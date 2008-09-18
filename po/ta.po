@@ -1,20 +1,21 @@
-# translation of gnome-panel.HEAD.po to TAMIL
+# translation of gnome-panel.HEAD.po to Tamil
 # translation of ta.po to
 # Tamil translation of Gnome-Panel messages.
-# Copyright (C) 2001, 2004, 2006, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2004, 2006, 2007, 2008 Free Software Foundation, Inc.
 #
 # Dinesh Nadarajah <dinesh_list@sbcglobal.net>, 2004.
 # Jayaradha N <jaya@pune.redhat.com>, 2004.
 # Felix <ifelix@redhat.com>, 2006.
 # Dr.T.Vasudevan <agnihot3@gmail.com>, 2007.
+# Dr.T.vasudevan <agnihot3@gmail.com>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-11 14:49+0100\n"
-"PO-Revision-Date: 2007-08-12 08:30+0530\n"
-"Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
-"Language-Team: TAMIL <ubuntu-l10n-tam@lists.ubuntu.com>\n"
+"POT-Creation-Date: 2008-09-01 22:51+0000\n"
+"PO-Revision-Date: 2008-09-18 17:48+0530\n"
+"Last-Translator: Dr.T.vasudevan <agnihot3@gmail.com>\n"
+"Language-Team: Tamil <Ubuntu-l10n-tam@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,12 +29,12 @@ msgstr "தேதி & நேரத்தை மாற்றுதல் (_j)"
 # applets/gen_util/clock.c:596
 #: ../applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
-msgstr "தேதியை நகலெடு"
+msgstr "(_D) தேதியை நகலெடு"
 
 # applets/gen_util/clock.c:589
 #: ../applets/clock/GNOME_ClockApplet.xml.h:3
 msgid "Copy _Time"
-msgstr "நேரத்தை நகலெடு"
+msgstr "(_T) நேரத்தை நகலெடு"
 
 # applets/desk-guide/deskguide_applet.c:251 applets/fish/fish.c:958
 # applets/gen_util/clock.c:610 applets/gen_util/mailcheck.c:1534
@@ -46,7 +47,7 @@ msgstr "நேரத்தை நகலெடு"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About"
-msgstr "அறிமுகம்"
+msgstr "(_A) அறிமுகம்"
 
 # applets/desk-guide/deskguide_applet.c:244 applets/fish/fish.c:951
 # applets/gen_util/clock.c:603 applets/gen_util/mailcheck.c:1528
@@ -61,9 +62,9 @@ msgstr "அறிமுகம்"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
-#: ../gnome-panel/panel-menu-button.c:659
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
+#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "உதவி _H "
 
@@ -77,7 +78,7 @@ msgstr "முன்னுரிமைகள் _P "
 
 # applets/gen_util/clock.c:927
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2230
+#: ../applets/clock/clock.c:3753
 msgid "Clock"
 msgstr "கடிகாரம்"
 
@@ -94,14 +95,19 @@ msgid "Get the current time and date"
 msgstr "தற்போதைய நேரமும் திகதியையும் பெறுக"
 
 # panel/foobar-widget.c:589
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:422
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 # applets/gen_util/clock.c:198 applets/gen_util/clock.c:400
 # panel/foobar-widget.c:587 panel/foobar-widget.c:1038
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:424
+#: ../applets/clock/clock.c:1532 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -109,44 +115,55 @@ msgstr "%H:%M"
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%b %d"
 
 # applets/desk-guide/deskguide_applet.c:101
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
+#: ../applets/clock/calendar-window.c:773
+msgid "Tasks"
 msgstr "செயல்கள்"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:949
+#: ../applets/clock/calendar-window.c:1578
+msgid "Edit"
+msgstr "திருத்து"
+
+#: ../applets/clock/calendar-window.c:894
 msgid "All Day"
 msgstr "முழு நாள்"
 
 # panel/foobar-widget.c:597
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
+#: ../applets/clock/calendar-window.c:1033
+msgid "Appointments"
 msgstr "நேரம் ஒதுக்குதல்"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
+#: ../applets/clock/calendar-window.c:1058
+msgid "Birthdays and Anniversaries"
 msgstr "பிறந்தநாள் மற்றும் வருட கொண்டாட்டங்கள்"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
+#: ../applets/clock/calendar-window.c:1083
+msgid "Weather Information"
 msgstr "வானிலை தகவல்"
 
+# panel/drawer.c:144 panel/menu-properties.c:623 panel/menu-properties.c:659
+#: ../applets/clock/calendar-window.c:1578 ../applets/clock/clock.glade.h:13
+msgid "Locations"
+msgstr "இருப்பிடங்கள்"
+
 # panel/menu.c:4746 panel/panel_config.c:1576
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1877
 msgid "Calendar"
 msgstr "நாள்காட்டி"
 
 # panel/foobar-widget.c:590
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:422
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 # panel/foobar-widget.c:588
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:424 ../applets/clock/clock.c:1530
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -156,7 +173,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:444
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -164,7 +181,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:451
 #, c-format
 msgid ""
 "%1$s\n"
@@ -177,63 +194,73 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:459
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-# panel/foobar-widget.c:487
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %B %d"
+# applets/gen_util/clock.c:425
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:641
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:671
 msgid "Click to hide your appointments and tasks"
 msgstr "உங்கள் நேர ஒதுக்கங்கள் வேலைகள் ஆகியவற்றை மறைக்க சொடுக்கவும்"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:674
 msgid "Click to view your appointments and tasks"
 msgstr "உங்கள் நேர ஒதுக்கங்கள் வேலைகள் ஆகியவற்றை பார்க்க சொடுக்கவும்"
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:678
 msgid "Click to hide month calendar"
 msgstr "மாத நாட்காட்டியை மறைக்க சொடுக்கவும்"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:681
 msgid "Click to view month calendar"
 msgstr "மாத நாட்காட்டியை பார்க்க சொடுக்கவும்"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "மற்ற நேர மண்டலங்களில் நேரம் பார்க்க சொடுக்கவும்"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1385
 msgid "Computer Clock"
 msgstr "கணிப்பொறி கடிகாரம்"
 
 # panel/menu.c:3516 panel/session.c:1549
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1525
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:191 applets/gen_util/clock.c:395
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1527
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:425
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1569
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
 # panel/gnome-run.c:236 panel/gnome-run.c:242
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1646
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "நேரம் அமைத்தல் கருவி தொடங்க முடியவில்லை: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1677
+msgid "Set System Time..."
+msgstr "கணினி நேரத்தை அமை..."
+
+#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:17
+msgid "Set System Time"
+msgstr "கணினி நேரத்தை அமை"
+
+#: ../applets/clock/clock.c:1693
+msgid "Failed to set the system time"
+msgstr "கணினி நேரத்தை அமைத்தல் தோல்வியடைந்தது"
+
+#: ../applets/clock/clock.c:1887
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -242,78 +269,185 @@ msgstr ""
 "இருக்கலாம்?"
 
 # gnome-terminal/gnome-terminal.c:1079
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2819
 msgid "Custom format"
 msgstr "தனிப்பயன் வடிவம்"
 
-# panel/logout.c:194
-#: ../applets/clock/clock.c:2062
-msgid "Clock Preferences"
-msgstr "கடிகாரம் விருப்பங்கள்"
+# gnome-about/contributors.h:282
+#: ../applets/clock/clock.c:3480
+msgid "City Name"
+msgstr "மாநகரத்தின் பெயர்"
 
-# applets/gen_util/clock.c:974
-#: ../applets/clock/clock.c:2087
-msgid "Clock _type:"
-msgstr "கடிகாரம் _வகை:"
-
-# applets/gen_util/clock.c:779
-#: ../applets/clock/clock.c:2098
-msgid "12 hour"
-msgstr "12 மணி"
+# panel/menu.c:3809 panel/menu.c:3818 panel/menu.c:5411
+#: ../applets/clock/clock.c:3484
+msgid "City Time Zone"
+msgstr "மாநகர நேர மண்டலம்"
 
 # applets/gen_util/clock.c:788
-#: ../applets/clock/clock.c:2099
+#: ../applets/clock/clock.c:3649
 msgid "24 hour"
 msgstr "24 மணி"
 
 # applets/gen_util/clock.c:865
-#: ../applets/clock/clock.c:2100
+#: ../applets/clock/clock.c:3650
 msgid "UNIX time"
 msgstr "யூநிக்ஸ் நேரம்"
 
 # applets/gen_util/clock.c:869
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3651
 msgid "Internet time"
 msgstr "இணைய நேரம்"
 
 # applets/gen_util/clock.c:521
-#: ../applets/clock/clock.c:2109
+#: ../applets/clock/clock.c:3659
 msgid "Custom _format:"
-msgstr "தனிப்பயன் _வடிவமைப்பு:"
+msgstr "(_f) தனிப்பயன் வடிவமைப்பு:"
 
-# applets/gen_util/mailcheck.c:1230
-#: ../applets/clock/clock.c:2128
-msgid "Show _seconds"
-msgstr "_நொடிகள் காட்டுக"
-
-# applets/gen_util/clock.c:596
-#: ../applets/clock/clock.c:2137
-msgid "Show _date"
-msgstr "தேதியை காட்டுக"
-
-# applets/gen_util/clock.c:851
-#: ../applets/clock/clock.c:2146
-msgid "Use _UTC"
-msgstr "_UTC பயன்டுத்தவும்"
-
-# panel/panel_config.c:674
-#: ../applets/clock/clock.c:2155
-msgid "Show multiple _timezones"
-msgstr "பல நேர மண்டலங்களை காட்டுக"
-
-#: ../applets/clock/clock.c:2233
+#: ../applets/clock/clock.c:3756
 msgid "The Clock displays the current time and date"
 msgstr "கடிகாரம் தற்போதைய நேரத்தையும் தேதியையும் காட்டும்"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2236 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:3759 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
-#: ../gnome-panel/panel-context-menu.c:134
+#: ../applets/wncklet/workspace-switcher.c:620
+#: ../gnome-panel/panel-context-menu.c:137
 msgid "translator-credits"
 msgstr "I. Felix, ifelix25@gmail.com"
+
+# gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
+#: ../applets/clock/clock.glade.h:1
+msgid "<b>Clock Options</b>"
+msgstr "<b>கடிகார தேர்வுகள்</b>"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "<b>Display</b>"
+msgstr "<b>காட்சி</b>"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Panel Display</b>"
+msgstr "<b>பலக காட்சி</b>"
+
+# gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Time Settings</b>"
+msgstr "<b>நேர அமைப்புகள்</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<i>(optional)</i>"
+msgstr "<i>(விருப்ப தேர்வு)</i>"
+
+# panel/logout.c:194
+#: ../applets/clock/clock.glade.h:6
+msgid "Clock Preferences"
+msgstr "கடிகாரம் விருப்பங்கள்"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "Current Time:"
+msgstr "இப்போதைய நேரம்:"
+
+#: ../applets/clock/clock.glade.h:8
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"கிழக்கு\n"
+"மேற்கு"
+
+# gnome-terminal/gnome-terminal.glade.h:20
+#: ../applets/clock/clock.glade.h:10
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "பொது"
+
+#: ../applets/clock/clock.glade.h:11
+msgid "Latitude:"
+msgstr "அட்ச ரேகை:"
+
+# panel/drawer.c:144 panel/menu-properties.c:623 panel/menu-properties.c:659
+#: ../applets/clock/clock.glade.h:12
+msgid "Location Name:"
+msgstr "இடப்பெயர்:"
+
+#: ../applets/clock/clock.glade.h:14
+msgid "Longitude:"
+msgstr "தீர்க்க ரேகை:"
+
+#: ../applets/clock/clock.glade.h:15
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"வடக்கு\n"
+"தெற்கு"
+
+# applets/gen_util/clock.c:596
+#: ../applets/clock/clock.glade.h:18
+msgid "Show _temperature"
+msgstr "(_t) வெப்ப அளவை காட்டுக"
+
+# applets/gen_util/clock.c:596
+#: ../applets/clock/clock.glade.h:19
+msgid "Show _weather"
+msgstr "(_w)  வானிலையை காட்டுக"
+
+# applets/gen_util/mailcheck.c:1230
+#: ../applets/clock/clock.glade.h:20
+msgid "Show seco_nds"
+msgstr "(_n) நொடிகளை காட்டுக"
+
+# applets/gen_util/clock.c:596
+#: ../applets/clock/clock.glade.h:21
+msgid "Show the _date"
+msgstr "(_d)  தேதியை காட்டுக"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Time Settings"
+msgstr "நேர அமைப்புகள்"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Time _Settings"
+msgstr "(_S) நேர அமைப்புகள்"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Time:"
+msgstr "நேரம்:"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Timezone:"
+msgstr "நேரமண்டலம்:"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Weather"
+msgstr "வானிலை"
+
+# applets/gen_util/clock.c:521
+#: ../applets/clock/clock.glade.h:27
+msgid "_12 hour format"
+msgstr "_12 மணி வடிவமைப்பு"
+
+# applets/gen_util/clock.c:521
+#: ../applets/clock/clock.glade.h:28
+msgid "_24 hour format"
+msgstr "_24 மணி வடிவமைப்பு"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "_Pressure unit:"
+msgstr "அழுத்த அலகு (_P):"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_Temperature unit:"
+msgstr "(_T) வெப்ப அலகு:"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Visibility unit:"
+msgstr "(_V) தெளிவுப்பார்வை அலகு:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Wind speed unit:"
+msgstr "(_W) காற்று வேக அலகு:"
 
 # applets/gen_util/clock.c:788
 #. Translators:
@@ -331,10 +465,8 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
-msgstr "நேரமண்டல அடையாளப் பட்டியல். ஒவ்வொரு அடையாள எண்ணும் தனி நேரமண்டலத்தை குறிக்கும். இவற்றின் அமைப்பு / $(id)_name and $(id)_zone விசையில் சேமிக்கப்பட்டிருக்கும்."
+msgid "A list of locations to display in the calendar window."
+msgstr "நாட்காட்டி சாளரத்தில் காட்ட இடங்கள் பட்டியல்"
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -349,89 +481,124 @@ msgid "Expand list of birthdays"
 msgstr "பிறந்த நாட்கள் பட்டியலை விரிக்கவும்."
 
 #: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "இடங்கள் பட்டியலை விரிக்கவும்."
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "வேலைகள் பட்டியலை விரிக்கவும்."
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "வானிலை தகவல் பட்டியலை விரிக்கவும்."
 
 # applets/gen_util/clock.c:521
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "மணி வடிவமைப்பு"
 
-#: ../applets/clock/clock.schemas.in.h:19
+# gnome-hint/gnome-hint.c:648
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "உண்மை என்றால், வானிலை சின்னத்தை காட்டுக."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "மெய்யென்றால், கடிகாரத்தில் தேதியையும் காட்டுக"
 
 # gnome-hint/gnome-hint.c:648
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "உண்மை என்றால், நேரத்தில் நொடிகள் காட்டுக."
 
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "மெய்யென்றால், கடிகாரத்தில் நேரம் தவிர நேரமண்டல பொத்தானையும் காட்டுக"
-
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "உண்மையெனில் ,நேரத்தை உலகளாவிய நேரத்தில் காட்டு"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "உண்மையானால் நேர ஒதுக்கீடுகள் பட்டியலை நாட்காட்டி சாளரத்தில் விரிக்கவும்."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "உண்மையானால் பிறந்த நாட்கள் பட்டியலை நாட்காட்டி சாளரத்தில் விரிக்கவும்."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "உண்மையானால் இடங்கள் பட்டியலை நாட்காட்டி சாளரத்தில் விரிக்கவும்."
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "உண்மையானால் வேலைகள் பட்டியலை நாட்காட்டி சாளரத்தில் விரிக்கவும்."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "உண்மையானால் வானிலை தகவல் பட்டியலை நாட்காட்டி சாளரத்தில் விரிக்கவும்."
 
 # panel/gnome-panel-properties.c:635
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "உண்மையெனில், சுட்டியை கடிகாத்திற்கு அருகில் கொண்டு செல்லும்போது தேதி குறிப்பை காட்டு"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "உண்மையானால் வெப்ப நிலையை வானிலை சின்னத்துக்கு அடுத்து காட்டவும்."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "உண்மையானால் நாட்காட்டியில் வார எண்களை காட்டவும்."
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "நேரமண்டலத்தின் பெயர்"
+# panel/launcher.c:484 panel/menu.c:1700
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "இடங்களின் பட்டியல் "
 
 # applets/gen_util/clock.c:823
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "தேதியை கடிகாரத்தில் காட்டுக"
 
 # applets/gen_util/clock.c:837
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "தேதியை கருவி-உதவியில் காண்பி"
 
-# panel/panel_config.c:674
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "நேர மண்டல பொத்தானை காட்டுக"
+# applets/gen_util/clock.c:823
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "வெப்பநிலையை கடிகாரத்தில் காட்டுக"
 
 # applets/gen_util/mailcheck.c:1230
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "நொடிகளுடன் நேரம் காட்டுக"
 
-#: ../applets/clock/clock.schemas.in.h:34
+# applets/gen_util/clock.c:823
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "வானிலையை கடிகாரத்தில் காட்டுக"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "நாட்காட்டியில் வார எண்களை காட்டுக"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "வேக அலகு"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "வெப்ப அலகு"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "வெப்ப நிலையை காட்டும் போது பயன்படுத்த அலகு"
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "காற்றின் வேகத்தை காட்டும் போது பயன்படுத்த அலகு."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -439,7 +606,7 @@ msgstr ""
 "'வடிவமைப்பு' விசைக்கு ஆதரவாக க்னோம் 2.6 இந்த விசையின் பயன்பாடு மறுக்கப்பட்டது . பழைய "
 "பதிப்புகளுக்கு ஆதரவு தருவதற்காக இந்த வசதி தொடரப்படுகிறது."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -450,7 +617,7 @@ msgstr ""
 "பயன்படுத்தும் குறிப்பிட்ட அமைப்பை பெற்றுக்கொள்ள strftime() ஆல் புரிந்துகொள்ளக்கூடிய மாற்று "
 "குறிப்புகளை தரவும். மேலும் அதிக விவரங்களுக்கு strftime() கையேட்டை பார்க்கவும்."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -468,47 +635,94 @@ msgstr ""
 "\"யூனிக்ஸ்\" என அமைத்தால் கடிகாரம் நெடிகளில் சேரத்தை காட்டும் அதாவது 1970-01-01. "
 "\"தனிப்பயன்\" என அமைத்தால் நீங்கள் குறிப்பிட்ட அமைப்பில் நேரம் காட்டப்படும்."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr "இந்த விசை டிஜி(TZ) சூழல் மாறியில் பயன்படும் நேரமண்டலத்தின் பெயரை குறிப்பிடுகிறது."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "இந்த விசை நிரல் நேரத்தை அமைக்க இயக்க வேண்டும் என குறிப்பிடுகிறது"
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr "இந்த விசை பயனருக்கு தெரியும் நேரமண்டல பெயரை குறிப்பிடுகிறது"
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "நேரம் அமைத்தல் கருவி"
 
-# panel/gnome-panel-properties.c:127
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "நேரமண்டல அடையாள பட்டியல்"
-
 # applets/gen_util/clock.c:869
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "இணைய நேரத்தை பயன்படுத்து"
 
 # applets/gen_util/clock.c:865
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "UNIX நேரம் பயன்படுத்துக"
 
 # applets/gen_util/clock.c:851
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "UTC பயன் படுத்தவும்"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "பயனருக்கு தெரியும் நேரமண்டலம்"
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "கணினி நேரமண்டலத்தின் பெயர் ஐ அமைக்க தவறியது."
+
+#: ../applets/clock/clock-location-tile.c:240
+msgid "<small>Set...</small>"
+msgstr "<small>அமை...</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+msgid "<small>Set</small>"
+msgstr "<small>அமை</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "இடத்தை இப்போதைய இடமாக அமைத்து அதன் நேர மண்டலத்தை இந்த கணினிக்கு பயன்படுத்துக"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:453
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:462
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:472
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:581
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
+msgid "Unknown"
+msgstr "தெரியாத"
+
+#: ../applets/clock/clock-location-tile.c:594
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, உணர்வது %s"
+
+#: ../applets/clock/clock-location-tile.c:612
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "சூரிய உதயம்: %s / சூரிய அஸ்தமனம்: %s"
 
 # gnome-terminal/gnome-terminal.c:2097
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
@@ -517,96 +731,29 @@ msgstr "பயனருக்கு தெரியும் நேரமண்�
 msgid "There was an error displaying help: %s"
 msgstr "உதவி காண்பிக்கும்போது ஓர் பிழை: %s"
 
-# gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>செயலில் உள்ள நேர மண்டலம்</b>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "கணினி நேரத்தை மாற்றுக"
 
-# gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>நேர மண்டலத்தை சேர்</b>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "கணினி நேரமண்டலத்தை மாற்றுக"
 
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>இடம்:</b></small>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "வன்பொருள் கடிகாரத்தை வடிவமை"
 
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
-msgstr "<small><i>ஒரு நகரத்தின் நேரமண்டலத்தை தேர்ந்தெடுக்க அணுகிப் பார்க்க சொடுக்கவும் அல்லது விலகிப் பார்க்க வலது சொடுக்கவும்.</i></small>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "கணினி நேர மண்டலத்தை மாற்றி அமைக்க உரிமைகள் தேவை."
 
-# panel/menu.c:3809 panel/menu.c:3818 panel/menu.c:5411
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "நேர மண்டலங்களை திருத்தவும்"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "கணினி நேரத்தை மாற்றி அமைக்க உரிமைகள் தேவை."
 
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-# panel/gnome-panel-screenshot.glade.h:11
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "படத்தில் சொடுக்கியை நகர்த்துக"
-
-# gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>இடம்:</b> %s"
-
-# gnome-about/contributors.h:282
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "பெயர்"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "நேரமண்டலம்"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s பகல் நேர சேமிப்புடன் (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-# panel/menu.c:3809 panel/menu.c:3818 panel/menu.c:5411
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "பட்டியலை தொகுக்கவும் _E"
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "நேரமண்டலங்கள்"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "கணினி வன்பொருள் நேரத்தை மாற்றி அமைக்க உரிமைகள் தேவை."
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -639,7 +786,7 @@ msgstr ""
 "என சொல்லும் இல%s பயன்படுத்துவதை பற்றி நாங்கள் தவறாக அறிவுரை கூறிவிட்டோம்\n"
 "குறும்பயனை \"சரியான\" முறையில் பயன்படுத்த இது உதவும். வேண்டாம்."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:452
 msgid "Images"
 msgstr "படங்கள்"
 
@@ -665,7 +812,7 @@ msgstr ""
 # applets/fish/fish.c:783
 #: ../applets/fish/fish.c:575
 msgid "(with minor help from George)"
-msgstr "(ஜார்ஜ் இடம் இருந்து கொஞ்ஞம் உதவியுடன்)"
+msgstr "(ஜார்ஜ் இடம் இருந்து கொஞ்சம் உதவியுடன்)"
 
 # applets/fish/fish.c:400
 #: ../applets/fish/fish.c:617
@@ -740,9 +887,9 @@ msgstr "இன்றைய தேதியைப்பாருங்கள்!"
 #: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "%s ஏதிர் காலத்தை காணித்து சொல்பவர்"
+msgstr "%s எதிர் காலத்தை கணித்து சொல்பவர்"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -774,27 +921,27 @@ msgstr "ஒரு அசைவூட்டத்தை தேர்ந்தெ�
 
 #: ../applets/fish/fish.glade.h:7
 msgid "_File:"
-msgstr "_கோப்பு:"
+msgstr "(_F) கோப்பு:"
 
 # gnome-about/contributors.h:282
 #: ../applets/fish/fish.glade.h:8
 msgid "_Name of fish:"
-msgstr "_மீன் பெயர்:"
+msgstr "(_N) மீன் பெயர்:"
 
 # applets/fish/fish.c:578
 #: ../applets/fish/fish.glade.h:9
 msgid "_Pause per frame:"
-msgstr "ஒவ்வொரு சட்டத்திற்குமான இடைவேளை"
+msgstr "(_P) ஒவ்வொரு சட்டத்திற்குமான இடைவேளை"
 
 # applets/fish/fish.c:591
 #: ../applets/fish/fish.glade.h:10
 msgid "_Rotate on vertical panels"
-msgstr "செங்குத்தான-பலகையில் சுழற்று"
+msgstr "(_R) செங்குத்தான-பலகையில் சுழற்று"
 
 # applets/fish/fish.c:562
 #: ../applets/fish/fish.glade.h:11
 msgid "_Total frames in animation:"
-msgstr "_அசைவூட்டத்தில் எத்தனை சட்டங்கள்:"
+msgstr "(_T) அசைவூட்டத்தில் எத்தனை சட்டங்கள்:"
 
 # help-browser/toc-man.c:24 help-browser/toc2-man.c:26
 #: ../applets/fish/fish.glade.h:12
@@ -928,7 +1075,7 @@ msgid "Window Selector"
 msgstr "சாளரம் தெரிவு"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "வேலையிட மாற்றி"
 
@@ -975,55 +1122,55 @@ msgstr ""
 "சாளர பட்டியல் ஒரு அமைப்பு பொத்தான்களில் எல்லா சாளரங்களின் பட்டியலையும் காட்டும். மேலும் "
 "எல்லா சாளரங்களையும் உலாவ உங்களை அனுமதிக்கும்"
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>சிறிதாக்கப்பட்ட சாளரங்களை மீட்கின்றது</b>"
 
 # gsm/splash.c:67
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>சாளரம் குழுவாக்கம்</b>"
 
 # help-browser/window.c:227
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>சாளர பட்டியல் உள்ளடக்கங்கள்</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
-msgstr "இடம் இல்லாவிட்டால் சாளரங்களை குழுவாக்கவும்"
+msgstr "(_s) இடம் இல்லாவிட்டால் சாளரங்களை குழுவாக்கவும்"
+
+#: ../applets/wncklet/window-list.glade.h:5
+msgid "Restore to current _workspace"
+msgstr "(_w) தற்போதைய வேலையிடத்தை மீட்கவும்"
 
 #: ../applets/wncklet/window-list.glade.h:6
-msgid "Restore to current _workspace"
-msgstr "தற்போதைய வேலையிடத்தை மீட்கவும்"
-
-#: ../applets/wncklet/window-list.glade.h:7
 msgid "Restore to na_tive workspace"
-msgstr "சொந்த பணியிடத்தை மீட்கவும்"
+msgstr "(_t) சொந்த பணியிடத்தை மீட்கவும்"
 
 # applets/tasklist/tasklist_properties.c:348
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
-msgstr "தற்போதைய பணியிடத்தில் சாளரங்களைக் காட்டுக"
+msgstr "(_o) தற்போதைய பணியிடத்தில் சாளரங்களைக் காட்டுக"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
-msgstr "அனைத்து வேலையிடங்களிலும் _உள்ள சாளரங்களை காட்டுக"
+msgstr "(_l) அனைத்து வேலையிடங்களிலும் உள்ள சாளரங்களை காட்டுக"
 
 # help-browser/window.c:227
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "சாளரம் பட்டியல் விருப்பங்கள்"
 
 # panel/panel_config.c:1414
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
-msgstr "_எப்பொழுதும் சாளரங்களை தொகுக்க வேண்டும்"
+msgstr "(_A) எப்பொழுதும் சாளரங்களை தொகுக்க வேண்டும்"
 
 # panel/panel_config.c:1398
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
-msgstr "_எப்பொழுதும் சாளரங்களை தொகுக்கக்கூடாது"
+msgstr "(_N) எப்பொழுதும் சாளரங்களை தொகுக்கக்கூடாது"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -1071,8 +1218,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
 msgstr ""
-"க்னோம் 2.6 இல் இந்த விசையின் பயன்பாடு மறுக்கப்பட்டது . பழைய "
-"பதிப்புகளுக்கு ஆதரவு தருவதற்காக இந்த திட்டம் தொடரப்படுகிறது."
+"க்னோம் 2.6 இல் இந்த விசையின் பயன்பாடு மறுக்கப்பட்டது . பழைய பதிப்புகளுக்கு ஆதரவு "
+"தருவதற்காக இந்த திட்டம் தொடரப்படுகிறது."
 
 # panel/panel_config.c:1398
 #: ../applets/wncklet/window-list.schemas.in.h:9
@@ -1092,14 +1239,14 @@ msgstr ""
 # panel/menu-properties.c:640 panel/panel-util.c:204
 # panel/panel_config.c:1642 panel/swallow.c:265
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "வரிசைகள்"
 
 # help-browser/history.c:260
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "நெடுவரிசைகள்"
 
@@ -1118,11 +1265,11 @@ msgstr "பணியிட மாற்றிக்கான display_workspace_n
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "பணியிட மாற்றிக்கான display_all_workspaces மதிப்பை ஏற்றுவதில் பிழை: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "பணியிட மர்றி உங்கள் பணியிடத்தில் நீங்கள் கையாளும் சாளரத்தின் சிறிய பதிப்பை காட்டும்."
+msgstr "பணியிட மாற்றி உங்கள் பணியிடத்தில் நீங்கள் கையாளும் சாளரத்தின் சிறிய பதிப்பை காட்டும்."
 
 # panel/gnome-panel-screenshot.glade.h:8
 #: ../applets/wncklet/workspace-switcher.glade.h:1
@@ -1135,21 +1282,21 @@ msgstr "<b>வேலை இடங்கள்</b>"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
-msgstr "எத்தனை வேலை _இடங்கள்:"
+msgstr "(_w)எத்தனை வேலை இடங்கள்:"
 
 # applets/tasklist/tasklist_properties.c:348
 #: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
-msgstr "_அனைத்து வேலையிடங்களிலும் காட்டுக:"
+msgstr "(_a) அனைத்து வேலையிடங்களிலும் காட்டுக:"
 
 # applets/tasklist/tasklist_properties.c:348
 #: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
-msgstr "தற்போதைய _வேலையிடத்தை மட்டும் காட்டுக"
+msgstr "(_o) தற்போதைய வேலையிடத்தை மட்டும் காட்டுக"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
-msgstr "மாற்றியில் வேலையிடங்களின் பெயர்களைக் காட்டுக"
+msgstr "(_n) மாற்றியில் வேலையிடங்களின் பெயர்களைக் காட்டுக"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
@@ -1162,7 +1309,7 @@ msgstr "வேலையிட மாற்றியின் பண்புக�
 
 #: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
-msgstr "வேலை இடங்கள் _பெயர்கள்:"
+msgstr "(_m) வேலை இடங்களின் பெயர்கள்:"
 
 # applets/tasklist/tasklist_properties.c:348
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
@@ -1206,6 +1353,27 @@ msgstr ""
 "பணியிடமாற்றியால் பணியிடத்தில் காட்ட முடியும் என்பதை காட்டும். display_all_workspaces  "
 "என்பதை உண்மை என அமைத்தால் இந்த தகவல்கள் காட்டப்படும்."
 
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086
+msgid "Error"
+msgstr "பிழை"
+
+# panel/launcher.c:103 panel/launcher.c:148
+#: ../gnome-panel/libpanel-util/panel-show.c:45
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "'%s' இடத்தை திறக்க முடியவில்லை"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:193
+msgid "No application to handle search folders is installed."
+msgstr "தேடல் அடைவுகளை கையாள எந்த நிரலும் அமைக்கப்படவில்லை."
+
 # gnome-about/gnome-about.c:571
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1214,17 +1382,17 @@ msgstr "கனோம் பலகை மேல்வடிவு"
 # panel/applet.c:479
 #: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
-msgstr "பலகையில் _பூட்டுக"
+msgstr "(_k) பலகையில் பூட்டுக"
 
 # panel/applet.c:486
 #: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
 msgid "_Move"
-msgstr "_நகர்த்து"
+msgstr "(_M) நகர்த்து"
 
 # panel/applet.c:479
 #: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
-msgstr "பலகையில் _இருந்து கழட்டுக"
+msgstr "(_R) பலகையில் இருந்து கழட்டுக"
 
 # applets/tasklist/tasklist_applet.c:135 panel/applet.c:438
 # panel/foobar-widget.c:776
@@ -1239,50 +1407,50 @@ msgstr "காலியான ஓரிடம் இல்லை"
 
 # panel/drawer.c:187 panel/drawer.c:321 panel/gnome-panel-properties.c:583
 # panel/menu.c:4886
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1585
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:172
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Drawer"
 msgstr "இழுப்பறை"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
 #: ../gnome-panel/drawer.c:589
 msgid "_Add to Drawer..."
-msgstr "இழுப்பறையில் சேர்க்கவும்..."
+msgstr "(_A) இழுப்பறையில் சேர்க்கவும்..."
 
 # panel/menu.c:5103
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
-#: ../gnome-panel/panel-action-button.c:138
-#: ../gnome-panel/panel-context-menu.c:212
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:874
+#: ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Properties"
-msgstr "பண்புகள்"
+msgstr "(_P) பண்புகள்"
 
 # panel/menu.c:3723
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: ../gnome-panel/gnome-desktop-item-edit.c:31
 msgid "Create new file in the given directory"
 msgstr "கொடுக்கப்பட்ட அடைவில் புதிய கோப்பு உருவாக்குக"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:28
+#: ../gnome-panel/gnome-desktop-item-edit.c:32
 msgid "[FILE...]"
 msgstr "[கோப்பு...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:131
+#: ../gnome-panel/gnome-desktop-item-edit.c:110
 msgid "- Edit .desktop files"
 msgstr "- .desktop கோப்புகளை திருத்தவும்"
 
 # panel/launcher.c:709
-#: ../gnome-panel/gnome-desktop-item-edit.c:162
-#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
+#: ../gnome-panel/gnome-desktop-item-edit.c:149
+#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:964
 msgid "Create Launcher"
 msgstr "தொடங்கர் உருவாக்குக"
 
 # panel/panel_config.c:1857
-#: ../gnome-panel/gnome-desktop-item-edit.c:188
-#: ../gnome-panel/gnome-desktop-item-edit.c:208
+#: ../gnome-panel/gnome-desktop-item-edit.c:174
+#: ../gnome-panel/gnome-desktop-item-edit.c:197
 msgid "Directory Properties"
 msgstr "அடைவின் பண்புகள்"
 
 # panel/launcher.c:561
-#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
+#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:802
 msgid "Launcher Properties"
 msgstr "தொடங்கர் பண்புகள்"
 
@@ -1297,78 +1465,73 @@ msgstr "மற்ற நிரல்களை துவக்கவும், �
 msgid "Panel"
 msgstr "பலகம்"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/launcher.c:173
 msgid "Could not show this URL"
 msgstr "இந்த யூஆர்எல் ஐ காட்ட முடியவில்லை"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:174
 msgid "No URL was specified."
 msgstr "யூஆர்எல் ஏதும் குறிப்பிடவில்லை"
 
-# panel/launcher.c:77
-#: ../gnome-panel/launcher.c:165
-#, c-format
-msgid "Could not show '%s'"
-msgstr "%s ஐ காண்பிக்க முடியவில்லை"
-
 # panel/launcher.c:103 panel/launcher.c:148
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:218
 msgid "Could not launch application"
 msgstr "நிரலை துவங்க முடியவில்லை"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:286
 msgid "Could not use dropped item"
 msgstr "விடப்பட்ட உருப்படியை பயன்படுத்த முடியாது."
 
-#: ../gnome-panel/launcher.c:471
+#: ../gnome-panel/launcher.c:490
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "பலக துவக்கிக்கான மேல்மேசை கோப்பின் URI தரப்படவில்லை\n"
 
-#: ../gnome-panel/launcher.c:514
+#: ../gnome-panel/launcher.c:529
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "%s%s பலகதுவக்கிக்கான %s மேல்மேசை கோப்பை திறக்க முடியவில்லை\n"
 
-#: ../gnome-panel/launcher.c:853
+#: ../gnome-panel/launcher.c:868
 msgid "_Launch"
 msgstr "துவக்கவும் _L "
 
-#: ../gnome-panel/launcher.c:892
+#: ../gnome-panel/launcher.c:907
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s விசை அமைக்கப்படவில்லை, தொடங்கரை ஏற்ற முடியவில்லை\n"
 
 # panel/launcher.c:709
-#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
-#: ../gnome-panel/panel-ditem-editor.c:1381
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/launcher.c:1031 ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1384
+#: ../gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
 msgstr "தொடங்கரை சேமிக்க முடியவில்லை"
 
 # panel/menu.c:1627
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
-msgstr "இந்த தொடங்கரை பலகத்தில் சேர்க்க"
+msgstr "(_p) இந்த தொடங்கரை பலகத்தில் சேர்க்க"
 
 # panel/menu.c:1627
-#: ../gnome-panel/menu.c:940
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
-msgstr "இந்த தொடங்கரை மேல்மேசையில் சேர்க்க"
+msgstr "(_d) இந்த தொடங்கரை மேல்மேசையில் சேர்க்க"
 
 # panel/menu.c:1750
-#: ../gnome-panel/menu.c:952
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
-msgstr "பட்டி முழுவதும்"
+msgstr "(_E) பட்டி முழுவதும்"
 
 # panel/menu.c:1760
-#: ../gnome-panel/menu.c:957
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
-msgstr "இதை ஓர் இழுப்பறையாக பலகத்தில் சேர்க்க"
+msgstr "(_d) இதை ஓர் இழுப்பறையாக பலகத்தில் சேர்க்க"
 
 # panel/menu.c:1769
-#: ../gnome-panel/menu.c:964
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
-msgstr "இதை ஓர் பட்டியலாக பலகத்தில் சேர்க்க"
+msgstr "(_m) இதை ஓர் பட்டியலாக பலகத்தில் சேர்க்க"
 
 #: ../gnome-panel/nothing.cP:601
 #, c-format
@@ -1417,33 +1580,33 @@ msgid "Killer GEGLs from Outer Space"
 msgstr "விண்வளியிலிருந்து GEGL கொல்லிகள்"
 
 # gsm/splash.c:56 gsm/splash.c:57
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Activate Screensaver"
-msgstr "திரைக்காவலரை தொடங்கவும் "
+msgstr "(_A) திரைக்காவலரை தொடங்கவும் "
 
 # panel/foobar-widget.c:385
-#: ../gnome-panel/panel-action-button.c:132
+#: ../gnome-panel/panel-action-button.c:133
 msgid "_Lock Screen"
-msgstr "திரையை _பூட்டுக"
+msgstr "(_L) திரையை பூட்டுக"
 
 # panel/menu.c:5178
-#: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:809
+#: ../gnome-panel/panel-action-button.c:228
+#: ../gnome-panel/panel-menu-bar.c:416 ../gnome-panel/panel-menu-button.c:992
+#: ../gnome-panel/panel-util.c:711
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' செயல்படுத்த முடியவில்லை"
 
-#: ../gnome-panel/panel-action-button.c:253
+#: ../gnome-panel/panel-action-button.c:265
 msgid "Could not connect to server"
 msgstr "சேவையகத்தை இணைக்க முடியவில்லை"
 
 # panel/foobar-widget.c:385
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:296
 msgid "Lock Screen"
-msgstr "திரையை _பூட்டுக"
+msgstr "திரையை பூட்டுக"
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:297
 msgid "Protect your computer from unauthorized use"
 msgstr "அனுமதி இல்லாதவர்கள் இடம் இருந்து கனிப்பொறியை காப்பு"
 
@@ -1451,158 +1614,160 @@ msgstr "அனுமதி இல்லாதவர்கள் இடம் இ
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:299
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Log Out..."
 msgstr "வெளியேறு..."
 
 # panel/menu.c:5345
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:312
 msgid "Log out of this session to log in as a different user"
 msgstr "வேறு பயனீட்டாளராக உள்ளே நுழைய இந்த அமர்விலிருந்து வெளியேறவும் "
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:321
 msgid "Run Application..."
 msgstr "செயல்பாடு இயக்குக..."
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "கட்டளையை உள்ளிட்டு அல்லது பட்டியலிலிருந்து தேர்ந்தெடுத்து செயல்பாடை இயக்குக"
 
-#: ../gnome-panel/panel-action-button.c:319
+#: ../gnome-panel/panel-action-button.c:331
 msgid "Search for Files..."
 msgstr "கோப்புகளுக்காக தேடுக..."
 
-#: ../gnome-panel/panel-action-button.c:320
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "இந்த கணினியில் உள்ள ஆவணங்கள் அல்லது அடைவுகளை பெயராலோ உள்ளடக்கத்தாலோ கண்டுபிடிக்கவும்"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:340
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "கட்டாயப்படுத்தி மூடுவும்"
 
-#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-action-button.c:341
 msgid "Force a misbehaving application to quit"
 msgstr "தவருதலாக செயல்படும் செயல்பாடை கட்டாயப்படுத்தி நிறுத்துக"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Connect to Server..."
 msgstr "சேவையகத்தை உடன் இணைக்கவும்... "
 
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Connect to a remote computer or shared disk"
 msgstr "ஒரு தொலை கணினி அல்லது பகிர்ந்த வட்டுடன் இணைக்கவும்"
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:359
 msgid "Shut Down..."
 msgstr "நிறுத்தவும்... "
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Shut down the computer"
 msgstr "கணினியை நிறுத்தவும் "
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:113
 msgid "Custom Application Launcher"
 msgstr "தனி பயன்பாடு துவக்கி"
 
 # panel/launcher.c:709
-#: ../gnome-panel/panel-addto.c:112
+#: ../gnome-panel/panel-addto.c:114
 msgid "Create a new launcher"
 msgstr "புதிய துவக்கியை உருவாக்கு"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:124
 msgid "Application Launcher..."
 msgstr "பயன்பாடு துவக்கி இயக்குக..."
 
-#: ../gnome-panel/panel-addto.c:123
+#: ../gnome-panel/panel-addto.c:125
 msgid "Copy a launcher from the applications menu"
 msgstr "பயன்பாடுகள் பட்டியிலிருந்து ஒரு துவக்கியை பிரதி எடுக்கவும்"
 
 # panel/menu.c:3964 panel/menu.c:3969 panel/menu.c:5654 panel/menu.c:5681
 # panel/menu.c:5817
-#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:1093
 msgid "Main Menu"
 msgstr "தலைப்புப் பட்டி"
 
 # panel/menu.c:244
-#: ../gnome-panel/panel-addto.c:138
+#: ../gnome-panel/panel-addto.c:140
 msgid "The main GNOME menu"
 msgstr "முக்கிய க்னோம் மெனு"
 
 # panel/menu-properties.c:599
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:150
 msgid "Menu Bar"
 msgstr "மெனுபட்டி"
 
-#: ../gnome-panel/panel-addto.c:149
+#: ../gnome-panel/panel-addto.c:151
 msgid "A custom menu bar"
 msgstr "தனி மெனு பட்டி"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:161
 msgid "Separator"
 msgstr "பிரிப்பி"
 
-#: ../gnome-panel/panel-addto.c:160
+#: ../gnome-panel/panel-addto.c:162
 msgid "A separator to organize the panel items"
 msgstr "பலக உருப்படிகளை திட்டமிட பிரிப்பி"
 
-#: ../gnome-panel/panel-addto.c:171
+#: ../gnome-panel/panel-addto.c:173
 msgid "A pop out drawer to store other items in"
 msgstr "மற்ற உருப்படிகளை சேமிக்கும் தோன்றல் பெட்டி"
 
-#: ../gnome-panel/panel-addto.c:262
+#: ../gnome-panel/panel-addto.c:264
 msgid "(empty)"
 msgstr "(காலி)"
 
-#: ../gnome-panel/panel-addto.c:402
+#: ../gnome-panel/panel-addto.c:407
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "வினவல் திரும்பிய விதிவிலக்கு %s\n"
 
-#: ../gnome-panel/panel-addto.c:1061
+#: ../gnome-panel/panel-addto.c:1066
 #, c-format
 msgid "Find an _item to add to \"%s\":"
-msgstr "\"%s\" இல் சேர்ப்பதற்கான ஒரு உருப்படியை கண்டு பிடிக்கவும்:"
+msgstr "(_i) \"%s\" இல் சேர்ப்பதற்கான ஒரு உருப்படியை கண்டு பிடிக்கவும்:"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: ../gnome-panel/panel-addto.c:1065
+#: ../gnome-panel/panel-addto.c:1070
+#, c-format
 msgid "Add to Drawer"
 msgstr "இழுப்பறையில் சேர்க்கவும்..."
 
-#: ../gnome-panel/panel-addto.c:1067
+#: ../gnome-panel/panel-addto.c:1072
 msgid "Find an _item to add to the drawer:"
-msgstr "இழுப்பறையில் சேர்ப்பதற்கான ஒரு உருப்படியை கண்டு பிடிக்கவும்:"
+msgstr "(_i) இழுப்பறையில் சேர்ப்பதற்கான ஒரு உருப்படியை கண்டு பிடிக்கவும்:"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1074
+#, c-format
 msgid "Add to Panel"
 msgstr "பலகைப் பாளத்தோடு சேர்க்கவும்"
 
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1076
 msgid "Find an _item to add to the panel:"
 msgstr "பலகத்தில் சேர்ப்பதற்கான ஒரு உருப்படியை கண்டு பிடிக்கவும்:"
 
-#: ../gnome-panel/panel-applet-frame.c:850
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "மேல்விரி பட்டில் இருந்து விதிவிலக்ம '%s'\n"
+msgstr "(_m) மேல்விரி பட்டில் இருந்து விதிவிலக்கு '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:975
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" எதிர்பாராது வெளியேறியது"
 
 # panel/gnome-panel-properties.c:1697
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "பலகப் பொருள் எதிர்பாராதவிதமாக வெளியேறியது"
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1610,49 +1775,39 @@ msgstr "நீங்கள் ஒரு பலக பொருளை மீள�
 
 # gmenu/main.c:106 gsm/session-properties-capplet.c:257
 # gsm/session-properties-capplet.c:311
-#: ../gnome-panel/panel-applet-frame.c:990
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
-msgstr "மீண்டும் ஏற்ற வேண்டாம்"
+msgstr "(_D) மீண்டும் ஏற்ற வேண்டாம்"
 
-#: ../gnome-panel/panel-applet-frame.c:991
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "மீளேற்று (_R)"
 
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
-msgid "Error"
-msgstr "பிழை"
-
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: ../gnome-panel/panel-applet-frame.c:1057
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "பலகையில் \"%s\" ஏற்றும்போது ஒரு பிழை நடைபெற்றது."
 
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: ../gnome-panel/panel-applet-frame.c:1073
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "உங்கள் வடிவமைப்பிலிருந்து இந்த குறுநிரலை நீக்க விருப்பமா?"
 
-#: ../gnome-panel/panel-applet-frame.c:1147
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "AppletShell இடைமுகத்தை கட்டுப்படுத்தியிலிருந்து பெற முடியவில்லை\n"
 
 #: ../gnome-panel/panel-bindings.c:153
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr "gconf விசை '%s' பார்க்கும்போது பிழை: %s"
+msgstr "ஜிகான்ஃப்  விசை '%s' பார்க்கும்போது பிழை: %s"
 
 # gmenu/utils.c:32
 #: ../gnome-panel/panel-bindings.c:171
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "'%s' gconf அடைவு ஏற்றும்போது பிழை: %s"
+msgstr "'%s' ஜிகான்ஃப்  அடைவு ஏற்றும்போது பிழை: %s"
 
 #: ../gnome-panel/panel-bindings.c:185
 #, c-format
@@ -1660,148 +1815,153 @@ msgid "Error getting value for '%s': %s"
 msgstr "'%s' மதிப்பு பெறும்போது பிழை: %s"
 
 # panel/menu.c:217
-#: ../gnome-panel/panel-context-menu.c:101
+#: ../gnome-panel/panel-context-menu.c:103
 msgid "And many, many others..."
 msgstr "மற்றும் பலர்..."
 
 # panel/menu.c:244
-#: ../gnome-panel/panel-context-menu.c:127
+#: ../gnome-panel/panel-context-menu.c:129
 msgid "The GNOME Panel"
-msgstr "கனோம் பலகை"
+msgstr "கனோம் பலகm"
 
 # panel/menu.c:246
-#: ../gnome-panel/panel-context-menu.c:130
+#: ../gnome-panel/panel-context-menu.c:132
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr "இந்த நிரல் மற்ற நிரல்களை துவக்கவும் சிறு பயன்பாடுகளை தரவும் பயன்படும்"
 
-# panel/menu.c:5025 panel/menu.c:5086
-#: ../gnome-panel/panel-context-menu.c:167
-msgid "Cannot delete this panel"
-msgstr "_இந்த பலகத்தை நீக்க இயலாது"
+# panel/menu.c:244
+#: ../gnome-panel/panel-context-menu.c:136
+msgid "About the GNOME Panel"
+msgstr "க்னோம் பலகம் பற்றி"
 
-#: ../gnome-panel/panel-context-menu.c:168
+# panel/menu.c:5025 panel/menu.c:5086
+#: ../gnome-panel/panel-context-menu.c:170
+msgid "Cannot delete this panel"
+msgstr "இந்த பலகத்தை நீக்க இயலாது"
+
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "You must always have at least one panel."
 msgstr "நீங்கள் எப்போதும் ஒரு பலகமாவது பெற்றிருக்க வேண்டும்."
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: ../gnome-panel/panel-context-menu.c:201
+#: ../gnome-panel/panel-context-menu.c:204
 msgid "_Add to Panel..."
-msgstr "பலகத்தில் சேக்கவும்..."
+msgstr "(_A) பலகத்தில் சேக்கவும்..."
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: ../gnome-panel/panel-context-menu.c:222
+#: ../gnome-panel/panel-context-menu.c:225
 msgid "_Delete This Panel"
-msgstr "_இந்த பலகையை அழிக்கவும்"
+msgstr "(_D) இந்த பலகையை அழிக்கவும்"
 
 # gsm/splash.c:65
-#: ../gnome-panel/panel-context-menu.c:237
+#: ../gnome-panel/panel-context-menu.c:240
 msgid "_New Panel"
-msgstr "_புதிய பலகை"
+msgstr "(_N) புதிய பலகை"
 
 # panel/menu.c:5266
-#: ../gnome-panel/panel-context-menu.c:288
+#: ../gnome-panel/panel-context-menu.c:291
 msgid "A_bout Panels"
-msgstr "பலகம் பற்றி"
+msgstr "(_b) பலகம் பற்றி"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application"
 msgstr "விண்ணப்பம்"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Application in Terminal"
 msgstr "முனையத்தில் பயன்பாடு"
 
 # panel/drawer.c:144 panel/menu-properties.c:623 panel/menu-properties.c:659
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:120
 msgid "Location"
 msgstr "இருப்பிடம்"
 
 # gsm/gsm-client-editor.c:104
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:619
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Type:"
 msgstr "வகை_T :"
 
 # gnome-about/contributors.h:282
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:626
+#: ../gnome-panel/panel-ditem-editor.c:629
 msgid "_Name:"
 msgstr " பெயர் _N :"
 
 # applets/gen_util/mailcheck.c:1230
-#: ../gnome-panel/panel-ditem-editor.c:634
+#: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
 msgstr "உருவங்களை தேடவும்"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
-msgstr "_உலாவு..."
+msgstr "(_B) உலாவு..."
 
 # panel/swallow.c:263
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:662
 msgid "Co_mment:"
 msgstr "குறிப்புரை _m:"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-ditem-editor.c:1021
+#: ../gnome-panel/panel-ditem-editor.c:1024
 msgid "Choose an application..."
 msgstr "விண்ணப்பத்தை தேர்ந்தெடுத்தவும் ..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1025
+#: ../gnome-panel/panel-ditem-editor.c:1028
 msgid "Choose a file..."
 msgstr "கோப்பினை தேர்ந்தெடுக்கவும்... "
 
 # panel/swallow.c:263
-#: ../gnome-panel/panel-ditem-editor.c:1150
+#: ../gnome-panel/panel-ditem-editor.c:1153
 msgid "Comm_and:"
 msgstr "கட்டளை: (_C)"
 
 # panel/swallow.c:263
-#: ../gnome-panel/panel-ditem-editor.c:1159
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "_Command:"
 msgstr "கட்டளை _C"
 
 # panel/drawer.c:144 panel/menu-properties.c:623 panel/menu-properties.c:659
-#: ../gnome-panel/panel-ditem-editor.c:1168
+#: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
 msgstr "இறுப்பிடம் _L:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1348
+#: ../gnome-panel/panel-ditem-editor.c:1351
 msgid "The name of the launcher is not set."
 msgstr "துவக்கியின் பெயர் அமைக்கப்படவில்லை"
 
 # panel/panel_config.c:1857
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1355
 msgid "Could not save directory properties"
 msgstr "அடைவின் பண்புகளை சேமிக்க இயலவில்லை"
 
 # panel/gnome-panel-add-launcher.c:35
-#: ../gnome-panel/panel-ditem-editor.c:1353
+#: ../gnome-panel/panel-ditem-editor.c:1356
 msgid "The name of the directory is not set."
 msgstr "அடைவின் பெயர் அமைக்கப்படவில்லை"
 
 # panel/gnome-panel-add-launcher.c:35
-#: ../gnome-panel/panel-ditem-editor.c:1369
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The command of the launcher is not set."
 msgstr "துவக்கியின் கட்டளை அமைக்கப்படவில்லை"
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1375
 msgid "The location of the launcher is not set."
 msgstr "துவக்கியின் இடம் அமைக்கப்படவில்லை"
 
 # panel/launcher.c:77
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
+#: ../gnome-panel/panel-ditem-editor.c:1455 ../gnome-panel/panel-util.c:192
 msgid "Could not display help document"
 msgstr "உதவி ஆவணத்தை காண்பிக்க முடியவில்லை"
 
 #: ../gnome-panel/panel-force-quit.c:76
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "பயன்பாட்டை வௌதயேறு வலியுறுத்தத சாளரத்தின் மேல் சொடுக்கு. விடுபட <ESC> அலுத்தவும்"
+msgstr "பயன்பாட்டை வௌதயேறு வலியுறுத்தத சாளரத்தின் மேல் சொடுக்கு. விடுபட <ESC> அழுத்தவும்"
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
@@ -1909,8 +2069,8 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"பலகம் தவிர்க்கும் IIDக்களின் பட்டியல். இந்த முறையில் மெனுவில் பல ஆப்டலட்டுகள் "
-"காட்டப்படுவதையும் ஏற்றப்படுவதையும் தவிர்க்கலா, உதாரணம் mini-commander குறுநிரல்டை "
+"பலகம் தவிர்க்கும் IIDக்களின் பட்டியல். இந்த முறையில் மெனுவில் பல ஆப்லட்டுகள் "
+"காட்டப்படுவதையும் ஏற்றப்படுவதையும் தவிர்க்கலாம், உதாரணம் mini-commander குறுநிரலை "
 "செயலிழக்கச்செய்ய  'OAFIID:GNOME_MiniCommanderApplet' ஐ பட்டியலில் சேர்த்து, பலகத்தை "
 "மீண்டும் துவக்கவும்."
 
@@ -2015,122 +2175,70 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "உண்மையெனில், கருவிக்குறிப்புகள் பொருள் பலகத்தில் காட்டப்படும்."
 
-#: ../gnome-panel/panel-logout.c:238
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d seconds."
-msgstr[0] ""
-"நீங்கள் இப்போது \"%s\" ஆக உள்நுழைந்துள்ளீர்கள்\n"
-"நீங்கள் தானாக %d வினாடியில் வெளியேற்றப்படுவீர்கள்"
-msgstr[1] ""
-"நீங்கள் இப்போது \"%s\" ஆக உள்நுழைந்துள்ளீர்கள்\n"
-"நீங்கள் தானாக %d வினாடிகளில் வெளியேற்றப்படுவீர்கள்"
-
-#: ../gnome-panel/panel-logout.c:249
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d seconds."
-msgstr[0] ""
-"நீங்கள் இப்போது \"%s\" ஆக உள்நுழைந்துள்ளீர்கள்\n"
-"இந்த கணினி தானாக %d வினாடியில் முழு நிறுத்தம் செய்யும்"
-msgstr[1] ""
-"நீங்கள் இப்போது \"%s\" ஆக உள்நுழைந்துள்ளீர்கள்\n"
-"இந்த கணினி தானாக %d வினாடிகளில் முழு நிறுத்தம் செய்யும்"
-
-#: ../gnome-panel/panel-logout.c:330
-msgid "Log out of this system now?"
-msgstr "கணினியிலிருந்து இப்போது வெளிச்செல்லவா?"
-
-#: ../gnome-panel/panel-logout.c:336
-msgid "_Switch User"
-msgstr "பயனரை மாற்றுக"
-
-# panel/foobar-widget.c:395
-#: ../gnome-panel/panel-logout.c:342
-msgid "_Log Out"
-msgstr "வெளியேறு _L"
-
-#: ../gnome-panel/panel-logout.c:347
-msgid "Shut down this system now?"
-msgstr "இப்போது இந்த கணினியை நிறுத்தவும்? "
-
-#: ../gnome-panel/panel-logout.c:352
-msgid "S_uspend"
-msgstr "இடை நிறுத்தம் _S"
-
-#: ../gnome-panel/panel-logout.c:357
-msgid "_Hibernate"
-msgstr "செயலற்றிருத்தல்_H "
-
-#: ../gnome-panel/panel-logout.c:362
-msgid "_Restart"
-msgstr "மீண்டும் தொடங்கு (_R)"
-
-#: ../gnome-panel/panel-logout.c:371
-msgid "_Shut Down"
-msgstr "நிறுத்தவும் _S "
-
 # panel/extern.c:787
-#: ../gnome-panel/panel-menu-bar.c:97
+#: ../gnome-panel/panel-menu-bar.c:104
 msgid "Browse and run installed applications"
 msgstr "நிறுவிய நிரல்களை உலாவி இயக்குக"
 
-#: ../gnome-panel/panel-menu-bar.c:99
+#: ../gnome-panel/panel-menu-bar.c:106
 msgid "Access documents, folders and network places"
 msgstr "ஆவணங்கள், அடைவுகள் மற்றும் பிணைய இடங்கள் ஆகியவற்றை அணுக"
 
-#: ../gnome-panel/panel-menu-bar.c:101
+#: ../gnome-panel/panel-menu-bar.c:108
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "மேல்மேசை காட்சி, நடத்தை ஆகியவற்றை மாற்ற, உதவி பெற அல்லது வெளியேற"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: ../gnome-panel/panel-menu-bar.c:136
+#: ../gnome-panel/panel-menu-bar.c:143
 msgid "Applications"
 msgstr "நிரல்கள்"
 
 # panel/menu.c:3809 panel/menu.c:3818 panel/menu.c:5411
-#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-bar.c:349 ../gnome-panel/panel-menu-button.c:666
 msgid "_Edit Menus"
 msgstr " பட்டியலை தொகுக்கவும் _E"
 
-# panel/launcher.c:103 panel/launcher.c:148
-#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "'%s' இடத்தை திறக்க முடியவில்லை"
-
-#: ../gnome-panel/panel-menu-items.c:405
+#: ../gnome-panel/panel-menu-items.c:393
 msgid "Bookmarks"
 msgstr "புத்தகக்குறிகள்"
 
 # panel/panel.c:956
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:415 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
-msgstr " '%s'திறக்கவும்"
+msgstr " '%s' திறக்கவும்"
 
-#: ../gnome-panel/panel-menu-items.c:516
-msgid "Network Places"
-msgstr "பிணையத்தின் இடங்கள் "
+#: ../gnome-panel/panel-menu-items.c:483
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "%s ஐ ஊடக மாற்றங்களுக்கு வருட முடியவில்லை"
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:526
+#, c-format
+msgid "Rescan %s"
+msgstr "%s ஐ மறு வருடல் செய்க"
+
+# gnome-terminal/gnome-terminal.glade.h:12
+#: ../gnome-panel/panel-menu-items.c:563
+#, c-format
+msgid "Unable to mount %s"
+msgstr " %s ஐ ஏற்ற முடியவில்லை"
+
+#: ../gnome-panel/panel-menu-items.c:626
+#, c-format
+msgid "Mount %s"
+msgstr " %s ஐ ஏற்றுக"
+
+#: ../gnome-panel/panel-menu-items.c:829
 msgid "Removable Media"
 msgstr "நீக்கப்படக்கூடிய சாதனங்கள் "
 
-#: ../gnome-panel/panel-menu-items.c:580
-msgid "Home Folder"
-msgstr "இல்ல அடைவு"
+#: ../gnome-panel/panel-menu-items.c:910
+msgid "Network Places"
+msgstr "பிணையத்தின் இடங்கள் "
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:949
 msgid "Open your personal folder"
 msgstr "உங்கள் அந்தரங்க அடைவை திறக்கவும்"
 
@@ -2138,27 +2246,28 @@ msgstr "உங்கள் அந்தரங்க அடைவை திறக
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:969
 msgid "Desktop Folder|Desktop"
 msgstr "மேசைப் பதிப்பு"
 
-#: ../gnome-panel/panel-menu-items.c:601
+#: ../gnome-panel/panel-menu-items.c:970
 msgid "Open the contents of your desktop in a folder"
 msgstr "உங்கள் மேல்மேசை உள்ளடக்கத்தை ஒரு அடைவில் திறக்கவும்"
 
-#: ../gnome-panel/panel-menu-items.c:911
+#: ../gnome-panel/panel-menu-items.c:1362
 msgid "Places"
 msgstr "இடங்கள்"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:1391
 msgid "System"
 msgstr "முறைமை"
 
+#. Below this, we only have log out/shutdown items
 #. Translators: translate "panel:showusername|1" to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1472
 msgid "panel:showusername|1"
 msgstr "panel:showusername|1"
 
@@ -2167,7 +2276,7 @@ msgstr "panel:showusername|1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#: ../gnome-panel/panel-menu-items.c:1484
 #, c-format
 msgid "Log Out %s..."
 msgstr "வெளியேறு %s..."
@@ -2175,13 +2284,13 @@ msgstr "வெளியேறு %s..."
 # panel/menu.c:5345
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#: ../gnome-panel/panel-menu-items.c:1488
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "வேறு பயனீட்டாளராக உள்ளே நுழைய இந்த அமர்விலிருந்து %s ஐ வெளியேற்றவும்"
 
 # panel/menu.c:5040
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1531
 msgid "Could not launch menu item"
 msgstr "பட்டியல் உருப்படியை தொடங்க முடியவில்லை"
 
@@ -2372,8 +2481,9 @@ msgstr "பட்டி உள்ளடக்கங்களுக்கு த�
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf சரம் மதிப்பு '%s' வாசிக்கும்போது பிழை: %s"
 
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1733
+#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf எண் மதிப்பு '%s' வாசிக்கும்போது பிழை: %s"
@@ -2391,42 +2501,42 @@ msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf பூலியன் மதிப்பு '%s' வாசிக்கும்போது பிழை: %s"
 
 # panel/menu.c:4782
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "உச்சி"
 
 # panel/menu.c:4782
-#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-properties-dialog.c:128
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "அடிப்பாகம்"
 
 # panel/menu.c:4782
-#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "இடப்பக்கம்"
 
 # panel/menu.c:4782
-#: ../gnome-panel/panel-properties-dialog.c:127
+#: ../gnome-panel/panel-properties-dialog.c:130
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "வலப்பக்கம்"
 
 # panel/panel_config.c:1857
-#: ../gnome-panel/panel-properties-dialog.c:947
+#: ../gnome-panel/panel-properties-dialog.c:951
 msgid "Drawer Properties"
 msgstr "இழுப்பறையின் பண்புகள்"
 
 # panel/gnome-run.c:345
-#: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1951
+#: ../gnome-panel/panel-properties-dialog.c:1059
+#: ../gnome-panel/panel-run-dialog.c:1938
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "'%s'. கோப்பை ஏற்ற முடியவில்லை"
 
-#: ../gnome-panel/panel-properties-dialog.c:1060
+#: ../gnome-panel/panel-properties-dialog.c:1064
 msgid "Could not display properties dialog"
 msgstr "பண்புகள் உரையாடலை காட்ட முடியவில்லை"
 
@@ -2461,11 +2571,6 @@ msgstr "வண்ணம்_l :"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "விரிக்கவும் _x"
-
-# gnome-terminal/gnome-terminal.glade.h:20
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "பொது"
 
 # gsm/splash.c:61
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
@@ -2573,27 +2678,22 @@ msgstr "_கட்டமாக"
 msgid "pixels"
 msgstr "பிக்சல்கள்"
 
-# panel/extern.c:787
-#: ../gnome-panel/panel-recent.c:51
-msgid "Could not find a suitable application."
-msgstr "பொருத்தமான செயல்பாடு கண்டுபிடிக்க முடியவில்லை"
-
 # panel/launcher.c:77
-#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "சமீபத்தில் பயன்படுத்திய \"%s\" ஆவணத்தை திறக்க முடியவில்லை"
 
-#: ../gnome-panel/panel-recent.c:110
+#: ../gnome-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" ஐ திறக்க முயற்சித்த போது தெரியாத பிழை ஏற்பட்டது."
 
-#: ../gnome-panel/panel-recent.c:167
+#: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "சமீபத்தில் ஆவணங்கள் பட்டியலை நீக்கவேண்டுமா?"
 
-#: ../gnome-panel/panel-recent.c:169
+#: ../gnome-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2604,52 +2704,52 @@ msgstr ""
 "• இடங்கள் → சமீபத்திய ஆவணங்கள் மெனுவில் உள்ள எல்லா உருப்படிகளும்\n"
 "• எல்லா நிரல்களிலும் உள்ள சமீபத்திய ஆவணங்கள் பட்டியல்."
 
-#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:161 ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
 msgstr "சமீபத்தில் ஆவணங்களை சுத்தப்படுத்து"
 
-#: ../gnome-panel/panel-recent.c:216
+#: ../gnome-panel/panel-recent.c:196
 msgid "Recent Documents"
 msgstr "சமீபத்தில் திறந்த ஆவணங்கள்"
 
-#: ../gnome-panel/panel-recent.c:257
+#: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "சமீபத்தில் ஆவணங்கள் பட்டியலிலிருந்து எல்லா உருப்படிகளையும் சுத்தப்படுத்த வேண்டுமா?"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: ../gnome-panel/panel-run-dialog.c:322
+#: ../gnome-panel/panel-run-dialog.c:326
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' கட்டளை இயக்க முடியவில்லை"
 
-#: ../gnome-panel/panel-run-dialog.c:406
+#: ../gnome-panel/panel-run-dialog.c:383
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8 இலிருந்து '%s' ஐ மாற்ற முடியவில்லை"
 
-#: ../gnome-panel/panel-run-dialog.c:1212
+#: ../gnome-panel/panel-run-dialog.c:1194
 msgid "Choose a file to append to the command..."
 msgstr "கட்டளையுடன் சேர்ப்பதற்கு கேப்பு ஒன்று தெரிவுசெய்க..."
 
-#: ../gnome-panel/panel-run-dialog.c:1588
+#: ../gnome-panel/panel-run-dialog.c:1570
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "செயல்பாட்டின் விவரங்களை பார்க்க அதனை தெரிவு செய்யவும்"
 
 # panel/gnome-run.c:881
-#: ../gnome-panel/panel-run-dialog.c:1626
+#: ../gnome-panel/panel-run-dialog.c:1608
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "இயக்கும் கட்டளை: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1639
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "இயக்குக கட்டளை உரையாடல் போது விடப்பட்ட யுஆர்ஐ பட்டியல் தவறான முறையில் (%d) அல்லது "
 "நீளத்தில் (%d) இருந்தது.\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1955
+#: ../gnome-panel/panel-run-dialog.c:1942
 msgid "Could not display run dialog"
 msgstr "இயக்குக கட்டளை உரையாடலை காட்ட முடியவில்லை"
 
@@ -2719,7 +2819,7 @@ msgid "_Run"
 msgstr "_செயல்படுத்துக"
 
 # panel/main.c:498
-#: ../gnome-panel/panel-shell.c:64
+#: ../gnome-panel/panel-shell.c:66
 #, c-format
 msgid ""
 "The panel could not register with the bonobo-activation server (error code: %"
@@ -2731,12 +2831,12 @@ msgstr ""
 "பலகம் வெளியேறுகிறது. இதை தானியங்கியாக மீள்துவக்கம் செய்ய இயலும்."
 
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: ../gnome-panel/panel-shell.c:74
+#: ../gnome-panel/panel-shell.c:76
 msgid "The panel has encountered a fatal error"
 msgstr "பலகம் ஒரு பெரும் பிழையை சந்தித்தது"
 
 #. FIXME: the checkbox is not correctly aligned in the dialog...
-#: ../gnome-panel/panel-shell.c:80
+#: ../gnome-panel/panel-shell.c:82
 msgid "Force the panel to not be automatically restarted"
 msgstr "பலகம் தானியங்கியாக மறு துவக்கம் ஆவதை வன் தடுப்பு செய்க"
 
@@ -2757,99 +2857,99 @@ msgstr "அழிக்க வேண்டாம்"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1175
+#: ../gnome-panel/panel-toplevel.c:1176
 msgid "Hide Panel"
 msgstr "பலகையை மறைக்கவும்"
 
 # panel/menu.c:244
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1554
 msgid "Top Expanded Edge Panel"
 msgstr "மேல் நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1555
 msgid "Top Centered Panel"
 msgstr "மேல் நடுப் பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: ../gnome-panel/panel-toplevel.c:1558
+#: ../gnome-panel/panel-toplevel.c:1556
 msgid "Top Floating Panel"
 msgstr "மேல் நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1557
 msgid "Top Edge Panel"
 msgstr "மேல் ஓரப் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Bottom Expanded Edge Panel"
 msgstr "கீழ் நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Bottom Centered Panel"
 msgstr "கீழ் நடுப் பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: ../gnome-panel/panel-toplevel.c:1565
+#: ../gnome-panel/panel-toplevel.c:1563
 msgid "Bottom Floating Panel"
 msgstr "கீழ் நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1564
 msgid "Bottom Edge Panel"
 msgstr "கீழ் ஓரப் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Left Expanded Edge Panel"
 msgstr "இடது நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Left Centered Panel"
 msgstr "இடது நடு பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: ../gnome-panel/panel-toplevel.c:1572
+#: ../gnome-panel/panel-toplevel.c:1570
 msgid "Left Floating Panel"
 msgstr "இடது நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1571
 msgid "Left Edge Panel"
 msgstr "இடது ஓரப் பலகை"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Right Expanded Edge Panel"
 msgstr "வலது நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3611 panel/menu.c:4709 panel/panel_config.c:1769
 # panel/panel_config.c:1898
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Right Centered Panel"
 msgstr "வலது நடு பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: ../gnome-panel/panel-toplevel.c:1579
+#: ../gnome-panel/panel-toplevel.c:1577
 msgid "Right Floating Panel"
 msgstr "வலது நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1578
 msgid "Right Edge Panel"
 msgstr "வலது ஓரப் பலகை"
 
@@ -2984,9 +3084,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"உண்மையெனில் x விசை மற்றும் x வலது விசை தவிர்க்கப்பட்டு பலகம் x-அச்சின் திரையின் மையத்தில் வைக்கப்படும். பலகத்தின் "
-"அளவை மாற்றினால் அது அதே நிலையில் நிற்கும். அதாவது பலகம் எல்லா திசைகளிலும் விரியும். "
-"பொய்யெனில் x விசை மற்றும் x வலது விசை பலகத்தின் இடத்தை குறிப்பிடும்"
+"உண்மையெனில் x விசை மற்றும் x வலது விசை தவிர்க்கப்பட்டு பலகம் x-அச்சின் திரையின் மையத்தில் "
+"வைக்கப்படும். பலகத்தின் அளவை மாற்றினால் அது அதே நிலையில் நிற்கும். அதாவது பலகம் எல்லா "
+"திசைகளிலும் விரியும். பொய்யெனில் x விசை மற்றும் x வலது விசை பலகத்தின் இடத்தை "
+"குறிப்பிடும்"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2995,9 +3096,9 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"உண்மையெனில் y மற்றும் yகீழ்விசைகள் தவிர்க்கப்பட்டு பலகம் y-அச்சின் திரையின் மையத்தில் வைக்கப்படும். பலகத்தின் "
-"அளவை மாற்றினால் அது அதே நிலையில் நிற்கும். அதாவது பலகம் எல்லா திசைகளிலும் விரியும். "
-"பொய்யெனில் y மற்றும் yகீழ்விசைகள் பலகத்தின் இடத்தை குறிப்பிடும்"
+"உண்மையெனில் y மற்றும் yகீழ்விசைகள் தவிர்க்கப்பட்டு பலகம் y-அச்சின் திரையின் மையத்தில் "
+"வைக்கப்படும். பலகத்தின் அளவை மாற்றினால் அது அதே நிலையில் நிற்கும். அதாவது பலகம் எல்லா "
+"திசைகளிலும் விரியும். பொய்யெனில் y மற்றும் yகீழ்விசைகள் பலகத்தின் இடத்தை குறிப்பிடும்"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -3113,7 +3214,9 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"திரையின் வலது பக்கம் துவங்கி x-அச்சில் பலகம் இருக்குமிடம். மதிப்பை -1 என அமைத்தால் அது உதாசீனப்படுத்தப்பட்டு x விசை பயன்படுத்தப்படும். மதிப்பு 0 க்கு மேல் இருந்தால் x விசை மதிப்பு உதாசீனப்படுத்தப்படும்.  இது இயக்க பாங்கோடு தொடர்புடையது. விரிவாக்க பாங்கில் இந்த "
+"திரையின் வலது பக்கம் துவங்கி x-அச்சில் பலகம் இருக்குமிடம். மதிப்பை -1 என அமைத்தால் அது "
+"உதாசீனப்படுத்தப்பட்டு x விசை பயன்படுத்தப்படும். மதிப்பு 0 க்கு மேல் இருந்தால் x விசை "
+"மதிப்பு உதாசீனப்படுத்தப்படும்.  இது இயக்க பாங்கோடு தொடர்புடையது. விரிவாக்க பாங்கில் இந்த "
 "விசை தவிர்க்கப்படும் மற்றும் பலகம் திரையில் ஓரத்தில் திசை விசையை பொருத்து வைக்கப்படும்"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
@@ -3134,7 +3237,9 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"திரையின் வலது பக்கம் துவங்கி y-அச்சில் பலகம் இருக்குமிடம். மதிப்பை -1 என அமைத்தால் அது உதாசீனப்படுத்தப்பட்டு y விசை பயன்படுத்தப்படும். மதிப்பு 0 க்கு மேல் இருந்தால் y விசை மதிப்பு உதாசீனப்படுத்தப்படும்.  இது இயக்க பாங்கோடு தொடர்புடையது. விரிவாக்க பாங்கில் இந்த "
+"திரையின் வலது பக்கம் துவங்கி y-அச்சில் பலகம் இருக்குமிடம். மதிப்பை -1 என அமைத்தால் அது "
+"உதாசீனப்படுத்தப்பட்டு y விசை பயன்படுத்தப்படும். மதிப்பு 0 க்கு மேல் இருந்தால் y விசை "
+"மதிப்பு உதாசீனப்படுத்தப்படும்.  இது இயக்க பாங்கோடு தொடர்புடையது. விரிவாக்க பாங்கில் இந்த "
 "விசை தவிர்க்கப்படும் மற்றும் பலகம் திரையில் ஓரத்தில் திசை விசையை பொருத்து வைக்கப்படும்"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
@@ -3230,63 +3335,41 @@ msgstr "இப்பலகையின் Y இட-மதிப்பு"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "பலகத்தின் Y ஆயத்தொலைவு, திரையின் கீழ் பக்கம் துவங்கி"
 
-#: ../gnome-panel/panel-util.c:714
+#: ../gnome-panel/panel-util.c:608
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "'%s' இன் உருவம் காணப்படவில்லை"
 
-#: ../gnome-panel/panel-util.c:937
+#: ../gnome-panel/panel-util.c:847
 msgid "file"
 msgstr "கோப்பு"
 
-#: ../gnome-panel/panel-util.c:1370
-msgid "Computer"
-msgstr "கணிப்பொறி"
+#: ../gnome-panel/panel-util.c:1064
+msgid "Home Folder"
+msgstr "இல்ல அடைவு"
 
-#: ../gnome-panel/panel-util.c:1372
-msgid "Network"
-msgstr "பிணையம்"
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1076
+msgid "File System"
+msgstr "கோப்பு முறைமை"
 
-#: ../gnome-panel/panel-util.c:1374
-msgid "Fonts"
-msgstr "எழுத்துருக்கள்"
-
-#: ../gnome-panel/panel-util.c:1376
-msgid "Themes"
-msgstr "கருப்பொருள்கள்"
-
-#: ../gnome-panel/panel-util.c:1378
-msgid "CD/DVD Creator"
-msgstr "ஸிடி/டிவிடி உருவாக்கி"
-
-# gnome-terminal/gnome-terminal.c:1499
-#: ../gnome-panel/panel-util.c:1380
-msgid "Windows Network"
-msgstr "சாளர பிணையம்"
-
-#. translators: this is the title of the "dns-sd:///" location
-#: ../gnome-panel/panel-util.c:1383
-msgid "Services in"
-msgstr "இல் சேவைகள்"
-
-#: ../gnome-panel/panel-util.c:1457
+#: ../gnome-panel/panel-util.c:1223
 msgid "Search"
 msgstr "தேடுக"
 
-#: ../gnome-panel/panel-util.c:1460
-msgid "Trash"
-msgstr "குப்பை"
-
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: ../gnome-panel/panel-util.c:1513
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1269
 #, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s on %2$s"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
 
 # panel/panel.c:956
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "%s இணைய முகவரியை திறக்கவும்: "
@@ -3383,7 +3466,7 @@ msgstr "ஏற்ற வேண்டிய குறும்பயன் IID �
 
 #: ../libpanel-applet/panel-test-applets.c:35
 msgid "Specify a gconf location in which the applet preferences should be stored"
-msgstr "gconf இன் எந்த இடத்தில் குறுநிரல் விருப்பங்கள் சேமிக்க பட வேண்டும் என்பதை குறிப்பிடவும்"
+msgstr "ஜிகான்ஃப்  இன் எந்த இடத்தில் குறுநிரல் விருப்பங்கள் சேமிக்க பட வேண்டும் என்பதை குறிப்பிடவும்"
 
 #: ../libpanel-applet/panel-test-applets.c:36
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
