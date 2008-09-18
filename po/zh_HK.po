@@ -9,20 +9,21 @@
 # Kevin Kee <kevin@oaka.org>, 2004
 # Abel Cheung <abel@oaka.org>, 2002-2004.
 # Woodman Tuen <wmtuen@gmail.com>, 2005-07
-# 
-# 
+# Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>, 2008.
+#
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.21.90\n"
+"Project-Id-Version: gnome-panel 2.24.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 16:16+0800\n"
-"PO-Revision-Date: 2008-03-09 16:20+0800\n"
-"Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
+"POT-Creation-Date: 2008-09-16 20:52+0800\n"
+"PO-Revision-Date: 2008-09-18 11:13+0800\n"
+"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -53,9 +54,11 @@ msgstr "關於(_A)"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
-#: ../gnome-panel/panel-menu-button.c:659
+#: ../gnome-panel/drawer.c:601
+#: ../gnome-panel/panel-action-button.c:721
+#: ../gnome-panel/panel-context-menu.c:284
+#: ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "求助(_H)"
 
@@ -67,7 +70,7 @@ msgid "_Preferences"
 msgstr "偏好設定(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4111
+#: ../applets/clock/clock.c:3753
 msgid "Clock"
 msgstr "時鐘"
 
@@ -83,7 +86,8 @@ msgstr "產生時鐘面板程式的工廠。"
 msgid "Get the current time and date"
 msgstr "取得目前的時間及日期"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
+#: ../applets/clock/calendar-window.c:242
+#: ../applets/clock/clock.c:422
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
@@ -92,8 +96,10 @@ msgstr "%p %l:%M"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:488
+#: ../applets/clock/calendar-window.c:244
+#: ../applets/clock/clock.c:424
+#: ../applets/clock/clock.c:1532
+#: ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -104,45 +110,47 @@ msgstr "%H:%M"
 msgid "%b %d"
 msgstr "%-d/%-m"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:773
 msgid "Tasks"
 msgstr "工作"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:949
+#: ../applets/clock/calendar-window.c:1585
 msgid "Edit"
 msgstr "編輯"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:894
 msgid "All Day"
 msgstr "整天"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1033
 msgid "Appointments"
 msgstr "約會"
 
-#: ../applets/clock/calendar-window.c:1044
+#: ../applets/clock/calendar-window.c:1058
 msgid "Birthdays and Anniversaries"
 msgstr "生日及週年紀念日"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1083
 msgid "Weather Information"
 msgstr "天氣資訊"
 
-#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1585
+#: ../applets/clock/clock.glade.h:13
 msgid "Locations"
 msgstr "位置"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1884
 msgid "Calendar"
 msgstr "月曆"
 
-#: ../applets/clock/clock.c:421
+#: ../applets/clock/clock.c:422
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1552
+#: ../applets/clock/clock.c:424
+#: ../applets/clock/clock.c:1530
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -153,7 +161,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:444
 msgid "%a %b %e"
 msgstr "%-m月%-d日(%a)"
 
@@ -161,7 +169,7 @@ msgstr "%-m月%-d日(%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:451
 #, c-format
 msgid ""
 "%1$s\n"
@@ -174,7 +182,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:458
+#: ../applets/clock/clock.c:459
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
@@ -182,110 +190,105 @@ msgstr "%1$s %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:641
 msgid "%A %B %d (%%s)"
 msgstr "%B %d %A (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:671
 msgid "Click to hide your appointments and tasks"
 msgstr "按下以隱藏約會及工作"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:674
 msgid "Click to view your appointments and tasks"
 msgstr "按下來顯示約會及工作"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:678
 msgid "Click to hide month calendar"
 msgstr "按下以隱藏月曆"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:681
 msgid "Click to view month calendar"
 msgstr "按下來顯示月曆"
 
-#: ../applets/clock/clock.c:1402
+#: ../applets/clock/clock.c:1385
 msgid "Computer Clock"
 msgstr "電腦時鐘"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1525
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: ../applets/clock/clock.c:1549
+#: ../applets/clock/clock.c:1527
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1569
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日(%A)"
 
-#: ../applets/clock/clock.c:1666
+#: ../applets/clock/clock.c:1646
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "無法執行時間設置工具：%s"
 
-#: ../applets/clock/clock.c:1695
+#: ../applets/clock/clock.c:1677
 msgid "Set System Time..."
 msgstr "設定系統時刻..."
 
-#: ../applets/clock/clock.c:1696 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1678
+#: ../applets/clock/clock.glade.h:17
 msgid "Set System Time"
 msgstr "設定系統時刻"
 
-#: ../applets/clock/clock.c:1710
+#: ../applets/clock/clock.c:1693
 msgid "Failed to set the system time"
 msgstr "設定系統時刻失敗"
 
-#: ../applets/clock/clock.c:1883
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
+#: ../applets/clock/clock.c:1887
+msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "找不到任何設置日期及時間的程式。或許根本沒有安裝？"
 
-#: ../applets/clock/clock.c:2753
+#: ../applets/clock/clock.c:2819
 msgid "Custom format"
 msgstr "自選格式"
 
-#: ../applets/clock/clock.c:3554 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:588
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#: ../applets/clock/clock.c:3812
+#: ../applets/clock/clock.c:3480
 msgid "City Name"
 msgstr "城市名稱"
 
-#: ../applets/clock/clock.c:3816
+#: ../applets/clock/clock.c:3484
 msgid "City Time Zone"
 msgstr "城市時區"
 
-#: ../applets/clock/clock.c:4007
+#: ../applets/clock/clock.c:3649
 msgid "24 hour"
 msgstr "24 小時制"
 
-#: ../applets/clock/clock.c:4008
+#: ../applets/clock/clock.c:3650
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: ../applets/clock/clock.c:4009
+#: ../applets/clock/clock.c:3651
 msgid "Internet time"
 msgstr "Internet 時間"
 
-#: ../applets/clock/clock.c:4017
+#: ../applets/clock/clock.c:3659
 msgid "Custom _format:"
 msgstr "自選格式(_F)："
 
-#: ../applets/clock/clock.c:4114
+#: ../applets/clock/clock.c:3756
 msgid "The Clock displays the current time and date"
 msgstr "時鐘程式可顯示目前的時間及日期"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4117 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:3759
+#: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
+#: ../applets/wncklet/showdesktop.c:533
+#: ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
 #: ../applets/wncklet/workspace-switcher.c:620
-#: ../gnome-panel/panel-context-menu.c:134
+#: ../gnome-panel/panel-context-menu.c:137
 msgid "translator-credits"
 msgstr ""
 "如對翻譯有任何意見，請送一封電子郵件給\n"
@@ -300,42 +303,34 @@ msgstr ""
 "Yuan-Chung Cheng <platin@linux.org.tw>, 1999"
 
 #: ../applets/clock/clock.glade.h:1
-msgid "12 _hour format"
-msgstr "12 小時制(_H)"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "24 h_our format"
-msgstr "24 小時制(_O)"
-
-#: ../applets/clock/clock.glade.h:3
 msgid "<b>Clock Options</b>"
 msgstr "<b>時鐘選項</b>"
 
-#: ../applets/clock/clock.glade.h:4
+#: ../applets/clock/clock.glade.h:2
 msgid "<b>Display</b>"
 msgstr "<b>顯示</b>"
 
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.glade.h:3
 msgid "<b>Panel Display</b>"
 msgstr "<b>面板顯示</b>"
 
-#: ../applets/clock/clock.glade.h:6
+#: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
 msgstr "<b>時刻選項</b>"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(選用性的)</i>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:6
 msgid "Clock Preferences"
 msgstr "時鐘偏好設定"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:7
 msgid "Current Time:"
 msgstr "目前的時刻:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:8
 msgid ""
 "East\n"
 "West"
@@ -343,32 +338,24 @@ msgstr ""
 "東經\n"
 "西經"
 
-#: ../applets/clock/clock.glade.h:12
-msgid "Find _Next"
-msgstr "尋找下一個(_N)"
-
-#: ../applets/clock/clock.glade.h:13
-msgid "Find..."
-msgstr "尋找..."
-
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:10
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "一般設定"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:11
 msgid "Latitude:"
 msgstr "緯度:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:12
 msgid "Location Name:"
 msgstr "地名:"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:14
 msgid "Longitude:"
 msgstr "經度:"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:15
 msgid ""
 "North\n"
 "South"
@@ -376,59 +363,63 @@ msgstr ""
 "北緯\n"
 "南緯"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:18
 msgid "Show _temperature"
 msgstr "顯示溫度(_T)"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:19
 msgid "Show _weather"
 msgstr "顯示天氣(_W)"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:20
 msgid "Show seco_nds"
 msgstr "顯示秒數(_N)"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:21
 msgid "Show the _date"
 msgstr "顯示日期(_D)"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:22
 msgid "Time Settings"
 msgstr "時刻設定值"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:23
 msgid "Time _Settings"
 msgstr "時刻設定值(_S)"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:24
 msgid "Time:"
 msgstr "時刻:"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:25
 msgid "Timezone:"
 msgstr "時區:"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:26
 msgid "Weather"
 msgstr "天氣"
 
-#: ../applets/clock/clock.glade.h:31
-msgid "_Find:"
-msgstr "尋找(_F):"
+#: ../applets/clock/clock.glade.h:27
+msgid "_12 hour format"
+msgstr "_12 小時制"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:28
+msgid "_24 hour format"
+msgstr "_24 小時制"
+
+#: ../applets/clock/clock.glade.h:29
 msgid "_Pressure unit:"
 msgstr "氣壓單位(_P):"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.glade.h:30
 msgid "_Temperature unit:"
 msgstr "溫度單位(_T):"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.glade.h:31
 msgid "_Visibility unit:"
 msgstr "能見度單位(_V):"
 
-#: ../applets/clock/clock.glade.h:35
+#: ../applets/clock/clock.glade.h:32
 msgid "_Wind speed unit:"
 msgstr "風速單位(_W):"
 
@@ -571,29 +562,15 @@ msgid "The unit to use when showing wind speed."
 msgstr "在顯示風速時使用的單位。"
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
+msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
 msgstr "此設定鍵在 GNOME 2.6 已不再使用，及已被‘format’設定鍵取代。它的存在純粹是為了和舊版本兼容。"
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
+msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
 msgstr "此設定鍵是在時鐘面板程式的‘format’設定鍵被設為‘custom’時使用的自選格式。你可以用可被 strftime() 理解的轉換規範來取得所指定的格式。請查閱 strftime() 手冊以獲取更多資訊。"
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
+msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
 msgstr ""
 "本設定鍵指定時鐘面板程式所顯示的小時格式。可接受的值包括“12-hour”、“24-hour”、“internet”、“unix和“custom”。\n"
 "若設成“internet”，時鐘將會顯示 Internet 時間。Internet 時間系統將一天分成 1000 個「節拍」(beat)。由於它並沒有時區的概念，所以全世界的時間是一樣的。\n"
@@ -620,29 +597,21 @@ msgstr "使用 UNIX 時間"
 msgid "Use UTC"
 msgstr "使用世界協調時(UTC)"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "未知的位置"
-
-#: ../applets/clock/clock-location-tile.c:194
+#: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "設定系統時區失敗"
 
-#: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:317
+#: ../applets/clock/clock-location-tile.c:240
 msgid "<small>Set...</small>"
 msgstr "<small>設定...</small>"
 
-#: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:318
+#: ../applets/clock/clock-location-tile.c:241
 msgid "<small>Set</small>"
 msgstr "<small>設定</small>"
 
-#: ../applets/clock/clock-location-tile.c:323
-msgid "Set as current timezone for this computer"
-msgstr "設為這台電腦目前的時區"
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "將位置設為目前的位置，並使用其時區設為這台電腦目前的時區"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -650,7 +619,7 @@ msgstr "設為這台電腦目前的時區"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:461
+#: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -660,7 +629,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * from the weekday at the location (the %A expands to the weekday).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:470
+#: ../applets/clock/clock-location-tile.c:462
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -669,139 +638,62 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * for 12-hour format (the %p expands to am/pm).
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/clock-location-tile.c:472
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
+#: ../applets/clock/clock-location-tile.c:581
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:598
-#: ../applets/clock/clock-location-tile.c:604
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
 msgid "Unknown"
 msgstr "不明"
 
-#: ../applets/clock/clock-location-tile.c:599
+#: ../applets/clock/clock-location-tile.c:594
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s，感覺像 %s"
 
-#: ../applets/clock/clock-location-tile.c:615
+#: ../applets/clock/clock-location-tile.c:612
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "日出: %s / 日落: %s"
 
-#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
-#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
+#: ../applets/clock/clock-utils.c:72
+#: ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90
+#: ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "顯示說明文件時出現錯誤：%s"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
 msgstr "改變系統時刻"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
 msgid "Change system time zone"
 msgstr "改變系統時區"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
 msgid "Configure hardware clock"
 msgstr "設定硬件時鐘"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
 msgstr "改變系統時區需要有權限。"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
 msgstr "改變系統時刻需要有權限。"
 
-#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
 msgstr "設定硬件時鐘需要有權限。"
-
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>使用中時區</b>"
-
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>加入時區</b>"
-
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>位置:</b></small>"
-
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
-msgstr "<small><i>點選地圖以放大並選擇城市的時區，或者按右鍵可以縮小地圖。</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "編輯時區"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "在地圖上移動滑鼠"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>位置：</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "名稱"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "時區"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s 使用日光節約時間 (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "編輯時區(_E)..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "時區"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -832,11 +724,13 @@ msgstr ""
 "面板程式，你或者應該避免這樣做。強烈建議不要\n"
 "用任何方法用 %s 來進行任何「實際」或有用的事。"
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:436
+#: ../gnome-panel/panel-properties-dialog.c:452
 msgid "Images"
 msgstr "圖片"
 
-#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
+#: ../applets/fish/fish.c:550
+#: ../applets/fish/fish.c:616
 #: ../applets/fish/fish.c:732
 #, no-c-format
 msgid "%s the Fish"
@@ -844,10 +738,7 @@ msgstr "小魚 %s"
 
 #: ../applets/fish/fish.c:551
 #, c-format
-msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. "
-"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr "%s 一點用處也沒有；它只會佔硬碟空間，編譯時又要佔用時間，啟動時還得佔去面板空間和記憶體空間。使用這個面板程式的人應該要送去檢查一下精神狀況呢。"
 
 #: ../applets/fish/fish.c:575
@@ -977,9 +868,7 @@ msgid "seconds"
 msgstr "秒"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
+msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
 msgstr "沒有名稱的魚兒是比較呆滯的。請為魚兒命名，為它帶來一點生氣。"
 
 #: ../applets/fish/fish.schemas.in.h:2
@@ -991,8 +880,7 @@ msgid "Frames in fish's animation"
 msgstr "小魚的動畫格數"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "如設定為‘true’，在垂直面板中，動畫會以垂直方向顯示。"
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -1012,21 +900,15 @@ msgid "The fish's name"
 msgstr "小魚的名稱"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid ""
-"This key specifies the command that will be tried to execute when the fish "
-"is clicked."
+msgid "This key specifies the command that will be tried to execute when the fish is clicked."
 msgstr "本設定鍵指定按下小魚時執行的指令。"
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid ""
-"This key specifies the filename of the pixmap which will be used for the "
-"animation displayed in the fish applet relative to the pixmap directory."
+msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
 msgstr "本設定鍵指定小魚面板程式在顯示動畫時使用的 pixmap 檔的檔案名稱。它應該是 pixmap 目錄下的相對路徑。"
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid ""
-"This key specifies the number of frames that will be displayed in the fish's "
-"animation."
+msgid "This key specifies the number of frames that will be displayed in the fish's animation."
 msgstr "本設定鍵指定了小魚的動畫格數"
 
 #: ../applets/fish/fish.schemas.in.h:12
@@ -1084,7 +966,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "視窗瀏覽面板程式工廠"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
+#: ../applets/wncklet/window-menu.c:78
+#: ../applets/wncklet/window-menu.c:240
 msgid "Window Selector"
 msgstr "視窗選擇程式"
 
@@ -1110,7 +993,8 @@ msgstr "按下這裏可以將所有已經隱藏的視窗回復原狀。"
 msgid "Click here to hide all windows and show the desktop."
 msgstr "按下這裏可以隱藏所有視窗並顯示桌面。"
 
-#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:455
+#: ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "顯示桌面按鈕"
 
@@ -1119,15 +1003,11 @@ msgid "This button lets you hide all windows and show the desktop."
 msgstr "本按鈕可以隱藏所有視窗並顯示桌面。"
 
 #: ../applets/wncklet/showdesktop.c:568
-msgid ""
-"Your window manager does not support the show desktop button, or you are not "
-"running a window manager."
+msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
 msgstr "你使用的視窗總理員不支援「顯示桌面」按鈕，或是你根本沒有執行任何視窗總理員。"
 
 #: ../applets/wncklet/window-list.c:610
-msgid ""
-"The Window List shows a list of all windows in a set of buttons and lets you "
-"browse them."
+msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
 msgstr "「視窗清單」在一組按鈕中顯示視窗清單以供瀏覽。"
 
 #: ../applets/wncklet/window-list.glade.h:1
@@ -1175,21 +1055,15 @@ msgid "_Never group windows"
 msgstr "永不合併同類的視窗(_N)"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
+msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
 msgstr "決定是否在「視窗清單」中合併同類應用程式的視窗。有效的值為“never”、“auto”及 “always”。"
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid ""
-"If true, the window list will show windows from all workspaces. Otherwise it "
-"will only display windows from the current workspace."
+msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
 msgstr "如設定為‘true’，「視窗清單」會顯示所有工作區中的視窗，否則只會顯示目前工作區中的視窗。"
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, move it to the current workspace. "
-"Otherwise, switch to the workspace of the window."
+msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
 msgstr "如設定為‘true’，當視窗由最小化還原時，會在目前的工作區顯示。否則會切換至視窗原來的工作區來顯示。"
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
@@ -1209,9 +1083,7 @@ msgid "Show windows from all workspaces"
 msgstr "顯示所有工作區中的視窗"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid ""
-"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
-"compatibility with older versions."
+msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
 msgstr "此設定鍵在 GNOME 2.20 已不再使用。它的存在純粹是為了和舊版本兼容。"
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
@@ -1219,9 +1091,7 @@ msgid "When to group windows"
 msgstr "何時合併同類的視窗"
 
 #: ../applets/wncklet/window-menu.c:82
-msgid ""
-"The Window Selector shows a list of all windows in a menu and lets you "
-"browse them."
+msgid "The Window Selector shows a list of all windows in a menu and lets you browse them."
 msgstr "「視窗選擇程式」會在選單中顯示視窗清單以供瀏覽。"
 
 #: ../applets/wncklet/workspace-switcher.c:213
@@ -1242,8 +1112,7 @@ msgstr "載入「工作區切換程式」中的 num_rows 數值時出現錯誤�
 
 #: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "載入「工作區切換程式」中的 display_workspace_names 數值時出現錯誤：%s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:513
@@ -1252,9 +1121,7 @@ msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "載入「工作區切換程式」中的 display_all_workspaces 數值時出現錯誤：%s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:625
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
+msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
 msgstr "「工作區切換程式」可在較小的空間中顯示工作區的情況，方便管理視窗。"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:1
@@ -1303,16 +1170,11 @@ msgid "Display workspace names"
 msgstr "顯示工作區名稱"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid ""
-"If true, the workspace switcher will show all workspaces. Otherwise it will "
-"only show the current workspace."
+msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
 msgstr "如設定為‘true’，就會在「工作區切換程式」中顯示所有工作區，否則只會顯示目前的工作區。"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid ""
-"If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace. "
-"This setting only works when the window manager is Metacity."
+msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
 msgstr "如果設為‘true’，就會在「工作區切換程式」中顯示各工作區的名稱，否則會顯示它們的畫面內容。這個設定值只有在視窗管理程式為 Metacity 時才有效。"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
@@ -1320,25 +1182,45 @@ msgid "Rows in workspace switcher"
 msgstr "工作區切換程式的列數"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid ""
-"This key specifies how many rows (for horizontal layout) or columns (for "
-"vertical layout) the workspace switcher shows the workspaces in. This key is "
-"only relevant if the display_all_workspaces key is true."
+msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
 msgstr "本設定鍵會決定「工作區切換程式」使用多少列（水平排列）或多少行（垂直排列）來顯示工作區。本設定鍵會在 display_all_workspaces key 設定為‘true’時才生效。"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086
+msgid "Error"
+msgstr "錯誤"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:45
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "無法開啟位置‘%s’"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:193
+msgid "No application to handle search folders is installed."
+msgstr "尚未安裝用來處理搜尋資料夾的應用程式。"
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "GNOME 面板指令解譯器"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: ../gnome-panel/applet.c:542
 msgid "Loc_k To Panel"
 msgstr "在面板鎖定(_L)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: ../gnome-panel/applet.c:525
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: ../gnome-panel/applet.c:514
 msgid "_Remove From Panel"
 msgstr "從面板中移除(_R)"
 
@@ -1350,8 +1232,9 @@ msgstr "???"
 msgid "Cannot find an empty spot"
 msgstr "沒有空位"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/drawer.c:350
+#: ../gnome-panel/panel-addto.c:172
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Drawer"
 msgstr "抽屜"
 
@@ -1359,111 +1242,108 @@ msgstr "抽屜"
 msgid "_Add to Drawer..."
 msgstr "加入至抽屜(_A)..."
 
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
-#: ../gnome-panel/panel-action-button.c:138
-#: ../gnome-panel/panel-context-menu.c:212
+#: ../gnome-panel/drawer.c:595
+#: ../gnome-panel/launcher.c:874
+#: ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Properties"
 msgstr "屬性(_P)"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: ../gnome-panel/gnome-desktop-item-edit.c:31
 msgid "Create new file in the given directory"
 msgstr "在指定的目錄中新增檔案"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:28
+#: ../gnome-panel/gnome-desktop-item-edit.c:32
 msgid "[FILE...]"
 msgstr "[檔案...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:106
+#: ../gnome-panel/gnome-desktop-item-edit.c:110
 msgid "- Edit .desktop files"
 msgstr "- 編輯 .desktop 檔案"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:145
-#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:149
+#: ../gnome-panel/gnome-desktop-item-edit.c:203
+#: ../gnome-panel/launcher.c:964
 msgid "Create Launcher"
 msgstr "建立啟動圖示"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:170
-#: ../gnome-panel/gnome-desktop-item-edit.c:193
+#: ../gnome-panel/gnome-desktop-item-edit.c:174
+#: ../gnome-panel/gnome-desktop-item-edit.c:197
 msgid "Directory Properties"
 msgstr "目錄屬性"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:180
+#: ../gnome-panel/launcher.c:802
 msgid "Launcher Properties"
 msgstr "啟動圖示屬性"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid ""
-"Launch other applications and provide various utilities to manage windows, "
-"show the time, etc."
+msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
 msgstr "執行其他的應用程式以提供各種工具來管理視窗、顯示時刻等。"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
 msgid "Panel"
 msgstr "面板"
 
-#: ../gnome-panel/launcher.c:170
+#: ../gnome-panel/launcher.c:173
 msgid "Could not show this URL"
 msgstr "無法顯示此 URL"
 
-#: ../gnome-panel/launcher.c:171
+#: ../gnome-panel/launcher.c:174
 msgid "No URL was specified."
 msgstr "沒有指定 URL。"
 
-#: ../gnome-panel/launcher.c:183
-#, c-format
-msgid "Could not show '%s'"
-msgstr "無法顯示‘%s’"
-
-#: ../gnome-panel/launcher.c:229
+#: ../gnome-panel/launcher.c:218
 msgid "Could not launch application"
 msgstr "無法啟動程式"
 
-#: ../gnome-panel/launcher.c:297
+#: ../gnome-panel/launcher.c:286
 msgid "Could not use dropped item"
 msgstr "無法使用已拖曳的項目"
 
-#: ../gnome-panel/launcher.c:501
+#: ../gnome-panel/launcher.c:490
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "沒有提供任何 URI 給面板啟動圖示的 .desktop 檔案\n"
 
-#: ../gnome-panel/launcher.c:544
+#: ../gnome-panel/launcher.c:529
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "無法開啟面板啟動圖示中指定的 .desktop 檔案 %s%s%s\n"
 
-#: ../gnome-panel/launcher.c:885
+#: ../gnome-panel/launcher.c:868
 msgid "_Launch"
 msgstr "啟動圖示(_L)"
 
-#: ../gnome-panel/launcher.c:924
+#: ../gnome-panel/launcher.c:907
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "設定鍵 %s 並未設定，無法載入啟動圖示\n"
 
-#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
-#: ../gnome-panel/panel-ditem-editor.c:1381
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/launcher.c:1031
+#: ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1384
+#: ../gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
 msgstr "無法儲存啟動圖示"
 
-#: ../gnome-panel/menu.c:1004
+#: ../gnome-panel/menu.c:1005
 msgid "Add this launcher to _panel"
 msgstr "將此啟動圖示加入面板(_P)"
 
-#: ../gnome-panel/menu.c:1011
+#: ../gnome-panel/menu.c:1012
 msgid "Add this launcher to _desktop"
 msgstr "將此啟動圖示加入桌面(_D)"
 
-#: ../gnome-panel/menu.c:1023
+#: ../gnome-panel/menu.c:1024
 msgid "_Entire menu"
 msgstr "整個選單(_E)"
 
-#: ../gnome-panel/menu.c:1028
+#: ../gnome-panel/menu.c:1029
 msgid "Add this as _drawer to panel"
 msgstr "將此抽屜加入面板(_D)"
 
-#: ../gnome-panel/menu.c:1035
+#: ../gnome-panel/menu.c:1036
 msgid "Add this as _menu to panel"
 msgstr "將此選單加入面板(_M)"
 
@@ -1491,7 +1371,8 @@ msgstr "已暫停"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:617
+#: ../gnome-panel/nothing.cP:628
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
@@ -1513,211 +1394,201 @@ msgstr "左/右方向鍵可移動，空白鍵發射，「p」暫停，「q」離
 msgid "Killer GEGLs from Outer Space"
 msgstr "外太空殺手 GEGLs"
 
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Activate Screensaver"
 msgstr "啟用螢幕保護程式(_A)"
 
-#: ../gnome-panel/panel-action-button.c:132
+#: ../gnome-panel/panel-action-button.c:133
 msgid "_Lock Screen"
 msgstr "鎖定畫面(_L)"
 
-#: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:752
+#: ../gnome-panel/panel-action-button.c:228
+#: ../gnome-panel/panel-menu-bar.c:416
+#: ../gnome-panel/panel-menu-button.c:992
+#: ../gnome-panel/panel-util.c:711
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "無法執行‘%s’"
 
-#: ../gnome-panel/panel-action-button.c:253
+#: ../gnome-panel/panel-action-button.c:265
 msgid "Could not connect to server"
 msgstr "無法連接伺服器"
 
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:296
 msgid "Lock Screen"
 msgstr "鎖定畫面"
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:297
 msgid "Protect your computer from unauthorized use"
 msgstr "保護電腦，避免別人在未經授權的情況下使用"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:299
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Log Out..."
 msgstr "登出..."
 
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:312
 msgid "Log out of this session to log in as a different user"
 msgstr "登出這個作業階段，然後以其它使用者登入"
 
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:321
 msgid "Run Application..."
 msgstr "執行程式..."
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "透過輸入指令，或從清單中選擇來執行程式"
 
-#: ../gnome-panel/panel-action-button.c:319
+#: ../gnome-panel/panel-action-button.c:331
 msgid "Search for Files..."
 msgstr "搜尋檔案..."
 
-#: ../gnome-panel/panel-action-button.c:320
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "以名稱或內容在此電腦中尋找文件及資料夾"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:340
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "強行結束"
 
-#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-action-button.c:341
 msgid "Force a misbehaving application to quit"
 msgstr "強行結束無效的應用程式"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Connect to Server..."
 msgstr "連接到伺服器..."
 
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Connect to a remote computer or shared disk"
 msgstr "連接遠端電腦或磁碟共享"
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:359
 msgid "Shut Down..."
 msgstr "關機..."
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Shut down the computer"
 msgstr "關閉電腦"
 
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:113
 msgid "Custom Application Launcher"
 msgstr "自選的程式啟動圖示"
 
-#: ../gnome-panel/panel-addto.c:112
+#: ../gnome-panel/panel-addto.c:114
 msgid "Create a new launcher"
 msgstr "新增啟動圖示"
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:124
 msgid "Application Launcher..."
 msgstr "啟動圖示..."
 
-#: ../gnome-panel/panel-addto.c:123
+#: ../gnome-panel/panel-addto.c:125
 msgid "Copy a launcher from the applications menu"
 msgstr "從應用程式選單中複製啟動圖示"
 
-#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:139
+#: ../gnome-panel/panel-menu-button.c:1093
 msgid "Main Menu"
 msgstr "主選單"
 
-#: ../gnome-panel/panel-addto.c:138
+#: ../gnome-panel/panel-addto.c:140
 msgid "The main GNOME menu"
 msgstr "GNOME 主選單"
 
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:150
 msgid "Menu Bar"
 msgstr "選單列"
 
-#: ../gnome-panel/panel-addto.c:149
+#: ../gnome-panel/panel-addto.c:151
 msgid "A custom menu bar"
 msgstr "自選選單列"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:161
 msgid "Separator"
 msgstr "分隔線"
 
-#: ../gnome-panel/panel-addto.c:160
+#: ../gnome-panel/panel-addto.c:162
 msgid "A separator to organize the panel items"
 msgstr "用作整理面板項目的分隔線"
 
-#: ../gnome-panel/panel-addto.c:171
+#: ../gnome-panel/panel-addto.c:173
 msgid "A pop out drawer to store other items in"
 msgstr "可隨時彈出來的抽屜，用來儲存其它圖示"
 
-#: ../gnome-panel/panel-addto.c:262
+#: ../gnome-panel/panel-addto.c:264
 msgid "(empty)"
 msgstr "（空白）"
 
-#: ../gnome-panel/panel-addto.c:402
+#: ../gnome-panel/panel-addto.c:407
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "詢問時回傳了例外情況 %s\n"
 
-#: ../gnome-panel/panel-addto.c:1061
+#: ../gnome-panel/panel-addto.c:1066
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "尋找加入至“%s”的項目(_I)："
 
-#: ../gnome-panel/panel-addto.c:1065
+#: ../gnome-panel/panel-addto.c:1070
 #, c-format
 msgid "Add to Drawer"
 msgstr "加入至抽屜"
 
-#: ../gnome-panel/panel-addto.c:1067
+#: ../gnome-panel/panel-addto.c:1072
 msgid "Find an _item to add to the drawer:"
 msgstr "尋找加入至抽屜的項目(_I)："
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1074
 #, c-format
 msgid "Add to Panel"
 msgstr "加入面板"
 
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1076
 msgid "Find an _item to add to the panel:"
 msgstr "尋找加入至面板的項目(_I):"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu‘%s’出現例外情況\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "‘%s’在無法預計的情況下離開"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "面板物件在無法預計的情況下離開"
 
-#: ../gnome-panel/panel-applet-frame.c:974
-msgid ""
-"If you reload a panel object, it will automatically be added back to the "
-"panel."
+#: ../gnome-panel/panel-applet-frame.c:976
+msgid "If you reload a panel object, it will automatically be added back to the panel."
 msgstr "如果重新載入面版物件，它會自動地加入到面板中。"
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "不要重新載入(_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "重新載入(_R)"
 
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
-msgid "Error"
-msgstr "錯誤"
-
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "載入“%s”時面板出現問題。"
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "是否要在你的設定中刪除面板程式？"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "無法從 control 取得 AppletShell 介面\n"
 
@@ -1736,126 +1607,128 @@ msgstr "載入 gconf 目錄‘%s’時出現錯誤：%s"
 msgid "Error getting value for '%s': %s"
 msgstr "擷取‘%s’的值時出現錯誤：%s"
 
-#: ../gnome-panel/panel-context-menu.c:101
+#: ../gnome-panel/panel-context-menu.c:103
 msgid "And many, many others..."
 msgstr "還有很多人..."
 
-#: ../gnome-panel/panel-context-menu.c:127
+#: ../gnome-panel/panel-context-menu.c:129
 msgid "The GNOME Panel"
 msgstr "GNOME 面板"
 
-#: ../gnome-panel/panel-context-menu.c:130
-msgid ""
-"This program is responsible for launching other applications and provides "
-"useful utilities."
+#: ../gnome-panel/panel-context-menu.c:132
+msgid "This program is responsible for launching other applications and provides useful utilities."
 msgstr "本程式負責啟動其它程式並提供好用的公用程式。"
 
-#: ../gnome-panel/panel-context-menu.c:167
+#: ../gnome-panel/panel-context-menu.c:136
+msgid "About the GNOME Panel"
+msgstr "關於 GNOME 面板"
+
+#: ../gnome-panel/panel-context-menu.c:170
 msgid "Cannot delete this panel"
 msgstr "無法刪除此面板"
 
-#: ../gnome-panel/panel-context-menu.c:168
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "You must always have at least one panel."
 msgstr "最少要有一個面板。"
 
-#: ../gnome-panel/panel-context-menu.c:201
+#: ../gnome-panel/panel-context-menu.c:204
 msgid "_Add to Panel..."
 msgstr "加入面板(_A)..."
 
-#: ../gnome-panel/panel-context-menu.c:222
+#: ../gnome-panel/panel-context-menu.c:225
 msgid "_Delete This Panel"
 msgstr "刪除本面板(_D)"
 
-#: ../gnome-panel/panel-context-menu.c:237
+#: ../gnome-panel/panel-context-menu.c:240
 msgid "_New Panel"
 msgstr "新增面板(_N)"
 
-#: ../gnome-panel/panel-context-menu.c:288
+#: ../gnome-panel/panel-context-menu.c:292
 msgid "A_bout Panels"
 msgstr "關於面板(_B)"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application"
 msgstr "應用程式"
 
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Application in Terminal"
 msgstr "終端機中的程式"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:120
 msgid "Location"
 msgstr "位置"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:619
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Type:"
 msgstr "類型(_T)："
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:626
+#: ../gnome-panel/panel-ditem-editor.c:629
 msgid "_Name:"
 msgstr "名稱(_N)："
 
-#: ../gnome-panel/panel-ditem-editor.c:634
+#: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
 msgstr "瀏覽圖示"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:662
 msgid "Co_mment:"
 msgstr "備註(_M)："
 
-#: ../gnome-panel/panel-ditem-editor.c:1021
+#: ../gnome-panel/panel-ditem-editor.c:1024
 msgid "Choose an application..."
 msgstr "選擇程式..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1025
+#: ../gnome-panel/panel-ditem-editor.c:1028
 msgid "Choose a file..."
 msgstr "選擇檔案..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1150
+#: ../gnome-panel/panel-ditem-editor.c:1153
 msgid "Comm_and:"
 msgstr "指令(_A):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1159
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "_Command:"
 msgstr "指令(_C)："
 
-#: ../gnome-panel/panel-ditem-editor.c:1168
+#: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
 msgstr "位置(_L)："
 
-#: ../gnome-panel/panel-ditem-editor.c:1348
+#: ../gnome-panel/panel-ditem-editor.c:1351
 msgid "The name of the launcher is not set."
 msgstr "啟動圖示的名稱並未設定。"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1355
 msgid "Could not save directory properties"
 msgstr "無法儲存目錄屬性"
 
-#: ../gnome-panel/panel-ditem-editor.c:1353
+#: ../gnome-panel/panel-ditem-editor.c:1356
 msgid "The name of the directory is not set."
 msgstr "此目錄的名稱並未設定。"
 
-#: ../gnome-panel/panel-ditem-editor.c:1369
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The command of the launcher is not set."
 msgstr "啟動圖示的指令並未設定。"
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1375
 msgid "The location of the launcher is not set."
 msgstr "啟動圖示的位置並未設定。"
 
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
+#: ../gnome-panel/panel-ditem-editor.c:1455
+#: ../gnome-panel/panel-util.c:192
 msgid "Could not display help document"
 msgstr "無法顯示說明文件"
 
 #: ../gnome-panel/panel-force-quit.c:76
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "按下任何一個視窗都可以強行結束該程式。如果想取消，請按 <ESC>。"
 
 #: ../gnome-panel/panel-force-quit.c:204
@@ -1863,36 +1736,23 @@ msgid "Force this application to exit?"
 msgstr "強行結束這個應用程式？"
 
 #: ../gnome-panel/panel-force-quit.c:207
-msgid ""
-"If you choose to force an application to exit, any open documents in it will "
-"be lost."
+msgid "If you choose to force an application to exit, any open documents in it will be lost."
 msgstr "如果選擇強行結束這個程式，將會失去其中所有開啟的文件。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid ""
-"A boolean flag to indicate whether the user's previous configuration in /"
-"apps/panel/profiles/default has been copied to the new location in /apps/"
-"panel."
+msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
 msgstr "邏輯值的旗標是用作指示使用者以前在 /apps/panel/profiles/default 的設定是否複製到新的位置 /apps/panel。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr "一系列的面板識別碼。每個識別碼都代表一個面板。而這些面板的設定都存放在 /apps/panel/toplevels/$(id)。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid ""
-"A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in /apps/panel/applets/"
-"$(id)."
+msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
 msgstr "面板程式識別碼的清單。每個識別碼都代表一個面板程式。而這些面板程式的設定都存放在 /apps/panel/applets/$(id)。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects are stored in /apps/panel/objects/$(id)."
+msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr "面板物件識別碼的清單。每個識別碼都代表一個面板物件（例如啟動圖示、行動按鈕或選單按鈕/選單列）。而這些面板物件的設定都存放在 /apps/panel/objects/$(id)。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
@@ -1908,22 +1768,15 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "在「執行程式」對話方塊中顯示並展開完整的程式清單"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "如設定為‘true’，自動完成功能可以在「執行程式」對話方塊中使用。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
 msgstr "如設定為‘true’，顯示「執行程式」對話方塊時，會展開「已知的應用程式」清單中的內容。本設定鍵會在 enable_program_list 設定鍵為‘true’時才生效。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is made available. Whether or not the listing is expanded when the "
-"dialog is shown is controlled by the show_program_list key."
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
 msgstr "如設定為‘true’，「執行程式」對話方塊中會顯示「已知的應用程式」清單。至於顯示對話方塊時會否展開清單中的內容，則是由 show_program_list 設定鍵決定。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
@@ -1943,11 +1796,7 @@ msgid "Panel object ID list"
 msgstr "面板物件識別碼清單"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid ""
-"A list of applet IIDs that the panel will ignore. This way you can disable "
-"certain applets from loading or showing up in the menu. For example to "
-"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
-"this list. The panel must be restarted for this to take effect."
+msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
 msgstr "這裏列出了面板會忽略不理的面板程式 IID。你可以在此設定不載入或不在選單中顯示的面板程式。例如，要停用 mini-commander 面板程式，只需在此清單加入 'OAFIID:GNOME_MiniCommanderApplet' 即可。任何更改在面板重新啟動後才會生效。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
@@ -1996,171 +1845,98 @@ msgid "Highlight launchers on mouseover"
 msgstr "滑鼠移動至啟動圖示上面時，加強顯示啟動圖示"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
+msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
 msgstr "如設定為‘true’，當用戶準備移除面板時，會顯示對話方塊要求使用者確認。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid ""
-"If true, a drawer will automatically be closed when the user clicks a "
-"launcher in it."
+msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
 msgstr "如設定為‘true’，當使用者按下抽屜中的啟動圖示後，抽屜會自動關閉。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "如設定為‘true’，滑鼠移動至啟動圖示上面時，會加強顯示啟動圖示。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
+msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
 msgstr "如設定為‘true’，面板將隱藏「強行結束」按鈕以防止使用者強行結束執行中的程式。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
+msgid "If true, the panel will not allow a user to lock their screen, by removing access to the lock screen menu entries."
 msgstr "如設定為‘true’，面板將隱藏選單中的「鎖定畫面」項以防止使用者鎖定畫面。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
+msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
 msgstr "如設定為‘true’，面板將隱藏選單中的「登出」項以防止使用者登出。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
+msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
 msgstr "如設定為‘true’，面板將不允許任何對其設定的更改。然而，個別面板程式的鎖定則要分開執行。任何更改在面板重新啟動後才會生效。"
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "如設定為‘true’，面板上的物件會顯示工具提示。"
 
-#: ../gnome-panel/panel-logout.c:242
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d second."
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d seconds."
-msgstr ""
-"你目前以「%s」登入。\n"
-"你會在 %d 秒後自動登出。你目前以「%s」登入。\n"
-"你會在 %d 秒後自動登出。"
-
-#: ../gnome-panel/panel-logout.c:253
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d second."
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d seconds."
-msgstr ""
-"你目前以「%s」登入。\n"
-"本系統會在 %d 秒後自動關閉。你目前以「%s」登入。\n"
-"本系統會在 %d 秒後自動關閉。"
-
-#: ../gnome-panel/panel-logout.c:334
-msgid "Log out of this system now?"
-msgstr "現在從本系統中登出？"
-
-#: ../gnome-panel/panel-logout.c:340
-msgid "_Switch User"
-msgstr "切換使用者(_S)"
-
-#: ../gnome-panel/panel-logout.c:346
-msgid "_Log Out"
-msgstr "登出(_L)"
-
-#: ../gnome-panel/panel-logout.c:351
-msgid "Shut down this system now?"
-msgstr "現在關閉本系統？"
-
-#: ../gnome-panel/panel-logout.c:356
-msgid "S_uspend"
-msgstr "暫停(_S)"
-
-#: ../gnome-panel/panel-logout.c:361
-msgid "_Hibernate"
-msgstr "休眠(_H)"
-
-#: ../gnome-panel/panel-logout.c:366
-msgid "_Restart"
-msgstr "重新啟動(_R)"
-
-#: ../gnome-panel/panel-logout.c:375
-msgid "_Shut Down"
-msgstr "關機(_S)"
-
-#: ../gnome-panel/panel-menu-bar.c:97
+#: ../gnome-panel/panel-menu-bar.c:104
 msgid "Browse and run installed applications"
 msgstr "瀏覽及執行已安裝的程式"
 
-#: ../gnome-panel/panel-menu-bar.c:99
+#: ../gnome-panel/panel-menu-bar.c:106
 msgid "Access documents, folders and network places"
 msgstr "存取文件、資料夾及網絡位置"
 
-#: ../gnome-panel/panel-menu-bar.c:101
+#: ../gnome-panel/panel-menu-bar.c:108
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "更改桌面的外觀及運作方式，取得協助或登出"
 
-#: ../gnome-panel/panel-menu-bar.c:136
+#: ../gnome-panel/panel-menu-bar.c:143
 msgid "Applications"
 msgstr "應用程式"
 
-#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-bar.c:349
+#: ../gnome-panel/panel-menu-button.c:666
 msgid "_Edit Menus"
 msgstr "編輯選單(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "無法開啟位置‘%s’"
-
-#: ../gnome-panel/panel-menu-items.c:416
+#: ../gnome-panel/panel-menu-items.c:393
 msgid "Bookmarks"
 msgstr "書籤"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
+#: ../gnome-panel/panel-menu-items.c:415
+#: ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "開啟‘%s’"
 
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:483
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "無法掃描 %s 以取得媒體的更改"
 
-#: ../gnome-panel/panel-menu-items.c:549
+#: ../gnome-panel/panel-menu-items.c:526
 #, c-format
 msgid "Rescan %s"
 msgstr "重新掃描 %s"
 
-#: ../gnome-panel/panel-menu-items.c:585
+#: ../gnome-panel/panel-menu-items.c:563
 #, c-format
 msgid "Unable to mount %s"
 msgstr "無法掛載 %s"
 
-#: ../gnome-panel/panel-menu-items.c:638
+#: ../gnome-panel/panel-menu-items.c:626
 #, c-format
 msgid "Mount %s"
 msgstr "掛載 %s"
 
-#: ../gnome-panel/panel-menu-items.c:841
+#: ../gnome-panel/panel-menu-items.c:829
 msgid "Removable Media"
 msgstr "抽取式媒體"
 
-#: ../gnome-panel/panel-menu-items.c:922
+#: ../gnome-panel/panel-menu-items.c:910
 msgid "Network Places"
 msgstr "網絡位置"
 
-#: ../gnome-panel/panel-menu-items.c:961
+#: ../gnome-panel/panel-menu-items.c:949
 msgid "Open your personal folder"
 msgstr "開啟你的個人資料夾"
 
@@ -2168,27 +1944,28 @@ msgstr "開啟你的個人資料夾"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:981
+#: ../gnome-panel/panel-menu-items.c:969
 msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: ../gnome-panel/panel-menu-items.c:982
+#: ../gnome-panel/panel-menu-items.c:970
 msgid "Open the contents of your desktop in a folder"
 msgstr "以資料夾形式開啟桌面中的東西"
 
-#: ../gnome-panel/panel-menu-items.c:1374
+#: ../gnome-panel/panel-menu-items.c:1362
 msgid "Places"
 msgstr "位置"
 
-#: ../gnome-panel/panel-menu-items.c:1403
+#: ../gnome-panel/panel-menu-items.c:1391
 msgid "System"
 msgstr "系統"
 
+#. Below this, we only have log out/shutdown items
 #. Translators: translate "panel:showusername|1" to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1480
+#: ../gnome-panel/panel-menu-items.c:1472
 msgid "panel:showusername|1"
 msgstr "panel:showusername"
 
@@ -2196,25 +1973,21 @@ msgstr "panel:showusername"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1492
+#: ../gnome-panel/panel-menu-items.c:1484
 #, c-format
 msgid "Log Out %s..."
 msgstr "登出 %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1496
+#: ../gnome-panel/panel-menu-items.c:1488
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "登出 %s 這個作業階段，然後以其它使用者登入"
 
-#: ../gnome-panel/panel-menu-items.c:1537
+#: ../gnome-panel/panel-menu-items.c:1531
 msgid "Could not launch menu item"
 msgstr "無法啟動選單項目"
-
-#: ../gnome-panel/panel-mount-operation.c:124
-msgid "Enter Password"
-msgstr "輸入密碼"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2229,29 +2002,19 @@ msgid "Icon used for object's button"
 msgstr "按鈕所用的圖示"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
-msgid ""
-"If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
+msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr "如設定為‘true’，則會使用 custom_icon 設定中指定的圖示作為按鈕圖示，否則不會理會 custom_icon 設定。只有 object_type 是“menu-object”或“drawer-object”時，本設鍵定方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid ""
-"If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
+msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
 msgstr "如設定為‘true’，則會使用 menu_path 設定中指定的路徑作為基礎來產生選單，否則不會理會 menu_path 設定。只有 object_type 是“menu-object”時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid ""
-"If true, the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
+msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
 msgstr "如設定為‘true’，面板物件的位置會從面板的右邊（或者垂直面板的底部）開始計算。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid ""
-"If true, the user may not move the applet without first unlocking the object "
-"using the \"Unlock\" menuitem."
+msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
 msgstr "如設定為‘true’，使用者必須在選單中選取「不鎖定位置」，才可以移動面板程式。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
@@ -2283,22 +2046,15 @@ msgid "Panel object type"
 msgstr "面板物件類型"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
-msgid ""
-"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr "面板程式的 Bonobo implementation ID - 例如“OAFIID:GNOME_ClockApplet”。只有 object_type 是“bonobo-applet”時本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
+msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
 msgstr "該按鈕所代表的特殊操作程序。可接受的值為“lock”、“logout”、“run”、“search”及“screenshot”。只有在 object_type 是“action-applet”時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid ""
-"The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
+msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
 msgstr "該抽屜物件所連接的面板的識別碼。只有在 object_type 是“drawer-object”的時候，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
@@ -2306,42 +2062,27 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr "包含本物件的的上層面板的識別碼。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
 msgstr "該啟動圖示的 .desktop 檔案位置。只有在 object_type 是“launcher-object”時，本設定方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
+msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
 msgstr "圖片檔位置，作為代表該物件的圖示。只有 object_type 是“drawer-object”或“menu-object”及 use_custom_icon 為‘true’時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid ""
-"The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
+msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
 msgstr "使用哪個路徑作為根目錄來產生選單。只有在 use_menu_path 為‘true’及 object_type 是“menu-object”時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
 msgstr "該面板物件的位置。位置是從面板的左邊（或者垂直面板的頂部）開始計算。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid ""
-"The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr "本抽屜物件或選單中顯示的工具提示文字。只有在 object_type 是“drawer-object”或者“menu-object”時，本設定方會生效。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid ""
-"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
 msgstr "本面板物件的類型。可接受的值為：“drawer-object”、“menu-object”、“launcher-object”、“bonobo-applet”、“action-applet”及“menu-bar”。"
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
@@ -2360,24 +2101,26 @@ msgstr "在按鈕中使用自選圖示"
 msgid "Use custom path for menu contents"
 msgstr "使用自選的路徑作為選單內容"
 
-#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
-#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
+#: ../gnome-panel/panel-profile.c:766
+#: ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829
+#: ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "讀取 GConf 字串值‘%s’時發生錯誤：%s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
+#: ../gnome-panel/panel-profile.c:808
+#: ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663
+#: ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "讀取 GConf 整數值‘%s’時發生錯誤：%s"
 
 #: ../gnome-panel/panel-profile.c:1600
 #, c-format
-msgid ""
-"Panel '%s' is set to be displayed on screen %d which is not currently "
-"available. Not loading this panel."
+msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
 msgstr "面板‘%s’被指定在第 %d 個螢幕中顯示，但該螢幕不存在，因此不會載入面板。"
 
 #: ../gnome-panel/panel-profile.c:1678
@@ -2385,37 +2128,37 @@ msgstr "面板‘%s’被指定在第 %d 個螢幕中顯示，但該螢幕不存
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "讀取 GConf 邏輯值‘%s’時發生錯誤：%s"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "頂部"
 
-#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-properties-dialog.c:128
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "底部"
 
-#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "左方"
 
-#: ../gnome-panel/panel-properties-dialog.c:127
+#: ../gnome-panel/panel-properties-dialog.c:130
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "右方"
 
-#: ../gnome-panel/panel-properties-dialog.c:947
+#: ../gnome-panel/panel-properties-dialog.c:951
 msgid "Drawer Properties"
 msgstr "抽屜屬性"
 
-#: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1963
+#: ../gnome-panel/panel-properties-dialog.c:1059
+#: ../gnome-panel/panel-run-dialog.c:1938
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "無法載入檔案‘%s’。"
 
-#: ../gnome-panel/panel-properties-dialog.c:1060
+#: ../gnome-panel/panel-properties-dialog.c:1064
 msgid "Could not display properties dialog"
 msgstr "無法顯示屬性對話視窗"
 
@@ -2521,26 +2264,22 @@ msgstr "鋪排(_T)"
 msgid "pixels"
 msgstr "像素"
 
-#: ../gnome-panel/panel-recent.c:51
-#, c-format
-msgid "Could not find a suitable application."
-msgstr "找不到適合的程式。"
-
-#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
+#: ../gnome-panel/panel-recent.c:78
+#: ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "無法開啟最近存取文件“%s”"
 
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "嘗試開啟“%s”時出現不明的錯誤。"
 
-#: ../gnome-panel/panel-recent.c:164
+#: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "清除最近存取文件的清單？"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2550,61 +2289,58 @@ msgstr ""
 "• 在「位置」中「最近存取文件」內的所有項目。\n"
 "• 所有程式選單中最近存取文件的所有項目。"
 
-#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
+#: ../gnome-panel/panel-recent.c:161
+#: ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
 msgstr "清除最近存取文件"
 
-#: ../gnome-panel/panel-recent.c:213
+#: ../gnome-panel/panel-recent.c:196
 msgid "Recent Documents"
 msgstr "最近存取文件"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "清除最近存取文件清單中的所有項目？"
 
-#: ../gnome-panel/panel-run-dialog.c:322
+#: ../gnome-panel/panel-run-dialog.c:326
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "無法執行‘%s’指令"
 
-#: ../gnome-panel/panel-run-dialog.c:407
+#: ../gnome-panel/panel-run-dialog.c:383
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "無法由 UTF-8 轉換為‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1215
+#: ../gnome-panel/panel-run-dialog.c:1194
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱..."
 
-#: ../gnome-panel/panel-run-dialog.c:1591
+#: ../gnome-panel/panel-run-dialog.c:1570
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
-#: ../gnome-panel/panel-run-dialog.c:1629
+#: ../gnome-panel/panel-run-dialog.c:1608
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1660
+#: ../gnome-panel/panel-run-dialog.c:1639
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖曳到執行視窗的 URI 清單的格式 (%d) 或長度 (%d) 錯誤\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1967
+#: ../gnome-panel/panel-run-dialog.c:1942
 msgid "Could not display run dialog"
 msgstr "無法顯示執行對話視窗"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
+msgid "Click this button to browse for a file whose name to append to the command string."
 msgstr "按下該按鈕後可以選取檔案，將該檔案的名稱附加在指令之後。"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
+msgid "Click this button to run the selected application or the command in the command entry field."
 msgstr "按下該按鈕可以執行輸入欄位中的指令。"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
@@ -2652,22 +2388,21 @@ msgstr "執行指令時使用的視窗圖示。"
 msgid "_Run"
 msgstr "執行(_R)"
 
-#: ../gnome-panel/panel-shell.c:64
+#: ../gnome-panel/panel-shell.c:66
 #, c-format
 msgid ""
-"The panel could not register with the bonobo-activation server (error code: %"
-"d) and will exit.\n"
+"The panel could not register with the bonobo-activation server (error code: %d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
 "將面板註冊到 bonobo-activation 伺服程式時出現問題(錯誤代碼為：%d)且即將關閉。\n"
 "面板可能會自動重新啟動。"
 
-#: ../gnome-panel/panel-shell.c:74
+#: ../gnome-panel/panel-shell.c:76
 msgid "The panel has encountered a fatal error"
 msgstr "此面板出現嚴重的問題。"
 
 #. FIXME: the checkbox is not correctly aligned in the dialog...
-#: ../gnome-panel/panel-shell.c:80
+#: ../gnome-panel/panel-shell.c:82
 msgid "Force the panel to not be automatically restarted"
 msgstr "強迫面板不自動重新啟動"
 
@@ -2683,73 +2418,73 @@ msgstr "清除(_L)"
 msgid "D_on't Delete"
 msgstr "不要刪除(_O)"
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1176
 msgid "Hide Panel"
 msgstr "隱藏本面板"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Top Expanded Edge Panel"
 msgstr "頂部擴大邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1560
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Top Centered Panel"
 msgstr "頂部置中面板"
 
-#: ../gnome-panel/panel-toplevel.c:1561
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Top Floating Panel"
 msgstr "頂部浮動面板"
 
-#: ../gnome-panel/panel-toplevel.c:1562
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Top Edge Panel"
 msgstr "頂部邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Bottom Expanded Edge Panel"
 msgstr "底部擴大邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1567
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Bottom Centered Panel"
 msgstr "底部置中面板"
 
-#: ../gnome-panel/panel-toplevel.c:1568
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Bottom Floating Panel"
 msgstr "底部浮動面板"
 
-#: ../gnome-panel/panel-toplevel.c:1569
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Bottom Edge Panel"
 msgstr "底部邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1587
 msgid "Left Expanded Edge Panel"
 msgstr "左邊擴大邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1574
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Left Centered Panel"
 msgstr "左邊置中面板"
 
-#: ../gnome-panel/panel-toplevel.c:1575
+#: ../gnome-panel/panel-toplevel.c:1589
 msgid "Left Floating Panel"
 msgstr "左邊浮動面板"
 
-#: ../gnome-panel/panel-toplevel.c:1576
+#: ../gnome-panel/panel-toplevel.c:1590
 msgid "Left Edge Panel"
 msgstr "左邊邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1594
 msgid "Right Expanded Edge Panel"
 msgstr "右邊擴大邊界面板"
 
-#: ../gnome-panel/panel-toplevel.c:1581
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Right Centered Panel"
 msgstr "右邊置中面板"
 
-#: ../gnome-panel/panel-toplevel.c:1582
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Right Floating Panel"
 msgstr "右邊浮動面板"
 
-#: ../gnome-panel/panel-toplevel.c:1583
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Right Edge Panel"
 msgstr "右邊邊界面板"
 
@@ -2802,76 +2537,47 @@ msgid "Fit image to panel"
 msgstr "令圖片符合面板大小"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
+msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
 msgstr "如設定為‘true’，會在隱藏按鈕中顯示箭頭。只有設定鍵 enable_buttons 為‘true’時，設定鍵才會生效。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
+msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
 msgstr "如設定為‘true’，會在面板兩邊顯示按鈕，而這些按鈕可以用來隱藏面板。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid ""
-"If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantly."
+msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
 msgstr "如設定為‘true’，隱藏或取消隱藏面板不會即時發生，而是以平滑移動的方式進行。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
+msgid "If true, the background image will be rotated when the panel is oriented vertically."
 msgstr "如設定為‘true’，在垂直面板中背景圖案會旋轉 90 度顯示。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid ""
-"If true, the image will be scaled (retaining the aspect ratio of the image) "
-"to the panel height (if horizontal)."
+msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
 msgstr "如設定為‘true’，圖片會縮放至符合面板高度 (如果是水平面板)，同時保留長寬比。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid ""
-"If true, the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
+msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
 msgstr "如設定為‘true’，會將圖片縮放至符合面板的尺寸，而且不會理會圖片的長寬比。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
+msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
 msgstr "如設定為‘true’，當鼠標離開面板後，面板就會自動隱藏在畫面的角落裏。當鼠標移至該角落，面板就會重新顯示。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid ""
-"If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this mode the panel can only be placed at a screen edge. "
-"If false, the panel will only be large enough to accommodate the applets, "
-"launchers and buttons on the panel."
+msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
 msgstr "如設定為‘true’，面板會佔用整個螢幕的闊度（垂直面板則佔用整個高度）。在這種模式下，面板只能放在螢幕邊緣。否則，面板的尺寸只會足夠容納所有面板程式、啟動圖示及按鈕。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
+msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
 msgstr "如果設為‘true’，將會忽略 x 及 x_right 設定鍵，而面板會放置在畫面水平方向的中央位置。如果面板尺寸有改動，它會保持在中央位置，即是說面板會向左右兩邊加長。如果不選用本設定鍵，則由 x 及 x_right 設定鍵來決定面板的位置。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
+msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
 msgstr "如果設為‘true’，將會忽略 y 及 y_bottom 設定鍵，而面板會放置在畫面垂直方向的中央位置。如果面板尺寸有改動，它會保持在中央位置，即是說面板會向上下兩個方向加長。如果不選用本設定鍵，則由 y 及 y_bottom 設定鍵來決定面板的位置。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
+msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
 msgstr "在 Xinerama 設定中，每個螢幕都可以有獨立的面板。這設定鍵指定了面板會在哪一個螢幕顯示。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
@@ -2903,37 +2609,23 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr "以 #RGB 格式指定面板的底色。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
+msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
 msgstr "指定作為面板背景圖案的檔案名稱。如果該圖案有透明色版，顯示該圖案時，會將它和桌面背景組合在一起計算。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
+msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
 msgstr "指定當鼠標移動至面板，相隔多少毫秒後面板才會完全顯示。只有在設定鍵 auto_hide 為‘true’時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
+msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
 msgstr "指定當鼠標離開面板後，相隔多少毫秒後面板才會完全隱藏。只有在設定鍵 auto_hide 為‘true’時，本設定鍵方會生效。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr "當面板隱藏在角落裏時，顯示多少個像素。只有啟用了 auto_hide 選項的時候，本選項方會生效。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid ""
-"Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535), the color will be composited "
-"onto the desktop background image."
+msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
 msgstr "指定背景顏色的透明度。如果顏色不是絕對不透明（數值小於 65535），該顏色會和桌面背景的圖案組合在一起來計算。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
@@ -2941,71 +2633,35 @@ msgid "Stretch image to panel"
 msgstr "將圖片伸展至符合面板尺寸"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
+msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
 msgstr "面板高度 (或者垂直面板的闊度)。面板會根據字型大小及其它因素來決定面板本身的尺寸下限。面板尺寸上限則固定在畫面的四分之一高度 (或闊度)。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
+msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "面板的水平位置，從螢幕的右邊算起。如果設為 -1，則此數值會被忽略並使用 x 設定鍵的數值。如果此數值大於 0，則 x 設定鍵的數值會被忽略。只有在不是擴大模式的面板中，本數值才會適用。在擴大模式中，本數值將不予理會，而面板會放在 orientation 設定鍵中指定的畫面邊緣。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
+msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "面板的水平位置。只有在不是擴大模式的面板中，本數值才會適用。在擴大模式中，本數值將不予理會，而面板會放在 orientation 設定鍵中指定的畫面邊緣。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
+msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "面板的垂直位置。如果設為 -1，則此數值會被忽略並使用 y 設定鍵的數值。如果此數值大於 0，則 y 設定鍵的數值會被忽略。只有在不是擴大模式的面板中，本數值才會適用。在擴大模式中，本數值將不予理會，而面板會放在 orientation 設定鍵中指定的畫面邊緣。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
+msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "面板的垂直位置。只有在不是擴大模式的面板中，本數值才會適用。在擴大模式中，本數值將不予理會，而面板會放在 orientation 設定鍵中指定的畫面邊緣。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
-"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
-"panel."
+msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
 msgstr "面板的方向。可接受的值有四個：“top”、“bottom”、“left”及“right”。在完全擴展的面板中，本選項指定面板位於螢幕的哪一邊。在沒有擴展的面板中，“top”與“bottom”的分別不大(兩者都表示面板是水平放置的)，但仍然提供了提示給某些面板物件，讓它們知道怎樣運作。例如，在“top”面板中，按下選單按鈕後，選單會在面板下方顯示；而在“bottom”面板中，則會在面板上方顯示選單。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
-"enable_animations key is true."
+msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
 msgstr "面板平滑移動的速度。可接受的值有三個：“slow”、“medium”及“fast”。只有啟用了 enable_animation 的時候，本選項方會生效。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
+msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
 msgstr "你可以為每個面板命名，以資識別。它的用途主要是作為視窗標題使用，當在不同面板之間切換時會有用。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
@@ -3013,11 +2669,7 @@ msgid "Visible pixels when hidden"
 msgstr "面板隱藏後仍然顯示的像素數目"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
+msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
 msgstr ""
 "本面板使用哪一種背景。可接受的 3 個值為：\n"
 "”gtk”：使用預設 GTK+ 視窗元件背景\n"
@@ -3025,9 +2677,7 @@ msgstr ""
 "”imagei”：使用自選的圖片作為背景圖片"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
+msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
 msgstr "在一個多螢幕的硬件設定中，每個螢幕可以有不同的面板。本設定鍵識別面板應該在哪個螢幕顯示。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
@@ -3054,26 +2704,26 @@ msgstr "面板的垂直座標"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "面板的 Y 坐標，自螢幕底部算起"
 
-#: ../gnome-panel/panel-util.c:657
+#: ../gnome-panel/panel-util.c:608
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "圖示‘%s’不存在"
 
-#: ../gnome-panel/panel-util.c:880
+#: ../gnome-panel/panel-util.c:847
 msgid "file"
 msgstr "檔案"
 
-#: ../gnome-panel/panel-util.c:1486
+#: ../gnome-panel/panel-util.c:1064
 msgid "Home Folder"
 msgstr "家目錄"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:1498
+#: ../gnome-panel/panel-util.c:1076
 msgid "File System"
 msgstr "檔案系統"
 
-#: ../gnome-panel/panel-util.c:1645
+#: ../gnome-panel/panel-util.c:1223
 msgid "Search"
 msgstr "搜尋"
 
@@ -3082,31 +2732,31 @@ msgstr "搜尋"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1691
+#: ../gnome-panel/panel-util.c:1269
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "開啟 URL：%s"
 
-#: ../gnome-panel/panel.c:1299
+#: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
 msgstr "刪除這抽屜？"
 
-#: ../gnome-panel/panel.c:1300
+#: ../gnome-panel/panel.c:1303
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr "當刪除抽屜後，抽屜及其設定都會消失。"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
 msgstr "刪除本面板？"
 
-#: ../gnome-panel/panel.c:1304
+#: ../gnome-panel/panel.c:1307
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3172,8 +2822,7 @@ msgid "Specify an applet IID to load"
 msgstr "指定準備載入的面板程式的 IID"
 
 #: ../libpanel-applet/panel-test-applets.c:35
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "面板程式的偏好設定應該儲存在指定的 gconf 位置"
 
 #: ../libpanel-applet/panel-test-applets.c:36
@@ -3181,8 +2830,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "指定面板程式開始時的大小（超微型、中型、大型等。）"
 
 #: ../libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "指定面板程式開始顯示時的方向（頂部、底部、左邊、右邊）"
 
 #: ../libpanel-applet/panel-test-applets.c:61
@@ -3230,4 +2878,91 @@ msgstr "面板程式(_A)："
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "偏好設定目錄(_P)："
+
+#~ msgid "Find _Next"
+#~ msgstr "尋找下一個(_N)"
+#~ msgid "Find..."
+#~ msgstr "尋找..."
+#~ msgid "_Find:"
+#~ msgstr "尋找(_F):"
+#~ msgid "Unknown Location"
+#~ msgstr "未知的位置"
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>使用中時區</b>"
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>加入時區</b>"
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>位置:</b></small>"
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>點選地圖以放大並選擇城市的時區，或者按右鍵可以縮小地圖。</i></"
+#~ "small>"
+#~ msgid "Edit Timezones"
+#~ msgstr "編輯時區"
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+#~ msgid "move the mouse on the map"
+#~ msgstr "在地圖上移動滑鼠"
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>位置：</b> %s"
+#~ msgid "Name"
+#~ msgstr "名稱"
+#~ msgid "Timezone"
+#~ msgstr "時區"
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s 使用日光節約時間 (UTC %s%.2ld:%.2ld)"
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgid "_Edit timezones..."
+#~ msgstr "編輯時區(_E)..."
+#~ msgid "Timezones"
+#~ msgstr "時區"
+#~ msgid "Could not show '%s'"
+#~ msgstr "無法顯示‘%s’"
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d second.You are currently "
+#~ "logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d seconds."
+#~ msgstr ""
+#~ "您目前以「%s」登入。\n"
+#~ "您會在 %d 秒後自動登出。您目前以「%s」登入。\n"
+#~ "您會在 %d 秒後自動登出。"
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d second.You are "
+#~ "currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d seconds."
+#~ msgstr ""
+#~ "您目前以「%s」登入。\n"
+#~ "本系統會在 %d 秒後自動關閉。您目前以「%s」登入。\n"
+#~ "本系統會在 %d 秒後自動關閉。"
+#~ msgid "Log out of this system now?"
+#~ msgstr "現在從本系統中登出？"
+#~ msgid "_Switch User"
+#~ msgstr "切換使用者(_S)"
+#~ msgid "_Log Out"
+#~ msgstr "登出(_L)"
+#~ msgid "Shut down this system now?"
+#~ msgstr "現在關閉本系統？"
+#~ msgid "S_uspend"
+#~ msgstr "暫停(_S)"
+#~ msgid "_Hibernate"
+#~ msgstr "休眠(_H)"
+#~ msgid "_Restart"
+#~ msgstr "重新啟動(_R)"
+#~ msgid "_Shut Down"
+#~ msgstr "關機(_S)"
+#~ msgid "Enter Password"
+#~ msgstr "輸入密碼"
+#~ msgid "Could not find a suitable application."
+#~ msgstr "找不到適合的程式。"
 
