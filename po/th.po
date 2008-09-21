@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-04 22:37+0700\n"
-"PO-Revision-Date: 2008-09-08 18:19+0700\n"
+"POT-Creation-Date: 2008-09-21 16:01+0700\n"
+"PO-Revision-Date: 2008-09-21 16:03+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "เ_กี่ยวกับ..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:601 gnome-panel/panel-action-button.c:721
-#: gnome-panel/panel-context-menu.c:283 gnome-panel/panel-menu-bar.c:341
+#: gnome-panel/panel-context-menu.c:284 gnome-panel/panel-menu-bar.c:341
 #: gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "_วีธีใช้"
@@ -1036,7 +1036,7 @@ msgstr ""
 
 #: applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>การขยายคืนหน้าต่างที่ถูกย่อ</b>"
+msgstr "<b>การเรียกคืนหน้าต่างที่ถูกย่อเก็บ</b>"
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
@@ -1112,7 +1112,7 @@ msgstr "จำนวนรายชื่อหน้าต่างต่ำส
 
 #: applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
-msgstr "ย้ายหน้าต่างไปที่พื้นที่ทำงานปัจจุบันเมื่อคืนขนาดหน้าต่างที่ย่อเล็กสุด"
+msgstr "ย้ายหน้าต่างไปที่พื้นที่ทำงานปัจจุบันเมื่อเรียกคืนหน้าต่างที่ย่อเก็บ"
 
 #: applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
@@ -1289,7 +1289,7 @@ msgid "Cannot find an empty spot"
 msgstr "ไม่มีที่ว่าง"
 
 #: gnome-panel/drawer.c:350 gnome-panel/panel-addto.c:172
-#: gnome-panel/panel-toplevel.c:1583
+#: gnome-panel/panel-toplevel.c:1602
 msgid "Drawer"
 msgstr "ลิ้นชัก"
 
@@ -1380,23 +1380,23 @@ msgstr "ไม่ได้กำหนดค่า %s ไม่สามาร�
 msgid "Could not save launcher"
 msgstr "ไม่สามารถบันทึกปุ่มเรียกโปรแกรมได้"
 
-#: gnome-panel/menu.c:1004
+#: gnome-panel/menu.c:1005
 msgid "Add this launcher to _panel"
 msgstr "เพิ่มปุ่มเรียกโปรแกรมนี้ใน_พาเนล"
 
-#: gnome-panel/menu.c:1011
+#: gnome-panel/menu.c:1012
 msgid "Add this launcher to _desktop"
 msgstr "เพิ่มไอคอนเรียกโปรแกรมนี้บนพื้นโ_ต๊ะ"
 
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1024
 msgid "_Entire menu"
 msgstr "เมนูทั้งห_มด"
 
-#: gnome-panel/menu.c:1028
+#: gnome-panel/menu.c:1029
 msgid "Add this as _drawer to panel"
 msgstr "เพิ่มลงเป็น_ลิ้นชักในพาเนล"
 
-#: gnome-panel/menu.c:1035
+#: gnome-panel/menu.c:1036
 msgid "Add this as _menu to panel"
 msgstr "เพิ่มลงเป็นเ_มนูในพาเนล"
 
@@ -1697,7 +1697,7 @@ msgstr "_ลบพาเนลนี้"
 msgid "_New Panel"
 msgstr "พาเนลใ_หม่"
 
-#: gnome-panel/panel-context-menu.c:291
+#: gnome-panel/panel-context-menu.c:292
 msgid "A_bout Panels"
 msgstr "เ_กี่ยวกับพาเนล"
 
@@ -2593,67 +2593,67 @@ msgstr "ซ่อนพาเนล"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1554
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Top Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1555
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Top Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1556
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Top Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านบน"
 
-#: gnome-panel/panel-toplevel.c:1557
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Top Edge Panel"
 msgstr "พาเนลที่ขอบบน"
 
-#: gnome-panel/panel-toplevel.c:1561
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Bottom Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1562
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Bottom Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Bottom Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านล่าง"
 
-#: gnome-panel/panel-toplevel.c:1564
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Bottom Edge Panel"
 msgstr "พาเนลที่ขอบล่าง"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Left Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1569
+#: gnome-panel/panel-toplevel.c:1588
 msgid "Left Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1589
 msgid "Left Floating Panel"
 msgstr "พาเนลที่ลอยออยู่ด้านซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1571
+#: gnome-panel/panel-toplevel.c:1590
 msgid "Left Edge Panel"
 msgstr "พาเนลที่ขอบซ้าย"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1594
 msgid "Right Expanded Edge Panel"
 msgstr "พาเนลที่ขยายเต็มขอบขวา"
 
-#: gnome-panel/panel-toplevel.c:1576
+#: gnome-panel/panel-toplevel.c:1595
 msgid "Right Centered Panel"
 msgstr "พาเนลที่อยู่ตรงกลางขอบขวา"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1596
 msgid "Right Floating Panel"
 msgstr "พาเนลที่ลอยอยู่ด้านขวา"
 
-#: gnome-panel/panel-toplevel.c:1578
+#: gnome-panel/panel-toplevel.c:1597
 msgid "Right Edge Panel"
 msgstr "พาเนลที่ขอบขวา"
 
