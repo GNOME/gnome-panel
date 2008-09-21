@@ -1,17 +1,17 @@
 # Romanian translation for gnome-panel
 # Copyright (C) 2000 - 2004 Free Software Foundation, Inc.
 # Marius Andreiana <marius galuna.ro>, 2000, 2002, 2003.
-# Mişu Moldovan <dumol@gnome.ro>, 2003, 2004.
+# Mișu Moldovan <dumol@gnome.ro>, 2003, 2004.
 # Dan Damian <dand@gnome.ro>, 2000-2001, 2005-2006.
 # Alexandru Szasz <alexxed@gmail.com>, 2007.
-# TODO: "item" e tradus ca "item" şi "element"
+# TODO: "item" e tradus ca "item" și "element"
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-13 08:57+0100\n"
-"PO-Revision-Date: 2007-09-13 11:07+0300\n"
+"POT-Creation-Date: 2008-09-01 22:51+0000\n"
+"PO-Revision-Date: 2008-09-21 23:39+0300\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
-msgstr "A_justaţi data şi ora"
+msgstr "A_justați data și ora"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -48,9 +48,9 @@ msgstr "_Despre"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
-#: ../gnome-panel/panel-menu-button.c:659
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
+#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "_Ajutor"
 
@@ -59,10 +59,10 @@ msgstr "_Ajutor"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences"
-msgstr "_Preferinţe"
+msgstr "_Preferințe"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2234
+#: ../applets/clock/clock.c:3753
 msgid "Clock"
 msgstr "Ceas"
 
@@ -76,53 +76,73 @@ msgstr "Fabrică pentru crearea apleturilor ceas"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
-msgstr "Arată ora şi data curentă"
+msgstr "Arată ora și data curentă"
 
-#: ../applets/clock/calendar-window.c:226 ../applets/clock/clock.c:347
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:422
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:228 ../applets/clock/clock.c:349
-#: ../applets/clock/clock.c:1256
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:424
+#: ../applets/clock/clock.c:1532 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:234
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:742
-msgid "_Tasks"
+#: ../applets/clock/calendar-window.c:773
+#, fuzzy
+msgid "Tasks"
 msgstr "_Sarcini"
 
-#: ../applets/clock/calendar-window.c:858
+#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:949
+#: ../applets/clock/calendar-window.c:1578
+msgid "Edit"
+msgstr ""
+
+#: ../applets/clock/calendar-window.c:894
 msgid "All Day"
 msgstr "Toată ziua"
 
-#: ../applets/clock/calendar-window.c:985
-msgid "_Appointments"
+#: ../applets/clock/calendar-window.c:1033
+#, fuzzy
+msgid "Appointments"
 msgstr "Î_ntâlniri"
 
-#: ../applets/clock/calendar-window.c:1002
-msgid "_Birthdays and Anniversaries"
-msgstr "_Zile de naştere şi aniversări"
+#: ../applets/clock/calendar-window.c:1058
+#, fuzzy
+msgid "Birthdays and Anniversaries"
+msgstr "_Zile de naștere și aniversări"
 
-#: ../applets/clock/calendar-window.c:1018
-msgid "_Weather Information"
-msgstr "Informaţii despre _vreme"
+#: ../applets/clock/calendar-window.c:1083
+#, fuzzy
+msgid "Weather Information"
+msgstr "Informații despre _vreme"
 
-#: ../applets/clock/calendar-window.c:1687
+#: ../applets/clock/calendar-window.c:1578 ../applets/clock/clock.glade.h:13
+#, fuzzy
+msgid "Locations"
+msgstr "Amplasare"
+
+#: ../applets/clock/calendar-window.c:1877
 msgid "Calendar"
 msgstr "Calendar"
 
-#: ../applets/clock/clock.c:347
+#: ../applets/clock/clock.c:422
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:349 ../applets/clock/clock.c:1254
+#: ../applets/clock/clock.c:424 ../applets/clock/clock.c:1530
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -131,7 +151,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:369
+#: ../applets/clock/clock.c:444
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -139,7 +159,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:376
+#: ../applets/clock/clock.c:451
 #, c-format
 msgid ""
 "%1$s\n"
@@ -152,130 +172,254 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:384
+#: ../applets/clock/clock.c:459
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:527
-msgid "%A %B %d"
-msgstr "%A %d %B"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:641
+#, fuzzy
+msgid "%A %B %d (%%s)"
+msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:671
 msgid "Click to hide your appointments and tasks"
-msgstr "Clic aici pentru a ascunde întâlnirile şi sarcinile dumneavoastră"
+msgstr "Clic aici pentru a ascunde întâlnirile și sarcinile dumneavoastră"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:674
 msgid "Click to view your appointments and tasks"
-msgstr "Clic pentru a vizualiza întâlnirile şi sarcinile dumneavoastră."
+msgstr "Clic pentru a vizualiza întâlnirile și sarcinile dumneavoastră."
 
-#: ../applets/clock/clock.c:548
+#: ../applets/clock/clock.c:678
 msgid "Click to hide month calendar"
 msgstr "Clic pentru a ascunde calendarul lunar"
 
-#: ../applets/clock/clock.c:551
+#: ../applets/clock/clock.c:681
 msgid "Click to view month calendar"
 msgstr "Clic pentru a vizualiza calendarul lunii"
 
-#: ../applets/clock/clock.c:1095
-msgid "Click to view time in other timezones"
-msgstr "Clic pentru a vedea ora în alte fusuri orare"
-
-#: ../applets/clock/clock.c:1102
+#: ../applets/clock/clock.c:1385
 msgid "Computer Clock"
 msgstr "Ceas calculator"
 
-#: ../applets/clock/clock.c:1249
+#: ../applets/clock/clock.c:1525
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1251
+#: ../applets/clock/clock.c:1527
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1293
+#: ../applets/clock/clock.c:1569
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1368
+#: ../applets/clock/clock.c:1646
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Nu am reuşit să pornesc unealta de configurare a timpului: %s"
+msgstr "Nu am reușit să pornesc unealta de configurare a timpului: %s"
 
-#: ../applets/clock/clock.c:1406
+#: ../applets/clock/clock.c:1677
+msgid "Set System Time..."
+msgstr ""
+
+#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:17
+msgid "Set System Time"
+msgstr ""
+
+#: ../applets/clock/clock.c:1693
+msgid "Failed to set the system time"
+msgstr ""
+
+#: ../applets/clock/clock.c:1887
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
-"Nu am reuşit să localizez un program pentru configurarea datei şi a "
+"Nu am reușit să localizez un program pentru configurarea datei și a "
 "timpului. Poate nu este niciunul instalat?"
 
-#: ../applets/clock/clock.c:1917
+#: ../applets/clock/clock.c:2819
 msgid "Custom format"
 msgstr "Format personalizat"
 
-#: ../applets/clock/clock.c:2064
-msgid "Clock Preferences"
-msgstr "Preferinţe ceas"
+#: ../applets/clock/clock.c:3480
+#, fuzzy
+msgid "City Name"
+msgstr "Nume"
 
-#: ../applets/clock/clock.c:2089
-msgid "Clock _type:"
-msgstr "_Tip ceas"
+#  dand: e greșit pus la plural, IMHO
+#: ../applets/clock/clock.c:3484
+#, fuzzy
+msgid "City Time Zone"
+msgstr "Editează fusurile orare"
 
-#: ../applets/clock/clock.c:2100
-msgid "12 hour"
-msgstr "12 ore"
-
-#: ../applets/clock/clock.c:2101
+#: ../applets/clock/clock.c:3649
 msgid "24 hour"
 msgstr "24 ore"
 
-#: ../applets/clock/clock.c:2102
+#: ../applets/clock/clock.c:3650
 msgid "UNIX time"
 msgstr "Timp UNIX"
 
-#: ../applets/clock/clock.c:2103
+#: ../applets/clock/clock.c:3651
 msgid "Internet time"
 msgstr "Timp Internet"
 
-#: ../applets/clock/clock.c:2111
+#: ../applets/clock/clock.c:3659
 msgid "Custom _format:"
 msgstr "_Format personalizat:"
 
-#: ../applets/clock/clock.c:2130
-msgid "Show _seconds"
-msgstr "Arată _secunde"
-
-#: ../applets/clock/clock.c:2139
-msgid "Show _date"
-msgstr "Arată _data"
-
-#: ../applets/clock/clock.c:2148
-msgid "Use _UTC"
-msgstr "Foloseşte _UTC"
-
-#: ../applets/clock/clock.c:2158
-msgid "Show multiple _timezones"
-msgstr "Ara_tă mai multe fusuri orare"
-
-#: ../applets/clock/clock.c:2237
+#: ../applets/clock/clock.c:3756
 msgid "The Clock displays the current time and date"
-msgstr "Ceasul arată timpul şi data curentă"
+msgstr "Ceasul arată timpul și data curentă"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2240 ../applets/fish/fish.c:588
+#: ../applets/clock/clock.c:3759 ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
 #: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:617
-#: ../gnome-panel/panel-context-menu.c:134
+#: ../applets/wncklet/workspace-switcher.c:620
+#: ../gnome-panel/panel-context-menu.c:137
 msgid "translator-credits"
 msgstr ""
 "Dan Damian <dand@gnome.ro>\n"
 "Marius Andreiana <marius galuna.ro>\n"
-"Mişu Moldovan <dumol@go.ro>\n"
+"Mișu Moldovan <dumol@go.ro>\n"
 "Alexandru Szasz <alexxed@gmail.com>"
+
+#: ../applets/clock/clock.glade.h:1
+#, fuzzy
+msgid "<b>Clock Options</b>"
+msgstr "<b>Amplasare:</b> %s"
+
+#: ../applets/clock/clock.glade.h:2
+#, fuzzy
+msgid "<b>Display</b>"
+msgstr "<b>Spații de lucru</b>"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Panel Display</b>"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:4
+#, fuzzy
+msgid "<b>Time Settings</b>"
+msgstr "<b>Animație</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<i>(optional)</i>"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:6
+msgid "Clock Preferences"
+msgstr "Preferințe ceas"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "Current Time:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:8
+msgid ""
+"East\n"
+"West"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:10
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Generale"
+
+#: ../applets/clock/clock.glade.h:11
+msgid "Latitude:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:12
+#, fuzzy
+msgid "Location Name:"
+msgstr "Amp_lasare:"
+
+#: ../applets/clock/clock.glade.h:14
+msgid "Longitude:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:15
+msgid ""
+"North\n"
+"South"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:18
+#, fuzzy
+msgid "Show _temperature"
+msgstr "Arată _data"
+
+#: ../applets/clock/clock.glade.h:19
+#, fuzzy
+msgid "Show _weather"
+msgstr "Arată _data"
+
+#: ../applets/clock/clock.glade.h:20
+#, fuzzy
+msgid "Show seco_nds"
+msgstr "Arată _secunde"
+
+#: ../applets/clock/clock.glade.h:21
+#, fuzzy
+msgid "Show the _date"
+msgstr "Arată _data"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Time Settings"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Time _Settings"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:24
+#, fuzzy
+msgid "Time:"
+msgstr "Fus orar"
+
+#: ../applets/clock/clock.glade.h:25
+#, fuzzy
+msgid "Timezone:"
+msgstr "Fus orar"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Weather"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:27
+#, fuzzy
+msgid "_12 hour format"
+msgstr "Format oră"
+
+#: ../applets/clock/clock.glade.h:28
+#, fuzzy
+msgid "_24 hour format"
+msgstr "Format oră"
+
+#: ../applets/clock/clock.glade.h:29
+#, fuzzy
+msgid "_Pressure unit:"
+msgstr "Director _preferințe:"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_Temperature unit:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Visibility unit:"
+msgstr ""
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Wind speed unit:"
+msgstr ""
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -292,13 +436,10 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
-msgid ""
-"A list of timezone IDs. Each ID identifies an individual timezone. The "
-"settings of these timezones are stored in the $(id)_name and $(id)_zone keys."
+#, fuzzy
+msgid "A list of locations to display in the calendar window."
 msgstr ""
-"O listă de id-uri de fusuri orare. Fiecare ID identifică un anume fus "
-"orar. Setările pentru aceste fuse orare sunt stocate în cheile $(id)_name "
-"şi $(id)_zone."
+"Dacă e activat, se va extinde lista de aniversări în fereastra calendarului."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -313,91 +454,129 @@ msgid "Expand list of birthdays"
 msgstr "Extinde lista aniversărilor"
 
 #: ../applets/clock/clock.schemas.in.h:16
-msgid "Expand list of tasks"
+#, fuzzy
+msgid "Expand list of locations"
 msgstr "Extinde lista sarcinilor"
 
 #: ../applets/clock/clock.schemas.in.h:17
-msgid "Expand list of weather information"
-msgstr "Extinde lista cu informaţii despre vreme"
+msgid "Expand list of tasks"
+msgstr "Extinde lista sarcinilor"
 
 #: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "Extinde lista cu informații despre vreme"
+
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Format oră"
 
-#: ../applets/clock/clock.schemas.in.h:19
-msgid "If true, display date in the clock, in addition to time."
-msgstr "Odată activat, pe lângă oră se va afişa şi data."
-
 #: ../applets/clock/clock.schemas.in.h:20
-msgid "If true, display seconds in time."
-msgstr "Odată activat, se vor afişa şi secundele."
+#, fuzzy
+msgid "If true, display a weather icon."
+msgstr "Odată activat, se vor afișa și secundele."
 
 #: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display the timezone button in the clock, in addition to time."
-msgstr "Dacă e activat, arată butonul de fus orar lângă oră."
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Odată activat, pe lângă oră se va afișa și data."
 
 #: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "Odată activat, se vor afișa și secundele."
+
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "La activare arată timpul în zona de timp UTC."
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr ""
-"Dacă e activat, se va extinde lista de întâlniri în fereastra "
-"calendarului."
-
-#: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr ""
-"Dacă e activat, se va extinde lista de aniversări în fereastra "
-"calendarului."
+"Dacă e activat, se va extinde lista de întâlniri în fereastra calendarului."
 
 #: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr ""
+"Dacă e activat, se va extinde lista de aniversări în fereastra calendarului."
+
+#: ../applets/clock/clock.schemas.in.h:26
+#, fuzzy
+msgid "If true, expand the list of locations in the calendar window."
+msgstr ""
+"Dacă e activat, se va extinde lista de sarcini din fereastra calendarului."
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr ""
 "Dacă e activat, se va extinde lista de sarcini din fereastra calendarului."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
-"Dacă e activat, se va extinde lista cu informaţii despre vreme în "
-"fereastra calendarului."
+"Dacă e activat, se va extinde lista cu informații despre vreme în fereastra "
+"calendarului."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Odată activat, la trecerea mausului peste ceas se va afişa data într-un "
+"Odată activat, la trecerea mausului peste ceas se va afișa data într-un "
 "indiciu."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:30
+#, fuzzy
+msgid "If true, show the temperature next to the weather icon."
+msgstr "La activare arată numărul săptămânilor în calendar"
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "La activare arată numărul săptămânilor în calendar"
 
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "Name of the timezone"
-msgstr "Numele fusului orar"
+#: ../applets/clock/clock.schemas.in.h:32
+#, fuzzy
+msgid "List of locations"
+msgstr "Lista aplicațiilor cunoscute"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Arată data în ceas"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Arată data ca indiciu"
 
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show the timezone button"
-msgstr "Arată butonul de fus orar"
+#: ../applets/clock/clock.schemas.in.h:35
+#, fuzzy
+msgid "Show temperature in clock"
+msgstr "Arată data în ceas"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Arată secundele în ceas"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:37
+#, fuzzy
+msgid "Show weather in clock"
+msgstr "Arată data în ceas"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Arată numărul săptămânilor în calendar"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr ""
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -405,19 +584,19 @@ msgstr ""
 "Utilizarea acestei chei în GNOME 2.6 este descurajată în favoarea cheii "
 "„format”. A fost păstrată însă din motive de compatibilitate."
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
 msgstr ""
-"Această cheie specifică formatul folosit de mini-aplicaţia ceas când "
-"formatul este „personalizat”. Puteţi folosi opţiuni de conversie "
-"acceptaţi de strftime() pentru a obţine un format specific. Vedeţi "
-"manualul strftime() pentru mai multe informaţii."
+"Această cheie specifică formatul folosit de mini-aplicația ceas când "
+"formatul este „personalizat”. Puteți folosi opțiuni de conversie acceptați "
+"de strftime() pentru a obține un format specific. Vedeți manualul strftime() "
+"pentru mai multe informații."
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -428,165 +607,152 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"Această cheie specifică formatul orei utilizat în panou. Valorile "
-"posibile sunt „12 ore”, „24 ore”, „Timp internet”, „Timp unix” sau "
-"„personalizat”. Pentru valoarea „Timp internet”, se va afişa în panou timpul "
-"Internet. În acest sistem, ziua este împărţită în 1000 de "
-"„.beats”. Nu există fusuri orare în acest sistem, timpul este acelaşi "
-"peste tot în lume. Pentru valoarea „Timp unix”, ceasul va afişa timpul în "
-"secunde de la momentul Epoch, adică 01.01.1970. Pentru valoarea "
-"„personalizat”, ceasul va arăta timpul în formatul specificat de cheia "
-"„custom_format”."
+"Această cheie specifică formatul orei utilizat în panou. Valorile posibile "
+"sunt „12 ore”, „24 ore”, „Timp internet”, „Timp unix” sau „personalizat”. "
+"Pentru valoarea „Timp internet”, se va afișa în panou timpul Internet. În "
+"acest sistem, ziua este împărțită în 1000 de „.beats”. Nu există fusuri "
+"orare în acest sistem, timpul este același peste tot în lume. Pentru "
+"valoarea „Timp unix”, ceasul va afișa timpul în secunde de la momentul "
+"Epoch, adică 01.01.1970. Pentru valoarea „personalizat”, ceasul va arăta "
+"timpul în formatul specificat de cheia „custom_format”."
 
-#: ../applets/clock/clock.schemas.in.h:38
-msgid ""
-"This key specifies the name of the timezone as can be used in the TZ "
-"environment variable."
-msgstr ""
-"Această cheie specifică numele fusului orar aşa cum poate fi folosit în "
-"variabila de mediu TZ."
-
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Această cheie specifică programul de pornit pentru configurarea timpului."
 
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "This key specifies the user-visible name of the timezone."
-msgstr ""
-"Această cheie specifică numele fusului orar aşa cum este văzut de "
-"utilizator."
-
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Unealtă de configurare a timpului"
 
-#: ../applets/clock/clock.schemas.in.h:42
-msgid "Timezone ID list"
-msgstr "Listă de id-uri de fusuri orare"
-
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Utilizează timpul Internet"
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Utilizează timpul Unix"
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Utilizează UTC"
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "User-visible name of the timezone"
-msgstr "Numele văzut de utilizator pentru fusul orar"
+#: ../applets/clock/clock-location-tile.c:183
+#, fuzzy
+msgid "Failed to set the system timezone"
+msgstr "Numele fusului orar"
+
+#: ../applets/clock/clock-location-tile.c:240
+#, fuzzy
+msgid "<small>Set...</small>"
+msgstr "<small>Opac</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+#, fuzzy
+msgid "<small>Set</small>"
+msgstr "<small>Opac</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:453
+#, fuzzy
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "<small>Opac</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:462
+#, fuzzy
+msgid "%H:%M <small>(%A)</small>"
+msgstr "<small>Opac</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:472
+#, fuzzy
+msgid "%l:%M <small>%p</small>"
+msgstr "<small>Opac</small>"
+
+#: ../applets/clock/clock-location-tile.c:581
+#, fuzzy, c-format
+msgid "%s, %s"
+msgstr "%s - %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
+msgid "Unknown"
+msgstr ""
+
+#: ../applets/clock/clock-location-tile.c:594
+#, c-format
+msgid "%s, feels like %s"
+msgstr ""
+
+#: ../applets/clock/clock-location-tile.c:612
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr ""
 
 #: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
 #: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "S-a produs o eroare la afişarea ajutorului: %s"
+msgstr "S-a produs o eroare la afișarea ajutorului: %s"
 
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>Fusuri orare active</b>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
+#, fuzzy
+msgid "Change system time"
+msgstr "_Niciunul (utilizează tema sistemului)"
 
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>Adaugă fus orar</b>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
+#, fuzzy
+msgid "Change system time zone"
+msgstr "Numele fusului orar"
 
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>Amplasare:</b></small>"
-
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
 msgstr ""
-"<small><i>Clic pe hartă pentru a apropia şi a selecta fusul orar al unui "
-"oraş, sau clic dreapta pentru a distanţa.</i></small>"
 
-#  dand: e greşit pus la plural, IMHO
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "Editează fusurile orare"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "mutaţi mausul pe hartă"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>Amplasare:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "Nume"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "Fus orar"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s cu ora de vară (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
 msgstr ""
-"%s - %s\n"
-"%s"
 
-#  dand: e greşit pus la plural, IMHO
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "_Editează fusurile orare..."
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr ""
 
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "Fusuri orare"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr ""
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
-msgstr "Arată un peşte ce înoată sau o altă creatură animată"
+msgstr "Arată un pește ce înoată sau o altă creatură animată"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: ../applets/fish/fish.c:582
 msgid "Fish"
-msgstr "Peşte"
+msgstr "Pește"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
-msgstr "De unde a venit acest peşte stupid"
+msgstr "De unde a venit acest pește stupid"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
@@ -600,12 +766,12 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"Atenţie: Comanda pare să fie ceva util.\n"
-"Din moment ce acest progrămel e inutil, poate nu doriţi asta.\n"
-"Vă sfătuim insistent să nu încercaţi utilizarea %s pentru orice\n"
+"Atenție: Comanda pare să fie ceva util.\n"
+"Din moment ce acest progrămel e inutil, poate nu doriți asta.\n"
+"Vă sfătuim insistent să nu încercați utilizarea %s pentru orice\n"
 "scop ce ar putea face acest progrămel practic sau util."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:452
 msgid "Images"
 msgstr "Imagini"
 
@@ -613,7 +779,7 @@ msgstr "Imagini"
 #: ../applets/fish/fish.c:732
 #, no-c-format
 msgid "%s the Fish"
-msgstr "Peştele %s"
+msgstr "Peștele %s"
 
 #: ../applets/fish/fish.c:551
 #, c-format
@@ -622,19 +788,19 @@ msgid ""
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr ""
-"%s nu are nici un fel de folos. Doar ocupă spaţiu pe disc şi timp de "
-"compilare. Când este pornit ocupă de asemenea spaţiu preţios în panou "
-"şi în memorie. Dacă cineva este prins folosind acest progrămel, ar "
-"trebui trimis(ă) de urgenţă pentru o evaluare psihologică completă."
+"%s nu are nici un fel de folos. Doar ocupă spațiu pe disc și timp de "
+"compilare. Când este pornit ocupă de asemenea spațiu prețios în panou și în "
+"memorie. Dacă cineva este prins folosind acest progrămel, ar trebui trimis"
+"(ă) de urgență pentru o evaluare psihologică completă."
 
 #: ../applets/fish/fish.c:575
 msgid "(with minor help from George)"
-msgstr "(cu puţin ajutor de la George)"
+msgstr "(cu puțin ajutor de la George)"
 
 #: ../applets/fish/fish.c:617
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "Peştele %s, un oracol contemporan"
+msgstr "Peștele %s, un oracol contemporan"
 
 #: ../applets/fish/fish.c:688
 msgid "Unable to locate the command to execute"
@@ -643,7 +809,7 @@ msgstr "Nu pot localiza comanda de executat"
 #: ../applets/fish/fish.c:737
 #, no-c-format
 msgid "%s the Fish Says:"
-msgstr "Peştele %s spune:"
+msgstr "Peștele %s spune:"
 
 #: ../applets/fish/fish.c:806
 #, c-format
@@ -658,12 +824,12 @@ msgstr ""
 
 #: ../applets/fish/fish.c:871
 msgid "_Speak again"
-msgstr "_Vorbeşte din nou"
+msgstr "_Vorbește din nou"
 
 #: ../applets/fish/fish.c:954
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr "Comanda configurată nu funcţionează şi a fost înlocuită de: %s"
+msgstr "Comanda configurată nu funcționează și a fost înlocuită de: %s"
 
 #: ../applets/fish/fish.c:977
 #, c-format
@@ -693,21 +859,21 @@ msgstr "Trebuie schimbată apa"
 
 #: ../applets/fish/fish.c:1613
 msgid "Look at today's date!"
-msgstr "Uitaţi-vă ce dată e azi!"
+msgstr "Uitați-vă ce dată e azi!"
 
 #: ../applets/fish/fish.c:1706
 #, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "Peştele %s, povestitorul de zicători"
+msgstr "Peștele %s, povestitorul de zicători"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
 #: ../applets/fish/fish.glade.h:2
 msgid "<b>Animation</b>"
-msgstr "<b>Animaţie</b>"
+msgstr "<b>Animație</b>"
 
 #: ../applets/fish/fish.glade.h:3
 msgid "<b>General</b>"
@@ -715,23 +881,23 @@ msgstr "<b>Generale</b>"
 
 #: ../applets/fish/fish.glade.h:4
 msgid "Co_mmand to run when clicked:"
-msgstr "Co_manda de executat la un click de mouse pe peşte"
+msgstr "Co_manda de executat la un click de mouse pe pește"
 
 #: ../applets/fish/fish.glade.h:5
 msgid "Fish Preferences"
-msgstr "Preferinţe Peşte"
+msgstr "Preferințe Pește"
 
 #: ../applets/fish/fish.glade.h:6
 msgid "Select an animation"
-msgstr "Selectează o animaţie"
+msgstr "Selectează o animație"
 
 #: ../applets/fish/fish.glade.h:7
 msgid "_File:"
-msgstr "_Fişier:"
+msgstr "_Fișier:"
 
 #: ../applets/fish/fish.glade.h:8
 msgid "_Name of fish:"
-msgstr "_Nume peşte:"
+msgstr "_Nume pește:"
 
 #: ../applets/fish/fish.glade.h:9
 msgid "_Pause per frame:"
@@ -739,11 +905,11 @@ msgstr "_Pauză între cadre:"
 
 #: ../applets/fish/fish.glade.h:10
 msgid "_Rotate on vertical panels"
-msgstr "_Roteşte în panourile verticale"
+msgstr "_Rotește în panourile verticale"
 
 #: ../applets/fish/fish.glade.h:11
 msgid "_Total frames in animation:"
-msgstr "Număr _total de cadre în animaţie:"
+msgstr "Număr _total de cadre în animație:"
 
 #: ../applets/fish/fish.glade.h:12
 msgid "frames"
@@ -758,8 +924,8 @@ msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"Un peşte fără nume este un peşte destul de neinteresant. Adu peştele "
-"tău la viaţa botezându-l."
+"Un pește fără nume este un pește destul de neinteresant. Adu peștele tău la "
+"viața botezându-l."
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -767,14 +933,13 @@ msgstr "Comandă de executat la click"
 
 #: ../applets/fish/fish.schemas.in.h:3
 msgid "Frames in fish's animation"
-msgstr "Numărul de cadre în animaţia peştelui"
+msgstr "Numărul de cadre în animația peștelui"
 
 #: ../applets/fish/fish.schemas.in.h:4
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
-"La activare animaţia peştelui va fi afişată rotit în panourile "
-"verticale."
+"La activare animația peștelui va fi afișată rotit în panourile verticale."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -782,37 +947,37 @@ msgstr "Pauză între cadre"
 
 #: ../applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
-msgstr "Roteşte în panouri verticale"
+msgstr "Rotește în panouri verticale"
 
 #: ../applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
-msgstr "Imaginea animată a peştelui"
+msgstr "Imaginea animată a peștelui"
 
 #: ../applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
-msgstr "Numele peştelui"
+msgstr "Numele peștelui"
 
 #: ../applets/fish/fish.schemas.in.h:9
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Această cheie specifică comanda de executat la un click pe peşte."
+msgstr "Această cheie specifică comanda de executat la un click pe pește."
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
-"Această cheie specifică calea fişierului imagine ce va fi utilizat pentru "
-"animaţia afişată în progrămel, cale relativă la directorul imaginii."
+"Această cheie specifică calea fișierului imagine ce va fi utilizat pentru "
+"animația afișată în progrămel, cale relativă la directorul imaginii."
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
 msgstr ""
-"Această cheie specifică numărul de cadre ce vor fi afişate în animaţia "
-"peştelui."
+"Această cheie specifică numărul de cadre ce vor fi afișate în animația "
+"peștelui."
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -820,7 +985,7 @@ msgstr "Această cheie specifică numărul de secunde între cadre"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "Zonă unde apar iconiţele de notificare"
+msgstr "Zonă unde apar iconițele de notificare"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:135
@@ -841,11 +1006,11 @@ msgstr "Fabrica progrămelelor de navigare ferestre"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Ascunde ferestrele aplicaţiilor şi arată desktopul"
+msgstr "Ascunde ferestrele aplicațiilor și arată desktopul"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
-msgstr "Afişează desktopul"
+msgstr "Afișează desktopul"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows using a menu"
@@ -874,18 +1039,18 @@ msgid "Window Selector"
 msgstr "Selector ferestre"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:620
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "Comutator ecrane"
 
 #: ../applets/wncklet/showdesktop.c:183
 #, c-format
 msgid "Failed to load %s: %s\n"
-msgstr "Nu am reuşit să încarc imaginea %s: %s\n"
+msgstr "Nu am reușit să încarc imaginea %s: %s\n"
 
 #: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
-msgstr "Iconiţa nu a fost găsită"
+msgstr "Iconița nu a fost găsită"
 
 #: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to restore hidden windows."
@@ -893,7 +1058,7 @@ msgstr "Click aici pentru a restaura ferestrele ascunse."
 
 #: ../applets/wncklet/showdesktop.c:245
 msgid "Click here to hide all windows and show the desktop."
-msgstr "Click aici pentru a ascunde ferestrele şi a arăta desktopul."
+msgstr "Click aici pentru a ascunde ferestrele și a arăta desktopul."
 
 #: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
@@ -902,66 +1067,65 @@ msgstr "Butonul „Arată desktop”"
 #: ../applets/wncklet/showdesktop.c:538
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
-"Acest buton vă permite să ascundeţi toate ferestrele şi să arătaţi "
-"desktopul"
+"Acest buton vă permite să ascundeți toate ferestrele și să arătați desktopul"
 
 #: ../applets/wncklet/showdesktop.c:568
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"Administratorul de ferestre curent nu suportă butonul „Desktop” sau "
-"nici un administrator de ferestre nu e pornit."
+"Administratorul de ferestre curent nu suportă butonul „Desktop” sau nici un "
+"administrator de ferestre nu e pornit."
 
 #: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"Progrămelul „Listă ferestre” afişează o listă cu toate ferestrele "
-"şi vă permite să navigaţi în ele."
+"Progrămelul „Listă ferestre” afișează o listă cu toate ferestrele și vă "
+"permite să navigați în ele."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Restaurez ferestrele minimizate</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Grupare ferestre</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
-msgstr "<b>Conţinut listă ferestre</b>"
+msgstr "<b>Conținut listă ferestre</b>"
+
+#: ../applets/wncklet/window-list.glade.h:4
+msgid "Group windows when _space is limited"
+msgstr "Grupează ferestrele când _spațiul este limitat"
 
 #: ../applets/wncklet/window-list.glade.h:5
-msgid "Group windows when _space is limited"
-msgstr "Grupează ferestrele când _spaţiul este limitat"
+msgid "Restore to current _workspace"
+msgstr "Restaurează în spațiul de lucru curen_t"
 
 #: ../applets/wncklet/window-list.glade.h:6
-msgid "Restore to current _workspace"
-msgstr "Restaurează în spaţiul de lucru curen_t"
+msgid "Restore to na_tive workspace"
+msgstr "Restaurează în spațiul de lucru nati_v"
 
 #: ../applets/wncklet/window-list.glade.h:7
-msgid "Restore to na_tive workspace"
-msgstr "Restaurează în spaţiul de lucru nati_v"
-
-#: ../applets/wncklet/window-list.glade.h:8
 msgid "Sh_ow windows from current workspace"
 msgstr "Arată _doar ferestrele din ecranul curent"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Arată _ferestrele din toate ecranele"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
-msgstr "Preferinţe listă ferestre"
+msgstr "Preferințe listă ferestre"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "Întotdeauna _grupează ferestrele"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "Niciodată _nu grupa ferestrele"
 
@@ -970,24 +1134,24 @@ msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Decide când să grupeze ferestrele din aceeaşi aplicaţie în lista "
-"ferestrelor. Valorile valide sunt „never”, „auto” şi „always”."
+"Decide când să grupeze ferestrele din aceeași aplicație în lista "
+"ferestrelor. Valorile valide sunt „never”, „auto” și „always”."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"La activare lista ferestrelor va arăta ferestrele din toate spaţiile de "
-"lucru, altfel va arăta doar ferestrele din spaţiul curent."
+"La activare lista ferestrelor va arăta ferestrele din toate spațiile de "
+"lucru, altfel va arăta doar ferestrele din spațiul curent."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"La activare ferestrele minimizate vor fi restaurate în spaţiul de lucru "
-"curent. Altfel va schimba în spaţiul de lucru iniţial al ferestrei."
+"La activare ferestrele minimizate vor fi restaurate în spațiul de lucru "
+"curent. Altfel va schimba în spațiul de lucru inițial al ferestrei."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -1003,15 +1167,15 @@ msgstr "Mută ferestrele minimizate în ecranul curent la restaurare"
 
 #: ../applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
-msgstr "Arată ferestrele de pe toate spaţiile de lucru"
+msgstr "Arată ferestrele de pe toate spațiile de lucru"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
 msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
 msgstr ""
-"Utilizarea acestei chei este descurajată în GNOME 2.20. Schema este "
-"reţinută doar pentru compatibilitate cu versiunile mai vechi."
+"Utilizarea acestei chei este descurajată în GNOME 2.20. Schema este reținută "
+"doar pentru compatibilitate cu versiunile mai vechi."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1022,17 +1186,17 @@ msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr ""
-"Progrămelul „Selector ferestre” arată o listă cu toate ferestrele şi "
-"vă permite să schimbaţi navigaţi în ele."
+"Progrămelul „Selector ferestre” arată o listă cu toate ferestrele și vă "
+"permite să schimbați navigați în ele."
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "rânduri"
 
 #: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:971
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "coloane"
 
@@ -1040,31 +1204,31 @@ msgstr "coloane"
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
-"Eroare la încărcarea valorii „num_rows” pentru comutatorul spaţiilor "
-"de lucru: %s\n"
+"Eroare la încărcarea valorii „num_rows” pentru comutatorul spațiilor de "
+"lucru: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
-"Eroare la încărcarea valorii „display_workspace_names” pentru "
-"comutatorul spaţiilor de lucru: %s\n"
+"Eroare la încărcarea valorii „display_workspace_names” pentru comutatorul "
+"spațiilor de lucru: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
-"Eroare la încărcarea valorii „display_all_workspace” pentru "
-"comutatorul spaţiilor de lucru: %s\n"
+"Eroare la încărcarea valorii „display_all_workspace” pentru comutatorul "
+"spațiilor de lucru: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"Comutatorul de ecrane vă arată o versiune în miniatură a ecranelor de "
-"lucru uşurând administrarea ferestrelor."
+"Comutatorul de ecrane vă arată o versiune în miniatură a ecranelor de lucru "
+"ușurând administrarea ferestrelor."
 
 #: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
@@ -1072,51 +1236,51 @@ msgstr "<b>Comutator</b>"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
-msgstr "<b>Spaţii de lucru</b>"
+msgstr "<b>Spații de lucru</b>"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
-msgstr "Număr de _spaţii"
+msgstr "Număr de _spații"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
-msgstr "Arată _toate spaţiile în:"
+msgstr "Arată _toate spațiile în:"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
-msgstr "Arată _doar spaţiul de lucru curent"
+msgstr "Arată _doar spațiul de lucru curent"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
-msgstr "A_rată numele spaţiilor de lucru în comutator"
+msgstr "A_rată numele spațiilor de lucru în comutator"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
-msgstr "Nume spaţii de lucru"
+msgstr "Nume spații de lucru"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "Preferinţe comutator spaţii de lucru"
+msgstr "Preferințe comutator spații de lucru"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
-msgstr "_Nume spaţii de lucru"
+msgstr "_Nume spații de lucru"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
-msgstr "Arată toate spaţiile de lucru"
+msgstr "Arată toate spațiile de lucru"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:2
 msgid "Display workspace names"
-msgstr "Arată numele spaţiilor de lucru"
+msgstr "Arată numele spațiilor de lucru"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"La activare comutatorul spaţiilor de lucru va arăta toate spaţiile, "
-"altfel va arăta doar spaţiul curent."
+"La activare comutatorul spațiilor de lucru va arăta toate spațiile, altfel "
+"va arăta doar spațiul curent."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
@@ -1124,14 +1288,13 @@ msgid ""
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"Odată activată, în comutatorul de spaţii de lucru se va afişa numele "
-"acestora. Altfel, se vor afişa ferestrele de pe spaţiile de lucru. "
-"Această setare funcţionează doar când gestionarul de ferestre este "
-"Metacity."
+"Odată activată, în comutatorul de spații de lucru se va afișa numele "
+"acestora. Altfel, se vor afișa ferestrele de pe spațiile de lucru. Această "
+"setare funcționează doar când gestionarul de ferestre este Metacity."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
-msgstr "Rânduri în comutatorul spaţiilor de lucru"
+msgstr "Rânduri în comutatorul spațiilor de lucru"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
 msgid ""
@@ -1139,10 +1302,29 @@ msgid ""
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
-"Această cheie specifică câte rânduri (la aranjarea orizontală) sau "
-"coloane (la aranjarea verticală) utilizează comutatorul spaţiilor de "
-"lucru. Această valoare e relevantă doar dacă cheia "
-"„display_all_workspaces” este setată."
+"Această cheie specifică câte rânduri (la aranjarea orizontală) sau coloane "
+"(la aranjarea verticală) utilizează comutatorul spațiilor de lucru. Această "
+"valoare e relevantă doar dacă cheia „display_all_workspaces” este setată."
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086
+msgid "Error"
+msgstr "Eroare"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:45
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "Nu am putut deschide locația „%s”"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:193
+msgid "No application to handle search folders is installed."
+msgstr ""
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1168,8 +1350,8 @@ msgstr "???"
 msgid "Cannot find an empty spot"
 msgstr "Nu s-a putut găsi un loc liber"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1585
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:172
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Drawer"
 msgstr "Sertar"
 
@@ -1177,112 +1359,108 @@ msgstr "Sertar"
 msgid "_Add to Drawer..."
 msgstr "A_daugă la sertar..."
 
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:859
-#: ../gnome-panel/panel-action-button.c:138
-#: ../gnome-panel/panel-context-menu.c:212
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:874
+#: ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:215
 msgid "_Properties"
-msgstr "_Proprietăţi"
+msgstr "_Proprietăți"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: ../gnome-panel/gnome-desktop-item-edit.c:31
 msgid "Create new file in the given directory"
-msgstr "Creează un nou fişier în directorul dat"
+msgstr "Creează un nou fișier în directorul dat"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:28
+#: ../gnome-panel/gnome-desktop-item-edit.c:32
 msgid "[FILE...]"
-msgstr "[FIŞIER.]"
+msgstr "[FIȘIER.]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:131
+#: ../gnome-panel/gnome-desktop-item-edit.c:110
 msgid "- Edit .desktop files"
-msgstr "- Editează fişiere .desktop"
+msgstr "- Editează fișiere .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:162
-#: ../gnome-panel/gnome-desktop-item-edit.c:214 ../gnome-panel/launcher.c:949
+#: ../gnome-panel/gnome-desktop-item-edit.c:149
+#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:964
 msgid "Create Launcher"
 msgstr "Creează un lansator"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:188
-#: ../gnome-panel/gnome-desktop-item-edit.c:208
+#: ../gnome-panel/gnome-desktop-item-edit.c:174
+#: ../gnome-panel/gnome-desktop-item-edit.c:197
 msgid "Directory Properties"
-msgstr "Proprietăţi director"
+msgstr "Proprietăți director"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:193 ../gnome-panel/launcher.c:787
+#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:802
 msgid "Launcher Properties"
-msgstr "Proprietăţi lansator"
+msgstr "Proprietăți lansator"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr ""
-"Lansează alte aplicaţii şi furnizează diverse utilitare pentru "
-"gestionarea ferestrelor, afişarea orei, etc."
+"Lansează alte aplicații și furnizează diverse utilitare pentru gestionarea "
+"ferestrelor, afișarea orei, etc."
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:2
 msgid "Panel"
 msgstr "Panou"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/launcher.c:173
 msgid "Could not show this URL"
-msgstr "Nu pot afişa acest URL"
+msgstr "Nu pot afișa acest URL"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:174
 msgid "No URL was specified."
 msgstr "Nu a fost specificat nici un URL"
 
-#: ../gnome-panel/launcher.c:165
-#, c-format
-msgid "Could not show '%s'"
-msgstr "Nu pot afişa „%s”"
-
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:218
 msgid "Could not launch application"
-msgstr "Nu pot lansa aplicaţia"
+msgstr "Nu pot lansa aplicația"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:286
 msgid "Could not use dropped item"
 msgstr "Nu pot utiliza elementul aruncat"
 
-#: ../gnome-panel/launcher.c:471
+#: ../gnome-panel/launcher.c:490
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "URI nespecificat pentru fişierul desktop al lansatorului din panou\n"
+msgstr "URI nespecificat pentru fișierul desktop al lansatorului din panou\n"
 
-#: ../gnome-panel/launcher.c:514
+#: ../gnome-panel/launcher.c:529
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Nu pot deschide fişierul desktop %s pentru lansatorul din panou%s%s\n"
+msgstr "Nu pot deschide fișierul desktop %s pentru lansatorul din panou%s%s\n"
 
-#: ../gnome-panel/launcher.c:853
+#: ../gnome-panel/launcher.c:868
 msgid "_Launch"
 msgstr "_Lansează"
 
-#: ../gnome-panel/launcher.c:892
+#: ../gnome-panel/launcher.c:907
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Cheia %s nu este setată, nu se poate încărca lansatorul\n"
 
-#: ../gnome-panel/launcher.c:1016 ../gnome-panel/panel-ditem-editor.c:1347
-#: ../gnome-panel/panel-ditem-editor.c:1381
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/launcher.c:1031 ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1384
+#: ../gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
 msgstr "Nu s-a putut salva lansatorul"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "Adaugă acest lansator la _panou"
 
-#: ../gnome-panel/menu.c:940
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "Adaugă acest lansator pe _desktop"
 
-#: ../gnome-panel/menu.c:952
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "Într_eg meniul"
 
-#: ../gnome-panel/menu.c:957
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "Adaugă ca _sertar la panou"
 
-#: ../gnome-panel/menu.c:964
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "Adaugă ca _meniu la panou"
 
@@ -1302,7 +1480,7 @@ msgstr "%1$s   %2$s   %3$s"
 
 #: ../gnome-panel/nothing.cP:609
 msgid "Press 'q' to quit"
-msgstr "Apăsaţi „q” pentru a ieşi"
+msgstr "Apăsați „q” pentru a ieși"
 
 #: ../gnome-panel/nothing.cP:614
 msgid "Paused"
@@ -1317,235 +1495,224 @@ msgstr "%1$s\t%2$s"
 
 #: ../gnome-panel/nothing.cP:618
 msgid "Press 'p' to unpause"
-msgstr "Apăsaţi „p” pentru a relua"
+msgstr "Apăsați „p” pentru a relua"
 
 #: ../gnome-panel/nothing.cP:624
 #, c-format
 msgid "Level: %s,  Lives: %s"
-msgstr "Nivel: %s,  Vieţi: %s"
+msgstr "Nivel: %s,  Vieți: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
-"Stânga/Dreapta pentru mişcare, Space pentru foc, „p” pentru pauză, "
-"„q” pentru ieşire"
+"Stânga/Dreapta pentru mișcare, Space pentru foc, „p” pentru pauză, „q” "
+"pentru ieșire"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
-msgstr "GEGLII ucigaşi din spaţiu"
+msgstr "GEGLII ucigași din spațiu"
 
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Activate Screensaver"
-msgstr "_Activează protecţia ecranului"
+msgstr "_Activează protecția ecranului"
 
-#: ../gnome-panel/panel-action-button.c:132
+#: ../gnome-panel/panel-action-button.c:133
 msgid "_Lock Screen"
 msgstr "_Blocare ecran"
 
-#: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:809
+#: ../gnome-panel/panel-action-button.c:228
+#: ../gnome-panel/panel-menu-bar.c:416 ../gnome-panel/panel-menu-button.c:992
+#: ../gnome-panel/panel-util.c:711
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Nu pot porni „%s”"
 
-#: ../gnome-panel/panel-action-button.c:253
+#: ../gnome-panel/panel-action-button.c:265
 msgid "Could not connect to server"
 msgstr "Nu mă pot conecta la server"
 
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:296
 msgid "Lock Screen"
-msgstr "Blochează ecranul"
+msgstr "Blocare ecran"
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:297
 msgid "Protect your computer from unauthorized use"
-msgstr "Protejaţi-vă calculatorul de utilizatori neautorizaţi"
+msgstr "Protejați-vă calculatorul de utilizatori neautorizați"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:299
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Log Out..."
-msgstr "Ieşire..."
+msgstr "Ieșire..."
 
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:312
 msgid "Log out of this session to log in as a different user"
 msgstr ""
-"Ieşiţi din această sesiune pentru a vă autentifica ca un utilizator "
-"diferit"
+"Ieșiți din această sesiune pentru a vă autentifica ca un utilizator diferit"
 
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:321
 msgid "Run Application..."
-msgstr "Pornire aplicaţii..."
+msgstr "Pornire aplicații..."
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:322
 msgid "Run an application by typing a command or choosing from a list"
-msgstr ""
-"Rulaţi o aplicaţie tastând o comandă sau alegând una dintr-o listă"
+msgstr "Rulați o aplicație tastând o comandă sau alegând una dintr-o listă"
 
-#: ../gnome-panel/panel-action-button.c:319
+#: ../gnome-panel/panel-action-button.c:331
 msgid "Search for Files..."
-msgstr "Căutare fişiere..."
+msgstr "Căutare fișiere..."
 
-#: ../gnome-panel/panel-action-button.c:320
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Locate documents and folders on this computer by name or content"
-msgstr ""
-"Găsiţi documente şi dosare pe acest computer după nume sau conţinut"
+msgstr "Găsiți documente și dosare pe acest computer după nume sau conținut"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:340
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
-msgstr "Închide forţat"
+msgstr "Închide forțat"
 
-#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-action-button.c:341
 msgid "Force a misbehaving application to quit"
-msgstr "Forţează închiderea unei aplicaţii ce nu mai răspunde"
+msgstr "Forțează închiderea unei aplicații ce nu mai răspunde"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Connect to Server..."
 msgstr "Conectare la server..."
 
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Connect to a remote computer or shared disk"
 msgstr ""
-"Conectaţi-vă la un calculator aflat la distanţă sau la un disc partajat"
+"Conectați-vă la un calculator aflat la distanță sau la un disc partajat"
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:359
 msgid "Shut Down..."
 msgstr "Oprire..."
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:360
 msgid "Shut down the computer"
 msgstr "Oprire calculator"
 
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:113
 msgid "Custom Application Launcher"
-msgstr "Lansator de aplicaţii personalizat"
+msgstr "Lansator de aplicații personalizat"
 
-#: ../gnome-panel/panel-addto.c:112
+#: ../gnome-panel/panel-addto.c:114
 msgid "Create a new launcher"
 msgstr "Creează un nou lansator"
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:124
 msgid "Application Launcher..."
-msgstr "Lansator aplicaţii..."
+msgstr "Lansator aplicații..."
 
-#: ../gnome-panel/panel-addto.c:123
+#: ../gnome-panel/panel-addto.c:125
 msgid "Copy a launcher from the applications menu"
-msgstr "Copiază un lansator din meniul de aplicaţii"
+msgstr "Copiază un lansator din meniul de aplicații"
 
-#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:1093
 msgid "Main Menu"
 msgstr "Meniu principal"
 
-#: ../gnome-panel/panel-addto.c:138
+#: ../gnome-panel/panel-addto.c:140
 msgid "The main GNOME menu"
 msgstr "Meniul principal GNOME"
 
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:150
 msgid "Menu Bar"
 msgstr "Bară de meniu"
 
-#: ../gnome-panel/panel-addto.c:149
+#: ../gnome-panel/panel-addto.c:151
 msgid "A custom menu bar"
 msgstr "O bară de meniu personalizată"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:161
 msgid "Separator"
 msgstr "Separator"
 
-#: ../gnome-panel/panel-addto.c:160
+#: ../gnome-panel/panel-addto.c:162
 msgid "A separator to organize the panel items"
 msgstr "Un separator pentru organizarea elementelor din panou"
 
-#: ../gnome-panel/panel-addto.c:171
+#: ../gnome-panel/panel-addto.c:173
 msgid "A pop out drawer to store other items in"
 msgstr "Un sertar pentru stocarea altor itemi"
 
-#: ../gnome-panel/panel-addto.c:262
+#: ../gnome-panel/panel-addto.c:264
 msgid "(empty)"
 msgstr "(gol)"
 
-#: ../gnome-panel/panel-addto.c:402
+#: ../gnome-panel/panel-addto.c:407
 #: ../libpanel-applet/panel-test-applets.c:248
 #, c-format
 msgid "query returned exception %s\n"
-msgstr "cererea a returnat excepţia %s\n"
+msgstr "cererea a returnat excepția %s\n"
 
-#: ../gnome-panel/panel-addto.c:1061
+#: ../gnome-panel/panel-addto.c:1066
 #, c-format
 msgid "Find an _item to add to \"%s\":"
-msgstr "Căutaţi un _item de adăugat în „%s”:"
+msgstr "Căutați un _item de adăugat în „%s”:"
 
-#: ../gnome-panel/panel-addto.c:1065
+#: ../gnome-panel/panel-addto.c:1070
+#, c-format
 msgid "Add to Drawer"
 msgstr "Adaugă la sertar"
 
-#: ../gnome-panel/panel-addto.c:1067
+#: ../gnome-panel/panel-addto.c:1072
 msgid "Find an _item to add to the drawer:"
-msgstr "Căutaţi un _item de adăugat în sertar:"
+msgstr "Căutați un _item de adăugat în sertar:"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1074
+#, c-format
 msgid "Add to Panel"
 msgstr "Adaugă la panou"
 
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1076
 msgid "Find an _item to add to the panel:"
-msgstr "Căutaţi un _item de adăugat în panou:"
+msgstr "Căutați un _item de adăugat în panou:"
 
-#: ../gnome-panel/panel-applet-frame.c:850
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "Excepţie de la meniul popup „%s”\n"
+msgstr "Excepție de la _meniul popup „%s”\n"
 
-#: ../gnome-panel/panel-applet-frame.c:975
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr "„%s” a ieşit în mod neaşteptat"
+msgstr "„%s” a ieșit în mod neașteptat"
 
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
-msgstr "Obiectul panou a ieşit în mod neaşteptat"
+msgstr "Obiectul panou a ieșit în mod neașteptat"
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
-"Dacă reîncărcaţi un obiect din panou, acesta va fi automat "
-"adăugat înapoi în panou."
+"Dacă reîncărcați un obiect din panou, acesta va fi automat adăugat înapoi în "
+"panou."
 
-#: ../gnome-panel/panel-applet-frame.c:990
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "_Nu reîncărca"
 
-#: ../gnome-panel/panel-applet-frame.c:991
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "_Reîncarcă"
 
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094 ../gnome-panel/panel-util.c:397
-msgid "Error"
-msgstr "Eroare"
-
-#: ../gnome-panel/panel-applet-frame.c:1057
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panoul a întâlnit o problemă la încărcarea „%s”"
 
-#: ../gnome-panel/panel-applet-frame.c:1073
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
-msgstr "Doriţi să eliminaţi progrămelul din configuraţia proprie?"
+msgstr "Doriți să eliminați progrămelul din configurația proprie?"
 
-#: ../gnome-panel/panel-applet-frame.c:1147
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr "Nu pot obţine interfaţa AppletShell de la control\n"
+msgstr "Nu pot obține interfața AppletShell de la control\n"
 
 #: ../gnome-panel/panel-bindings.c:153
 #, c-format
@@ -1560,155 +1727,160 @@ msgstr "Eroare la încărcarea directorului GConf „%s”: %s"
 #: ../gnome-panel/panel-bindings.c:185
 #, c-format
 msgid "Error getting value for '%s': %s"
-msgstr "Eroare la scrierea în fişierul „%s”: %s"
+msgstr "Eroare la scrierea în fișierul „%s”: %s"
 
-#: ../gnome-panel/panel-context-menu.c:101
+#: ../gnome-panel/panel-context-menu.c:103
 msgid "And many, many others..."
-msgstr "Şi mulţi, mulţi alţii..."
+msgstr "Și mulți, mulți alții..."
 
-#: ../gnome-panel/panel-context-menu.c:127
+#: ../gnome-panel/panel-context-menu.c:129
 msgid "The GNOME Panel"
 msgstr "Panoul GNOME"
 
-#: ../gnome-panel/panel-context-menu.c:130
+#: ../gnome-panel/panel-context-menu.c:132
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
 msgstr ""
-"Acest program este responsabil pentru lansarea altor aplicaţii şi "
-"furnizează alte utilitare folositoare."
+"Acest program este responsabil pentru lansarea altor aplicații și furnizează "
+"alte utilitare folositoare."
 
-#: ../gnome-panel/panel-context-menu.c:167
+#: ../gnome-panel/panel-context-menu.c:136
+#, fuzzy
+msgid "About the GNOME Panel"
+msgstr "Panoul GNOME"
+
+#: ../gnome-panel/panel-context-menu.c:170
 msgid "Cannot delete this panel"
 msgstr "Nu pot elimina acest panou"
 
-#: ../gnome-panel/panel-context-menu.c:168
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "You must always have at least one panel."
-msgstr "Trebuie să aveţi cel puţin un panou."
+msgstr "Trebuie să aveți cel puțin un panou."
 
-#: ../gnome-panel/panel-context-menu.c:201
+#: ../gnome-panel/panel-context-menu.c:204
 msgid "_Add to Panel..."
 msgstr "A_daugă la panou..."
 
-#: ../gnome-panel/panel-context-menu.c:222
+#: ../gnome-panel/panel-context-menu.c:225
 msgid "_Delete This Panel"
 msgstr "_Elimină acest panou"
 
-#: ../gnome-panel/panel-context-menu.c:237
+#: ../gnome-panel/panel-context-menu.c:240
 msgid "_New Panel"
 msgstr "Panou _nou"
 
-#: ../gnome-panel/panel-context-menu.c:288
+#: ../gnome-panel/panel-context-menu.c:291
 msgid "A_bout Panels"
 msgstr "De_spre panouri"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application"
-msgstr "Aplicaţie"
+msgstr "Aplicație"
 
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Application in Terminal"
-msgstr "Aplicaţie în terminal"
+msgstr "Aplicație în terminal"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:120
 msgid "Location"
 msgstr "Amplasare"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:619
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Type:"
 msgstr "_Tip:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:626
+#: ../gnome-panel/panel-ditem-editor.c:629
 msgid "_Name:"
 msgstr "_Nume:"
 
-#: ../gnome-panel/panel-ditem-editor.c:634
+#: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
-msgstr "Răsfoieşte iconiţele"
+msgstr "Răsfoiește iconițele"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
-msgstr "_Răsfoieşte..."
+msgstr "_Răsfoiește..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:662
 msgid "Co_mment:"
 msgstr "Co_mentariu:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1021
+#: ../gnome-panel/panel-ditem-editor.c:1024
 msgid "Choose an application..."
-msgstr "Alegeţi o aplicaţie..."
+msgstr "Alegeți o aplicație..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1025
+#: ../gnome-panel/panel-ditem-editor.c:1028
 msgid "Choose a file..."
-msgstr "Alegeţi un fişier..."
+msgstr "Alegeți un fișier..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1150
+#: ../gnome-panel/panel-ditem-editor.c:1153
 msgid "Comm_and:"
 msgstr "Com_andă:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1159
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "_Command:"
 msgstr "_Comandă:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1168
+#: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
 msgstr "Amp_lasare:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1348
+#: ../gnome-panel/panel-ditem-editor.c:1351
 msgid "The name of the launcher is not set."
 msgstr "Numele lansatorului nu este setat."
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1355
 msgid "Could not save directory properties"
-msgstr "Nu se pot salva proprietăţile directorului"
+msgstr "Nu se pot salva proprietățile directorului"
 
-#: ../gnome-panel/panel-ditem-editor.c:1353
+#: ../gnome-panel/panel-ditem-editor.c:1356
 msgid "The name of the directory is not set."
 msgstr "Numele directorului nu este setat."
 
-#: ../gnome-panel/panel-ditem-editor.c:1369
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The command of the launcher is not set."
 msgstr "Comanda lansatorului nu este setată."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1375
 msgid "The location of the launcher is not set."
 msgstr "Amplasarea lansatorului nu este setată."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:187
+#: ../gnome-panel/panel-ditem-editor.c:1455 ../gnome-panel/panel-util.c:192
 msgid "Could not display help document"
-msgstr "Nu pot afişa documentul de ajutor"
+msgstr "Nu pot afișa documentul de ajutor"
 
 #: ../gnome-panel/panel-force-quit.c:76
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
-"Click pe o fereastră pentru a forţa închiderea aplicaţiei. Pentru "
-"anulare apăsaţi <ESC>."
+"Click pe o fereastră pentru a forța închiderea aplicației. Pentru anulare "
+"apăsați <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
-msgstr "Forţaţi închiderea acestei aplicaţii?"
+msgstr "Forțați închiderea acestei aplicații?"
 
 #: ../gnome-panel/panel-force-quit.c:207
 msgid ""
 "If you choose to force an application to exit, any open documents in it will "
 "be lost."
 msgstr ""
-"Dacă alegeţi să forţaţi închiderea unei aplicaţii, orice documente "
-"deschise în ea vor fi pierdute."
+"Dacă alegeți să forțați închiderea unei aplicații, orice documente deschise "
+"în ea vor fi pierdute."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
-"A boolean flag to indicate whether the user's previous configuration in "
-"/apps/panel/profiles/default has been copied to the new location in "
-"/apps/panel."
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
 msgstr ""
-"Un indicator boolean care marchează dacă configuraţia precedentă a "
+"Un indicator boolean care marchează dacă configurația precedentă a "
 "utilizatorului din /apps/panel/profiles/default a fost copiată în noua "
-"locaţie din /apps/panel."
+"locație din /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1722,42 +1894,41 @@ msgstr ""
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in "
-"/apps/panel/applets/$(id)."
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
 msgstr ""
 "O listă de ID-uri ale progrămelelor din panouri. Fiecare ID identifică un "
-"progrămel individual. Setările pentru fiecare dintre aceste progrămele "
-"sunt păstrate în /apps/panel/applets/$(id)."
+"progrămel individual. Setările pentru fiecare dintre aceste progrămele sunt "
+"păstrate în /apps/panel/applets/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
 msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object "
-"(e.g. a launcher, action button or menu button/bar). The settings for each "
-"of these objects are stored in /apps/panel/objects/$(id)."
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "O listă de ID-uri ale obiectelor din panouri. Fiecare ID identifică un "
-"obiect individual (un lansator, o acţiune etc.). Setările pentru fiecare "
+"obiect individual (un lansator, o acțiune etc.). Setările pentru fiecare "
 "dintre aceste obiecte sunt păstrate în /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr ""
-"Activează completarea automată în fereastra „Pornire aplicaţii”"
+msgstr "Activează completarea automată în fereastra „Pornire aplicații”"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Activează lista de programe în fereastra „Pornire aplicaţii”"
+msgstr "Activează lista de programe în fereastra „Pornire aplicații”"
 
 #: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Extinde lista de programe în fereastra „Pornire aplicaţii”"
+msgstr "Extinde lista de programe în fereastra „Pornire aplicații”"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "Dacă este bifată, completarea automată va fi disponibilă în fereastra "
-"„Pornire aplicaţii”."
+"„Pornire aplicații”."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1765,9 +1936,9 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"La activare, lista „Aplicaţii cunoscute” în fereastra „Pornire "
-"aplicaţii” este extinsă când dialogul este afişat. Această cheie este "
-"relevantă doar dacă cheia „enable_program_list” este setată."
+"La activare, lista „Aplicații cunoscute” în fereastra „Pornire aplicații” "
+"este extinsă când dialogul este afișat. Această cheie este relevantă doar "
+"dacă cheia „enable_program_list” este setată."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1775,13 +1946,13 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"La activare, lista „Aplicaţii cunoscute” în dialogul „Pornire "
-"aplicaţii” este disponibilă. Dacă lista este extinsă sau nu se poate "
-"seta prin cheia „show_program_list”."
+"La activare, lista „Aplicații cunoscute” în dialogul „Pornire aplicații” "
+"este disponibilă. Dacă lista este extinsă sau nu se poate seta prin cheia "
+"„show_program_list”."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
-msgstr "Configuraţia profilelor vechi a fost migrată"
+msgstr "Configurația profilelor vechi a fost migrată"
 
 #: ../gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
@@ -1802,11 +1973,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"O listă a IID-urilor progrămelelor ce vor fi ignorate de panou. În acest "
-"fel puteţi dezactiva anumite progrămele pentru a nu fi încărcate sau "
-"afişate într-un panou. De exemplu, pentru a dezactiva progrămelul "
-"„mini_commander” adăugaţi „OAFIID:GNOME_MiniCommanderApplet” în "
-"această listă. Panoul trebuie repornit pentru ca setarea să aibă efect."
+"O listă a IID-urilor progrămelelor ce vor fi ignorate de panou. În acest fel "
+"puteți dezactiva anumite progrămele pentru a nu fi încărcate sau afișate "
+"într-un panou. De exemplu, pentru a dezactiva progrămelul „mini-commander” "
+"adăugați „OAFIID:GNOME_MiniCommanderApplet” în această listă. Panoul trebuie "
+"repornit pentru ca setarea să aibă efect."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1826,11 +1997,11 @@ msgstr "Confirmare la eliminarea unui panou"
 
 #: ../gnome-panel/panel-global.schemas.in.h:6
 msgid "Deprecated"
-msgstr "Depăşit"
+msgstr "Depășit"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
-msgstr "Dezactivare închidere forţată"
+msgstr "Dezactivare închidere forțată"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
 msgid "Disable Lock Screen"
@@ -1838,12 +2009,12 @@ msgstr "Dezactivează blocarea ecranului"
 
 #: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr "Dezactivare ieşire din GNOME"
+msgstr "Dezactivare ieșire din GNOME"
 
 #: ../gnome-panel/panel-global.schemas.in.h:10
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
-msgstr "Activează animaţiile"
+msgstr "Activează animațiile"
 
 #: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Enable tooltips"
@@ -1851,7 +2022,7 @@ msgstr "Activează sugestiile"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
-msgstr "Evidenţiază lansatoarele sub indicatorul de mouse"
+msgstr "Evidențiază lansatoarele sub indicatorul de mouse"
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
@@ -1866,14 +2037,14 @@ msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"La activare ,un sertar va fi automat închis când un utilizator porneşte "
-"un lansator din el."
+"La activare ,un sertar va fi automat închis când un utilizator pornește un "
+"lansator din el."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"La activare, un lansator va fi evidenţiat când un utilizator mută "
+"La activare, un lansator va fi evidențiat când un utilizator mută "
 "indicatorul de mouse deasupra sa."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -1881,8 +2052,8 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"La activare, panoul nu va permite unui utilizator închiderea forţată a "
-"unei aplicaţii, dezactivând accesul la butonul de închidere forţată"
+"La activare, panoul nu va permite unui utilizator închiderea forțată a unei "
+"aplicații, dezactivând accesul la butonul de închidere forțată"
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
@@ -1890,7 +2061,7 @@ msgid ""
 "access to the lock screen menu entries."
 msgstr ""
 "La activare, panoul nu va permite unui utilizator să blocheze ecranul, "
-"dezactivând accesul la opţiunea „Blocare ecran” din meniu."
+"dezactivând accesul la opțiunea „Blocare ecran” din meniu."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
@@ -1898,7 +2069,7 @@ msgid ""
 "the log out menu entries."
 msgstr ""
 "La activare, panoul nu va permite unui utilizator să iasă din GNOME, "
-"dezactivând accesul la opţiunea „Ieşire” din meniu."
+"dezactivând accesul la opțiunea „Ieșire” din meniu."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1906,156 +2077,105 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"La activare, panoul nu va permite schimbarea nici unei setări. "
-"Progrămelele s-ar putea să trebuiască să aibă setările blocate "
-"individual. Panoul trebuie restartat înainte ca această setare să aibă "
-"efect."
+"La activare, panoul nu va permite schimbarea nici unei setări. Progrămelele "
+"s-ar putea să trebuiască să aibă setările blocate individual. Panoul trebuie "
+"restartat înainte ca această setare să aibă efect."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "La activare, se arată sugestii pentru obiectele din panouri."
 
-#: ../gnome-panel/panel-logout.c:238
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d seconds."
-msgstr[0] ""
-"Sunteţi autentificat ca „%s”.\n"
-"Veţi fi dezautentificat automat în %d secundă."
-msgstr[1] ""
-"Sunteţi autentificat ca „%s”.\n"
-"Veţi fi dezautentificat automat în %d secunde."
-
-#: ../gnome-panel/panel-logout.c:249
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d seconds."
-msgstr[0] ""
-"Sunteţi autentificat ca „%s”.\n"
-"Sistemul va fi oprit automat în %d secundă."
-msgstr[1] ""
-"Sunteţi autentificat ca „%s”.\n"
-"Sistemul va fi oprit automat în %d secunde."
-
-#: ../gnome-panel/panel-logout.c:330
-msgid "Log out of this system now?"
-msgstr "Ieşiţi din sistem acum?"
-
-#: ../gnome-panel/panel-logout.c:336
-msgid "_Switch User"
-msgstr "_Schimbă utilizatorul"
-
-#: ../gnome-panel/panel-logout.c:342
-msgid "_Log Out"
-msgstr "_Ieşi din sesiune"
-
-#: ../gnome-panel/panel-logout.c:347
-msgid "Shut down this system now?"
-msgstr "Opriţi sistemul acum?"
-
-#: ../gnome-panel/panel-logout.c:352
-msgid "S_uspend"
-msgstr "S_uspendă"
-
-#: ../gnome-panel/panel-logout.c:357
-msgid "_Hibernate"
-msgstr "_Hibernează"
-
-#: ../gnome-panel/panel-logout.c:362
-msgid "_Restart"
-msgstr "_Reporneşte calculatorul"
-
-#: ../gnome-panel/panel-logout.c:371
-msgid "_Shut Down"
-msgstr "_Opreşte calculatorul"
-
-#: ../gnome-panel/panel-menu-bar.c:97
+#: ../gnome-panel/panel-menu-bar.c:104
 msgid "Browse and run installed applications"
-msgstr "Descoperiţi şi porniţi aplicaţiile instalate"
+msgstr "Descoperiți și porniți aplicațiile instalate"
 
-#: ../gnome-panel/panel-menu-bar.c:99
+#: ../gnome-panel/panel-menu-bar.c:106
 msgid "Access documents, folders and network places"
-msgstr "Accesaţi documente, directoare şi locuri din reţea"
+msgstr "Accesați documente, directoare și locuri din rețea"
 
-#: ../gnome-panel/panel-menu-bar.c:101
+#: ../gnome-panel/panel-menu-bar.c:108
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
-"Modificaţi aspectul şi comportamentul desktop-ului, obţineţi ajutor sau "
-"ieşiţi din sistem"
+"Modificați aspectul și comportamentul desktop-ului, obțineți ajutor sau "
+"ieșiți din sistem"
 
-#: ../gnome-panel/panel-menu-bar.c:136
+#: ../gnome-panel/panel-menu-bar.c:143
 msgid "Applications"
-msgstr "Aplicaţii"
+msgstr "Aplicații"
 
-#  dand: e greşit pus la plural, IMHO
-#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
+#  dand: e greșit pus la plural, IMHO
+#: ../gnome-panel/panel-menu-bar.c:349 ../gnome-panel/panel-menu-button.c:666
 msgid "_Edit Menus"
 msgstr "_Editează meniul"
 
-#: ../gnome-panel/panel-menu-items.c:118 ../gnome-panel/panel-run-dialog.c:351
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "Nu am putut deschide locaţia „%s”"
-
-#: ../gnome-panel/panel-menu-items.c:405
+#: ../gnome-panel/panel-menu-items.c:393
 msgid "Bookmarks"
 msgstr "Favorite"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:424 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:415 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Deschide „%s”"
 
-#: ../gnome-panel/panel-menu-items.c:516
-msgid "Network Places"
-msgstr "Locuri din reţea"
+#: ../gnome-panel/panel-menu-items.c:483
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr ""
 
-#: ../gnome-panel/panel-menu-items.c:519
+#: ../gnome-panel/panel-menu-items.c:526
+#, c-format
+msgid "Rescan %s"
+msgstr ""
+
+#: ../gnome-panel/panel-menu-items.c:563
+#, fuzzy, c-format
+msgid "Unable to mount %s"
+msgstr "Activează sugestiile"
+
+#: ../gnome-panel/panel-menu-items.c:626
+#, fuzzy, c-format
+msgid "Mount %s"
+msgstr "Fonturi"
+
+#: ../gnome-panel/panel-menu-items.c:829
 msgid "Removable Media"
 msgstr "Medii amovibile"
 
-#: ../gnome-panel/panel-menu-items.c:580
-msgid "Home Folder"
-msgstr "Dosarul Acasă"
+#: ../gnome-panel/panel-menu-items.c:910
+msgid "Network Places"
+msgstr "Locuri din rețea"
 
-#: ../gnome-panel/panel-menu-items.c:581
+#: ../gnome-panel/panel-menu-items.c:949
 msgid "Open your personal folder"
-msgstr "Deschideţi dosarul dumneavoastră personal"
+msgstr "Deschideți dosarul dumneavoastră personal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:600
+#: ../gnome-panel/panel-menu-items.c:969
 msgid "Desktop Folder|Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:601
+#: ../gnome-panel/panel-menu-items.c:970
 msgid "Open the contents of your desktop in a folder"
-msgstr "Deschideţi conţinutul spaţiului de lucru într-un dosar"
+msgstr "Deschideți conținutul spațiului de lucru într-un dosar"
 
-#: ../gnome-panel/panel-menu-items.c:911
+#: ../gnome-panel/panel-menu-items.c:1362
 msgid "Places"
 msgstr "Locuri"
 
-#: ../gnome-panel/panel-menu-items.c:940
+#: ../gnome-panel/panel-menu-items.c:1391
 msgid "System"
 msgstr "Sistem"
 
+#. Below this, we only have log out/shutdown items
 #. Translators: translate "panel:showusername|1" to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
+#: ../gnome-panel/panel-menu-items.c:1472
 msgid "panel:showusername|1"
 msgstr "panel:showusername|1"
 
@@ -2063,27 +2183,27 @@ msgstr "panel:showusername|1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#: ../gnome-panel/panel-menu-items.c:1484
 #, c-format
 msgid "Log Out %s..."
-msgstr "Ieşire din contul %s..."
+msgstr "Ieșire din contul %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#: ../gnome-panel/panel-menu-items.c:1488
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
-"Ieşiţi din sesiunea contului %s pentru a vă autentifica ca un utilizator "
+"Ieșiți din sesiunea contului %s pentru a vă autentifica ca un utilizator "
 "diferit"
 
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1531
 msgid "Could not launch menu item"
 msgstr "Nu pot lansa elementul de meniu"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
-msgstr "Tip buton acţiune"
+msgstr "Tip buton acțiune"
 
 #: ../gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
@@ -2091,7 +2211,7 @@ msgstr "IID Bonobo progrămel"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr "Iconiţă utilizată pentru butonul obiectului"
+msgstr "Iconiță utilizată pentru butonul obiectului"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -2099,10 +2219,10 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"La activare, cheia „custom_icon” este utilizată ca o iconiţă "
-"personalizată pentru buton. Dacă nu, cheia „custom_icon” este "
-"ignorată. Această cheie este relevantă doar dacă cheia „object-type” "
-"este „menu-object” sau „drawer-object”."
+"La activare, cheia „custom_icon” este utilizată ca o iconiță personalizată "
+"pentru buton. Dacă nu, cheia „custom_icon” este ignorată. Această cheie este "
+"relevantă doar dacă cheia „object-type” este „menu-object” sau „drawer-"
+"object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -2111,29 +2231,29 @@ msgid ""
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 "La activare, cheia „menu-path” este utilizată ca o cale din care se "
-"construieşte conţinutul meniului. Dacă nu, cheia „menu_path” este "
-"ignorată. Această cheie este relevantă doar dacă cheia „object-type” "
-"este „menu-object”."
+"construiește conținutul meniului. Dacă nu, cheia „menu_path” este ignorată. "
+"Această cheie este relevantă doar dacă cheia „object-type” este „menu-"
+"object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"La activare poziţia obiectului este interpretată relativ la marginea "
-"dreaptă (sau de jos dacă e vertical) a panoului."
+"La activare poziția obiectului este interpretată relativ la marginea dreaptă "
+"(sau de jos dacă e vertical) a panoului."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"La activare utilizatorul nu poate muta progrămelul fără să deblocheze "
-"întâi obiectul utilizând elementul „Deblochează” din meniu."
+"La activare utilizatorul nu poate muta progrămelul fără să deblocheze întâi "
+"obiectul utilizând elementul „Deblochează” din meniu."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
-msgstr "Interpretează poziţia relativ la marginea din dreapta jos"
+msgstr "Interpretează poziția relativ la marginea din dreapta jos"
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
@@ -2145,15 +2265,15 @@ msgstr "Fixează obiectul în panou"
 
 #: ../gnome-panel/panel-object.schemas.in.h:11
 msgid "Menu content path"
-msgstr "Cale conţinut meniu"
+msgstr "Cale conținut meniu"
 
 #: ../gnome-panel/panel-object.schemas.in.h:12
 msgid "Object's position on the panel"
-msgstr "Poziţia obiectului în panou"
+msgstr "Poziția obiectului în panou"
 
 #: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
-msgstr "Panou ataşat unui sertar"
+msgstr "Panou atașat unui sertar"
 
 #: ../gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel object type"
@@ -2161,13 +2281,12 @@ msgstr "Tip obiect panou"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
 msgid ""
-"The Bonobo implementation ID of the applet - e.g. "
-"\"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type "
-"key is \"bonobo-applet\"."
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
-"ID-ul implementării Bonobo a progrămelului - de ex. "
-"„OAFIID:GNOME_ClockApplet”. Această cheie este relevantă doar dacă "
-"cheia „object-type” este „bonobo-applet”."
+"ID-ul implementării Bonobo a progrămelului - de ex. „OAFIID:"
+"GNOME_ClockApplet”. Această cheie este relevantă doar dacă cheia „object-"
+"type” este „bonobo-applet”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2175,23 +2294,22 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
-"Tipul de acţiune reprezentat de acest buton. Valorile posibile sunt: "
-"„lock”, „logout”, „run”, „search” şi „screenshot”. "
-"Această cheie este relevantă doar dacă cheia „object-type” este "
-"„action-applets”."
+"Tipul de acțiune reprezentat de acest buton. Valorile posibile sunt: „lock”, "
+"„logout”, „run”, „search” și „screenshot”. Această cheie este relevantă doar "
+"dacă cheia „object_type” este „action-applets”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
-"Identificatorul panoului ataşat acestui sertar. Această cheie este "
-"relevantă doar dacă cheia „object-type” este „drawer-object”."
+"Identificatorul panoului atașat acestui sertar. Această cheie este relevantă "
+"doar dacă cheia „object_type” este „drawer-object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
-"Identificatorul panoului de la nivelul cel mai de sus ce conţine acest "
+"Identificatorul panoului de la nivelul cel mai de sus ce conține acest "
 "obiect."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
@@ -2199,9 +2317,8 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"Amplasarea fişierului .desktop ce descrie acest lansator. Această cheie "
-"este relevantă doar dacă cheia „object-type” este "
-"„launcher-object”."
+"Amplasarea fișierului .desktop ce descrie acest lansator. Această cheie este "
+"relevantă doar dacă cheia „object_type” este „launcher-object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2209,68 +2326,67 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
-"Locaţia fişierului imagine utilizat ca iconiţă pentru butonul obictului. "
-"Această cheie este relevantă doar dacă cheia „object-type” este "
-"„drawer-object” sau „menu-object” şi cheia „use-custom_icon” "
-"este setată."
+"Locația fișierului imagine utilizat ca iconiță pentru butonul obictului. "
+"Această cheie este relevantă doar dacă cheia „object-type” este „drawer-"
+"object” sau „menu-object” și cheia „use-custom_icon” este setată."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is "
-"\"menu-object\"."
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
 msgstr ""
-"Calea din care se construieşte conţinutul meniului. Această cheie este "
-"relevantă doar dacă cheia „use-menu_path” este setată şi cheia "
-"„object_type” este „menu-object”."
+"Calea din care se construiește conținutul meniului. Această cheie este "
+"relevantă doar dacă cheia „use-menu_path” este setată și cheia „object_type” "
+"este „menu-object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"Poziţia acestui obiect din panou. Poziţia specifică numărul de pixeli de "
-"la marginea stângă a panoului (sau de sus pentru un panou vertical)"
+"Poziția acestui obiect din panou. Poziția specifică numărul de pixeli de la "
+"marginea stângă a panoului (sau de sus pentru un panou vertical)"
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Text de afişat într-o sugestie pentru acest sertar. Această cheie este "
-"relevantă doar dacă cheia „object-type” este „drawer-object”."
+"Text de afișat într-o sugestie pentru acest sertar. Această cheie este "
+"relevantă doar dacă cheia „object_type” este „drawer-object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
-"The type of this panel object. Possible values are \"drawer-object\", "
-"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" "
-"and \"menu-bar\"."
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
 msgstr ""
 "Tipul acestui obiect din panou. Valorile posibile sunt „drawer-object”, "
-"„menu-object”, „launcher-object”, „bonobo-applet”, "
-"„action-applet” şi „menu-bar”."
+"„menu-object”, „launcher-object”, „bonobo-applet”, „action-applet” și „menu-"
+"bar”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Sugestie afişata pentru sertar sau meniu"
+msgstr "Sugestie afișata pentru sertar sau meniu"
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr "Panoul de la nivelul cel mai de sus ce conţine obiectul"
+msgstr "Panoul de la nivelul cel mai de sus ce conține obiectul"
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr "Utilizează o iconiţă personalizată pentru obiectul butonului"
+msgstr "Utilizează o iconiță personalizată pentru obiectul butonului"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr "Utilizează o cale personalizată pentru conţinutul meniului"
+msgstr "Utilizează o cale personalizată pentru conținutul meniului"
 
 #: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
 #: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
-msgstr "Eroare la citirea valorii şirului GConf „%s”: %s"
+msgstr "Eroare la citirea valorii șirului GConf „%s”: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
 #: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
@@ -2285,7 +2401,7 @@ msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
-"Panoul „%s” este setat pentru a fi afişat pe ecranul %d care nu este "
+"Panoul „%s” este setat pentru a fi afișat pe ecranul %d care nu este "
 "disponibil momentan. Acest panou nu va porni."
 
 #: ../gnome-panel/panel-profile.c:1678
@@ -2293,39 +2409,39 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Eroare la citirea valorii boolene GConf „%s”: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:127
 #: ../libpanel-applet/panel-test-applets.c:53
 msgid "Orientation|Top"
 msgstr "Orientare|Sus"
 
-#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-properties-dialog.c:128
 #: ../libpanel-applet/panel-test-applets.c:54
 msgid "Orientation|Bottom"
 msgstr "Orientare|Jos"
 
-#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
 msgid "Orientation|Left"
 msgstr "Orientare|Stânga"
 
-#: ../gnome-panel/panel-properties-dialog.c:127
+#: ../gnome-panel/panel-properties-dialog.c:130
 #: ../libpanel-applet/panel-test-applets.c:56
 msgid "Orientation|Right"
 msgstr "Orientare|Dreapta"
 
-#: ../gnome-panel/panel-properties-dialog.c:947
+#: ../gnome-panel/panel-properties-dialog.c:951
 msgid "Drawer Properties"
-msgstr "Proprietăţi sertar"
+msgstr "Proprietăți sertar"
 
-#: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1951
+#: ../gnome-panel/panel-properties-dialog.c:1059
+#: ../gnome-panel/panel-run-dialog.c:1938
 #, c-format
 msgid "Unable to load file '%s'."
-msgstr "Nu am reuşit să încărc fişierul „%s”"
+msgstr "Nu am reușit să încărc fișierul „%s”"
 
-#: ../gnome-panel/panel-properties-dialog.c:1060
+#: ../gnome-panel/panel-properties-dialog.c:1064
 msgid "Could not display properties dialog"
-msgstr "Nu am putut afişa dialogul de proprietăţi"
+msgstr "Nu am putut afișa dialogul de proprietăți"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:2
 msgid "<small>Opaque</small>"
@@ -2337,7 +2453,7 @@ msgstr "<small>Transparent</small>"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:4
 msgid "Arro_ws on hide buttons"
-msgstr "Arată _săgeţi pe butoanele de ascundere"
+msgstr "Arată _săgeți pe butoanele de ascundere"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:5
 msgid "Background"
@@ -2355,25 +2471,21 @@ msgstr "Cu_loare"
 msgid "E_xpand"
 msgstr "E_xtinde"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Generale"
-
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
 msgstr "Detalii imagine fundal"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:11
 msgid "Panel Properties"
-msgstr "Proprietăţi panou"
+msgstr "Proprietăți panou"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Pick a color"
-msgstr "Alegeţi o culoare"
+msgstr "Alegeți o culoare"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:13
 msgid "Rotate image when panel is _vertical"
-msgstr "Roteşte imaginea pentru panouri _verticale"
+msgstr "Rotește imaginea pentru panouri _verticale"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:14
 msgid "S_tyle:"
@@ -2381,7 +2493,7 @@ msgstr "S_til:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:15
 msgid "Select background"
-msgstr "Selectaţi un fundal"
+msgstr "Selectați un fundal"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Show hide _buttons"
@@ -2393,7 +2505,7 @@ msgstr "Culoare _unică:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Some of these properties are locked down"
-msgstr "O parte din aceste proprietăţi nu pot fi schimbate"
+msgstr "O parte din aceste proprietăți nu pot fi schimbate"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:19
 msgid "St_retch"
@@ -2405,7 +2517,7 @@ msgstr "Ascun_de automat"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:21
 msgid "_Icon:"
-msgstr "_Iconiţă:"
+msgstr "_Iconiță:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_None (use system theme)"
@@ -2433,88 +2545,84 @@ msgstr "Mo_zaic"
 msgid "pixels"
 msgstr "pixeli"
 
-#: ../gnome-panel/panel-recent.c:51
-msgid "Could not find a suitable application."
-msgstr "Nu s-a găsit o aplicaţie potrivită"
-
-#: ../gnome-panel/panel-recent.c:98 ../gnome-panel/panel-recent.c:108
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nu s-a putut deschide documentul recent utilizat „%s”"
 
-#: ../gnome-panel/panel-recent.c:110
+#: ../gnome-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "A intervenit o eroare necunoscută la deschiderea „%s”."
 
-#: ../gnome-panel/panel-recent.c:167
+#: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Golesc lista documentelor recente"
 
-#: ../gnome-panel/panel-recent.c:169
+#: ../gnome-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"Dacă goliţi lista „Documente recente”, veţi şterge următoarele:\n"
+"Dacă goliți lista „Documente recente”, veți șterge următoarele:\n"
 "\n"
 "• Totul din lista „Locuri” → „Documente recente”.\n"
-"• Totul din listele cu documente recente ale tuturor aplicaţiilor."
+"• Totul din listele cu documente recente ale tuturor aplicațiilor."
 
-#: ../gnome-panel/panel-recent.c:181 ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:161 ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
-msgstr "Goleşte lista documentelor recente"
+msgstr "Golește lista documentelor recente"
 
-#: ../gnome-panel/panel-recent.c:216
+#: ../gnome-panel/panel-recent.c:196
 msgid "Recent Documents"
 msgstr "Documente recente"
 
-#: ../gnome-panel/panel-recent.c:257
+#: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
-msgstr "Goleşte lista documentelor recente"
+msgstr "Golește lista documentelor recente"
 
-#: ../gnome-panel/panel-run-dialog.c:322
+#: ../gnome-panel/panel-run-dialog.c:326
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Nu am putut porni comanda „%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:406
+#: ../gnome-panel/panel-run-dialog.c:383
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nu am putut converti „%s” din UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1212
+#: ../gnome-panel/panel-run-dialog.c:1194
 msgid "Choose a file to append to the command..."
-msgstr "Alegeţi un fişier de adăugat în linia de comandă..."
+msgstr "Alegeți un fișier de adăugat în linia de comandă..."
 
-#: ../gnome-panel/panel-run-dialog.c:1588
+#: ../gnome-panel/panel-run-dialog.c:1570
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
-msgstr "Selectaţi o aplicaţie pentru a-i vedea descrierea."
+msgstr "Selectați o aplicație pentru a-i vedea descrierea."
 
-#: ../gnome-panel/panel-run-dialog.c:1626
+#: ../gnome-panel/panel-run-dialog.c:1608
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Va executa comanda: „%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1639
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
-"Lista URI plasată pe dialogul de pornire are formatul (%d) sau lungimea "
-"(%d) greşită\n"
+"Lista URI plasată pe dialogul de pornire are formatul (%d) sau lungimea (%d) "
+"greșită\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1955
+#: ../gnome-panel/panel-run-dialog.c:1942
 msgid "Could not display run dialog"
-msgstr "Nu pot afişa dialogul de pornire"
+msgstr "Nu pot afișa dialogul de pornire"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"Apăsaţi acest buton pentru a selecta un fişier de adăugat în linia de "
+"Apăsați acest buton pentru a selecta un fișier de adăugat în linia de "
 "comandă."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
@@ -2522,7 +2630,7 @@ msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Apăsaţi acest buton pentru a porni aplicaţia selectată ori comanda din "
+"Apăsați acest buton pentru a porni aplicația selectată ori comanda din "
 "câmpul intrării de comenzi."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
@@ -2531,155 +2639,155 @@ msgstr "Intrare comenzi"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
-msgstr "Iconiţă comandă"
+msgstr "Iconiță comandă"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
-msgstr "Introduceţi o comandă aici pentru a o executa."
+msgstr "Introduceți o comandă aici pentru a o executa."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:6
 msgid "List of known applications"
-msgstr "Lista aplicaţiilor cunoscute"
+msgstr "Lista aplicațiilor cunoscute"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
-msgstr "Pornire aplicaţii"
+msgstr "Pornire aplicații"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
-msgstr "Porneşte în _terminal"
+msgstr "Pornește în _terminal"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:9
 msgid "Run with _file..."
-msgstr "Cu _fişierul..."
+msgstr "Cu _fișierul..."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
-msgstr "Bifaţi această opţiune pentru a executa comanda într-un terminal."
+msgstr "Bifați această opțiune pentru a executa comanda într-un terminal."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
-msgstr "_Arată lista aplicaţiilor cunoscute"
+msgstr "_Arată lista aplicațiilor cunoscute"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
-msgstr "Iconiţa comenzii de executat."
+msgstr "Iconița comenzii de executat."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
 #: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Run"
-msgstr "_Porneşte"
+msgstr "_Pornește"
 
-#: ../gnome-panel/panel-shell.c:64
+#: ../gnome-panel/panel-shell.c:66
 #, c-format
 msgid ""
-"The panel could not register with the bonobo-activation server (error code: "
-"%d) and will exit.\n"
+"The panel could not register with the bonobo-activation server (error code: %"
+"d) and will exit.\n"
 "It may be automatically restarted."
 msgstr ""
-"A apărut o problemă la înregistrarea panoului cu serverul "
-"bonobo-activation.\n"
+"A apărut o problemă la înregistrarea panoului cu serverul bonobo-"
+"activation.\n"
 "Codul de eroare este: %d\n"
-"Panoul se va închide acum şi se va încerca repornirea lui."
+"Panoul se va închide acum și se va încerca repornirea lui."
 
-#: ../gnome-panel/panel-shell.c:74
+#: ../gnome-panel/panel-shell.c:76
 msgid "The panel has encountered a fatal error"
 msgstr "Panoul a întâmpinat o eroare fatală"
 
 #. FIXME: the checkbox is not correctly aligned in the dialog...
-#: ../gnome-panel/panel-shell.c:80
+#: ../gnome-panel/panel-shell.c:82
 msgid "Force the panel to not be automatically restarted"
-msgstr "Forţează panoul să nu fie repornit automat"
+msgstr "Forțează panoul să nu fie repornit automat"
 
 #: ../gnome-panel/panel-stock-icons.c:92
 msgid "_Force quit"
-msgstr "Închide _forţat"
+msgstr "Închide _forțat"
 
 #: ../gnome-panel/panel-stock-icons.c:93
 msgid "C_lear"
-msgstr "C_urăţă"
+msgstr "C_urăță"
 
 #: ../gnome-panel/panel-stock-icons.c:94
 msgid "D_on't Delete"
-msgstr "_Nu şterge"
+msgstr "_Nu șterge"
 
-#: ../gnome-panel/panel-toplevel.c:1175
+#: ../gnome-panel/panel-toplevel.c:1176
 msgid "Hide Panel"
 msgstr "Ascunde panoul"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1554
 msgid "Top Expanded Edge Panel"
 msgstr "Panou extins sus"
 
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1555
 msgid "Top Centered Panel"
 msgstr "Panou centrat sus"
 
-#: ../gnome-panel/panel-toplevel.c:1558
+#: ../gnome-panel/panel-toplevel.c:1556
 msgid "Top Floating Panel"
 msgstr "Panou flotant sus"
 
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1557
 msgid "Top Edge Panel"
 msgstr "Panou margine sus"
 
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panou extins jos"
 
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Bottom Centered Panel"
 msgstr "Panou centrat jos"
 
-#: ../gnome-panel/panel-toplevel.c:1565
+#: ../gnome-panel/panel-toplevel.c:1563
 msgid "Bottom Floating Panel"
 msgstr "Panou flotant jos"
 
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1564
 msgid "Bottom Edge Panel"
 msgstr "Panou margine jos"
 
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Left Expanded Edge Panel"
 msgstr "Panou extins stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Left Centered Panel"
 msgstr "Panou centrat stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1572
+#: ../gnome-panel/panel-toplevel.c:1570
 msgid "Left Floating Panel"
 msgstr "Panou flotant stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1571
 msgid "Left Edge Panel"
 msgstr "Panou margine stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Right Expanded Edge Panel"
 msgstr "Panou extins dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Right Centered Panel"
 msgstr "Panou centrat dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1579
+#: ../gnome-panel/panel-toplevel.c:1577
 msgid "Right Floating Panel"
 msgstr "Panou flotant dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1578
 msgid "Right Edge Panel"
 msgstr "Panou margine dreapta"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:1
 msgid "Animation speed"
-msgstr "Viteză animaţie"
+msgstr "Viteză animație"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
-msgstr "Ascunde automat panoul într-un colţ"
+msgstr "Ascunde automat panoul într-un colț"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:3
 msgid "Background color"
@@ -2707,7 +2815,7 @@ msgstr "Centrează panoul pe axa Y"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
-msgstr "Arată săgeţi pe butoanele de ascundere"
+msgstr "Arată săgeți pe butoanele de ascundere"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Enable hide buttons"
@@ -2715,18 +2823,18 @@ msgstr "Arată butoanele de ascundere"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr "Extinde pentru a ocupa întreaga lăţime a ecranului"
+msgstr "Extinde pentru a ocupa întreaga lățime a ecranului"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
-msgstr "Potriveşte imaginea la panou"
+msgstr "Potrivește imaginea la panou"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"La activare, se vor plasa săgeţi pe butoanele de ascundere. Această cheie "
+"La activare, se vor plasa săgeți pe butoanele de ascundere. Această cheie "
 "este relevantă doar dacă cheia „enable_buttons” este setată."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
@@ -2735,15 +2843,15 @@ msgid ""
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
 "La activare, pe fiecare margine a panoului vor fi plasate butoane ce pot fi "
-"utilizate pentru a ascunde panoul la marginea ecranului, rămânând "
-"vizibile doar butoanele."
+"utilizate pentru a ascunde panoul la marginea ecranului, rămânând vizibile "
+"doar butoanele."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"La activare, ascunderea şi reapariţia acestui panou vor fi animate, nu "
+"La activare, ascunderea și reapariția acestui panou vor fi animate, nu "
 "instantanee."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
@@ -2759,16 +2867,16 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"La activare, imaginea va fi scalată (păstrând proporţiile iniţiale) la "
-"înălţimea panoului (dacă e orizontal)."
+"La activare, imaginea va fi scalată (păstrând proporțiile inițiale) la "
+"înălțimea panoului (dacă e orizontal)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"La activare, imaginea va fi scalată la dimensiunile panoului. Proporţiile "
-"iniţiale ale imaginii vor fi păstrate."
+"La activare, imaginea va fi scalată la dimensiunile panoului. Proporțiile "
+"inițiale ale imaginii vor fi păstrate."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2776,9 +2884,9 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"La activare, panoul va fi automat ascuns într-un colţ al ecranului când "
-"indicatorul de mouse părăseşte aria panoului. Mutând indicatorul de "
-"mouseînapoi în acel colţ, se readuce panoul pe ecran."
+"La activare, panoul va fi automat ascuns într-un colț al ecranului când "
+"indicatorul de mouse părăsește aria panoului. Mutând indicatorul de "
+"mouseînapoi în acel colț, se readuce panoul pe ecran."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2787,10 +2895,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"La activare, panoul va ocupa întreaga lăţime a ecranului (sau înălţime "
-"dacă e un panou vertical). În acest mod panoul poate fi plasat doar la o "
-"margine a ecranului. Dacă nu, panoul va fi doar îndeajuns de mare pentru a "
-"găzdui progrămelele, lansatoarele şi butoanele configurate."
+"La activare, panoul va ocupa întreaga lățime a ecranului (sau înălțime dacă "
+"e un panou vertical). În acest mod panoul poate fi plasat doar la o margine "
+"a ecranului. Dacă nu, panoul va fi doar îndeajuns de mare pentru a găzdui "
+"progrămelele, lansatoarele și butoanele configurate."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2799,10 +2907,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"La activare, cheile x şi x_right sunt ignorate iar panoul va fi plasat la "
-"mijlocul axei X a ecranului. Dacă panoul este redimensionat, îşi va "
-"menţine poziţia, adică se va extinde pe ambele laturi. Dacă nu, cheia x "
-"şi x_right specifică amplasarea panoului."
+"La activare, cheile x și x_right sunt ignorate iar panoul va fi plasat la "
+"mijlocul axei X a ecranului. Dacă panoul este redimensionat, își va menține "
+"poziția, adică se va extinde pe ambele laturi. Dacă nu, cheia x și x_right "
+"specifică amplasarea panoului."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2811,19 +2919,19 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"La activare, cheile y şi y_bottom sunt ignorate iar panoul va fi plasat la "
-"mijlocul axei Y a ecranului. Dacă panoul este redimensionat, îşi va "
-"menţine poziţia, adică se va extinde pe ambele laturi. Dacă nu, cheile y "
-"şi y_bottom specifică amplasarea panoului."
+"La activare, cheile y și y_bottom sunt ignorate iar panoul va fi plasat la "
+"mijlocul axei Y a ecranului. Dacă panoul este redimensionat, își va menține "
+"poziția, adică se va extinde pe ambele laturi. Dacă nu, cheile y și y_bottom "
+"specifică amplasarea panoului."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
-"Într-o configuraţie Xinerama, puteţi avea panouri pe fiecare monitor "
+"Într-o configurație Xinerama, puteți avea panouri pe fiecare monitor "
 "individual. Această cheie identifică monitorul curent în care panoul este "
-"afişat."
+"afișat."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2835,7 +2943,7 @@ msgstr "Întârziere ascundere automată"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr "Întârziere reapariţie"
+msgstr "Întârziere reapariție"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
@@ -2847,7 +2955,7 @@ msgstr "Mărime panou"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
-msgstr "Roteşte imaginea în panourile verticale"
+msgstr "Rotește imaginea în panourile verticale"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
@@ -2859,8 +2967,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
-"Specifică fişierul de utilizat pentru imaginea fundalului. Dacă imaginea "
-"conţine un canal Alfa atunci ea va fi amestecată cu imaginea de fundal."
+"Specifică fișierul de utilizat pentru imaginea fundalului. Dacă imaginea "
+"conține un canal Alfa atunci ea va fi amestecată cu imaginea de fundal."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -2868,9 +2976,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"Specifică întârzierea în milisecunde înainte de reapariţia panoului "
-"după ce indicatorul de mouse a intrat în zona panoului. Această cheie "
-"este relevantă doar dacă cheia „auto_hide” este setată."
+"Specifică întârzierea în milisecunde înainte de reapariția panoului după ce "
+"indicatorul de mouse a intrat în zona panoului. Această cheie este relevantă "
+"doar dacă cheia „auto_hide” este setată."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
@@ -2878,18 +2986,18 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"Specifică întârzierea în milisecunde înainte de ascunderea panoului "
-"după ce indicatorul de mouse părăsit zona panoului. Această cheie este "
-"relevantă doar dacă cheia „auto_hide” este setată."
+"Specifică întârzierea în milisecunde înainte de ascunderea panoului după ce "
+"indicatorul de mouse părăsit zona panoului. Această cheie este relevantă "
+"doar dacă cheia „auto_hide” este setată."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
-"Specifică numărul de pixeli vizibili când un panou este automat ascuns "
-"într-un colţ. Această cheie este relevantă doar dacă cheia "
-"„auto-hide” este setată."
+"Specifică numărul de pixeli vizibili când un panou este automat ascuns într-"
+"un colț. Această cheie este relevantă doar dacă cheia „auto_hide” este "
+"setată."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
@@ -2897,9 +3005,9 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
-"Specifică opacitatea culorii fundalului. Dacă culoarea nu este complet "
-"opacă (o valoare mai mică de 65535), atunci culoarea va fi rezultatul "
-"amestecării cu imaginea de fundal a desktopului."
+"Specifică opacitatea culorii fundalului. Dacă culoarea nu este complet opacă "
+"(o valoare mai mică de 65535), atunci culoarea va fi rezultatul amestecării "
+"cu imaginea de fundal a desktopului."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2912,10 +3020,10 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
-"Înălţimea unui panou (sau lăţimea pentru un panou vertical). Panoul va "
-"determina la pornire mărimea minimă în funcţie de mărimea fontului şi "
-"alţi indicatori. Dimensiunea maximă este fixată la un sfert din "
-"înălţimea (sau lăţimea) ecranului."
+"Înălțimea unui panou (sau lățimea pentru un panou vertical). Panoul va "
+"determina la pornire mărimea minimă în funcție de mărimea fontului și alți "
+"indicatori. Dimensiunea maximă este fixată la un sfert din înălțimea (sau "
+"lățimea) ecranului."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -2927,21 +3035,21 @@ msgid ""
 "the orientation key."
 msgstr ""
 "Amplasarea panoului pe axa X, începând din dreapta ecranului. Dacă este "
-"setată la -1, această valoare e ignorată şi este folosită valoarea "
-"cheii x. Dacă valoarea este mai mare ca 0, atunci valoarea cheii x este "
-"ignorată. Această cheie este relevantă doar dacă panoul nu este extins. "
-"Dacă este extins, cheia este ignorată şi panoul este amplasat la marginea "
-"ecranului specificată de cheia „orientare”."
+"setată la -1, această valoare e ignorată și este folosită valoarea cheii x. "
+"Dacă valoarea este mai mare ca 0, atunci valoarea cheii x este ignorată. "
+"Această cheie este relevantă doar dacă panoul nu este extins. Dacă este "
+"extins, cheia este ignorată și panoul este amplasat la marginea ecranului "
+"specificată de cheia „orientare”."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
-"The location of the panel along the x-axis. This key is only relevant in "
-"un-expanded mode. In expanded mode this key is ignored and the panel is "
-"placed at the screen edge specified by the orientation key."
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 "Amplasarea panoului pe axa X. Această cheie este relevantă doar în mod "
-"normal. În mod extins această cheie este ignorată şi panoul este plasat "
-"la marginea ecranului specificată în cheia „orientation”."
+"normal. În mod extins această cheie este ignorată și panoul este plasat la "
+"marginea ecranului specificată în cheia „orientation”."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2952,51 +3060,50 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Amplasarea panoului pe axa y, începând din partea de jos a ecranului. "
-"Dacă este setată la -1, valoarea este ignorată şi este·folosită "
-"valoarea cheii y. Dacă valoarea este mai mare ca 0, atunci valoarea cheii y "
-"este ignorată. Această cheie este relevantă doar dacă panoul nu este "
-"extins. Dacă este extins, această cheie este ignorată şi panoul este "
-"amplasat la marginea ecranului specificată de cheia „orientare”."
+"Amplasarea panoului pe axa y, începând din partea de jos a ecranului. Dacă "
+"este setată la -1, valoarea este ignorată și este·folosită valoarea cheii y. "
+"Dacă valoarea este mai mare ca 0, atunci valoarea cheii y este ignorată. "
+"Această cheie este relevantă doar dacă panoul nu este extins. Dacă este "
+"extins, această cheie este ignorată și panoul este amplasat la marginea "
+"ecranului specificată de cheia „orientare”."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
-"The location of the panel along the y-axis. This key is only relevant in "
-"un-expanded mode. In expanded mode this key is ignored and the panel is "
-"placed at the screen edge specified by the orientation key."
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 "Amplasarea panoului pe axa Y. Această cheie este relevantă doar în mod "
-"normal. În mod extins această cheie este ignorată şi panoul este plasa "
-"la marginea ecranului specificată în cheia „orientation”."
+"normal. În mod extins această cheie este ignorată și panoul este plasa la "
+"marginea ecranului specificată în cheia „orientation”."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", "
-"\"left\", \"right\". In expanded mode the key specifies which screen edge "
-"the panel is on. In un-expanded mode the difference between \"top\" and "
-"\"bottom\" is less important - both indicate that this is a horizontal panel "
-"- but still give a useful hint as to how some panel objects should behave. "
-"For example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Orientarea panoului. Valorile posibile sunt „top”, „bottom”, "
-"„left” şi „right”. În modul extins această cheie specifică în "
-"ce margine a ecranului este panoul. În mod normal diferenţa între "
-"„top” şi „bottom” este mai puţin importantă, amândouă indică "
-"că este un panou orizontal. De exemplu, într-un panou „top” un buton "
-"din meniu va deschide un meniu sub panou, dar într-un panou „bottom” "
-"meniul va fi deschis deasupra panoului."
+"Orientarea panoului. Valorile posibile sunt „top”, „bottom”, „left” și "
+"„right”. În modul extins această cheie specifică în ce margine a ecranului "
+"este panoul. În mod normal diferența între „top” și „bottom” este mai puțin "
+"importantă, amândouă indică că este un panou orizontal. De exemplu, într-un "
+"panou „top” un buton din meniu va deschide un meniu sub panou, dar într-un "
+"panou „bottom” meniul va fi deschis deasupra panoului."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
-"The speed in which panel animations should occur. Possible values are "
-"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Viteza animaţiilor panoului. Valorile posibile sunt „slow”, "
-"„medium” şi „fast”. Această cheie este relevantă doar dacă cheia "
-"„enable_animations” este setată."
+"Viteza animațiilor panoului. Valorile posibile sunt „slow”, „medium” și "
+"„fast”. Această cheie este relevantă doar dacă cheia „enable_animations” "
+"este setată."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -3004,7 +3111,7 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
-"Acesta este un nume uşor de înţeles pentru a identifica un panou. "
+"Acesta este un nume ușor de înțeles pentru a identifica un panou. "
 "Principalul său scop este de a servi ca titlu al ferestrei panoului, util "
 "atunci când se schimbă panoul activ."
 
@@ -3020,18 +3127,17 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Ce tip de fundal ar trebui utilizat pentru acest panou. Valori posibile sunt "
-"„gtk” pentru fundalul implicit de widget GTK+, „color” pentru cheia "
-"unei culori ce va fi utilizată ca culoare de fundal sau „image” pentru "
-"imaginea specificată de cheia „image” ce va fi utilizată ca fundal."
+"„gtk” pentru fundalul implicit de widget GTK+, „color” pentru cheia unei "
+"culori ce va fi utilizată ca culoare de fundal sau „image” pentru imaginea "
+"specificată de cheia „image” ce va fi utilizată ca fundal."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"Într-o configuraţie cu mai multe ecrane puteţi avea panouri pe fiecare "
-"ecran individual. Această cheie identifică ecranul curent în care e "
-"afişat panoul."
+"Într-o configurație cu mai multe ecrane puteți avea panouri pe fiecare ecran "
+"individual. Această cheie identifică ecranul curent în care e afișat panoul."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -3043,11 +3149,11 @@ msgstr "Coordonata X a panoului, începând din dreapta ecranului"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
-msgstr "Ecran X în care este afişat panoul"
+msgstr "Ecran X în care este afișat panoul"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "Monitor Xinerama în care este afişat panoul"
+msgstr "Monitor Xinerama în care este afișat panoul"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
@@ -3057,75 +3163,55 @@ msgstr "Coordonata Y a acestui panou"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Coordonata Y a panoului, începând din partea de jos a ecranului"
 
-#: ../gnome-panel/panel-util.c:714
+#: ../gnome-panel/panel-util.c:608
 #, c-format
 msgid "Icon '%s' not found"
-msgstr "Iconiţa „%s” nu a fost găsită"
+msgstr "Iconița „%s” nu a fost găsită"
 
-#: ../gnome-panel/panel-util.c:937
+#: ../gnome-panel/panel-util.c:847
 msgid "file"
-msgstr "fişier"
+msgstr "fișier"
 
-#: ../gnome-panel/panel-util.c:1370
-msgid "Computer"
-msgstr "Computer"
+#: ../gnome-panel/panel-util.c:1064
+msgid "Home Folder"
+msgstr "Dosarul Acasă"
 
-#: ../gnome-panel/panel-util.c:1372
-msgid "Network"
-msgstr "Reţea"
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1076
+#, fuzzy
+msgid "File System"
+msgstr "Sistem"
 
-#: ../gnome-panel/panel-util.c:1374
-msgid "Fonts"
-msgstr "Fonturi"
-
-#: ../gnome-panel/panel-util.c:1376
-msgid "Themes"
-msgstr "Teme"
-
-#: ../gnome-panel/panel-util.c:1378
-msgid "CD/DVD Creator"
-msgstr "Creator de CD/DVD"
-
-#: ../gnome-panel/panel-util.c:1380
-msgid "Windows Network"
-msgstr "Reţea Windows"
-
-#. translators: this is the title of the "dns-sd:///" location
-#: ../gnome-panel/panel-util.c:1383
-msgid "Services in"
-msgstr "Servicii în"
-
-#: ../gnome-panel/panel-util.c:1457
+#: ../gnome-panel/panel-util.c:1223
 msgid "Search"
 msgstr "Caută"
 
-#: ../gnome-panel/panel-util.c:1460
-msgid "Trash"
-msgstr "Gunoi"
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1269
+#, fuzzy, c-format
+msgid "%1$s: %2$s"
+msgstr "%2$s, %1$s"
 
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: ../gnome-panel/panel-util.c:1513
-#, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s pe %2$s"
-
-#: ../gnome-panel/panel.c:477
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "Deschide URL-ul: %s"
 
 #: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
-msgstr "Şterg acest sertar?"
+msgstr "Șterg acest sertar?"
 
 #: ../gnome-panel/panel.c:1303
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"Când un sertar este eliminat, sertarul şi setările\n"
+"Când un sertar este eliminat, sertarul și setările\n"
 "sale sunt pierdute."
 
 #: ../gnome-panel/panel.c:1306
@@ -3137,7 +3223,7 @@ msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
-"Când un panou este eliminat, panoul şi setările\n"
+"Când un panou este eliminat, panoul și setările\n"
 "sale sunt pierdute."
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
@@ -3165,7 +3251,7 @@ msgstr "Am primit tipul incomplet de fundal „%s”: %s"
 #: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
-msgstr "N-am putut obţine imaginea %s"
+msgstr "N-am putut obține imaginea %s"
 
 #: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
@@ -3173,15 +3259,15 @@ msgstr "Am primit un tip necunoscut de fundal"
 
 #: ../libpanel-applet/panel-applet.c:1306
 msgid "The Applet's containing Panel's orientation"
-msgstr "Progrămel conţinând orientarea panoului"
+msgstr "Progrămel conținând orientarea panoului"
 
 #: ../libpanel-applet/panel-applet.c:1314
 msgid "The Applet's containing Panel's size in pixels"
-msgstr "Progrămel conţinând mărimea panoului în pixeli"
+msgstr "Progrămel conținând mărimea panoului în pixeli"
 
 #: ../libpanel-applet/panel-applet.c:1322
 msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "Progrămel conţinând culoarea sau imaginea de fundal a panoului "
+msgstr "Progrămel conținând culoarea sau imaginea de fundal a panoului "
 
 #: ../libpanel-applet/panel-applet.c:1330
 msgid "The Applet's flags"
@@ -3193,30 +3279,28 @@ msgstr "Limitele între care mărimile progrămelelor sunt rezonabile"
 
 #: ../libpanel-applet/panel-applet.c:1346
 msgid "The Applet's containing Panel is locked down"
-msgstr "Progrămelul conţinând panoul este complet blocat"
+msgstr "Progrămelul conținând panoul este complet blocat"
 
 #: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify an applet IID to load"
-msgstr "Alegeţi IID-ul progrămelului de încărcat"
+msgstr "Alegeți IID-ul progrămelului de încărcat"
 
 #: ../libpanel-applet/panel-test-applets.c:35
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
-"Specifică un loc GConf în care să fie stocate preferinţele progrămelelor"
+"Specifică un loc GConf în care să fie stocate preferințele progrămelelor"
 
 #: ../libpanel-applet/panel-test-applets.c:36
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
-"Specifică mărimea iniţială a progrămelului (minusculă, medie, mare "
-"etc.)"
+"Specifică mărimea inițială a progrămelului (minusculă, medie, mare etc.)"
 
 #: ../libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
-"Specifică orientarea iniţială a progrămelului (sus, jos, dreapta sau "
-"stânga)"
+"Specifică orientarea inițială a progrămelului (sus, jos, dreapta sau stânga)"
 
 #: ../libpanel-applet/panel-test-applets.c:61
 msgid "Size|XX Small"
@@ -3249,7 +3333,7 @@ msgstr "Dimensiune|XX mare"
 #: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
 msgid "Failed to load applet %s"
-msgstr "Nu am reuşit să încărc progrămelul %s"
+msgstr "Nu am reușit să încărc progrămelul %s"
 
 #. This is an utility to easily test various applets
 #: ../libpanel-applet/panel-test-applets.glade.h:2
@@ -3262,4 +3346,175 @@ msgstr "_Progrămel:"
 
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
-msgstr "Director _preferinţe:"
+msgstr "Director _preferințe:"
+
+#~ msgid "%A %B %d"
+#~ msgstr "%A %d %B"
+
+#~ msgid "Click to view time in other timezones"
+#~ msgstr "Clic pentru a vedea ora în alte fusuri orare"
+
+#~ msgid "Clock _type:"
+#~ msgstr "_Tip ceas"
+
+#~ msgid "12 hour"
+#~ msgstr "12 ore"
+
+#~ msgid "Use _UTC"
+#~ msgstr "Folosește _UTC"
+
+#~ msgid "Show multiple _timezones"
+#~ msgstr "Ara_tă mai multe fusuri orare"
+
+#~ msgid ""
+#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
+#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
+#~ "keys."
+#~ msgstr ""
+#~ "O listă de id-uri de fusuri orare. Fiecare ID identifică un anume fus "
+#~ "orar. Setările pentru aceste fuse orare sunt stocate în cheile $(id)_name "
+#~ "și $(id)_zone."
+
+#~ msgid ""
+#~ "If true, display the timezone button in the clock, in addition to time."
+#~ msgstr "Dacă e activat, arată butonul de fus orar lângă oră."
+
+#~ msgid "Show the timezone button"
+#~ msgstr "Arată butonul de fus orar"
+
+#~ msgid ""
+#~ "This key specifies the name of the timezone as can be used in the TZ "
+#~ "environment variable."
+#~ msgstr ""
+#~ "Această cheie specifică numele fusului orar așa cum poate fi folosit în "
+#~ "variabila de mediu TZ."
+
+#~ msgid "This key specifies the user-visible name of the timezone."
+#~ msgstr ""
+#~ "Această cheie specifică numele fusului orar așa cum este văzut de "
+#~ "utilizator."
+
+#~ msgid "Timezone ID list"
+#~ msgstr "Listă de id-uri de fusuri orare"
+
+#~ msgid "User-visible name of the timezone"
+#~ msgstr "Numele văzut de utilizator pentru fusul orar"
+
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>Fusuri orare active</b>"
+
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>Adaugă fus orar</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>Amplasare:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Clic pe hartă pentru a apropia și a selecta fusul orar al unui "
+#~ "oraș, sau clic dreapta pentru a distanța.</i></small>"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "mutați mausul pe hartă"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s cu ora de vară (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+
+#  dand: e greșit pus la plural, IMHO
+#~ msgid "_Edit timezones..."
+#~ msgstr "_Editează fusurile orare..."
+
+#~ msgid "Timezones"
+#~ msgstr "Fusuri orare"
+
+#~ msgid "Could not show '%s'"
+#~ msgstr "Nu pot afișa „%s”"
+
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d second."
+#~ msgid_plural ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d seconds."
+#~ msgstr[0] ""
+#~ "Sunteți autentificat ca „%s”.\n"
+#~ "Veți fi dezautentificat automat în %d secundă."
+#~ msgstr[1] ""
+#~ "Sunteți autentificat ca „%s”.\n"
+#~ "Veți fi dezautentificat automat în %d secunde."
+
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d second."
+#~ msgid_plural ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d seconds."
+#~ msgstr[0] ""
+#~ "Sunteți autentificat ca „%s”.\n"
+#~ "Sistemul va fi oprit automat în %d secundă."
+#~ msgstr[1] ""
+#~ "Sunteți autentificat ca „%s”.\n"
+#~ "Sistemul va fi oprit automat în %d secunde."
+
+#~ msgid "Log out of this system now?"
+#~ msgstr "Ieșiți din sistem acum?"
+
+#~ msgid "_Switch User"
+#~ msgstr "_Schimbă utilizatorul"
+
+#~ msgid "_Log Out"
+#~ msgstr "_Ieși din sesiune"
+
+#~ msgid "Shut down this system now?"
+#~ msgstr "Opriți sistemul acum?"
+
+#~ msgid "S_uspend"
+#~ msgstr "S_uspendă"
+
+#~ msgid "_Hibernate"
+#~ msgstr "_Hibernează"
+
+#~ msgid "_Restart"
+#~ msgstr "_Repornește calculatorul"
+
+#~ msgid "_Shut Down"
+#~ msgstr "_Oprește calculatorul"
+
+#~ msgid "Could not find a suitable application."
+#~ msgstr "Nu s-a găsit o aplicație potrivită"
+
+#~ msgid "Computer"
+#~ msgstr "Computer"
+
+#~ msgid "Network"
+#~ msgstr "Rețea"
+
+#~ msgid "Themes"
+#~ msgstr "Teme"
+
+#~ msgid "CD/DVD Creator"
+#~ msgstr "Creator de CD/DVD"
+
+#~ msgid "Windows Network"
+#~ msgstr "Rețea Windows"
+
+#~ msgid "Services in"
+#~ msgstr "Servicii în"
+
+#~ msgid "Trash"
+#~ msgstr "Gunoi"
+
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%1$s pe %2$s"
