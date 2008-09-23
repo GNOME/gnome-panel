@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.dz\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 03:27+0100\n"
-"PO-Revision-Date: 2007-06-27 03:43+0530\n"
-"Last-Translator: Tshewang Norbu <bumthap2006@hotmail.com>\n"
+"POT-Creation-Date: 2008-04-19 02:55+0000\n"
+"PO-Revision-Date: 2008-09-23 12:45+0530\n"
+"Last-Translator: Dawa pemo <daws_403@hotmail.com>\n"
 "Language-Team: DZONGKHA <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,9 +48,9 @@ msgstr "སྐོར་ལས།(_A)"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:708
+#: ../gnome-panel/panel-action-button.c:709
 #: ../gnome-panel/panel-context-menu.c:280
-#: ../gnome-panel/panel-menu-bar.c:383
+#: ../gnome-panel/panel-menu-bar.c:334
 #: ../gnome-panel/panel-menu-button.c:659
 msgid "_Help"
 msgstr "གྲོགས་རམ།(_H)"
@@ -63,7 +63,7 @@ msgid "_Preferences"
 msgstr "དགའ་གདམ་ཚུ།(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2016
+#: ../applets/clock/clock.c:4398
 msgid "Clock"
 msgstr "ཆེ་འཁོར།"
 
@@ -79,54 +79,71 @@ msgstr "ཆེ་འཁོར་གྱི་ ཨེཔ་ལེཊི་ གས�
 msgid "Get the current time and date"
 msgstr "ད་ལྟོའི་ཆུ་ཚོད་དང་ ཚེས་གྲངས་ལེན།"
 
-#: ../applets/clock/calendar-window.c:225
-#: ../applets/clock/clock.c:345
+#: ../applets/clock/calendar-window.c:242
+#: ../applets/clock/clock.c:425
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/calendar-window.c:227
-#: ../applets/clock/clock.c:347
-#: ../applets/clock/clock.c:1036
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244
+#: ../applets/clock/clock.c:427
+#: ../applets/clock/clock.c:1552
+#: ../applets/clock/clock-location-tile.c:472
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:233
+#: ../applets/clock/calendar-window.c:250
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:718
-msgid "_Tasks"
-msgstr "ལས་ཀ་ཚུ(_T)"
+#: ../applets/clock/calendar-window.c:766
+msgid "Tasks"
+msgstr "ལས་ཀ་ཚུ་ "
 
-#: ../applets/clock/calendar-window.c:834
+#: ../applets/clock/calendar-window.c:766
+#: ../applets/clock/calendar-window.c:942
+#: ../applets/clock/calendar-window.c:1571
+msgid "Edit"
+msgstr "ཞུན་དག་ "
+
+#: ../applets/clock/calendar-window.c:887
 msgid "All Day"
 msgstr "ཉིནམ་གང་"
 
-#: ../applets/clock/calendar-window.c:961
-msgid "_Appointments"
-msgstr "བསྐོ་བཞག(_A)"
+#: ../applets/clock/calendar-window.c:1026
+msgid "Appointments"
+msgstr "བསྐོ་བཞག་"
 
-#: ../applets/clock/calendar-window.c:978
-msgid "_Birthdays and Anniversaries"
-msgstr "སྐྱེ་བའི་ཉིནམ་དང་ལོ་འཁོར་དུས་སྟོན(_B)"
+#: ../applets/clock/calendar-window.c:1051
+msgid "Birthdays and Anniversaries"
+msgstr "སྐྱེ་བའི་ཉིནམ་དང་ལོ་འཁོར་དུས་སྟོན་ཚུ་ "
 
-#: ../applets/clock/calendar-window.c:994
-msgid "_Weather Information"
-msgstr "གནམ་གཤིས་ཀྱི་བརྡ་དོན(_W)"
+#: ../applets/clock/calendar-window.c:1076
+msgid "Weather Information"
+msgstr "གནམ་གཤིས་ཀྱི་བརྡ་དོན་ "
 
-#: ../applets/clock/calendar-window.c:1659
+#: ../applets/clock/calendar-window.c:1571
+#: ../applets/clock/clock.glade.h:17
+msgid "Locations"
+msgstr "གནས་ཁོངས་ཚུ་ "
+
+#: ../applets/clock/calendar-window.c:1870
 msgid "Calendar"
 msgstr "ཟླ་ཐོ།"
 
-#: ../applets/clock/clock.c:345
+#: ../applets/clock/clock.c:425
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:347
-#: ../applets/clock/clock.c:1034
+#: ../applets/clock/clock.c:427
+#: ../applets/clock/clock.c:1550
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -135,7 +152,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:367
+#: ../applets/clock/clock.c:447
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -143,7 +160,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:374
+#: ../applets/clock/clock.c:454
 #, c-format
 msgid ""
 "%1$s\n"
@@ -156,125 +173,254 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:382
+#: ../applets/clock/clock.c:462
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:520
-msgid "%A %B %d"
-msgstr "%A %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:644
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:534
+#: ../applets/clock/clock.c:674
 msgid "Click to hide your appointments and tasks"
 msgstr "ཁྱོད་རའི་ངོ་འཕྲད་དང་ ལས་ཀ་ཚུ་ དབྱིབས་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད"
 
-#: ../applets/clock/clock.c:537
+#: ../applets/clock/clock.c:677
 msgid "Click to view your appointments and tasks"
 msgstr "ཁྱོད་རའི་ངོ་འཕྲད་དང་ ལས་ཀ་ཚུ་ བལྟ་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད།"
 
-#: ../applets/clock/clock.c:541
+#: ../applets/clock/clock.c:681
 msgid "Click to hide month calendar"
 msgstr "ཟླ་བའི་ཟླ་ཐོ་ དབྱིབས་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད"
 
-#: ../applets/clock/clock.c:544
+#: ../applets/clock/clock.c:684
 msgid "Click to view month calendar"
 msgstr "ཟླ་བའི་ཟླ་ཐོ་ བལྟ་ནིའི་དོན་ལུ་ ཨེབ་གཏང་འབད།"
 
-#: ../applets/clock/clock.c:925
+#: ../applets/clock/clock.c:1400
 msgid "Computer Clock"
 msgstr "གློག་རིག་ཆེ་འཁོར།"
 
-#: ../applets/clock/clock.c:1029
+#: ../applets/clock/clock.c:1545
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1031
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1073
+#: ../applets/clock/clock.c:1589
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1148
+#: ../applets/clock/clock.c:1664
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "ཆུ་ཚོད་རིམ་སྒྲིག་ལག་ཆས་ %s གསར་བཙུགས་འབད་མ་ཚུགས།"
 
-#: ../applets/clock/clock.c:1186
+#: ../applets/clock/clock.c:1693
+msgid "Set System Time..."
+msgstr "རིམ་ལུགས་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་་་་"
+
+#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.glade.h:21
+msgid "Set System Time"
+msgstr "རིམ་ལུགས་ཀྱི་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་ "
+
+#: ../applets/clock/clock.c:1708
+msgid "Failed to set the system time"
+msgstr "རིམ་ལུགས་ཀྱི་ ཆུ་ཚོད་ གཞི་སྒྲིག་འབད་ནི་ལུ་ འཐུས་ཤོར་འབྱུང་ཡོདཔ་ "
+
+#: ../applets/clock/clock.c:1896
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
 msgstr "ཚེས་གྲངས་དང་ཆུ་ཚོད་ རིམ་སྒྲིག་གི་དོན་ལུ་ ལས་རིམ་ཅིག་འཚོལ་མ་ཐོབ། དེ་ཚུ་ག་ནི་ཡང་ གཞི་བཙུགས་མ་འབདཝ་འོང་ནི་མས།"
 
-#: ../applets/clock/clock.c:1672
+#: ../applets/clock/clock.c:2828
 msgid "Custom format"
 msgstr "སྲོལ་སྒྲིག་རྩ་སྒྲིག་།"
 
-#: ../applets/clock/clock.c:1796
-#: ../applets/clock/clock.c:1974
-#: ../applets/fish/fish.c:160
-#: ../applets/notification_area/main.c:90
-#: ../applets/wncklet/wncklet.c:120
+#: ../applets/clock/clock.c:3795
+#: ../applets/clock/clock-location-tile.c:573
 #, c-format
-msgid "There was an error displaying help: %s"
-msgstr "གྲོགས་རམ་%sབཀྲམ་སྟོན་འབད་ནི་ལུ་ འཛོལ་བ་ཅིག་བྱུང་ནུག"
+msgid "%s, %s"
+msgstr "%s, %s"
 
-#: ../applets/clock/clock.c:1833
-msgid "Clock Preferences"
-msgstr "ཆེ་འཁོར་གྱི་དགའ་གདམ་ཚུ།"
+#: ../applets/clock/clock.c:4091
+msgid "City Name"
+msgstr "གྲོང་སྡེའི་ མིང་"
 
-#: ../applets/clock/clock.c:1858
-msgid "Clock _type:"
-msgstr "ཆེ་འཁོར་གྱི་དབྱེ་བ་:(_t)"
+#: ../applets/clock/clock.c:4095
+msgid "City Time Zone"
+msgstr "གྲོང་སྡེའི་ ཆུ་ཚོད་གླིང་སྡེ་ "
 
-#: ../applets/clock/clock.c:1869
-msgid "12 hour"
-msgstr "ཆུ་ཚོད་༡༢།"
-
-#: ../applets/clock/clock.c:1870
+#: ../applets/clock/clock.c:4294
 msgid "24 hour"
 msgstr "ཆུ་ཚོད་༢༤།"
 
-#: ../applets/clock/clock.c:1871
+#: ../applets/clock/clock.c:4295
 msgid "UNIX time"
 msgstr "ཡུ་ཨེན་ཨའི་ཨེགསི་ ཆུ་ཚོད།"
 
-#: ../applets/clock/clock.c:1872
+#: ../applets/clock/clock.c:4296
 msgid "Internet time"
 msgstr "ཨིན་ཊར་ནེཊི་ ཆུ་ཚོད།"
 
-#: ../applets/clock/clock.c:1880
+#: ../applets/clock/clock.c:4304
 msgid "Custom _format:"
 msgstr "སྲོལ་སྒྲིག་རྩ་སྒྲིག་:(_f)"
 
-#: ../applets/clock/clock.c:1899
-msgid "Show _seconds"
-msgstr "སྐར་ཆ་ཚུ་སྟོན།(_s)"
-
-#: ../applets/clock/clock.c:1908
-msgid "Show _date"
-msgstr "ཚེས་གྲངས་སྟོན།(_d)"
-
-#: ../applets/clock/clock.c:1917
-msgid "Use _UTC"
-msgstr "ཡུ་ཊི་སི་ ལག་ལེན་འཐབ།(_U)"
-
-#: ../applets/clock/clock.c:2019
+#: ../applets/clock/clock.c:4401
 msgid "The Clock displays the current time and date"
 msgstr "ཆེ་འཁོར་གྱིས་ ད་ལྟོའི་ཆུ་ཚོད་དང་ཚེས་གྲངས་ བཀྲམ་སྟོན་འབདཝ་ཨིན།"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2022
+#: ../applets/clock/clock.c:4404
 #: ../applets/fish/fish.c:588
 #: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:531
-#: ../applets/wncklet/window-list.c:762
+#: ../applets/wncklet/showdesktop.c:533
+#: ../applets/wncklet/window-list.c:605
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:546
+#: ../applets/wncklet/workspace-switcher.c:620
 #: ../gnome-panel/panel-context-menu.c:134
 msgid "translator-credits"
 msgstr "ཨའི་ཌི་ཨར་སི་གི་མ་དངུལ་རྒྱབ་སྐྱོར་ཐོག་ལས་ བརྡ་དོན་འཕྲུལ་རིག་ལས་ཁུངས་ནང་ སྐད་བསྒྱུར་འབད་ཡི། ཁ་གསལ་གྱི་དོན་ལུ་ འབྲེལ་བ་འཐབ་ས་: <pema_geyleg@druknet.bt>/<pgeyleg@dit.gov.bt>"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "12 _hour format"
+msgstr "ཆུ་ཚོད་ ༡༢  _ རྩ སྒྲིག་ "
+
+#: ../applets/clock/clock.glade.h:2
+msgid "24 h_our format"
+msgstr "ཆུ་ཚོད་ ༢༤ རྩ་སྒྲིག་ (_O)"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Clock Options</b>"
+msgstr "<b>ཆེ་འཁོར་ གདམ་ཁ་ཚུ་ </b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Display</b>"
+msgstr "<b>བཀྲབ་སྟོན་ </b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<b>Panel Display</b>"
+msgstr "<b>པེ་ནཱལ་ བཀྲམ་སྟོན་ </b>"
+
+#: ../applets/clock/clock.glade.h:6
+msgid "<b>Time Settings</b>"
+msgstr "<b>ཆུ་ཚོད་ ཀྱི་ སྒྲིག་སྟངས་ཚུ་</b>"
+
+#: ../applets/clock/clock.glade.h:7
+msgid "<i>(optional)</i>"
+msgstr "<i>(optional)</i>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "ཆེ་འཁོར་གྱི་དགའ་གདམ་ཚུ།"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "ད་ལྟོའི་ ཆུ་ཚོད:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"ཤར\n"
+"ནུབ་ "
+
+#: ../applets/clock/clock.glade.h:12
+msgid "Find _Next"
+msgstr "ཤུལ་མམ་དེ་འཚོལ་ (_N)"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Find..."
+msgstr "འཚོལ་་་་་་"
+
+#: ../applets/clock/clock.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "ཡོངས་ཁྱབ་།"
+
+#: ../applets/clock/clock.glade.h:15
+msgid "Latitude:"
+msgstr "ལྷོ་བྱང་མཚམས་ཐིག:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Location Name:"
+msgstr "གནས་ཁོངས་ མིང:"
+
+#: ../applets/clock/clock.glade.h:18
+msgid "Longitude:"
+msgstr "ཤར་ནུབ་མཚམས་ཐིག:"
+
+#: ../applets/clock/clock.glade.h:19
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"བྱང་\n"
+"ལྷོ་ "
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show _temperature"
+msgstr "ཚ་དྲདོ་ སྟོན་ (_T)"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show _weather"
+msgstr "གནམ་གཤིས་ ་སྟོན་ (_W)"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Show seco_nds"
+msgstr "སྐར་ཆ་ཚུ་སྟོན  (_N)"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Show the _date"
+msgstr "ཚེས་གྲངས་ སྟོན་  (_D)"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time Settings"
+msgstr "ཆུ་ཚོད་ གཞི་སྒྲིག་ "
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Time _Settings"
+msgstr "ཆུ་ཚོད་ གཞི་སྒྲིག་ཚུ་ (_S)"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Time:"
+msgstr "དུས་ཚོད:"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "Timezone:"
+msgstr "ཆུ་ཚོད་གླིང་སྡེ :"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "Weather"
+msgstr "གནམ་གཤིས་ "
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Find:"
+msgstr "འཚོལ:(_F)"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Pressure unit:"
+msgstr "ཨེབ་ཤུགས་ཀྱི་ སྡེ་ཕྲན་:(_P)"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Temperature unit:"
+msgstr "ཚ་དྲོད་ ཆ་ཕྲན: (_t)"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Visibility unit:"
+msgstr "མཐོང་གསལ་ ཆ་ཕྲན:(_V)"
+
+#: ../applets/clock/clock.glade.h:35
+msgid "_Wind speed unit:"
+msgstr "རླུང་གི་མགྱོགས་ཚད་ ཆ་ཕྲན:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -291,112 +437,254 @@ msgid "24-hour"
 msgstr "ཆུ་ཚོད་-༢༤"
 
 #: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "ཟླ་ཐོའི་ཝིན་ཌོ་ནང་ བཀྲམ་སྟོན་འབད་ནི་ཨིན་པའི་ གནས་ཁོངས་ཀྱི་ཐོ་ཡིག། "
+
+#: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
 msgstr "ཆེ་འཁོར་གྱི་ སྲོལ་སྒྲིག་རྩ་སྒྲིག་།"
 
-#: ../applets/clock/clock.schemas.in.h:13
+#: ../applets/clock/clock.schemas.in.h:14
 msgid "Expand list of appointments"
 msgstr "བསྐོ་བཞག་གི་ཐོ་བཀོད་རྒྱ་འཕར་འབད"
 
-#: ../applets/clock/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:15
 msgid "Expand list of birthdays"
 msgstr "སྐྱེ་བའི་ཉིནམ་ཚུ་གི་ཐོ་བཀོད་རྒྱ་འཕརའབད"
 
-#: ../applets/clock/clock.schemas.in.h:15
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "གནས་ཁོངས་ཚུ་གི་ ཐོ་ཡིག་རྒྱ་འཕར་འབད་ "
+
+#: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
 msgstr "ལས་ཀ་ཚུ་གི་ཐོ་ཡིག་རྒྱ་འཕར་འབད"
 
-#: ../applets/clock/clock.schemas.in.h:16
+#: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
 msgstr "གནམ་གཤིས་བརྡ་དོན་ཚུ་གི་ཐོ་ཡིག་རྒྱ་འཕར་འབད"
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "ཆུ་ཚོད་ཀྱི་རྩ་སྒྲིག་།"
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ གནམ་གཤིས་ཀྱི་ ངོས་དཔར་ བཀྲམ་སྟོན་འབད། "
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཆེ་འཁོར་ནང་ ཆུ་ཚོད་ཀྱི་ཁ་སྐོང་ལུ་ ཚེས་གྲངས་བཀྲམ་སྟོན་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཆུ་ཚོད་ནང་སྐར་ཆ་ བཀྲམ་སྟོན་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཆུ་ཚོད་དེ་ འཛམ་གླིང་ཡོངས་ཁྱབ་ མཉམ་འབྲེལ་འབད་མི་ ཆུ་ཚོད་གླིང་སྡེའི་ནང་ བཀྲམ་སྟོན་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:21
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ བསྐ་བཞག་གི་ཐོ་བཀོད་ཚུ་ཝིན་ཌོ་ ཟླ་ཐོའི་ནང་རྒྱ་འཕར་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ སྐྱེ་བའི་ཉིནམ་གྱི་ཐོ་བཀོད་ཚུ་ ཟླ་ཐོའི་ནང་རྒྱ་འཕར་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཟླ་ཐོའི་ཝིན་ཌོ་ནང་ལུ་ གནས་ཁོངས་ཀྱི་ ཐོ་ཡིག་ རྒྱ་འཕར་གཏང། "
+
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ལས་ཀ་གི་ཐོ་བཀོད་ཚུ་ ཟླ་ཐོའི་ནང་རྒྱ་འཕར་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ གནམ་གཤིས་བརྡ་དོན་ཐོ་བཀོད་ཚུ་ ཟླ་ཐོའི་ནང་རྒྱ་འཕར་འབད།"
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ དཔག་བྱེད་དེ་ ཆེ་འཁོར་གུ་ལས་ཕར་ཡོད་པའི་སྐབས་ ཚེས་གྲངས་དེ་ ལག་ཆས་ཕན་བསླབ་ནང་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ གནམ་གཤིས་ཀྱི་དངོས་དཔར་གྱི་ སྦོ་ལོགས་ཁར་ ཚ་དྲོད་སྟོན། "
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ བདུན་ཕྲག་གི་ཨང་གྲངས་ཚུ་ ཟླ་ཐོའི་ནང་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "གནས་ཁོངས་ཚུ་གི་ ཐོ་ཡིག"
+
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "ཆེ་འཁོར་ནང་ ཚེས་གྲངས་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "ལག་ཆས་ཕན་བསླབ་ནང་ ཚེས་གྲངས་ནང་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "ཆེ་འཁོར་ནང་ ཚེས་དྲོད་ སྟོན་ "
+
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "ཆུ་ཚོད་སྐར་ཆ་དང་བཅསཔ་སྦེ་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "ཆེ་འཁོར་ནང་ གནམ་གཤིས་ ་སྟོན།"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "བདུན་ཕྲག་གི་ཨང་གྲངས་ཚུ་ ཟླ་ཐོ་ནང་སྟོན།"
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "མགྱོགས་ཚད་ ཆ་ཕྲན་ "
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "ཚ་དྲོད་ ཆ་ཕྲན་ "
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "ཚ་དྲོད་ཚུ་ སྟོན་པའི་སྐབས་ ལག་ལེན་འཐབ་ནི་ཨིན་པའི་ ཆ་ཕྲན། "
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "རླུང་གི་ མགྱོགས་ཚད་སྟོན་པའི་སྐབས་ ལག་ལེན་འཐབ་ནིའི་ ཆ་ཕྲན། "
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
 msgstr "ལྡེ་མིག་འདི་གི་ལག་ལེན་དེ་ རྩ་སྒྲིག་ལྡེ་མིག་གི་དོན་ལུ་ ཇི་ནོམ་༢.༦ ནང་ལུ་ གསང་བ་བཟོ་སྟེ་ཡོད། ལས་འཆར་དེ་ ཐོན་རིམ་རྙིངམ་ཚུ་དང་ མཐུན་འགྱུར་གྱི་དོན་ལུ་ བདག་འཛིན་འབད་བཞག་ཡོད།"
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:44
 msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
 msgstr "ལྡེ་མིག་འདི་གིས་ སྲོལ་སྒྲིག་ལྡེ་མིག་དེ་ \"custom\"ལུ་ གཞི་སྒྲིག་འབདཝ་ད་ ཆེ་འཁོར་གྱི་ཨེཔstrftime()་ལེཊི་གིས་ ལག་ལེན་འཐབ་མི་ རྩ་སྒྲིག་དེ་ གསལ་བཀོད་འབདཝ་ཨིན། དམིགས་བསལ་གྱི་རྩ་སྒྲིག་ཅིག་ ལེན་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་ strftime() གིས་ ཧ་གོ་མི་ གཞི་བསྒྱུར་གྱི་གསལ་བཀོདཔ་དེ་ ལག་ལེན་འཐབ་བཏུབ། བརྡ་དོན་ལེ་ཤ་གི་དོན་ལས་strftime()ལག་དེབ་བལྟ།"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:45
 msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
 msgstr "ལྡེ་མིག་འདི་གིས་ ཆེ་འཁོར་གྱི་ཨེཔ་ལེཊི་གིས་ ལག་ལེན་འཐབ་མི་ ཆུ་ཚོད་གཞི་སྒྲིག་དེ་ གསལ་བཀོད་འབདཝ་ཨིན། སྲིད་པའི་བེ་ལུསི་ \"12-hour\", \"24-hour\", \"internet\", \"unix\" དང་ \"custom\"ཚུ་ཨིན། གལ་སྲིད་ \"internet\" ལུ་གཞི་སྒྲིག་འབད་བ་ཅིན་ ཆེ་འཁོར་གྱིས་ཨིན་ཊར་ནེཊི་གི་ཆུ་ཚོད་ བཀྲམ་སྟོན་འབད་འོང་། ཨིན་ཊར་ནེཊི་གི་ ཆུ་ཚོད་རིམ་ལུགས་དེ་གིས་ ཉིནམ་དེ་ \".beats\" ༡༠༠༠ ལུ་བགོཝ་ཨིན། རིམ་ལུགས་འདི་ནང་ ཆུ་ཚོད་ཀྱི་གླིང་སྡེ་མེདཔ་ལས་ ཆུ་ཚོད་དེ་ འཛམ་གླིང་ཡོངས་ལུ་ ཅོག་གཅིགཔ་ཨིན། གལ་སྲིད་ \"unix\" ལུ་གཞི་སྒྲིག་འབད་བ་ཅིན་ ཨི་པོཀ་ཟེར་ ༡༩༧༠-༠༡-༠༡ ལས་གསར་བཙུགས་འབད་དེ་ ཆེ་འཁོར་དེ་གིས་ ཆུ་ཚོད་སྐར་ཆའི་ནང་ བཀྲམ་སྟོན་འབད་འོང་། གལ་སྲིད་ \"custom\"ལུ་ གཞི་སྒྲིག་འབད་བ་ཅིན་ ཆེ་འཁོར་དེ་གིས་ ཆུ་ཚོད་དེ་ སྲོལ་སྒྲིག་རྩ་སྒྲིག་གི་ལྡེ་མིག་ནང་ གསལ་བཀོད་འབད་མི་དང་འཁྲིལ་ཏེ་ བཀྲམ་སྟོན་འབད་འོང་།"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "ལྡེ་མིག་འདི་གིས་ ཆུ་ཚོད་རིམ་སྒྲིག་འབད་ཐབས་ལུ་ ལག་ལེན་འཐབ་ནིའི་ ལས་རིམ་དེ་ གསལ་བཀོད་འབདཝ་ཨིན།"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "ཆུ་ཚོད་རིམསྒྲིག་ལག་ཆས།"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "ཨིན་ཊར་ནེཊི་གི་ཆུ་ཚོད་ ལག་ལེན་འཐབ།"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "ཡུ་ཨེན་ཨའི་ཨེགསི་ཆུ་ཚོད་ ལག་ལེན་འཐབ།"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "ཡུ་ཊི་སི་ ལག་ལེན་འཐབ།"
+
+#: ../applets/clock/clock-location-tile.c:182
+msgid "Failed to set the system timezone"
+msgstr "རིམ་ལུགས་ཀྱི་ ཆུ་ཚོད་གླིང་སྡེ་ གཞི་སྒྲིག་འབད་ནི་འཐུས་ཤོར་འབྱུང་ཡོདཔ་ "
+
+#: ../applets/clock/clock-location-tile.c:230
+msgid "<small>Set...</small>"
+msgstr "<small>གཞི་སྒྲིག་ </small>"
+
+#: ../applets/clock/clock-location-tile.c:231
+msgid "<small>Set</small>"
+msgstr "<small>གཞི་སྒྲིག་ </small>"
+
+#. FIXME: this needs to talk about locations, not timezones
+#: ../applets/clock/clock-location-tile.c:307
+msgid "Set as current timezone for this computer"
+msgstr "གློག་རིག་འདི་གི་དོན་ལུ་ ད་ལྟོའི་ ཆུ་ཚོད་གླིག་སྡེ་སྦེ་ གཞི་སྒྲིག་འབད་ "
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:445
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:454
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:464
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:585
+#: ../applets/clock/clock-location-tile.c:593
+msgid "Unknown"
+msgstr "མ་ཤེསཔ་ "
+
+#: ../applets/clock/clock-location-tile.c:586
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, བཟུམ་སྦེ་ ཚོར་སྣང་  %s"
+
+#: ../applets/clock/clock-location-tile.c:604
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "ཉི་ཤར་: %s / ཉི་ནུབ་: %s"
+
+#: ../applets/clock/clock-utils.c:72
+#: ../applets/fish/fish.c:160
+#: ../applets/notification_area/main.c:90
+#: ../applets/wncklet/wncklet.c:109
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "གྲོགས་རམ་%sབཀྲམ་སྟོན་འབད་ནི་ལུ་ འཛོལ་བ་ཅིག་བྱུང་ནུག"
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "རིམ་ལུགས་ཀྱི་དུས་ཚོད་ བསྒྱུར་བཅོས་འབད་ "
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "རིམ་ལུགསཀྱི་ དུས་ཚོད་གླིང་སྡེ་ བསྒྱུར་བཅོས་འབད་ "
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "སྲ་ཆས་ ཆེ་འཁོར་ རིམ་སྒྲིག་འབད་ "
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "རིམ་ལུགས་ཀྱི་ དུས་ཚོད་ གླིང་སྡེ་ བསྒྱུར་བཅོས་འབད་ནིའི་དོན་ལུ་ ཁེ་དབང་ཚུ་དགོཔ་འདུག། "
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "རིམ་ལུགས་ཀྱི་དུས་ཚོད་ བསྒྱུར་བཅོས་འབད་ནིའི་དོན་ལུ་ ཁེ་དབང་ཚུ་དགོཔ་འདུག། "
+
+#: ../applets/clock/gnome-clock-applet-mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "ས་ཆས་ ཆེ་འཁོར་ རིམ་སྒྲིག་འབད་ནིའི་དོན་ལུ་ ཁེ་དབང་ཚུ་ དགོཔ་འདུག། "
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -429,7 +717,7 @@ msgstr ""
 " བསླབ་བྱ་བྱིན་མི་དེ་ཡང་ དེ་གིས་ཨེཔ་ལེཊི་དེ་ \"practical\" ཡང་ན་ ཕན་ཐོགས་ཅན་བཟོཝ་ཨིན།"
 
 #: ../applets/fish/fish.c:436
-#: ../gnome-panel/panel-properties-dialog.c:450
+#: ../gnome-panel/panel-properties-dialog.c:449
 msgid "Images"
 msgstr "གཟུགས་བརྙན།"
 
@@ -519,8 +807,6 @@ msgid "%s the Fish, the fortune teller"
 msgstr "ཉ་%s དེ་ བསོད་ནམས་བཤད་མི་ཨིན།"
 
 #: ../applets/fish/fish.glade.h:1
-#: ../applets/wncklet/window-list.glade.h:1
-#: ../applets/wncklet/workspace-switcher.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -663,7 +949,7 @@ msgid "Switch between workspaces"
 msgstr "ལཱ་གི་ས་སྒོ་ཚུ་གི་བར་ན་ སོར་བསྒྱུར་འབད།"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:765
+#: ../applets/wncklet/window-list.c:608
 msgid "Window List"
 msgstr "སྒོ་སྒྲིག་གི་ཐོ་ཡིག"
 
@@ -678,7 +964,7 @@ msgid "Window Selector"
 msgstr "སྒོ་སྒྲིག་སེལ་བྱེད།"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:549
+#: ../applets/wncklet/workspace-switcher.c:623
 msgid "Workspace Switcher"
 msgstr "ལཱ་གི་ས་སྒོ་སོར་བསྒྱུར་འབད་མི།"
 
@@ -691,7 +977,7 @@ msgstr "%s: %s མངོན་གསལ་འབད་མ་ཚུགས། \n"
 msgid "Icon not found"
 msgstr "ངོས་དཔར་མ་ཐོབ།"
 
-#: ../applets/wncklet/showdesktop.c:242
+#: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to restore hidden windows."
 msgstr "སྦ་སྟེ་ཡོད་པའི་སྒོ་སྒྲིག་ཚུ་ སོར་ཆུད་འབད་ནིའི་དོན་ལུ་ ནཱ་ལུ་ཨེབ་གཏང་འབད།"
 
@@ -699,91 +985,66 @@ msgstr "སྦ་སྟེ་ཡོད་པའི་སྒོ་སྒྲིག
 msgid "Click here to hide all windows and show the desktop."
 msgstr "སྒོ་སྒྲིག་ཆ་མཉམ་སྦ་བཞག་ཞིནམ་ལས་ ཌེཀསི་ཊོཔ་་སྟོན་ནིའི་དོན་ལུ་ ནཱ་ལུ་ཨེབ་གཏང་འབད།"
 
-#: ../applets/wncklet/showdesktop.c:453
-#: ../applets/wncklet/showdesktop.c:534
+#: ../applets/wncklet/showdesktop.c:455
+#: ../applets/wncklet/showdesktop.c:536
 msgid "Show Desktop Button"
 msgstr "ཌེཀསི་ཊོཔ་གི་ཨེབ་རྟ་སྟོན།"
 
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:538
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ཨེབ་རྟ་འདི་གིས་ སྒོ་སྒྲིག་ག་ར་ སྦ་བཞག་སྟེ་ ཌེཀསི་ཊོཔ་སྟོན་བཅུགཔ་ཨིན།"
 
-#: ../applets/wncklet/showdesktop.c:566
+#: ../applets/wncklet/showdesktop.c:568
 msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
 msgstr "ཁྱོད་ཀྱི་སྒོ་སྒྲིག་འཛིན་སྐྱོངཔ་གིས་ སྟོན་ནིའི་ཌེཀསི་ཊོཔ་ ཨེབ་རྟ་ལུ་ རྒྱབ་བསྐྱོར་མི་འབད་བས། ཡང་ན་ ཁྱོད་ཀྱིས་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་ཅིག་ གཡོག་བཀོལ་དོ་མེདཔ་འོང་ནི་མས།"
 
-#: ../applets/wncklet/window-list.c:767
+#: ../applets/wncklet/window-list.c:610
 msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
 msgstr "སྒོ་སྒྲིག་ཐོ་ཡིག་དེ་གིས་ སྒོ་སྒྲིག་ཆ་མཉམ་གྱི་ ཐོ་ཡིག་ཅིག་ ཨེབ་རྟའི་ཆ་ཚན་ཅིག་ནང་སྟོན་ཏེ་ ཁྱོད་ལུ་དེ་ཚུ་བརྡ་འཚོལ་འབད་བཅུགཔ་ཨིན།"
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>མར་ཕབ་འབད་དེ་ཡོད་པའི་སྒོ་སྒྲིག་ཚུ་ སོར་ཆུད་འབད་དོ། </b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>སྒོ་སྒྲིག་གི་སྡེ་ཚན་བཟོ་བ། </b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ནང་དོན། </b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ཚད།</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "སྤྱོད་ལམ།"
-
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "ས་སྒོ་ཚད་ཅིག་ལས་མེད་པའི་སྐབས་ལུ་ སྒོ་སྒྲིག་ཚུ་སྡེ་ཚན་བཟོ།(_s)"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "ཚད་ཕབ་:(_i)"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "ཚད་ཀྱི་མང་མཐའ་:(_x)"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "ད་ལྟོའི་ལཱ་གི་ས་སྒོ་ལུ་ སོར་ཆུད་འབད།(_w)"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "རང་ཡུལ་ལཱ་གི་ས་སྒོ་ལུ་ སོར་ཆུད་འབད།(_t)"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "ད་ལྟོའི་ལཱ་གི་ས་སྒོ་ནང་ལས་ སྒོ་སྒྲིག་ཚུ་སྟོན།(_o)"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "ལཱ་གི་ས་སྒོ་ཆ་མཉམ་ནང་ལས་ སྒོ་སྒྲིག་ཚུ་སྟོན།(_l)"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "ཚད།"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ དགའ་གདམ་ཚུ།"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "སྒོ་སྒྲིག་ཚུ་ ཨ་རྟག་རང་སྡེ་ཚན་བསྡོམས་ཏེ་བཞག(_A)"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "སྒོ་སྒྲིག་ཚུ་ ནམ་ཡང་སྡེ་ཚན་མ་བཟོ།(_N)"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "པིག་སེལསི།"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
@@ -814,14 +1075,10 @@ msgid "Show windows from all workspaces"
 msgstr "ལཱ་གི་ས་སྒོ་ཆ་མཉམ་ནང་ལས་ སྒོ་སྒྲིག་ཚུ་སྟོན།"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "This key specifies the maximum width that the window list requests. The maximum width setting is useful to limit the size of the window list in large panels, where the window list could fill the entire space available."
-msgstr "ལྡེ་མིག་འདི་གིས་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ཞུ་བ་འབད་མི་ རྒྱ་ཚད་ཀྱི་མང་མཐའ་ གསལ་བཀོད་འབདཝ་ཨིན། རྒྱ་ཚད་ཀྱི་མང་མཐའ་གཞི་སྒྲིག་དེ་ཡང་ པེ་ནཱལ་སྦོམ་ཚུ་ནང་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ས་སྒོ་ཆ་མཉམ་གང་ནི་ཨིནམ་ལས་ སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ཚད་བཟོ་ནི་ལུ་ ཕན་ཐོགས་ཡོདཔ་ཨིན།"
+msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
+msgstr "ལྡེ་མིག་འདི་གི་ལག་ལེན་དེ་ ཇི་ནོམ་༢.༦ ནང་ལུ་ གསང་བ་བཟོ་སྟེ་ཡོད། ལས་འཆར་དེ་ ཐོན་རིམ་རྙིངམ་ཚུ་དང་ མཐུན་འགྱུར་གྱི་དོན་ལུ་ བདག་འཛིན་འབད་བཞག་ཡོད།"
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr "ལྡེ་མིག་འདི་གིས་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ཞུ་བ་འབད་མི་ རྒྱ་ཚད་ཀྱི་ཉུང་མཐའ་ གསལ་བཀོད་འབདཝ་ཨིན། "
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "སྒོ་སྒྲིག་ཚུ་ ནམ་སྡེ་ཚན་བསྡོམ་དགོཔ་ཨིན་ན།"
 
@@ -829,69 +1086,69 @@ msgstr "སྒོ་སྒྲིག་ཚུ་ ནམ་སྡེ་ཚན་�
 msgid "The Window Selector shows a list of all windows in a menu and lets you browse them."
 msgstr "སྒོ་སྒྲིག་སེལ་བྱེད་ཀྱིས་ སྒོ་སྒྲིག་ཆ་མཉམ་གྱི་ ཐོ་ཡིག་ཅིག་སྟོན་ཞིནམ་ལས་ དེ་ཚུ་ལུ་བརྡ་འཚོལ་འབད་བཅུགཔ་ཨིན།"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
-#: ../applets/wncklet/workspace-switcher.glade.h:11
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "གྲལ་ཐིག་ཚུ།"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:865
+#: ../applets/wncklet/workspace-switcher.c:213
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "ཀེར་ཐིག་ཚུ།"
 
-#: ../applets/wncklet/workspace-switcher.c:417
+#: ../applets/wncklet/workspace-switcher.c:487
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "ལཱ་གི་ས་སྒོ་སོར་བསྒྱུར་འབད་མི་%sགི་དོན་ལུ་ གྲལ་ཐིག་གི་གྱངས་ཁའི་བེ་ལུ་ མངོན་གསལ་འབད་ནི་ལུ་འཛོལ་བ། (_r)\n"
 
-#: ../applets/wncklet/workspace-switcher.c:428
+#: ../applets/wncklet/workspace-switcher.c:498
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "ལཱ་གི་ས་སྒོ་སོར་བསྒྱུར་འབད་མི་%sགི་དོན་ལུ་ ལཱ་གི་ས་སྒོའི་མིང་ བཀྲམ་སྟོན་གྱི་བེ་ལུ་ མངོན་གསལ་འབད་ནི་ལུ་འཛོལ་བ། \n"
 
-#: ../applets/wncklet/workspace-switcher.c:443
+#: ../applets/wncklet/workspace-switcher.c:513
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི་%sགི་དོན་ལུ་ ལཱ་གི་ས་སྒོ་ཆ་མཉམ་ བཀྲམ་སྟོན་གྱི་བེ་ལུ་ མངོན་གསལ་འབད་ནི་ལུ་འཛོལ་བ། \n"
 
-#: ../applets/wncklet/workspace-switcher.c:551
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
 msgstr "ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི་དེ་གིས་ ཁྱོད་རའི་སྒོ་སྒྲིག་ཚུ་ འཛིན་སྐྱོང་འཐབ་བཅུག་ནིའི་དོན་ལས་ ཁྱོད་ལུ་ཁྱོད་རའི་ལཱ་གི་ས་སྒོ་ཚུ་གི་ ཐོན་རིམ་ཆུང་ཀུ་ཅིག་སྟོནམ་ཨིན།"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:2
+#: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
 msgstr "<b>སོར་བསྒྱུར་འབད་མི་</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
 msgstr "<b>ལཱ་གི་ས་སྒོ་ཚུ་</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
 msgstr "ལཱ་གི་ས་སྒོའི་གྱངས་ཁ།(_w)"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
 msgstr "ལཱ་གི་ས་སྒོ་ཆ་མཉམ་ནང་ལུ་: སྟོན།(_a)"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
 msgstr "ད་ལྟོའི་ལཱ་གི་ས་སྒོ་རྐྱངམ་གཅིག་སྟོན།(_o)"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
 msgstr "སོར་བསྒྱུར་འབད་མི་ནང་ལུ་ ལཱ་གི་ས་སྒོའི་མིང་ཚུ་སྟོན།(_n)"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
 msgstr "ལཱ་གི་ས་སྒོའི་མིང་།"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མིའི་དགའ་གདམ་ཚུ།"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
 msgstr "ལཱ་གི་ས་སྒོའི་མིང་ཚུ་:(_m)"
 
@@ -908,8 +1165,8 @@ msgid "If true, the workspace switcher will show all workspaces. Otherwise it wi
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི་དེ་གིས་ ལཱ་གི་ས་སྒོ་ཆ་མཉམ་སྟོན་འོང་། དེ་མིན་པ་ཅིན་ དེ་གིས་ད་ལྟོའི་ལཱ་གི་ས་སྒོ་རྐྱངམ་གཅིག་སྟོན་འོང་།"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace."
-msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི་དེ་ནང་གི་ ལཱ་གི་ས་སྒོ་ཚུ་གིས་ ལཱ་གི་ས་སྒོའི་མིང་ཚུ་ བཀྲམ་སྟོན་འབད་འོང་། དེ་མིན་པ་ཅིན་ དེ་ཚུ་གིས་ ལཱ་གི་ས་སྒོ་ནང་གི་སྒོ་སྒྲིག་ཚུ་ བཀྲམ་སྟོན་འབད་འོང་།"
+msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ལཱ་གི་ས་སྒོ་ སོར་བསྒྱུར་འབད་མི་དེ་ནང་གི་ ལཱ་གི་ས་སྒོ་ཚུ་གིས་ ལཱ་གི་ས་སྒོའི་མིང་ཚུ་ བཀྲམ་སྟོན་འབད་འོང་། དེ་མིན་པ་ཅིན་ དེ་ཚུ་གིས་ ལཱ་གི་ས་སྒོ་ནང་གི་སྒོ་སྒྲིག་ཚུ་ བཀྲམ་སྟོན་འབད་འོང་།གཞི་སྒྲིག་འདི་ ཝིན་ཌོ་འཛིན་སྐྱོང་པ་དེ་ མེ་ཊ་སི་ཊི་ ཨིན་པ་ཅིན་རྐྱངམ་ཅིག་ ལཱ་འབད་འོང་། "
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -948,7 +1205,7 @@ msgstr "ས་ཁོངས་སྟོངམ་ཅིག་ འཚོལ་མ�
 
 #: ../gnome-panel/drawer.c:350
 #: ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1527
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Drawer"
 msgstr "བཤུད་སྒྲོམ།"
 
@@ -957,37 +1214,37 @@ msgid "_Add to Drawer..."
 msgstr "བཤུད་སྒྲོམ་ལུ་ ཁ་སྐོང་རྐྱབས་...(_A)"
 
 #: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:858
+#: ../gnome-panel/launcher.c:891
 #: ../gnome-panel/panel-action-button.c:138
 #: ../gnome-panel/panel-context-menu.c:212
 msgid "_Properties"
 msgstr "རྒྱུ་དངོས་ཚུ།(_P)"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:25
+#: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "གྲ་སྒྲིག་སྣོད་ཐོའི་ནང་ ཡིག་སྣོད་གསར་བསྐྲུན་འབད།"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:26
+#: ../gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[ཡིག་སྣོད་...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:129
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- ཌེཀསི་ཊོཔ་ཡིག་སྣོད་ཚུ་ ཞུན་དག་རྐྱབས།"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:160
-#: ../gnome-panel/gnome-desktop-item-edit.c:212
-#: ../gnome-panel/launcher.c:948
+#: ../gnome-panel/gnome-desktop-item-edit.c:145
+#: ../gnome-panel/gnome-desktop-item-edit.c:199
+#: ../gnome-panel/launcher.c:981
 msgid "Create Launcher"
 msgstr "གསར་བཙུགས་འབད་མི་ གསར་བསྐྲུན།"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:186
-#: ../gnome-panel/gnome-desktop-item-edit.c:206
+#: ../gnome-panel/gnome-desktop-item-edit.c:170
+#: ../gnome-panel/gnome-desktop-item-edit.c:193
 msgid "Directory Properties"
 msgstr "སྣོད་ཐོའི་རྒྱུ་དངོས་ཚུ།"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:191
-#: ../gnome-panel/launcher.c:786
+#: ../gnome-panel/gnome-desktop-item-edit.c:176
+#: ../gnome-panel/launcher.c:819
 msgid "Launcher Properties"
 msgstr "གསར་བཙུགས་འབད་མིའི་རྒྱུ་དངོས།"
 
@@ -999,69 +1256,70 @@ msgstr "ཝིན་ཌོ་འཛིན་སྐྱོང་འབད་ནི
 msgid "Panel"
 msgstr "པེ་ནཱལ"
 
-#: ../gnome-panel/launcher.c:151
+#: ../gnome-panel/launcher.c:170
 msgid "Could not show this URL"
 msgstr "ཡུ་ཨར་ཨེལ་འདི་སྟོན་མ་ཚུགས།"
 
-#: ../gnome-panel/launcher.c:152
+#: ../gnome-panel/launcher.c:171
 msgid "No URL was specified."
 msgstr "ཡུ་ཨར་ཨེལ་གསལ་བཀོད་མ་འབད་བས།"
 
-#: ../gnome-panel/launcher.c:165
+#: ../gnome-panel/launcher.c:183
 #, c-format
 msgid "Could not show '%s'"
 msgstr "'%s'སྟོན་མ་ཚུགས།"
 
-#: ../gnome-panel/launcher.c:210
+#: ../gnome-panel/launcher.c:229
 msgid "Could not launch application"
 msgstr "གློག་རིམ་གསར་བཙུགས་འབད་མ་ཚུགས།"
 
-#: ../gnome-panel/launcher.c:275
+#: ../gnome-panel/launcher.c:297
 msgid "Could not use dropped item"
 msgstr "བཀོག་བཞག་པའི་རྣམ་གྲངས་ལག་ལེན་འཐབ་མ་ཚུགས།"
 
-#: ../gnome-panel/launcher.c:471
+#: ../gnome-panel/launcher.c:501
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "པེ་ནཱལ་གསར་བཙུགས་འབད་མི་ ཌེཀསི་ཊོཔ་ཡིག་སྣོད་ཀྱི་དོན་ལུ་ ཡུ་ཨར་ཨའི་ མ་བྱིན་པས། \n"
 
-#: ../gnome-panel/launcher.c:514
+#: ../gnome-panel/launcher.c:544
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "པེ་ནཱལ་གསར་བཙུགས་འབད་མི་ %s%sགི་དོན་ལུ་ ཌེཀསི་ཊོཔ་ཡིག་སྣོད་་%sཁ་ཕྱེ་མི་ཚུགས་པས། \n"
 
-#: ../gnome-panel/launcher.c:852
+#: ../gnome-panel/launcher.c:885
 msgid "_Launch"
 msgstr "འགོ་བཙུགས།(_L)"
 
-#: ../gnome-panel/launcher.c:891
+#: ../gnome-panel/launcher.c:924
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "ལྡེ་མིག་%sགཞི་སྒྲིག་མ་འབདཝ་ལས་ གསར་བཙུགས་འབད་མི་ མངོན་གསལ་འབད་མི་ཚུགས་པས། \n"
 
-#: ../gnome-panel/launcher.c:1015
+#: ../gnome-panel/launcher.c:1048
 #: ../gnome-panel/panel-ditem-editor.c:1347
 #: ../gnome-panel/panel-ditem-editor.c:1381
 #: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "Could not save launcher"
 msgstr "གསར་བཙུགས་འབད་མི་ སྲུང་བཞག་འབད་མ་ཚུགས།"
 
-#: ../gnome-panel/menu.c:931
+#: ../gnome-panel/menu.c:1004
 msgid "Add this launcher to _panel"
 msgstr "གསར་བཙུགས་འབད་མི་འདི་ པེ་ནཱལ་གུ་ཁ་སྐོང་རྐྱབས།(_p)"
 
-#: ../gnome-panel/menu.c:942
+#: ../gnome-panel/menu.c:1011
 msgid "Add this launcher to _desktop"
 msgstr "གསར་བཙུགས་འབད་མི་འདི་ ཌེཀསི་ཊོཔ་གུ་ཁ་སྐོང་རྐྱབས།(_d)"
 
-#: ../gnome-panel/menu.c:958
+#: ../gnome-panel/menu.c:1023
 msgid "_Entire menu"
 msgstr "དཀར་ཆག་ཡོངས་རྫོགས།(_E)"
 
-#: ../gnome-panel/menu.c:968
+#: ../gnome-panel/menu.c:1028
 msgid "Add this as _drawer to panel"
 msgstr "འདི་པེ་ནཱལ་གུ་ བཤུད་སྒྲོམ་སྦེ་ ཁ་སྐོང་རྐྱབས།(_d)"
 
-#: ../gnome-panel/menu.c:980
+#: ../gnome-panel/menu.c:1035
 msgid "Add this as _menu to panel"
 msgstr "འདི་པེ་ནཱལ་གུ་དཀར་ཆག་སྦེ་ཁ་སྐོང་རྐྱབས།(_m)"
 
@@ -1121,75 +1379,75 @@ msgid "_Lock Screen"
 msgstr "གསལ་གཞི་ལྡེ་མིག་རྐྱབས།(_L)"
 
 #: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:458
-#: ../gnome-panel/panel-menu-button.c:991
-#: ../gnome-panel/panel-util.c:808
+#: ../gnome-panel/panel-menu-bar.c:409
+#: ../gnome-panel/panel-menu-button.c:990
+#: ../gnome-panel/panel-util.c:752
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' ལག་ལེན་འཐབ་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-action-button.c:252
+#: ../gnome-panel/panel-action-button.c:253
 msgid "Could not connect to server"
 msgstr "སར་བར་ལུ་མཐུད་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-action-button.c:283
+#: ../gnome-panel/panel-action-button.c:284
 msgid "Lock Screen"
 msgstr "གསལ་གཞི་ལྡེ་མིག་རྐྱབས།"
 
-#: ../gnome-panel/panel-action-button.c:284
+#: ../gnome-panel/panel-action-button.c:285
 msgid "Protect your computer from unauthorized use"
 msgstr "ཁྱོད་རའི་གློག་རིག་ གནང་བ་མེད་པར་སྤྱོད་ནི་ལས་ ཉེན་སྐྱོབ་འབད།"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:298
+#: ../gnome-panel/panel-action-button.c:299
 msgid "Log Out..."
 msgstr "ཕྱིར་བསྐྱོད་..."
 
-#: ../gnome-panel/panel-action-button.c:299
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Log out of this session to log in as a different user"
 msgstr "ལག་ལེན་པ་སོ་སོ་ཅིག་སྦེ་ ནང་བསྐྱོད་འབད་ནི་ལུ་ ལཱ་ཡུན་འདི་ནང་ལས་ ཕྱིར་བསྐྱོད་འབད།"
 
-#: ../gnome-panel/panel-action-button.c:308
+#: ../gnome-panel/panel-action-button.c:309
 msgid "Run Application..."
 msgstr "གློག་རིམ་གཡོག་བཀོལ་..."
 
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:310
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "གློག་རིམ་འདི་ བརྡ་བཀོད་ཅིག་གུ་ཡིག་དཔར་བརྐྱབ་ནི་དང་ཐོ་ཡིག་ཅིག་ལས་གདམ་ཁ་བརྐྱབ་ཐོག་ལས་ གཡོག་བཀོལ་"
 
-#: ../gnome-panel/panel-action-button.c:318
+#: ../gnome-panel/panel-action-button.c:319
 msgid "Search for Files..."
 msgstr "ཡིག་སྣོད་ཀྱི་དོན་ལས་ འཚོལ་ཞིབ་འབད་..."
 
-#: ../gnome-panel/panel-action-button.c:319
+#: ../gnome-panel/panel-action-button.c:320
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "མིང་ཡང་ན་ནང་དོན་གྱིས་སྦེ་ གློག་རིག་དེ་གུ་ཡིག་ཆ་ཚུ་དང་སྣོད་འཛིན་ཚུ་ག་ཡོད་འཚོལ་"
 
-#: ../gnome-panel/panel-action-button.c:327
+#: ../gnome-panel/panel-action-button.c:328
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "བང་ཅན་སྦེ་སྤངས།"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:329
 msgid "Force a misbehaving application to quit"
 msgstr "སྤྱོད་ངན་གྱི་ གློམ་རིམ་ཅིག་ བང་ཅན་སྦེ་སྤངས།"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:337
+#: ../gnome-panel/panel-action-button.c:338
 msgid "Connect to Server..."
 msgstr "སར་བར་ལུ་མཐུད་..."
 
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:339
 msgid "Connect to a remote computer or shared disk"
 msgstr "ཐག་རིང་གི་གློག་རིག་ཅིག་ལུ་ཡང་ན་རུབ་སྤྱོད་འབད་ཡོད་པའི་ཌིཀསི་ལུ་མཐུད་"
 
-#: ../gnome-panel/panel-action-button.c:346
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Shut Down..."
 msgstr "སྒོ་བསྡམས་..."
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:348
 msgid "Shut down the computer"
 msgstr "གློག་རིག་སྒོ་བསྡམས།"
 
@@ -1210,7 +1468,7 @@ msgid "Copy a launcher from the applications menu"
 msgstr "གློག་རིམ་དཀར་ཆག་ནང་ལས་ གསར་བཙུགས་འབད་མི་ཅིག་ འདྲ་བཤུས་རྐྱབས།"
 
 #: ../gnome-panel/panel-addto.c:137
-#: ../gnome-panel/panel-menu-button.c:1092
+#: ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "དཀར་ཆག་གཙོ་བོ།"
 
@@ -1254,6 +1512,7 @@ msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"ལུ་ ཁ་སྐོང་བརྐྱབ་ནའི་དོན་ལུ་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
 #: ../gnome-panel/panel-addto.c:1065
+#, c-format
 msgid "Add to Drawer"
 msgstr "བཤུད་སྒྲོམ་ལུ་ཁ་སྐོང་རྐྱབས།"
 
@@ -1262,6 +1521,7 @@ msgid "Find an _item to add to the drawer:"
 msgstr "བཤུད་སྒྲོམ་ལུ་ཁ་སྐོང་བརྐྱབ་ནིའི་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
 #: ../gnome-panel/panel-addto.c:1069
+#, c-format
 msgid "Add to Panel"
 msgstr "པེ་ནཱལ་ལུ་ ཁ་སྐོང་རྐྱབས།"
 
@@ -1269,29 +1529,29 @@ msgstr "པེ་ནཱལ་ལུ་ ཁ་སྐོང་རྐྱབས།"
 msgid "Find an _item to add to the panel:"
 msgstr "པེ་ནཱལ་ལུ་ཁ་སྐོང་བརྐྱབ་ནིའི་ རྣམ་གྲངས་ཅིག་འཚོལ།(_i)"
 
-#: ../gnome-panel/panel-applet-frame.c:850
+#: ../gnome-panel/panel-applet-frame.c:842
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "པོཔ་ཨཔ་དཀར་ཆག་'%s' ནང་ལས་ དམིགས་བསལ།(_m) \n"
 
-#: ../gnome-panel/panel-applet-frame.c:975
+#: ../gnome-panel/panel-applet-frame.c:967
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" དེ་ རེ་བ་མེད་པར་ སྤངས་ད་ནུག"
 
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:969
 msgid "Panel object has quit unexpectedly"
 msgstr "པེ་ནཱལ་གྱི་དངོས་པོ་དེ་ རེ་བ་མེད་པར་སྤངས་ད་ནུག"
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:976
 msgid "If you reload a panel object, it will automatically be added back to the panel."
 msgstr "ཁྱོད་ཀྱིས་པེ་ནཱལ་དངོས་པོ་ཅིག་ སླར་མངོན་གསལ་འབད་བ་ཅིན་ རང་བཞིན་གྱིས་ ལོག་སྟེ་པེ་ནཱལ་གུ་ ཁ་སྐོང་བརྐྱབ་འོང་།"
 
-#: ../gnome-panel/panel-applet-frame.c:990
+#: ../gnome-panel/panel-applet-frame.c:982
 msgid "_Don't Reload"
 msgstr "སླར་མངོན་གསལ་མ་འབད།(_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:991
+#: ../gnome-panel/panel-applet-frame.c:983
 msgid "_Reload"
 msgstr "སླར་མངོན་གསལ་འབད།(_R)"
 
@@ -1300,22 +1560,22 @@ msgstr "སླར་མངོན་གསལ་འབད།(_R)"
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:1006
-#: ../gnome-panel/panel-applet-frame.c:1094
-#: ../gnome-panel/panel-util.c:396
+#: ../gnome-panel/panel-applet-frame.c:998
+#: ../gnome-panel/panel-applet-frame.c:1086
+#: ../gnome-panel/panel-util.c:395
 msgid "Error"
 msgstr "འཛོལ་བ"
 
-#: ../gnome-panel/panel-applet-frame.c:1057
+#: ../gnome-panel/panel-applet-frame.c:1049
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\"མངོན་གསལ་འབད་བའི་སྐབས་ པེ་ནཱལ་དེ་ལུ་ དཀའ་ངལ་ཅིག་བྱུང་ནུག"
 
-#: ../gnome-panel/panel-applet-frame.c:1073
+#: ../gnome-panel/panel-applet-frame.c:1065
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "ཁྱོད་རའི་རིམ་སྒྲིག་ནང་ལས་ ཨེཔ་ལེཊི་ བཏོན་གཏང་དགོ་མནོཝ་ཨིན་ན?"
 
-#: ../gnome-panel/panel-applet-frame.c:1147
+#: ../gnome-panel/panel-applet-frame.c:1139
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "ཚད་འཛིན་ནང་ལས་ ཨེཔ་ལེཊི་ཤེལ་གྱི་ ངོས་འདྲ་བ་ ལེན་མི་ཚུགས་པས། \n"
 
@@ -1446,7 +1706,7 @@ msgid "The location of the launcher is not set."
 msgstr "གསར་བཙུགས་པའི་གནས་ཁོངས་དེ་ གཞི་སྒྲིག་མ་འབད་བས།"
 
 #: ../gnome-panel/panel-ditem-editor.c:1453
-#: ../gnome-panel/panel-util.c:186
+#: ../gnome-panel/panel-util.c:185
 msgid "Could not display help document"
 msgstr "གྲོགས་རམ་ཡིག་ཆ་ བཀྲམ་སྟོན་འབད་མ་ཚུགས།"
 
@@ -1599,7 +1859,7 @@ msgstr "བདེན་པ་ཨིན་པ་ཅིན་ པེ་ནཱལ�
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ པེ་ནཱལསི་ནང་གི་ དངོས་པའི་དོན་ལུ་ ལག་ཆས་ཕན་བསླབ་ཚུ་སྟོནམ་ཨིན།"
 
-#: ../gnome-panel/panel-logout.c:238
+#: ../gnome-panel/panel-logout.c:242
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1614,7 +1874,7 @@ msgstr[1] ""
 "ཁྱོད་ད་ལྟོ་\"%s\".\n"
 "བཟུམ་སྦེ་ཕྱིར་བསྐྱོད་འབད་ཡོདཔཁྱོད་སྐར་ཆ་%d ནང་འཁོད་ལུ་ རང་བཞིན་གྱིས་ཕྱིར་བསྐྱོད་འབད་འོང་།"
 
-#: ../gnome-panel/panel-logout.c:249
+#: ../gnome-panel/panel-logout.c:253
 #, c-format
 msgid ""
 "You are currently logged in as \"%s\".\n"
@@ -1629,43 +1889,43 @@ msgstr[1] ""
 "ཁྱོད་ད་ལྟོ་\"%s\".\n"
 "བཟུམ་སྦེ་ཕྱིར་བསྐྱོད་འབད་ཡོདཔརིམ་ལུགས་འདི་སྐར་ཆ་%dནང་ལུ་རང་བཞིན་གྱིས་སྒོ་བསྡམ་འོང་།"
 
-#: ../gnome-panel/panel-logout.c:330
+#: ../gnome-panel/panel-logout.c:339
 msgid "Log out of this system now?"
 msgstr "རིམ་ལུགས་འདི་ནང་ལས་ ད་ལྟོ་རང་ཕྱིར་བསྐྱོད་འབད་ནི་ཨིན་ན?"
 
-#: ../gnome-panel/panel-logout.c:336
+#: ../gnome-panel/panel-logout.c:345
 msgid "_Switch User"
 msgstr "ལག་ལེན་སོར་བསྒྱུར་འབད།(_S)"
 
-#: ../gnome-panel/panel-logout.c:342
+#: ../gnome-panel/panel-logout.c:351
 msgid "_Log Out"
 msgstr "ཕྱིར་བསྐྱོད།(_L)"
 
-#: ../gnome-panel/panel-logout.c:347
+#: ../gnome-panel/panel-logout.c:356
 msgid "Shut down this system now?"
 msgstr "རིམ་ལུགས་འདི་ ད་ལྟོ་རང་སྒོ་བསྡམ་ནི་ཨིན་ན?"
 
-#: ../gnome-panel/panel-logout.c:352
+#: ../gnome-panel/panel-logout.c:361
 msgid "S_uspend"
 msgstr "འཕྲལ་བཀག(_u)"
 
-#: ../gnome-panel/panel-logout.c:357
+#: ../gnome-panel/panel-logout.c:366
 msgid "_Hibernate"
 msgstr "གཉིད་ནང་བཙུགས།(_H)"
 
-#: ../gnome-panel/panel-logout.c:362
+#: ../gnome-panel/panel-logout.c:371
 msgid "_Restart"
 msgstr "ལོག་འགོ་བཙུགས།(_R)"
 
-#: ../gnome-panel/panel-logout.c:371
+#: ../gnome-panel/panel-logout.c:380
 msgid "_Shut Down"
 msgstr "སྒོ་བསྡམས།(_S)"
 
-#: ../gnome-panel/panel-menu-bar.c:77
+#: ../gnome-panel/panel-menu-bar.c:97
 msgid "Browse and run installed applications"
 msgstr "གཞི་བཙུགས་འབད་དེ་ཡོད་པའི་གློག་རིམ་ཚུ་ བརྡ་འཚོལ་འབད་དེ་གཡོག་བཀོལ།"
 
-#: ../gnome-panel/panel-menu-bar.c:89
+#: ../gnome-panel/panel-menu-bar.c:99
 msgid "Access documents, folders and network places"
 msgstr "ཡིག་ཆ་དང་ སྣོད་འཛིན་ ཡོངས་འབྲེལ་ས་གནས་ཚུ་ལུ་ འཛུལ་སྤྱོད་འབད།"
 
@@ -1673,56 +1933,81 @@ msgstr "ཡིག་ཆ་དང་ སྣོད་འཛིན་ ཡོངས�
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "ཌེགསི་ཊོཔ་གི་འབྱུང་སྣང་དང་སྤྱོད་ལམ་སོར། གྲོགས་རམ་ལེན་ ཡང་ན་ ཕྱིར་བསྐྱོད་འབད།"
 
-#: ../gnome-panel/panel-menu-bar.c:185
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "གློག་རིམ་ཚུ།"
 
-#: ../gnome-panel/panel-menu-bar.c:391
+#: ../gnome-panel/panel-menu-bar.c:342
 #: ../gnome-panel/panel-menu-button.c:664
 msgid "_Edit Menus"
 msgstr "དཀར་ཆག་ཚུ་ ཞུན་དག་རྐྱབས།(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:118
+#: ../gnome-panel/panel-menu-items.c:135
 #: ../gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "གནས་ཁོངས་'%s'ཁ་ཕྱེ་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-menu-items.c:404
+#: ../gnome-panel/panel-menu-items.c:416
 msgid "Bookmarks"
 msgstr "དེབ་རྟགས་ཚུ།"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:423
+#: ../gnome-panel/panel-menu-items.c:438
+#: ../gnome-panel/panel.c:531
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s'ཁ་ཕྱེ།"
 
-#: ../gnome-panel/panel-menu-items.c:515
+#: ../gnome-panel/panel-menu-items.c:506
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "བརྡ་ལམ་ བསྒྱུར་བཅོས་ཚུ་གི་དོན་ལུ་  %s ཞིབ་ལྟ་འབད་མི་ཚུགས་པས་ "
+
+#: ../gnome-panel/panel-menu-items.c:549
+#, c-format
+msgid "Rescan %s"
+msgstr "%s ལོག་ ཞིབ་ལྟ་འབད་ "
+
+#: ../gnome-panel/panel-menu-items.c:585
+#, c-format
+msgid "Unable to mount %s"
+msgstr "%s སྦྱར་བརྩེགས་འབད་མ་ཚུགས་ "
+
+#: ../gnome-panel/panel-menu-items.c:638
+#, c-format
+msgid "Mount %s"
+msgstr " %s སྦྱར་བརྩེགས་འབད་ "
+
+#: ../gnome-panel/panel-menu-items.c:841
+msgid "Removable Media"
+msgstr "རྩ་བསྐྲད་གཏང་བཏུབ་པའི་བརྡ་ལམ།"
+
+#: ../gnome-panel/panel-menu-items.c:922
 msgid "Network Places"
 msgstr "ཡོངས་འབྲེལ་གྱི་ས་གནས།"
 
-#: ../gnome-panel/panel-menu-items.c:518
-msgid "Removable Media"
-msgstr "རྩ་བསྐྲད་གཏང་བཏུབ་པའི་བརྡ་ལམ།"
+#: ../gnome-panel/panel-menu-items.c:961
+msgid "Open your personal folder"
+msgstr "ཁྱོད་རའི་ སྒེར་དོན་གྱི་ སྣོད་འཛིན་ ཁ་ཕྱེ་ "
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: ../gnome-panel/panel-menu-items.c:589
+#: ../gnome-panel/panel-menu-items.c:981
 msgid "Desktop Folder|Desktop"
 msgstr "ཌེཀསི་ཊོཔ།"
 
-#: ../gnome-panel/panel-menu-items.c:590
+#: ../gnome-panel/panel-menu-items.c:982
 msgid "Open the contents of your desktop in a folder"
 msgstr "ཁྱོད་རའི་ཌེཀསི་ཊོཔ་གི་སྣོད་འཛིན་གཅིག་ནང་ ནང་དོན་ཚུ་ཁ་ཕྱེ་"
 
-#: ../gnome-panel/panel-menu-items.c:898
+#: ../gnome-panel/panel-menu-items.c:1374
 msgid "Places"
 msgstr "ས་གནས་ཚུ།"
 
-#: ../gnome-panel/panel-menu-items.c:928
+#: ../gnome-panel/panel-menu-items.c:1403
 msgid "System"
 msgstr "རིམ་ལུགས།"
 
@@ -1730,7 +2015,7 @@ msgstr "རིམ་ལུགས།"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1480
 msgid "panel:showusername|1"
 msgstr "པེ་ནཱལ་: ལག་ལེན་པའི་མིང་སྟོན|༡།"
 
@@ -1738,21 +2023,25 @@ msgstr "པེ་ནཱལ་: ལག་ལེན་པའི་མིང་ས�
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1018
+#: ../gnome-panel/panel-menu-items.c:1492
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s ཕྱིར་བསྐྱོད་འབད་..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1022
+#: ../gnome-panel/panel-menu-items.c:1496
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "ལག་ལེན་པ་སོ་སོ་ཅིག་སྦེ་ ནང་བསྐྱོད་འབད་ནི་ལུ་ ལཱ་ཡུན་འདི་གི་%sཕྱིར་བསྐྱོད་འབད།"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:1537
 msgid "Could not launch menu item"
 msgstr "དཀར་ཆག་རྣམ་གྲངས་གསར་བཙུགས་འབད་མ་ཚུགས།"
+
+#: ../gnome-panel/panel-mount-operation.c:124
+msgid "Enter Password"
+msgstr "ཆོག་ཡིག་ བཙུགས་ "
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1866,28 +2155,29 @@ msgstr "དངོས་པོའི་ཨེབ་རྟའི་དོན་ལ
 msgid "Use custom path for menu contents"
 msgstr "དཀར་ཆག་ནང་དོན་གྱི་དོན་ལུ་ སྲོལ་སྒྲིག་འགྲུལ་ལམ་ ལག་ལེན་འཐབ།"
 
-#: ../gnome-panel/panel-profile.c:762
-#: ../gnome-panel/panel-profile.c:789
-#: ../gnome-panel/panel-profile.c:825
-#: ../gnome-panel/panel-profile.c:1648
+#: ../gnome-panel/panel-profile.c:766
+#: ../gnome-panel/panel-profile.c:793
+#: ../gnome-panel/panel-profile.c:829
+#: ../gnome-panel/panel-profile.c:1694
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "ཇི་ཀཱོནཕ་ཡིག་རྒྱུན་གྱི་བེ་ལུ་'%s': %sལྷག་ནི་ལུ་འཛོལ་བ།"
 
-#: ../gnome-panel/panel-profile.c:804
-#: ../gnome-panel/panel-profile.c:1544
-#: ../gnome-panel/panel-profile.c:1617
-#: ../gnome-panel/panel-profile.c:1680
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:808
+#: ../gnome-panel/panel-profile.c:1590
+#: ../gnome-panel/panel-profile.c:1663
+#: ../gnome-panel/panel-profile.c:1745
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "ཇི་ཀཱོནཕ་ ཧྲིལ་གྲངས་ཀྱི་བེ་ལུ་'%s': %sལྷག་ནི་ལུ་འཛོལ་བ།"
 
-#: ../gnome-panel/panel-profile.c:1554
+#: ../gnome-panel/panel-profile.c:1600
 #, c-format
 msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
 msgstr "པེ་ནཱལ་%sདེ་ ད་ལྟོ་མེད་མི་ གསལ་གཞི་%dགུ་ བཀྲམ་སྟོན་འབད་ནི་འབད་ གཞི་སྒྲིག་འབད་ནུག"
 
-#: ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:1678
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "ཇི་ཀཱོནཕ་ བུ་ལིན་གྱི་བེ་ལུ་'%s': %sལྷག་ནི་ལུ་འཛོལ་བ།"
@@ -1912,17 +2202,17 @@ msgstr "ཕྱོགས།གཡོན།"
 msgid "Orientation|Right"
 msgstr "ཕྱོགས།གཡས།"
 
-#: ../gnome-panel/panel-properties-dialog.c:927
+#: ../gnome-panel/panel-properties-dialog.c:947
 msgid "Drawer Properties"
 msgstr "སྣོད་ཐོའི་རྒྱུ་དངོས་ཚུ"
 
-#: ../gnome-panel/panel-properties-dialog.c:1035
-#: ../gnome-panel/panel-run-dialog.c:1951
+#: ../gnome-panel/panel-properties-dialog.c:1055
+#: ../gnome-panel/panel-run-dialog.c:1963
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "ཡིག་སྣོད་'%s'མངོན་གསལ་འབད་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-properties-dialog.c:1040
+#: ../gnome-panel/panel-properties-dialog.c:1060
 msgid "Could not display properties dialog"
 msgstr "རྒྱུ་དངོས་ཀྱི་ཌའི་ལོག་བཀྲམ་སྟོན་འབད་མ་ཚུགས།"
 
@@ -1953,10 +2243,6 @@ msgstr "ཚོས་གཞི་:(_l)"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "རྒྱ་འཕར།(_x)"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "ཡོངས་ཁྱབ་།"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
@@ -2028,26 +2314,31 @@ msgstr "ཚད་:(_S)"
 msgid "_Tile"
 msgstr "ཊ་ཡེལ།(_T)"
 
-#: ../gnome-panel/panel-recent.c:50
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "པིག་སེལསི།"
+
+#: ../gnome-panel/panel-recent.c:51
+#, c-format
 msgid "Could not find a suitable application."
 msgstr "གློག་རིམ་འོས་ལྡན་ཅིག་འཐོབ་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-recent.c:97
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:95
+#: ../gnome-panel/panel-recent.c:105
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "འཕྲལ་ཁམས་ལག་ལེན་འཐབ་མི་ཡིག་ཆ་\"%s\"ཁ་ཕྱེ་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:107
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\"ཁ་ཕྱེ་ནི་ལུ་ འབད་རྩོལ་བསྐྱེད་པའི་སྐབས་ མ་ཤེས་པའི་འཛོལ་བ་ཅིག་བྱུང་ཡི།"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:164
 msgid "Clear the Recent Documents list?"
 msgstr "འཕྲལ་ཁམས་ཀྱི་ཡིག་ཆའི་ཐོ་ཡིག་དེ་བསལ།"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:166
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2057,16 +2348,16 @@ msgstr ""
 "•ས་གནས་ཚུ་ནང་ལས་རྣམ་གྲངས་ཆ་མཉམ་→འཕྲལ་གྱི་ཡིག་ཆའི་དཀར་ཆག་རྣམ་གྲངས། \n"
 "•གློག་རིམ་ཆ་མཉམ་ནང་གི་ འཕྲལ་གྱི་ཡིག་ཆའི་ཐོ་ཡིག་ནང་ལས་ རྣམ་གྲངས་ཆ་མཉམ།"
 
-#: ../gnome-panel/panel-recent.c:180
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:178
+#: ../gnome-panel/panel-recent.c:252
 msgid "Clear Recent Documents"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་བསལ་གཏང་།"
 
-#: ../gnome-panel/panel-recent.c:215
+#: ../gnome-panel/panel-recent.c:213
 msgid "Recent Documents"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆ་ཚུ།"
 
-#: ../gnome-panel/panel-recent.c:259
+#: ../gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "འཕྲལ་གྱི་ཡིག་ཆའི་ཐོ་ཡིག་ནང་ལས་ རྣམ་གྲངས་ཆ་མཉམབསལ་གཏང་།"
 
@@ -2075,31 +2366,31 @@ msgstr "འཕྲལ་གྱི་ཡིག་ཆའི་ཐོ་ཡིག་
 msgid "Could not run command '%s'"
 msgstr "བརྡ་བཀོད་'%s' གཡོག་བཀོལ་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-run-dialog.c:406
+#: ../gnome-panel/panel-run-dialog.c:407
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "ཡུ་ཊི་ཨེཕ་-༨ ནང་ལས་'%sགཞི་བསྒྱུར་འབད་མ་ཚུགས།"
 
-#: ../gnome-panel/panel-run-dialog.c:1212
+#: ../gnome-panel/panel-run-dialog.c:1215
 msgid "Choose a file to append to the command..."
 msgstr "བརྡ་བཀོད་ལུ་ མཇུག་བསྣོན་འབད་ནིའི་ཡིག་སྣོད་ཅིག་ གདམ་ཁ་རྐྱབས།"
 
-#: ../gnome-panel/panel-run-dialog.c:1588
+#: ../gnome-panel/panel-run-dialog.c:1591
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "དེ་གི་འགྲེལ་བཤད་བལྟ་ནིའི་དོན་ལུ་ གློག་རིམ་ཅིག་ སེལ་འཐུ་འབད།"
 
-#: ../gnome-panel/panel-run-dialog.c:1626
+#: ../gnome-panel/panel-run-dialog.c:1629
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "བརྡ་བཀོད་ཡོག་བཀོལ་འོང་། :'%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1660
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "གཡོག་བཀོལ་བའི་ཌའི་ལོག་གུ་བཞག་མི་ ཡུ་ཨར་ཨའི་ཐོ་ཡིག་དེ་ལུ་ རྩ་སྒྲིག་་ཕྱི་འགྱུར་(%d)ཡང་ན་ རིང་ཚད་(%d)འདུག\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1955
+#: ../gnome-panel/panel-run-dialog.c:1967
 msgid "Could not display run dialog"
 msgstr "གཡོག་བཀོལ་ཌའི་ལོག་བཀྲམ་སྟོན་འབད་མ་ཚུགས།"
 
@@ -2186,73 +2477,73 @@ msgstr "བསལ།(_l)"
 msgid "D_on't Delete"
 msgstr "བཏོན་མ་གཏང་།(_o)"
 
-#: ../gnome-panel/panel-toplevel.c:1117
+#: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "པེ་ནཱལ་སྦ་བཞག"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1498
+#: ../gnome-panel/panel-toplevel.c:1559
 msgid "Top Expanded Edge Panel"
 msgstr "མགོའི་མཐའ་ཟུར་རྒྱ་འཕར་ཅན་གྱི་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1499
+#: ../gnome-panel/panel-toplevel.c:1560
 msgid "Top Centered Panel"
 msgstr "མགོའི་དབུས་བསྒྲིགས་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1500
+#: ../gnome-panel/panel-toplevel.c:1561
 msgid "Top Floating Panel"
 msgstr "མགོའི་འཕུར་ལྡིང་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1501
+#: ../gnome-panel/panel-toplevel.c:1562
 msgid "Top Edge Panel"
 msgstr "མགོའི་མཐའ་ཟུར་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1566
 msgid "Bottom Expanded Edge Panel"
 msgstr "མཇུག་གི་མཐའ་ཟུར་རྒྱ་འཕར་ཅན་གྱི་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1506
+#: ../gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Centered Panel"
 msgstr "མཇུག་གི་དབུས་བསྒྲིགས་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1507
+#: ../gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Floating Panel"
 msgstr "མཇུག་གི་འཕུར་ལྡིང་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1508
+#: ../gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Edge Panel"
 msgstr "མཇུག་གི་མཐའ་ཟུར་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Left Expanded Edge Panel"
 msgstr "གཡོན་གྱི་མཐའ་ཟུར་རྒྱ་འཕར་ཅན་གྱི་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1513
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Left Centered Panel"
 msgstr "གཡོན་གྱི་དབུས་བསྒྲིགས་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1514
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Left Floating Panel"
 msgstr "གཡོན་གྱི་འཕུར་ལྡིང་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1515
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Left Edge Panel"
 msgstr "གཡོན་གྱི་མཐའ་ཟུར་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Right Expanded Edge Panel"
 msgstr "གཡས་ཀྱི་མཐའ་ཟུར་རྒྱ་འཕར་ཅན་གྱི་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1520
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Right Centered Panel"
 msgstr "གཡས་ཀྱི་དབུས་བསྒྲིགས་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1521
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Right Floating Panel"
 msgstr "གཡས་ཀྱི་འཕུར་ལྡིང་པེ་ནཱལ།"
 
-#: ../gnome-panel/panel-toplevel.c:1522
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Right Edge Panel"
 msgstr "གཡས་ཀྱི་མཐའ་ཟུར་པེ་ནཱལ།"
 
@@ -2337,12 +2628,12 @@ msgid "If true, the panel will occupy the entire screen width (height if this is
 msgstr "བདེན་པ་ཨིན་པ་ཅིན་ པེ་ནཱལ་དེ་གིས་ གསལ་གཞིའི་རྒྱ་ཚད་ཧྲིལ་བུ་ འདྲ་བཤུས་བརྐྱབ་འོང་། (ཀེར་ཕྲང་པེ་ནཱལ་ཨིན་པ་ཅིན་མཐོ་ཚད་) ཐབས་ལམ་འདི་ནང་ པེ་ནཱལ་དེ་ གསལ་གཞིའི་མཐའ་ཟུར་ཅིག་ལུ་རྐྱངམ་གཅིག་ ཞག་བཏུབ། རྫུན་པ་ཨིན་པ་ཅིན་ པེ་ནཱལ་དེ་ པེ་ནཱལ་གུ་ཡོད་པའི་ ཨེཔ་ལེཊིསི་དང་ གསར་བཙུགས་འབད་མི་ ཨེབ་རྟ་ཚུ་ ཤོམ་ཚུགསཔ་ཙམ་ཅིག་འབད་སྡོད་འོང་།"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x key is ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x key specifies the location of the panel."
-msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཨེགསི་ལྡེ་མིག་དེ་ སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་གསལ་གཞིའི་ ཨེགསི་-ཚད་ཐིག་གི་ སྦུག་ལུ་བཞག་འོང་། པེ་ནཱལ་གྱི་ཚད་སོར་བ་ཅིན་ གནས་ས་དེ་གུ་རང་སྡོད་ནི་ཨིན་མི་དེ་ཡང་ དཔེར་ན་ པེ་ནཱལ་དེ་ ཕྱོགས་གཉིས་ཆ་རང་ལུ་ སྦོམ་འགྱོ་འོང་། རྫུན་པ་ཨིན་པ་ཅིན་ ཨེགསི་ལྡེ་མིག་དེ་གིས་ པེ་ནཱལ་གྱི་གནས་ཁོངས་ གསལ་བཀོད་འབད་འོང་།"
+msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཨེགསི་ལྡེ་མིག་དེ་ སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་གསལ་གཞིའི་ ཨེགསི་-ཚད་ཐིག་གི་ སྦུག་ལུ་བཞག་འོང་།  པེ་ནཱལ་གྱི་ཚད་སོར་བ་ཅིན་ གནས་ས་དེ་གུ་རང་སྡོད་ནི་ཨིན་མི་དེ་ཡང་ དཔེར་ན་ པེ་ནཱལ་དེ་ ཕྱོགས་གཉིས་ཆ་རང་ལུ་ སྦོམ་འགྱོ་འོང་། རྫུན་པ་ཨིན་པ་ཅིན་ ཨེགསི་ལྡེ་མིག་དེ་གིས་ པེ་ནཱལ་གྱི་གནས་ཁོངས་ གསལ་བཀོད་འབད་འོང་།"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y key is ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y key specifies the location of the panel."
-msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཝའི་ལྡེ་མིག་དེ་ སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་གསལ་གཞིའི་ ཝའི་-ཚད་ཐིག་གི་ སྦུག་ལུ་བཞག་འོང་། པེ་ནཱལ་གྱི་ཚད་སོར་བ་ཅིན་ གནས་ས་དེ་གུ་རང་སྡོད་ནི་ཨིན་མི་དེ་ཡང་ དཔེར་ན་ པེ་ནཱལ་དེ་ ཕྱོགས་གཉིས་ཆ་རང་ལུ་ སྦོམ་འགྱོ་འོང་། རྫུན་པ་ཨིན་པ་ཅིན་ ཝའི་ལྡེ་མིག་དེ་གིས་ པེ་ནཱལ་གྱི་གནས་ཁོངས་ གསལ་བཀོད་འབད་འོང་།"
+msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
+msgstr "བདེན་པ་ཨིན་པ་ཅིན་ ཝའི་ལྡེ་མིག་དེ་ སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་གསལ་གཞིའི་ ཝའི་-ཚད་ཐིག་གི་ སྦུག་ལུ་བཞག་འོང་། པེ་ནཱལ་གྱི་ཚད་སོར་བ་ཅིན་ གནས་ས་དེ་གུ་རང་སྡོད་ནི་ཨིན་མི་དེ་ཡང་ དཔེར་ན་ པེ་ནཱལ་དེ་ ཕྱོགས་གཉིས་ཆ་རང་ལུ་ སྦོམ་འགྱོ་འོང་།  རྫུན་པ་ཨིན་པ་ཅིན་ ཝའི་ལྡེ་མིག་དེ་གིས་ པེ་ནཱལ་གྱི་གནས་ཁོངས་ གསལ་བཀོད་འབད་འོང་།"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
 msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
@@ -2405,117 +2696,112 @@ msgid "The height (width for a vertical panel) of the panel. The panel will dete
 msgstr "པེ་ནཱལ་གྱི་མཐོ་ཚད། (ཀེར་ཕྲང་པེ་ནཱལ་ཅིག་གི་རྒྱ་ཚད) པེ་ནཱལ་དེ་གིས་ ལཱ་འབད་བའི་སྐབས་ལུ་ ཡིག་གཟུགས་ཀྱི་ཚད་དང་ བརྡ་སྟོན་གཞན་ཚུ་ལུ་ གཞི་བཞག་སྟེ་ ཚད་ཀྱི་ཉུང་མཐའ་ཅིག་ ངོས་འཛིན་འབད་འོང་། ཚད་ཀྱི་མང་མཐའ་དེ་ གསལ་གཞིའི་མཐོ་ཚད་ (ཡང་ན་རྒྱ་ཚད་) ཀྱི་ བཞི་དཔྱ་གཅིག་ལུ་ བསྒྲིགས་ཏེ་ཡོད།"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
+msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "གསལ་གཞིའི་ གཡས་ཁ་ཐུག་ལས་ འགོ་བཙུགས་ཏེ་ ཨེགསི་ ཚད་ཐིག་བདའ་སྟེ་ པེ་ནཱལ་གྱི་ གནས་ཁོངས། ག་དེམ་ཅིག་སྦེ་ - ༡ ལུ་ གཞི་སྒྲིག་འབད་དེ་ཡོད་པ་ཅིན་ བེ་ལུ་དེ་ གནང་མེད་བཞགཔ་ཨིནམ་དང་ ཨེགསི་ ལྡེ་མིག་གི་ བེ་ལུ་དེ་ ལག་ལེན་འཐབ་ཡོདཔ་ཨིན། ག་དེམ་ཅིག་སྦེ་ བེ་ལུ་དེ་ ༠  ལས་ སྦོམ་ཨིན་པ་ཅིན་ ཨེགསི་ ལྡེ་མིག་གི་ བེ་ལུ་དེ་ གནང་མེད་བཞག་དེ་འོང་། ལྡེ་མིག་འདི་ རྒྱ་འཕར་མ་གཏང་ཡོད་པའི་ ཐབས་ལམ་ནང་རྐྱངམ་ཅིག་ འབྲེལ་བ་ཡོདཔ་ཨིན། རྒྱ་འཕར་གཏང་ཡོདཔ་པའི་ཐབས་ལམ་ནང་ ལྡེ་མིག་འདི་ གནང་མེད་བཞག་ཡོདཔ་ཨིནམ་དང་ ཕྱོགས་ལྡེ་གིས་ གལས་བཀོད་འབད་ཡོད་མི་དང་འཁྲིལ་ཏེ་ པེ་ནཱལ་དེ་ གསལ་གཞིའི་ མཐའ་མ་ལུ་ བཞག་ཡོདཔ་ཨིན། "
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "ཨེགསི་-ཚད་ཐིག་བདའ་སྟེ་ པེ་ནཱལ་གྱི་གནས་ཁོངས། ལྡེ་མིག་འདི་ རྒྱ་འཕར་མེན་པའི་ ཐབས་ལམ་ནང་རྐྱངམ་གཅིག་ འབྲེལ་བ་ཡོད། རྒྱ་འཕར་ཅན་གྱི་ཐབས་ལམ་ནང་ ལྡེ་མིག་འདི་སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་ ཕྱོགས་ཀྱི་ལྡེ་མིག་གིས་ གསལ་བཀོད་འབད་མི་ གསལ་གཞིའི་མཐའ་ཟུར་ལུ་བཞགཔ་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
+#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "གསལ་གཞིའི་ གཡས་ཁ་ཐུག་ལས་ འགོ་བཙུགས་ཏེ་ ཝའི་ ཚད་ཐིག་བདའ་སྟེ་ པེ་ནཱལ་གྱི་ གནས་ཁོངས། ག་དེམ་ཅིག་སྦེ་ - ༡ ལུ་ གཞི་སྒྲིག་འབད་དེ་ཡོད་པ་ཅིན་ བེ་ལུ་དེ་ གནང་མེད་བཞགཔ་ཨིནམ་དང་ ཝའི་ལྡེ་མིག་གི་ བེ་ལུ་དེ་ ལག་ལེན་འཐབ་ཡོདཔ་ཨིན། ག་དེམ་ཅིག་སྦེ་ བེ་ལུ་དེ་ ༠  ལས་ སྦོམ་ཨིན་པ་ཅིན་ ཝའི་ལྡེ་མིག་གི་ བེ་ལུ་དེ་ གནང་མེད་བཞག་དེ་འོང་། ལྡེ་མིག་འདི་ རྒྱ་འཕར་མ་གཏང་ཡོད་པའི་ ཐབས་ལམ་ནང་རྐྱངམ་ཅིག་ འབྲེལ་བ་ཡོདཔ་ཨིན། རྒྱ་འཕར་གཏང་ཡོདཔ་པའི་ཐབས་ལམ་ནང་ ལྡེ་མིག་འདི་ གནང་མེད་བཞག་ཡོདཔ་ཨིནམ་དང་ ཕྱོགས་ལྡེ་གིས་ གལས་བཀོད་འབད་ཡོད་མི་དང་འཁྲིལ་ཏེ་ པེ་ནཱལ་དེ་ གསལ་གཞིའི་ མཐའ་མ་ལུ་ བཞག་ཡོདཔ་ཨིན། "
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr "ཝའི་-ཚད་ཐིག་བདའ་སྟེ་ པེ་ནཱལ་གྱི་གནས་ཁོངས། ལྡེ་མིག་འདི་ རྒྱ་འཕར་མེན་པའི་ ཐབས་ལམ་ནང་རྐྱངམ་གཅིག་ འབྲེལ་བ་ཡོད། རྒྱ་འཕར་ཅན་གྱི་ཐབས་ལམ་ནང་ ལྡེ་མིག་འདི་སྣང་མེད་བཞག་སྟེ་ པེ་ནཱལ་དེ་ ཕྱོགས་ཀྱི་ལྡེ་མིག་གིས་ གསལ་བཀོད་འབད་མི་ གསལ་གཞིའི་མཐའ་ཟུར་ལུ་བཞགཔ་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
 msgstr "པེ་ནཱལ་གྱི་ཕྱོགས། སྲིད་པའི་བེ་ལུསི་\"top\", \"bottom\", \"left\", \"right\"ཚུ་ཨིན། རྒྱ་འཕར་ཐབས་ལམ་ནང་ ལྡེ་མིག་དེ་གིས་ པེ་ནཱལ་དེ་ གསལ་གཞིའི་མཐའ་ཟུར་ ག་དེ་ལུ་ ཨཱོན་ཡོདཔ་ཨིན་ན་ གསལ་བཀོད་འབདཝ་ཨིན། རྒྱ་འཕར་མེན་པའི་ཐབས་ལམ་ \"top\" and \"bottom\" གི་བར་ན་ ཁྱད་པར་སྦོམ་མེད། གཉིས་ཆ་རང་གིས་ འདི་ཐད་སྙོམས་ཀྱི་ པེ་ནཱལ་ཅིག་ཨིན་པའི་བརྡ་སྟོནམ་ཨིན། དེ་འབདཝ་ད་ པེ་ནཱལ་དངོས་པོ་ལ་ལོ་ཅིག་གིས་ སྤྱོད་ལམ་ག་དེ་སྦེ་ འབད་དགོཔ་ཨིན་ན་གི་ ཕན་ཐོགས་ཅན་གྱི་ བརྡ་མཚོན་རེ་སྟོནམ་ཨིན། དེ་ཡང་དཔྱེ་འབད་བ་ཅིན་\"top\" པེ་ནཱལ་གུ་ དཀར་ཆག་ཨེབ་རྟ་ཅིག་གིས་ པེ་ནཱལ་གྱི་འོག་ལུ་ དེ་གི་དཀར་ཆག་གུ་ པོཔ་ཨཔ་འབད་དོ་ཡོདཔ་ད་ \"bottom\" པེ་ནཱལ་གུ་ དཀར་ཆག་དེ་ པེ་ནཱལ་གྱི་ལྟག་ལུ་ པོཔ་ཨཔ་འབདཝ་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
+#: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
 msgstr "པེ་ནཱལ་བསྒུལ་ཅན་བཟོཝ་ད་ མགྱོགས་ཚད་འབྱུང་དགོཔ། སྲིད་པའི་བེ་ལུསི་ \"slow\", \"medium\" and \"fast\"ཚུ་ཨིན།  ལྡེ་མིག་འདི་ ལྕོགས་ཅན་བཟོ་ནིའི་ བསྒུལ་བཟོའི་ལྡེ་མིག་དེ་ བདེན་པ་ཨིན་པ་ཅིན་རྐྱངམ་གཅིག་འབྲེལ་བ་ཡོད།(_a)"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
+#: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
 msgstr "འདི་འགྲོ་བ་མི་གིས་ལྷག་ཚུགས་པའི་མིང་ཅིག་ཨིནམ་ལས་ འདི་ཁྱོད་ཀྱིས་ པེ་ནཱལ་ཅིག་ངོས་འཛིན་འབད་ནིའི་དོན་ལུ་ ལག་ལེན་འཐབ་ཚུགས། དེ་གི་དགོས་དོན་གཙོ་བོ་རང་ པེ་ནཱལ་གཉིས་ཀྱི་བར་ན་ འགྲུལ་བསྐྱོད་འབད་བའི་སྐབས་ ཁག་ཆེའི་པེ་ནཱལ་གྱི་ སྒོ་སྒྲིག་གི་མགོ་མིང་འབད་ ལཱ་འབདཝ་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
+#: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "སྦ་བཞག་པའི་སྐབས་ལུ་ མཐོང་ཚུགས་པའི་ པིག་སེལསི།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
+#: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
 msgstr "པེ་ནཱལ་འདི་གི་དོན་ལས་ རྒྱབ་གཞིའི་དབྱེ་བ་ ག་དེ་ལག་ལེན་འཐབ་ནི་ཨིན་ན། སྲིད་པའི་བེ་ལུསི་ \"gtk\" - སྔོན་སྒྲིག་ཇི་ཊི་ཀེ་+ཝི་གེཊི་གི་རྒྱབ་གཞི་དེ་ ལག་ལེན་འཐབ་ནི་ཨིན། \"color\" - ཚོས་གཞི་ལྡེ་མིག་དེ་ རྒྱབ་གཞིའི་ཚོས་གཞི་འབད་ ལག་ལེན་འཐབ་ནི་ཨིན། ཡང་ན་ \"image\"- གཟུགས་བརྙན་ལྡེ་མིག་གིས་ གསལ་བཀོད་འབད་མི་ གཟུགས་བརྙན་དེ་ རྒྱབ་གཞི་སྦེ་ལག་ལེན་འཐབ་ནི་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
+#: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
 msgstr "སྣ་མང་གསལ་གཞི་ གཞི་སྒྲིག་ཅིག་གི་ཐོག་ལུ་ གསལ་གཞི་རེ་རེ་བཞིན་དུ་ལུ་ པེ་ནཱལ་ཡོད། ལྡེ་མིག་འདི་གིས་ ད་ལྟོ་པེ་ནཱལ་བཀྲམ་སྟོན་འབད་ཡོད་མི་ གསལ་གཞི་དེ་ ངོས་འཛིན་འབདཝ་ཨིན།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
+#: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
 msgstr " པེ་ནཱལ་གྱི་ཆ་སྙོམ་ཨེགསི།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
+#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "གསལ་གཞིའི་ གཡས་ཁ་ཐུག་ལས་ འགོ་བཙུགས་ཏེ་ པེ་ནཱལ་གྱི་ ཨེགསི་ ཆ་སྙོམ་ "
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
 msgstr "པེ་ནཱལ་བཀྲམ་སྟོན་འབད་ཡོད་མི་ ཨེགསི་གསལ་གཞི།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
+#: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "པེ་ནཱལ་བཀྲམ་སྟོན་འབད་ཡོད་མི་ ཟི་ནི་ར་མ་གསལ་གཞི།"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+#: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
 msgstr "པེ་ནཱལ་གྱི་ཆ་སྙོམ་ཝའི།"
 
-#: ../gnome-panel/panel-util.c:713
+#: ../gnome-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "གསལ་གཞིའི་ གཤམ་ལས་འགོ་བཙུགས་ཏེ་ པེ་ནཱལ་གྱི་ ཝའི་ ཆ་སྙོམ་ "
+
+#: ../gnome-panel/panel-util.c:657
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ངོས་དཔར་'%s'མ་ཐོབ།"
 
-#: ../gnome-panel/panel-util.c:936
+#: ../gnome-panel/panel-util.c:880
 msgid "file"
 msgstr "ཡིག་སྣོད་"
 
-#: ../gnome-panel/panel-util.c:1369
-msgid "Computer"
-msgstr "གློག་རིག"
+#: ../gnome-panel/panel-util.c:1486
+msgid "Home Folder"
+msgstr "ཁྱིམ་གྱི་ སྣོད་འཛིན་ "
 
-#: ../gnome-panel/panel-util.c:1371
-msgid "Network"
-msgstr "ཡོངས་འབྲེལ"
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:1498
+msgid "File System"
+msgstr "ཡིག་སྣོད་ རིམ་ལུགས།"
 
-#: ../gnome-panel/panel-util.c:1373
-msgid "Fonts"
-msgstr "ཡིག་ཚུགས་ཚུ"
-
-#: ../gnome-panel/panel-util.c:1375
-msgid "Themes"
-msgstr "བརྗོད་དོན་ཚུ"
-
-#: ../gnome-panel/panel-util.c:1377
-msgid "CD/DVD Creator"
-msgstr "སི་ཌི/ཌི་ཝི་ཌི་གསར་བསྐྲུན་པ"
-
-#: ../gnome-panel/panel-util.c:1379
-msgid "Windows Network"
-msgstr "སྒོ་སྒྲིག་ཚུ་གི་ཡོངས་འབྲེལ"
-
-#. translators: this is the title of the "dns-sd:///" location
-#: ../gnome-panel/panel-util.c:1382
-msgid "Services in"
-msgstr "ཞབས་ཏོག་ཚུ་ནང་ན"
-
-#: ../gnome-panel/panel-util.c:1431
+#: ../gnome-panel/panel-util.c:1645
 msgid "Search"
 msgstr "འཚོལ་"
 
-#: ../gnome-panel/panel-util.c:1434
-msgid "Trash"
-msgstr "ཕྱགས་ཧོད"
-
-#. Translators: the first string is a path and the second
-#. * string is a hostname. nautilus contains the same string to
-#. * translate.
-#: ../gnome-panel/panel-util.c:1487
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1691
 #, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s, %2$s གུ"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:476
+#: ../gnome-panel/panel.c:471
 #, c-format
 msgid "Open URL: %s"
 msgstr "ཡུ་ཨར་ཨེལ་: %sཁ་ཕྱེ།"
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1299
 msgid "Delete this drawer?"
 msgstr "བཤུད་སྒྲོམ་འདི་ བཏོན་གཏང་ག?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1300
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2523,11 +2809,11 @@ msgstr ""
 "བཤུད་སྒྲོམ་ཅིག་ བཏོན་བཏང་བའི་སྐབས་ བཤུད་སྒྲོམ་དེ་དང་ དེ་གི་\n"
 "གཞི་སྒྲིག་ཚུ་ བརླག་སྟོར་འགྱོཝ་ཨིན།"
 
-#: ../gnome-panel/panel.c:1310
+#: ../gnome-panel/panel.c:1303
 msgid "Delete this panel?"
 msgstr "པེ་ནཱལ་འདི་ བཏོན་གཏང་ནི་ཨིན་ན?"
 
-#: ../gnome-panel/panel.c:1311
+#: ../gnome-panel/panel.c:1304
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2652,6 +2938,51 @@ msgstr "ཨེཔ་ལེཊི་:(_A)"
 msgid "_Prefs Dir:"
 msgstr "གདའ་གདམ་གྱི་སྣོད་ཐོ་:(_P)"
 
+#~ msgid "%A %B %d"
+#~ msgstr "%A %B %d"
+#~ msgid "Clock _type:"
+#~ msgstr "ཆེ་འཁོར་གྱི་དབྱེ་བ་:(_t)"
+#~ msgid "12 hour"
+#~ msgstr "ཆུ་ཚོད་༡༢།"
+#~ msgid "Use _UTC"
+#~ msgstr "ཡུ་ཊི་སི་ ལག་ལེན་འཐབ།(_U)"
+#~ msgid "<b>Window List Size</b>"
+#~ msgstr "<b>སྒོ་སྒྲིག་ཐོ་ཡིག་གི་ཚད།</b>"
+#~ msgid "Behavior"
+#~ msgstr "སྤྱོད་ལམ།"
+#~ msgid "M_inimum size:"
+#~ msgstr "ཚད་ཕབ་:(_i)"
+#~ msgid "Ma_ximum size:"
+#~ msgstr "ཚད་ཀྱི་མང་མཐའ་:(_x)"
+#~ msgid "Size"
+#~ msgstr "ཚད།"
+#~ msgid ""
+#~ "This key specifies the maximum width that the window list requests. The "
+#~ "maximum width setting is useful to limit the size of the window list in "
+#~ "large panels, where the window list could fill the entire space available."
+#~ msgstr ""
+#~ "ལྡེ་མིག་འདི་གིས་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ཞུ་བ་འབད་མི་ རྒྱ་ཚད་ཀྱི་མང་མཐའ་ གསལ་བཀོད་འབདཝ་ཨིན། རྒྱ་ཚད་"
+#~ "ཀྱི་མང་མཐའ་གཞི་སྒྲིག་དེ་ཡང་ པེ་ནཱལ་སྦོམ་ཚུ་ནང་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ས་སྒོ་ཆ་མཉམ་གང་ནི་ཨིནམ་ལས་ སྒོ་"
+#~ "སྒྲིག་ཐོ་ཡིག་གི་ཚད་བཟོ་ནི་ལུ་ ཕན་ཐོགས་ཡོདཔ་ཨིན།"
+#~ msgid "This key specifies the minimum width that the window list requests."
+#~ msgstr ""
+#~ "ལྡེ་མིག་འདི་གིས་ སྒོ་སྒྲིག་ཐོ་ཡིག་གིས་ ཞུ་བ་འབད་མི་ རྒྱ་ཚད་ཀྱི་ཉུང་མཐའ་ གསལ་བཀོད་འབདཝ་ཨིན། "
+#~ msgid "Computer"
+#~ msgstr "གློག་རིག"
+#~ msgid "Network"
+#~ msgstr "ཡོངས་འབྲེལ"
+#~ msgid "Themes"
+#~ msgstr "བརྗོད་དོན་ཚུ"
+#~ msgid "CD/DVD Creator"
+#~ msgstr "སི་ཌི/ཌི་ཝི་ཌི་གསར་བསྐྲུན་པ"
+#~ msgid "Windows Network"
+#~ msgstr "སྒོ་སྒྲིག་ཚུ་གི་ཡོངས་འབྲེལ"
+#~ msgid "Services in"
+#~ msgstr "ཞབས་ཏོག་ཚུ་ནང་ན"
+#~ msgid "Trash"
+#~ msgstr "ཕྱགས་ཧོད"
+#~ msgid "%1$s on %2$s"
+#~ msgstr "%1$s, %2$s གུ"
 #~ msgid "File"
 #~ msgstr "ཡིག་སྣོད།"
 #~ msgid ""
