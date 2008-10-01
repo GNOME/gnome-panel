@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-06 21:08+0200\n"
-"PO-Revision-Date: 2008-09-06 21:11+0200\n"
+"POT-Creation-Date: 2008-10-01 14:10+0200\n"
+"PO-Revision-Date: 2008-10-01 15:24+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italiano <tp@list.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "I_nformazioni"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
-#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-context-menu.c:284 ../gnome-panel/panel-menu-bar.c:341
 #: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "A_iuto"
@@ -68,9 +68,10 @@ msgstr "Orologio"
 msgid "Clock Applet Factory"
 msgstr "Fabbrica applet Orologio"
 
+# GNOME-2-24
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr "Fabbrica per creare le applet orologio."
+msgstr "Fabbrica per creare le applet Orologio."
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
@@ -216,10 +217,11 @@ msgstr "%l.%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %-d %B %Y"
 
+# GNOME-2-24
 #: ../applets/clock/clock.c:1646
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Lancio dello strumento di configurazione dell'ora fallito: %s"
+msgstr "Lancio dello strumento di configurazione dell'ora non riuscito: %s"
 
 # GNOME-2-22
 #: ../applets/clock/clock.c:1677
@@ -231,18 +233,17 @@ msgstr "Imposta ora sistema..."
 msgid "Set System Time"
 msgstr "Imposta ora sistema"
 
-# GNOME-2-22
+# GNOME-2-24
 #: ../applets/clock/clock.c:1693
 msgid "Failed to set the system time"
-msgstr "Impostazione dell'ora del sistema fallita"
+msgstr "Impostazione dell'ora del sistema non riuscita"
 
+# GNOME-2-24
 #: ../applets/clock/clock.c:1887
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
-msgstr ""
-"Individuazione di un programma per configurare data e ora fallita. Forse non "
-"ne è installato alcuno."
+msgstr "Individuazione di un programma per configurare data e ora non riuscita. Forse non ne è installato alcuno."
 
 #: ../applets/clock/clock.c:2819
 msgid "Custom format"
@@ -561,30 +562,35 @@ msgstr "Se impostata a VERO, mostra nel calendario i numeri di settimana."
 msgid "List of locations"
 msgstr "Elenco delle località"
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
-msgstr "Mostrare data nell'orologio"
+msgstr "Mostra la data nell'orologio"
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
-msgstr "Mostrare data nel suggerimento"
+msgstr "Mostra la data nel suggerimento"
 
-# GNOME-2-22
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:35
 msgid "Show temperature in clock"
-msgstr "Mostrare temperatura nell'orologio"
+msgstr "Mostra la temperatura nell'orologio"
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
-msgstr "Mostrare ora con i secondi"
+msgstr "Mostra l'ora con i secondi"
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:37
 msgid "Show weather in clock"
-msgstr "Mostrare meteo nell'orologio"
+msgstr "Mostra il meteo nell'orologio"
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
-msgstr "Mostrare numeri di settimana nel calendario"
+msgstr "Mostra i numeri di settimana nel calendario"
 
 # GNOME-2-22
 #: ../applets/clock/clock.schemas.in.h:39
@@ -615,18 +621,16 @@ msgstr ""
 "\"format\". Questa chiave schema è mantenuta per compatibilità con le "
 "versioni più vecchie."
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
-msgstr ""
-"Questa chiave specifica il formato usato dall'applet orologio quando la "
-"chiave \"format\" è impostata a \"custom\". Per ottenere uno specifico "
-"formato possono essere usati gli indicatori di conversione gestiti da "
-"strftime(). Consultare il manuale di strftime() per maggiori informazioni."
+msgstr "Questa chiave specifica il formato usato dall'applet Orologio quando la chiave \"format\" è impostata a \"custom\". Per ottenere uno specifico formato possono essere usati gli indicatori di conversione gestiti da strftime(). Consultare il manuale di strftime() per maggiori informazioni."
 
+# GNOME-2-24
 #: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
@@ -637,16 +641,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
-"Questa chiave specifica il formato orario usato dall'applet orologio. Valori "
-"ammessi sono \"12-hour\", \"24-hour\", \"internet\", \"unix\" e \"custom\". "
-"Se impostata ad \"internet\", l'orologio mostra il tempo di Internet. Il "
-"sistema tempo di Internet divide il giorno in 1000 \".beat\". Non ci sono "
-"fusi orari in questo sistema, così l'ora è la stessa in tutto il mondo. Se "
-"impostata ad \"unix\", l'orologio mostra il tempo come secondi trascorsi da "
-"Epoch, cioè dal primo gennaio 1970. Se impostata a \"custom\" l'orologio "
-"mostra il tempo in accordo col formato indicato dalla chiave \"custom_format"
-"\"."
+msgstr "Questa chiave specifica il formato orario usato dall'applet Orologio. Valori ammessi sono \"12-hour\", \"24-hour\", \"internet\", \"unix\" e \"custom\". Se impostata ad \"internet\", l'orologio mostra il tempo di Internet. Il sistema tempo di Internet divide il giorno in 1000 \".beat\". Non ci sono fusi orari in questo sistema, così l'ora è la stessa in tutto il mondo. Se impostata ad \"unix\", l'orologio mostra il tempo come secondi trascorsi da Epoch, cioè dal primo gennaio 1970. Se impostata a \"custom\" l'orologio mostra il tempo in accordo col formato indicato dalla chiave \"custom_format\"."
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
@@ -669,10 +664,10 @@ msgstr "Usa ora UNIX"
 msgid "Use UTC"
 msgstr "Usa UTC"
 
-# GNOME-2-22
+# GNOME-2-24
 #: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
-msgstr "Impostazione del fuso orario del sistema fallita"
+msgstr "Impostazione del fuso orario del sistema non riuscita"
 
 # GNOME-2-22
 #: ../applets/clock/clock-location-tile.c:240
@@ -687,7 +682,9 @@ msgstr "<small>Imposta</small>"
 # GNOME-2-24
 #: ../applets/clock/clock-location-tile.c:317
 msgid "Set location as current location and use its timezone for this computer"
-msgstr "Imposta la località come località attuale e usa il suo fuso orario per questo computer"
+msgstr ""
+"Imposta la località come località attuale e usa il suo fuso orario per "
+"questo computer"
 
 # GNOME-2-22
 #. translators: This is a strftime format string that is used for formatting
@@ -810,7 +807,7 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Attenzione: sembra che questo comando sia stato progettato\n"
-"per fare qualcosa di utile. Dato che questa è una applet\n"
+"per fare qualcosa di utile. Dato che questa è un'applet\n"
 "inutile, è meglio non eseguire questa operazione. \n"
 "Suggeriamo caldamente di non utilizzare «%s» per qualcosa\n"
 "che renda l'applet utile sul piano pratico."
@@ -831,11 +828,7 @@ msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. "
 "Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr ""
-"L'utilità di «%s» è assolutamente nulla. Ruba solo spazio su disco e tempo "
-"di compilazione e, se avviato, usa anche memoria e spazio prezioso sul "
-"pannello. Chiunque venisse colto ad usarlo dovrebbe essere prontamente "
-"mandato da uno psicologo della ASL."
+msgstr "L'utilità di «%s» è assolutamente nulla. Ruba solo spazio su disco e tempo di compilazione e, se avviato, usa anche memoria e spazio prezioso sul pannello. Chiunque venisse colto a usarlo dovrebbe essere prontamente mandato da uno psicologo della ASL."
 
 #: ../applets/fish/fish.c:575
 msgid "(with minor help from George)"
@@ -1060,15 +1053,15 @@ msgstr "Mostra scrivania"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows using a menu"
-msgstr "Passa da una finestra aperta ad un'altra usando un menù"
+msgstr "Passa da una finestra aperta a un'altra usando un menù"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between open windows using buttons"
-msgstr "Passa da una finestra aperta ad un'altra usando dei pulsanti"
+msgstr "Passa da una finestra aperta a un'altra usando dei pulsanti"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
-msgstr "Passa da un'area di lavoro ad un'altra"
+msgstr "Passa da un'area di lavoro a un'altra"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 #: ../applets/wncklet/window-list.c:608
@@ -1089,10 +1082,11 @@ msgstr "Selettore finestre"
 msgid "Workspace Switcher"
 msgstr "Selettore area di lavoro"
 
+# GNOME-2-24
 #: ../applets/wncklet/showdesktop.c:183
 #, c-format
 msgid "Failed to load %s: %s\n"
-msgstr "Caricamento di «%s» fallito: %s\n"
+msgstr "Caricamento di «%s» non riuscito: %s\n"
 
 #: ../applets/wncklet/showdesktop.c:184
 msgid "Icon not found"
@@ -1117,33 +1111,34 @@ msgstr ""
 "Questo pulsante consente di nascondere tutte le finestre e mostrare la "
 "scrivania."
 
+# GNOME-2-24
 #: ../applets/wncklet/showdesktop.c:568
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
-msgstr ""
-"Il window manager in uso non supporta il pulsante mostra scrivania, oppure "
-"non c'è alcun window manager in esecuzione."
+msgstr "Il window manager in uso non supporta il pulsante per mostrare la scrivania, oppure non c'è alcun window manager in esecuzione."
 
+# GNOME-2-24
 #: ../applets/wncklet/window-list.c:610
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
-msgstr ""
-"Elenco finestre mostra un elenco di tutte in un gruppo di pulsanti, "
-"consentendo la loro navigazione."
+msgstr "Elenco finestre mostra un elenco di tutte le finestre in un gruppo di pulsanti, consentendo la loro navigazione."
 
+# GNOME-2-24
 #: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>Ripristino finestre minimizzate</b>"
+msgstr "<b>Ripristino delle finestre minimizzate</b>"
 
+# GNOME-2-24
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
-msgstr "<b>Raggruppamento finestre</b>"
+msgstr "<b>Raggruppamento delle finestre</b>"
 
+# GNOME-2-24
 #: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
-msgstr "<b>Contenuto elenco finestre</b>"
+msgstr "<b>Contenuto dell'elenco di finestre</b>"
 
 #: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
@@ -1375,7 +1370,8 @@ msgstr "Impossibile aprire la posizione «%s»"
 # GNOME-2-24
 #: ../gnome-panel/libpanel-util/panel-show.c:193
 msgid "No application to handle search folders is installed."
-msgstr "Non è installata alcuna applicazione per gestire le cartelle di ricerca."
+msgstr ""
+"Non è installata alcuna applicazione per gestire le cartelle di ricerca."
 
 #: ../gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1402,7 +1398,7 @@ msgid "Cannot find an empty spot"
 msgstr "Impossibile trovare dello spazio libero"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:172
-#: ../gnome-panel/panel-toplevel.c:1583
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Drawer"
 msgstr "Cassetto"
 
@@ -1513,24 +1509,24 @@ msgid "Could not save launcher"
 msgstr "Impossibile salvare il lanciatore"
 
 # LAUNCH
-#: ../gnome-panel/menu.c:1004
+#: ../gnome-panel/menu.c:1005
 msgid "Add this launcher to _panel"
 msgstr "Aggiungi questo lanciatore al _pannello"
 
 # LAUNCH
-#: ../gnome-panel/menu.c:1011
+#: ../gnome-panel/menu.c:1012
 msgid "Add this launcher to _desktop"
 msgstr "Aggiungi questo lanciatore alla _scrivania"
 
-#: ../gnome-panel/menu.c:1023
+#: ../gnome-panel/menu.c:1024
 msgid "_Entire menu"
 msgstr "_Tutto il menù"
 
-#: ../gnome-panel/menu.c:1028
+#: ../gnome-panel/menu.c:1029
 msgid "Add this as _drawer to panel"
 msgstr "Aggiungi questo al pannello come _cassetto"
 
-#: ../gnome-panel/menu.c:1035
+#: ../gnome-panel/menu.c:1036
 msgid "Add this as _menu to panel"
 msgstr "Aggiungi questo al pannello come _menù"
 
@@ -1853,7 +1849,7 @@ msgstr "Eli_mina questo pannello"
 msgid "_New Panel"
 msgstr "_Nuovo pannello"
 
-#: ../gnome-panel/panel-context-menu.c:291
+#: ../gnome-panel/panel-context-menu.c:292
 msgid "A_bout Panels"
 msgstr "I_nformazioni sui pannelli"
 
@@ -1964,10 +1960,7 @@ msgid ""
 "A boolean flag to indicate whether the user's previous configuration in /"
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
-msgstr ""
-"Una opzione booleana che indica se la precedente configurazione utente in /"
-"apps/panel/profiles/default è stata copiata nella nuova posizione /apps/"
-"panel."
+msgstr "Un'opzione booleana che indica se la precedente configurazione utente in /apps/panel/profiles/default è stata copiata nella nuova posizione /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -2004,13 +1997,15 @@ msgstr ""
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Attiva il completamento automatico nel dialogo \"Esegui applicazione\""
 
+# GNOME-2-24
 #: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Attiva la lista dei programmi nel dialogo \"Esegui applicazione\""
+msgstr "Attiva l'elenco dei programmi nel dialogo \"Esegui applicazione\""
 
+# GNOME-2-24
 #: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Espandi la lista dei programmi nel dialogo \"Esegui applicazione\""
+msgstr "Espande l'elenco dei programmi nel dialogo \"Esegui applicazione\""
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
@@ -2019,27 +2014,21 @@ msgstr ""
 "Se impostata a VERO, è reso disponibile il completamento automatico nel "
 "dialogo \"Esegui applicazione\"."
 
+# GNOME-2-24
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr ""
-"Se impostata a VERO, la lista \"Applicazioni conosciute\" nella finestra di "
-"dialogo \"Esegui applicazione\" è espansa all'apertura della finestra. "
-"Questa chiave ha senso solo se la chiave enable_program_listing è impostata "
-"a VERO."
+msgstr "Se impostata a VERO, l'elenco \"Applicazioni conosciute\" nella finestra di dialogo \"Esegui applicazione\" è espansa all'apertura della finestra. Questa chiave ha senso solo se la chiave enable_program_listing è impostata a VERO."
 
+# GNOME-2-24
 #: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr ""
-"Se impostata a VERO, nella finestra di dialogo \"Esegui applicazione\" è "
-"disponibile la lista \"Applicazioni conosciute\". Tale lista è o non è "
-"espansa nella finestra di dialogo in base a quanto definito nella chiave "
-"show_program_list."
+msgstr "Se impostata a VERO, nella finestra di dialogo \"Esegui applicazione\" è disponibile l'elenco \"Applicazioni conosciute\". Tale elenco è oppure non è espanso nel dialogo in base a quanto definito nella chiave show_program_list."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -2216,11 +2205,11 @@ msgstr "Segnalibri"
 msgid "Open '%s'"
 msgstr "Apre «%s»"
 
-# GNOME-2-22
+# GNOME-2-24
 #: ../gnome-panel/panel-menu-items.c:483
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr "Impossibile scansionare «%s» per cambiamenti al supporto"
+msgstr "Impossibile scansionare «%s» per i cambi di supporto"
 
 # GNOME-2-22
 #: ../gnome-panel/panel-menu-items.c:526
@@ -2478,9 +2467,10 @@ msgstr ""
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Suggerimento mostrato per il cassetto o menù"
 
+# GNOME-2-24
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr "Pannello di livello superiore contenente l'oggetto"
+msgstr "Pannello di livello principale contenente l'oggetto"
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
@@ -2826,70 +2816,69 @@ msgstr "Non eli_minare"
 msgid "Hide Panel"
 msgstr "Nascondi pannello"
 
-# Termina la sessione di «%s»
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1554
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Top Expanded Edge Panel"
 msgstr "Pannello di bordo espanso superiore"
 
-#: ../gnome-panel/panel-toplevel.c:1555
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Top Centered Panel"
 msgstr "Pannello centrato superiore"
 
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Top Floating Panel"
 msgstr "Pannello fluttuante superiore"
 
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Top Edge Panel"
 msgstr "Pannello di bordo superiore"
 
-#: ../gnome-panel/panel-toplevel.c:1561
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Bottom Expanded Edge Panel"
 msgstr "Pannello di bordo espanso inferiore"
 
-#: ../gnome-panel/panel-toplevel.c:1562
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Bottom Centered Panel"
 msgstr "Pannello centrato inferiore"
 
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Bottom Floating Panel"
 msgstr "Pannello fluttuante inferiore"
 
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Bottom Edge Panel"
 msgstr "Pannello di bordo inferiore"
 
-#: ../gnome-panel/panel-toplevel.c:1568
+#: ../gnome-panel/panel-toplevel.c:1587
 msgid "Left Expanded Edge Panel"
 msgstr "Pannello di bordo espanso sinistro"
 
-#: ../gnome-panel/panel-toplevel.c:1569
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Left Centered Panel"
 msgstr "Pannello centrato sinistro"
 
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1589
 msgid "Left Floating Panel"
 msgstr "Pannello fluttuante sinistro"
 
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1590
 msgid "Left Edge Panel"
 msgstr "Pannello di bordo sinistro"
 
-#: ../gnome-panel/panel-toplevel.c:1575
+#: ../gnome-panel/panel-toplevel.c:1594
 msgid "Right Expanded Edge Panel"
 msgstr "Pannello di bordo espanso destro"
 
-#: ../gnome-panel/panel-toplevel.c:1576
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Right Centered Panel"
 msgstr "Pannello centrato destro"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Right Floating Panel"
 msgstr "Pannello fluttuante destro"
 
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Right Edge Panel"
 msgstr "Pannello di bordo destro"
 
@@ -3136,11 +3125,7 @@ msgid ""
 "determine at runtime a minimum size based on the font size and other "
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
-msgstr ""
-"L'altezza (larghezza per i pannelli verticali) del pannello. La dimensione "
-"minima del pannello è determinata durante l'esecuzione, basandosi sulle "
-"dimensioni del tipo di carattere ed altri fattori. La dimensione massima è "
-"comunque fissata ad un quarto dell'altezza (o larghezza) dello schermo."
+msgstr "L'altezza (larghezza per i pannelli verticali) del pannello. La dimensione minima del pannello è determinata durante l'esecuzione, basandosi sulle dimensioni del tipo di carattere ed altri fattori. La dimensione massima è comunque fissata a un quarto dell'altezza (o larghezza) dello schermo."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -3373,10 +3358,11 @@ msgstr "Tipo di sfondo ricevuto «%s» incompleto"
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Tipo di sfondo ricevuto «%s» incompleto: %s"
 
+# GNOME-2-24
 #: ../libpanel-applet/panel-applet.c:1075
 #, c-format
 msgid "Failed to get pixmap %s"
-msgstr "Acquisizione dell'immagine «%s» fallita"
+msgstr "Acquisizione della pixmap «%s» non riuscita"
 
 #: ../libpanel-applet/panel-applet.c:1082
 msgid "Unknown background type received"
@@ -3456,10 +3442,11 @@ msgstr "X Large"
 msgid "Size|XX Large"
 msgstr "XX Large"
 
+# GNOME-2-24
 #: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
 msgid "Failed to load applet %s"
-msgstr "Caricamento dell'applet «%s» fallito"
+msgstr "Caricamento dell'applet «%s» non riuscita"
 
 #. This is an utility to easily test various applets
 #: ../libpanel-applet/panel-test-applets.glade.h:2
