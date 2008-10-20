@@ -44,10 +44,14 @@ typedef struct {
         gchar *weather_code;
         WeatherInfo *weather_info;
         guint weather_timeout;
+        guint weather_retry_time;
 
 	TempUnit temperature_unit;
 	SpeedUnit speed_unit;
 } ClockLocationPrivate;
+
+#define WEATHER_TIMEOUT_BASE 30
+#define WEATHER_TIMEOUT_MAX  1800
 
 enum {
 	WEATHER_UPDATED,
@@ -561,12 +565,44 @@ clock_location_get_weather_info (ClockLocation *loc)
 	return priv->weather_info;
 }
 
+static gboolean update_weather_info (gpointer data);
+
+static void
+set_weather_update_timeout (ClockLocation *loc)
+{
+	ClockLocationPrivate *priv = PRIVATE (loc);
+	guint timeout;
+
+	if (!weather_info_network_error (info)) {
+		/* The last update succeeded; set the next update to
+		 * happen in half an hour, and reset the retry timer.
+		 */
+		timeout = WEATHER_TIMEOUT_MAX;
+		priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
+	} else {
+		/* The last update failed; set the next update
+		 * according to the retry timer, and exponentially
+		 * back off the retry timer.
+		 */
+		timeout = priv->weather_retry_time;
+		priv->weather_retry_time *= 2;
+		if (priv->weather_retry_time > WEATHER_TIMEOUT_MAX)
+			priv->weather_retry_time = WEATHER_TIMEOUT_MAX;
+	}
+
+	if (priv->weather_timeout)
+		g_source_remove (priv->weather_timeout);
+	priv->weather_timeout =
+		g_timeout_add_seconds (timeout, update_weather_info, loc);
+}
+
 static void
 weather_info_updated (WeatherInfo *info, gpointer data)
 {
 	ClockLocation *loc = data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 
+	set_weather_update_timeout (loc);
 	g_signal_emit (loc, location_signals[WEATHER_UPDATED],
 		       0, priv->weather_info);
 }
@@ -623,7 +659,11 @@ update_weather_infos (void)
 	GList *l;
 
 	for (l = locations; l; l = l->next) {
-		update_weather_info (l->data);
+		ClockLocation *loc = l->data;
+		ClockLocationPrivate *priv = PRIVATE (loc);
+
+		priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
+		update_weather_info (loc);
 	}
 }
 
@@ -777,8 +817,7 @@ setup_weather_updates (ClockLocation *loc)
 	priv->weather_info =
 		weather_info_new (wl, &prefs, weather_info_updated, loc);
 
-	priv->weather_timeout =
-		g_timeout_add_seconds (1800, update_weather_info, loc);
+	set_weather_update_timeout (loc);
 
 	weather_location_free (wl);
 	g_free (dms);

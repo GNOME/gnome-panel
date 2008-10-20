@@ -1,3 +1,13 @@
+2008-10-20  Dan Winship  <danw@gnome.org>
+
+	* clock-location.c (set_weather_update_timeout, etc): if the
+	weather update fails because of a network error, try again in 30
+	seconds, and then 1 minute, 2 minutes, etc, until it succeeds, or
+	we reach the original 30 minute retry time. Makes things work
+	better when you connect to a wifi network that requires some sort
+	of authentication/terms-of-service-acceptance before the network
+	is really functional. (#556776)
+
 ==================== 2.24.0 ====================
 
 2008-09-12  Sebastien Bacher  <seb128@ubuntu.com>
