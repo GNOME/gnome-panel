@@ -573,7 +573,7 @@ set_weather_update_timeout (ClockLocation *loc)
 	ClockLocationPrivate *priv = PRIVATE (loc);
 	guint timeout;
 
-	if (!weather_info_network_error (info)) {
+	if (!weather_info_network_error (priv->weather_info)) {
 		/* The last update succeeded; set the next update to
 		 * happen in half an hour, and reset the retry timer.
 		 */
