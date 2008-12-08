@@ -180,7 +180,6 @@ glade_DATA =					\
 	panel-run-dialog.glade
 
 EXTRA_DIST =					\
-	GNOME_Panel.server.in			\
 	$(glade_DATA)				\
 	nothing.cP				\
 	nothing.h				\
@@ -235,14 +234,8 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 uidir   = $(datadir)/gnome-2.0/ui
 ui_DATA = GNOME_Panel_Popup.xml
 
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_Panel.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
-
 rcdir = $(datadir)
 rc_DATA = gnome-panelrc
-
-@INTLTOOL_SERVER_RULE@
 
 entriesdir       = $(GCONF_SCHEMA_FILE_DIR)
 entries_DATA     = panel-default-setup.entries
@@ -278,7 +271,6 @@ endif
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(schemas_in_files:.schemas.in=.schemas) \
-	$(server_DATA) \
 	$(sys_DATA) \
 	$(desktop_DATA)
 

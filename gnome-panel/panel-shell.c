@@ -2,6 +2,8 @@
  * panel-shell.c: panel shell interface implementation
  *
  * Copyright (C) 2001 Ximian, Inc.
+ * Copyright (C) 2008 Red Hat, Inc.
+ * Copyright (C) 2008 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -20,147 +22,154 @@
  *
  * Authors:
  *      Jacob Berkman <jacob@ximian.com>
+ *      Colin Walters <walters@verbum.org>
+ *      Vincent Untz <vuntz@gnome.org>
  */
 
 #include <config.h>
 #include <glib/gi18n.h>
 
-#include <string.h>
-#include <gtk/gtk.h>
+#include <dbus/dbus-glib.h>
 
-#include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-cleanup.h>
+
+#include "panel-profile.h"
+#include "panel-session.h"
 
 #include "panel-shell.h"
-#include "panel-session.h"
-#include "panel-util.h"
 
-/*
- * PanelShell is a singleton.
- */
-static PanelShell *panel_shell = NULL;
+#define PANEL_DBUS_SERVICE "org.gnome.Panel"
 
-static Bonobo_RegistrationResult
-panel_shell_bonobo_activation_register_for_display (const char    *iid,
-						    Bonobo_Unknown ref)
+static DBusGConnection *dbus_connection = NULL;
+static DBusGProxy      *session_bus = NULL;
+
+static void
+panel_shell_on_name_lost (DBusGProxy *proxy,
+			  const char *name,
+			  gpointer   user_data)
 {
-	const char *display_name;
-	GSList     *reg_env ;
-	Bonobo_RegistrationResult result;
-	
-	display_name = gdk_display_get_name (gdk_display_get_default ());
-	reg_env = bonobo_activation_registration_env_set (NULL,
-							  "DISPLAY",
-							  display_name);
-	result = bonobo_activation_register_active_server (iid, ref, reg_env);
-	bonobo_activation_registration_env_free (reg_env);
-	return result;
+	if (strcmp (name, PANEL_DBUS_SERVICE) != 0)
+		return;
+
+	/* We lost our DBus name, and there is something replacing us.
+	 * Tell the SM not to restart us automatically, then exit. */
+	g_printerr ("Panel leaving: a new panel shell is starting.\n");
+
+	panel_session_do_not_restart ();
+	panel_shell_quit ();
 }
 
 static void
-panel_shell_register_error_dialog (int reg_res)
+panel_shell_cleanup (gpointer data)
 {
-	GtkWidget *dlg;
-	GtkWidget *checkbox;
-	char      *secondary;
+	if (dbus_connection != NULL) {
+		dbus_g_connection_unref (dbus_connection);
+		dbus_connection = NULL;
+	}
 
-	secondary = g_strdup_printf (_("The panel could not register with the "
-				       "bonobo-activation server (error code: "
-				       "%d) and will exit.\n"
-				       "It may be automatically restarted."),
-				       reg_res);
-
-	dlg = panel_error_dialog (NULL,
-				  gdk_screen_get_default (),
-				  "panel_shell_register_error",
-				  FALSE,
-				  _("The panel has encountered a fatal error"),
-				  secondary);
-
-	g_free (secondary);
-
-	//FIXME: the checkbox is not correctly aligned in the dialog...
-	checkbox = gtk_check_button_new_with_mnemonic (_("Force the panel to "
-							 "not be automatically "
-							 "restarted"));
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-			    checkbox, FALSE, FALSE, 0);
-	gtk_widget_show (checkbox);
-
-	gtk_dialog_run (GTK_DIALOG (dlg));
-
-	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox)))
-		panel_session_do_not_restart ();
-
-	gtk_widget_destroy (dlg);
+	if (session_bus != NULL) {
+		g_object_unref (session_bus);
+		session_bus = NULL;
+	}
 }
 
 gboolean
-panel_shell_register (void)
+panel_shell_register (gboolean replace)
 {
-	gboolean retval;
+	GError   *error;
+	guint     request_name_reply;
+	guint32   flags;
+	gboolean  retval;
 
-	retval = TRUE;
+	if (session_bus != NULL)
+		return TRUE;
 
-        if (!panel_shell) {
-		Bonobo_RegistrationResult  reg_res;
+	retval = FALSE;
 
-		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
-		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
+	panel_cleanup_register (PANEL_CLEAN_FUNC (panel_shell_cleanup), NULL);
 
-		reg_res = panel_shell_bonobo_activation_register_for_display
-				("OAFIID:GNOME_PanelShell",
-				 BONOBO_OBJREF (panel_shell));
+	dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+	if (dbus_connection == NULL) {
+		g_warning ("Cannot register the panel shell: cannot connect "
+			   "to the session bus.");
+		goto register_out;
+	}
 
-		switch (reg_res) {
-		case Bonobo_ACTIVATION_REG_SUCCESS:
-			break;
-		case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
-			retval = FALSE;
-			g_printerr ("A panel is already running.\n");
-			panel_session_do_not_restart ();
-			break;
-		default:
-			retval = FALSE;
-			panel_shell_register_error_dialog (reg_res);
-			break;
-		}
+	session_bus = dbus_g_proxy_new_for_name (dbus_connection,
+						 "org.freedesktop.DBus",
+						 "/org/freedesktop/DBus",
+						 "org.freedesktop.DBus");
+	if (session_bus == NULL) {
+		g_warning ("Cannot register the panel shell: cannot connect "
+			   "to the session bus.");
+		goto register_out;
+	}
+
+	dbus_g_proxy_add_signal (session_bus,
+				 "NameLost",
+				 G_TYPE_STRING,
+				 G_TYPE_INVALID);
+
+	dbus_g_proxy_connect_signal (session_bus,
+				     "NameLost",
+				     G_CALLBACK (panel_shell_on_name_lost),
+				     NULL,
+				     NULL);
+
+	flags = DBUS_NAME_FLAG_DO_NOT_QUEUE|DBUS_NAME_FLAG_ALLOW_REPLACEMENT;
+	if (replace)
+		flags |= DBUS_NAME_FLAG_REPLACE_EXISTING;
+	error = NULL;
+
+	if (!dbus_g_proxy_call (session_bus,
+				"RequestName",
+				&error,
+				G_TYPE_STRING, PANEL_DBUS_SERVICE,
+				G_TYPE_UINT, flags,
+				G_TYPE_INVALID,
+				G_TYPE_UINT, &request_name_reply,
+				G_TYPE_INVALID)) {
+		g_warning ("Cannot register the panel shell: %s",
+			   error->message);
+		g_error_free (error);
+
+		goto register_out;
+	}
+
+	if (request_name_reply == DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER ||
+	    request_name_reply == DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER)
+		retval = TRUE;
+	else if (request_name_reply == DBUS_REQUEST_NAME_REPLY_EXISTS)
+		g_printerr ("Cannot register the panel shell: there is "
+			    "already one running.\n");
+	else if (request_name_reply == DBUS_REQUEST_NAME_REPLY_IN_QUEUE)
+		/* This should never happen since we don't want to be queued. */
+		g_warning ("Cannot register the panel shell: it was queued "
+			   "after the running one, but this should not "
+			   "happen.");
+	else
+		g_warning ("Cannot register the panel shell: unhandled "
+			   "reply %u from RequestName", request_name_reply);
+
+register_out:
+
+	if (!retval) {
+		panel_session_do_not_restart ();
+		panel_shell_cleanup (NULL);
 	}
 
 	return retval;
 }
 
 void
-panel_shell_unregister (void)
+panel_shell_quit (void)
 {
-	bonobo_activation_unregister_active_server ("OAFIID:GNOME_PanelShell",
-						    BONOBO_OBJREF (panel_shell));
+	GSList *toplevels_to_destroy, *l;
+
+        toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
+        for (l = toplevels_to_destroy; l; l = l->next)
+		gtk_widget_destroy (l->data);
+        g_slist_free (toplevels_to_destroy);
+
+	gtk_main_quit ();
 }
-
-static void
-impl_displayRunDialog (PortableServer_Servant  servant,
-		       const CORBA_char       *initial_string,
-		       CORBA_Environment      *ev)
-{
-	PanelShell *shell;
-
-	shell = PANEL_SHELL (bonobo_object (servant));
-
-	g_message ("displayRunDialog: %s\n", initial_string);
-}
-
-static void
-panel_shell_class_init (PanelShellClass *klass)
-{
-	klass->epv.displayRunDialog = impl_displayRunDialog;
-}
-
-static void
-panel_shell_init (PanelShell *shell)
-{
-}
-
-BONOBO_TYPE_FUNC_FULL (PanelShell,
-		       GNOME_Vertigo_PanelShell,
-		       BONOBO_OBJECT_TYPE,
-		       panel_shell)
-

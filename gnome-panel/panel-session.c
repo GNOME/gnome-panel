@@ -25,28 +25,19 @@
 #include <config.h>
 
 #include <libgnomeui/gnome-client.h>
-#include "panel-session.h"
 
 #include <stdlib.h>
 
-#include "panel-profile.h"
 #include "panel-shell.h"
+
+#include "panel-session.h"
 
 static void
 panel_session_handle_die_request (GnomeClient *client)
 {
-	GSList *toplevels_to_destroy, *l;
-
 	g_return_if_fail (GNOME_IS_CLIENT (client));
 
-        toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
-        for (l = toplevels_to_destroy; l; l = l->next)
-		gtk_widget_destroy (l->data);
-        g_slist_free (toplevels_to_destroy);
-
-	panel_shell_unregister ();
-
-	gtk_main_quit ();
+	panel_shell_quit ();
 }
 
 void

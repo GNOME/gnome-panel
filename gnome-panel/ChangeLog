@@ -1,5 +1,19 @@
 2008-12-08  Vincent Untz  <vuntz@gnome.org>
 
+	Use dbus-based uniquification instead of bonobo-based, and makes it
+	possible to replace a currently running panel.
+	Based on patch by Colin Walters <walters@verbum.org>
+	Fix bug #558534.
+
+	* GNOME_Panel.server.in: kill
+	* Makefile.am: updated for file removal
+	* main.c: (main): add a --replace option to replace the current panel
+	* panel-session.c: (panel_session_handle_die_request): just call
+	panel_shell_quit()
+	* panel-shell.[ch]: this is pretty much rewritten
+
+2008-12-08  Vincent Untz  <vuntz@gnome.org>
+
 	* libpanel-util/panel-cleanup.c: (panel_cleanup_register),
 	(panel_cleanup_unregister): accept NULL data
 
