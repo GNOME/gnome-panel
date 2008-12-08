@@ -61,7 +61,6 @@ panel_cleanup_register (PanelCleanFunc func,
 	PanelClean *clean;
 
 	g_return_if_fail (func != NULL);
-	g_return_if_fail (data != NULL);
 
 	clean = g_slice_new (PanelClean);
 	clean->func = func;
@@ -78,7 +77,6 @@ panel_cleanup_unregister (PanelCleanFunc func,
 	PanelClean *clean;
 
 	g_return_if_fail (func != NULL);
-	g_return_if_fail (data != NULL);
 
 	if (!cleaner)
 		return;
