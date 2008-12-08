@@ -41,7 +41,6 @@ G_BEGIN_DECLS
 typedef struct _NaTray		NaTray;
 typedef struct _NaTrayPrivate	NaTrayPrivate;
 typedef struct _NaTrayClass	NaTrayClass;
-typedef struct _NaTrayChild	NaTrayChild;
 
 struct _NaTray
 {

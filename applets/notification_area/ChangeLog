@@ -1,3 +1,33 @@
+2008-12-08  Vincent Untz  <vuntz@gnome.org>
+
+	Real tray icons transparency.
+	Patch by Owen Taylor <otaylor@redhat.com>
+	Fix bug #552953.
+
+	* Makefile.am:
+	* na-tray-child.[ch]: new files, to subclass GtkSocket, and have a
+	better life
+	* na-tray-manager.c: (na_tray_manager_plug_removed): trivial update
+	(na_tray_manager_make_socket_transparent): killed
+	(na_tray_manager_socket_exposed): killed
+	(na_tray_manager_socket_style_set): killed
+	(na_tray_manager_handle_dock_request): updated for NaTrayChild
+	(na_tray_manager_set_visual_property): set _NET_SYSTEM_TRAY_VISUAL
+	(na_tray_manager_manage_screen_x11): call
+	na_tray_manager_set_visual_property(), and some cleanups
+	(na_tray_manager_get_child_title): killed, replaced by a NaTrayChild
+	method
+	* na-tray-manager.h:
+	* na-tray.c: (tray_added), (tray_removed): don't force a redraw of the
+	icon. It shouldn't be needed anymore now, with NaTrayChild.
+	(na_tray_expose_icon): new, paint the icon if it's composited.
+	(na_tray_expose_box): updated to for na_tray_expose_icon()
+	(na_tray_init): connect to the expose event of the box
+	(idle_redraw_cb): updated to use na_tray_child_force_redraw()
+	(na_tray_force_redraw): remove a comment
+	* na-tray.h: remove NaTrayChild from there
+	* testtray.c: (tray_added_cb): update some code
+
 ==================== 2.24.2 ====================
 
 ==================== 2.24.1 ====================

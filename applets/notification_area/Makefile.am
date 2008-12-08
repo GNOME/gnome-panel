@@ -22,6 +22,8 @@ NOTIFICATION_AREA_SOURCES =		\
 	obox.h					\
 	na-tray.c				\
 	na-tray.h				\
+	na-tray-child.c				\
+	na-tray-child.h				\
 	na-tray-manager.c			\
 	na-tray-manager.h			\
 	na-marshal.c				\
@@ -94,6 +96,8 @@ testtray_SOURCES = \
 	na-marshal.h		\
 	na-tray.c		\
 	na-tray.h		\
+	na-tray-child.c		\
+	na-tray-child.h		\
 	na-tray-manager.c	\
 	na-tray-manager.h	\
 	obox.c			\

@@ -120,7 +120,6 @@ tray_added (NaTrayManager *manager,
   gtk_box_pack_end (GTK_BOX (priv->box), icon, FALSE, FALSE, 0);
 
   gtk_widget_show (icon);
-  na_tray_force_redraw (tray);
 }
 
 static void
@@ -135,8 +134,6 @@ tray_removed (NaTrayManager *manager,
     return;
 
   g_assert (tray->priv->trays_screen == trays_screen);
-
-  na_tray_force_redraw (tray);
 
   g_hash_table_remove (trays_screen->icon_table, icon);
   /* this will also destroy the tip associated to this icon */
@@ -404,8 +401,38 @@ update_size_and_orientation (NaTray *tray)
       gtk_widget_set_size_request (priv->box, -1, MIN_BOX_SIZE);
       break;
     }
+}
 
-  na_tray_force_redraw (tray);
+/* Children with alpha channels have been set to be composited by calling
+ * gdk_window_set_composited(). We need to paint these children ourselves.
+ */
+static void
+na_tray_expose_icon (GtkWidget *widget,
+		     gpointer   data)
+{
+  cairo_t *cr = data;
+
+  if (na_tray_child_is_composited (NA_TRAY_CHILD (widget)))
+    {
+      gdk_cairo_set_source_pixmap (cr, widget->window,
+				   widget->allocation.x,
+				   widget->allocation.y);
+      cairo_paint (cr);
+    }
+}
+
+static void
+na_tray_expose_box (GtkWidget      *box,
+		    GdkEventExpose *event)
+{
+  cairo_t *cr = gdk_cairo_create (box->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  gtk_container_foreach (GTK_CONTAINER (box), na_tray_expose_icon, cr);
+
+  cairo_destroy (cr);
 }
 
 static void
@@ -423,6 +450,8 @@ na_tray_init (NaTray *tray)
   gtk_widget_show (priv->frame);
 
   priv->box = na_obox_new ();
+  g_signal_connect (priv->box, "expose-event",
+		    G_CALLBACK (na_tray_expose_box), tray);
   gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
   gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
   gtk_widget_show (priv->box);
@@ -663,9 +692,9 @@ idle_redraw_cb (NaTray *tray)
 {
   NaTrayPrivate *priv = tray->priv;
 
+  gtk_container_foreach (GTK_CONTAINER (priv->box), (GtkCallback)na_tray_child_force_redraw, tray);
+  
   priv->idle_redraw_id = 0;
-  gtk_widget_hide (priv->box);
-  gtk_widget_show (priv->box);
 
   return FALSE;
 }
@@ -676,8 +705,6 @@ na_tray_force_redraw (NaTray *tray)
   NaTrayPrivate *priv = tray->priv;
 
   /* Force the icons to redraw their backgrounds.
-   * gtk_widget_queue_draw() doesn't work across process boundaries,
-   * so we do this instead.
    */
   if (priv->idle_redraw_id == 0)
     priv->idle_redraw_id = g_idle_add ((GSourceFunc) idle_redraw_cb, tray);
