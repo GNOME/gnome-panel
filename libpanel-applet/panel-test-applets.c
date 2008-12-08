@@ -50,21 +50,21 @@ typedef struct {
 } ComboItem;
 
 static ComboItem orient_items [] = {
-	{ N_("Orientation|Top"),    "top"    },
-	{ N_("Orientation|Bottom"), "bottom" },
-	{ N_("Orientation|Left"),   "left"   },
-	{ N_("Orientation|Right"),  "right"  }
+	{ NC_("Orientation", "Top"),    "top"    },
+	{ NC_("Orientation", "Bottom"), "bottom" },
+	{ NC_("Orientation", "Left"),   "left"   },
+	{ NC_("Orientation", "Right"),  "right"  }
 };
 
 
 static ComboItem size_items [] = {
-	{ N_("Size|XX Small"), "xx-small" },
-	{ N_("Size|X Small"),  "x-small"  },
-	{ N_("Size|Small"),    "small"    },
-	{ N_("Size|Medium"),   "medium"   },
-	{ N_("Size|Large"),    "large"    },
-	{ N_("Size|X Large"),  "x-large"  },
-	{ N_("Size|XX Large"), "xx-large" }
+	{ NC_("Size", "XX Small"), "xx-small" },
+	{ NC_("Size", "X Small"),  "x-small"  },
+	{ NC_("Size", "Small"),    "small"    },
+	{ NC_("Size", "Medium"),   "medium"   },
+	{ NC_("Size", "Large"),    "large"    },
+	{ NC_("Size", "X Large"),  "x-large"  },
+	{ NC_("Size", "XX Large"), "xx-large" }
 };
 
 static char *
@@ -192,10 +192,11 @@ on_execute_button_clicked (GtkButton *button,
 }
 
 static void
-setup_combo (GtkWidget *combo_box,
-	     ComboItem *items,
-	     int        nb_items,
-	     gboolean   dynamic)
+setup_combo (GtkWidget  *combo_box,
+	     ComboItem  *items,
+	     const char *context,
+	     int         nb_items,
+	     gboolean    dynamic)
 {
 	GtkListStore          *model;
 	GtkTreeIter            iter;
@@ -213,7 +214,7 @@ setup_combo (GtkWidget *combo_box,
 	for (i = 0; i < nb_items; i++) {
 		gtk_list_store_append (model, &iter);
 		gtk_list_store_set (model, &iter,
-				    COLUMN_TEXT, dynamic ? g_strdup (items [i].name) : Q_(items [i].name),
+				    COLUMN_TEXT, dynamic ? g_strdup (items [i].name) : g_dpgettext2 (NULL, context, items [i].name),
 				    COLUMN_ITEM, dynamic ? g_strdup (items [i].value) : items [i].value,
 				    -1);
 	}
@@ -261,12 +262,13 @@ setup_options (void)
 		applet_items[i].value = info->iid;
 	}
 
-	setup_combo (applet_combo, applet_items, applet_nb, TRUE);
+	setup_combo (applet_combo, applet_items, NULL, applet_nb, TRUE);
 	g_free (applet_items);
 	CORBA_free (applets);
 
-	setup_combo (size_combo, size_items, G_N_ELEMENTS (size_items), FALSE);
-	setup_combo (orient_combo, orient_items,
+	setup_combo (size_combo, size_items, "Size",
+		     G_N_ELEMENTS (size_items), FALSE);
+	setup_combo (orient_combo, orient_items, "Orientation",
 		     G_N_ELEMENTS (orient_items), FALSE);
 
 	unique_key = gconf_unique_key ();

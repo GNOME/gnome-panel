@@ -1,3 +1,14 @@
+2008-12-08  Vincent Untz  <vuntz@gnome.org>
+
+	* panel-action-button.c: use C_() instead of Q_().
+	* panel-menu-items.c: (panel_place_menu_item_create_menu),
+	(panel_menu_items_append_lock_logout): ditto
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_orientation_combo): use NC_() and
+	then g_dpgettext2() instead of Q_()
+	Based on patch by Philip Withnall <bugzilla@tecnocode.co.uk>
+	Fix bug #558418, part of a GNOME Goal.
+
 ==================== 2.24.2 ====================
 
 ==================== 2.24.1 ====================

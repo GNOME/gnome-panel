@@ -964,9 +964,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 				PANEL_ICON_DESKTOP, NULL,
 				/* Translators: Desktop is used here as in
 				 * "Desktop Folder" (this is not the Desktop
-				 * environment). Do not keep "Desktop Folder|"
-				 * in the translation */
-				Q_("Desktop Folder|Desktop"),
+				 * environment). */
+				C_("Desktop Folder", "Desktop"),
 				_("Open the contents of your desktop in a folder"),
 				places_menu,
 				G_CALLBACK (activate_desktop_uri),
@@ -1465,11 +1464,11 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		return;
 	/* Below this, we only have log out/shutdown items */
 
-	/* Translators: translate "panel:showusername|1" to anything
+	/* Translators: translate "1" (msgctxt: "panel:showusername") to anything
 	 * but "1" if "Log Out %s" doesn't make any sense in your
 	 * language (where %s is a username).
 	 */
-	translate = Q_("panel:showusername|1");
+	translate = C_("panel:showusername", "1");
 	if (strcmp (translate, "1") == 0) {
 		const char *user_name;
 
@@ -1480,11 +1479,11 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		/* keep those strings in sync with the ones in
 		 * panel-action-button.c */
 		/* Translators: this string is used ONLY if you translated
-		 * "panel:showusername|1" to "1" */
+		 * "1" (msgctxt: "panel:showusername") to "1" */
 		label = g_strdup_printf (_("Log Out %s..."),
 					 g_get_user_name ());
 		/* Translators: this string is used ONLY if you translated
-		 * "panel:showusername|1" to "1" */
+		 * "1" (msgctxt: "panel:showusername") to "1" */
 		tooltip = g_strdup_printf (_("Log out %s of this session to "
 					     "log in as a different user"),
 					   user_name);

@@ -307,7 +307,7 @@ static PanelAction actions [] = {
 		PANEL_ICON_LOGOUT,
 		/* when changing one of those two strings, don't forget to
 		 * update the ones in panel-menu-items.c (look for
-		 * panel:showusername|1) */
+		 * "1" (msgctxt: "panel:showusername")) */
 		N_("Log Out..."),
 		N_("Log out of this session to log in as a different user"),
 		"gospanel-20",
