@@ -26,6 +26,7 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
+#include <glib/gi18n.h>
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
 #include <libgnomeui/gnome-help.h>
