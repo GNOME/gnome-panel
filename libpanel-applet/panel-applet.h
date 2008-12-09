@@ -27,9 +27,8 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-ui-init.h>
-#include <libgnomeui/gnome-client.h>
 #include <bonobo/bonobo-control.h>
+#include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-ui-component.h>
 #include <bonobo/bonobo-generic-factory.h>
 
@@ -179,94 +178,59 @@ Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                
  * Things to define for these:
  *	+ required if Native Language Support is enabled (ENABLE_NLS):
  *                   GETTEXT_PACKAGE and GNOMELOCALEDIR 
- *      + optional : PREFIX, SYSCONFDIR, DATADIR and LIBDIR.
  */
 
 #if !defined(ENABLE_NLS)
-#if defined(PREFIX) && defined(SYSCONFDIR) && defined(DATADIR) && defined(LIBDIR)
-#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
-int main (int argc, char *argv [])						\
-{										\
-	GnomeProgram   *program;							\
-	GOptionContext *context;						\
-	int             retval;							\
-	context = g_option_context_new ("");					\
-	program = gnome_program_init (name, version,				\
-				      LIBGNOMEUI_MODULE,			\
-				      argc, argv,				\
-				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
-				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
-				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
-				      NULL);					\
-        retval = panel_applet_factory_main (iid, type, callback, data);		\
-	g_object_unref (program);						\
-	return retval;								\
-}
-#else /* !defined(PREFIX) ... */
-#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
-int main (int argc, char *argv [])						\
-{										\
-	GnomeProgram *program;							\
-	int           retval;							\
-	program = gnome_program_init (name, version,				\
-				      LIBGNOMEUI_MODULE,			\
-				      argc, argv,				\
-				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
-				      GNOME_PARAM_NONE);			\
-        retval = panel_applet_factory_main (iid, type, callback, data);		\
-	g_object_unref (program);						\
-	return retval;								\
-}
-#endif /* defined(PREFIX) ... */
+#define _PANEL_APPLET_SETUP_GETTEXT(call_textdomain)				\
+	do { } while (0)
 #else /* defined(ENABLE_NLS) */
 #include <libintl.h>
-#if defined(PREFIX) && defined(SYSCONFDIR) && defined(DATADIR) && defined(LIBDIR)
-#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
-int main (int argc, char *argv [])						\
-{										\
-	GnomeProgram *program;							\
-	GOptionContext *context;						\
-	int           retval;							\
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
-	textdomain (GETTEXT_PACKAGE);						\
-	context = g_option_context_new ("");					\
-	program = gnome_program_init (name, version,				\
-				      LIBGNOMEUI_MODULE,			\
-				      argc, argv,				\
-				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
-				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
-				      GNOME_PROGRAM_STANDARD_PROPERTIES,	\
-				      NULL);					\
-        retval = panel_applet_factory_main (iid, type, callback, data);		\
-	g_object_unref (program);						\
-	return retval;								\
-}
-#else /* !defined(PREFIX) ... */
-#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
-int main (int argc, char *argv [])						\
-{										\
-	GnomeProgram *program;							\
-	GOptionContext *context;						\
-	int           retval;							\
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
-	textdomain (GETTEXT_PACKAGE);						\
-	context = g_option_context_new ("");					\
-	program = gnome_program_init (name, version,				\
-				      LIBGNOMEUI_MODULE,			\
-				      argc, argv,				\
-				      GNOME_PARAM_GOPTION_CONTEXT, context,	\
-				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,	\
-				      GNOME_PARAM_NONE);			\
-        retval = panel_applet_factory_main (iid, type, callback, data);		\
-	g_object_unref (program);						\
-	return retval;								\
-}
-#endif /* defined(PREFIX) ... */
+#define _PANEL_APPLET_SETUP_GETTEXT(call_textdomain)				\
+	do {									\
+		bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);		\
+		bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");		\
+		if (call_textdomain)						\
+			textdomain (GETTEXT_PACKAGE);				\
+	} while (0)
 #endif /* !defined(ENABLE_NLS) */
 
-#if !defined(ENABLE_NLS)
+#define PANEL_APPLET_BONOBO_FACTORY(iid, type, name, version, callback, data)	\
+int main (int argc, char *argv [])						\
+{										\
+	GOptionContext *context;						\
+	GError         *error;							\
+	int             retval;							\
+										\
+	_PANEL_APPLET_SETUP_GETTEXT (TRUE);					\
+										\
+	context = g_option_context_new ("");					\
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));	\
+	g_option_context_add_group (context,					\
+				    bonobo_activation_get_goption_group ());	\
+										\
+	error = NULL;								\
+	if (!g_option_context_parse (context, &argc, &argv, &error)) {		\
+		if (error) {							\
+			g_printerr ("Cannot parse arguments: %s.\n",		\
+				    error->message);				\
+			g_error_free (error);					\
+		} else								\
+			g_printerr ("Cannot parse arguments.\n");		\
+		return 1;							\
+	}									\
+										\
+	gtk_init (&argc, &argv);						\
+	if (!bonobo_init (&argc, argv)) {					\
+		g_printerr ("Cannot initialize bonobo.\n");			\
+		return 1;							\
+	}									\
+										\
+        retval = panel_applet_factory_main (iid, type, callback, data);		\
+	g_option_context_free (context);					\
+										\
+	return retval;								\
+}
+
 #define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, type, descr, callback, data)	\
 static Bonobo_Unknown								\
 __panel_applet_shlib_factory (PortableServer_POA  poa,				\
@@ -274,6 +238,7 @@ __panel_applet_shlib_factory (PortableServer_POA  poa,				\
 			      gpointer            impl_ptr,			\
 			      CORBA_Environment  *ev)				\
 {										\
+	_PANEL_APPLET_SETUP_GETTEXT (FALSE);					\
         return panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
 					   (callback), (data), ev);		\
 }										\
@@ -282,26 +247,6 @@ static BonoboActivationPluginObject plugin_list[] = {				\
 	{ NULL }								\
 };										\
 const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
-#else /* defined(ENABLE_NLS) */
-#include <libintl.h>
-#define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, type, descr, callback, data)	\
-static Bonobo_Unknown								\
-__panel_applet_shlib_factory (PortableServer_POA  poa,				\
-			      const char         *oafiid,			\
-			      gpointer            impl_ptr,			\
-			      CORBA_Environment  *ev)				\
-{										\
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);			\
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");			\
-        return panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
-					   (callback), (data), ev);		\
-}										\
-static BonoboActivationPluginObject plugin_list[] = {				\
-	{ (iid), __panel_applet_shlib_factory },				\
-	{ NULL }								\
-};										\
-const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
-#endif /* !defined(ENABLE_NLS) */
 
 G_END_DECLS
 

@@ -1,5 +1,17 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	Get rid of libgnome(ui) usage. We still indirectly depend on libgnome
+	because of libbonoboui, but we shouldn't depend on libgnomeui anymore.
+
+	* libpanelapplet-2.0-uninstalled.pc.in:
+	* libpanelapplet-2.0.pc.in: remove libgnomeui-2.0 from Requires
+	* panel-applet.h: use gtk_init() and bonobo_init() instead of
+	gnome_program_init(). And sanitize the macros a bit.
+	* panel-test-applets.c: (main): use gtk_init_with_args() and
+	bonobo_init() instead of gnome_program_init()
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-applet.c: (panel_applet_get_pixmap): don't use a cairo matrix,
 	we can do the same thing by just shifting the pixmap in
 	gdk_cairo_set_source_pixmap()

@@ -12,6 +12,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <bonobo/bonobo-exception.h>
+#include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-widget.h>
 #include <gconf/gconf.h>
 
@@ -281,24 +282,31 @@ setup_options (void)
 int
 main (int argc, char **argv)
 {
-	GOptionContext *context;
-	GladeXML       *gui;
-	char           *gladefile;
+	GladeXML *gui;
+	char     *gladefile;
+	GError   *error;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	context = g_option_context_new ("");
+	error = NULL;
+	if (!gtk_init_with_args (&argc, &argv,
+				 "", (GOptionEntry *) options, GETTEXT_PACKAGE,
+				 &error)) {
+		if (error) {
+			g_printerr ("%s\n", error->message);
+			g_error_free (error);
+		} else
+			g_printerr ("Cannot initiliaze GTK+.\n");
 
-	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
+		return 1;
+	}
 
-	gnome_program_init (argv [0], "0.0.0.0", LIBGNOMEUI_MODULE,
-			    argc, argv,
-			    GNOME_PARAM_GOPTION_CONTEXT, context,
-			    GNOME_PARAM_NONE);
-
-	g_option_context_free (context);
+	if (!bonobo_init (&argc, argv)) {
+		g_printerr ("Cannot initialize bonobo.\n");
+		return 1;
+	}
 
 	if (cli_iid) {
 		load_applet_from_command_line ();
