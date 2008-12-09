@@ -1,5 +1,9 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* na-tray.c: remove useless libgnome include
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* obox.[ch]: (na_obox_finalize), (na_obox_class_init), (na_obox_init),
 	(get_class): g_type_class_peek() does not create a type if the class
 	wasn't used before, so we need to call g_type_class_ref() (and later,

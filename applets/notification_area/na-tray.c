@@ -26,7 +26,6 @@
 #include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-help.h>
 
 #include "na-tray-manager.h"
 #include "fixedtip.h"
