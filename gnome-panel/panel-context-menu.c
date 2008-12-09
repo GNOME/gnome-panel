@@ -89,7 +89,7 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		"George Lebl (jirka@5z.com)",
 		"Glynn Foster (glynn.foster@sun.com)",
 		"Ian Main (imain@gtk.org)",
-		"Ian McKellar <yakk@yakk.net>",
+		"Ian McKellar (yakk@yakk.net)",
 		"Jacob Berkman (jberkman@andrew.cmu.edu)",
 		"Mark McLoughlin (mark@skynet.ie)",
 		"Martin Baulig (baulig@suse.de)",
