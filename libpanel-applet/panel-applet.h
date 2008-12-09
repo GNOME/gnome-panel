@@ -25,9 +25,8 @@
 #ifndef __PANEL_APPLET_H__
 #define __PANEL_APPLET_H__
 
-#include <glib/gmacros.h>
-#include <gtk/gtkenums.h>
-#include <gtk/gtkeventbox.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 #include <libgnomeui/gnome-ui-init.h>
 #include <libgnomeui/gnome-client.h>
 #include <bonobo/bonobo-control.h>

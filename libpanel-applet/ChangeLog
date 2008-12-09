@@ -1,3 +1,23 @@
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
+	Stop using deprecated API (except for one bonobo API) and single
+	include for glib/gtk+.
+
+	* panel-applet-gconf.h: single include for glib
+	* panel-applet.c: single include for gtk+
+	(panel_applet_associate_schemas_in_dir):
+	s/gconf_entry_free/gconf_entry_unref
+	(panel_applet_can_focus), (panel_applet_focus):
+	s/gtk_tooltips_data_get/gtk_widget_get_has_tooltip/. Sure, it'd be
+	better to do both, but let's just say we don't like old applets with
+	old code.
+	(panel_applet_handle_background_string),
+	(panel_applet_property_bag): do not mark strings that are not visible
+	as translatable
+	(panel_applet_update_background_for_widget):
+	s/gtk_rc_style_unref/g_object_unref/
+	* panel-applet.h: single include for glib/gtk+
+
 2008-12-08  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-test-applets.c: (setup_combo), (setup_options): use NC_() and

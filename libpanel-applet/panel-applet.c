@@ -29,13 +29,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <cairo.h>
 #include <cairo-xlib.h> //FIXME should be removed when gdk_cairo_set_source_pixmap() is available (GTK+ 2.10)
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkbindings.h>
-#include <gtk/gtktooltips.h>
+#include <gtk/gtk.h>
 #include <bonobo/bonobo-ui-util.h>
 #include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-types.h>
@@ -149,7 +149,7 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 
 		g_free (key);
 
-		gconf_entry_free (entry);
+		gconf_entry_unref (entry);
 
 		if (*error) {
 			g_slist_free (list);
@@ -663,7 +663,7 @@ panel_applet_can_focus (GtkWidget *widget)
 	 * A PanelApplet widget can focus if it has a tooltip or it does 
 	 * not have any focusable children.
 	 */
-	if (gtk_tooltips_data_get (widget))
+	if (gtk_widget_get_has_tooltip (widget))
 		return TRUE;
 
 	if (!PANEL_IS_APPLET (widget))
@@ -860,8 +860,8 @@ panel_applet_focus (GtkWidget        *widget,
 	}
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
-	 if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
-		if (gtk_tooltips_data_get (widget)) {
+	if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
+		if (gtk_widget_get_has_tooltip (widget)) {
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
 			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
@@ -869,11 +869,12 @@ panel_applet_focus (GtkWidget        *widget,
 		}
 	}
 	ret = GTK_WIDGET_CLASS (panel_applet_parent_class)->focus (widget, dir);
+
 	if (!ret && !previous_focus_child) {
  		if (!GTK_WIDGET_HAS_FOCUS (widget))  {
 			/*
 			 * Applet does not have a widget which can focus so set
-			 * the focus on the applet unless it aleready had focus
+			 * the focus on the applet unless it already had focus
 			 * because it had a tooltip.
 			 */ 
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
@@ -1049,7 +1050,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 
 		if (!elements [1] || !panel_applet_parse_color (elements [1], color)) {
 
-			g_warning (_("Incomplete '%s' background type received"), elements [0]);
+			g_warning ("Incomplete '%s' background type received", elements [0]);
 			g_strfreev (elements);
 			return PANEL_NO_BACKGROUND;
 		}
@@ -1063,7 +1064,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 		g_return_val_if_fail (pixmap != NULL, PANEL_NO_BACKGROUND);
 
 		if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
-			g_warning (_("Incomplete '%s' background type received: %s"),
+			g_warning ("Incomplete '%s' background type received: %s",
 				   elements [0], elements [1]);
 
 			g_strfreev (elements);
@@ -1072,14 +1073,14 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 
 		*pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
 		if (!*pixmap) {
-			g_warning (_("Failed to get pixmap %s"), elements [1]);
+			g_warning ("Failed to get pixmap %s", elements [1]);
 			g_strfreev (elements);
 			return PANEL_NO_BACKGROUND;
 		}
 
 		retval = PANEL_PIXMAP_BACKGROUND;
 	} else
-		g_warning (_("Unknown background type received"));
+		g_warning ("Unknown background type received");
 
 	g_strfreev (elements);
 
@@ -1160,7 +1161,7 @@ panel_applet_update_background_for_widget (GtkWidget                 *widget,
 	gtk_widget_set_style (widget, NULL);
 	rc_style = gtk_rc_style_new ();
 	gtk_widget_modify_style (widget, rc_style);
-	gtk_rc_style_unref (rc_style);
+	g_object_unref (rc_style);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
@@ -1303,7 +1304,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_ORIENT_IDX,
 				 BONOBO_ARG_SHORT,
 				 NULL,
-				 _("The Applet's containing Panel's orientation"),
+				 "The Applet's containing Panel's orientation",
 				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	bonobo_property_bag_add (sack,
@@ -1311,7 +1312,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_SIZE_IDX,
 				 BONOBO_ARG_SHORT,
 				 NULL,
-				 _("The Applet's containing Panel's size in pixels"),
+				 "The Applet's containing Panel's size in pixels",
 				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	bonobo_property_bag_add (sack,
@@ -1319,7 +1320,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_BACKGROUND_IDX,
 				 BONOBO_ARG_STRING,
 				 NULL,
-				 _("The Applet's containing Panel's background color or pixmap"),
+				 "The Applet's containing Panel's background color or pixmap",
 				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	bonobo_property_bag_add (sack,
@@ -1327,7 +1328,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_FLAGS_IDX,
 				 BONOBO_ARG_SHORT,
 				 NULL,
-				 _("The Applet's flags"),
+				 "The Applet's flags",
 				 Bonobo_PROPERTY_READABLE);
 
 	bonobo_property_bag_add (sack,
@@ -1335,7 +1336,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_SIZE_HINTS_IDX,
 				 TC_CORBA_sequence_CORBA_long,
 				 NULL,
-				 _("Ranges that hint what sizes are acceptable for the applet"),
+				 "Ranges that hint what sizes are acceptable for the applet",
 				 Bonobo_PROPERTY_READABLE);
 
 	bonobo_property_bag_add (sack,
@@ -1343,7 +1344,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_LOCKED_DOWN_IDX,
 				 BONOBO_ARG_BOOLEAN,
 				 NULL,
-				 _("The Applet's containing Panel is locked down"),
+				 "The Applet's containing Panel is locked down",
 				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	return sack;
