@@ -29,8 +29,6 @@
 
 #include <config.h>
 
-#undef GNOME_DISABLE_DEPRECATED
-#undef GTK_DISABLE_DEPRECATED
 #include "panel-run-dialog.h"
 
 #include <string.h>
