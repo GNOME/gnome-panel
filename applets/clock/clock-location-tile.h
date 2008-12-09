@@ -1,7 +1,7 @@
 #ifndef __CLOCK_LOCATION_TILE_H__
 #define __CLOCK_LOCATION_TILE_H__
 
-#include <gtk/gtkalignment.h>
+#include <gtk/gtk.h>
 
 #include "clock.h"
 #include "clock-face.h"

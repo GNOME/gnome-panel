@@ -1,5 +1,19 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-face.c: (draw):
+	s/gdk_pixbuf_render_to_drawable/gdk_draw_pixbuf/ (no deprecated API)
+	* clock-location-tile.h: single include for gtk+
+	* clock-map.c: (clock_map_finalize), (clock_map_refresh),
+	(clock_map_mark), (clock_map_place_locations),
+	(clock_map_render_shadow): s/gdk_pixbuf_unref/g_object_unref/ (no
+	deprecated API)
+	* clock-utils.h: single include for gtk+
+	* clock.c: add missing include for glib/gi18n.h
+	* obox.[ch]: single include for gtk+
+	(get_class): s/gtk_type_class/g_type_class_peek/ (no deprecated API)
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* calendar-sources.c: define HANDLE_LIBICAL_MEMORY to avoid warning
 	during compilation
 

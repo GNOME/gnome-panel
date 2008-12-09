@@ -148,29 +148,29 @@ clock_map_finalize (GObject *g_obj)
 	}
 
         if (priv->stock_map_pixbuf) {
-                gdk_pixbuf_unref (priv->stock_map_pixbuf);
+                g_object_unref (priv->stock_map_pixbuf);
                 priv->stock_map_pixbuf = NULL;
         }
 
 	for (i = 0; i < MARKER_NB; i++) {
         	if (priv->location_marker_pixbuf[i]) {
-                	gdk_pixbuf_unref (priv->location_marker_pixbuf[i]);
+                	g_object_unref (priv->location_marker_pixbuf[i]);
                 	priv->location_marker_pixbuf[i] = NULL;
         	}
 	}
 
         if (priv->location_map_pixbuf) {
-                gdk_pixbuf_unref (priv->location_map_pixbuf);
+                g_object_unref (priv->location_map_pixbuf);
                 priv->location_map_pixbuf = NULL;
         }
 
         if (priv->shadow_pixbuf) {
-                gdk_pixbuf_unref (priv->shadow_pixbuf);
+                g_object_unref (priv->shadow_pixbuf);
                 priv->shadow_pixbuf = NULL;
         }
 
         if (priv->shadow_map_pixbuf) {
-                gdk_pixbuf_unref (priv->shadow_map_pixbuf);
+                g_object_unref (priv->shadow_map_pixbuf);
                 priv->shadow_map_pixbuf = NULL;
         }
 
@@ -192,7 +192,7 @@ clock_map_refresh (ClockMap *this)
 	if (priv->width != widget->allocation.width ||
 	    priv->height != widget->allocation.height) {
                 if (priv->stock_map_pixbuf) {
-                        gdk_pixbuf_unref (priv->stock_map_pixbuf);
+                        g_object_unref (priv->stock_map_pixbuf);
                         priv->stock_map_pixbuf = NULL;
                 }
 
@@ -361,8 +361,8 @@ clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
                                       dest_y,
                                       1.0, 1.0, GDK_INTERP_NEAREST, 0xFF);
 
-                gdk_pixbuf_unref (lhs);
-                gdk_pixbuf_unref (rhs);
+                g_object_unref (lhs);
+                g_object_unref (rhs);
         } else if (dest_x + dest_width > width) {
                 /* split into our two pixbufs for the left and right edges */
                 GdkPixbuf *lhs = NULL;
@@ -390,8 +390,8 @@ clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
                                       dest_y,
                                       1.0, 1.0, GDK_INTERP_NEAREST, 0xFF);
 
-                gdk_pixbuf_unref (lhs);
-                gdk_pixbuf_unref (rhs);
+                g_object_unref (lhs);
+                g_object_unref (rhs);
         } else {
                 gdk_pixbuf_composite (marker, priv->location_map_pixbuf,
                                       dest_x, dest_y,
@@ -402,7 +402,7 @@ clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
         }
 
         if (partial != NULL) {
-                gdk_pixbuf_unref (partial);
+                g_object_unref (partial);
         }
 }
 
@@ -432,7 +432,7 @@ clock_map_place_locations (ClockMap *this)
         ClockLocation *loc;
 
         if (priv->location_map_pixbuf) {
-                gdk_pixbuf_unref (priv->location_map_pixbuf);
+                g_object_unref (priv->location_map_pixbuf);
                 priv->location_map_pixbuf = NULL;
         }
 
@@ -557,7 +557,7 @@ clock_map_render_shadow (ClockMap *this)
         ClockMapPrivate *priv = PRIVATE (this);
 
         if (priv->shadow_pixbuf) {
-                gdk_pixbuf_unref (priv->shadow_pixbuf);
+                g_object_unref (priv->shadow_pixbuf);
         }
 
         priv->shadow_pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
@@ -569,7 +569,7 @@ clock_map_render_shadow (ClockMap *this)
         clock_map_render_shadow_pixbuf (priv->shadow_pixbuf);
 
         if (priv->shadow_map_pixbuf) {
-                gdk_pixbuf_unref (priv->shadow_map_pixbuf);
+                g_object_unref (priv->shadow_map_pixbuf);
         }
 
         priv->shadow_map_pixbuf = gdk_pixbuf_copy (priv->location_map_pixbuf);

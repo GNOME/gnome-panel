@@ -128,13 +128,15 @@ draw (GtkWidget *this, cairo_t *cr)
         /* clock back */
         if (priv->face_pixbuf) {
                 GdkWindow *window = this->window;
-                gdk_pixbuf_render_to_drawable (priv->face_pixbuf,
-                                               GDK_DRAWABLE (window),
-                                               NULL, 0, 0, this->allocation.x,
-                                               this->allocation.y,
-                                               this->allocation.width,
-                                               this->allocation.height,
-                                               GDK_RGB_DITHER_NONE, 0, 0);
+		gdk_draw_pixbuf (GDK_DRAWABLE (window),
+				 NULL,
+				 priv->face_pixbuf,
+				 0, 0,
+				 this->allocation.x,
+				 this->allocation.y,
+				 this->allocation.width,
+				 this->allocation.height,
+				 GDK_RGB_DITHER_NONE, 0, 0);
         }
 
         cairo_restore (cr);
