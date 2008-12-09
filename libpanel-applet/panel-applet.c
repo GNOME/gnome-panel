@@ -31,7 +31,6 @@
 #include <string.h>
 
 #include <cairo.h>
-#include <cairo-xlib.h> //FIXME should be removed when gdk_cairo_set_source_pixmap() is available (GTK+ 2.10)
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
@@ -962,7 +961,6 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	int              width;
 	int              height;
 	cairo_t         *cr;
-	cairo_surface_t *surface;
 	cairo_pattern_t *pattern;
 	cairo_matrix_t   matrix;
 
@@ -991,32 +989,26 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 		return NULL;
 	}
 
-	gdk_drawable_get_size (GDK_DRAWABLE (pixmap), &width, &height);
-
-	//FIXME gdk_cairo_set_source_pixmap() should do the trick (GTK+ 2.10)
-	surface = cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
- 					     //xid,
-					     gdk_x11_drawable_get_xid (GDK_DRAWABLE (pixmap)),
-					     gdk_x11_visual_get_xvisual (gdk_drawable_get_visual (GTK_WIDGET (applet)->window)),
-					     width, height);
-
-	pattern = cairo_pattern_create_for_surface (surface);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-	cairo_matrix_init_translate (&matrix, x, y);
-	cairo_pattern_set_matrix (pattern, &matrix);
-
 	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
 			       &width, &height);
 	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window,
 				 width, height, -1);
 
+	/* the pixmap has no colormap, and we need one */
+	gdk_drawable_set_colormap (GDK_DRAWABLE (pixmap),
+				   gdk_drawable_get_colormap (GTK_WIDGET (applet)->window));
+
 	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
-	cairo_set_source (cr, pattern);
+	gdk_cairo_set_source_pixmap (cr, pixmap, 0, 0);
+	pattern = cairo_get_source (cr);
+
+	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+	cairo_matrix_init_translate (&matrix, x, y);
+	cairo_pattern_set_matrix (pattern, &matrix);
+
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
 
-	cairo_pattern_destroy (pattern);
-	cairo_surface_destroy (surface);
 	cairo_destroy (cr);
 
 	g_object_unref (pixmap);

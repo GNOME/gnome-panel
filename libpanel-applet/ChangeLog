@@ -1,5 +1,10 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-applet.c: (panel_applet_get_pixmap): use
+	gdk_cairo_set_source_pixmap() instead of some custom code
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	Stop using deprecated API (except for one bonobo API) and single
 	include for glib/gtk+.
 
