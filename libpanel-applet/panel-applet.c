@@ -42,7 +42,6 @@
 #include <bonobo/bonobo-item-handler.h>
 #include <bonobo/bonobo-shlib-factory.h>
 #include <bonobo/bonobo-property-bag-client.h>
-#include <libgnome/gnome-program.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
 #include <X11/Xatom.h>
@@ -962,7 +961,6 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	int              height;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
-	cairo_matrix_t   matrix;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
@@ -999,12 +997,9 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 				   gdk_drawable_get_colormap (GTK_WIDGET (applet)->window));
 
 	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
-	gdk_cairo_set_source_pixmap (cr, pixmap, 0, 0);
+	gdk_cairo_set_source_pixmap (cr, pixmap, -x, -y);
 	pattern = cairo_get_source (cr);
-
 	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-	cairo_matrix_init_translate (&matrix, x, y);
-	cairo_pattern_set_matrix (pattern, &matrix);
 
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);

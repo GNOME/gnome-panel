@@ -1,5 +1,11 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-applet.c: (panel_applet_get_pixmap): don't use a cairo matrix,
+	we can do the same thing by just shifting the pixmap in
+	gdk_cairo_set_source_pixmap()
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-applet.c: (panel_applet_get_pixmap): use
 	gdk_cairo_set_source_pixmap() instead of some custom code
 

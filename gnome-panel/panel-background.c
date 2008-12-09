@@ -1076,7 +1076,6 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 	GdkPixmap       *pixmap;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
-	cairo_matrix_t   matrix;
 	GtkStyle        *style;
 
 	bg_pixmap = panel_background_get_pixmap (background);
@@ -1089,14 +1088,11 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 				 -1);
 
 	cr = gdk_cairo_create (GDK_DRAWABLE (pixmap));
-	gdk_cairo_set_source_pixmap (cr, (GdkPixmap *) bg_pixmap, 0, 0);
+	gdk_cairo_set_source_pixmap (cr, (GdkPixmap *) bg_pixmap,
+				     -widget->allocation.x,
+				     -widget->allocation.y);
 	pattern = cairo_get_source (cr);
-
 	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-	cairo_matrix_init_translate (&matrix,
-				     widget->allocation.x,
-				     widget->allocation.y);
-	cairo_pattern_set_matrix (pattern, &matrix);
 
 	cairo_rectangle (cr, 0, 0,
 			 widget->allocation.width, widget->allocation.height);

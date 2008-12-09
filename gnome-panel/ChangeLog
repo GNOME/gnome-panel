@@ -1,5 +1,12 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-background.c:
+	(panel_background_set_image_background_on_widget): don't use a cairo
+	matrix, we can do the same thing by just shifting the pixmap in
+	gdk_cairo_set_source_pixmap()
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	Lots of "remove deprecated API usage" and single include fun.
 
 	* panel-compatibility.c: (copy_gconf_dir):
