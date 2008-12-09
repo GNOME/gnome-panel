@@ -38,12 +38,28 @@ static void na_obox_size_allocate (GtkWidget       *widget,
 G_DEFINE_TYPE (NaOBox, na_obox, GTK_TYPE_BOX)
 
 static void
+na_obox_finalize (GObject *object)
+{
+  NaOBox *obox;
+
+  obox = NA_OBOX (object);
+
+  g_type_class_unref (obox->hbox_type);
+  g_type_class_unref (obox->vbox_type);
+
+  G_OBJECT_CLASS (na_obox_parent_class)->finalize (object);
+}
+
+static void
 na_obox_class_init (NaOBoxClass *class)
 {
+  GObjectClass   *gobject_class;
   GtkWidgetClass *widget_class;
 
+  gobject_class = (GObjectClass*) class;
   widget_class = (GtkWidgetClass*) class;
 
+  gobject_class->finalize = na_obox_finalize;
   widget_class->size_request = na_obox_size_request;
   widget_class->size_allocate = na_obox_size_allocate;
 }
@@ -52,6 +68,9 @@ static void
 na_obox_init (NaOBox *obox)
 {
   obox->orientation = GTK_ORIENTATION_HORIZONTAL;
+
+  obox->hbox_type = g_type_class_ref (GTK_TYPE_HBOX);
+  obox->vbox_type = g_type_class_ref (GTK_TYPE_VBOX);
 }
 
 GtkWidget*
@@ -72,10 +91,10 @@ get_class (NaOBox *obox)
   switch (obox->orientation)
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      klass = GTK_WIDGET_CLASS (g_type_class_peek (GTK_TYPE_HBOX));
+      klass = GTK_WIDGET_CLASS (obox->hbox_type);
       break;
     case GTK_ORIENTATION_VERTICAL:
-      klass = GTK_WIDGET_CLASS (g_type_class_peek (GTK_TYPE_VBOX));
+      klass = GTK_WIDGET_CLASS (obox->vbox_type);
       break;
     default:
       g_assert_not_reached ();

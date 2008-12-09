@@ -51,6 +51,9 @@ struct _NaOBox
   GtkBox box;
 
   GtkOrientation orientation;
+
+  gpointer       hbox_type;
+  gpointer       vbox_type;
 };
 
 struct _NaOBoxClass
