@@ -1,5 +1,12 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-background.c:
+	(panel_background_set_image_background_on_widget): use
+	gdk_cairo_set_source_pixmap() now that it's available, instead of
+	custom code.
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* main.c: (main): set an application name. It's used by the gio
 	authentication dialog.
 

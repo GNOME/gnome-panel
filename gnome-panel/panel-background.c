@@ -28,8 +28,8 @@
 
 #include <string.h>
 #include <gdk/gdkx.h>
+#include <gdk/gdk.h>
 #include <cairo.h>
-#include <cairo-xlib.h> //FIXME should be removed when gdk_cairo_set_source_pixmap() is available (GTK+ 2.10)
 
 #include "panel-background-monitor.h"
 #include "panel-util.h"
@@ -1074,32 +1074,14 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 {
 	const GdkPixmap *bg_pixmap;
 	GdkPixmap       *pixmap;
-	int              width;
-	int              height;
 	cairo_t         *cr;
-	cairo_surface_t *surface;
 	cairo_pattern_t *pattern;
 	cairo_matrix_t   matrix;
-	GtkStyle         *style;
+	GtkStyle        *style;
 
 	bg_pixmap = panel_background_get_pixmap (background);
 	if (!bg_pixmap)
 		return;
-
-	gdk_drawable_get_size (GDK_DRAWABLE (bg_pixmap), &width, &height);
-
-	//FIXME gdk_cairo_set_source_pixmap() should do the trick (GTK+ 2.10)
-	surface = cairo_xlib_surface_create (gdk_x11_drawable_get_xdisplay (widget->window),
- 					     gdk_x11_drawable_get_xid (GDK_DRAWABLE (bg_pixmap)),
-					     gdk_x11_visual_get_xvisual (gdk_drawable_get_visual (widget->window)),
-					     width, height);
-
-	pattern = cairo_pattern_create_for_surface (surface);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-	cairo_matrix_init_translate (&matrix,
-				     widget->allocation.x,
-				     widget->allocation.y);
-	cairo_pattern_set_matrix (pattern, &matrix);
 
 	pixmap = gdk_pixmap_new (widget->window,
 				 widget->allocation.width,
@@ -1107,13 +1089,19 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 				 -1);
 
 	cr = gdk_cairo_create (GDK_DRAWABLE (pixmap));
-	cairo_set_source (cr, pattern);
+	gdk_cairo_set_source_pixmap (cr, (GdkPixmap *) bg_pixmap, 0, 0);
+	pattern = cairo_get_source (cr);
+
+	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+	cairo_matrix_init_translate (&matrix,
+				     widget->allocation.x,
+				     widget->allocation.y);
+	cairo_pattern_set_matrix (pattern, &matrix);
+
 	cairo_rectangle (cr, 0, 0,
 			 widget->allocation.width, widget->allocation.height);
 	cairo_fill (cr);
 
-	cairo_pattern_destroy (pattern);
-	cairo_surface_destroy (surface);
 	cairo_destroy (cr);
 
 	style = gtk_style_copy (widget->style);
