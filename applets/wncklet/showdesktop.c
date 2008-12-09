@@ -27,12 +27,9 @@
 #include <config.h>
 #endif
 
-#include <gtk/gtkicontheme.h>
-#include <gtk/gtktogglebutton.h>
-#include <gtk/gtkimage.h>
-#include <gtk/gtkstock.h>
-#include <gtk/gtkmessagedialog.h>
-#include <gtk/gtkdnd.h>
+#include <glib/gi18n.h>
+
+#include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
 #include <libwnck/screen.h>

@@ -24,7 +24,7 @@
 #ifndef _SHOWDESKTOP_H_
 #define _SHOWDESKTOP_H_
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS

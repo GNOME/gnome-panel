@@ -9,7 +9,7 @@
 #ifndef __WORKSPACE_SWITCHER_APPLET_H__
 #define __WORKSPACE_SWITCHER_APPLET_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS

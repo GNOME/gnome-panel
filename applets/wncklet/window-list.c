@@ -19,8 +19,8 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
-#include <gtk/gtkdialog.h>
-#include <libgnomeui/gnome-help.h>
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>

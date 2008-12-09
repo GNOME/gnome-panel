@@ -29,7 +29,7 @@
 #ifndef __WINDOW_MENU_H__
 #define __WINDOW_MENU_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS

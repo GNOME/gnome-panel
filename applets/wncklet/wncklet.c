@@ -27,9 +27,10 @@
 
 #include <string.h>
 #include <panel-applet.h>
+
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <libgnomeui/gnome-help.h>
-#include <gtk/gtkaboutdialog.h>
-#include <gtk/gtkmessagedialog.h>
 #include <libwnck/screen.h>
 #include <libwnck/util.h>
 

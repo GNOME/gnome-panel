@@ -28,7 +28,7 @@
 #include <libwnck/screen.h>
 
 #include <glib.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS

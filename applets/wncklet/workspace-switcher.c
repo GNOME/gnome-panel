@@ -21,11 +21,11 @@
 
 #include <stdlib.h>
 
-#include <gtk/gtkdialog.h>
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
-#include <libgnomeui/gnome-help.h>
 
 #include "workspace-switcher.h"
 
