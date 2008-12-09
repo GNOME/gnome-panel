@@ -1,5 +1,23 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	Remove dependency on gnome_util_home_file()
+
+	* launcher.h: move PANEL_LAUNCHERS_PATH to panel-util.c
+	* launcher.c: (panel_launcher_delete): update to use
+	panel_launcher_is_in_personal_path()
+	Move some functions to panel-util.c. That's suboptimal, but I can't
+	figure out yet how I want the code to be organized, so...
+	* panel-util.c: (panel_launcher_get_personal_path): new, real
+	gnome_util_home_file() killer
+	(panel_launcher_is_in_personal_path): new, does what the name implies
+	(panel_launcher_get_gfile),
+	(panel_launcher_get_uri), (panel_launcher_get_filename): moved from
+	launcher.c
+	(panel_make_full_path): trivial update
+	* panel-util.h: also remove UpdateFunction which was unused
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-properties-dialog.c:
 	(panel_properties_dialog_setup_image_chooser): remove the filter
 	chooser in the file chooser: since there's only one filter, the chooser

@@ -16,8 +16,6 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_LAUNCHERS_PATH "panel2.d/default/launchers"
-
 typedef struct {
 	AppletInfo        *info;
 	GtkWidget         *button;

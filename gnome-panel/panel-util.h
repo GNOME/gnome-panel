@@ -6,8 +6,6 @@
 
 G_BEGIN_DECLS
 
-typedef void (*UpdateFunction) (gpointer);
-
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
 void            panel_util_launch_from_key_file (GKeyFile                *keyfile,
@@ -68,6 +66,11 @@ GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 int            desired_width,
 					 int            desired_height,
 					 char         **error_msg);
+
+GFile      *panel_launcher_get_gfile           (const char *location);
+char       *panel_launcher_get_uri             (const char *location);
+char       *panel_launcher_get_filename        (const char *location);
+gboolean    panel_launcher_is_in_personal_path (const char *location);
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);

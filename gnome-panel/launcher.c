@@ -20,7 +20,6 @@
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>
-#include <libgnome/gnome-util.h>
 #include <gdk/gdkx.h>
 
 #include <libpanel-util/panel-error.h>
@@ -94,61 +93,6 @@ launcher_register_error_dialog (Launcher *launcher,
 	g_signal_connect (dialog, "destroy",
 			  G_CALLBACK (launcher_widget_open_dialog_destroyed),
 			  launcher);
-}
-
-static GFile *
-panel_launcher_get_gfile (const char *location)
-{
-	char  *path;
-	GFile *file;
-
-	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
-		return g_file_new_for_uri (location);
-
-	if (g_path_is_absolute (location))
-		return g_file_new_for_path (location);
-
-	path = panel_make_full_path (NULL, location);
-	file = g_file_new_for_path (path);
-	g_free (path);
-
-	return file;
-}
-
-static char *
-panel_launcher_get_uri (const char *location)
-{
-	char *path;
-	char *uri;
-
-	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
-		return g_strdup (location);
-
-	if (!g_path_is_absolute (location))
-		path = panel_make_full_path (NULL, location);
-	else
-		path = g_strdup (location);
-
-	uri = g_filename_to_uri (path, NULL, NULL);
-	g_free (path);
-
-	return uri;
-}
-
-static const char *
-panel_launcher_get_filename (const char *location)
-{
-	char *p;
-
-	if (!g_path_is_absolute (location) &&
-	    g_ascii_strncasecmp (location, "file:", strlen ("file:")))
-		/* this is not a local URI */
-		return NULL;
-
-	if ((p = strstr (location, PANEL_LAUNCHERS_PATH)))
-		p += sizeof (PANEL_LAUNCHERS_PATH);
-
-	return p;
 }
 
 static void
@@ -331,22 +275,15 @@ free_launcher (gpointer data)
 void
 panel_launcher_delete (Launcher *launcher)
 {
-	GFile *file;
-	GFile *launchers;
-	char  *launchers_path;
-
 	if (!launcher->location)
 		return;
 
-	launchers_path = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
-	launchers = g_file_new_for_path (launchers_path);
-	g_free (launchers_path);
-
-	file = panel_launcher_get_gfile (launcher->location);
-
 	/* do not remove the file if it's not in the user's launchers path */
-	if (g_file_has_prefix (file, launchers)) {
+	if (panel_launcher_is_in_personal_path (launcher->location)) {
 		GError *error;
+		GFile  *file;
+
+		file = panel_launcher_get_gfile (launcher->location);
 
 		error = NULL;
 		if (!g_file_delete (file, NULL, &error)) {
@@ -358,10 +295,9 @@ panel_launcher_delete (Launcher *launcher)
 			g_free (path);
 			g_error_free (error);
 		}
-	}
 
-	g_object_unref (file);
-	g_object_unref (launchers);
+		g_object_unref (file);
+	}
 }
 
 static gboolean
