@@ -1,5 +1,10 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* fish.c: (get_location): use g_file_read_link() instead of readlink().
+	But the code is broken anyway...
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* fish.c: add missing include for glib/gi18n.h
 
 ==================== 2.24.2 ====================

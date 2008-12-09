@@ -1138,7 +1138,7 @@ static char *
 get_location (void)
 {
 	static char  location [256];
-	char         buffer [256];
+	char        *buffer;
 	FILE        *zone;
 	int          i, len, count;
 	
@@ -1151,18 +1151,22 @@ get_location (void)
 	} 
 
 	/* New method : works for glibc 2.2 */
-	len = readlink ("/etc/localtime", buffer, sizeof (buffer));
-	if (len <= 0)
+	/* FIXME: this is broken for many distros, see the clock code */
+	buffer = g_file_read_link ("/etc/localtime", NULL);
+	if (!buffer)
 		return NULL;
 
 	for (i = len, count = 0; (i > 0) && (count != 2); i--)
 		if (buffer [i] == '/')
 			count++;
 
-	if (count != 2)
+	if (count != 2) {
 		return NULL;
+		g_free (buffer);
+	}
 
 	memcpy (location, &buffer [i + 2], len - i - 2);
+	g_free (buffer);
 
 	return location;
 }
