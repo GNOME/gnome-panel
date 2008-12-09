@@ -1,5 +1,11 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-run-dialog.c: (panel_run_dialog_launch_command): Use
+	gnome_desktop_prepend_terminal_to_vector() instead of
+	gnome_prepend_terminal_to_vector(), to slowly get rid of libgnome
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-background.c:
 	(panel_background_set_image_background_on_widget): don't use a cairo
 	matrix, we can do the same thing by just shifting the pixmap in

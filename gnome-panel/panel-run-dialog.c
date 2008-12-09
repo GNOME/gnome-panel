@@ -29,6 +29,8 @@
 
 #include <config.h>
 
+#undef GNOME_DISABLE_DEPRECATED
+#undef GTK_DISABLE_DEPRECATED
 #include "panel-run-dialog.h"
 
 #include <string.h>
@@ -41,11 +43,13 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
-#include <libgnome/gnome-exec.h>
 #include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-entry.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
+
+#define GNOME_DESKTOP_USE_UNSTABLE_API
+#include <libgnome/gnome-desktop-utils.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -308,7 +312,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
 		
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
-		gnome_prepend_terminal_to_vector (&argc, &argv);
+		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
 		   
 	result = gdk_spawn_on_screen (screen,
 				      NULL, /* working directory */
