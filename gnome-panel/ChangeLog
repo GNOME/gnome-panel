@@ -1,3 +1,9 @@
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
+	* main.c: (main): don't call gnome_authentication_manager_init()
+	anymore. Since we use gio, we don't need to do this which was needed
+	for gnome-vfs.
+
 2008-12-08  Vincent Untz  <vuntz@gnome.org>
 
 	Use dbus-based uniquification instead of bonobo-based, and makes it

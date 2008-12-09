@@ -13,7 +13,6 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
-#include <libgnomeui/gnome-authentication-manager.h>
 #include <libgnomeui/gnome-ui-init.h>
 
 #include <libpanel-util/panel-cleanup.h>
@@ -74,8 +73,6 @@ main (int argc, char **argv)
 		panel_cleanup_do ();
 		return -1;
 	}
-
-	gnome_authentication_manager_init ();
 
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
