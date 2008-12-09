@@ -1,5 +1,12 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_image_chooser): remove the filter
+	chooser in the file chooser: since there's only one filter, the chooser
+	is not really useful.
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-run-dialog.c: (panel_run_dialog_launch_command): Use
 	gnome_desktop_prepend_terminal_to_vector() instead of
 	gnome_prepend_terminal_to_vector(), to slowly get rid of libgnome

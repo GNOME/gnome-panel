@@ -449,10 +449,7 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 	dialog->image_chooser = glade_xml_get_widget (gui, "image_chooser");
 
 	filter = gtk_file_filter_new ();
-	gtk_file_filter_set_name (filter, _("Images"));
 	gtk_file_filter_add_pixbuf_formats (filter);
-	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
-				     filter);
 	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
 				     filter);
 
