@@ -30,6 +30,7 @@
 #include <libintl.h>
 #include <string.h>
 #include <gconf/gconf-client.h>
+#define HANDLE_LIBICAL_MEMORY
 #include <libecal/e-cal.h>
 #include <libedataserver/e-source-list.h>
 #include <libedataserverui/e-passwords.h>
