@@ -67,6 +67,7 @@ main (int argc, char **argv)
 				      NULL);
 	panel_cleanup_register (PANEL_CLEAN_FUNC (g_object_unref), program);
 
+	g_set_application_name (_("Panel"));
 	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 
 	if (!panel_shell_register (replace)) {

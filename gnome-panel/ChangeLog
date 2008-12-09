@@ -1,5 +1,10 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* main.c: (main): set an application name. It's used by the gio
+	authentication dialog.
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* main.c: (main): don't call gnome_authentication_manager_init()
 	anymore. Since we use gio, we don't need to do this which was needed
 	for gnome-vfs.
