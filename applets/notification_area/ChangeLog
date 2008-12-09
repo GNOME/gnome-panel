@@ -1,6 +1,14 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
 	* main.c:
+	* na-tray-manager.[ch]:
+	* na-tray.[ch]:
+	* obox.[ch]: use single include for gtk+
+	(get_class): s/gtk_type_class/g_type_class_peek/ (no deprecated API)
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
+	* main.c:
 	* na-tray-child.c: (na_tray_child_realize): fix compilation warnings
 
 2008-12-09  Vincent Untz  <vuntz@gnome.org>

@@ -25,8 +25,7 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
-#include <gtk/gtkmessagedialog.h>
-#include <gtk/gtkhbox.h>
+#include <gtk/gtk.h>
 #include <libgnomeui/gnome-help.h>
 
 #include "na-tray-manager.h"

@@ -24,10 +24,10 @@
 #ifndef __NA_TRAY_H__
 #define __NA_TRAY_H__
 
-#include <gtk/gtkwidget.h>
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
 #endif
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
