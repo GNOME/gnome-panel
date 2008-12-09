@@ -25,14 +25,18 @@
  */
 
 #include <config.h>
+
+#include <math.h>
 #include <string.h>
 #include <time.h>
 
-#include <math.h>
 #include <cairo.h>
+
+#include <glib/gi18n.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
