@@ -25,7 +25,7 @@
 #ifndef __PANEL_ENUMS_H__
 #define __PANEL_ENUMS_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 

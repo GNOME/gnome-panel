@@ -25,7 +25,7 @@
 #ifndef __PANEL_APPLET_FRAME_H__
 #define __PANEL_APPLET_FRAME_H__
 
-#include <gtk/gtkeventbox.h>
+#include <gtk/gtk.h>
 
 #include "panel-widget.h"
 #include "applet.h"

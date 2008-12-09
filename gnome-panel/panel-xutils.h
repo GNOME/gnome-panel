@@ -25,8 +25,7 @@
 #ifndef __PANEL_XUTILS_H__
 #define __PANEL_XUTILS_H__
 
-#include <glib/gmacros.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 

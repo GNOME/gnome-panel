@@ -1916,8 +1916,7 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	image->requisition.height = icon_height;
 
 	/* this takes over the floating ref */
-	icon->pixmap = g_object_ref (G_OBJECT (image));
-	gtk_object_sink (GTK_OBJECT (image));
+	icon->pixmap = g_object_ref_sink (G_OBJECT (image));
 
 	icon->stock_id       = stock_id;
 	if (gicon)

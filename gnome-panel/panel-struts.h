@@ -23,7 +23,7 @@
 #ifndef __PANEL_STRUTS_H__
 #define __PANEL_STRUTS_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include "panel-toplevel.h"
 
 G_BEGIN_DECLS

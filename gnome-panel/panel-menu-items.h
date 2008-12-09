@@ -24,7 +24,7 @@
 #ifndef __PANEL_MENU_ITEMS_H__
 #define __PANEL_MENU_ITEMS_H__
 
-#include <gtk/gtkmenuitem.h>
+#include <gtk/gtk.h>
 #include "panel-widget.h"
 
 G_BEGIN_DECLS

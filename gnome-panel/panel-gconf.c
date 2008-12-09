@@ -253,7 +253,7 @@ panel_gconf_copy_dir (GConfClient  *client,
 		if (!gconf_entry_get_is_default (entry) && entry->value)
 			gconf_client_set (client, key, entry->value, NULL);
 
-		gconf_entry_free (entry);
+		gconf_entry_unref (entry);
 	}
 	g_slist_free (list);
 
@@ -305,7 +305,7 @@ panel_gconf_associate_schemas_in_dir (GConfClient  *client,
 		gconf_engine_associate_schema (
 			client->engine, key, gconf_entry_get_key (entry), NULL);
 
-		gconf_entry_free (entry);
+		gconf_entry_unref (entry);
 	}
 
 	g_slist_free (list);

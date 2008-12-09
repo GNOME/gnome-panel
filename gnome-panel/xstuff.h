@@ -2,7 +2,7 @@
 #define __XSTUFF_H__
 
 #include <gdk/gdk.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 
 void xstuff_delete_property		(GdkWindow *window,
 					 const char *name);

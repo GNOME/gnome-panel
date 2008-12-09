@@ -25,7 +25,7 @@
 #ifndef __PANEL_PROFILE_H__
 #define __PANEL_PROFILE_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <gdk/gdk.h>
 #include <gconf/gconf-client.h>
 

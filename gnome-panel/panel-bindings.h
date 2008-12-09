@@ -25,7 +25,7 @@
 #ifndef __PANEL_BINDINGS_H__
 #define __PANEL_BINDINGS_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

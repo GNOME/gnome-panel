@@ -143,7 +143,7 @@ panel_global_config_load (void)
 
 	for (l = entries; l; l = l->next) {
 		panel_global_config_set_entry (l->data);
-		gconf_entry_free (l->data);
+		gconf_entry_unref (l->data);
 	}
 	g_slist_free (entries);
 

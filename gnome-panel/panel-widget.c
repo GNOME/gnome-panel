@@ -229,18 +229,18 @@ remove_tab_bindings (GtkBindingSet    *binding_set,
 		     GdkModifierType   modifiers,
 		     gboolean          next)
 {
-	gtk_binding_entry_clear (binding_set, GDK_Tab, modifiers);
-  	gtk_binding_entry_clear (binding_set, GDK_KP_Tab, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_Tab, modifiers);
+  	gtk_binding_entry_remove (binding_set, GDK_KP_Tab, modifiers);
 }
 
 static void
 remove_move_bindings (GtkBindingSet    *binding_set,
 		      GdkModifierType   modifiers)
 {
-	gtk_binding_entry_clear (binding_set, GDK_Up, modifiers);
-	gtk_binding_entry_clear (binding_set, GDK_Down, modifiers);
-	gtk_binding_entry_clear (binding_set, GDK_Left, modifiers);
-	gtk_binding_entry_clear (binding_set, GDK_Right, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_Up, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_Down, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_Left, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_Right, modifiers);
 }
 
 static void
@@ -262,11 +262,11 @@ remove_all_move_bindings (PanelWidget *panel)
 	remove_tab_bindings (binding_set, 0, TRUE);
 	remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
-	gtk_binding_entry_clear (binding_set, GDK_Escape, 0);
-	gtk_binding_entry_clear (binding_set, GDK_KP_Enter, 0);
-	gtk_binding_entry_clear (binding_set, GDK_Return, 0);
-	gtk_binding_entry_clear (binding_set, GDK_KP_Space, 0);
-	gtk_binding_entry_clear (binding_set, GDK_space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_Escape, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KP_Enter, 0);
+	gtk_binding_entry_remove (binding_set, GDK_Return, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KP_Space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_space, 0);
 }
 
 static void
@@ -578,7 +578,7 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	if(panel->currently_dragged_applet == ad)
 		panel_widget_applet_drag_end(panel);
 
-	gtk_widget_ref(widget);
+	g_object_ref (widget);
 	if (GTK_CONTAINER_CLASS (panel_widget_parent_class)->remove)
 		(* GTK_CONTAINER_CLASS (panel_widget_parent_class)->remove) (container,
 								widget);
@@ -588,7 +588,7 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	g_signal_emit (G_OBJECT (container),
 		       panel_widget_signals[APPLET_REMOVED_SIGNAL],
 		       0, widget);
-	gtk_widget_unref(widget);
+	g_object_unref (widget);
 }
 
 

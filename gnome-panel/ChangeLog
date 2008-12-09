@@ -1,5 +1,49 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	Lots of "remove deprecated API usage" and single include fun.
+
+	* panel-compatibility.c: (copy_gconf_dir):
+	s/gconf_entry_free/gconf_entry_unref
+	* panel-applet-frame.c: add missing include for glib/gi18n.h
+	(panel_applet_frame_activated): fix buglet where gtk_object_sink() was
+	used but we really wanted g_object_unref
+	* applet.c: (panel_applet_recreate_menu):
+	s/gtk_widget_unref/g_object_unref
+	(panel_applet_create_menu): use g_object_ref_sink
+	* panel-bindings.c: (panel_binding_clear_entry):
+	s/gtk_binding_entry_clear/gtk_binding_entry_remove/
+	* menu.c: (panel_load_menu_image_deferred): use g_object_ref_sink
+	* panel-background.c:
+	(panel_background_set_no_background_on_widget):
+	s/gtk_rc_style_unref/g_object_unref
+	* panel-widget.c: (remove_tab_bindings), (remove_move_bindings),
+	(remove_all_move_bindings):
+	s/gtk_binding_entry_clear/gtk_binding_entry_remove/
+	(panel_widget_cremove): s/gtk_widget_(un)ref/g_object_(un)ref/
+	* panel-gconf.c: (panel_gconf_copy_dir),
+	(panel_gconf_associate_schemas_in_dir):
+	s/gconf_entry_free/gconf_entry_unref
+	* panel-config-global.c: (panel_global_config_load):
+	s/gconf_entry_free/gconf_entry_unref
+	* panel-addto.c: add missing glib/gi18n.h
+	* applet.h:
+	* panel-action-button.h:
+	* panel-action-protocol.h:
+	* panel-applet-frame.h:
+	* panel-bindings.h:
+	* panel-compatibility.h:
+	* panel-enums.h:
+	* panel-menu-bar.h:
+	* panel-menu-items.h:
+	* panel-profile.h:
+	* panel-stock-icons.[ch]:
+	* panel-struts.h:
+	* panel-types.h:
+	* panel-xutils.h:
+	* xstuff.h: single include!
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-context-menu.c: (panel_context_menu_show_about_dialog): use
 	parenthesis instead of angle brackets for a mail address. Fix bug
 	#551237.

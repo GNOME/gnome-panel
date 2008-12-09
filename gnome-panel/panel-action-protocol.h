@@ -25,7 +25,7 @@
 #ifndef __PANEL_ACTION_PROTOCOL_H__
 #define __PANEL_ACTION_PROTOCOL_H__
 
-#include <glib/gmacros.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 

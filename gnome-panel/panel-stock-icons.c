@@ -26,9 +26,8 @@
 
 #include "panel-stock-icons.h"
 
-#include <gtk/gtkstock.h>
-#include <gtk/gtkiconfactory.h>
 #include <glib/gi18n.h>
+#include <gtk/gtk.h>
 
 #include "panel-icon-names.h"
 

@@ -97,7 +97,7 @@ panel_binding_clear_entry (PanelBinding  *binding,
 {
 	binding_set = get_binding_set (binding_set);
 
-        gtk_binding_entry_clear (binding_set,	binding->keyval, binding->modifiers);
+        gtk_binding_entry_remove (binding_set, binding->keyval, binding->modifiers);
 }
 
 static void

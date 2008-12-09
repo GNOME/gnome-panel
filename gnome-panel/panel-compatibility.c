@@ -978,7 +978,7 @@ copy_gconf_dir (GConfClient  *client,
 		if (entry->value)
 			gconf_client_set (client, key, entry->value, NULL);
 
-		gconf_entry_free (entry);
+		gconf_entry_unref (entry);
 	}
 	g_slist_free (list);
 

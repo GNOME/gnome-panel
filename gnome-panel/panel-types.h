@@ -2,8 +2,8 @@
 #ifndef PANEL_TYPES_H
 #define PANEL_TYPES_H
 
-#include <gdk/gdkcolor.h>
-#include <gtk/gtktypeutils.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 #include "GNOME_Panel.h"
 
 typedef enum {

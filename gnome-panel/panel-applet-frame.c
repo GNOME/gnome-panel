@@ -26,6 +26,8 @@
 #include <config.h>
 #include <string.h>
 
+#include <glib/gi18n.h>
+
 #include <libbonoboui.h>
 #include <gconf/gconf.h>
 #include <gdk/gdk.h>
@@ -1337,7 +1339,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get control frame)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
-		gtk_object_sink (GTK_OBJECT (widget));
+		g_object_unref (widget);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		return;
@@ -1353,7 +1355,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 			   "(cannot get property bag):\n%s",
 			   frame->priv->iid, error);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
-		gtk_object_sink (GTK_OBJECT (widget));
+		g_object_unref (widget);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		g_free (error);
@@ -1376,7 +1378,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 			   "(cannot get popup component):\n%s",
 			   frame->priv->iid, error);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
-		gtk_object_sink (GTK_OBJECT (widget));
+		g_object_unref (widget);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		g_free (error);
@@ -1400,7 +1402,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get control)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
-		gtk_object_sink (GTK_OBJECT (widget));
+		g_object_unref (widget);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		return;
@@ -1412,7 +1414,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get applet shell)", frame->priv->iid);
 		panel_applet_frame_loading_failed (frame, frame_act->id);
-		gtk_object_sink (GTK_OBJECT (widget));
+		g_object_unref (widget);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		return;

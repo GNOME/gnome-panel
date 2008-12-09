@@ -154,7 +154,7 @@ panel_applet_recreate_menu (AppletInfo	*info)
 		menu->submenu =NULL;
 	}
 
-	gtk_widget_unref (info->menu);
+	g_object_unref (info->menu);
 	info->menu = panel_applet_create_menu (info);
 }
 
@@ -469,8 +469,7 @@ panel_applet_create_menu (AppletInfo *info)
 
 	panel_widget = PANEL_WIDGET (info->widget->parent);
 
-	menu = g_object_ref (gtk_menu_new ());
-	gtk_object_sink (GTK_OBJECT (menu));
+	menu = g_object_ref_sink (gtk_menu_new ());
 
 	/* connect the show & deactivate signal, so that we can "disallow" and
 	 * "re-allow" autohide when the menu is shown/deactivated.

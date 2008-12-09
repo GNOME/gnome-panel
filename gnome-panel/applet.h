@@ -2,7 +2,7 @@
 #define APPLET_H
 
 #include <glib.h>
-#include <gdk/gdktypes.h>
+#include <gdk/gdk.h>
 #include "panel-widget.h"
 #include "panel-gconf.h"
 #include "panel-enums.h"
