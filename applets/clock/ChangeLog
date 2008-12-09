@@ -1,5 +1,19 @@
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
+	* obox.[ch]: (clock_obox_finalize), (clock_obox_class_init),
+	(clock_obox_init), (get_class): g_type_class_peek() does not create a
+	type if the class wasn't used before, so we need to call
+	g_type_class_ref() (and later, g_type_class_unref())
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
+	* obox.[ch]: (na_obox_finalize), (na_obox_class_init), (na_obox_init),
+	(get_class): g_type_class_peek() does not create a type if the class
+	wasn't used before, so we need to call g_type_class_ref() (and later,
+	g_type_class_unref())
+
+2008-12-09  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-face.c: (draw):
 	s/gdk_pixbuf_render_to_drawable/gdk_draw_pixbuf/ (no deprecated API)
 	* clock-location-tile.h: single include for gtk+

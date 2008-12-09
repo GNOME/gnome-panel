@@ -52,6 +52,9 @@ struct _ClockOBox
 
   GtkOrientation orientation;
   gboolean       reverse_order;
+
+  gpointer       hbox_type;
+  gpointer       vbox_type;
 };
 
 struct _ClockOBoxClass
