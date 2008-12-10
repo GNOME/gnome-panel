@@ -339,7 +339,7 @@ static PanelAction actions [] = {
 		PANEL_ICON_REMOTE, //FIXME icon
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
-		"nautilus-server-connect", //FIXME
+		"nautilus-server-connect",
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
 	},
