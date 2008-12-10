@@ -41,7 +41,6 @@
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnomeui/gnome-uidefs.h>
 #include <glade/glade-xml.h>
 
 #define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
@@ -930,15 +929,15 @@ display_fortune_dialog (FishApplet *fish)
 
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    fish->fortune_label,
-				    FALSE, FALSE, GNOME_PAD);
+				    FALSE, FALSE, 6);
 
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    scrolled,
-				    TRUE, TRUE, GNOME_PAD);
+				    TRUE, TRUE, 6);
 
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    fish->fortune_cmd_label,
-				    FALSE, FALSE, GNOME_PAD);
+				    FALSE, FALSE, 6);
 
 		update_fortune_dialog (fish);
 
@@ -954,7 +953,7 @@ display_fortune_dialog (FishApplet *fish)
 		char *command;
 		char * text;
 
-		command = g_strdup_printf ("<tt>%s</tt>", argv[0]);
+		command = g_markup_printf_escaped ("<tt>%s</tt>", argv[0]);
 		text = g_strdup_printf (_("The configured command is not "
 					  "working and has been replaced by: "
 					  "%s"), command);

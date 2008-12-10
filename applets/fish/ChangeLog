@@ -1,3 +1,8 @@
+2008-12-11  Vincent Untz  <vuntz@gnome.org>
+
+	* fish.c: (display_fortune_dialog): kill GNOME_PAD, and also use
+	g_markup_printf_escaped() instead of g_strdup_printf()
+
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
 	* fish.c: (get_location): use g_file_read_link() instead of readlink().
