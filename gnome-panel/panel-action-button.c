@@ -33,6 +33,7 @@
 #include <glib/gi18n.h>
 
 #include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-session-manager.h>
 
 #include "applet.h"
@@ -216,23 +217,11 @@ static void
 panel_action_search (GtkWidget *widget)
 {
 	GdkScreen *screen;
-	GError    *error = NULL;
 
 	screen = gtk_widget_get_screen (widget);
-	panel_launch_desktop_file ("gnome-search-tool.desktop",
-				   "gnome-search-tool",
-				   screen,
-				   &error);
-	if (error) {
-		char *primary;
-		primary = g_strdup_printf (_("Could not execute '%s'"),
-					   "gnome-search-tool");
-		panel_error_dialog (NULL, screen,
-				    "cannot_exec_gnome-search-tool", TRUE,
-				    primary, error->message);
-		g_free (primary);
-		g_error_free (error);
-	}
+	panel_launch_desktop_file_with_fallback ("gnome-search-tool.desktop",
+						 "gnome-search-tool",
+						 screen, NULL);
 }
 
 /* Force Quit

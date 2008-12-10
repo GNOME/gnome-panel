@@ -42,6 +42,7 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-show.h>
 
 #include "menu.h"
@@ -1519,17 +1520,5 @@ void
 panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 				       const char *path)
 {
-	GError *error;
-
-	error = NULL;
-	panel_launch_desktop_file (path, NULL,
-				   menuitem_to_screen (menuitem), &error);
-	if (error) {
-		panel_error_dialog (NULL, menuitem_to_screen (menuitem),
-				    "cannot_launch_entry", TRUE,
-				    _("Could not launch menu item"),
-				    error->message);
-
-		g_error_free (error);
-	}
+	panel_launch_desktop_file (path, menuitem_to_screen (menuitem), NULL);
 }

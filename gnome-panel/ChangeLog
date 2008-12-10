@@ -1,5 +1,26 @@
 2008-12-10  Vincent Untz  <vuntz@gnome.org>
 
+	Use gio to launch desktop files, instead of gnome-desktop.
+
+	* panel-util.[ch]: (panel_ditem_launch),
+	(panel_util_launch_from_key_file), (panel_launch_desktop_file): kill
+	* libpanel-util/panel-launch.[ch]: new, with some nice API
+	* libpanel-util/Makefile.am: add new file
+	* libpanel-util/panel-show.c: (_panel_app_info_launch_uri): killed
+	(panel_show_nautilus_search_uri): use panel_app_info_launch_uri()
+	(panel_show_uri_force_mime_type): use panel_app_info_launch_uri()
+	* launcher.c: (launcher_launch), (drag_data_received_cb): use
+	panel_launch_key_file()
+	* panel-action-button.c: (panel_action_search): use
+	panel_launch_desktop_file_with_fallback()
+	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): use
+	panel_launch_desktop_file_with_fallback()
+	* panel-menu-button.c: (panel_menu_button_invoke_menu): ditto
+	* panel-menu-items.c: (panel_menu_item_activate_desktop_file): use
+	panel_launch_desktop_file()
+
+2008-12-10  Vincent Untz  <vuntz@gnome.org>
+
 	* libpanel-util/panel-list.c: (panel_g_list_swap_next),
 	(panel_g_list_swap_prev), (panel_g_list_resort_item),
 	(panel_g_slist_make_unique): various minor cleanups to avoid possible

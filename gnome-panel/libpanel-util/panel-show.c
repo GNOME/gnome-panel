@@ -30,6 +30,7 @@
 
 #include "panel-error.h"
 #include "panel-glib.h"
+#include "panel-launch.h"
 
 #include "panel-show.h"
 
@@ -145,34 +146,6 @@ _panel_show_handle_error (const gchar  *uri,
 }
 
 static gboolean
-_panel_app_info_launch_uri (GAppInfo     *appinfo,
-			    const gchar  *uri,
-			    GdkScreen    *screen,
-			    guint32       timestamp,
-			    GError      **error)
-{
-	GList               *uris;
-	GdkAppLaunchContext *context;
-	GError              *local_error;
-
-	uris = NULL;
-	uris = g_list_prepend (uris, (gpointer) uri);
-
-	context = gdk_app_launch_context_new ();
-	gdk_app_launch_context_set_screen (context, screen);
-	gdk_app_launch_context_set_timestamp (context, timestamp);
-
-	local_error = NULL;
-	g_app_info_launch_uris (appinfo, uris,
-				(GAppLaunchContext *) context,
-				&local_error);
-	g_list_free (uris);
-	g_object_unref (context);
-
-	return _panel_show_handle_error (uri, screen, local_error, error);
-}
-
-static gboolean
 panel_show_nautilus_search_uri (GdkScreen    *screen,
 				const gchar  *uri,
 				guint32       timestamp,
@@ -194,8 +167,8 @@ panel_show_nautilus_search_uri (GdkScreen    *screen,
 		return FALSE;
 	}
 
-	ret = _panel_app_info_launch_uri ((GAppInfo *) appinfo,
-					  uri, screen, timestamp, error);
+	ret = panel_app_info_launch_uri ((GAppInfo *) appinfo,
+					 uri, screen, timestamp, error);
 	g_object_unref (appinfo);
 
 	return ret;
@@ -250,7 +223,7 @@ panel_show_uri_force_mime_type (GdkScreen    *screen,
 		return panel_show_uri (screen, uri, timestamp, error);
 	}
 
-	ret = _panel_app_info_launch_uri (app, uri, screen, timestamp, error);
+	ret = panel_app_info_launch_uri (app, uri, screen, timestamp, error);
 	g_object_unref (app);
 
 	return ret;

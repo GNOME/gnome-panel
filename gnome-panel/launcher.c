@@ -25,6 +25,7 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-show.h>
 
 #include "launcher.h"
@@ -147,10 +148,8 @@ launcher_launch (Launcher  *launcher,
 	else {
 		GError *error = NULL;
 
-		panel_util_launch_from_key_file (launcher->key_file,
-						 NULL,
-						 launcher_get_screen (launcher),
-						 &error);
+		panel_launch_key_file (launcher->key_file, NULL,
+				       launcher_get_screen (launcher), &error);
 		if (error) {
 			GtkWidget *error_dialog;
 
@@ -213,10 +212,8 @@ drag_data_received_cb (GtkWidget        *widget,
 		file_list = g_list_prepend (file_list, uris[i]);
 	file_list = g_list_reverse (file_list);
 
-	panel_util_launch_from_key_file (launcher->key_file,
-					 file_list,
-					 launcher_get_screen (launcher),
-					 &error);
+	panel_launch_key_file (launcher->key_file, file_list,
+			       launcher_get_screen (launcher), &error);
 
 	g_list_free (file_list);
 	g_strfreev (uris);

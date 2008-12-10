@@ -32,6 +32,7 @@
 #include <glib/gi18n.h>
 
 #include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-launch.h>
 
 #include "panel-util.h"
 #include "panel-background.h"
@@ -399,28 +400,15 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	} else if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;
 
-		panel_launch_desktop_file ("alacarte.desktop",
-					   "alacarte",
-					   screen,
-					   &error);
+		panel_launch_desktop_file_with_fallback ("alacarte.desktop",
+							 "alacarte",
+							 screen, &error);
 		if (error) {
 			g_error_free (error);
-			error = NULL;
-			panel_launch_desktop_file ("gmenu-simple-editor.desktop",
-						   "gmenu-simple-editor",
-						   screen,
-						   &error);
-		}
-		if (error) {
-			char *primary;
-			primary = g_strdup_printf (_("Could not execute '%s'"),
-						   "gmenu-simple-editor");
-                        panel_error_dialog (NULL, screen,
-                                            "cannot_exec_gmenu-simple-editor",
-					    TRUE,
-					    primary, error->message);
-			g_free (primary);
-			g_error_free (error);
+			panel_launch_desktop_file_with_fallback (
+						"gmenu-simple-editor.desktop",
+						"gmenu-simple-editor",
+						screen, NULL);
 		}
 	}
 }

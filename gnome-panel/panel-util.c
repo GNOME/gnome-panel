@@ -28,7 +28,6 @@
 #include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#include <libgnome/gnome-desktop-item.h>
 #include <libgnomeui/gnome-help.h>
 
 #include <libpanel-util/panel-error.h>
@@ -44,110 +43,6 @@
 #include "launcher.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
-
-static int
-panel_ditem_launch (GnomeDesktopItem  *item,
-		    GList             *file_list,
-		    GdkScreen         *screen,
-		    GError           **error)
-{
-	int workspace;
-
-	workspace = xstuff_get_current_workspace (screen);
-
-	gnome_desktop_item_set_launch_time (item,
-					    gtk_get_current_event_time ());
-
-	return gnome_desktop_item_launch_on_screen (item, file_list, 0,
-						    screen, workspace, error);
-}
-
-void
-panel_util_launch_from_key_file (GKeyFile   *keyfile,
-				 GList      *file_list,
-				 GdkScreen  *screen,
-				 GError    **error)
-{
-	GnomeDesktopItem  *ditem;
-	int                i;
-	static const char *keys [] = { "Type",
-				       "Exec",
-				       "URL",
-				       "Dev",
-				       "Path",
-				       "Terminal",
-				       "TerminalOptions",
-				       "StartupNotify",
-				       "StartupWMClass",
-				     };
-	static const char *locale_keys [] = { "Name",
-					      "GenericName",
-					      "Icon",
-					      "MiniIcon",
-					    };
-
-	g_return_if_fail (keyfile != NULL);
-
-	ditem = gnome_desktop_item_new ();
-	if (ditem == NULL)
-		return;
-
-	for (i = 0; i < G_N_ELEMENTS (keys); i++) {
-		char *value;
-
-		value = panel_key_file_get_string (keyfile, keys [i]);
-		if (value != NULL) {
-			gnome_desktop_item_set_string (ditem, keys [i], value);
-			g_free (value);
-		}
-	}
-
-	for (i = 0; i < G_N_ELEMENTS (locale_keys); i++) {
-		char *value;
-
-		value = panel_key_file_get_locale_string (keyfile,
-							  locale_keys [i]);
-		if (value != NULL) {
-			gnome_desktop_item_set_string (ditem, locale_keys [i], value);
-			g_free (value);
-		}
-	}
-
-	panel_ditem_launch (ditem, file_list, screen, error);
-	gnome_desktop_item_unref (ditem);
-}
-
-void
-panel_launch_desktop_file (const char  *desktop_file,
-			   const char  *fallback_exec,
-			   GdkScreen   *screen,
-			   GError     **error)
-{
-	GnomeDesktopItem *ditem;
-
-	if (g_path_is_absolute (desktop_file))
-		ditem = gnome_desktop_item_new_from_file (desktop_file, 0,
-							  error);
-	else
-		ditem = gnome_desktop_item_new_from_basename (desktop_file, 0,
-							      error);
-
-	if (ditem != NULL) {
-		panel_ditem_launch (ditem, NULL, screen, error);
-		gnome_desktop_item_unref (ditem);
-	} else if (fallback_exec != NULL) {
-		char *argv [2] = {(char *)fallback_exec, NULL};
-
-		if (*error) {
-			g_error_free (*error);
-			*error = NULL;
-		}
-
-		gdk_spawn_on_screen (screen, NULL, argv, NULL,
-				     G_SPAWN_SEARCH_PATH,
-				     NULL, NULL, NULL, error);
-	}
-}
 
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)

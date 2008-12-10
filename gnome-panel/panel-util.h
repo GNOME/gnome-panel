@@ -8,15 +8,6 @@ G_BEGIN_DECLS
 
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
-void            panel_util_launch_from_key_file (GKeyFile                *keyfile,
-						 GList                   *file_list,
-						 GdkScreen               *screen,
-						 GError                 **error);
-void            panel_launch_desktop_file  (const char                   *desktop_file,
-					    const char                   *fallback_exec,
-					    GdkScreen                    *screen,
-					    GError                      **error);
-
 char *          panel_util_make_exec_uri_for_desktop (const char *exec);
 
 void		panel_show_help		(GdkScreen  *screen,
