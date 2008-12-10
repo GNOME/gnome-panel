@@ -41,7 +41,6 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
-#include <libgnome/gnome-util.h>
 #include <libgnomeui/gnome-entry.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
@@ -248,29 +247,27 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 }
 
 static gboolean
-command_is_executable (const char *command)
+command_is_executable (const char   *command,
+		       int          *argcp,
+		       char       ***argvp)
 {
 	gboolean   result;
 	char     **argv;
 	char      *path;
 	int        argc;
-	
-	path = g_filename_from_uri (command, NULL, NULL);
-	if (!path)
-		path = g_strdup (command);
-	
-	result = g_shell_parse_argv (path, &argc, &argv, NULL);
-	g_free (path);
-	
+
+	result = g_shell_parse_argv (command, &argc, &argv, NULL);
+
 	if (!result)
 		return FALSE;
-	
-	path = g_find_program_in_path (argv [0]);
-	g_strfreev (argv);
-			
-	if (!path)
+
+	path = g_find_program_in_path (argv[0]);
+
+	if (!path) {
+		g_strfreev (argv);
 		return FALSE;
-	
+	}
+
 	/* If we pass an absolute path to g_find_program it just returns
 	 * that absolute path without checking if it is executable. Also
 	 * make sure its a regular file so we don't try to launch
@@ -279,18 +276,24 @@ command_is_executable (const char *command)
 	if (!g_file_test (path, G_FILE_TEST_IS_EXECUTABLE) ||
 	    !g_file_test (path, G_FILE_TEST_IS_REGULAR)) {
 		g_free (path);
+		g_strfreev (argv);
 		return FALSE;
 	}
-	
+
 	g_free (path);
-	
+
+	if (argcp)
+		*argcp = argc;
+	if (argvp)
+		*argvp = argv;
+
 	return TRUE;
 }
 
 static gboolean
 panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
-				 const char     *escaped)
+				 const char     *locale_command)
 {
 	GdkScreen  *screen;
 	gboolean    result;	
@@ -298,15 +301,9 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	char      **argv;
 	int         argc;
 	
-	if (!command_is_executable (command))
+	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
 
-	argc = 3;
-	argv = g_new0 (char *, 4);
-	argv [0] = gnome_util_user_shell ();
-	argv [1] = g_strdup ("-c");
-	argv [2] = g_strdup (command);
-	
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
 		
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
@@ -325,8 +322,8 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	if (!result) {
 		char *primary;
 
-		primary = g_strdup_printf (_("Could not run command '%s'"),
-					   escaped);
+		primary = g_markup_printf_escaped (_("Could not run command '%s'"),
+						   command);
 		panel_error_dialog (GTK_WINDOW (dialog->run_dialog), NULL,
 				    "cannot_spawn_command", TRUE,
 				    primary, error->message);
@@ -343,16 +340,12 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 static void
 panel_run_dialog_execute (PanelRunDialog *dialog)
 {
-	GdkScreen *screen;
-	GError    *error;
-	gboolean   result;
-	char      *command;
-	char      *escaped;
-	GFile     *file;
-	char      *disk, *uri;
-	char      *scheme;	
+	GError   *error;
+	gboolean  result;
+	char     *command;
+	char     *disk;
+	char     *scheme;	
 	
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
 	command = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry)));
 	command = g_strchug (command);
 
@@ -393,29 +386,28 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		return;
 	}
 
-	file = panel_util_get_file_optional_homedir (command);
-	uri = g_file_get_uri (file);
-	scheme = g_file_get_uri_scheme (file);
-	g_object_unref (file);
-
-	escaped = g_markup_escape_text (uri, -1);
 	result = FALSE;
 	
-	if (!g_ascii_strcasecmp (scheme, "http") ||
-	    !g_ascii_strcasecmp (scheme, "file"))
-		/* If this returns an http or file uri, the uri might refer to
-		 * a command that is somewhere in the path or an executable
-		 * file. So try executing it before displaying it. We execute
-		 * the command in the user's shell so that it can do all the
-		 * parameter expansion and other magic for us. */
-		result = panel_run_dialog_launch_command (dialog, disk, escaped);
+	scheme = g_uri_parse_scheme (disk);
+	/* if it's an absolute path or not a URI, it's possibly an executable,
+	 * so try it before displaying it */
+	if (g_path_is_absolute (disk) || !scheme)
+		result = panel_run_dialog_launch_command (dialog, command, disk);
 	
 	if (!result) {
+		GFile     *file;
+		char      *uri;
 		GdkScreen *screen;
 		
+		file = panel_util_get_file_optional_homedir (command);
+		uri = g_file_get_uri (file);
+		g_object_unref (file);
+
 		screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 		result = panel_show_uri (screen, uri,
 					 gtk_get_current_event_time (), NULL);
+
+		g_free (uri);
 	}
 		
 	if (result) {
@@ -431,8 +423,6 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 
 	g_free (command);
 	g_free (disk);
-	g_free (uri);
-	g_free (escaped);
 	g_free (scheme);
 }
 
@@ -1712,7 +1702,6 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	GKeyFile   *key_file;
 	gboolean    exec = FALSE;
 	const char *text;
-	GFile      *file;
 	char       *name;
 	char       *disk;
 	char       *scheme;
@@ -1724,16 +1713,12 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 		return NULL;
 		
 	key_file = panel_key_file_new_desktop ();
-
 	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
-	file = panel_util_get_file_optional_homedir (disk);
-	g_free (disk);
 
-	scheme = g_file_get_uri_scheme (file);
-	if (!g_ascii_strcasecmp (scheme, "http"))
-		exec = command_is_executable (text);
-	else if (!g_ascii_strcasecmp (scheme, "file"))
-		exec = command_is_executable (text);
+	scheme = g_uri_parse_scheme (disk);
+	/* if it's an absolute path or not a URI, it's possibly an executable */
+	if (g_path_is_absolute (disk) || !scheme)
+		exec = command_is_executable (disk, NULL, NULL);
 	g_free (scheme);
 		
 	if (exec) {
@@ -1741,16 +1726,19 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 		panel_key_file_set_string (key_file, "Exec", text);
 		name = g_strdup (text);
 	} else {
-		char *uri;
+		GFile *file;
+		char  *uri;
 
+		file = panel_util_get_file_optional_homedir (disk);
 		uri = g_file_get_uri (file);
+		g_object_unref (file);
 
 		panel_key_file_set_string (key_file, "Type", "Link");
 		panel_key_file_set_string (key_file, "URL", uri);
 		name = uri;
 	}
 
-	g_object_unref (file);
+	g_free (disk);
 
 	panel_key_file_set_locale_string (key_file, "Name",
 					  (dialog->item_name) ?

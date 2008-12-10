@@ -1,3 +1,24 @@
+2008-12-11  Vincent Untz  <vuntz@gnome.org>
+
+	Stop using gnome_util_user_shell(). This not needed, unless we want to
+	have the aliases defined in a shell work in the run dialog. I'm nearly
+	sure no other "run dialog"-type programs do this anyway, and it's
+	really not a command line from the shell (redirecting output doesn't
+	work, eg).
+	And some much needed cleanups.
+
+	* panel-run-dialog.c: (command_is_executable): don't accept URI, and
+	return the stuff that g_shell_parse_argv() gives us so we don't have
+	to call it twice
+	(panel_run_dialog_launch_command): no gnome_util_user_shell() anymore,
+	and minor updates
+	(panel_run_dialog_execute): remove some useless stuff, don't assume we
+	can run a program over http, do not accept applications if they're
+	started by URI (file:///) -- it doesn't really make sense anyway; stop
+	mixing the strings with the disk encoding and utf-8
+	(panel_run_dialog_create_desktop_file): ditto (more or less), and make
+	consistent
+
 2008-12-10  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-action-button.c: remove FIXME
