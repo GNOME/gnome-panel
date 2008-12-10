@@ -98,6 +98,9 @@ panel_g_list_swap_next (GList *list,
 {
 	GList *t;
 
+	if (!dl)
+		return list;
+
 	if (!dl->next)
 		return list;
 
@@ -123,6 +126,9 @@ panel_g_list_swap_prev (GList *list,
 			GList *dl)
 {
 	GList *t;
+
+	if (!dl)
+		return list;
 
 	if (!dl->prev)
 		return list;
@@ -153,12 +159,15 @@ panel_g_list_resort_item (GList        *list,
 {
 	GList *dl;
 
+	g_return_val_if_fail (func != NULL, list);
+
 	if (!list)
 		return NULL;
 
-	dl = g_list_find (list,data);
+	dl = g_list_find (list, data);
 
-	g_return_val_if_fail (dl != NULL, list);
+	if (dl != NULL)
+		return list;
 
 	while (dl->next &&
 	       (*func)(dl->data, dl->next->data) > 0)
@@ -177,7 +186,7 @@ panel_g_slist_make_unique (GSList       *list,
 {
 	GSList *sorted, *l;
 
-	g_assert (compare != NULL);
+	g_return_val_if_fail (compare != NULL, list);
 
 	if (!list)
 		return NULL;

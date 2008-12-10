@@ -1,5 +1,12 @@
 2008-12-10  Vincent Untz  <vuntz@gnome.org>
 
+	* libpanel-util/panel-list.c: (panel_g_list_swap_next),
+	(panel_g_list_swap_prev), (panel_g_list_resort_item),
+	(panel_g_slist_make_unique): various minor cleanups to avoid possible
+	misuses of this API
+
+2008-12-10  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-util.[ch]: move all panel_g_(s)list functions to...
 	* libpanel-util/panel-list.[ch]: ... here (new files)
 	* libpanel-util/Makefile.am: add new file
