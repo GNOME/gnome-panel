@@ -29,6 +29,8 @@
 #include <string.h>
 #include <glib/gi18n.h>
 
+#include <libpanel-util/panel-list.h>
+
 #include "applet.h"
 #include "panel-compatibility.h"
 #include "panel-gconf.h"

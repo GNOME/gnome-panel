@@ -30,6 +30,8 @@ libpanel_util_la_SOURCES=	\
 	panel-glib.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
+	panel-list.c			\
+	panel-list.h			\
 	panel-power-manager.c		\
 	panel-power-manager.h		\
 	panel-session-manager.c		\

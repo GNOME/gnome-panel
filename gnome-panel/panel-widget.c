@@ -12,6 +12,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
+#include <libpanel-util/panel-list.h>
+
 #include "applet.h"
 #include "panel-widget.h"
 #include "button-widget.h"

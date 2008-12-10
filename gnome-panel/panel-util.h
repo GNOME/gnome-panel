@@ -23,24 +23,6 @@ void		panel_show_help		(GdkScreen  *screen,
 					 const char *path,
 					 const char *linkid);
 
-GList *panel_g_list_insert_before (GList        *list,
-				   GList        *sibling,
-				   GList        *link);
-GList *panel_g_list_insert_after  (GList        *list,
-				   GList        *sibling,
-				   GList        *link);
-GList *panel_g_list_swap_next     (GList        *list,
-				   GList        *dl);
-GList *panel_g_list_swap_prev     (GList        *list,
-				   GList        *dl);
-GList *panel_g_list_resort_item   (GList        *list,
-				   gpointer      data,
-				   GCompareFunc  func);
-
-GSList *panel_g_slist_make_unique (GSList       *list,
-				   GCompareFunc  compare,
-				   gboolean      free_data);
-
 int		panel_find_applet_index	(GtkWidget *widget);
 
 void		panel_push_window_busy	(GtkWidget *window);
