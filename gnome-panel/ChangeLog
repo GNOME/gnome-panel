@@ -1,5 +1,9 @@
 2008-12-11  Vincent Untz  <vuntz@gnome.org>
 
+	* libpanel-util/panel-show.c: (panel_show_help): plug leak
+
+2008-12-11  Vincent Untz  <vuntz@gnome.org>
+
 	Stop using gnome_util_user_shell(). This not needed, unless we want to
 	have the aliases defined in a shell work in the run dialog. I'm nearly
 	sure no other "run dialog"-type programs do this anyway, and it's

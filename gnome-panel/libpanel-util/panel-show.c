@@ -286,5 +286,7 @@ panel_show_help (GdkScreen    *screen,
 
 	gtk_show_uri (screen, uri, gtk_get_current_event_time (), &local_error);
 
+	g_free (uri);
+
 	return _panel_show_help_handle_error (doc, screen, local_error, error);
 }
