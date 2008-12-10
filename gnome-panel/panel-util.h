@@ -10,10 +10,6 @@ G_BEGIN_DECLS
 
 char *          panel_util_make_exec_uri_for_desktop (const char *exec);
 
-void		panel_show_help		(GdkScreen  *screen,
-					 const char *path,
-					 const char *linkid);
-
 int		panel_find_applet_index	(GtkWidget *widget);
 
 void		panel_push_window_busy	(GtkWidget *window);

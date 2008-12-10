@@ -39,14 +39,10 @@ _panel_show_error_dialog (const gchar *uri,
 			  GdkScreen   *screen,
 			  const gchar *message)
 {
-	char *escaped;
 	char *primary;
 
-	escaped = g_markup_escape_text (uri, -1);
-	primary = g_strdup_printf (_("Could not open location '%s'"),
-				   escaped);
-	g_free (escaped);
-
+	primary = g_markup_printf_escaped (_("Could not open location '%s'"),
+					   uri);
 	panel_error_dialog (NULL, screen, "cannot_show_url", TRUE,
 			    primary, message);
 	g_free (primary);
@@ -182,7 +178,7 @@ panel_show_uri (GdkScreen    *screen,
 {
 	GError *local_error = NULL;
 
-	g_return_val_if_fail (screen != NULL, FALSE);
+	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -207,7 +203,7 @@ panel_show_uri_force_mime_type (GdkScreen    *screen,
 	GAppInfo *app;
 	gboolean  ret;
 
-	g_return_val_if_fail (screen != NULL, FALSE);
+	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (mime_type != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -227,4 +223,68 @@ panel_show_uri_force_mime_type (GdkScreen    *screen,
 	g_object_unref (app);
 
 	return ret;
+}
+
+static void
+_panel_show_help_error_dialog (const gchar *doc,
+			       GdkScreen   *screen,
+			       const gchar *message)
+{
+	char *primary;
+
+	primary = g_markup_printf_escaped (_("Could not display help document '%s'"),
+					   doc);
+	panel_error_dialog (NULL, screen, "cannot_show_help", TRUE,
+			    primary, message);
+	g_free (primary);
+}
+
+static gboolean
+_panel_show_help_handle_error (const gchar  *doc,
+			       GdkScreen    *screen,
+			       GError       *local_error,
+			       GError      **error)
+{
+	if (local_error == NULL)
+		return TRUE;
+
+	else if (g_error_matches (local_error,
+				  G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+		g_error_free (local_error);
+		return TRUE;
+	}
+
+	else if (error != NULL)
+		g_propagate_error (error, local_error);
+
+	else {
+		_panel_show_help_error_dialog (doc, screen,
+					       local_error->message);
+		g_error_free (local_error);
+	}
+
+	return FALSE;
+}
+
+gboolean
+panel_show_help (GdkScreen    *screen,
+		 const gchar  *doc,
+		 const gchar  *link,
+		 GError      **error)
+{
+	GError *local_error = NULL;
+	char   *uri;
+
+	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
+	g_return_val_if_fail (doc != NULL, FALSE);
+	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+	if (link)
+		uri = g_strdup_printf ("ghelp:%s?%s", doc, link);
+	else
+		uri = g_strdup_printf ("ghelp:%s", doc);
+
+	gtk_show_uri (screen, uri, gtk_get_current_event_time (), &local_error);
+
+	return _panel_show_help_handle_error (doc, screen, local_error, error);
 }

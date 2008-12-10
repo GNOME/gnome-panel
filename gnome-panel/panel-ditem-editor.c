@@ -31,9 +31,9 @@
 #include <gtk/gtk.h>
 
 #include <libgnomeui/gnome-icon-entry.h>
-#include <libgnomeui/gnome-help.h>
 
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-show.h>
 
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
@@ -1445,11 +1445,8 @@ response_cb (GtkDialog *dialog,
 
 	switch (response_id) {
 	case GTK_RESPONSE_HELP:
-		if (!gnome_help_display_desktop_on_screen (NULL, "user-guide",
-							   "user-guide",
-							   "gospanel-52",
-							   gtk_window_get_screen (GTK_WINDOW (dialog)),
-							   &error)) {
+		if (!panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog)),
+				      "user-guide", "gospanel-52", &error)) {
 			g_signal_emit (G_OBJECT (dialog),
 				       ditem_edit_signals[ERROR_REPORTED], 0,
 				       _("Could not display help document"),

@@ -33,6 +33,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-show.h>
 
 #include "panel-util.h"
 #include "panel-background.h"
@@ -395,7 +396,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
 	if (!strcmp (callback_name, "help")) {
-		panel_show_help (screen, "user-guide.xml", "menubar");
+		panel_show_help (screen, "user-guide", "menubar", NULL);
 
 	} else if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;

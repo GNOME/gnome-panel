@@ -33,6 +33,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-show.h>
 
 #include "applet.h"
 #include "panel-widget.h"
@@ -970,7 +971,7 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 	screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
 	if (!strcmp (callback_name, "help")) {
-		panel_show_help (screen, "user-guide.xml", "gospanel-37");
+		panel_show_help (screen, "user-guide", "gospanel-37", NULL);
 
 	} else if (!strcmp (callback_name, "edit")) {
                 GError *error = NULL;

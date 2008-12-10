@@ -35,6 +35,7 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-session-manager.h>
+#include <libpanel-util/panel-show.h>
 
 #include "applet.h"
 #include "panel-config-global.h"
@@ -338,7 +339,7 @@ static PanelAction actions [] = {
 		PANEL_ICON_REMOTE, //FIXME icon
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
-		"gospanel-563", //FIXME
+		"nautilus-server-connect", //FIXME
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
 	},
@@ -816,8 +817,8 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
-		panel_show_help (screen, "user-guide.xml",
-				 actions [button->priv->type].help_index);
+		panel_show_help (screen, "user-guide",
+				 actions [button->priv->type].help_index, NULL);
 
 		return;
 	}

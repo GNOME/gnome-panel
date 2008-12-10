@@ -35,6 +35,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
 #include "panel-util.h"
@@ -53,7 +54,7 @@ panel_context_menu_show_help (GtkWidget *w,
 			      gpointer data)
 {
 	panel_show_help (gtk_widget_get_screen (w),
-			 "user-guide.xml", "gospanel-1");
+			 "user-guide", "gospanel-1", NULL);
 }
 
 static gboolean

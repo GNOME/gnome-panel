@@ -14,6 +14,8 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 
+#include <libpanel-util/panel-show.h>
+
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
@@ -247,7 +249,8 @@ applet_callback_callback (GtkWidget      *widget,
 
 			panel_properties_dialog_present (drawer->toplevel);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help (screen, "user-guide.xml", "gospanel-18");
+			panel_show_help (screen,
+					 "user-guide", "gospanel-18", NULL);
 		}
 		break;
 	case PANEL_OBJECT_MENU:

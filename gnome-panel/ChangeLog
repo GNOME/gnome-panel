@@ -1,5 +1,37 @@
 2008-12-10  Vincent Untz  <vuntz@gnome.org>
 
+	Stop using GnomeHelp, and use gtk_show_uri() for displaying help.
+
+	* panel-util.[ch]: (panel_show_help): kill
+	* libpanel-util/panel-show.[ch]: (_panel_show_error_dialog): use
+	g_markup_printf_escaped()
+	(panel_show_uri):
+	(panel_show_uri_force_mime_type): fix a check
+	(_panel_show_help_error_dialog), (_panel_show_help_handle_error),
+	(panel_show_help): new, they all do what their name imply
+
+	* applet.c: (applet_callback_callback):
+	* panel-action-button.c: (panel_action_button_invoke_menu):
+	* panel-addto.c: (panel_addto_dialog_response):
+	* panel-context-menu.c: (panel_context_menu_show_help):
+	* panel-ditem-editor.c: (response_cb):
+	* panel-menu-bar.c: (panel_menu_bar_invoke_menu):
+	* panel-menu-button.c: (panel_menu_button_invoke_menu):
+	* panel-properties-dialog.c: (panel_properties_dialog_response):
+	* panel-run-dialog.c: (panel_run_dialog_response):
+	updates for panel_show_help()
+
+	* panel-action-button.c: fix help for "connect to server"
+
+	* libpanel-util/panel-launch.c: (_panel_launch_error_dialog): escape
+	the name of the application since it will be used inside markup
+	(_panel_launch_handle_error): new, to factorize code
+	(panel_app_info_launch_uris):
+	(panel_launch_desktop_file_with_fallback): use
+	_panel_launch_handle_error()
+
+2008-12-10  Vincent Untz  <vuntz@gnome.org>
+
 	Use gio to launch desktop files, instead of gnome-desktop.
 
 	* panel-util.[ch]: (panel_ditem_launch),

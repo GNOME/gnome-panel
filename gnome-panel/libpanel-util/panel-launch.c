@@ -42,13 +42,40 @@ _panel_launch_error_dialog (const gchar *name,
 	char *primary;
 
 	if (name)
-		primary = g_strdup_printf (_("Could not launch '%s'"), name);
+		primary = g_markup_printf_escaped (_("Could not launch '%s'"),
+						   name);
 	else
 		primary = g_strdup (_("Could not launch application"));
 
 	panel_error_dialog (NULL, screen, "cannot_launch", TRUE,
 			    primary, message);
 	g_free (primary);
+}
+
+static gboolean
+_panel_launch_handle_error (const gchar  *name,
+			    GdkScreen    *screen,
+			    GError       *local_error,
+			    GError      **error)
+{
+	if (local_error == NULL)
+		return TRUE;
+
+	else if (g_error_matches (local_error,
+				  G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+		g_error_free (local_error);
+		return TRUE;
+	}
+
+	else if (error != NULL)
+		g_propagate_error (error, local_error);
+
+	else {
+		_panel_launch_error_dialog (name, screen, local_error->message);
+		g_error_free (local_error);
+	}
+
+	return FALSE;
 }
 
 gboolean
@@ -77,20 +104,8 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 
 	g_object_unref (context);
 
-	if (retval)
-		return TRUE;
-
-	/* handle error */
-	if (error != NULL)
-		g_propagate_error (error, local_error);
-
-	else {
-		_panel_launch_error_dialog (g_app_info_get_name (appinfo),
-					    screen, local_error->message);
-		g_error_free (local_error);
-	}
-
-	return FALSE;
+	return _panel_launch_handle_error (g_app_info_get_name (appinfo),
+					   screen, local_error, error);
 }
 
 gboolean
@@ -214,18 +229,6 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				      G_SPAWN_SEARCH_PATH,
 				      NULL, NULL, NULL, &local_error);
 
-	if (retval)
-		return TRUE;
-
-	/* handle error */
-	if (error != NULL)
-		g_propagate_error (error, local_error);
-
-	else {
-		_panel_launch_error_dialog (fallback_exec,
-					    screen, local_error->message);
-		g_error_free (local_error);
-	}
-
-	return FALSE;
+	return _panel_launch_handle_error (fallback_exec,
+					   screen, local_error, error);
 }

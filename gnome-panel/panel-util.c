@@ -17,6 +17,7 @@
 #include "panel-util.h"
 
 #include <dirent.h>
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -27,8 +28,6 @@
 #include <glib/gstdio.h>
 #include <gio/gio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <libgnomeui/gnome-help.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -73,22 +72,6 @@ panel_util_make_exec_uri_for_desktop (const char *exec)
 	str = g_string_append_c (str, '"');
 
 	return g_string_free (str, FALSE);
-}
-
-void
-panel_show_help (GdkScreen  *screen,
-		 const char *doc_name,
-		 const char *linkid)
-{
-	GError *error = NULL;
-
-	if (!gnome_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
-		panel_error_dialog (NULL, screen, "cannot_show_help", TRUE,
-				    _("Could not display help document"),
-				    error != NULL ? error->message : NULL);
-
-		g_clear_error (&error);
-	}
 }
 
 int

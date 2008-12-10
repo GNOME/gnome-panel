@@ -33,6 +33,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
+#include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
 #include "panel-profile.h"
@@ -645,7 +646,7 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 			help_id = "gospanel-28";
 		}
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "user-guide.xml", help_id);
+				 "user-guide", help_id, NULL);
 		break;
 	default:
 		break;
