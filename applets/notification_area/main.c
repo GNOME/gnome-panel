@@ -28,7 +28,6 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-help.h>
 
 #include "na-tray-manager.h"
 #include "na-tray.h"
@@ -70,36 +69,53 @@ help_cb (BonoboUIComponent *uic,
 	 AppletData        *data,	  
 	 const gchar       *verbname)   
 {
-  GdkScreen *screen;
-  GError *err = NULL;
+  GError *error = NULL;
+  char   *uri;
+#define NA_HELP_DOC "user-guide"
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (data->applet));
+  uri = g_strdup_printf ("ghelp:%s?%s",
+                         NA_HELP_DOC, "panels-notification-area");
 
-  gnome_help_display_desktop_on_screen (NULL, "user-guide",
-                                        "user-guide.xml", "gospanel-567",
-					screen, &err);
+  gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (data->applet)), uri,
+                gtk_get_current_event_time (), &error);
 
-  if (err != NULL)
+  g_free (uri);
+
+  if (error &&
+      g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+    }
+  else if (error)
     {
       GtkWidget *dialog;
-      
-      dialog = gtk_message_dialog_new (NULL,
-                                       GTK_DIALOG_DESTROY_WITH_PARENT,
-                                       GTK_MESSAGE_ERROR,
-                                       GTK_BUTTONS_OK,
-                                       _("There was an error displaying help: %s"),
-                                       err->message);
-      
-      g_signal_connect (G_OBJECT (dialog), "response",
-                        G_CALLBACK (gtk_widget_destroy), NULL);
-      
-      gtk_window_set_icon_name (GTK_WINDOW (dialog), NOTIFICATION_AREA_ICON);
-      gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-      gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-      
-      gtk_widget_show (dialog);
+      char      *primary;
 
-      g_error_free (err);
+      primary = g_markup_printf_escaped (
+                                    _("Could not display help document '%s'"),
+                                    NA_HELP_DOC);
+      dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                       primary);
+
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                "%s", error->message);
+
+      g_error_free (error);
+      g_free (primary);
+
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_widget_destroy), NULL);
+
+      gtk_window_set_icon_name (GTK_WINDOW (dialog), NOTIFICATION_AREA_ICON);
+      gtk_window_set_screen (GTK_WINDOW (dialog),
+                             gtk_widget_get_screen (GTK_WIDGET (data->applet)));
+      /* we have no parent window */
+      gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
+      gtk_window_set_title (GTK_WINDOW (dialog),
+                            _("Error displaying help document"));
+
+      gtk_widget_show (dialog);
     }
 }
 

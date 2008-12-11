@@ -39,6 +39,8 @@
 #define NUM_WORKSPACES "/apps/metacity/general/num_workspaces"
 #define WORKSPACE_NAME "/apps/metacity/workspace_names/name_1"
 
+#define WORKSPACE_SWITCHER_ICON "gnome-panel-workspace-switcher"
+
 typedef enum {
 	PAGER_WM_METACITY,
 	PAGER_WM_COMPIZ,
@@ -599,7 +601,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	wncklet_display_help (pager->applet, "user-guide",
-			      "user-guide.xml", "gosoverview-39");
+			      "overview-workspaces", WORKSPACE_SWITCHER_ICON);
 }
 
 static void
@@ -626,7 +628,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "gnome-panel-workspace-switcher",
+			       WORKSPACE_SWITCHER_ICON,
 			       "pager",
 			       "Pager");
 }
@@ -812,8 +814,9 @@ response_cb (GtkWidget *widget,
 	     PagerData *pager)
 {
 	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help (pager->applet, "user-guide",
-				      "user-guide.xml", "gosoverview-39");
+		wncklet_display_help (widget, "user-guide",
+				      "overview-workspaces",
+				      WORKSPACE_SWITCHER_ICON);
 	else
 		gtk_widget_destroy (widget);
 }
@@ -1052,7 +1055,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (pager->properties_dialog),
-	                          "gnome-panel-workspace-switcher");
+	                          WORKSPACE_SWITCHER_ICON);
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));

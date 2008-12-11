@@ -1,3 +1,18 @@
+2008-12-11  Vincent Untz  <vuntz@gnome.org>
+
+	* wncklet.[ch]: (wncklet_display_help): get rid of
+	gnome_help_display_desktop_on_screen(), and improve code
+
+	* showdesktop.c: (update_icon), (display_help_dialog),
+	(display_about_dialog):
+	* window-list.c: (response_cb), (display_help_dialog),
+	(display_about_dialog), (display_properties_dialog):
+	* window-menu.c: (window_menu_help), (window_menu_about):
+	* workspace-switcher.c: (display_help_dialog),
+	(display_about_dialog), (response_cb), (display_properties_dialog):
+	trivial updates, and put the icon name of the applets in some #define
+	(also updated some links inside the help documents)
+
 2008-12-09  Vincent Untz  <vuntz@gnome.org>
 
 	* showdesktop.[ch]:

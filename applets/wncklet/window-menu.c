@@ -42,6 +42,8 @@
 #include "wncklet.h"
 #include "window-menu.h"
 
+#define WINDOW_MENU_ICON "gnome-panel-window-menu"
+
 typedef struct {
 	GtkWidget    *applet;
 	GtkWidget    *selector;
@@ -56,7 +58,7 @@ window_menu_help (BonoboUIComponent *uic,
                   const char        *verb) 
 {
 	wncklet_display_help (window_menu->applet, "user-guide",
-			      "user-guide.xml", "panel-windowselector");
+			      "panel-windowselector", WINDOW_MENU_ICON);
 }
 
 static void
@@ -85,7 +87,7 @@ window_menu_about (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "gnome-panel-window-menu",
+			       WINDOW_MENU_ICON,
 			       "window-menu",
 			       "WindowMenu");
 }

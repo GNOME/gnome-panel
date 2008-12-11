@@ -28,6 +28,8 @@
 #include "wncklet.h"
 #include "window-list.h"
 
+#define WINDOW_LIST_ICON "gnome-panel-window-list"
+
 typedef struct {
 	GtkWidget *applet;
 	GtkWidget *tasklist;
@@ -93,8 +95,8 @@ response_cb (GtkWidget    *widget,
 	     TasklistData *tasklist)
 {
 	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help (tasklist->applet, "user-guide",
-				      "user-guide.xml", "windowlist-prefs");
+		wncklet_display_help (widget, "user-guide",
+				      "windowlist-prefs", WINDOW_LIST_ICON);
 	else
 		gtk_widget_hide (widget);
 }
@@ -585,7 +587,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	wncklet_display_help (tasklist->applet, "user-guide",
-			      "user-guide.xml", "windowlist");
+			      "windowlist", WINDOW_LIST_ICON);
 }
 
 static void
@@ -611,7 +613,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "gnome-panel-window-list",
+			       WINDOW_LIST_ICON,
 			       "tasklist",
 			       "Tasklist");
 }
@@ -784,7 +786,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (tasklist->properties_dialog),
-				  "gnome-panel-window-list"); 
+				  WINDOW_LIST_ICON); 
 
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),

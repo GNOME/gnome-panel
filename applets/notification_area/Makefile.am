@@ -6,7 +6,7 @@ INCLUDES =							\
 	$(GNOME_INCLUDEDIR)					\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(PANEL_CFLAGS)						\
+	$(NOTIFICATION_AREA_CFLAGS)				\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\
 	-DPREFIX=\"$(prefix)\"					\
@@ -32,7 +32,7 @@ NOTIFICATION_AREA_SOURCES =		\
 NOTIFICATION_AREA_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(X_LIBS)					\
-	$(PANEL_LIBS)
+	$(NOTIFICATION_AREA_LIBS)
 
 if NOTIFICATION_AREA_INPROCESS
 APPLET_TYPE     = shlib

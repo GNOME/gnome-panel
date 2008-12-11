@@ -47,8 +47,8 @@ void        wncklet_display_about       (GtkWidget   *applet,
 
 void        wncklet_display_help        (GtkWidget  *widget,
 					 const char *doc_id,
-					 const char *filename,
-					 const char *link_id);
+					 const char *link_id,
+					 const char *icon_name);
 
 WnckScreen *wncklet_get_screen          (GtkWidget *applet);
 	

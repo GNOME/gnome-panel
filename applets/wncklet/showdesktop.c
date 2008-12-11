@@ -40,6 +40,7 @@
 #include <string.h>
 
 #define TIMEOUT_ACTIVATE 1000
+#define SHOW_DESKTOP_ICON "user-desktop"
 
 
 typedef struct {
@@ -173,11 +174,11 @@ update_icon (ShowDesktopData *sdd)
 
 	error = NULL;
 	icon = gtk_icon_theme_load_icon (sdd->icon_theme,
-					 "user-desktop",
+					 SHOW_DESKTOP_ICON,
 					 icon_size, 0, &error);
 
 	if (icon == NULL) {
-		g_printerr (_("Failed to load %s: %s\n"), "user-desktop",
+		g_printerr (_("Failed to load %s: %s\n"), SHOW_DESKTOP_ICON,
 			    error ? error->message : _("Icon not found"));
 		if (error) {
 			g_error_free (error);
@@ -505,11 +506,11 @@ show_desktop_applet_fill (PanelApplet *applet)
 
 static void
 display_help_dialog (BonoboUIComponent *uic,
-                     ShowDesktopData         *sdd,
+                     ShowDesktopData   *sdd,
                      const gchar       *verbname)
 {
 	wncklet_display_help (sdd->applet, "user-guide",
-			      "user-guide.xml", "gospanel-564");
+			      "gospanel-564", SHOW_DESKTOP_ICON);
 }
 
 static void
@@ -536,7 +537,7 @@ display_about_dialog (BonoboUIComponent *uic,
 			       authors,
 			       documenters,
 			       translator_credits,
-			       "user-desktop",
+			       SHOW_DESKTOP_ICON,
 			       "show-desktop",
 			       "show-desktop");
 }

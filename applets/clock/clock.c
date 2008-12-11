@@ -3230,8 +3230,8 @@ prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
 static void
 prefs_help (GtkWidget *widget, ClockData *cd)
 {
-	clock_utils_display_help (cd->applet,
-				  "clock", "clock", "clock-settings");
+	clock_utils_display_help (cd->prefs_window,
+				  "clock", "clock-settings");
 }
 
 static void
@@ -3723,7 +3723,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		     ClockData         *cd,
 		     const gchar       *verbname)
 {
-	clock_utils_display_help (cd->applet, "clock", "clock", NULL);
+	clock_utils_display_help (cd->applet, "clock", NULL);
 }
 
 static void
