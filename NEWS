@@ -1,4 +1,105 @@
 ==============
+Version 2.25.3
+==============
+
+Note to distributors: this release might break various other applications
+(mostly applets, though). If this is the case, please contact the gnome-panel
+developers to see if changes should be reverted.
+
+ + we do not have a bonobo PanelShell interface. As far as I know, it wasn't
+   used by anything and was useless anyway.
+ + libpanel-applet doesn't depend on libgnomeui anymore. This might have some
+   build-time and run-time side-effects:
+   - build-time: the pkg-config check for libpanelapplet-2.0 won't bring
+     libgnomeui anymore. The fix is to have the applet configure script check
+     for libgnomeui itself if it needs it.
+   - build-time: panel-applet.h doesn't contain some #include for some
+     libgnomeui part anymore. The fix is to have the relevant applet code
+     include the right headers it needs.
+   - run-time: the macro defined in panel-applet.h and used by nearly all
+     applets to start the applet (PANEL_APPLET_BONOBO_FACTORY) used to call
+     gnome_program_init(), and it's not the case anymore. If the applet uses
+     some libgnomeui widgets, there might be warnings because some of those
+     require some libgnomeui initialization. The fix is to either port the
+     applet to GTK+ widgets, or to have it called gnome_program_init() on its
+     own.
+   This last item could arguably be seen as an API change. If this causes too
+   many issues, another solution might be considered.
+
+
+  Panel
+
+	* Use C_() instead of Q_() (Philip Withnall, Vincent)
+	* Fix compilation warnings (Vincent)
+	* Use dbus-based uniquification instead of bonobo-based (Colin Walters,
+	  Vincent)
+	* Add a --replace argument to replace the current panel instead of just
+	  leaving (Vincent)
+	* Remove unneeded call to gnome_authentication_manager_init() (we use
+	  gio now) (Vincent)
+	* Set an application name (Vincent)
+	* Code cleanup (Vincent)
+	* Use single include for glib and gtk+ (Vincent)
+	* Stop using many deprecated API (Vincent)
+	* Start removing calls to libgnome/libgnomeui API (Vincent)
+	* Use gio to launch desktop files, instead of gnome-desktop (Vincent)
+	* Stop using gnome_help_display_desktop_on_screen() and get rid of
+	  libgnomeui dependency (Vincent)
+	* Fix help for "connect to server" (Vincent)
+
+  libpanel-applet
+
+	* Use C_() instead of Q_() (Philip Withnall, Vincent)
+	* Use single include for glib and gtk+ (Vincent)
+	* Stop using many deprecated API (Vincent)
+	* Code cleanup (Vincent)
+	* Do not depend on libgnome/libgnomeui anymore [note that we still have
+	  an indirect libgnome dependency, through bonobo] (Vincent)
+
+  All Applets
+
+	* Use single include for glib and gtk+ (Vincent)
+	* Stop using gnome_help_display_desktop_on_screen() and get rid of
+	  libgnomeui dependency (Vincent)
+
+  Clock Applet
+
+	* Add some inline documentation to the edit location window (Dan
+	  Winship)
+	* Remove fixed width for buttons in the pref dialog (Gabor Kelemen)
+	* Build fixes (Vincent)
+	* Stop using deprecated GTK+ API (Vincent)
+	* Show day of week header in "set time" calendar (Vincent)
+
+  Fish Applet
+
+	* Fix compilation warnings (Vincent)
+
+  Notification Area Applet
+
+	* Real tray icons transparency (Owen Taylor)
+	* Fix compilation warnings (Vincent)
+	* Stop using deprecated GTK+ API (Vincent)
+
+  Wnck Applets
+
+	* Use the right help file for some help buttons (Vincent)
+	* Make sure dialogs have the right window icon (Vincent)
+
+  Misc
+
+	* Require glib 2.18.0 (Vincent)
+	* Remove obsolete german translation of documentation (Vincent)
+	* Stop declaring a bonobo PanelShell interface (Vincent)
+	* libpanel-applet and all applets in gnome-panel lose their libgnomeui
+	  dependency (Vincent)
+
+  Translators
+
+	* Yair Hershkovitz (he)
+	* Leonardo Ferreira Fontenelle (pt_BR)
+
+==============
 Version 2.24.2
 ==============
 
