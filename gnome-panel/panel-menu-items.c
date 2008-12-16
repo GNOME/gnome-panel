@@ -987,10 +987,6 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	if (gconf_name)
 		g_free (gconf_name);
 
-	panel_menu_items_append_from_desktop (places_menu,
-					      "nautilus-cd-burner.desktop",
-					      NULL);
-
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
 
