@@ -67,6 +67,7 @@ CLOCK_SOURCES = 		\
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(CLOCK_LIBS)					\
+	$(LIBPANEL_APPLET_LIBS)				\
 	$(POLKIT_GNOME_LIBS)				\
 	-lgweather
 

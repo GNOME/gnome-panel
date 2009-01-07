@@ -31,7 +31,8 @@ $(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	$(WNCKLET_LIBS)
+	$(WNCKLET_LIBS)					\
+	$(LIBPANEL_APPLET_LIBS)
 
 if WNCKLET_INPROCESS
 APPLET_TYPE     = shlib

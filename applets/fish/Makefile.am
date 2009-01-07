@@ -14,7 +14,8 @@ FISH_SOURCES = fish.c
 
 FISH_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	$(FISH_LIBS)
+	$(FISH_LIBS)					\
+	$(LIBPANEL_APPLET_LIBS)
 
 if FISH_INPROCESS
 APPLET_TYPE     = shlib
