@@ -1,5 +1,15 @@
 2009-01-08  Vincent Untz  <vuntz@gnome.org>
 
+	* clock-location.c: (clock_location_new): use
+	clock_location_get_valid_weather_code()
+	(clock_location_get_valid_weather_code): new, to use "-" for empty code
+	(clock_location_set_weather_code): use
+	clock_location_get_valid_weather_code()
+	(setup_weather_updates): update to use WEATHER_EMPTY_CODE
+	Fix bug #560200 (crash on Solaris when the weather code is empty)
+
+2009-01-08  Vincent Untz  <vuntz@gnome.org>
+
 	* clock-utils.[ch]: (clock_locale_supports_am_pm): new
 	(clock_locale_format): use clock_locale_supports_am_pm
 	* clock.c: (ensure_prefs_window_is_created): hide the options to use 12
