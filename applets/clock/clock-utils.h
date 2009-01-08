@@ -41,6 +41,7 @@ typedef enum {
 	CLOCK_FORMAT_CUSTOM
 } ClockFormat;
 
+gboolean clock_locale_supports_am_pm (void);
 ClockFormat clock_locale_format (void);
 
 void clock_utils_display_help (GtkWidget  *widget,

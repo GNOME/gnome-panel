@@ -3531,6 +3531,7 @@ ensure_prefs_window_is_created (ClockData *cd)
         GtkWidget *edit_window;
 	GtkWidget *prefs_close_button;
 	GtkWidget *prefs_help_button;
+	GtkWidget *clock_options;
         GtkWidget *edit_cancel_button;
         GtkWidget *edit_ok_button;
         GtkWidget *location_box;
@@ -3547,7 +3548,11 @@ ensure_prefs_window_is_created (ClockData *cd)
 
         prefs_close_button = glade_xml_get_widget (cd->glade_xml, "prefs-close-button");
         prefs_help_button = glade_xml_get_widget (cd->glade_xml, "prefs-help-button");
+        clock_options = glade_xml_get_widget (cd->glade_xml, "clock-options");
         cd->prefs_locations = GTK_TREE_VIEW (glade_xml_get_widget (cd->glade_xml, "cities_list"));
+
+	if (!clock_locale_supports_am_pm ())
+		gtk_widget_hide (clock_options);
 
         selection = gtk_tree_view_get_selection (cd->prefs_locations);
         g_signal_connect (G_OBJECT (selection), "changed",

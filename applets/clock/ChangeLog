@@ -1,3 +1,11 @@
+2009-01-08  Vincent Untz  <vuntz@gnome.org>
+
+	* clock-utils.[ch]: (clock_locale_supports_am_pm): new
+	(clock_locale_format): use clock_locale_supports_am_pm
+	* clock.c: (ensure_prefs_window_is_created): hide the options to use 12
+	or 24 hour format if there's no AM/PM string.
+	* clock.glade: name a widget
+
 2009-01-07  Vincent Untz  <vuntz@gnome.org>
 
 	* Makefile.am: add LIBPANEL_APPLET_LIBS to LDADD since we don't really

@@ -38,17 +38,24 @@
 
 #include "clock-utils.h"
 
-ClockFormat
-clock_locale_format (void)
+gboolean
+clock_locale_supports_am_pm (void)
 {
 #ifdef HAVE_NL_LANGINFO
         const char *am;
 
         am = nl_langinfo (AM_STR);
-        return (am[0] == '\0') ? CLOCK_FORMAT_24 : CLOCK_FORMAT_12;
+        return (am[0] != '\0');
 #else
-	return CLOCK_FORMAT_24;
+	return TRUE;
 #endif
+}
+
+ClockFormat
+clock_locale_format (void)
+{
+	return clock_locale_supports_am_pm () ?
+		CLOCK_FORMAT_12 : CLOCK_FORMAT_24;
 }
 
 void
