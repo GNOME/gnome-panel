@@ -1,3 +1,14 @@
+2009-01-12  Matt Keenan  <matt.keenan@sun.com>
+
+	* clock-location.c: (clock_location_new): use
+	clock_location_get_valid_weather_code()
+	(clock_location_get_valid_weather_code): new, to use "-" for empty code
+	(clock_location_set_weather_code): use
+	clock_location_get_valid_weather_code()
+	(setup_weather_updates): update to use WEATHER_EMPTY_CODE
+	Fix bug #560200 (crash on Solaris when the weather code is empty)
+	Fix taken from trunk implemented by vuntz
+
 2008-12-08  Vincent Untz  <vuntz@gnome.org>
 
 	* clock.glade: add some inline documentation to the edit location

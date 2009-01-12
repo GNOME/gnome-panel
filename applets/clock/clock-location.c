@@ -52,6 +52,7 @@ typedef struct {
 
 #define WEATHER_TIMEOUT_BASE 30
 #define WEATHER_TIMEOUT_MAX  1800
+#define WEATHER_EMPTY_CODE   "-"
 
 enum {
 	WEATHER_UPDATED,
@@ -67,6 +68,7 @@ static void clock_location_unset_tz (ClockLocation *this);
 static void setup_weather_updates (ClockLocation *loc);
 static void add_to_network_monitor (ClockLocation *loc);
 static void remove_from_network_monitor (ClockLocation *loc);
+static gchar* clock_location_get_valid_weather_code (const gchar *code);
 
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TYPE, ClockLocationPrivate))
 
@@ -119,7 +121,7 @@ clock_location_new (const gchar *name, const gchar *timezone,
         priv->latitude = latitude;
         priv->longitude = longitude;
 
-        priv->weather_code = g_strdup (code);
+        priv->weather_code = clock_location_get_valid_weather_code(code);
 
 	if (prefs) {
 		priv->temperature_unit = prefs->temperature_unit;
@@ -538,6 +540,15 @@ clock_location_make_current (ClockLocation *loc,
         g_free (filename);
 }
 
+static gchar *
+clock_location_get_valid_weather_code (const gchar *code)
+{
+	if (!code || code[0] == '\0')
+		return g_strdup (WEATHER_EMPTY_CODE);
+	else
+		return g_strdup (code);
+}
+
 const gchar *
 clock_location_get_weather_code (ClockLocation *loc)
 {
@@ -552,7 +563,7 @@ clock_location_set_weather_code (ClockLocation *loc, const gchar *code)
         ClockLocationPrivate *priv = PRIVATE (loc);
 
 	g_free (priv->weather_code);
-	priv->weather_code = g_strdup (code);
+	priv->weather_code = clock_location_get_valid_weather_code (code);
 
 	setup_weather_updates (loc);
 }
@@ -807,7 +818,7 @@ setup_weather_updates (ClockLocation *loc)
 		priv->weather_timeout = 0;
 	}
 
-	if (!priv->weather_code || strcmp (priv->weather_code, "-") == 0)
+	if (!priv->weather_code || strcmp (priv->weather_code, WEATHER_EMPTY_CODE) == 0)
 		return;
 
 	dms = rad2dms (priv->latitude, priv->longitude);
