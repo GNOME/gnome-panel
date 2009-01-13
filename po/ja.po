@@ -13,10 +13,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel trunk\n"
+"Project-Id-Version: gnome-panel gnome-2-24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-21 18:23+0900\n"
-"PO-Revision-Date: 2008-09-21 18:08+0900\n"
+"POT-Creation-Date: 2009-01-14 08:36+0900\n"
+"PO-Revision-Date: 2009-01-14 08:36+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr "誕生日と記念日"
 msgid "Weather Information"
 msgstr "天気の情報"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:13
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
 msgid "Locations"
 msgstr "都市"
 
@@ -225,7 +225,7 @@ msgstr "時刻設定ツールの起動に失敗しました: %s"
 msgid "Set System Time..."
 msgstr "システム時刻の設定..."
 
-#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "システム時刻の設定"
 
@@ -314,15 +314,24 @@ msgstr "<b>時刻の設定</b>"
 msgid "<i>(optional)</i>"
 msgstr "<i>(オプションl)</i>"
 
-#: ../applets/clock/clock.glade.h:6
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.glade.h:7
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>(都市名または都道府県名、あるいは国の名前を入力し、ポップアップから"
+"それに一致するジオメトリ情報を選択して下さい)</i></small>"
+
+#: ../applets/clock/clock.glade.h:8
 msgid "Clock Preferences"
 msgstr "時計の設定"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:9
 msgid "Current Time:"
 msgstr "現在の時刻"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:10
 msgid ""
 "East\n"
 "West"
@@ -330,24 +339,24 @@ msgstr ""
 "東経\n"
 "西経"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "全般"
 
-#: ../applets/clock/clock.glade.h:11
+#: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
 msgstr "緯度:"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
 msgstr "都市の名称"
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
 msgstr "経度:"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
@@ -355,63 +364,63 @@ msgstr ""
 "北緯\n"
 "南緯"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
 msgstr "気温を表示する(_T)"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
 msgstr "天気を表示する(_W)"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
 msgstr "秒を表示する(_N)"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.glade.h:23
 msgid "Show the _date"
 msgstr "日付を表示する(_D)"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
 msgstr "時刻の設定"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
 msgstr "時刻を設定する(_S)"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:26
 msgid "Time:"
 msgstr "時刻:"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
 msgstr "タイムゾーン:"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:28
 msgid "Weather"
 msgstr "天気"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:29
 msgid "_12 hour format"
 msgstr "_12時制"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:30
 msgid "_24 hour format"
 msgstr "_24時制"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:31
 msgid "_Pressure unit:"
 msgstr "気圧の単位(_P):"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:32
 msgid "_Temperature unit:"
 msgstr "気温の単位(_T):"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.glade.h:33
 msgid "_Visibility unit:"
 msgstr "視界の単位(_V):"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:34
 msgid "_Wind speed unit:"
 msgstr "風速の単位(_W):"
 
