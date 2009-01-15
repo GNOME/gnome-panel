@@ -192,15 +192,14 @@ panel_action_shutdown (GtkWidget *widget)
 static gboolean
 panel_action_shutdown_reboot_is_disabled (void)
 {
-	return panel_lockdown_get_disable_log_out();
-#if 0
-	/* FIXME: waiting for a gnome-session dbus api to know if
-	 * shutdown/reboot is possible:
-	 * http://bugzilla.gnome.org/show_bug.cgi?id=536915 */
-	return (panel_lockdown_get_disable_log_out() ||
-	(!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN) &&
-	 !gdm_supports_logout_action (GDM_LOGOUT_ACTION_REBOOT)));
-#endif
+	PanelSessionManager *manager;
+
+	if (panel_lockdown_get_disable_log_out())
+		return TRUE;
+
+	manager = panel_session_manager_get ();
+
+	return (!panel_session_manager_is_shutdown_available (manager));
 }
 
 /* Run Application

@@ -64,6 +64,8 @@ void panel_session_manager_request_logout   (PanelSessionManager           *sess
 					     PanelSessionManagerLogoutType  mode);
 void panel_session_manager_request_shutdown (PanelSessionManager *session);
 
+gboolean panel_session_manager_is_shutdown_available (PanelSessionManager *session);
+
 G_END_DECLS
 
 #endif /* PANEL_SESSION_MANAGER_H */

@@ -1,3 +1,15 @@
+2009-01-15  Vincent Untz  <vuntz@gnome.org>
+
+	Fix gnome-panel part of bug #536915.
+	Based on patch by Ray Strode <rstrode@redhat.com>
+
+	* libpanel-util/panel-session-manager.[ch]:
+	(panel_session_manager_is_shutdown_available): new, to tell if shutdown
+	is available from the session manager
+	* panel-action-button.c:
+	(panel_action_shutdown_reboot_is_disabled): use the new method for the
+	action buttons
+
 ==================== 2.25.3 ====================
 
 2008-12-16  Bastien Nocera  <hadess@hadess.net>

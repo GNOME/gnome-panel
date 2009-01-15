@@ -141,6 +141,42 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 	}
 }
 
+gboolean
+panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
+{
+	GError *error;
+	DBusGProxy *proxy;
+	gboolean is_shutdown_available;
+
+	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
+
+	error = NULL;
+
+	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
+						   &error)) {
+		g_warning ("Could not connect to session manager: %s",
+			   error->message);
+		g_error_free (error);
+
+		return FALSE;
+	}
+
+	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+
+	if (!dbus_g_proxy_call (proxy, "CanShutdown", &error,
+				G_TYPE_INVALID, G_TYPE_BOOLEAN,
+				&is_shutdown_available, G_TYPE_INVALID) &&
+	    error != NULL) {
+		g_warning ("Could not ask session manager if shut down is available: %s",
+			   error->message);
+		g_error_free (error);
+
+		return FALSE;
+	}
+
+	return is_shutdown_available;
+}
+
 PanelSessionManager *
 panel_session_manager_get (void)
 {
