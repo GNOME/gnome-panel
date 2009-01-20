@@ -965,6 +965,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 						 applet->locked,
 						 applet->position,
 						 applet->id);
+		break;
 	default:
 		g_assert_not_reached ();
 		break;
