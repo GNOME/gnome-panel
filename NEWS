@@ -1,4 +1,52 @@
 ==============
+Version 2.25.5
+==============
+
+  Panel
+
+	* Only show shutdown/reboot menu items if made available by the session
+	  manager (Ray Strode)
+	* Only allow dragging panels when pressing a modifier button (usually
+	  Alt) for expanded panels (Vincent, William Lachance)
+	* Delay the initial panel animation until applets/objects are loaded
+	  (Ray Strode, Vincent)
+	* Fix initial animation not happening for newly created panels
+	  (Vincent)
+	* Fix unloaded panels with existing configuration appearing empty when
+	  reloaded in gconf (Vincent)
+	* Correctly set the struts of the panel at the very early start so that
+	  desktop icons don't jump around on login (Vincent, Ray Strode)
+	* Connect to the session manager when we're really ready, instead of
+	  doing it too early. This helps with desktop icons too (Behdad
+	  Esfahbod, Vincent)
+	* Respect TryExec key in desktop files that we directly put in the
+	  menus (Matthias Clasen, Vincent)
+
+  Clock Applet
+
+	* Hide the option to use 12/24 hours if it's not supported in the
+	  current locale (Vincent)
+	* Fix a crash on Solaris when the weather code is empty (Vincent)
+	* Minor HIG fix
+
+  Misc
+
+	* Fix applet compilation by explicitly listing LIBPANEL_APPLET_LIBS in
+	  LDADD (Vincent)
+
+  Translators
+
+	* Petr Kovar (cs)
+	* Andre Klapper (de)
+	* Jorge González (es)
+	* saudat mohammed (ha)
+	* Gabor Kelemen (hu)
+	* Onye, Sylvester (ig)
+	* Kjartan Maraas (nb)
+	* Daniel Nylander (sv)
+	* Fajuyitan, Sunday Ayo (yo)
+
+==============
 Version 2.25.3
 ==============
 
