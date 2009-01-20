@@ -55,12 +55,15 @@ panel_session_init (void)
 {
 	GnomeClient *client;
 
-	/* We don't want the WM to try and save/restore our
-	 * window position
-	 */
-	gdk_set_sm_client_id (NULL);
-
 	client = gnome_master_client ();
+
+	/* explicitly tell the session manager we're ready -- we don't do it
+	 * before */
+	gnome_client_connect (client);
+
+	/* We don't want the WM to try and save/restore our
+	 * window position */
+	gdk_set_sm_client_id (NULL);
 
         if (!getenv ("GNOME_PANEL_DEBUG"))
                 gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);

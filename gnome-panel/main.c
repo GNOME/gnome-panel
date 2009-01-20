@@ -13,6 +13,7 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
+#include <libgnomeui/gnome-client.h>
 #include <libgnomeui/gnome-ui-init.h>
 
 #include <libpanel-util/panel-cleanup.h>
@@ -62,6 +63,7 @@ main (int argc, char **argv)
 	program = gnome_program_init ("gnome-panel", VERSION,
 				      LIBGNOMEUI_MODULE,
 				      argc, argv,
+				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,
 				      GNOME_PARAM_GOPTION_CONTEXT, context,
 				      GNOME_PROGRAM_STANDARD_PROPERTIES,
 				      NULL);
@@ -79,8 +81,6 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	panel_session_init ();
-
 	gconf_client_add_dir (panel_gconf_get_client (),
 			      "/desktop/gnome/interface",
 			      GCONF_CLIENT_PRELOAD_NONE,
@@ -96,6 +96,14 @@ main (int argc, char **argv)
 			 NULL);
 
 	xstuff_init ();
+
+	/* Flush to make sure our struts are seen by everyone starting
+	 * immediate after (eg, the nautilus desktop). */
+	gdk_flush ();
+
+	/* Do this at the end, to be sure that we're really ready when
+	 * connecting to the session manager */
+	panel_session_init ();
 
 	gtk_main ();
 

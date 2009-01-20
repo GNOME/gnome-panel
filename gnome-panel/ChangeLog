@@ -1,5 +1,18 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	Connect to the session manager only when we're really ready, so that
+	the struts are really set. Therefore, nautilus doesn't have jumping
+	icons on login.
+	Fix bug #563635.
+	Based on patch by Behdad Esfahbod <behdad@gnome.org>
+
+	* main.c: (main): don't connect to the session manager automatically,
+	and move the session initialization code just before we enter the
+	main loop
+	* panel-session.c: (panel_session_init): connect to the session manager
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-toplevel.c: (panel_toplevel_button_press_event): don't require
 	the mouse button modifier to move a non-expanded panel. Only the
 	handles can be grabbed, and they're there for that.
