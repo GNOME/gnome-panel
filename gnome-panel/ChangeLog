@@ -1,5 +1,12 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-menu-items.c: (panel_menu_items_append_from_desktop): respect
+	TryExec in the desktop file.
+	Based on patch by Matthias Clasen <mclasen@redhat.com>
+	Fix bug #555710.
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	* applet.c: (panel_applet_stop_loading): the assertion there was wrong,
 	and caused a crash when reloading an applet that crashed.
 

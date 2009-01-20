@@ -149,6 +149,9 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	char      *path_freeme;
 	char      *full_path;
 	char      *uri;
+	char      *type;
+	gboolean   is_application;
+	char      *tryexec;
 	char      *icon;
 	char      *name;
 	char      *comment;
@@ -191,6 +194,41 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		return;
 	}
 
+	/* For Application desktop files, respect TryExec */
+	type = panel_key_file_get_string (key_file, "Type");
+	if (!type) {
+		g_key_file_free (key_file);
+		if (path_freeme)
+			g_free (path_freeme);
+		return;
+	}
+	is_application = (strcmp (type, "Application") == 0);
+	g_free (type);
+
+	if (is_application) {
+		tryexec = panel_key_file_get_string (key_file, "TryExec");
+		if (tryexec) {
+			char *prog;
+
+			prog = g_find_program_in_path (tryexec);
+			g_free (tryexec);
+
+			if (!prog) {
+				/* FIXME: we could add some file monitor magic,
+				 * so that the menu items appears when the
+				 * program appears, but that's really complex
+				 * for not a huge benefit */
+				g_key_file_free (key_file);
+				if (path_freeme)
+					g_free (path_freeme);
+				return;
+			}
+
+			g_free (prog);
+		}
+	}
+
+	/* Now, simply build the menu item */
 	icon    = panel_key_file_get_locale_string (key_file, "Icon");
 	comment = panel_key_file_get_locale_string (key_file, "Comment");
 
