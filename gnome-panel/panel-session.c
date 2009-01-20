@@ -57,8 +57,12 @@ panel_session_init (void)
 
 	client = gnome_master_client ();
 
-	/* explicitly tell the session manager we're ready -- we don't do it
-	 * before */
+	/* Explicitly tell the session manager we're ready -- we don't do it
+	 * before.
+	 * TODO: when migrating away from libgnomeui, we need to keep this
+	 * late connection. In its current state, I don't think eggsmclient
+	 * supports this (because it connects to the session manager in a
+	 * post-options-parsing hook). */
 	gnome_client_connect (client);
 
 	/* We don't want the WM to try and save/restore our
