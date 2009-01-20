@@ -847,10 +847,12 @@ panel_applet_stop_loading (const char *id)
 			break;
 	}
 
-	g_assert (l != NULL);
-
-	panel_applets_loading = g_slist_delete_link (panel_applets_loading, l);
-	free_applet_to_load (applet);
+	/* this can happen if we reload an applet after it crashed,
+	 * for example */
+	if (l != NULL) {
+		panel_applets_loading = g_slist_delete_link (panel_applets_loading, l);
+		free_applet_to_load (applet);
+	}
 
 	if (panel_applets_loading == NULL && panel_applets_to_load == NULL)
 		panel_applet_queue_initial_unhide_toplevels ();
