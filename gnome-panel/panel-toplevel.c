@@ -1397,8 +1397,14 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 	 * represent what is at the end of the animation, to avoid desktop
 	 * icons jumping around. */
 	if (!toplevel->priv->initial_animation_done) {
-		panel_toplevel_calculate_animation_end_geometry (toplevel);
 		end_of_animation = TRUE;
+
+		/* We've not started the animation yet, so we have to compute
+		 * where we want to end. Note that we don't want to compute
+		 * this everytime, since the struts conflict resolution will be
+		 * overridden if we do so */
+		if (!toplevel->priv->animating)
+			panel_toplevel_calculate_animation_end_geometry (toplevel);
 	}
 
 	screen = panel_toplevel_get_monitor_geometry (toplevel,
@@ -2159,7 +2165,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		panel_toplevel_update_animating_position (toplevel);
 		return;
 	}
-
 
 	if (toplevel->priv->position_centered) {
 		toplevel->priv->position_centered = FALSE;

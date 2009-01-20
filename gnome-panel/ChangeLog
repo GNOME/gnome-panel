@@ -1,5 +1,11 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-toplevel.c: (panel_toplevel_update_struts): do not recompute
+	the end position of the initial animation, since it's not needed, and
+	it overrides the struts conflict resolution.
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	* panel-session.c: (panel_session_init): add a reminder about things to
 	check when migrating to eggsmclient.
 
