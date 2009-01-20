@@ -113,6 +113,10 @@ static GQuark toplevel_id_quark = 0;
 static GQuark queued_changes_quark = 0;
 static GQuark commit_timeout_quark = 0;
 
+static void panel_profile_object_id_list_update (GConfClient       *client,
+						 GConfValue        *value,
+						 PanelGConfKeyType  type);
+
 gboolean
 panel_profile_map_orientation_string (const char       *str,
 				      PanelOrientation *orientation)
@@ -1791,6 +1795,52 @@ panel_profile_load_and_show_toplevel (GConfClient       *client,
 				      const char        *toplevel_id)
 {
 	PanelToplevel *toplevel;
+	const char    *id_list;
+	const char    *key;
+	GConfValue    *value;
+	gboolean       loading_queued_applets;
+
+	toplevel = panel_profile_load_toplevel (client, profile_dir, type, toplevel_id);
+	if (!toplevel)
+		return;
+
+	gtk_widget_show (GTK_WIDGET (toplevel));
+
+	loading_queued_applets = FALSE;
+
+	/* reload list of objects to get those that might be on the new
+	 * toplevel */
+	id_list = panel_gconf_key_type_to_id_list (PANEL_GCONF_OBJECTS);
+	key = panel_gconf_sprintf ("%s/general/%s", profile_dir, id_list);
+	value = gconf_client_get (client, key, NULL);
+	if (value) {
+		panel_profile_object_id_list_update (client, value,
+						     PANEL_GCONF_OBJECTS);
+		loading_queued_applets = TRUE;
+		gconf_value_free (value);
+	}
+
+	id_list = panel_gconf_key_type_to_id_list (PANEL_GCONF_APPLETS);
+	key = panel_gconf_sprintf ("%s/general/%s", profile_dir, id_list);
+	value = gconf_client_get (client, key, NULL);
+	if (value) {
+		panel_profile_object_id_list_update (client, value,
+						     PANEL_GCONF_APPLETS);
+		loading_queued_applets = TRUE;
+		gconf_value_free (value);
+	}
+
+	if (!loading_queued_applets)
+		panel_applet_load_queued_applets ();
+}
+
+static void
+panel_profile_load_and_show_toplevel_startup (GConfClient       *client,
+					      const char        *profile_dir,
+					      PanelGConfKeyType  type,
+					      const char        *toplevel_id)
+{
+	PanelToplevel *toplevel;
 
 	toplevel = panel_profile_load_toplevel (client, profile_dir, type, toplevel_id);
 	if (toplevel)
@@ -2144,19 +2194,13 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 }
 
 static void
-panel_profile_object_id_list_notify (GConfClient *client,
-				     guint        cnxn_id,
-				     GConfEntry  *entry,
-				     gpointer     data)
+panel_profile_object_id_list_update (GConfClient       *client,
+				     GConfValue        *value,
+				     PanelGConfKeyType  type)
 {
-	PanelGConfKeyType  type = GPOINTER_TO_INT (data);
-	GConfValue        *value;
-	GSList            *existing_applets;
-	GSList            *sublist = NULL, *l;
-	GSList            *object_ids;
-
-	if (!(value = gconf_entry_get_value (entry)))
-		return;
+	GSList *existing_applets;
+	GSList *sublist = NULL, *l;
+	GSList *object_ids;
 
 	if (value->type != GCONF_VALUE_LIST ||
 	    gconf_value_get_list_type (value) != GCONF_VALUE_STRING) {
@@ -2198,6 +2242,21 @@ panel_profile_object_id_list_notify (GConfClient *client,
 	g_slist_free (object_ids);
 
 	panel_applet_load_queued_applets ();
+}
+
+static void
+panel_profile_object_id_list_notify (GConfClient *client,
+				     guint        cnxn_id,
+				     GConfEntry  *entry,
+				     gpointer     data)
+{
+	GConfValue        *value;
+	PanelGConfKeyType  type = GPOINTER_TO_INT (data);
+
+	if (!(value = gconf_entry_get_value (entry)))
+		return;
+
+	panel_profile_object_id_list_update (client, value, type);
 }
 
 static void
@@ -2464,7 +2523,7 @@ panel_profile_load (void)
 	panel_profile_load_list (client,
 				 PANEL_CONFIG_DIR,
 				 PANEL_GCONF_TOPLEVELS,
-				 panel_profile_load_and_show_toplevel,
+				 panel_profile_load_and_show_toplevel_startup,
 				 (GConfClientNotifyFunc) panel_profile_toplevel_id_list_notify);
 	panel_profile_load_list (client,
 				 PANEL_CONFIG_DIR,

@@ -793,8 +793,11 @@ typedef struct {
 	guint            locked : 1;
 } PanelAppletToLoad;
 
+/* Each time those lists get both empty,
+ * panel_applet_queue_initial_unhide_toplevels() should be called */
 static GSList  *panel_applets_to_load = NULL;
 static GSList  *panel_applets_loading = NULL;
+
 static gboolean panel_applet_have_load_idle = FALSE;
 
 static void
@@ -822,16 +825,13 @@ panel_applet_on_load_queue (const char *id)
 }
 
 /* This doesn't do anything if the initial unhide already happened */
-static gboolean
-panel_applet_queue_initial_unhide_toplevels (gpointer user_data)
+static void
+panel_applet_queue_initial_unhide_toplevels (void)
 {
 	GSList *l;
 
-	for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
+	for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next)
 		panel_toplevel_queue_initial_unhide ((PanelToplevel *) l->data);
-	}
-
-	return FALSE;
 }
 
 void
@@ -853,7 +853,7 @@ panel_applet_stop_loading (const char *id)
 	free_applet_to_load (applet);
 
 	if (panel_applets_loading == NULL && panel_applets_to_load == NULL)
-		panel_applet_queue_initial_unhide_toplevels (NULL);
+		panel_applet_queue_initial_unhide_toplevels ();
 }
 
 static gboolean
@@ -884,6 +884,12 @@ panel_applet_load_idle_handler (gpointer dummy)
 		g_slist_free (panel_applets_to_load);
 		panel_applets_to_load = NULL;
 		panel_applet_have_load_idle = FALSE;
+
+		if (panel_applets_loading == NULL) {
+			/* unhide any potential initially hidden toplevel */
+			panel_applet_queue_initial_unhide_toplevels ();
+		}
+
 		return FALSE;
 	}
 
@@ -1014,7 +1020,7 @@ void
 panel_applet_load_queued_applets (void)
 {
 	if (!panel_applets_to_load) {
-		g_idle_add (panel_applet_queue_initial_unhide_toplevels, NULL);
+		panel_applet_queue_initial_unhide_toplevels ();
 		return;
         }
 

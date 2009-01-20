@@ -1,5 +1,31 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	Fix initial un-hiding of newly created panels. And also make sure that
+	a panel that was unused but put back in the configuration gets its
+	applets/objects loaded.
+
+	* applet.c: (panel_applet_queue_initial_unhide_toplevels): simplify
+	(panel_applet_stop_loading): trivial update
+	(panel_applet_load_idle_handler): if there's no applet to load anymore,
+	then do the initial unhiding. This is necessary in case there's still
+	an applet in the configuration that matches no panel -- else, we're
+	blocked with no visible panel at all.
+	(panel_applet_load_queued_applets): don't put
+	panel_applet_queue_initial_unhide_toplevels() in the idle loop and call
+	it correctly. It already queues stuff in the idle loop...
+	* panel-profile.c: (panel_profile_load_and_show_toplevel): for panels
+	added during runtime, we also check if there are some applets/objects
+	that might belong to it.
+	(panel_profile_load_and_show_toplevel_startup): old version of
+	panel_profile_load_and_show_toplevel(), only used on panel startup
+	(panel_profile_object_id_list_update): new, based on
+	panel_profile_object_id_list_notify() so that it can be used elsewhere
+	(panel_profile_object_id_list_notify): just call
+	panel_profile_object_id_list_notify()
+	(panel_profile_load): use panel_profile_load_and_show_toplevel_startup()
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	First part of smoothing the panel slide-in on login.
 	Part of bug #554343.
 	Patch by Ray Strode <rstrode@redhat.com>, with a few minor bug
