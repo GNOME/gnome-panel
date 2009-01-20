@@ -1,5 +1,36 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	Correctly set the struts before and during the initial toplevel
+	animation, so that desktop icons don't jump.
+	Part of bug #554343.
+	Loosely based on some code by Ray Strode <rstrode@redhat.com>
+
+	* panel-toplevel.c: (panel_toplevel_update_struts): if we're still
+	doing the initial animation, then we're really only interested in the
+	end of animation coordinates for the struts. Also fix a typo in code
+	that might have weird side-effects on multiscreen.
+	(panel_toplevel_update_auto_hide_position): if we're looking for the
+	end position of animation, then get the real auto-hide size. It's
+	useful for the initial animation where the position is hidden (and
+	therefore, we don't get the real auto-hide size).
+	(panel_toplevel_update_animating_position): mark the initial animation
+	as done.
+	(panel_toplevel_update_position): trivial update
+	(panel_toplevel_update_geometry): cleanup
+	(panel_toplevel_initially_hide): don't set the struts here, it's
+	useless
+	(panel_toplevel_calculate_animation_end_geometry): new, split from
+	panel_toplevel_start_animation() so that it can be used elsewhere.
+	Also, a toplevel that is in its initial animation (but not a
+	auto-hiding toplevel) should have its end position computed as its
+	normal position
+	(panel_toplevel_start_animation): some trivial update
+	(panel_toplevel_auto_unhide_timeout_handler): remove
+	initial_animation_done = TRUE here, since it's not what we want and
+	makes things ugly.
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	Fix initial un-hiding of newly created panels. And also make sure that
 	a panel that was unused but put back in the configuration gets its
 	applets/objects loaded.

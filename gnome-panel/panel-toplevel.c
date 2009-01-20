@@ -231,6 +231,8 @@ enum {
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
 static GSList       *toplevel_list = NULL;
 
+static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
+
 GSList *
 panel_toplevel_list_toplevels (void)
 {
@@ -1391,6 +1393,14 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		return FALSE;
 	}
 
+	/* In the case of the initial animation, we really want the struts to
+	 * represent what is at the end of the animation, to avoid desktop
+	 * icons jumping around. */
+	if (!toplevel->priv->initial_animation_done) {
+		panel_toplevel_calculate_animation_end_geometry (toplevel);
+		end_of_animation = TRUE;
+	}
+
 	screen = panel_toplevel_get_monitor_geometry (toplevel,
 						      &monitor_x,
 						      &monitor_y,
@@ -1401,7 +1411,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		x = toplevel->priv->animation_end_x;
 		y = toplevel->priv->animation_end_y;
 		x += panel_multiscreen_x (screen, toplevel->priv->monitor);
-		x += panel_multiscreen_y (screen, toplevel->priv->monitor);
+		y += panel_multiscreen_y (screen, toplevel->priv->monitor);
 		if (toplevel->priv->animation_end_width != -1)
 			width = toplevel->priv->animation_end_width;
 		else
@@ -1446,7 +1456,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		if (strut > 0) {
 			strut_start = MAX (y, monitor_y);
 			strut_end = MIN (y + height, monitor_y + monitor_height) - 1;
-
 		}
 	}
 
@@ -1806,7 +1815,8 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 					  int           *x,
 					  int           *y,
 					  int           *w,
-					  int           *h)
+					  int           *h,
+					  gboolean       for_end_position)
 {
 	int width, height;
 	int monitor_width, monitor_height;
@@ -1827,10 +1837,13 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	height = toplevel->priv->original_height;
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	if (toplevel->priv->initial_animation_done) {
+	/* For the initial animation, we animate from outside the screen, and
+	 * so we don't want the toplevel to be visible at all. But when the
+	 * request is for the end position, then we give the real result (it's
+	 * useful for struts) */
+	if (for_end_position || toplevel->priv->initial_animation_done) {
 		auto_hide_size = panel_toplevel_get_effective_auto_hide_size (toplevel);
 	} else {
-		/* when loading, we animate from outside the screen */
 		auto_hide_size = 0;
 	}
 
@@ -2029,6 +2042,10 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 	if (toplevel->priv->geometry.x - monitor_offset_x == toplevel->priv->animation_end_x &&
 	    toplevel->priv->geometry.y - monitor_offset_y == toplevel->priv->animation_end_y) {
 		toplevel->priv->animating = FALSE;
+		/* Note: it's important to set initial_animation_done to TRUE
+		 * as soon as possible (hence, here) since we don't want to
+		 * have a wrong value in a size request event */
+		toplevel->priv->initial_animation_done = TRUE;
 
 		if (toplevel->priv->attached && panel_toplevel_get_is_hidden (toplevel))
 			gtk_widget_unmap (GTK_WIDGET (toplevel));
@@ -2211,7 +2228,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		panel_toplevel_update_normal_position (toplevel, &x, &y, &w, &h);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
-		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h);
+		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h, FALSE);
 
 	else 
 		panel_toplevel_update_hidden_position (toplevel, &x, &y, &w, &h);
@@ -2500,6 +2517,7 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 	panel_toplevel_update_position (toplevel);
 
 	panel_toplevel_update_struts (toplevel, FALSE);
+
 	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
 	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
 		panel_struts_update_toplevel_geometry (toplevel,
@@ -2911,10 +2929,6 @@ panel_toplevel_initially_hide (PanelToplevel *toplevel)
 		 * used */
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-
-		/* We still want to have the struts ready at the beginning to
-		 * avoid desktop icons moving around */
-		panel_toplevel_update_struts (toplevel, FALSE);
 	} else
 		toplevel->priv->initial_animation_done = TRUE;
 }
@@ -3349,21 +3363,18 @@ panel_toplevel_get_animation_time (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_start_animation (PanelToplevel *toplevel)
+panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 	int        monitor_width, monitor_height;
-	int        deltax, deltay, deltaw = 0, deltah = 0;
-	int        cur_x = -1, cur_y = -1;
-	long       t;
-
-	screen = panel_toplevel_get_monitor_geometry (
-				toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	toplevel->priv->animation_end_x      = toplevel->priv->x;
 	toplevel->priv->animation_end_y      = toplevel->priv->y;
 	toplevel->priv->animation_end_width  = -1;
 	toplevel->priv->animation_end_height = -1;
+
+	screen = panel_toplevel_get_monitor_geometry (
+				toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	if (!toplevel->priv->expand) {
 
@@ -3375,7 +3386,11 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 				(monitor_height - toplevel->priv->geometry.height) / 2;
 	}
 
-	if (toplevel->priv->state == PANEL_STATE_NORMAL)
+	/* we consider the toplevels which are in the initial animation stage
+	 * as in a normal state */
+	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+	    (!toplevel->priv->initial_animation_done &&
+	     !toplevel->priv->auto_hide))
 		panel_toplevel_update_normal_position (toplevel,
 						       &toplevel->priv->animation_end_x,
 						       &toplevel->priv->animation_end_y,
@@ -3387,13 +3402,25 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 							  &toplevel->priv->animation_end_x,
 							  &toplevel->priv->animation_end_y,
 							  &toplevel->priv->animation_end_width,
-							  &toplevel->priv->animation_end_height);
+							  &toplevel->priv->animation_end_height,
+							  TRUE);
 	else
 		panel_toplevel_update_hidden_position (toplevel,
 						       &toplevel->priv->animation_end_x,
 						       &toplevel->priv->animation_end_y,
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
+}
+
+static void
+panel_toplevel_start_animation (PanelToplevel *toplevel)
+{
+	GdkScreen *screen;
+	int        deltax, deltay, deltaw = 0, deltah = 0;
+	int        cur_x = -1, cur_y = -1;
+	long       t;
+
+	panel_toplevel_calculate_animation_end_geometry (toplevel);
 
 	toplevel->priv->animating = TRUE;
 
@@ -3406,6 +3433,8 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	panel_toplevel_update_struts (toplevel, FALSE);
 
 	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, &cur_x, &cur_y);
+
+	screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 
 	cur_x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
 	cur_y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
@@ -3580,7 +3609,6 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	    toplevel->priv->auto_hide) {
 		toplevel->priv->unhide_timeout = 0;
 		panel_toplevel_unhide (toplevel);
-		toplevel->priv->initial_animation_done = TRUE;
 		panel_toplevel_hide (toplevel, TRUE, -1);
 		return FALSE;
 	}
