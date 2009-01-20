@@ -1262,6 +1262,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 	char               *error;
 	char               *item_name;
 
+	widget = NULL;
 	frame_act = (PanelAppletFrameActivating *) data;
 	frame = frame_act->frame;
 
@@ -1270,10 +1271,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 	if (error_reason != NULL || object == CORBA_OBJECT_NIL) {
 		g_warning (G_STRLOC ": failed to load applet %s:\n%s",
 			   frame->priv->iid, error_reason);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_free (frame_act->id);
-		g_free (frame_act);
-		return;
+		goto error_out;
 	}
 
 	CORBA_exception_init (&corba_ev);
@@ -1310,13 +1308,10 @@ panel_applet_frame_activated (CORBA_Object  object,
 		error = bonobo_exception_get_text (&corba_ev);
 		g_warning (G_STRLOC ": failed to get Bonobo/Control interface on applet %s:\n%s",
                            frame->priv->iid, error);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		CORBA_exception_free (&corba_ev);
 		bonobo_object_release_unref (object, NULL);
-                g_free (frame_act->id);
-		g_free (frame_act);
 		g_free (error);
-		return;
+		goto error_out;
 	}
 
 	widget = bonobo_widget_new_control_from_objref (frame->priv->control,
@@ -1328,21 +1323,14 @@ panel_applet_frame_activated (CORBA_Object  object,
 	if (!widget) {
 		g_warning (G_STRLOC ": failed to load applet %s",
 			   frame->priv->iid);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_free (frame_act->id);
-		g_free (frame_act);
-		return;
+		goto error_out;
 	}
 
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 	if (control_frame == NULL) {
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get control frame)", frame->priv->iid);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_object_unref (widget);
-		g_free (frame_act->id);
-		g_free (frame_act);
-		return;
+		goto error_out;
 	}
 
 	frame->priv->property_bag = 
@@ -1354,12 +1342,8 @@ panel_applet_frame_activated (CORBA_Object  object,
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get property bag):\n%s",
 			   frame->priv->iid, error);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_object_unref (widget);
-		g_free (frame_act->id);
-		g_free (frame_act);
 		g_free (error);
-		return;
+		goto error_out;
 	}
 
 	bonobo_event_source_client_add_listener (frame->priv->property_bag,
@@ -1377,12 +1361,8 @@ panel_applet_frame_activated (CORBA_Object  object,
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get popup component):\n%s",
 			   frame->priv->iid, error);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_object_unref (widget);
-		g_free (frame_act->id);
-		g_free (frame_act);
 		g_free (error);
-		return;
+		goto error_out;
 	}
 
 	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
@@ -1401,11 +1381,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get control)", frame->priv->iid);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_object_unref (widget);
-		g_free (frame_act->id);
-		g_free (frame_act);
-		return;
+		goto error_out;
 	}
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
@@ -1413,11 +1389,7 @@ panel_applet_frame_activated (CORBA_Object  object,
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(cannot get applet shell)", frame->priv->iid);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
-		g_object_unref (widget);
-		g_free (frame_act->id);
-		g_free (frame_act);
-		return;
+		goto error_out;
 	}
 
 	CORBA_exception_free (&corba_ev);
@@ -1446,6 +1418,17 @@ panel_applet_frame_activated (CORBA_Object  object,
 	panel_lockdown_notify_add (G_CALLBACK (panel_applet_frame_sync_menu_state),
 				   frame);
 
+	panel_applet_stop_loading (frame_act->id);
+	g_free (frame_act->id);
+	g_free (frame_act);
+
+	return;
+
+error_out:
+	panel_applet_frame_loading_failed (frame, frame_act->id);
+	if (widget)
+		g_object_unref (widget);
+	panel_applet_stop_loading (frame_act->id);
 	g_free (frame_act->id);
 	g_free (frame_act);
 }

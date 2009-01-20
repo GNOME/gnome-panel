@@ -53,6 +53,7 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      gboolean         exactpos,
 				      PanelObjectType  type,
 				      const char      *id);
+void panel_applet_stop_loading (const char *id);
 
 const char *panel_applet_get_id           (AppletInfo      *info);
 const char *panel_applet_get_id_by_widget (GtkWidget       *widget);

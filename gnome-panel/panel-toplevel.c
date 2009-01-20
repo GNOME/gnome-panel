@@ -2731,6 +2731,12 @@ panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
 
 	toplevel->priv->attached = TRUE;
 
+	/* Cancelling the initial animation for drawers in
+	 * panel_toplevel_initially_hide() is not enough, since this will
+	 * happen only when the toplevel is realized, which might be too late
+	 * for drawers (since it's realized when the drawer is clicked) */
+	toplevel->priv->initial_animation_done = TRUE;
+
 	toplevel->priv->attach_toplevel = attach_toplevel;
 	toplevel->priv->attach_widget   = attach_widget;
 
@@ -2900,13 +2906,17 @@ panel_toplevel_initially_hide (PanelToplevel *toplevel)
 	if (!toplevel->priv->attached) {
 		toplevel->priv->initial_animation_done = FALSE;
 
+		/* We start the panel off hidden until all the applets are
+		 * loaded, and then finally slide it down when it's ready to be
+		 * used */
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
-		panel_toplevel_queue_auto_unhide (toplevel);
+		/* We still want to have the struts ready at the beginning to
+		 * avoid desktop icons moving around */
+		panel_toplevel_update_struts (toplevel, FALSE);
 	} else
 		toplevel->priv->initial_animation_done = TRUE;
-
 }
 
 static void
@@ -3641,6 +3651,22 @@ panel_toplevel_queue_auto_unhide (PanelToplevel *toplevel)
 		toplevel->priv->unhide_timeout = 
 			g_idle_add ((GSourceFunc) panel_toplevel_auto_unhide_timeout_handler,
 				    toplevel);
+}
+
+void
+panel_toplevel_queue_initial_unhide (PanelToplevel *toplevel)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (toplevel->priv->initial_animation_done)
+		return;
+
+	if (toplevel->priv->unhide_timeout)
+		return;
+
+	toplevel->priv->unhide_timeout =
+		g_idle_add ((GSourceFunc) panel_toplevel_auto_unhide_timeout_handler,
+			    toplevel);
 }
 
 static gboolean

@@ -136,6 +136,7 @@ void                 panel_toplevel_hide                   (PanelToplevel       
 void                 panel_toplevel_unhide                 (PanelToplevel       *toplevel);
 void                 panel_toplevel_queue_auto_hide        (PanelToplevel       *toplevel);
 void                 panel_toplevel_queue_auto_unhide      (PanelToplevel       *toplevel);
+void                 panel_toplevel_queue_initial_unhide   (PanelToplevel       *toplevel);
 void                 panel_toplevel_push_autohide_disabler (PanelToplevel       *toplevel);
 void                 panel_toplevel_pop_autohide_disabler  (PanelToplevel       *toplevel);
 

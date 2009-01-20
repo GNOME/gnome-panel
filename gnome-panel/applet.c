@@ -794,6 +794,7 @@ typedef struct {
 } PanelAppletToLoad;
 
 static GSList  *panel_applets_to_load = NULL;
+static GSList  *panel_applets_loading = NULL;
 static gboolean panel_applet_have_load_idle = FALSE;
 
 static void
@@ -818,6 +819,41 @@ panel_applet_on_load_queue (const char *id)
 			return TRUE;
 	}
 	return FALSE;
+}
+
+/* This doesn't do anything if the initial unhide already happened */
+static gboolean
+panel_applet_queue_initial_unhide_toplevels (gpointer user_data)
+{
+	GSList *l;
+
+	for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
+		panel_toplevel_queue_initial_unhide ((PanelToplevel *) l->data);
+	}
+
+	return FALSE;
+}
+
+void
+panel_applet_stop_loading (const char *id)
+{
+	PanelAppletToLoad *applet;
+	GSList *l;
+
+	for (l = panel_applets_loading; l; l = l->next) {
+		applet = l->data;
+
+		if (strcmp (applet->id, id) == 0)
+			break;
+	}
+
+	g_assert (l != NULL);
+
+	panel_applets_loading = g_slist_delete_link (panel_applets_loading, l);
+	free_applet_to_load (applet);
+
+	if (panel_applets_loading == NULL && panel_applets_to_load == NULL)
+		panel_applet_queue_initial_unhide_toplevels (NULL);
 }
 
 static gboolean
@@ -852,6 +888,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	}
 
 	panel_applets_to_load = g_slist_delete_link (panel_applets_to_load, l);
+	panel_applets_loading = g_slist_append (panel_applets_loading, applet);
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
@@ -921,10 +958,13 @@ panel_applet_load_idle_handler (gpointer dummy)
 						 applet->position,
 						 applet->id);
 	default:
+		g_assert_not_reached ();
 		break;
 	}
 
-	free_applet_to_load (applet);
+	/* Only the bonobo applets will do a late stop_loading */
+	if (applet->type != PANEL_OBJECT_BONOBO)
+		panel_applet_stop_loading (applet->id);
 
 	return TRUE;
 }
@@ -973,8 +1013,10 @@ panel_applet_compare (const PanelAppletToLoad *a,
 void
 panel_applet_load_queued_applets (void)
 {
-	if (!panel_applets_to_load)
+	if (!panel_applets_to_load) {
+		g_idle_add (panel_applet_queue_initial_unhide_toplevels, NULL);
 		return;
+        }
 
 	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
 					      (GCompareFunc) panel_applet_compare);

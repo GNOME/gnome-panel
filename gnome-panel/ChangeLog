@@ -1,5 +1,30 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	First part of smoothing the panel slide-in on login.
+	Part of bug #554343.
+	Patch by Ray Strode <rstrode@redhat.com>, with a few minor bug
+	fixes/changes from me.
+
+	We delay the slide-in until all panel objects are loaded.
+
+	* applet.[ch]: (panel_applet_queue_initial_unhide_toplevels): new
+	(panel_applet_stop_loading): new, when an object has stopped loading,
+	we look if we should queue an unhide
+	(panel_applet_load_idle_handler): put the applet that is being loaded
+	in the list of applets loading, and call panel_applet_stop_loading()
+	when it makes sense
+	(panel_applet_load_queued_applets): unhide the panels if there's no
+	applet to load
+	* panel-applet-frame.c: (panel_applet_frame_activated): consolidate
+	freeing stuff in case of error, and call panel_applet_stop_loading()
+	* panel-toplevel.[ch]: (panel_toplevel_attach_to_widget): an attached
+	toplevel (ie, drawer) should not have an initial animation
+	(panel_toplevel_initially_hide): don't queue an unhide here, but still
+	update the struts
+	(panel_toplevel_queue_initial_unhide): new
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	Only move panel with the mouse when a mouse button modifier is used
 	(the same one as in metacity). Ie: you can drag the panel to move it
 	when pressing Alt.
