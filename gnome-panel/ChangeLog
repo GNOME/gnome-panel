@@ -1,5 +1,11 @@
 2009-01-20  Vincent Untz  <vuntz@gnome.org>
 
+	* panel-toplevel.c: (panel_toplevel_button_press_event): don't require
+	the mouse button modifier to move a non-expanded panel. Only the
+	handles can be grabbed, and they're there for that.
+
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
 	Correctly set the struts before and during the initial toplevel
 	animation, so that desktop icons don't jump.
 	Part of bug #554343.
