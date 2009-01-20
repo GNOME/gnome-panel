@@ -1,3 +1,24 @@
+2009-01-20  Vincent Untz  <vuntz@gnome.org>
+
+	Only move panel with the mouse when a mouse button modifier is used
+	(the same one as in metacity). Ie: you can drag the panel to move it
+	when pressing Alt.
+	Fix bug #309721.
+	Based on patch by William Lachance <wrlach@gmail.com>
+
+	* panel-bindings.[ch]: monitor the gconf key for the mouse button
+	modifier and provide an API to access it
+	(panel_binding_set_from_string): fix typo in warning
+	(panel_binding_watch): don't translate warning
+	(panel_bindings_mouse_modifier_set_from_string): new
+	(panel_bindings_mouse_modifier_changed): new
+	(panel_bindings_initialise): don't translate warning, handle the mouse
+	button modifier stuff too
+	(panel_bindings_set_entries): trivial update
+	(panel_bindings_get_mouse_button_modifier_keymask): new
+	* panel-toplevel.c: (panel_toplevel_button_press_event): look at the
+	modifier mask before starting the move
+
 2009-01-15  Vincent Untz  <vuntz@gnome.org>
 
 	Fix gnome-panel part of bug #536915.

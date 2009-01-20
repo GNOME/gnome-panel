@@ -31,6 +31,7 @@
 G_BEGIN_DECLS
 
 void panel_bindings_set_entries (GtkBindingSet *binding_set);
+guint panel_bindings_get_mouse_button_modifier_keymask (void);
 
 G_END_DECLS
 

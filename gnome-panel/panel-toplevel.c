@@ -3215,6 +3215,11 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	if (toplevel->priv->animating)
 		return FALSE;
 
+	/* Get the mouse-button modifier from metacity so that only intentional
+	 * moves are considered */
+	if ((event->state & gtk_accelerator_get_default_mod_mask ()) != panel_bindings_get_mouse_button_modifier_keymask ())
+		return FALSE;
+
 	gdk_window_get_user_data (event->window, (gpointer)&event_widget);
 	g_assert (GTK_IS_WIDGET (event_widget));
 	gtk_widget_translate_coordinates (event_widget,

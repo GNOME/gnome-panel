@@ -32,7 +32,10 @@
 #include "panel-gconf.h"
 #include "panel-profile.h"
 
-#define BINDINGS_PREFIX "/apps/metacity/window_keybindings"
+#define BINDINGS_PREFIX    "/apps/metacity/window_keybindings"
+#define MOUSE_MODIFIER_DIR "/apps/metacity/general"
+#define MOUSE_MODIFIER_KEY "/apps/metacity/general/mouse_button_modifier"
+#define DEFAULT_MOUSE_MODIFIER GDK_MOD1_MASK
 
 typedef struct {
 	char            *key;
@@ -53,6 +56,8 @@ static PanelBinding bindings [] = {
 	{ "begin_resize",         "begin-resize",     0, 0 },
 };
 
+static guint mouse_button_modifier_keymask = DEFAULT_MOUSE_MODIFIER;
+
 static void
 panel_binding_set_from_string (PanelBinding *binding,
 			       const char   *str)
@@ -68,7 +73,7 @@ panel_binding_set_from_string (PanelBinding *binding,
 
 	gtk_accelerator_parse (str, &binding->keyval, &binding->modifiers);
 	if (binding->keyval == 0 && binding->modifiers == 0) {
-		g_warning ("Enable to parse binding '%s'\n", str);
+		g_warning ("Unable to parse binding '%s'\n", str);
 		return;
 	}
 }
@@ -150,9 +155,47 @@ panel_binding_watch (PanelBinding *binding,
 				(GConfClientNotifyFunc) panel_binding_changed,
 				binding, NULL, &error);
 	if (error) {
-		g_warning (_("Error watching gconf key '%s': %s"), key, error->message);
+		g_warning ("Error watching gconf key '%s': %s",
+			   key, error->message);
 		g_error_free (error);
 	}
+}
+
+static void
+panel_bindings_mouse_modifier_set_from_string (const char *str)
+{
+	guint modifier_keysym;
+	guint modifier_keymask;
+
+	gtk_accelerator_parse (str, &modifier_keysym, &modifier_keymask);
+
+	if (modifier_keysym == 0 && modifier_keymask == 0) {
+		g_warning ("Unable to parse mouse modifier '%s'\n", str);
+		return;
+	}
+
+	if (modifier_keymask)
+		mouse_button_modifier_keymask = modifier_keymask;
+	else
+		mouse_button_modifier_keymask = DEFAULT_MOUSE_MODIFIER;
+}
+
+static void
+panel_bindings_mouse_modifier_changed (GConfClient  *client,
+				       guint         cnxn_id,
+				       GConfEntry   *entry,
+				       gpointer      user_data)
+{
+	GConfValue *value;
+	const char *str;
+
+	value = gconf_entry_get_value (entry);
+
+	if (!value || value->type != GCONF_VALUE_STRING)
+		return;
+
+	str = gconf_value_get_string (value);
+	panel_bindings_mouse_modifier_set_from_string (str);
 }
 
 static void
@@ -161,6 +204,10 @@ panel_bindings_initialise (void)
 	GConfClient *client;
 	GError      *error;
 	int          i;
+	char        *str;
+
+	if (initialised)
+		return;
 
 	client = panel_gconf_get_client ();
 
@@ -168,22 +215,22 @@ panel_bindings_initialise (void)
 	gconf_client_add_dir (client, BINDINGS_PREFIX,
 			      GCONF_CLIENT_PRELOAD_ONELEVEL, &error);
 	if (error) {
-		g_warning (_("Error loading gconf directory '%s': %s"),
+		g_warning ("Error loading gconf directory '%s': %s",
 			   BINDINGS_PREFIX, error->message),
 		g_error_free (error);
 	}
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
 		const char *key;
-		char       *str;
 
 		key = panel_gconf_sprintf ("%s/%s", BINDINGS_PREFIX, bindings [i].key);
 
 		error = NULL;
 		str = gconf_client_get_string (client, key, &error);
 		if (error) {
-			g_warning (_("Error getting value for '%s': %s"),
+			g_warning ("Error getting value for '%s': %s",
 				   key, error->message);
+			g_error_free (error);
 			continue;
 		}
 
@@ -192,6 +239,39 @@ panel_bindings_initialise (void)
 
 		g_free (str);
 	}
+
+	/* mouse button modifier */
+	error = NULL;
+	gconf_client_add_dir (client, MOUSE_MODIFIER_DIR,
+			      GCONF_CLIENT_PRELOAD_NONE, &error);
+	if (error) {
+		g_warning ("Error loading gconf directory '%s': %s",
+			   MOUSE_MODIFIER_DIR, error->message),
+		g_error_free (error);
+	}
+
+	error = NULL;
+	gconf_client_notify_add (client, MOUSE_MODIFIER_KEY,
+				 panel_bindings_mouse_modifier_changed,
+				 NULL, NULL, &error);
+	if (error) {
+		g_warning ("Error watching gconf key '%s': %s",
+			   MOUSE_MODIFIER_KEY, error->message);
+		g_error_free (error);
+	}
+
+	error = NULL;
+	str = gconf_client_get_string (client, MOUSE_MODIFIER_KEY, &error);
+	if (error) {
+		g_warning ("Error getting value for '%s': %s",
+			   MOUSE_MODIFIER_KEY, error->message);
+		g_error_free (error);
+	} else {
+		panel_bindings_mouse_modifier_set_from_string (str);
+		g_free (str);
+	}
+
+	initialised = TRUE;
 }
 
 void
@@ -199,10 +279,8 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 {
 	int i;
 
-	if (!initialised) {
+	if (!initialised)
 		panel_bindings_initialise ();
-		initialised = TRUE;
-	}
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
 		if (!bindings [i].keyval)
@@ -210,4 +288,15 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 
 		panel_binding_set_entry (&bindings [i], binding_set);
 	}
+}
+
+guint
+panel_bindings_get_mouse_button_modifier_keymask (void)
+{
+	g_assert (mouse_button_modifier_keymask != 0);
+
+	if (!initialised)
+		panel_bindings_initialise ();
+
+	return mouse_button_modifier_keymask;
 }
