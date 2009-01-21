@@ -1,3 +1,15 @@
+2009-01-21  Vincent Untz  <vuntz@gnome.org>
+
+	If an applet is not loading, it blocks the panel initial animation. So
+	add a timeout of 5 seconds to always show the panels after this
+	timeout.
+
+	* applet.c: (panel_applet_queue_initial_unhide_toplevels): GSourceFunc
+	again, and remove the timeout
+	(panel_applet_stop_loading), (panel_applet_load_idle_handler): trivial
+	updates
+	(panel_applet_load_queued_applets): add the timeout
+
 ==================== 2.25.5.1 ====================
 
 2009-01-21  Vincent Untz  <vuntz@gnome.org>

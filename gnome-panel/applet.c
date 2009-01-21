@@ -797,6 +797,10 @@ typedef struct {
  * panel_applet_queue_initial_unhide_toplevels() should be called */
 static GSList  *panel_applets_to_load = NULL;
 static GSList  *panel_applets_loading = NULL;
+/* We have a timeout to always unhide toplevels after a delay, in case of some
+ * blocking applet */
+#define         UNHIDE_TOPLEVELS_TIMEOUT_SECONDS 5
+static guint    panel_applet_unhide_toplevels_timeout = 0;
 
 static gboolean panel_applet_have_load_idle = FALSE;
 
@@ -825,13 +829,20 @@ panel_applet_on_load_queue (const char *id)
 }
 
 /* This doesn't do anything if the initial unhide already happened */
-static void
-panel_applet_queue_initial_unhide_toplevels (void)
+static gboolean
+panel_applet_queue_initial_unhide_toplevels (gpointer user_data)
 {
 	GSList *l;
 
+	if (panel_applet_unhide_toplevels_timeout != 0) {
+		g_source_remove (panel_applet_unhide_toplevels_timeout);
+		panel_applet_unhide_toplevels_timeout = 0;
+	}
+
 	for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next)
 		panel_toplevel_queue_initial_unhide ((PanelToplevel *) l->data);
+
+	return FALSE;
 }
 
 void
@@ -855,7 +866,7 @@ panel_applet_stop_loading (const char *id)
 	}
 
 	if (panel_applets_loading == NULL && panel_applets_to_load == NULL)
-		panel_applet_queue_initial_unhide_toplevels ();
+		panel_applet_queue_initial_unhide_toplevels (NULL);
 }
 
 static gboolean
@@ -889,7 +900,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 
 		if (panel_applets_loading == NULL) {
 			/* unhide any potential initially hidden toplevel */
-			panel_applet_queue_initial_unhide_toplevels ();
+			panel_applet_queue_initial_unhide_toplevels (NULL);
 		}
 
 		return FALSE;
@@ -1023,9 +1034,16 @@ void
 panel_applet_load_queued_applets (void)
 {
 	if (!panel_applets_to_load) {
-		panel_applet_queue_initial_unhide_toplevels ();
+		panel_applet_queue_initial_unhide_toplevels (NULL);
 		return;
-        }
+        } else {
+		/* Install a timeout to make sure we don't block the unhiding
+		 * because of an applet that doesn't load */
+		panel_applet_unhide_toplevels_timeout =
+			g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
+					       panel_applet_queue_initial_unhide_toplevels,
+					       NULL);
+	}
 
 	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
 					      (GCompareFunc) panel_applet_compare);
