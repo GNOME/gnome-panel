@@ -493,7 +493,7 @@ gnome_clock_applet_mechanism_set_timezone (GnomeClockAppletMechanism *mechanism,
                         code = GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL;
 
                 error2 = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                      code, error->message);
+                                      code, "%s", error->message);
 
                 g_error_free (error);
 

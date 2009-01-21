@@ -1313,10 +1313,10 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_NONE,
-			text1);
+			"%s", text1);
 	
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-	                                          text2);	
+	                                          "%s", text2);	
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
