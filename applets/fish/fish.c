@@ -1166,9 +1166,11 @@ get_location (void)
 	/* Old method : works for glibc < 2.2 */
 	zone = fopen("/etc/timezone", "r");
 	if (zone) {
-		fscanf (zone, "%255s", location);
+		count = fscanf (zone, "%255s", location);
 		fclose (zone);
-		return location;
+		/* if we could read it, we return what we got */
+		if (count == 1)
+			return location;
 	} 
 
 	/* New method : works for glibc 2.2 */
@@ -1177,6 +1179,7 @@ get_location (void)
 	if (!buffer)
 		return NULL;
 
+	len = strlen (buffer);
 	for (i = len, count = 0; (i > 0) && (count != 2); i--)
 		if (buffer [i] == '/')
 			count++;
