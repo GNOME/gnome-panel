@@ -57,6 +57,10 @@
 #include <libgweather/location-entry.h>
 #include <libgweather/timezone-menu.h>
 
+#ifdef HAVE_LIBECAL
+#include <libedataserverui/e-passwords.h>
+#endif
+
 #include "clock.h"
 
 #include "calendar-window.h"
@@ -209,6 +213,10 @@ struct _ClockData {
 
 	guint listeners [N_GCONF_PREFS];
 };
+
+/* Used to count the number of clock instances. It's there to know when we
+ * should free resources that are shared. */
+static int clock_numbers = 0;
 
 static void  update_clock (ClockData * cd);
 static void  update_tooltip (ClockData * cd);
@@ -770,6 +778,13 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
         }
 
 	g_free (cd);
+
+#ifdef HAVE_LIBECAL
+	if (clock_numbers > 0) {
+		e_passwords_shutdown ();
+		clock_numbers--;
+	}
+#endif
 }
 
 static gboolean
@@ -1344,6 +1359,11 @@ weather_tooltip (GtkWidget   *widget,
 static void
 create_clock_widget (ClockData *cd)
 {
+#ifdef HAVE_LIBECAL
+	clock_numbers++;
+	e_passwords_init ();
+#endif
+
         /* Main toggle button */
         cd->panel_button = create_main_clock_button ();
 	g_signal_connect (cd->panel_button, "button_press_event",

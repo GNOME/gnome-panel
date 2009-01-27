@@ -1,5 +1,17 @@
 2009-01-27  Vincent Untz  <vuntz@gnome.org>
 
+	Properly initialize the eds part handling passwords.
+	This fixes some issues with the clock hanging.
+	https://bugzilla.novell.com/show_bug.cgi?id=440866 for example
+	Thanks to Simon Brys <sbrys@novell.com> for debugging and finding the
+	fix.
+
+	* clock.c: (create_clock_widget): call e_passwords_init()
+	(destroy_clock): call e_passwords_shutdown() when the last clock is
+	destroyed.
+
+2009-01-27  Vincent Untz  <vuntz@gnome.org>
+
 	* org.gnome.ClockApplet.Mechanism.conf: allow the destination (and
 	implying therefore all interfaces on this destination) instead of a
 	non-existing interface...
