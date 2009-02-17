@@ -32,7 +32,6 @@
 #include "na-tray-manager.h"
 #include "na-tray.h"
 #include "fixedtip.h"
-#include "obox.h"
 
 #define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
 

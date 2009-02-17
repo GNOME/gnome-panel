@@ -68,7 +68,6 @@
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
-#include "obox.h"
 #include "set-timezone.h"
 #include "system-timezone.h"
 
@@ -248,6 +247,27 @@ static void applet_change_orient (PanelApplet       *applet,
 static void edit_hide (GtkWidget *unused, ClockData *cd);
 static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
 static void save_cities_store (ClockData *cd);
+
+/* ClockBox, an instantiable GtkBox */
+
+typedef GtkBox      ClockBox;
+typedef GtkBoxClass ClockBoxClass;
+
+static GType clock_box_get_type (void);
+
+G_DEFINE_TYPE (ClockBox, clock_box, GTK_TYPE_BOX)
+
+static void
+clock_box_init (ClockBox *box)
+{
+}
+
+static void
+clock_box_class_init (ClockBoxClass *klass)
+{
+}
+
+/* Clock */
 
 static void
 unfix_size (ClockData *cd)
@@ -1376,13 +1396,13 @@ create_clock_widget (ClockData *cd)
         gtk_widget_show (cd->panel_button);
 
         /* Main orientable box */
-        cd->main_obox = clock_obox_new ();
+        cd->main_obox = g_object_new (clock_box_get_type (), NULL);
         gtk_box_set_spacing (GTK_BOX (cd->main_obox), 12); /* spacing between weather and time */
         gtk_container_add (GTK_CONTAINER (cd->panel_button), cd->main_obox);
         gtk_widget_show (cd->main_obox);
 
         /* Weather orientable box */
-        cd->weather_obox = clock_obox_new ();
+        cd->weather_obox = g_object_new (clock_box_get_type (), NULL);
         gtk_box_set_spacing (GTK_BOX (cd->weather_obox), 2); /* spacing between weather icon and temperature */
         gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->weather_obox, FALSE, FALSE, 0);
         gtk_widget_set_has_tooltip (cd->weather_obox, TRUE);
@@ -1481,8 +1501,8 @@ applet_change_orient (PanelApplet       *applet,
                 return;
 	}
 
-        clock_obox_set_orientation (CLOCK_OBOX (cd->main_obox), o);
-        clock_obox_set_orientation (CLOCK_OBOX (cd->weather_obox), o);
+        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->main_obox), o);
+        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->weather_obox), o);
 
         unfix_size (cd);
         update_clock (cd);

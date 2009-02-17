@@ -42,8 +42,6 @@ endif
 CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
-	obox.c			\
-	obox.h			\
 	clock.c			\
 	clock.h			\
 	clock-face.c		\

@@ -18,8 +18,6 @@ NOTIFICATION_AREA_SOURCES =		\
 	fixedtip.h				\
 	fixedtip.c				\
 	main.c					\
-	obox.c					\
-	obox.h					\
 	na-tray.c				\
 	na-tray.h				\
 	na-tray-child.c				\
@@ -101,8 +99,6 @@ testtray_SOURCES = \
 	na-tray-child.h		\
 	na-tray-manager.c	\
 	na-tray-manager.h	\
-	obox.c			\
-	obox.h			\
 	testtray.c
 
 testtray_LDADD = \

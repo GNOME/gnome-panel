@@ -29,7 +29,6 @@
 
 #include "na-tray-manager.h"
 #include "fixedtip.h"
-#include "obox.h"
 
 #include "na-tray.h"
 
@@ -85,6 +84,27 @@ static gboolean     initialized   = FALSE;
 static TraysScreen *trays_screens = NULL;
 
 static void icon_tip_show_next (IconTip *icontip);
+
+/* NaBox, an instantiable GtkBox */
+
+typedef GtkBox      NaBox;
+typedef GtkBoxClass NaBoxClass;
+
+static GType na_box_get_type (void);
+
+G_DEFINE_TYPE (NaBox, na_box, GTK_TYPE_BOX)
+
+static void
+na_box_init (NaBox *box)
+{
+}
+
+static void
+na_box_class_init (NaBoxClass *klass)
+{
+}
+
+/* NaTray */
 
 G_DEFINE_TYPE (NaTray, na_tray, GTK_TYPE_BIN)
 
@@ -375,7 +395,7 @@ update_size_and_orientation (NaTray *tray)
 {
   NaTrayPrivate *priv = tray->priv;
 
-  na_obox_set_orientation (NA_OBOX (priv->box), priv->orientation);
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (priv->box), priv->orientation);
 
   /* This only happens when setting the property during object construction */
   if (!priv->trays_screen)
@@ -447,7 +467,7 @@ na_tray_init (NaTray *tray)
   gtk_container_add (GTK_CONTAINER (tray), priv->frame);
   gtk_widget_show (priv->frame);
 
-  priv->box = na_obox_new ();
+  priv->box = g_object_new (na_box_get_type (), NULL);
   g_signal_connect (priv->box, "expose-event",
 		    G_CALLBACK (na_tray_expose_box), tray);
   gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);

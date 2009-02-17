@@ -1,3 +1,16 @@
+2009-02-17  Vincent Untz  <vuntz@gnome.org>
+
+	Kill OBox since GtkBox now supports changing the orientation.
+	Patch by Christian Persch <chpe@gnome.org>.
+	Fix bug #571042.
+
+	* Makefile.am: remove obox.[ch]
+	* obox.[ch]: killed
+	* main.c: remove useless include
+	* na-tray.c: (na_box_init), (na_box_class_init): add an
+	instantiable GtkBox type
+	(update_size_and_orientation), (na_tray_init): use GtkBox methods.
+
 ==================== 2.25.90 ====================
 
 2009-01-21  Frederic Crozat  <fcrozat@mandriva.com>
