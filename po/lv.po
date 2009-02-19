@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-05 10:42+0300\n"
-"PO-Revision-Date: 2009-01-29 10:34+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"POT-Creation-Date: 2009-01-29 08:37+0000\n"
+"PO-Revision-Date: 2009-02-19 17:46+0200\n"
 "Last-Translator: Raivis Dejus <orvils@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
 "MIME-Version: 1.0\n"
@@ -47,9 +47,9 @@ msgstr "P_ar"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:600 ../gnome-panel/panel-action-button.c:706
-#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:382
-#: ../gnome-panel/panel-menu-button.c:658
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
+#: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Palīdzība"
 
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "_Iestatījumi"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:2909
+#: ../applets/clock/clock.c:3780
 msgid "Clock"
 msgstr "Pulkstenis"
 
@@ -77,29 +77,77 @@ msgstr "Ražotne pulksteņa paneļprogrammu izveidošanai."
 msgid "Get the current time and date"
 msgstr "Iegūt pašreizējo datumu un laiku"
 
-#: ../applets/clock/clock.c:370
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#: ../applets/clock/clock.c:370 ../applets/clock/clock.c:764
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:432
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../applets/clock/clock.c:372 ../applets/clock/clock.c:1950
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#: ../applets/clock/clock.c:372 ../applets/clock/clock.c:766
-#: ../applets/clock/clock.c:1952
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:434
+#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
+
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: ../applets/clock/calendar-window.c:250
+msgid "%b %d"
+msgstr "%b %d"
+
+#: ../applets/clock/calendar-window.c:773
+msgid "Tasks"
+msgstr "Uzdevumi"
+
+#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:949
+#: ../applets/clock/calendar-window.c:1585
+msgid "Edit"
+msgstr "Rediģēt"
+
+#: ../applets/clock/calendar-window.c:894
+msgid "All Day"
+msgstr "Visu dienu"
+
+#: ../applets/clock/calendar-window.c:1033
+msgid "Appointments"
+msgstr "Tikšanās"
+
+#: ../applets/clock/calendar-window.c:1058
+msgid "Birthdays and Anniversaries"
+msgstr "Dzimšanas dienas un jubilejas"
+
+#: ../applets/clock/calendar-window.c:1083
+#| msgid "Launcher location"
+msgid "Weather Information"
+msgstr "Laikapstākļu informācija"
+
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+#| msgid "_Location:"
+msgid "Locations"
+msgstr "Atrašanās vieta"
+
+#: ../applets/clock/calendar-window.c:1884
+msgid "Calendar"
+msgstr "Kalendārs"
+
+#: ../applets/clock/clock.c:432
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1552
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:392
+#: ../applets/clock/clock.c:454
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -107,7 +155,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:399
+#: ../applets/clock/clock.c:461
 #, c-format
 msgid ""
 "%1$s\n"
@@ -120,68 +168,71 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:407
+#: ../applets/clock/clock.c:469
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip
-#: ../applets/clock/clock.c:528
-msgid "%A %B %d"
-msgstr "%A %B %d"
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:651
+#| msgid "%A, %B %d %Y"
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:540
+#: ../applets/clock/clock.c:681
+#| msgid "Click to view your appointments and tasks"
+msgid "Click to hide your appointments and tasks"
+msgstr "Klikšķiniet, lai paslēptu savus uzdevumus un tikšanās"
+
+#: ../applets/clock/clock.c:684
 msgid "Click to view your appointments and tasks"
 msgstr "Klikšķiniet, lai aplūkotu savus uzdevumus un tikšanās"
 
-#: ../applets/clock/clock.c:542
+#: ../applets/clock/clock.c:688
+#| msgid "Click to view month calendar"
+msgid "Click to hide month calendar"
+msgstr "Klikšķiniet, lai paslēptu mēneša kalendāru"
+
+#: ../applets/clock/clock.c:691
 msgid "Click to view month calendar"
 msgstr "Klikšķiniet, lai aplūkotu mēneša kalendāru"
 
-#. Translators: If the event did not start on the current day
-#. we will display the start date in the most abbreviated way possible.
-#: ../applets/clock/clock.c:771
-msgid "%b %d"
-msgstr "%b %d"
-
-#: ../applets/clock/clock.c:1117
-msgid "Tasks"
-msgstr "Uzdevumi"
-
-#: ../applets/clock/clock.c:1266
-msgid "All Day"
-msgstr "Visu dienu"
-
-#: ../applets/clock/clock.c:1305
-msgid "Appointments"
-msgstr "Tikšanās"
-
-#: ../applets/clock/clock.c:1546
-msgid "Calendar"
-msgstr "Kalendārs"
-
-#: ../applets/clock/clock.c:1842
+#: ../applets/clock/clock.c:1407
 msgid "Computer Clock"
 msgstr "Datora pulkstenis"
 
-#: ../applets/clock/clock.c:1945
+#: ../applets/clock/clock.c:1547
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1947
+#: ../applets/clock/clock.c:1549
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1989
+#: ../applets/clock/clock.c:1591
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:2046
+#: ../applets/clock/clock.c:1668
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nevarēju palaist laika konfigurēšanas rīku: %s"
 
-#: ../applets/clock/clock.c:2084
+#: ../applets/clock/clock.c:1699
+msgid "Set System Time..."
+msgstr "Iestatīt sistēmas laiku..."
+
+#: ../applets/clock/clock.c:1700 ../applets/clock/clock.glade.h:19
+msgid "Set System Time"
+msgstr "Iestatīt sistēmas laiku"
+
+#: ../applets/clock/clock.c:1715
+msgid "Failed to set the system time"
+msgstr "Neizdevās iestatīt sistēmas laiku"
+
+#: ../applets/clock/clock.c:1909
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -189,74 +240,191 @@ msgstr ""
 "Neizdevās atrast programm datuma un laika konfigurēšanai. Iespējams tāda nav "
 "uzinstalēta?"
 
-#: ../applets/clock/clock.c:2566
+#: ../applets/clock/clock.c:2841
 msgid "Custom format"
 msgstr "Dažādus formātus"
 
-#: ../applets/clock/clock.c:2690 ../applets/clock/clock.c:2867
-#: ../applets/fish/fish.c:160 ../applets/notification_area/main.c:90
-#: ../applets/wncklet/window-list.c:113 ../applets/wncklet/wncklet.c:128
-#: ../applets/wncklet/workspace-switcher.c:254
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Parādot palīdzību notikusi kļūda: %s"
+#: ../applets/clock/clock.c:3502
+msgid "City Name"
+msgstr "Pilsēta"
 
-#: ../applets/clock/clock.c:2727
-msgid "Clock Preferences"
-msgstr "Pulksteņa iestatījumi"
+#: ../applets/clock/clock.c:3506
+#| msgid "Fit image to panel"
+msgid "City Time Zone"
+msgstr "Pilsētas laika zona"
 
-#: ../applets/clock/clock.c:2752
-msgid "Clock _type:"
-msgstr "Pulksteņa _tips:"
-
-#: ../applets/clock/clock.c:2763
-msgid "12 hour"
-msgstr "12 stundu"
-
-#: ../applets/clock/clock.c:2764
+#: ../applets/clock/clock.c:3676
 msgid "24 hour"
 msgstr "24 stundu"
 
-#: ../applets/clock/clock.c:2765
+#: ../applets/clock/clock.c:3677
 msgid "UNIX time"
 msgstr "UNIX laiks"
 
-#: ../applets/clock/clock.c:2766
+#: ../applets/clock/clock.c:3678
 msgid "Internet time"
 msgstr "Interneta laiks"
 
-#: ../applets/clock/clock.c:2774
+#: ../applets/clock/clock.c:3686
 msgid "Custom _format:"
 msgstr "Cits _formāts:"
 
-#: ../applets/clock/clock.c:2793
-msgid "Show _seconds"
-msgstr "Rādīt _sekundes"
-
-#: ../applets/clock/clock.c:2802
-msgid "Show _date"
-msgstr "Rādīt _datumu"
-
-#: ../applets/clock/clock.c:2811
-msgid "Use _UTC"
-msgstr "Pieskaņot _UTC"
-
-#: ../applets/clock/clock.c:2912
+#: ../applets/clock/clock.c:3783
 msgid "The Clock displays the current time and date"
 msgstr "Pulkstenis rāda pašreizējo laiku un datumu"
 
 #. Translator credits
-#: ../applets/clock/clock.c:2915 ../applets/fish/fish.c:588
-#: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:783
-#: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:571
-#: ../gnome-panel/panel-context-menu.c:133
+#: ../applets/clock/clock.c:3786 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:156
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
+#: ../applets/wncklet/window-menu.c:79
+#: ../applets/wncklet/workspace-switcher.c:622
+#: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr ""
 "Raivis Dejus <orvils@gmail.com>\n"
 "Pēteris Krišjānis <peteris.krisjanis@os.lv>\n"
 "Artis Trops <hornet@navigator.lv>"
+
+#: ../applets/clock/clock.glade.h:1
+#| msgid "<b>Animation</b>"
+msgid "<b>Clock Options</b>"
+msgstr "<b>Pulksteņa iespējas</b>"
+
+#: ../applets/clock/clock.glade.h:2
+#| msgid "<b>Workspaces</b>"
+msgid "<b>Display</b>"
+msgstr "<b>Ekrāns</b>"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Panel Display</b>"
+msgstr "<b>Paneļa ekrāns</b>"
+
+#: ../applets/clock/clock.glade.h:4
+#| msgid "<b>Animation</b>"
+msgid "<b>Time Settings</b>"
+msgstr "<b>Laika iestatījumi</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<i>(optional)</i>"
+msgstr "<i>(neobligāts)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.glade.h:7
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr "<small><i>Ierakstiet pilsētu un valsti, lai iegūtu iespējamo vietu sarakstu no kura izvēlēties īsto.</i></small>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "Pulksteņa iestatījumi"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "Pašreizējais laiks:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"Austrumi\n"
+"Rietumi"
+
+#: ../applets/clock/clock.glade.h:12
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "Vispārējs"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Latitude:"
+msgstr "Platums:"
+
+#: ../applets/clock/clock.glade.h:14
+#| msgid "_Location:"
+msgid "Location Name:"
+msgstr "Atrašanās vieta:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Longitude:"
+msgstr "Garums:"
+
+#: ../applets/clock/clock.glade.h:17
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"Ziemeļi\n"
+"Dienvidi"
+
+#: ../applets/clock/clock.glade.h:20
+#| msgid "Show _date"
+msgid "Show _temperature"
+msgstr "Rādīt _temperatūru"
+
+#: ../applets/clock/clock.glade.h:21
+#| msgid "Show _date"
+msgid "Show _weather"
+msgstr "Rādīt _laikapstākļus"
+
+#: ../applets/clock/clock.glade.h:22
+#| msgid "Show _seconds"
+msgid "Show seco_nds"
+msgstr "Rādīt seku_ndes"
+
+#: ../applets/clock/clock.glade.h:23
+#| msgid "Show _date"
+msgid "Show the _date"
+msgstr "Rādīt _datumu"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Time Settings"
+msgstr "Laika iestatījumi"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Time _Settings"
+msgstr "Laika ie_statījumi"
+
+#: ../applets/clock/clock.glade.h:26
+#| msgid "_Tile"
+msgid "Time:"
+msgstr "Laiks:"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Timezone:"
+msgstr "Laika josla:"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Weather"
+msgstr "Laikapstākļi"
+
+#: ../applets/clock/clock.glade.h:29
+#| msgid "Hour format"
+msgid "_12 hour format"
+msgstr "_12 stundu formāts"
+
+#: ../applets/clock/clock.glade.h:30
+#| msgid "Hour format"
+msgid "_24 hour format"
+msgstr "_24 stundu formāts"
+
+#: ../applets/clock/clock.glade.h:31
+#| msgid "_Prefs Dir:"
+msgid "_Pressure unit:"
+msgstr "S_piediena vienība:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Temperature unit:"
+msgstr "_Temperatūras vienība:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Visibility unit:"
+msgstr "_Redzamības vienība:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Wind speed unit:"
+msgstr "_Vēja ātruma vienība:"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -273,52 +441,142 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "Kalendāra logā rādāmo vietu saraksts."
+
+#: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
 msgstr "Cits pulksteņa formāts"
 
-#: ../applets/clock/clock.schemas.in.h:13
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "Izvērst tikšanos sarakstu"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "Izvērst dzimšanas dienu sarakstu"
+
+#: ../applets/clock/clock.schemas.in.h:16
+#| msgid "Show list of known _applications"
+msgid "Expand list of locations"
+msgstr "Izvērst atrašanās vietu sarakstu"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "Izvērst uzdevumu sarakstu"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "Izvērst laikapstākļu informāciju"
+
+#: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
 msgstr "Stundu formāts"
 
-#: ../applets/clock/clock.schemas.in.h:14
+#: ../applets/clock/clock.schemas.in.h:20
+#| msgid "If true, display seconds in time."
+msgid "If true, display a weather icon."
+msgstr "Ja patiess, rādīt laikapstākļu ikonu."
+
+#: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Bez laika rādīt pulkstenī arī datumu."
 
-#: ../applets/clock/clock.schemas.in.h:15
+#: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
 msgstr "Rādīt pulkstenī arī sekundes."
 
-#: ../applets/clock/clock.schemas.in.h:16
+#: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Rādīt laiku balstoties uz Universālajā Koordinētajā Laika (agrāk Grinvičas "
 "laika) zonu."
 
-#: ../applets/clock/clock.schemas.in.h:17
+#: ../applets/clock/clock.schemas.in.h:24
+#| msgid "If true, show week numbers in the calendar."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Ja patiess, izvērst tikšanos sarakstu kalendāra logā."
+
+#: ../applets/clock/clock.schemas.in.h:25
+#| msgid "If true, show week numbers in the calendar."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Ja patiess, izvērst dzimšanas dienu sarakstu kalendāra logā."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "Ja patiess, izvērst atrašanās vietu sarakstu kalendāra logā."
+
+#: ../applets/clock/clock.schemas.in.h:27
+#| msgid "If true, show week numbers in the calendar."
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Ja patiess, izvērst uzdevumu sarakstu kalendāra logā."
+
+#: ../applets/clock/clock.schemas.in.h:28
+#| msgid "If true, show week numbers in the calendar."
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Ja patiess, izvērst laikapstākļu informāciju kalendāra logā."
+
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Parādīt datumu paskaidrē, kad peles kursors tiek novietots virs Pulksteņa."
 
-#: ../applets/clock/clock.schemas.in.h:18
+#: ../applets/clock/clock.schemas.in.h:30
+#| msgid "If true, show week numbers in the calendar."
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Ja patiess, blakus laikapstākļu ikonai tiks rādīta temperatūra."
+
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
 msgstr "Rādīt kalendārā arī nedēļu numurus."
 
-#: ../applets/clock/clock.schemas.in.h:19
+#: ../applets/clock/clock.schemas.in.h:32
+#| msgid "List of known applications"
+msgid "List of locations"
+msgstr "Vietu saraksts"
+
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
 msgstr "Pie pulksteņa rādīt arī datumu"
 
-#: ../applets/clock/clock.schemas.in.h:20
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
 msgstr "Parādīt datumu paskaidrē"
 
-#: ../applets/clock/clock.schemas.in.h:21
+#: ../applets/clock/clock.schemas.in.h:35
+#| msgid "Show date in clock"
+msgid "Show temperature in clock"
+msgstr "Rādīt temperatūru pulkstenī"
+
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show time with seconds"
 msgstr "Parādīt laiku ar sekundēm"
 
-#: ../applets/clock/clock.schemas.in.h:22
+#: ../applets/clock/clock.schemas.in.h:37
+#| msgid "Show date in clock"
+msgid "Show weather in clock"
+msgstr "Rādīt laikapstākļus pulkstenī"
+
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Show week numbers in calendar"
 msgstr "Rādīt kalendārā arī nedēļu numurus"
 
-#: ../applets/clock/clock.schemas.in.h:23
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "Ātruma vienība"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "Temperatūras vienība"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "Kādās mērvienībās rādīt temperatūru."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "Kādās mērvienībās rādīt vēja ātrumu."
+
+#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -327,17 +585,22 @@ msgstr ""
 "'formāts' elements. Šī shēma ir saglabāta, lai nodrošinātu savietojamību ar "
 "vecākām versijām."
 
-#: ../applets/clock/clock.schemas.in.h:24
+#: ../applets/clock/clock.schemas.in.h:44
+#| msgid ""
+#| "This key specifies the format used by the clock applet when the format "
+#| "key is set to \"custom\". You can use conversion specifiers understood by "
+#| "strftime() to obtain a specific format."
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
 msgstr ""
 "Šī vērtība nosaka kādu laika formātu lietot pulksteņa sīkiletotnē, kad kā "
 "formāts ir norādīts \"cits\". Jūs varat lietot konvertācijas apzīmētājus, "
-"lai iegūtu ar strftime() savietojamu formātu."
+"lai iegūtu ar strftime() savietojamu formātu. Papildus informāciju meklējiet strftime() dokumentācijā."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -357,32 +620,143 @@ msgstr ""
 "ka laika formāts būs kāds \"cits\", tad laiks tiks attēlots atbilstoši cita "
 "formāta tipa laukā ievadītajām vērtībām."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Šī vērtība nosaka, kādu programmu izsaukt, lai nokonfigurētu laiku."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Laika konfigurēšanas rīks"
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:48
 msgid "Use Internet time"
 msgstr "Lietot Interneta laiku"
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:49
 msgid "Use UNIX time"
 msgstr "Lietot UNIX laiku"
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:50
 msgid "Use UTC"
 msgstr "Pieskaņot UTC"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "Neizdevās iestatīt sistēmas laiak zonu"
+
+#: ../applets/clock/clock-location-tile.c:240
+#| msgid "<small>Opaque</small>"
+msgid "<small>Set...</small>"
+msgstr "<small>Iestatīt...</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+#| msgid "<small>Opaque</small>"
+msgid "<small>Set</small>"
+msgstr "<small>Iestatīt</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "Iestatīt pašreizējo vietu kā atrašanās vietu un izmantot tās laika zonu šajā datorā"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:453
+#| msgid "<small>Opaque</small>"
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:462
+#| msgid "<small>Opaque</small>"
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:472
+#| msgid "<small>Opaque</small>"
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:581
+#, c-format
+#| msgid "%1$s, %2$s"
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
+msgid "Unknown"
+msgstr "Nezināms"
+
+#: ../applets/clock/clock-location-tile.c:594
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, bet liekas kā %s"
+
+#: ../applets/clock/clock-location-tile.c:612
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Saullēkts: %s / Saulriets: %s"
+
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../gnome-panel/libpanel-util/panel-show.c:235
+#, c-format
+#| msgid "Could not display help document"
+msgid "Could not display help document '%s'"
+msgstr "Nevaru parādīt palīdzības dokumentu '%s'"
+
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
+#| msgid "Could not display help document"
+msgid "Error displaying help document"
+msgstr "Kļūda parādot palīdzības dokumentu"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
+#| msgid "_None (use system theme)"
+msgid "Change system time"
+msgstr "Mainīt sistēmas laiku"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Mainīt laika zonu"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Konfigurēt aparatūras pulksteni"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "Lai izmainītu sistēmas laika zonu nepieciešamas lielākas privilēģijas."
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "Lai izmainītu sistēmas laiku nepieciešamas lielākas privilēģijas."
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "Lai konfigurētu aparatūras pulksteni nepieciešamas lielākas privilēģijas."
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
 msgstr "Parādīt peldošu zivtiņu vai citu animētu radību"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:582
+#: ../applets/fish/fish.c:607
 msgid "Fish"
 msgstr "Zivtiņa"
 
@@ -394,7 +768,7 @@ msgstr "No Kurienes Tā Muļķa Zivs Nākusi"
 msgid "Wanda Factory"
 msgstr "Wanda ražotne"
 
-#: ../applets/fish/fish.c:249
+#: ../applets/fish/fish.c:274
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -407,17 +781,17 @@ msgstr ""
 "Mēs nopietni ierosinām jums nelietot %s kaut kam,\n"
 "kas varētu šo paneļprogrammu padarīt \"praktisku\" vai noderīgu."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:441
+#: ../applets/fish/fish.c:461
 msgid "Images"
 msgstr "Attēli"
 
-#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
-#: ../applets/fish/fish.c:732
+#: ../applets/fish/fish.c:575 ../applets/fish/fish.c:641
+#: ../applets/fish/fish.c:757
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Zivtiņa %s"
 
-#: ../applets/fish/fish.c:551
+#: ../applets/fish/fish.c:576
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -429,25 +803,25 @@ msgstr ""
 "kas ir atradis šī pielietojumu, būtu nekavējoties jānosūta psiholoģiskai "
 "izmeklēšanai."
 
-#: ../applets/fish/fish.c:575
+#: ../applets/fish/fish.c:600
 msgid "(with minor help from George)"
 msgstr "(ar nelielu palīdzību no Džordža)"
 
-#: ../applets/fish/fish.c:617
+#: ../applets/fish/fish.c:642
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Zivtiņa %s, mūsdienu orākuls"
 
-#: ../applets/fish/fish.c:688
+#: ../applets/fish/fish.c:713
 msgid "Unable to locate the command to execute"
 msgstr "Nevaru atrast komandu, ko palaist"
 
-#: ../applets/fish/fish.c:737
+#: ../applets/fish/fish.c:762
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Zivtiņa %s saka:"
 
-#: ../applets/fish/fish.c:806
+#: ../applets/fish/fish.c:831
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -458,16 +832,16 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: ../applets/fish/fish.c:871
+#: ../applets/fish/fish.c:896
 msgid "_Speak again"
 msgstr "_Runāt vēlreiz"
 
-#: ../applets/fish/fish.c:954
+#: ../applets/fish/fish.c:979
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Konfigurācijā norādītā komanda nedarbojās un tika aizstāta ar: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:1002
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -478,7 +852,7 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: ../applets/fish/fish.c:993
+#: ../applets/fish/fish.c:1018
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -489,21 +863,20 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: ../applets/fish/fish.c:1611
+#: ../applets/fish/fish.c:1643
 msgid "The water needs changing"
 msgstr "Būtu tā kā ūdens jāpamaina"
 
-#: ../applets/fish/fish.c:1613
+#: ../applets/fish/fish.c:1645
 msgid "Look at today's date!"
 msgstr "Apskaties kāds šodien datums!"
 
-#: ../applets/fish/fish.c:1707
+#: ../applets/fish/fish.c:1738
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Zivtiņa %s, laimes pareģotāja"
 
-#: ../applets/fish/fish.glade.h:1 ../applets/wncklet/window-list.glade.h:1
-#: ../applets/wncklet/workspace-switcher.glade.h:1
+#: ../applets/fish/fish.glade.h:1
 #: ../gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
@@ -624,7 +997,7 @@ msgid "Area where notification icons appear"
 msgstr "Vieta, kur parādās paziņojumu ikonas"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:135
+#: ../applets/notification_area/main.c:151
 msgid "Notification Area"
 msgstr "Paziņojumu lauks"
 
@@ -632,7 +1005,7 @@ msgstr "Paziņojumu lauks"
 msgid "Notification Area Factory"
 msgstr "Paziņojumu lauka fabrika"
 
-#: ../applets/notification_area/main.c:224
+#: ../applets/notification_area/main.c:240
 msgid "Panel Notification Area"
 msgstr "Paneļa paziņojumu lauks"
 
@@ -661,7 +1034,7 @@ msgid "Switch between workspaces"
 msgstr "Pārslēgties starp darba vietām"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:786
+#: ../applets/wncklet/window-list.c:610
 msgid "Window List"
 msgstr "Logu saraksts"
 
@@ -670,29 +1043,29 @@ msgid "Window Navigation Applet Factory"
 msgstr "Lovu navigācijas sīklietotņu rūpnīca"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:241
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
 msgid "Window Selector"
 msgstr "Logu izvēlētājs"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:574
+#: ../applets/wncklet/workspace-switcher.c:625
 msgid "Workspace Switcher"
 msgstr "Darba vietu pārslēdzējs"
 
-#: ../applets/wncklet/showdesktop.c:183
+#: ../applets/wncklet/showdesktop.c:181
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Neizdevās ielādēt %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:184
+#: ../applets/wncklet/showdesktop.c:182
 msgid "Icon not found"
 msgstr "Ikona nav atrasta"
 
-#: ../applets/wncklet/showdesktop.c:242
+#: ../applets/wncklet/showdesktop.c:241
 msgid "Click here to restore hidden windows."
 msgstr "Klikšķis šeit, lai atjaunotu paslēptos logus."
 
-#: ../applets/wncklet/showdesktop.c:245
+#: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klikšķis šeit, lai paslēptu visus logus un parādītu darba virsmu."
 
@@ -712,7 +1085,7 @@ msgstr ""
 "Jūsu logu pārvaldnieks neatbalsta darbavirsmas parādīšanas pogu vai arī jūs "
 "neizmantojat logu pārvaldnieku."
 
-#: ../applets/wncklet/window-list.c:788
+#: ../applets/wncklet/window-list.c:612
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -720,74 +1093,49 @@ msgstr ""
 "Logu Saraksts pogu veidā parāda visu pieejamos logus un ļauj jums izvēlēties "
 "starp tiem."
 
-#: ../applets/wncklet/window-list.glade.h:2
+#: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
 msgstr "<b>Atjaunoju minimizētos logus</b>"
 
-#: ../applets/wncklet/window-list.glade.h:3
+#: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Logu grupēšana</b>"
 
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
 msgstr "<b>Logu Saraksta saturs</b>"
 
-#: ../applets/wncklet/window-list.glade.h:5
-msgid "<b>Window List Size</b>"
-msgstr "<b>Logu Saraksta izmērs</b>"
-
-#: ../applets/wncklet/window-list.glade.h:6
-msgid "Behavior"
-msgstr "Uzvedība"
-
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
 msgstr "Grupēt logus, kad _vieta ir ierobežota"
 
-#: ../applets/wncklet/window-list.glade.h:8
-msgid "M_inimum size:"
-msgstr "M_inimālais izmērs:"
-
-#: ../applets/wncklet/window-list.glade.h:9
-msgid "Ma_ximum size:"
-msgstr "Ma_ksimālais izmērs:"
-
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
 msgstr "Atjaunot pašreizējā _darba vietā"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
 msgstr "Atjaunot attiecīgajā d_arba vietā"
 
-#: ../applets/wncklet/window-list.glade.h:12
+#: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
 msgstr "Parādīt l_ogus no pašreizējās darba vietas"
 
-#: ../applets/wncklet/window-list.glade.h:13
+#: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
 msgstr "Parādīt logus no _visām darba vietām"
 
-#: ../applets/wncklet/window-list.glade.h:14
-msgid "Size"
-msgstr "Izmērs"
-
-#: ../applets/wncklet/window-list.glade.h:15
+#: ../applets/wncklet/window-list.glade.h:9
 msgid "Window List Preferences"
 msgstr "Logu saraksta iestatījumi"
 
-#: ../applets/wncklet/window-list.glade.h:16
+#: ../applets/wncklet/window-list.glade.h:10
 msgid "_Always group windows"
 msgstr "_Vienmēr grupēt logus"
 
-#: ../applets/wncklet/window-list.glade.h:17
+#: ../applets/wncklet/window-list.glade.h:11
 msgid "_Never group windows"
 msgstr "_Nekad negrupēt logus"
-
-#: ../applets/wncklet/window-list.glade.h:18
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
-msgid "pixels"
-msgstr "pikseļi"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -830,57 +1178,51 @@ msgid "Show windows from all workspaces"
 msgstr "Parādīt logus no visām darba vietām"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
+#| msgid ""
+#| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#| "key. The schema is retained for compatibility with older versions."
 msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
-msgstr ""
-"Šī vērtība nosaka maksimālo platums, ko Logu Saraksts var pieprasīt. "
-"Maksimālā platuma uzstādījums ir noderīgs, lai limitētu Logu Saraksta lielos "
-"izmērus, jo pretējā gadījumā Logu Saraksts varētu aizpildīt visu pieejamo "
-"vietu."
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr "Kopš GNOME 2.20 šis elements vairs netiek lietots. Šī shēma ir saglabāta, lai nodrošinātu savietojamību ar vecākām versijām."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "This key specifies the minimum width that the window list requests."
-msgstr "Šī vērtība nosaka Logu Saraksta maksimālo izmēru."
-
-#: ../applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Kad grupēt logus"
 
-#: ../applets/wncklet/window-menu.c:82
+#: ../applets/wncklet/window-menu.c:86
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr "Logu Saraksts izvēlnē parāda visus logus un ļauj jums tos pārlūkot."
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:890
-#: ../applets/wncklet/workspace-switcher.glade.h:11
+#: ../applets/wncklet/workspace-switcher.c:215
+#: ../applets/wncklet/workspace-switcher.c:977
+#: ../applets/wncklet/workspace-switcher.glade.h:10
 msgid "rows"
 msgstr "rindas"
 
-#: ../applets/wncklet/workspace-switcher.c:130
-#: ../applets/wncklet/workspace-switcher.c:890
+#: ../applets/wncklet/workspace-switcher.c:215
+#: ../applets/wncklet/workspace-switcher.c:977
 msgid "columns"
 msgstr "kolonnas"
 
-#: ../applets/wncklet/workspace-switcher.c:442
+#: ../applets/wncklet/workspace-switcher.c:489
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Kļūda lādējot num_rows vērtību Darba vietu Pārslēgam: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:453
+#: ../applets/wncklet/workspace-switcher.c:500
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "Kļūda lādējot display_workspace_names vērtību Darba vietu Pārslēgam: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:468
+#: ../applets/wncklet/workspace-switcher.c:515
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "Kļūda lādējot display_all_workspaces vērtību Darba vietu Pārslēgam: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:576
+#: ../applets/wncklet/workspace-switcher.c:627
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -888,39 +1230,39 @@ msgstr ""
 "Darba vietu Pārslēdzējs parāda jums samazinātu jūsu darba vietu versiju, kas "
 "ļauj jums pārvaldīt jūsu logus."
 
-#: ../applets/wncklet/workspace-switcher.glade.h:2
+#: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
 msgstr "<b>Pārslēgs</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
 msgstr "<b>Darba vietas</b>"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.glade.h:3
 msgid "Number of _workspaces:"
 msgstr "_Darba vietu skaits:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.glade.h:4
 msgid "Show _all workspaces in:"
 msgstr "P_arādīt visas darba vietas:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
 msgstr "Parādīt tikai pašreizēj_o darba vietu"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
 msgstr "Rādīt darba vietu _nosaukumus pārslēdzējā"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.glade.h:7
 msgid "Workspace Names"
 msgstr "Darba vietu Nosaukumi"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
 msgstr "Darba vietu pārslēdzēja iestatījumi"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
 msgstr "Darba vietu _nosaukumi:"
 
@@ -941,12 +1283,17 @@ msgstr ""
 "pretējā gadījumā tas rādīs tikai pašreizējo darba vietu."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+#| msgid ""
+#| "If true, the workspaces in the workspace switcher will display the names "
+#| "of the workspaces. Otherwise they will display the windows on the "
+#| "workspace."
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace."
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
 msgstr ""
-"Ja šī vēŗtība ir patiesa, darba vietas Darba vietu Pārslēgā rādīs arī darba "
-"vietu nosaukumus, Pretējā gadījumā tās rādīs darba vietas saturu."
+"Ja šī vērtība ir patiesa, darba vietas Darba vietu Pārslēgā rādīs arī darba "
+"vietu nosaukumus, Pretējā gadījumā tās rādīs darba vietas saturu. Šis iestatījums strādā vienīgi, ja logu pārvaldnieks ir Metacity."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -962,307 +1309,387 @@ msgstr ""
 "(vertikālajam izkārtojumam) Darba vietu Pārslēgs parāda darba vietas. Šī "
 "vēŗtība ir aktuāla vienīgi ja ir izvēlēts display_all_workspaces."
 
-#: ../gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "GNOME paneļa čaula"
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:1000
+#: ../gnome-panel/panel-applet-frame.c:1088
+msgid "Error"
+msgstr "Kļūda"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
-msgid "Loc_k To Panel"
-msgstr "Pieslēg_t panelim"
-
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
-msgid "_Move"
-msgstr "_Pārvietot"
-
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
-msgid "_Remove From Panel"
-msgstr "_Noņemt no paneļa"
-
-#: ../gnome-panel/applet.c:434
-msgid "???"
-msgstr "???"
-
-#: ../gnome-panel/applet.c:1239
-msgid "Cannot find an empty spot"
-msgstr "Nevar atrast tukšu vietu"
-
-#: ../gnome-panel/drawer.c:349 ../gnome-panel/panel-addto.c:169
-#: ../gnome-panel/panel-toplevel.c:1527
-msgid "Drawer"
-msgstr "Atvilktne"
-
-#: ../gnome-panel/drawer.c:588
-msgid "_Add to Drawer..."
-msgstr "_Pievienot atvilknei..."
-
-#: ../gnome-panel/drawer.c:594 ../gnome-panel/launcher.c:874
-#: ../gnome-panel/panel-action-button.c:137
-#: ../gnome-panel/panel-context-menu.c:212
-msgid "_Properties"
-msgstr "_Iestatījumi"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:24
-msgid "Create new file in the given directory"
-msgstr "Izveidot jaunu failu dotajā mapē"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:25
-msgid "[FILE...]"
-msgstr "[FILE...]"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:172
-msgid "- Edit .desktop files"
-msgstr "- Rediģēt .desktop failus"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/gnome-desktop-item-edit.c:269 ../gnome-panel/launcher.c:964
-msgid "Create Launcher"
-msgstr "Izveidot palaidēju"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:227
-#: ../gnome-panel/gnome-desktop-item-edit.c:256
-msgid "Directory Properties"
-msgstr "Mapes iestatījumi"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:232 ../gnome-panel/launcher.c:802
-msgid "Launcher Properties"
-msgstr "Palaidēja iestatījumi"
-
-#: ../gnome-panel/launcher.c:150
-msgid "Could not show this URL"
-msgstr "Nevaru attēlot šo URL"
-
-#: ../gnome-panel/launcher.c:151
-msgid "No URL was specified."
-msgstr "Nav norādīts URL."
-
-#: ../gnome-panel/launcher.c:164
+#: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
-msgid "Could not show '%s'"
-msgstr "Nevaru parādīt '%s'"
+#| msgid "Could not show '%s'"
+msgid "Could not launch '%s'"
+msgstr "Nevaru palaist '%s'"
 
-#: ../gnome-panel/launcher.c:209
+#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/launcher.c:161
 msgid "Could not launch application"
 msgstr "Nevaru palaist programmu"
 
-#: ../gnome-panel/launcher.c:274
+#: ../gnome-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "Nevar atvērt atrašanās vietu '%s'"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "Meklēšanas mapju apstrādei nav uzinstalēta neviena programma."
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
+msgid "Loc_k To Panel"
+msgstr "Pieslēg_t panelim"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:527
+msgid "_Move"
+msgstr "_Pārvietot"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
+msgid "_Remove From Panel"
+msgstr "_Noņemt no paneļa"
+
+#: ../gnome-panel/applet.c:437
+msgid "???"
+msgstr "???"
+
+#: ../gnome-panel/applet.c:1310
+msgid "Cannot find an empty spot"
+msgstr "Nevar atrast tukšu vietu"
+
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-toplevel.c:1617
+msgid "Drawer"
+msgstr "Atvilktne"
+
+#: ../gnome-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "_Pievienot atvilknei..."
+
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
+#: ../gnome-panel/panel-action-button.c:141
+#: ../gnome-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "_Iestatījumi"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:31
+msgid "Create new file in the given directory"
+msgstr "Izveidot jaunu failu dotajā mapē"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:32
+msgid "[FILE...]"
+msgstr "[FILE...]"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:110
+msgid "- Edit .desktop files"
+msgstr "- Rediģēt .desktop failus"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:149
+#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "Izveidot palaidēju"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:174
+#: ../gnome-panel/gnome-desktop-item-edit.c:197
+msgid "Directory Properties"
+msgstr "Mapes iestatījumi"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "Palaidēja iestatījumi"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr "Palaiž citas programmas un nodrošina rīkus, lai pārvaldītu kogus, rādītu laiku un darītu citas lietas."
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#| msgid "_New Panel"
+msgid "Panel"
+msgstr "Panelis"
+
+#: ../gnome-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "Nevaru attēlot šo URL"
+
+#: ../gnome-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "Nav norādīts URL."
+
+#: ../gnome-panel/launcher.c:227
 msgid "Could not use dropped item"
 msgstr "Nevarēju izmantot nomesto vienību"
 
-#: ../gnome-panel/launcher.c:470
+#: ../gnome-panel/launcher.c:423
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nav dots URI paneļa palaidēja darbavirsmas failam\n"
 
-#: ../gnome-panel/launcher.c:513
+#: ../gnome-panel/launcher.c:462
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nevaru atvērt darbavirsmas failu %s paneļa palaidējam%s%s\n"
 
-#: ../gnome-panel/launcher.c:868
+#: ../gnome-panel/launcher.c:801
 msgid "_Launch"
 msgstr "Pa_laist"
 
-#: ../gnome-panel/launcher.c:907
+#: ../gnome-panel/launcher.c:840
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
-msgstr "Atslēga %s nav uzstādīta, nevar ielādēt palaidēju\n"
+msgstr "Atslēga %s nav iestatīta nevar ielādēt palaidēju\n"
 
-#: ../gnome-panel/launcher.c:1031 ../gnome-panel/panel-ditem-editor.c:1237
-#: ../gnome-panel/panel-ditem-editor.c:1263
-#: ../gnome-panel/panel-ditem-editor.c:1331
+#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1384
+#: ../gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
 msgstr "Nevar saglabāt palaidēju"
 
-#: ../gnome-panel/menu.c:935
+#: ../gnome-panel/main.c:43
+msgid "Replace a currently running panel"
+msgstr "Aizstāj pašreizējo paneli"
+
+#: ../gnome-panel/menu.c:1005
 msgid "Add this launcher to _panel"
 msgstr "Pievienot šo palaidēju _panelim"
 
-#: ../gnome-panel/menu.c:946
+#: ../gnome-panel/menu.c:1012
 msgid "Add this launcher to _desktop"
 msgstr "Novietot šo palaidēju uz _darbavirsmas"
 
-#: ../gnome-panel/menu.c:962
+#: ../gnome-panel/menu.c:1024
 msgid "_Entire menu"
 msgstr "Visu izv_ēlni"
 
-#: ../gnome-panel/menu.c:972
+#: ../gnome-panel/menu.c:1029
 msgid "Add this as _drawer to panel"
 msgstr "Pievienot šo kā atvilkni panelim"
 
-#: ../gnome-panel/menu.c:984
+#: ../gnome-panel/menu.c:1036
 msgid "Add this as _menu to panel"
 msgstr "Pievienot šo kā izvēlni panelim"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/nothing.cP:601
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>SPĒLE BEIGUSIES</b> %d. līmenī!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../gnome-panel/nothing.cP:608
+#, c-format
+#| msgid "%1$s on %2$s"
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#: ../gnome-panel/nothing.cP:609
+msgid "Press 'q' to quit"
+msgstr "Nospiediet 'q', lai izietu"
+
+#: ../gnome-panel/nothing.cP:614
+msgid "Paused"
+msgstr "Apturēts"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#, c-format
+#| msgid ""
+#| "%1$s\n"
+#| "%2$s"
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../gnome-panel/nothing.cP:618
+msgid "Press 'p' to unpause"
+msgstr "Nospiediet 'p', lai turpinātu"
+
+#: ../gnome-panel/nothing.cP:624
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "Līmenis: %s, Dzīvības: %s"
+
+#: ../gnome-panel/nothing.cP:629
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr "Pa labi/Pa kreisi, lai kustētos, Atstarpe, lai šautu, 'p', lai iepauzētu un 'q', lai izietu"
+
+#: ../gnome-panel/nothing.cP:1369
+msgid "Killer GEGLs from Outer Space"
+msgstr "Kosmosa slepkavnieciskie GEGLi"
+
+#: ../gnome-panel/panel-action-button.c:129
 msgid "_Activate Screensaver"
 msgstr "_Aktivizēt ekrānsaudzētāju"
 
-#: ../gnome-panel/panel-action-button.c:131
+#: ../gnome-panel/panel-action-button.c:135
 msgid "_Lock Screen"
 msgstr "_Bloķēt ekrānu"
 
-#: ../gnome-panel/panel-action-button.c:212
-#: ../gnome-panel/panel-menu-bar.c:457 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:793
-#, c-format
-msgid "Could not execute '%s'"
-msgstr "Nevaru palaist '%s'"
-
-#: ../gnome-panel/panel-action-button.c:250
+#: ../gnome-panel/panel-action-button.c:254
 msgid "Could not connect to server"
 msgstr "Nevaru pieslēgties serverim"
 
-#: ../gnome-panel/panel-action-button.c:281
+#: ../gnome-panel/panel-action-button.c:285
 msgid "Lock Screen"
 msgstr "Bloķēt ekrānu"
 
-#: ../gnome-panel/panel-action-button.c:282
+#: ../gnome-panel/panel-action-button.c:286
 msgid "Protect your computer from unauthorized use"
 msgstr "Aizsargājiet savu datoru no nesankcionētas lietošanas"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
-#. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:296
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Log Out..."
 msgstr "Iziet..."
 
-#: ../gnome-panel/panel-action-button.c:297
+#: ../gnome-panel/panel-action-button.c:301
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "Iziet no šīs sesijas, lai pieslēgtos ar citu lietotājvārdu vai arī beidzētu "
 "datoru"
 
-#: ../gnome-panel/panel-action-button.c:306
+#: ../gnome-panel/panel-action-button.c:310
 msgid "Run Application..."
 msgstr "Palaist programmu..."
 
-#: ../gnome-panel/panel-action-button.c:307
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Palaist programmu ievadot komandu vai izvēloties no saraksta"
 
-#: ../gnome-panel/panel-action-button.c:316
+#: ../gnome-panel/panel-action-button.c:320
 msgid "Search for Files..."
 msgstr "Meklēt failus..."
 
-#: ../gnome-panel/panel-action-button.c:317
+#: ../gnome-panel/panel-action-button.c:321
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Meklē mapes un failus šajā datorā pēc to nosaukuma vai satura"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "Piespiedu apturēšana"
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:330
 msgid "Force a misbehaving application to quit"
 msgstr "Likt nepaklausīgai programmai pārtraukt darbu"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:335
+#: ../gnome-panel/panel-action-button.c:339
 msgid "Connect to Server..."
 msgstr "Pieslēgties serverim..."
 
-#: ../gnome-panel/panel-action-button.c:336
+#: ../gnome-panel/panel-action-button.c:340
 msgid "Connect to a remote computer or shared disk"
 msgstr "Pieslēgties attālinātam serverim vai koplietošanas diskam"
 
-#: ../gnome-panel/panel-action-button.c:344
+#: ../gnome-panel/panel-action-button.c:348
 msgid "Shut Down..."
 msgstr "Izslēgt..."
 
-#: ../gnome-panel/panel-action-button.c:345
+#: ../gnome-panel/panel-action-button.c:349
 msgid "Shut down the computer"
 msgstr "Izslēgt datoru"
 
-#: ../gnome-panel/panel-addto.c:110
+#: ../gnome-panel/panel-addto.c:116
 msgid "Custom Application Launcher"
 msgstr "Pašizvēlētas programmas palaidējs"
 
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:117
 msgid "Create a new launcher"
 msgstr "Izveidot jaunu palaidēju"
 
-#: ../gnome-panel/panel-addto.c:121
+#: ../gnome-panel/panel-addto.c:127
 msgid "Application Launcher..."
 msgstr "Aplikāciju palaidējs..."
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:128
 msgid "Copy a launcher from the applications menu"
 msgstr "Pārkopēt palaidēju no Programmu izvēlnes"
 
-#: ../gnome-panel/panel-addto.c:136 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "Galvenā izvēlne"
 
-#: ../gnome-panel/panel-addto.c:137
+#: ../gnome-panel/panel-addto.c:143
 msgid "The main GNOME menu"
 msgstr "Galvenā GNOME izvēlne"
 
-#: ../gnome-panel/panel-addto.c:147
+#: ../gnome-panel/panel-addto.c:153
 msgid "Menu Bar"
 msgstr "Izvēlņu josla"
 
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:154
 msgid "A custom menu bar"
 msgstr "Pielāgota izvēļņu josla"
 
-#: ../gnome-panel/panel-addto.c:158
+#: ../gnome-panel/panel-addto.c:164
 msgid "Separator"
 msgstr "Atdalītājs"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
 msgstr "Atdalītājs paneļa elementu sakārtošanai"
 
-#: ../gnome-panel/panel-addto.c:170
+#: ../gnome-panel/panel-addto.c:176
 msgid "A pop out drawer to store other items in"
 msgstr "Izvelkama atvilkne citu lietu glabāšanai"
 
-#: ../gnome-panel/panel-addto.c:261
+#: ../gnome-panel/panel-addto.c:267
 msgid "(empty)"
 msgstr "(tukšs)"
 
-#: ../gnome-panel/panel-addto.c:401
-#: ../libpanel-applet/panel-test-applets.c:248
+#: ../gnome-panel/panel-addto.c:410
+#: ../libpanel-applet/panel-test-applets.c:250
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "pieprasījums atgrieza izņēmumu %s\n"
 
-#: ../gnome-panel/panel-addto.c:1060
+#: ../gnome-panel/panel-addto.c:1069
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Atrast elementu, ko p_ievienot \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1064
+#: ../gnome-panel/panel-addto.c:1073
+#, c-format
 msgid "Add to Drawer"
 msgstr "Pievienot atvilknei"
 
-#: ../gnome-panel/panel-addto.c:1066
+#: ../gnome-panel/panel-addto.c:1075
 msgid "Find an _item to add to the drawer:"
 msgstr "Atrast elementu, ko p_ievienot atvilknei:"
 
-#: ../gnome-panel/panel-addto.c:1068
+#: ../gnome-panel/panel-addto.c:1077
+#, c-format
 msgid "Add to Panel"
 msgstr "_Pievienot panelim"
 
-#: ../gnome-panel/panel-addto.c:1070
+#: ../gnome-panel/panel-addto.c:1079
 msgid "Find an _item to add to the panel:"
 msgstr "Atrast elementu, ko p_ievienot panelim:"
 
-#: ../gnome-panel/panel-applet-frame.c:839
+#: ../gnome-panel/panel-applet-frame.c:844
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Izņēmums no izlecēj_izvēlnes '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:961
+#: ../gnome-panel/panel-applet-frame.c:969
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" ir negaidot aizvērusies"
 
-#: ../gnome-panel/panel-applet-frame.c:963
+#: ../gnome-panel/panel-applet-frame.c:971
 msgid "Panel object has quit unexpectedly"
 msgstr "Paneļa objekts ir negaidot aizvēries"
 
-#: ../gnome-panel/panel-applet-frame.c:970
+#: ../gnome-panel/panel-applet-frame.c:978
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1270,163 +1697,175 @@ msgstr ""
 "Ja jūs pārlādēsiet šo paneļa objektu, tas tiks auomātiski atkal pievienots "
 "panelim."
 
-#: ../gnome-panel/panel-applet-frame.c:976
+#: ../gnome-panel/panel-applet-frame.c:984
 msgid "_Don't Reload"
 msgstr "Nepārlā_dēt"
 
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:985
 msgid "_Reload"
 msgstr "_Pārlādēt"
 
-#: ../gnome-panel/panel-applet-frame.c:1037
+#: ../gnome-panel/panel-applet-frame.c:1051
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelis saskārās ar problēmu, ladējot \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1054
+#: ../gnome-panel/panel-applet-frame.c:1067
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vai vēlaties dzēst paneļprogrammu no jūsu konfigurācijas?"
 
-#: ../gnome-panel/panel-applet-frame.c:1121
+#: ../gnome-panel/panel-applet-frame.c:1141
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nevarēju saņemt AppletShell saskarni no kontroles\n"
 
-#: ../gnome-panel/panel-bindings.c:153
-#, c-format
-msgid "Error watching gconf key '%s': %s"
-msgstr "Kļūda aplūkojot gconf atslēgu '%s': %s"
-
-#: ../gnome-panel/panel-bindings.c:171
-#, c-format
-msgid "Error loading gconf directory '%s': %s"
-msgstr "Kļūda ielādējot gconf mapi '%s': %s"
-
-#: ../gnome-panel/panel-bindings.c:185
-#, c-format
-msgid "Error getting value for '%s': %s"
-msgstr "Kļūda iegūstot vērtību priekš '%s': %s"
-
-#: ../gnome-panel/panel-context-menu.c:100
+#: ../gnome-panel/panel-context-menu.c:104
 msgid "And many, many others..."
 msgstr "Un daudzi, daudzi citi..."
 
-#: ../gnome-panel/panel-context-menu.c:126
+#: ../gnome-panel/panel-context-menu.c:130
 msgid "The GNOME Panel"
 msgstr "GNOME panelis"
 
-#: ../gnome-panel/panel-context-menu.c:129
+#: ../gnome-panel/panel-context-menu.c:133
+#| msgid ""
+#| "This program is responsible for launching other applications and "
+#| "embedding small applets within itself."
 msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
-msgstr ""
-"Šī programma ir atbildīga par lietojumprogrammu palaišanu, paneļprogrammu "
-"iekļaušanu sevī."
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr "Šī programma ir atbildīga par citu programmu palaišanu un nodrošina noderīgus rīkus."
 
-#: ../gnome-panel/panel-context-menu.c:167
+#: ../gnome-panel/panel-context-menu.c:137
+#| msgid "The GNOME Panel"
+msgid "About the GNOME Panel"
+msgstr "Par GNOME paneli"
+
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "Cannot delete this panel"
 msgstr "Nevaru izdzēst šo paneli"
 
-#: ../gnome-panel/panel-context-menu.c:168
+#: ../gnome-panel/panel-context-menu.c:172
 msgid "You must always have at least one panel."
 msgstr "Jums vienmēr ir jābūt vismaz vienam panelim."
 
-#: ../gnome-panel/panel-context-menu.c:201
+#: ../gnome-panel/panel-context-menu.c:205
 msgid "_Add to Panel..."
 msgstr "Pievienot p_anelim..."
 
-#: ../gnome-panel/panel-context-menu.c:222
+#: ../gnome-panel/panel-context-menu.c:226
 msgid "_Delete This Panel"
 msgstr "_Dzēst šo paneli"
 
-#: ../gnome-panel/panel-context-menu.c:237
+#: ../gnome-panel/panel-context-menu.c:241
 msgid "_New Panel"
 msgstr "_Jauns panelis"
 
-#: ../gnome-panel/panel-context-menu.c:288
+#: ../gnome-panel/panel-context-menu.c:293
 msgid "A_bout Panels"
 msgstr "_Par paneļiem"
 
-#: ../gnome-panel/panel-ditem-editor.c:111
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application"
 msgstr "Programma"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Application in Terminal"
 msgstr "Aplikācija terminālī"
 
-#: ../gnome-panel/panel-ditem-editor.c:115
-msgid "File"
-msgstr "Fails"
+#: ../gnome-panel/panel-ditem-editor.c:120
+#| msgid "_Location:"
+msgid "Location"
+msgstr "Vieta"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:574
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Type:"
 msgstr "_Tips:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:581
+#: ../gnome-panel/panel-ditem-editor.c:629
 msgid "_Name:"
 msgstr "_Nosaukums:"
 
-#: ../gnome-panel/panel-ditem-editor.c:589
+#: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
 msgstr "Lūkoties ikonās"
 
-#: ../gnome-panel/panel-ditem-editor.c:607
+#: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
 msgstr "_Lūkoties..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:614
+#: ../gnome-panel/panel-ditem-editor.c:662
 msgid "Co_mment:"
 msgstr "Ko_mentārs:"
 
-#: ../gnome-panel/panel-ditem-editor.c:943
+#: ../gnome-panel/panel-ditem-editor.c:1024
 msgid "Choose an application..."
 msgstr "Izvēlies programmu..."
 
-#: ../gnome-panel/panel-ditem-editor.c:947
+#: ../gnome-panel/panel-ditem-editor.c:1028
 msgid "Choose a file..."
 msgstr "Izvēlies failu..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1061
-#: ../gnome-panel/panel-ditem-editor.c:1070
+#: ../gnome-panel/panel-ditem-editor.c:1153
+#| msgid "_Command:"
+msgid "Comm_and:"
+msgstr "Kom_anda:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "_Command:"
 msgstr "_Komanda:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1079
+#: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
 msgstr "_Atrašanās vieta:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1238
+#: ../gnome-panel/panel-ditem-editor.c:1351
 msgid "The name of the launcher is not set."
 msgstr "Palaidēja vārds nav norādīts."
 
-#: ../gnome-panel/panel-ditem-editor.c:1251
+#: ../gnome-panel/panel-ditem-editor.c:1355
+#| msgid "Could not use dropped item"
+msgid "Could not save directory properties"
+msgstr "Nevar saglabāt direktorijas iestatījumus"
+
+#: ../gnome-panel/panel-ditem-editor.c:1356
+#| msgid "The name of the launcher is not set."
+msgid "The name of the directory is not set."
+msgstr "Direktorijas vārds nav norādīts."
+
+#: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The command of the launcher is not set."
 msgstr "Nav norādīta palaidēja komanda."
 
-#: ../gnome-panel/panel-ditem-editor.c:1254
+#: ../gnome-panel/panel-ditem-editor.c:1375
 msgid "The location of the launcher is not set."
 msgstr "Nav norādīta palaidēja atrašanās vieta."
 
-#: ../gnome-panel/panel-ditem-editor.c:1371 ../gnome-panel/panel-util.c:152
+#: ../gnome-panel/panel-ditem-editor.c:1452
 msgid "Could not display help document"
 msgstr "Nevaru parādīt palīdzības dokumentu"
 
-#: ../gnome-panel/panel-force-quit.c:75
+#: ../gnome-panel/panel-force-quit.c:76
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Uzklikšķiniet uz loga, lai liktu programmai beigt darbu. Lai atceltu "
 "nospiediet <ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:203
+#: ../gnome-panel/panel-force-quit.c:204
+#| msgid "Force a misbehaving application to quit"
+msgid "Force this application to exit?"
+msgstr "Likt šai programmai pārtraukt darbu?"
+
+#: ../gnome-panel/panel-force-quit.c:207
+#| msgid ""
+#| "Force this application to exit?\n"
+#| "(Any open documents will be lost.)"
 msgid ""
-"Force this application to exit?\n"
-"(Any open documents will be lost.)"
-msgstr ""
-"Likt šai programmai beigt darbu?\n"
-"(Visi atvēŗtie dokumenti tiks zaudēti.)"
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
+msgstr "Ja liksiet šai programmai beigt darbu visi atvērtie dokumenti tiks zaudēti."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1637,155 +2076,118 @@ msgstr ""
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Ja šī vērtība ir izvēlēta, paneļa objektiem tiks rādītas paskaidres."
 
-#: ../gnome-panel/panel-logout.c:236
-#, c-format
-msgid "You will be automatically logged out in %d second."
-msgid_plural "You will be automatically logged out in %d seconds."
-msgstr[0] "Jūs tiksiet automātiski atslēgti no sistēmas pēc %d sekundes."
-msgstr[1] "Jūs tiksiet automātiski atslēgti no sistēmas pēc %d sekundes."
-msgstr[2] "Jūs tiksiet automātiski atslēgti no sistēmas pēc %d sekundes."
-
-#: ../gnome-panel/panel-logout.c:243
-#, c-format
-msgid "This system will be automatically shut down in %d second."
-msgid_plural "This system will be automatically shut down in %d seconds."
-msgstr[0] "Sistēma tiks automātiski izslēgta pēc %d sekundes."
-msgstr[1] "Sistēma tiks automātiski izslēgta pēc %d sekundes."
-msgstr[2] "Sistēma tiks automātiski izslēgta pēc %d sekundes."
-
-#: ../gnome-panel/panel-logout.c:315
-msgid "Log out of this system now?"
-msgstr "Vai tiešām vēlaties atslēgties no sistēmas?"
-
-#: ../gnome-panel/panel-logout.c:321
-msgid "_Switch User"
-msgstr "_Nomainīt lietotāju"
-
-#: ../gnome-panel/panel-logout.c:327
-msgid "_Log Out"
-msgstr "_Beigt darbu"
-
-#: ../gnome-panel/panel-logout.c:332
-msgid "Shut down this system now?"
-msgstr "Vai tiešām vēlaties izslēgt datoru?"
-
-#: ../gnome-panel/panel-logout.c:337
-msgid "S_uspend"
-msgstr "Ie_snaudināt"
-
-#: ../gnome-panel/panel-logout.c:342
-msgid "_Hibernate"
-msgstr "_Iemidzināt"
-
-#: ../gnome-panel/panel-logout.c:347
-msgid "_Restart"
-msgstr "Pā_rstartēt"
-
-#: ../gnome-panel/panel-logout.c:353
-msgid "_Shut Down"
-msgstr "Iz_slēgt"
-
-#: ../gnome-panel/panel-menu-bar.c:76
+#: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
 msgstr "Pārlūkojiet un palaidiet uzinstalētās programmas"
 
-#: ../gnome-panel/panel-menu-bar.c:88
+#: ../gnome-panel/panel-menu-bar.c:108
 msgid "Access documents, folders and network places"
 msgstr "Piekļūstiet dokumentiem, mapēm un tīkla vietām"
 
-#: ../gnome-panel/panel-menu-bar.c:100
+#: ../gnome-panel/panel-menu-bar.c:110
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 "Izmainiet saskarnes izskatu un uzvedību, iegūstiet palīdzību vai beidziet "
 "darbu"
 
-#: ../gnome-panel/panel-menu-bar.c:184
+#: ../gnome-panel/panel-menu-bar.c:145
 msgid "Applications"
 msgstr "Programmas"
 
-#: ../gnome-panel/panel-menu-bar.c:390 ../gnome-panel/panel-menu-button.c:663
+#: ../gnome-panel/panel-menu-bar.c:351 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "R_ediģēt izvēlnes"
 
-#: ../gnome-panel/panel-menu-items.c:110 ../gnome-panel/panel-run-dialog.c:346
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "Nevar atvērt atrašanās vietu '%s'"
-
-#: ../gnome-panel/panel-menu-items.c:374
+#: ../gnome-panel/panel-menu-items.c:432
 msgid "Bookmarks"
 msgstr "Grāmatzīmes"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:395
+#: ../gnome-panel/panel-menu-items.c:454 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Atvērt '%s'"
 
-#. Translators: the first string is a
-#. * path and the second string is a
-#. * hostname. nautilus contains the same
-#. * string to translate.
-#: ../gnome-panel/panel-menu-items.c:446
-#, c-format
-msgid "%1$s on %2$s"
-msgstr "%1$s uz %2$s"
-
-#: ../gnome-panel/panel-menu-items.c:519
-msgid "Network Places"
-msgstr "Tīmekļa vietas"
-
 #: ../gnome-panel/panel-menu-items.c:522
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Near pārskanēt %s, lai iegūtu datu nesēja izmaiņas"
+
+#: ../gnome-panel/panel-menu-items.c:565
+#, c-format
+msgid "Rescan %s"
+msgstr "Pārskanēt %s"
+
+#: ../gnome-panel/panel-menu-items.c:602
+#, c-format
+#| msgid "Enable tooltips"
+msgid "Unable to mount %s"
+msgstr "Nevar piemontēt %s"
+
+#: ../gnome-panel/panel-menu-items.c:665
+#, c-format
+msgid "Mount %s"
+msgstr "Montēt %s"
+
+#: ../gnome-panel/panel-menu-items.c:868
 msgid "Removable Media"
 msgstr "Noņemamais daru nesējs"
 
+#: ../gnome-panel/panel-menu-items.c:949
+msgid "Network Places"
+msgstr "Tīmekļa vietas"
+
+#: ../gnome-panel/panel-menu-items.c:988
+#| msgid "Open the contents of your desktop in a folder"
+msgid "Open your personal folder"
+msgstr "Atvērt jūsu privāto mapi"
+
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
-#. * environment). Do not keep "Desktop Folder|"
-#. * in the translation
-#: ../gnome-panel/panel-menu-items.c:598
-msgid "Desktop Folder|Desktop"
-msgstr "Darbavirsmas mape"
+#. * environment).
+#: ../gnome-panel/panel-menu-items.c:1007
+#| msgid "Show Desktop"
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Darbvirsma"
 
-#: ../gnome-panel/panel-menu-items.c:599
+#: ../gnome-panel/panel-menu-items.c:1008
 msgid "Open the contents of your desktop in a folder"
 msgstr "Atvērt darbavirsmas saturu mapē"
 
-#: ../gnome-panel/panel-menu-items.c:909
+#: ../gnome-panel/panel-menu-items.c:1396
 msgid "Places"
 msgstr "Vietas"
 
-#: ../gnome-panel/panel-menu-items.c:939
+#: ../gnome-panel/panel-menu-items.c:1425
 msgid "System"
 msgstr "Sistēma"
 
-#. Translators: translate "panel:showusername|1" to anything
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1017
-msgid "panel:showusername|1"
+#: ../gnome-panel/panel-menu-items.c:1506
+msgctxt "panel:showusername"
+msgid "1"
 msgstr "1"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
-#. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1029
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1518
 #, c-format
 msgid "Log Out %s..."
 msgstr "Iziet no %s sesijas..."
 
 #. Translators: this string is used ONLY if you translated
-#. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1033
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1522
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Iziet no %s sesijas, lai pieteiktos kā cits lietotājs vai arī izslēgtu datoru"
-
-#: ../gnome-panel/panel-menu-items.c:1074
-msgid "Could not launch menu item"
-msgstr "Nevarēju palaist izvēlnes elementu"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1964,19 +2366,20 @@ msgstr "Objekta pogai izmantot pielāgotu ikonu"
 msgid "Use custom path for menu contents"
 msgstr "Lietot pielāgotu ceļu līdz izvēlnes saturam"
 
-#: ../gnome-panel/panel-profile.c:762 ../gnome-panel/panel-profile.c:789
-#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1648
+#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
+#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Kļūda lasot GCong '%s' simbolu virknes vērtību: '%s'"
 
-#: ../gnome-panel/panel-profile.c:804 ../gnome-panel/panel-profile.c:1544
-#: ../gnome-panel/panel-profile.c:1617 ../gnome-panel/panel-profile.c:1680
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
+#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Kļūda lasot GCong veselo skaitļu '%s' vērtību: '%s'"
 
-#: ../gnome-panel/panel-profile.c:1554
+#: ../gnome-panel/panel-profile.c:1606
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1985,38 +2388,47 @@ msgstr ""
 "'%s' paneli ir paredzēts attēlot uz %d ekrāna, kas šobrīd nav pieejams. Šis "
 "panelis netiks ielādēts."
 
-#: ../gnome-panel/panel-profile.c:1632
+#: ../gnome-panel/panel-profile.c:1684
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Kļūda lasot GCong loģiskā mainīgā '%s' vērtību: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:121
-#: ../libpanel-applet/panel-test-applets.c:53
-msgid "Orientation|Top"
-msgstr "Augšpusē"
-
-#: ../gnome-panel/panel-properties-dialog.c:122
+#: ../gnome-panel/panel-properties-dialog.c:128
 #: ../libpanel-applet/panel-test-applets.c:54
-msgid "Orientation|Bottom"
-msgstr "Apakšpusē"
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Augšā"
 
-#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
-msgid "Orientation|Left"
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Apakšā"
+
+#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../libpanel-applet/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Left"
 msgstr "Pa kreisi"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
-#: ../libpanel-applet/panel-test-applets.c:56
-msgid "Orientation|Right"
+#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../libpanel-applet/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Right"
 msgstr "Pa labi"
 
-#: ../gnome-panel/panel-properties-dialog.c:1023
-#: ../gnome-panel/panel-run-dialog.c:1937
+#: ../gnome-panel/panel-properties-dialog.c:949
+#| msgid "Directory Properties"
+msgid "Drawer Properties"
+msgstr "Atvilknes iestatījumi"
+
+#: ../gnome-panel/panel-properties-dialog.c:1057
+#: ../gnome-panel/panel-run-dialog.c:1928
 #, c-format
 msgid "Unable to load file '%s'."
 msgstr "Neizdevās ielādēt failu: '%s'."
 
-#: ../gnome-panel/panel-properties-dialog.c:1028
+#: ../gnome-panel/panel-properties-dialog.c:1062
 msgid "Could not display properties dialog"
 msgstr "Nevarēju parādīt iestatījumu dialoglogu"
 
@@ -2047,10 +2459,6 @@ msgstr "Krāsa:"
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
 msgstr "Izvērst"
-
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
-msgid "General"
-msgstr "Vispārējs"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
@@ -2122,81 +2530,84 @@ msgstr "_Izmērs:"
 msgid "_Tile"
 msgstr "_Flīze"
 
-#: ../gnome-panel/panel-recent.c:50
-msgid "Could not find a suitable application."
-msgstr "Nevarēju atrast piemērotu programmu."
+#: ../gnome-panel/panel-properties-dialog.glade.h:27
+msgid "pixels"
+msgstr "pikseļi"
 
-#: ../gnome-panel/panel-recent.c:97 ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nevaru parādīt palīdzības dokumentu \"%s\""
 
-#: ../gnome-panel/panel-recent.c:109
+#: ../gnome-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Mēģinot atvērt \"%s\" notikusi nezinama kļūda."
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Notīrīt nesen izmantoto dokumentu sarakstu?"
 
-#: ../gnome-panel/panel-recent.c:168
+#: ../gnome-panel/panel-recent.c:149
+#| msgid ""
+#| "If you clear the Recent Documents list, you clear the following:\n"
+#| "\n"
+#| "• All items from the Places → Recent Documents menu item.\n"
+#| "• All items from the recent documents list in all applications."
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Ja jūs notīrīsiet nesen izmantoto dokumentu sarakstu, jūs notīrīsiet "
 "sekojošo:\n"
-"\n"
 "• Visu no Vietas → Nesen izmantoto dokumentu izvēlnes.\n"
 "• Visu programmu nesen izmantoto dokumentu sarakstus."
 
-#: ../gnome-panel/panel-recent.c:211
-msgid "Recent Documents"
-msgstr "Nesen izmantotie dokumenti"
-
-#: ../gnome-panel/panel-recent.c:251
+#: ../gnome-panel/panel-recent.c:161 ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
 msgstr "Notīrīt nesen izmantotos dokumentus"
 
-#: ../gnome-panel/panel-recent.c:255
+#: ../gnome-panel/panel-recent.c:196
+msgid "Recent Documents"
+msgstr "Nesen izmantotie dokumenti"
+
+#: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Notīrīt visus elementus nesen izmantoto dokumentu sarakstā"
 
-#: ../gnome-panel/panel-run-dialog.c:317
+#: ../gnome-panel/panel-run-dialog.c:325
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Nevaru palaist komandu '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:401
+#: ../gnome-panel/panel-run-dialog.c:378
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nevaru pārveidot '%s' no UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1209
+#: ../gnome-panel/panel-run-dialog.c:1186
 msgid "Choose a file to append to the command..."
 msgstr "Izvēlieties failu ko pievienot komandai..."
 
-#: ../gnome-panel/panel-run-dialog.c:1585
+#: ../gnome-panel/panel-run-dialog.c:1562
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Izvēlieties programmu, kuras aprakstu vēlaties redzēt."
 
-#: ../gnome-panel/panel-run-dialog.c:1623
+#: ../gnome-panel/panel-run-dialog.c:1600
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Palaidīs komandu: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1654
+#: ../gnome-panel/panel-run-dialog.c:1631
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Palaišanas logā norādītajam URI saraksta formāts (%d) vai garums (%d) nav "
 "pareizs\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1941
+#: ../gnome-panel/panel-run-dialog.c:1932
 msgid "Could not display run dialog"
 msgstr "Nevarēju parādīt palaišanas dialogu"
 
@@ -2255,109 +2666,89 @@ msgid "The icon of the command to be run."
 msgstr "Izpildāmās komandas ikona."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:14
-#: ../gnome-panel/panel-stock-icons.c:89
+#: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Run"
 msgstr "_Palaist"
 
-#: ../gnome-panel/panel-shell.c:74
-msgid ""
-"I've detected a panel already running,\n"
-"and will now exit."
-msgstr ""
-"Esmu atklājis jau darbojošos paneli,\n"
-"un tagad iziešu."
-
-#: ../gnome-panel/panel-shell.c:78
-#, c-format
-msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
-"The error code is: %d\n"
-"The panel will now exit."
-msgstr ""
-"Radusies problēma reģistrējot paneli ar bonbo-aktivizācijas serveri.\n"
-"Kļūdas kods ir: %d\n"
-"Panelis tūlīt pārstās darboties."
-
-#: ../gnome-panel/panel-stock-icons.c:90
+#: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Force quit"
 msgstr "Aizvērt piespiedu kārtā"
 
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-stock-icons.c:92
 msgid "C_lear"
 msgstr "N_otīrīt"
 
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:93
 msgid "D_on't Delete"
 msgstr "_Nedzēst"
 
-#: ../gnome-panel/panel-toplevel.c:1117
+#: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
 msgstr "Paslēpt paneli"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1498
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Top Expanded Edge Panel"
 msgstr "Virsējais izvērstās malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1499
+#: ../gnome-panel/panel-toplevel.c:1589
 msgid "Top Centered Panel"
 msgstr "Virsējais centrētais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1500
+#: ../gnome-panel/panel-toplevel.c:1590
 msgid "Top Floating Panel"
 msgstr "Virsējais peldošais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1501
+#: ../gnome-panel/panel-toplevel.c:1591
 msgid "Top Edge Panel"
 msgstr "Virsējais malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1505
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Bottom Expanded Edge Panel"
 msgstr "Apakšējais izvērstais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1506
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Bottom Centered Panel"
 msgstr "Apakšējais centrētais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1507
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Bottom Floating Panel"
 msgstr "Apakšējais peldošais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1508
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Bottom Edge Panel"
 msgstr "Apakšējais malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1512
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Left Expanded Edge Panel"
 msgstr "Kreisās malas izvērstais malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1513
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Left Centered Panel"
 msgstr "Kreisās malas centrētais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1514
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Left Floating Panel"
 msgstr "Kreisās malas peldošais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1515
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Left Edge Panel"
 msgstr "Kreisās malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1519
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Right Expanded Edge Panel"
 msgstr "Labās malas izvērstais malas panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1520
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Right Centered Panel"
 msgstr "Labās malas centrētais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1521
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Right Floating Panel"
 msgstr "Labās malas peldošais panelis"
 
-#: ../gnome-panel/panel-toplevel.c:1522
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Right Edge Panel"
 msgstr "Labās malas malējais panelis"
 
@@ -2481,26 +2872,36 @@ msgstr ""
 "satilptu viss tā saturs."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
+#| msgid ""
+#| "If true, the x key is ignored and the panel is placed at the center of "
+#| "the x-axis of the screen. If the panel is resized it will remain at that "
+#| "position - i.e. the panel will grow on both sides. If false, the x key "
+#| "specifies the location of the panel."
 msgid ""
-"If true, the x key is ignored and the panel is placed at the center of the x-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the x key specifies the "
-"location of the panel."
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
 msgstr ""
-"Ja šī iespēja ir aktivizēta, x vērtība tiek ignorēta un panelis atrodas "
+"Ja šī iespēja ir aktivizēta, x un x_right vērtības tiek ignorētas un panelis atrodas "
 "ekrāna x-ass centrā. Ja paneļa izmēri tiek mainīti, tas tik un tā atradīsies "
-"ēkrāna centrā. Pretējā gadījumā x vēŗtība arī nosaka paneļa atrašanās vietu."
+"ēkrāna centrā. Pretējā gadījumā x un x_right vērtības nosaka paneļa atrašanās vietu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
+#| msgid ""
+#| "If true, the y key is ignored and the panel is placed at the center of "
+#| "the y-axis of the screen. If the panel is resized it will remain at that "
+#| "position - i.e. the panel will grow on both sides. If false, the y key "
+#| "specifies the location of the panel."
 msgid ""
-"If true, the y key is ignored and the panel is placed at the center of the y-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the y key specifies the "
-"location of the panel."
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
 msgstr ""
-"Ja šī iespēja ir izvēlēta, tad y vērtība tiks ignorēta un panelis tiks "
+"Ja šī iespēja ir izvēlēta, tad y un y_bottom vērtības tiks ignorētas un panelis tiks "
 "novietots ekrāna y-ass centrā. Ja paneļa izmērs tiks mainīts tas vienalga "
-"paliks tajā pat vietā. Pretējā gadījumā y vērtība arī nosaka paneļa "
+"paliks tajā pat vietā. Pretējā gadījumā y un y_bottom vērtības nosaka paneļa "
 "atrašanās vietu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
@@ -2601,6 +3002,23 @@ msgstr ""
 "daļu no ekrāna izmēra."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
+#| msgid ""
+#| "The location of the panel along the x-axis. This key is only relevant in "
+#| "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#| "placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Paneļa atrašanās vieta gar x-asi, sākot ar ekrāna labo malu. Ja vērtība ir -1, tā tiek ignorēta un tās veitā tiek izmantota x vērtība. Ja vērtība ir lielāka par 0, x vērtība tiks ignorēta. Šī vērtība ir aktuāla tikai ne-izvērstā "
+"stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
+"novietots pie kādas no ekrāna malām."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2610,7 +3028,24 @@ msgstr ""
 "stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
 "novietots pie kādas no ekrāna malām."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
+#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#| msgid ""
+#| "The location of the panel along the y-axis. This key is only relevant in "
+#| "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#| "placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Paneļa atrašanās vieta gar y-asi, sākot ar ekrāna apakšu. Ja vērtība ir -1, tā tiek ignorēta un tās veitā tiek izmantota y vērtība. Ja vērtība ir lielāka par 0, y vērtība tiks ignorēta.Šī vērtība ir aktuāla tikai ne-izvērstā "
+"stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
+"novietots pie kādas no ekrāna malām."
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -2620,7 +3055,7 @@ msgstr ""
 "stāvoklī. Izvērstā stāvoklī šī vērtība tiek ignorēta un panelis tiek "
 "novietots pie kādas no ekrāna malām."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
+#: ../gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -2638,7 +3073,7 @@ msgstr ""
 "horizontāls - taču tik un tā sniedz mums vērtīgu informāciju, kā vajadzētu "
 "uzvesties dažiem paneļa objektiem."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
+#: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2648,7 +3083,7 @@ msgstr ""
 "\", \"medium\" un \"fast\". Šī vērtība ir aktuāla vienīgi, ja ir aktivizētas "
 "animācijas (enable_animations = true)."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
+#: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2658,11 +3093,11 @@ msgstr ""
 "identificētu konkrētu paneli. Tā galvenais uzdevums ir būt par paneļa loga "
 "virsrakstu, kas varētu noderēt pārvietojoties starp vairākiem paneļiem."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
+#: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "Paslēptam panelim redzamie pikseļi"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
+#: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2673,7 +3108,7 @@ msgstr ""
 "GTK+ noklusētā vērtība, \"color\" - tiks lietota krāsas lauka vērtība, "
 "\"imagr\" - tiks lietots attēls uz ko norāda fona attēla lauka vērtība."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
+#: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -2682,41 +3117,80 @@ msgstr ""
 "katrā no tiem. Šī lauka vērtība norāda kurā no ekrāniem šobrīd ir redzams "
 "konkrētais panelis."
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
+#: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
 msgstr "Paneļa X koordināta"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
+#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "Paneļa X koordināta sākot no ekrāna labās malas"
+
+#: ../gnome-panel/panel-toplevel.schemas.in.h:51
 msgid "X screen where the panel is displayed"
 msgstr "X ekrāns, kurā ir redzams attiecīgais panelis"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
+#: ../gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Xinerama monitors uz kura būs redzams konkrētais panelis"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
+#: ../gnome-panel/panel-toplevel.schemas.in.h:53
 msgid "Y co-ordinate of panel"
 msgstr "Paneļa Y koordināta"
 
-#: ../gnome-panel/panel-util.c:671
+#: ../gnome-panel/panel-toplevel.schemas.in.h:54
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Paneļa Y koordināta sākot no ekrāna apakšas"
+
+#: ../gnome-panel/panel-util.c:323
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikona '%s' nav atrasta"
 
-#: ../gnome-panel/panel-util.c:881
+#: ../gnome-panel/panel-util.c:426
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "Nevaru palaist '%s'"
+
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "fails"
 
-#: ../gnome-panel/panel.c:475
+#: ../gnome-panel/panel-util.c:879
+msgid "Home Folder"
+msgstr "Mājas mape"
+
+#. Translators: this is the same string as the one found in
+#. * nautilus
+#: ../gnome-panel/panel-util.c:891
+#| msgid "System"
+msgid "File System"
+msgstr "Failu sistēma"
+
+#: ../gnome-panel/panel-util.c:1038
+msgid "Search"
+msgstr "Meklēt"
+
+#. Translators: the first string is the name of a gvfs
+#. * method, and the second string is a path. For
+#. * example, "Trash: some-directory". It means that the
+#. * directory called "some-directory" is in the trash.
+#.
+#: ../gnome-panel/panel-util.c:1084
+#, c-format
+#| msgid "%1$s, %2$s"
+msgid "%1$s: %2$s"
+msgstr "%1$s: %2$s"
+
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "Atvērt URL: %s"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
 msgstr "Dzēst šo atvilkni?"
 
-#: ../gnome-panel/panel.c:1308
+#: ../gnome-panel/panel.c:1303
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2724,25 +3198,17 @@ msgstr ""
 "Dzēšot atvilkni, arī visi tās\n"
 " iestatījumi tiek zaudēti."
 
-#: ../gnome-panel/panel.c:1310
-msgid "Delete Drawer"
-msgstr "Dzēst atvilkni"
-
-#: ../gnome-panel/panel.c:1312
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
 msgstr "Dzēst šo paneli?"
 
-#: ../gnome-panel/panel.c:1313
+#: ../gnome-panel/panel.c:1307
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Dzēšot paneli, tiek zaudēti\n"
 "arī visi tā iestatījumi."
-
-#: ../gnome-panel/panel.c:1315
-msgid "Delete Panel"
-msgstr "Dzēst paneli"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2756,98 +3222,69 @@ msgstr "Testēt Bonabo Paneļprogrammu"
 msgid "Test Bonobo Applet Factory"
 msgstr "Testēt Bonabo Paneļprogrammas Ražotne"
 
-#: ../libpanel-applet/panel-applet.c:1055
-#, c-format
-msgid "Incomplete '%s' background type received"
-msgstr "Saņemts nepilnīgs '%s' fona tips"
-
-#: ../libpanel-applet/panel-applet.c:1069
-#, c-format
-msgid "Incomplete '%s' background type received: %s"
-msgstr "Saņemts nepilnīgs '%s' fona tips: %s"
-
-#: ../libpanel-applet/panel-applet.c:1078
-#, c-format
-msgid "Failed to get pixmap %s"
-msgstr "Neizdevās dabūt pikseļkarti %s"
-
-#: ../libpanel-applet/panel-applet.c:1085
-msgid "Unknown background type received"
-msgstr "Saņemts nezināms fona tips"
-
-#: ../libpanel-applet/panel-applet.c:1309
-msgid "The Applet's containing Panel's orientation"
-msgstr "Paneļprogramma, saturoša Paneļa novietojumu"
-
-#: ../libpanel-applet/panel-applet.c:1317
-msgid "The Applet's containing Panel's size in pixels"
-msgstr "Paneļprogramma, saturoša Paneļa izmēru pikseļos"
-
-#: ../libpanel-applet/panel-applet.c:1325
-msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "Paneļprogramma, saturoša Paneļa fona krāsu vai pikseļkarti"
-
-#: ../libpanel-applet/panel-applet.c:1333
-msgid "The Applet's flags"
-msgstr "Paneļprogrammas karodziņi"
-
-#: ../libpanel-applet/panel-applet.c:1341
-msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr "Nosaka to paskaidri, kādi izmēri ir pieņemami paneļprogrammai"
-
-#: ../libpanel-applet/panel-applet.c:1349
-msgid "The Applet's containing Panel is locked down"
-msgstr "Paneli saturošās paneļprogrammas ir noslēgtas"
-
-#: ../libpanel-applet/panel-test-applets.c:34
+#: ../libpanel-applet/panel-test-applets.c:35
 msgid "Specify an applet IID to load"
 msgstr "Norādiet ielādējamās paneļprogrammas IID"
 
-#: ../libpanel-applet/panel-test-applets.c:35
+#: ../libpanel-applet/panel-test-applets.c:36
 msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 "Norādiet gconf atrašanās vietu, kurā būtu jāglabā attiecīgā paneļa "
 "iestatījumi"
 
-#: ../libpanel-applet/panel-test-applets.c:36
+#: ../libpanel-applet/panel-test-applets.c:37
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "Norādiet paneļprogrammas sākotnējo izmēru (xx-small, medium, large utt.)"
 
-#: ../libpanel-applet/panel-test-applets.c:37
+#: ../libpanel-applet/panel-test-applets.c:38
 msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Norādiet paneļprogramas sākotnējo novietojumu (augšā, apakšā, pa labu vai pa "
 "kreisi)"
 
-#: ../libpanel-applet/panel-test-applets.c:61
-msgid "Size|XX Small"
+#: ../libpanel-applet/panel-test-applets.c:62
+#| msgid "Size|XX Small"
+msgctxt "Size"
+msgid "XX Small"
 msgstr "XX mazs"
 
-#: ../libpanel-applet/panel-test-applets.c:62
-msgid "Size|X Small"
+#: ../libpanel-applet/panel-test-applets.c:63
+#| msgid "Size|X Small"
+msgctxt "Size"
+msgid "X Small"
 msgstr "X mazs"
 
-#: ../libpanel-applet/panel-test-applets.c:63
-msgid "Size|Small"
+#: ../libpanel-applet/panel-test-applets.c:64
+#| msgid "Size|Small"
+msgctxt "Size"
+msgid "Small"
 msgstr "Mazs"
 
-#: ../libpanel-applet/panel-test-applets.c:64
-msgid "Size|Medium"
+#: ../libpanel-applet/panel-test-applets.c:65
+#| msgid "Size|Medium"
+msgctxt "Size"
+msgid "Medium"
 msgstr "Vidējs"
 
-#: ../libpanel-applet/panel-test-applets.c:65
-msgid "Size|Large"
+#: ../libpanel-applet/panel-test-applets.c:66
+#| msgid "Size|Large"
+msgctxt "Size"
+msgid "Large"
 msgstr "Liels"
 
-#: ../libpanel-applet/panel-test-applets.c:66
-msgid "Size|X Large"
+#: ../libpanel-applet/panel-test-applets.c:67
+#| msgid "Size|X Large"
+msgctxt "Size"
+msgid "X Large"
 msgstr "X liels"
 
-#: ../libpanel-applet/panel-test-applets.c:67
-msgid "Size|XX Large"
+#: ../libpanel-applet/panel-test-applets.c:68
+#| msgid "Size|XX Large"
+msgctxt "Size"
+msgid "XX Large"
 msgstr "XX liels"
 
-#: ../libpanel-applet/panel-test-applets.c:129
+#: ../libpanel-applet/panel-test-applets.c:130
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Neizdevās ielādēt paneļprogrammu: %s"
