@@ -1,3 +1,16 @@
+2009-02-24  Vincent Untz  <vuntz@gnome.org>
+
+	Fix some randr-interaction by connecting to the monitors-changed
+	signal.
+	Fix bug #572933.
+	Patch by Matthias Clasen <mclasen@redhat.com>
+
+	* panel-multiscreen.c: (panel_multiscreen_reinit_idle),
+	(panel_multiscreen_queue_reinit): use an idle loop as callback since we
+	can get two signals emitted at the same time.
+	(panel_multiscreen_init): connect to monitors-changed too
+	(panel_multiscreen_reinit): trivial update
+
 ==================== 2.25.91 ====================
 
 2009-02-16  Vincent Untz  <vuntz@gnome.org>

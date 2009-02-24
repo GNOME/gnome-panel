@@ -40,6 +40,25 @@ static int            screens     = 0;
 static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean	      initialized = FALSE;
+static guint          reinit_id   = 0;
+
+static gboolean
+panel_multiscreen_reinit_idle (gpointer data)
+{
+	panel_multiscreen_reinit ();
+ 	reinit_id = 0;
+
+	return FALSE;
+}
+
+static void
+panel_multiscreen_queue_reinit (void)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
+}
 
 void
 panel_multiscreen_init (void)
@@ -62,8 +81,14 @@ panel_multiscreen_init (void)
 
 		screen = gdk_display_get_screen (display, i);
 
+		/* We connect to both signals to be on the safe side, but in
+		 * theory, it should be enough to only connect to
+		 * monitors-changed. Since we'll likely get two signals, we do
+		 * the real callback in the idle loop. */
 		g_signal_connect (screen, "size-changed",
-				  G_CALLBACK (panel_multiscreen_reinit), NULL);
+				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+		g_signal_connect (screen, "monitors-changed",
+				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
 		monitors   [i] = gdk_screen_get_n_monitors (screen);
 		geometries [i] = g_new0 (GdkRectangle, monitors [i]);
@@ -105,7 +130,7 @@ panel_multiscreen_reinit (void)
 
 		screen = gdk_display_get_screen (display, i);
 		g_signal_handlers_disconnect_by_func (screen,
-						      panel_multiscreen_reinit,
+						      panel_multiscreen_queue_reinit,
 						      NULL);
 	}
 
