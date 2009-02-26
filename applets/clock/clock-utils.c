@@ -96,7 +96,7 @@ clock_utils_display_help (GtkWidget  *widget,
 				parent ? GTK_WINDOW (parent) : NULL,
 				GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
+				GTK_BUTTONS_CLOSE,
 				"%s", primary);
 
 		gtk_message_dialog_format_secondary_text (

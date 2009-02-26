@@ -1684,7 +1684,7 @@ try_config_tool (GdkScreen  *screen,
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
+					 GTK_BUTTONS_CLOSE,
 					 _("Failed to launch time configuration tool: %s"),
 					 err->message);
 	g_error_free (err);
@@ -1731,7 +1731,7 @@ set_time_callback (ClockData *cd, GError *error)
                 dialog = gtk_message_dialog_new (NULL,
                                                  0,
                                                  GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_OK,
+                                                 GTK_BUTTONS_CLOSE,
                                                  _("Failed to set the system time"));
 
                 gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
@@ -1925,7 +1925,7 @@ config_date (BonoboUIComponent *uic,
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
+					 GTK_BUTTONS_CLOSE,
 					 _("Failed to locate a program for configuring "
 					   "the date and time. Perhaps none is installed?"));
 

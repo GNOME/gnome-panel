@@ -59,7 +59,7 @@ panel_error_dialog (GtkWindow  *parent,
 	}
 
 	dialog = gtk_message_dialog_new (parent, 0, GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK, "%s", primary_text);
+					 GTK_BUTTONS_CLOSE, "%s", primary_text);
 	if (secondary_text != NULL)
 		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 							  "%s", secondary_text);

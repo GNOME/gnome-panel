@@ -172,7 +172,7 @@ show_help (FishApplet *fish, const char *link_id)
 				NULL,
 				GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
+				GTK_BUTTONS_CLOSE,
 				"%s", primary);
 
 		gtk_message_dialog_format_secondary_text (
@@ -666,7 +666,7 @@ something_fishy_going_on (FishApplet *fish,
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_OK,
+					 GTK_BUTTONS_CLOSE,
 					 "%s", message);
 
 	g_signal_connect (dialog, "response",

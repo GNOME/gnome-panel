@@ -94,7 +94,7 @@ help_cb (BonoboUIComponent *uic,
                                     _("Could not display help document '%s'"),
                                     NA_HELP_DOC);
       dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
+                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
                                        "%s", primary);
 
       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
