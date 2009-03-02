@@ -1,5 +1,5 @@
 # Italian Translation for gnome-panel
-#
+# This file is distributed under the same license as gnome-panel package
 # Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009 Free Software Foundation, Inc.
 # Christopher R. Gabriel <cgabriel@pluto.linux.it>
 # Alessio Frusciante <algol@firenze.linux.it>, 2003
@@ -8,10 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.25.x\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2009-02-13 19:28+0000\n"
-"PO-Revision-Date: 2009-02-14 16:35+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"POT-Creation-Date: 2009-02-17 09:44+0000\n"
+"PO-Revision-Date: 2009-03-02 21:21+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +61,7 @@ msgid "_Preferences"
 msgstr "Preferen_ze"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3780
+#: ../applets/clock/clock.c:3800
 msgid "Clock"
 msgstr "Orologio"
 
@@ -78,7 +77,7 @@ msgstr "Fabbrica per creare le applet Orologio."
 msgid "Get the current time and date"
 msgstr "Legge la data e l'ora correnti"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:432
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:452
 msgid "%l:%M %p"
 msgstr "%l.%M %p"
 
@@ -90,8 +89,8 @@ msgstr "%l.%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:434
-#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%-H.%M"
 
@@ -136,14 +135,14 @@ msgstr "Località"
 msgid "Calendar"
 msgstr "Calendario"
 
-#: ../applets/clock/clock.c:432
+#: ../applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
 # la forma %k non è sempre supportata
 # in assenza di indicazioni e visto che
 # creava problemi in nautilus preferisco %-H
-#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1552
+#: ../applets/clock/clock.c:454 ../applets/clock/clock.c:1572
 msgid "%H:%M:%S"
 msgstr "%-H.%M.%S"
 
@@ -152,7 +151,7 @@ msgstr "%-H.%M.%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:474
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -160,7 +159,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:461
+#: ../applets/clock/clock.c:481
 #, c-format
 msgid ""
 "%1$s\n"
@@ -173,7 +172,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:469
+#: ../applets/clock/clock.c:489
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -181,60 +180,60 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:671
 msgid "%A %B %d (%%s)"
 msgstr "%A, %-d %B (%%s)"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:701
 msgid "Click to hide your appointments and tasks"
 msgstr "Fare clic per nascondere i propri appuntamenti e attività"
 
-#: ../applets/clock/clock.c:684
+#: ../applets/clock/clock.c:704
 msgid "Click to view your appointments and tasks"
 msgstr "Fare clic per visualizzare i propri appuntamenti e attività"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:708
 msgid "Click to hide month calendar"
 msgstr "Fare clic per nascondere il calendario del mese"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:711
 msgid "Click to view month calendar"
 msgstr "Fare clic per visualizzare il calendario del mese"
 
-#: ../applets/clock/clock.c:1407
+#: ../applets/clock/clock.c:1427
 msgid "Computer Clock"
 msgstr "Orologio del computer"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: ../applets/clock/clock.c:1549
+#: ../applets/clock/clock.c:1569
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1611
 msgid "%A, %B %d %Y"
 msgstr "%A, %-d %B %Y"
 
-#: ../applets/clock/clock.c:1668
+#: ../applets/clock/clock.c:1688
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Lancio dello strumento di configurazione dell'ora non riuscito: %s"
 
-#: ../applets/clock/clock.c:1699
+#: ../applets/clock/clock.c:1719
 msgid "Set System Time..."
 msgstr "Imposta ora sistema..."
 
-#: ../applets/clock/clock.c:1700 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "Imposta ora sistema"
 
-#: ../applets/clock/clock.c:1715
+#: ../applets/clock/clock.c:1735
 msgid "Failed to set the system time"
 msgstr "Impostazione dell'ora del sistema non riuscita"
 
-#: ../applets/clock/clock.c:1909
+#: ../applets/clock/clock.c:1929
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -242,41 +241,41 @@ msgstr ""
 "Individuazione di un programma per configurare data e ora non riuscita. "
 "Forse non ne è installato alcuno."
 
-#: ../applets/clock/clock.c:2841
+#: ../applets/clock/clock.c:2861
 msgid "Custom format"
 msgstr "Formato personalizzato"
 
-#: ../applets/clock/clock.c:3502
+#: ../applets/clock/clock.c:3522
 msgid "City Name"
 msgstr "Nome della città"
 
-#: ../applets/clock/clock.c:3506
+#: ../applets/clock/clock.c:3526
 msgid "City Time Zone"
 msgstr "Fuso orario della città"
 
-#: ../applets/clock/clock.c:3676
+#: ../applets/clock/clock.c:3696
 msgid "24 hour"
 msgstr "24 ore"
 
-#: ../applets/clock/clock.c:3677
+#: ../applets/clock/clock.c:3697
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: ../applets/clock/clock.c:3678
+#: ../applets/clock/clock.c:3698
 msgid "Internet time"
 msgstr "Ora Internet"
 
-#: ../applets/clock/clock.c:3686
+#: ../applets/clock/clock.c:3706
 msgid "Custom _format:"
 msgstr "_Formato personalizzato:"
 
-#: ../applets/clock/clock.c:3783
+#: ../applets/clock/clock.c:3803
 msgid "The Clock displays the current time and date"
 msgstr "Orologio mostra l'ora e la data correnti"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3786 ../applets/fish/fish.c:613
-#: ../applets/notification_area/main.c:156
+#: ../applets/clock/clock.c:3806 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
 #: ../applets/wncklet/window-menu.c:79
 #: ../applets/wncklet/workspace-switcher.c:622
@@ -710,16 +709,14 @@ msgid "Sunrise: %s / Sunset: %s"
 msgstr "Alba: %s / Tramonto: %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
-#| msgid "Could not display help document"
 msgid "Could not display help document '%s'"
 msgstr "Impossibile mostrare il documento d'aiuto «%s»"
 
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
-#| msgid "Could not display help document"
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Errore nel mostrare il documento d'aiuto"
 
@@ -1002,7 +999,7 @@ msgid "Area where notification icons appear"
 msgstr "Area dove appaiono le icone di notifica"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:151
+#: ../applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "Area di notifica"
 
@@ -1010,7 +1007,7 @@ msgstr "Area di notifica"
 msgid "Notification Area Factory"
 msgstr "Fabbrica dell'area di notifica"
 
-#: ../applets/notification_area/main.c:240
+#: ../applets/notification_area/main.c:239
 msgid "Panel Notification Area"
 msgstr "Area di notifica del pannello"
 
@@ -1337,7 +1334,6 @@ msgstr "Errore"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
-#| msgid "Could not show '%s'"
 msgid "Could not launch '%s'"
 msgstr "Impossibile lanciare «%s»"
 
@@ -2177,7 +2173,6 @@ msgstr "Apre la propria cartella personale"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
 #: ../gnome-panel/panel-menu-items.c:1007
-#| msgid "Show Desktop"
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Scrivania"
@@ -3243,7 +3238,7 @@ msgid ""
 "settings are lost."
 msgstr ""
 "Quando un cassetto viene eliminato, il cassetto\n"
-"e le sue impostazioni vengono perse. "
+"e le sue impostazioni vengono perse."
 
 #: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
@@ -3291,43 +3286,36 @@ msgstr ""
 "Specifica l'orientamento iniziale dell'applet (alto, basso, destra, sinistra)"
 
 #: ../libpanel-applet/panel-test-applets.c:62
-#| msgid "Size|XX Small"
 msgctxt "Size"
 msgid "XX Small"
 msgstr "XX Small"
 
 #: ../libpanel-applet/panel-test-applets.c:63
-#| msgid "Size|X Small"
 msgctxt "Size"
 msgid "X Small"
 msgstr "X Small"
 
 #: ../libpanel-applet/panel-test-applets.c:64
-#| msgid "Size|Small"
 msgctxt "Size"
 msgid "Small"
 msgstr "Small"
 
 #: ../libpanel-applet/panel-test-applets.c:65
-#| msgid "Size|Medium"
 msgctxt "Size"
 msgid "Medium"
 msgstr "Media"
 
 #: ../libpanel-applet/panel-test-applets.c:66
-#| msgid "Size|Large"
 msgctxt "Size"
 msgid "Large"
 msgstr "Large"
 
 #: ../libpanel-applet/panel-test-applets.c:67
-#| msgid "Size|X Large"
 msgctxt "Size"
 msgid "X Large"
 msgstr "X Large"
 
 #: ../libpanel-applet/panel-test-applets.c:68
-#| msgid "Size|XX Large"
 msgctxt "Size"
 msgid "XX Large"
 msgstr "XX Large"
