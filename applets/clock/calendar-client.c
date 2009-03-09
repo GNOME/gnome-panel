@@ -597,7 +597,7 @@ get_ical_rid (icalcomponent *ical)
   ical_time = icalproperty_get_recurrenceid (prop);
 
   return icaltime_is_valid_time (ical_time) && !icaltime_is_null_time (ical_time) ? 
-    icaltime_as_ical_string (ical_time) : NULL;
+    g_strdup (icaltime_as_ical_string (ical_time)) : NULL;
 }
 
 static char *

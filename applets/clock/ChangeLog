@@ -1,3 +1,8 @@
+2009-03-09  Vincent Untz  <vuntz@gnome.org>
+
+	* calendar-client.c: (get_ical_rid): strdup the string returned by
+	libical, else we'll free it twice.
+
 ==================== 2.25.92 ====================
 
 2009-02-26  Vincent Untz  <vuntz@gnome.org>
