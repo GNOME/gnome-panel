@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-12 14:45+0700\n"
-"PO-Revision-Date: 2009-02-12 15:00+0700\n"
+"POT-Creation-Date: 2009-03-10 20:04+0700\n"
+"PO-Revision-Date: 2009-03-10 20:06+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgid "_Preferences"
 msgstr "_ปรับแต่ง..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:3780
+#: applets/clock/clock.c:3800
 msgid "Clock"
 msgstr "นาฬิกา"
 
@@ -81,7 +81,7 @@ msgstr "โรงงานสร้างแอพเพล็ตนาฬิก
 msgid "Get the current time and date"
 msgstr "ดูวันและเวลาปัจจุบัน"
 
-#: applets/clock/calendar-window.c:242 applets/clock/clock.c:432
+#: applets/clock/calendar-window.c:242 applets/clock/clock.c:452
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -90,8 +90,8 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: applets/clock/calendar-window.c:244 applets/clock/clock.c:434
-#: applets/clock/clock.c:1554 applets/clock/clock-location-tile.c:480
+#: applets/clock/calendar-window.c:244 applets/clock/clock.c:454
+#: applets/clock/clock.c:1574 applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -106,8 +106,7 @@ msgstr "%a %e %b"
 msgid "Tasks"
 msgstr "ภารกิจ"
 
-#: applets/clock/calendar-window.c:773
-#: applets/clock/calendar-window.c:949
+#: applets/clock/calendar-window.c:773 applets/clock/calendar-window.c:949
 #: applets/clock/calendar-window.c:1585
 msgid "Edit"
 msgstr "แก้ไข"
@@ -136,11 +135,11 @@ msgstr "ตำแหน่งที่ตั้ง"
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
-#: applets/clock/clock.c:432
+#: applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:434 applets/clock/clock.c:1552
+#: applets/clock/clock.c:454 applets/clock/clock.c:1572
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -149,7 +148,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:454
+#: applets/clock/clock.c:474
 msgid "%a %b %e"
 msgstr "%a %-d %b"
 
@@ -157,7 +156,7 @@ msgstr "%a %-d %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:461
+#: applets/clock/clock.c:481
 #, c-format
 msgid ""
 "%1$s\n"
@@ -170,7 +169,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:469
+#: applets/clock/clock.c:489
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -178,102 +177,101 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: applets/clock/clock.c:651
+#: applets/clock/clock.c:671
 msgid "%A %B %d (%%s)"
 msgstr "วัน%Aที่ %-d %B %EY (%%s)"
 
-#: applets/clock/clock.c:681
+#: applets/clock/clock.c:701
 msgid "Click to hide your appointments and tasks"
 msgstr "กดเพื่อซ่อนนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:684
+#: applets/clock/clock.c:704
 msgid "Click to view your appointments and tasks"
 msgstr "กดเพื่อดูนัดหมายและรายการภารกิจของคุณ"
 
-#: applets/clock/clock.c:688
+#: applets/clock/clock.c:708
 msgid "Click to hide month calendar"
 msgstr "กดเพื่อซ่อนปฏิทินรายเดือน"
 
-#: applets/clock/clock.c:691
+#: applets/clock/clock.c:711
 msgid "Click to view month calendar"
 msgstr "กดเพื่อดูปฏิทินรายเดือน"
 
-#: applets/clock/clock.c:1407
+#: applets/clock/clock.c:1427
 msgid "Computer Clock"
 msgstr "นาฬิกาคอมพิวเตอร์"
 
-#: applets/clock/clock.c:1547
+#: applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1549
+#: applets/clock/clock.c:1569
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:1591
+#: applets/clock/clock.c:1611
 msgid "%A, %B %d %Y"
 msgstr "วัน%Aที่ %-d %B %EY"
 
-#: applets/clock/clock.c:1668
+#: applets/clock/clock.c:1688
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "เรียกใช้เครื่องมือตั้งเวลาไม่สำเร็จ: %s"
 
-#: applets/clock/clock.c:1699
+#: applets/clock/clock.c:1719
 msgid "Set System Time..."
 msgstr "ตั้งเวลาของเครื่อง..."
 
-#: applets/clock/clock.c:1700 applets/clock/clock.glade.h:19
+#: applets/clock/clock.c:1720 applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "ตั้งเวลาของเครื่อง"
 
-#: applets/clock/clock.c:1715
+#: applets/clock/clock.c:1735
 msgid "Failed to set the system time"
 msgstr "ตั้งเวลาของเครื่องไม่สำเร็จ"
 
-#: applets/clock/clock.c:1909
+#: applets/clock/clock.c:1929
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "หาโปรแกรมสำหรับตั้งวันที่และเวลาไม่พบ โปรแกรมอาจยังไม่ได้ติดตั้ง?"
 
-#: applets/clock/clock.c:2841
+#: applets/clock/clock.c:2861
 msgid "Custom format"
 msgstr "กำหนดรูปแบบเอง"
 
-#: applets/clock/clock.c:3502
+#: applets/clock/clock.c:3522
 msgid "City Name"
 msgstr "ชื่อเมือง"
 
-#: applets/clock/clock.c:3506
+#: applets/clock/clock.c:3526
 msgid "City Time Zone"
 msgstr "เขตเวลาของเมือง"
 
-#: applets/clock/clock.c:3676
+#: applets/clock/clock.c:3696
 msgid "24 hour"
 msgstr "24 ชั่วโมง"
 
-#: applets/clock/clock.c:3677
+#: applets/clock/clock.c:3697
 msgid "UNIX time"
 msgstr "เวลาแบบยูนิกซ์"
 
-#: applets/clock/clock.c:3678
+#: applets/clock/clock.c:3698
 msgid "Internet time"
 msgstr "เวลาแบบอินเทอร์เน็ต"
 
-#: applets/clock/clock.c:3686
+#: applets/clock/clock.c:3706
 msgid "Custom _format:"
 msgstr "_กำหนดรูปแบบเอง:"
 
-#: applets/clock/clock.c:3783
+#: applets/clock/clock.c:3803
 msgid "The Clock displays the current time and date"
 msgstr "นาฬิกาแสดงวันและเวลาปัจจุบัน"
 
 #. Translator credits
-#: applets/clock/clock.c:3786 applets/fish/fish.c:613
-#: applets/notification_area/main.c:156
-#: applets/wncklet/showdesktop.c:531 applets/wncklet/window-list.c:607
-#: applets/wncklet/window-menu.c:79
+#: applets/clock/clock.c:3806 applets/fish/fish.c:613
+#: applets/notification_area/main.c:155 applets/wncklet/showdesktop.c:531
+#: applets/wncklet/window-list.c:607 applets/wncklet/window-menu.c:79
 #: applets/wncklet/workspace-switcher.c:622
 #: gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
@@ -679,14 +677,14 @@ msgid "Sunrise: %s / Sunset: %s"
 msgstr "ดวงอาทิตย์ขึ้น: %s / ดวงอาทิตย์ตก: %s"
 
 #: applets/clock/clock-utils.c:93 applets/fish/fish.c:169
-#: applets/notification_area/main.c:95 applets/wncklet/wncklet.c:123
+#: applets/notification_area/main.c:94 applets/wncklet/wncklet.c:123
 #: gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "ไม่สามารถแสดงเอกสารวิธีใช้ '%s'"
 
 #: applets/clock/clock-utils.c:122 applets/fish/fish.c:195
-#: applets/notification_area/main.c:116 applets/wncklet/wncklet.c:152
+#: applets/notification_area/main.c:115 applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "เกิดข้อผิดพลาดขณะแสดงเอกสารวิธีใช้"
 
@@ -748,8 +746,7 @@ msgstr ""
 msgid "Images"
 msgstr "รูปภาพ"
 
-#: applets/fish/fish.c:575 applets/fish/fish.c:641
-#: applets/fish/fish.c:757
+#: applets/fish/fish.c:575 applets/fish/fish.c:641 applets/fish/fish.c:757
 #, no-c-format
 msgid "%s the Fish"
 msgstr "ปลา %s"
@@ -837,8 +834,7 @@ msgstr "ดูปฏิทินสิ!"
 msgid "%s the Fish, the fortune teller"
 msgstr "ปลา %s หมอดูไม่แม่น"
 
-#: applets/fish/fish.glade.h:1
-#: gnome-panel/panel-properties-dialog.glade.h:1
+#: applets/fish/fish.glade.h:1 gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -954,7 +950,7 @@ msgid "Area where notification icons appear"
 msgstr "พื้นที่สำหรับไอคอนแจ้งเหตุ"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:151
+#: applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "พื้นที่แจ้งเหตุ"
 
@@ -962,7 +958,7 @@ msgstr "พื้นที่แจ้งเหตุ"
 msgid "Notification Area Factory"
 msgstr "โรงงานพื้นที่แจ้งเหตุ"
 
-#: applets/notification_area/main.c:240
+#: applets/notification_area/main.c:239
 msgid "Panel Notification Area"
 msgstr "พื้นที่แจ้งเหตุสำหรับพาเนล"
 
@@ -1263,8 +1259,7 @@ msgstr ""
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:82
-#: gnome-panel/panel-applet-frame.c:1000
-#: gnome-panel/panel-applet-frame.c:1088
+#: gnome-panel/panel-applet-frame.c:1000 gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "ข้อผิดพลาด"
 
@@ -1273,8 +1268,7 @@ msgstr "ข้อผิดพลาด"
 msgid "Could not launch '%s'"
 msgstr "ไม่สามารถเรียกใช้ '%s'"
 
-#: gnome-panel/libpanel-util/panel-launch.c:48
-#: gnome-panel/launcher.c:161
+#: gnome-panel/libpanel-util/panel-launch.c:48 gnome-panel/launcher.c:161
 msgid "Could not launch application"
 msgstr "ไม่สามารถเรียกใช้โปรแกรมได้"
 
@@ -1317,8 +1311,7 @@ msgid "_Add to Drawer..."
 msgstr "เ_พิ่มลงในลิ้นชัก..."
 
 #: gnome-panel/drawer.c:595 gnome-panel/launcher.c:807
-#: gnome-panel/panel-action-button.c:141
-#: gnome-panel/panel-context-menu.c:216
+#: gnome-panel/panel-action-button.c:141 gnome-panel/panel-context-menu.c:216
 msgid "_Properties"
 msgstr "คุณ_สมบัติ"
 
@@ -1337,7 +1330,7 @@ msgstr "- แก้ไขแฟ้ม .desktop"
 #: gnome-panel/gnome-desktop-item-edit.c:149
 #: gnome-panel/gnome-desktop-item-edit.c:203 gnome-panel/launcher.c:897
 msgid "Create Launcher"
-msgstr "สร้างปุ่มเรียกโปรแกรม"
+msgstr "สร้างปุ่มเรียก"
 
 #: gnome-panel/gnome-desktop-item-edit.c:174
 #: gnome-panel/gnome-desktop-item-edit.c:197
@@ -1346,7 +1339,7 @@ msgstr "คุณสมบัติไดเรกทอรี"
 
 #: gnome-panel/gnome-desktop-item-edit.c:180 gnome-panel/launcher.c:735
 msgid "Launcher Properties"
-msgstr "คุณสมบัติปุ่มเรียกโปรแกรม"
+msgstr "คุณสมบัติปุ่มเรียก"
 
 #: gnome-panel/gnome-panel.desktop.in.in.h:1
 msgid ""
@@ -1373,12 +1366,12 @@ msgstr "ไม่สามารถใช้สิ่งที่ลากมา
 #: gnome-panel/launcher.c:423
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกโปรแกรมบนพาเนล\n"
+msgstr "ไม่ได้กำหนด URI ของแฟ้มพื้นโต๊ะของปุ่มเรียกบนพาเนล\n"
 
 #: gnome-panel/launcher.c:462
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกโปรแกรมบนพาเนล %s%s\n"
+msgstr "ไม่สามารถเปิดแฟ้มพื้นโต๊ะ %s สำหรับปุ่มเรียกบนพาเนล %s%s\n"
 
 #: gnome-panel/launcher.c:801
 msgid "_Launch"
@@ -1387,13 +1380,12 @@ msgstr "เ_รียกใช้"
 #: gnome-panel/launcher.c:840
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
-msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียกโปรแกรม\n"
+msgstr "ไม่ได้กำหนดค่า %s ไม่สามารถโหลดปุ่มเรียก\n"
 
 #: gnome-panel/launcher.c:964 gnome-panel/panel-ditem-editor.c:1350
-#: gnome-panel/panel-ditem-editor.c:1384
-#: gnome-panel/panel-ditem-editor.c:1415
+#: gnome-panel/panel-ditem-editor.c:1384 gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
-msgstr "ไม่สามารถบันทึกปุ่มเรียกโปรแกรมได้"
+msgstr "ไม่สามารถบันทึกปุ่มเรียกได้"
 
 #: gnome-panel/main.c:43
 msgid "Replace a currently running panel"
@@ -1512,8 +1504,7 @@ msgstr "ค้นหาแฟ้ม..."
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "ค้นหาเอกสารและโฟลเดอร์ในคอมพิวเตอร์เครื่องนี้ด้วยชื่อหรือเนื้อหา"
 
-#: gnome-panel/panel-action-button.c:329
-#: gnome-panel/panel-force-quit.c:221
+#: gnome-panel/panel-action-button.c:329 gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
 msgstr "บังคับออก"
 
@@ -1544,7 +1535,7 @@ msgstr "ปุ่มเรียกโปรแกรมสร้างเอง
 
 #: gnome-panel/panel-addto.c:117
 msgid "Create a new launcher"
-msgstr "สร้างปุ่มเรียกโปรแกรมใหม่"
+msgstr "สร้างปุ่มเรียกใหม่"
 
 #: gnome-panel/panel-addto.c:127
 msgid "Application Launcher..."
@@ -1552,7 +1543,7 @@ msgstr "ปุ่มเรียกโปรแกรม..."
 
 #: gnome-panel/panel-addto.c:128
 msgid "Copy a launcher from the applications menu"
-msgstr "สร้างปุ่มเรียกโปรแกรมโดยคัดลอกมาจากเมนูเรียกโปรแกรม"
+msgstr "สร้างปุ่มเรียกโดยคัดลอกมาจากเมนูเรียกโปรแกรม"
 
 #: gnome-panel/panel-addto.c:142 gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
@@ -1586,8 +1577,7 @@ msgstr "ลิ้นชักที่เปิดออกได้ สำห�
 msgid "(empty)"
 msgstr "(ว่างเปล่า)"
 
-#: gnome-panel/panel-addto.c:410
-#: libpanel-applet/panel-test-applets.c:250
+#: gnome-panel/panel-addto.c:410 libpanel-applet/panel-test-applets.c:250
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "การร้องขอข้อมูลแจ้งสิ่งผิดปรกติ %s\n"
@@ -1824,7 +1814,7 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"รายชื่อหมายเลขประจำวัตถุพาเนล แต่ละหมายเลขแทนวัตถุพาเนลแต่ละตัว (เช่น ปุ่มเรียกโปรแกรม "
+"รายชื่อหมายเลขประจำวัตถุพาเนล แต่ละหมายเลขแทนวัตถุพาเนลแต่ละตัว (เช่น ปุ่มเรียก "
 "ปุ่มทำงานหรือปุ่ม/แถบเมนู)ค่าตั้งสำหรับแต่ละวัตถุเหล่านี้จะเก็บไว้ใน /apps/panel/objects/$(id)"
 
 #: gnome-panel/panel-general.schemas.in.h:5
@@ -1934,7 +1924,7 @@ msgstr "เปิดใช้งานคำแนะนำเครื่อง
 
 #: gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
-msgstr "เน้นปุ่มเรียกโปรแกรมเมื่อเมาส์อยู่เหนือตัวเรียกเหล่านั้น"
+msgstr "เน้นปุ่มเรียกเมื่อเมาส์อยู่เหนือปุ่มเรียก"
 
 #: gnome-panel/panel-global.schemas.in.h:13
 msgid ""
@@ -1946,12 +1936,12 @@ msgstr "ถ้าเลือก จะแสดงกล่องโต้ต�
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "ถ้าเลือก ลิ้นชักจะปิดอัตโนมัติเมื่อผู้ใช้คลิกปุ่มเรียกโปรแกรมที่อยู่ในลิ้นชัก"
+msgstr "ถ้าเลือก ลิ้นชักจะปิดอัตโนมัติเมื่อผู้ใช้คลิกปุ่มเรียกที่อยู่ในลิ้นชัก"
 
 #: gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "ถ้าเลือก จะเน้นปุ่มเรียกโปรแกรมเมื่อผู้ใช้เลื่อนตัวชี้อยู่เหนือตัวเรียก"
+msgstr "ถ้าเลือก จะเน้นปุ่มเรียกเมื่อผู้ใช้เลื่อนตัวชี้อยู่เหนือปุ่มเรียก"
 
 #: gnome-panel/panel-global.schemas.in.h:16
 msgid ""
@@ -2142,7 +2132,7 @@ msgstr "วัดตำแหน่งเทียบกับขอบล่า
 
 #: gnome-panel/panel-object.schemas.in.h:9
 msgid "Launcher location"
-msgstr "ตำแหน่งปุ่มเรียกโปรแกรม"
+msgstr "ตำแหน่งปุ่มเรียก"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
@@ -2197,8 +2187,8 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"ตำแหน่งของแฟ้ม .desktop ที่ระบุเกี่ยวกับปุ่มเรียกโปรแกรมนั้นค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type "
-"เป็น \"launcher-object\""
+"ตำแหน่งของแฟ้ม .desktop ที่บรรยายปุ่มเรียก ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น "
+"\"launcher-object\""
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2475,8 +2465,7 @@ msgstr "ไม่สามารถแปลง '%s' จาก UTF-8 ได้"
 msgid "Choose a file to append to the command..."
 msgstr "เลือกแฟ้มที่จะใช้ต่อท้ายคำสั่ง..."
 
-#: gnome-panel/panel-run-dialog.c:1562
-#: gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1562 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "เลือกโปรแกรมแล้วจะแสดงรายละเอียด"
 
@@ -2548,8 +2537,7 @@ msgstr "แสดงรายชื่อโ_ปรแกรมที่รู�
 msgid "The icon of the command to be run."
 msgstr "ไอคอนของคำสั่งที่จะเรียกใช้งาน"
 
-#: gnome-panel/panel-run-dialog.glade.h:14
-#: gnome-panel/panel-stock-icons.c:90
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:90
 msgid "_Run"
 msgstr "เ_รียกใช้งาน"
 
@@ -2741,7 +2729,7 @@ msgid ""
 msgstr ""
 "ถ้าเลือก พาเนลจะขยายเต็มความกว้างของหน้าจอ (หรือความสูง ถ้าเป็นพาเนลแนวตั้ง) ในโหมดนี้ "
 "จะสามารถวางพาเนลไว้ที่ขอบของหน้าจอได้เท่านั้น ถ้าไม่เลือก "
-"พาเนลจะขยายใหญ่ให้เพียงพอสำหรับวางแอพเพล็ต ปุ่มเรียกโปรแกรม และปุ่มต่างๆ เท่านั้น"
+"พาเนลจะขยายใหญ่ให้เพียงพอสำหรับวางแอพเพล็ต ปุ่มเรียก และปุ่มต่างๆ เท่านั้น"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -3475,7 +3463,7 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgstr "ว่างเปล่า"
 
 #~ msgid "Could not save launcher to disk"
-#~ msgstr "ไม่สามารถบันทึกปุ่มเรียกโปรแกรมลงบนดิสก์ได้"
+#~ msgstr "ไม่สามารถบันทึกปุ่มเรียกลงบนดิสก์ได้"
 
 #~ msgid "You have to specify a name."
 #~ msgstr "คุณต้องกำหนดชื่อ"
@@ -3484,7 +3472,7 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgstr "คุณต้องกำหนด URL หรือคำสั่งที่ถูกต้อง"
 
 #~ msgid "Could not save changes to launcher"
-#~ msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงของปุ่มเรียกโปรแกรมได้"
+#~ msgstr "ไม่สามารถบันทึกการเปลี่ยนแปลงของปุ่มเรียกได้"
 
 #~ msgid "Menu"
 #~ msgstr "เมนู"
@@ -3538,7 +3526,7 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgid ""
 #~ "You can not create a new launcher at this location since the location is "
 #~ "not writable."
-#~ msgstr "คุณไม่สามารถสร้างปุ่มเรียกโปรแกรมใหม่ตรงนี้เนื่องจากตรงนี้ไม่สามารถเขียนได้"
+#~ msgstr "คุณไม่สามารถสร้างปุ่มเรียกใหม่ตรงนี้เนื่องจากตรงนี้ไม่สามารถเขียนได้"
 
 #~ msgid "You cannot remove your last panel."
 #~ msgstr "คุณไม่สามารถลบพาเนลล่าสุดของคุณออกได้"
@@ -3809,7 +3797,7 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgstr "_ความเร็วในการเคลื่อนไหว:"
 
 #~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "_ปิดลิ้นชักเมื่อตัวเรียกใช้โปรแกรมถูกคลิก"
+#~ msgstr "_ปิดลิ้นชักเมื่อปุ่มเรียกถูกคลิก"
 
 #~ msgid "Drawer and panel _animation"
 #~ msgstr "ภาพเ_คลื่อนไหวของลิ้นชักและพาเนล"
@@ -3861,7 +3849,7 @@ msgstr "โฟลเดอร์ค่า_ปรับแต่ง:"
 #~ msgstr "เอกสารที่พึ่งใช้"
 
 #~ msgid "Launcher from menu"
-#~ msgstr "ตัวเรียกใช้โปรแกรมจากเมนู"
+#~ msgstr "ปุ่มเรียกจากเมนู"
 
 #~ msgid "Cannot add to run box"
 #~ msgstr "ไม่สามารถเพิ่มเพื่อเรียกใช้กล่อง"
