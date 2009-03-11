@@ -831,6 +831,11 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 
 		mount = l->data;
 
+		if (g_mount_is_shadowed (mount)) {
+			g_object_unref (mount);
+			continue;
+		}
+
 		volume = g_mount_get_volume (mount);
 		if (volume != NULL) {
 			g_object_unref (volume);
@@ -917,6 +922,12 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 		GFile   *root;
 
 		mount = l->data;
+
+		if (g_mount_is_shadowed (mount)) {
+			g_object_unref (mount);
+			continue;
+		}
+
 		volume = g_mount_get_volume (mount);
 		if (volume != NULL) {
 			g_object_unref (volume);
