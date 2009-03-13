@@ -8,9 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.1.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-06 23:50+0100\n"
-"PO-Revision-Date: 2008-03-02 18:12+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
+"POT-Creation-Date: 2009-03-03 17:13+0000\n"
+"PO-Revision-Date: 2009-03-12 19:19+0000\n"
 "Last-Translator: Philip Withnall <philip@tecnocode.co.uk>\n"
 "Language-Team: English/GB <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +49,7 @@ msgstr "_About"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:721
-#: ../gnome-panel/panel-context-menu.c:283 ../gnome-panel/panel-menu-bar.c:341
+#: ../gnome-panel/panel-context-menu.c:284 ../gnome-panel/panel-menu-bar.c:341
 #: ../gnome-panel/panel-menu-button.c:661
 msgid "_Help"
 msgstr "_Help"
@@ -124,7 +125,7 @@ msgstr "Birthdays and Anniversaries"
 msgid "Weather Information"
 msgstr "Weather Information"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:13
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
 msgid "Locations"
 msgstr "Locations"
 
@@ -219,7 +220,7 @@ msgstr "Failed to launch time configuration tool: %s"
 msgid "Set System Time..."
 msgstr "Set System Time..."
 
-#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.c:1678 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "Set System Time"
 
@@ -301,15 +302,24 @@ msgstr "<b>Time Settings</b>"
 msgid "<i>(optional)</i>"
 msgstr "<i>(optional)</i>"
 
-#: ../applets/clock/clock.glade.h:6
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.glade.h:7
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Type·a·city,"
+"·county·or·country·name·and·then·select·a·match·from·the·pop-up.</i></small>"
+
+#: ../applets/clock/clock.glade.h:8
 msgid "Clock Preferences"
 msgstr "Clock Preferences"
 
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:9
 msgid "Current Time:"
 msgstr "Current Time:"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:10
 msgid ""
 "East\n"
 "West"
@@ -317,24 +327,24 @@ msgstr ""
 "East\n"
 "West"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "General"
 
-#: ../applets/clock/clock.glade.h:11
+#: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
 msgstr "Latitude:"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
 msgstr "Location Name:"
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
 msgstr "Longitude:"
 
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
@@ -342,63 +352,63 @@ msgstr ""
 "North\n"
 "South"
 
-#: ../applets/clock/clock.glade.h:18
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
 msgstr "Show _temperature"
 
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
 msgstr "Show _weather"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
 msgstr "Show seco_nds"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.glade.h:23
 msgid "Show the _date"
 msgstr "Show the _date"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
 msgstr "Time Settings"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
 msgstr "Time _Settings"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.glade.h:26
 msgid "Time:"
 msgstr "Time:"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
 msgstr "Timezone:"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:28
 msgid "Weather"
 msgstr "Weather"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:29
 msgid "_12 hour format"
 msgstr "_12 hour format"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:30
 msgid "_24 hour format"
 msgstr "_24 hour format"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:31
 msgid "_Pressure unit:"
 msgstr "_Pressure unit:"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:32
 msgid "_Temperature unit:"
 msgstr "_Temperature unit:"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.glade.h:33
 msgid "_Visibility unit:"
 msgstr "_Visibility unit:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:34
 msgid "_Wind speed unit:"
 msgstr "_Wind speed unit:"
 
@@ -1304,7 +1314,7 @@ msgid "Cannot find an empty spot"
 msgstr "Cannot find an empty spot"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:172
-#: ../gnome-panel/panel-toplevel.c:1583
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Drawer"
 msgstr "Drawer"
 
@@ -1397,23 +1407,23 @@ msgstr "Key %s is not set, cannot load launcher\n"
 msgid "Could not save launcher"
 msgstr "Could not save launcher"
 
-#: ../gnome-panel/menu.c:1004
+#: ../gnome-panel/menu.c:1005
 msgid "Add this launcher to _panel"
 msgstr "Add this launcher to _panel"
 
-#: ../gnome-panel/menu.c:1011
+#: ../gnome-panel/menu.c:1012
 msgid "Add this launcher to _desktop"
 msgstr "Add this launcher to _desktop"
 
-#: ../gnome-panel/menu.c:1023
+#: ../gnome-panel/menu.c:1024
 msgid "_Entire menu"
 msgstr "_Entire menu"
 
-#: ../gnome-panel/menu.c:1028
+#: ../gnome-panel/menu.c:1029
 msgid "Add this as _drawer to panel"
 msgstr "Add this as _drawer to panel"
 
-#: ../gnome-panel/menu.c:1035
+#: ../gnome-panel/menu.c:1036
 msgid "Add this as _menu to panel"
 msgstr "Add this as _menu to panel"
 
@@ -1719,7 +1729,7 @@ msgid "_New Panel"
 msgstr "_New Panel"
 
 #
-#: ../gnome-panel/panel-context-menu.c:291
+#: ../gnome-panel/panel-context-menu.c:292
 msgid "A_bout Panels"
 msgstr "A_bout Panels"
 
@@ -2651,67 +2661,67 @@ msgstr "Hide Panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1554
+#: ../gnome-panel/panel-toplevel.c:1573
 msgid "Top Expanded Edge Panel"
 msgstr "Top Expanded Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1555
+#: ../gnome-panel/panel-toplevel.c:1574
 msgid "Top Centered Panel"
 msgstr "Top Centred Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1556
+#: ../gnome-panel/panel-toplevel.c:1575
 msgid "Top Floating Panel"
 msgstr "Top Floating Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1557
+#: ../gnome-panel/panel-toplevel.c:1576
 msgid "Top Edge Panel"
 msgstr "Top Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1561
+#: ../gnome-panel/panel-toplevel.c:1580
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bottom Expanded Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1562
+#: ../gnome-panel/panel-toplevel.c:1581
 msgid "Bottom Centered Panel"
 msgstr "Bottom Centred Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1563
+#: ../gnome-panel/panel-toplevel.c:1582
 msgid "Bottom Floating Panel"
 msgstr "Bottom Floating Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1564
+#: ../gnome-panel/panel-toplevel.c:1583
 msgid "Bottom Edge Panel"
 msgstr "Bottom Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1568
+#: ../gnome-panel/panel-toplevel.c:1587
 msgid "Left Expanded Edge Panel"
 msgstr "Left Expanded Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1569
+#: ../gnome-panel/panel-toplevel.c:1588
 msgid "Left Centered Panel"
 msgstr "Left Centred Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1570
+#: ../gnome-panel/panel-toplevel.c:1589
 msgid "Left Floating Panel"
 msgstr "Left Floating Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1571
+#: ../gnome-panel/panel-toplevel.c:1590
 msgid "Left Edge Panel"
 msgstr "Left Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1575
+#: ../gnome-panel/panel-toplevel.c:1594
 msgid "Right Expanded Edge Panel"
 msgstr "Right Expanded Edge Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1576
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Right Centered Panel"
 msgstr "Right Centred Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1577
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Right Floating Panel"
 msgstr "Right Floating Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1578
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Right Edge Panel"
 msgstr "Right Edge Panel"
 
