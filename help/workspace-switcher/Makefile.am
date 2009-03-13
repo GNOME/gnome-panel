@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = workspace-switcher
 DOC_INCLUDES = 
 
-DOC_LINGUAS = ar ca da de el es eu fi fr it ko nl oc pa pt_BR ru sv uk vi
+DOC_LINGUAS = ar ca da de el en_GB es eu fi fr it ko nl oc pa pt_BR ru sv uk vi
