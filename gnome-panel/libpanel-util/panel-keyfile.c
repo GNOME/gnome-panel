@@ -25,11 +25,14 @@
  */
 
 #include <string.h>
+#include <sys/stat.h>
 
 #include <glib.h>
 #include <gio/gio.h>
 
 #include "panel-keyfile.h"
+
+#define KEYFILE_TRUSTED_SHEBANG "#!/usr/bin/env xdg-open\n"
 
 GKeyFile *
 panel_key_file_new_desktop (void)
@@ -43,6 +46,46 @@ panel_key_file_new_desktop (void)
 	g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Version", "1.0");
 
 	return retval;
+}
+
+static void
+_panel_key_file_make_executable (const gchar *path)
+{
+	GFile     *file;
+	GFileInfo *info;
+	guint32    current_perms;
+	guint32    new_perms;
+
+	file = g_file_new_for_path (path);
+
+	info = g_file_query_info (file,
+				  G_FILE_ATTRIBUTE_STANDARD_TYPE","
+				  G_FILE_ATTRIBUTE_UNIX_MODE,
+				  G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+				  NULL,
+				  NULL);
+
+	if (info == NULL) {
+		g_warning ("Cannot mark %s executable", path);
+		g_object_unref (file);
+		return;
+	}
+
+	if (g_file_info_has_attribute (info, G_FILE_ATTRIBUTE_UNIX_MODE)) {
+		current_perms = g_file_info_get_attribute_uint32 (info,
+								  G_FILE_ATTRIBUTE_UNIX_MODE);
+		new_perms = current_perms | S_IXGRP | S_IXUSR | S_IXOTH;
+		if ((current_perms != new_perms) &&
+		    !g_file_set_attribute_uint32 (file,
+			    			  G_FILE_ATTRIBUTE_UNIX_MODE,
+						  new_perms,
+						  G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
+						  NULL, NULL))
+			g_warning ("Cannot mark %s executable", path);
+	}
+
+	g_object_unref (info);
+	g_object_unref (file);
 }
 
 //FIXME: kill this when bug #309224 is fixed
@@ -79,16 +122,36 @@ panel_key_file_to_file (GKeyFile     *keyfile,
 		return FALSE;
 	}
 
+	if (!g_str_has_prefix (data, "#!")) {
+		gchar *new_data;
+		gsize  new_length;
+
+		new_length = length + strlen (KEYFILE_TRUSTED_SHEBANG);
+		new_data = g_malloc (new_length);
+
+		strcpy (new_data, KEYFILE_TRUSTED_SHEBANG);
+		memcpy (new_data + strlen (KEYFILE_TRUSTED_SHEBANG),
+			data, length);
+
+		g_free (data);
+		data = new_data;
+		length = new_length;
+	}
+
 	res = g_file_set_contents (filename, data, length, &write_error);
-	g_free (filename);
 
 	if (write_error) {
 		g_propagate_error (error, write_error);
 		g_free (data);
+		g_free (filename);
 		return FALSE;
 	}
 
 	g_free (data);
+
+	_panel_key_file_make_executable (filename);
+	g_free (filename);
+
 	return res;
 }
 
@@ -141,6 +204,30 @@ panel_key_file_load_from_uri (GKeyFile       *keyfile,
 	}
 
 	return result;
+}
+
+gboolean
+panel_key_file_copy_and_mark_trusted (const char  *source_path,
+				      const char  *target_path,
+				      GError     **error)
+{
+	GKeyFile *key_file;
+	gboolean  res = FALSE;
+
+	key_file = g_key_file_new ();
+	res = g_key_file_load_from_file (key_file, source_path, 
+					 G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
+					 error);
+	if (!res) {
+		g_key_file_free (key_file);
+		return FALSE;
+	}
+
+	res = panel_key_file_to_file (key_file, target_path, error);
+
+	g_key_file_free (key_file);
+
+	return res;
 }
 
 gboolean

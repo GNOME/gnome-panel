@@ -31,6 +31,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <gconf/gconf-client.h>
 
+#include <libpanel-util/panel-keyfile.h>
+
 #include "launcher.h"
 #include "panel-util.h"
 #include "panel.h"
@@ -696,16 +698,14 @@ static void
 add_app_to_desktop (GtkWidget      *item,
 		    GMenuTreeEntry *entry)
 {
-	GFile *source;
-	GFile *target;
-	GError *error;
-	char *target_dir;
-	char *target_uri;
-	char *source_uri;
+	char       *source_uri;
+	const char *source;
+	char       *target_dir;
+	char       *target_uri;
+	char       *target;
+	GError     *error;
 
 	g_return_if_fail (entry != NULL);
-
-	source = g_file_new_for_path (gmenu_tree_entry_get_desktop_file_path (entry));
 
 	if (desktop_is_home_dir ()) {
 		target_dir = g_build_filename (g_get_home_dir (), NULL);
@@ -713,22 +713,23 @@ add_app_to_desktop (GtkWidget      *item,
 		target_dir = g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 	}
 
-	source_uri = g_file_get_uri (source);
+	source = gmenu_tree_entry_get_desktop_file_path (entry);
+	source_uri = g_filename_to_uri (source, NULL, NULL);
+
 	target_uri = panel_make_unique_desktop_uri (target_dir, source_uri);
-	g_free (source_uri);
 	g_free (target_dir);
+	g_free (source_uri);
+
 	g_return_if_fail (target_uri != NULL);
 
-	target = g_file_new_for_uri (target_uri);
+	target = g_filename_from_uri (target_uri, NULL, NULL);
 	g_free (target_uri);
 
 	error = NULL;
-	g_file_copy (source, target, G_FILE_COPY_NONE,
-		     NULL, NULL, NULL, &error);
+	panel_key_file_copy_and_mark_trusted (source, target, &error);
 
-	g_object_unref (source);
-	g_object_unref (target);
-	
+	g_free (target);
+
 	if (error != NULL) {
 		g_warning ("Problem while copying launcher to desktop: %s",
 			   error->message);

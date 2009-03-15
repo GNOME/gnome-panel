@@ -41,6 +41,10 @@ gboolean panel_key_file_load_from_uri (GKeyFile       *keyfile,
 				       GKeyFileFlags   flags,
 				       GError        **error);
 
+gboolean panel_key_file_copy_and_mark_trusted (const char  *source_path,
+					       const char  *target_path,
+					       GError     **error);
+
 gboolean panel_key_file_get_boolean   (GKeyFile       *keyfile,
 				       const gchar    *key,
 				       gboolean        default_value);

@@ -1,3 +1,16 @@
+2009-03-15  Vincent Untz  <vuntz@gnome.org>
+
+	Mark desktop files as trusted when it makes sense.
+
+	* libpanel-util/panel-keyfile.[ch]: (_panel_key_file_make_executable):
+	new, mark a file as executable
+	(panel_key_file_to_file): prepend a #! header to the desktop file if
+	there's none, and mark the file as executable
+	(panel_key_file_copy_and_mark_trusted): new, does what it says :-)
+	* menu.c: (add_app_to_desktop): update to use
+	panel_key_file_copy_and_mark_trusted() instead of g_file_copy() so that
+	the copied file is marked as trusted
+
 2009-03-11  Vincent Untz  <vuntz@gnome.org>
 
 	* panel-menu-items.c: (panel_place_menu_item_append_local_gio),
