@@ -4,4 +4,4 @@ dist-hook: doc-dist-hook
 DOC_MODULE = fish
 DOC_INCLUDES = legal.xml
 
-DOC_LINGUAS = ca de el es eu fi fr it ko oc ru sv th uk
+DOC_LINGUAS = ca de el en_GB es eu fi fr it ko oc ru sv th uk
