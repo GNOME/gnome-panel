@@ -61,6 +61,7 @@ typedef struct {
 typedef struct {
 	GtkWidget   *image;
 	const char  *stock_id;
+	GIcon       *gicon;
 	GdkPixbuf   *pixbuf;
 	GtkIconSize  icon_size;
 } IconToAdd;
@@ -519,12 +520,17 @@ do_icons_to_add (void)
 
 		icons_to_add = g_list_delete_link (icons_to_add, icons_to_add);
 
-		if (icon_to_add->stock_id)
+		if (icon_to_add->stock_id) {
 			gtk_image_set_from_stock (
 				GTK_IMAGE (icon_to_add->image),
 				icon_to_add->stock_id,
 				icon_to_add->icon_size);
-		else {
+		} else if (icon_to_add->gicon) {
+			gtk_image_set_from_gicon (
+				GTK_IMAGE (icon_to_add->image),
+				icon_to_add->gicon,
+				icon_to_add->icon_size);
+		} else {
 			g_assert (icon_to_add->pixbuf);
 
 			gtk_image_set_from_pixbuf (
@@ -538,6 +544,8 @@ do_icons_to_add (void)
 			g_object_unref (icon_to_add->pixbuf);
 		}
 
+		if (icon_to_add->gicon)
+			g_object_unref (icon_to_add->gicon);
 		g_object_unref (icon_to_add->image);
 		g_free (icon_to_add);
 	}
@@ -571,7 +579,7 @@ load_icons_handler_again:
 		goto load_icons_handler_again;
 	}
 
-	if (icon->stock_id) {
+	if (icon->stock_id || icon->gicon) {
 		IconToAdd *icon_to_add;
 
 		icon_to_add            = g_new (IconToAdd, 1);
@@ -579,54 +587,10 @@ load_icons_handler_again:
 		icon_to_add->stock_id  = icon->stock_id;
 		icon_to_add->pixbuf    = NULL;
 		icon_to_add->icon_size = icon->icon_size;
-
-		icons_to_add = g_list_prepend (icons_to_add, icon_to_add);
-	} else if (icon->gicon) {
-		IconToAdd *icon_to_add;
-		char      *icon_name;
-		GdkPixbuf *pb;
-		int        icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
-
-		gtk_icon_size_lookup (icon->icon_size, NULL, &icon_height);
-
-		icon_name = panel_util_get_icon_name_from_g_icon (icon->gicon);
-
-		if (icon_name) {
-			pb = panel_make_menu_icon (icon->icon_theme,
-						   icon_name,
-						   icon->fallback_image,
-						   icon_height,
-						   &long_operation);
-			g_free (icon_name);
-		} else {
-			pb = panel_util_get_pixbuf_from_g_loadable_icon (icon->gicon, icon_height);
-			if (!pb && icon->fallback_image) {
-				pb = panel_make_menu_icon (icon->icon_theme,
-							   NULL,
-							   icon->fallback_image,
-							   icon_height,
-							   &long_operation);
-			}
-		}
-
-		if (!pb) {
-			icon_to_load_free (icon);
-			if (long_operation)
-				/* this may have been a long operation so jump
-				 * back to the main loop for a while */
-				return TRUE;
-			else
-				/* we didn't do anything long/hard, so just do
-				 * this again, this is fun, don't go back to
-				 * main loop */
-				goto load_icons_handler_again;
-		}
-
-		icon_to_add            = g_new (IconToAdd, 1);
-		icon_to_add->image     = g_object_ref (icon->pixmap);
-		icon_to_add->stock_id  = NULL;
-		icon_to_add->pixbuf    = pb;
-		icon_to_add->icon_size = icon->icon_size;
+		if (icon->gicon)
+			icon_to_add->gicon = g_object_ref (icon->gicon);
+		else
+			icon_to_add->gicon = NULL;
 
 		icons_to_add = g_list_prepend (icons_to_add, icon_to_add);
 	} else {
@@ -656,6 +620,7 @@ load_icons_handler_again:
 		icon_to_add            = g_new (IconToAdd, 1);
 		icon_to_add->image     = g_object_ref (icon->pixmap);
 		icon_to_add->stock_id  = NULL;
+		icon_to_add->gicon     = NULL;
 		icon_to_add->pixbuf    = pb;
 		icon_to_add->icon_size = icon->icon_size;
 

@@ -1,3 +1,14 @@
+2009-04-14  Vincent Untz  <vuntz@gnome.org>
+
+	Correctly handle icons for all locations in the menu, via the right use
+	of GIcon. Fix bug #578859.
+
+	* menu.c: (do_icons_to_add), (load_icons_handler): just use
+	gtk_image_set_from_gicon() instead of trying to get an icon name or a
+	pixbuf out of a GIcon
+	* panel-util.[ch]: (panel_util_get_pixbuf_from_g_loadable_icon): killed
+	(panel_util_get_icon_name_from_g_icon): make static
+
 ==================== 2.26.0 ====================
 
 2009-03-15  Vincent Untz  <vuntz@gnome.org>

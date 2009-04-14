@@ -771,7 +771,7 @@ panel_util_get_gfile_root (GFile *file)
 	return parent_old;
 }
 
-char *
+static char *
 panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 {
 	const char * const *names;
@@ -790,46 +790,6 @@ panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 	}
 
 	return NULL;
-}
-
-GdkPixbuf *
-panel_util_get_pixbuf_from_g_loadable_icon (GIcon *gicon,
-					    int    size)
-{
-	GdkPixbuf    *pixbuf;
-	GInputStream *stream;
-
-	if (!G_IS_LOADABLE_ICON (gicon))
-		return NULL;
-
-	pixbuf = NULL;
-
-	stream = g_loadable_icon_load (G_LOADABLE_ICON (gicon),
-				       size,
-				       NULL, NULL, NULL);
-	if (stream) {
-		pixbuf = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
-		g_object_unref (stream);
-	}
-
-	if (pixbuf) {
-		gint width, height;
-
-		width = gdk_pixbuf_get_width (pixbuf);
-		height = gdk_pixbuf_get_height (pixbuf);
-
-		if (width > size || height > size) {
-			GdkPixbuf *tmp;
-
-			tmp = gdk_pixbuf_scale_simple (pixbuf, size, size,
-						       GDK_INTERP_BILINEAR);
-
-			g_object_unref (pixbuf);
-			pixbuf = tmp;
-		}
-	}
-
-	return pixbuf;
 }
 
 static char *
