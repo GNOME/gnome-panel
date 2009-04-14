@@ -4,16 +4,15 @@
 #
 # Sayed Jaffer Al-Mosawi <mosawi@arabeyes.org>, 2002.
 # Abdulaziz Al-Arfaj <alarfaj0@yahoo.com>, 2004.
-# Djihed Afifi <djihed@gmail.com>, 2006.
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008.
 # Anas Husseini <linux.anas@gmail.com>, 2007.
+# Djihed Afifi <djihed@gmail.com>, 2006, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2009-03-16 23:01+0000\n"
-"PO-Revision-Date: 2008-09-18 02:16+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-14 04:44+0200\n"
+"PO-Revision-Date: 2009-04-14 04:51+0200\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -311,6 +310,8 @@ msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
+"<small><i>اكتب اسم مدينة أو محافظة أو بلد ثم اختر ما يطابقها من القائمة "
+"المنبثقة.</i></small>"
 
 #: ../applets/clock/clock.glade.h:8
 msgid "Clock Preferences"
@@ -425,7 +426,7 @@ msgstr "وحدة قياس سرعة الر_يح:"
 #.
 #: ../applets/clock/clock.schemas.in.h:11
 msgid "24-hour"
-msgstr "24-ساعة"
+msgstr "12-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
 msgid "A list of locations to display in the calendar window."
@@ -678,15 +679,14 @@ msgstr "الشروق : %s / غروب : %s"
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
 #: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
-#, fuzzy, c-format
+#, c-format
 msgid "Could not display help document '%s'"
-msgstr "لا يمكن فتح مستند المساعدة"
+msgstr "لا يمكن فتح مستند المساعدة '%s'"
 
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
 #: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
-#, fuzzy
 msgid "Error displaying help document"
-msgstr "لا يمكن فتح مستند المساعدة"
+msgstr "خطأ أثناء فتح مستند المساعدة"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
@@ -1271,9 +1271,9 @@ msgid "Error"
 msgstr "خطأ"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
-#, fuzzy, c-format
+#, c-format
 msgid "Could not launch '%s'"
-msgstr "لا يمكن عرض '%s'"
+msgstr "لا يمكن بدء '%s'"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:48
 #: ../gnome-panel/launcher.c:161
@@ -1399,7 +1399,7 @@ msgstr "لم يمكن حفظ المُطْلِق"
 
 #: ../gnome-panel/main.c:43
 msgid "Replace a currently running panel"
-msgstr ""
+msgstr "استبدل شريطا يعمل حاليا"
 
 #: ../gnome-panel/menu.c:1006
 msgid "Add this launcher to _panel"
@@ -2061,10 +2061,9 @@ msgstr "افتح مجلدك الشخصي"
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
 #: ../gnome-panel/panel-menu-items.c:1018
-#, fuzzy
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "اظهر سطح المكتب"
+msgstr "سطح المكتب"
 
 #: ../gnome-panel/panel-menu-items.c:1019
 msgid "Open the contents of your desktop in a folder"
@@ -2086,7 +2085,7 @@ msgstr "نظام"
 #: ../gnome-panel/panel-menu-items.c:1517
 msgctxt "panel:showusername"
 msgid "1"
-msgstr ""
+msgstr "0"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
@@ -2095,14 +2094,14 @@ msgstr ""
 #: ../gnome-panel/panel-menu-items.c:1529
 #, c-format
 msgid "Log Out %s..."
-msgstr "تسجيل خروج %s..."
+msgstr "اخرج %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
 #: ../gnome-panel/panel-menu-items.c:1533
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "سجّل خروج %s من هذه الجلسة لتسجيل الدخول كمستخدم آخر"
+msgstr "أخرج %s من هذه الجلسة ليلج كمستخدم آخر"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2308,25 +2307,25 @@ msgstr "خطأ عند قراءة القيمة المنطقية لـ GConf '%s': 
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Top"
-msgstr ""
+msgstr "فوق"
 
 #: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Bottom"
-msgstr ""
+msgstr "تحت"
 
 #: ../gnome-panel/panel-properties-dialog.c:130
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Left"
-msgstr ""
+msgstr "يسار"
 
 #: ../gnome-panel/panel-properties-dialog.c:131
 #: ../libpanel-applet/panel-test-applets.c:57
 msgctxt "Orientation"
 msgid "Right"
-msgstr ""
+msgstr "يمين"
 
 #: ../gnome-panel/panel-properties-dialog.c:949
 msgid "Drawer Properties"
@@ -3114,43 +3113,36 @@ msgstr ""
 "اليمين)"
 
 #: ../libpanel-applet/panel-test-applets.c:62
-#, fuzzy
 msgctxt "Size"
 msgid "XX Small"
 msgstr "صغير جدًا جدًا"
 
 #: ../libpanel-applet/panel-test-applets.c:63
-#, fuzzy
 msgctxt "Size"
 msgid "X Small"
 msgstr "صغير جدًا"
 
 #: ../libpanel-applet/panel-test-applets.c:64
-#, fuzzy
 msgctxt "Size"
 msgid "Small"
 msgstr "صغير"
 
 #: ../libpanel-applet/panel-test-applets.c:65
-#, fuzzy
 msgctxt "Size"
 msgid "Medium"
 msgstr "متوسط"
 
 #: ../libpanel-applet/panel-test-applets.c:66
-#, fuzzy
 msgctxt "Size"
 msgid "Large"
 msgstr "كبير"
 
 #: ../libpanel-applet/panel-test-applets.c:67
-#, fuzzy
 msgctxt "Size"
 msgid "X Large"
 msgstr "كبير جدًا"
 
 #: ../libpanel-applet/panel-test-applets.c:68
-#, fuzzy
 msgctxt "Size"
 msgid "XX Large"
 msgstr "كبير جدًا جدًا"
