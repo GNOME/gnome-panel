@@ -430,7 +430,7 @@ na_tray_expose_icon (GtkWidget *widget,
 {
   cairo_t *cr = data;
 
-  if (na_tray_child_is_composited (NA_TRAY_CHILD (widget)))
+  if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
     {
       gdk_cairo_set_source_pixmap (cr, widget->window,
 				   widget->allocation.x,
