@@ -19,4 +19,4 @@ which gnome-autogen.sh || {
     exit 1
 }
 
-USE_COMMON_DOC_BUILD=yes . gnome-autogen.sh
+. gnome-autogen.sh

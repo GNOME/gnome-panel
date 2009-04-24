@@ -1,1 +1,1 @@
-SUBDIRS = clock fish window-list workspace-switcher ja zh_TW
+SUBDIRS = clock fish window-list workspace-switcher
