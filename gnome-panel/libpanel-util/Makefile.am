@@ -41,3 +41,5 @@ libpanel_util_la_SOURCES=	\
 	panel-show.c			\
 	panel-show.h			\
 	$(NULL)
+
+-include $(top_srcdir)/git.mk

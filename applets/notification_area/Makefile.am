@@ -107,3 +107,5 @@ testtray_SOURCES = \
 testtray_LDADD = \
 	$(X_LIBS)					\
 	$(PANEL_LIBS)
+
+-include $(top_srcdir)/git.mk

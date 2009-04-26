@@ -10,3 +10,5 @@ gegl_DATA = 				\
 	$(NULL)
 
 EXTRA_DIST = $(gegl_DATA)
+
+-include $(top_srcdir)/git.mk

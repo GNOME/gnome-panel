@@ -64,3 +64,5 @@ dist-hook-local:
 #	for f in $(srcdir)/TEXT/* ; do  \
 #	  test -f $$f && cp -p $$f $(distdir)/TEXT; \
 #	done
+
+-include $(top_srcdir)/git.mk

@@ -105,3 +105,5 @@ endif
 gladedir   = $(datadir)/gnome-panel/glade
 glade_DATA = workspace-switcher.glade window-list.glade
 
+
+-include $(top_srcdir)/git.mk

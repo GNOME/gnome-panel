@@ -17,3 +17,5 @@ EXTRA_DIST = 		\
 	$(icon_DATA)
 
 MAINTAINERCLEANFILES = Makefile.in
+
+-include $(top_srcdir)/git.mk

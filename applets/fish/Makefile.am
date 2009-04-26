@@ -95,3 +95,5 @@ install-data-local:
 else
 install-data-local:
 endif
+
+-include $(top_srcdir)/git.mk

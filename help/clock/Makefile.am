@@ -5,3 +5,5 @@ DOC_MODULE = clock
 DOC_INCLUDES = legal.xml
 
 DOC_LINGUAS = ar ca cs de el en_GB es eu fi fr it ja ko nl oc pa pt_BR ru sr sv th uk zh_CN zh_TW
+
+-include $(top_srcdir)/git.mk

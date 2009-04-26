@@ -11,3 +11,5 @@ install-data-local:
 	if test -f $(DESTDIR)$(gen_util_server); then \
 		rm -f $(DESTDIR)$(gen_util_server); \
 	fi
+
+-include $(top_srcdir)/git.mk

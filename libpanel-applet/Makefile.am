@@ -129,3 +129,5 @@ noinst_DATA     = $(server_in_files:.server.in=.server)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
+
+-include $(top_srcdir)/git.mk
