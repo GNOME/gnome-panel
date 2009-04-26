@@ -1,3 +1,5 @@
+QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
+
 INCLUDES =							\
 	-I$(srcdir)						\
 	-I$(srcdir)/../../libpanel-applet			\
@@ -58,7 +60,8 @@ server_in_files = GNOME_NotificationAreaApplet.server.in
 server_DATA     = GNOME_NotificationAreaApplet.server
 
 $(server_in_files): $(server_in_files).in Makefile
-	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	$(QUIET_GEN)sed \
+	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
 	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
@@ -80,10 +83,10 @@ CLEANFILES =                                    \
 	GNOME_NotificationAreaApplet.server
 
 na-marshal.h: na-marshal.list $(GLIB_GENMARSHAL)
-	$(GLIB_GENMARSHAL) $< --header --prefix=_na_marshal > $@
+	$(QUIET_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=_na_marshal > $@
 
 na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
-	echo "#include \"na-marshal.h\"" > $@ && \
+	$(QUIET_GEN)echo "#include \"na-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=_na_marshal >> $@
 
 noinst_PROGRAMS = testtray

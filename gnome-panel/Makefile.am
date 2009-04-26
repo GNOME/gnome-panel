@@ -3,6 +3,7 @@ AUTOMAKE_OPTIONS = 1.3
 SUBDIRS = libpanel-util
 
 NULL =
+QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
 
 INCLUDES =							\
 	-I.							\
@@ -43,7 +44,7 @@ CORBA_SRCLIST =			\
 	$(NULL)
 
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
+	$(QUIET_GEN)$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
@@ -199,14 +200,15 @@ panel_enum_headers =					\
 	GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
-	$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@
+	$(QUIET_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@
 
 panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
-	echo "#include \"panel-marshal.h\"" > $@ && \
+	$(QUIET_GEN)echo "#include \"panel-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=panel_marshal >> $@
 
 panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
-	glib-mkenums    --fhead "#include <glib-object.h>\n" \
+	$(QUIET_GEN)glib-mkenums \
+			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
@@ -221,7 +223,8 @@ panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
 		$(panel_enum_headers) > $@
 
 panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
-	glib-mkenums    --fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
+	$(QUIET_GEN)glib-mkenums \
+			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \

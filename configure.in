@@ -323,8 +323,12 @@ if test "x$enable_rebuilds" = "xyes" && \
 fi
 AC_SUBST(REBUILD)
 
+SHAVE_INIT([.], [enable])
+
 AC_OUTPUT([
 Makefile
+shave
+shave-libtool
 idl/Makefile
 icons/Makefile
 icons/16x16/Makefile

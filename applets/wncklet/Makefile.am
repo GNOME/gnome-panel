@@ -1,3 +1,5 @@
+QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
+
 INCLUDES = \
 	-I$(top_builddir) \
 	-I$(top_builddir)/applets/wncklet \
@@ -65,7 +67,8 @@ server_in_files = GNOME_Wncklet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 $(server_in_files): $(server_in_files).in Makefile
-	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	$(QUIET_GEN)sed \
+	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
 	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@

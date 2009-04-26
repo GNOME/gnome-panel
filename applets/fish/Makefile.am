@@ -1,3 +1,5 @@
+QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
+
 INCLUDES =							\
 	-I$(srcdir)						\
 	-I$(srcdir)/../../libpanel-applet			\
@@ -66,7 +68,8 @@ server_in_files = GNOME_FishApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 $(server_in_files): $(server_in_files).in Makefile
-	sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	$(QUIET_GEN)sed \
+	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
 	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
