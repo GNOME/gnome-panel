@@ -39,7 +39,7 @@
 
 #include <string.h>
 
-#define TIMEOUT_ACTIVATE 1000
+#define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
 
@@ -348,9 +348,9 @@ button_drag_motion (GtkWidget          *widget,
 {
 
 	if (sdd->button_activate == 0)
-		sdd->button_activate = g_timeout_add (TIMEOUT_ACTIVATE,
-						      button_motion_timeout,
-						      sdd);
+		sdd->button_activate = g_timeout_add_seconds (TIMEOUT_ACTIVATE_SECONDS,
+							      button_motion_timeout,
+							      sdd);
 	gdk_drag_status (context, 0, time);
 	
 	return TRUE;

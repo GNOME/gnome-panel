@@ -267,8 +267,9 @@ icon_tip_show_next (IconTip *icontip)
   icontip->id = buffer->id;
 
   if (buffer->timeout > 0)
-    icontip->source_id = g_timeout_add (buffer->timeout * 1000,
-                                        icon_tip_show_next_timeout, icontip);
+    icontip->source_id = g_timeout_add_seconds (buffer->timeout,
+                                                icon_tip_show_next_timeout,
+                                                icontip);
 
   icon_tip_buffer_free (buffer, NULL);
 }

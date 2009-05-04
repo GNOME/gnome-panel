@@ -61,7 +61,7 @@ reset_killtimer (void)
                 g_source_remove (timer_id);
         }
         g_debug ("Setting killtimer to 30 seconds...");
-        timer_id = g_timeout_add (30 * 1000, do_exit, NULL);
+        timer_id = g_timeout_add_seconds (30, do_exit, NULL);
 }
 
 struct GnomeClockAppletMechanismPrivate

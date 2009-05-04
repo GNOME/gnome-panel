@@ -254,7 +254,7 @@ queue_drawer_close_for_drag (Drawer *drawer)
 {
 	if (!drawer->close_timeout_id)
 		drawer->close_timeout_id =
-			g_timeout_add (1 * 1000, close_drawer_in_idle, drawer);
+			g_timeout_add_seconds (1, close_drawer_in_idle, drawer);
 }
 
 static void
