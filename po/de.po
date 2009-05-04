@@ -12,14 +12,15 @@
 # Christian Kintner <mail@christian-kintner.de>, 2006.
 # Philipp Kerling <k.philipp@gmail.com>, 2008.
 # Andre Klapper <ak-47@gmx.net>, 2009.
+# Moritz Baumann <flamingmo@online.de>, 2009.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-13 23:48+0200\n"
-"PO-Revision-Date: 2009-04-13 23:46+0200\n"
+"POT-Creation-Date: 2009-05-04 22:32+0200\n"
+"PO-Revision-Date: 2009-05-04 22:53+0200\n"
 "Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -226,15 +227,15 @@ msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
 
 #: ../applets/clock/clock.c:1719
 msgid "Set System Time..."
-msgstr "Systemzeit setzen …"
+msgstr "Systemzeit einstellen …"
 
 #: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
-msgstr "Systemzeit setzen"
+msgstr "Systemzeit einstellen"
 
 #: ../applets/clock/clock.c:1735
 msgid "Failed to set the system time"
-msgstr "Systemzeit konnte nicht gesetzt werden"
+msgstr "Systemzeit konnte nicht eingestellt werden"
 
 #: ../applets/clock/clock.c:1929
 msgid ""
@@ -293,7 +294,9 @@ msgstr ""
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Hendrik Richter <hendrikr@gnome.org>\n"
 "Christian Kintner <mail@christian-kintner.de>\n"
-"Philipp Kerling <k.philipp@gmail.com>"
+"Philipp Kerling <k.philipp@gmail.com>\n"
+"Moritz Baumann <flamingmo@online.de>\n"
+"Christian Kirbach <Christian.Kirbach@googlemail.com>"
 
 #: ../applets/clock/clock.glade.h:1
 msgid "<b>Clock Options</b>"
@@ -337,8 +340,8 @@ msgid ""
 "East\n"
 "West"
 msgstr ""
-"Ost\n"
-"West"
+"östlich\n"
+"westlich"
 
 #: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
@@ -362,8 +365,8 @@ msgid ""
 "North\n"
 "South"
 msgstr ""
-"Nord\n"
-"Süd"
+"nördlich\n"
+"südlich"
 
 #: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
@@ -528,16 +531,20 @@ msgstr ""
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird das Datum in einer Minihilfe "
-"angezeigt, wenn sich die Maus über der Uhr befindet?"
+"angezeigt, wenn sich die Maus über der Uhr befindet."
 
 #: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Legt fest, ob die Temperatur neben dem Wettersymbol angezeigt wird."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, wird die Temperatur neben dem Wettersymbol "
+"angezeigt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:31
 msgid "If true, show week numbers in the calendar."
-msgstr "Wenn »true«, werden die Wochennummern im Kalender angezeigt."
+msgstr ""
+"Falls dieser Schlüssel WAHR ist, werden die Wochennummern im Kalender "
+"angezeigt."
 
 #: ../applets/clock/clock.schemas.in.h:32
 msgid "List of locations"
@@ -648,11 +655,11 @@ msgstr "Systemzeitzone konnte nicht gesetzt werden"
 
 #: ../applets/clock/clock-location-tile.c:240
 msgid "<small>Set...</small>"
-msgstr "<small>Setzen …</small>"
+msgstr "<small>Einstellen …</small>"
 
 #: ../applets/clock/clock-location-tile.c:241
 msgid "<small>Set</small>"
-msgstr "<small>Setzen</small>"
+msgstr "<small>Einstellen</small>"
 
 #: ../applets/clock/clock-location-tile.c:317
 msgid "Set location as current location and use its timezone for this computer"
@@ -703,7 +710,7 @@ msgstr "Unbekannt"
 #: ../applets/clock/clock-location-tile.c:594
 #, c-format
 msgid "%s, feels like %s"
-msgstr "%s, gefühlt %s"
+msgstr "%s, gefühlt wie %s"
 
 #: ../applets/clock/clock-location-tile.c:612
 #, c-format
@@ -817,7 +824,7 @@ msgstr "Der auszuführende Befehl konnte nicht gefunden werden"
 #: ../applets/fish/fish.c:762
 #, no-c-format
 msgid "%s the Fish Says:"
-msgstr "%s, der Fisch sagt:"
+msgstr "%s, der Fisch, sagt:"
 
 #: ../applets/fish/fish.c:831
 #, c-format
@@ -910,7 +917,7 @@ msgstr "_Name des Fisches:"
 
 #: ../applets/fish/fish.glade.h:9
 msgid "_Pause per frame:"
-msgstr "_Pause pro Einzelbild"
+msgstr "_Pause nach jedem Einzelbild"
 
 #: ../applets/fish/fish.glade.h:10
 msgid "_Rotate on vertical panels"
@@ -954,7 +961,7 @@ msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
-msgstr "Pause pro Einzelbild"
+msgstr "Pause nach jedem Einzelbild"
 
 #: ../applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
@@ -1477,23 +1484,23 @@ msgstr "Starter konnte nicht gespeichert werden"
 msgid "Replace a currently running panel"
 msgstr "Momentan laufendes Panel ersetzen"
 
-#: ../gnome-panel/menu.c:1006
+#: ../gnome-panel/menu.c:971
 msgid "Add this launcher to _panel"
 msgstr "Als Starter zum _Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:1013
+#: ../gnome-panel/menu.c:978
 msgid "Add this launcher to _desktop"
 msgstr "Als Starter zum _Desktop hinzufügen"
 
-#: ../gnome-panel/menu.c:1025
+#: ../gnome-panel/menu.c:990
 msgid "_Entire menu"
 msgstr "_Gesamtes Menü"
 
-#: ../gnome-panel/menu.c:1030
+#: ../gnome-panel/menu.c:995
 msgid "Add this as _drawer to panel"
 msgstr "Als _Schublade zum Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:1037
+#: ../gnome-panel/menu.c:1002
 msgid "Add this as _menu to panel"
 msgstr "Als _Menü zum Panel hinzufügen"
 
@@ -1619,7 +1626,7 @@ msgstr "Verbindung zu einem entfernten Rechner oder Datenträger"
 
 #: ../gnome-panel/panel-action-button.c:348
 msgid "Shut Down..."
-msgstr "Ausschalten"
+msgstr "Ausschalten …"
 
 #: ../gnome-panel/panel-action-button.c:349
 msgid "Shut down the computer"
@@ -1933,22 +1940,22 @@ msgstr ""
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
-"Automatische Vervollständigung im »Anwendung ausführen«-Dialog aktivieren"
+"Automatische Vervollständigung im Dialog »Anwendung ausführen« aktivieren"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Programmliste im »Anwendung ausführen«-Dialog aktivieren"
+msgstr "Programmliste im Dialog »Anwendung ausführen« aktivieren"
 
 #: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Programmliste im »Anwendung ausführen«-Dialog ausklappen"
+msgstr "Programmliste im Dialog »Anwendung ausführen« ausklappen"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird automatische Vervollständigung im "
-"»Anwendung ausführen«-Dialog aktiviert."
+"Falls dieser Schlüssel WAHR ist, wird die automatische Vervollständigung im "
+"Dialog »Anwendung ausführen« aktiviert."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1957,7 +1964,7 @@ msgid ""
 "the enable_program_list key is true."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird die Liste bekannter Anwendungen der "
-"Größe des »Anwendung ausführen«-Dialogs angepasst, sobald dieser geöffnet "
+"Größe des Dialogs »Anwendung ausführen« angepasst, sobald dieser geöffnet "
 "wird. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
 "»enable_program_list« WAHR ist."
 
@@ -1968,7 +1975,7 @@ msgid ""
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird die Liste bekannter Anwendungen im "
-"»Anwendung ausführen«-Dialog angezeigt. Der Schlüssel »show_program_list« legt "
+"Dialog »Anwendung ausführen« angezeigt. Der Schlüssel »show_program_list« legt "
 "fest, ob die Größe der Liste der des Fensters angepasst werden soll."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
@@ -3210,17 +3217,17 @@ msgstr "»%s« konnte nicht ausgeführt werden"
 msgid "file"
 msgstr "Datei"
 
-#: ../gnome-panel/panel-util.c:879
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Persönlicher Ordner"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:891
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Dateisystem"
 
-#: ../gnome-panel/panel-util.c:1038
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "Suchen"
 
@@ -3229,7 +3236,7 @@ msgstr "Suchen"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1084
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
