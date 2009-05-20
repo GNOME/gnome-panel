@@ -34,7 +34,6 @@ EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING			\
 	ChangeLog.pre-git	\
-	omf.make		\
 	gnome-doc-utils.make
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper
