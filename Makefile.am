@@ -33,6 +33,7 @@ EXTRA_DIST = \
 	MAINTAINERS		\
 	COPYING-DOCS		\
 	HACKING			\
+	ChangeLog.pre-git	\
 	omf.make		\
 	gnome-doc-utils.make
 
