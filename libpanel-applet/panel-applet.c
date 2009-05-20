@@ -125,28 +125,55 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 
 	list = gconf_client_all_entries (client, schema_dir, error);
 
-	g_return_if_fail (*error == NULL);
+	if (*error != NULL)
+		return;
 
 	for (l = list; l; l = l->next) {
-		GConfEntry *entry = l->data;
-		gchar      *key;
-		gchar      *tmp;
+		GConfEntry  *entry = l->data;
+		const gchar *schema_key;
+		GConfEntry  *applet_entry;
+		const gchar *applet_schema_key;
+		gchar       *key;
+		gchar       *tmp;
 
-		tmp = g_path_get_basename (gconf_entry_get_key (entry));
+		schema_key = gconf_entry_get_key (entry);
+		tmp = g_path_get_basename (schema_key);
 
 		if (strchr (tmp, '-'))
 			g_warning ("Applet key '%s' contains a hyphen. Please "
 				   "use underscores in gconf keys\n", tmp);
 
 		key = g_strdup_printf ("%s/%s", prefs_key, tmp);
-
 		g_free (tmp);
 
-		gconf_engine_associate_schema (
-			client->engine, key, gconf_entry_get_key (entry), error);
+		/* Associating a schema is potentially expensive, so let's try
+		 * to avoid this by doing it only when needed. So we check if
+		 * the key is already correctly associated. */
+
+		applet_entry = gconf_client_get_entry (client, key,
+						       NULL, TRUE, NULL);
+		if (applet_entry)
+			applet_schema_key = gconf_entry_get_schema_name (applet_entry);
+		else
+			applet_schema_key = NULL;
+
+		if (g_strcmp0 (schema_key, applet_schema_key) != 0) {
+			gconf_engine_associate_schema (client->engine,
+						       key, schema_key, error);
+
+			if (gconf_entry_get_value (applet_entry) == NULL ||
+			    gconf_entry_get_is_default (applet_entry)) {
+				/* unset the key: gconf_client_get_entry()
+				 * brought an invalid entry in the client
+				 * cache, and we want to fix this */
+				gconf_client_unset (client, key, NULL);
+			}
+		}
 
 		g_free (key);
 
+		if (applet_entry)
+			gconf_entry_unref (applet_entry);
 		gconf_entry_unref (entry);
 
 		if (*error) {
@@ -170,8 +197,10 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, tmp);
 		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, tmp);
 
-		panel_applet_associate_schemas_in_dir (
-			client, prefs_subdir, schema_subdir, error);
+		panel_applet_associate_schemas_in_dir (client,
+						       prefs_subdir,
+						       schema_subdir,
+						       error);
 
 		g_free (prefs_subdir);
 		g_free (schema_subdir);
@@ -206,8 +235,10 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	else
 		error = &our_error;
 
-	panel_applet_associate_schemas_in_dir (
-		applet->priv->client, applet->priv->prefs_key, schema_dir, error);
+	panel_applet_associate_schemas_in_dir (applet->priv->client,
+					       applet->priv->prefs_key,
+					       schema_dir,
+					       error);
 
 	if (!opt_error && our_error) {
 		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",
