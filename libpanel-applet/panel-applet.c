@@ -161,7 +161,8 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 			gconf_engine_associate_schema (client->engine,
 						       key, schema_key, error);
 
-			if (gconf_entry_get_value (applet_entry) == NULL ||
+			if (applet_entry == NULL ||
+			    gconf_entry_get_value (applet_entry) == NULL ||
 			    gconf_entry_get_is_default (applet_entry)) {
 				/* unset the key: gconf_client_get_entry()
 				 * brought an invalid entry in the client
