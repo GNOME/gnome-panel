@@ -1852,6 +1852,23 @@ wrap_cb (GtkSpinButton *spin, ClockData *cd)
 	}
 }
 
+static gboolean
+output_cb (GtkSpinButton *spin,
+           gpointer       data)
+{
+	GtkAdjustment *adj;
+	gchar *text;
+	int value;
+
+	adj = gtk_spin_button_get_adjustment (spin);
+	value = (int) gtk_adjustment_get_value (adj);
+	text = g_strdup_printf ("%02d", value);
+	gtk_entry_set_text (GTK_ENTRY (spin), text);
+	g_free (text);
+
+	return TRUE;
+}
+
 static void
 ensure_time_settings_window_is_created (ClockData *cd)
 {
@@ -1878,6 +1895,9 @@ ensure_time_settings_window_is_created (ClockData *cd)
         g_signal_connect (cd->seconds_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
         g_signal_connect (cd->minutes_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
         g_signal_connect (cd->hours_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
+
+	g_signal_connect (cd->minutes_spin, "output", G_CALLBACK (output_cb), cd);
+	g_signal_connect (cd->seconds_spin, "output", G_CALLBACK (output_cb), cd);
 
 	cd->set_time_button = glade_xml_get_widget (cd->glade_xml, "set-time-button");
 	g_signal_connect (cd->set_time_button, "clicked", G_CALLBACK (set_time), cd);
