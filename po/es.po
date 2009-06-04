@@ -20,8 +20,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2009-03-01 23:15+0000\n"
-"PO-Revision-Date: 2009-03-07 17:54+0100\n"
+"POT-Creation-Date: 2009-06-04 01:51+0000\n"
+"PO-Revision-Date: 2009-06-04 06:44+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgid "_Preferences"
 msgstr "Prefere_ncias"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3800
+#: ../applets/clock/clock.c:3820
 msgid "Clock"
 msgstr "Reloj"
 
@@ -136,7 +136,7 @@ msgstr "Cumpleaños y aniversarios"
 msgid "Weather Information"
 msgstr "Información meteorológica"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:14
 msgid "Locations"
 msgstr "Ubicaciones"
 
@@ -231,7 +231,7 @@ msgstr "Falló al lanzar la herramienta de configuración de la hora: %s"
 msgid "Set System Time..."
 msgstr "Establecer la hora del sistema…"
 
-#: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:18
 msgid "Set System Time"
 msgstr "Establecer la hora del sistema"
 
@@ -239,7 +239,7 @@ msgstr "Establecer la hora del sistema"
 msgid "Failed to set the system time"
 msgstr "Falló al establecer la hora del sistema"
 
-#: ../applets/clock/clock.c:1929
+#: ../applets/clock/clock.c:1949
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -247,41 +247,41 @@ msgstr ""
 "Falló al localizar algún programa para configurar de la fecha y hora. "
 "¿Quizás no hay ninguno instalado?"
 
-#: ../applets/clock/clock.c:2861
+#: ../applets/clock/clock.c:2881
 msgid "Custom format"
 msgstr "Formato personalizado"
 
 # Esta cadena aparece en la ayuda
-#: ../applets/clock/clock.c:3522
+#: ../applets/clock/clock.c:3542
 msgid "City Name"
 msgstr "Nombre de la ciudad"
 
-#: ../applets/clock/clock.c:3526
+#: ../applets/clock/clock.c:3546
 msgid "City Time Zone"
 msgstr "Zona horaria de la ciudad"
 
-#: ../applets/clock/clock.c:3696
+#: ../applets/clock/clock.c:3716
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3697
+#: ../applets/clock/clock.c:3717
 msgid "UNIX time"
 msgstr "Hora UNIX"
 
-#: ../applets/clock/clock.c:3698
+#: ../applets/clock/clock.c:3718
 msgid "Internet time"
 msgstr "Hora de Internet"
 
-#: ../applets/clock/clock.c:3706
+#: ../applets/clock/clock.c:3726
 msgid "Custom _format:"
 msgstr "Formato _personalizado:"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:3823
 msgid "The Clock displays the current time and date"
 msgstr "El reloj muestra la fecha y hora actual"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3806 ../applets/fish/fish.c:613
+#: ../applets/clock/clock.c:3826 ../applets/fish/fish.c:613
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
 #: ../applets/wncklet/window-menu.c:79
@@ -307,15 +307,11 @@ msgid "<b>Panel Display</b>"
 msgstr "<b>Panel de visualización</b>"
 
 #: ../applets/clock/clock.glade.h:4
-msgid "<b>Time Settings</b>"
-msgstr "<b>Ajustes de la hora</b>"
-
-#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(opcional)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:6
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -323,15 +319,15 @@ msgstr ""
 "<small><i>Escriba el nombre de una ciudad, región o país y después "
 "seleccione una coincidencia del menú emergente.</i></small>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:7
 msgid "Clock Preferences"
 msgstr "Preferencias del reloj"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:8
 msgid "Current Time:"
 msgstr "Hora actual:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:9
 msgid ""
 "East\n"
 "West"
@@ -339,24 +335,24 @@ msgstr ""
 "Este\n"
 "Oeste"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:11
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "General"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:12
 msgid "Latitude:"
 msgstr "Latitud:"
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:13
 msgid "Location Name:"
 msgstr "Nombre de la ubicación:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:15
 msgid "Longitude:"
 msgstr "Longitud:"
 
-#: ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.glade.h:16
 msgid ""
 "North\n"
 "South"
@@ -364,63 +360,63 @@ msgstr ""
 "Norte\n"
 "Sur"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.glade.h:19
 msgid "Show _temperature"
 msgstr "Mostrar la _temperatura"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _weather"
 msgstr "Mostrar la _meteorología"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:21
 msgid "Show seco_nds"
 msgstr "Mostrar los segu_ndos"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:22
 msgid "Show the _date"
 msgstr "Mostrar la _fecha"
 
-#: ../applets/clock/clock.glade.h:24
-msgid "Time Settings"
-msgstr "Ajustes de la hora"
+#: ../applets/clock/clock.glade.h:23
+msgid "Time & Date"
+msgstr "Fecha y hora"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:24
 msgid "Time _Settings"
 msgstr "Ajuste_s de la hora"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:25
 msgid "Time:"
 msgstr "Tiempo:"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:26
 msgid "Timezone:"
 msgstr "Zona horaria:"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:27
 msgid "Weather"
 msgstr "Meteorología"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:28
 msgid "_12 hour format"
 msgstr "Formato _12 horas"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:29
 msgid "_24 hour format"
 msgstr "Formato _24 horas"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.glade.h:30
 msgid "_Pressure unit:"
 msgstr "Unidad de _presión atmosférica:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:31
 msgid "_Temperature unit:"
 msgstr "Unidad de _temperatura:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.glade.h:32
 msgid "_Visibility unit:"
 msgstr "Unidad de _visibilidad:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.glade.h:33
 msgid "_Wind speed unit:"
 msgstr "Unidad de velocidad del _viento:"
 
@@ -1467,23 +1463,23 @@ msgstr "No se pudo guardar el lanzador"
 msgid "Replace a currently running panel"
 msgstr "Reemplazar un panel actualmente en ejecución"
 
-#: ../gnome-panel/menu.c:1005
+#: ../gnome-panel/menu.c:971
 msgid "Add this launcher to _panel"
 msgstr "Añadir este lanzador al _panel"
 
-#: ../gnome-panel/menu.c:1012
+#: ../gnome-panel/menu.c:978
 msgid "Add this launcher to _desktop"
 msgstr "Añadir este lanzador al _escritorio"
 
-#: ../gnome-panel/menu.c:1024
+#: ../gnome-panel/menu.c:990
 msgid "_Entire menu"
 msgstr "Menú _completo"
 
-#: ../gnome-panel/menu.c:1029
+#: ../gnome-panel/menu.c:995
 msgid "Add this as _drawer to panel"
 msgstr "Añadir esto como _cajón al panel"
 
-#: ../gnome-panel/menu.c:1036
+#: ../gnome-panel/menu.c:1002
 msgid "Add this as _menu to panel"
 msgstr "Añadir esto como _menú al panel"
 
@@ -2137,35 +2133,35 @@ msgstr "No se pudo montar %s"
 msgid "Mount %s"
 msgstr "Montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:868
+#: ../gnome-panel/panel-menu-items.c:873
 msgid "Removable Media"
 msgstr "Soporte extraíble"
 
-#: ../gnome-panel/panel-menu-items.c:949
+#: ../gnome-panel/panel-menu-items.c:960
 msgid "Network Places"
 msgstr "Lugares en la red"
 
-#: ../gnome-panel/panel-menu-items.c:988
+#: ../gnome-panel/panel-menu-items.c:999
 msgid "Open your personal folder"
 msgstr "Abrir su carpeta personal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1007
+#: ../gnome-panel/panel-menu-items.c:1018
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: ../gnome-panel/panel-menu-items.c:1008
+#: ../gnome-panel/panel-menu-items.c:1019
 msgid "Open the contents of your desktop in a folder"
 msgstr "Abrir los contenidos de su escritorio en una carpeta"
 
-#: ../gnome-panel/panel-menu-items.c:1396
+#: ../gnome-panel/panel-menu-items.c:1407
 msgid "Places"
 msgstr "Lugares"
 
-#: ../gnome-panel/panel-menu-items.c:1425
+#: ../gnome-panel/panel-menu-items.c:1436
 msgid "System"
 msgstr "Sistema"
 
@@ -2174,7 +2170,7 @@ msgstr "Sistema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1517
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2183,14 +2179,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1518
+#: ../gnome-panel/panel-menu-items.c:1529
 #, c-format
 msgid "Log Out %s..."
 msgstr "Cerrar la sesión de %s…"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1522
+#: ../gnome-panel/panel-menu-items.c:1533
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Cierra la sesión de %s para entrar como un usuario diferente"
@@ -3166,17 +3162,17 @@ msgstr "No se pudo ejecutar «%s»"
 msgid "file"
 msgstr "archivo"
 
-#: ../gnome-panel/panel-util.c:879
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Carpeta personal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:891
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistema de archivos"
 
-#: ../gnome-panel/panel-util.c:1038
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "Buscar"
 
@@ -3185,7 +3181,7 @@ msgstr "Buscar"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1084
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3307,6 +3303,12 @@ msgstr "_Miniaplicación:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Dir _prefs:"
+
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>Ajustes de la hora</b>"
+
+#~ msgid "Time Settings"
+#~ msgstr "Ajustes de la hora"
 
 #~ msgid "Error watching gconf key '%s': %s"
 #~ msgstr "Ocurrió un error al observar la clave gconf «%s»: %s"
