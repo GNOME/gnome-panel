@@ -209,6 +209,28 @@ free_applet_data (AppletData *data)
   g_slice_free (AppletData, data);
 }
 
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
+  static gboolean first_time = TRUE;
+
+  if (first_time)
+    {
+      gtk_rc_parse_string ("\n"
+                           "   style \"na-tray-style\"\n"
+                           "   {\n"
+                           "      GtkWidget::focus-line-width=0\n"
+                           "      GtkWidget::focus-padding=0\n"
+                           "   }\n"
+                           "\n"
+                           "    widget \"*.na-tray\" style \"na-tray-style\"\n"
+                           "\n");
+      first_time = FALSE;
+    }
+
+  gtk_widget_set_name (widget, "na-tray");
+}
+
 static gboolean
 applet_factory (PanelApplet *applet,
                 const gchar *iid,
@@ -251,7 +273,8 @@ applet_factory (PanelApplet *applet,
   panel_applet_set_background_widget (applet, GTK_WIDGET (applet));
 
   gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
-  
+  force_no_focus_padding (GTK_WIDGET (applet));
+
 #ifndef NOTIFICATION_AREA_INPROCESS
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 #endif
