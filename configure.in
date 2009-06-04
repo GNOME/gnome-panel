@@ -175,16 +175,6 @@ if test "x$HAVE_NETWORK_MANAGER" = "xyes" ; then
     AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
 fi
 
-# Let distributor specify which utility to use when changing the time
-AC_ARG_WITH(clock-time-utility,
-              [AC_HELP_STRING([--with-clock-time-utility],
-                              [Specify the utility to use when changing the time from the clock applet @<:@default=@:>@])],,
-                              [with_clock_time_utility=""])
-
-CLOCK_TIME_UTILITY=$with_clock_time_utility
-AC_SUBST(CLOCK_TIME_UTILITY)
-
-
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
 PANEL_INPROCESS_ALL=

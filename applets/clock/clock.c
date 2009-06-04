@@ -83,19 +83,11 @@
 #define KEY_SHOW_WEATHER	"show_weather"
 #define KEY_SHOW_TEMPERATURE	"show_temperature"
 #define KEY_GMT_TIME		"gmt_time"
-#define KEY_CONFIG_TOOL		"config_tool"
 #define KEY_CUSTOM_FORMAT	"custom_format"
 #define KEY_SHOW_WEEK		"show_week_numbers"
 #define KEY_CITIES		"cities"
 #define KEY_TEMPERATURE_UNIT	"temperature_unit"
 #define KEY_SPEED_UNIT		"speed_unit"
-
-#define FALLBACK_CONFIG_TOOL "time-admin"
-
-static const char *clock_config_tools [] = {
-	CLOCK_TIME_UTILITY,
-	FALLBACK_CONFIG_TOOL
-};
 
 static GConfEnumStringPair format_type_enum_map [] = {
 	{ CLOCK_FORMAT_12,       "12-hour"  },
@@ -179,8 +171,6 @@ struct _ClockData {
         gboolean     use_speed_default;
         TempUnit     temperature_unit;
         SpeedUnit    speed_unit;
-
-        char *config_tool;
 
         /* Locations */
         GList *locations;
@@ -779,7 +769,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
 	g_free (cd->timeformat);
 	g_free (cd->fallback_timeformat);
-	g_free (cd->config_tool);
 	g_free (cd->custom_format);
 
         free_locations (cd);
@@ -1623,85 +1612,6 @@ copy_date (BonoboUIComponent *uic,
 	g_free (utf8);
 }
 
-/* FIXME old clock applet */
-#if 0
-static void
-on_config_tool_exited (GPid     pid,
-                       gint     status,
-                       gpointer data)
-{
-  ClockData *clock;
-
-  clock = (ClockData *) data;
-
-  refresh_clock (clock);
-
-  g_spawn_close_pid (pid);
-}
-
-static gboolean
-try_config_tool (GdkScreen  *screen,
-		 const char *tool,
-		 ClockData  *cd)
-{
-	GtkWidget *dialog;
-	GError    *err;
-	char     **argv;
-	char      *path;
-	GPid       pid;
-
-        if (!tool || tool[0] == '\0')
-                return FALSE;
-
-        if (!g_shell_parse_argv (tool, NULL, &argv, NULL))
-                return FALSE;
-
-        if (!(path = g_find_program_in_path (argv [0]))) {
-                g_strfreev (argv);
-                return FALSE;
-        }
-
-        g_free (path);
-
-	err = NULL;
-	if (gdk_spawn_on_screen (screen,
-                                 NULL,
-                                 argv,
-                                 NULL,
-                                 G_SPAWN_SEARCH_PATH|G_SPAWN_DO_NOT_REAP_CHILD,
-                                 NULL,
-                                 NULL,
-                                 &pid,
-                                 &err)) {
-
-		g_child_watch_add (pid, on_config_tool_exited, cd);
-		g_strfreev (argv);
-		return TRUE;
-	}
-
-        g_strfreev (argv);
-
-	dialog = gtk_message_dialog_new (NULL,
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_CLOSE,
-					 _("Failed to launch time configuration tool: %s"),
-					 err->message);
-	g_error_free (err);
-
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (gtk_widget_destroy), NULL);
-
-	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
-	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-
-	gtk_widget_show_all (dialog);
-
-	return TRUE;
-}
-#endif
-
 static void
 update_set_time_button (ClockData *cd)
 {
@@ -1927,37 +1837,6 @@ config_date (BonoboUIComponent *uic,
              const char        *verbname)
 {
 	run_time_settings (NULL, cd);
-#if 0
-        /* FMQ: this was from the old clock; it's replaced with our PolicyKit stuff */
-	GtkWidget *dialog;
-	GdkScreen *screen;
-	int i;
-
-	screen = gtk_widget_get_screen (cd->applet);
-
-	if (try_config_tool (screen, cd->config_tool, cd))
-		return;
-
-	for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-		if (try_config_tool (screen, clock_config_tools [i], cd))
-			return;
-
-	dialog = gtk_message_dialog_new (NULL,
-					 GTK_DIALOG_DESTROY_WITH_PARENT,
-					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_CLOSE,
-					 _("Failed to locate a program for configuring "
-					   "the date and time. Perhaps none is installed?"));
-
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (gtk_widget_destroy), NULL);
-
-	gtk_window_set_icon_name (GTK_WINDOW (dialog), CLOCK_ICON);
-	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
-
-	gtk_widget_show_all (dialog);
-#endif
 }
 
 /* current timestamp */
@@ -2501,49 +2380,6 @@ gmt_time_changed (GConfClient  *client,
 	}
 }
 
-static gboolean
-check_config_tool_command (const char *config_tool)
-{
-        char **argv;
-        char  *path;
-
-        if (!config_tool || config_tool[0] == '\0')
-                return FALSE;
-
-        argv = NULL;
-        if (!g_shell_parse_argv (config_tool, NULL, &argv, NULL))
-                return FALSE;
-
-        if (!(path = g_find_program_in_path (argv [0]))) {
-                g_strfreev (argv);
-                return FALSE;
-        }
-
-        g_free (path);
-        g_strfreev (argv);
-
-        return TRUE;
-}
-
-static void
-config_tool_changed (GConfClient  *client,
-                     guint         cnxn_id,
-                     GConfEntry   *entry,
-                     ClockData    *clock)
-{
-	const char *value;
-
-	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
-		return;
-
-	value = gconf_value_get_string (entry->value);
-
-        if (check_config_tool_command (value)) {
-                g_free (clock->config_tool);
-                clock->config_tool = g_strdup (value);
-        }
-}
-
 static void
 custom_format_changed (GConfClient  *client,
                        guint         cnxn_id,
@@ -2617,7 +2453,6 @@ setup_gconf (ClockData *cd)
                 { KEY_SHOW_WEATHER,	(GConfClientNotifyFunc) show_weather_changed },
                 { KEY_SHOW_TEMPERATURE,	(GConfClientNotifyFunc) show_temperature_changed },
                 { KEY_GMT_TIME,		(GConfClientNotifyFunc) gmt_time_changed },
-                { KEY_CONFIG_TOOL,	(GConfClientNotifyFunc) config_tool_changed },
                 { KEY_CUSTOM_FORMAT,	(GConfClientNotifyFunc) custom_format_changed },
                 { KEY_SHOW_WEEK,	(GConfClientNotifyFunc) show_week_changed },
                 { KEY_CITIES,		(GConfClientNotifyFunc) cities_changed },
@@ -2706,7 +2541,6 @@ load_gconf_settings (ClockData *cd)
         cd->show_temperature = panel_applet_gconf_get_bool (applet, KEY_SHOW_TEMPERATURE, NULL);
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
-        cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
         cd->timeformat = NULL;
         cd->fallback_timeformat = NULL;
 
@@ -2803,21 +2637,6 @@ fill_clock_applet (PanelApplet *applet)
 					      "hidden", "1",
 					      NULL);
 	}
-
-        if (!check_config_tool_command (cd->config_tool)) {
-                g_free (cd->config_tool);
-                cd->config_tool = NULL;
-        }
-
-        if (!cd->config_tool) {
-                int i;
-
-                for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
-                        if (check_config_tool_command (clock_config_tools [i])) {
-                                cd->config_tool = g_strdup (clock_config_tools [i]);
-                                break;
-                        }
-        }
 
 	cd->systz = system_timezone_new ();
 	g_signal_connect (cd->systz, "changed",
