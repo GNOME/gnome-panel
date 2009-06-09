@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2009-06-04 01:51+0000\n"
-"PO-Revision-Date: 2009-06-04 11:57+0300\n"
+"POT-Creation-Date: 2009-06-04 18:14+0000\n"
+"PO-Revision-Date: 2009-06-08 12:09+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -160,10 +160,6 @@ msgstr "%H:%M"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "Tõrge aja seadistamisvahendi käivitamisel: %s"
-
 msgid "Set System Time..."
 msgstr "Määra süsteemi aeg..."
 
@@ -172,13 +168,6 @@ msgstr "Muuda süsteemset aega"
 
 msgid "Failed to set the system time"
 msgstr "Tõrge süsteemi aja seadmisel"
-
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
-"Kuupäeva ja kellaaja seadistusprogrammi ei leitud. Võib-olla ei ole ühtegi "
-"paigaldatud?"
 
 msgid "Custom format"
 msgstr "Kohandatud vorming"
@@ -424,6 +413,15 @@ msgid "The unit to use when showing wind speed."
 msgstr "Tuule kiiruse näitamiseks kasutatav ühik."
 
 msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Selle võtme kasutamine on tänu sisemise ajasätete vahendile alates GNOME "
+"versioonist 2.22 aegunud. See skeem on alles jäetud vanemate versioonidega "
+"ühildumise eesmärgil."
+
+msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
@@ -460,9 +458,6 @@ msgstr ""
 "\" korral kuvab kell sekundeid alates epohhi (1970-01-01) algusest. Väärtuse "
 "\"custom\" korral kuvatakse kohandatud aega custom_format võtmega määratud "
 "vormingus."
-
-msgid "This key specifies the program to run in order to configure the time."
-msgstr "Selle võtmega määratakse aja seadistamiseks käivitatav programm."
 
 msgid "Time configuration tool"
 msgstr "Aja seadistusprogramm"
@@ -2561,12 +2556,6 @@ msgstr "_Rakend:"
 
 msgid "_Prefs Dir:"
 msgstr "_Eelistuste kataloog:"
-
-#~ msgid "<b>Time Settings</b>"
-#~ msgstr "<b>Aja sätted</b>"
-
-#~ msgid "Time Settings"
-#~ msgstr "Aja sätted"
 
 #~ msgid "There was an error displaying help: %s"
 #~ msgstr "Abiteabe kuvamisel tekkis viga: %s"
