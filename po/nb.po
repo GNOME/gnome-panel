@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.25.x\n"
+"Project-Id-Version: gnome-panel 2.27.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-29 19:07+0100\n"
-"PO-Revision-Date: 2009-01-05 07:38+0100\n"
+"POT-Creation-Date: 2009-06-10 11:02+0200\n"
+"PO-Revision-Date: 2009-06-10 11:03+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Brukervalg"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3780
+#: ../applets/clock/clock.c:3639
 msgid "Clock"
 msgstr "Klokke"
 
@@ -75,7 +75,7 @@ msgstr "Fabrikk for oppretting av klokke."
 msgid "Get the current time and date"
 msgstr "Hent tid og dato"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:432
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:442
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -84,8 +84,8 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:434
-#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:1563 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -122,7 +122,7 @@ msgstr "Fødsels- og bryllupsdager"
 msgid "Weather Information"
 msgstr "Informasjon om vær"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:14
 msgid "Locations"
 msgstr "Lokasjoner"
 
@@ -130,11 +130,11 @@ msgstr "Lokasjoner"
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:432
+#: ../applets/clock/clock.c:442
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1552
+#: ../applets/clock/clock.c:444 ../applets/clock/clock.c:1561
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -143,7 +143,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:464
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -151,7 +151,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:461
+#: ../applets/clock/clock.c:471
 #, c-format
 msgid ""
 "%1$s\n"
@@ -164,7 +164,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:469
+#: ../applets/clock/clock.c:479
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -172,102 +172,89 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:661
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:691
 msgid "Click to hide your appointments and tasks"
 msgstr "Klikk for å skjule dine avtaler og oppgaver"
 
-#: ../applets/clock/clock.c:684
+#: ../applets/clock/clock.c:694
 msgid "Click to view your appointments and tasks"
 msgstr "Klikk for å vise dine avtaler og oppgaver"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:698
 msgid "Click to hide month calendar"
 msgstr "Klikk for å skjule månedskalender"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:701
 msgid "Click to view month calendar"
 msgstr "Klikk for å vise månedskalender"
 
-#: ../applets/clock/clock.c:1407
+#: ../applets/clock/clock.c:1416
 msgid "Computer Clock"
 msgstr "Datamaskinklokke"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1556
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1549
+#: ../applets/clock/clock.c:1558
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1600
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1668
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "Feil under kjøring av konfigurasjonsverktøy for klokke: %s"
-
-#: ../applets/clock/clock.c:1699
+#: ../applets/clock/clock.c:1629
 msgid "Set System Time..."
 msgstr "Still klokken for systemet..."
 
-#: ../applets/clock/clock.c:1700 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1630 ../applets/clock/clock.glade.h:18
 msgid "Set System Time"
 msgstr "Still klokken for systemet"
 
-#: ../applets/clock/clock.c:1715
+#: ../applets/clock/clock.c:1645
 msgid "Failed to set the system time"
 msgstr "Kunne ikke stille klokken for systemet"
 
-#: ../applets/clock/clock.c:1909
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
-"Kunne ikke finne et program for konfigurasjon av dato og klokkeslett. "
-"Kanskje ingen er installert?"
-
-#: ../applets/clock/clock.c:2841
+#: ../applets/clock/clock.c:2700
 msgid "Custom format"
 msgstr "Tilpasset format"
 
-#: ../applets/clock/clock.c:3502
+#: ../applets/clock/clock.c:3361
 msgid "City Name"
 msgstr "Navn på by"
 
-#: ../applets/clock/clock.c:3506
+#: ../applets/clock/clock.c:3365
 msgid "City Time Zone"
 msgstr "Tidssone for by"
 
-#: ../applets/clock/clock.c:3676
+#: ../applets/clock/clock.c:3535
 msgid "24 hour"
 msgstr "24 timer"
 
-#: ../applets/clock/clock.c:3677
+#: ../applets/clock/clock.c:3536
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
-#: ../applets/clock/clock.c:3678
+#: ../applets/clock/clock.c:3537
 msgid "Internet time"
 msgstr "Internett-tid"
 
-#: ../applets/clock/clock.c:3686
+#: ../applets/clock/clock.c:3545
 msgid "Custom _format:"
 msgstr "Tilpasset _format:"
 
-#: ../applets/clock/clock.c:3783
+#: ../applets/clock/clock.c:3642
 msgid "The Clock displays the current time and date"
 msgstr "Klokken viser nåværende klokkeslett og dato"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3786 ../applets/fish/fish.c:613
-#: ../applets/notification_area/main.c:156
+#: ../applets/clock/clock.c:3645 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
 #: ../applets/wncklet/window-menu.c:79
 #: ../applets/wncklet/workspace-switcher.c:622
@@ -290,15 +277,11 @@ msgid "<b>Panel Display</b>"
 msgstr "<b>Panelvisning</b>"
 
 #: ../applets/clock/clock.glade.h:4
-msgid "<b>Time Settings</b>"
-msgstr "<b>Tidsinnstillinger</b>"
-
-#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(valgfri)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:6
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -306,15 +289,15 @@ msgstr ""
 "<small><i>Skriv inn en by, region eller navn på et land og velg fra listen.</"
 "i></small>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:7
 msgid "Clock Preferences"
 msgstr "Brukervalg for klokke"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:8
 msgid "Current Time:"
 msgstr "Klokkeslett:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:9
 msgid ""
 "East\n"
 "West"
@@ -322,24 +305,24 @@ msgstr ""
 "Øst\n"
 "Vest"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:11
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "Generelt"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:12
 msgid "Latitude:"
 msgstr "Breddegrad:"
 
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:13
 msgid "Location Name:"
 msgstr "Navn på lokasjon:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:15
 msgid "Longitude:"
 msgstr "Lengdegrad:"
 
-#: ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.glade.h:16
 msgid ""
 "North\n"
 "South"
@@ -347,63 +330,63 @@ msgstr ""
 "Nord\n"
 "Sør"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.glade.h:19
 msgid "Show _temperature"
 msgstr "Vis _temperatur"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _weather"
 msgstr "Vis _vær"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:21
 msgid "Show seco_nds"
 msgstr "Vis seku_nder"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:22
 msgid "Show the _date"
 msgstr "Vis _dato"
 
-#: ../applets/clock/clock.glade.h:24
-msgid "Time Settings"
-msgstr "Tidsinnstillinger"
+#: ../applets/clock/clock.glade.h:23
+msgid "Time & Date"
+msgstr "Klokkeslett og dato"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:24
 msgid "Time _Settings"
 msgstr "Tidsinn_stillinger"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:25
 msgid "Time:"
 msgstr "Tid:"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:26
 msgid "Timezone:"
 msgstr "Tidssone:"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:27
 msgid "Weather"
 msgstr "Vær"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:28
 msgid "_12 hour format"
 msgstr "_12-timers format"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:29
 msgid "_24 hour format"
 msgstr "_24-timers format"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.glade.h:30
 msgid "_Pressure unit:"
 msgstr "Enhet for _trykk:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:31
 msgid "_Temperature unit:"
 msgstr "Enhet for _temperatur:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.glade.h:32
 msgid "_Visibility unit:"
 msgstr "Enhet for _sikt:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.glade.h:33
 msgid "_Wind speed unit:"
 msgstr "Enhet for _vindhastighet:"
 
@@ -550,13 +533,20 @@ msgstr "Enhet som skal brukes for vindhastighet."
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.22 til fordel for et internt verktøy for å stille klokken. Denne bevares for kompatibilitet med eldre versjoner."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 "Bruk av denne nøkkelen gikk ut i GNOME 2.6 til fordel for «format»-nøkkelen. "
 "Denne bevares for kompatibilitet med eldre versjoner."
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -568,7 +558,7 @@ msgstr ""
 "konverteringsspesifikasjonene som er gyldige i strftime() for å tilpasse "
 "formatet. Se manualsiden for strftime()."
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:46
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -586,11 +576,6 @@ msgstr ""
 "den samme over hele verden. Hvis den settes til «unix» vil klokken vise tiden "
 "i sekunder siden Epoch, altså 1. januar 1970. Hvis den settes til «custom» "
 "vil den vise tiden i henhold til formatet som oppgis i nøkkelen «custom_key»."
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
-"Denne nøkkelen oppgir hvilket program som skal kjøres for å sette tiden."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -676,14 +661,14 @@ msgid "Sunrise: %s / Sunset: %s"
 msgstr "Soloppgang: %s / Solnedgang: %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Kunne ikke vise hjelpdokument «%s»"
 
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Feil ved visning av hjelpdokument"
 
@@ -957,7 +942,7 @@ msgid "Area where notification icons appear"
 msgstr "Område hvor varselsikoner kommer til syne"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:151
+#: ../applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "Varslingsområde"
 
@@ -965,7 +950,7 @@ msgstr "Varslingsområde"
 msgid "Notification Area Factory"
 msgstr "Fabrikk for varslingsområde"
 
-#: ../applets/notification_area/main.c:240
+#: ../applets/notification_area/main.c:261
 msgid "Panel Notification Area"
 msgstr "Varslingsområde for panelet"
 
@@ -1416,23 +1401,23 @@ msgstr "Kunne ikke lagre oppstarter"
 msgid "Replace a currently running panel"
 msgstr "Erstatt et eksisterende panel"
 
-#: ../gnome-panel/menu.c:1005
+#: ../gnome-panel/menu.c:971
 msgid "Add this launcher to _panel"
 msgstr "Legg til denne oppstarteren på _panelet"
 
-#: ../gnome-panel/menu.c:1012
+#: ../gnome-panel/menu.c:978
 msgid "Add this launcher to _desktop"
 msgstr "Legg til denne oppstarteren på skrivebor_det"
 
-#: ../gnome-panel/menu.c:1024
+#: ../gnome-panel/menu.c:990
 msgid "_Entire menu"
 msgstr "H_ele menyen"
 
-#: ../gnome-panel/menu.c:1029
+#: ../gnome-panel/menu.c:995
 msgid "Add this as _drawer to panel"
 msgstr "Legg til som _skuff på panelet"
 
-#: ../gnome-panel/menu.c:1036
+#: ../gnome-panel/menu.c:1002
 msgid "Add this as _menu to panel"
 msgstr "Legg til som _meny på panelet"
 
@@ -2083,35 +2068,35 @@ msgstr "Kan ikke montere %s"
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:868
+#: ../gnome-panel/panel-menu-items.c:873
 msgid "Removable Media"
 msgstr "Avtagbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:949
+#: ../gnome-panel/panel-menu-items.c:960
 msgid "Network Places"
 msgstr "Nettverkslokasjoner"
 
-#: ../gnome-panel/panel-menu-items.c:988
+#: ../gnome-panel/panel-menu-items.c:999
 msgid "Open your personal folder"
 msgstr "Åpne din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1007
+#: ../gnome-panel/panel-menu-items.c:1018
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1008
+#: ../gnome-panel/panel-menu-items.c:1019
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1396
+#: ../gnome-panel/panel-menu-items.c:1407
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1425
+#: ../gnome-panel/panel-menu-items.c:1436
 msgid "System"
 msgstr "System"
 
@@ -2120,7 +2105,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1517
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2129,14 +2114,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1518
+#: ../gnome-panel/panel-menu-items.c:1529
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logg ut %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1522
+#: ../gnome-panel/panel-menu-items.c:1533
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logg ut %s fra denne sesjonen for å logge inn som en annen bruker."
@@ -3087,17 +3072,17 @@ msgstr "Kunne ikke kjøre «%s»"
 msgid "file"
 msgstr "fil"
 
-#: ../gnome-panel/panel-util.c:880
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Hjemmemappe"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:892
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Filsystem"
 
-#: ../gnome-panel/panel-util.c:1040
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "Søk"
 
@@ -3106,7 +3091,7 @@ msgstr "Søk"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1086
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3224,12 +3209,3 @@ msgstr "P_anelprogram:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Katalog for _brukervalg:"
-
-#~ msgid "Error watching gconf key '%s': %s"
-#~ msgstr "Feil under overvåking av GConf-nøkkel «%s»: %s"
-
-#~ msgid "Error loading gconf directory '%s': %s"
-#~ msgstr "Feil under lasting av GConf-katalog «%s»: %s"
-
-#~ msgid "Error getting value for '%s': %s"
-#~ msgstr "Feil under henting av verdi for «%s»: %s"
