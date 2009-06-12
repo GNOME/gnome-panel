@@ -136,8 +136,8 @@ goat_timeout_func(gpointer data)
 	cairo_paint (cr);
 	
 	gdk_cairo_set_source_pixmap (cr,
-				     goat_accx<0?goat_pix_rev[real_goat_frame]:
-						 goat_pix[real_goat_frame],
+				     goat_accx<0?goat_pix[real_goat_frame]:
+						 goat_pix_rev[real_goat_frame],
 				     goat_x,goat_y);
 
 	cairo_paint (cr);
@@ -210,7 +210,7 @@ goat_realize(GtkWidget *widget)
 
 		goat_pix_rev[frame] = gdk_pixmap_new(widget->window,
 						     width, height, -1);
-		cr = gdk_cairo_create (goat_pix[frame]);
+		cr = gdk_cairo_create (goat_pix_rev[frame]);
 		gdk_cairo_set_source_pixbuf (cr, pb, 0, 0);
 
 		cairo_matrix_init_identity (&matrix);
