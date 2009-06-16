@@ -87,7 +87,7 @@ static void
 panel_action_protocol_kill_dialog (GdkScreen *screen,
 				   guint32    activate_time)
 {
-	panel_run_dialog_present (screen, activate_time);
+	panel_force_quit (screen, activate_time);
 }
 
 static GdkFilterReturn
