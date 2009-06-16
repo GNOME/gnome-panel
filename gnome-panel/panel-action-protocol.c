@@ -35,6 +35,7 @@
 #include "panel-globals.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
+#include "panel-force-quit.h"
 #include "panel-run-dialog.h"
 #include "panel-menu-button.h"
 #include "panel-menu-bar.h"
