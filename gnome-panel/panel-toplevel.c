@@ -53,9 +53,9 @@ G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 #define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
 
 #define DEFAULT_SIZE              48
-#define DEFAULT_AUTO_HIDE_SIZE    6
-#define DEFAULT_HIDE_DELAY        500
-#define DEFAULT_UNHIDE_DELAY      500
+#define DEFAULT_AUTO_HIDE_SIZE    1
+#define DEFAULT_HIDE_DELAY        300
+#define DEFAULT_UNHIDE_DELAY      100
 #define DEFAULT_DND_THRESHOLD     8
 #define MINIMUM_WIDTH             100
 #define MAXIMUM_SIZE_SCREEN_RATIO 5
@@ -4482,7 +4482,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->hide_delay      = DEFAULT_HIDE_DELAY;
 	toplevel->priv->unhide_delay    = DEFAULT_UNHIDE_DELAY;
 	toplevel->priv->auto_hide_size  = DEFAULT_AUTO_HIDE_SIZE;
-	toplevel->priv->animation_speed = PANEL_ANIMATION_MEDIUM;
+	toplevel->priv->animation_speed = PANEL_ANIMATION_FAST;
 
 	toplevel->priv->snap_tolerance  = DEFAULT_DND_THRESHOLD * SNAP_TOLERANCE_FACTOR;
 	toplevel->priv->gtk_settings    = NULL;
