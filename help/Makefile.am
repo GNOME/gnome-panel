@@ -1,3 +1,3 @@
-SUBDIRS = clock fish window-list workspace-switcher
+SUBDIRS = clock fish
 
 -include $(top_srcdir)/git.mk
