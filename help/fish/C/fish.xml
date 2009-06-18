@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "3.4.7.4ac19">
-  <!ENTITY manrevision "2.3">
-  <!ENTITY date "September 2003">
+  <!ENTITY manrevision "2.5">
+  <!ENTITY date "June 2009">
   <!ENTITY applet "Fish">
 ]>
 
@@ -21,7 +21,11 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo> 
-	 <title>&applet; Manual</title> 
+	 <title>&applet; Manual</title>
+	 <copyright> 
+		<year>2009</year> 
+		<holder>Paul Cutler</holder> 
+	 </copyright>	  
 	 <copyright> 
 		<year>2002</year> 
 		<year>2003</year> 
@@ -48,6 +52,14 @@
 
 
 	 <authorgroup> 
+		<author> 
+		  <firstname>Paul</firstname> 
+		  <surname>Cutler</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>pcutler@gnome.org</email> </address> 
+		  </affiliation> 
+		</author>	 
 		<author> 
 		  <firstname>Sun</firstname> 
 		  <surname>GNOME Documentation Team</surname> 
@@ -77,10 +89,21 @@
            </othercredit>
 -->
 	 </authorgroup>
+	 
+	<releaseinfo revision="2.28" role="review">
+	</releaseinfo>
 
 	 <revhistory>
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>	 
+		<revision> 
+		  <revnumber>Fish Applet Manual V2.4</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
 			 <para role="author">Sun GNOME Documentation Team</para> 
