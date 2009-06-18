@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "2.5.3.1">
-  <!ENTITY manrevision "2.5">
-  <!ENTITY date "February 2004">
+  <!ENTITY manrevision "2.6">
+  <!ENTITY date "June 2009">
   <!ENTITY applet "Clock">
 ]>
 <!-- 
@@ -21,6 +21,10 @@
 <!-- appropriate code -->
   <articleinfo> 
 	 <title>&applet; Manual</title> 
+	 <copyright> 
+		<year>2009</year> 
+		<holder>Paul Cutler</holder> 
+	 </copyright>
 	 <copyright> 
 		<year>2002</year>
 		<year>2003</year>  
@@ -53,6 +57,14 @@
 
 	 <authorgroup> 
 		<author> 
+		  <firstname>Paul </firstname> 
+		  <surname> Cutler</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>pcutler@gnome.org</email> </address> 
+		  </affiliation> 
+		</author> 
+		<author> 
 		  <firstname>Sun </firstname> 
 		  <surname>Microsystems</surname> 
 		  <affiliation> 
@@ -81,11 +93,23 @@
            </othercredit>
 -->
 	 </authorgroup>
+	 
+	 <releaseinfo revision="2.28" role="review">
+	 </releaseinfo>
   
 	 <revhistory>
+	 
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Paul Cutler</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Clock Applet Manual V2.5</revnumber> 
+		  <date>February 2004</date> 
 		  <revdescription> 
 			 <para role="author">Sun Microsystems</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
@@ -149,12 +173,12 @@
 		
 	 </legalnotice> 
 	 <abstract role="description">
-	 	<para>The &applet; displays the time and date in a panel.</para>
+	 	<para>The <application>&applet;</application> applet displays the date and time, and when clicked, displays a calendar.  The <application>&applet;</application> can be customized to show seconds or a 12 or 24 hour clock.</para>
 	 </abstract>
   </articleinfo> 
   <indexterm> 
 	 <primary>Clock</primary> 
-  </indexterm> 
+  </indexterm>  
 <!-- ============= Document Body ============================= -->
 
 <!-- ============= Introduction ============================== -->
@@ -178,8 +202,10 @@
 	 </figure> 
     <!-- ==== End of Figure ======================================= -->
 <para>
-The <application>&applet;</application> applet displays the time and the date in a panel. 
+The <application>&applet;</application> applet displays the date and time, and when clicked, displays a calendar.  The <application>&applet;</application> can be customized to show seconds or a 12 or 24 hour clock.
 </para>
+
+
 
 <sect2 id="clock-introduction-add">
 <title>To Add &applet; to a Panel</title>
