@@ -56,6 +56,7 @@
 #include <libgweather/gweather-xml.h>
 #include <libgweather/location-entry.h>
 #include <libgweather/timezone-menu.h>
+#include <libnotify/notify.h> /* for geoclue-started notifications */
 
 #ifdef HAVE_LIBECAL
 #include <libedataserverui/e-passwords.h>
@@ -177,7 +178,9 @@ struct _ClockData {
         GList *locations;
         GList *location_tiles;
 
+        GtkWidget *geo_city_section;
 	ClockGeoclue *clock_geo; /* geoclue abstraction */
+        ClockLocation *current_geo_location; /* also in locations */
 
 	/* runtime data */
         time_t             current_time;
@@ -239,7 +242,227 @@ static void applet_change_orient (PanelApplet       *applet,
 
 static void edit_hide (GtkWidget *unused, ClockData *cd);
 static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
+static void ensure_prefs_window_is_created (ClockData *cd);
+static void fill_location_tree (ClockData *cd);
 static void save_cities_store (ClockData *cd);
+
+static void location_tile_pressed_cb (ClockLocationTile *tile, gpointer data);
+static ClockFormat location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data);
+
+static GWeatherLocation *
+find_gweather_location_by_country (GWeatherLocation *loc,
+                                   const char *country,
+                                   const char *country_code)
+{
+	GWeatherLocation *result;
+
+	if (gweather_location_get_level (loc) < GWEATHER_LOCATION_COUNTRY) {
+		GWeatherLocation **children;
+		int i;
+		children = gweather_location_get_children (loc);
+		for (i = 0; children[i]; i++) {
+			result = find_gweather_location_by_country (children[i], country, country_code);
+			if (result)
+				return result;
+		}
+	}
+	else if (gweather_location_get_level (loc) == GWEATHER_LOCATION_COUNTRY) {
+                const char *name;
+		const char *code;
+		code = gweather_location_get_country (loc);
+		name = gweather_location_get_name (loc);
+		if (country_code && g_strcmp0 (country_code, code) == 0)
+			return loc;
+		if (country && g_strcmp0 (country, name) == 0)
+			return loc;
+	}
+
+	return NULL;
+}
+
+static const char *
+find_gweather_location_code (GWeatherLocation *location)
+{
+	if (gweather_location_get_level (location) == GWEATHER_LOCATION_WEATHER_STATION) {
+		return gweather_location_get_code (location);
+	}
+	else {
+		GWeatherLocation **children;
+		children = gweather_location_get_children (location);
+	 	return find_gweather_location_code (children[0]);
+	}
+}
+
+static ClockLocation *
+create_new_geoclue_location (ClockData *cd, 
+                             char *locality, 
+                             char *country, 
+                             char *country_code)
+{
+        WeatherPrefs prefs;
+        GtkTreeModel *model;
+        char *weather_code;
+        ClockLocation *loc;
+        gdouble lat, lon;
+        char *zone_name;
+        char *location_name;
+        GWeatherLocation *location, *world;
+	GWeatherTimezone *zone;
+       
+	if (!country && !country_code)
+		return NULL;
+
+	world = gweather_location_new_world (FALSE);
+	location = find_gweather_location_by_country (world, country, country_code);
+	if (location)
+		gweather_location_ref (location);
+	gweather_location_unref (world);
+        if (!location) {
+                /* TODO: use geoclue coordinates to figure out the location */ 
+		g_debug ("New geoclue location was not usable");
+                return NULL;
+        }
+
+        if (locality) {
+                location_name = g_strdup_printf ("%s (geoclue)", locality);
+        } else {
+                /* TODO use names from zone? */
+                location_name = g_strdup_printf ("%s (geoclue)", gweather_location_get_name (location));
+        }
+        /* TODO: get coordinates from geoclue instead of using zoneinfo coords ? */ 
+       
+	zone = gweather_location_get_timezone (location);
+        zone_name = g_strdup (gweather_timezone_get_tzid (zone));
+	if (gweather_location_has_coords (location)) {
+		gweather_location_get_coords (location, &lat, &lon);
+	}
+	else {
+		/* FIXME use geoclue coordinates */
+	}
+	/* FIXME use coords to find a better location */
+	weather_code = g_strdup (find_gweather_location_code (location));
+ 
+       prefs.temperature_unit = cd->temperature_unit;
+       prefs.speed_unit = cd->speed_unit;
+       
+       loc = clock_location_new (location_name, 
+                                 zone_name, (gfloat)lat, (gfloat)lon, 
+                                 weather_code, &prefs);
+
+	g_free (location_name);
+	gweather_location_unref (location);
+	g_free (zone_name);
+	g_free (weather_code);
+
+        return loc;
+}
+
+typedef struct {
+       ClockData *cd;
+       ClockLocation *loc;
+} ClockNotifyData;
+
+
+static void
+set_geoclue_location_as_current (ClockData *cd, ClockLocation *loc)
+{
+       g_debug ("setting geoclue location as current");
+       
+       /* TODO: make sure current_loc is not same as loc */
+       
+       /* TODO: free current_geo_location if needed and remove from list */
+       
+       cd->current_geo_location = loc;
+       cd->locations = g_list_append (cd->locations, loc);
+       /* do something to trigger update ? */
+}
+
+static void
+edit_notify_callback (NotifyNotification *n, const char *action, ClockNotifyData *data) 
+{
+       g_debug ("'edit geoclue location' clicked");
+}
+
+static void
+set_notify_callback (NotifyNotification *n, const char *action, ClockNotifyData *data) 
+{
+       set_geoclue_location_as_current (data->cd, data->loc);
+       /*TODO save? */
+}
+
+static void
+show_new_timezone_notification (ClockData *cd, ClockLocation *loc) 
+{
+       ClockNotifyData *data;
+       NotifyNotification *notification;
+       gboolean notify_init_ok = FALSE;
+       char *body;
+       
+       notify_init_ok = notify_is_initted () ? TRUE : notify_init ("Clock Applet");
+       if (!notify_init_ok) {
+               g_warning ("Could not initialize libnotify\n");
+               return;
+       }
+       
+       data = g_new0 (ClockNotifyData, 1);
+       data->cd = cd;
+       data->loc = loc;
+       
+       body =  g_strdup_printf ("New location '%s', in timezone '%s'", 
+                                clock_location_get_name (loc),
+                                clock_location_get_timezone (loc));
+       
+       /*this ends up in wrong places, maybe button size/location is not available yet? */
+       notification = notify_notification_new ("Timezone change detected",
+                                               body,
+                                               NULL, 
+                                               cd->panel_button);
+       notify_notification_add_action(notification, 
+                                      "set", "Set as current location",
+                                      (NotifyActionCallback)set_notify_callback,
+                                      data, NULL); /* TODO free function */
+       notify_notification_add_action(notification,
+                                      "edit", "Edit location",
+                                      (NotifyActionCallback)edit_notify_callback,
+                                      data, NULL);
+       if (!notify_notification_show (notification, NULL)) {
+               g_warning ("Failed to send notification\n");
+               g_free (data);
+       }
+       
+       g_free (body);
+}
+
+static void
+on_location_changed (ClockGeoclue *clock_geo,
+                     char *locality,
+                     char *country,
+                     char *country_code,
+                     ClockData *cd)
+{
+       ClockLocation *geo_loc;
+       geo_loc = create_new_geoclue_location (cd, locality, country, country_code);
+       if (!geo_loc) {
+               g_debug ("New geoclue location was not usable");
+               return;
+       }
+       /* we now know the timezone we're in */
+       
+       /* TODO: if timezone is different from current, popup
+        *       if timezone is same as current, change current location to geoclue location */
+       
+       if (strcmp (system_timezone_get (cd->systz),
+                   clock_location_get_timezone (geo_loc)) == 0) {
+               g_debug ("new geoclue location (%s), same as system tz",
+                        clock_location_get_name (geo_loc));
+               set_geoclue_location_as_current (cd, geo_loc);
+       } else {
+               g_debug ("new geoclue location (%s) on new timezone, showing notification",
+                        clock_location_get_name (geo_loc));
+               show_new_timezone_notification (cd, geo_loc);
+       }
+}
+
 
 /* ClockBox, an instantiable GtkBox */
 
@@ -779,10 +1002,14 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
         g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
-	if (cd->clock_geo)
+	if (cd->clock_geo) {
 		g_object_unref (cd->clock_geo);
-	cd->clock_geo = NULL;
-
+		cd->clock_geo = NULL;
+	}
+	if (cd->current_geo_location) {
+               g_object_unref (cd->current_geo_location);
+               cd->current_geo_location = NULL;
+	}
 	if (cd->systz) {
 		g_object_unref (cd->systz);
 		cd->systz = NULL;
@@ -1026,14 +1253,15 @@ create_cities_store (ClockData *cd)
 	while (list) {
 		ClockLocation *loc = CLOCK_LOCATION (list->data);
 
-		gtk_list_store_append (cd->cities_store, &iter);
-		gtk_list_store_set (cd->cities_store, &iter,
-				    COL_CITY_NAME, clock_location_get_name (loc),
-				    /* FIXME: translate the timezone */
-				    COL_CITY_TZ, clock_location_get_timezone (loc),
-                                    COL_CITY_LOC, loc,
-				    -1);
-
+		if (loc != cd->current_geo_location) {
+			gtk_list_store_append (cd->cities_store, &iter);
+			gtk_list_store_set (cd->cities_store, &iter,
+					    COL_CITY_NAME, clock_location_get_name (loc),
+					    /* FIXME: translate the timezone */
+					    COL_CITY_TZ, clock_location_get_timezone (loc),
+       	                             	    COL_CITY_LOC, loc,
+					    -1);
+		}
                 list = list->next;
 	}
 
@@ -1213,6 +1441,7 @@ update_calendar_popup (ClockData *cd)
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
                         cd->cities_section = NULL;
+			cd->geo_city_section = NULL;
                         cd->map_section = NULL;
                         cd->map_widget = NULL;
 			cd->clock_vbox = NULL;
@@ -2080,6 +2309,11 @@ set_locations (ClockData *cd, GList *locations)
 {
         free_locations (cd);
         cd->locations = locations;
+
+	if (cd->current_geo_location) {
+		cd->locations = g_list_append (cd->locations, cd->current_geo_location);
+	}
+
 	locations_changed (cd);
 }
 
@@ -2645,7 +2879,12 @@ fill_clock_applet (PanelApplet *applet)
 					      NULL);
 	}
 
+	cd->current_geo_location = NULL;
+
 	cd->clock_geo = clock_geoclue_new ();
+        g_signal_connect (cd->clock_geo, "location-changed", 
+                          G_CALLBACK (on_location_changed), cd);
+        clock_geoclue_force_location_changed (cd->clock_geo);
 
 	cd->systz = system_timezone_new ();
 	g_signal_connect (cd->systz, "changed",
@@ -2882,7 +3121,9 @@ save_cities_store (ClockData *cd)
 
         while (node) {
                 loc = CLOCK_LOCATION (node->data);
-                list = g_slist_prepend (list, loc_to_string (loc));
+		if (loc != cd->current_geo_location) {
+               		list = g_slist_prepend (list, loc_to_string (loc));
+		}
                 node = node->next;
         }
 
