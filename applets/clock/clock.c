@@ -256,7 +256,17 @@ find_gweather_location_by_country (GWeatherLocation *loc,
 {
 	GWeatherLocation *result;
 
-	if (gweather_location_get_level (loc) < GWEATHER_LOCATION_COUNTRY) {
+	if (gweather_location_get_level (loc) == GWEATHER_LOCATION_COUNTRY) {
+                const char *name;
+		const char *code;
+		code = gweather_location_get_country (loc);
+		name = gweather_location_get_name (loc);
+		if (country_code && g_strcmp0 (country_code, code) == 0)
+			return loc;
+		if (country && g_strcmp0 (country, name) == 0)
+			return loc;
+	}
+	else {
 		GWeatherLocation **children;
 		int i;
 		children = gweather_location_get_children (loc);
@@ -266,15 +276,29 @@ find_gweather_location_by_country (GWeatherLocation *loc,
 				return result;
 		}
 	}
-	else if (gweather_location_get_level (loc) == GWEATHER_LOCATION_COUNTRY) {
-                const char *name;
-		const char *code;
-		code = gweather_location_get_country (loc);
-		name = gweather_location_get_name (loc);
-		if (country_code && g_strcmp0 (country_code, code) == 0)
+
+	return NULL;
+}
+
+static GWeatherLocation *
+find_gweather_location_by_code (GWeatherLocation *loc, const char *code)
+{
+	if (gweather_location_get_level (loc) == GWEATHER_LOCATION_WEATHER_STATION) {
+		const char *weather_code;
+		weather_code = gweather_location_get_code (loc);
+		if (weather_code && g_strcmp0 (weather_code, code) == 0)
 			return loc;
-		if (country && g_strcmp0 (country, name) == 0)
-			return loc;
+	}
+	else {
+		GWeatherLocation **children;
+		GWeatherLocation *result;
+		int i;
+		children = gweather_location_get_children (loc);
+		for (i = 0; children[i]; i++) {
+			result = find_gweather_location_by_code (children[i], code);
+			if (result)
+				return result;
+		}
 	}
 
 	return NULL;
@@ -300,7 +324,6 @@ create_new_geoclue_location (ClockData *cd,
                              char *country_code)
 {
         WeatherPrefs prefs;
-        GtkTreeModel *model;
         char *weather_code;
         ClockLocation *loc;
         gdouble lat, lon;
@@ -2274,13 +2297,58 @@ locations_changed (ClockData *cd)
 		create_cities_section (cd);
 }
 
+static void 
+on_set_current_location (ClockLocation *loc, ClockData *cd)
+{
+        if (loc != cd->current_geo_location) {
+		GWeatherLocation *location, *world, *parent;
+		const char *city, *country, *code;
+
+		world = gweather_location_new_world (FALSE);
+		location = find_gweather_location_by_code (world, clock_location_get_weather_code (loc));
+		if (location)
+			gweather_location_ref (location);
+		gweather_location_unref (world);
+
+                if (!location) {
+                        g_debug ("weather code not found");
+                        return;
+                }
+		city = gweather_location_get_city_name (location);
+                code = gweather_location_get_country (location);
+
+		parent = location;
+		while (gweather_location_get_level (parent) != GWEATHER_LOCATION_COUNTRY) {
+			parent = gweather_location_get_parent (parent);
+		}
+		country = gweather_location_get_name (parent);
+
+                g_debug ("%s, %s (%s)", city, country, code);
+                clock_geoclue_set_manual (cd->clock_geo, 
+                                          g_strdup (city),
+                                          g_strdup (country),
+                                          g_strdup (code));
+                /* remove the set location ? */
+		gweather_location_unref (location);
+        }
+} 
+
 
 static void
 set_locations (ClockData *cd, GList *locations)
 {
+	GList *l;
+
         free_locations (cd);
         cd->locations = locations;
 
+        
+         for (l = locations; l; l = l->next) {
+                 g_signal_connect_after (l->data, "set-current", 
+                                         G_CALLBACK (on_set_current_location), cd);
+                 
+                 /* FIXME: these are never disconnected and set_locations gets called quite a lot */
+         }
 	if (cd->current_geo_location) {
 		cd->locations = g_list_append (cd->locations,
                                                g_object_ref (cd->current_geo_location));
