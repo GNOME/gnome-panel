@@ -372,28 +372,18 @@ set_geoclue_location_as_current (ClockData *cd, ClockLocation *loc)
        
        /* TODO: free current_geo_location if needed and remove from list */
        
+       if (cd->current_geo_location) {
+               g_object_unref (cd->current_geo_location);
+               cd->locations = g_list_remove (cd->locations, cd->current_geo_location);
+       }
        cd->current_geo_location = loc;
-       cd->locations = g_list_append (cd->locations, loc);
+       cd->locations = g_list_append (cd->locations, g_object_ref (loc));
        /* do something to trigger update ? */
-}
-
-static void
-edit_notify_callback (NotifyNotification *n, const char *action, ClockNotifyData *data) 
-{
-       g_debug ("'edit geoclue location' clicked");
-}
-
-static void
-set_notify_callback (NotifyNotification *n, const char *action, ClockNotifyData *data) 
-{
-       set_geoclue_location_as_current (data->cd, data->loc);
-       /*TODO save? */
 }
 
 static void
 show_new_timezone_notification (ClockData *cd, ClockLocation *loc) 
 {
-       ClockNotifyData *data;
        NotifyNotification *notification;
        gboolean notify_init_ok = FALSE;
        char *body;
@@ -404,10 +394,6 @@ show_new_timezone_notification (ClockData *cd, ClockLocation *loc)
                return;
        }
        
-       data = g_new0 (ClockNotifyData, 1);
-       data->cd = cd;
-       data->loc = loc;
-       
        body =  g_strdup_printf ("New location '%s', in timezone '%s'", 
                                 clock_location_get_name (loc),
                                 clock_location_get_timezone (loc));
@@ -417,17 +403,8 @@ show_new_timezone_notification (ClockData *cd, ClockLocation *loc)
                                                body,
                                                NULL, 
                                                cd->panel_button);
-       notify_notification_add_action(notification, 
-                                      "set", "Set as current location",
-                                      (NotifyActionCallback)set_notify_callback,
-                                      data, NULL); /* TODO free function */
-       notify_notification_add_action(notification,
-                                      "edit", "Edit location",
-                                      (NotifyActionCallback)edit_notify_callback,
-                                      data, NULL);
        if (!notify_notification_show (notification, NULL)) {
                g_warning ("Failed to send notification\n");
-               g_free (data);
        }
        
        g_free (body);
@@ -446,17 +423,11 @@ on_location_changed (ClockGeoclue *clock_geo,
                g_debug ("New geoclue location was not usable");
                return;
        }
-       /* we now know the timezone we're in */
-       
-       /* TODO: if timezone is different from current, popup
-        *       if timezone is same as current, change current location to geoclue location */
-       
+
+	set_geoclue_location_as_current (cd, geo_loc);
+
        if (strcmp (system_timezone_get (cd->systz),
-                   clock_location_get_timezone (geo_loc)) == 0) {
-               g_debug ("new geoclue location (%s), same as system tz",
-                        clock_location_get_name (geo_loc));
-               set_geoclue_location_as_current (cd, geo_loc);
-       } else {
+                   clock_location_get_timezone (geo_loc)) != 0) {
                g_debug ("new geoclue location (%s) on new timezone, showing notification",
                         clock_location_get_name (geo_loc));
                show_new_timezone_notification (cd, geo_loc);
@@ -2311,7 +2282,8 @@ set_locations (ClockData *cd, GList *locations)
         cd->locations = locations;
 
 	if (cd->current_geo_location) {
-		cd->locations = g_list_append (cd->locations, cd->current_geo_location);
+		cd->locations = g_list_append (cd->locations,
+                                               g_object_ref (cd->current_geo_location));
 	}
 
 	locations_changed (cd);
