@@ -54,6 +54,8 @@ void            setup_uri_drag             (GtkWidget  *menuitem,
 
 GtkWidget *	panel_create_menu              (void);
 
+GtkWidget *	panel_image_menu_item_new      (void);
+
 GdkPixbuf *	panel_make_menu_icon (GtkIconTheme *icon_theme,
 				      const char   *icon,
 				      const char   *fallback,

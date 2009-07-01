@@ -142,7 +142,9 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 
 	menubar->priv->applications_menu = create_applications_menu ("applications.menu", NULL);
 
-	menubar->priv->applications_item = gtk_image_menu_item_new_with_label (_("Applications"));
+	menubar->priv->applications_item = panel_image_menu_item_new ();
+	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
+				 _("Applications"));
 	image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
 					      panel_menu_bar_icon_get_size ());
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),

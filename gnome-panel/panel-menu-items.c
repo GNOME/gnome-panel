@@ -237,7 +237,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	else
 		name = g_strdup (force_name);
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 				   icon, NULL, NULL, name);
 
@@ -283,7 +283,7 @@ panel_menu_items_append_place_item (const char *icon_name,
 	GtkWidget *item;
 	char      *user_data;
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   icon_name, NULL, gicon,
@@ -313,7 +313,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 	if (panel_action_get_is_disabled (action_type))
 		return NULL;
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
         setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
@@ -426,7 +426,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	} else {
 		GtkWidget *item;
 
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_BOOKMARKS, NULL, NULL,
 					   _("Bookmarks"));
@@ -555,7 +555,7 @@ panel_menu_item_append_drive (GtkWidget *menu,
 	icon = g_drive_get_icon (drive);
 	title = g_drive_get_name (drive);
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   NULL, NULL, icon,
@@ -655,7 +655,7 @@ panel_menu_item_append_volume (GtkWidget *menu,
 	icon = g_volume_get_icon (volume);
 	title = g_volume_get_name (volume);
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   NULL, NULL, icon,
@@ -866,7 +866,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *item;
 
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_REMOVABLE_MEDIA,
 					   NULL, NULL,
@@ -953,7 +953,7 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *item;
 
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_NETWORK_SERVER,
 					   NULL, NULL,

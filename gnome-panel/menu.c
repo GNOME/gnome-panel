@@ -87,15 +87,6 @@ static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
 
 static inline gboolean
-panel_menu_have_icons (void)
-{	
-	return gconf_client_get_bool (
-			panel_gconf_get_client (),
-			"/desktop/gnome/interface/menus_have_icons",
-			NULL);
-}
-
-static inline gboolean
 desktop_is_home_dir (void)
 {	
 	return gconf_client_get_bool (
@@ -191,51 +182,6 @@ menuitem_to_screen (GtkWidget *menuitem)
 }
 
 static void
-menus_have_icons_changed (GConfClient *client,
-			  guint        cnxn_id,
-			  GConfEntry  *entry,
-			  GtkWidget   *menu)
-{
-	GConfValue *value;
-	GList      *list, *l;
-	gboolean    have_icons = TRUE;
-
-	value = gconf_entry_get_value (entry);
-
-	if (value != NULL && value->type == GCONF_VALUE_BOOL)
-		have_icons = gconf_value_get_bool (value);
-
-	list = g_list_copy (GTK_MENU_SHELL (menu)->children);
-	for (l = list; l; l = l->next) {
-		GtkWidget *item = l->data;
-		GtkWidget *cur_image;
-		GtkWidget *image;
-
-		if (!GTK_IS_IMAGE_MENU_ITEM (item))
-			continue;
-
-		image = g_object_get_data (G_OBJECT (item), "Panel:Image");
-		if (!image)
-			continue;
-
-		cur_image = gtk_image_menu_item_get_image (
-					GTK_IMAGE_MENU_ITEM (item));
-
-		if (have_icons) {
-			if (cur_image != image) {
-				gtk_image_menu_item_set_image (
-					GTK_IMAGE_MENU_ITEM (item), image);
-				gtk_widget_show (image);
-			}
-		} else {
-			gtk_image_menu_item_set_image (
-				GTK_IMAGE_MENU_ITEM (item), NULL);
-		}
-	}
-	g_list_free (list);
-}
-
-static void
 reload_image_menu_items (void)
 {
 	GSList *l;
@@ -279,10 +225,6 @@ panel_create_menu (void)
 	
 	retval = gtk_menu_new ();
 	gtk_widget_set_name (retval, "gnome-panel-main-menu");
-	
-	panel_gconf_notify_add_while_alive ("/desktop/gnome/interface/menus_have_icons",
-					    (GConfClientNotifyFunc) menus_have_icons_changed,
-					    G_OBJECT (retval));
 
 	g_signal_connect (retval, "key_press_event",
 			  G_CALLBACK (panel_menu_key_press_handler),
@@ -1247,9 +1189,8 @@ setup_menuitem (GtkWidget   *menuitem,
 					g_object_ref (image),
 					(GDestroyNotify) g_object_unref);
 		gtk_widget_show (image);
-		if (panel_menu_have_icons ())
-			gtk_image_menu_item_set_image (
-				GTK_IMAGE_MENU_ITEM (menuitem), image);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+					       image);
 	} else if (icon_size != GTK_ICON_SIZE_INVALID)
 		g_signal_connect (menuitem, "size_request",
 				  G_CALLBACK (image_menuitem_size_request),
@@ -1431,14 +1372,24 @@ create_fake_menu (GMenuTreeDirectory *directory)
 	return menu;
 }
 
+GtkWidget *
+panel_image_menu_item_new (void)
+{
+	GtkWidget *menuitem;
+
+	menuitem = gtk_image_menu_item_new ();
+	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
+						   TRUE);
+	return menuitem;
+}
+
 static GtkWidget *
 create_submenu_entry (GtkWidget          *menu,
 		      GMenuTreeDirectory *directory)
 {
 	GtkWidget *menuitem;
 
-	menuitem = gtk_image_menu_item_new ();
-
+	menuitem = panel_image_menu_item_new ();
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
 					NULL, NULL,
@@ -1502,7 +1453,7 @@ create_menuitem (GtkWidget          *menu,
 {
 	GtkWidget  *menuitem;
 	
-	menuitem = gtk_image_menu_item_new ();
+	menuitem = panel_image_menu_item_new ();
 
 	g_object_set_data_full (G_OBJECT (menuitem),
 				"panel-menu-tree-entry",
@@ -1899,10 +1850,9 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				"Panel:Image",
 				g_object_ref (image),
 				(GDestroyNotify) g_object_unref);
- 
-	if (panel_menu_have_icons ())
-		gtk_image_menu_item_set_image (
-			GTK_IMAGE_MENU_ITEM (image_menu_item), image);
+
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item),
+				       image);
 
 	g_signal_connect_data (image, "map",
 			       G_CALLBACK (image_menu_shown), icon,
