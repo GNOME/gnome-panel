@@ -410,6 +410,7 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	win = gtk_window_new (GTK_WINDOW_POPUP);
 
+	gtk_window_set_screen (GTK_WINDOW (win), gscreen);
 	gtk_window_set_keep_above (GTK_WINDOW (win), TRUE);
 	gtk_window_set_decorated (GTK_WINDOW (win), FALSE);
 	gtk_widget_set_app_paintable(win, TRUE);
