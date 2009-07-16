@@ -18,6 +18,8 @@ distuninstallcheck:
 
 distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out' | grep -v 'legal.xml'
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS =			\
 	po 			\
 	idl 			\
