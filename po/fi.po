@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-27 18:21+0300\n"
-"PO-Revision-Date: 2009-01-27 18:25+0300\n"
+"POT-Creation-Date: 2009-07-19 10:31+0300\n"
+"PO-Revision-Date: 2009-07-19 10:35+0300\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "_Tietoja"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
 #: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "O_hje"
@@ -82,7 +82,7 @@ msgstr "_Asetukset"
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3780
+#: ../applets/clock/clock.c:3639
 msgid "Clock"
 msgstr "Kello"
 
@@ -102,7 +102,7 @@ msgid "Get the current time and date"
 msgstr "Hae nykyinen aika ja päiväys"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:432
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:442
 msgid "%l:%M %p"
 msgstr "%I.%M %p"
 
@@ -112,8 +112,8 @@ msgstr "%I.%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:434
-#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:1563 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -152,7 +152,7 @@ msgid "Weather Information"
 msgstr "Säätiedot"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:3
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:14
 msgid "Locations"
 msgstr "Sijainnit"
 
@@ -161,12 +161,12 @@ msgid "Calendar"
 msgstr "Kalenteri"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:432
+#: ../applets/clock/clock.c:442
 msgid "%l:%M:%S %p"
 msgstr "%I.%M.%S %p"
 
 # applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
-#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1552
+#: ../applets/clock/clock.c:444 ../applets/clock/clock.c:1561
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
@@ -176,7 +176,7 @@ msgstr "%H.%M.%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:464
 msgid "%a %b %e"
 msgstr "%a %e. %Bta"
 
@@ -184,7 +184,7 @@ msgstr "%a %e. %Bta"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:461
+#: ../applets/clock/clock.c:471
 #, c-format
 msgid ""
 "%1$s\n"
@@ -197,7 +197,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:469
+#: ../applets/clock/clock.c:479
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -206,108 +206,94 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:661
 msgid "%A %B %d (%%s)"
 msgstr "%A %e. %Bta %Y (%%s)"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:691
 msgid "Click to hide your appointments and tasks"
 msgstr "Piilota tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:684
+#: ../applets/clock/clock.c:694
 msgid "Click to view your appointments and tasks"
 msgstr "Näytä tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:698
 msgid "Click to hide month calendar"
 msgstr "Piilota kuukauden kalenteri napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:701
 msgid "Click to view month calendar"
 msgstr "Näytä kuukauden kalenteri napsauttamalla tästä"
 
 # applets/gen_util/clock.c:378
-#: ../applets/clock/clock.c:1407
+#: ../applets/clock/clock.c:1416
 msgid "Computer Clock"
 msgstr "Tietokoneen kello"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1556
 msgid "%I:%M:%S %p"
 msgstr "%I.%M.%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: ../applets/clock/clock.c:1549
+#: ../applets/clock/clock.c:1558
 msgid "%I:%M %p"
 msgstr "%I.%M %p"
 
 # applets/gen_util/clock.c:503
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1600
 msgid "%A, %B %d %Y"
 msgstr "%A %e. %Bta %Y"
 
-# gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
-#: ../applets/clock/clock.c:1668
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
-
-#: ../applets/clock/clock.c:1699
+#: ../applets/clock/clock.c:1629
 msgid "Set System Time..."
 msgstr "Aseta tietokoneen aika..."
 
-#: ../applets/clock/clock.c:1700 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1630 ../applets/clock/clock.glade.h:18
 msgid "Set System Time"
 msgstr "Aseta tietokoneen aika"
 
-#: ../applets/clock/clock.c:1715
+#: ../applets/clock/clock.c:1645
 msgid "Failed to set the system time"
 msgstr "Tietokoneen aikaa ei voi asettaa"
 
-#: ../applets/clock/clock.c:1909
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
-"Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
-"sitä ei ole asennettu?"
-
-#: ../applets/clock/clock.c:2841
+#: ../applets/clock/clock.c:2700
 msgid "Custom format"
 msgstr "Muu muoto"
 
 # applets/fish/fish.c:713
-#: ../applets/clock/clock.c:3502
+#: ../applets/clock/clock.c:3361
 msgid "City Name"
 msgstr "Kaupungin nimi"
 
 # gnome-panel/distribution.c:26
-#: ../applets/clock/clock.c:3506
+#: ../applets/clock/clock.c:3365
 msgid "City Time Zone"
 msgstr "Kaupungin aikavyöhyke"
 
 # applets/gen_util/clock.c:959
-#: ../applets/clock/clock.c:3676
+#: ../applets/clock/clock.c:3535
 msgid "24 hour"
 msgstr "24-tuntinen"
 
 # applets/gen_util/clock.c:964
-#: ../applets/clock/clock.c:3677
+#: ../applets/clock/clock.c:3536
 msgid "UNIX time"
 msgstr "Unix-aika"
 
 # applets/gen_util/clock.c:968
-#: ../applets/clock/clock.c:3678
+#: ../applets/clock/clock.c:3537
 msgid "Internet time"
 msgstr "Internet-aika"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: ../applets/clock/clock.c:3686
+#: ../applets/clock/clock.c:3545
 msgid "Custom _format:"
 msgstr "Muu _muoto:"
 
 # applets/gen_util/clock.c:1158
-#: ../applets/clock/clock.c:3783
+#: ../applets/clock/clock.c:3642
 msgid "The Clock displays the current time and date"
 msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 
@@ -315,8 +301,8 @@ msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: ../applets/clock/clock.c:3786 ../applets/fish/fish.c:613
-#: ../applets/notification_area/main.c:156
+#: ../applets/clock/clock.c:3645 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
 #: ../applets/wncklet/window-menu.c:79
 #: ../applets/wncklet/workspace-switcher.c:622
@@ -345,17 +331,12 @@ msgstr "<b>Näyttö</b>"
 msgid "<b>Panel Display</b>"
 msgstr "<b>Paneelinäyttö</b>"
 
-# gnome-panel/gnome-panel-screenshot.glade.h:2
 #: ../applets/clock/clock.glade.h:4
-msgid "<b>Time Settings</b>"
-msgstr "<b>Aika-asetukset</b>"
-
-#: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
 msgstr "<i>(valinnainen)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.glade.h:6
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -364,15 +345,15 @@ msgstr ""
 "ponnahdusikkunasta.</i></small>"
 
 # applets/gen_util/clock.c:916
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.glade.h:7
 msgid "Clock Preferences"
 msgstr "Kellon asetukset"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.glade.h:8
 msgid "Current Time:"
 msgstr "Nykyinen aika:"
 
-#: ../applets/clock/clock.glade.h:10
+#: ../applets/clock/clock.glade.h:9
 msgid ""
 "East\n"
 "West"
@@ -380,25 +361,25 @@ msgstr ""
 "itäistä\n"
 "läntistä"
 
-#: ../applets/clock/clock.glade.h:12
+#: ../applets/clock/clock.glade.h:11
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
 msgid "General"
 msgstr "Yleistä"
 
-#: ../applets/clock/clock.glade.h:13
+#: ../applets/clock/clock.glade.h:12
 msgid "Latitude:"
 msgstr "Leveyspiiri:"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:3
-#: ../applets/clock/clock.glade.h:14
+#: ../applets/clock/clock.glade.h:13
 msgid "Location Name:"
 msgstr "Sijainnin nimi:"
 
-#: ../applets/clock/clock.glade.h:16
+#: ../applets/clock/clock.glade.h:15
 msgid "Longitude:"
 msgstr "Pituuspiiri:"
 
-#: ../applets/clock/clock.glade.h:17
+#: ../applets/clock/clock.glade.h:16
 msgid ""
 "North\n"
 "South"
@@ -407,69 +388,69 @@ msgstr ""
 "eteläistä"
 
 # applets/gen_util/clock.c:1015
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.glade.h:19
 msgid "Show _temperature"
 msgstr "_Näytä lämpötila"
 
 # applets/gen_util/clock.c:1015
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.glade.h:20
 msgid "Show _weather"
 msgstr "_Näytä sää"
 
 # applets/gen_util/clock.c:1005
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.glade.h:21
 msgid "Show seco_nds"
 msgstr "Näytä _sekunnit"
 
 # applets/gen_util/clock.c:1015
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.glade.h:22
 msgid "Show the _date"
 msgstr "_Näytä päiväys"
 
-#: ../applets/clock/clock.glade.h:24
-msgid "Time Settings"
-msgstr "Aika-asetukset"
+#: ../applets/clock/clock.glade.h:23
+msgid "Time & Date"
+msgstr "Päiväys ja aika"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.glade.h:24
 msgid "Time _Settings"
 msgstr "Aika-a_setukset"
 
-#: ../applets/clock/clock.glade.h:26
+#: ../applets/clock/clock.glade.h:25
 msgid "Time:"
 msgstr "Aika:"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.glade.h:26
 msgid "Timezone:"
 msgstr "Aikavyöhyke:"
 
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.glade.h:27
 msgid "Weather"
 msgstr "Sää"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.glade.h:28
 msgid "_12 hour format"
 msgstr "_12-tuntinen muoto"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.glade.h:29
 msgid "_24 hour format"
 msgstr "_24-tuntinen muoto"
 
 # libpanel-applet/panel-test-applets.glade.h:7
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.glade.h:30
 msgid "_Pressure unit:"
 msgstr "_Paineyksikkö:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.glade.h:31
 msgid "_Temperature unit:"
 msgstr "_Lämpötilan yksikkö:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.glade.h:32
 msgid "_Visibility unit:"
 msgstr "_Näkyvyyden yksikkö:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.glade.h:33
 msgid "_Wind speed unit:"
 msgstr "_Tuulen nopeuden yksikkö:"
 
@@ -627,13 +608,23 @@ msgstr "Tuulen nopeutta näytettäessä käytettävä yksikkö."
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Tämän avain poistettiin käytöstä GNOME 2.22 -versiossa sisäisen aika-asettelun "
+"lisäyksen ansiosta. Tämä kaavain on säilytetty vanhojen versioiden yhteensopivuuden "
+"vuoksi."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 "Tämän avaimen käyttö ei ole suositeltua GNOME 2.6:ssa. Käytä mieluummin "
 "\"format\"-avainta. Kaavain on olemassa yhteensopivuuden vuoksi."
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -644,7 +635,7 @@ msgstr ""
 "\"format\" arvo on \"custom\". Voit käyttää kaikkia strftime()-kutsun "
 "ymmärtämiä aikamääreitä. Lue strftime-ohjesivulta lisätietoja."
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:46
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -663,10 +654,6 @@ msgstr ""
 "Jos arvo on \"unix\", kello laskee sekunteja alkukohdasta (1.1.1970) alkaen. "
 "Jos arvo on \"custom\", kello näyttää ajan käyttäjän avaimessa "
 "\"custom_format\" määrittelemässä muodossa."
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the program to run in order to configure the time."
-msgstr "Ohjelma, joka käynnistetään, kun aika-asetuksia halutaan muuttaa."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -758,7 +745,7 @@ msgstr "Aurinko nousee: %s / laskee: %s"
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
@@ -767,7 +754,7 @@ msgstr "Ohjetiedostoa \"%s\" ei voi näyttää"
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Virhe näytettäessä ohjetiedostoa"
 
@@ -1074,7 +1061,7 @@ msgid "Area where notification icons appear"
 msgstr "Alue, johon ilmoituskuvakkeet ilmestyvät"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:151
+#: ../applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "Ilmoitusalue"
 
@@ -1082,7 +1069,7 @@ msgstr "Ilmoitusalue"
 msgid "Notification Area Factory"
 msgstr "Ilmoitusaluetehdas"
 
-#: ../applets/notification_area/main.c:240
+#: ../applets/notification_area/main.c:261
 msgid "Panel Notification Area"
 msgstr "Paneelin ilmoitusalue"
 
@@ -1612,27 +1599,27 @@ msgid "Replace a currently running panel"
 msgstr "Korvaa käynnissä oleva paneeli"
 
 # gnome-panel/menu.c:1342
-#: ../gnome-panel/menu.c:1005
+#: ../gnome-panel/menu.c:913
 msgid "Add this launcher to _panel"
 msgstr "Lisää tämä käynnistin _paneeliin"
 
 # gnome-panel/menu.c:1342
-#: ../gnome-panel/menu.c:1012
+#: ../gnome-panel/menu.c:920
 msgid "Add this launcher to _desktop"
 msgstr "Lisää tämä käynnistin _työpöydälle"
 
 # gnome-panel/menu.c:1442
-#: ../gnome-panel/menu.c:1024
+#: ../gnome-panel/menu.c:932
 msgid "_Entire menu"
 msgstr "_Koko valikko"
 
 # gnome-panel/menu.c:1451
-#: ../gnome-panel/menu.c:1029
+#: ../gnome-panel/menu.c:937
 msgid "Add this as _drawer to panel"
 msgstr "Lisää tämä _vetolaatikkona paneeliin"
 
 # gnome-panel/menu.c:1459
-#: ../gnome-panel/menu.c:1036
+#: ../gnome-panel/menu.c:944
 msgid "Add this as _menu to panel"
 msgstr "Lisää tämä _valikkona paneeliin"
 
@@ -2011,13 +1998,9 @@ msgstr "Valitse tiedosto..."
 
 # gnome-panel/gnome-run.c:849
 #: ../gnome-panel/panel-ditem-editor.c:1153
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "Comm_and:"
 msgstr "K_omento:"
-
-# gnome-panel/gnome-run.c:849
-#: ../gnome-panel/panel-ditem-editor.c:1162
-msgid "_Command:"
-msgstr "_Komento:"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:3
 #: ../gnome-panel/panel-ditem-editor.c:1171
@@ -2297,12 +2280,12 @@ msgstr "Muuta työpöydän ulkoasua ja toimintaa, etsi apua tai kirjaudu ulos"
 
 # gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
 # gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
-#: ../gnome-panel/panel-menu-bar.c:145
+#: ../gnome-panel/panel-menu-bar.c:147
 msgid "Applications"
 msgstr "Sovellukset"
 
 # gnome-panel/distribution.c:26
-#: ../gnome-panel/panel-menu-bar.c:351 ../gnome-panel/panel-menu-button.c:668
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "_Muokkaa valikoita"
 
@@ -2338,15 +2321,15 @@ msgstr "Ei voi liittää %s"
 msgid "Mount %s"
 msgstr "Liitä %s"
 
-#: ../gnome-panel/panel-menu-items.c:868
+#: ../gnome-panel/panel-menu-items.c:873
 msgid "Removable Media"
 msgstr "Irrotettavat taltiot"
 
-#: ../gnome-panel/panel-menu-items.c:949
+#: ../gnome-panel/panel-menu-items.c:960
 msgid "Network Places"
 msgstr "Verkkosijainnit"
 
-#: ../gnome-panel/panel-menu-items.c:988
+#: ../gnome-panel/panel-menu-items.c:999
 msgid "Open your personal folder"
 msgstr "Avaa henkilökohtaisen kansiosi"
 
@@ -2354,20 +2337,20 @@ msgstr "Avaa henkilökohtaisen kansiosi"
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1007
+#: ../gnome-panel/panel-menu-items.c:1018
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Työpöytä"
 
-#: ../gnome-panel/panel-menu-items.c:1008
+#: ../gnome-panel/panel-menu-items.c:1019
 msgid "Open the contents of your desktop in a folder"
 msgstr "Avaa työpöydän sisältö kansiona"
 
-#: ../gnome-panel/panel-menu-items.c:1396
+#: ../gnome-panel/panel-menu-items.c:1407
 msgid "Places"
 msgstr "Sijainnit"
 
-#: ../gnome-panel/panel-menu-items.c:1425
+#: ../gnome-panel/panel-menu-items.c:1436
 msgid "System"
 msgstr "Järjestelmä"
 
@@ -2376,7 +2359,7 @@ msgstr "Järjestelmä"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1517
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2386,7 +2369,7 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1518
+#: ../gnome-panel/panel-menu-items.c:1529
 #, c-format
 msgid "Log Out %s..."
 msgstr "Kirjaa ulos käyttäjä %s..."
@@ -2394,7 +2377,7 @@ msgstr "Kirjaa ulos käyttäjä %s..."
 # gnome-panel/menu.c:3466
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1522
+#: ../gnome-panel/panel-menu-items.c:1533
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -3404,17 +3387,17 @@ msgstr "Komennon \"%s\" suorittaminen epäonnistui"
 msgid "file"
 msgstr "tiedosto"
 
-#: ../gnome-panel/panel-util.c:879
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Kotikansio"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:891
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Tiedostojärjestelmä"
 
-#: ../gnome-panel/panel-util.c:1038
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "Haku"
 
@@ -3423,7 +3406,7 @@ msgstr "Haku"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1084
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3559,6 +3542,32 @@ msgstr "_Sovelma:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Asetuskansio:"
+
+# gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
+#~ msgid "Failed to launch time configuration tool: %s"
+#~ msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
+
+#~ msgid ""
+#~ "Failed to locate a program for configuring the date and time. Perhaps "
+#~ "none is installed?"
+#~ msgstr ""
+#~ "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
+#~ "sitä ei ole asennettu?"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:2
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>Aika-asetukset</b>"
+
+#~ msgid "Time Settings"
+#~ msgstr "Aika-asetukset"
+
+#~ msgid ""
+#~ "This key specifies the program to run in order to configure the time."
+#~ msgstr "Ohjelma, joka käynnistetään, kun aika-asetuksia halutaan muuttaa."
+
+# gnome-panel/gnome-run.c:849
+#~ msgid "_Command:"
+#~ msgstr "_Komento:"
 
 # applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
 # applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
