@@ -2,6 +2,7 @@ AC_INIT([gnome-panel], [2.27.5],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_CONFIG_MACRO_DIR([m4])
 GNOME_COMMON_INIT
@@ -313,12 +314,8 @@ if test "x$enable_rebuilds" = "xyes" && \
 fi
 AC_SUBST(REBUILD)
 
-SHAVE_INIT([.], [enable])
-
 AC_OUTPUT([
 Makefile
-shave
-shave-libtool
 idl/Makefile
 icons/Makefile
 icons/16x16/Makefile

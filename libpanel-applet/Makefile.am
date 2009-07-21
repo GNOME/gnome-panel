@@ -45,7 +45,7 @@ CORBA_SRCLIST =			\
 	GNOME_Panel.h
 
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
-	$(QUIET_GEN)$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
+	$(AM_V_GEN)$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
 noinst_PROGRAMS = test-bonobo-applet
 
@@ -77,16 +77,16 @@ EXTRA_DIST =					\
 	panel-test-applets.glade
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
-	$(QUIET_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
+	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
 
 panel-applet-marshal.c: panel-applet-marshal.list $(GLIB_GENMARSHAL)
-	$(QUIET_GEN)echo "#include \"panel-applet-marshal.h\"" > $@ && \
+	$(AM_V_GEN)echo "#include \"panel-applet-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=panel_applet_marshal >> $@
 
 panel_applet_enum_headers = $(top_srcdir)/libpanel-applet/panel-applet.h
 
 panel-applet-enums.c: @REBUILD@ $(panel_applet_enum_headers)
-	$(QUIET_GEN)glib-mkenums \
+	$(AM_V_GEN)glib-mkenums \
 		     --fhead "#include <glib-object.h>\n" \
 		     --fhead "#include \"panel-applet-enums.h\"\n\n" \
 		     --fprod "\n/* enumerations from \"@filename@\" */" \
@@ -102,7 +102,7 @@ panel-applet-enums.c: @REBUILD@ $(panel_applet_enum_headers)
 		$(panel_applet_enum_headers) > $@
 
 panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
-	$(QUIET_GEN)glib-mkenums \
+	$(AM_V_GEN)glib-mkenums \
 		     --fhead "#ifndef __PANEL_APPLET_ENUMS_H__\n" \
 		     --fhead "#define __PANEL_APPLET_ENUMS_H__\n\n" \
 		     --fhead "G_BEGIN_DECLS\n\n" \

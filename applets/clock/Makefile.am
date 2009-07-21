@@ -1,7 +1,5 @@
 SUBDIRS = pixmaps
 
-QUIET_GEN = $(Q:@=@echo '  GEN   '$@;)
-
 INCLUDES =							\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
@@ -77,16 +75,16 @@ BUILT_SOURCES =					\
 	clock-typebuiltins.h
 
 clock-marshallers.c: clock-marshallers.list
-	$(QUIET_GEN)glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
+	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
 
 clock-marshallers.h: clock-marshallers.list
-	$(QUIET_GEN)glib-genmarshal --prefix _clock_marshal --header --internal $< > $@
+	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --internal $< > $@
 
 clock_enum_headers =					\
 	$(top_srcdir)/applets/clock/clock-utils.h
 
 clock-typebuiltins.c: @REBUILD@ $(clock_enum_headers)
-	$(QUIET_GEN)glib-mkenums \
+	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"clock-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
@@ -102,7 +100,7 @@ clock-typebuiltins.c: @REBUILD@ $(clock_enum_headers)
 		$(clock_enum_headers) > $@
 
 clock-typebuiltins.h: @REBUILD@ $(clock_enum_headers)
-	$(QUIET_GEN)glib-mkenums \
+	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __CLOCK_TYPEBUILTINS_H__\n" \
 			--fhead "#define __CLOCK_TYPEBUILTINS_H__ 1\n\n" \
 			--fhead "G_BEGIN_DECLS\n\n" \
@@ -114,7 +112,7 @@ clock-typebuiltins.h: @REBUILD@ $(clock_enum_headers)
 		$(clock_enum_headers) >  $@
 
 gnome-clock-applet-mechanism-glue.h: $(srcdir)/gnome-clock-applet-mechanism.xml
-	$(QUIET_GEN)dbus-binding-tool \
+	$(AM_V_GEN)dbus-binding-tool \
 			--prefix=gnome_clock_applet_mechanism --mode=glib-server	\
 			--output=gnome-clock-applet-mechanism-glue.h			\
 			$(srcdir)/gnome-clock-applet-mechanism.xml
@@ -178,7 +176,7 @@ server_in_files = GNOME_ClockApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 $(server_in_files): $(server_in_files).in Makefile
-	$(QUIET_GEN)sed \
+	$(AM_V_GEN)sed \
 	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
 	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
@@ -215,7 +213,7 @@ if HAVE_POLKIT
 dbus_services_DATA = $(dbus_services_in_files:.service.in=.service)
 
 $(dbus_services_DATA): $(dbus_services_in_files)
-	$(QUIET_GEN)sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
+	$(AM_V_GEN)sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
 
 dbus_conf_DATA = org.gnome.ClockApplet.Mechanism.conf
 
