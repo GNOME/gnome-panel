@@ -34,8 +34,6 @@ libpanel_util_la_SOURCES=	\
 	panel-launch.h			\
 	panel-list.c			\
 	panel-list.h			\
-	panel-power-manager.c		\
-	panel-power-manager.h		\
 	panel-session-manager.c		\
 	panel-session-manager.h		\
 	panel-show.c			\
