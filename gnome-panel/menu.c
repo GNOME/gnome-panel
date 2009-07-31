@@ -1389,7 +1389,7 @@ create_submenu_entry (GtkWidget          *menu,
 {
 	GtkWidget *menuitem;
 
-	menuitem = panel_image_menu_item_new ();
+	menuitem = gtk_image_menu_item_new ();
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
 					NULL, NULL,

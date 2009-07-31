@@ -1,4 +1,5 @@
-/*
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
+ *
  * Copyright (C) 2005 Vincent Untz
  *
  * This program is free software; you can redistribute it and/or
@@ -141,7 +142,8 @@ activate_desktop_uri (GtkWidget *menuitem,
 static void
 panel_menu_items_append_from_desktop (GtkWidget *menu,
 				      char      *path,
-				      char      *force_name)
+				      char      *force_name,
+                                      gboolean   use_icon)
 {
 	GKeyFile  *key_file;
 	gboolean   loaded;
@@ -237,7 +239,12 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 	else
 		name = g_strdup (force_name);
 
-	item = panel_image_menu_item_new ();
+	if (use_icon) {
+		item = panel_image_menu_item_new ();
+        } else {
+		item = gtk_image_menu_item_new ();
+	}
+
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 				   icon, NULL, NULL, name);
 
@@ -313,7 +320,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 	if (panel_action_get_is_disabled (action_type))
 		return NULL;
 
-	item = panel_image_menu_item_new ();
+	item = gtk_image_menu_item_new ();
         setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
@@ -1032,7 +1039,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 					      NULL);
 	panel_menu_items_append_from_desktop (places_menu,
 					      "nautilus-computer.desktop",
-					      gconf_name);
+					      gconf_name,
+                                              TRUE);
 	if (gconf_name)
 		g_free (gconf_name);
 
@@ -1041,7 +1049,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	panel_menu_items_append_from_desktop (places_menu,
 					      "network-scheme.desktop",
-					      NULL);
+					      NULL,
+                                              TRUE);
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
 	if (panel_is_program_in_path ("nautilus-connect-server")) {
@@ -1055,7 +1064,8 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	panel_menu_items_append_from_desktop (places_menu,
 					      "gnome-search-tool.desktop",
-					      NULL);
+					      NULL,
+                                              FALSE);
 
 	panel_recent_append_documents_menu (places_menu,
 					    place_item->priv->recent_manager);
@@ -1147,8 +1157,8 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 	if (add_separator)
 		add_menu_separator (menu);
 
-	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL);
-	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL);
+	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
+	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL, FALSE);
 
 	if (parent->priv->append_lock_logout)
 		panel_menu_items_append_lock_logout (menu);
