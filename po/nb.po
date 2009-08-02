@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.27.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-10 11:02+0200\n"
+"POT-Creation-Date: 2009-08-03 00:09+0200\n"
 "PO-Revision-Date: 2009-06-10 11:03+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -46,7 +46,7 @@ msgstr "_Om"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
 #: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Hjelp"
@@ -536,7 +536,10 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
 "versions."
-msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.22 til fordel for et internt verktøy for å stille klokken. Denne bevares for kompatibilitet med eldre versjoner."
+msgstr ""
+"Bruk av denne nøkkelen gikk ut i GNOME 2.22 til fordel for et internt "
+"verktøy for å stille klokken. Denne bevares for kompatibilitet med eldre "
+"versjoner."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -1401,23 +1404,23 @@ msgstr "Kunne ikke lagre oppstarter"
 msgid "Replace a currently running panel"
 msgstr "Erstatt et eksisterende panel"
 
-#: ../gnome-panel/menu.c:971
+#: ../gnome-panel/menu.c:913
 msgid "Add this launcher to _panel"
 msgstr "Legg til denne oppstarteren på _panelet"
 
-#: ../gnome-panel/menu.c:978
+#: ../gnome-panel/menu.c:920
 msgid "Add this launcher to _desktop"
 msgstr "Legg til denne oppstarteren på skrivebor_det"
 
-#: ../gnome-panel/menu.c:990
+#: ../gnome-panel/menu.c:932
 msgid "_Entire menu"
 msgstr "H_ele menyen"
 
-#: ../gnome-panel/menu.c:995
+#: ../gnome-panel/menu.c:937
 msgid "Add this as _drawer to panel"
 msgstr "Legg til som _skuff på panelet"
 
-#: ../gnome-panel/menu.c:1002
+#: ../gnome-panel/menu.c:944
 msgid "Add this as _menu to panel"
 msgstr "Legg til som _meny på panelet"
 
@@ -1751,12 +1754,9 @@ msgid "Choose a file..."
 msgstr "Velg en fil..."
 
 #: ../gnome-panel/panel-ditem-editor.c:1155
+#: ../gnome-panel/panel-ditem-editor.c:1164
 msgid "Comm_and:"
 msgstr "Komm_ando:"
-
-#: ../gnome-panel/panel-ditem-editor.c:1164
-msgid "_Command:"
-msgstr "_Kommando:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1173
 msgid "_Location:"
@@ -2030,73 +2030,73 @@ msgstr "Aksesser dokumenter, mapper og nettverkslokasjoner"
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Endre utseende og oppførsel for skrivebord, finn hjelp eller logg ut"
 
-#: ../gnome-panel/panel-menu-bar.c:145
+#: ../gnome-panel/panel-menu-bar.c:147
 msgid "Applications"
 msgstr "Programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:351 ../gnome-panel/panel-menu-button.c:668
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "R_ediger menyer"
 
-#: ../gnome-panel/panel-menu-items.c:432
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:454 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Åpne «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:522
+#: ../gnome-panel/panel-menu-items.c:529
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke søke etter endringer for medie på %s"
 
-#: ../gnome-panel/panel-menu-items.c:565
+#: ../gnome-panel/panel-menu-items.c:572
 #, c-format
 msgid "Rescan %s"
 msgstr "Oppdater %s"
 
-#: ../gnome-panel/panel-menu-items.c:602
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:665
+#: ../gnome-panel/panel-menu-items.c:672
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:873
+#: ../gnome-panel/panel-menu-items.c:880
 msgid "Removable Media"
 msgstr "Avtagbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:960
+#: ../gnome-panel/panel-menu-items.c:967
 msgid "Network Places"
 msgstr "Nettverkslokasjoner"
 
-#: ../gnome-panel/panel-menu-items.c:999
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "Open your personal folder"
 msgstr "Åpne din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1018
+#: ../gnome-panel/panel-menu-items.c:1025
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1019
+#: ../gnome-panel/panel-menu-items.c:1026
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1407
+#: ../gnome-panel/panel-menu-items.c:1417
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1436
+#: ../gnome-panel/panel-menu-items.c:1446
 msgid "System"
 msgstr "System"
 
@@ -2105,7 +2105,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1517
+#: ../gnome-panel/panel-menu-items.c:1527
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2114,14 +2114,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1529
+#: ../gnome-panel/panel-menu-items.c:1539
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logg ut %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1533
+#: ../gnome-panel/panel-menu-items.c:1543
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logg ut %s fra denne sesjonen for å logge inn som en annen bruker."
@@ -3209,3 +3209,6 @@ msgstr "P_anelprogram:"
 #: ../libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Katalog for _brukervalg:"
+
+#~ msgid "_Command:"
+#~ msgstr "_Kommando:"
