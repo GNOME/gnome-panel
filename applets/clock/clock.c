@@ -70,7 +70,6 @@
 #include "clock-utils.h"
 #include "set-timezone.h"
 #include "system-timezone.h"
-#include "clock-geoclue.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
@@ -176,8 +175,6 @@ struct _ClockData {
         /* Locations */
         GList *locations;
         GList *location_tiles;
-
-	ClockGeoclue *clock_geo; /* geoclue abstraction */
 
 	/* runtime data */
         time_t             current_time;
@@ -778,10 +775,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 
         g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
-
-	if (cd->clock_geo)
-		g_object_unref (cd->clock_geo);
-	cd->clock_geo = NULL;
 
 	if (cd->systz) {
 		g_object_unref (cd->systz);
@@ -2644,8 +2637,6 @@ fill_clock_applet (PanelApplet *applet)
 					      "hidden", "1",
 					      NULL);
 	}
-
-	cd->clock_geo = clock_geoclue_new ();
 
 	cd->systz = system_timezone_new ();
 	g_signal_connect (cd->systz, "changed",

@@ -57,9 +57,6 @@ CLOCK_SOURCES = 		\
 	clock-utils.h		\
 	system-timezone.c	\
 	system-timezone.h	\
-	clock-geoclue.c		\
-	clock-geoclue.h		\
-	geoclue-localnet-bindings.h \
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)	\
 	$(SETTIME_SOURCES)
