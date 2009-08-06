@@ -232,7 +232,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 				   panel_menu_icon_get_size (),
 				   NULL,
 				   GTK_STOCK_CLEAR, NULL,
-				   _("Clear Recent Documents"));
+				   _("Clear Recent Documents..."));
 	panel_util_set_tooltip_text (menu_item,
 				     _("Clear all items from the recent documents list"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (recent_menu), menu_item);
