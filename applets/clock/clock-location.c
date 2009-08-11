@@ -534,8 +534,7 @@ clock_location_make_current (ClockLocation *loc,
 
         filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
         set_system_timezone_async (filename,
-				   transient_parent_xid,
-                                   (GFunc)make_current_cb, 
+                                   (GFunc)make_current_cb,
 				   mcdata,
                                    free_make_current_data);
         g_free (filename);

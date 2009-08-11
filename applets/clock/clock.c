@@ -1628,7 +1628,7 @@ update_set_time_button (ClockData *cd)
 {
 	gint can_set;
 
-	can_set = can_set_system_time (); /* this can return 0, 1, 2 */
+	can_set = can_set_system_time ();
 
 	if (cd->time_settings_button)
 		gtk_widget_set_sensitive (cd->time_settings_button, can_set);
@@ -1691,7 +1691,7 @@ set_time (GtkWidget *widget, ClockData *cd)
 
 	tim = mktime (&t);
 
-	set_system_time_async (tim, GDK_WINDOW_XWINDOW (cd->applet->window), (GFunc)set_time_callback, cd, NULL);
+	set_system_time_async (tim, (GFunc)set_time_callback, cd, NULL);
 }
 
 static void

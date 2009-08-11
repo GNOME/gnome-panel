@@ -32,31 +32,8 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include <polkit/polkit.h>
-#include <polkit-dbus/polkit-dbus.h>
-
 #include "set-timezone.h"
 
-#define CACHE_VALIDITY_SEC 2
-
-static DBusGConnection *
-get_session_bus (void)
-{
-        GError          *error;
-        static DBusGConnection *bus = NULL;
-
-	if (bus == NULL) {
-        	error = NULL;
-        	bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-        	if (bus == NULL) {
-               		g_warning ("Couldn't connect to session bus: %s", 
-				   error->message);
-                	g_error_free (error);
-        	}
-	}
-
-        return bus;
-}
 
 static DBusGConnection *
 get_system_bus (void)
@@ -77,148 +54,96 @@ get_system_bus (void)
         return bus;
 }
 
-static gboolean
-pk_io_watch_have_data (GIOChannel *channel, GIOCondition condition, gpointer user_data)
-{
-        int fd;
-        PolKitContext *pk_context = user_data;
-        fd = g_io_channel_unix_get_fd (channel);
-        polkit_context_io_func (pk_context, fd);
-        return TRUE;
-}
+#define CACHE_VALIDITY_SEC 2
 
-static int 
-pk_io_add_watch_fn (PolKitContext *pk_context, int fd)
-{
-        guint id = 0;
-        GIOChannel *channel;
-        channel = g_io_channel_unix_new (fd);
-        if (channel == NULL)
-                goto out;
-        id = g_io_add_watch (channel, G_IO_IN, pk_io_watch_have_data, pk_context);
-        if (id == 0) {
-                g_io_channel_unref (channel);
-                goto out;
-        }
-        g_io_channel_unref (channel);
-out:
-        return id;
-}
+typedef  void (*CanDoFunc) (gint value);
 
-static void 
-pk_io_remove_watch_fn (PolKitContext *pk_context, int watch_id)
+static void
+can_do_notify (DBusGProxy     *proxy,
+	       DBusGProxyCall *call,
+	       void           *user_data)
 {
-        g_source_remove (watch_id);
-}
+        CanDoFunc callback = user_data;
+	GError *error = NULL;
+	gint value;
 
-static PolKitContext *
-get_pk_context (void)
-{
-	static PolKitContext *pk_context = NULL;
-
-	if (pk_context == NULL) {
-		pk_context = polkit_context_new ();
-                polkit_context_set_io_watch_functions (pk_context,
-                                                       pk_io_add_watch_fn,
-                                                       pk_io_remove_watch_fn);
-		if (!polkit_context_init (pk_context, NULL)) {
-			polkit_context_unref (pk_context);
-			pk_context = NULL;
-		}
+	if (dbus_g_proxy_end_call (proxy, call,
+                                   &error,
+                                   G_TYPE_INT, &value,
+                                   G_TYPE_INVALID)) {
+        	callback (value);
 	}
-
-	return pk_context;
 }
 
-static gint
-can_do (const gchar *pk_action_id)
+static void
+can_do_refresh (const gchar *action, CanDoFunc callback)
 {
-	DBusConnection *system_bus;
-	PolKitCaller *pk_caller;
-        PolKitAction *pk_action;
-        PolKitResult pk_result;
-	PolKitContext *pk_context;
-        DBusError dbus_error;
-	gint res = 0;
+        DBusGConnection *bus;
+        DBusGProxy      *proxy;
 
-        pk_caller = NULL;
-        pk_action = NULL;
+        bus = get_system_bus ();
+        if (bus == NULL)
+                return;
 
-	system_bus = dbus_g_connection_get_connection (get_system_bus ());
-	if (system_bus == NULL)
-		goto out;
-	
-	pk_context = get_pk_context ();
-	if (pk_context == NULL)
-		goto out;
-	
-        pk_action = polkit_action_new ();
-        polkit_action_set_action_id (pk_action, pk_action_id);
+	proxy = dbus_g_proxy_new_for_name (bus,
+					   "org.gnome.ClockApplet.Mechanism",
+					   "/",
+					   "org.gnome.ClockApplet.Mechanism");
 
-        dbus_error_init (&dbus_error);
-        pk_caller = polkit_caller_new_from_pid (system_bus, getpid (), &dbus_error);
-        if (pk_caller == NULL) {
-                fprintf (stderr, "cannot get caller from dbus name\n");
-                goto out;
-        }
+	dbus_g_proxy_begin_call_with_timeout (proxy,
+					      action,
+					      can_do_notify,
+					      callback, NULL,
+					      INT_MAX,
+					      G_TYPE_INVALID);
+}
 
-        pk_result = polkit_context_is_caller_authorized (pk_context, pk_action, pk_caller, FALSE, NULL);
+static gint   settimezone_cache = 0;
+static time_t settimezone_stamp = 0;
 
-	switch (pk_result) {
-        case POLKIT_RESULT_UNKNOWN:
-        case POLKIT_RESULT_NO:
- 		res = 0;
-		break;
-        case POLKIT_RESULT_YES:
-		res = 2;
-		break;
-        default:
-                /* This covers all the POLKIT_RESULT_ONLY_VIA_[SELF|ADMIN]_AUTH_* cases as more of these
-                 * may be added in the future.
-                 */
-		res = 1;
-		break;
-	}
-	
-out:
-        if (pk_action != NULL)
-                polkit_action_unref (pk_action);
-        if (pk_caller != NULL)
-                polkit_caller_unref (pk_caller);
-
-	return res;
+static void
+update_can_settimezone (gint res)
+{
+	settimezone_cache = res;
+	time (&settimezone_stamp);
 }
 
 gint
 can_set_system_timezone (void)
 {
-	static gboolean cache = FALSE;
-	static time_t   last_refreshed = 0;
 	time_t          now;
 
 	time (&now);
-	if (ABS (now - last_refreshed) > CACHE_VALIDITY_SEC) {
-		cache = can_do ("org.gnome.clockapplet.mechanism.settimezone");
-		last_refreshed = now;
+	if (ABS (now - settimezone_stamp) > CACHE_VALIDITY_SEC) {
+		can_do_refresh ("CanSetTimezone", update_can_settimezone);
+		settimezone_stamp = now;
 	}
 
-	return cache;
+	return settimezone_cache;
+}
+
+static gint   settime_cache = 0;
+static time_t settime_stamp = 0;
+
+static void
+update_can_settime (gint res)
+{
+	settime_cache = res;
+	time (&settime_stamp);
 }
 
 gint
 can_set_system_time (void)
 {
-	static gboolean cache = FALSE;
-	static time_t   last_refreshed = 0;
-	time_t          now;
+	time_t now;
 
 	time (&now);
-	if (ABS (now - last_refreshed) > CACHE_VALIDITY_SEC) {
-		cache = can_do ("org.gnome.clockapplet.mechanism.settime");
-		last_refreshed = now;
+	if (ABS (now - settime_stamp) > CACHE_VALIDITY_SEC) {
+		can_do_refresh ("CanSetTime", update_can_settime);
+		settime_stamp = now;
 	}
 
-	return cache;
+	return settime_cache;
 }
 
 typedef struct {
@@ -226,7 +151,6 @@ typedef struct {
         gchar *call;
 	gint64 time;
 	gchar *filename;
-        guint transient_parent_xid;
 	GFunc callback;
 	gpointer data;
 	GDestroyNotify notify;
@@ -244,61 +168,6 @@ free_data (gpointer d)
 		g_free (data->filename);
 		g_free (data);
 	}
-}
-
-static void set_time_async (SetTimeCallbackData *data);
-
-static void 
-auth_notify (DBusGProxy     *proxy,
-             DBusGProxyCall *call,
-             void           *user_data)
-{
-	SetTimeCallbackData *data = user_data;
-	GError *error = NULL;
-	gboolean gained_privilege;
-
-	if (dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_BOOLEAN, &gained_privilege, G_TYPE_INVALID)) {
-		if (gained_privilege)
-			set_time_async (data);
-	}
-	else {
-		if (data->callback) 
-			data->callback (data->data, error);
-		else
-			g_error_free (error);
-	}
-}
-
-static void
-do_auth_async (const gchar         *action, 
-               const gchar         *result, 
-               SetTimeCallbackData *data)
-{
-        DBusGConnection *bus;
-	DBusGProxy *proxy;
-
-	g_debug ("helper refused; returned polkit_result='%s' and polkit_action='%s'",
-		 result, action);
-
-	/* Now ask the user for auth... */
-        bus = get_session_bus ();
-	if (bus == NULL)
-		return;
-
-	proxy = dbus_g_proxy_new_for_name (bus,
-					"org.gnome.PolicyKit",
-					"/org/gnome/PolicyKit/Manager",
-					"org.gnome.PolicyKit.Manager");
-	
-	data->ref_count++;
-	dbus_g_proxy_begin_call_with_timeout (proxy,
-					      "ShowDialog",
-					      auth_notify,
-					      data, free_data,
-					      INT_MAX,
-					      G_TYPE_STRING, action,
-					      G_TYPE_UINT, data->transient_parent_xid,
-					      G_TYPE_INVALID);
 }
 
 static void
@@ -323,17 +192,6 @@ set_time_notify (DBusGProxy     *proxy,
 			g_error_free (error);
 			if (data->callback)
 				data->callback (data->data, NULL);
-		}
-		else if (dbus_g_error_has_name (error, "org.gnome.ClockApplet.Mechanism.NotPrivileged")) {
-			gchar **tokens;
-
-			tokens = g_strsplit (error->message, " ", 2);
-			g_error_free (error);                            
-			if (g_strv_length (tokens) == 2) 
-				do_auth_async (tokens[0], tokens[1], data);
-			else
-				g_warning ("helper return string malformed");
-			g_strfreev (tokens);
 		}
 		else {
 			if (data->callback)
@@ -386,9 +244,8 @@ set_time_async (SetTimeCallbackData *data)
 
 void
 set_system_time_async (gint64         time,
-                       guint          transient_parent_xid,
-		       GFunc          callback, 
-		       gpointer       d, 
+		       GFunc          callback,
+		       gpointer       d,
 		       GDestroyNotify notify)
 {
 	SetTimeCallbackData *data;
@@ -401,7 +258,6 @@ set_system_time_async (gint64         time,
 	data->call = "SetTime";
 	data->time = time;
 	data->filename = NULL;
-        data->transient_parent_xid = transient_parent_xid;
 	data->callback = callback;
 	data->data = d;
 	data->notify = notify;
@@ -412,9 +268,8 @@ set_system_time_async (gint64         time,
 
 void
 set_system_timezone_async (const gchar    *filename,
-                           guint           transient_parent_xid,
-	             	   GFunc           callback, 
-		           gpointer        d, 
+	             	   GFunc           callback,
+		           gpointer        d,
 		           GDestroyNotify  notify)
 {
 	SetTimeCallbackData *data;
@@ -427,7 +282,6 @@ set_system_timezone_async (const gchar    *filename,
 	data->call = "SetTimezone";
 	data->time = -1;
 	data->filename = g_strdup (filename);
-        data->transient_parent_xid = transient_parent_xid;
 	data->callback = callback;
 	data->data = d;
 	data->notify = notify;

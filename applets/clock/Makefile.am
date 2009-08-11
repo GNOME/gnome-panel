@@ -7,7 +7,7 @@ INCLUDES =							\
 	$(GNOME_INCLUDEDIR)					\
 	$(WARN_CFLAGS)						\
 	$(CLOCK_CFLAGS)						\
-	$(POLKIT_GNOME_CFLAGS)					\
+	$(POLKIT_CFLAGS)					\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DBUILDERDIR=\""$(uidir)"\"				\
@@ -65,7 +65,7 @@ CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
-	$(POLKIT_GNOME_LIBS)				\
+	$(POLKIT_LIBS)				\
 	-lgweather
 
 BUILT_SOURCES =					\
@@ -130,11 +130,11 @@ endif
 
 gnome_clock_applet_mechanism_INCLUDES =	\
 	$(CLOCK_MECHANISM_CFLAGS) 	\
-	$(POLKIT_GNOME_CFLAGS)
+	$(POLKIT_CFLAGS)
 
 gnome_clock_applet_mechanism_LDADD =	\
 	$(CLOCK_MECHANISM_LIBS)		\
-	$(POLKIT_GNOME_LIBS)
+	$(POLKIT_LIBS)
 
 if CLOCK_INPROCESS
 APPLET_TYPE     = shlib
@@ -203,7 +203,7 @@ endif
 
 dbus_servicesdir = $(datadir)/dbus-1/system-services
 dbus_confdir = $(sysconfdir)/dbus-1/system.d
-polkitdir = $(datadir)/PolicyKit/policy
+polkitdir = $(datadir)/polkit-1/actions
 
 dbus_services_in_files = org.gnome.ClockApplet.Mechanism.service.in
 polkit_in_files = org.gnome.clockapplet.mechanism.policy.in

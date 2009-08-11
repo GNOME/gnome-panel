@@ -37,7 +37,7 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include <polkit-dbus/polkit-dbus.h>
+#include <polkit/polkit.h>
 
 #include "system-timezone.h"
 
@@ -68,7 +68,7 @@ struct GnomeClockAppletMechanismPrivate
 {
         DBusGConnection *system_bus_connection;
         DBusGProxy      *system_bus_proxy;
-        PolKitContext   *pol_ctx;
+        PolkitAuthority *auth;
 };
 
 static void     gnome_clock_applet_mechanism_finalize    (GObject     *object);
@@ -172,50 +172,11 @@ gnome_clock_applet_mechanism_finalize (GObject *object)
 }
 
 static gboolean
-pk_io_watch_have_data (GIOChannel *channel, GIOCondition condition, gpointer user_data)
-{
-        int fd;
-        PolKitContext *pk_context = user_data;
-        fd = g_io_channel_unix_get_fd (channel);
-        polkit_context_io_func (pk_context, fd);
-        return TRUE;
-}
-
-static int 
-pk_io_add_watch (PolKitContext *pk_context, int fd)
-{
-        guint id = 0;
-        GIOChannel *channel;
-        channel = g_io_channel_unix_new (fd);
-        if (channel == NULL)
-                goto out;
-        id = g_io_add_watch (channel, G_IO_IN, pk_io_watch_have_data, pk_context);
-        if (id == 0) {
-                g_io_channel_unref (channel);
-                goto out;
-        }
-        g_io_channel_unref (channel);
-out:
-        return id;
-}
-
-static void 
-pk_io_remove_watch (PolKitContext *pk_context, int watch_id)
-{
-        g_source_remove (watch_id);
-}
-
-static gboolean
 register_mechanism (GnomeClockAppletMechanism *mechanism)
 {
         GError *error = NULL;
 
-        mechanism->priv->pol_ctx = polkit_context_new ();
-        polkit_context_set_io_watch_functions (mechanism->priv->pol_ctx, pk_io_add_watch, pk_io_remove_watch);
-        if (!polkit_context_init (mechanism->priv->pol_ctx, NULL)) {
-                g_critical ("cannot initialize libpolkit");
-                goto error;
-        }
+        mechanism->priv->auth = polkit_authority_get ();
 
         error = NULL;
         mechanism->priv->system_bus_connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
@@ -266,48 +227,35 @@ _check_polkit_for_action (GnomeClockAppletMechanism *mechanism, DBusGMethodInvoc
 {
         const char *sender;
         GError *error;
-        DBusError dbus_error;
-        PolKitCaller *pk_caller;
-        PolKitAction *pk_action;
-        PolKitResult pk_result;
+        PolkitSubject *subject;
+        PolkitAuthorizationResult *result;
 
         error = NULL;
 
         /* Check that caller is privileged */
         sender = dbus_g_method_get_sender (context);
-        dbus_error_init (&dbus_error);
-        pk_caller = polkit_caller_new_from_dbus_name (
-                dbus_g_connection_get_connection (mechanism->priv->system_bus_connection),
-                sender, 
-                &dbus_error);
-        if (pk_caller == NULL) {
-                error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
-                                     GNOME_CLOCK_APPLET_MECHANISM_ERROR_GENERAL,
-                                     "Error getting information about caller: %s: %s",
-                                     dbus_error.name, dbus_error.message);
-                dbus_error_free (&dbus_error);
-                dbus_g_method_return_error (context, error);
-                g_error_free (error);
-                return FALSE;
-        }
+        subject = polkit_system_bus_name_new (sender);
 
-        pk_action = polkit_action_new ();
-        polkit_action_set_action_id (pk_action, action);
-        pk_result = polkit_context_is_caller_authorized (mechanism->priv->pol_ctx, pk_action, pk_caller, FALSE, NULL);
-        polkit_caller_unref (pk_caller);
-        polkit_action_unref (pk_action);
+        result = polkit_authority_check_authorization_sync (mechanism->priv->auth,
+                                                            subject,
+                                                            action,
+                                                            NULL,
+                                                            POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
+                                                            NULL, NULL);
+        g_object_unref (subject);
 
-        if (pk_result != POLKIT_RESULT_YES) {
+        if (!polkit_authorization_result_get_is_authorized (result)) {
                 error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
                                      GNOME_CLOCK_APPLET_MECHANISM_ERROR_NOT_PRIVILEGED,
-                                     "%s %s <-- (action, result)",
-                                     action,
-                                     polkit_result_to_string_representation (pk_result));
-                dbus_error_free (&dbus_error);
+                                     "Not Authorized for action %s", action);
                 dbus_g_method_return_error (context, error);
                 g_error_free (error);
+		g_object_unref (result);
+
                 return FALSE;
         }
+
+	g_object_unref (result);
 
         return TRUE;
 }
@@ -607,5 +555,61 @@ gnome_clock_applet_mechanism_set_hardware_clock_using_utc  (GnomeClockAppletMech
         }
         dbus_g_method_return (context);
         return TRUE;
+}
 
+static void
+check_can_do (GnomeClockAppletMechanism *mechanism,
+              const char                *action,
+              DBusGMethodInvocation     *context)
+{
+        const char *sender;
+        PolkitSubject *subject;
+        PolkitAuthorizationResult *result;
+
+        /* Check that caller is privileged */
+        sender = dbus_g_method_get_sender (context);
+        subject = polkit_system_bus_name_new (sender);
+
+        result = polkit_authority_check_authorization_sync (mechanism->priv->auth,
+                                                            subject,
+                                                            action,
+                                                            NULL,
+                                                            0,
+                                                            NULL, NULL);
+        g_object_unref (subject);
+
+        if (polkit_authorization_result_get_is_authorized (result)) {
+		dbus_g_method_return (context, 2);
+	}
+	else if (polkit_authorization_result_get_is_challenge (result)) {
+		dbus_g_method_return (context, 1);
+	}
+	else {
+		dbus_g_method_return (context, 0);
+	}
+
+	g_object_unref (result);
+}
+
+
+gboolean
+gnome_clock_applet_mechanism_can_set_time (GnomeClockAppletMechanism    *mechanism,
+                                           DBusGMethodInvocation        *context)
+{
+        check_can_do (mechanism,
+                      "org.gnome.clockapplet.mechanism.settime",
+                      context);
+
+	return TRUE;
+}
+
+gboolean
+gnome_clock_applet_mechanism_can_set_timezone (GnomeClockAppletMechanism    *mechanism,
+                                               DBusGMethodInvocation        *context)
+{
+        check_can_do (mechanism,
+                      "org.gnome.clockapplet.mechanism.settimezone",
+                      context);
+
+	return TRUE;
 }
