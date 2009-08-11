@@ -40,7 +40,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <glade/glade-xml.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
@@ -49,6 +48,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
+#include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-show.h>
 
@@ -1122,14 +1122,14 @@ program_list_selection_activated (GtkTreeView       *view,
 
 static void
 panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
-				     GladeXML       *gui)
+				     GtkBuilder     *gui)
 {
 	GtkTreeSelection *selection;
 	
-	dialog->program_list = glade_xml_get_widget (gui, "program_list");
-	dialog->program_list_box = glade_xml_get_widget (gui, "program_list_box");
-	dialog->program_label = glade_xml_get_widget (gui, "program_label");
-	dialog->main_box = glade_xml_get_widget (gui, "main_box");
+	dialog->program_list = PANEL_GTK_BUILDER_GET (gui, "program_list");
+	dialog->program_list_box = PANEL_GTK_BUILDER_GET (gui, "program_list_box");
+	dialog->program_label = PANEL_GTK_BUILDER_GET (gui, "program_label");
+	dialog->main_box = PANEL_GTK_BUILDER_GET (gui, "main_box");
 	
 	/* Ref the box so it doesn't get destroyed when it is
 	 * removed from the visible area of the dialog box.
@@ -1197,12 +1197,12 @@ list_expander_toggled (GtkExpander    *expander,
 
 static void
 panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
-				      GladeXML       *gui)
+				      GtkBuilder     *gui)
 {
 	GConfClient *client;
 	const char *key;
 	
-	dialog->list_expander = glade_xml_get_widget (gui, "list_expander");
+	dialog->list_expander = PANEL_GTK_BUILDER_GET (gui, "list_expander");
 
 	if (panel_profile_get_enable_program_list ()) {
 		gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander),
@@ -1273,9 +1273,9 @@ file_button_clicked (GtkButton      *button,
 
 static void
 panel_run_dialog_setup_file_button (PanelRunDialog *dialog,
-				    GladeXML       *gui)
+				    GtkBuilder     *gui)
 {
-	dialog->file_button = glade_xml_get_widget (gui, "file_button");
+	dialog->file_button = PANEL_GTK_BUILDER_GET (gui, "file_button");
 		
         g_signal_connect (dialog->file_button, "clicked",
 			  G_CALLBACK (file_button_clicked),
@@ -1734,13 +1734,13 @@ entry_drag_data_received (GtkEditable      *entry,
 
 static void
 panel_run_dialog_setup_entry (PanelRunDialog *dialog,
-			      GladeXML       *gui)
+			      GtkBuilder     *gui)
 {
 	GdkScreen             *screen;
 	int                    width_request;
 	GtkWidget             *entry;
 	
-	dialog->combobox = glade_xml_get_widget (gui, "comboboxentry");
+	dialog->combobox = PANEL_GTK_BUILDER_GET (gui, "comboboxentry");
 
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
@@ -1906,9 +1906,9 @@ panel_run_dialog_screen_changed (GtkWidget      *widget,
 
 static void
 panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
-			       GladeXML       *gui)
+			       GtkBuilder     *gui)
 {
-	dialog->pixmap = glade_xml_get_widget (gui, "icon_pixmap");
+	dialog->pixmap = PANEL_GTK_BUILDER_GET (gui, "icon_pixmap");
 	
 	g_signal_connect (dialog->pixmap, "style-set",
 			  G_CALLBACK (panel_run_dialog_style_set),
@@ -1923,15 +1923,15 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 }
 
 static PanelRunDialog *
-panel_run_dialog_new (GdkScreen *screen,
-		      GladeXML  *gui,
+panel_run_dialog_new (GdkScreen  *screen,
+		      GtkBuilder *gui,
 		      guint32    activate_time)
 {
 	PanelRunDialog *dialog;
 
 	dialog = g_new0 (PanelRunDialog, 1);
 
-	dialog->run_dialog = glade_xml_get_widget (gui, "panel_run_dialog");
+	dialog->run_dialog = PANEL_GTK_BUILDER_GET (gui, "panel_run_dialog");
 	
 	g_signal_connect_swapped (dialog->run_dialog, "response",
 				  G_CALLBACK (panel_run_dialog_response), dialog);
@@ -1939,8 +1939,8 @@ panel_run_dialog_new (GdkScreen *screen,
 	g_signal_connect_swapped (dialog->run_dialog, "destroy",
 				  G_CALLBACK (panel_run_dialog_destroy), dialog);
 
-	dialog->run_button = glade_xml_get_widget (gui, "run_button");
-	dialog->terminal_checkbox = glade_xml_get_widget (gui, "terminal_checkbox");
+	dialog->run_button = PANEL_GTK_BUILDER_GET (gui, "run_button");
+	dialog->terminal_checkbox = PANEL_GTK_BUILDER_GET (gui, "terminal_checkbox");
 	
 	panel_run_dialog_setup_pixmap        (dialog, gui);
 	panel_run_dialog_setup_entry         (dialog, gui);
@@ -1990,7 +1990,8 @@ void
 panel_run_dialog_present (GdkScreen *screen,
 			  guint32    activate_time)
 {
-	GladeXML *gui;
+	GtkBuilder *gui;
+	GError     *error;
 
 	if (panel_lockdown_get_disable_command_line ())
 		return;
@@ -2003,19 +2004,27 @@ panel_run_dialog_present (GdkScreen *screen,
 		return;
 	}
 
-	gui = glade_xml_new (GLADEDIR "/panel-run-dialog.glade",
-			     "panel_run_dialog",
-			     NULL);
-	if (!gui) {
+	gui = gtk_builder_new ();
+
+	error = NULL;
+	gtk_builder_add_from_file (gui,
+				   BUILDERDIR "/panel-run-dialog.ui",
+				   &error);
+
+        if (error) {
 		char *secondary;
 
-		secondary = g_strdup_printf (_("Unable to load file '%s'."),
-					     GLADEDIR"/panel-run-dialog.glade");
+		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
+					     BUILDERDIR"/panel-run-dialog.ui",
+					     error->message);
 		panel_error_dialog (NULL, screen, "cannot_display_run_dialog",
 				    TRUE,
 				    _("Could not display run dialog"),
 				      secondary);
 		g_free (secondary);
+		g_error_free (error);
+		g_object_unref (gui);
+
 		return;
 	}
 

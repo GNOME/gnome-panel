@@ -11,7 +11,7 @@ INCLUDES =							\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DGLADEDIR=\""$(gladedir)"\"				\
+	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -174,18 +174,18 @@ gnome_desktop_item_edit_LDADD = 	\
 	$(PANEL_LIBS)			\
 	$(X_LIBS)
 
-gladedir = $(datadir)/gnome-panel/glade
-glade_DATA =					\
-	panel-properties-dialog.glade		\
-	panel-run-dialog.glade
+uidir = $(datadir)/gnome-panel/ui
+ui_DATA =					\
+	panel-properties-dialog.ui		\
+	panel-run-dialog.ui
 
 EXTRA_DIST =					\
-	$(glade_DATA)				\
+	$(ui_DATA)				\
 	nothing.cP				\
 	nothing.h				\
 	$(schemas_in_files)			\
 	panel-compatibility.schemas		\
-	$(ui_DATA)				\
+	$(xmlui_DATA)				\
 	panel-marshal.list			\
 	gnome-panelrc				\
 	$(entries_DATA)				\
@@ -233,8 +233,8 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) >  $@
 
-uidir   = $(datadir)/gnome-2.0/ui
-ui_DATA = GNOME_Panel_Popup.xml
+xmluidir   = $(datadir)/gnome-2.0/ui
+xmlui_DATA = GNOME_Panel_Popup.xml
 
 rcdir = $(datadir)
 rc_DATA = gnome-panelrc

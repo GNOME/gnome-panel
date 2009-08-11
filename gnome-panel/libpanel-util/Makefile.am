@@ -7,7 +7,7 @@ INCLUDES =							\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DGLADEDIR=\""$(gladedir)"\"				\
+	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -28,6 +28,7 @@ libpanel_util_la_SOURCES=	\
 	panel-error.h			\
 	panel-glib.c			\
 	panel-glib.h			\
+	panel-gtk.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	panel-launch.c			\

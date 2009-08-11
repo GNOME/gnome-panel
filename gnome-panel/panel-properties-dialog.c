@@ -27,12 +27,12 @@
 #include "panel-properties-dialog.h"
 
 #include <string.h>
-#include <glade/glade-xml.h>
 #include <glib/gi18n.h>
 #include <libgnomeui/gnome-icon-entry.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
+#include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
@@ -155,7 +155,7 @@ panel_properties_dialog_orientation_changed (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
-						 GladeXML              *gui)
+						 GtkBuilder            *gui)
 {
 	PanelOrientation  orientation;
 	GtkListStore     *model;
@@ -163,9 +163,9 @@ panel_properties_dialog_setup_orientation_combo (PanelPropertiesDialog *dialog,
 	GtkCellRenderer  *renderer;
 	int               i;
 
-	dialog->orientation_combo = glade_xml_get_widget (gui, "orientation_combo");
+	dialog->orientation_combo = PANEL_GTK_BUILDER_GET (gui, "orientation_combo");
 	g_return_if_fail (dialog->orientation_combo != NULL);
-	dialog->orientation_label = glade_xml_get_widget (gui, "orientation_label");
+	dialog->orientation_label = PANEL_GTK_BUILDER_GET (gui, "orientation_label");
 	g_return_if_fail (dialog->orientation_label != NULL);
 
 	orientation = panel_profile_get_toplevel_orientation (dialog->toplevel);
@@ -215,15 +215,15 @@ panel_properties_dialog_size_changed (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
-					 GladeXML              *gui)
+					 GtkBuilder            *gui)
 {
-	dialog->size_widgets = glade_xml_get_widget (gui, "size_widgets");
+	dialog->size_widgets = PANEL_GTK_BUILDER_GET (gui, "size_widgets");
 	g_return_if_fail (dialog->size_widgets != NULL);
-	dialog->size_spin = glade_xml_get_widget (gui, "size_spin");
+	dialog->size_spin = PANEL_GTK_BUILDER_GET (gui, "size_spin");
 	g_return_if_fail (dialog->size_spin != NULL);
-	dialog->size_label = glade_xml_get_widget (gui, "size_label");
+	dialog->size_label = PANEL_GTK_BUILDER_GET (gui, "size_label");
 	g_return_if_fail (dialog->size_label != NULL);
-	dialog->size_label_pixels = glade_xml_get_widget (gui, "size_label_pixels");
+	dialog->size_label_pixels = PANEL_GTK_BUILDER_GET (gui, "size_label_pixels");
 	g_return_if_fail (dialog->size_label_pixels != NULL);
 
 	gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->size_spin),
@@ -275,17 +275,20 @@ panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
-					  GladeXML              *gui)
+					  GtkBuilder            *gui)
 {
 	char *custom_icon;
 
-	dialog->icon_align = glade_xml_get_widget (gui, "icon_align");
+	dialog->icon_align = PANEL_GTK_BUILDER_GET (gui, "icon_align");
 	g_return_if_fail (dialog->icon_align != NULL);
 
-	dialog->icon_entry = glade_xml_get_widget (gui, "icon_entry");
-	g_return_if_fail (dialog->icon_entry != NULL);
+	dialog->icon_entry = gnome_icon_entry_new ("panel-drawer-icon",
+						   _("Browse icons"));
+	gtk_widget_show (dialog->icon_entry);
+	gtk_container_add (GTK_CONTAINER (dialog->icon_align),
+			   dialog->icon_entry);
 
-	dialog->icon_label = glade_xml_get_widget (gui, "icon_label");
+	dialog->icon_label = PANEL_GTK_BUILDER_GET (gui, "icon_label");
 	g_return_if_fail (dialog->icon_label != NULL);
 
 	dialog->icon_theme_dir = NULL;
@@ -337,9 +340,9 @@ panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
 	}                                                                                         \
 	static void                                                                               \
 	panel_properties_dialog_setup_##n (PanelPropertiesDialog *dialog,                         \
-					   GladeXML              *gui)                            \
+					   GtkBuilder            *gui)                            \
 	{                                                                                         \
-		dialog->n = glade_xml_get_widget (gui, wid);                                      \
+		dialog->n = PANEL_GTK_BUILDER_GET (gui, wid);                                      \
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->n),                      \
 					      panel_profile_get_toplevel_##p (dialog->toplevel)); \
 		g_signal_connect_swapped (dialog->n, "toggled",                                   \
@@ -369,13 +372,13 @@ panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 
 static void
 panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
-					    GladeXML              *gui)
+					    GtkBuilder            *gui)
 {
 	PanelColor color;
 
-	dialog->color_button = glade_xml_get_widget (gui, "color_button");
+	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
-	dialog->color_label = glade_xml_get_widget (gui, "color_label");
+	dialog->color_label = PANEL_GTK_BUILDER_GET (gui, "color_label");
 	g_return_if_fail (dialog->color_label != NULL);
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
@@ -441,13 +444,13 @@ panel_properties_dialog_chooser_preview_update (GtkFileChooser *file_chooser,
 
 static void
 panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
-					     GladeXML              *gui)
+					     GtkBuilder            *gui)
 {
 	GtkFileFilter *filter;
 	GtkWidget     *chooser_preview;
 	char          *image;
 
-	dialog->image_chooser = glade_xml_get_widget (gui, "image_chooser");
+	dialog->image_chooser = PANEL_GTK_BUILDER_GET (gui, "image_chooser");
 
 	filter = gtk_file_filter_new ();
 	gtk_file_filter_add_pixbuf_formats (filter);
@@ -503,16 +506,16 @@ panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 
 static void
 panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
-					     GladeXML              *gui)
+					     GtkBuilder            *gui)
 {
 	guint16 opacity;
 	gdouble percentage;
 
-	dialog->opacity_scale = glade_xml_get_widget (gui, "opacity_scale");
+	dialog->opacity_scale = PANEL_GTK_BUILDER_GET (gui, "opacity_scale");
 	g_return_if_fail (dialog->opacity_scale != NULL);
-	dialog->opacity_label = glade_xml_get_widget (gui, "opacity_label");
+	dialog->opacity_label = PANEL_GTK_BUILDER_GET (gui, "opacity_label");
 	g_return_if_fail (dialog->opacity_label != NULL);
-	dialog->opacity_legend = glade_xml_get_widget (gui, "opacity_legend");
+	dialog->opacity_legend = PANEL_GTK_BUILDER_GET (gui, "opacity_legend");
 	g_return_if_fail (dialog->opacity_legend != NULL);
 
 	opacity = panel_profile_get_background_opacity (dialog->toplevel);
@@ -568,16 +571,16 @@ panel_properties_dialog_background_toggled (PanelPropertiesDialog *dialog,
 				
 static void
 panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
-						 GladeXML              *gui)
+						 GtkBuilder            *gui)
 {
 	PanelBackgroundType  background_type;
 	GtkWidget           *active_radio;
 
-	dialog->default_radio     = glade_xml_get_widget (gui, "default_radio");
-	dialog->color_radio       = glade_xml_get_widget (gui, "color_radio");
-	dialog->image_radio       = glade_xml_get_widget (gui, "image_radio");
-	dialog->color_widgets     = glade_xml_get_widget (gui, "color_widgets");
-	dialog->image_widgets     = glade_xml_get_widget (gui, "image_widgets");
+	dialog->default_radio     = PANEL_GTK_BUILDER_GET (gui, "default_radio");
+	dialog->color_radio       = PANEL_GTK_BUILDER_GET (gui, "color_radio");
+	dialog->image_radio       = PANEL_GTK_BUILDER_GET (gui, "image_radio");
+	dialog->color_widgets     = PANEL_GTK_BUILDER_GET (gui, "color_widgets");
+	dialog->image_widgets     = PANEL_GTK_BUILDER_GET (gui, "image_widgets");
 
 	background_type = panel_profile_get_background_type (dialog->toplevel);
 	switch (background_type) {
@@ -954,7 +957,7 @@ panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
 
 static PanelPropertiesDialog *
 panel_properties_dialog_new (PanelToplevel *toplevel,
-			     GladeXML      *gui)
+			     GtkBuilder    *gui)
 {
 	PanelPropertiesDialog *dialog;
 
@@ -967,7 +970,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	dialog->toplevel = toplevel;
 
-	dialog->properties_dialog = glade_xml_get_widget (gui, "panel_properties_dialog");
+	dialog->properties_dialog = PANEL_GTK_BUILDER_GET (gui, "panel_properties_dialog");
 	g_signal_connect_swapped (dialog->properties_dialog, "response",
 				  G_CALLBACK (panel_properties_dialog_response), dialog);
 	g_signal_connect_swapped (dialog->properties_dialog, "destroy",
@@ -976,11 +979,11 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	dialog->writability_warn_general = glade_xml_get_widget (gui, "writability_warn_general");
-	dialog->writability_warn_background = glade_xml_get_widget (gui, "writability_warn_background");
+	dialog->writability_warn_general = PANEL_GTK_BUILDER_GET (gui, "writability_warn_general");
+	dialog->writability_warn_background = PANEL_GTK_BUILDER_GET (gui, "writability_warn_background");
 
-	dialog->general_vbox  = glade_xml_get_widget (gui, "general_vbox");
-	dialog->general_table = glade_xml_get_widget (gui, "general_table");
+	dialog->general_vbox  = PANEL_GTK_BUILDER_GET (gui, "general_vbox");
+	dialog->general_table = PANEL_GTK_BUILDER_GET (gui, "general_table");
 
 	panel_properties_dialog_setup_orientation_combo  (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
@@ -1024,7 +1027,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	g_signal_connect (dialog->properties_dialog, "event",
 			  G_CALLBACK (config_event),
-			  glade_xml_get_widget (gui, "notebook"));
+			  PANEL_GTK_BUILDER_GET (gui, "notebook"));
 
 	gtk_widget_show (dialog->properties_dialog);
 
@@ -1035,7 +1038,8 @@ void
 panel_properties_dialog_present (PanelToplevel *toplevel)
 {
 	PanelPropertiesDialog *dialog;
-	GladeXML              *gui;
+	GtkBuilder            *gui;
+	GError                *error;
 
 	if (!panel_properties_dialog_quark)
 		panel_properties_dialog_quark =
@@ -1049,19 +1053,28 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 		return;
 	}
 
-	gui = glade_xml_new (GLADEDIR "/panel-properties-dialog.glade",
-			     "panel_properties_dialog",
-			     NULL);
-	if (gui == NULL) {
+	gui = gtk_builder_new ();
+
+	error = NULL;
+	gtk_builder_add_from_file (gui,
+				   BUILDERDIR "/panel-properties-dialog.ui",
+				   &error);
+
+        if (error) {
 		char *secondary;
-		secondary = g_strdup_printf (_("Unable to load file '%s'."),
-					     GLADEDIR"/panel-properties-dialog.glade");
+
+		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
+					     BUILDERDIR"/panel-properties-dialog.ui",
+					     error->message);
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_display_properties_dialog", TRUE,
 				    _("Could not display properties dialog"),
 				    secondary);
 		g_free (secondary);
+		g_error_free (error);
+		g_object_unref (gui);
+
 		return;
 	}
 

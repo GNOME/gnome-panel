@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<glade-interface>
-  <!-- interface-requires gtk+ 2.16 -->
+<interface>
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
-  <widget class="GtkDialog" id="panel_run_dialog">
+  <object class="GtkDialog" id="panel_run_dialog">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Run Application</property>
     <property name="resizable">False</property>
@@ -10,37 +10,41 @@
     <property name="type_hint">dialog</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox1">
+      <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkVBox" id="main_box">
+          <object class="GtkVBox" id="main_box">
             <property name="visible">True</property>
             <property name="border_width">5</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <widget class="GtkHBox" id="entry_box">
+              <object class="GtkHBox" id="entry_box">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkAlignment" id="alignment1">
+                  <object class="GtkAlignment" id="alignment1">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
                     <property name="xscale">0</property>
                     <property name="yscale">0</property>
                     <child>
-                      <widget class="GtkImage" id="icon_pixmap">
+                      <object class="GtkImage" id="icon_pixmap">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="yalign">0</property>
                         <property name="stock">gtk-missing-image</property>
-                        <accessibility>
-                          <atkproperty name="AtkObject::accessible-name" translatable="yes">Command icon</atkproperty>
-                          <atkproperty name="AtkObject::accessible-description" translatable="yes">The icon of the command to be run.</atkproperty>
-                        </accessibility>
-                      </widget>
+                        <child internal-child="accessible">
+                          <object class="AtkObject" id="icon_pixmap-atkobject">
+                            <property name="AtkObject::accessible-name" translatable="yes">Command icon</property>
+                            <property name="AtkObject::accessible-description" translatable="yes">The icon of the command to be run.</property>
+                          </object>
+                        </child>
+                      </object>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
@@ -49,103 +53,111 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkVBox" id="vbox2">
+                  <object class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkComboBoxEntry" id="comboboxentry">
+                      <object class="GtkComboBoxEntry" id="comboboxentry">
                         <property name="visible">True</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkHBox" id="hbox2">
+                      <object class="GtkHBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="spacing">12</property>
                         <child>
-                          <widget class="GtkCheckButton" id="terminal_checkbox">
+                          <object class="GtkCheckButton" id="terminal_checkbox">
                             <property name="label" translatable="yes">Run in _terminal</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <accessibility>
-                              <atkproperty name="AtkObject::accessible-description" translatable="yes">Select this box to run the command in a terminal window.</atkproperty>
-                            </accessibility>
-                          </widget>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="terminal_checkbox-atkobject">
+                                <property name="AtkObject::accessible-description" translatable="yes">Select this box to run the command in a terminal window.</property>
+                              </object>
+                            </child>
+                          </object>
                           <packing>
                             <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="file_button">
+                          <object class="GtkButton" id="file_button">
                             <property name="label" translatable="yes">Run with _file...</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
-                            <accessibility>
-                              <atkproperty name="AtkObject::accessible-description" translatable="yes">Click this button to browse for a file whose name to append to the command string.</atkproperty>
-                            </accessibility>
-                          </widget>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="file_button-atkobject">
+                                <property name="AtkObject::accessible-description" translatable="yes">Click this button to browse for a file whose name to append to the command string.</property>
+                              </object>
+                            </child>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">1</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkExpander" id="list_expander">
+              <object class="GtkExpander" id="list_expander">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="expanded">True</property>
                 <child>
-                  <widget class="GtkVBox" id="program_list_box">
+                  <object class="GtkVBox" id="program_list_box">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <widget class="GtkTreeView" id="program_list">
+                          <object class="GtkTreeView" id="program_list">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="headers_visible">False</property>
-                            <accessibility>
-                              <atkproperty name="AtkObject::accessible-name" translatable="yes">List of known applications</atkproperty>
-                            </accessibility>
-                          </widget>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="program_list-atkobject">
+                                <property name="AtkObject::accessible-name" translatable="yes">List of known applications</property>
+                              </object>
+                            </child>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="program_label">
+                      <object class="GtkLabel" id="program_label">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="xalign">0</property>
@@ -153,51 +165,46 @@
                         <property name="label" translatable="yes">Select an application to view its description.</property>
                         <property name="wrap">True</property>
                         <property name="selectable">True</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                 </child>
-                <child>
-                  <widget class="GtkLabel" id="label3">
+                <child type="label">
+                  <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
                     <property name="label" translatable="yes">Show list of known _applications</property>
                     <property name="use_underline">True</property>
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
+                  </object>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="position">1</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="position">1</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area1">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="help_button">
+              <object class="GtkButton" id="help_button">
                 <property name="label">gtk-help</property>
-                <property name="response_id">-11</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -205,15 +212,14 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="cancel_button">
+              <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
-                <property name="response_id">-6</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -221,31 +227,32 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="run_button">
-                <property name="response_id">-5</property>
+              <object class="GtkButton" id="run_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">False</property>
-                <accessibility>
-                  <atkproperty name="AtkObject::accessible-description" translatable="yes">Click this button to run the selected application or the command in the command entry field.</atkproperty>
-                </accessibility>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="run_button-atkobject">
+                    <property name="AtkObject::accessible-description" translatable="yes">Click this button to run the selected application or the command in the command entry field.</property>
+                  </object>
+                </child>
                 <child>
-                  <widget class="GtkAlignment" id="alignment2">
+                  <object class="GtkAlignment" id="alignment2">
                     <property name="visible">True</property>
                     <property name="xscale">0</property>
                     <property name="yscale">0</property>
                     <child>
-                      <widget class="GtkHBox" id="hbox1">
+                      <object class="GtkHBox" id="hbox1">
                         <property name="visible">True</property>
                         <property name="spacing">2</property>
                         <child>
-                          <widget class="GtkImage" id="image1">
+                          <object class="GtkImage" id="image1">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
                             <property name="stock">gtk-execute</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
@@ -253,38 +260,43 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkLabel" id="label1">
+                          <object class="GtkLabel" id="label1">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Run</property>
                             <property name="use_markup">True</property>
                             <property name="use_underline">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
-                      </widget>
+                      </object>
                     </child>
-                  </widget>
+                  </object>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">2</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
-      </widget>
+      </object>
     </child>
-  </widget>
-</glade-interface>
+    <action-widgets>
+      <action-widget response="-11">help_button</action-widget>
+      <action-widget response="-6">cancel_button</action-widget>
+      <action-widget response="-5">run_button</action-widget>
+    </action-widgets>
+  </object>
+</interface>
