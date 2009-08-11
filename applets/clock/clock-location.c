@@ -338,7 +338,7 @@ clock_location_set_tz (ClockLocation *this)
         now_t = time (NULL);
         localtime_r (&now_t, &now);
 
-        if (daylight && now.tm_isdst) {
+        if (now.tm_isdst > 0) {
                 clock_location_set_tzname (this, tzname[1]);
         } else {
                 clock_location_set_tzname (this, tzname[0]);

@@ -679,7 +679,7 @@ update_tooltip (ClockData * cd)
                 time (&now_t);
                 localtime_r (&now_t, &now);
 
-                if (daylight && now.tm_isdst) {
+                if (now.tm_isdst > 0) {
                         zone = tzname[1];
                 } else {
                         zone = tzname[0];
