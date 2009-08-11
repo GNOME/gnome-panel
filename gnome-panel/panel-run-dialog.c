@@ -41,7 +41,6 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 #include <glade/glade-xml.h>
-#include <libgnomeui/gnome-entry.h>
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
@@ -72,8 +71,7 @@ typedef struct {
 	GtkWidget        *main_box;
 	GtkWidget        *program_list_box;
 
-	GtkWidget        *gnome_entry;
-	GtkWidget        *gtk_entry;
+	GtkWidget        *combobox;
 	GtkWidget        *pixmap;
 	GtkWidget        *run_button;
 	GtkWidget        *file_button;
@@ -118,6 +116,74 @@ enum {
 static PanelRunDialog *static_dialog = NULL;
 
 static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
+
+#define PANEL_RUN_HISTORY_KEY "/apps/gnome-settings/gnome-panel/history-gnome-run"
+#define PANEL_RUN_MAX_HISTORY 10
+
+static GtkTreeModel *
+_panel_run_get_recent_programs_list (void)
+{
+	GtkListStore *list;
+	GSList       *gconf_items;
+	GSList       *command;
+	int           i = 0;
+
+	list = gtk_list_store_new (1, G_TYPE_STRING);
+
+	gconf_items = gconf_client_get_list (panel_gconf_get_client (),
+					     PANEL_RUN_HISTORY_KEY,
+					     GCONF_VALUE_STRING, NULL);
+
+	for (command = gconf_items;
+	     command && i < PANEL_RUN_MAX_HISTORY;
+	     command = command->next) {
+		GtkTreeIter iter;
+		gtk_list_store_prepend (list, &iter);
+		gtk_list_store_set (list, &iter, 0, command->data, -1);
+		i++;
+	}
+
+	g_slist_free (gconf_items);
+
+	return GTK_TREE_MODEL (list);
+}
+
+static void
+_panel_run_save_recent_programs_list (GtkComboBoxEntry *entry,
+				      char             *lastcommand)
+{
+	GtkTreeModel *model;
+	GtkTreeIter   iter;
+	GSList       *gconf_items = NULL;
+	int           i = 0;
+
+	gconf_items = g_slist_prepend (gconf_items, lastcommand);
+	i++;
+
+	model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
+
+	if (gtk_tree_model_get_iter_first (model, &iter)) {
+		char *command;
+
+		do {
+			gtk_tree_model_get (model, &iter, 0, &command, -1);
+
+			if (strcmp (command, lastcommand) == 0)
+				continue;
+
+			gconf_items = g_slist_prepend (gconf_items, command);
+			i++;
+		} while (gtk_tree_model_iter_next (model, &iter) &&
+			 i < PANEL_RUN_MAX_HISTORY);
+	}
+
+	gconf_client_set_list (panel_gconf_get_client (),
+			       PANEL_RUN_HISTORY_KEY,
+			       GCONF_VALUE_STRING, gconf_items,
+			       NULL);
+
+	g_slist_free (gconf_items);
+}
 
 static void
 panel_run_dialog_destroy (PanelRunDialog *dialog)
@@ -346,7 +412,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char     *disk;
 	char     *scheme;	
 	
-	command = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry)));
+	command = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
 	command = g_strchug (command);
 
 	if (!command || !command [0]) {
@@ -412,9 +478,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		
 	if (result) {
 		/* only save working commands in history */
-		gnome_entry_prepend_history (GNOME_ENTRY (dialog->gnome_entry),
-					     TRUE, /* save item in history */
-					     command);
+		_panel_run_save_recent_programs_list
+			(GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
 		
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -473,23 +538,25 @@ static void
 panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 				   const char     *file)
 {
-	const char *text;
+	char       *text;
 	char       *quoted, *temp;
+	GtkWidget  *entry;
 	
 	/* Don't allow filenames beginning with '-' */
 	if (!file || !file[0] || file[0] == '-')
 		return;
 	
 	quoted = quote_string (file);
-	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
-	
+	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
+	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
 	if (text && text [0]) {
 		temp = g_strconcat (text, " ", quoted, NULL);
-		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), temp);
+		gtk_entry_set_text (GTK_ENTRY (entry), temp);
 		g_free (temp);
 	} else
-		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry), quoted);
+		gtk_entry_set_text (GTK_ENTRY (entry), quoted);
 	
+	g_free (text);
 	g_free (quoted);
 }
 
@@ -579,17 +646,13 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	GtkTreeIter   iter;
 	GtkTreeModel *model;
 	GtkTreePath  *path;
-	const char   *text;
+	char         *text;
 	char         *found_icon;
 	char         *found_name;
 	gboolean      fuzzy;
 	
 	model = GTK_TREE_MODEL (dialog->program_list_store);
 	path = gtk_tree_path_new_first ();
-	text = sure_string (gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry)));
-	found_icon = NULL;
-	found_name = NULL;
-	fuzzy = FALSE;
 	
 	if (!path || !gtk_tree_model_get_iter (model, &iter, path)) {
 		if (path)
@@ -600,6 +663,11 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		dialog->find_command_idle_id = 0;
 		return FALSE;
 	}
+
+	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	found_icon = NULL;
+	found_name = NULL;
+	fuzzy = FALSE;
 
 	do {
 		char *exec = NULL;
@@ -658,6 +726,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	//FIXME update dialog->program_label
 
 	g_free (found_icon);
+	g_free (text);
 	
 	g_free (dialog->item_name);
 	dialog->item_name = found_name;
@@ -964,7 +1033,8 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	char         *path, *stripped;
 	gboolean      terminal;
 	GKeyFile     *key_file;
-		
+	GtkWidget    *entry;
+
 	if (!gtk_tree_selection_get_selected (selection, &filter_model,
 					      &filter_iter))
 		return;
@@ -997,21 +1067,20 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	if (dialog->item_name)
 		g_free (dialog->item_name);
 	dialog->item_name = NULL;
-	
+
 	/* Order is important here. We have to set the text first so that the
 	 * drag source is enabled, otherwise the drag icon can't be set by
 	 * panel_run_dialog_set_icon.
 	 */
+	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	temp = panel_key_file_get_string (key_file, "Exec");
 	if (temp) {
 		stripped = remove_parameters (temp);
-		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
-				    stripped);
+		gtk_entry_set_text (GTK_ENTRY (entry), stripped);
 		g_free (stripped);
 	} else {
 		temp = panel_key_file_get_string (key_file, "URL");
-		gtk_entry_set_text (GTK_ENTRY (dialog->gtk_entry),
-				    sure_string (temp));
+		gtk_entry_set_text (GTK_ENTRY (entry), sure_string (temp));
 	}
 	g_free (temp);
 
@@ -1096,7 +1165,7 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 					      dialog->list_expander);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
-                gtk_widget_grab_focus (dialog->gtk_entry);
+                gtk_widget_grab_focus (dialog->combobox);
 		
 	} else if (show_list) {
 		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
@@ -1105,7 +1174,7 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 		
         } else if (!show_list) {
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
-                gtk_widget_grab_focus (dialog->gtk_entry);
+                gtk_widget_grab_focus (dialog->combobox);
         }
 }
 
@@ -1174,7 +1243,7 @@ file_button_browse_response (GtkWidget      *chooser,
 
 	gtk_widget_destroy (chooser);
  
- 	gtk_widget_grab_focus (dialog->gtk_entry);
+	gtk_widget_grab_focus (dialog->combobox);
 }
 
 static void
@@ -1498,10 +1567,10 @@ entry_event (GtkEditable    *entry,
 
 			prefix = g_strconcat (temp, nprefix, NULL);
 
-			g_signal_handler_block (dialog->gtk_entry,
+			g_signal_handler_block (dialog->combobox,
 						dialog->changed_id);
 			gtk_editable_delete_text (entry, 0, -1);
-			g_signal_handler_unblock (dialog->gtk_entry,
+			g_signal_handler_unblock (dialog->combobox,
 						  dialog->changed_id);
 
 			gtk_editable_insert_text (entry,
@@ -1527,14 +1596,14 @@ entry_event (GtkEditable    *entry,
 }
 
 static void
-entry_changed (GtkEntry       *entry,
-	       PanelRunDialog *dialog)
+combobox_changed (GtkComboBox    *combobox,
+		  PanelRunDialog *dialog)
 {
-	const char *text;
-	const char *start;
-	char       *msg;
+	char *text;
+	char *start;
+	char *msg;
 
-	text = gtk_entry_get_text (entry);
+	text = gtk_combo_box_get_active_text (combobox);
 
 	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
@@ -1554,6 +1623,8 @@ entry_changed (GtkEntry       *entry,
 
 	/* desensitize run button if no text entered */
 	if (!start || !start [0]) {
+		g_free (text);
+
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
 		gtk_drag_source_unset (dialog->run_dialog);
 
@@ -1611,6 +1682,8 @@ entry_changed (GtkEntry       *entry,
 			g_idle_add_full (G_PRIORITY_LOW,
 					 (GSourceFunc) panel_run_dialog_find_command_idle,
 					 dialog, NULL);
+
+	g_free (text);
 }
 
 static void
@@ -1665,52 +1738,62 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 {
 	GdkScreen             *screen;
 	int                    width_request;
+	GtkWidget             *entry;
 	
-	dialog->gnome_entry = glade_xml_get_widget (gui, "gnome_entry");
-	dialog->gtk_entry   = glade_xml_get_widget (gui, "gtk_entry");
+	dialog->combobox = glade_xml_get_widget (gui, "comboboxentry");
+
+	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
+	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+
+	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
+				 _panel_run_get_recent_programs_list ());
+	gtk_combo_box_entry_set_text_column
+		(GTK_COMBO_BOX_ENTRY (dialog->combobox), 0);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
         /* 1/4 the width of the first monitor should be a good value */
 	width_request = panel_multiscreen_width (screen, 0) / 4;
-	g_object_set (G_OBJECT (dialog->gnome_entry),
+	g_object_set (G_OBJECT (dialog->combobox),
 		      "width_request", width_request,
 		      NULL);
 
-        g_signal_connect (dialog->gtk_entry, "key-press-event",
+        g_signal_connect (entry, "key-press-event",
 			  G_CALLBACK (entry_event), dialog);
 			  
-        dialog->changed_id = g_signal_connect (dialog->gtk_entry, "changed",
-					       G_CALLBACK (entry_changed),
+        dialog->changed_id = g_signal_connect (dialog->combobox, "changed",
+					       G_CALLBACK (combobox_changed),
 					       dialog);
 
-	gtk_drag_dest_unset (dialog->gtk_entry);
+	gtk_drag_dest_unset (dialog->combobox);
 	
-	gtk_drag_dest_set (dialog->gtk_entry,
+	gtk_drag_dest_set (dialog->combobox,
 			   GTK_DEST_DEFAULT_MOTION|GTK_DEST_DEFAULT_HIGHLIGHT,
 			   NULL, 0,
 			   GDK_ACTION_COPY);
-	gtk_drag_dest_add_uri_targets (dialog->gtk_entry);
+	gtk_drag_dest_add_uri_targets (dialog->combobox);
 
-	g_signal_connect (dialog->gtk_entry, "drag_data_received",
+	g_signal_connect (dialog->combobox, "drag_data_received",
 			  G_CALLBACK (entry_drag_data_received), dialog);
 }
 
 static char *
 panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 {
-	GKeyFile   *key_file;
-	gboolean    exec = FALSE;
-	const char *text;
-	char       *name;
-	char       *disk;
-	char       *scheme;
-	char       *save_uri;
+	GKeyFile *key_file;
+	gboolean  exec = FALSE;
+	char     *text;
+	char     *name;
+	char     *disk;
+	char     *scheme;
+	char     *save_uri;
 
-	text = gtk_entry_get_text (GTK_ENTRY (dialog->gtk_entry));
+	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
 	
-	if (!text || !text [0])
+	if (!text || !text [0]) {
+		g_free (text);
 		return NULL;
+	}
 		
 	key_file = panel_key_file_new_desktop ();
 	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
@@ -1765,6 +1848,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	g_key_file_free (key_file);
 	g_free (disk);
 	g_free (name);
+	g_free (text);
 
 	return save_uri;
 }
@@ -1875,7 +1959,7 @@ panel_run_dialog_new (GdkScreen *screen,
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->run_dialog), screen);
 
-	gtk_widget_grab_focus (dialog->gtk_entry);
+	gtk_widget_grab_focus (dialog->combobox);
 	gtk_widget_realize (dialog->run_dialog);
 	gdk_x11_window_set_user_time (dialog->run_dialog->window,
 				      activate_time);
@@ -1915,7 +1999,7 @@ panel_run_dialog_present (GdkScreen *screen,
 		gtk_window_set_screen (GTK_WINDOW (static_dialog->run_dialog), screen);
 		gtk_window_present_with_time (GTK_WINDOW (static_dialog->run_dialog),
 					      activate_time);
-		gtk_widget_grab_focus (static_dialog->gtk_entry);
+		gtk_widget_grab_focus (static_dialog->combobox);
 		return;
 	}
 
