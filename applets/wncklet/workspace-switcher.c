@@ -1044,6 +1044,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 		GError     *error;
 
 		builder = gtk_builder_new ();
+		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
 
 		error = NULL;
 		gtk_builder_add_from_file (builder, PAGER_BUILDERDIR "/workspace-switcher.ui", &error);

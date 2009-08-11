@@ -2594,6 +2594,7 @@ fill_clock_applet (PanelApplet *applet)
         load_gconf_settings (cd);
 
 	cd->builder = gtk_builder_new ();
+	gtk_builder_set_translation_domain (cd->builder, GETTEXT_PACKAGE);
         filename = g_build_filename (BUILDERDIR, "clock.ui", NULL);
 
 	error = NULL;

@@ -427,6 +427,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	}
 
 	builder = gtk_builder_new ();
+	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
 
 	error = NULL;
 	gtk_builder_add_from_file (builder, FISH_BUILDERDIR "/fish.ui", &error);

@@ -314,6 +314,7 @@ main (int argc, char **argv)
 	}
 
 	builder = gtk_builder_new ();
+	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
 
 	uifile = PANEL_APPLET_BUILDERDIR "/panel-test-applets.ui";
 	gtk_builder_add_from_file (builder, uifile, &error);

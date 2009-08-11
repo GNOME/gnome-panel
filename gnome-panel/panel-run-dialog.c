@@ -2005,6 +2005,7 @@ panel_run_dialog_present (GdkScreen *screen,
 	}
 
 	gui = gtk_builder_new ();
+	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
 
 	error = NULL;
 	gtk_builder_add_from_file (gui,
