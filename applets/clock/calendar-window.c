@@ -42,6 +42,9 @@
 #include <glib/gi18n.h>
 #include <gconf/gconf-client.h>
 
+#define GNOME_DESKTOP_USE_UNSTABLE_API
+#include <libgnome/gnome-desktop-utils.h>
+
 #include "calendar-window.h"
 
 #include "clock.h"
@@ -61,6 +64,9 @@
 #  define KEY_BIRTHDAYS_EXPANDED    "expand_birthdays"
 #  define KEY_TASKS_EXPANDED        "expand_tasks"
 #  define KEY_WEATHER_EXPANDED      "expand_weather"
+
+#  define KEY_CALENDAR_APP          "/desktop/gnome/applications/calendar"
+#  define KEY_TASKS_APP             "/desktop/gnome/applications/tasks"
 #else
 #  define N_CALENDAR_WINDOW_GCONF_PREFS 1
 #endif
@@ -137,33 +143,90 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 #ifdef HAVE_LIBECAL
 
 static void
-clock_launch_evolution (CalendarWindow *calwin,
-			const char     *argument)
+clock_launch_calendar_tasks_app (CalendarWindow *calwin,
+				 const char     *key_program,
+				 const char     *argument)
 {
-	char      *command_line;
-	GdkScreen *screen;
-	GError    *error;
+	char      **argv;
+	int         argc;
+	char       *key;
+	char       *program;
+	gboolean    terminal;
+	char       *command_line;
+	GdkScreen  *screen;
+	GError     *error;
+	gboolean    result;
 
-	command_line = g_find_program_in_path ("evolution");
-	if (command_line == NULL)
+	key = g_strdup_printf ("%s%s", key_program, "/exec");
+	program = gconf_client_get_string (calwin->priv->gconfclient,
+					   key, NULL);
+	g_free (key);
+
+	key = g_strdup_printf ("%s%s", key_program, "/needs_term");
+	terminal = gconf_client_get_bool (calwin->priv->gconfclient,
+					  key, NULL);
+	g_free (key);
+
+	if (program == NULL) {
+		g_printerr ("Cannot launch calendar/tasks application: key not set\n");
 		return;
+	}
+
+	command_line = g_find_program_in_path (program);
+	if (command_line == NULL) {
+		g_printerr ("Cannot launch calendar/tasks application: %s in path\n", program);
+		g_free (program);
+		return;
+	}
 	g_free (command_line);
 
-	if (argument)
-		command_line = g_strdup_printf ("evolution %s", argument);
-	else
-		command_line = g_strdup ("evolution");
+	if (argument) {
+		argc = 2;
+		argv = g_new0 (char *, 3);
+		argv[1] = g_strdup (argument);
+	} else {
+		argc = 1;
+		argv = g_new0 (char *, 2);
+	}
+	argv[0] = program; /* no strdup, and it will get freed for free */
 
 	screen = gtk_widget_get_screen (calwin->priv->calendar);
 	error = NULL;
 
-	if (!gdk_spawn_command_line_on_screen (screen, command_line,
-					       &error)) {
-		g_printerr ("Cannot launch evolution: %s\n", error->message);
+	if (terminal)
+		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
+
+	result = gdk_spawn_on_screen (screen,
+				      NULL, /* working directory */
+				      argv,
+				      NULL, /* envp */
+				      G_SPAWN_SEARCH_PATH,
+				      NULL, /* child setup func */
+				      NULL, /* user data */
+				      NULL, /* child pid */
+				      &error);
+
+	if (!result) {
+		g_printerr ("Cannot launch calendar/tasks application: %s\n",
+			    error->message);
 		g_error_free (error);
 	}
 
-	g_free (command_line);
+	g_strfreev (argv);
+}
+
+static void
+clock_launch_calendar_app (CalendarWindow *calwin,
+			   const char     *argument)
+{
+	clock_launch_calendar_tasks_app (calwin, KEY_CALENDAR_APP, argument);
+}
+
+static void
+clock_launch_tasks_app (CalendarWindow *calwin,
+			const char     *argument)
+{
+	clock_launch_calendar_tasks_app (calwin, KEY_TASKS_APP, argument);
 }
 
 static void
@@ -505,7 +568,7 @@ task_activated_cb (GtkTreeView       *view,
 
 	argument = g_strdup_printf ("task:%s", uid);
 
-	clock_launch_evolution (calwin, argument);
+	clock_launch_tasks_app (calwin, argument);
 
 	g_free (argument);
         g_free (uid);
@@ -754,7 +817,7 @@ calendar_window_tree_selection_changed (GtkTreeSelection *selection,
 static void
 edit_tasks (CalendarWindow *calwin)
 {
-       clock_launch_evolution (calwin, "--component=tasks");
+	clock_launch_tasks_app (calwin, NULL);
 }
 
 static GtkWidget *
@@ -1020,7 +1083,7 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
 static void
 edit_appointments (CalendarWindow *calwin)
 {
-       clock_launch_evolution (calwin, "--component=calendar");
+	clock_launch_calendar_app (calwin, NULL);
 }
 
 static GtkWidget *
@@ -1044,7 +1107,7 @@ create_appointment_list (CalendarWindow  *calwin,
 static void
 edit_birthdays (CalendarWindow *calwin)
 {
-       clock_launch_evolution (calwin, "--component=calendar");
+	clock_launch_calendar_app (calwin, NULL);
 }
 
 static GtkWidget *
@@ -1069,7 +1132,7 @@ create_birthday_list (CalendarWindow  *calwin,
 static void
 edit_weather (CalendarWindow *calwin)
 {
-       clock_launch_evolution (calwin, "--component=calendar");
+	clock_launch_calendar_app (calwin, NULL);
 }
 
 
@@ -1192,7 +1255,7 @@ calendar_day_activated (GtkCalendar    *calendar,
 				    utc_date_tm.tm_min,
 				    0);
 
-	clock_launch_evolution (calwin, argument);
+	clock_launch_calendar_app (calwin, argument);
 
 	g_free (argument);
 }
