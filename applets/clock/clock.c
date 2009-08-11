@@ -1628,6 +1628,8 @@ update_set_time_button (ClockData *cd)
 {
 	gint can_set;
 
+	/* this returns more than just a boolean; check the documentation of
+	 * the dbus method for more information */
 	can_set = can_set_system_time ();
 
 	if (cd->time_settings_button)
