@@ -406,7 +406,10 @@ clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
         }
 }
 
-static void
+/**
+ * Return value: %TRUE if @loc can be placed on the map, %FALSE otherwise.
+ **/
+static gboolean
 clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
 {
         gfloat latitude, longitude;
@@ -415,7 +418,7 @@ clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
         clock_location_get_coords (loc, &latitude, &longitude);
         /* 0/0 means unset, basically */
         if (latitude == 0 && longitude == 0)
-                return;
+                return FALSE;
 
 	if (hilight)
 		marker = MARKER_HILIGHT;
@@ -425,6 +428,8 @@ clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
 		marker = MARKER_NORMAL;
 
         clock_map_mark (this, latitude, longitude, marker);
+
+        return TRUE;
 }
 
 static void
@@ -607,9 +612,11 @@ highlight (gpointer user_data)
        if (data->count == 6)
                return FALSE;
 
-       if (data->count % 2 == 0)
-                 clock_map_place_location (data->map, data->location, TRUE);
-       else
+       if (data->count % 2 == 0) {
+                 if (!clock_map_place_location (data->map,
+                                                data->location, TRUE))
+                         return FALSE;
+       } else
                  clock_map_place_locations (data->map);
        clock_map_display (data->map);
 
