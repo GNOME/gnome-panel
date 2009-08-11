@@ -219,9 +219,6 @@ dbus_conf_DATA = org.gnome.ClockApplet.Mechanism.conf
 @INTLTOOL_POLICY_RULE@
 polkit_DATA = $(polkit_in_files:.policy.in=.policy)
 
-check:
-	$(POLKIT_POLICY_FILE_VALIDATE) $(polkit_DATA)
-
 else
 dbus_services_DATA =
 dbus_conf_DATA =
