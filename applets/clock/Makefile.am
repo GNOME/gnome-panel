@@ -10,7 +10,7 @@ INCLUDES =							\
 	$(POLKIT_GNOME_CFLAGS)					\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	-DDATADIR=\""$(datadir)"\"				\
-	-DGLADEDIR=\""$(datadir)/gnome-panel/glade"\"		\
+	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DLIBDIR=\""$(libdir)"\"				\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
@@ -164,12 +164,11 @@ if HAVE_POLKIT
 libexec_PROGRAMS += gnome-clock-applet-mechanism
 endif
 
-gladedir = $(datadir)/gnome-panel/glade
-glade_DATA =		\
-	clock.glade
+uidir		= $(datadir)/gnome-panel/ui
+ui_DATA		= clock.ui
 
-uidir 	= $(datadir)/gnome-2.0/ui
-ui_DATA	= GNOME_ClockApplet.xml
+xmluidir 	= $(datadir)/gnome-2.0/ui
+xmlui_DATA	= GNOME_ClockApplet.xml
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_ClockApplet_Factory.server.in
@@ -233,8 +232,8 @@ endif
 EXTRA_DIST =						\
 	GNOME_ClockApplet_Factory.server.in.in		\
 	$(schemas_in_files)				\
+	$(xmlui_DATA)					\
 	$(ui_DATA)					\
-	$(glade_DATA)					\
 	clock-marshallers.list				\
 	$(dbus_services_in_files)			\
 	org.gnome.ClockApplet.Mechanism.conf		\

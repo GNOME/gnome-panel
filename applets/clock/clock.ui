@@ -1,49 +1,51 @@
 <?xml version="1.0"?>
-<glade-interface>
-  <!-- interface-requires gtk+ 2.16 -->
+<interface>
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
-  <widget class="GtkDialog" id="edit-location-window">
+  <object class="GtkDialog" id="edit-location-window">
     <property name="border_width">5</property>
     <property name="resizable">False</property>
     <property name="type_hint">dialog</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox3">
+      <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
-          <widget class="GtkTable" id="table26">
+          <object class="GtkTable" id="table26">
             <property name="visible">True</property>
             <property name="n_columns">3</property>
             <property name="column_spacing">6</property>
             <property name="row_spacing">6</property>
             <child>
-              <widget class="GtkVBox" id="vbox34">
+              <object class="GtkVBox" id="vbox34">
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">6</property>
                 <child>
-                  <widget class="GtkScrolledWindow" id="scrolledwindow12">
+                  <object class="GtkScrolledWindow" id="scrolledwindow12">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">never</property>
                     <property name="vscrollbar_policy">never</property>
                     <child>
-                      <widget class="GtkViewport" id="viewport3">
+                      <object class="GtkViewport" id="viewport3">
                         <property name="visible">True</property>
                         <property name="shadow_type">none</property>
                         <child>
-                          <widget class="GtkImage" id="image30">
+                          <object class="GtkImage" id="image30">
                             <property name="stock">gtk-missing-image</property>
-                          </widget>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkTable" id="table27">
+                  <object class="GtkTable" id="table27">
                     <property name="visible">True</property>
                     <property name="border_width">5</property>
                     <property name="n_rows">5</property>
@@ -51,13 +53,13 @@
                     <property name="column_spacing">6</property>
                     <property name="row_spacing">6</property>
                     <child>
-                      <widget class="GtkLabel" id="label243">
+                      <object class="GtkLabel" id="label243">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes" comments="Languages that have a single word that translates as either &quot;state&quot; or &quot;province&quot; should use that instead of &quot;region&quot;.">&lt;small&gt;&lt;i&gt;Type a city, region, or country name and then select a match from the pop-up.&lt;/i&gt;&lt;/small&gt;</property>
                         <property name="use_markup">True</property>
                         <property name="wrap">True</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">4</property>
@@ -68,12 +70,13 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkVBox" id="edit-location-name-box">
+                      <object class="GtkVBox" id="edit-location-name-box">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <placeholder/>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">4</property>
@@ -82,12 +85,13 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkVBox" id="edit-location-timezone-box">
+                      <object class="GtkVBox" id="edit-location-timezone-box">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <placeholder/>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">4</property>
@@ -98,11 +102,11 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label242">
+                      <object class="GtkLabel" id="label242">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">Timezone:</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="top_attach">2</property>
                         <property name="bottom_attach">3</property>
@@ -111,22 +115,22 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label241">
+                      <object class="GtkLabel" id="label241">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">Location Name:</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"></property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="edit-location-latitude-entry">
+                      <object class="GtkEntry" id="edit-location-latitude-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">&#x2022;</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
@@ -136,11 +140,16 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkComboBox" id="edit-location-latitude-combo">
+                      <object class="GtkComboBox" id="edit-location-latitude-combo">
                         <property name="visible">True</property>
-                        <property name="items" translatable="yes">North
-South</property>
-                      </widget>
+                        <property name="model">liststore2</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
                       <packing>
                         <property name="left_attach">2</property>
                         <property name="right_attach">3</property>
@@ -151,12 +160,12 @@ South</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label240">
+                      <object class="GtkLabel" id="label240">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;i&gt;(optional)&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">3</property>
                         <property name="right_attach">4</property>
@@ -167,12 +176,12 @@ South</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label239">
+                      <object class="GtkLabel" id="label239">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;i&gt;(optional)&lt;/i&gt;</property>
                         <property name="use_markup">True</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">3</property>
                         <property name="right_attach">4</property>
@@ -183,11 +192,16 @@ South</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkComboBox" id="edit-location-longitude-combo">
+                      <object class="GtkComboBox" id="edit-location-longitude-combo">
                         <property name="visible">True</property>
-                        <property name="items" translatable="yes">East
-West</property>
-                      </widget>
+                        <property name="model">liststore1</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
                       <packing>
                         <property name="left_attach">2</property>
                         <property name="right_attach">3</property>
@@ -198,11 +212,11 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkEntry" id="edit-location-longitude-entry">
+                      <object class="GtkEntry" id="edit-location-longitude-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="invisible_char">&#x2022;</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
@@ -212,11 +226,11 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label238">
+                      <object class="GtkLabel" id="label238">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">Longitude:</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="top_attach">4</property>
                         <property name="bottom_attach">5</property>
@@ -225,23 +239,24 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkVBox" id="vbox35">
+                      <object class="GtkVBox" id="vbox35">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <property name="homogeneous">True</property>
                         <child>
-                          <widget class="GtkLabel" id="label237">
+                          <object class="GtkLabel" id="label237">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">Latitude:</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="top_attach">3</property>
                         <property name="bottom_attach">4</property>
@@ -251,36 +266,34 @@ West</property>
                     <child>
                       <placeholder/>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">1</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="right_attach">3</property>
                 <property name="y_options"></property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="position">1</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area3">
+          <object class="GtkHButtonBox" id="dialog-action_area3">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="edit-location-cancel-button">
+              <object class="GtkButton" id="edit-location-cancel-button">
                 <property name="label">gtk-cancel</property>
-                <property name="response_id">-6</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -288,41 +301,46 @@ West</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="edit-location-ok-button">
+              <object class="GtkButton" id="edit-location-ok-button">
                 <property name="label">gtk-ok</property>
-                <property name="response_id">-5</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
-      </widget>
+      </object>
     </child>
-  </widget>
-  <widget class="GtkDialog" id="set-time-window">
+    <action-widgets>
+      <action-widget response="-6">edit-location-cancel-button</action-widget>
+      <action-widget response="-5">edit-location-ok-button</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="set-time-window">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Time &amp; Date</property>
+    <property name="resizable">False</property>
     <property name="type_hint">dialog</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox2">
+      <object class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
-          <widget class="GtkAlignment" id="alignment1">
+          <object class="GtkAlignment" id="alignment1">
             <property name="visible">True</property>
             <property name="yscale">0</property>
             <property name="top_padding">7</property>
@@ -330,42 +348,42 @@ West</property>
             <property name="left_padding">7</property>
             <property name="right_padding">7</property>
             <child>
-              <widget class="GtkHBox" id="time_settings_box">
+              <object class="GtkHBox" id="time_settings_box">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
-                  <widget class="GtkCalendar" id="calendar">
+                  <object class="GtkCalendar" id="calendar">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="year">2009</property>
                     <property name="month">5</property>
                     <property name="day">3</property>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkTable" id="table1">
+                  <object class="GtkTable" id="table1">
                     <property name="visible">True</property>
                     <property name="n_rows">2</property>
                     <property name="n_columns">2</property>
                     <property name="column_spacing">12</property>
                     <property name="row_spacing">6</property>
                     <child>
-                      <widget class="GtkHBox" id="hbox61">
+                      <object class="GtkHBox" id="hbox61">
                         <property name="visible">True</property>
                         <child>
-                          <widget class="GtkSpinButton" id="hours_spin">
+                          <object class="GtkSpinButton" id="hours_spin">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="adjustment">23 0 23 1 12 0</property>
+                            <property name="adjustment">adjustment3</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
                             <property name="wrap">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
@@ -373,15 +391,15 @@ West</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkSpinButton" id="minutes_spin">
+                          <object class="GtkSpinButton" id="minutes_spin">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="adjustment">59 0 59 1 30 0</property>
+                            <property name="adjustment">adjustment2</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
                             <property name="wrap">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
@@ -389,22 +407,22 @@ West</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkSpinButton" id="seconds_spin">
+                          <object class="GtkSpinButton" id="seconds_spin">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
-                            <property name="adjustment">59 0 59 1 30 0</property>
+                            <property name="adjustment">adjustment1</property>
                             <property name="climb_rate">1</property>
                             <property name="numeric">True</property>
                             <property name="wrap">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="position">2</property>
                           </packing>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
@@ -414,11 +432,11 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="current_time_label">
+                      <object class="GtkLabel" id="current_time_label">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label">23:59:59</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
@@ -426,11 +444,11 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label236">
+                      <object class="GtkLabel" id="label236">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">Time:</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="top_attach">1</property>
                         <property name="bottom_attach">2</property>
@@ -439,26 +457,26 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label235">
+                      <object class="GtkLabel" id="label235">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">Current Time:</property>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"></property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
@@ -466,19 +484,18 @@ West</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area2">
+          <object class="GtkHButtonBox" id="dialog-action_area2">
             <property name="visible">True</property>
             <property name="homogeneous">True</property>
-            <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="cancel-set-time-button">
+              <object class="GtkButton" id="cancel-set-time-button">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -486,60 +503,98 @@ West</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="set-time-button">
+              <object class="GtkButton" id="set-time-button">
                 <property name="label" translatable="yes">Set System Time</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_underline">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
-      </widget>
+      </object>
     </child>
-  </widget>
-  <widget class="GtkDialog" id="prefs-window">
+    <action-widgets>
+      <action-widget response="0">cancel-set-time-button</action-widget>
+      <action-widget response="0">set-time-button</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name item text -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">East</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">West</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="liststore2">
+    <columns>
+      <!-- column-name item text -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">North</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">South</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkDialog" id="prefs-window">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Clock Preferences</property>
+    <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox1">
+      <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkNotebook" id="notebook">
+          <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="border_width">5</property>
             <child>
-              <widget class="GtkVBox" id="vbox17">
+              <object class="GtkVBox" id="vbox17">
                 <property name="visible">True</property>
                 <property name="border_width">12</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
                 <child>
-                  <widget class="GtkVBox" id="clock-options">
+                  <object class="GtkVBox" id="clock-options">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkLabel" id="label210">
+                      <object class="GtkLabel" id="label210">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Clock Options&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </widget>
+                        <property name="label" translatable="yes">Clock Options</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
@@ -547,22 +602,22 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkAlignment" id="alignment32">
+                      <object class="GtkAlignment" id="alignment32">
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <widget class="GtkHBox" id="hbox49">
+                          <object class="GtkHBox" id="hbox49">
                             <property name="visible">True</property>
                             <property name="spacing">13</property>
                             <child>
-                              <widget class="GtkRadioButton" id="12hr_radio">
+                              <object class="GtkRadioButton" id="12hr_radio">
                                 <property name="label" translatable="yes">_12 hour format</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
@@ -570,7 +625,7 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkRadioButton" id="24hr_radio">
+                              <object class="GtkRadioButton" id="24hr_radio">
                                 <property name="label" translatable="yes">_24 hour format</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -578,37 +633,40 @@ West</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">12hr_radio</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
-                          </widget>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="expand">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkVBox" id="vbox29">
+                  <object class="GtkVBox" id="vbox29">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkLabel" id="label229">
+                      <object class="GtkLabel" id="label229">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Panel Display&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </widget>
+                        <property name="label" translatable="yes">Panel Display</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
@@ -616,22 +674,23 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkAlignment" id="alignment33">
+                      <object class="GtkAlignment" id="alignment33">
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <widget class="GtkVBox" id="vbox30">
+                          <object class="GtkVBox" id="vbox30">
                             <property name="visible">True</property>
+                            <property name="orientation">vertical</property>
                             <property name="spacing">6</property>
                             <child>
-                              <widget class="GtkCheckButton" id="date_check">
+                              <object class="GtkCheckButton" id="date_check">
                                 <property name="label" translatable="yes">Show the _date</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
@@ -639,14 +698,14 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkCheckButton" id="seconds_check">
+                              <object class="GtkCheckButton" id="seconds_check">
                                 <property name="label" translatable="yes">Show seco_nds</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
@@ -654,14 +713,14 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkCheckButton" id="weather_check">
+                              <object class="GtkCheckButton" id="weather_check">
                                 <property name="label" translatable="yes">Show _weather</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
@@ -669,87 +728,88 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkCheckButton" id="temperature_check">
+                              <object class="GtkCheckButton" id="temperature_check">
                                 <property name="label" translatable="yes">Show _temperature</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
                                 <property name="position">3</property>
                               </packing>
                             </child>
-                          </widget>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">1</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
             </child>
-            <child>
-              <widget class="GtkLabel" id="label209">
+            <child type="tab">
+              <object class="GtkLabel" id="label209">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">General</property>
-              </widget>
+              </object>
               <packing>
                 <property name="tab_fill">False</property>
-                <property name="type">tab</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox24">
+              <object class="GtkVBox" id="vbox24">
                 <property name="visible">True</property>
                 <property name="border_width">12</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
                 <child>
-                  <widget class="GtkHBox" id="hbox54">
+                  <object class="GtkHBox" id="hbox54">
                     <property name="visible">True</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkScrolledWindow" id="scrolledwindow10">
+                      <object class="GtkScrolledWindow" id="scrolledwindow10">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
                         <property name="vscrollbar_policy">never</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <widget class="GtkTreeView" id="cities_list">
+                          <object class="GtkTreeView" id="cities_list">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="headers_visible">False</property>
                             <property name="hover_expand">True</property>
-                          </widget>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkVButtonBox" id="vbuttonbox2">
+                      <object class="GtkVButtonBox" id="vbuttonbox2">
                         <property name="visible">True</property>
+                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <property name="layout_style">start</property>
                         <child>
-                          <widget class="GtkButton" id="prefs-locations-add-button">
+                          <object class="GtkButton" id="prefs-locations-add-button">
                             <property name="label">gtk-add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
@@ -757,14 +817,14 @@ West</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="prefs-locations-edit-button">
+                          <object class="GtkButton" id="prefs-locations-edit-button">
                             <property name="label">gtk-edit</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
@@ -772,64 +832,67 @@ West</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="prefs-locations-remove-button">
+                          <object class="GtkButton" id="prefs-locations-remove-button">
                             <property name="label">gtk-remove</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                          </widget>
+                          </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
                             <property name="position">2</property>
                           </packing>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">0</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="position">1</property>
               </packing>
             </child>
-            <child>
-              <widget class="GtkLabel" id="label220">
+            <child type="tab">
+              <object class="GtkLabel" id="label220">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Locations</property>
-              </widget>
+              </object>
               <packing>
                 <property name="position">1</property>
                 <property name="tab_fill">False</property>
-                <property name="type">tab</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox27">
+              <object class="GtkVBox" id="vbox27">
                 <property name="visible">True</property>
                 <property name="border_width">12</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
                 <child>
-                  <widget class="GtkVBox" id="vbox28">
+                  <object class="GtkVBox" id="vbox28">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <widget class="GtkLabel" id="label224">
+                      <object class="GtkLabel" id="label224">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Display&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </widget>
+                        <property name="label" translatable="yes">Display</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
@@ -837,18 +900,18 @@ West</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkAlignment" id="alignment34">
+                      <object class="GtkAlignment" id="alignment34">
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <widget class="GtkTable" id="table25">
+                          <object class="GtkTable" id="table25">
                             <property name="visible">True</property>
                             <property name="n_rows">4</property>
                             <property name="n_columns">2</property>
                             <property name="column_spacing">12</property>
                             <property name="row_spacing">6</property>
                             <child>
-                              <widget class="GtkComboBox" id="visibility_combo"/>
+                              <object class="GtkComboBox" id="visibility_combo"/>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
@@ -859,12 +922,12 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label232">
+                              <object class="GtkLabel" id="label232">
                                 <property name="xalign">0</property>
                                 <property name="label" translatable="yes">_Visibility unit:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">visibility_combo</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="top_attach">3</property>
                                 <property name="bottom_attach">4</property>
@@ -873,7 +936,7 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkComboBox" id="pressure_combo"/>
+                              <object class="GtkComboBox" id="pressure_combo"/>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
@@ -884,12 +947,12 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label231">
+                              <object class="GtkLabel" id="label231">
                                 <property name="xalign">0</property>
                                 <property name="label" translatable="yes">_Pressure unit:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">pressure_combo</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="top_attach">2</property>
                                 <property name="bottom_attach">3</property>
@@ -898,9 +961,9 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkComboBox" id="wind_speed_combo">
+                              <object class="GtkComboBox" id="wind_speed_combo">
                                 <property name="visible">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
@@ -911,9 +974,9 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkComboBox" id="temperature_combo">
+                              <object class="GtkComboBox" id="temperature_combo">
                                 <property name="visible">True</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
@@ -921,13 +984,13 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label228">
+                              <object class="GtkLabel" id="label228">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="label" translatable="yes">_Wind speed unit:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">wind_speed_combo</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="top_attach">1</property>
                                 <property name="bottom_attach">2</property>
@@ -936,65 +999,62 @@ West</property>
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkLabel" id="label227">
+                              <object class="GtkLabel" id="label227">
                                 <property name="visible">True</property>
                                 <property name="xalign">0</property>
                                 <property name="label" translatable="yes">_Temperature unit:</property>
                                 <property name="use_underline">True</property>
                                 <property name="mnemonic_widget">temperature_combo</property>
-                              </widget>
+                              </object>
                               <packing>
                                 <property name="x_options">GTK_FILL</property>
                                 <property name="y_options"></property>
                               </packing>
                             </child>
-                          </widget>
+                          </object>
                         </child>
-                      </widget>
+                      </object>
                       <packing>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                  </widget>
+                  </object>
                   <packing>
                     <property name="position">0</property>
                   </packing>
                 </child>
-              </widget>
+              </object>
               <packing>
                 <property name="position">2</property>
               </packing>
             </child>
-            <child>
-              <widget class="GtkLabel" id="label223">
+            <child type="tab">
+              <object class="GtkLabel" id="label223">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Weather</property>
-              </widget>
+              </object>
               <packing>
                 <property name="position">2</property>
                 <property name="tab_fill">False</property>
-                <property name="type">tab</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="position">1</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area1">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="prefs-help-button">
+              <object class="GtkButton" id="prefs-help-button">
                 <property name="label">gtk-help</property>
-                <property name="response_id">-11</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -1002,14 +1062,14 @@ West</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="time-settings-button">
+              <object class="GtkButton" id="time-settings-button">
                 <property name="label" translatable="yes">Time _Settings</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_underline">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
@@ -1017,30 +1077,52 @@ West</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="prefs-close-button">
+              <object class="GtkButton" id="prefs-close-button">
                 <property name="label">gtk-close</property>
-                <property name="response_id">-7</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-              </widget>
+              </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">2</property>
               </packing>
             </child>
-          </widget>
+          </object>
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">end</property>
             <property name="position">0</property>
           </packing>
         </child>
-      </widget>
+      </object>
     </child>
-  </widget>
-</glade-interface>
+    <action-widgets>
+      <action-widget response="-11">prefs-help-button</action-widget>
+      <action-widget response="0">time-settings-button</action-widget>
+      <action-widget response="-7">prefs-close-button</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="value">59</property>
+    <property name="upper">59</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">30</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
+    <property name="value">59</property>
+    <property name="upper">59</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">30</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="value">23</property>
+    <property name="upper">23</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">12</property>
+  </object>
+</interface>
