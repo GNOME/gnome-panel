@@ -65,8 +65,8 @@ struct _CalendarClientClass
 
 typedef struct
 {
-  GTime start_time;
-  GTime end_time;
+  time_t start_time;
+  time_t end_time;
 } CalendarOccurrence;
 
 typedef struct
@@ -77,8 +77,8 @@ typedef struct
   char   *summary;
   char   *description;
   char   *color_string;
-  GTime   start_time;
-  GTime   end_time;
+  time_t  start_time;
+  time_t  end_time;
   guint   is_all_day : 1;
 
   /* Only used internally */
@@ -92,10 +92,10 @@ typedef struct
   char  *description;
   char  *color_string;
   char  *url;
-  GTime  start_time;
-  GTime  due_time;
+  time_t start_time;
+  time_t due_time;
   guint  percent_complete;
-  GTime  completed_time;
+  time_t completed_time;
   int    priority;
 } CalendarTask;
 
