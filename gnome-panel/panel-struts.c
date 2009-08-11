@@ -143,7 +143,7 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 			break;
 		case PANEL_ORIENTATION_RIGHT:
 			geometry->x = overlap_x1 - geometry->width;
-			strut->allocated_strut_size = old_x - geometry->x;
+			strut->allocated_strut_size += old_x - geometry->x;
 			break;
 		default:
 			g_assert_not_reached ();
