@@ -21,7 +21,6 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
@@ -649,10 +648,12 @@ display_all_workspaces_toggled (GtkToggleButton *button,
 				     NULL);
 }
 
+#define WID(s) GTK_WIDGET (gtk_builder_get_object (builder, s))
+
 static void
 setup_sensitivity (TasklistData *tasklist,
 		   GConfClient *client,
-		   GladeXML *xml,
+		   GtkBuilder *builder,
 		   const char *wid1,
 		   const char *wid2,
 		   const char *wid3,
@@ -670,27 +671,25 @@ setup_sensitivity (TasklistData *tasklist,
 	}
 	g_free (fullkey);
 
-	w = glade_xml_get_widget (xml, wid1);
+	w = WID (wid1);
 	g_assert (w != NULL);
 	gtk_widget_set_sensitive (w, FALSE);
 
 	if (wid2 != NULL) {
-		w = glade_xml_get_widget (xml, wid2);
+		w = WID (wid2);
 		g_assert (w != NULL);
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 	if (wid3 != NULL) {
-		w = glade_xml_get_widget (xml, wid3);
+		w = WID (wid3);
 		g_assert (w != NULL);
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 
 }
 
-#define WID(s) glade_xml_get_widget (xml, s)
-
 static void
-setup_dialog (GladeXML     *xml,
+setup_dialog (GtkBuilder   *builder,
 	      TasklistData *tasklist)
 {
 	GConfClient *client;
@@ -701,7 +700,7 @@ setup_dialog (GladeXML     *xml,
 	tasklist->show_current_radio = WID ("show_current_radio");
 	tasklist->show_all_radio = WID ("show_all_radio");
 
-	setup_sensitivity (tasklist, client, xml,
+	setup_sensitivity (tasklist, client, builder,
 			   "show_current_radio",
 			   "show_all_radio",
 			   NULL,
@@ -711,7 +710,7 @@ setup_dialog (GladeXML     *xml,
 	tasklist->auto_group_radio = WID ("auto_group_radio");
 	tasklist->always_group_radio = WID ("always_group_radio");
 
-	setup_sensitivity (tasklist, client, xml,
+	setup_sensitivity (tasklist, client, builder,
 			   "never_group_radio",
 			   "auto_group_radio",
 			   "always_group_radio",
@@ -721,7 +720,7 @@ setup_dialog (GladeXML     *xml,
 	tasklist->move_minimized_radio = WID ("move_minimized_radio");
 	tasklist->change_workspace_radio = WID ("change_workspace_radio");
 
-	setup_sensitivity (tasklist, client, xml,
+	setup_sensitivity (tasklist, client, builder,
 			   "move_minimized_radio",
 			   "change_workspace_radio",
 			   NULL,
@@ -772,17 +771,27 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   const gchar       *verbname)
 {
 	if (tasklist->properties_dialog == NULL) {
-		GladeXML  *xml;
+		GtkBuilder *builder;
+		GError     *error;
 
-		xml = glade_xml_new (TASKLIST_GLADEDIR "/window-list.glade", NULL, NULL);
-		tasklist->properties_dialog = glade_xml_get_widget (xml, "tasklist_properties_dialog");
+		builder = gtk_builder_new ();
+
+		error = NULL;
+		gtk_builder_add_from_file (builder, TASKLIST_BUILDERDIR "/window-list.ui", &error);
+		if (error) {
+			g_warning ("Error loading preferences: %s", error->message);
+			g_error_free (error);
+			return;
+		}
+
+		tasklist->properties_dialog = WID ("tasklist_properties_dialog");
 
 		g_object_add_weak_pointer (G_OBJECT (tasklist->properties_dialog),
 					   (void**) &tasklist->properties_dialog);
 
-		setup_dialog (xml, tasklist);
+		setup_dialog (builder, tasklist);
 		
-		g_object_unref (G_OBJECT (xml));
+		g_object_unref (builder);
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (tasklist->properties_dialog),

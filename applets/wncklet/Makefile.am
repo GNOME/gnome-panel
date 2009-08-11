@@ -8,8 +8,8 @@ INCLUDES = \
 	$(DISABLE_DEPRECATED_CFLAGS) \
 	$(WARN_CFLAGS) \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	-DPAGER_GLADEDIR=\""$(gladedir)"\" \
-	-DTASKLIST_GLADEDIR=\""$(gladedir)"\" \
+	-DPAGER_BUILDERDIR=\""$(uidir)"\" \
+	-DTASKLIST_BUILDERDIR=\""$(uidir)"\" \
 	-DPREFIX=\"$(prefix)\" \
         -DSYSCONFDIR=\"$(sysconfdir)\" \
         -DDATADIR=\"$(datadir)\" \
@@ -56,9 +56,9 @@ endif
 
 EXTRA_DIST = \
 	GNOME_Wncklet_Factory.server.in.in \
-	$(ui_DATA) \
+	$(xmlui_DATA) \
 	$(schemas_in_files) \
-	$(glade_DATA)
+	$(ui_DATA)
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Wncklet_Factory.server.in
@@ -75,8 +75,8 @@ $(server_in_files): $(server_in_files).in Makefile
 
 CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES) $(schemas_DATA)
 
-uidir    = $(datadir)/gnome-2.0/ui
-ui_DATA  = \
+xmluidir    = $(datadir)/gnome-2.0/ui
+xmlui_DATA  = \
 	GNOME_WindowMenuApplet.xml \
 	GNOME_WorkspaceSwitcherApplet.xml \
 	GNOME_ShowDesktopApplet.xml \
@@ -100,8 +100,8 @@ else
 install-data-local:
 endif
 
-gladedir   = $(datadir)/gnome-panel/glade
-glade_DATA = workspace-switcher.glade window-list.glade
+uidir   = $(datadir)/gnome-panel/ui
+ui_DATA = workspace-switcher.ui window-list.ui
 
 
 -include $(top_srcdir)/git.mk

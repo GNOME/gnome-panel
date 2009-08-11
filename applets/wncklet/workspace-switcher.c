@@ -23,7 +23,6 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
@@ -821,8 +820,6 @@ response_cb (GtkWidget *widget,
 		gtk_widget_destroy (widget);
 }
 
-#define WID(s) glade_xml_get_widget (xml, s)
-
 static void
 close_dialog (GtkWidget *button,
               gpointer data)
@@ -844,9 +841,11 @@ close_dialog (GtkWidget *button,
 	gtk_widget_destroy (pager->properties_dialog);
 }
 
+#define WID(s) GTK_WIDGET (gtk_builder_get_object (builder, s))
+
 static void
 setup_sensitivity (PagerData *pager,
-		   GladeXML *xml,
+		   GtkBuilder *builder,
 		   const char *wid1,
 		   const char *wid2,
 		   const char *wid3,
@@ -870,21 +869,21 @@ setup_sensitivity (PagerData *pager,
 	g_object_unref (G_OBJECT (client));
 	g_free (fullkey);
 
-	w = glade_xml_get_widget (xml, wid1);
+	w = WID (wid1);
 	g_assert (w != NULL);
 	g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
 			   GINT_TO_POINTER (1));
 	gtk_widget_set_sensitive (w, FALSE);
 
 	if (wid2 != NULL) {
-		w = glade_xml_get_widget (xml, wid2);
+		w = WID (wid2);
 		g_assert (w != NULL);
 		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
 				   GINT_TO_POINTER (1));
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 	if (wid3 != NULL) {
-		w = glade_xml_get_widget (xml, wid3);
+		w = WID (wid3);
 		g_assert (w != NULL);
 		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
 				   GINT_TO_POINTER (1));
@@ -894,8 +893,8 @@ setup_sensitivity (PagerData *pager,
 }
 
 static void
-setup_dialog (GladeXML  *xml,
-	      PagerData *pager)
+setup_dialog (GtkBuilder *builder,
+	      PagerData  *pager)
 {
 	gboolean value;
 	GtkTreeViewColumn *column;
@@ -907,7 +906,7 @@ setup_dialog (GladeXML  *xml,
 	pager->workspace_names_scroll = WID ("workspace_names_scroll");
 
 	pager->display_workspaces_toggle = WID ("workspace_name_toggle");
-	setup_sensitivity (pager, xml,
+	setup_sensitivity (pager, builder,
 			   "workspace_name_toggle",
 			   NULL,
 			   NULL,
@@ -915,7 +914,7 @@ setup_dialog (GladeXML  *xml,
 
 	pager->all_workspaces_radio = WID ("all_workspaces_radio");
 	pager->current_only_radio = WID ("current_only_radio");
-	setup_sensitivity (pager, xml,
+	setup_sensitivity (pager, builder,
 			   "all_workspaces_radio",
 			   "current_only_radio",
 			   "label_row_col",
@@ -923,21 +922,21 @@ setup_dialog (GladeXML  *xml,
 
 	pager->num_rows_spin = WID ("num_rows_spin");
 	pager->label_row_col = WID("label_row_col");
-	setup_sensitivity (pager, xml,
+	setup_sensitivity (pager, builder,
 			   "num_rows_spin",
 			   NULL,
 			   NULL,
 			   "num_rows" /* key */);
 
 	pager->num_workspaces_spin = WID ("num_workspaces_spin");
-	setup_sensitivity (pager, xml,
+	setup_sensitivity (pager, builder,
 			   "num_workspaces_spin",
 			   NULL,
 			   NULL,
 			   NUM_WORKSPACES /* key */);
 
 	pager->workspaces_tree = WID ("workspaces_tree_view");
-	setup_sensitivity (pager, xml,
+	setup_sensitivity (pager, builder,
 			   "workspaces_tree_view",
 			   NULL,
 			   NULL,
@@ -1041,17 +1040,27 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   const gchar       *verbname)
 {
 	if (pager->properties_dialog == NULL) {
-		GladeXML  *xml;
+		GtkBuilder *builder;
+		GError     *error;
 
-		xml = glade_xml_new (PAGER_GLADEDIR "/workspace-switcher.glade", NULL, NULL);
-		pager->properties_dialog = glade_xml_get_widget (xml, "pager_properties_dialog");
+		builder = gtk_builder_new ();
+
+		error = NULL;
+		gtk_builder_add_from_file (builder, PAGER_BUILDERDIR "/workspace-switcher.ui", &error);
+		if (error) {
+			g_warning ("Error loading preferences: %s", error->message);
+			g_error_free (error);
+			return;
+		}
+
+		pager->properties_dialog = WID ("pager_properties_dialog");
 
 		g_object_add_weak_pointer (G_OBJECT (pager->properties_dialog), 
 					   (gpointer *) &pager->properties_dialog);
 
-		setup_dialog (xml, pager);
+		setup_dialog (builder, pager);
 		
-		g_object_unref (G_OBJECT (xml));
+		g_object_unref (builder);
 	}
 
 	gtk_window_set_icon_name (GTK_WINDOW (pager->properties_dialog),
