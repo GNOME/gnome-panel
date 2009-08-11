@@ -250,12 +250,12 @@ _check_polkit_for_action (GnomeClockAppletMechanism *mechanism, DBusGMethodInvoc
                                      "Not Authorized for action %s", action);
                 dbus_g_method_return_error (context, error);
                 g_error_free (error);
-		g_object_unref (result);
+                g_object_unref (result);
 
                 return FALSE;
         }
 
-	g_object_unref (result);
+        g_object_unref (result);
 
         return TRUE;
 }
@@ -579,16 +579,16 @@ check_can_do (GnomeClockAppletMechanism *mechanism,
         g_object_unref (subject);
 
         if (polkit_authorization_result_get_is_authorized (result)) {
-		dbus_g_method_return (context, 2);
-	}
-	else if (polkit_authorization_result_get_is_challenge (result)) {
-		dbus_g_method_return (context, 1);
-	}
-	else {
-		dbus_g_method_return (context, 0);
-	}
+                dbus_g_method_return (context, 2);
+        }
+        else if (polkit_authorization_result_get_is_challenge (result)) {
+                dbus_g_method_return (context, 1);
+        }
+        else {
+                dbus_g_method_return (context, 0);
+        }
 
-	g_object_unref (result);
+        g_object_unref (result);
 }
 
 
@@ -600,7 +600,7 @@ gnome_clock_applet_mechanism_can_set_time (GnomeClockAppletMechanism    *mechani
                       "org.gnome.clockapplet.mechanism.settime",
                       context);
 
-	return TRUE;
+        return TRUE;
 }
 
 gboolean
@@ -611,5 +611,5 @@ gnome_clock_applet_mechanism_can_set_timezone (GnomeClockAppletMechanism    *mec
                       "org.gnome.clockapplet.mechanism.settimezone",
                       context);
 
-	return TRUE;
+        return TRUE;
 }

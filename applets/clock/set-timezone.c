@@ -59,24 +59,24 @@ get_system_bus (void)
 typedef  void (*CanDoFunc) (gint value);
 
 static void
-can_do_notify (DBusGProxy     *proxy,
+notify_can_do (DBusGProxy     *proxy,
 	       DBusGProxyCall *call,
 	       void           *user_data)
 {
-        CanDoFunc callback = user_data;
+	CanDoFunc callback = user_data;
 	GError *error = NULL;
 	gint value;
 
 	if (dbus_g_proxy_end_call (proxy, call,
-                                   &error,
-                                   G_TYPE_INT, &value,
-                                   G_TYPE_INVALID)) {
-        	callback (value);
+				   &error,
+				   G_TYPE_INT, &value,
+				   G_TYPE_INVALID)) {
+		callback (value);
 	}
 }
 
 static void
-can_do_refresh (const gchar *action, CanDoFunc callback)
+refresh_can_do (const gchar *action, CanDoFunc callback)
 {
         DBusGConnection *bus;
         DBusGProxy      *proxy;
@@ -92,7 +92,7 @@ can_do_refresh (const gchar *action, CanDoFunc callback)
 
 	dbus_g_proxy_begin_call_with_timeout (proxy,
 					      action,
-					      can_do_notify,
+					      notify_can_do,
 					      callback, NULL,
 					      INT_MAX,
 					      G_TYPE_INVALID);
@@ -115,7 +115,7 @@ can_set_system_timezone (void)
 
 	time (&now);
 	if (ABS (now - settimezone_stamp) > CACHE_VALIDITY_SEC) {
-		can_do_refresh ("CanSetTimezone", update_can_settimezone);
+		refresh_can_do ("CanSetTimezone", update_can_settimezone);
 		settimezone_stamp = now;
 	}
 
@@ -139,7 +139,7 @@ can_set_system_time (void)
 
 	time (&now);
 	if (ABS (now - settime_stamp) > CACHE_VALIDITY_SEC) {
-		can_do_refresh ("CanSetTime", update_can_settime);
+		refresh_can_do ("CanSetTime", update_can_settime);
 		settime_stamp = now;
 	}
 
@@ -268,9 +268,9 @@ set_system_time_async (gint64         time,
 
 void
 set_system_timezone_async (const gchar    *filename,
-	             	   GFunc           callback,
-		           gpointer        d,
-		           GDestroyNotify  notify)
+			   GFunc           callback,
+			   gpointer        d,
+			   GDestroyNotify  notify)
 {
 	SetTimeCallbackData *data;
 

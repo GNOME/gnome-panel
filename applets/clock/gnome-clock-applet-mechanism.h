@@ -75,6 +75,7 @@ gboolean            gnome_clock_applet_mechanism_can_set_timezone (GnomeClockApp
 gboolean            gnome_clock_applet_mechanism_set_time     (GnomeClockAppletMechanism    *mechanism,
                                                                gint64                        seconds_since_epoch,
                                                                DBusGMethodInvocation        *context);
+
 gboolean            gnome_clock_applet_mechanism_can_set_time (GnomeClockAppletMechanism    *mechanism,
                                                                DBusGMethodInvocation        *context);
 
