@@ -4,7 +4,7 @@ INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\"			\
-	-DFISH_GLADEDIR=\""$(gladedir)"\"			\
+	-DFISH_BUILDERDIR=\""$(uidir)"\"			\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(FISH_CFLAGS)						\
@@ -50,16 +50,16 @@ EXTRA_DIST =					\
 	GNOME_FishApplet_Factory.server.in.in	\
 	fish.schemas.in				\
 	$(ui_DATA)				\
-	$(glade_DATA)
+	$(xmlui_DATA)
 
-gladedir   = $(datadir)/gnome-panel/glade
-glade_DATA = fish.glade
+uidir		= $(datadir)/gnome-panel/ui
+ui_DATA		= fish.ui
 
 fishbitmapsdir = $(datadir)/gnome-panel/pixmaps
 fishbitmaps_DATA = $(FISH_BITMAPS)
 
-uidir		= $(datadir)/gnome-2.0/ui
-ui_DATA		= GNOME_FishApplet.xml
+xmluidir	= $(datadir)/gnome-2.0/ui
+xmlui_DATA	= GNOME_FishApplet.xml
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_FishApplet_Factory.server.in

@@ -40,7 +40,6 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
-#include <glade/glade-xml.h>
 
 #define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
 			fish_applet_get_type(),          \
@@ -346,7 +345,7 @@ handle_response (GtkWidget  *widget,
 
 static void
 setup_sensitivity (FishApplet *fish,
-		   GladeXML *xml,
+		   GtkBuilder *builder,
 		   const char *wid,
 		   const char *label,
 		   const char *label_post,
@@ -364,17 +363,17 @@ setup_sensitivity (FishApplet *fish,
 	}
 	g_free (fullkey);
 
-	w = glade_xml_get_widget (xml, wid);
+	w = GTK_WIDGET (gtk_builder_get_object (builder, wid));
 	g_assert (w != NULL);
 	gtk_widget_set_sensitive (w, FALSE);
 
 	if (label != NULL) {
-		w = glade_xml_get_widget (xml, label);
+		w = GTK_WIDGET (gtk_builder_get_object (builder, label));
 		g_assert (w != NULL);
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 	if (label_post != NULL) {
-		w = glade_xml_get_widget (xml, label_post);
+		w = GTK_WIDGET (gtk_builder_get_object (builder, label_post));
 		g_assert (w != NULL);
 		gtk_widget_set_sensitive (w, FALSE);
 	}
@@ -413,7 +412,8 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			    FishApplet        *fish,
 			    const char        *verbname)
 {
-	GladeXML      *xml;
+	GtkBuilder    *builder;
+	GError        *error;
 	GtkWidget     *button;
 	GtkFileFilter *filter;
 	GtkWidget     *chooser_preview;
@@ -426,8 +426,17 @@ display_preferences_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	xml = glade_xml_new (FISH_GLADEDIR "/fish.glade", NULL, NULL);
-	fish->preferences_dialog = glade_xml_get_widget (xml, "fish_preferences_dialog");
+	builder = gtk_builder_new ();
+
+	error = NULL;
+	gtk_builder_add_from_file (builder, FISH_BUILDERDIR "/fish.ui", &error);
+	if (error) {
+		g_warning ("Error loading preferences: %s", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	fish->preferences_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "fish_preferences_dialog"));
 
 	g_object_add_weak_pointer (G_OBJECT (fish->preferences_dialog),
 				   (void**) &fish->preferences_dialog);
@@ -439,24 +448,24 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	gtk_dialog_set_default_response (
 		GTK_DIALOG (fish->preferences_dialog), GTK_RESPONSE_OK);
 
-	fish->name_entry = glade_xml_get_widget (xml, "name_entry");
+	fish->name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "name_entry"));
 	gtk_entry_set_text (GTK_ENTRY (fish->name_entry), fish->name);
 
 	g_signal_connect (fish->name_entry, "changed",
 			  G_CALLBACK (name_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "name_entry" /* wid */,
 			   "name_label" /* label */,
 			   NULL /* label_post */,
 			   "name" /* key */);
 
-	fish->preview_image = glade_xml_get_widget (xml, "preview_image");
+	fish->preview_image = GTK_WIDGET (gtk_builder_get_object (builder, "preview_image"));
 	if (fish->pixbuf)
 		gtk_image_set_from_pixbuf (GTK_IMAGE (fish->preview_image),
 					   fish->pixbuf);
 
-	fish->image_chooser =  glade_xml_get_widget (xml, "image_chooser");
+	fish->image_chooser =  GTK_WIDGET (gtk_builder_get_object (builder, "image_chooser"));
 	filter = gtk_file_filter_new ();
 	gtk_file_filter_set_name (filter, _("Images"));
 	gtk_file_filter_add_pixbuf_formats (filter);
@@ -477,20 +486,20 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->image_chooser, "selection-changed",
 			  G_CALLBACK (image_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "image_chooser" /* wid */,
 			   "image_label" /* label */,
 			   NULL /* label_post */,
 			   "image" /* key */);
 
-	fish->command_label = glade_xml_get_widget (xml, "command_label");
-	fish->command_entry = glade_xml_get_widget (xml, "command_entry");
+	fish->command_label = GTK_WIDGET (gtk_builder_get_object (builder, "command_label"));
+	fish->command_entry = GTK_WIDGET (gtk_builder_get_object (builder, "command_entry"));
 	gtk_entry_set_text (GTK_ENTRY (fish->command_entry), fish->command);
 
 	g_signal_connect (fish->command_entry, "changed",
 			  G_CALLBACK (command_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "command_entry" /* wid */,
 			   "command_label" /* label */,
 			   NULL /* label_post */,
@@ -503,39 +512,39 @@ display_preferences_dialog (BonoboUIComponent *uic,
 		gtk_widget_set_sensitive (fish->command_entry, FALSE);
 	}
 
-	fish->frames_spin = glade_xml_get_widget (xml, "frames_spin");
+	fish->frames_spin = GTK_WIDGET (gtk_builder_get_object (builder, "frames_spin"));
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->frames_spin),
 				   fish->n_frames);
 
 	g_signal_connect (fish->frames_spin, "value_changed",
 			  G_CALLBACK (n_frames_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "frames_spin" /* wid */,
 			   "frames_label" /* label */,
 			   "frames_post_label" /* label_post */,
 			   "frames" /* key */);
 
-	fish->speed_spin = glade_xml_get_widget (xml, "speed_spin");
+	fish->speed_spin = GTK_WIDGET (gtk_builder_get_object (builder, "speed_spin"));
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->speed_spin), fish->speed);
 
 	g_signal_connect (fish->speed_spin, "value_changed",
 			  G_CALLBACK (speed_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "speed_spin" /* wid */,
 			   "speed_label" /* label */,
 			   "speed_post_label" /* label_post */,
 			   "speed" /* key */);
 
-	fish->rotate_toggle = glade_xml_get_widget (xml, "rotate_toggle");
+	fish->rotate_toggle = GTK_WIDGET (gtk_builder_get_object (builder, "rotate_toggle"));
 	gtk_toggle_button_set_active (
 		GTK_TOGGLE_BUTTON (fish->rotate_toggle), fish->rotate);
 
 	g_signal_connect (fish->rotate_toggle, "toggled",
 			  G_CALLBACK (rotate_value_changed), fish);
 
-	setup_sensitivity (fish, xml,
+	setup_sensitivity (fish, builder,
 			   "rotate_toggle" /* wid */,
 			   NULL /* label */,
 			   NULL /* label_post */,
@@ -546,7 +555,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	g_signal_connect (fish->preferences_dialog, "response",
 			  G_CALLBACK (handle_response), fish);
 
-	button = glade_xml_get_widget (xml, "done_button");
+	button = GTK_WIDGET (gtk_builder_get_object (builder, "done_button"));
         g_signal_connect_swapped (button, "clicked",
 				  (GCallback) gtk_widget_hide, 
 				  fish->preferences_dialog);
@@ -556,7 +565,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	gtk_window_set_resizable (GTK_WINDOW (fish->preferences_dialog), FALSE);
 	gtk_window_present (GTK_WINDOW (fish->preferences_dialog));
 
-	g_object_unref (xml);
+	g_object_unref (builder);
 }
 
 static void
