@@ -252,6 +252,12 @@ PKG_CHECK_MODULES(X, x11 xau, :, [
 
 AC_SUBST(X_LIBS)
 
+dnl X RANDR extension
+
+if $PKG_CONFIG --exists "xrandr >= 1.2.0" ; then
+	AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
+fi
+
 dnl IDL directories
 
 ORBIT_IDL="`$PKG_CONFIG --variable=orbit_idl ORBit-2.0`"

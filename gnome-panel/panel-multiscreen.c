@@ -39,25 +39,156 @@ extern char **environ;
 static int            screens     = 0;
 static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
-static gboolean	      initialized = FALSE;
+static gboolean       initialized = FALSE;
+static gboolean       have_randr  = FALSE;
 static guint          reinit_id   = 0;
 
 static gboolean
-panel_multiscreen_reinit_idle (gpointer data)
+panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
+						 int           *monitors_ret,
+						 GdkRectangle **geometries_ret)
 {
-	panel_multiscreen_reinit ();
- 	reinit_id = 0;
+#ifdef HAVE_RANDR
+	Display            *xdisplay;
+	XRRScreenResources *resources;
+	GArray             *geometries;
+	int                 i;
+	gboolean            driver_is_pre_randr_1_2;
 
+	if (!have_randr)
+		return FALSE;
+
+	/* GTK+ 2.14.x uses the Xinerama API, instead of RANDR, to get the
+	 * monitor geometries. It does this to avoid calling
+	 * XRRGetScreenResources(), which is slow as it re-detects all the
+	 * monitors --- note that XRRGetScreenResourcesCurrent() had not been
+	 * introduced yet.  Using Xinerama in GTK+ has the bad side effect that
+	 * gdk_screen_get_monitor_plug_name() will return NULL, as Xinerama
+	 * does not provide that information, unlike RANDR.
+	 *
+	 * Here we need to identify the output names, so that we can put the
+	 * built-in LCD in a laptop *before* all other outputs.  This is so
+	 * that gnome-panel will normally prefer to appear on the "native"
+	 * display rather than on an external monitor.
+	 *
+	 * To get the output names and geometries, we will not use
+	 * gdk_screen_get_n_monitors() and friends, but rather we will call
+	 * XRR*() directly.
+	 *
+	 * See https://bugzilla.novell.com/show_bug.cgi?id=479684 for this
+	 * particular bug, and and
+	 * http://bugzilla.gnome.org/show_bug.cgi?id=562944 for a more
+	 * long-term solution.
+	 */
+
+	xdisplay = GDK_SCREEN_XDISPLAY (screen);
+
+	resources = XRRGetScreenResources (xdisplay,
+					   GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (screen)));
+	if (!resources)
+		return FALSE;
+
+	geometries = g_array_sized_new (FALSE, FALSE,
+					sizeof (GdkRectangle),
+					resources->noutput);
+
+	driver_is_pre_randr_1_2 = FALSE;
+
+	for (i = 0; i < resources->noutput; i++) {
+		XRROutputInfo *output;
+
+		output = XRRGetOutputInfo (xdisplay, resources,
+					   resources->outputs[i]);
+
+		/* Drivers before RANDR 1.2 return "default" for the output
+		 * name */
+		if (g_strcmp0 (output->name, "default") == 0)
+			driver_is_pre_randr_1_2 = TRUE;
+
+		if (output->connection != RR_Disconnected &&
+		    output->crtc != 0) {
+			XRRCrtcInfo  *crtc;
+			GdkRectangle  rect;
+
+			crtc = XRRGetCrtcInfo (xdisplay, resources,
+					       output->crtc);
+
+			rect.x	    = crtc->x;
+			rect.y	    = crtc->y;
+			rect.width  = crtc->width;
+			rect.height = crtc->height;
+
+			XRRFreeCrtcInfo (crtc);
+
+			/* "LVDS" is the oh-so-intuitive name that X gives to
+			 * laptop LCDs.
+			 *
+			 * Note that on RANDR 1.3, the right way to check for
+			 * this is to get the ConnectorType property for the
+			 * output, and see if it is "Panel".  Yes, they changed
+			 * the known output names for 1.3. Amateurs.
+			 */
+
+			/* can be "LVDS0", "LVDS-0", etc. */
+			if (g_str_has_prefix (output->name, "LVDS"))
+				g_array_prepend_vals (geometries, &rect, 1);
+			else
+				g_array_append_vals (geometries, &rect, 1);
+		}
+
+		XRRFreeOutputInfo (output);
+	}
+
+	XRRFreeScreenResources (resources);
+
+	if (driver_is_pre_randr_1_2) {
+		/* Drivers before RANDR 1.2 don't provide useful info about
+		 * outputs */
+		g_array_free (geometries, TRUE);
+		return FALSE;
+	}
+
+	*monitors_ret = geometries->len;
+	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
+
+	return TRUE;
+#else
 	return FALSE;
+#endif
 }
 
 static void
-panel_multiscreen_queue_reinit (void)
+panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
+					       int           *monitors_ret,
+					       GdkRectangle **geometries_ret)
 {
-	if (reinit_id)
+	int           num_monitors;
+	GdkRectangle *geometries;
+	int           i;
+
+	num_monitors = gdk_screen_get_n_monitors (screen);
+	geometries = g_new (GdkRectangle, num_monitors);
+
+	for (i = 0; i < num_monitors; i++)
+		gdk_screen_get_monitor_geometry (screen, i, &(geometries[i]));
+
+	*monitors_ret = num_monitors;
+	*geometries_ret = geometries;
+}
+
+static void
+panel_multiscreen_get_raw_monitors_for_screen (GdkScreen     *screen,
+					       int           *monitors_ret,
+					       GdkRectangle **geometries_ret)
+{
+	if (panel_multiscreen_get_randr_monitors_for_screen (screen,
+							     monitors_ret,
+							     geometries_ret))
 		return;
 
-	reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
+	panel_multiscreen_get_gdk_monitors_for_screen (screen,
+						       monitors_ret,
+						       geometries_ret);
 }
 
 static inline gboolean
@@ -74,19 +205,15 @@ pixels_in_rectangle (GdkRectangle *r)
 }
 
 static void
-panel_multiscreen_get_monitors_for_screen (GdkScreen     *screen,
-					   int           *monitors_ret,
-					   GdkRectangle **geometries_ret)
+panel_multiscreen_compress_overlapping_monitors (int           *num_monitors_inout,
+						 GdkRectangle **geometries_inout)
 {
-	int num_monitors;
+	int           num_monitors;
 	GdkRectangle *geometries;
-	int i;
+	int           i;
 
-	num_monitors = gdk_screen_get_n_monitors (screen);
-	geometries = g_new (GdkRectangle, num_monitors);
-
-	for (i = 0; i < num_monitors; i++)
-		gdk_screen_get_monitor_geometry (screen, i, &(geometries[i]));
+	num_monitors = *num_monitors_inout;
+	geometries = *geometries_inout;
 
 	/* http://bugzilla.gnome.org/show_bug.cgi?id=530969
 	 * https://bugzilla.novell.com/show_bug.cgi?id=310208
@@ -135,7 +262,7 @@ panel_multiscreen_get_monitors_for_screen (GdkScreen     *screen,
 
 	for (i = 0; i < num_monitors; i++) {
 		long max_pixels;
-		int j;
+		int  j;
 
 		max_pixels = pixels_in_rectangle (&geometries[i]);
 
@@ -166,8 +293,65 @@ panel_multiscreen_get_monitors_for_screen (GdkScreen     *screen,
 		}
 	}
 
-	*monitors_ret = num_monitors;
-	*geometries_ret = geometries;
+	*num_monitors_inout = num_monitors;
+	*geometries_inout = geometries;
+}
+
+static void
+panel_multiscreen_get_monitors_for_screen (GdkScreen     *screen,
+					   int           *monitors_ret,
+					   GdkRectangle **geometries_ret)
+{
+	panel_multiscreen_get_raw_monitors_for_screen (screen,
+						       monitors_ret,
+						       geometries_ret);
+	panel_multiscreen_compress_overlapping_monitors (monitors_ret,
+							 geometries_ret);
+}
+
+static gboolean
+panel_multiscreen_reinit_idle (gpointer data)
+{
+	panel_multiscreen_reinit ();
+	reinit_id = 0;
+
+	return FALSE;
+}
+
+static void
+panel_multiscreen_queue_reinit (void)
+{
+	if (reinit_id)
+		return;
+
+	reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
+}
+
+static void
+panel_multiscreen_init_randr (GdkDisplay *display)
+{
+#ifdef HAVE_RANDR
+	Display *xdisplay;
+	int      event_base, error_base;
+#endif
+
+	have_randr = FALSE;
+
+#ifdef HAVE_RANDR
+	xdisplay = GDK_DISPLAY_XDISPLAY (display);
+
+	/* We don't remember the event/error bases, as we expect to get "screen
+	 * changed" events from GdkScreen instead.
+	 */
+
+	if (XRRQueryExtension (xdisplay, &event_base, &error_base)) {
+		int major, minor;
+
+		XRRQueryVersion (xdisplay, &major, &minor);
+		if ((major == 1 && minor >= 2) || major > 1)
+			have_randr = TRUE;
+	}
+#endif
 }
 
 void
@@ -182,12 +366,13 @@ panel_multiscreen_init (void)
 	display = gdk_display_get_default ();
 	screens = gdk_display_get_n_screens (display);
 
+	panel_multiscreen_init_randr (display);
+
 	monitors   = g_new0 (int, screens);
 	geometries = g_new0 (GdkRectangle *, screens);
 
 	for (i = 0; i < screens; i++) {
 		GdkScreen *screen;
-		int        j;
 
 		screen = gdk_display_get_screen (display, i);
 
