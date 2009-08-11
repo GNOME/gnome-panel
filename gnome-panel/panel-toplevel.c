@@ -616,7 +616,7 @@ panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
-	monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
+	monitor = panel_multiscreen_get_monitor_at_point (screen, pointer_x, pointer_y);
 
 	if (toplevel->priv->geometry.height < toplevel->priv->geometry.width)
 		vborder = hborder = (3 * toplevel->priv->geometry.height) >> 1;
@@ -728,7 +728,7 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 
-	new_monitor = gdk_screen_get_monitor_at_point (screen, new_x, new_y);
+	new_monitor = panel_multiscreen_get_monitor_at_point (screen, new_x, new_y);
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -2113,7 +2113,7 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 		break;
 	}
 
-	monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+	monitor = panel_multiscreen_get_monitor_at_point (screen, x, y);
 
 	panel_toplevel_set_monitor (toplevel, monitor);
 
