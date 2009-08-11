@@ -179,6 +179,8 @@ ui_DATA =					\
 	panel-properties-dialog.ui		\
 	panel-run-dialog.ui
 
+libexec_SCRIPTS = gnome-panel-add
+
 EXTRA_DIST =					\
 	$(ui_DATA)				\
 	nothing.cP				\
@@ -189,7 +191,8 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	gnome-panelrc				\
 	$(entries_DATA)				\
-	$(desktop_DATA)
+	$(desktop_DATA)				\
+	$(libexec_SCRIPTS)
 
 @INTLTOOL_DESKTOP_RULE@
 
