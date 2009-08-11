@@ -46,8 +46,6 @@ set_system_time_async (gint64         time,
 					     G_SPAWN_ERROR_FAILED,
 					     "Time setting is not supported");
 		callback (data, error);
-
-		g_error_free (error);
 	}
 
 	if (notify)
@@ -70,8 +68,6 @@ set_system_timezone_async (const gchar    *filename,
 					     G_SPAWN_ERROR_FAILED,
 					     "Timezone setting is not supported");
 		callback (d, error);
-
-		g_error_free (error);
 	}
 
 	if (notify)
