@@ -35,7 +35,6 @@ can_set_system_time (void)
 
 void
 set_system_time_async (gint64         time,
-                       guint          transient_parent_xid,
                        GFunc          callback,
                        gpointer       data,
                        GDestroyNotify notify)
@@ -57,7 +56,6 @@ set_system_time_async (gint64         time,
 
 void
 set_system_timezone_async (const gchar    *filename,
-                           guint           transient_parent_xid,
 	             	   GFunc           callback, 
 		           gpointer        d, 
 		           GDestroyNotify  notify)
