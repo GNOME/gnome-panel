@@ -3159,6 +3159,7 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
         fill_timezone_combo_from_location (cd, NULL);
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
+        gtk_window_set_title (GTK_WINDOW (edit_window), _("Choose Location"));
         gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
 
 	if (g_object_get_data (G_OBJECT (edit_window), "delete-handler") == NULL) {
@@ -3228,6 +3229,7 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
 	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
 
+        gtk_window_set_title (GTK_WINDOW (edit_window), _("Edit Location"));
         gtk_window_present (GTK_WINDOW (edit_window));
 }
 
@@ -3430,6 +3432,8 @@ ensure_prefs_window_is_created (ClockData *cd)
         GtkWidget *edit_ok_button;
         GtkWidget *location_box;
         GtkWidget *zone_box;
+        GtkWidget *location_name_label;
+        GtkWidget *timezone_label;
         GtkTreeSelection *selection;
         GWeatherLocation *world;
 
@@ -3444,6 +3448,9 @@ ensure_prefs_window_is_created (ClockData *cd)
         prefs_help_button = _clock_get_widget (cd, "prefs-help-button");
         clock_options = _clock_get_widget (cd, "clock-options");
         cd->prefs_locations = GTK_TREE_VIEW (_clock_get_widget (cd, "cities_list"));
+        location_name_label = _clock_get_widget (cd, "location-name-label");
+        timezone_label = _clock_get_widget (cd, "timezone-label");
+
 
 	if (!clock_locale_supports_am_pm ())
 		gtk_widget_hide (clock_options);
@@ -3494,6 +3501,9 @@ ensure_prefs_window_is_created (ClockData *cd)
         cd->location_entry = GWEATHER_LOCATION_ENTRY (gweather_location_entry_new (world));
         gtk_widget_show (GTK_WIDGET (cd->location_entry));
         gtk_container_add (GTK_CONTAINER (location_box), GTK_WIDGET (cd->location_entry));
+        gtk_label_set_mnemonic_widget (GTK_LABEL (location_name_label),
+                                       GTK_WIDGET (cd->location_entry));
+
         g_signal_connect (G_OBJECT (cd->location_entry), "notify::location",
                           G_CALLBACK (location_changed), cd);
 
@@ -3501,6 +3511,8 @@ ensure_prefs_window_is_created (ClockData *cd)
         cd->zone_combo = GWEATHER_TIMEZONE_MENU (gweather_timezone_menu_new (world));
         gtk_widget_show (GTK_WIDGET (cd->zone_combo));
         gtk_container_add (GTK_CONTAINER (zone_box), GTK_WIDGET (cd->zone_combo));
+        gtk_label_set_mnemonic_widget (GTK_LABEL (timezone_label),
+                                       GTK_WIDGET (cd->zone_combo));
 
         gweather_location_unref (world);
 

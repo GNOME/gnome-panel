@@ -102,10 +102,11 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label242">
+                      <object class="GtkLabel" id="timezone-label">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Timezone:</property>
+                        <property name="label" translatable="yes">_Timezone:</property>
+                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="top_attach">2</property>
@@ -115,10 +116,11 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label241">
+                      <object class="GtkLabel" id="location-name-label">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Location Name:</property>
+                        <property name="label" translatable="yes">_Location Name:</property>
+                        <property name="use_underline">True</property>
                       </object>
                       <packing>
                         <property name="x_options">GTK_FILL</property>
@@ -229,7 +231,9 @@
                       <object class="GtkLabel" id="label238">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Longitude:</property>
+                        <property name="label" translatable="yes">L_ongitude:</property>
+                        <property name="use_underline">True</property>
+                        <property name="mnemonic_widget">edit-location-longitude-entry</property>
                       </object>
                       <packing>
                         <property name="top_attach">4</property>
@@ -248,7 +252,9 @@
                           <object class="GtkLabel" id="label237">
                             <property name="visible">True</property>
                             <property name="xalign">0</property>
-                            <property name="label" translatable="yes">Latitude:</property>
+                            <property name="label" translatable="yes">L_atitude:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">edit-location-latitude-entry</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -447,7 +453,9 @@
                       <object class="GtkLabel" id="label236">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Time:</property>
+                        <property name="label" translatable="yes">_Time:</property>
+                        <property name="use_underline">True</property>
+                        <property name="mnemonic_widget">hours_spin</property>
                       </object>
                       <packing>
                         <property name="top_attach">1</property>
@@ -504,7 +512,7 @@
             </child>
             <child>
               <object class="GtkButton" id="set-time-button">
-                <property name="label" translatable="yes">Set System Time</property>
+                <property name="label" translatable="yes">_Set System Time</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -532,7 +540,7 @@
   </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
-      <!-- column-name item text -->
+      <!-- column-name item -->
       <column type="gchararray"/>
     </columns>
     <data>
@@ -546,7 +554,7 @@
   </object>
   <object class="GtkListStore" id="liststore2">
     <columns>
-      <!-- column-name item text -->
+      <!-- column-name item -->
       <column type="gchararray"/>
     </columns>
     <data>
