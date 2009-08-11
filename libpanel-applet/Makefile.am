@@ -1,7 +1,7 @@
 INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
-	-DPANEL_APPLET_GLADEDIR=\""$(gladedir)"\"		\
+	-DPANEL_APPLET_BUILDERDIR=\""$(uidir)"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -74,7 +74,7 @@ EXTRA_DIST =					\
 	panel-applet-marshal.list		\
 	libpanelapplet-2.0.pc.in		\
 	libpanelapplet-2.0-uninstalled.pc.in	\
-	panel-test-applets.glade
+	panel-test-applets.ui
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
@@ -113,8 +113,8 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 		     --eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_applet_enum_headers) > $@
 
-gladedir   = $(datadir)/gnome-panel/glade
-glade_DATA = panel-test-applets.glade
+uidir   = $(datadir)/gnome-panel/ui
+ui_DATA = panel-test-applets.ui
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc

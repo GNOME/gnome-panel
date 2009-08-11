@@ -8,7 +8,6 @@
  */
 
 #include <config.h>
-#include <glade/glade.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <bonobo/bonobo-exception.h>
@@ -282,9 +281,9 @@ setup_options (void)
 int
 main (int argc, char **argv)
 {
-	GladeXML *gui;
-	char     *gladefile;
-	GError   *error;
+	GtkBuilder *builder;
+	char       *uifile;
+	GError     *error;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -314,20 +313,30 @@ main (int argc, char **argv)
 		return 0;
 	}
 
-	gladefile = PANEL_APPLET_GLADEDIR "/panel-test-applets.glade";
-	gui = glade_xml_new (gladefile, "toplevel", NULL);
-	if (!gui) {
-		g_warning ("Error loading `%s'", gladefile);
+	builder = gtk_builder_new ();
+
+	uifile = PANEL_APPLET_BUILDERDIR "/panel-test-applets.ui";
+	gtk_builder_add_from_file (builder, uifile, &error);
+
+	if (error) {
+		g_warning ("Error loading \"%s\": %s", uifile, error->message);
+		g_error_free (error);
 		return 1;
 	}
 
-	glade_xml_signal_autoconnect (gui);
+	gtk_builder_connect_signals (builder, NULL);
 
-	win             = glade_xml_get_widget (gui, "toplevel");
-	applet_combo    = glade_xml_get_widget (gui, "applet-combo");
-	prefs_dir_entry = glade_xml_get_widget (gui, "prefs-dir-entry");
-	orient_combo    = glade_xml_get_widget (gui, "orient-combo");
-	size_combo      = glade_xml_get_widget (gui, "size-combo");
+	win             = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "toplevel"));
+	applet_combo    = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "applet-combo"));
+	prefs_dir_entry = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "prefs-dir-entry"));
+	orient_combo    = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "orient-combo"));
+	size_combo      = GTK_WIDGET (gtk_builder_get_object (builder,
+							      "size-combo"));
+	g_object_unref (builder);
 
 	setup_options ();
 
