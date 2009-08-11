@@ -413,6 +413,9 @@ clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
 	gint marker;
 
         clock_location_get_coords (loc, &latitude, &longitude);
+        /* 0/0 means unset, basically */
+        if (latitude == 0 && longitude == 0)
+                return;
 
 	if (hilight)
 		marker = MARKER_HILIGHT;
