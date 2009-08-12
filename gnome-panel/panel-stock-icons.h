@@ -30,8 +30,11 @@
 
 G_BEGIN_DECLS
 
-/* themeable size - "panel-menu" */
-#define PANEL_DEFAULT_MENU_ICON_SIZE 	24
+/* themeable size - "panel-menu" -- This is used for the icons in the menus */
+#define PANEL_DEFAULT_MENU_ICON_SIZE 		24
+/* themeable size - "panel-foobar" -- This is only used for the icon of the
+ * Applications item in the menu bar */
+#define PANEL_DEFAULT_MENU_BAR_ICON_SIZE 	24
 
 /* stock icons */
 #define PANEL_STOCK_FORCE_QUIT          "gnome-panel-force-quit"

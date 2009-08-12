@@ -128,8 +128,8 @@ panel_init_stock_icons_and_items (void)
 						       PANEL_DEFAULT_MENU_ICON_SIZE);
 
 	panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
-							   PANEL_DEFAULT_MENU_ICON_SIZE,
-							   PANEL_DEFAULT_MENU_ICON_SIZE);
+							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
+							   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
 
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);
