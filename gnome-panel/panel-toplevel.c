@@ -232,6 +232,9 @@ static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
 static GSList       *toplevel_list = NULL;
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
+static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
+						 int            monitor);
+
 
 GSList *
 panel_toplevel_list_toplevels (void)
@@ -2115,7 +2118,7 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 
 	monitor = panel_multiscreen_get_monitor_at_point (screen, x, y);
 
-	panel_toplevel_set_monitor (toplevel, monitor);
+	panel_toplevel_set_monitor_internal (toplevel, monitor);
 
 	x -= panel_multiscreen_x (screen, monitor);
 	y -= panel_multiscreen_y (screen, monitor);
@@ -4983,6 +4986,17 @@ panel_toplevel_get_y_centered (PanelToplevel *toplevel)
 	return toplevel->priv->y_centered;
 }
 
+/* This is used when we need to change the monitor because of constraints, but
+ * not because of the configuration. */
+static void
+panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
+				     int            monitor)
+{
+	toplevel->priv->monitor = monitor;
+
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+}
+
 void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
@@ -5002,9 +5016,7 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 	if (monitor >= panel_multiscreen_monitors (screen))
 		return;
 
-	toplevel->priv->monitor = monitor;
-
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	panel_toplevel_set_monitor_internal (toplevel, monitor);
 
 	g_object_notify (G_OBJECT (toplevel), "monitor");
 }
