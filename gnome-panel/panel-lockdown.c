@@ -35,7 +35,7 @@
 #define DESKTOP_GNOME_LOCKDOWN_DIR   "/desktop/gnome/lockdown"
 #define PANEL_GLOBAL_LOCKED_DOWN_KEY PANEL_GLOBAL_LOCKDOWN_DIR  "/locked_down"
 #define DISABLE_COMMAND_LINE_KEY     DESKTOP_GNOME_LOCKDOWN_DIR "/disable_command_line"
-#define DISABLE_LOCK_SCREEN_KEY      PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_lock_screen"
+#define DISABLE_LOCK_SCREEN_KEY      DESKTOP_GNOME_LOCKDOWN_DIR  "/disable_lock_screen"
 #define DISABLE_LOG_OUT_KEY          PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_log_out"
 #define DISABLE_FORCE_QUIT_KEY       PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_force_quit"
 #define DISABLED_APPLETS_KEY         PANEL_GLOBAL_LOCKDOWN_DIR  "/disabled_applets"

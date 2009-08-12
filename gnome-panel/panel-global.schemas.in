@@ -234,10 +234,10 @@ Panel Global Config Schema File -  work in progress
         <type>bool</type>
         <default>false</default>
         <locale name="C">
-          <short>Disable Lock Screen</short>
-          <long>If true, the panel will not allow a user to lock
-		their screen, by removing access to the lock screen
-		menu entries.
+          <short>Deprecated</short>
+	  <long>This key is deprecated as it cannot be used to implement proper
+		lockdown. The /desktop/gnome/lockdown/disable_lock_screen key
+		should be used instead.
           </long>
         </locale>
       </schema>
