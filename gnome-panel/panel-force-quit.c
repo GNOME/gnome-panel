@@ -205,9 +205,9 @@ kill_window_question (gpointer window)
 
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 						  _("If you choose to force an application "
-						  "to exit, any open documents in it will "
-						  "be lost."));
- 
+						  "to exit, unsaved changes in any open documents "
+						  "in it might get lost."));
+
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL,
 				GTK_RESPONSE_CANCEL,
