@@ -445,8 +445,14 @@ get_updated_timeformat (ClockData *cd,
 	char       *clock_format;
 
 	if (cd->format == CLOCK_FORMAT_12)
+		/* Translators: This is a strftime format string.
+		 * It is used to display the time in 12-hours format (eg, like
+		 * in the US: 8:10 am). The %p expands to am/pm. */
 		time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
 	else
+		/* Translators: This is a strftime format string.
+		 * It is used to display the time in 24-hours format (eg, like
+		 * in France: 20:10). */
 		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
 
 	if (!safe) {
@@ -462,11 +468,11 @@ get_updated_timeformat (ClockData *cd,
 		clock_format = g_strdup (time_gravity_format);
 
 	else {
-		/* translators: replace %e with %d if, when the day of the
-		 *              month as a decimal number is a single digit, it
-		 *              should begin with a 0 in your locale (e.g. "May
-		 *              01" instead of "May  1").
-		 */
+		/* Translators: This is a strftime format string.
+		 * It is used to display the date. Replace %e with %d if, when
+		 * the day of the month as a decimal number is a single digit,
+		 * it should begin with a 0 in your locale (e.g. "May 01"
+		 * instead of "May  1"). */
 		date_format = _("%a %b %e");
 
 		if (use_two_line_format (cd))
@@ -661,9 +667,10 @@ update_tooltip (ClockData * cd)
 
 		utf8 = NULL;
 
-                /* Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-                 * use it to put in the timezone name later.
-                 */
+                /* Show date in tooltip. */
+		/* Translators: This is a strftime format string.
+		 * It is used to display a date. Please leave "%%s" as it is:
+		 * it will be used to insert the timezone name later. */
                 loc = g_locale_from_utf8 (_("%A %B %d (%%s)"), -1, NULL, NULL, NULL);
                 if (!loc)
                         strcpy (date, "???");
@@ -1564,13 +1571,33 @@ copy_time (BonoboUIComponent *uic,
 						     NULL, NULL, NULL);
 		} else if (cd->format == CLOCK_FORMAT_12) {
 			if (cd->showseconds)
+				/* Translators: This is a strftime format
+				 * string.
+				 * It is used to display the time in 12-hours
+				 * format with a leading 0 if needed (eg, like
+				 * in the US: 08:10 am). The %p expands to
+				 * am/pm. */
 				format = g_locale_from_utf8 (_("%I:%M:%S %p"), -1, NULL, NULL, NULL);
 			else
+				/* Translators: This is a strftime format
+				 * string.
+				 * It is used to display the time in 12-hours
+				 * format with a leading 0 if needed (eg, like
+				 * in the US: 08:10 am). The %p expands to
+				 * am/pm. */
 				format = g_locale_from_utf8 (_("%I:%M %p"), -1, NULL, NULL, NULL);
 		} else {
 			if (cd->showseconds)
+				/* Translators: This is a strftime format
+				 * string.
+				 * It is used to display the time in 24-hours
+				 * format (eg, like in France: 20:10). */
 				format = g_locale_from_utf8 (_("%H:%M:%S"), -1, NULL, NULL, NULL);
 			else
+				/* Translators: This is a strftime format
+				 * string.
+				 * It is used to display the time in 24-hours
+				 * format (eg, like in France: 20:10). */
 				format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
 		}
 
@@ -1608,6 +1635,9 @@ copy_date (BonoboUIComponent *uic,
 	else
 		tm = localtime (&cd->current_time);
 
+	/* Translators: This is a strftime format string.
+	 * It is used to display a date in the full format (so that people can
+	 * copy and paste it elsewhere). */
 	loc = g_locale_from_utf8 (_("%A, %B %d %Y"), -1, NULL, NULL, NULL);
 	if (!loc)
 		strcpy (string, "???");

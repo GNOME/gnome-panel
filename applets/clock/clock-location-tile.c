@@ -444,39 +444,35 @@ format_time (struct tm   *now,
 
 	if (local_now.tm_wday != now->tm_wday) {
 		if (clock_format == CLOCK_FORMAT_12) {
-/* translators: This is a strftime format string that is used for formatting 
- * the time that is displayed for locations in the popup. This string is used
- * for 12-hour format (the %p expands to am/pm), when the local weekday differs
- * from the weekday at the location (the %A expands to the weekday).
- * There should be little need to translate this string.
- */
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 12-hours format
+			 * (eg, like in the US: 8:10 am), when the local
+			 * weekday differs from the weekday at the location
+			 * (the %A expands to the weekday). The %p expands to
+			 * am/pm. */
 			format = _("%l:%M <small>%p (%A)</small>");
 		}
 		else {
-/* translators: This is a strftime format string that is used for formatting 
- * the time that is displayed for locations in the popup. This string is used
- * for 24-hour format (the %p expands to am/pm), when the local weekday differs
- * from the weekday at the location (the %A expands to the weekday).
- * There should be little need to translate this string.
- */
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 24-hours format
+			 * (eg, like in France: 20:10), when the local
+			 * weekday differs from the weekday at the location
+			 * (the %A expands to the weekday). */
 			format = _("%H:%M <small>(%A)</small>");
 		}
 	}
 	else {
 		if (clock_format == CLOCK_FORMAT_12) {
-/* translators: This is a strftime format string that is used for formatting 
- * the time that is displayed for locations in the popup. This string is used
- * for 12-hour format (the %p expands to am/pm). 
- * There should be little need to translate this string.
- */
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 12-hours format
+			 * (eg, like in the US: 8:10 am). The %p expands to
+			 * am/pm. */
 			format = _("%l:%M <small>%p</small>");
 		}
 		else {
-/* translators: This is a strftime format string that is used for formatting 
- * the time that is displayed for locations in the popup. This string is used
- * for 24-hour format.
- * There should be little need to translate this string.
- */
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 24-hours format
+			 * (eg, like in France: 20:10). */
 			format = _("%H:%M");
 		}
 	}
@@ -591,6 +587,7 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 	if (strcmp (apparent, temp) != 0 &&
 	    /* FMQ: it's broken to read from another module's translations; add some API to libgweather. */
             strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
+		/* Translators: The two strings are temperatures. */
 		line2 = g_strdup_printf (_("%s, feels like %s"), temp, apparent);
 	else
 		line2 = g_strdup (temp);

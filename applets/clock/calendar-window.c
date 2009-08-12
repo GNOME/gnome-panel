@@ -302,14 +302,21 @@ format_time (ClockFormat format,
             month == tm->tm_mon &&
             day   == tm->tm_mday) {
                 if (format == CLOCK_FORMAT_12)
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 12-hours format
+			 * (eg, like in the US: 8:10 am). The %p expands to
+			 * am/pm. */
                         time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
                 else
+			/* Translators: This is a strftime format string.
+			 * It is used to display the time in 24-hours format
+			 * (eg, like in France: 20:10). */
                         time_format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
         }
         else {
-		/* Translators: If the event did not start on the current day
-		 * we will display the start date in the most abbreviated way
-		 * possible. */
+		/* Translators: This is a strftime format string.
+		 * It is used to display the start date of an appointment, in
+		 * the most abbreviated way possible. */
                 time_format = g_locale_from_utf8 (_("%b %d"), -1, NULL, NULL, NULL);
         }
 
