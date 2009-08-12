@@ -68,7 +68,7 @@
 #define NAMES_DIR               "/apps/nautilus/desktop"
 #define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
 #define COMPUTER_NAME_KEY       "/apps/nautilus/desktop/computer_icon_name"
-#define MAX_ITEMS_OR_SUBMENU    5
+#define MAX_ITEMS_OR_SUBMENU    8
 #define MAX_BOOKMARK_ITEMS      100
 
 G_DEFINE_TYPE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
