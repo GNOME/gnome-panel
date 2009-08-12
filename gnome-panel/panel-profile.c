@@ -2514,11 +2514,11 @@ panel_profile_load (void)
 
 	client  = panel_gconf_get_client ();
 
+	gconf_client_add_dir (client, PANEL_CONFIG_DIR "/general", GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+
 	panel_compatibility_maybe_copy_old_config (client);
 
 	panel_compatibility_migrate_panel_id_list (client);
-
-	gconf_client_add_dir (client, PANEL_CONFIG_DIR "/general", GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 
 	panel_profile_load_list (client,
 				 PANEL_CONFIG_DIR,
