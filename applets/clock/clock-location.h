@@ -31,13 +31,15 @@ typedef struct
 
 GType clock_location_get_type (void);
 
-ClockLocation *clock_location_new (const gchar *name, const gchar *timezone,
+ClockLocation *clock_location_new (const gchar *name, const gchar *city,
+				   const gchar *timezone,
 				   gfloat latitude, gfloat longitude,
 				   const gchar *code,
 				   WeatherPrefs *prefs);
 
 ClockLocation *clock_location_find_and_ref (GList       *locations,
                                             const gchar *name,
+                                            const gchar *city,
                                             const gchar *timezone,
                                             gfloat       latitude,
                                             gfloat       longitude,
@@ -45,8 +47,13 @@ ClockLocation *clock_location_find_and_ref (GList       *locations,
 
 gchar *clock_location_get_tzname (ClockLocation *loc);
 
+const gchar *clock_location_get_display_name (ClockLocation *loc);
+
 const gchar *clock_location_get_name (ClockLocation *loc);
 void clock_location_set_name (ClockLocation *loc, const gchar *name);
+
+const gchar *clock_location_get_city (ClockLocation *loc);
+void clock_location_set_city (ClockLocation *loc, const gchar *city);
 
 gchar *clock_location_get_timezone (ClockLocation *loc);
 void clock_location_set_timezone (ClockLocation *loc, const gchar *timezone);

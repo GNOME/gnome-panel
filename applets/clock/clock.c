@@ -1000,8 +1000,8 @@ sort_locations_by_name (gconstpointer a, gconstpointer b)
         ClockLocation *loc_a = (ClockLocation *) a;
         ClockLocation *loc_b = (ClockLocation *) b;
 
-        const char *name_a = clock_location_get_name (loc_a);
-        const char *name_b = clock_location_get_name (loc_b);
+        const char *name_a = clock_location_get_display_name (loc_a);
+        const char *name_b = clock_location_get_display_name (loc_b);
 
         return strcmp (name_a, name_b);
 }
@@ -1032,7 +1032,7 @@ create_cities_store (ClockData *cd)
 
 		gtk_list_store_append (cd->cities_store, &iter);
 		gtk_list_store_set (cd->cities_store, &iter,
-				    COL_CITY_NAME, clock_location_get_name (loc),
+				    COL_CITY_NAME, clock_location_get_display_name (loc),
 				    /* FIXME: translate the timezone */
 				    COL_CITY_TZ, clock_location_get_timezone (loc),
                                     COL_CITY_LOC, loc,
@@ -2108,6 +2108,7 @@ location_start_element (GMarkupParseContext *context,
         const gchar *att_name;
 
         gchar *name = NULL;
+        gchar *city = NULL;
         gchar *timezone = NULL;
         gfloat latitude = 0.0;
         gfloat longitude = 0.0;
@@ -2129,6 +2130,8 @@ location_start_element (GMarkupParseContext *context,
              att_name = attribute_names[++index]) {
                 if (strcmp (att_name, "name") == 0) {
                         name = (gchar *)attribute_values[index];
+                } else if (strcmp (att_name, "city") == 0) {
+                        city = (gchar *)attribute_values[index];
                 } else if (strcmp (att_name, "timezone") == 0) {
                         timezone = (gchar *)attribute_values[index];
                 } else if (strcmp (att_name, "latitude") == 0) {
@@ -2147,14 +2150,18 @@ location_start_element (GMarkupParseContext *context,
 
         setlocale (LC_NUMERIC, "");
 
-        if (!name || !timezone) {
+        if ((!name && !city) || !timezone) {
                 return;
         }
 
-	loc = clock_location_find_and_ref (cd->locations, name, timezone,
-					   latitude, longitude, code);
+        /* migration from the old configuration, when name == city */
+        if (!city)
+                city = name;
+
+	loc = clock_location_find_and_ref (cd->locations, name, city,
+					   timezone, latitude, longitude, code);
 	if (!loc)
-		loc = clock_location_new (name, timezone,
+		loc = clock_location_new (name, city, timezone,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
@@ -2857,16 +2864,20 @@ prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
 static gchar *
 loc_to_string (ClockLocation *loc)
 {
+        const gchar *name, *city;
         gfloat latitude, longitude;
         gchar *ret;
 
+        name = clock_location_get_name (loc);
+        city = clock_location_get_city (loc);
         clock_location_get_coords (loc, &latitude, &longitude);
 
         setlocale (LC_NUMERIC, "POSIX");
 	
         ret = g_markup_printf_escaped
-                ("<location name=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\" current=\"%s\"/>",
-                 clock_location_get_name (loc),
+                ("<location name=\"%s\" city=\"%s\" timezone=\"%s\" latitude=\"%f\" longitude=\"%f\" code=\"%s\" current=\"%s\"/>",
+                 name ? name : "",
+                 city ? city : "",
                  clock_location_get_timezone (loc),
                  latitude, longitude,
 		 clock_location_get_weather_code (loc),
@@ -2919,7 +2930,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
 
         const gchar *timezone, *weather_code;
-        gchar *name;
+        gchar *city, *name;
 
         GWeatherLocation *gloc;
         gfloat lat = 0;
@@ -2931,13 +2942,18 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                 return;
         }
 
+        city = NULL;
+        weather_code = NULL;
+        name = NULL;
+
         gloc = gweather_location_entry_get_location (cd->location_entry);
         if (gloc) {
-                name = gweather_location_get_city_name (gloc);
+                city = gweather_location_get_city_name (gloc);
                 weather_code = gweather_location_get_code (gloc);
-        } else {
+        }
+
+        if (gweather_location_entry_has_custom_text (cd->location_entry)) {
                 name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
-                weather_code = NULL;
         }
 
         sscanf (gtk_entry_get_text (GTK_ENTRY (lat_entry)), "%f", &lat);
@@ -2954,6 +2970,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         if (loc) {
                 clock_location_set_timezone (loc, timezone);
                 clock_location_set_name (loc, name);
+                clock_location_set_city (loc, city);
                 clock_location_set_coords (loc, lat, lon);
 		clock_location_set_weather_code (loc, weather_code);
         } else {
@@ -2962,7 +2979,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
 		prefs.temperature_unit = cd->temperature_unit;
 		prefs.speed_unit = cd->speed_unit;
  
-                loc = clock_location_new (name, timezone, lat, lon, weather_code, &prefs);
+                loc = clock_location_new (name, city, timezone, lat, lon, weather_code, &prefs);
 		/* has the side-effect of setting the current location if
 		 * there's none and this one can be considered as a current one
 		 */
@@ -2971,6 +2988,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                 cd->locations = g_list_append (cd->locations, loc);
         }
         g_free (name);
+        g_free (city);
 
 	/* This will update everything related to locations to take into
 	 * account the new location (via the gconf notification) */
@@ -3178,6 +3196,7 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 {
         ClockData *cd = data;
         ClockLocation *loc;
+        const char *name;
         gchar *tmp;
         gfloat lat, lon;
 
@@ -3197,8 +3216,12 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
 
         gweather_location_entry_set_city (cd->location_entry,
-                                          clock_location_get_name (loc),
+                                          clock_location_get_city (loc),
                                           clock_location_get_weather_code (loc));
+	name = clock_location_get_name (loc);
+        if (name && name[0]) {
+                gtk_entry_set_text (GTK_ENTRY (cd->location_entry), name);
+	}
 
         clock_location_get_coords (loc, &lat, &lon);
 

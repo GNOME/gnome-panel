@@ -544,7 +544,7 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 	priv->last_offset = clock_location_get_offset (priv->location);
 
         tmp = g_strdup_printf ("<big><b>%s</b></big>",
-                               clock_location_get_name (priv->location));
+                               clock_location_get_display_name (priv->location));
         gtk_label_set_markup (GTK_LABEL (priv->city_label), tmp);
         g_free (tmp);
 

@@ -31,6 +31,7 @@ G_DEFINE_TYPE (ClockLocation, clock_location, G_TYPE_OBJECT)
 
 typedef struct {
         gchar *name;
+        gchar *city;
 
         SystemTimezone *systz;
 
@@ -76,6 +77,7 @@ static gchar *clock_location_get_valid_weather_code (const gchar *code);
 ClockLocation *
 clock_location_find_and_ref (GList       *locations,
                              const gchar *name,
+                             const gchar *city,
                              const gchar *timezone,
                              gfloat       latitude,
                              gfloat       longitude,
@@ -91,6 +93,7 @@ clock_location_find_and_ref (GList       *locations,
                     priv->longitude == longitude &&
                     g_strcmp0 (priv->weather_code, code) == 0 &&
                     g_strcmp0 (priv->timezone, timezone) == 0 &&
+                    g_strcmp0 (priv->city, city) == 0 &&
                     g_strcmp0 (priv->name, name) == 0)
                         break;
         }
@@ -102,7 +105,8 @@ clock_location_find_and_ref (GList       *locations,
 }
 
 ClockLocation *
-clock_location_new (const gchar *name, const gchar *timezone,
+clock_location_new (const gchar *name, const gchar *city,
+		    const gchar *timezone,
 		    gfloat latitude, gfloat longitude,
 		    const gchar *code, WeatherPrefs *prefs)
 {
@@ -113,6 +117,7 @@ clock_location_new (const gchar *name, const gchar *timezone,
         priv = PRIVATE (this);
 
         priv->name = g_strdup (name);
+        priv->city = g_strdup (city);
         priv->timezone = g_strdup (timezone);
 
         /* initialize priv->tzname */
@@ -170,6 +175,7 @@ clock_location_init (ClockLocation *this)
         ClockLocationPrivate *priv = PRIVATE (this);
 
         priv->name = NULL;
+        priv->city = NULL;
 
         priv->systz = system_timezone_new ();
 
@@ -194,6 +200,11 @@ clock_location_finalize (GObject *g_obj)
         if (priv->name) {
                 g_free (priv->name);
                 priv->name = NULL;
+        }
+
+        if (priv->city) {
+                g_free (priv->city);
+                priv->city = NULL;
         }
 
         if (priv->systz) {
@@ -230,6 +241,17 @@ clock_location_finalize (GObject *g_obj)
 }
 
 const gchar *
+clock_location_get_display_name (ClockLocation *loc)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+
+        if (priv->name && priv->name[0])
+                return priv->name;
+        else
+                return priv->city;
+}
+
+const gchar *
 clock_location_get_name (ClockLocation *loc)
 {
         ClockLocationPrivate *priv = PRIVATE (loc);
@@ -248,6 +270,27 @@ clock_location_set_name (ClockLocation *loc, const gchar *name)
         }
 
         priv->name = g_strdup (name);
+}
+
+const gchar *
+clock_location_get_city (ClockLocation *loc)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+
+        return priv->city;
+}
+
+void
+clock_location_set_city (ClockLocation *loc, const gchar *city)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+
+        if (priv->city) {
+                g_free (priv->city);
+                priv->city = NULL;
+        }
+
+        priv->city = g_strdup (city);
 }
 
 gchar *
@@ -823,7 +866,7 @@ setup_weather_updates (ClockLocation *loc)
 		return;
 
 	dms = rad2dms (priv->latitude, priv->longitude);
-	wl = weather_location_new (priv->name, priv->weather_code,
+	wl = weather_location_new (priv->city, priv->weather_code,
 				   NULL, NULL, dms, NULL, NULL);
 
 	priv->weather_info =
