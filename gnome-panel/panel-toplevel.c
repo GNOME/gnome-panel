@@ -88,6 +88,10 @@ struct _PanelToplevelPrivate {
 	int                     y_bottom;
 
 	int                     monitor;
+	/* this is used when the configured monitor is missing. We keep it so
+	 * we can move the toplevel to the right monitor when it becomes
+	 * available */
+	int                     missing_monitor;
 
 	int                     hide_delay;
 	int                     unhide_delay;
@@ -232,8 +236,11 @@ static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
 static GSList       *toplevel_list = NULL;
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
+
+static void panel_toplevel_update_monitor       (PanelToplevel *toplevel);
 static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
-						 int            monitor);
+						 int            monitor,
+						 gboolean       force_resize);
 
 
 GSList *
@@ -2118,7 +2125,7 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 
 	monitor = panel_multiscreen_get_monitor_at_point (screen, x, y);
 
-	panel_toplevel_set_monitor_internal (toplevel, monitor);
+	panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
 	x -= panel_multiscreen_x (screen, monitor);
 	y -= panel_multiscreen_y (screen, monitor);
@@ -3044,6 +3051,10 @@ panel_toplevel_size_request (GtkWidget      *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 	bin = GTK_BIN (widget);
+
+	/* we get a size request when there are new monitors, so first try to
+	 * see if we need to move to a new monitor */
+	panel_toplevel_update_monitor (toplevel);
 
 	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
 		gtk_widget_size_request (bin->child, requisition);
@@ -4482,6 +4493,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->x_right         = -1;
 	toplevel->priv->y_bottom        = -1;
 	toplevel->priv->monitor         = 0;
+	toplevel->priv->missing_monitor = -1;
 	toplevel->priv->hide_delay      = DEFAULT_HIDE_DELAY;
 	toplevel->priv->unhide_delay    = DEFAULT_UNHIDE_DELAY;
 	toplevel->priv->auto_hide_size  = DEFAULT_AUTO_HIDE_SIZE;
@@ -4986,15 +4998,59 @@ panel_toplevel_get_y_centered (PanelToplevel *toplevel)
 	return toplevel->priv->y_centered;
 }
 
-/* This is used when we need to change the monitor because of constraints, but
- * not because of the configuration. */
+/**
+ * panel_toplevel_set_monitor_internal:
+ *
+ * Sets the monitor of the toplevel, but only the internal state. We need to
+ * make the difference between the internal state and the configuration of the
+ * user because internal constraints might affect the monitor of the toplevel.
+ *
+ * panel_toplevel_set_monitor_internal() won't update the configuration of the
+ * user.
+ **/
 static void
 panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
-				     int            monitor)
+				     int            monitor,
+				     gboolean       force_resize)
 {
+	/* if we finally use the missing monitor, then the world is at peace */
+	if (toplevel->priv->missing_monitor == monitor)
+		toplevel->priv->missing_monitor = -1;
+
+	if (toplevel->priv->monitor == monitor)
+		return;
+
 	toplevel->priv->monitor = monitor;
 
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	if (force_resize)
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+}
+
+/**
+ * panel_toplevel_update_monitor:
+ *
+ * Moves the toplevel to its configured monitor if needed. This generally
+ * happens when the configured monitor was non-existing before, and it appeared
+ * at runtime.
+ *
+ * This must only be called at the beginning of the size request of the
+ * toplevel because it doesn't queue a size request.
+ **/
+static void
+panel_toplevel_update_monitor (PanelToplevel *toplevel)
+{
+	GdkScreen *screen;
+
+	if (toplevel->priv->missing_monitor == -1)
+		return;
+
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	if (toplevel->priv->missing_monitor >= panel_multiscreen_monitors (screen))
+		return;
+
+	panel_toplevel_set_monitor_internal (toplevel,
+					     toplevel->priv->missing_monitor,
+					     FALSE);
 }
 
 void
@@ -5013,10 +5069,12 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 	 * We will put the panel on the monitor 0 for this session, and it will
 	 * move back to the right monitor next time. */
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (monitor >= panel_multiscreen_monitors (screen))
+	if (monitor >= panel_multiscreen_monitors (screen)) {
+		toplevel->priv->missing_monitor = monitor;
 		return;
+	}
 
-	panel_toplevel_set_monitor_internal (toplevel, monitor);
+	panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
 	g_object_notify (G_OBJECT (toplevel), "monitor");
 }
