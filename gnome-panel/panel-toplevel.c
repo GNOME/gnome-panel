@@ -4987,9 +4987,19 @@ void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {
+	GdkScreen *screen;
+
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
 	if (toplevel->priv->monitor == monitor)
+		return;
+
+	/* Ignore non-existing monitors, and keep the old one. The main use
+	 * case is when logging in after having used a multiscreen environment.
+	 * We will put the panel on the monitor 0 for this session, and it will
+	 * move back to the right monitor next time. */
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	if (monitor >= panel_multiscreen_monitors (screen))
 		return;
 
 	toplevel->priv->monitor = monitor;
