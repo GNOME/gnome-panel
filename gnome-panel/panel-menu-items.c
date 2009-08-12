@@ -433,7 +433,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	} else {
 		GtkWidget *item;
 
-		item = panel_image_menu_item_new ();
+		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_BOOKMARKS, NULL, NULL,
 					   _("Bookmarks"));
@@ -873,7 +873,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *item;
 
-		item = panel_image_menu_item_new ();
+		item = gtk_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_REMOVABLE_MEDIA,
 					   NULL, NULL,
