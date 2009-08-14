@@ -91,7 +91,7 @@ struct _PanelToplevelPrivate {
 	/* this is used when the configured monitor is missing. We keep it so
 	 * we can move the toplevel to the right monitor when it becomes
 	 * available */
-	int                     missing_monitor;
+	int                     configured_monitor;
 
 	int                     hide_delay;
 	int                     unhide_delay;
@@ -4493,7 +4493,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->x_right         = -1;
 	toplevel->priv->y_bottom        = -1;
 	toplevel->priv->monitor         = 0;
-	toplevel->priv->missing_monitor = -1;
+	toplevel->priv->configured_monitor = -1;
 	toplevel->priv->hide_delay      = DEFAULT_HIDE_DELAY;
 	toplevel->priv->unhide_delay    = DEFAULT_UNHIDE_DELAY;
 	toplevel->priv->auto_hide_size  = DEFAULT_AUTO_HIDE_SIZE;
@@ -5013,10 +5013,6 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 				     int            monitor,
 				     gboolean       force_resize)
 {
-	/* if we finally use the missing monitor, then the world is at peace */
-	if (toplevel->priv->missing_monitor == monitor)
-		toplevel->priv->missing_monitor = -1;
-
 	if (toplevel->priv->monitor == monitor)
 		return;
 
@@ -5041,15 +5037,16 @@ panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 
-	if (toplevel->priv->missing_monitor == -1)
+	if (toplevel->priv->configured_monitor == -1 ||
+	    toplevel->priv->configured_monitor == toplevel->priv->monitor)
 		return;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (toplevel->priv->missing_monitor >= panel_multiscreen_monitors (screen))
+	if (toplevel->priv->configured_monitor >= panel_multiscreen_monitors (screen))
 		return;
 
 	panel_toplevel_set_monitor_internal (toplevel,
-					     toplevel->priv->missing_monitor,
+					     toplevel->priv->configured_monitor,
 					     FALSE);
 }
 
@@ -5061,20 +5058,19 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
-	if (toplevel->priv->monitor == monitor)
+	if (toplevel->priv->configured_monitor == monitor)
 		return;
 
-	/* Ignore non-existing monitors, and keep the old one. The main use
-	 * case is when logging in after having used a multiscreen environment.
+	toplevel->priv->configured_monitor = monitor;
+
+	/* Only use the configured monitor if it's existing. Else, we ignore
+	 * the non-existing monitor, and keep the old one. The main use case is
+	 * when logging in after having used a multiscreen environment.
 	 * We will put the panel on the monitor 0 for this session, and it will
 	 * move back to the right monitor next time. */
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (monitor >= panel_multiscreen_monitors (screen)) {
-		toplevel->priv->missing_monitor = monitor;
-		return;
-	}
-
-	panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
+	if (monitor < panel_multiscreen_monitors (screen))
+		panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
 	g_object_notify (G_OBJECT (toplevel), "monitor");
 }
