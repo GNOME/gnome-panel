@@ -5,14 +5,14 @@
 # Paul Duffy <dubhthach@frink.nuigalway.ie>, 2003.
 # David O'Callaghan <david.ocallaghan@cs.tcd.ie>, 2003.
 # Alastair McKinstry <mckinstry@computer.org>, 2004.
-# Seán de Búrca <leftmostcat@gmail.com>, 2007-2009.
+# Seán de Búrca <leftmostcat@gmail.com>, 2007, 2008, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 21:48-0600\n"
-"PO-Revision-Date: 2009-08-11 22:06-0600\n"
+"POT-Creation-Date: 2009-08-15 05:30-0600\n"
+"PO-Revision-Date: 2009-08-15 05:36-0600\n"
 "Last-Translator: Seán de Búrca <leftmostcat@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgid "_Preferences"
 msgstr "_Sainroghanna"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3666
+#: ../applets/clock/clock.c:3719
 msgid "Clock"
 msgstr "Clog"
 
@@ -80,75 +80,94 @@ msgstr "Monarcha chun feidhmchláiríní cloig a chruthú."
 msgid "Get the current time and date"
 msgstr "Faigh an t-am agus an dáta rití"
 
-#: ../applets/clock/calendar-window.c:305 ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/calendar-window.c:307 ../applets/clock/clock.c:450
-#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
+#: ../applets/clock/clock.c:1601 ../applets/clock/clock-location-tile.c:476
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:313
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:320
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:846
+#: ../applets/clock/calendar-window.c:853
 msgid "Tasks"
 msgstr "Tascanna"
 
-#: ../applets/clock/calendar-window.c:846
-#: ../applets/clock/calendar-window.c:1022
-#: ../applets/clock/calendar-window.c:1658
+#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:1029
+#: ../applets/clock/calendar-window.c:1665
 msgid "Edit"
 msgstr "Cuir in Eagar"
 
-#: ../applets/clock/calendar-window.c:967
+#: ../applets/clock/calendar-window.c:974
 msgid "All Day"
 msgstr "An Lá ar Fad"
 
-#: ../applets/clock/calendar-window.c:1106
+#: ../applets/clock/calendar-window.c:1113
 msgid "Appointments"
 msgstr "Coinní"
 
-#: ../applets/clock/calendar-window.c:1131
+#: ../applets/clock/calendar-window.c:1138
 msgid "Birthdays and Anniversaries"
 msgstr "Breithlaethanta agus Cothrom Laethanta"
 
-#: ../applets/clock/calendar-window.c:1156
+#: ../applets/clock/calendar-window.c:1163
 msgid "Weather Information"
 msgstr "Faisnéis Aimsire"
 
-#: ../applets/clock/calendar-window.c:1658 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Suíomhanna"
 
-#: ../applets/clock/calendar-window.c:1957
+#: ../applets/clock/calendar-window.c:1964
 msgid "Calendar"
 msgstr "Féilire"
 
-#: ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:451
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1572
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1595
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:470
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:476
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -156,7 +175,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:477
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid ""
 "%1$s\n"
@@ -169,104 +188,120 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:485
+#: ../applets/clock/clock.c:491
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:667
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:697
+#: ../applets/clock/clock.c:704
 msgid "Click to hide your appointments and tasks"
 msgstr "Cliceáil chun do chuid coinní agus tascanna a fholú"
 
-#: ../applets/clock/clock.c:700
+#: ../applets/clock/clock.c:707
 msgid "Click to view your appointments and tasks"
 msgstr "Cliceáil chun amharc ar do chuid choinní agus tascanna"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:711
 msgid "Click to hide month calendar"
 msgstr "Cliceáil chun féilire an mhíosa a fholú"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:714
 msgid "Click to view month calendar"
 msgstr "Cliceáil chun amharc ar fhéilire an mhíosa"
 
-#: ../applets/clock/clock.c:1427
+#: ../applets/clock/clock.c:1434
 msgid "Computer Clock"
 msgstr "Clog an Ríomhaire"
 
-#: ../applets/clock/clock.c:1567
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1580
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1569
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1588
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1611
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1641
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1672
 msgid "Set System Time..."
 msgstr "Socraigh Am an Chórais..."
 
-#: ../applets/clock/clock.c:1643
+#: ../applets/clock/clock.c:1673
 msgid "Set System Time"
 msgstr "Socraigh Am an Chórais"
 
-#: ../applets/clock/clock.c:1658
+#: ../applets/clock/clock.c:1688
 msgid "Failed to set the system time"
 msgstr "Theip ar shocrú am an chórais"
 
-#: ../applets/clock/clock.c:2715
+#: ../applets/clock/clock.c:2752
 msgid "Custom format"
 msgstr "Formáid saincheaptha"
 
-#: ../applets/clock/clock.c:3162
+#: ../applets/clock/clock.c:3210
 msgid "Choose Location"
 msgstr "Roghnaigh Suíomh"
 
-#: ../applets/clock/clock.c:3232
+#: ../applets/clock/clock.c:3285
 msgid "Edit Location"
 msgstr "Cuir Suíomh in Eagar"
 
-#: ../applets/clock/clock.c:3378
+#: ../applets/clock/clock.c:3431
 msgid "City Name"
 msgstr "Ainm na Cathrach"
 
-#: ../applets/clock/clock.c:3382
+#: ../applets/clock/clock.c:3435
 msgid "City Time Zone"
 msgstr "Crios Ama na Cathrach"
 
-#: ../applets/clock/clock.c:3562
+#: ../applets/clock/clock.c:3615
 msgid "24 hour"
 msgstr "24 uair"
 
-#: ../applets/clock/clock.c:3563
+#: ../applets/clock/clock.c:3616
 msgid "UNIX time"
 msgstr "Am UNIX"
 
-#: ../applets/clock/clock.c:3564
+#: ../applets/clock/clock.c:3617
 msgid "Internet time"
 msgstr "Am Idirlín"
 
-#: ../applets/clock/clock.c:3572
+#: ../applets/clock/clock.c:3625
 msgid "Custom _format:"
 msgstr "_Formáid saincheaptha:"
 
-#: ../applets/clock/clock.c:3669
+#: ../applets/clock/clock.c:3722
 msgid "The Clock displays the current time and date"
 msgstr "Taispeánann an clog an t-am agus dáta rití"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3672 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3725 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -615,53 +650,54 @@ msgstr "<small>Socraigh</small>"
 #: ../applets/clock/clock-location-tile.c:317
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
+"Socraigh suíomh mar an suíomh reatha agus úsáid a chrios ama don ríomhaire "
+"seo"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:472
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:581
+#: ../applets/clock/clock-location-tile.c:577
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:593
-#: ../applets/clock/clock-location-tile.c:601
+#: ../applets/clock/clock-location-tile.c:589
+#: ../applets/clock/clock-location-tile.c:598
 msgid "Unknown"
 msgstr "Anaithnid"
 
-#: ../applets/clock/clock-location-tile.c:594
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:591
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, mar %s le mothú"
 
-#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Éirí gréine: %s / Luí gréine: %s"
@@ -812,7 +848,7 @@ msgstr ""
 
 #: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
-msgstr ""
+msgstr "Teastaíonn athrú ón uisce"
 
 #: ../applets/fish/fish.c:1655
 msgid "Look at today's date!"
@@ -888,7 +924,8 @@ msgstr "Frámaí in íomhá bheo an éisc"
 #: ../applets/fish/fish.schemas.in.h:4
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Má tá fíor, casfar timpeall íomhá bheo an éisc ar phainéail ingearaigh."
+msgstr ""
+"Má tá fíor, casfar timpeall íomhá bheo an éisc ar phainéail ingearaigh."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -1451,7 +1488,7 @@ msgstr "Gníomh_achtaigh Spárálaí Scáileáin"
 
 #: ../gnome-panel/panel-action-button.c:135
 msgid "_Lock Screen"
-msgstr "G_lasáil Scáileán"
+msgstr "_Cuir Scáileán Faoi Ghlas"
 
 #: ../gnome-panel/panel-action-button.c:254
 msgid "Could not connect to server"
@@ -1614,6 +1651,8 @@ msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
+"Má athluchtaíonn tú réad painéil, cuirtear é ar ais leis an bpainéal go "
+"huathoibríoch."
 
 #: ../gnome-panel/panel-applet-frame.c:984
 msgid "_Don't Reload"
@@ -1634,7 +1673,7 @@ msgstr "Ar mhaith leat an feidhmchláirín a scriosadh ó do chumraíocht?"
 
 #: ../gnome-panel/panel-applet-frame.c:1141
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr ""
+msgstr "Ní féidir comhéadan AppletShell a fháil ón rialtán\n"
 
 #: ../gnome-panel/panel-context-menu.c:104
 msgid "And many, many others..."
@@ -1768,8 +1807,8 @@ msgstr "Éignigh an feidhmchlár seo a scor?"
 
 #: ../gnome-panel/panel-force-quit.c:207
 msgid ""
-"If you choose to force an application to exit, any open documents in it will "
-"be lost."
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
@@ -1879,70 +1918,66 @@ msgid "Disable Force Quit"
 msgstr "Díchumasaigh Scor Éigeantach"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Lock Screen"
-msgstr "Díchumasaigh Cuir Scáileán Faoi Ghlas"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
 msgstr "Díchumasaigh Logáil Amach"
 
-#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Cumasaigh íomhánna beo"
 
-#: ../gnome-panel/panel-global.schemas.in.h:11
+#: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
 msgstr "Cumasaigh leideanna uirlisí"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Highlight launchers on mouseover"
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:15
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
-msgstr ""
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
+msgstr ""
+
+#: ../gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 msgstr ""
 
 #: ../gnome-panel/panel-menu-bar.c:106
