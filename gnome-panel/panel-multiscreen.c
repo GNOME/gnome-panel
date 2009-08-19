@@ -25,6 +25,7 @@
 
 #include <config.h>
 
+#include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrandr.h>
 #include <gdk/gdkx.h>
@@ -45,7 +46,51 @@ static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
+static gboolean       have_randr_1_3 = FALSE;
 static guint          reinit_id   = 0;
+
+#ifdef HAVE_RANDR
+static gboolean
+_panel_multiscreen_output_should_be_first (Display       *xdisplay,
+					   RROutput       output,
+					   XRROutputInfo *info,
+					   RROutput       primary)
+{
+	if (primary)
+		return output == primary;
+
+	if (have_randr_1_3) {
+		Atom           connector_type_atom;
+		Atom           actual_type;
+		int            actual_format;
+		unsigned long  nitems;
+		unsigned long  bytes_after;
+		unsigned char *prop;
+		char          *connector_type;
+		gboolean       retval;
+
+		connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
+
+		if (XRRGetOutputProperty (xdisplay, output, connector_type_atom,
+					  0, 100, False, False, None,
+					  &actual_type, &actual_format,
+					  &nitems, &bytes_after, &prop) == Success) {
+			if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32) {
+				connector_type = XGetAtomName (xdisplay, prop[0]);
+				retval = g_strcmp0 (connector_type, "Panel") == 0;
+				XFree (connector_type);
+				return retval;
+			}
+		}
+	}
+
+	/* Pre-1.3 fallback:
+	 * "LVDS" is the oh-so-intuitive name that X gives to
+	 * laptop LCDs. It can actually be LVDS0, LVDS-0, etc.
+	 */
+	return (g_str_has_prefix (info->name, "LVDS"));
+}
+#endif
 
 static gboolean
 panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
@@ -54,7 +99,9 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 {
 #ifdef HAVE_RANDR
 	Display            *xdisplay;
+	Window              xroot;
 	XRRScreenResources *resources;
+	RROutput            primary;
 	GArray             *geometries;
 	int                 i;
 	gboolean            driver_is_pre_randr_1_2;
@@ -86,11 +133,17 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	 */
 
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
+	xroot = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (screen));
 
-	resources = XRRGetScreenResources (xdisplay,
-					   GDK_WINDOW_XWINDOW (gdk_screen_get_root_window (screen)));
+	resources = XRRGetScreenResources (xdisplay, xroot);
 	if (!resources)
 		return FALSE;
+
+	primary = None;
+#if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
+	if (have_randr_1_3)
+		primary = XRRGetOutputPrimary (xdisplay, xroot);
+#endif
 
 	geometries = g_array_sized_new (FALSE, FALSE,
 					sizeof (GdkRectangle),
@@ -124,17 +177,9 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 
 			XRRFreeCrtcInfo (crtc);
 
-			/* "LVDS" is the oh-so-intuitive name that X gives to
-			 * laptop LCDs.
-			 *
-			 * Note that on RANDR 1.3, the right way to check for
-			 * this is to get the ConnectorType property for the
-			 * output, and see if it is "Panel".  Yes, they changed
-			 * the known output names for 1.3. Amateurs.
-			 */
-
-			/* can be "LVDS0", "LVDS-0", etc. */
-			if (g_str_has_prefix (output->name, "LVDS"))
+			if (_panel_multiscreen_output_should_be_first (xdisplay,
+								       resources->outputs[i],
+								       output, primary))
 				g_array_prepend_vals (geometries, &rect, 1);
 			else
 				g_array_append_vals (geometries, &rect, 1);
@@ -340,6 +385,7 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 #endif
 
 	have_randr = FALSE;
+	have_randr_1_3 = FALSE;
 
 #ifdef HAVE_RANDR
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
@@ -354,6 +400,9 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 		XRRQueryVersion (xdisplay, &major, &minor);
 		if ((major == 1 && minor >= 2) || major > 1)
 			have_randr = TRUE;
+
+		if ((major == 1 && minor >= 3) || major > 1)
+			have_randr_1_3 = TRUE;
 	}
 #endif
 }
