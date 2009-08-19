@@ -5025,9 +5025,9 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 /**
  * panel_toplevel_update_monitor:
  *
- * Moves the toplevel to its configured monitor if needed. This generally
- * happens when the configured monitor was non-existing before, and it appeared
- * at runtime.
+ * Moves the toplevel to its configured monitor or the first one, if needed.
+ * This generally happens when the configured monitor was non-existing before,
+ * and it appeared at runtime, or if it was existing and disappeared.
  *
  * This must only be called at the beginning of the size request of the
  * toplevel because it doesn't queue a size request.
@@ -5037,17 +5037,22 @@ panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 
-	if (toplevel->priv->configured_monitor == -1 ||
-	    toplevel->priv->configured_monitor == toplevel->priv->monitor)
-		return;
-
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (toplevel->priv->configured_monitor >= panel_multiscreen_monitors (screen))
-		return;
 
-	panel_toplevel_set_monitor_internal (toplevel,
-					     toplevel->priv->configured_monitor,
-					     FALSE);
+	/* If we were not using the configured monitor, can we use it now? */
+	if ((toplevel->priv->configured_monitor != -1) &&
+	    (toplevel->priv->configured_monitor != toplevel->priv->monitor) &&
+	    toplevel->priv->configured_monitor < panel_multiscreen_monitors (screen)) {
+		panel_toplevel_set_monitor_internal (toplevel,
+						     toplevel->priv->configured_monitor,
+						     FALSE);
+
+	/* else, can we still use the monitor we were using? */
+	} else if (toplevel->priv->monitor >= panel_multiscreen_monitors (screen)) {
+		panel_toplevel_set_monitor_internal (toplevel,
+						     0,
+						     FALSE);
+	}
 }
 
 void
