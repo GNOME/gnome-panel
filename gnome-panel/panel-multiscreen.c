@@ -85,10 +85,10 @@ _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 	}
 
 	/* Pre-1.3 fallback:
-	 * "LVDS" is the oh-so-intuitive name that X gives to
-	 * laptop LCDs. It can actually be LVDS0, LVDS-0, etc.
+	 * "LVDS" is the oh-so-intuitive name that X gives to laptop LCDs.
+	 * It can actually be LVDS0, LVDS-0, Lvds, etc.
 	 */
-	return (g_str_has_prefix (info->name, "LVDS"));
+	return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
 }
 #endif
 
