@@ -1,3 +1,109 @@
+===============
+Version 2.27.91
+===============
+
+  Panel
+
+	* Drop dead code (Vincent)
+	* Don't show icons icons for actions and categories (William Jon
+	  McCann, Matthias Clasen, Vincent)
+	* Remove use of GnomeEntry in run dialog (Diego Escalante Urrelo,
+	  Vincent)
+	* Port to GtkBuilder (Vincent)
+	* Make the run button icon respect the desktop-wide setting (Vincent)
+	* Add gnome-panel-add script to allow easy addition of applets
+	  (Vincent)
+	* Use g_timeout_add_seconds to reduce wakeups (Javier Jardón)
+	* Ignore overlapping monitors and just use the largest one (Federico
+	  Mena Quintero)
+	* Put LVDS as first monitor (Federico Mena Quintero)
+	* Correctly set struts when two panels are right-oriented (Alexey
+	  Rusakov)
+	* Use /desktop/gnome/lockdown/disable_lock_screen (Vincent)
+	* Use a different define for the size of the Applications menu icon
+	  (Vincent)
+	* Clarify warning message at forced quit (Gabor Kelemen)
+	* Make sure to preload /apps/panel/general early enough (Behdad
+	  Esfahbod)
+	* Remove empty labels from translation (Andre Klapper)
+	* Do not use non-existing monitors for toplevels (Vincent)
+	* Do not save monitor changes that are caused by constraints (Vincent)
+	* Use randr 1.3 features to detect the first monitor when possible
+	  (Vincent)
+	* Use XRRGetScreenResourcesCurrent() when possible (Vincent)
+	* Improve check for LVDS-named output (Vincent)
+	* Remove deprecated Encoding key from desktop file (Frédéric Péters)
+
+  libpanel-applet
+
+	* Port to GtkBuilder (Diego Escalante Urrelo, Vincent)
+
+  All Applets
+
+	* Port to GtkBuilder (Vincent)
+
+  Clock Applet
+
+	* Change "Clock Options" label to "Clock Format" (Vincent)
+	* Launch the configured calendar/tasks application instead of evolution
+	  (Alex Converse, Vincent)
+	* Port to PolicyKit 1 (Matthias Clasen)
+	* Make default PolicyKit configuration stricter (Vincent)
+	* Do not crash when setting time/timezone without PolicyKit (Matt Keenan)
+	* Do not use obsolete and unneeded daylight variable (Alexis Ballier)
+	* Fix confusion between GTime and time_t (Matthias Drochner)
+	* Add missing mnemonics and window title (Gabor Kelemen)
+	* Use g_timeout_add_seconds to reduce wakeups (Javier Jardón)
+	* Do not place on the map locations with lat = 0 and lon = 0 (Vincent)
+	* Make it possible to change the name of a location (Vincent)
+	* Add/improve translator comments (Vincent)
+	* Code cleanups (Vincent)
+
+  Notification Area Applet
+
+	* Allow more flexibility for NaTrayChild compositing (Owen Taylor)
+	* Use g_timeout_add_seconds to reduce wakeups (Javier Jardón)
+
+  Misc
+
+	* Add ACLOCAL_AMFLAGS (Sébastien Bacher)
+	* Use silent-rules instead of shave for quiet build (Vincent)
+	* Remove workaround for scrollkeeper (Vincent)
+	* Remove libglade dependency (Vincent)
+	* Require libgweather 2.27.90 (Vincent)
+
+  Docs Translators
+
+	* Marek Černocký (cs)
+	* Mario Blättermann (de)
+	* Laurent Coudeur (fr)
+	* Milo Casagrande (it)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Alexander Shopov (bg)
+	* Denis Arnaud (br)
+	* Jordi Mallach (ca)
+	* Petr Kovar (cs)
+	* Joop Eggen (eo)
+	* Jorge González (es)
+	* Ivar Smolin (et)
+	* Timo Jyrinki (fi)
+	* Seán de Búrca (ga)
+	* Antón Méixome (gl)
+	* Yaron Shahrabani (he)
+	* Changwoo Ryu (ko)
+	* Luca Ferretti (it)
+	* Kjartan Maraas (nb)
+	* Tomasz Dominikowski (pl)
+	* Vladimir Melo (pt_BR)
+	* Daniel Nylander (sv)
+	* Dr.T.Vasudevan (ta)
+	* Theppitak Karoonboonyanan (th)
+	* Chao-Hsiung Liao (zh_HK)
+	* Chao-Hsiung Liao (zh_TW)
+
 ==============
 Version 2.27.4
 ==============
