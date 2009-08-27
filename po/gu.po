@@ -1,22 +1,21 @@
-# translation of gnome-panel.HEAD.gu.po to Gujarati
+# translation of gnome-panel.master.gu.po to Gujarati
 # Ankit Patel <ankit644@yahoo.com>, 2005, 2006.
 # Ankit Patel <ankit@redhat.com>, 2007, 2009.
 # Sweta Kothari <sweta2782@yahoo.co.in>, 2008.
-# Sweta Kothari <swkothar@redhat.com>, 2008.
+# Sweta Kothari <swkothar@redhat.com>, 2008, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel.HEAD.gu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2009-08-12 11:04+0000\n"
-"PO-Revision-Date: 2009-03-11 14:24+0530\n"
-"Last-Translator: Ankit Patel <ankit@redhat.com>\n"
-"Language-Team: Gujarati <fedora-trans-gu@redhat.com>\n"
+"Project-Id-Version: gnome-panel.master.gu\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"POT-Creation-Date: 2009-08-26 10:05+0000\n"
+"PO-Revision-Date: 2009-08-27 13:00+0530\n"
+"Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
+"Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -71,7 +70,7 @@ msgid "_Preferences"
 msgstr "પસંદગીઓ (_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3689
+#: ../applets/clock/clock.c:3719
 msgid "Clock"
 msgstr "ઘડિયાળ"
 
@@ -87,76 +86,95 @@ msgstr "ઘડિયાળ એપ્લેટ બનાવવા માટેન
 msgid "Get the current time and date"
 msgstr "વર્તમાન સમય અને તારીખ મેળવો"
 
-#: ../applets/clock/calendar-window.c:305 ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/calendar-window.c:307 ../applets/clock/clock.c:450
-#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
+#: ../applets/clock/clock.c:1601 ../applets/clock/clock-location-tile.c:476
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:313
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:320
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:846
+#: ../applets/clock/calendar-window.c:853
 msgid "Tasks"
 msgstr "કાર્યો"
 
-#: ../applets/clock/calendar-window.c:846
-#: ../applets/clock/calendar-window.c:1022
-#: ../applets/clock/calendar-window.c:1658
+#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:1029
+#: ../applets/clock/calendar-window.c:1665
 msgid "Edit"
 msgstr "ફેરફાર"
 
-#: ../applets/clock/calendar-window.c:967
+#: ../applets/clock/calendar-window.c:974
 msgid "All Day"
 msgstr "બધા દિવસે"
 
-#: ../applets/clock/calendar-window.c:1106
+#: ../applets/clock/calendar-window.c:1113
 msgid "Appointments"
 msgstr "મુલાકાતો"
 
-#: ../applets/clock/calendar-window.c:1131
+#: ../applets/clock/calendar-window.c:1138
 msgid "Birthdays and Anniversaries"
 msgstr "જન્મદિવસો અને સાલગીરીઓ"
 
-#: ../applets/clock/calendar-window.c:1156
+#: ../applets/clock/calendar-window.c:1163
 msgid "Weather Information"
 msgstr "હવામાન જાણકારી"
 
-#: ../applets/clock/calendar-window.c:1658 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "સ્થાનો"
 
 # libgnomeui/gnome-dateedit.c:745
-#: ../applets/clock/calendar-window.c:1957
+#: ../applets/clock/calendar-window.c:1964
 msgid "Calendar"
 msgstr "કેલેન્ડર"
 
-#: ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:451
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1572
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1595
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:470
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:476
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -164,7 +182,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:477
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid ""
 "%1$s\n"
@@ -177,115 +195,129 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:485
+#: ../applets/clock/clock.c:491
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:667
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:697
+#: ../applets/clock/clock.c:704
 msgid "Click to hide your appointments and tasks"
 msgstr "તમારી મુલાકાતો અને કાર્યો છુપાવવા માટે ક્લિક કરો"
 
-#: ../applets/clock/clock.c:700
+#: ../applets/clock/clock.c:707
 msgid "Click to view your appointments and tasks"
 msgstr "તમારી મુલાકાતો અને ક્રિયાઓ જોવા માટે ક્લિક કરો"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:711
 msgid "Click to hide month calendar"
 msgstr "મહિના કેલેન્ડર છુપાવવા માટે ક્લિક કરો"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:714
 msgid "Click to view month calendar"
 msgstr "માસિક કેલેન્ડર જોવા માટે ક્લિક કરો"
 
-#: ../applets/clock/clock.c:1427
+#: ../applets/clock/clock.c:1434
 msgid "Computer Clock"
 msgstr "કમ્પ્યૂટર ઘડિયાળ"
 
-#: ../applets/clock/clock.c:1567
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1580
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1569
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1588
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1611
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1641
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1672
 msgid "Set System Time..."
 msgstr "સિસ્ટમ સમયનુ સુયોજન..."
 
-#: ../applets/clock/clock.c:1643
+#: ../applets/clock/clock.c:1673
 msgid "Set System Time"
 msgstr "સિસ્ટમ સમયનુ સુયોજન"
 
-#: ../applets/clock/clock.c:1658
+#: ../applets/clock/clock.c:1688
 msgid "Failed to set the system time"
 msgstr "સિસ્ટમ સમયને સુયોજિત કરવામાં નિષ્ફળતા"
 
-#: ../applets/clock/clock.c:2722
+#: ../applets/clock/clock.c:2752
 msgid "Custom format"
 msgstr "કસ્ટમ બંધારણ"
 
-#: ../applets/clock/clock.c:3180
-#, fuzzy
+#: ../applets/clock/clock.c:3210
 #| msgid "Location"
 msgid "Choose Location"
-msgstr "સ્થાન"
+msgstr "સ્થાન પસંદ કરો"
 
-#: ../applets/clock/clock.c:3255
-#, fuzzy
+#: ../applets/clock/clock.c:3285
 #| msgid "Location"
 msgid "Edit Location"
-msgstr "સ્થાન"
+msgstr "સ્થાન માં ફેરફાર કરો"
 
-#: ../applets/clock/clock.c:3401
+#: ../applets/clock/clock.c:3431
 msgid "City Name"
 msgstr "શહેર નામ"
 
-#: ../applets/clock/clock.c:3405
+#: ../applets/clock/clock.c:3435
 msgid "City Time Zone"
 msgstr "શહેર ટાઇમઝોન"
 
-#: ../applets/clock/clock.c:3585
+#: ../applets/clock/clock.c:3615
 msgid "24 hour"
 msgstr "૨૪ કલાક"
 
-#: ../applets/clock/clock.c:3586
+#: ../applets/clock/clock.c:3616
 msgid "UNIX time"
 msgstr "યુનિક્સ સમય"
 
-#: ../applets/clock/clock.c:3587
+#: ../applets/clock/clock.c:3617
 msgid "Internet time"
 msgstr "ઇન્ટરનેટ સમય"
 
-#: ../applets/clock/clock.c:3595
+#: ../applets/clock/clock.c:3625
 msgid "Custom _format:"
 msgstr "કસ્ટમ બંધારણ (_f):"
 
-#: ../applets/clock/clock.c:3692
+#: ../applets/clock/clock.c:3722
 msgid "The Clock displays the current time and date"
 msgstr "ઘડિયાળ હાલનો સમય અને તારીખ દર્શાવે છે"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3695 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3725 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
 #: ../applets/wncklet/workspace-switcher.c:621
 #: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
-msgstr "અંકતિ પટેલ <ankit644@yahoo.com>"
+msgstr "અંકતિ પટેલ <ankit644@yahoo.com>, શ્ર્વેતા કોઠારી <swkothar@redhat.com>"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
@@ -301,10 +333,9 @@ msgstr ""
 "small>"
 
 #: ../applets/clock/clock.ui.h:4
-#, fuzzy
 #| msgid "Custom format"
 msgid "Clock Format"
-msgstr "કસ્ટમ બંધારણ"
+msgstr "ઘડિયાળ બંધારણ"
 
 #: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
@@ -315,20 +346,16 @@ msgid "Current Time:"
 msgstr "હાલનો સમય:"
 
 #: ../applets/clock/clock.ui.h:7
-#, fuzzy
 #| msgid "<b>Display</b>"
 msgid "Display"
-msgstr "<b>દર્શાવો</b>"
+msgstr "દર્શાવો"
 
 #: ../applets/clock/clock.ui.h:8
-#, fuzzy
 #| msgid ""
 #| "East\n"
 #| "West"
 msgid "East"
-msgstr ""
-"પૂર્વ\n"
-"પશ્ચિમ"
+msgstr "પૂર્વ"
 
 #: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
@@ -336,32 +363,26 @@ msgid "General"
 msgstr "સામાન્ય"
 
 #: ../applets/clock/clock.ui.h:10
-#, fuzzy
 #| msgid "Latitude:"
 msgid "L_atitude:"
-msgstr "અક્ષાંશ:"
+msgstr "અક્ષાંશ (_a):"
 
 #: ../applets/clock/clock.ui.h:11
-#, fuzzy
 #| msgid "Longitude:"
 msgid "L_ongitude:"
-msgstr "રેખાંશ:"
+msgstr "રેખાંશ (_o):"
 
 #: ../applets/clock/clock.ui.h:13
-#, fuzzy
 #| msgid ""
 #| "North\n"
 #| "South"
 msgid "North"
-msgstr ""
-"ઉત્તર\n"
-"દક્ષિણ"
+msgstr "ઉત્તર"
 
 #: ../applets/clock/clock.ui.h:14
-#, fuzzy
 #| msgid "<b>Panel Display</b>"
 msgid "Panel Display"
-msgstr "<b>પેનલ દર્શાવો</b>"
+msgstr "પેનલ દર્શાવો"
 
 #: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
@@ -380,18 +401,15 @@ msgid "Show the _date"
 msgstr "તારીખ દર્શાવો (_d)"
 
 #: ../applets/clock/clock.ui.h:19
-#, fuzzy
 #| msgid ""
 #| "North\n"
 #| "South"
 msgid "South"
-msgstr ""
-"ઉત્તર\n"
-"દક્ષિણ"
+msgstr "દક્ષિણ"
 
 #: ../applets/clock/clock.ui.h:20
 msgid "Time & Date"
-msgstr ""
+msgstr "સમય અને તારીખ"
 
 #: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
@@ -402,14 +420,11 @@ msgid "Weather"
 msgstr "હવામાન"
 
 #: ../applets/clock/clock.ui.h:23
-#, fuzzy
 #| msgid ""
 #| "East\n"
 #| "West"
 msgid "West"
-msgstr ""
-"પૂર્વ\n"
-"પશ્ચિમ"
+msgstr "પશ્ચિમ"
 
 #: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
@@ -420,36 +435,32 @@ msgid "_24 hour format"
 msgstr "_24 કલાક માળખું"
 
 #: ../applets/clock/clock.ui.h:26
-#, fuzzy
 #| msgid "Location Name:"
 msgid "_Location Name:"
-msgstr "સ્થાન નામ:"
+msgstr "સ્થાન નામ (_L):"
 
 #: ../applets/clock/clock.ui.h:27
 msgid "_Pressure unit:"
 msgstr "દબાણ એકમ (_P):"
 
 #: ../applets/clock/clock.ui.h:28
-#, fuzzy
 #| msgid "Set System Time"
 msgid "_Set System Time"
-msgstr "સિસ્ટમ સમયનુ સુયોજન"
+msgstr "સિસ્ટમ સમયનુ સુયોજન (_S)"
 
 #: ../applets/clock/clock.ui.h:29
 msgid "_Temperature unit:"
 msgstr "ઉષ્ણતામાન એકમ (_T)"
 
 #: ../applets/clock/clock.ui.h:30
-#, fuzzy
 #| msgid "Time:"
 msgid "_Time:"
-msgstr "સમય:"
+msgstr "સમય (_T):"
 
 #: ../applets/clock/clock.ui.h:31
-#, fuzzy
 #| msgid "Timezone:"
 msgid "_Timezone:"
-msgstr "ટાઈમઝોન:"
+msgstr "ટાઈમઝોન (_T):"
 
 #: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
@@ -598,7 +609,6 @@ msgid "The unit to use when showing wind speed."
 msgstr "જ્યારે પવનની ઝડપ દર્શાવી રહ્યા હોય ત્યારે વાપરવાનો એકમ."
 
 #: ../applets/clock/clock.schemas.in.h:43
-#, fuzzy
 #| msgid ""
 #| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 #| "key. The schema is retained for compatibility with older versions."
@@ -607,8 +617,8 @@ msgid ""
 "time configuration tool. The schema is retained for compatibility with older "
 "versions."
 msgstr ""
-"'format' કીને આધારતિ આ કીનો વપરાશ જીનોમ ૨.૬ માં ઘટાડવામાં આવ્યો હતો. આ યોજના જૂની "
-"આવૃત્તિઓ સાથે સુસંગતા મેળવવા માટે રાખવામાં આવે છે."
+"આંતરિક સમય રૂપરેખાંકન સાધનને વાપરવા સાથે GNOME 2.22 માં આ કીને વપરાશ અપ્રચલિત થયેલ હતો. "
+"યોજના જૂની આવૃત્તિઓ સાથે સુસંગતા માટે રોકેલ છે."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -680,52 +690,51 @@ msgstr "<small>સુયોજન</small>"
 msgid "Set location as current location and use its timezone for this computer"
 msgstr "હાલની જગ્યા તરીકે જગ્યાને સુયોજિત કરો અને આ કમ્પ્યૂટર માટે તેના ટાઇમઝોન ને વાપરો"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:472
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:581
+#: ../applets/clock/clock-location-tile.c:577
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:593
-#: ../applets/clock/clock-location-tile.c:601
+#: ../applets/clock/clock-location-tile.c:589
+#: ../applets/clock/clock-location-tile.c:598
 msgid "Unknown"
 msgstr "અજાણ્યુ"
 
-#: ../applets/clock/clock-location-tile.c:594
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:591
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s ના જેવુ અનુભવે છે"
 
-#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "સૂર્યોદય: %s / સૂર્યાસ્ત: %s"
@@ -895,10 +904,9 @@ msgid "    "
 msgstr "    "
 
 #: ../applets/fish/fish.ui.h:2
-#, fuzzy
 #| msgid "Animation speed"
 msgid "Animation"
-msgstr "એનિમેશન ઝડપ"
+msgstr "એનિમેશન"
 
 #: ../applets/fish/fish.ui.h:3
 msgid "Co_mmand to run when clicked:"
@@ -956,8 +964,7 @@ msgid "Frames in fish's animation"
 msgstr "માછલીના એનિમેશનમાંના ચોકઠાઓ"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "જો ખરુ હોય તો, માછલીનું એનિમેશન ઊભી પેનલો પર ફરતુ દેખાશે."
 
 #: ../applets/fish/fish.schemas.in.h:5
@@ -980,8 +987,7 @@ msgstr "માછલીનું નામ"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
+msgstr "જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -1116,10 +1122,9 @@ msgid "Restore to na_tive workspace"
 msgstr "મૂળ કામ કરવાની જગ્યા પર પાછા ફરો (_t)"
 
 #: ../applets/wncklet/window-list.ui.h:4
-#, fuzzy
 #| msgid "<b>Restoring Minimized Windows</b>"
 msgid "Restoring Minimized Windows"
-msgstr "<b>ન્યૂનતમ સ્થિતિમાંથી બધી વિન્ડોને પહેલાની સ્થિતિમાં લાવો</b>"
+msgstr "ન્યૂનતમ સ્થિતિમાંથી બધી વિન્ડોને પહેલાની સ્થિતિમાં લાવો"
 
 #: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
@@ -1130,16 +1135,14 @@ msgid "Show windows from a_ll workspaces"
 msgstr "બધી કામ કરવાની જગ્યામાંથી વિન્ડો દર્શાવો (_l)"
 
 #: ../applets/wncklet/window-list.ui.h:7
-#, fuzzy
 #| msgid "<b>Window Grouping</b>"
 msgid "Window Grouping"
-msgstr "<b>વિન્ડો જૂથ થઈ રહ્યુ છે</b>"
+msgstr "વિન્ડો જૂથ થઈ રહ્યુ છે"
 
 #: ../applets/wncklet/window-list.ui.h:8
-#, fuzzy
 #| msgid "<b>Window List Content</b>"
 msgid "Window List Content"
-msgstr "<b>વિન્ડોની યાદીના સમાવિષ્ટ ભાગો</b>"
+msgstr "વિન્ડોની યાદીના સમાવિષ્ટ"
 
 #: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
@@ -1231,8 +1234,7 @@ msgstr "કામ કરવાની જગ્યાની ફેરબદલી
 
 #: ../applets/wncklet/workspace-switcher.c:499
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "કામ કરવાની જગ્યાની ફેરબદલી કરનાર માટે કામ કરવાની જગ્યાના નામ પ્રદર્શિત કરવા માટેી "
 "કિંમતો મેળવવામાં થતી ભૂલ: %s\n"
@@ -1269,10 +1271,9 @@ msgid "Show workspace _names in switcher"
 msgstr "ફેરબદલી કરનારમાં કામ કરવાની જગ્યાના નામ દર્શાવો (_n)"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
-#, fuzzy
 #| msgid "<b>Switcher</b>"
 msgid "Switcher"
-msgstr "<b>ફેરબદલી કરનાર</b>"
+msgstr "ફેરબદલી કરનાર"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "Workspace Names"
@@ -1287,10 +1288,9 @@ msgid "Workspace na_mes:"
 msgstr "કામ કરવાની જગ્યાના નામો:"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:9
-#, fuzzy
 #| msgid "Workspace Names"
 msgid "Workspaces"
-msgstr "કામ કરવાની જગ્યાના નામો"
+msgstr "કામ કરવાની જગ્યાઓ"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1383,7 +1383,7 @@ msgid "Cannot find an empty spot"
 msgstr "ખાલી સ્થાન શોધી શકતા નથી"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1627
 msgid "Drawer"
 msgstr "ડ્રોઅર"
 
@@ -1536,8 +1536,7 @@ msgstr "સ્તર: %s,  જીવનો: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr ""
-"ખસવા માટે ડાબું/જમણું, ફાયર કરવા માટે જગ્યા, અટકાવવા માટે 'p', બહાર નીકળવા માટે 'q'"
+msgstr "ખસવા માટે ડાબું/જમણું, ફાયર કરવા માટે જગ્યા, અટકાવવા માટે 'p', બહાર નીકળવા માટે 'q'"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
@@ -1746,8 +1745,7 @@ msgstr "જીનોમ પેનલ"
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
-msgstr ""
-"આ કાર્યક્રમ અન્ય કાર્યક્રમો લોન્ચ કરવા માટે જવાબદાર છે અને ઉપયોગી ઉપયોગીતાઓ પૂરી પાડે છે."
+msgstr "આ કાર્યક્રમ અન્ય કાર્યક્રમો લોન્ચ કરવા માટે જવાબદાર છે અને ઉપયોગી ઉપયોગીતાઓ પૂરી પાડે છે."
 
 #: ../gnome-panel/panel-context-menu.c:137
 msgid "About the GNOME Panel"
@@ -1855,17 +1853,14 @@ msgid "Could not display help document"
 msgstr "મદદ દસ્તાવેજ દર્શાવી શક્યા નહિં"
 
 #: ../gnome-panel/panel-force-quit.c:76
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
 msgstr "શું આ કાર્યક્રમની બહાર નીકળવા માટે દબાણ કરવું છે?"
 
 #: ../gnome-panel/panel-force-quit.c:207
-#, fuzzy
 #| msgid ""
 #| "If you choose to force an application to exit, any open documents in it "
 #| "will be lost."
@@ -1873,8 +1868,8 @@ msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
-"શું તમે બહાર નીકળવા માટે કાર્યક્રમ પર દબાણ કરવાનું પસંદ કરો, તો તેમાંના કોઈપણ ખૂલેલા "
-"દસ્તાવેજો નષ્ટ થઈ જશે."
+"શું તમે બહાર નીકળવા માટે કાર્યક્રમ પર દબાણ કરવાનું પસંદ કરો, કોઈપણ ખૂલેલા "
+"દસ્તાવેજો માં અસંગ્રહેલ બદલાવો તેમાં નષ્ટ થઇ શકે છે."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1925,10 +1920,8 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "કાર્યક્રમની યાદીને \"કાર્યક્રમ ચલાવો\" સંવાદમાં વિસ્તારો"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"જો સાચું હોય, તો \"કાર્યક્રમ ચલાવો\" સંવાદમાં આપોઆપ પૂર્ણ કરવાનું ઉપલબ્ધ કરવામાં આવ્યું છે."
+msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "જો સાચું હોય, તો \"કાર્યક્રમ ચલાવો\" સંવાદમાં આપોઆપ પૂર્ણ કરવાનું ઉપલબ્ધ કરવામાં આવ્યું છે."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -2024,19 +2017,16 @@ msgstr "શરૂ કરનાર ઉપર માઉસ આવે ત્યા�
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "જો ખરુ હોય તો, વપરાશકર્તા શરૂ કરનાર પર નિર્દેશક લાવે તો તે પ્રકાશતિ થશે."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
@@ -2074,6 +2064,8 @@ msgid ""
 "This key is deprecated as it cannot be used to implement proper lockdown. "
 "The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 msgstr ""
+"આ કી અપ્રચલિત છે જે તે યોગ્ય લોકડાઉન ને અમલીકરણ કરવા માટે વાપરી શકાતી નથી. "
+"/desktop/gnome/lockdown/disable_lock_screen કી તેને બદલે વાપરેલ હોવી જોઇએ."
 
 #: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
@@ -2414,10 +2406,10 @@ msgstr "દોરનાર ગુણધર્મો"
 
 #: ../gnome-panel/panel-properties-dialog.c:1067
 #: ../gnome-panel/panel-run-dialog.c:2018
-#, fuzzy, c-format
+#, c-format
 #| msgid "Unable to load file '%s'."
 msgid "Unable to load file '%s': %s."
-msgstr "ફાઈલ '%s' લાવવામાં નિષ્ફળ."
+msgstr "ફાઈલ '%s' લાવવામાં નિષ્ફળ: %s."
 
 #: ../gnome-panel/panel-properties-dialog.c:1073
 msgid "Could not display properties dialog"
@@ -2559,10 +2551,9 @@ msgid "Recent Documents"
 msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
 
 #: ../gnome-panel/panel-recent.c:235
-#, fuzzy
 #| msgid "Clear Recent Documents"
 msgid "Clear Recent Documents..."
-msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
+msgstr "તાજેતરનાં દસ્તાવેજોને સાફ કરો..."
 
 #: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
@@ -2665,73 +2656,73 @@ msgstr "કેલેન્ડર"
 msgid "D_on't Delete"
 msgstr "કાઢશો નહિ (_o) "
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1188
 msgid "Hide Panel"
 msgstr "પેનલ છુપાડો"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Expanded Edge Panel"
 msgstr "ઉપરથી વધારાયેલી બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1589
+#: ../gnome-panel/panel-toplevel.c:1599
 msgid "Top Centered Panel"
 msgstr "ઉપરની મધ્યસ્થ પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1590
+#: ../gnome-panel/panel-toplevel.c:1600
 msgid "Top Floating Panel"
 msgstr "ઉપરની તરતી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1591
+#: ../gnome-panel/panel-toplevel.c:1601
 msgid "Top Edge Panel"
 msgstr "ઉપરની બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Expanded Edge Panel"
 msgstr "નીચેથી વધારાયેલી બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1606
 msgid "Bottom Centered Panel"
 msgstr "નીચેથી મધ્યસ્થ કરેલી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1607
 msgid "Bottom Floating Panel"
 msgstr "નીચેની તરતી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1608
 msgid "Bottom Edge Panel"
 msgstr "નીચેની બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Expanded Edge Panel"
 msgstr "ડાબેથી વધારાયેલી બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1613
 msgid "Left Centered Panel"
 msgstr "ડાબેથી મધ્યસ્થ કરાયેલી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1614
 msgid "Left Floating Panel"
 msgstr "ડાબી તરતી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1615
 msgid "Left Edge Panel"
 msgstr "ડાબી બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Expanded Edge Panel"
 msgstr "જમણેથી વધારાયેલી બાજુવાળી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1620
 msgid "Right Centered Panel"
 msgstr "જમણેથી મધ્યસ્થ કરાયેલી પેનલ "
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1621
 msgid "Right Floating Panel"
 msgstr "જમણી તરતી પેનલ"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1622
 msgid "Right Edge Panel"
 msgstr "જમણી બાજુવાળી પેનલ"
 
@@ -2807,8 +2798,7 @@ msgstr ""
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr ""
-"જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
+msgstr "જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2828,8 +2818,7 @@ msgstr ""
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr ""
-"જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે."
+msgstr "જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -3184,8 +3173,7 @@ msgid "Specify an applet IID to load"
 msgstr "લાવવા માટેના એપ્લેટની IID સ્પષ્ટ કરો"
 
 #: ../libpanel-applet/panel-test-applets.c:35
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "જીકૉન્ફનું સ્થાન દર્શાવો કે જેમાં એપ્લેટની પસંદગીઓ સંગ્રહાય છે"
 
 #: ../libpanel-applet/panel-test-applets.c:36
@@ -3193,8 +3181,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "એપ્લેટનું શરુઆતનું માપ દર્શાવો (xx-નાનું, મધ્યમ, મોટું વગેરે.)"
 
 #: ../libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "એપ્લેટની શરુઆતની દિશા સ્પષ્ટ કરો (ઉપર, નીચે, ડાબે અથવા જમણે)"
 
 #: ../libpanel-applet/panel-test-applets.c:61
@@ -3250,53 +3237,3 @@ msgstr "એપ્લેટ (_A):"
 msgid "_Prefs Dir:"
 msgstr "પસંદગીઓ ડિરેક્ટરી (_P):"
 
-#~ msgid "Failed to launch time configuration tool: %s"
-#~ msgstr "સમય રુપરેખા સાધન લાવવામાં નિષ્ફળ: %s"
-
-#~ msgid ""
-#~ "Failed to locate a program for configuring the date and time. Perhaps "
-#~ "none is installed?"
-#~ msgstr ""
-#~ "તારીખ અને સમય ની રુપરેખા માટેનો કાર્યક્રમ શોધવામાં નિષ્ફળ. કદાચ કંઇજ સ્થાપતિ કરાયું ન "
-#~ "હોય ?"
-
-#~ msgid "<b>Clock Options</b>"
-#~ msgstr "<b>ઘડિયાળ વિકલ્પો</b>"
-
-#~ msgid "<b>Time Settings</b>"
-#~ msgstr "<b>સમય સુયોજનો</b>"
-
-#~ msgid "Time Settings"
-#~ msgstr "સમય સુયોજનો"
-
-#~ msgid ""
-#~ "This key specifies the program to run in order to configure the time."
-#~ msgstr "આ કી સમયને રુપરેખાંકતિ કરવા માટે વડે ચલાવાનો કાર્યક્રમ સ્પષ્ટ કરે છે."
-
-#~ msgid "<b>Animation</b>"
-#~ msgstr "<b>એનીમેશન</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>સામાન્ય</b>"
-
-#~ msgid "<b>Workspaces</b>"
-#~ msgstr "<b>કામ કરવાની જગ્યાઓ</b>"
-
-#~ msgid "_Command:"
-#~ msgstr "આદેશ (_C):"
-
-#~ msgid "Disable Lock Screen"
-#~ msgstr "સ્ક્રીનને તાળું લગાવવાનું નિષ્ક્રિય કરો"
-
-#~ msgid ""
-#~ "If true, the panel will not allow a user to lock their screen, by "
-#~ "removing access to the lock screen menu entries."
-#~ msgstr ""
-#~ "જો ખરુ હોય તો, પેનલ સ્ક્રીનને તાળુ લગાવવાના પ્રવેશની પરવાનગીઓ દૂર કરીને વપરાશકર્તાને "
-#~ "તેમની સ્ક્રીનને તાળુ મારવા માટે પરવાનગી આપશે નહિ."
-
-#~ msgid "Command entry"
-#~ msgstr "આદેશનો પ્રવેશ"
-
-#~ msgid "Enter a command string here to run it."
-#~ msgstr "આદેશને ચલાવવા માટે અહિ તેની શબ્દમાળા દાખલ કરો."
