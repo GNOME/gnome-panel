@@ -181,6 +181,10 @@ ui_DATA =					\
 
 libexec_SCRIPTS = gnome-panel-add
 
+gnome-panel-add: gnome-panel-add.in Makefile
+	$(AM_V_GEN)sed -e s!\@PYTHON\@!@PYTHON@! < $< > $@
+	$(AM_V_at)chmod a+x $@
+
 EXTRA_DIST =					\
 	$(ui_DATA)				\
 	nothing.cP				\
@@ -192,7 +196,7 @@ EXTRA_DIST =					\
 	gnome-panelrc				\
 	$(entries_DATA)				\
 	$(desktop_DATA)				\
-	$(libexec_SCRIPTS)
+	gnome-panel-add.in
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -277,7 +281,8 @@ CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(schemas_in_files:.schemas.in=.schemas) \
 	$(sys_DATA) \
-	$(desktop_DATA)
+	$(desktop_DATA) \
+	gnome-panel-add
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
