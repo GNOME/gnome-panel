@@ -195,7 +195,7 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	gnome-panelrc				\
 	$(entries_DATA)				\
-	$(desktop_DATA)				\
+	$(desktop_in_files)			\
 	gnome-panel-add.in
 
 @INTLTOOL_DESKTOP_RULE@
