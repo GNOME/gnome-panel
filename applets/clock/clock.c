@@ -738,6 +738,18 @@ refresh_clock_timeout(ClockData *cd)
 	clock_set_timeout (cd, cd->current_time);
 }
 
+/**
+ * This is like refresh_clock_timeout(), except that we only care about whether
+ * the time actually changed. We don't care about the format.
+ */
+static void
+refresh_click_timeout_time_only (ClockData *cd)
+{
+	if (cd->timeout)
+		g_source_remove (cd->timeout);
+	clock_timeout_callback (cd);
+}
+
 static void
 free_locations (ClockData *cd)
 {
@@ -1258,6 +1270,9 @@ static void
 toggle_calendar (GtkWidget *button,
                  ClockData *cd)
 {
+	/* if time is wrong, the user might try to fix it by clicking on the
+	 * clock */
+	refresh_click_timeout_time_only (cd);
 	update_calendar_popup (cd);
 }
 
@@ -1731,7 +1746,7 @@ cancel_time_settings (GtkWidget *button, ClockData *cd)
 {
 	gtk_widget_hide (cd->set_time_window);
 
-        refresh_clock_timeout (cd);
+        refresh_click_timeout_time_only (cd);
 }
 
 static gboolean
@@ -1871,7 +1886,7 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 
 	gtk_window_present (GTK_WINDOW (cd->set_time_window));
 
-        refresh_clock_timeout (cd);
+        refresh_click_timeout_time_only (cd);
 }
 
 static void
@@ -1916,7 +1931,6 @@ format_changed (GConfClient  *client,
 		return;
 
 	clock->format = new_format;
-	update_timeformat (clock);
 	refresh_clock_timeout (clock);
 
 	if (clock->calendar_popup != NULL) {
@@ -2324,7 +2338,7 @@ clock_timezone_changed (SystemTimezone *systz,
 	/* This will refresh the current location */
 	save_cities_store (cd);
 
-	refresh_clock_timeout (cd);
+	refresh_click_timeout_time_only (cd);
 }
 
 static void
@@ -3158,7 +3172,7 @@ prefs_hide (GtkWidget *widget, ClockData *cd)
 
         gtk_tree_selection_unselect_all (gtk_tree_view_get_selection (GTK_TREE_VIEW (tree)));
 
-        refresh_clock_timeout (cd);
+        refresh_click_timeout_time_only (cd);
 }
 
 static gboolean
@@ -3601,7 +3615,7 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
                                gtk_widget_get_screen (cd->applet));
 	gtk_window_present (GTK_WINDOW (cd->prefs_window));
 
-        refresh_clock_timeout (cd);
+        refresh_click_timeout_time_only (cd);
 
         /* FMQ: cd->props was the old preferences window; remove references to it */
         /* FMQ: connect to the Help button by hand; look at properties_response_cb() for the help code */
