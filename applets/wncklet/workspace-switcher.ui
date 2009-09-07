@@ -78,7 +78,7 @@
                                   <object class="GtkSpinButton" id="num_rows_spin">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="adjustment">adjustment2</property>
+                                    <property name="adjustment">num_rows_adjustment</property>
                                     <property name="climb_rate">1</property>
                                     <property name="numeric">True</property>
                                   </object>
@@ -169,7 +169,7 @@
                               <object class="GtkSpinButton" id="num_workspaces_spin">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="adjustment">adjustment1</property>
+                                <property name="adjustment">num_workspaces_adjustment</property>
                                 <property name="climb_rate">1</property>
                                 <property name="numeric">True</property>
                               </object>
@@ -305,5 +305,19 @@
       <action-widget response="-11">help_button</action-widget>
       <action-widget response="0">done_button</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="num_workspaces_adjustment">
+    <property name="value">1</property>
+    <property name="lower">1</property>
+    <property name="upper">36</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="num_rows_adjustment">
+    <property name="value">1</property>
+    <property name="lower">1</property>
+    <property name="upper">16</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
 </interface>
