@@ -50,6 +50,7 @@ struct _PanelDItemEditorPrivate
 	/* the revert ditem will only contain relevant keys */
 	GKeyFile *revert_key_file;
 
+	gboolean  reverting;
 	gboolean  dirty;
 	guint     save_timeout;
 
@@ -141,10 +142,12 @@ static RevertKey revert_keys [] = {
 	{ "Icon",     G_TYPE_STRING,  FALSE, TRUE  },
 	{ "Name",     G_TYPE_STRING,  FALSE, TRUE  },
 	{ "Comment",  G_TYPE_STRING,  FALSE, TRUE  },
+	{ "X-GNOME-FullName", G_TYPE_STRING,  FALSE, TRUE  },
 	/* C version of those keys */
 	{ "Icon",     G_TYPE_STRING,  FALSE, FALSE },
 	{ "Name",     G_TYPE_STRING,  FALSE, FALSE },
-	{ "Comment",  G_TYPE_STRING,  FALSE, FALSE }
+	{ "Comment",  G_TYPE_STRING,  FALSE, FALSE },
+	{ "X-GNOME-FullName", G_TYPE_STRING,  FALSE, FALSE }
 };
 
 enum {
@@ -858,12 +861,21 @@ panel_ditem_editor_name_changed (PanelDItemEditor *dialog)
 
 	name = gtk_entry_get_text (GTK_ENTRY (dialog->priv->name_entry));
 
-	if (name && name[0])
-		panel_key_file_set_locale_string (dialog->priv->key_file,
-						  "Name", name);
-	else
+	if (!dialog->priv->reverting) {
+		/* When reverting, we don't need to set the content of the key
+		 * file; we only want to send a signal. Changing the key file
+		 * could actually break the revert since it might overwrite the
+		 * old Name value with the X-GNOME-FullName value */
+		if (name && name[0])
+			panel_key_file_set_locale_string (dialog->priv->key_file,
+							  "Name", name);
+		else
+			panel_key_file_remove_all_locale_key (dialog->priv->key_file,
+							      "Name");
+
 		panel_key_file_remove_all_locale_key (dialog->priv->key_file,
-						      "Name");
+						      "X-GNOME-FullName");
+	}
 
 	g_signal_emit (G_OBJECT (dialog), ditem_edit_signals[NAME_CHANGED], 0,
 		       name);
@@ -1169,6 +1181,7 @@ panel_ditem_editor_init (PanelDItemEditor *dialog)
 	priv->key_file = NULL;
 	priv->free_key_file = FALSE;
 	priv->revert_key_file = NULL;
+	priv->reverting = FALSE;
 	priv->dirty = FALSE;
 	priv->save_timeout = 0;
 	priv->uri = NULL;
@@ -1298,7 +1311,9 @@ panel_ditem_editor_sync_display (PanelDItemEditor *dialog)
 	key_file = dialog->priv->key_file;
 
 	/* Name */
-	buffer = panel_key_file_get_locale_string (key_file, "Name");
+	buffer = panel_key_file_get_locale_string (key_file, "X-GNOME-FullName");
+	if (!buffer)
+		buffer = panel_key_file_get_locale_string (key_file, "Name");
 	gtk_entry_set_text (GTK_ENTRY (dialog->priv->name_entry),
 			    buffer ? buffer : "");
 	g_free (buffer);
@@ -1532,6 +1547,8 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 
 	g_return_if_fail (PANEL_IS_DITEM_EDITOR (dialog));
 
+	dialog->priv->reverting = TRUE;
+
 	key_file = dialog->priv->key_file;
 	revert_key_file = dialog->priv->revert_key_file;
 
@@ -1591,6 +1608,8 @@ panel_ditem_editor_revert (PanelDItemEditor *dialog)
 							panel_ditem_editor_save_timeout,
 							dialog);
 	}
+
+	dialog->priv->reverting = FALSE;
 }
 
 static void
