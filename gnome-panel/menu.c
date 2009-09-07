@@ -1479,7 +1479,7 @@ create_menuitem (GtkWidget          *menu,
 			panel_menu_icon_get_size (),
 			NULL,
 			alias_directory ? gmenu_tree_directory_get_name (alias_directory) :
-					  gmenu_tree_entry_get_name (entry));
+					  gmenu_tree_entry_get_display_name (entry));
 
 	if ((alias_directory &&
 	     gmenu_tree_directory_get_comment (alias_directory)) ||
@@ -1607,6 +1607,7 @@ create_applications_menu (const char *menu_file,
 	menu = create_empty_menu ();
 
 	tree = gmenu_tree_lookup (menu_file, GMENU_TREE_FLAGS_NONE);
+	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree",

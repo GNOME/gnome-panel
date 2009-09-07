@@ -789,8 +789,8 @@ static int
 compare_applications (GMenuTreeEntry *a,
 		      GMenuTreeEntry *b)
 {
-	return g_utf8_collate (gmenu_tree_entry_get_name (a),
-			       gmenu_tree_entry_get_name (b));
+	return g_utf8_collate (gmenu_tree_entry_get_display_name (a),
+			       gmenu_tree_entry_get_display_name (b));
 }
 
 static GSList *get_all_applications_from_dir (GMenuTreeDirectory *directory,
@@ -866,6 +866,7 @@ get_all_applications (void)
 	GSList             *retval;
 
 	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
+	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
 
 	root = gmenu_tree_get_root_directory (tree);
 
@@ -911,7 +912,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 		next = l->next;
 
-		entry_name = gmenu_tree_entry_get_name (entry);
+		entry_name = gmenu_tree_entry_get_display_name (entry);
 		if (prev_name && entry_name && strcmp (entry_name, prev_name) == 0) {
 			gmenu_tree_item_unref (entry);
 
@@ -930,7 +931,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 		gtk_list_store_set (dialog->program_list_store, &iter,
 				    COLUMN_ICON,      NULL,
 				    COLUMN_ICON_FILE, gmenu_tree_entry_get_icon (entry),
-				    COLUMN_NAME,      gmenu_tree_entry_get_name (entry),
+				    COLUMN_NAME,      gmenu_tree_entry_get_display_name (entry),
 				    COLUMN_COMMENT,   gmenu_tree_entry_get_comment (entry),
 				    COLUMN_EXEC,      gmenu_tree_entry_get_exec (entry),
 				    COLUMN_PATH,      gmenu_tree_entry_get_desktop_file_path (entry),

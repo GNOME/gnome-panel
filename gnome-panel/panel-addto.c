@@ -615,7 +615,7 @@ panel_addto_prepend_entry (GSList         **parent_list,
 	data = g_new0 (PanelAddtoAppList, 1);
 
 	data->item_info.type          = PANEL_ADDTO_LAUNCHER;
-	data->item_info.name          = g_strdup (gmenu_tree_entry_get_name (entry));
+	data->item_info.name          = g_strdup (gmenu_tree_entry_get_display_name (entry));
 	data->item_info.description   = g_strdup (gmenu_tree_entry_get_comment (entry));
 	data->item_info.icon          = g_strdup (gmenu_tree_entry_get_icon (entry));
 	data->item_info.launcher_path = g_strdup (gmenu_tree_entry_get_desktop_file_path (entry));
@@ -743,6 +743,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_STRING);
 
 	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
+	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
@@ -755,6 +756,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 	gmenu_tree_unref (tree);
 
 	tree = gmenu_tree_lookup ("settings.menu", GMENU_TREE_FLAGS_NONE);
+	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		GtkTreeIter iter;
