@@ -1114,6 +1114,48 @@ panel_ditem_editor_connect_signals (PanelDItemEditor *dialog)
 }
 
 static void
+panel_ditem_editor_block_signals (PanelDItemEditor *dialog)
+{
+	PanelDItemEditorPrivate *priv;
+
+	priv = dialog->priv;
+
+#define BLOCK_CHANGED(widget, callback) \
+	g_signal_handlers_block_by_func (G_OBJECT (widget), \
+					 G_CALLBACK (callback), \
+					 dialog); \
+	g_signal_handlers_block_by_func (G_OBJECT (widget), \
+					 G_CALLBACK (panel_ditem_editor_changed), \
+					 dialog);
+	BLOCK_CHANGED (priv->type_combo, type_combo_changed);
+	BLOCK_CHANGED (priv->name_entry, panel_ditem_editor_name_changed);
+	BLOCK_CHANGED (priv->command_entry, panel_ditem_editor_command_changed);
+	BLOCK_CHANGED (priv->comment_entry, panel_ditem_editor_comment_changed);
+	BLOCK_CHANGED (priv->icon_entry, panel_ditem_editor_icon_changed);
+}
+
+static void
+panel_ditem_editor_unblock_signals (PanelDItemEditor *dialog)
+{
+	PanelDItemEditorPrivate *priv;
+
+	priv = dialog->priv;
+
+#define UNBLOCK_CHANGED(widget, callback) \
+	g_signal_handlers_unblock_by_func (G_OBJECT (widget), \
+					   G_CALLBACK (callback), \
+					   dialog); \
+	g_signal_handlers_unblock_by_func (G_OBJECT (widget), \
+					   G_CALLBACK (panel_ditem_editor_changed), \
+					   dialog);
+	UNBLOCK_CHANGED (priv->type_combo, type_combo_changed);
+	UNBLOCK_CHANGED (priv->name_entry, panel_ditem_editor_name_changed);
+	UNBLOCK_CHANGED (priv->command_entry, panel_ditem_editor_command_changed);
+	UNBLOCK_CHANGED (priv->comment_entry, panel_ditem_editor_comment_changed);
+	UNBLOCK_CHANGED (priv->icon_entry, panel_ditem_editor_icon_changed);
+}
+
+static void
 panel_ditem_editor_init (PanelDItemEditor *dialog)
 {
 	PanelDItemEditorPrivate *priv;
@@ -1607,7 +1649,11 @@ panel_ditem_editor_set_revert (PanelDItemEditor *dialog)
 static void
 panel_ditem_editor_key_file_loaded (PanelDItemEditor  *dialog)
 {
+	/* the user is not changing any value here, so block the signals about
+	 * changing a value */
+	panel_ditem_editor_block_signals (dialog);
 	panel_ditem_editor_sync_display (dialog);
+	panel_ditem_editor_unblock_signals (dialog);
 
 	/* This should be after panel_ditem_editor_sync_display ()
 	 * so the revert button is insensitive */
