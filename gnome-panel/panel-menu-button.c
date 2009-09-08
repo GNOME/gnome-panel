@@ -386,7 +386,8 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 
 		filename = panel_menu_path_root_to_filename (button->priv->path_root);
 		button->priv->menu = create_applications_menu (filename,
-							       button->priv->menu_path);
+							       button->priv->menu_path,
+							       TRUE);
 	} else
 		button->priv->menu = create_main_menu (panel_widget);
 

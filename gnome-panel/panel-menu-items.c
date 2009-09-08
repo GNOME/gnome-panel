@@ -1169,7 +1169,7 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 {
 	GtkWidget *desktop_menu;
 
-	desktop_menu = create_applications_menu ("settings.menu", NULL);
+	desktop_menu = create_applications_menu ("settings.menu", NULL, FALSE);
 
 	g_object_set_data (G_OBJECT (desktop_menu),
 			   "panel-menu-append-callback",

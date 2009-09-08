@@ -1388,8 +1388,16 @@ create_submenu_entry (GtkWidget          *menu,
 		      GMenuTreeDirectory *directory)
 {
 	GtkWidget *menuitem;
+	gboolean   force_categories_icon;
 
-	menuitem = gtk_image_menu_item_new ();
+	force_categories_icon = g_object_get_data (G_OBJECT (menu),
+						   "panel-menu-force-icon-for-categories") != NULL;
+
+	if (force_categories_icon)
+		menuitem = panel_image_menu_item_new ();
+	else
+		menuitem = gtk_image_menu_item_new ();
+
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
 					NULL, NULL,
@@ -1415,6 +1423,7 @@ create_submenu (GtkWidget          *menu,
 {
 	GtkWidget *menuitem;
 	GtkWidget *submenu;
+	gboolean   force_categories_icon;
 
 	if (alias_directory)
 		menuitem = create_submenu_entry (menu, alias_directory);
@@ -1424,6 +1433,13 @@ create_submenu (GtkWidget          *menu,
 	submenu = create_fake_menu (directory);
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+
+	/* Keep the infor that we force (or not) the icons to be visible */
+	force_categories_icon = g_object_get_data (G_OBJECT (menu),
+						   "panel-menu-force-icon-for-categories") != NULL;
+	g_object_set_data (G_OBJECT (submenu),
+			   "panel-menu-force-icon-for-categories",
+			   GINT_TO_POINTER (force_categories_icon));
 }
 
 static void 
@@ -1598,13 +1614,19 @@ remove_gmenu_tree_monitor (GtkWidget *menu,
 
 GtkWidget *
 create_applications_menu (const char *menu_file,
-			  const char *menu_path)
+			  const char *menu_path,
+			  gboolean    always_show_image)
 {
 	GMenuTree *tree;
 	GtkWidget *menu;
 	guint      idle_id;
 
 	menu = create_empty_menu ();
+
+	if (always_show_image)
+		g_object_set_data (G_OBJECT (menu),
+				   "panel-menu-force-icon-for-categories",
+				   GINT_TO_POINTER (TRUE));
 
 	tree = gmenu_tree_lookup (menu_file, GMENU_TREE_FLAGS_NONE);
 	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
@@ -1760,7 +1782,8 @@ create_main_menu (PanelWidget *panel)
 {
 	GtkWidget *main_menu;
 
-	main_menu = create_applications_menu ("applications.menu", NULL);
+	main_menu = create_applications_menu ("applications.menu", NULL, TRUE);
+
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 	/* FIXME need to update the panel on parent_set */
 
