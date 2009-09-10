@@ -14,14 +14,16 @@
 # Andre Klapper <ak-47@gmx.net>, 2009.
 # Moritz Baumann <flamingmo@online.de>, 2009.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009.
+# Mario Blättermann <mariobl@gnome.org>, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-04 22:32+0200\n"
-"PO-Revision-Date: 2009-05-04 22:53+0200\n"
-"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
+"POT-Creation-Date: 2009-09-08 00:09+0000\n"
+"PO-Revision-Date: 2009-09-05 14:47+0100\n"
+"Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,8 +60,8 @@ msgstr "_Info"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
-#: ../gnome-panel/panel-menu-button.c:663
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
+#: ../gnome-panel/panel-menu-button.c:664
 msgid "_Help"
 msgstr "_Hilfe"
 
@@ -71,7 +73,7 @@ msgid "_Preferences"
 msgstr "_Einstellungen"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3800
+#: ../applets/clock/clock.c:3733
 msgid "Clock"
 msgstr "Uhr"
 
@@ -87,75 +89,94 @@ msgstr "Fabrik zum Erzeugen von Uhrenapplets."
 msgid "Get the current time and date"
 msgstr "Die aktuelle Zeit und das heutige Datum ermitteln"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:452
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:454
-#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
+#: ../applets/clock/clock.c:1616 ../applets/clock/clock-location-tile.c:476
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:250
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:320
 msgid "%b %d"
 msgstr "%d. %b"
 
-#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:853
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: ../applets/clock/calendar-window.c:773
-#: ../applets/clock/calendar-window.c:949
-#: ../applets/clock/calendar-window.c:1585
+#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:1029
+#: ../applets/clock/calendar-window.c:1665
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: ../applets/clock/calendar-window.c:894
+#: ../applets/clock/calendar-window.c:974
 msgid "All Day"
 msgstr "Ganztägig"
 
-#: ../applets/clock/calendar-window.c:1033
+#: ../applets/clock/calendar-window.c:1113
 msgid "Appointments"
 msgstr "Termine"
 
-#: ../applets/clock/calendar-window.c:1058
+#: ../applets/clock/calendar-window.c:1138
 msgid "Birthdays and Anniversaries"
 msgstr "Geburts- und Jahrestage"
 
-#: ../applets/clock/calendar-window.c:1083
+#: ../applets/clock/calendar-window.c:1163
 msgid "Weather Information"
 msgstr "Wetterinformationen"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Orte"
 
-#: ../applets/clock/calendar-window.c:1884
+#: ../applets/clock/calendar-window.c:1964
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:452
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:451
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:454 ../applets/clock/clock.c:1572
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1610
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:474
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:476
 msgid "%a %b %e"
 msgstr "%a, %d. %b"
 
@@ -163,7 +184,7 @@ msgstr "%a, %d. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:481
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid ""
 "%1$s\n"
@@ -176,113 +197,124 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:489
+#: ../applets/clock/clock.c:491
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:671
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:701
-msgid "Click to hide your appointments and tasks"
-msgstr "Klicken um Ihre Termine und Aufgaben zu verbergen"
-
 #: ../applets/clock/clock.c:704
-msgid "Click to view your appointments and tasks"
-msgstr "Klicken um Ihre Termine und Aufgaben anzuzeigen"
+msgid "Click to hide your appointments and tasks"
+msgstr "Klicken, um Ihre Termine und Aufgaben zu verbergen"
 
-#: ../applets/clock/clock.c:708
-msgid "Click to hide month calendar"
-msgstr "Klicken um den Monatskalender zu verbergen"
+#: ../applets/clock/clock.c:707
+msgid "Click to view your appointments and tasks"
+msgstr "Klicken, um Ihre Termine und Aufgaben anzuzeigen"
 
 #: ../applets/clock/clock.c:711
-msgid "Click to view month calendar"
-msgstr "Klicken um den Monatskalender anzuzeigen"
+msgid "Click to hide month calendar"
+msgstr "Klicken, um den Monatskalender zu verbergen"
 
-#: ../applets/clock/clock.c:1427
+#: ../applets/clock/clock.c:714
+msgid "Click to view month calendar"
+msgstr "Klicken, um den Monatskalender anzuzeigen"
+
+#: ../applets/clock/clock.c:1449
 msgid "Computer Clock"
 msgstr "Rechner-Uhr"
 
-#: ../applets/clock/clock.c:1567
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1595
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1569
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1603
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1611
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1656
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1688
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
-
-#: ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:1687
 msgid "Set System Time..."
 msgstr "Systemzeit einstellen …"
 
-#: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1688
 msgid "Set System Time"
 msgstr "Systemzeit einstellen"
 
-#: ../applets/clock/clock.c:1735
+#: ../applets/clock/clock.c:1703
 msgid "Failed to set the system time"
 msgstr "Systemzeit konnte nicht eingestellt werden"
 
-#: ../applets/clock/clock.c:1929
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
-"Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
-"Vermutlich ist keines installiert."
-
-#: ../applets/clock/clock.c:2861
+#: ../applets/clock/clock.c:2766
 msgid "Custom format"
 msgstr "Benutzerdefiniertes Format"
 
-#: ../applets/clock/clock.c:3522
+#: ../applets/clock/clock.c:3224
+msgid "Choose Location"
+msgstr "Ort wählen"
+
+#: ../applets/clock/clock.c:3299
+msgid "Edit Location"
+msgstr "Ort bearbeiten"
+
+#: ../applets/clock/clock.c:3445
 msgid "City Name"
 msgstr "Stadtname"
 
-#: ../applets/clock/clock.c:3526
+#: ../applets/clock/clock.c:3449
 msgid "City Time Zone"
 msgstr "Stadt-Zeitzone"
 
-#: ../applets/clock/clock.c:3696
+#: ../applets/clock/clock.c:3629
 msgid "24 hour"
 msgstr "24 Stunden"
 
-#: ../applets/clock/clock.c:3697
+#: ../applets/clock/clock.c:3630
 msgid "UNIX time"
 msgstr "UNIX-Zeit"
 
-#: ../applets/clock/clock.c:3698
+#: ../applets/clock/clock.c:3631
 msgid "Internet time"
 msgstr "Internet-Zeit"
 
-#: ../applets/clock/clock.c:3706
+#: ../applets/clock/clock.c:3639
 msgid "Custom _format:"
 msgstr "_Benutzerdefiniertes Format"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:3736
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3806 ../applets/fish/fish.c:613
+#: ../applets/clock/clock.c:3739 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:621
 #: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr ""
@@ -296,30 +328,15 @@ msgstr ""
 "Christian Kintner <mail@christian-kintner.de>\n"
 "Philipp Kerling <k.philipp@gmail.com>\n"
 "Moritz Baumann <flamingmo@online.de>\n"
-"Christian Kirbach <Christian.Kirbach@googlemail.com>"
+"Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
+"Mario Blättermann <mariobl@gnome.org>"
 
-#: ../applets/clock/clock.glade.h:1
-msgid "<b>Clock Options</b>"
-msgstr "<b>Uhreinstellungen</b>"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "<b>Display</b>"
-msgstr "<b>Anzeige</b>"
-
-#: ../applets/clock/clock.glade.h:3
-msgid "<b>Panel Display</b>"
-msgstr "<b>Panel-Anzeige</b>"
-
-#: ../applets/clock/clock.glade.h:4
-msgid "<b>Time Settings</b>"
-msgstr "<b>Zeiteinstellungen</b>"
-
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
 msgstr "<i>(optional)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.ui.h:3
 msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
@@ -327,104 +344,120 @@ msgstr ""
 "<small><i>Geben Sie einen Ort, eine Region oder ein Land ein und wählen dann "
 "aus der Liste.</i></small>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "Uhr-Format"
+
+#: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
 msgstr "Einstellungen der Uhr"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.ui.h:6
 msgid "Current Time:"
 msgstr "Aktuelle Zeit:"
 
-#: ../applets/clock/clock.glade.h:10
-msgid ""
-"East\n"
-"West"
-msgstr ""
-"östlich\n"
-"westlich"
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "Anzeige"
 
-#: ../applets/clock/clock.glade.h:12
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "östlich"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Allgemein"
 
-#: ../applets/clock/clock.glade.h:13
-msgid "Latitude:"
-msgstr "Breitengrad:"
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "_Breitengrad:"
 
-#: ../applets/clock/clock.glade.h:14
-msgid "Location Name:"
-msgstr "Ort:"
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "_Längengrad:"
 
-#: ../applets/clock/clock.glade.h:16
-msgid "Longitude:"
-msgstr "Längengrad:"
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "nördlich"
 
-#: ../applets/clock/clock.glade.h:17
-msgid ""
-"North\n"
-"South"
-msgstr ""
-"nördlich\n"
-"südlich"
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "Panel-Anzeige"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
 msgstr "_Temperatur anzeigen"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.ui.h:16
 msgid "Show _weather"
 msgstr "_Wetter anzeigen"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.ui.h:17
 msgid "Show seco_nds"
 msgstr "_Sekunden anzeigen"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.ui.h:18
 msgid "Show the _date"
 msgstr "_Datum anzeigen"
 
-#: ../applets/clock/clock.glade.h:24
-msgid "Time Settings"
-msgstr "Zeiteinstellungen"
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "südlich"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "Zeit und Datum"
+
+#: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
 msgstr "Zeit_einstellungen"
 
-#: ../applets/clock/clock.glade.h:26
-msgid "Time:"
-msgstr "Zeit:"
-
-#: ../applets/clock/clock.glade.h:27
-msgid "Timezone:"
-msgstr "Zeitzone:"
-
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.ui.h:22
 msgid "Weather"
 msgstr "Wetter"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "westlich"
+
+#: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
 msgstr "_12-Stunden-Format"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.ui.h:25
 msgid "_24 hour format"
 msgstr "_24-Stunden-Format"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "_Name des Ortes:"
+
+#: ../applets/clock/clock.ui.h:27
 msgid "_Pressure unit:"
 msgstr "_Luftdruckeinheit:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "_Systemzeit einstellen"
+
+#: ../applets/clock/clock.ui.h:29
 msgid "_Temperature unit:"
 msgstr "_Temperatureinheit:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "_Zeit:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "_Zeitzone:"
+
+#: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
 msgstr "_Sichtweiteneinheit:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.ui.h:33
 msgid "_Wind speed unit:"
 msgstr "_Windgeschwindigkeitseinheit:"
 
@@ -499,15 +532,15 @@ msgstr ""
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Liste der Termine im Kalender "
-"angezeigt."
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Termine im "
+"Kalenderfenster ausgeklappt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Liste der Geburtstage im Kalender "
-"angezeigt."
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Geburtstage im "
+"Kalenderfenster ausgeklappt."
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of locations in the calendar window."
@@ -517,15 +550,15 @@ msgstr "Legt fest, ob die Liste der Orte im Kalenderfenster ausgeklappt ist."
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr ""
-"Falls dieser Schlüssel WAHR ist, wird die Liste der Aufgaben im Kalender "
-"angezeigt."
+"Falls dieser Schlüssel WAHR ist, wird die Liste der Aufgaben im "
+"Kalenderfenster ausgeklapptt."
 
 # CHECK
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird die Liste der Wetterinformationen im "
-"Kalender angezeigt."
+"Kalenderfenster ausgeklappt."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
@@ -592,6 +625,16 @@ msgstr "Die für die Anzeige der Windgeschwindigkeit zu benutzende Einheit."
 
 #: ../applets/clock/clock.schemas.in.h:43
 msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Im Zuge von GNOME 2.26 wurde dieser Schlüssel zu Gunsten eines internen "
+"Werkzeugs zur Zeiteinstellung für nichtig erklärt. Das Schema wird zwecks "
+"Rückwärtskompatibilität beibehalten."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
@@ -599,7 +642,7 @@ msgstr ""
 "Schlüssels für nichtig erklärt. Das Schema wird zwecks "
 "Rückwärtskompatibilität beibehalten."
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -610,7 +653,7 @@ msgstr ""
 "Format-Schlüssel »custom« (benutzerdefiniert) ist. Sie können von »strftime()« "
 "akzeptierte Platzhalter verwenden, um ein bestimmtes Format zu erzielen."
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:46
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -624,14 +667,8 @@ msgstr ""
 "Dieser Schlüssel legt das vom Uhren-Applet verwendete Stundenformat fest. "
 "Zulässige Werte: »12-hour« (12 Stunden-Format), »24-hour« (24 Stunden-Format), "
 "»internet« (Internet-Zeit, ein Tag hat 1000 sog. ».beats«), »unix« (UNIX, also "
-"Zeit in Sekunden seit dem 1.1.1970) sowie »custom« (benutzerdefiniert, dem "
-"vom Schlüssel »custom_format« angegebenen Format entsprechend)."
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
-"Dieser Schlüssel gibt das zum Konfigurieren der Zeit auszuführende Programm "
-"an."
+"Zeit in Sekunden seit dem 1.1.1970) sowie »custom« (benutzerdefiniert, "
+"entsprechend des vom Schlüssel »custom_format« angegebenen Formats)."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -667,64 +704,63 @@ msgstr ""
 "Ort als aktuellen Ort festlegen und dessen Zeitzone für diesen Rechner "
 "einstellen"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:472
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:581
+#: ../applets/clock/clock-location-tile.c:577
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:593
-#: ../applets/clock/clock-location-tile.c:601
+#: ../applets/clock/clock-location-tile.c:589
+#: ../applets/clock/clock-location-tile.c:598
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: ../applets/clock/clock-location-tile.c:594
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:591
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, gefühlt wie %s"
 
-#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sonnenaufgang: %s / Sonnenuntergang: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
 #: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Das Hilfedokument »%s« konnte nicht dargestellt werden"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
 #: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Fehler beim Darstellen des Hilfedokuments"
@@ -758,7 +794,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Einen schwimmenden Fisch oder andere animierte Lebewesen anzeigen"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:607
+#: ../applets/fish/fish.c:617
 msgid "Fish"
 msgstr "Fisch"
 
@@ -770,7 +806,7 @@ msgstr "Da wo dieser dämliche Fisch herkam"
 msgid "Wanda Factory"
 msgstr "Wanda-Fabrik"
 
-#: ../applets/fish/fish.c:274
+#: ../applets/fish/fish.c:273
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -785,17 +821,17 @@ msgstr ""
 "Wir bitten Sie nachdrücklich, %s nicht für etwas zu verwenden,\n"
 "das dieses Applet irgendwie »praktisch« oder »nützlich« machen könnte."
 
-#: ../applets/fish/fish.c:461
+#: ../applets/fish/fish.c:471
 msgid "Images"
 msgstr "Bilder"
 
-#: ../applets/fish/fish.c:575 ../applets/fish/fish.c:641
-#: ../applets/fish/fish.c:757
+#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:767
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s, der Fisch"
 
-#: ../applets/fish/fish.c:576
+#: ../applets/fish/fish.c:586
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -808,25 +844,25 @@ msgstr ""
 "Hauptspeicher. Sollte jemand beim Verwenden dieses Applets erwischt werden, "
 "sollte er sich unverzüglich einer psychiatrischen Untersuchung unterziehen."
 
-#: ../applets/fish/fish.c:600
+#: ../applets/fish/fish.c:610
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
 
-#: ../applets/fish/fish.c:642
+#: ../applets/fish/fish.c:652
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s, der Fisch - ein zeitgenössisches Orakel"
 
-#: ../applets/fish/fish.c:713
+#: ../applets/fish/fish.c:723
 msgid "Unable to locate the command to execute"
 msgstr "Der auszuführende Befehl konnte nicht gefunden werden"
 
-#: ../applets/fish/fish.c:762
+#: ../applets/fish/fish.c:772
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s, der Fisch, sagt:"
 
-#: ../applets/fish/fish.c:831
+#: ../applets/fish/fish.c:841
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -837,17 +873,17 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: ../applets/fish/fish.c:896
+#: ../applets/fish/fish.c:906
 msgid "_Speak again"
 msgstr "Erneut _sprechen"
 
-#: ../applets/fish/fish.c:979
+#: ../applets/fish/fish.c:989
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Der Konfigurationsbefehl funktioniert nicht mehr und wurde ersetzt durch: %s"
 
-#: ../applets/fish/fish.c:1002
+#: ../applets/fish/fish.c:1012
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -858,7 +894,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: ../applets/fish/fish.c:1018
+#: ../applets/fish/fish.c:1028
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -869,69 +905,64 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: ../applets/fish/fish.c:1643
+#: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
 msgstr "Das Wasser muss gewechselt werden"
 
-#: ../applets/fish/fish.c:1645
+#: ../applets/fish/fish.c:1655
 msgid "Look at today's date!"
 msgstr "Man beachte das heutige Datum!"
 
-#: ../applets/fish/fish.c:1738
+#: ../applets/fish/fish.c:1748
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s, der wahrsagende Fisch"
 
-#: ../applets/fish/fish.glade.h:1
-#: ../gnome-panel/panel-properties-dialog.glade.h:1
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.glade.h:2
-msgid "<b>Animation</b>"
-msgstr "<b>Animation</b>"
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "Animation"
 
-#: ../applets/fish/fish.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>Allgemein</b>"
-
-#: ../applets/fish/fish.glade.h:4
+#: ../applets/fish/fish.ui.h:3
 msgid "Co_mmand to run when clicked:"
 msgstr "Beim _Anklicken auszuführender Befehl:"
 
-#: ../applets/fish/fish.glade.h:5
+#: ../applets/fish/fish.ui.h:4
 msgid "Fish Preferences"
 msgstr "Fisch-Einstellungen"
 
-#: ../applets/fish/fish.glade.h:6
+#: ../applets/fish/fish.ui.h:6
 msgid "Select an animation"
 msgstr "Animation auswählen"
 
-#: ../applets/fish/fish.glade.h:7
+#: ../applets/fish/fish.ui.h:7
 msgid "_File:"
 msgstr "_Datei:"
 
-#: ../applets/fish/fish.glade.h:8
+#: ../applets/fish/fish.ui.h:8
 msgid "_Name of fish:"
 msgstr "_Name des Fisches:"
 
-#: ../applets/fish/fish.glade.h:9
+#: ../applets/fish/fish.ui.h:9
 msgid "_Pause per frame:"
 msgstr "_Pause nach jedem Einzelbild"
 
-#: ../applets/fish/fish.glade.h:10
+#: ../applets/fish/fish.ui.h:10
 msgid "_Rotate on vertical panels"
 msgstr "Auf vertikalen Panels _drehen"
 
-#: ../applets/fish/fish.glade.h:11
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Einzelbildanzahl in Animation:"
 
-#: ../applets/fish/fish.glade.h:12
+#: ../applets/fish/fish.ui.h:12
 msgid "frames"
 msgstr "Einzelbilder"
 
-#: ../applets/fish/fish.glade.h:13
+#: ../applets/fish/fish.ui.h:13
 msgid "seconds"
 msgstr "Sekunden"
 
@@ -990,7 +1021,7 @@ msgid ""
 msgstr ""
 "Dieser Schlüssel gibt den Dateinamen der Pixmap an, die für die im Fisch-"
 "Applet angezeigte Animation verwendet wird, und zwar relativ zum Pixmap-"
-"Verzeichnis."
+"Ordner."
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
@@ -1019,7 +1050,7 @@ msgstr "Benachrichtigungsfeld"
 msgid "Notification Area Factory"
 msgstr "Fabrik des Benachrichtigungsfelds"
 
-#: ../applets/notification_area/main.c:239
+#: ../applets/notification_area/main.c:261
 msgid "Panel Notification Area"
 msgstr "Panel-Benachrichtigungsfeld"
 
@@ -1048,7 +1079,7 @@ msgid "Switch between workspaces"
 msgstr "Zwischen den Arbeitsflächen wechseln"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:610
+#: ../applets/wncklet/window-list.c:609
 msgid "Window List"
 msgstr "Fensterliste"
 
@@ -1062,7 +1093,7 @@ msgid "Window Selector"
 msgstr "Fensterwähler"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:625
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
 msgstr "Arbeitsflächenumschalter"
 
@@ -1102,7 +1133,7 @@ msgstr ""
 "Ihr Fenstermanager unterstützt den »Desktop anzeigen«-Knopf nicht oder Sie "
 "verwenden momentan keinen Fenstermanager."
 
-#: ../applets/wncklet/window-list.c:612
+#: ../applets/wncklet/window-list.c:611
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -1110,49 +1141,49 @@ msgstr ""
 "Die Fensterliste zeigt eine Liste aller Fenster an und lässt Sie zwischen "
 "diesen mittels einer Reihe von Knöpfen wechseln."
 
-#: ../applets/wncklet/window-list.glade.h:1
-msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>Wiederherstellen minimierter Fenster</b>"
-
-#: ../applets/wncklet/window-list.glade.h:2
-msgid "<b>Window Grouping</b>"
-msgstr "<b>Fenster gruppieren</b>"
-
-#: ../applets/wncklet/window-list.glade.h:3
-msgid "<b>Window List Content</b>"
-msgstr "<b>Inhalt der Fensterliste</b>"
-
 # missing accelerator
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
 msgstr "Fenster gruppieren, falls der _Platz begrenzt ist"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.ui.h:2
 msgid "Restore to current _workspace"
 msgstr "Auf _momentan sichtbarer Arbeitsfläche wiederherstellen"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.ui.h:3
 msgid "Restore to na_tive workspace"
 msgstr "Auf _ursprünglicher Arbeitsfläche wiederherstellen"
 
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "Wiederherstellen minimierter Fenster"
+
 # Ohne "befindlich" wird's zweideutig
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Auf momentan a_ktiver Arbeitsfläche befindliche Fenster anzeigen"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Auf a_llen Arbeitsfläche befindliche Fenster anzeigen"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "Fenster gruppieren"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "Inhalt der Fensterliste"
+
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
 msgstr "Einstellungen der Fensterliste"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "Fenster _immer gruppieren"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "Fenster _nie gruppieren"
 
@@ -1222,24 +1253,24 @@ msgstr ""
 "Der Fensterwähler zeigt eine Liste aller Fenster an und lässt Sie zwischen "
 "diesen mittels eines Menüs wechseln."
 
-#: ../applets/wncklet/workspace-switcher.c:215
-#: ../applets/wncklet/workspace-switcher.c:977
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "Zeilen"
 
-#: ../applets/wncklet/workspace-switcher.c:215
-#: ../applets/wncklet/workspace-switcher.c:977
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
 msgid "columns"
 msgstr "Spalten"
 
-#: ../applets/wncklet/workspace-switcher.c:489
+#: ../applets/wncklet/workspace-switcher.c:488
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »num_rows«-Wertes des Arbeitsflächenumschalters: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:500
+#: ../applets/wncklet/workspace-switcher.c:499
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -1247,14 +1278,14 @@ msgstr ""
 "Fehler beim Laden des »display_workspace_names«-Wertes des "
 "Arbeitsflächenumschalters: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:515
+#: ../applets/wncklet/workspace-switcher.c:514
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »display_all_workspaces«-Wertes des "
 "Arbeitsflächenumschalters: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:627
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1262,41 +1293,41 @@ msgstr ""
 "Der Arbeitsflächenumschalter zeigt eine Minitaturausgabe Ihrer "
 "Arbeitsflächen an, die es Ihnen ermöglicht, die Fenster zu verwalten."
 
-#: ../applets/wncklet/workspace-switcher.glade.h:1
-msgid "<b>Switcher</b>"
-msgstr "<b>Umschalter</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:2
-msgid "<b>Workspaces</b>"
-msgstr "<b>Arbeitsflächen</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
 msgstr "An_zahl der Arbeitsflächen:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.ui.h:2
 msgid "Show _all workspaces in:"
 msgstr "_Alle Arbeitsflächen anzeigen, und zwar in:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "Nur die _momentan sichtbare Arbeitsfläche anzeigen"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show workspace _names in switcher"
 msgstr "_Namen der Arbeitsflächen im Umschalter anzeigen"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "Switcher"
+msgstr "Umschalter"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "Workspace Names"
 msgstr "Namen der Arbeitsflächen"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Workspace Switcher Preferences"
 msgstr "Einstellungen des Arbeitsflächenumschalters"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Workspace na_mes:"
 msgstr "Na_men der Arbeitsflächen"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Workspaces"
+msgstr "Arbeitsflächen"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1391,7 +1422,7 @@ msgid "Cannot find an empty spot"
 msgstr "Es konnte kein Platz im Panel gefunden werden"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1627
 msgid "Drawer"
 msgstr "Schublade"
 
@@ -1407,7 +1438,7 @@ msgstr "Ei_genschaften"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:31
 msgid "Create new file in the given directory"
-msgstr "Eine neue Datei im angegebenen Verzeichnis anlegen"
+msgstr "Eine neue Datei im angegebenen Ordner anlegen"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:32
 msgid "[FILE...]"
@@ -1445,11 +1476,11 @@ msgstr "Panel"
 
 #: ../gnome-panel/launcher.c:118
 msgid "Could not show this URL"
-msgstr "Die URL konnte nicht angezeigt werden"
+msgstr "Diese Adresse konnte nicht angezeigt werden"
 
 #: ../gnome-panel/launcher.c:119
 msgid "No URL was specified."
-msgstr "Es wurde keine URL festgelegt"
+msgstr "Es wurde keine Adresse festgelegt"
 
 #: ../gnome-panel/launcher.c:227
 msgid "Could not use dropped item"
@@ -1474,9 +1505,9 @@ msgstr "_Starten"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Schlüssel %s ist nicht festgelegt; Starter kann nicht geladen werden\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
-#: ../gnome-panel/panel-ditem-editor.c:1384
-#: ../gnome-panel/panel-ditem-editor.c:1415
+#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1407
+#: ../gnome-panel/panel-ditem-editor.c:1441
+#: ../gnome-panel/panel-ditem-editor.c:1472
 msgid "Could not save launcher"
 msgstr "Starter konnte nicht gespeichert werden"
 
@@ -1484,23 +1515,23 @@ msgstr "Starter konnte nicht gespeichert werden"
 msgid "Replace a currently running panel"
 msgstr "Momentan laufendes Panel ersetzen"
 
-#: ../gnome-panel/menu.c:971
+#: ../gnome-panel/menu.c:913
 msgid "Add this launcher to _panel"
 msgstr "Als Starter zum _Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:978
+#: ../gnome-panel/menu.c:920
 msgid "Add this launcher to _desktop"
 msgstr "Als Starter zum _Desktop hinzufügen"
 
-#: ../gnome-panel/menu.c:990
+#: ../gnome-panel/menu.c:932
 msgid "_Entire menu"
 msgstr "_Gesamtes Menü"
 
-#: ../gnome-panel/menu.c:995
+#: ../gnome-panel/menu.c:937
 msgid "Add this as _drawer to panel"
 msgstr "Als _Schublade zum Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:1002
+#: ../gnome-panel/menu.c:944
 msgid "Add this as _menu to panel"
 msgstr "Als _Menü zum Panel hinzufügen"
 
@@ -1648,7 +1679,7 @@ msgstr "Anwendungsstarter …"
 msgid "Copy a launcher from the applications menu"
 msgstr "Einen Anwendungsstarter aus dem Anwendungsmenü kopieren"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
@@ -1683,31 +1714,31 @@ msgid "(empty)"
 msgstr "(leer)"
 
 #: ../gnome-panel/panel-addto.c:410
-#: ../libpanel-applet/panel-test-applets.c:250
+#: ../libpanel-applet/panel-test-applets.c:249
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Anfrage lieferte Ausnahmefehler %s\n"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1071
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Wählen Sie ein _Objekt, das zu »%s« hinzugefügt werden soll:"
 
-#: ../gnome-panel/panel-addto.c:1073
+#: ../gnome-panel/panel-addto.c:1075
 #, c-format
 msgid "Add to Drawer"
 msgstr "Zur Schublade hinzufügen"
 
-#: ../gnome-panel/panel-addto.c:1075
+#: ../gnome-panel/panel-addto.c:1077
 msgid "Find an _item to add to the drawer:"
 msgstr "Wählen Sie ein _Objekt, das zur Schublade hinzugefügt werden soll:"
 
-#: ../gnome-panel/panel-addto.c:1077
+#: ../gnome-panel/panel-addto.c:1079
 #, c-format
 msgid "Add to Panel"
 msgstr "Zum Panel hinzufügen"
 
-#: ../gnome-panel/panel-addto.c:1079
+#: ../gnome-panel/panel-addto.c:1081
 msgid "Find an _item to add to the panel:"
 msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
 
@@ -1800,83 +1831,81 @@ msgstr "Panel a_nlegen"
 msgid "A_bout Panels"
 msgstr "_Info zu den Panels"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:117
 msgid "Application"
 msgstr "Anwendung"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:119
 msgid "Application in Terminal"
 msgstr "Anwendung im Terminal"
 
-#: ../gnome-panel/panel-ditem-editor.c:120
+#: ../gnome-panel/panel-ditem-editor.c:121
 msgid "Location"
 msgstr "Ort"
 
 # CHECK
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:632
 msgid "_Name:"
 msgstr "_Name:"
 
-#: ../gnome-panel/panel-ditem-editor.c:637
+#: ../gnome-panel/panel-ditem-editor.c:640
+#: ../gnome-panel/panel-properties-dialog.c:286
 msgid "Browse icons"
 msgstr "Symbole durchsuchen"
 
-#: ../gnome-panel/panel-ditem-editor.c:655
+#: ../gnome-panel/panel-ditem-editor.c:658
 msgid "_Browse..."
 msgstr "_Durchsuchen …"
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:662
+#: ../gnome-panel/panel-ditem-editor.c:665
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1036
 msgid "Choose an application..."
 msgstr "Anwendung auswählen …"
 
-#: ../gnome-panel/panel-ditem-editor.c:1028
+#: ../gnome-panel/panel-ditem-editor.c:1040
 msgid "Choose a file..."
 msgstr "Datei auswählen …"
 
-#: ../gnome-panel/panel-ditem-editor.c:1153
+#: ../gnome-panel/panel-ditem-editor.c:1208
+#: ../gnome-panel/panel-ditem-editor.c:1217
 msgid "Comm_and:"
 msgstr "_Befehl:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1162
-msgid "_Command:"
-msgstr "_Befehl:"
-
-#: ../gnome-panel/panel-ditem-editor.c:1171
+#: ../gnome-panel/panel-ditem-editor.c:1226
 msgid "_Location:"
 msgstr "_Ort:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1408
 msgid "The name of the launcher is not set."
 msgstr "Der Name des Starters ist nicht gesetzt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1355
+#: ../gnome-panel/panel-ditem-editor.c:1412
 msgid "Could not save directory properties"
 msgstr "Ordner-Eigenschaften konnten nicht gespeichert werden"
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "The name of the directory is not set."
 msgstr "Der Name des Ordners ist nicht gesetzt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1429
 msgid "The command of the launcher is not set."
 msgstr "Der Befehl des Startes ist nicht gesetzt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1375
+#: ../gnome-panel/panel-ditem-editor.c:1432
 msgid "The location of the launcher is not set."
 msgstr "Der Ort des Starters ist nicht gesetzt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452
+#: ../gnome-panel/panel-ditem-editor.c:1509
 msgid "Could not display help document"
 msgstr "Ein Hilfedokument konnte nicht dargestellt werden"
 
@@ -1895,9 +1924,11 @@ msgstr "Das Beenden dieser Anwendung erzwingen?"
 
 #: ../gnome-panel/panel-force-quit.c:207
 msgid ""
-"If you choose to force an application to exit, any open documents in it will "
-"be lost."
-msgstr "Dabei gehen alle in dieser Anwendung geöffneten Dokumente verloren."
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Wenn Sie das Beenden einer Anwendung erzwingen, gehen die Änderungen in "
+"allen geöffneten Dokumenten verloren."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2003,7 +2034,7 @@ msgid ""
 msgstr ""
 "Eine Liste von Applet-IIDs, die das Panel ignoriert. Auf diese Weise können "
 "Sie verhindern, dass bestimmte Applets geladen oder im Menü angezeigt "
-"werden. Falls Sie beispielsweise das Mini-Commander-Applet deaktivieren "
+"werden. Falls Sie beispielsweise das Befehlszeilen-Applet deaktivieren "
 "möchten, so müssen Sie »OAFIID:GNOME_MiniCommanderApplet« zur Liste "
 "hinzufügen. Damit diese Einstellungen wirksam werden, muss das Panel neu "
 "gestartet werden."
@@ -2033,27 +2064,23 @@ msgid "Disable Force Quit"
 msgstr "Erzwungenes Beenden deaktivieren"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Lock Screen"
-msgstr "Sperren des Bildschirms deaktivieren"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
 msgstr "Abmelden deaktivieren"
 
-#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Animationen aktivieren"
 
-#: ../gnome-panel/panel-global.schemas.in.h:11
+#: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
 msgstr "Minihilfen aktivieren"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Highlight launchers on mouseover"
 msgstr "Starter hervorheben, wenn sich die Maus darüber befindet"
 
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -2061,7 +2088,7 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird ein Dialog angezeigt, der den Benutzer "
 "dazu auffordert, das Entfernen eines Panels zu bestätigen."
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -2069,14 +2096,14 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird eine Schublade automatisch "
 "geschlossen, sobald der Benutzer darin einen Starter anklickt."
 
-#: ../gnome-panel/panel-global.schemas.in.h:15
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, werden Starter hervorgehoben, wenn sich der "
 "Zeiger über ihnen befindet."
 
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2085,16 +2112,7 @@ msgstr ""
 "das Beenden einer Anwendung zu erzwingen. Dies wird durch das Entfernen des "
 "»Anwendung beenden«-Knopfes bewerkstelligt."
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
-msgstr ""
-"Falls dieser Schlüssel WAHR ist, erlaubt es das Panel dem Benutzer nicht, "
-"den Bildschirm zu sperren. Dies wird durch das Entfernen der »Bildschirm "
-"sperren«-Menüeinträge bewerkstelligt."
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -2103,7 +2121,7 @@ msgstr ""
 "sich abzumelden. Dies wird durch das Entfernen der »Abmelden«-Menüeinträge "
 "bewerkstelligt."
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -2114,11 +2132,20 @@ msgstr ""
 "gesperrt werden. Damit diese Einstellungen wirksam werden, muss das Panel "
 "neu gestartet werden."
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, werden für Panelobjekte Minihilfen "
 "angezeigt."
+
+#: ../gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Dieser Schlüssel ist veraltet, weil er nicht zur Implementation einer "
+"sauberen Sperrung verwendet werden kann. Stattdessen sollte der Schlüssel »/"
+"desktop/gnome/lockdown/disable_lock_screen« verwendet werden."
 
 #: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
@@ -2134,73 +2161,73 @@ msgstr ""
 "Das Aussehen der Arbeitsoberfläche und deren Verhalten anpassen, Hilfe "
 "erhalten oder abmelden"
 
-#: ../gnome-panel/panel-menu-bar.c:145
+#: ../gnome-panel/panel-menu-bar.c:147
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: ../gnome-panel/panel-menu-bar.c:351 ../gnome-panel/panel-menu-button.c:668
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
 msgid "_Edit Menus"
 msgstr "Menüs _bearbeiten"
 
-#: ../gnome-panel/panel-menu-items.c:432
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:454 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "»%s« öffnen"
 
-#: ../gnome-panel/panel-menu-items.c:522
+#: ../gnome-panel/panel-menu-items.c:529
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s konnte nicht auf Medienwechsel überprüft werden"
 
-#: ../gnome-panel/panel-menu-items.c:565
+#: ../gnome-panel/panel-menu-items.c:572
 #, c-format
 msgid "Rescan %s"
 msgstr "%s neu einlesen"
 
-#: ../gnome-panel/panel-menu-items.c:602
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s konnte nicht eingehängt werden"
 
-#: ../gnome-panel/panel-menu-items.c:665
+#: ../gnome-panel/panel-menu-items.c:672
 #, c-format
 msgid "Mount %s"
 msgstr "%s einhängen"
 
-#: ../gnome-panel/panel-menu-items.c:873
+#: ../gnome-panel/panel-menu-items.c:880
 msgid "Removable Media"
 msgstr "Wechselmedium"
 
-#: ../gnome-panel/panel-menu-items.c:960
+#: ../gnome-panel/panel-menu-items.c:967
 msgid "Network Places"
 msgstr "Netzwerkorte"
 
-#: ../gnome-panel/panel-menu-items.c:999
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1018
+#: ../gnome-panel/panel-menu-items.c:1025
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:1019
+#: ../gnome-panel/panel-menu-items.c:1026
 msgid "Open the contents of your desktop in a folder"
 msgstr "Den Desktop als Ordner öffnen"
 
-#: ../gnome-panel/panel-menu-items.c:1407
+#: ../gnome-panel/panel-menu-items.c:1417
 msgid "Places"
 msgstr "Orte"
 
-#: ../gnome-panel/panel-menu-items.c:1436
+#: ../gnome-panel/panel-menu-items.c:1446
 msgid "System"
 msgstr "System"
 
@@ -2209,7 +2236,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1517
+#: ../gnome-panel/panel-menu-items.c:1527
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2218,14 +2245,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1529
+#: ../gnome-panel/panel-menu-items.c:1539
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s abmelden …"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1533
+#: ../gnome-panel/panel-menu-items.c:1543
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -2250,7 +2277,7 @@ msgid ""
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird der Schlüssel »custom_icon« als "
-"benutzerdefiniertes Symbol für den Knopf verwende. Falls dieser Schlüssel "
+"benutzerdefiniertes Symbol für den Knopf verwendet. Falls dieser Schlüssel "
 "FALSCH ist, wird der Schlüssel »custom_icon« ignoriert. Dieser Schlüssel "
 "kommt ausschließlich zum Tragen, falls der Objekttypschlüssel »object_type« "
 "»menu-object« oder »drawer-object« ist."
@@ -2446,142 +2473,142 @@ msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Fehler beim Ermitteln des booleschen GConf-Wertes %s: %s"
 
 #: ../gnome-panel/panel-properties-dialog.c:128
-#: ../libpanel-applet/panel-test-applets.c:54
+#: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Oben"
 
 #: ../gnome-panel/panel-properties-dialog.c:129
-#: ../libpanel-applet/panel-test-applets.c:55
+#: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Unten"
 
 #: ../gnome-panel/panel-properties-dialog.c:130
-#: ../libpanel-applet/panel-test-applets.c:56
+#: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Links"
 
 #: ../gnome-panel/panel-properties-dialog.c:131
-#: ../libpanel-applet/panel-test-applets.c:57
+#: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Rechts"
 
-#: ../gnome-panel/panel-properties-dialog.c:949
+#: ../gnome-panel/panel-properties-dialog.c:952
 msgid "Drawer Properties"
 msgstr "Schubladen-Eigenschaften"
 
-#: ../gnome-panel/panel-properties-dialog.c:1057
-#: ../gnome-panel/panel-run-dialog.c:1928
+#: ../gnome-panel/panel-properties-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
-msgid "Unable to load file '%s'."
-msgstr "Die Datei »%s« konnte nicht geladen werden"
+msgid "Unable to load file '%s': %s."
+msgstr "Die Datei »%s« konnte nicht geladen werden: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1062
+#: ../gnome-panel/panel-properties-dialog.c:1073
 msgid "Could not display properties dialog"
 msgstr "Der Eigenschaften-Dialog konnte nicht angezeigt werden"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:2
+#: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "<small>Opaque</small>"
 msgstr "<small>Deckend</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:3
+#: ../gnome-panel/panel-properties-dialog.ui.h:3
 msgid "<small>Transparent</small>"
 msgstr "<small>Transparent</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:4
 msgid "Arro_ws on hide buttons"
 msgstr "_Pfeile auf Verbergen-Knöpfen anzeigen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
 msgid "Background _image:"
 msgstr "Hintergrund_bild:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:7
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
 msgid "Co_lor:"
 msgstr "_Farbe:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:8
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
 msgid "E_xpand"
 msgstr "Aus_dehnen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:10
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
 msgid "Image Background Details"
 msgstr "Details zum Bildhintergrund"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:11
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
 msgid "Panel Properties"
 msgstr "Panel-Eigenschaften"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:12
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
 msgid "Pick a color"
 msgstr "Wählen Sie eine Farbe"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:13
+#: ../gnome-panel/panel-properties-dialog.ui.h:13
 msgid "Rotate image when panel is _vertical"
 msgstr "Bild auf vertikalen Panels _drehen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
 msgid "S_tyle:"
 msgstr "_Stil:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:15
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
 msgid "Select background"
 msgstr "Hintergrund auswählen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:16
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
 msgid "Show hide _buttons"
 msgstr "Verbergen-_Knöpfe anzeigen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:17
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
 msgid "Solid c_olor"
 msgstr "_Einfärben"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:18
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
 msgid "Some of these properties are locked down"
 msgstr "Einige dieser Eigenschaften sind gesperrt"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:19
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "St_retch"
 msgstr "St_recken"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:20
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
 msgid "_Autohide"
 msgstr "Auto-_Verbergen"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
 msgid "_Icon:"
 msgstr "_Symbol:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "_None (use system theme)"
 msgstr "_Keiner (System-Thema verwenden)"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:23
-#: ../libpanel-applet/panel-test-applets.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../libpanel-applet/panel-test-applets.ui.h:4
 msgid "_Orientation:"
 msgstr "_Ausrichtung:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:25
-#: ../libpanel-applet/panel-test-applets.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../libpanel-applet/panel-test-applets.ui.h:6
 msgid "_Size:"
 msgstr "_Größe:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Kacheln"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:27
 msgid "pixels"
 msgstr "Pixel"
 
@@ -2609,7 +2636,7 @@ msgstr ""
 "• Alle Einträge im Menü Orte → Zuletzt geöffnete Dokumente.\n"
 "• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
-#: ../gnome-panel/panel-recent.c:161 ../gnome-panel/panel-recent.c:235
+#: ../gnome-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
@@ -2617,47 +2644,51 @@ msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 msgid "Recent Documents"
 msgstr "Zuletzt geöffnete Dokumente"
 
+#: ../gnome-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "Liste der zuletzt geöffneten Dokumente löschen …"
+
 #: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
-#: ../gnome-panel/panel-run-dialog.c:325
+#: ../gnome-panel/panel-run-dialog.c:391
 #, c-format
 msgid "Could not run command '%s'"
-msgstr "Befehl »%s« konnte nicht gestartet werden"
+msgstr "Befehl »%s« konnte nicht ausgeführt werden"
 
-#: ../gnome-panel/panel-run-dialog.c:378
+#: ../gnome-panel/panel-run-dialog.c:444
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "»%s« konnte nicht aus UTF-8 konvertiert werden"
 
-#: ../gnome-panel/panel-run-dialog.c:1186
+#: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
 msgstr "Wählen Sie eine an den Befehl anzuhängende Datei …"
 
-#: ../gnome-panel/panel-run-dialog.c:1562
-#: ../gnome-panel/panel-run-dialog.glade.h:10
+#: ../gnome-panel/panel-run-dialog.c:1634
+#: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Wählen Sie eine Anwendung, um ihre Beschreibung anzuzeigen."
 
-#: ../gnome-panel/panel-run-dialog.c:1600
+#: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Den Befehl »%s« ausführen"
 
-#: ../gnome-panel/panel-run-dialog.c:1631
+#: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Die mit dem »Ausführen«-Dialog übergebene URI-Liste hat ein falsches Format (%"
 "d) oder eine falsche Länge (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1932
+#: ../gnome-panel/panel-run-dialog.c:2024
 msgid "Could not display run dialog"
 msgstr "Der »Ausführen«-Dialog konnte nicht angezeigt werden"
 
 # CHECK - semantisch fragwürdig
-#: ../gnome-panel/panel-run-dialog.glade.h:1
+#: ../gnome-panel/panel-run-dialog.ui.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
@@ -2665,7 +2696,7 @@ msgstr ""
 "Klicken Sie auf diesen Knopf, um eine Datei auszuwählen, deren Name an die "
 "Befehlszeichenkette angehängt werden soll."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:2
+#: ../gnome-panel/panel-run-dialog.ui.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2673,49 +2704,41 @@ msgstr ""
 "Klicken Sie auf diesen Knopf, um die gewählte Anwendung oder den Befehl im "
 "Befehlseintragfeld auszuführen."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:3
-msgid "Command entry"
-msgstr "Befehlseintrag"
-
-#: ../gnome-panel/panel-run-dialog.glade.h:4
+#: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
 msgstr "Befehlssymbol"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:5
-msgid "Enter a command string here to run it."
-msgstr "Geben Sie hier einen Befehl ein, um ihn auszuführen."
-
-#: ../gnome-panel/panel-run-dialog.glade.h:6
+#: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "List of known applications"
 msgstr "Liste bekannter Anwendungen"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:7
+#: ../gnome-panel/panel-run-dialog.ui.h:5
 msgid "Run Application"
 msgstr "Anwendung ausführen"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:8
+#: ../gnome-panel/panel-run-dialog.ui.h:6
 msgid "Run in _terminal"
 msgstr "Im _Terminal ausführen"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:9
+#: ../gnome-panel/panel-run-dialog.ui.h:7
 msgid "Run with _file..."
 msgstr "Mit _Datei ausführen …"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:11
+#: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr ""
 "Kreuzen Sie dieses Feld an, um den Befehl in einem Terminal-Fenster "
 "auszuführen."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:12
+#: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
 msgstr "Liste bekannter _Anwendungen anzeigen"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:13
+#: ../gnome-panel/panel-run-dialog.ui.h:11
 msgid "The icon of the command to be run."
 msgstr "Das Symbol des auszuführenden Befehls."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:14
+#: ../gnome-panel/panel-run-dialog.ui.h:12
 #: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Run"
 msgstr "Aus_führen"
@@ -2732,73 +2755,73 @@ msgstr "_Löschen"
 msgid "D_on't Delete"
 msgstr "_Nicht löschen"
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1188
 msgid "Hide Panel"
 msgstr "Panel verbergen"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Expanded Edge Panel"
 msgstr "Oberes Kanten-Panel, ausgedehnt"
 
-#: ../gnome-panel/panel-toplevel.c:1589
+#: ../gnome-panel/panel-toplevel.c:1599
 msgid "Top Centered Panel"
 msgstr "Oberes Panel, zentriert"
 
-#: ../gnome-panel/panel-toplevel.c:1590
+#: ../gnome-panel/panel-toplevel.c:1600
 msgid "Top Floating Panel"
 msgstr "Oberes Panel, freischwebend"
 
-#: ../gnome-panel/panel-toplevel.c:1591
+#: ../gnome-panel/panel-toplevel.c:1601
 msgid "Top Edge Panel"
 msgstr "Oberes Kanten-Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Expanded Edge Panel"
 msgstr "Unteres Kanten-Panel, ausgedehnt"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1606
 msgid "Bottom Centered Panel"
 msgstr "Unteres Panel, zentriert"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1607
 msgid "Bottom Floating Panel"
 msgstr "Unteres Panel, freischwebend"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1608
 msgid "Bottom Edge Panel"
 msgstr "Unteres Kanten-Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Expanded Edge Panel"
 msgstr "Linkes Kanten-Panel, ausgedehnt"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1613
 msgid "Left Centered Panel"
 msgstr "Linkes Panel, zentriert"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1614
 msgid "Left Floating Panel"
 msgstr "Linkes Panel, freischwebend"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1615
 msgid "Left Edge Panel"
 msgstr "Linkes Kanten-Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Expanded Edge Panel"
 msgstr "Rechtes Kanten-Panel, ausgedehnt"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1620
 msgid "Right Centered Panel"
 msgstr "Rechtes Panel, zentriert"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1621
 msgid "Right Floating Panel"
 msgstr "Rechtes Panel, freischwebend"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1622
 msgid "Right Edge Panel"
 msgstr "Rechtes Kanten-Panel"
 
@@ -2875,7 +2898,7 @@ msgid ""
 "happening instantly."
 msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird das Anzeigen/Verbergen dieses Panels "
-"animiert. Andernfalls wird das Panel unverzüglich angezeigt/verborgen."
+"animiert. Anderenfalls wird das Panel unverzüglich angezeigt/verborgen."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2958,7 +2981,7 @@ msgid ""
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
 "In einer Xinerama-Umgebung ist es möglich, monitorspezifische Panels "
-"anzulegen. Dieser Schlüssel identifiziert den Panel, auf dem das Panel "
+"anzulegen. Dieser Schlüssel identifiziert den Bildschirm, auf dem das Panel "
 "momentan angezeigt wird."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
@@ -3054,7 +3077,7 @@ msgstr ""
 "Die Höhe des Panels (Breite bei vertikalen Panels). Das Panel legt auf Basis "
 "der Schriftgröße und anderer Indikatoren beim Ausführen eine minimale Größe "
 "fest. Die maximale Größe ist auf ein Viertel der Bildschirmhöhe (bzw. -"
-"breite) limitiert."
+"breite) begrenzt."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -3068,7 +3091,7 @@ msgstr ""
 "Die Position des Panels auf der X-Achse, beginnend rechts vom Bildschirm. "
 "Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »x« "
 "verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
-"»x« ignoriert. Dieser Schlüssel kommt ausschließlich im nichtausgedehnten "
+"»x« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht ausgedehnten "
 "Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
 "das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
 "platziert."
@@ -3080,7 +3103,7 @@ msgid ""
 "at the screen edge specified by the orientation key."
 msgstr ""
 "Die Position des Panels auf der X-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nichtausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
+"ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
 "wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
 "»orientation« angegebenen Bildschirmkante platziert."
 
@@ -3096,7 +3119,7 @@ msgstr ""
 "Die Position des Panels auf der Y-Achse, beginnend unten vom Bildschirm. "
 "Falls dieser Wert -1 ist, wird er ignoriert und der Wert des Schlüssels »y« "
 "verwendet. Falls dieser Wert größer als 0 ist, wird der Wert des Schlüssels "
-"»y« ignoriert. Dieser Schlüssel kommt ausschließlich im nichtausgedehnten "
+"»y« ignoriert. Dieser Schlüssel kommt ausschließlich im nicht ausgedehnten "
 "Modus zum Tragen. Im ausgedehnten Modus wird dieser Schlüssel ignoriert und "
 "das Panel an der vom Schlüssel »orientation« angegebenen Bildschirmkante "
 "platziert."
@@ -3108,7 +3131,7 @@ msgid ""
 "at the screen edge specified by the orientation key."
 msgstr ""
 "Die Position des Panels auf der Y-Achse. Dieser Schlüssel kommt "
-"ausschließlich im nichtausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
+"ausschließlich im nicht ausgedehnten Modus zum Tragen. Im ausgedehnten Modus "
 "wird dieser Schlüssel ignoriert und das Panel an der vom Schlüssel "
 "»orientation« angegebenen Bildschirmkante platziert."
 
@@ -3244,7 +3267,7 @@ msgstr "%1$s: %2$s"
 #: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
-msgstr "URL öffnen: %s"
+msgstr "Adresse öffnen: %s"
 
 #: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
@@ -3282,80 +3305,134 @@ msgstr "Bonobo-Testapplet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test-Bonobo-Applet-Fabrik"
 
-#: ../libpanel-applet/panel-test-applets.c:35
+#: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify an applet IID to load"
 msgstr "Eine zu ladende Applet-IID angeben"
 
-#: ../libpanel-applet/panel-test-applets.c:36
+#: ../libpanel-applet/panel-test-applets.c:35
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 "Einen GConf-Speicherort angeben, an dem die Applet-Einstellungen gespeichert "
 "werden sollen"
 
-#: ../libpanel-applet/panel-test-applets.c:37
+#: ../libpanel-applet/panel-test-applets.c:36
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 "Die anfängliche Größe des Applets angeben (xx-small, medium, large etc.)"
 
-#: ../libpanel-applet/panel-test-applets.c:38
+#: ../libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Die anfängliche Ausrichtung des Applets angeben (top, bottom, left or right)"
 
-#: ../libpanel-applet/panel-test-applets.c:62
+#: ../libpanel-applet/panel-test-applets.c:61
 msgctxt "Size"
 msgid "XX Small"
 msgstr "Extrem klein"
 
-#: ../libpanel-applet/panel-test-applets.c:63
+#: ../libpanel-applet/panel-test-applets.c:62
 msgctxt "Size"
 msgid "X Small"
 msgstr "Sehr klein"
 
-#: ../libpanel-applet/panel-test-applets.c:64
+#: ../libpanel-applet/panel-test-applets.c:63
 msgctxt "Size"
 msgid "Small"
 msgstr "Klein"
 
-#: ../libpanel-applet/panel-test-applets.c:65
+#: ../libpanel-applet/panel-test-applets.c:64
 msgctxt "Size"
 msgid "Medium"
 msgstr "Mittel"
 
-#: ../libpanel-applet/panel-test-applets.c:66
+#: ../libpanel-applet/panel-test-applets.c:65
 msgctxt "Size"
 msgid "Large"
 msgstr "Groß"
 
-#: ../libpanel-applet/panel-test-applets.c:67
+#: ../libpanel-applet/panel-test-applets.c:66
 msgctxt "Size"
 msgid "X Large"
 msgstr "Sehr groß"
 
-#: ../libpanel-applet/panel-test-applets.c:68
+#: ../libpanel-applet/panel-test-applets.c:67
 msgctxt "Size"
 msgid "XX Large"
 msgstr "Extrem groß"
 
-#: ../libpanel-applet/panel-test-applets.c:130
+#: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Das Applet »%s« konnte nicht geladen werden"
 
 #. This is an utility to easily test various applets
-#: ../libpanel-applet/panel-test-applets.glade.h:2
+#: ../libpanel-applet/panel-test-applets.ui.h:2
 msgid "Test applet utility"
 msgstr "Test-Applet Dienstprogramme"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:3
+#: ../libpanel-applet/panel-test-applets.ui.h:3
 msgid "_Applet:"
 msgstr "_Applet:"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:5
+#: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
-msgstr "_Einstellungsverzeichnis:"
+msgstr "_Einstellungsordner:"
+
+#~ msgid "Failed to launch time configuration tool: %s"
+#~ msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
+
+#~ msgid ""
+#~ "Failed to locate a program for configuring the date and time. Perhaps "
+#~ "none is installed?"
+#~ msgstr ""
+#~ "Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
+#~ "Vermutlich ist keines installiert."
+
+#~ msgid "<b>Clock Options</b>"
+#~ msgstr "<b>Uhreinstellungen</b>"
+
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>Zeiteinstellungen</b>"
+
+#~ msgid "Time Settings"
+#~ msgstr "Zeiteinstellungen"
+
+#~ msgid ""
+#~ "This key specifies the program to run in order to configure the time."
+#~ msgstr ""
+#~ "Dieser Schlüssel gibt das zum Konfigurieren der Zeit auszuführende "
+#~ "Programm an."
+
+#~ msgid "<b>Animation</b>"
+#~ msgstr "<b>Animation</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Allgemein</b>"
+
+#~ msgid "<b>Workspaces</b>"
+#~ msgstr "<b>Arbeitsflächen</b>"
+
+#~ msgid "_Command:"
+#~ msgstr "_Befehl:"
+
+#~ msgid "Disable Lock Screen"
+#~ msgstr "Sperren des Bildschirms deaktivieren"
+
+#~ msgid ""
+#~ "If true, the panel will not allow a user to lock their screen, by "
+#~ "removing access to the lock screen menu entries."
+#~ msgstr ""
+#~ "Falls dieser Schlüssel WAHR ist, erlaubt es das Panel dem Benutzer nicht, "
+#~ "den Bildschirm zu sperren. Dies wird durch das Entfernen der »Bildschirm "
+#~ "sperren«-Menüeinträge bewerkstelligt."
+
+#~ msgid "Command entry"
+#~ msgstr "Befehlseintrag"
+
+#~ msgid "Enter a command string here to run it."
+#~ msgstr "Geben Sie hier einen Befehl ein, um ihn auszuführen."
 
 #~ msgid "Error watching gconf key '%s': %s"
 #~ msgstr "Fehler beim Überwachen des GConf-Schlüssels »%s«: %s"
