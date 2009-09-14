@@ -1,3 +1,4 @@
+# translation of gnome-panel.master.ml.po to
 # translation of gnome-panel.HEAD.ml.po to
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -7,16 +8,16 @@
 # Praveen Arimbrathodiyil <pravi.a@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel.HEAD.ml\n"
+"Project-Id-Version: gnome-panel.master.ml\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
-"POT-Creation-Date: 2009-02-25 08:40+0000\n"
-"PO-Revision-Date: 2009-03-01 23:28-0800\n"
-"Last-Translator: Praveen Arimbrathodiyil <pravi.a@gmail.com>\n"
-"Language-Team: Malayalam <smc-discuss@googlegroups.com>\n"
+"POT-Creation-Date: 2009-08-12 11:04+0000\n"
+"PO-Revision-Date: 2009-09-14 20:44+0530\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.3\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -48,10 +49,8 @@ msgstr "_സംബന്ധിച്ച്"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285
-#: ../gnome-panel/panel-menu-bar.c:343
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
 #: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_സഹായം"
@@ -64,7 +63,7 @@ msgid "_Preferences"
 msgstr "_മുന്‍ഗണനകള്‍"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3800
+#: ../applets/clock/clock.c:3689
 msgid "Clock"
 msgstr "ഘടികാരം"
 
@@ -80,8 +79,7 @@ msgstr "ഘടികാരം ലഘുപ്രയോഗം ഉണ്ടാക�
 msgid "Get the current time and date"
 msgstr "ഇപ്പോഴത്തെ സമയവും തീയതിയും അറിയുക"
 
-#: ../applets/clock/calendar-window.c:242
-#: ../applets/clock/clock.c:452
+#: ../applets/clock/calendar-window.c:305 ../applets/clock/clock.c:448
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -90,61 +88,57 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244
-#: ../applets/clock/clock.c:454
-#: ../applets/clock/clock.c:1574
-#: ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:307 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: If the event did not start on the current day
 #. * we will display the start date in the most abbreviated way
 #. * possible.
-#: ../applets/clock/calendar-window.c:250
+#: ../applets/clock/calendar-window.c:313
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:846
 msgid "Tasks"
 msgstr "ജോലികള്‍ "
 
-#: ../applets/clock/calendar-window.c:773
-#: ../applets/clock/calendar-window.c:949
-#: ../applets/clock/calendar-window.c:1585
+#: ../applets/clock/calendar-window.c:846
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1658
 msgid "Edit"
 msgstr "മാറ്റം വരുത്തുക"
 
-#: ../applets/clock/calendar-window.c:894
+#: ../applets/clock/calendar-window.c:967
 msgid "All Day"
 msgstr "ദിവസം മുഴുവന്‍"
 
-#: ../applets/clock/calendar-window.c:1033
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "മുന്‍കൂട്ടി നിര്‍ണ്ണയിച്ച ജോലികള്‍ "
 
-#: ../applets/clock/calendar-window.c:1058
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "പിറന്നാളുകളും വാര്‍ഷികങ്ങളും "
 
-#: ../applets/clock/calendar-window.c:1083
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "കാലാവസ്ഥയുടെ വിവരങ്ങള്‍ "
 
-#: ../applets/clock/calendar-window.c:1585
-#: ../applets/clock/clock.glade.h:15
+#: ../applets/clock/calendar-window.c:1658 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "സ്ഥലങ്ങള്‍"
 
-#: ../applets/clock/calendar-window.c:1884
+#: ../applets/clock/calendar-window.c:1957
 msgid "Calendar"
 msgstr "കലണ്ടര്‍"
 
-#: ../applets/clock/clock.c:452
+#: ../applets/clock/clock.c:448
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:454
-#: ../applets/clock/clock.c:1572
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1572
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -153,7 +147,7 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:474
+#: ../applets/clock/clock.c:470
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -161,7 +155,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:481
+#: ../applets/clock/clock.c:477
 #, c-format
 msgid ""
 "%1$s\n"
@@ -174,7 +168,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:489
+#: ../applets/clock/clock.c:485
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -182,23 +176,23 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:671
+#: ../applets/clock/clock.c:667
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:701
+#: ../applets/clock/clock.c:697
 msgid "Click to hide your appointments and tasks"
 msgstr "നിങ്ങളുടെ സന്ദര്‍ശനസമയങ്ങളും ജോലികളും അദൃശ്യമാക്കുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:700
 msgid "Click to view your appointments and tasks"
 msgstr "നിങ്ങളുടെ സന്ദര്‍ശനസമയങ്ങളും ജോലികളും കാണുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/clock/clock.c:708
+#: ../applets/clock/clock.c:704
 msgid "Click to hide month calendar"
 msgstr "ഈ മാസത്തെ കലണ്ടര്‍ അദൃശ്യമാക്കുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
-#: ../applets/clock/clock.c:711
+#: ../applets/clock/clock.c:707
 msgid "Click to view month calendar"
 msgstr "ഈ മാസത്തെ കലണ്ടര്‍ കാണുന്നതിനായി ക്ലിക്ക് ചെയ്യുക"
 
@@ -218,195 +212,218 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1688
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "സമയം ക്രമീകരിക്കുന്ന ഉപകരണം പ്രവര്‍ത്തിപ്പിക്കുന്നതില്‍ പരാജയപ്പെട്ടു: %s"
-
-#: ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:1642
 msgid "Set System Time..."
 msgstr "സിസ്റ്റത്തിന്റെ സമയം ക്രമികരിക്കുക..."
 
-#: ../applets/clock/clock.c:1720
-#: ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1643
 msgid "Set System Time"
 msgstr "സിസ്റ്റത്തിന്റെ സമയം ക്രമികരിക്കുക"
 
-#: ../applets/clock/clock.c:1735
+#: ../applets/clock/clock.c:1658
 msgid "Failed to set the system time"
 msgstr "സിസ്റ്റത്തിന്റെ സമയം ക്രമികരിക്കുന്നതില്‍ പരാജയം"
 
-#: ../applets/clock/clock.c:1929
-msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
-msgstr "സമയവും തീയതിയും ക്രമീകരിക്കുന്നതിനുളള പ്രോഗ്രാം കണ്ടുപിടിക്കുന്നതില്‍ പരാജയപ്പെട്ടു. ഒന്നും ഇന്‍സ്റ്റോള്‍ ചെയ്തിട്ടുണ്ടാവില്ല?"
-
-#: ../applets/clock/clock.c:2861
+#: ../applets/clock/clock.c:2722
 msgid "Custom format"
 msgstr "രൂപം ഇഷ്ടമുളള വിധം തെരഞ്ഞെടുക്കുക"
 
-#: ../applets/clock/clock.c:3522
+#: ../applets/clock/clock.c:3180
+#| msgid "Location"
+msgid "Choose Location"
+msgstr "സ്ഥാനം തെരഞ്ഞെടുക്കുക"
+
+#: ../applets/clock/clock.c:3255
+#| msgid "Location"
+msgid "Edit Location"
+msgstr "സ്ഥാനം ചിട്ടപ്പെടുത്തുക"
+
+#: ../applets/clock/clock.c:3401
 msgid "City Name"
 msgstr "സിറ്റിയുടെ പേര്"
 
-#: ../applets/clock/clock.c:3526
+#: ../applets/clock/clock.c:3405
 msgid "City Time Zone"
 msgstr "സിറ്റിയുടെ സമയമേഘല"
 
-#: ../applets/clock/clock.c:3696
+#: ../applets/clock/clock.c:3585
 msgid "24 hour"
 msgstr "24 മണിക്കൂര്‍"
 
-#: ../applets/clock/clock.c:3697
+#: ../applets/clock/clock.c:3586
 msgid "UNIX time"
 msgstr "UNIX സമയം"
 
-#: ../applets/clock/clock.c:3698
+#: ../applets/clock/clock.c:3587
 msgid "Internet time"
 msgstr "ഇന്റര്‍നെറ്റ് സമയം"
 
-#: ../applets/clock/clock.c:3706
+#: ../applets/clock/clock.c:3595
 msgid "Custom _format:"
 msgstr "രൂപം ഇഷ്ടമുളള വിധം തെരഞ്ഞെടുക്കുക: (_f)"
 
-#: ../applets/clock/clock.c:3803
+#: ../applets/clock/clock.c:3692
 msgid "The Clock displays the current time and date"
 msgstr "ഘടികാരം ഇപ്പോഴത്തെ സമയവും തീയതിയും കാണിക്കുന്നു"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3806
-#: ../applets/fish/fish.c:613
+#: ../applets/clock/clock.c:3695 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
-#: ../applets/wncklet/showdesktop.c:531
-#: ../applets/wncklet/window-list.c:607
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
-#: ../applets/wncklet/workspace-switcher.c:622
+#: ../applets/wncklet/workspace-switcher.c:621
 #: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr "അനി പീറ്റര്‍ <peter.ani@gmail.com>"
 
-#: ../applets/clock/clock.glade.h:1
-msgid "<b>Clock Options</b>"
-msgstr "<b>ക്ലോക്ക് ഉപാധികള്‍</b>"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "<b>Display</b>"
-msgstr "<b>കാഴ്ച</b>"
-
-#: ../applets/clock/clock.glade.h:3
-msgid "<b>Panel Display</b>"
-msgstr "<b>പാളി ഡിസ്പ്ലെ</b>"
-
-#: ../applets/clock/clock.glade.h:4
-msgid "<b>Time Settings</b>"
-msgstr "<b>സമയ ക്രമികരണങ്ങള്‍</b>"
-
-#: ../applets/clock/clock.glade.h:5
+#: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
 msgstr "<i>(വേണമെങ്കില്‍)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.glade.h:7
-msgid "<small><i>Type a city, region, or country name and then select a match from the pop-up.</i></small>"
-msgstr "<small><i>ഒരു നഗരത്തിന്റെ, പ്രദേശത്തിന്റെ അല്ലെങ്കില്‍ രാജ്യത്തിന്റെ പേരു് അടിച്ചു് പൊങ്ങി വരുന്നവയില്‍ നിന്നും പൊരുത്തമുള്ളവ തെരഞ്ഞെടുക്കുക.</i></small>"
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>ഒരു നഗരത്തിന്റെ, പ്രദേശത്തിന്റെ അല്ലെങ്കില്‍ രാജ്യത്തിന്റെ പേരു് അടിച്ചു് പൊങ്ങി "
+"വരുന്നവയില്‍ നിന്നും പൊരുത്തമുള്ളവ തെരഞ്ഞെടുക്കുക.</i></small>"
 
-#: ../applets/clock/clock.glade.h:8
+#: ../applets/clock/clock.ui.h:4
+#| msgid "Custom format"
+msgid "Clock Format"
+msgstr "ക്ലോക്ക് മാതൃക"
+
+#: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
 msgstr "ഘടികാര മുന്‍ഗണനകള്‍"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.ui.h:6
 msgid "Current Time:"
 msgstr "നിലവിലുള്ള സമയം:"
 
-#: ../applets/clock/clock.glade.h:10
-msgid ""
-"East\n"
-"West"
-msgstr ""
-"കിഴക്ക്\n"
-"പടിഞ്ഞാറ്"
+#: ../applets/clock/clock.ui.h:7
+#| msgid "<b>Display</b>"
+msgid "Display"
+msgstr "കാഴ്ച"
 
-#: ../applets/clock/clock.glade.h:12
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
+#: ../applets/clock/clock.ui.h:8
+#| msgid ""
+#| "East\n"
+#| "West"
+msgid "East"
+msgstr "കിഴക്ക്"
+
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "സാര്‍വത്രികമായ"
 
-#: ../applets/clock/clock.glade.h:13
-msgid "Latitude:"
-msgstr "ലാറ്റിറ്റ്യൂഡ്:"
+#: ../applets/clock/clock.ui.h:10
+#| msgid "Latitude:"
+msgid "L_atitude:"
+msgstr "_ലാറ്റിറ്റ്യൂഡ്:"
 
-#: ../applets/clock/clock.glade.h:14
-msgid "Location Name:"
-msgstr "സ്ഥല പേര്:"
+#: ../applets/clock/clock.ui.h:11
+#| msgid "Longitude:"
+msgid "L_ongitude:"
+msgstr "_ലോങ്റ്റിറ്റ്യൂഡ്:"
 
-#: ../applets/clock/clock.glade.h:16
-msgid "Longitude:"
-msgstr "ലോങ്റ്റിറ്റ്യൂഡ്:"
+#: ../applets/clock/clock.ui.h:13
+#| msgid ""
+#| "North\n"
+#| "South"
+msgid "North"
+msgstr "തെക്ക്"
 
-#: ../applets/clock/clock.glade.h:17
-msgid ""
-"North\n"
-"South"
-msgstr ""
-"വടക്ക\n"
-"തെക്ക്"
+#: ../applets/clock/clock.ui.h:14
+#| msgid "<b>Panel Display</b>"
+msgid "Panel Display"
+msgstr "പാനല്‍ ഡിസ്പ്ലെ"
 
-#: ../applets/clock/clock.glade.h:20
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
 msgstr "_താപനില കാണിക്കുക"
 
-#: ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.ui.h:16
 msgid "Show _weather"
 msgstr "_കാലാവസ്ഥ കാണിക്കുക"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.ui.h:17
 msgid "Show seco_nds"
 msgstr "സെ_ക്കന്‍ഡുകള്‍റുകള്‍ കാണിക്കുക "
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.ui.h:18
 msgid "Show the _date"
 msgstr "_തീയതി കാണിക്കുക"
 
-#: ../applets/clock/clock.glade.h:24
-msgid "Time Settings"
-msgstr "സമയ ക്രമികരണങ്ങള്‍"
+#: ../applets/clock/clock.ui.h:19
+#| msgid ""
+#| "North\n"
+#| "South"
+msgid "South"
+msgstr "വടക്ക്"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr ""
+
+#: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
 msgstr "സമയ ക്രമി_കരണങ്ങള്‍"
 
-#: ../applets/clock/clock.glade.h:26
-msgid "Time:"
-msgstr "സമയം:"
-
-#: ../applets/clock/clock.glade.h:27
-msgid "Timezone:"
-msgstr "സമയമേഘല:"
-
-#: ../applets/clock/clock.glade.h:28
+#: ../applets/clock/clock.ui.h:22
 msgid "Weather"
 msgstr "കാലാവസ്ഥ"
 
-#: ../applets/clock/clock.glade.h:29
+#: ../applets/clock/clock.ui.h:23
+#| msgid ""
+#| "East\n"
+#| "West"
+msgid "West"
+msgstr "പടിഞ്ഞാറ്"
+
+#: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
 msgstr "12 _മണിക്കൂര്‍ സമയരൂപം"
 
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.ui.h:25
 msgid "_24 hour format"
 msgstr "24 മ_ണിക്കൂര്‍ സമയരൂപം"
 
-#: ../applets/clock/clock.glade.h:31
+#: ../applets/clock/clock.ui.h:26
+#| msgid "Location Name:"
+msgid "_Location Name:"
+msgstr "_സ്ഥല പേര്:"
+
+#: ../applets/clock/clock.ui.h:27
 msgid "_Pressure unit:"
 msgstr "_പ്രഷര്‍ യൂണിറ്റ്:"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.ui.h:28
+#| msgid "Set System Time"
+msgid "_Set System Time"
+msgstr "സിസ്റ്റത്തിന്റെ സമയം _ക്രമീകരിക്കുക"
+
+#: ../applets/clock/clock.ui.h:29
 msgid "_Temperature unit:"
 msgstr "_താപനില യൂണിറ്റ്:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.ui.h:30
+#| msgid "Time:"
+msgid "_Time:"
+msgstr "_സമയം:"
+
+#: ../applets/clock/clock.ui.h:31
+#| msgid "Timezone:"
+msgid "_Timezone:"
+msgstr "_സമയമേഘല:"
+
+#: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
 msgstr "_വിസിബിളിറ്റ് യൂണിറ്റ്:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.ui.h:33
 msgid "_Wind speed unit:"
 msgstr "_കാറ്റിന്റെ വേഗത:"
 
@@ -474,7 +491,9 @@ msgstr "ശരി (ട്രൂ) എങ്കില്‍, സമയം യൂ�
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "ശരി (ട്രൂ) എങ്കില്‍, കലണ്ടര്‍ രീതിയിലുളള കാഴ്ചയില്‍ മുന്‍കൂട്ടി നിശ്ചയിച്ച ജോലികളുടെ പട്ടിക വലുതാക്കുക."
+msgstr ""
+"ശരി (ട്രൂ) എങ്കില്‍, കലണ്ടര്‍ രീതിയിലുളള കാഴ്ചയില്‍ മുന്‍കൂട്ടി നിശ്ചയിച്ച ജോലികളുടെ പട്ടിക "
+"വലുതാക്കുക."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of birthdays in the calendar window."
@@ -549,20 +568,48 @@ msgid "The unit to use when showing wind speed."
 msgstr "കാറ്റിന്റെ വേഗത കാണിക്കുന്ന യൂണിറ്റ്"
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
-msgstr "'format' കീയ്ക്കു് മുന്‍തൂക്കം കൊടുത്തു് ഗ്നോം 2.6 ല്‍ ഈ കീ നിരുത്സാഹപ്പെടുത്തിയിരിയ്ക്കുന്നു. പഴയ പതിപ്പുകളുമായി പൊരുത്തത്തിനാണു് ഈ സ്കീമ കാത്തു് സൂക്ഷിച്ചിരിയ്ക്കുന്നതു്."
+#| msgid ""
+#| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#| "key. The schema is retained for compatibility with older versions."
+msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"ഒരു ആന്തരിക സമയ ക്രമീകരണ പ്രയോഗമുപയോഗിച്ചു് ഗ്നോം 2.22-ല്‍ ഈ കീയുടെ ഉപയോഗം "
+"നിരുത്സാഹപ്പെടുത്തിയിരിയ്ക്കുന്നു. പഴയ പതിപ്പുകളുമായി പൊരുത്തത്തിനാണു് ഈ സ്കീമ കാത്തു് "
+"സൂക്ഷിച്ചിരിയ്ക്കുന്നതു്."
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
-msgstr "\"custom\" എന്നതിലേയ്ക്കു് format കീ വച്ചിട്ടുണ്ടെങ്കില്‍ ഘടികാര ലഘുപ്രയോഗം ഉപയഗിയ്ക്കുന്ന ഫോര്‍മാറ്റ് ഈ കൂ വ്യക്തമാക്കുന്നു. strftime() നു് മനസ്സിലാകുന്ന മാറ്റാനുള്ള അടയാളങ്ങള്‍ ഒരു പ്രത്യേക ഫോര്‍മാറ്റ് ലഭ്യമാകാന്‍ നിങ്ങള്‍ക്കുപയോഗിയ്ക്കാം. കൂടുതല്‍ വിവരത്തിനു് strftime() മാനുവലില്‍ നോക്കുക.േ"
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"'format' കീയ്ക്കു് മുന്‍തൂക്കം കൊടുത്തു് ഗ്നോം 2.6 ല്‍ ഈ കീ നിരുത്സാഹപ്പെടുത്തിയിരിയ്ക്കുന്നു. പഴയ "
+"പതിപ്പുകളുമായി പൊരുത്തത്തിനാണു് ഈ സ്കീമ കാത്തു് സൂക്ഷിച്ചിരിയ്ക്കുന്നതു്."
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
 msgstr ""
+"\"custom\" എന്നതിലേയ്ക്കു് format കീ വച്ചിട്ടുണ്ടെങ്കില്‍ ഘടികാര ലഘുപ്രയോഗം ഉപയഗിയ്ക്കുന്ന "
+"ഫോര്‍മാറ്റ് ഈ കൂ വ്യക്തമാക്കുന്നു. strftime() നു് മനസ്സിലാകുന്ന മാറ്റാനുള്ള അടയാളങ്ങള്‍ ഒരു പ്രത്യേക "
+"ഫോര്‍മാറ്റ് ലഭ്യമാകാന്‍ നിങ്ങള്‍ക്കുപയോഗിയ്ക്കാം. കൂടുതല്‍ വിവരത്തിനു് strftime() മാനുവലില്‍ നോക്കുക.േ"
 
 #: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the program to run in order to configure the time."
-msgstr "സമയം ക്രമീകരിക്കുന്നതിനായി പ്രവര്‍ത്തിപ്പിക്കേണ്ട പ്രോഗ്രാം ഏതെന്ന് വ്യക്തമാക്കുന്ന കീ ആണിത്."
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -593,9 +640,8 @@ msgid "<small>Set</small>"
 msgstr "<small>ക്രമികരിക്കുക</small>"
 
 #: ../applets/clock/clock-location-tile.c:317
-#, fuzzy
 msgid "Set location as current location and use its timezone for this computer"
-msgstr "ഈ കംപ്യൂട്ടറിന് നിലവിലുള്ള സമയമേഘല ആയി ക്രമികരിക്കുക"
+msgstr "നിലവിലുള്ള സ്ഥാനം കമ്പ്യൂട്ടറിന്റെ സ്ഥാനവും നിലവിലുള്ള സമയമേഘല ഇതിന്റെ സമയമേഘലമായും ക്രമീകരിക്കുക"
 
 #. translators: This is a strftime format string that is used for formatting
 #. * the time that is displayed for locations in the popup. This string is used
@@ -647,18 +693,15 @@ msgstr "%s, %s പോലെ തോന്നുന്നു"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "സൂര്യോദയം: %s / സൂര്യാസ്തമയം: %s"
 
-#: ../applets/clock/clock-utils.c:93
-#: ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:94
-#: ../applets/wncklet/wncklet.c:123
-#: ../gnome-panel/libpanel-util/panel-show.c:235, c-format
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
+#: ../gnome-panel/libpanel-util/panel-show.c:235
+#, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' സഹായ പ്രമാണം പ്രദര്‍ശിപ്പിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../applets/clock/clock-utils.c:122
-#: ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:115
-#: ../applets/wncklet/wncklet.c:152
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "സഹായത്തിനുളള രേഖ പ്രദര്‍ശിപ്പിക്കുന്നതില്‍ പിശകു്"
 
@@ -691,7 +734,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "നീന്തുന്ന മത്സ്യമോ ചലിക്കുന്ന മറ്റൊരു ജീവിയോ പ്രദര്‍ശിപ്പിക്കുക"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:607
+#: ../applets/fish/fish.c:617
 msgid "Fish"
 msgstr "മീന്‍"
 
@@ -703,7 +746,7 @@ msgstr "ആ പൊട്ട മീന്‍ എവിടെ നിന്നു�
 msgid "Wanda Factory"
 msgstr "വാണ്ട ശാല"
 
-#: ../applets/fish/fish.c:274
+#: ../applets/fish/fish.c:273
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -712,41 +755,43 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 
-#: ../applets/fish/fish.c:461
+#: ../applets/fish/fish.c:471
 msgid "Images"
 msgstr "രൂപങ്ങള്‍"
 
-#: ../applets/fish/fish.c:575
-#: ../applets/fish/fish.c:641
-#: ../applets/fish/fish.c:757
+#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:767
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s എന്ന മീന്‍"
 
-#: ../applets/fish/fish.c:576
+#: ../applets/fish/fish.c:586
 #, c-format
-msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
 msgstr ""
 
-#: ../applets/fish/fish.c:600
+#: ../applets/fish/fish.c:610
 msgid "(with minor help from George)"
 msgstr "(ജോര്‍ജിന്റെ ചെറിയേ സഹായത്തോടെ)"
 
-#: ../applets/fish/fish.c:642
+#: ../applets/fish/fish.c:652
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s എന്ന മീന്‍"
 
-#: ../applets/fish/fish.c:713
+#: ../applets/fish/fish.c:723
 msgid "Unable to locate the command to execute"
 msgstr "പ്രവര്‍ത്തിപ്പിക്കുവാനുളള നിര്‍ദ്ദേശം കണ്ടെത്താന്‍ കഴിഞ്ഞില്ല"
 
-#: ../applets/fish/fish.c:762
+#: ../applets/fish/fish.c:772
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s എന്ന മീന്‍ പറയുന്നു:"
 
-#: ../applets/fish/fish.c:831
+#: ../applets/fish/fish.c:841
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -757,16 +802,16 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:896
+#: ../applets/fish/fish.c:906
 msgid "_Speak again"
 msgstr "വീണ്ടും _സംസാരിക്കുക"
 
-#: ../applets/fish/fish.c:979
+#: ../applets/fish/fish.c:989
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "ക്രമീകരിച്ച നിര്‍ദ്ദേശം പ്രവര്‍ത്തിക്കാത്തതിനാല്‍ പകരം മറ്റൊന്ന്: %s"
 
-#: ../applets/fish/fish.c:1002
+#: ../applets/fish/fish.c:1012
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -777,7 +822,7 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:1018
+#: ../applets/fish/fish.c:1028
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -788,74 +833,72 @@ msgstr ""
 "\n"
 "വിശദീകരണം: %s"
 
-#: ../applets/fish/fish.c:1643
+#: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
 msgstr "മാറ്റം ആവശ്യമാണ്"
 
-#: ../applets/fish/fish.c:1645
+#: ../applets/fish/fish.c:1655
 msgid "Look at today's date!"
 msgstr "ഇന്നത്തെ തീയതി കാണുക!"
 
-#: ../applets/fish/fish.c:1738
+#: ../applets/fish/fish.c:1748
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s മീന്‍ എന്ന പ്രവാചകി"
 
-#: ../applets/fish/fish.glade.h:1
-#: ../gnome-panel/panel-properties-dialog.glade.h:1
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.glade.h:2
-msgid "<b>Animation</b>"
-msgstr "<b>നീക്കം</b>"
+#: ../applets/fish/fish.ui.h:2
+#| msgid "Animation speed"
+msgid "Animation"
+msgstr "ആനിമേഷന്‍"
 
-#: ../applets/fish/fish.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>സാധാരണ</b>"
-
-#: ../applets/fish/fish.glade.h:4
+#: ../applets/fish/fish.ui.h:3
 msgid "Co_mmand to run when clicked:"
 msgstr "ക്ലിക്ക് ചെയ്യുമ്പോള്‍ പ്രവര്‍ത്തിക്കേണ്ട നിര്‍ദ്ദേശം: (_m)"
 
-#: ../applets/fish/fish.glade.h:5
+#: ../applets/fish/fish.ui.h:4
 msgid "Fish Preferences"
 msgstr "മീനിനുള്ള മുന്‍ഗണനകള്‍"
 
-#: ../applets/fish/fish.glade.h:6
+#: ../applets/fish/fish.ui.h:6
 msgid "Select an animation"
 msgstr "ഒരു നീക്കം തെരഞ്ഞെടുക്കുക"
 
-#: ../applets/fish/fish.glade.h:7
+#: ../applets/fish/fish.ui.h:7
 msgid "_File:"
 msgstr "_ഫയല്‍:"
 
-#: ../applets/fish/fish.glade.h:8
+#: ../applets/fish/fish.ui.h:8
 msgid "_Name of fish:"
 msgstr "മീനിന്റെ _പേര്:"
 
-#: ../applets/fish/fish.glade.h:9
+#: ../applets/fish/fish.ui.h:9
 msgid "_Pause per frame:"
 msgstr "ഓരോ ഫ്രെയിമിലും _താല്‍കാലികമായി നിര്‍ത്തുക:"
 
-#: ../applets/fish/fish.glade.h:10
+#: ../applets/fish/fish.ui.h:10
 msgid "_Rotate on vertical panels"
 msgstr "_കുത്തനെയുള്ള പാളികളില്‍ കറക്കുക"
 
-#: ../applets/fish/fish.glade.h:11
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "നീങ്ങുമ്പോള്‍ മുഴുവനായുളള ഫ്രെയിമുകള്‍:"
 
-#: ../applets/fish/fish.glade.h:12
+#: ../applets/fish/fish.ui.h:12
 msgid "frames"
 msgstr "ഫ്രെയിമുകള്‍"
 
-#: ../applets/fish/fish.glade.h:13
+#: ../applets/fish/fish.ui.h:13
 msgid "seconds"
 msgstr "സെക്കന്റുകള്‍"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 msgstr "മീനിനു് പേര് നല്‍കുക."
 
 #: ../applets/fish/fish.schemas.in.h:2
@@ -868,7 +911,9 @@ msgstr "മീനിന്റെ നീക്കത്തിലുളള ഫ്�
 
 #: ../applets/fish/fish.schemas.in.h:4
 msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "ശരിയാണെങ്കില്‍, മീനിന്റെ നീക്കങ്ങള്‍ കുത്തനെയുള്ള പാളികളില്‍ കറക്കി പ്രദര്‍ശിപ്പിയ്ക്കുന്നതായിരിയ്ക്കും."
+msgstr ""
+"ശരിയാണെങ്കില്‍, മീനിന്റെ നീക്കങ്ങള്‍ കുത്തനെയുള്ള പാളികളില്‍ കറക്കി "
+"പ്രദര്‍ശിപ്പിയ്ക്കുന്നതായിരിയ്ക്കും."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -887,15 +932,21 @@ msgid "The fish's name"
 msgstr "മീനിന്റെ പേര്"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
 msgstr "മീനില്‍ ക്ലിക്ക് ചെയ്യുമ്പോള്‍ പ്രവര്‍ത്തിക്കുന്ന നിര്‍ദ്ദേശം ഏതെന്ന് വ്യക്തമാക്കുന്ന കീ"
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid "This key specifies the number of frames that will be displayed in the fish's animation."
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr "മീനിന്റെ ആനിമേഷനില്‍ എത്ര ഫ്രെയിമുകള്‍ ഉണ്ട് എന്ന് വ്യക്തമാക്കുന്ന കീ."
 
 #: ../applets/fish/fish.schemas.in.h:12
@@ -915,7 +966,7 @@ msgstr "അറിയിപ്പു് പരിധി"
 msgid "Notification Area Factory"
 msgstr "അറിയിപ്പു് പരിധിയുടെ ശാല"
 
-#: ../applets/notification_area/main.c:239
+#: ../applets/notification_area/main.c:261
 msgid "Panel Notification Area"
 msgstr "പാളി അറിയിപ്പു് പരിധി"
 
@@ -944,7 +995,7 @@ msgid "Switch between workspaces"
 msgstr "പണിയറകള്‍ മാറുക"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:610
+#: ../applets/wncklet/window-list.c:609
 msgid "Window List"
 msgstr "ജാലക നാമാവലി"
 
@@ -953,13 +1004,12 @@ msgid "Window Navigation Applet Factory"
 msgstr "Window നാവിഗേഷന്‍ ലഘുപ്രയോഗ ശാല"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:82
-#: ../applets/wncklet/window-menu.c:244
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
 msgid "Window Selector"
 msgstr "ജാലകം തെരഞ്ഞെടുക്കല്‍ സംവിധാനം"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:625
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
 msgstr "പണിയറ തെരഞ്ഞെടുക്കുക"
 
@@ -980,8 +1030,7 @@ msgstr "അദൃശ്യമായ ജാലകങ്ങള്‍ ലഭ്യ�
 msgid "Click here to hide all windows and show the desktop."
 msgstr "എല്ലാ ജാലകങ്ങളും അദൃശ്യമാക്കി പണിയിടം കാണിക്കുന്നതിനായി ഇവിടെ ക്ലിക്ക് ചെയ്യുക."
 
-#: ../applets/wncklet/showdesktop.c:453
-#: ../applets/wncklet/showdesktop.c:534
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
 msgid "Show Desktop Button"
 msgstr "പണിയിടം കാണാനുള്ള ബട്ടണ്‍"
 
@@ -990,67 +1039,84 @@ msgid "This button lets you hide all windows and show the desktop."
 msgstr "എല്ലാ ജാലകങ്ങളും അദൃശ്യമാക്കി പണിയിടം കാണിക്കുന്നതിനായി ഈ ബട്ടണ്‍ ഉപയോഗിക്കുക."
 
 #: ../applets/wncklet/showdesktop.c:566
-msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
-msgstr "നിങ്ങളുടെ ജാലക നടത്തിപ്പുകാരന്‍ പണിയിടം കാണിയ്ക്കാനുള്ള ബട്ടണ്‍ പിന്തുണയ്ക്കുന്നില്ല, അല്ലെങ്കില്‍ നിങ്ങള്‍ ഒരു ജാലക നടത്തിപ്പുകാരന്‍ പ്രവര്‍ത്തിപ്പിയ്ക്കുന്നില്ല."
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"നിങ്ങളുടെ ജാലക നടത്തിപ്പുകാരന്‍ പണിയിടം കാണിയ്ക്കാനുള്ള ബട്ടണ്‍ പിന്തുണയ്ക്കുന്നില്ല, അല്ലെങ്കില്‍ "
+"നിങ്ങള്‍ ഒരു ജാലക നടത്തിപ്പുകാരന്‍ പ്രവര്‍ത്തിപ്പിയ്ക്കുന്നില്ല."
 
-#: ../applets/wncklet/window-list.c:612
-msgid "The Window List shows a list of all windows in a set of buttons and lets you browse them."
-msgstr "ജാലകങ്ങളുടെ പട്ടിക എല്ലാ ജാലകങ്ങളുടേയും പട്ടിക നിങ്ങള്‍ക്കു് തെരഞ്ഞെടുക്കാവുന്ന ഒരു കൂട്ടം ബട്ടണുകളായി കാണിയ്ക്കും."
+#: ../applets/wncklet/window-list.c:611
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"ജാലകങ്ങളുടെ പട്ടിക എല്ലാ ജാലകങ്ങളുടേയും പട്ടിക നിങ്ങള്‍ക്കു് തെരഞ്ഞെടുക്കാവുന്ന ഒരു കൂട്ടം "
+"ബട്ടണുകളായി കാണിയ്ക്കും."
 
-#: ../applets/wncklet/window-list.glade.h:1
-msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>ചെറുതാക്കിയ ജാലകങ്ങള്‍ വീണ്ടെടുക്കുന്നു</b>"
-
-#: ../applets/wncklet/window-list.glade.h:2
-msgid "<b>Window Grouping</b>"
-msgstr "<b>ജാലകങ്ങളുടെ കൂട്ടം</b>"
-
-#: ../applets/wncklet/window-list.glade.h:3
-msgid "<b>Window List Content</b>"
-msgstr "<b>ജാലക പട്ടികയുടെ ഉള്ളടക്കം</b>"
-
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
 msgstr "_സ്ഥലം കുറവാകുമ്പോള്‍ ജാലകങ്ങള്‍ കൂട്ടമായി കാണിയ്ക്കുക"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.ui.h:2
 msgid "Restore to current _workspace"
 msgstr "സജീവ പണിയറ മാത്രം കാണിക്കുക"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.ui.h:3
 msgid "Restore to na_tive workspace"
 msgstr "സ്വതേയുള്ള പണിയറ തെരിച്ചുകൊണ്ടുവരിക"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.ui.h:4
+#| msgid "<b>Restoring Minimized Windows</b>"
+msgid "Restoring Minimized Windows"
+msgstr "ചെറുതാക്കിയ ജാലകങ്ങള്‍ വീണ്ടെടുക്കുന്നു"
+
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "നിലവിലുളള പണിയറയില്‍ നിന്നും ജാലകങ്ങള്‍ _കാണിക്കുക"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "_എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള്‍ കാണിക്കുക"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.ui.h:7
+#| msgid "<b>Window Grouping</b>"
+msgid "Window Grouping"
+msgstr "ജാലകങ്ങളുടെ കൂട്ടം"
+
+#: ../applets/wncklet/window-list.ui.h:8
+#| msgid "<b>Window List Content</b>"
+msgid "Window List Content"
+msgstr "ജാലക പട്ടികയുടെ ഉള്ളടക്കം"
+
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
 msgstr "ജാലക നാമാവലി മുന്‍ഗണനകള്‍"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "ജാലകങ്ങള്‍ _എപ്പോഴും കൂട്ടമാക്കുക"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "ജാലകങ്ങള്‍ _ഒരിക്കലും കൂട്ടമാക്കേണ്ട"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
@@ -1070,7 +1136,9 @@ msgid "Show windows from all workspaces"
 msgstr "എല്ലാ പണിയറകളിലെയും ജാലകങ്ങള്‍ കാണിക്കുക"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
 msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
@@ -1078,74 +1146,80 @@ msgid "When to group windows"
 msgstr "ജാലകങ്ങള്‍ എപ്പോള്‍ കൂട്ടമാക്കണം"
 
 #: ../applets/wncklet/window-menu.c:86
-msgid "The Window Selector shows a list of all windows in a menu and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:215
-#: ../applets/wncklet/workspace-switcher.c:977
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "വരികള്‍"
 
-#: ../applets/wncklet/workspace-switcher.c:215
-#: ../applets/wncklet/workspace-switcher.c:977
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
 msgid "columns"
 msgstr "നിരകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.c:489
+#: ../applets/wncklet/workspace-switcher.c:488
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:500
+#: ../applets/wncklet/workspace-switcher.c:499
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.c:515
+#: ../applets/wncklet/workspace-switcher.c:514
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "പണിയറയുടെ മാറ്റുന്നതില് തകരാറ്: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:627
-msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
+#: ../applets/wncklet/workspace-switcher.c:626
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.glade.h:1
-msgid "<b>Switcher</b>"
-msgstr "<b>സ്വിച്ചര്‍</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:2
-msgid "<b>Workspaces</b>"
-msgstr "<b>പണിയറകള്‍</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
 msgstr "പണിയറകളുടെ എണ്ണം:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.ui.h:2
 msgid "Show _all workspaces in:"
 msgstr "_എല്ലാ പണിയറകളും കാണിക്കുക:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "നിലവിലുളള പണിയറ _മാത്രം കാണിക്കുക"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show workspace _names in switcher"
 msgstr ""
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+#| msgid "<b>Switcher</b>"
+msgid "Switcher"
+msgstr "സ്വിച്ചര്‍"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "Workspace Names"
 msgstr "പണിയറയുടെ പേരുകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Workspace Switcher Preferences"
 msgstr "പണിയറയുടെ സ്വിച്ചറിന്റെ മുന്‍ഗണനകള്‍"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Workspace na_mes:"
 msgstr "പണിയറയുടെ _പേരുകള്‍:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+#| msgid "Workspace Names"
+msgid "Workspaces"
+msgstr "പണിയറകള്‍"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1156,11 +1230,16 @@ msgid "Display workspace names"
 msgstr "പണിയറയുടെ പേരുകള്‍ കാണിക്കുക"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
 msgstr ""
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
 msgstr ""
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
@@ -1168,7 +1247,10 @@ msgid "Rows in workspace switcher"
 msgstr "പണിയറ സ്വിച്ചറിലുളള വരികള്‍"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
 msgstr ""
 
 #. FIXME: We need a title in this case, but we don't know what
@@ -1201,18 +1283,15 @@ msgstr "'%s' സ്ഥാനം തുറക്കുവാന്‍ സാധ�
 msgid "No application to handle search folders is installed."
 msgstr ""
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1
-#: ../gnome-panel/applet.c:544
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
 msgid "Loc_k To Panel"
 msgstr "_പാളിയില്‍ പൂട്ടുക"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2
-#: ../gnome-panel/applet.c:527
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:527
 msgid "_Move"
 msgstr "_മാറ്റുക"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3
-#: ../gnome-panel/applet.c:516
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "പാളിയില്‍ നിന്നും _നീക്കംചെയ്യുക"
 
@@ -1224,8 +1303,7 @@ msgstr "???"
 msgid "Cannot find an empty spot"
 msgstr "കാലിയായ സ്ഥലം ലഭ്യമല്ല"
 
-#: ../gnome-panel/drawer.c:350
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
 #: ../gnome-panel/panel-toplevel.c:1617
 msgid "Drawer"
 msgstr "വലിപ്പ്"
@@ -1234,8 +1312,7 @@ msgstr "വലിപ്പ്"
 msgid "_Add to Drawer..."
 msgstr "വലിപ്പിലേക്ക് _ചേര്‍ക്കുക..."
 
-#: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:807
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
 #: ../gnome-panel/panel-action-button.c:141
 #: ../gnome-panel/panel-context-menu.c:216
 msgid "_Properties"
@@ -1254,8 +1331,7 @@ msgid "- Edit .desktop files"
 msgstr "- .desktop ഫയലുകളില്‍ മാറ്റം വരുത്തുക"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203
-#: ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "വിക്ഷേപിണി നിര്‍മ്മിക്കുക"
 
@@ -1264,17 +1340,17 @@ msgstr "വിക്ഷേപിണി നിര്‍മ്മിക്കു�
 msgid "Directory Properties"
 msgstr "‌തട്ടിന്റെ ഗുണഗണങ്ങള്‍"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180
-#: ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "വിക്ഷേപിണിയുടെ ഗുണഗണങ്ങള്‍"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
 msgstr ""
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-#: ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
 msgid "Panel"
 msgstr "പാളി"
 
@@ -1309,8 +1385,7 @@ msgstr "_തുടങ്ങുക"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "%s എന്ന കീ ക്രമികരിച്ചിട്ടില്ല, അതിനാല്‍ പ്രയോഗിനി ലഭ്യമാക്കുവാന്‍ സാധ്യമായില്ല\n"
 
-#: ../gnome-panel/launcher.c:964
-#: ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
 #: ../gnome-panel/panel-ditem-editor.c:1384
 #: ../gnome-panel/panel-ditem-editor.c:1415
 msgid "Could not save launcher"
@@ -1320,23 +1395,23 @@ msgstr "വിക്ഷേപിണി സൂക്ഷിക്കുവാന�
 msgid "Replace a currently running panel"
 msgstr "ഇപ്പോള്‍ പ്രവര്‍ത്തിച്ചുകൊണ്ടിരിയ്ക്കുന്ന പാളി മാറ്റി വയ്ക്കുക"
 
-#: ../gnome-panel/menu.c:1005
+#: ../gnome-panel/menu.c:913
 msgid "Add this launcher to _panel"
 msgstr "പാളിയിലേയ്ക്കു് ഈ വിക്ഷേപിണി ചേര്‍ക്കുക"
 
-#: ../gnome-panel/menu.c:1012
+#: ../gnome-panel/menu.c:920
 msgid "Add this launcher to _desktop"
 msgstr "പണിയിടത്തിലേയ്ക്കു് ഈ വിക്ഷേപിണി ചേര്‍ക്കുക"
 
-#: ../gnome-panel/menu.c:1024
+#: ../gnome-panel/menu.c:932
 msgid "_Entire menu"
 msgstr "മെനു _മുഴുവനും"
 
-#: ../gnome-panel/menu.c:1029
+#: ../gnome-panel/menu.c:937
 msgid "Add this as _drawer to panel"
 msgstr "ഇത് _വലിപ്പ് ആയി പാളിയിലേയ്ക്കു് ചേര്‍ക്കുക"
 
-#: ../gnome-panel/menu.c:1036
+#: ../gnome-panel/menu.c:944
 msgid "Add this as _menu to panel"
 msgstr "ഇത് _മെനു ആയി പാളിയിലേയ്ക്കു് ചേര്‍ക്കുക"
 
@@ -1364,8 +1439,7 @@ msgstr "തല്‍ക്കാലികമായി നിര്‍ത്ത�
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617
-#: ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
@@ -1381,7 +1455,9 @@ msgstr "ലവല്‍: %s,  Lives: %s"
 
 #: ../gnome-panel/nothing.cP:629
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "നീങ്ങുന്നതിനായി ഇടത്/വലത്, വെടിവെയ്ക്കുന്നതിനായി Space, തല്‍ക്കാലികമായി നിര്‍ത്തുന്നതിനായി 'p', പുറത്ത് കടക്കുന്നതിനായി 'q'"
+msgstr ""
+"നീങ്ങുന്നതിനായി ഇടത്/വലത്, വെടിവെയ്ക്കുന്നതിനായി Space, തല്‍ക്കാലികമായി നിര്‍ത്തുന്നതിനായി "
+"'p', പുറത്ത് കടക്കുന്നതിനായി 'q'"
 
 #: ../gnome-panel/nothing.cP:1369
 msgid "Killer GEGLs from Outer Space"
@@ -1476,8 +1552,7 @@ msgstr "പ്രയോഗത്തിനുളള വിക്ഷേപിണ�
 msgid "Copy a launcher from the applications menu"
 msgstr "പ്രയോഗത്തിന്റെ മെനുവില്‍ നിന്നും ഒരു വിക്ഷേപിണി പകര്‍ത്തുക"
 
-#: ../gnome-panel/panel-addto.c:142
-#: ../gnome-panel/panel-menu-button.c:1081
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "പ്രധാന മെനു"
 
@@ -1510,7 +1585,7 @@ msgid "(empty)"
 msgstr "(കാലി)"
 
 #: ../gnome-panel/panel-addto.c:410
-#: ../libpanel-applet/panel-test-applets.c:250
+#: ../libpanel-applet/panel-test-applets.c:249
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
@@ -1553,7 +1628,9 @@ msgid "Panel object has quit unexpectedly"
 msgstr "പാളി ഒബ്ജക്ടുകള്‍ അപ്രതീക്ഷിതമായി നിന്നിരിക്കുന്നു"
 
 #: ../gnome-panel/panel-applet-frame.c:978
-msgid "If you reload a panel object, it will automatically be added back to the panel."
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
 msgstr "ഒരു പാളി ഒബ്ജക്ട് റീലോഡ് ചെയ്താല്‍, അത് ഓട്ടോമാറ്റിക്കായി പാളിയിലേയ്ക്കു് വീണ്ടും ചേര്‍ക്കപ്പെടുന്നു."
 
 #: ../gnome-panel/panel-applet-frame.c:984
@@ -1586,7 +1663,9 @@ msgid "The GNOME Panel"
 msgstr "ഗ്നോം പാളി"
 
 #: ../gnome-panel/panel-context-menu.c:133
-msgid "This program is responsible for launching other applications and provides useful utilities."
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
 msgstr ""
 
 #: ../gnome-panel/panel-context-menu.c:137
@@ -1640,6 +1719,7 @@ msgid "_Name:"
 msgstr "_പേര്:"
 
 #: ../gnome-panel/panel-ditem-editor.c:637
+#: ../gnome-panel/panel-properties-dialog.c:286
 msgid "Browse icons"
 msgstr "ചിഹ്നങ്ങള്‍ തെരയുക"
 
@@ -1661,12 +1741,9 @@ msgid "Choose a file..."
 msgstr "ഒരു ഫയല്‍ തെരഞ്ഞെടുക്കുക..."
 
 #: ../gnome-panel/panel-ditem-editor.c:1153
+#: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "Comm_and:"
 msgstr "ആജ്ഞ:"
-
-#: ../gnome-panel/panel-ditem-editor.c:1162
-msgid "_Command:"
-msgstr "_നിര്‍ദ്ദേശം:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
@@ -1698,30 +1775,50 @@ msgstr "സഹായത്തിനുളള രേഖ പ്രദര്‍ശ�
 
 #: ../gnome-panel/panel-force-quit.c:76
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "പ്രയോഗം നിര്‍ബന്ധമായി നിര്‍ത്തുന്നതിനായി ജാലകത്തില്‍ ക്ലിക്ക് ചെയ്യുക. റദ്ദാക്കിന്നതിനായി <ESC> അമര്‍ത്തുക."
+msgstr ""
+"പ്രയോഗം നിര്‍ബന്ധമായി നിര്‍ത്തുന്നതിനായി ജാലകത്തില്‍ ക്ലിക്ക് ചെയ്യുക. റദ്ദാക്കിന്നതിനായി <ESC> "
+"അമര്‍ത്തുക."
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
 msgstr "ഈ പ്രയോഗത്തില്‍ നിന്നും പുറത്ത് പോകുന്നതിനായി നിര്‍ബന്ധിക്കണമോ?"
 
 #: ../gnome-panel/panel-force-quit.c:207
-msgid "If you choose to force an application to exit, any open documents in it will be lost."
-msgstr "ഈ പ്രയോഗത്തില്‍ നിന്നും പുറത്ത് പോയാല്‍ തുറന്ന് കിടക്കുന്ന രേഖകളെല്ലാം നഷ്ടമാകും."
+#| msgid ""
+#| "If you choose to force an application to exit, any open documents in it "
+#| "will be lost."
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"ഈ പ്രയോഗത്തില്‍ നിന്നും പുറത്ത് പോയാല്‍ തുറന്ന് കിടക്കുന്ന രേഖകളില്‍ സൂക്ഷിച്ചിട്ടില്ലാത്ത "
+"മാറ്റങ്ങള്‍ നഷ്ടമാകും."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
@@ -1741,11 +1838,17 @@ msgid "If true, autocompletion in the \"Run Application\" dialog is made availab
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
 msgstr ""
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
@@ -1765,7 +1868,11 @@ msgid "Panel object ID list"
 msgstr "പാളി ഒബ്ജക്ട് ID ലിസ്റ്റ്"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
@@ -1793,56 +1900,65 @@ msgid "Disable Force Quit"
 msgstr "നിര്‍ബന്ധപൂര്‍വ്വമുളള അടച്ചുപൂട്ടല്‍ അപ്രാപ്യമാക്കുക"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Lock Screen"
-msgstr "സ്ക്രീന്‍ പൂട്ടുന്നത് പ്രവര്‍ത്തന രഹിതമാക്കുക"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
 msgstr "പുറത്തിറങ്ങുന്നത് പ്രവര്‍ത്തന രഹിതമാക്കുക"
 
-#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "നീങ്ങുന്നതു് പ്രാവര്‍ത്തികമാക്കുക"
 
-#: ../gnome-panel/panel-global.schemas.in.h:11
+#: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
 msgstr "സൂചനകള്‍ പ്രാവര്‍ത്തികമാക്കുക"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Highlight launchers on mouseover"
 msgstr "മൌസ് മുകളില്‍ വരുമ്പോള്‍ വിക്ഷേപിണികള്‍ എടുത്തു് കാണിയ്ക്കുക"
 
+#: ../gnome-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
-msgstr ""
-
-#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 
+#: ../gnome-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid "If true, the panel will not allow a user to lock their screen, by removing access to the lock screen menu entries."
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
-msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
+msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
-msgstr ""
-
-#: ../gnome-panel/panel-global.schemas.in.h:20
-msgid "If true, tooltips are shown for objects in panels."
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 msgstr ""
 
 #: ../gnome-panel/panel-menu-bar.c:106
@@ -1857,75 +1973,73 @@ msgstr "ഫയലുകള്‍, അറകള്‍, ശൃഖലകള്‍ �
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
 
-#: ../gnome-panel/panel-menu-bar.c:145
+#: ../gnome-panel/panel-menu-bar.c:147
 msgid "Applications"
 msgstr "പ്രയോഗങ്ങള്‍"
 
-#: ../gnome-panel/panel-menu-bar.c:351
-#: ../gnome-panel/panel-menu-button.c:668
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "_മെനുവില്‍ മാറ്റം വരുത്തുക"
 
-#: ../gnome-panel/panel-menu-items.c:432
+#: ../gnome-panel/panel-menu-items.c:439
 msgid "Bookmarks"
 msgstr "ഓര്‍മ്മക്കുറിപ്പുകള്‍"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:454
-#: ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' തുറക്കുക"
 
-#: ../gnome-panel/panel-menu-items.c:522
+#: ../gnome-panel/panel-menu-items.c:529
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr ""
+msgstr "മീഡീയാ മാറ്റങ്ങള്‍ക്കായി %s പരിശോധിക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../gnome-panel/panel-menu-items.c:565
+#: ../gnome-panel/panel-menu-items.c:572
 #, c-format
 msgid "Rescan %s"
 msgstr "%s വീണ്ടും പരിശോധിക്കുക"
 
-#: ../gnome-panel/panel-menu-items.c:602
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s മൌണ്ട് ചെയ്യുവാന്‍ സാധ്യമല്ല"
 
-#: ../gnome-panel/panel-menu-items.c:665
+#: ../gnome-panel/panel-menu-items.c:672
 #, c-format
 msgid "Mount %s"
 msgstr "%s മൌണ്ട് ചെയ്യുക"
 
-#: ../gnome-panel/panel-menu-items.c:868
+#: ../gnome-panel/panel-menu-items.c:880
 msgid "Removable Media"
 msgstr "മാറ്റുവാന്‍ സാധ്യമാകുന്ന മീഡിയ"
 
-#: ../gnome-panel/panel-menu-items.c:949
+#: ../gnome-panel/panel-menu-items.c:967
 msgid "Network Places"
 msgstr "ശൃംഖലാ സ്ഥലങ്ങള്‍"
 
-#: ../gnome-panel/panel-menu-items.c:988
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "Open your personal folder"
 msgstr "നിങ്ങളുടെ സ്വകാര്യ അറ തുറക്കുക"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1007
+#: ../gnome-panel/panel-menu-items.c:1025
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:1008
+#: ../gnome-panel/panel-menu-items.c:1026
 msgid "Open the contents of your desktop in a folder"
 msgstr "നിങ്ങളുടെ പണിയിടത്തിലുള്ളവ ഒരു അറയില്‍ തുറക്കുക"
 
-#: ../gnome-panel/panel-menu-items.c:1396
+#: ../gnome-panel/panel-menu-items.c:1417
 msgid "Places"
 msgstr "സ്ഥലങ്ങള്‍"
 
-#: ../gnome-panel/panel-menu-items.c:1425
+#: ../gnome-panel/panel-menu-items.c:1446
 msgid "System"
 msgstr "സിസ്റ്റം"
 
@@ -1934,7 +2048,7 @@ msgstr "സിസ്റ്റം"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1527
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -1943,21 +2057,21 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1518
+#: ../gnome-panel/panel-menu-items.c:1539
 #, c-format
 msgid "Log Out %s..."
 msgstr "പുറത്തിറങ്ങുക %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1522
+#: ../gnome-panel/panel-menu-items.c:1543
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "മറ്റൊരു ഉപയോക്താവായി അകത്തു് കയറുന്നതിനായി ഈ സെഷന്റെ %s-ല്‍ നിന്നും പുറത്ത് കടക്കുക"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
-msgstr ""
+msgstr "പ്രവര്‍ത്തന ബട്ടണ്‍ തരം"
 
 #: ../gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
@@ -1968,20 +2082,32 @@ msgid "Icon used for object's button"
 msgstr "ഒബ്ജക്ടുകളുടെ ബട്ടണ് വേണ്ടി ഉപയോഗിക്കുന്ന പ്രതെരൂപം"
 
 #: ../gnome-panel/panel-object.schemas.in.h:4
-msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
 msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
 msgstr ""
+"true എങ്കില്‍, \"Unlock\" മെനു വസ്തു ഉപയോഗിച്ചു് ആദ്യം ഒബ്ജക്ട് അണ്‍ലോക്ക് ചെയ്യാതെ, "
+"ഉപയോക്താവു് ആപ്ലെറ്റ് നീക്കുന്നില്ല."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2012,44 +2138,87 @@ msgid "Panel object type"
 msgstr "പാളി വസ്തുവിന്റെ തരം"
 
 #: ../gnome-panel/panel-object.schemas.in.h:15
-msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
+"ആപ്ലെറ്റിനുള്ള ബൊണോബോ ID - ഉദാം. \"OAFIID:GNOME_ClockApplet"
+"\". object_type കീ \"bonobo-applet\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
 msgstr ""
+"ഏതു് തരത്തിലുള്ള പ്രവര്‍ത്തനമാണു് ഈ ബട്ടണ്‍ സൂചിപ്പിക്കുന്നതു്. സാധ്യമായ "
+"മൂല്ല്യങ്ങള്‍: \"lock\", \"logout\", \"run\", \"search\", \"screenshot\". object_type കീ "
+" \"action-applet\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
 msgstr ""
+"ഈ ഡ്രോവറിലേക്ക് ചേര്‍ത്തിട്ടുള്ള പാനല്‍ തിരിച്ചറിയുന്നതിനുള്ള സഹായി. object_type കീ "
+"\"drawer-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr ""
+msgstr "ഈ ഒബ്ജക്ടുള്ള മുകളിലുള്ള പാനല്‍ തിരിച്ചറിയുന്നതിനുള്ള സഹായി."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
 msgstr ""
+"പ്രയോഗിനി വിശേഷിപ്പിക്കുന്ന .desktop ഫയലിന്റെ സ്ഥാനം. object_type കീ \"launcher-object\" "
+"ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
+"ഒബ്ജക്ടിന്റെ ബട്ടണുള്ള ചിഹ്നത്തിനായി ഉപയോഗിക്കേണ്ട ഇമേജ് ഫയലിന്റെ സ്ഥാനം. "
+"object_type കീ \"drawer-object\" അല്ലെങ്കില്‍ \"menu-object\", use_custom_icon കീ true "
+"ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
 msgstr ""
+"മെനു ഉള്ളടക്കം ഉണ്ടാക്കുന്നതിനുള്ള പാഥ്.  use_menu_path കീ true, object_type കീ "
+"\"menu-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
 msgstr ""
+"ഈ പാനല്‍ ഒബ്ജക്ടിന്റെ സ്ഥാനം. ഇടത്ത് (കുറുകെയെങ്കില്‍ മുകളില്‍) പാനല്‍ വരമ്പില്‍ നിന്നുമുള്ള "
+"പിക്സലുകളുടെ എണ്ണം മുഖേന സ്ഥാനം വ്യക്തമാകുന്നു."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
+"ഈ ഡ്രോവര്‍ അല്ലെങ്കില്‍ ഈ മെനുവിനുള്ള ടൂള്‍ടിപ്പിനുള്ള പദാവലി. object_type key  "
+"\"drawer-object\" അല്ലെങ്കില്‍ \"menu-object\" ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
 msgstr ""
+"ഈ തരത്തിലുള്ള പാനല്‍ ഒബ്ജക്ട്. സാധ്യമായ മൂല്ല്യങ്ങള്‍: \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" ,"
+"\"menu-bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -2057,37 +2226,37 @@ msgstr "വലിപ്പിനോ മെനുവിനോ സൂചന പ്
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr ""
+msgstr "ഒബ്ജക്ടുള്ള മുകളിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr ""
+msgstr "ഒബ്ജക്ടിനുള്ള ബട്ടണിനായി നിങ്ങള്‍ സജ്ജമാക്കിയ ചിഹ്നം ഉപയോഗിക്കുക"
 
 #: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr ""
+msgstr "മെനുവിലുള്ളവയ്ക്കായി നിങ്ങള്‍ തയ്യാറാക്കിയ പാഥ് ഉപയോഗിക്കുക"
 
-#: ../gnome-panel/panel-profile.c:772
-#: ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835
-#: ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
+#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf സ്ട്രിങിന്റെ മൂല്യമായ '%s' വായിക്കുന്നതില്‍ പിശക്: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814
-#: ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669
-#: ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
+#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf ഇന്റിജറിന്റെ മൂല്യമായ '%s' വായിക്കുന്നതില്‍ പിശക്: %s"
 
 #: ../gnome-panel/panel-profile.c:1606
 #, c-format
-msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
 msgstr ""
+"പാനല്‍ '%s' സ്ക്രീന്‍ %d-ല്‍ കാണിക്കുവാന്‍ സജ്ജമാണു്. ഇതു് നിലവില്‍ ലഭ്യമല്ല. "
+"അതിനാല്‍ ഈ പാനല്‍ ലഭ്യമാകുന്നില്ല."
 
 #: ../gnome-panel/panel-profile.c:1684
 #, c-format
@@ -2095,147 +2264,147 @@ msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf ബൂളിയന്‍ മൂല്യമായ '%s' വായിക്കുന്നതില്‍ പിശക്: %s"
 
 #: ../gnome-panel/panel-properties-dialog.c:128
-#: ../libpanel-applet/panel-test-applets.c:54
+#: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "മുകളില്‍"
 
 #: ../gnome-panel/panel-properties-dialog.c:129
-#: ../libpanel-applet/panel-test-applets.c:55
+#: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "താഴെ"
 
 #: ../gnome-panel/panel-properties-dialog.c:130
-#: ../libpanel-applet/panel-test-applets.c:56
+#: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ഇടതു്"
 
 #: ../gnome-panel/panel-properties-dialog.c:131
-#: ../libpanel-applet/panel-test-applets.c:57
+#: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "വലതു്"
 
-#: ../gnome-panel/panel-properties-dialog.c:949
+#: ../gnome-panel/panel-properties-dialog.c:952
 msgid "Drawer Properties"
 msgstr "വലിപ്പിന്റെ ഗുണഗണങ്ങള്‍"
 
-#: ../gnome-panel/panel-properties-dialog.c:1057
-#: ../gnome-panel/panel-run-dialog.c:1928
+#: ../gnome-panel/panel-properties-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:2018
 #, c-format
-msgid "Unable to load file '%s'."
-msgstr "ഫയല്‍ '%s' തുടങ്ങുവാന്‍ സാധ്യമായില്ല."
+#| msgid "Unable to load file '%s'."
+msgid "Unable to load file '%s': %s."
+msgstr "ഫയല്‍ '%s' തുടങ്ങുവാന്‍ സാധ്യമായില്ല: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1062
+#: ../gnome-panel/panel-properties-dialog.c:1073
 msgid "Could not display properties dialog"
 msgstr "ഗുണഗണങ്ങളുടെ ഡയലോഗ് പ്രദര്‍ശിപ്പിക്കുവാന്‍ സാധ്യമായില്ല"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:2
+#: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "<small>Opaque</small>"
 msgstr "<small>അതാര്യമായ</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:3
+#: ../gnome-panel/panel-properties-dialog.ui.h:3
 msgid "<small>Transparent</small>"
 msgstr "<small>നിര്‍മ്മലമായ</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:4
 msgid "Arro_ws on hide buttons"
-msgstr ""
+msgstr "അദൃശ്യമായ ബട്ടണുകളില്‍ _അറോകള്‍"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
 msgid "Background"
 msgstr "പശ്ചാത്തലം"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
 msgid "Background _image:"
 msgstr "പശ്ചാത്തല _ചിത്രം:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:7
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
 msgid "Co_lor:"
 msgstr "_നിറം:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:8
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
 msgid "E_xpand"
 msgstr "_വികസിപ്പിക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:10
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
 msgid "Image Background Details"
 msgstr "ഇമേജിന്റെ പശ്ചാത്തലത്തിലുള്ള വിശദാംശങ്ങള്‍"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:11
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
 msgid "Panel Properties"
 msgstr "‌പാളി-ഗുണഗണങ്ങള്‍"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:12
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
 msgid "Pick a color"
 msgstr "ഒരു നിറം തെരഞ്ഞെടുക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:13
+#: ../gnome-panel/panel-properties-dialog.ui.h:13
 msgid "Rotate image when panel is _vertical"
-msgstr ""
+msgstr "പാനല്‍ _കുറുകെയാകുമ്പോള്‍ ചിത്രം തിരിക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
 msgid "S_tyle:"
 msgstr "_ശൈലി:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:15
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
 msgid "Select background"
 msgstr "പശ്ചാത്തലം തെരഞ്ഞെടുക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:16
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
 msgid "Show hide _buttons"
 msgstr "അദൃശ്യമാക്കിയ _ബട്ടണുകള്‍ കാണിക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:17
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
 msgid "Solid c_olor"
-msgstr ""
+msgstr "ഉറച്ച _നിറം"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:18
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
 msgid "Some of these properties are locked down"
-msgstr ""
+msgstr "ഇവയില്‍ ചില ഗുണഗണങ്ങള്‍ പൂട്ടിയിരിക്കുന്നു"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:19
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "St_retch"
 msgstr "_നീട്ടുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:20
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
 msgid "_Autohide"
 msgstr "_സ്വയം ഒളിക്കുക"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
 msgid "_Icon:"
 msgstr "_ചിഹ്നം:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "_None (use system theme)"
 msgstr "_ഒന്നുമില്ല (സിസ്റ്റത്തിലെ പ്രമേയം ഉപയോഗിയ്ക്കുക)"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:23
-#: ../libpanel-applet/panel-test-applets.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../libpanel-applet/panel-test-applets.ui.h:4
 msgid "_Orientation:"
 msgstr "_സംവേദനം:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Scale"
 msgstr "_തോത്"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:25
-#: ../libpanel-applet/panel-test-applets.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../libpanel-applet/panel-test-applets.ui.h:6
 msgid "_Size:"
 msgstr "_വലിപ്പം:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_ടൈല്‍"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:27
 msgid "pixels"
 msgstr "പിക്സലുകള്‍"
 
-#: ../gnome-panel/panel-recent.c:78
-#: ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന \"%s\" എന്ന രേഖ തുറക്കുവാന്‍ സാധ്യമായില്ല"
@@ -2255,9 +2424,11 @@ msgid ""
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടിക വെടിപ്പാക്കിയാല്‍, നിങ്ങളിവയും വെടിപ്പാക്കുന്നു:\n"
+"• സ്ഥലങ്ങള്‍ → ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടിക മെനുവിലുള്ള എല്ലാ വസ്തുക്കള്‍.\n"
+"• എല്ലാ പ്രയോഗങ്ങളിലുമുള്ള ഏറ്റവും ഒടുവില്‍ തുറന്ന ഫയലുകളുടെ പട്ടികയിലുള്ള വസ്കുക്കള്‍."
 
 #: ../gnome-panel/panel-recent.c:161
-#: ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍ വെടിപ്പാക്കുക"
 
@@ -2265,92 +2436,97 @@ msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്
 msgid "Recent Documents"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍"
 
+#: ../gnome-panel/panel-recent.c:235
+#| msgid "Clear Recent Documents"
+msgid "Clear Recent Documents..."
+msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങള്‍ വെടിപ്പാക്കുക..."
+
 #: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "ഏറ്റവും ഒടുവില്‍ തുറന്ന പ്രമാണങ്ങളുടെ പട്ടിക വെടിപ്പാക്കുക"
 
-#: ../gnome-panel/panel-run-dialog.c:325
+#: ../gnome-panel/panel-run-dialog.c:391
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "കമാന്‍ഡ് പ്രവര്‍ത്തിപ്പിക്കുവാന്‍ സാധ്യമായില്ല '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:378
+#: ../gnome-panel/panel-run-dialog.c:444
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8-ല്‍ നിന്നും '%s' വേര്‍തിരിക്കുവാന്‍ സാധ്യമല്ല"
 
-#: ../gnome-panel/panel-run-dialog.c:1186
+#: ../gnome-panel/panel-run-dialog.c:1255
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "കമാന്‍ഡിലേക്ക് ചേര്‍ക്കുവാനുള്ള ഒരു ഫയല്‍ തെരഞ്ഞെടുക്കുക..."
 
-#: ../gnome-panel/panel-run-dialog.c:1562
-#: ../gnome-panel/panel-run-dialog.glade.h:10
+#: ../gnome-panel/panel-run-dialog.c:1633
+#: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "ഒരു പ്രയോഗത്തെക്കുറിച്ചുള്ള വിവരരണങ്ങള്‍ കാണുന്നതിനായി അത് തെരഞ്ഞെടുക്കുക."
 
-#: ../gnome-panel/panel-run-dialog.c:1600
+#: ../gnome-panel/panel-run-dialog.c:1671
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "%s - നിര്‍ദ്ദേശം പ്രവ‍ര്‍ത്തിയ്ക്കും"
 
-#: ../gnome-panel/panel-run-dialog.c:1631
+#: ../gnome-panel/panel-run-dialog.c:1704
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
+msgstr "റണ്‍ ഡയലോഗില്‍ ലഭ്യമായ യുആര്‍ഐ പട്ടികയില്‍ തെറ്റായ മാതൃക (%d) അല്ലെങ്കില്‍ നീളമാണു് (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:1932
+#: ../gnome-panel/panel-run-dialog.c:2023
 msgid "Could not display run dialog"
+msgstr "റണ്‍ ഡയലോഗ് പ്രദര്‍ശിപ്പിക്കുവാന്‍ സാധ്യമല്ല"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:1
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
 msgstr ""
+"കമാന്‍ഡ് സ്ട്രിങിലേക്ക് ചേര്‍ക്കുവാനുള്ള ഫയല്‍ നാമം തെരയുന്നതിനായി ഈ "
+"ബട്ടണ്‍ ക്ലിക്ക് ചെയ്യുക."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:1
-msgid "Click this button to browse for a file whose name to append to the command string."
+#: ../gnome-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
 msgstr ""
+"തെരഞ്ഞെടുത്ത പ്രയോഗം പ്രവര്‍ത്തിക്കുന്നതിനായി അല്ലെങ്കില്‍ കമാന്‍ഡ് എന്‍ട്രി "
+"ഫീള്‍ഡില്‍ കമാന്‍ഡിനായി ഈ ബട്ടണ്‍ ക്ലിക്ക് ചെയ്യുക."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:2
-msgid "Click this button to run the selected application or the command in the command entry field."
-msgstr ""
-
-#: ../gnome-panel/panel-run-dialog.glade.h:3
-msgid "Command entry"
-msgstr "കമാന്‍ഡ് എന്‍ട്രി"
-
-#: ../gnome-panel/panel-run-dialog.glade.h:4
+#: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
 msgstr "കമാന്‍ഡ് ചിഹ്നം"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:5
-msgid "Enter a command string here to run it."
-msgstr "ഒരു കമാന്‍ഡ് സ്ട്രിങ് പ്രവര്‍ത്തിപ്പിക്കുന്നതിനായി ഇവിടെ നല്‍കുക."
-
-#: ../gnome-panel/panel-run-dialog.glade.h:6
+#: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "List of known applications"
 msgstr "അറിയാവുന്ന പ്രയോഗങ്ങളുടെ നാമാവലി"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:7
+#: ../gnome-panel/panel-run-dialog.ui.h:5
 msgid "Run Application"
 msgstr "പ്രയോഗം പ്രവര്‍ത്തിപ്പിക്കുക"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:8
+#: ../gnome-panel/panel-run-dialog.ui.h:6
 msgid "Run in _terminal"
 msgstr "_ടെര്‍മിനലില്‍ പ്രവര്‍ത്തിപ്പിക്കുക"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:9
+#: ../gnome-panel/panel-run-dialog.ui.h:7
 msgid "Run with _file..."
 msgstr "_ഫയലുമായി പ്രവര്‍ത്തിപ്പിക്കുക..."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:11
+#: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr "ഒരു ടെര്‍മിനലില്‍ കമാന്‍ഡ് പ്രവര്‍ത്തിപ്പിക്കുന്നതിനായി ഈ ബോക്സ് തെരഞ്ഞെടുക്കുക."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:12
+#: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
 msgstr "ലഭ്യമായ _പ്രയോഗങ്ങളുടെ പട്ടിക കാണിക്കുക"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:13
+#: ../gnome-panel/panel-run-dialog.ui.h:11
 msgid "The icon of the command to be run."
 msgstr "പ്രവര്‍ത്തിപ്പിക്കേണ്ട നിര്‍ദ്ദേശത്തിനുളള ചിഹ്നം."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:14
+#: ../gnome-panel/panel-run-dialog.ui.h:12
 #: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Run"
 msgstr "_നടപ്പിലാക്കുക"
@@ -2369,69 +2545,69 @@ msgstr "നീക്കം _ചെയ്യരുത്"
 
 #: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
-msgstr "പാളി അദൃശ്യമാക്കുക"
+msgstr "പാനല്‍ അദൃശ്യമാക്കുക"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
 #: ../gnome-panel/panel-toplevel.c:1588
 msgid "Top Expanded Edge Panel"
-msgstr ""
+msgstr "മുകളില്‍ വരമ്പിലുള്ള വികസിച്ച പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1589
 msgid "Top Centered Panel"
-msgstr ""
+msgstr "മുകളില്‍ മദ്ധ്യത്തിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1590
 msgid "Top Floating Panel"
-msgstr ""
+msgstr "മുകളിലുള്ള ഫ്ലോട്ടിങ് പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1591
 msgid "Top Edge Panel"
-msgstr ""
+msgstr "മുകളില്‍ വരമ്പിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1595
 msgid "Bottom Expanded Edge Panel"
-msgstr ""
+msgstr "താഴെ വരമ്പിലുള്ള വികസിച്ച പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1596
 msgid "Bottom Centered Panel"
-msgstr ""
+msgstr "താഴെ മദ്ധ്യത്തിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1597
 msgid "Bottom Floating Panel"
-msgstr ""
+msgstr "താഴെയുള്ള ഫ്ലോട്ടിങ് പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1598
 msgid "Bottom Edge Panel"
-msgstr "താഴെയുളള പാളി"
+msgstr "താഴെ വരമ്പിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1602
 msgid "Left Expanded Edge Panel"
-msgstr ""
+msgstr "ഇടത്ത് വരമ്പിലുള്ള വികസിച്ച പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1603
 msgid "Left Centered Panel"
-msgstr ""
+msgstr "ഇടതു് മദ്ധ്യത്തിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1604
 msgid "Left Floating Panel"
-msgstr ""
+msgstr "ഇടതു് ഫ്ലോട്ടിങ് പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1605
 msgid "Left Edge Panel"
-msgstr "ഇടത് വശത്തുള്ള പാളി"
+msgstr "ഇടത് വശത്തുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1609
 msgid "Right Expanded Edge Panel"
-msgstr ""
+msgstr "വലത്ത് വരമ്പിലുള്ള വികസിച്ച പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1610
 msgid "Right Centered Panel"
-msgstr ""
+msgstr "വലതു് മദ്ധ്യത്തിലുള്ള പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1611
 msgid "Right Floating Panel"
-msgstr ""
+msgstr "വലതു് ഫ്ലോട്ടിങ് പാനല്‍"
 
 #: ../gnome-panel/panel-toplevel.c:1612
 msgid "Right Edge Panel"
@@ -2486,48 +2662,104 @@ msgid "Fit image to panel"
 msgstr "പാളിയില്‍ ചിത്രം കൊള്ളിയ്ക്കുക"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
 msgstr ""
+"true എങ്കില്‍, അദൃശ്യമായ ബട്ടണുകളില്‍ ആരോകള്‍ സ്ഥാപിക്കപ്പെടുന്നു. enable_buttons കീ "
+"true എങ്കില്‍ മാത്രമേ ഈ കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"true എങ്കില്‍, സ്ക്രീനിന്റെ വരമ്പിലേക്ക് പാനലിനെ നീക്കുന്നതിനായി, പാനലിന്റെ രണ്ടു് "
+"വശത്തും ബട്ടണുകള്‍ സ്ഥാപിക്കുന്നു. അപ്പോള്‍ ഒരു ബട്ടണ്‍ മാത്രമേ കാണുകയുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
 msgstr ""
+"true എങ്കില്‍, ഉടനായി സംഭവിക്കുന്നതിനു് പകരം ഈ പാനല്‍ ദൃശ്യവും "
+"അദൃശ്യവുമാകുന്നതു് ആനിമേറ്റ് ചെയ്യപ്പെടുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid "If true, the background image will be rotated when the panel is oriented vertically."
-msgstr ""
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "true എങ്കില്‍, പാനല്‍ കുറുകെ തിരിക്കുമ്പോള്‍ പശ്ചാത്തല ചിത്രവും തിരിക്കപ്പെടുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
 msgstr ""
+"true എങ്കില്‍, ചിത്രം പാനലിന്റെ ഉയരത്തില്‍ (നേരെയെങ്കില്‍) ലഭ്യമാകുന്നു "
+"(ചിത്രത്തിന്റെ ആസ്പെക്ട് റേഷ്യോ സൂക്ഷിക്കുന്നു)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
 msgstr ""
+"true എങ്കില്‍, ചിത്രം പാനലിന്റെ അളവുകളില്‍ ലഭ്യമാകുന്നു. ചിത്രത്തിന്റെ ആസ്പെക്ട് റേഷ്യോ "
+"കൈകാര്യം ചെയ്യുവാന്‍ സാധ്യമല്ല."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
 msgstr ""
+"true എങ്കില്‍, പാനലില്‍ നിന്നും സൂചിക മാറുമ്പോള്‍, സ്ക്രീനിന്റെ മൂലയിലേക്ക് പാനല്‍ "
+"സ്വയം അദൃശ്യമാകുന്നു. ആ മൂലയിലേക്ക് സൂചിക വീണ്ടും നീക്കിയാല്‍, പാനല്‍ വീണ്ടും "
+"ലഭ്യമാകുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
 msgstr ""
+"true എങ്കില്‍, സ്ക്രീനിന്റെ പൂര്‍ണ്ണ വീതി (കുറുകെയുള്ള പാനലെങ്കില്‍ ഇതു് ഉയരമാണു്) "
+"പാനലുപയോഗിക്കുന്നു. ഈ മോഡില്‍ പാനല്‍ ഒരു സ്ക്രീനിന്റെ വരമ്പത്തു് മാത്രമേ "
+"സ്ഥാപിക്കുവാന്‍ സാധിക്കൂ. false എങ്കില്‍, പാനലില്‍ ആപ്ലെറ്റുകള്‍, പ്രയോഗിനികള്‍, ബട്ടണുകള്‍ "
+"എന്നിവ മാത്രം സ്ഥാപിക്കുവാനുള്ള വലിപ്പത്തിലാണു് പാനല്‍."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
 msgstr ""
+"true ആണെങ്കില്‍, x, x_right കീകള്‍ ഉപേക്ഷിക്കപ്പെടുന്നു. കൂടാതെ, സ്ക്രീനിന്റെ x-ആക്സിസിനു് "
+"മദ്ധ്യത്തില്‍ പാനല്‍ സ്ഥാപിക്കുന്നു. പാനലിന്റെ വ്യാപ്തി മാറ്റിയെങ്കില്‍, അതു് ആ സ്ഥാനത്തു് "
+"തന്നെ ലഭ്യമാകുന്നു - അതായതു്, പാനല്‍ രണ്ടു് വശത്തേക്കും വ്യാപിക്കുന്നു. false എങ്കില്‍, x, "
+"x_right കീകള്‍ പാനലിന്റെ സ്ഥാനം വ്യക്തമാക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
 msgstr ""
+"true ആണെങ്കില്‍, y, y_bottom കീകള്‍ ഉപേക്ഷിക്കപ്പെടുന്നു. കൂടാതെ, സ്ക്രീനിന്റെ y-ആക്സിസിനു് "
+"മദ്ധ്യത്തില്‍ പാനല്‍ സ്ഥാപിക്കുന്നു. പാനലിന്റെ വ്യാപ്തി മാറ്റിയെങ്കില്‍, അതു് ആ സ്ഥാനത്തു് "
+"തന്നെ ലഭ്യമാകുന്നു - അതായതു്, പാനല്‍ രണ്ടു് വശത്തേക്കും വ്യാപിക്കുന്നു. false എങ്കില്‍, y, "
+"y_bottom കീകള്‍ പാനലിന്റെ സ്ഥാനം വ്യക്തമാക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
 msgstr ""
+"ഒരു Xinerama ക്രമീകരണത്തില്‍, ഓരോ മോണിറ്ററിലും നിങ്ങള്‍ക്കു് പാനലുകളുണ്ടാവാം. "
+"പാനല്‍ ലഭ്യമാകുന്ന നിലവിലുള്ള മോണിറ്റര്‍ ഈ കീ തിരിച്ചറിയുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2558,72 +2790,163 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr "പാനലിലേക്കുളള പശ്ചാത്തല നിറം #RGB രീതിയില്‍ നല്‍കുക."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
 msgstr ""
+"പശ്ചാത്തല ചിത്രമായുപയോഗിക്കേണ്ട ഫയല്‍ വ്യക്തമാക്കുന്നു. ചിത്രത്തിലൊരു ആല്‍ഫാ "
+"ചാനലുണ്ടെങ്കില്‍, പണിയിട പശ്ചാത്തലത്തിലേക്ക് ഇമേജില്‍ നിറം വേര്‍തിരിക്കപ്പെടുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
+"പാനല്‍ സ്വയമായി വീണ്ടും കാണിക്കുന്നതിനു് മുമ്പു് പാനലിന്റെ സ്ഥലത്തേക്ക്"
+"സൂചിക ലഭ്യമാകുന്നതിനു് ശേഷമുള്ള താമസം മില്ലിസെക്കന്‍ഡുകളില്‍ വ്യക്തമാക്കുന്നു. "
+"auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
+"പാനല്‍ സ്വയമായി അദൃശ്യമാകുന്നതിനു് മുമ്പു് പാനലിന്റെ സ്ഥലത്തു് നിന്നും "
+"സൂചിക ഉപേക്ഷിക്കപ്പെടുന്നതിനു് ശേഷമുള്ള താമസം മില്ലിസെക്കന്‍ഡുകളില്‍ "
+"വ്യക്തമാക്കുന്നു. auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
+"പാനല്‍ സ്വയമായി ഒരു മൂലയില്‍ അദൃശ്യമാകുമ്പോള്‍, ദൃശ്യമാകുന്ന പിക്സലുകളുടെ എണ്ണം "
+"വ്യക്തമാക്കുന്നു. auto_hide കീ true ആണെങ്കില്‍ മാത്രമേ ഈ കീയ്ക്കു് പ്രാധാന്യമുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
 msgstr ""
+"പശ്ചാത്തല നിറ ശൈലിയുടെ അതാര്യത വ്യക്തമാക്കുന്നു. നിറം പൂര്‍ണ്ണമായും "
+"ഇരുണ്ടതല്ലെങ്കില്‍ (65535-ല്‍ കുറഞ്ഞൊരു മൂല്ല്യം), പണിയിട പശ്ചാത്തലത്തിലേക്ക് "
+"ഇമേജില്‍ നിറം വേര്‍തിരിക്കപ്പെടുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "ഇമേജ് പാളിയിലേയ്ക്കു് വലിച്ച് നീട്ടുക"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
 msgstr ""
+"പാനലിന്റെ ഉയരം (കുറുകെയുള്ളൊരു പാനലിന്റെ വീതി). റണ്‍ടൈമില്‍ പാനല്‍ "
+"അക്ഷരസഞ്ചയത്തിന്റെയും മറ്റു് സൂചനകളുടെയും അടിസ്ഥാനത്തില്‍ ഏറ്റവും കുറഞ്ഞ "
+"വ്യാപ്തി ലഭ്യമാക്കുന്നു. സ്ക്രീനിന്റെ ഉയരത്തിന്റെ (അല്ലെങ്കില്‍ വീതി) ഒരു നാലിലൊന്നായി "
+"ഏറ്റവും കൂടിയ വ്യാപ്തിയായുപയോഗിക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
+"x-ആക്സിസിലുള്ള പാനലിന്റെ സ്ഥാനം. അണ്‍-എക്സ്പാന്‍ഡഡ് മോഡില്‍ മാത്രമേ ഈ "
+"കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ. എക്സ്പാന്‍ഡഡ് മോഡില്‍ ഈ കീ ഉപേക്ഷിക്കുന്നു, സംവേദനത്തിനുള്ള "
+"കീ വ്യക്തമാക്കിയ സ്ക്രീനിന്റെ വരമ്പിലാണു് പാനല്‍ സ്ഥാപിക്കുന്നതു്."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
+"y-ആക്സിസിലുള്ള പാനലിന്റെ സ്ഥാനം. അണ്‍-എക്സ്പാന്‍ഡഡ് മോഡില്‍ മാത്രമേ ഈ "
+"കീയ്ക്ക് പ്രാധാന്യമുള്ളൂ. എക്സ്പാന്‍ഡഡ് മോഡില്‍ ഈ കീ ഉപേക്ഷിക്കുന്നു, സംവേദനത്തിനുള്ള "
+"കീ വ്യക്തമാക്കിയ സ്ക്രീനിന്റെ വരമ്പിലാണു് പാനല്‍ സ്ഥാപിക്കുന്നതു്."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
 msgstr ""
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
 msgstr ""
+"പാനല്‍ ആനിമേഷനുകള്‍ ഉണ്ടാകേണ്ട വേഗത. സാധ്യതയുള്ള മൂല്ല്യങ്ങള്‍: \"പതിയെ"
+"\", \"ഇടത്തരം\" , \"പെട്ടെന്നു്\". enable_animations കീ true ആണെങ്കില്‍ മാത്രമേ "
+"ഈ കീയ്ക്കുപയോഗമുള്ളൂ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
 msgstr ""
+"പാനല്‍ തിരിച്ചറിയുവാന്‍ ഉപയോഗിക്കാവുന്ന നിങ്ങള്‍ക്കു് വായിക്കുവാന്‍ സാധിക്കുന്ന "
+"പേരാണിതു്. പാനലിന്റെ ജാലക തലക്കെട്ടായുപയോഗിക്കുക എന്നതാണു് ഇതിന്റെ "
+"പ്രധാന ഉപയോഗം. പാനലുകളിലൂടെയുള്ള യാത്രയില്‍ ഇതു് സഹായിക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "അദൃശ്യമാക്കുമ്പോള്‍ കാണുവാന്‍ സാധ്യമാകുന്ന പിക്സലുകള്‍"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
 msgstr ""
+"ഈ പാനലിനുപയോഗിക്കേണ്ട തരത്തിലുള്ള പശ്ചാത്തലം. സാധ്യമായ മൂല്ല്യങ്ങള്‍:"
+"\"gtk\" - സ്വതവേയുള്ള GTK+ വിഡ്ജറ്റ് പശ്ചാത്തലം ഉപയോഗിക്കുന്നു, \"നിറം\" - നിറത്തിനുള്ള "
+"കീ പശ്ചാത്തല നിറമായുപയോഗിക്കുന്നു അല്ലെങ്കില്‍ \"ഇമേജ്\" - ഇമേജ് നല്‍കുന്ന ഇമേജ് "
+"കീ പശ്ചാത്തലമായുപയോഗിക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
 msgstr ""
+"ഒരു മള്‍ട്ടി-സ്ക്രീന്‍ സജ്ജീകരണത്തില്‍, ഓരോ സ്ക്രീനിലും നിങ്ങള്‍ക്കു് പാനലുകള്‍ ലഭിക്കുന്നു. "
+"ഏതു് സ്ക്രീനിലാണു് പാനല്‍ ലഭ്യമാകുന്നതെന്നു് ഈ കീ സൂചിപ്പിക്കുന്നു."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -2663,17 +2986,17 @@ msgstr "'%s' പ്രവര്‍ത്തിപ്പിക്കുവാന�
 msgid "file"
 msgstr "ഫയല്‍"
 
-#: ../gnome-panel/panel-util.c:879
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "ആസ്ഥാന അറ"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:891
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "ഫയല്‍ സിസ്റ്റം"
 
-#: ../gnome-panel/panel-util.c:1038
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "തെരയുക"
 
@@ -2682,7 +3005,7 @@ msgstr "തെരയുക"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1084
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -2728,72 +3051,72 @@ msgstr "ബോനോബോ ലഘുപ്രയോഗം പരീക്ഷി�
 msgid "Test Bonobo Applet Factory"
 msgstr "ബോനോബോ ലഘുപ്രയോഗ ശാല പരീക്ഷിക്കുക"
 
-#: ../libpanel-applet/panel-test-applets.c:35
+#: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify an applet IID to load"
 msgstr "ലഭ്യമാക്കുന്നതിനുളള ലഘുപ്രയോഗത്തിന്റെ IID നല്‍കുക"
 
-#: ../libpanel-applet/panel-test-applets.c:36
+#: ../libpanel-applet/panel-test-applets.c:35
 msgid "Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
+msgstr "ആപ്ലെറ്റ് മുന്‍ഗണനകള്‍ സൂക്ഷിക്കുന്നതിനുള്ള ഒരു gconf സ്ഥാനം നല്‍കുക"
+
+#: ../libpanel-applet/panel-test-applets.c:36
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "ആപ്ലെറ്റിന്റെ പ്രാരംഭ വലിപ്പം നല്‍കുക (വളരെ ചെറിയ, ഇടത്തരം, വലുതു് എന്നിങ്ങനെ.)"
 
 #: ../libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
-
-#: ../libpanel-applet/panel-test-applets.c:38
 msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr ""
+msgstr "ആപ്ലെറ്റിന്റെ പ്രാരംഭ സംവേദനം നല്‍കുക (മുകളില്‍, താഴെ, ഇടതു് അല്ലെങ്കില്‍ വലതു്)"
 
-#: ../libpanel-applet/panel-test-applets.c:62
+#: ../libpanel-applet/panel-test-applets.c:61
 msgctxt "Size"
 msgid "XX Small"
 msgstr "XX ചെറിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:63
+#: ../libpanel-applet/panel-test-applets.c:62
 msgctxt "Size"
 msgid "X Small"
 msgstr "X ചെറിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:64
+#: ../libpanel-applet/panel-test-applets.c:63
 msgctxt "Size"
 msgid "Small"
 msgstr "ചെറിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:65
+#: ../libpanel-applet/panel-test-applets.c:64
 msgctxt "Size"
 msgid "Medium"
 msgstr "മിതമായ"
 
-#: ../libpanel-applet/panel-test-applets.c:66
+#: ../libpanel-applet/panel-test-applets.c:65
 msgctxt "Size"
 msgid "Large"
 msgstr "വലിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:67
+#: ../libpanel-applet/panel-test-applets.c:66
 msgctxt "Size"
 msgid "X Large"
 msgstr "X വലിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:68
+#: ../libpanel-applet/panel-test-applets.c:67
 msgctxt "Size"
 msgid "XX Large"
 msgstr "XX വലിയ"
 
-#: ../libpanel-applet/panel-test-applets.c:130
+#: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "%s എന്ന ആപ്ലെറ്റ് ലഭ്യമാക്കുന്നതില്‍ പരാജയം"
 
 #. This is an utility to easily test various applets
-#: ../libpanel-applet/panel-test-applets.glade.h:2
+#: ../libpanel-applet/panel-test-applets.ui.h:2
 msgid "Test applet utility"
 msgstr "ലഘുപ്രയോഗ യൂട്ടിലിറ്റി പരീക്ഷിക്കുക"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:3
+#: ../libpanel-applet/panel-test-applets.ui.h:3
 msgid "_Applet:"
 msgstr "_ലഘുപ്രയോഗം:"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:5
+#: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
 msgstr "_Prefs Dir:"
 
