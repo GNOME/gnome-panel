@@ -1,5 +1,5 @@
 # Czech translation of gnome-panel.
-# Copyright (C) 1999, 2006, 2007, 2008 the author(s) of gnome-panel.
+# Copyright (C) 1999, 2006, 2007, 2008, 2009 the author(s) of gnome-panel.
 # Copyright (C) 2004, 2005, 2006 Miloslav Trmac <mitr@volny.cz>.
 # This file is distributed under the same license as the gnome-panel package.
 # GIS <gis@academy.cas.cz>, 1999.
@@ -10,20 +10,18 @@
 # Petr Tomeš <ptomes@gmail.com>, 2006.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
 # Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-11 18:09+0200\n"
-"PO-Revision-Date: 2009-06-28 17:05+0200\n"
+"POT-Creation-Date: 2009-09-21 05:26+0200\n"
+"PO-Revision-Date: 2009-09-20 20:28+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -56,7 +54,7 @@ msgstr "O _aplikaci"
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
-#: ../gnome-panel/panel-menu-button.c:663
+#: ../gnome-panel/panel-menu-button.c:664
 msgid "_Help"
 msgstr "Nápo_věda"
 
@@ -68,7 +66,7 @@ msgid "_Preferences"
 msgstr "Př_edvolby"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3652
+#: ../applets/clock/clock.c:3733
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -84,75 +82,94 @@ msgstr "Generátor na vytváření appletů hodin."
 msgid "Get the current time and date"
 msgstr "Získat aktuální datum a čas"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:450
-#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
+#: ../applets/clock/clock.c:1616 ../applets/clock/clock-location-tile.c:476
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:250
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:320
 msgid "%b %d"
 msgstr "%e. %b"
 
-#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:853
 msgid "Tasks"
 msgstr "Úkoly"
 
-#: ../applets/clock/calendar-window.c:773
-#: ../applets/clock/calendar-window.c:949
-#: ../applets/clock/calendar-window.c:1585
+#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:1029
+#: ../applets/clock/calendar-window.c:1665
 msgid "Edit"
 msgstr "Upravit"
 
-#: ../applets/clock/calendar-window.c:894
+#: ../applets/clock/calendar-window.c:974
 msgid "All Day"
 msgstr "Celý den"
 
-#: ../applets/clock/calendar-window.c:1033
+#: ../applets/clock/calendar-window.c:1113
 msgid "Appointments"
 msgstr "Události"
 
-#: ../applets/clock/calendar-window.c:1058
+#: ../applets/clock/calendar-window.c:1138
 msgid "Birthdays and Anniversaries"
 msgstr "Narozeniny a výročí"
 
-#: ../applets/clock/calendar-window.c:1083
+#: ../applets/clock/calendar-window.c:1163
 msgid "Weather Information"
 msgstr "Informace o počasí"
 
-#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Umístění"
 
-#: ../applets/clock/calendar-window.c:1884
+#: ../applets/clock/calendar-window.c:1964
 msgid "Calendar"
 msgstr "Kalendář"
 
-#: ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:451
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1572
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1610
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:470
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:476
 msgid "%a %b %e"
 msgstr "%a, %e. %B"
 
@@ -160,7 +177,7 @@ msgstr "%a, %e. %B"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:477
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid ""
 "%1$s\n"
@@ -173,96 +190,120 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:485
+#: ../applets/clock/clock.c:491
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:667
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:674
 msgid "%A %B %d (%%s)"
 msgstr "%A, %e. %B (%%s)"
 
-#: ../applets/clock/clock.c:697
+#: ../applets/clock/clock.c:704
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknutím se skryjí události a úkoly"
 
-#: ../applets/clock/clock.c:700
+#: ../applets/clock/clock.c:707
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknutím se zobrazí události a úkoly"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:711
 msgid "Click to hide month calendar"
 msgstr "Kliknutím se skryje měsíční kalendář"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:714
 msgid "Click to view month calendar"
 msgstr "Kliknutím se zobrazí měsíční kalendář"
 
-#: ../applets/clock/clock.c:1427
+#: ../applets/clock/clock.c:1449
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: ../applets/clock/clock.c:1567
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1595
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: ../applets/clock/clock.c:1569
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1603
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: ../applets/clock/clock.c:1611
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1656
 msgid "%A, %B %d %Y"
 msgstr "%A, %e. %B %Y"
 
-#: ../applets/clock/clock.c:1640
+#: ../applets/clock/clock.c:1687
 msgid "Set System Time..."
 msgstr "Nastavit systémový čas..."
 
-#: ../applets/clock/clock.c:1641 ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.c:1688
 msgid "Set System Time"
 msgstr "Nastavit systémový čas"
 
-#: ../applets/clock/clock.c:1656
+#: ../applets/clock/clock.c:1703
 msgid "Failed to set the system time"
 msgstr "Nezdařilo se nastavení systémového času"
 
-#: ../applets/clock/clock.c:2713
+#: ../applets/clock/clock.c:2766
 msgid "Custom format"
 msgstr "Vlastní formát"
 
-#: ../applets/clock/clock.c:3374
+#: ../applets/clock/clock.c:3224
+msgid "Choose Location"
+msgstr "Vybrat umístění"
+
+#: ../applets/clock/clock.c:3299
+msgid "Edit Location"
+msgstr "Upravit umístění"
+
+#: ../applets/clock/clock.c:3445
 msgid "City Name"
 msgstr "Název města"
 
-#: ../applets/clock/clock.c:3378
+#: ../applets/clock/clock.c:3449
 msgid "City Time Zone"
 msgstr "Časové pásmo města"
 
-#: ../applets/clock/clock.c:3548
+#: ../applets/clock/clock.c:3629
 msgid "24 hour"
 msgstr "Dvacetičtyřhodinové"
 
-#: ../applets/clock/clock.c:3549
+#: ../applets/clock/clock.c:3630
 msgid "UNIX time"
 msgstr "Unixový čas"
 
-#: ../applets/clock/clock.c:3550
+#: ../applets/clock/clock.c:3631
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: ../applets/clock/clock.c:3558
+#: ../applets/clock/clock.c:3639
 msgid "Custom _format:"
 msgstr "Vlastní _formát:"
 
-#: ../applets/clock/clock.c:3655
+#: ../applets/clock/clock.c:3736
 msgid "The Clock displays the current time and date"
 msgstr "Hodiny zobrazují aktuální datum a čas"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3658 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3739 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -293,9 +334,8 @@ msgstr ""
 "odpovídající položku.</i></small>"
 
 #: ../applets/clock/clock.ui.h:4
-#, fuzzy
 msgid "Clock Format"
-msgstr "Vlastní formát"
+msgstr "Formát hodin"
 
 #: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
@@ -319,84 +359,88 @@ msgid "General"
 msgstr "Obecné"
 
 #: ../applets/clock/clock.ui.h:10
-msgid "Latitude:"
-msgstr "Zeměpisná šířka:"
+msgid "L_atitude:"
+msgstr "Zeměpisná šířk_a:"
 
 #: ../applets/clock/clock.ui.h:11
-msgid "Location Name:"
-msgstr "Název umístění:"
+msgid "L_ongitude:"
+msgstr "Z_eměpisná výška:"
 
 #: ../applets/clock/clock.ui.h:13
-msgid "Longitude:"
-msgstr "Zeměpisná výška:"
-
-#: ../applets/clock/clock.ui.h:14
 msgid "North"
 msgstr "Sever"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:14
 msgid "Panel Display"
 msgstr "Zobrazení panelu"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
 msgstr "Zo_brazit teplotu"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:16
 msgid "Show _weather"
 msgstr "Z_obrazit počasí"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:17
 msgid "Show seco_nds"
 msgstr "Zobrazit _sekundy"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:18
 msgid "Show the _date"
 msgstr "Zobrazit _datum"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:19
 msgid "South"
 msgstr "Jih"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:20
 msgid "Time & Date"
 msgstr "Čas a datum"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
 msgstr "Nas_tavení času"
 
-#: ../applets/clock/clock.ui.h:24
-msgid "Time:"
-msgstr "Čas:"
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Timezone:"
-msgstr "Časové pásmo:"
-
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:22
 msgid "Weather"
 msgstr "Počasí"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:23
 msgid "West"
 msgstr "Západ"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
 msgstr "_12hodinový formát"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:25
 msgid "_24 hour format"
 msgstr "_24hodinový formát"
 
-#: ../applets/clock/clock.ui.h:30
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "Náz_ev umístění:"
+
+#: ../applets/clock/clock.ui.h:27
 msgid "_Pressure unit:"
 msgstr "Jednotk_a tlaku:"
 
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "Na_stavit systémový čas"
+
+#: ../applets/clock/clock.ui.h:29
 msgid "_Temperature unit:"
 msgstr "Jednotka _teploty:"
+
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "Č_as:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "Č_asové pásmo:"
 
 #: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
@@ -628,52 +672,51 @@ msgstr ""
 "Nastavit umístění pro tento počítač jako aktuální a použít odpovídající "
 "časové pásmo"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:472
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:581
+#: ../applets/clock/clock-location-tile.c:577
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:593
-#: ../applets/clock/clock-location-tile.c:601
+#: ../applets/clock/clock-location-tile.c:589
+#: ../applets/clock/clock-location-tile.c:598
 msgid "Unknown"
 msgstr "Neznámé"
 
-#: ../applets/clock/clock-location-tile.c:594
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:591
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, pocitově %s"
 
-#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Východ Slunce: %s / západ Slunce: %s"
@@ -844,9 +887,8 @@ msgid "    "
 msgstr "    "
 
 #: ../applets/fish/fish.ui.h:2
-#, fuzzy
 msgid "Animation"
-msgstr "Rychlost animace"
+msgstr "Animace"
 
 #: ../applets/fish/fish.ui.h:3
 msgid "Co_mmand to run when clicked:"
@@ -1230,9 +1272,8 @@ msgid "Workspace na_mes:"
 msgstr "Názvy pra_covních ploch:"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:9
-#, fuzzy
 msgid "Workspaces"
-msgstr "Názvy pracovních ploch"
+msgstr "Pracovní plochy"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1325,7 +1366,7 @@ msgid "Cannot find an empty spot"
 msgstr "Nelze nalézt volné místo"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1627
 msgid "Drawer"
 msgstr "Zásuvka"
 
@@ -1408,9 +1449,9 @@ msgstr "_Spustit"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
-#: ../gnome-panel/panel-ditem-editor.c:1384
-#: ../gnome-panel/panel-ditem-editor.c:1415
+#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1407
+#: ../gnome-panel/panel-ditem-editor.c:1441
+#: ../gnome-panel/panel-ditem-editor.c:1472
 msgid "Could not save launcher"
 msgstr "Nelze uložit spouštěč"
 
@@ -1576,7 +1617,7 @@ msgstr "Spouštěč aplikace..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopírovat spouštěč z nabídky aplikací"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
 msgid "Main Menu"
 msgstr "Hlavní nabídka"
 
@@ -1614,26 +1655,26 @@ msgstr "(prázdné)"
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1071
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Vy_hledat položku, kterou přidat do \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1073
+#: ../gnome-panel/panel-addto.c:1075
 #, c-format
 msgid "Add to Drawer"
 msgstr "Přidat do zásuvky"
 
-#: ../gnome-panel/panel-addto.c:1075
+#: ../gnome-panel/panel-addto.c:1077
 msgid "Find an _item to add to the drawer:"
 msgstr "Vy_hledat položku, kterou přidat do zásuvky:"
 
-#: ../gnome-panel/panel-addto.c:1077
+#: ../gnome-panel/panel-addto.c:1079
 #, c-format
 msgid "Add to Panel"
 msgstr "Přidat na panel"
 
-#: ../gnome-panel/panel-addto.c:1079
+#: ../gnome-panel/panel-addto.c:1081
 msgid "Find an _item to add to the panel:"
 msgstr "Vy_hledat položku, kterou přidat na panel:"
 
@@ -1722,80 +1763,80 @@ msgstr "_Nový panel"
 msgid "A_bout Panels"
 msgstr "_O panelech"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:117
 msgid "Application"
 msgstr "Aplikace"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:119
 msgid "Application in Terminal"
 msgstr "Aplikace v terminálu"
 
-#: ../gnome-panel/panel-ditem-editor.c:120
+#: ../gnome-panel/panel-ditem-editor.c:121
 msgid "Location"
 msgstr "Umístění"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:632
 msgid "_Name:"
 msgstr "Náz_ev:"
 
-#: ../gnome-panel/panel-ditem-editor.c:637
+#: ../gnome-panel/panel-ditem-editor.c:640
 #: ../gnome-panel/panel-properties-dialog.c:286
 msgid "Browse icons"
 msgstr "Procházet ikony"
 
-#: ../gnome-panel/panel-ditem-editor.c:655
+#: ../gnome-panel/panel-ditem-editor.c:658
 msgid "_Browse..."
 msgstr "_Procházet..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:662
+#: ../gnome-panel/panel-ditem-editor.c:665
 msgid "Co_mment:"
 msgstr "Ko_mentář:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1036
 msgid "Choose an application..."
 msgstr "Zvolit aplikaci..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1028
+#: ../gnome-panel/panel-ditem-editor.c:1040
 msgid "Choose a file..."
 msgstr "Zvolit soubor..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1153
-#: ../gnome-panel/panel-ditem-editor.c:1162
+#: ../gnome-panel/panel-ditem-editor.c:1208
+#: ../gnome-panel/panel-ditem-editor.c:1217
 msgid "Comm_and:"
 msgstr "Pří_kaz:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1171
+#: ../gnome-panel/panel-ditem-editor.c:1226
 msgid "_Location:"
 msgstr "_Umístění:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1408
 msgid "The name of the launcher is not set."
 msgstr "Název spouštěče není nastaven."
 
-#: ../gnome-panel/panel-ditem-editor.c:1355
+#: ../gnome-panel/panel-ditem-editor.c:1412
 msgid "Could not save directory properties"
 msgstr "Nelze uložit nastavení adresáře"
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1413
 msgid "The name of the directory is not set."
 msgstr "Název adresáře není nastaven."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1429
 msgid "The command of the launcher is not set."
 msgstr "Příkaz spouštěče není nastaven."
 
-#: ../gnome-panel/panel-ditem-editor.c:1375
+#: ../gnome-panel/panel-ditem-editor.c:1432
 msgid "The location of the launcher is not set."
 msgstr "Umístění spouštěče není nastaveno."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452
+#: ../gnome-panel/panel-ditem-editor.c:1509
 msgid "Could not display help document"
 msgstr "Nelze zobrazit dokument nápovědy"
 
@@ -1811,10 +1852,11 @@ msgstr "Vynutit ukončení této aplikace?"
 
 #: ../gnome-panel/panel-force-quit.c:207
 msgid ""
-"If you choose to force an application to exit, any open documents in it will "
-"be lost."
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
 msgstr ""
-"Vynutíte-li ukončení aplikace, všechny otevřené dokumenty budou ztraceny."
+"Vynutíte-li ukončení aplikace, neuložené změny ve všech otevřených "
+"dokumentech mohou být ztraceny."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1945,27 +1987,23 @@ msgid "Disable Force Quit"
 msgstr "Zakázat vynucení ukončení"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Lock Screen"
-msgstr "Zakázat zamykání obrazovky"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
 msgstr "Zakázat odhlašování"
 
-#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Povolit animace"
 
-#: ../gnome-panel/panel-global.schemas.in.h:11
+#: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
 msgstr "Povolit místní nápovědu"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Highlight launchers on mouseover"
 msgstr "Zvýrazňovat spouštěče při přítomnosti myši"
 
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1973,7 +2011,7 @@ msgstr ""
 "Je-li \"true\", je zobrazen dialog žádající o potvrzení, když chce uživatel "
 "odstranit panel."
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -1981,13 +2019,13 @@ msgstr ""
 "Je-li \"true\", bude zásuvka automaticky zavřena, když v ní uživatel klikne "
 "na spouštěč."
 
-#: ../gnome-panel/panel-global.schemas.in.h:15
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Je-li \"true\", je spouštěč zvýrazněn, když na něj uživatel přesune kurzor."
 
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1995,15 +2033,7 @@ msgstr ""
 "Je-li \"true\", panel uživateli nedovolí vynutit ukončení aplikace tím, že "
 "odstraní přístup k tlačítku vynuceného ukončení."
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
-msgstr ""
-"Je-li \"true\", panel uživateli nedovolí zamknout obrazovku tím, že odstraní "
-"přístup k položkám nabídky zamčení obrazovky."
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -2011,7 +2041,7 @@ msgstr ""
 "Je-li \"true\", panel uživateli nepovolí uživateli odhlásit se tím, že "
 "odstraní přístup k položkám nabídky odhlášení."
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -2021,9 +2051,18 @@ msgstr ""
 "applety ale možná bude potřeba zamknout odděleně. Aby mělo toto nastavení "
 "vliv, musí být panel restartován."
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Je-li \"true\", je zobrazována místní nápověda k objektům v panelech."
+
+#: ../gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Tento klíč je zastaralý, jelikož nemůže být použit v implementaci korektního "
+"uzamčení. Namísto toho by měl být použit klíč /desktop/gnome/lockdown/"
+"disable_lock_screen."
 
 #: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
@@ -2043,7 +2082,7 @@ msgstr ""
 msgid "Applications"
 msgstr "Aplikace"
 
-#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
 msgid "_Edit Menus"
 msgstr "_Upravit nabídky"
 
@@ -2369,10 +2408,10 @@ msgid "Drawer Properties"
 msgstr "Vlastnosti zásuvky"
 
 #: ../gnome-panel/panel-properties-dialog.c:1067
-#: ../gnome-panel/panel-run-dialog.c:2018
-#, fuzzy, c-format
+#: ../gnome-panel/panel-run-dialog.c:2019
+#, c-format
 msgid "Unable to load file '%s': %s."
-msgstr "Nelze načíst soubor \"%s\"."
+msgstr "Nelze načíst soubor \"%s\": %s."
 
 #: ../gnome-panel/panel-properties-dialog.c:1073
 msgid "Could not display properties dialog"
@@ -2530,28 +2569,28 @@ msgstr "Nelze spustit příkaz \"%s\""
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nelze převést \"%s\" z UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1255
+#: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
 msgstr "Vybrat soubor, který připojit k příkazu..."
 
-#: ../gnome-panel/panel-run-dialog.c:1633
+#: ../gnome-panel/panel-run-dialog.c:1634
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikaci k zobrazení jejího popisu."
 
-#: ../gnome-panel/panel-run-dialog.c:1671
+#: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Bude spuštěn příkaz: \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1704
+#: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Seznam URI upuštěný na dialog spuštění měl chybný formát (%d) nebo délku (%"
 "d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2023
+#: ../gnome-panel/panel-run-dialog.c:2024
 msgid "Could not display run dialog"
 msgstr "Nelze zobrazit dialog Spustit"
 
@@ -2620,73 +2659,73 @@ msgstr "_Vymazat"
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1188
 msgid "Hide Panel"
 msgstr "Skrýt panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Expanded Edge Panel"
 msgstr "Rozpínací hranový panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1589
+#: ../gnome-panel/panel-toplevel.c:1599
 msgid "Top Centered Panel"
 msgstr "Panel nahoře uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1590
+#: ../gnome-panel/panel-toplevel.c:1600
 msgid "Top Floating Panel"
 msgstr "Plovoucí panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1591
+#: ../gnome-panel/panel-toplevel.c:1601
 msgid "Top Edge Panel"
 msgstr "Hranový panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rozpínací hranový panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1606
 msgid "Bottom Centered Panel"
 msgstr "Panel dole uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1607
 msgid "Bottom Floating Panel"
 msgstr "Plovoucí panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1608
 msgid "Bottom Edge Panel"
 msgstr "Hranový panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1613
 msgid "Left Centered Panel"
 msgstr "Panel vlevo uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1614
 msgid "Left Floating Panel"
 msgstr "Plovoucí panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1615
 msgid "Left Edge Panel"
 msgstr "Hranový panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vpravo"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1620
 msgid "Right Centered Panel"
 msgstr "Panel vpravo uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1621
 msgid "Right Floating Panel"
 msgstr "Plovoucí panel vpravo"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1622
 msgid "Right Edge Panel"
 msgstr "Hranový panel vpravo"
 
@@ -3215,126 +3254,3 @@ msgstr "App_let:"
 #: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
 msgstr "_Adresář nastavení:"
-
-#~ msgid "<b>Clock Options</b>"
-#~ msgstr "<b>Možnosti hodin</b>"
-
-#~ msgid "<b>Animation</b>"
-#~ msgstr "<b>Animace</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Obecné</b>"
-
-#~ msgid "<b>Workspaces</b>"
-#~ msgstr "<b>Pracovní plochy</b>"
-
-#~ msgid "Command entry"
-#~ msgstr "Pole příkazu"
-
-#~ msgid "Enter a command string here to run it."
-#~ msgstr "Zde prosím zadejte řetězec příkazu, který má být spuštěn."
-
-#~ msgid "Failed to launch time configuration tool: %s"
-#~ msgstr "Nelze spustit nástroj na nastavení času: %s"
-
-#~ msgid ""
-#~ "Failed to locate a program for configuring the date and time. Perhaps "
-#~ "none is installed?"
-#~ msgstr ""
-#~ "Nelze nalézt program pro nastavení data a času. Možná není žádný "
-#~ "nainstalován?"
-
-#~ msgid "<b>Time Settings</b>"
-#~ msgstr "<b>Nastavení času</b>"
-
-#~ msgid "Time Settings"
-#~ msgstr "Nastavení času"
-
-#~ msgid ""
-#~ "This key specifies the program to run in order to configure the time."
-#~ msgstr ""
-#~ "Tento klíč určuje program, který má být spuštěn kvůli nastavení času."
-
-#~ msgid "Error watching gconf key '%s': %s"
-#~ msgstr "Chyba při sledování klíče gconf \"%s\": %s"
-
-#~ msgid "Error loading gconf directory '%s': %s"
-#~ msgstr "Chyba při načítání adresáře gconf \"%s\": %s"
-
-#~ msgid "Error getting value for '%s': %s"
-#~ msgstr "Chyba při získávání hodnoty \"%s\": %s"
-
-#~ msgid "_Command:"
-#~ msgstr "Přík_az:"
-
-#~ msgid "There was an error displaying help: %s"
-#~ msgstr "Chyba při zobrazování nápovědy: %s"
-
-#~ msgid "GNOME Panel Shell"
-#~ msgstr "Shell panelu GNOME"
-
-#~ msgid "Desktop Folder|Desktop"
-#~ msgstr "Pracovní plocha"
-
-#~ msgid "panel:showusername|1"
-#~ msgstr "1"
-
-#~ msgid "Could not launch menu item"
-#~ msgstr "Nelze spustit položku nabídky"
-
-#~ msgid "Orientation|Top"
-#~ msgstr "Nahoře"
-
-#~ msgid "Orientation|Bottom"
-#~ msgstr "Dole"
-
-#~ msgid "Orientation|Left"
-#~ msgstr "Vlevo"
-
-#~ msgid "Orientation|Right"
-#~ msgstr "Vpravo"
-
-#~ msgid ""
-#~ "The panel could not register with the bonobo-activation server (error "
-#~ "code: %d) and will exit.\n"
-#~ "It may be automatically restarted."
-#~ msgstr ""
-#~ "Při registraci tohoto panelu u serveru bonobo-activation vznikl problém "
-#~ "(chybový kód: %d). Panel bude nyní ukončen.\n"
-#~ "Může dojít k automatickému restartu."
-
-#~ msgid "The panel has encountered a fatal error"
-#~ msgstr "V panelu došlo ke kritické chybě"
-
-#~ msgid "Force the panel to not be automatically restarted"
-#~ msgstr "Vynutit zamezení automatického restartu panelu"
-
-#~ msgid "Incomplete '%s' background type received"
-#~ msgstr "Přijat nedokončený typ pozadí \"%s\""
-
-#~ msgid "Incomplete '%s' background type received: %s"
-#~ msgstr "Přijat nedokončený typ pozadí \"%s\": %s"
-
-#~ msgid "Failed to get pixmap %s"
-#~ msgstr "Nelze získat obrázek %s"
-
-#~ msgid "Unknown background type received"
-#~ msgstr "Přijat neznámý typ pozadí"
-
-#~ msgid "The Applet's containing Panel's orientation"
-#~ msgstr "Orientace panelu obsahujícího applet"
-
-#~ msgid "The Applet's containing Panel's size in pixels"
-#~ msgstr "Velikost panelu obsahujícího applet v pixelech"
-
-#~ msgid "The Applet's containing Panel's background color or pixmap"
-#~ msgstr "Barva nebo obrázek na pozadí panelu obsahujícího applet"
-
-#~ msgid "The Applet's flags"
-#~ msgstr "Volby appletu"
-
-#~ msgid "Ranges that hint what sizes are acceptable for the applet"
-#~ msgstr "Rozsahy, které napovídají velikosti přijatelné pro applet"
-
-#~ msgid "The Applet's containing Panel is locked down"
-#~ msgstr "Panel obsahující tento applet je zamčen"
