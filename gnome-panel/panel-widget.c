@@ -1590,6 +1590,10 @@ panel_widget_realize (GtkWidget *widget)
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
+	/* For auto-hidden panels with a colored background, we need native
+	 * windows to avoid some uglyness on unhide */
+	gdk_window_ensure_native (widget->window);
+
 	panel_background_set_default_style (
 		&panel->background,
 		&widget->style->bg [GTK_WIDGET_STATE (widget)],
