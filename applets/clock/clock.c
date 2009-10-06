@@ -178,7 +178,6 @@ struct _ClockData {
 	/* runtime data */
         time_t             current_time;
 	char              *timeformat;
-	char              *fallback_timeformat;
 	guint              timeout;
 	PanelAppletOrient  orient;
 	int                size;
@@ -432,15 +431,13 @@ use_two_line_format (ClockData *cd)
 }
 
 static char *
-get_updated_timeformat (ClockData *cd,
-			gboolean   safe)
+get_updated_timeformat (ClockData *cd)
 {
  /* Show date in another line if panel is vertical, or
   * horizontal but large enough to hold two lines of text
   */
 	char       *result;
 	const char *time_format;
-	char       *time_gravity_format;
 	const char *date_format;
 	char       *clock_format;
 
@@ -455,17 +452,8 @@ get_updated_timeformat (ClockData *cd,
 		 * in France: 20:10). */
 		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
 
-	if (!safe) {
-		/* FIXME: we need this for bug #410169 in pango. We'll be able
-		 * to remove this at a later stage. */
-		time_gravity_format = g_strdup_printf ("<span gravity=\"south\">%s</span>",
-						       time_format);
-	} else {
-		time_gravity_format = g_strdup (time_format);
-	}
-
 	if (!cd->showdate)
-		clock_format = g_strdup (time_gravity_format);
+		clock_format = g_strdup (time_format);
 
 	else {
 		/* Translators: This is a strftime format string.
@@ -482,7 +470,7 @@ get_updated_timeformat (ClockData *cd,
 			 */
 			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
 							date_format,
-							time_gravity_format);
+							time_format);
 		else
 			/* translators: reverse the order of these arguments
 			 *              if the time should come before the
@@ -490,10 +478,8 @@ get_updated_timeformat (ClockData *cd,
 			 */
 			clock_format = g_strdup_printf (_("%1$s, %2$s"),
 							date_format,
-							time_gravity_format);
+							time_format);
 	}
-
-	g_free (time_gravity_format);
 
 	result = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
 	g_free (clock_format);
@@ -509,9 +495,7 @@ static void
 update_timeformat (ClockData *cd)
 {
 	g_free (cd->timeformat);
-	cd->timeformat = get_updated_timeformat (cd, FALSE);
-	g_free (cd->fallback_timeformat);
-	cd->fallback_timeformat = get_updated_timeformat (cd, TRUE);
+	cd->timeformat = get_updated_timeformat (cd);
 }
 
 /* sets accessible name and description for the widget */
@@ -793,7 +777,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 	cd->calendar_popup = NULL;
 
 	g_free (cd->timeformat);
-	g_free (cd->fallback_timeformat);
 	g_free (cd->custom_format);
 
         free_locations (cd);
@@ -2600,7 +2583,6 @@ load_gconf_settings (ClockData *cd)
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
         cd->timeformat = NULL;
-        cd->fallback_timeformat = NULL;
 
 	cd->can_handle_format_12 = (clock_locale_format () == CLOCK_FORMAT_12);
 	if (!cd->can_handle_format_12 && cd->format == CLOCK_FORMAT_12)
