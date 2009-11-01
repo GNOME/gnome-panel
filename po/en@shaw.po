@@ -1,0 +1,2352 @@
+# Shavian translation of gnome-panel.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-panel\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
+"POT-Creation-Date: 2009-01-16 17:28+0000\n"
+"PO-Revision-Date: 2009-10-31 22:40-0500\n"
+"Last-Translator: Thomas Thurman <tthurman@gnome.org>\n"
+"Language-Team: Shavian <ubuntu-l10n-en-shaw@launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "𐑩_𐑡𐑳𐑕𐑑 𐑛𐑱𐑑 & 𐑑𐑲𐑥"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "𐑒𐑪𐑐𐑦 _𐑛𐑱𐑑"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "𐑒𐑪𐑐𐑦 _𐑑𐑲𐑯"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:4
+#: ../applets/fish/GNOME_FishApplet.xml.h:1
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "_𐑩𐑚𐑬𐑑"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:5
+#: ../applets/fish/GNOME_FishApplet.xml.h:2
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
+#: ../gnome-panel/panel-menu-button.c:663
+msgid "_Help"
+msgstr "_𐑣𐑧𐑤𐑐"
+
+#: ../applets/clock/GNOME_ClockApplet.xml.h:6
+#: ../applets/fish/GNOME_FishApplet.xml.h:3
+#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "_𐑐𐑮𐑧𐑓𐑼𐑧𐑯𐑕𐑧𐑟"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+#: ../applets/clock/clock.c:3760
+msgid "Clock"
+msgstr "𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "𐑒𐑤𐑪𐑒 𐑨𐑐𐑤𐑩𐑑 𐑓𐑨𐑒𐑑𐑼𐑦"
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "𐑓𐑨𐑒𐑑𐑼𐑦 𐑓𐑹 𐑒𐑮𐑦𐑱𐑑𐑦𐑙 𐑒𐑤𐑪𐑒 𐑨𐑐𐑤𐑩𐑑𐑕."
+
+#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "𐑜𐑧𐑑 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑑𐑲𐑥 𐑯 𐑛𐑱𐑑"
+
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:424
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format.
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:426
+#: ../applets/clock/clock.c:1534 ../applets/clock/clock-location-tile.c:480
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. Translators: If the event did not start on the current day
+#. * we will display the start date in the most abbreviated way
+#. * possible.
+#: ../applets/clock/calendar-window.c:250
+msgid "%b %d"
+msgstr "%b %d"
+
+#: ../applets/clock/calendar-window.c:773
+msgid "Tasks"
+msgstr "𐑑𐑭𐑕𐑒𐑕"
+
+#: ../applets/clock/calendar-window.c:773
+#: ../applets/clock/calendar-window.c:949
+#: ../applets/clock/calendar-window.c:1585
+msgid "Edit"
+msgstr "𐑧𐑛𐑦𐑑"
+
+#: ../applets/clock/calendar-window.c:894
+msgid "All Day"
+msgstr "𐑷𐑤 𐑛𐑱"
+
+#: ../applets/clock/calendar-window.c:1033
+msgid "Appointments"
+msgstr "𐑩𐑐𐑶𐑯𐑑𐑥𐑩𐑯𐑑𐑕"
+
+#: ../applets/clock/calendar-window.c:1058
+msgid "Birthdays and Anniversaries"
+msgstr "𐑚𐑻𐑔𐑛𐑱𐑟 𐑯 𐑨𐑯𐑩𐑝𐑻𐑕𐑻𐑰𐑟"
+
+#: ../applets/clock/calendar-window.c:1083
+msgid "Weather Information"
+msgstr "𐑢𐑧𐑞𐑼 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯"
+
+#: ../applets/clock/calendar-window.c:1585 ../applets/clock/clock.glade.h:15
+msgid "Locations"
+msgstr "𐑤𐑴𐑒𐑱𐑖𐑩𐑯𐑟"
+
+#: ../applets/clock/calendar-window.c:1884
+msgid "Calendar"
+msgstr "𐑒𐑨𐑤𐑩𐑯𐑛𐑼"
+
+#: ../applets/clock/clock.c:424
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#: ../applets/clock/clock.c:426 ../applets/clock/clock.c:1532
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: ../applets/clock/clock.c:446
+msgid "%a %b %e"
+msgstr "%a %b %e"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:453
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:461
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
+#. * use it to put in the timezone name later.
+#.
+#: ../applets/clock/clock.c:643
+msgid "%A %B %d (%%s)"
+msgstr "%A %B %d (%%s)"
+
+#: ../applets/clock/clock.c:673
+msgid "Click to hide your appointments and tasks"
+msgstr "𐑒𐑤𐑦𐑒 𐑑 𐑣𐑲𐑛 𐑿𐑼 𐑩𐑐𐑶𐑯𐑑𐑥𐑩𐑯𐑑𐑕 𐑯 𐑑𐑭𐑕𐑒𐑕"
+
+#: ../applets/clock/clock.c:676
+msgid "Click to view your appointments and tasks"
+msgstr "𐑒𐑤𐑦𐑒 𐑑 𐑝𐑿 𐑿𐑼 𐑩𐑐𐑶𐑯𐑑𐑥𐑩𐑯𐑑𐑕 𐑯 𐑑𐑭𐑕𐑒𐑕"
+
+#: ../applets/clock/clock.c:680
+msgid "Click to hide month calendar"
+msgstr "𐑒𐑤𐑦𐑒 𐑑 𐑣𐑲𐑛 𐑥𐑳𐑯𐑔 𐑒𐑨𐑤𐑩𐑯𐑛𐑼"
+
+#: ../applets/clock/clock.c:683
+msgid "Click to view month calendar"
+msgstr "𐑒𐑤𐑦𐑒 𐑑 𐑝𐑿 𐑥𐑳𐑯𐑔 𐑒𐑨𐑤𐑩𐑯𐑛𐑼"
+
+#: ../applets/clock/clock.c:1387
+msgid "Computer Clock"
+msgstr "𐑒𐑩𐑥𐑐𐑿𐑑𐑼 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/clock.c:1527
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#: ../applets/clock/clock.c:1529
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#: ../applets/clock/clock.c:1571
+msgid "%A, %B %d %Y"
+msgstr "%A, %B %d %Y"
+
+#: ../applets/clock/clock.c:1648
+#, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr "𐑓𐑱𐑤𐑛 𐑑 𐑤𐑷𐑯𐑗 𐑑𐑲𐑥 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑑𐑵𐑤: %s"
+
+#: ../applets/clock/clock.c:1679
+msgid "Set System Time..."
+msgstr "𐑕𐑧𐑑 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥..."
+
+#: ../applets/clock/clock.c:1680 ../applets/clock/clock.glade.h:19
+msgid "Set System Time"
+msgstr "𐑕𐑧𐑑 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.c:1695
+msgid "Failed to set the system time"
+msgstr "𐑓𐑱𐑤𐑛 𐑑 𐑕𐑧𐑑 𐑞 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.c:1889
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"𐑓𐑱𐑤𐑛 𐑑 𐑤𐑴𐑒𐑱𐑑 𐑩 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑓𐑹 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑦𐑙 𐑞 𐑛𐑱𐑑 𐑯 𐑑𐑲𐑥. 𐑐𐑼𐑣𐑨𐑐𐑕 𐑯𐑳𐑯 𐑦𐑟 𐑦𐑯𐑕𐑑𐑷𐑤𐑛?"
+
+#: ../applets/clock/clock.c:2821
+msgid "Custom format"
+msgstr "𐑒𐑳𐑕𐑑𐑩𐑥 𐑓𐑹𐑥𐑨𐑑"
+
+#: ../applets/clock/clock.c:3482
+msgid "City Name"
+msgstr "𐑕𐑦𐑑𐑦 𐑯𐑱𐑥"
+
+#: ../applets/clock/clock.c:3486
+msgid "City Time Zone"
+msgstr "𐑕𐑦𐑑𐑦 𐑑𐑲𐑥 𐑟𐑴𐑯"
+
+#: ../applets/clock/clock.c:3656
+msgid "24 hour"
+msgstr "24 𐑬𐑼"
+
+#: ../applets/clock/clock.c:3657
+msgid "UNIX time"
+msgstr "·𐑿𐑯𐑦𐑒𐑕 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.c:3658
+msgid "Internet time"
+msgstr "·𐑦𐑯𐑑𐑼𐑯𐑧𐑑 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.c:3666
+msgid "Custom _format:"
+msgstr "𐑒𐑳𐑕𐑑𐑩𐑥 _𐑓𐑹𐑥𐑨𐑑:"
+
+#: ../applets/clock/clock.c:3763
+msgid "The Clock displays the current time and date"
+msgstr "𐑞 𐑒𐑤𐑪𐑒 𐑛𐑦𐑕𐑐𐑤𐑱𐑟 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑑𐑲𐑥 𐑯 𐑛𐑱𐑑"
+
+#. Translator credits
+#: ../applets/clock/clock.c:3766 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:156
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
+#: ../applets/wncklet/window-menu.c:79
+#: ../applets/wncklet/workspace-switcher.c:622
+#: ../gnome-panel/panel-context-menu.c:138
+msgid "translator-credits"
+msgstr "·𐑑𐑪𐑥𐑩𐑕 ·𐑔𐑻𐑥𐑩𐑯"
+
+#: ../applets/clock/clock.glade.h:1
+msgid "<b>Clock Options</b>"
+msgstr "<b>𐑒𐑤𐑪𐑒 𐑪𐑐𐑖𐑩𐑯𐑟</b>"
+
+#: ../applets/clock/clock.glade.h:2
+msgid "<b>Display</b>"
+msgstr "<b>𐑛𐑩𐑕𐑐𐑤𐑱</b>"
+
+#: ../applets/clock/clock.glade.h:3
+msgid "<b>Panel Display</b>"
+msgstr "<b>𐑐𐑨𐑯𐑩𐑤 𐑛𐑩𐑕𐑐𐑤𐑱</b>"
+
+#: ../applets/clock/clock.glade.h:4
+msgid "<b>Time Settings</b>"
+msgstr "<b>𐑑𐑲𐑥 𐑕𐑧𐑑𐑦𐑙𐑟</b>"
+
+#: ../applets/clock/clock.glade.h:5
+msgid "<i>(optional)</i>"
+msgstr "<i>(𐑪𐑐𐑖𐑩𐑯𐑩𐑤)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.glade.h:7
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>𐑑𐑲𐑐 𐑩 𐑕𐑦𐑑𐑦, 𐑮𐑰𐑡𐑩𐑯, 𐑹 𐑒𐑳𐑯𐑑𐑮𐑰 𐑯𐑱𐑥 𐑯 𐑞𐑧𐑯 𐑕𐑩𐑤𐑧𐑒𐑑 𐑩 𐑥𐑨𐑗 𐑓𐑮𐑪𐑥 𐑞 𐑐𐑪𐑐-𐑳𐑐.</i>"
+"</small>"
+
+#: ../applets/clock/clock.glade.h:8
+msgid "Clock Preferences"
+msgstr "𐑒𐑤𐑪𐑒 𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
+
+#: ../applets/clock/clock.glade.h:9
+msgid "Current Time:"
+msgstr "𐑒𐑳𐑮𐑩𐑯𐑑 𐑑𐑲𐑥:"
+
+#: ../applets/clock/clock.glade.h:10
+msgid ""
+"East\n"
+"West"
+msgstr ""
+"𐑰𐑕𐑑\n"
+"𐑢𐑧𐑕𐑑"
+
+#: ../applets/clock/clock.glade.h:12
+#: ../gnome-panel/panel-properties-dialog.glade.h:9
+msgid "General"
+msgstr "𐑡𐑧𐑯𐑼𐑩𐑤"
+
+#: ../applets/clock/clock.glade.h:13
+msgid "Latitude:"
+msgstr "𐑤𐑨𐑑𐑦𐑑𐑿𐑛:"
+
+#: ../applets/clock/clock.glade.h:14
+msgid "Location Name:"
+msgstr "𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑯𐑱𐑥:"
+
+#: ../applets/clock/clock.glade.h:16
+msgid "Longitude:"
+msgstr "𐑤𐑪𐑙𐑜𐑦𐑑𐑿𐑛:"
+
+#: ../applets/clock/clock.glade.h:17
+msgid ""
+"North\n"
+"South"
+msgstr ""
+"𐑯𐑹𐑔\n"
+"𐑕𐑬𐑔"
+
+#: ../applets/clock/clock.glade.h:20
+msgid "Show _temperature"
+msgstr "𐑖𐑴 _𐑑𐑧𐑥𐑐𐑼𐑨𐑑𐑿𐑮"
+
+#: ../applets/clock/clock.glade.h:21
+msgid "Show _weather"
+msgstr "𐑖𐑴 _𐑢𐑧𐑞𐑼"
+
+#: ../applets/clock/clock.glade.h:22
+msgid "Show seco_nds"
+msgstr "𐑖𐑴 𐑕𐑧𐑒𐑩_𐑯𐑛𐑟"
+
+#: ../applets/clock/clock.glade.h:23
+msgid "Show the _date"
+msgstr "𐑖𐑴 𐑞 _𐑛𐑱𐑑"
+
+#: ../applets/clock/clock.glade.h:24
+msgid "Time Settings"
+msgstr "𐑑𐑲𐑥 𐑕𐑧𐑑𐑦𐑙𐑟"
+
+#: ../applets/clock/clock.glade.h:25
+msgid "Time _Settings"
+msgstr "𐑑𐑲𐑥 _𐑕𐑧𐑑𐑦𐑙𐑟"
+
+#: ../applets/clock/clock.glade.h:26
+msgid "Time:"
+msgstr "𐑑𐑲𐑥:"
+
+#: ../applets/clock/clock.glade.h:27
+msgid "Timezone:"
+msgstr "𐑑𐑲𐑥𐑟𐑴𐑯:"
+
+#: ../applets/clock/clock.glade.h:28
+msgid "Weather"
+msgstr "𐑢𐑧𐑞𐑼"
+
+#: ../applets/clock/clock.glade.h:29
+msgid "_12 hour format"
+msgstr "_12 𐑬𐑼 𐑓𐑹𐑥𐑨𐑑"
+
+#: ../applets/clock/clock.glade.h:30
+msgid "_24 hour format"
+msgstr "_24 𐑬𐑼 𐑓𐑹𐑥𐑨𐑑"
+
+#: ../applets/clock/clock.glade.h:31
+msgid "_Pressure unit:"
+msgstr "_𐑐𐑮𐑧𐑖𐑿𐑮 𐑿𐑯𐑦𐑑:"
+
+#: ../applets/clock/clock.glade.h:32
+msgid "_Temperature unit:"
+msgstr "_𐑑𐑧𐑥𐑐𐑼𐑨𐑑𐑿𐑮 𐑿𐑯𐑦𐑑:"
+
+#: ../applets/clock/clock.glade.h:33
+msgid "_Visibility unit:"
+msgstr "_𐑝𐑦𐑟𐑦𐑚𐑦𐑤𐑦𐑑𐑦 𐑿𐑯𐑦𐑑:"
+
+#: ../applets/clock/clock.glade.h:34
+msgid "_Wind speed unit:"
+msgstr "_𐑢𐑦𐑯𐑛 𐑕𐑐𐑰𐑛 𐑿𐑯𐑦𐑑:"
+
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-hour"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑤𐑴𐑒𐑱𐑖𐑩𐑯𐑟 𐑑 𐑛𐑦𐑕𐑐𐑤𐑱 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "𐑒𐑳𐑕𐑑𐑩𐑥 𐑓𐑹𐑥𐑨𐑑 𐑝 𐑞 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑤𐑦𐑕𐑑 𐑝 𐑩𐑐𐑶𐑯𐑑𐑥𐑩𐑯𐑑𐑕"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑤𐑦𐑕𐑑 𐑝 𐑚𐑻𐑔𐑛𐑱𐑟"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑤𐑦𐑕𐑑 𐑝 𐑤𐑴𐑒𐑱𐑖𐑩𐑯𐑟"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑤𐑦𐑕𐑑 𐑝 𐑑𐑭𐑕𐑒𐑕"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑤𐑦𐑕𐑑 𐑝 𐑢𐑧𐑞𐑼 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯"
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "𐑬𐑼 𐑓𐑹𐑥𐑨𐑑"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑛𐑦𐑕𐑐𐑤𐑱 𐑩 𐑢𐑧𐑞𐑼 𐑲𐑒𐑪𐑯."
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑛𐑦𐑕𐑐𐑤𐑱 𐑛𐑱𐑑 𐑦𐑯 𐑞 𐑒𐑤𐑪𐑒, 𐑦𐑯 𐑩𐑛𐑦𐑖𐑩𐑯 𐑑 𐑑𐑲𐑥."
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑛𐑦𐑕𐑐𐑤𐑱 𐑕𐑧𐑒𐑩𐑯𐑛𐑟 𐑦𐑯 𐑑𐑲𐑥."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑛𐑦𐑕𐑐𐑤𐑱 𐑑𐑲𐑥 𐑦𐑯 𐑿𐑯𐑩𐑝𐑻𐑕𐑩𐑤 𐑒𐑴𐑹𐑛𐑦𐑯𐑱𐑑𐑩𐑛 𐑑𐑲𐑥 𐑟𐑴𐑯."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑩𐑐𐑶𐑯𐑑𐑥𐑩𐑯𐑑𐑕 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑚𐑻𐑔𐑛𐑱𐑟 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑤𐑴𐑒𐑱𐑖𐑩𐑯𐑟 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑑𐑭𐑕𐑒𐑕 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑞 𐑤𐑦𐑕𐑑 𐑝 𐑢𐑧𐑞𐑼 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑖𐑴 𐑛𐑱𐑑 𐑦𐑯 𐑩 𐑑𐑵𐑤𐑑𐑦𐑐 𐑢𐑧𐑯 𐑞 𐑐𐑶𐑯𐑑𐑼 𐑦𐑟 𐑴𐑝𐑼 𐑞 𐑒𐑤𐑪𐑒."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show the temperature next to the weather icon."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑖𐑴 𐑞 𐑑𐑧𐑥𐑐𐑼𐑩𐑗𐑼 𐑯𐑧𐑒𐑕𐑑 𐑑 𐑞 𐑢𐑧𐑞𐑼 𐑲𐑒𐑪𐑯."
+
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "If true, show week numbers in the calendar."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑖𐑴 𐑢𐑰𐑒 𐑯𐑳𐑥𐑚𐑼𐑟 𐑦𐑯 𐑞 𐑒𐑨𐑤𐑩𐑯𐑛𐑼."
+
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "List of locations"
+msgstr "𐑤𐑦𐑕𐑑 𐑝 𐑤𐑴𐑒𐑱𐑖𐑩𐑯𐑟"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in clock"
+msgstr "𐑖𐑴 𐑛𐑱𐑑 𐑦𐑯 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show date in tooltip"
+msgstr "𐑖𐑴 𐑛𐑱𐑑 𐑦𐑯 𐑑𐑵𐑤𐑑𐑦𐑐"
+
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show temperature in clock"
+msgstr "𐑖𐑴 𐑑𐑧𐑥𐑐𐑼𐑩𐑗𐑼 𐑦𐑯 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show time with seconds"
+msgstr "𐑖𐑴 𐑑𐑲𐑥 𐑢𐑦𐑞 𐑕𐑧𐑒𐑩𐑯𐑛𐑟"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show weather in clock"
+msgstr "𐑖𐑴 𐑢𐑧𐑞𐑼 𐑦𐑯 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Show week numbers in calendar"
+msgstr "𐑖𐑴 𐑢𐑰𐑒 𐑯𐑳𐑥𐑚𐑼𐑟 𐑦𐑯 𐑒𐑨𐑤𐑩𐑯𐑛𐑼"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Speed unit"
+msgstr "𐑕𐑐𐑰𐑛 𐑿𐑯𐑦𐑑"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "Temperature unit"
+msgstr "𐑑𐑧𐑥𐑐𐑼𐑩𐑗𐑼 𐑿𐑯𐑦𐑑"
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing temperatures."
+msgstr "𐑞 𐑿𐑯𐑦𐑑 𐑑 𐑿𐑕 𐑢𐑧𐑯 𐑖𐑴𐑦𐑙 𐑑𐑧𐑥𐑐𐑼𐑩𐑗𐑼𐑟."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid "The unit to use when showing wind speed."
+msgstr "𐑞 𐑿𐑯𐑦𐑑 𐑑 𐑿𐑕 𐑢𐑧𐑯 𐑖𐑴𐑦𐑙 𐑢𐑦𐑯𐑛 𐑕𐑐𐑰𐑛."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"𐑞 𐑿𐑕 𐑝 𐑞𐑦𐑕 𐑒𐑰 𐑢𐑪𐑟 𐑛𐑧𐑐𐑮𐑩𐑒𐑱𐑑𐑩𐑛 𐑦𐑯 ·𐑜𐑯𐑴𐑥 2.6 𐑦𐑯 𐑓𐑱𐑝𐑼 𐑝 𐑞 'format' 𐑒𐑰. 𐑞 𐑕𐑒𐑰𐑥𐑩 𐑦𐑟 "
+"𐑮𐑦𐑑𐑱𐑯𐑛 𐑓𐑹 𐑒𐑩𐑥𐑐𐑨𐑑𐑩𐑚𐑦𐑤𐑩𐑑𐑰 𐑢𐑦𐑞 𐑴𐑤𐑛𐑼 𐑝𐑻𐑠𐑩𐑯𐑟."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑓𐑹𐑥𐑨𐑑 𐑿𐑕𐑑 𐑚𐑲 𐑞 𐑒𐑤𐑪𐑒 𐑨𐑐𐑤𐑩𐑑 𐑢𐑧𐑯 𐑞 𐑓𐑹𐑥𐑨𐑑 𐑒𐑰 𐑦𐑟 𐑕𐑧𐑑 𐑑 "
+"\"custom\". 𐑿 𐑒𐑨𐑯 𐑿𐑕 𐑒𐑩𐑯𐑝𐑻𐑖𐑩𐑯 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑼𐑟 𐑳𐑯𐑛𐑼𐑕𐑑𐑫𐑛 𐑚𐑲 strftime() 𐑑 𐑪𐑚𐑑𐑱𐑯 𐑩 "
+"𐑕𐑐𐑩𐑕𐑦𐑓𐑦𐑒 𐑓𐑹𐑥𐑨𐑑. 𐑕𐑰 𐑞 strftime() 𐑥𐑨𐑯𐑘𐑫𐑩𐑤 𐑓𐑹 𐑥𐑹 𐑦𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑬𐑼 𐑓𐑹𐑥𐑨𐑑 𐑿𐑕𐑑 𐑚𐑲 𐑞 𐑒𐑤𐑪𐑒 𐑨𐑐𐑤𐑩𐑑. 𐑐𐑪𐑕𐑩𐑚𐑩𐑤 𐑝𐑨𐑤𐑿𐑟 𐑸"
+"\"12-hour\", \"24-hour\", \"internet\", \"unix\" 𐑯 \"custom\". 𐑦𐑓 𐑕𐑧𐑑 𐑑 \"internet\", 𐑞 "
+"𐑒𐑤𐑪𐑒 𐑢𐑦𐑤 𐑛𐑦𐑕𐑐𐑤𐑱 ·𐑦𐑯𐑑𐑼𐑯𐑧𐑑 𐑑𐑲𐑥. 𐑞 ·𐑦𐑯𐑑𐑼𐑯𐑧𐑑 𐑑𐑲𐑥 𐑕𐑦𐑕𐑑𐑩𐑥 𐑛𐑦𐑝𐑲𐑛𐑟 𐑞 𐑛𐑱 𐑦𐑯𐑑𐑫 1000 \"."
+"𐑚𐑰𐑑𐑕\". 𐑞𐑺 𐑸 𐑯𐑴 𐑑𐑲𐑥 𐑟𐑴𐑯𐑟 𐑦𐑯 𐑞𐑦𐑕 𐑕𐑦𐑕𐑑𐑩𐑥, 𐑕𐑴 𐑑𐑲𐑥 𐑦𐑟 𐑞 𐑕𐑱𐑥 𐑷𐑤 𐑴𐑝𐑼 𐑞 𐑢𐑻𐑤𐑛. 𐑦𐑓 "
+"𐑕𐑧𐑑 𐑑 \"unix\", 𐑞 𐑒𐑤𐑪𐑒 𐑢𐑦𐑤 𐑛𐑦𐑕𐑐𐑤𐑱 𐑑𐑲𐑥 𐑦𐑯 𐑕𐑧𐑒𐑩𐑯𐑛𐑟 𐑕𐑦𐑯𐑕 ·𐑧𐑐𐑩𐑒, 𐑲.𐑧. 1970-01-"
+"01. 𐑦𐑓 𐑕𐑧𐑑 𐑑 \"custom\", 𐑞 𐑒𐑤𐑪𐑒 𐑢𐑦𐑤 𐑛𐑦𐑕𐑐𐑤𐑱 𐑑𐑲𐑥 𐑩𐑒𐑹𐑛𐑦𐑙 𐑑 𐑞 𐑓𐑹𐑥𐑨𐑑 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑛 𐑦𐑯 "
+"𐑞 custom_format 𐑒𐑰."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid "This key specifies the program to run in order to configure the time."
+msgstr "𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑑 𐑮𐑳𐑯 𐑦𐑯 𐑹𐑛𐑼 𐑑 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑞 𐑑𐑲𐑥."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "𐑑𐑲𐑥 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑑𐑵𐑤"
+
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "𐑿𐑟 ·𐑦𐑯𐑑𐑼𐑯𐑧𐑑 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "𐑿𐑟 ·𐑿𐑯𐑦𐑒𐑕 𐑑𐑲𐑥"
+
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "𐑿𐑟 UTC"
+
+#: ../applets/clock/clock-location-tile.c:183
+msgid "Failed to set the system timezone"
+msgstr "𐑓𐑱𐑤𐑛 𐑑 𐑕𐑧𐑑 𐑞 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥𐑟𐑴𐑯"
+
+#: ../applets/clock/clock-location-tile.c:240
+msgid "<small>Set...</small>"
+msgstr "<small>𐑕𐑧𐑑...</small>"
+
+#: ../applets/clock/clock-location-tile.c:241
+msgid "<small>Set</small>"
+msgstr "<small>𐑕𐑧𐑑</small>"
+
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "𐑕𐑧𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑨𐑟 𐑒𐑳𐑮𐑩𐑯𐑑 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑯 𐑿𐑕 𐑦𐑑𐑕 𐑑𐑲𐑥𐑟𐑴𐑯 𐑓𐑹 𐑞𐑦𐑕 𐑒𐑩𐑥𐑐𐑿𐑑𐑼"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:453
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
+#. * from the weekday at the location (the %A expands to the weekday).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:462
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. translators: This is a strftime format string that is used for formatting
+#. * the time that is displayed for locations in the popup. This string is used
+#. * for 12-hour format (the %p expands to am/pm).
+#. * There should be little need to translate this string.
+#.
+#: ../applets/clock/clock-location-tile.c:472
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:581
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:593
+#: ../applets/clock/clock-location-tile.c:601
+msgid "Unknown"
+msgstr "𐑳𐑯𐑴𐑯"
+
+#: ../applets/clock/clock-location-tile.c:594
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, 𐑓𐑰𐑤𐑟 𐑤𐑲𐑒 %s"
+
+#: ../applets/clock/clock-location-tile.c:612
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "𐑕𐑩𐑯𐑮𐑲𐑟: %s / 𐑕𐑳𐑯𐑕𐑧𐑑: %s"
+
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../gnome-panel/libpanel-util/panel-show.c:235
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑛𐑩𐑕𐑐𐑤𐑱 𐑣𐑧𐑤𐑐 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑 '%s'"
+
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "𐑻𐑼 𐑛𐑦𐑕𐑐𐑤𐑱𐑦𐑙 𐑣𐑧𐑤𐑐 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "𐑗𐑱𐑯𐑡 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "𐑗𐑱𐑯𐑡 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥 𐑟𐑴𐑯"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑣𐑭𐑮𐑛𐑢𐑧𐑮 𐑒𐑤𐑪𐑒"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
+msgid "Privileges are required to change the system time zone."
+msgstr "𐑐𐑮𐑦𐑝𐑤𐑩𐑡𐑩𐑟 𐑸 𐑮𐑦𐑒𐑢𐑲𐑼𐑛 𐑑 𐑗𐑱𐑯𐑡 𐑞 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥 𐑟𐑴𐑯."
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
+msgid "Privileges are required to change the system time."
+msgstr "𐑐𐑮𐑦𐑝𐑤𐑩𐑡𐑩𐑟 𐑸 𐑮𐑦𐑒𐑢𐑲𐑼𐑛 𐑑 𐑗𐑱𐑯𐑡 𐑞 𐑕𐑦𐑕𐑑𐑩𐑥 𐑑𐑲𐑥."
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
+msgstr "𐑐𐑮𐑦𐑝𐑤𐑩𐑡𐑩𐑟 𐑸 𐑮𐑦𐑒𐑢𐑲𐑼𐑛 𐑑 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼 𐑞 𐑣𐑭𐑮𐑛𐑢𐑧𐑮 𐑒𐑤𐑪𐑒."
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "𐑛𐑩𐑕𐑐𐑤𐑱 𐑩 𐑕𐑢𐑦𐑥𐑦𐑙 𐑓𐑦𐑖 𐑹 𐑩𐑯𐑳𐑞𐑼 𐑨𐑯𐑩𐑥𐑱𐑑𐑩𐑛 𐑒𐑮𐑰𐑗𐑼"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+#: ../applets/fish/fish.c:607
+msgid "Fish"
+msgstr "𐑓𐑦𐑖"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "𐑓𐑮𐑪𐑥 𐑢𐑧𐑯𐑕 𐑞𐑨𐑑 𐑕𐑑𐑵𐑐𐑦𐑛 𐑓𐑦𐑖 𐑒𐑱𐑥"
+
+#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "𐑢𐑭𐑯𐑛𐑩 𐑓𐑨𐑒𐑑𐑼𐑦"
+
+#: ../applets/fish/fish.c:274
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"𐑢𐑹𐑯𐑦𐑙:  𐑞 𐑒𐑩𐑥𐑭𐑯𐑛 𐑩𐑐𐑽𐑟 𐑑 𐑚𐑰 𐑕𐑳𐑥𐑔𐑦𐑙 𐑨𐑒𐑗𐑫𐑩𐑤𐑦 𐑿𐑕𐑓𐑩𐑤.\n"
+"𐑕𐑦𐑯𐑕 𐑞𐑦𐑕 𐑦𐑟 𐑩 𐑿𐑕𐑤𐑩𐑕 𐑨𐑐𐑤𐑩𐑑, 𐑿 𐑥𐑱 𐑯𐑪𐑑 𐑢𐑪𐑯𐑑 𐑑 𐑛𐑵 𐑞𐑦𐑕.\n"
+"𐑢𐑰 𐑕𐑑𐑮𐑪𐑙𐑤𐑦 𐑨𐑛𐑝𐑲𐑟 𐑿 𐑩𐑜𐑱𐑯𐑕𐑑 𐑿𐑟𐑦𐑙 %s 𐑓𐑹 𐑧𐑯𐑦𐑔𐑦𐑙\n"
+"𐑢𐑦𐑗 𐑢𐑫𐑛 𐑥𐑱𐑒 𐑞 𐑨𐑐𐑤𐑩𐑑 \"𐑐𐑮𐑨𐑒𐑑𐑦𐑒𐑩𐑤\" 𐑹 𐑿𐑕𐑓𐑩𐑤."
+
+#: ../applets/fish/fish.c:461
+msgid "Images"
+msgstr "𐑦𐑥𐑦𐑡𐑩𐑟"
+
+#: ../applets/fish/fish.c:575 ../applets/fish/fish.c:641
+#: ../applets/fish/fish.c:757
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s 𐑞 𐑓𐑦𐑖"
+
+#: ../applets/fish/fish.c:576
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. "
+"Anybody found using it should be promptly sent for a psychiatric evaluation."
+msgstr ""
+"%s 𐑣𐑨𐑟 𐑯𐑴 𐑿𐑕 𐑢𐑪𐑑-𐑕𐑴-𐑧𐑝𐑼. 𐑦𐑑 𐑴𐑯𐑤𐑦 𐑑𐑱𐑒𐑕 𐑳𐑐 𐑛𐑦𐑕𐑒 𐑕𐑐𐑱𐑕 𐑯 𐑒𐑭𐑥𐑐𐑩𐑤𐑱𐑖𐑩𐑯 𐑑𐑲𐑥, 𐑯 𐑦𐑓 "
+"𐑤𐑴𐑛𐑩𐑛 𐑦𐑑 𐑷𐑤𐑕𐑴 𐑑𐑱𐑒𐑕 𐑳𐑐 𐑐𐑮𐑧𐑖𐑩𐑕 𐑐𐑨𐑯𐑩𐑤 𐑕𐑐𐑱𐑕 𐑯 𐑥𐑧𐑥𐑼𐑦. 𐑧𐑯𐑦𐑚𐑪𐑛𐑦 𐑓𐑬𐑯𐑛 𐑿𐑟𐑦𐑙 𐑦𐑑 𐑖𐑫𐑛 𐑚𐑰 "
+"𐑐𐑮𐑪𐑥𐑐𐑑𐑤𐑦 𐑕𐑧𐑯𐑑 𐑓𐑹 𐑩 𐑕𐑲𐑒𐑰𐑨𐑑𐑮𐑦𐑒 𐑦𐑝𐑨𐑤𐑘𐑵𐑱𐑖𐑩𐑯."
+
+#: ../applets/fish/fish.c:600
+msgid "(with minor help from George)"
+msgstr "(𐑢𐑦𐑞 𐑥𐑲𐑯𐑼 𐑣𐑧𐑤𐑐 𐑓𐑮𐑪𐑥 ·𐑡𐑹𐑡)"
+
+#: ../applets/fish/fish.c:642
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "%s 𐑞 𐑓𐑦𐑖, 𐑩 𐑒𐑩𐑯𐑑𐑧𐑥𐑐𐑼𐑼𐑦 𐑪𐑮𐑩𐑒𐑩𐑤"
+
+#: ../applets/fish/fish.c:713
+msgid "Unable to locate the command to execute"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑤𐑴𐑒𐑱𐑑 𐑞 𐑒𐑩𐑥𐑭𐑯𐑛 𐑑 𐑧𐑒𐑕𐑩𐑒𐑿𐑑"
+
+#: ../applets/fish/fish.c:762
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s 𐑞 𐑓𐑦𐑖 𐑕𐑧𐑟:"
+
+#: ../applets/fish/fish.c:831
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑮𐑰𐑛 𐑬𐑑𐑐𐑫𐑑 𐑓𐑮𐑪𐑥 𐑒𐑩𐑥𐑭𐑯𐑛\n"
+"\n"
+"𐑛𐑰𐑑𐑱𐑤𐑟: %s"
+
+#: ../applets/fish/fish.c:896
+msgid "_Speak again"
+msgstr "_𐑕𐑐𐑰𐑒 𐑩𐑜𐑱𐑯"
+
+#: ../applets/fish/fish.c:979
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "𐑞 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑛 𐑒𐑩𐑥𐑭𐑯𐑛 𐑦𐑟 𐑯𐑪𐑑 𐑢𐑻𐑒𐑦𐑙 𐑯 𐑣𐑨𐑟 𐑚𐑰𐑯 𐑮𐑦𐑐𐑤𐑱𐑕𐑑 𐑚𐑲: %s"
+
+#: ../applets/fish/fish.c:1002
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑧𐑒𐑕𐑩𐑒𐑿𐑑 '%s'\n"
+"\n"
+"𐑛𐑰𐑑𐑱𐑤𐑟: %s"
+
+#: ../applets/fish/fish.c:1018
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑮𐑰𐑛 𐑓𐑮𐑪𐑥 '%s'\n"
+"\n"
+"𐑛𐑰𐑑𐑱𐑤𐑟: %s"
+
+#: ../applets/fish/fish.c:1640
+msgid "The water needs changing"
+msgstr "𐑞 𐑢𐑷𐑑𐑼 𐑯𐑰𐑛𐑟 𐑗𐑱𐑯𐑡𐑦𐑙"
+
+#: ../applets/fish/fish.c:1642
+msgid "Look at today's date!"
+msgstr "𐑤𐑫𐑒 𐑨𐑑 𐑑𐑫𐑛𐑱'𐑕 𐑛𐑱𐑑!"
+
+#: ../applets/fish/fish.c:1735
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "%s 𐑞 𐑓𐑦𐑖, 𐑞 𐑓𐑹𐑑𐑿𐑯 𐑑𐑧𐑤𐑻"
+
+#: ../applets/fish/fish.glade.h:1
+#: ../gnome-panel/panel-properties-dialog.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: ../applets/fish/fish.glade.h:2
+msgid "<b>Animation</b>"
+msgstr "<b>𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯</b>"
+
+#: ../applets/fish/fish.glade.h:3
+msgid "<b>General</b>"
+msgstr "<b>𐑡𐑧𐑯𐑼𐑩𐑤</b>"
+
+#: ../applets/fish/fish.glade.h:4
+msgid "Co_mmand to run when clicked:"
+msgstr "𐑒𐑫_𐑥𐑭𐑯𐑛 𐑑 𐑮𐑳𐑯 𐑢𐑧𐑯 𐑒𐑤𐑦𐑒𐑑:"
+
+#: ../applets/fish/fish.glade.h:5
+msgid "Fish Preferences"
+msgstr "𐑓𐑦𐑖 𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
+
+#: ../applets/fish/fish.glade.h:6
+msgid "Select an animation"
+msgstr "𐑕𐑩𐑤𐑧𐑒𐑑 𐑩𐑯 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯"
+
+#: ../applets/fish/fish.glade.h:7
+msgid "_File:"
+msgstr "_𐑓𐑲𐑤:"
+
+#: ../applets/fish/fish.glade.h:8
+msgid "_Name of fish:"
+msgstr "_𐑯𐑱𐑥 𐑝 𐑓𐑦𐑖:"
+
+#: ../applets/fish/fish.glade.h:9
+msgid "_Pause per frame:"
+msgstr "_𐑐𐑷𐑟 𐑐𐑻 𐑓𐑮𐑱𐑥:"
+
+#: ../applets/fish/fish.glade.h:10
+msgid "_Rotate on vertical panels"
+msgstr "_𐑮𐑴𐑑𐑱𐑑 𐑪𐑯 𐑝𐑻𐑑𐑦𐑒𐑩𐑤 𐑐𐑨𐑯𐑩𐑤𐑟"
+
+#: ../applets/fish/fish.glade.h:11
+msgid "_Total frames in animation:"
+msgstr "_𐑑𐑴𐑑𐑩𐑤 𐑓𐑮𐑱𐑥𐑟 𐑦𐑯 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯:"
+
+#: ../applets/fish/fish.glade.h:12
+msgid "frames"
+msgstr "𐑓𐑮𐑱𐑥𐑟"
+
+#: ../applets/fish/fish.glade.h:13
+msgid "seconds"
+msgstr "𐑕𐑧𐑒𐑩𐑯𐑛𐑟"
+
+#: ../applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "𐑩 𐑓𐑦𐑖 𐑢𐑦𐑞𐑬𐑑 𐑩 𐑯𐑱𐑥 𐑦𐑟 𐑩 𐑐𐑮𐑦𐑑𐑦 𐑛𐑳𐑤 𐑓𐑦𐑖. 𐑚𐑮𐑦𐑙 𐑿𐑼 𐑓𐑦𐑖 𐑑 𐑤𐑲𐑓 𐑚𐑲 𐑯𐑱𐑥𐑦𐑙 𐑣𐑦𐑥."
+
+#: ../applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "𐑒𐑩𐑥𐑭𐑯𐑛 𐑑 𐑧𐑒𐑕𐑩𐑒𐑿𐑑 𐑪𐑯 𐑒𐑤𐑦𐑒"
+
+#: ../applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "𐑓𐑮𐑱𐑥𐑟 𐑦𐑯 𐑓𐑦𐑖𐑧𐑕 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯"
+
+#: ../applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑓𐑦𐑖𐑧𐑕 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯 𐑢𐑦𐑤 𐑚𐑰 𐑛𐑩𐑕𐑐𐑤𐑱𐑛 𐑮𐑴𐑑𐑱𐑑𐑩𐑛 𐑪𐑯 𐑝𐑻𐑑𐑦𐑒𐑩𐑤 𐑐𐑨𐑯𐑩𐑤𐑟."
+
+#: ../applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "𐑐𐑷𐑟 𐑐𐑻 𐑓𐑮𐑱𐑥"
+
+#: ../applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "𐑮𐑴𐑑𐑱𐑑 𐑪𐑯 𐑝𐑻𐑑𐑦𐑒𐑩𐑤 𐑐𐑨𐑯𐑩𐑤𐑟"
+
+#: ../applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "𐑞 𐑓𐑦𐑖𐑧𐑕 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯 pixmap"
+
+#: ../applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "𐑞 𐑓𐑦𐑖𐑧𐑕 𐑯𐑱𐑥"
+
+#: ../applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑒𐑩𐑥𐑭𐑯𐑛 𐑞𐑨𐑑 𐑢𐑦𐑤 𐑚𐑰 𐑑𐑮𐑲𐑛 𐑑 𐑧𐑒𐑕𐑩𐑒𐑿𐑑 𐑢𐑧𐑯 𐑞 𐑓𐑦𐑖 𐑦𐑟 𐑒𐑤𐑦𐑒𐑑."
+
+#: ../applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑓𐑲𐑤𐑯𐑱𐑥 𐑝 𐑞 𐑐𐑦𐑒𐑕𐑥𐑨𐑐 𐑢𐑦𐑗 𐑢𐑦𐑤 𐑚𐑰 𐑿𐑟𐑛 𐑓𐑹 𐑞 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯 𐑛𐑩𐑕𐑐𐑤𐑱𐑛 𐑦𐑯 "
+"𐑞 𐑓𐑦𐑖 𐑨𐑐𐑤𐑩𐑑 𐑮𐑧𐑤𐑩𐑑𐑦𐑝 𐑑 𐑞 𐑐𐑦𐑒𐑕𐑥𐑨𐑐 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦."
+
+#: ../applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr ""
+"𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑯𐑳𐑥𐑚𐑼 𐑝 𐑓𐑮𐑱𐑥𐑟 𐑞𐑨𐑑 𐑢𐑦𐑤 𐑚𐑰 𐑛𐑩𐑕𐑐𐑤𐑱𐑛 𐑦𐑯 𐑞 𐑓𐑦𐑖𐑧𐑕 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯."
+
+#: ../applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑞 𐑯𐑳𐑥𐑚𐑼 𐑝 𐑕𐑧𐑒𐑩𐑯𐑛𐑟 𐑰𐑗 𐑓𐑮𐑱𐑥 𐑢𐑦𐑤 𐑚𐑰 𐑛𐑩𐑕𐑐𐑤𐑱𐑛."
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "𐑺𐑦𐑩 𐑢𐑺 𐑯𐑴𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯 𐑲𐑒𐑪𐑯𐑟 𐑩𐑐𐑽"
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+#: ../applets/notification_area/main.c:151
+msgid "Notification Area"
+msgstr "𐑯𐑴𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯 𐑺𐑦𐑩"
+
+#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "𐑯𐑴𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯 𐑺𐑦𐑩 𐑓𐑨𐑒𐑑𐑼𐑦"
+
+#: ../applets/notification_area/main.c:240
+msgid "Panel Notification Area"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑯𐑴𐑑𐑦𐑓𐑦𐑒𐑱𐑖𐑩𐑯 𐑺𐑦𐑩"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "𐑓𐑨𐑒𐑑𐑼𐑦 𐑓𐑹 𐑞 𐑢𐑦𐑯𐑛𐑴 𐑯𐑨𐑝𐑦𐑜𐑱𐑖𐑩𐑯 𐑮𐑦𐑤𐑱𐑑𐑩𐑛 𐑨𐑐𐑤𐑩𐑑𐑕"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "𐑣𐑲𐑛 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑢𐑦𐑯𐑛𐑴𐑟 𐑯 𐑖𐑴 𐑞 𐑛𐑧𐑕𐑒𐑑𐑪𐑐"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "𐑖𐑴 𐑛𐑧𐑕𐑒𐑑𐑪𐑐"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "𐑕𐑢𐑦𐑗 𐑚𐑦𐑑𐑢𐑰𐑯 𐑴𐑐𐑩𐑯 𐑢𐑦𐑯𐑛𐑴𐑟 𐑿𐑟𐑦𐑙 𐑩 𐑥𐑧𐑯𐑿"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "𐑕𐑢𐑦𐑗 𐑚𐑦𐑑𐑢𐑰𐑯 𐑴𐑐𐑩𐑯 𐑢𐑦𐑯𐑛𐑴𐑟 𐑿𐑟𐑦𐑙 𐑚𐑳𐑑𐑩𐑯𐑟"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "𐑕𐑢𐑦𐑗 𐑚𐑦𐑑𐑢𐑰𐑯 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: ../applets/wncklet/window-list.c:610
+msgid "Window List"
+msgstr "𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "𐑢𐑦𐑯𐑛𐑴 𐑯𐑨𐑝𐑦𐑜𐑱𐑖𐑩𐑯 𐑨𐑐𐑤𐑩𐑑 𐑓𐑨𐑒𐑑𐑼𐑦"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
+msgid "Window Selector"
+msgstr "𐑢𐑦𐑯𐑛𐑴 𐑕𐑧𐑤𐑧𐑒𐑑𐑼"
+
+#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: ../applets/wncklet/workspace-switcher.c:625
+msgid "Workspace Switcher"
+msgstr "𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻"
+
+#: ../applets/wncklet/showdesktop.c:181
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "𐑓𐑱𐑤𐑛 𐑑 𐑤𐑴𐑛 %s: %s\n"
+
+#: ../applets/wncklet/showdesktop.c:182
+msgid "Icon not found"
+msgstr "𐑲𐑒𐑪𐑯 𐑯𐑪𐑑 𐑓𐑬𐑯𐑛"
+
+#: ../applets/wncklet/showdesktop.c:241
+msgid "Click here to restore hidden windows."
+msgstr "𐑒𐑤𐑦𐑒 𐑣𐑽 𐑑 𐑮𐑩𐑕𐑑𐑹 𐑣𐑦𐑛𐑩𐑯 𐑢𐑦𐑯𐑛𐑴𐑟."
+
+#: ../applets/wncklet/showdesktop.c:243
+msgid "Click here to hide all windows and show the desktop."
+msgstr "𐑒𐑤𐑦𐑒 𐑣𐑽 𐑑 𐑣𐑲𐑛 𐑷𐑤 𐑢𐑦𐑯𐑛𐑴𐑟 𐑯 𐑖𐑴 𐑞 𐑛𐑧𐑕𐑒𐑑𐑪𐑐."
+
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+msgid "Show Desktop Button"
+msgstr "𐑖𐑴 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑚𐑳𐑑𐑩𐑯"
+
+#: ../applets/wncklet/showdesktop.c:536
+msgid "This button lets you hide all windows and show the desktop."
+msgstr "𐑞𐑦𐑕 𐑚𐑳𐑑𐑩𐑯 𐑤𐑧𐑑𐑕 𐑿 𐑣𐑲𐑛 𐑷𐑤 𐑢𐑦𐑯𐑛𐑴𐑟 𐑯 𐑖𐑴 𐑞 𐑛𐑧𐑕𐑒𐑑𐑪𐑐."
+
+#: ../applets/wncklet/showdesktop.c:566
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"𐑿𐑼 𐑢𐑦𐑯𐑛𐑴 𐑥𐑨𐑯𐑩𐑡𐑼 𐑛𐑳𐑟 𐑯𐑪𐑑 𐑕𐑩𐑐𐑹𐑑 𐑞 𐑖𐑴 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑚𐑳𐑑𐑩𐑯, 𐑹 𐑿 𐑸 𐑯𐑪𐑑 𐑮𐑳𐑯𐑦𐑙 𐑩 𐑢𐑦𐑯𐑛𐑴 "
+"𐑥𐑨𐑯𐑩𐑡𐑼."
+
+#: ../applets/wncklet/window-list.c:612
+msgid ""
+"The Window List shows a list of all windows in a set of buttons and lets you "
+"browse them."
+msgstr ""
+"𐑞 𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑖𐑴𐑟 𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑷𐑤 𐑢𐑦𐑯𐑛𐑴𐑟 𐑦𐑯 𐑩 𐑕𐑧𐑑 𐑝 𐑚𐑳𐑑𐑩𐑯𐑟 𐑯 𐑤𐑧𐑑𐑕 𐑿 𐑚𐑮𐑬𐑟 𐑞𐑧𐑥."
+
+#: ../applets/wncklet/window-list.glade.h:1
+msgid "<b>Restoring Minimized Windows</b>"
+msgstr "<b>𐑮𐑩𐑕𐑑𐑹𐑦𐑙 𐑥𐑦𐑯𐑩𐑥𐑲𐑟𐑛 𐑢𐑦𐑯𐑛𐑴𐑟</b>"
+
+#: ../applets/wncklet/window-list.glade.h:2
+msgid "<b>Window Grouping</b>"
+msgstr "<b>𐑢𐑦𐑯𐑛𐑴 𐑜𐑮𐑵𐑐𐑦𐑙</b>"
+
+#: ../applets/wncklet/window-list.glade.h:3
+msgid "<b>Window List Content</b>"
+msgstr "<b>𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑒𐑪𐑯𐑑𐑧𐑯𐑑</b>"
+
+#: ../applets/wncklet/window-list.glade.h:4
+msgid "Group windows when _space is limited"
+msgstr "𐑜𐑮𐑵𐑐 𐑢𐑦𐑯𐑛𐑴𐑟 𐑢𐑧𐑯 _𐑕𐑐𐑱𐑕 𐑦𐑟 𐑤𐑦𐑥𐑦𐑑𐑩𐑛"
+
+#: ../applets/wncklet/window-list.glade.h:5
+msgid "Restore to current _workspace"
+msgstr "𐑮𐑩𐑕𐑑𐑹 𐑑 𐑒𐑳𐑮𐑩𐑯𐑑 _𐑢𐑻𐑒𐑕𐑐𐑱𐑕"
+
+#: ../applets/wncklet/window-list.glade.h:6
+msgid "Restore to na_tive workspace"
+msgstr "𐑮𐑩𐑕𐑑𐑹 𐑑 𐑯𐑱_𐑑𐑦𐑝 𐑢𐑻𐑒𐑕𐑐𐑱𐑕"
+
+#: ../applets/wncklet/window-list.glade.h:7
+msgid "Sh_ow windows from current workspace"
+msgstr "𐑖_𐑴 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑒𐑳𐑮𐑩𐑯𐑑 𐑢𐑻𐑒𐑕𐑐𐑱𐑕"
+
+#: ../applets/wncklet/window-list.glade.h:8
+msgid "Show windows from a_ll workspaces"
+msgstr "𐑖𐑴 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑭_𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟"
+
+#: ../applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
+
+#: ../applets/wncklet/window-list.glade.h:10
+msgid "_Always group windows"
+msgstr "_𐑭𐑤𐑢𐑱𐑟 𐑜𐑮𐑵𐑐 𐑢𐑦𐑯𐑛𐑴𐑟"
+
+#: ../applets/wncklet/window-list.glade.h:11
+msgid "_Never group windows"
+msgstr "_𐑯𐑧𐑝𐑼 𐑜𐑮𐑵𐑐 𐑢𐑦𐑯𐑛𐑴𐑟"
+
+#: ../applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"𐑛𐑦𐑕𐑲𐑛𐑟 𐑢𐑧𐑯 𐑑 𐑜𐑮𐑵𐑐 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑞 𐑕𐑱𐑥 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑪𐑯 𐑞 𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑. 𐑐𐑪𐑕𐑩𐑚𐑩𐑤 𐑝𐑨𐑤𐑿𐑟 "
+"𐑸 \"never\", \"auto\" 𐑯 \"always\"."
+
+#: ../applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑢𐑦𐑤 𐑖𐑴 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑷𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟. 𐑳𐑞𐑼𐑢𐑲𐑟 𐑦𐑑 𐑢𐑦𐑤 𐑴𐑯𐑤𐑦 "
+"𐑛𐑩𐑕𐑐𐑤𐑱 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑢𐑻𐑒𐑕𐑐𐑱𐑕."
+
+#: ../applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞𐑧𐑯 𐑢𐑧𐑯 𐑳𐑯𐑥𐑦𐑯𐑦𐑥𐑲𐑟𐑦𐑙 𐑩 𐑢𐑦𐑯𐑛𐑴, 𐑥𐑵𐑝 𐑦𐑑 𐑑 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑢𐑻𐑒𐑕𐑐𐑱𐑕. 𐑳𐑞𐑼𐑢𐑲𐑟, "
+"𐑕𐑢𐑦𐑗 𐑑 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑝 𐑞 𐑢𐑦𐑯𐑛𐑴."
+
+#: ../applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "𐑥𐑨𐑒𐑕𐑦𐑥𐑩𐑥 𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑕𐑲𐑟"
+
+#: ../applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "𐑥𐑦𐑯𐑩𐑥𐑩𐑥 𐑢𐑦𐑯𐑛𐑴 𐑤𐑦𐑕𐑑 𐑕𐑲𐑟"
+
+#: ../applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "𐑥𐑵𐑝 𐑢𐑦𐑯𐑛𐑴𐑟 𐑑 𐑒𐑳𐑮𐑩𐑯𐑑 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑢𐑧𐑯 𐑳𐑯𐑥𐑦𐑯𐑦𐑥𐑲𐑟𐑛"
+
+#: ../applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "𐑖𐑴 𐑢𐑦𐑯𐑛𐑴𐑟 𐑓𐑮𐑪𐑥 𐑷𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟"
+
+#: ../applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"𐑞 𐑿𐑕 𐑝 𐑞𐑦𐑕 𐑒𐑰 𐑢𐑪𐑟 𐑛𐑧𐑐𐑮𐑩𐑒𐑱𐑑𐑩𐑛 𐑦𐑯 ·𐑜𐑯𐑴𐑥 2.20. 𐑞 𐑕𐑒𐑰𐑥𐑩 𐑦𐑟 𐑮𐑦𐑑𐑱𐑯𐑛 𐑓𐑹 "
+"𐑒𐑩𐑥𐑐𐑨𐑑𐑩𐑚𐑦𐑤𐑩𐑑𐑰 𐑢𐑦𐑞 𐑴𐑤𐑛𐑼 𐑝𐑻𐑠𐑩𐑯𐑟."
+
+#: ../applets/wncklet/window-list.schemas.in.h:9
+msgid "When to group windows"
+msgstr "𐑢𐑧𐑯 𐑑 𐑜𐑮𐑵𐑐 𐑢𐑦𐑯𐑛𐑴𐑟"
+
+#: ../applets/wncklet/window-menu.c:86
+msgid ""
+"The Window Selector shows a list of all windows in a menu and lets you "
+"browse them."
+msgstr "𐑞 𐑢𐑦𐑯𐑛𐑴 𐑕𐑧𐑤𐑧𐑒𐑑𐑼 𐑖𐑴𐑟 𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑷𐑤 𐑢𐑦𐑯𐑛𐑴𐑟 𐑦𐑯 𐑩 𐑥𐑧𐑯𐑿 𐑯 𐑤𐑧𐑑𐑕 𐑿 𐑚𐑮𐑬𐑟 𐑞𐑧𐑥."
+
+#: ../applets/wncklet/workspace-switcher.c:215
+#: ../applets/wncklet/workspace-switcher.c:977
+#: ../applets/wncklet/workspace-switcher.glade.h:10
+msgid "rows"
+msgstr "𐑮𐑴𐑟"
+
+#: ../applets/wncklet/workspace-switcher.c:215
+#: ../applets/wncklet/workspace-switcher.c:977
+msgid "columns"
+msgstr "𐑒𐑪𐑤𐑩𐑥𐑟"
+
+#: ../applets/wncklet/workspace-switcher.c:489
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "𐑻𐑼 𐑤𐑴𐑛𐑦𐑙 num_rows 𐑝𐑨𐑤𐑿 𐑓𐑹 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:500
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "𐑻𐑼 𐑤𐑴𐑛𐑦𐑙 display_workspace_names 𐑝𐑨𐑤𐑿 𐑓𐑹 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:515
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr "𐑻𐑼 𐑤𐑴𐑛𐑦𐑙 display_all_workspaces 𐑝𐑨𐑤𐑿 𐑓𐑹 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻: %s\n"
+
+#: ../applets/wncklet/workspace-switcher.c:627
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻 𐑖𐑴𐑟 𐑿 𐑩 𐑕𐑥𐑷𐑤 𐑝𐑻𐑠𐑩𐑯 𐑝 𐑿𐑼 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟 𐑞𐑨𐑑 𐑤𐑧𐑑𐑕 𐑿 𐑥𐑨𐑯𐑦𐑡 𐑿𐑼 𐑢𐑦𐑯𐑛𐑴𐑟."
+
+#: ../applets/wncklet/workspace-switcher.glade.h:1
+msgid "<b>Switcher</b>"
+msgstr "<b>𐑕𐑢𐑦𐑗𐑻</b>"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:2
+msgid "<b>Workspaces</b>"
+msgstr "<b>𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟</b>"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:3
+msgid "Number of _workspaces:"
+msgstr "𐑯𐑳𐑥𐑚𐑼 𐑝 _𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟:"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show _all workspaces in:"
+msgstr "𐑖𐑴 _𐑭𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟 𐑦𐑯:"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show _only the current workspace"
+msgstr "𐑖𐑴 _𐑴𐑯𐑤𐑦 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 𐑢𐑻𐑒𐑕𐑐𐑱𐑕"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:6
+msgid "Show workspace _names in switcher"
+msgstr "𐑖𐑴 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 _𐑯𐑱𐑥𐑟 𐑦𐑯 𐑕𐑢𐑦𐑗𐑻"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Names"
+msgstr "𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑯𐑱𐑥𐑟"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻 𐑐𐑮𐑧𐑓𐑼𐑩𐑯𐑕𐑩𐑟"
+
+#: ../applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspace na_mes:"
+msgstr "𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑯𐑱_𐑥𐑟:"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "𐑛𐑩𐑕𐑐𐑤𐑱 𐑷𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "𐑛𐑩𐑕𐑐𐑤𐑱 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑯𐑱𐑥𐑟"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻 𐑢𐑦𐑤 𐑖𐑴 𐑷𐑤 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟. 𐑳𐑞𐑼𐑢𐑲𐑟 𐑦𐑑 𐑢𐑦𐑤 𐑴𐑯𐑤𐑦 𐑖𐑴 𐑞 𐑒𐑳𐑮𐑩𐑯𐑑 "
+"𐑢𐑻𐑒𐑕𐑐𐑱𐑕."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟 𐑦𐑯 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻 𐑢𐑦𐑤 𐑛𐑦𐑕𐑐𐑤𐑱 𐑞 𐑯𐑱𐑥𐑟 𐑝 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟. "
+"𐑳𐑞𐑼𐑢𐑲𐑟 𐑞𐑱 𐑢𐑦𐑤 𐑛𐑦𐑕𐑐𐑤𐑱 𐑞 𐑢𐑦𐑯𐑛𐑴𐑟 𐑪𐑯 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕. 𐑞𐑦𐑕 𐑕𐑧𐑑𐑦𐑙 𐑴𐑯𐑤𐑦 𐑢𐑻𐑒𐑕 𐑢𐑧𐑯 𐑞 𐑢𐑦𐑯𐑛𐑴 "
+"𐑥𐑨𐑯𐑩𐑡𐑼 𐑦𐑟 ·𐑥𐑧𐑑𐑨𐑕𐑦𐑑𐑦."
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "𐑮𐑴𐑟 𐑦𐑯 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻"
+
+#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"𐑞𐑦𐑕 𐑒𐑰 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑟 𐑣𐑬 𐑥𐑧𐑯𐑦 𐑮𐑴𐑟 (𐑓𐑹 𐑣𐑪𐑮𐑦𐑟𐑪𐑯𐑑𐑩𐑤 𐑤𐑱𐑬𐑑) 𐑹 𐑒𐑪𐑤𐑩𐑥𐑟 (𐑓𐑹 𐑝𐑻𐑑𐑦𐑒𐑩𐑤 𐑤𐑱𐑬𐑑) "
+"𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕 𐑕𐑢𐑦𐑗𐑻 𐑖𐑴𐑟 𐑞 𐑢𐑻𐑒𐑕𐑐𐑱𐑕𐑩𐑟 𐑦𐑯. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"display_all_workspaces 𐑒𐑰 𐑦𐑟 𐑑𐑮𐑵."
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:1000
+#: ../gnome-panel/panel-applet-frame.c:1088
+msgid "Error"
+msgstr "𐑻𐑼"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑤𐑷𐑯𐑗 '%s'"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑤𐑷𐑯𐑗 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑴𐑐𐑩𐑯 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 '%s'"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr "𐑯𐑴 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑣𐑨𐑯𐑛𐑩𐑤 𐑕𐑻𐑗 𐑓𐑴𐑤𐑛𐑼𐑟 𐑦𐑟 𐑦𐑯𐑕𐑑𐑷𐑤𐑛."
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
+msgid "Loc_k To Panel"
+msgstr "𐑤𐑪_𐑒 𐑑 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:527
+msgid "_Move"
+msgstr "_𐑥𐑵𐑝"
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
+msgid "_Remove From Panel"
+msgstr "_𐑮𐑰𐑥𐑵𐑝 𐑓𐑮𐑪𐑥 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/applet.c:437
+msgid "???"
+msgstr "???"
+
+#: ../gnome-panel/applet.c:1241
+msgid "Cannot find an empty spot"
+msgstr "𐑒𐑨𐑯𐑪𐑑 𐑓𐑲𐑯𐑛 𐑩𐑯 𐑧𐑥𐑐𐑑𐑦 𐑕𐑐𐑪𐑑"
+
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-toplevel.c:1602
+msgid "Drawer"
+msgstr "𐑛𐑮𐑷𐑼"
+
+#: ../gnome-panel/drawer.c:589
+msgid "_Add to Drawer..."
+msgstr "_𐑨𐑛 𐑑 𐑛𐑮𐑷𐑼..."
+
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
+#: ../gnome-panel/panel-action-button.c:141
+#: ../gnome-panel/panel-context-menu.c:216
+msgid "_Properties"
+msgstr "_𐑐𐑮𐑪𐑐𐑼𐑑𐑰𐑟"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:31
+msgid "Create new file in the given directory"
+msgstr "𐑒𐑮𐑦𐑱𐑑 𐑯𐑿 𐑓𐑲𐑤 𐑦𐑯 𐑞 𐑜𐑦𐑝𐑩𐑯 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:32
+msgid "[FILE...]"
+msgstr "[𐑓𐑲𐑤...]"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:110
+msgid "- Edit .desktop files"
+msgstr "- 𐑧𐑛𐑦𐑑 .desktop 𐑓𐑲𐑤𐑟"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:149
+#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+msgid "Create Launcher"
+msgstr "𐑒𐑮𐑦𐑱𐑑 𐑤𐑪𐑯𐑗𐑻"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:174
+#: ../gnome-panel/gnome-desktop-item-edit.c:197
+msgid "Directory Properties"
+msgstr "𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦 𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+msgid "Launcher Properties"
+msgstr "𐑤𐑪𐑯𐑗𐑻 𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"𐑤𐑷𐑯𐑗 𐑳𐑞𐑼 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟 𐑯 𐑐𐑮𐑩𐑝𐑲𐑛 𐑝𐑺𐑦𐑩𐑕 𐑘𐑵𐑑𐑦𐑤𐑩𐑑𐑰𐑟 𐑑 𐑥𐑨𐑯𐑦𐑡 𐑢𐑦𐑯𐑛𐑴𐑟, 𐑖𐑴 𐑞 𐑑𐑲𐑥, 𐑧𐑑𐑕."
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:70
+msgid "Panel"
+msgstr "𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/launcher.c:118
+msgid "Could not show this URL"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑖𐑴 𐑞𐑦𐑕 URL"
+
+#: ../gnome-panel/launcher.c:119
+msgid "No URL was specified."
+msgstr "𐑯𐑴 URL 𐑢𐑪𐑟 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑛."
+
+#: ../gnome-panel/launcher.c:227
+msgid "Could not use dropped item"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑿𐑟 𐑛𐑮𐑪𐑐𐑑 𐑲𐑑𐑩𐑥"
+
+#: ../gnome-panel/launcher.c:423
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "𐑯𐑴 URI 𐑐𐑮𐑩𐑝𐑲𐑛𐑩𐑛 𐑓𐑹 𐑐𐑨𐑯𐑩𐑤 𐑤𐑪𐑯𐑗𐑻 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑓𐑲𐑤\n"
+
+#: ../gnome-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑴𐑐𐑩𐑯 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑓𐑲𐑤 %s 𐑓𐑹 𐑐𐑨𐑯𐑩𐑤 𐑤𐑪𐑯𐑗𐑻%s%s\n"
+
+#: ../gnome-panel/launcher.c:801
+msgid "_Launch"
+msgstr "_𐑤𐑷𐑯𐑗"
+
+#: ../gnome-panel/launcher.c:840
+#, c-format
+msgid "Key %s is not set, cannot load launcher\n"
+msgstr "𐑒𐑰 %s 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑧𐑑, 𐑒𐑨𐑯𐑪𐑑 𐑤𐑴𐑛 𐑤𐑪𐑯𐑗𐑻\n"
+
+#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1384
+#: ../gnome-panel/panel-ditem-editor.c:1415
+msgid "Could not save launcher"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑤𐑪𐑯𐑗𐑻"
+
+#: ../gnome-panel/main.c:42
+msgid "Replace a currently running panel"
+msgstr "𐑮𐑦𐑐𐑤𐑱𐑕 𐑩 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑮𐑳𐑯𐑦𐑙 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/menu.c:1005
+msgid "Add this launcher to _panel"
+msgstr "𐑨𐑛 𐑞𐑦𐑕 𐑤𐑪𐑯𐑗𐑻 𐑑 _𐑐𐑨𐑯𐑧𐑤"
+
+#: ../gnome-panel/menu.c:1012
+msgid "Add this launcher to _desktop"
+msgstr "𐑨𐑛 𐑞𐑦𐑕 𐑤𐑪𐑯𐑗𐑻 𐑑 _𐑛𐑧𐑕𐑒𐑑𐑪𐑐"
+
+#: ../gnome-panel/menu.c:1024
+msgid "_Entire menu"
+msgstr "_𐑦𐑯𐑑𐑲𐑼 𐑥𐑧𐑯𐑿"
+
+#: ../gnome-panel/menu.c:1029
+msgid "Add this as _drawer to panel"
+msgstr "𐑨𐑛 𐑞𐑦𐑕 𐑨𐑟 _𐑛𐑮𐑪𐑼 𐑑 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/menu.c:1036
+msgid "Add this as _menu to panel"
+msgstr "𐑨𐑛 𐑞𐑦𐑕 𐑨𐑟 _𐑥𐑧𐑯𐑿 𐑑 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/nothing.cP:601
+#, c-format
+msgid "<b>GAME OVER</b> at level %d!"
+msgstr "<b>𐑜𐑱𐑥 𐑴𐑝𐑼</b> 𐑨𐑑 𐑤𐑧𐑝𐑩𐑤 %d!"
+
+#. Translators: the first and third strings are similar to a
+#. * title, and the second string is a small information text.
+#. * The spaces are there only to separate all the strings, so
+#. try to keep them as is.
+#: ../gnome-panel/nothing.cP:608
+#, c-format
+msgid "%1$s   %2$s   %3$s"
+msgstr "%1$s   %2$s   %3$s"
+
+#: ../gnome-panel/nothing.cP:609
+msgid "Press 'q' to quit"
+msgstr "𐑐𐑮𐑧𐑕 'q' 𐑑 𐑒𐑢𐑦𐑑"
+
+#: ../gnome-panel/nothing.cP:614
+msgid "Paused"
+msgstr "𐑐𐑷𐑟𐑛"
+
+#. Translators: the first string is a title and the second
+#. * string is a small information text.
+#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#, c-format
+msgid "%1$s\t%2$s"
+msgstr "%1$s\t%2$s"
+
+#: ../gnome-panel/nothing.cP:618
+msgid "Press 'p' to unpause"
+msgstr "𐑐𐑮𐑧𐑕 'p' 𐑑 unpause"
+
+#: ../gnome-panel/nothing.cP:624
+#, c-format
+msgid "Level: %s,  Lives: %s"
+msgstr "𐑤𐑧𐑝𐑩𐑤: %s,  𐑤𐑦𐑝𐑟: %s"
+
+#: ../gnome-panel/nothing.cP:629
+msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+msgstr "𐑤𐑧𐑓𐑑/𐑮𐑲𐑑 𐑑 𐑥𐑵𐑝, 𐑕𐑐𐑱𐑕 𐑑 𐑓𐑲𐑼, 'p' 𐑑 𐑐𐑷𐑟, 'q' 𐑑 𐑒𐑢𐑦𐑑"
+
+#: ../gnome-panel/nothing.cP:1369
+msgid "Killer GEGLs from Outer Space"
+msgstr "𐑒𐑦𐑤𐑻 ·𐑜𐑧𐑜𐑩𐑤𐑟 𐑓𐑮𐑪𐑥 𐑬𐑑𐑼 𐑕𐑐𐑱𐑕"
+
+#: ../gnome-panel/panel-action-button.c:129
+msgid "_Activate Screensaver"
+msgstr "_𐑨𐑒𐑑𐑦𐑝𐑱𐑑 𐑕𐑒𐑮𐑰𐑯𐑕𐑱𐑝𐑼"
+
+#: ../gnome-panel/panel-action-button.c:135
+msgid "_Lock Screen"
+msgstr "_𐑤𐑪𐑒 𐑕𐑒𐑮𐑰𐑯"
+
+#: ../gnome-panel/panel-action-button.c:254
+msgid "Could not connect to server"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑕𐑻𐑝𐑼"
+
+#: ../gnome-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "𐑤𐑪𐑒 𐑕𐑒𐑮𐑰𐑯"
+
+#: ../gnome-panel/panel-action-button.c:286
+msgid "Protect your computer from unauthorized use"
+msgstr "𐑐𐑮𐑩𐑑𐑧𐑒𐑑 𐑿𐑼 𐑒𐑩𐑥𐑐𐑿𐑑𐑼 𐑓𐑮𐑪𐑥 𐑩𐑯𐑪𐑔𐑻𐑲𐑟𐑛 𐑿𐑕"
+
+#. when changing one of those two strings, don't forget to
+#. * update the ones in panel-menu-items.c (look for
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../gnome-panel/panel-action-button.c:300
+msgid "Log Out..."
+msgstr "𐑤𐑪𐑜 𐑬𐑑..."
+
+#: ../gnome-panel/panel-action-button.c:301
+msgid "Log out of this session to log in as a different user"
+msgstr "𐑤𐑪𐑜 𐑬𐑑 𐑝 𐑞𐑦𐑕 𐑕𐑧𐑖𐑩𐑯 𐑑 𐑤𐑪𐑜 𐑦𐑯 𐑨𐑟 𐑩 𐑛𐑦𐑓𐑼𐑩𐑯𐑑 𐑿𐑟𐑼"
+
+#: ../gnome-panel/panel-action-button.c:310
+msgid "Run Application..."
+msgstr "𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯..."
+
+#: ../gnome-panel/panel-action-button.c:311
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "𐑮𐑳𐑯 𐑩𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑚𐑲 𐑑𐑲𐑐𐑦𐑙 𐑩 𐑒𐑩𐑥𐑭𐑯𐑛 𐑹 𐑗𐑵𐑟𐑦𐑙 𐑓𐑮𐑪𐑥 𐑩 𐑤𐑦𐑕𐑑"
+
+#: ../gnome-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "𐑕𐑻𐑗 𐑓𐑹 𐑓𐑲𐑤𐑟..."
+
+#: ../gnome-panel/panel-action-button.c:321
+msgid "Locate documents and folders on this computer by name or content"
+msgstr "𐑤𐑴𐑒𐑱𐑑 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑𐑕 𐑯 𐑓𐑴𐑤𐑛𐑼𐑟 𐑪𐑯 𐑞𐑦𐑕 𐑒𐑩𐑥𐑐𐑿𐑑𐑼 𐑚𐑲 𐑯𐑱𐑥 𐑹 𐑒𐑪𐑯𐑑𐑧𐑯𐑑"
+
+#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-force-quit.c:221
+msgid "Force Quit"
+msgstr "𐑓𐑹𐑕 𐑒𐑢𐑦𐑑"
+
+#: ../gnome-panel/panel-action-button.c:330
+msgid "Force a misbehaving application to quit"
+msgstr "𐑓𐑹𐑕 𐑩 𐑥𐑦𐑕𐑚𐑩𐑣𐑱𐑝𐑦𐑙 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑒𐑢𐑦𐑑"
+
+#. FIXME icon
+#: ../gnome-panel/panel-action-button.c:339
+msgid "Connect to Server..."
+msgstr "𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑕𐑻𐑝𐑼..."
+
+#: ../gnome-panel/panel-action-button.c:340
+msgid "Connect to a remote computer or shared disk"
+msgstr "𐑒𐑩𐑯𐑧𐑒𐑑 𐑑 𐑩 𐑮𐑦𐑥𐑴𐑑 𐑒𐑩𐑥𐑐𐑿𐑑𐑼 𐑹 𐑖𐑺𐑛 𐑛𐑦𐑕𐑒"
+
+#: ../gnome-panel/panel-action-button.c:348
+msgid "Shut Down..."
+msgstr "𐑖𐑳𐑑 𐑛𐑬𐑯..."
+
+#: ../gnome-panel/panel-action-button.c:349
+msgid "Shut down the computer"
+msgstr "𐑖𐑳𐑑 𐑛𐑬𐑯 𐑞 𐑒𐑩𐑥𐑐𐑿𐑑𐑼"
+
+#: ../gnome-panel/panel-addto.c:116
+msgid "Custom Application Launcher"
+msgstr "𐑒𐑳𐑕𐑑𐑩𐑥 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑤𐑪𐑯𐑗𐑻"
+
+#: ../gnome-panel/panel-addto.c:117
+msgid "Create a new launcher"
+msgstr "𐑒𐑮𐑦𐑱𐑑 𐑩 𐑯𐑿 𐑤𐑪𐑯𐑗𐑻"
+
+#: ../gnome-panel/panel-addto.c:127
+msgid "Application Launcher..."
+msgstr "𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑤𐑪𐑯𐑗𐑻..."
+
+#: ../gnome-panel/panel-addto.c:128
+msgid "Copy a launcher from the applications menu"
+msgstr "𐑒𐑪𐑐𐑦 𐑩 𐑤𐑪𐑯𐑗𐑻 𐑓𐑮𐑪𐑥 𐑞 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟 𐑥𐑧𐑯𐑿"
+
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
+msgid "Main Menu"
+msgstr "𐑥𐑱𐑯 𐑥𐑧𐑯𐑿"
+
+#: ../gnome-panel/panel-addto.c:143
+msgid "The main GNOME menu"
+msgstr "𐑞 𐑥𐑱𐑯 ·𐑜𐑯𐑴𐑥 𐑥𐑧𐑯𐑿"
+
+#: ../gnome-panel/panel-addto.c:153
+msgid "Menu Bar"
+msgstr "𐑥𐑧𐑯𐑿 𐑚𐑸"
+
+#: ../gnome-panel/panel-addto.c:154
+msgid "A custom menu bar"
+msgstr "𐑩 𐑒𐑳𐑕𐑑𐑩𐑥 𐑥𐑧𐑯𐑿 𐑚𐑸"
+
+#: ../gnome-panel/panel-addto.c:164
+msgid "Separator"
+msgstr "𐑕𐑧𐑐𐑼𐑱𐑑𐑼"
+
+#: ../gnome-panel/panel-addto.c:165
+msgid "A separator to organize the panel items"
+msgstr "𐑩 𐑕𐑧𐑐𐑼𐑱𐑑𐑼 𐑑 𐑹𐑜𐑩𐑯𐑲𐑟 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑲𐑑𐑩𐑥𐑟"
+
+#: ../gnome-panel/panel-addto.c:176
+msgid "A pop out drawer to store other items in"
+msgstr "𐑩 𐑐𐑪𐑐 𐑬𐑑 𐑛𐑮𐑷𐑼 𐑑 𐑕𐑑𐑹 𐑳𐑞𐑼 𐑲𐑑𐑩𐑥𐑟 𐑦𐑯"
+
+#: ../gnome-panel/panel-addto.c:267
+msgid "(empty)"
+msgstr "(𐑧𐑥𐑐𐑑𐑦)"
+
+#: ../gnome-panel/panel-addto.c:410
+#: ../libpanel-applet/panel-test-applets.c:250
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "𐑒𐑢𐑽𐑦 𐑮𐑦𐑑𐑻𐑯𐑛 𐑦𐑒𐑕𐑧𐑐𐑖𐑩𐑯 %s\n"
+
+#: ../gnome-panel/panel-addto.c:1069
+#, c-format
+msgid "Find an _item to add to \"%s\":"
+msgstr "𐑓𐑲𐑯𐑛 𐑩𐑯 _𐑲𐑑𐑩𐑥 𐑑 𐑨𐑛 𐑑 \"%s\":"
+
+#: ../gnome-panel/panel-addto.c:1073
+#, c-format
+msgid "Add to Drawer"
+msgstr "𐑨𐑛 𐑑 𐑛𐑮𐑷𐑼"
+
+#: ../gnome-panel/panel-addto.c:1075
+msgid "Find an _item to add to the drawer:"
+msgstr "𐑓𐑲𐑯𐑛 𐑩𐑯 _𐑲𐑑𐑩𐑥 𐑑 𐑨𐑛 𐑑 𐑞 𐑛𐑮𐑷𐑼:"
+
+#: ../gnome-panel/panel-addto.c:1077
+#, c-format
+msgid "Add to Panel"
+msgstr "𐑨𐑛 𐑑 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-addto.c:1079
+msgid "Find an _item to add to the panel:"
+msgstr "𐑓𐑲𐑯𐑛 𐑩𐑯 _𐑲𐑑𐑩𐑥 𐑑 𐑨𐑛 𐑑 𐑞 𐑐𐑨𐑯𐑩𐑤:"
+
+#: ../gnome-panel/panel-applet-frame.c:844
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "𐑦𐑒𐑕𐑧𐑐𐑖𐑩𐑯 𐑓𐑮𐑪𐑥 popup_menu '%s'\n"
+
+#: ../gnome-panel/panel-applet-frame.c:969
+#, c-format
+msgid "\"%s\" has quit unexpectedly"
+msgstr "\"%s\" 𐑣𐑨𐑟 𐑒𐑢𐑦𐑑 𐑩𐑯𐑦𐑒𐑕𐑐𐑧𐑒𐑑𐑦𐑛𐑤𐑰"
+
+#: ../gnome-panel/panel-applet-frame.c:971
+msgid "Panel object has quit unexpectedly"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑 𐑣𐑨𐑟 𐑒𐑢𐑦𐑑 𐑩𐑯𐑦𐑒𐑕𐑐𐑧𐑒𐑑𐑦𐑛𐑤𐑰"
+
+#: ../gnome-panel/panel-applet-frame.c:978
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr "𐑦𐑓 𐑿 𐑮𐑰𐑤𐑴𐑛 𐑩 𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑, 𐑦𐑑 𐑢𐑦𐑤 𐑷𐑑𐑩𐑥𐑨𐑑𐑦𐑒𐑤𐑦 𐑚𐑰 𐑨𐑛𐑩𐑛 𐑚𐑨𐑒 𐑑 𐑞 𐑐𐑨𐑯𐑩𐑤."
+
+#: ../gnome-panel/panel-applet-frame.c:984
+msgid "_Don't Reload"
+msgstr "_𐑛𐑴𐑯𐑑 𐑮𐑰𐑤𐑴𐑛"
+
+#: ../gnome-panel/panel-applet-frame.c:985
+msgid "_Reload"
+msgstr "_𐑮𐑰𐑤𐑴𐑛"
+
+#: ../gnome-panel/panel-applet-frame.c:1051
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "𐑞 𐑐𐑨𐑯𐑩𐑤 𐑦𐑯𐑒𐑶𐑯𐑑𐑻𐑛 𐑩 𐑐𐑮𐑪𐑚𐑤𐑩𐑥 𐑢𐑲𐑤 𐑤𐑴𐑛𐑦𐑙 \"%s\"."
+
+#: ../gnome-panel/panel-applet-frame.c:1067
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "𐑛𐑵 𐑿 𐑢𐑪𐑯𐑑 𐑑 𐑛𐑦𐑤𐑰𐑑 𐑞 𐑨𐑐𐑤𐑩𐑑 𐑓𐑮𐑪𐑥 𐑿𐑼 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯?"
+
+#: ../gnome-panel/panel-applet-frame.c:1141
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑪𐑚𐑑𐑱𐑯 AppletShell 𐑦𐑯𐑑𐑼𐑓𐑱𐑕 𐑓𐑮𐑪𐑥 𐑒𐑩𐑯𐑑𐑮𐑴𐑤\n"
+
+#: ../gnome-panel/panel-bindings.c:153
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr "𐑻𐑼 𐑢𐑪𐑗𐑦𐑙 gconf 𐑒𐑰 '%s': %s"
+
+#: ../gnome-panel/panel-bindings.c:171
+#, c-format
+msgid "Error loading gconf directory '%s': %s"
+msgstr "𐑻𐑼 𐑤𐑴𐑛𐑦𐑙 gconf 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦 '%s': %s"
+
+#: ../gnome-panel/panel-bindings.c:185
+#, c-format
+msgid "Error getting value for '%s': %s"
+msgstr "𐑻𐑼 𐑜𐑧𐑑𐑦𐑙 𐑝𐑨𐑤𐑿 𐑓𐑹 '%s': %s"
+
+#: ../gnome-panel/panel-context-menu.c:104
+msgid "And many, many others..."
+msgstr "𐑯 𐑥𐑧𐑯𐑦, 𐑥𐑧𐑯𐑦 𐑳𐑞𐑼𐑟..."
+
+#: ../gnome-panel/panel-context-menu.c:130
+msgid "The GNOME Panel"
+msgstr "𐑞 ·𐑜𐑯𐑴𐑥 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-context-menu.c:133
+msgid ""
+"This program is responsible for launching other applications and provides "
+"useful utilities."
+msgstr ""
+"𐑞𐑦𐑕 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑦𐑟 𐑮𐑦𐑕𐑐𐑪𐑯𐑕𐑦𐑚𐑩𐑤 𐑓𐑹 𐑤𐑷𐑯𐑗𐑦𐑙 𐑳𐑞𐑼 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟 𐑯 𐑐𐑮𐑩𐑝𐑲𐑛𐑟 𐑿𐑕𐑓𐑩𐑤 "
+"𐑘𐑵𐑑𐑦𐑤𐑩𐑑𐑰𐑟."
+
+#: ../gnome-panel/panel-context-menu.c:137
+msgid "About the GNOME Panel"
+msgstr "𐑩𐑚𐑬𐑑 𐑞 ·𐑜𐑯𐑴𐑥 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-context-menu.c:171
+msgid "Cannot delete this panel"
+msgstr "𐑒𐑨𐑯𐑪𐑑 𐑛𐑦𐑤𐑰𐑑 𐑞𐑦𐑕 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-context-menu.c:172
+msgid "You must always have at least one panel."
+msgstr "𐑿 𐑥𐑳𐑕𐑑 𐑷𐑤𐑢𐑱𐑟 𐑣𐑨𐑝 𐑨𐑑 𐑤𐑰𐑕𐑑 𐑢𐑳𐑯 𐑐𐑨𐑯𐑩𐑤."
+
+#: ../gnome-panel/panel-context-menu.c:205
+msgid "_Add to Panel..."
+msgstr "_𐑨𐑛 𐑑 𐑐𐑨𐑯𐑩𐑤..."
+
+#: ../gnome-panel/panel-context-menu.c:226
+msgid "_Delete This Panel"
+msgstr "_𐑛𐑦𐑤𐑰𐑑 𐑞𐑦𐑕 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-context-menu.c:241
+msgid "_New Panel"
+msgstr "_𐑯𐑿 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-context-menu.c:293
+msgid "A_bout Panels"
+msgstr "𐑩_𐑚𐑬𐑑 𐑐𐑨𐑯𐑩𐑤𐑟"
+
+#: ../gnome-panel/panel-ditem-editor.c:116
+msgid "Application"
+msgstr "𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯"
+
+#: ../gnome-panel/panel-ditem-editor.c:118
+msgid "Application in Terminal"
+msgstr "𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑦𐑯 𐑑𐑻𐑥𐑦𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-ditem-editor.c:120
+msgid "Location"
+msgstr "𐑤𐑴𐑒𐑱𐑖𐑩𐑯"
+
+#. Type
+#: ../gnome-panel/panel-ditem-editor.c:622
+msgid "_Type:"
+msgstr "_𐑑𐑲𐑐:"
+
+#. Name
+#: ../gnome-panel/panel-ditem-editor.c:629
+msgid "_Name:"
+msgstr "_𐑯𐑱𐑥:"
+
+#: ../gnome-panel/panel-ditem-editor.c:637
+msgid "Browse icons"
+msgstr "𐑚𐑮𐑬𐑟 𐑲𐑒𐑪𐑯𐑟"
+
+#: ../gnome-panel/panel-ditem-editor.c:655
+msgid "_Browse..."
+msgstr "_𐑚𐑮𐑬𐑟..."
+
+#. Comment
+#: ../gnome-panel/panel-ditem-editor.c:662
+msgid "Co_mment:"
+msgstr "𐑒𐑪_𐑥𐑧𐑯𐑑:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1024
+msgid "Choose an application..."
+msgstr "𐑗𐑵𐑟 𐑩𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯..."
+
+#: ../gnome-panel/panel-ditem-editor.c:1028
+msgid "Choose a file..."
+msgstr "𐑗𐑵𐑟 𐑩 𐑓𐑲𐑤..."
+
+#: ../gnome-panel/panel-ditem-editor.c:1153
+msgid "Comm_and:"
+msgstr "𐑒𐑫𐑥_𐑭𐑯𐑛:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1162
+msgid "_Command:"
+msgstr "_𐑒𐑳𐑥𐑭𐑯𐑛:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1171
+msgid "_Location:"
+msgstr "_𐑤𐑴𐑒𐑱𐑖𐑩𐑯:"
+
+#: ../gnome-panel/panel-ditem-editor.c:1351
+msgid "The name of the launcher is not set."
+msgstr "𐑞 𐑯𐑱𐑥 𐑝 𐑞 𐑤𐑪𐑯𐑗𐑻 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑧𐑑."
+
+#: ../gnome-panel/panel-ditem-editor.c:1355
+msgid "Could not save directory properties"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑕𐑱𐑝 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦 𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
+
+#: ../gnome-panel/panel-ditem-editor.c:1356
+msgid "The name of the directory is not set."
+msgstr "𐑞 𐑯𐑱𐑥 𐑝 𐑞 𐑛𐑲𐑮𐑧𐑒𐑑𐑼𐑦 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑧𐑑."
+
+#: ../gnome-panel/panel-ditem-editor.c:1372
+msgid "The command of the launcher is not set."
+msgstr "𐑞 𐑒𐑩𐑥𐑭𐑯𐑛 𐑝 𐑞 𐑤𐑪𐑯𐑗𐑻 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑧𐑑."
+
+#: ../gnome-panel/panel-ditem-editor.c:1375
+msgid "The location of the launcher is not set."
+msgstr "𐑞 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑝 𐑞 𐑤𐑪𐑯𐑗𐑻 𐑦𐑟 𐑯𐑪𐑑 𐑕𐑧𐑑."
+
+#: ../gnome-panel/panel-ditem-editor.c:1452
+msgid "Could not display help document"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑛𐑩𐑕𐑐𐑤𐑱 𐑣𐑧𐑤𐑐 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑"
+
+#: ../gnome-panel/panel-force-quit.c:76
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "𐑒𐑤𐑦𐑒 𐑪𐑯 𐑩 𐑢𐑦𐑯𐑛𐑴 𐑑 𐑓𐑹𐑕 𐑞 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑒𐑢𐑦𐑑. 𐑑 𐑒𐑨𐑯𐑕𐑩𐑤 𐑐𐑮𐑧𐑕 <ESC>."
+
+#: ../gnome-panel/panel-force-quit.c:204
+msgid "Force this application to exit?"
+msgstr "𐑓𐑹𐑕 𐑞𐑦𐑕 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑧𐑜𐑟𐑦𐑑?"
+
+#: ../gnome-panel/panel-force-quit.c:207
+msgid ""
+"If you choose to force an application to exit, any open documents in it will "
+"be lost."
+msgstr ""
+"𐑦𐑓 𐑿 𐑗𐑵𐑟 𐑑 𐑓𐑹𐑕 𐑩𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑧𐑜𐑟𐑦𐑑, 𐑧𐑯𐑦 𐑴𐑐𐑩𐑯 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑𐑕 𐑦𐑯 𐑦𐑑 𐑢𐑦𐑤 𐑚𐑰 𐑤𐑪𐑕𐑑."
+
+#: ../gnome-panel/panel-general.schemas.in.h:1
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"𐑩 𐑚𐑵𐑤𐑰𐑩𐑯 𐑓𐑤𐑨𐑜 𐑑 𐑦𐑯𐑛𐑦𐑒𐑱𐑑 𐑢𐑧𐑞𐑼 𐑞 𐑿𐑟𐑼'𐑕 𐑐𐑮𐑰𐑝𐑦𐑩𐑕 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑦𐑯 /apps/panel/"
+"profiles/default 𐑣𐑨𐑟 𐑚𐑰𐑯 𐑒𐑪𐑐𐑦𐑛 𐑑 𐑞 𐑯𐑿 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑦𐑯 /apps/panel."
+
+#: ../gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑐𐑨𐑯𐑩𐑤 IDs. 𐑰𐑗 ID 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑲𐑟 𐑩𐑯 𐑦𐑯𐑛𐑦𐑝𐑦𐑛𐑿𐑩𐑤 𐑑𐑪𐑐𐑤𐑧𐑝𐑩𐑤 𐑐𐑨𐑯𐑩𐑤. 𐑞 𐑕𐑧𐑑𐑦𐑙𐑟 "
+"𐑓𐑹 𐑰𐑗 𐑝 𐑞𐑰𐑟 𐑐𐑨𐑯𐑩𐑤𐑟 𐑸 𐑕𐑑𐑹𐑛 𐑦𐑯 /apps/panel/toplevels/$(id)."
+
+#: ../gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑐𐑨𐑯𐑩𐑤 𐑨𐑐𐑤𐑩𐑑 IDs. 𐑰𐑗 ID 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑲𐑟 𐑩𐑯 𐑦𐑯𐑛𐑦𐑝𐑦𐑛𐑿𐑩𐑤 𐑐𐑨𐑯𐑩𐑤 𐑨𐑐𐑤𐑩𐑑. 𐑞 "
+"𐑕𐑧𐑑𐑦𐑙𐑟 𐑓𐑹 𐑰𐑗 𐑝 𐑞𐑰𐑟 𐑨𐑐𐑤𐑩𐑑𐑕 𐑸 𐑕𐑑𐑹𐑛 𐑦𐑯 /apps/panel/applets/$(id)."
+
+#: ../gnome-panel/panel-general.schemas.in.h:4
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑 IDs. 𐑰𐑗 ID 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑲𐑟 𐑩𐑯 𐑦𐑯𐑛𐑦𐑝𐑦𐑛𐑿𐑩𐑤 𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑 (e.g. "
+"𐑩 𐑤𐑪𐑯𐑗𐑻, 𐑨𐑒𐑖𐑩𐑯 𐑚𐑳𐑑𐑩𐑯 𐑹 𐑥𐑧𐑯𐑿 𐑚𐑳𐑑𐑩𐑯/𐑚𐑸). 𐑞 𐑕𐑧𐑑𐑦𐑙𐑟 𐑓𐑹 𐑰𐑗 𐑝 𐑞𐑰𐑟 𐑪𐑚𐑡𐑧𐑒𐑑𐑕 𐑸 𐑕𐑑𐑹𐑛 "
+"𐑦𐑯 /apps/panel/objects/$(id)."
+
+#: ../gnome-panel/panel-general.schemas.in.h:5
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑷𐑑𐑴𐑒𐑪𐑥𐑐𐑤𐑰𐑖𐑩𐑯 𐑦𐑯 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜"
+
+#: ../gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑤𐑦𐑕𐑑 𐑦𐑯 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜"
+
+#: ../gnome-panel/panel-general.schemas.in.h:7
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "𐑦𐑒𐑕𐑐𐑨𐑯𐑛 𐑐𐑮𐑴𐑜𐑮𐑨𐑥 𐑤𐑦𐑕𐑑 𐑦𐑯 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜"
+
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑷𐑑𐑴𐑒𐑪𐑥𐑐𐑤𐑰𐑖𐑩𐑯 𐑦𐑯 𐑞 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 𐑥𐑱𐑛 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤."
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 \"𐑯𐑴𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟\" 𐑤𐑦𐑕𐑑𐑦𐑙 𐑦𐑯 𐑞 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 "
+"𐑦𐑒𐑕𐑐𐑨𐑯𐑛𐑩𐑛 𐑢𐑧𐑯 𐑞 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 𐑴𐑐𐑩𐑯𐑛. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"enable_program_list 𐑒𐑰 𐑦𐑟 𐑑𐑮𐑵."
+
+#: ../gnome-panel/panel-general.schemas.in.h:10
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 \"𐑯𐑴𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟\" 𐑤𐑦𐑕𐑑𐑦𐑙 𐑦𐑯 𐑞 \"𐑮𐑳𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯\" 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 𐑥𐑱𐑛 "
+"𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤. 𐑢𐑧𐑞𐑼 𐑹 𐑯𐑪𐑑 𐑞 𐑤𐑦𐑕𐑑𐑦𐑙 𐑦𐑟 𐑦𐑒𐑕𐑐𐑨𐑯𐑛𐑩𐑛 𐑢𐑧𐑯 𐑞 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 𐑖𐑴𐑯 𐑦𐑟 𐑒𐑩𐑯𐑑𐑮𐑴𐑤𐑛 "
+"𐑚𐑲 𐑞 show_program_list 𐑒𐑰."
+
+#: ../gnome-panel/panel-general.schemas.in.h:11
+msgid "Old profiles configuration migrated"
+msgstr "𐑴𐑤𐑛 𐑐𐑮𐑴𐑓𐑲𐑤𐑟 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑥𐑲𐑜𐑮𐑱𐑑𐑦𐑛"
+
+#: ../gnome-panel/panel-general.schemas.in.h:12
+msgid "Panel ID list"
+msgstr "𐑐𐑨𐑯𐑩𐑤 ID 𐑤𐑦𐑕𐑑"
+
+#: ../gnome-panel/panel-general.schemas.in.h:13
+msgid "Panel applet ID list"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑨𐑐𐑤𐑩𐑑 ID 𐑤𐑦𐑕𐑑"
+
+#: ../gnome-panel/panel-general.schemas.in.h:14
+msgid "Panel object ID list"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑 ID 𐑤𐑦𐑕𐑑"
+
+#: ../gnome-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"𐑩 𐑤𐑦𐑕𐑑 𐑝 𐑨𐑐𐑤𐑩𐑑 IIDs 𐑞𐑨𐑑 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑤 𐑦𐑜𐑯𐑹. 𐑞𐑦𐑕 𐑢𐑱 𐑿 𐑒𐑨𐑯 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑕𐑻𐑑𐑩𐑯 𐑨𐑐𐑤𐑩𐑑𐑕 "
+"𐑓𐑮𐑪𐑥 𐑤𐑴𐑛𐑦𐑙 𐑹 𐑖𐑴𐑦𐑙 𐑳𐑐 𐑦𐑯 𐑞 𐑥𐑧𐑯𐑿. 𐑓𐑹 𐑦𐑜𐑟𐑭𐑥𐑐𐑩𐑤 𐑑 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑞 𐑥𐑦𐑯𐑰-𐑒𐑩𐑥𐑭𐑯𐑛𐑼 𐑨𐑐𐑤𐑩𐑑 "
+"𐑨𐑛 'OAFIID:GNOME_MiniCommanderApplet' 𐑑 𐑞𐑦𐑕 𐑤𐑦𐑕𐑑. 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑥𐑳𐑕𐑑 𐑚𐑰 𐑮𐑰𐑕𐑑𐑸𐑑𐑩𐑛 "
+"𐑓𐑹 𐑞𐑦𐑕 𐑑 𐑑𐑱𐑒 𐑦𐑓𐑧𐑒𐑑."
+
+#: ../gnome-panel/panel-global.schemas.in.h:2
+msgid "Applet IIDs to disable from loading"
+msgstr "𐑨𐑐𐑤𐑩𐑑 IIDs 𐑑 𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑓𐑮𐑪𐑥 𐑤𐑴𐑛𐑦𐑙"
+
+#: ../gnome-panel/panel-global.schemas.in.h:3
+msgid "Autoclose drawer"
+msgstr "𐑷𐑑𐑴𐑒𐑤𐑴𐑟 𐑛𐑮𐑷𐑼"
+
+#: ../gnome-panel/panel-global.schemas.in.h:4
+msgid "Complete panel lockdown"
+msgstr "𐑒𐑩𐑥𐑐𐑤𐑰𐑑 𐑐𐑨𐑯𐑩𐑤 𐑤𐑭𐑒𐑛𐑶𐑯"
+
+#: ../gnome-panel/panel-global.schemas.in.h:5
+msgid "Confirm panel removal"
+msgstr "𐑒𐑪𐑯𐑓𐑻𐑥 𐑐𐑨𐑯𐑩𐑤 𐑮𐑦𐑥𐑵𐑝𐑩𐑤"
+
+#: ../gnome-panel/panel-global.schemas.in.h:6
+msgid "Deprecated"
+msgstr "𐑛𐑧𐑐𐑮𐑩𐑒𐑱𐑑𐑩𐑛"
+
+#: ../gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑓𐑹𐑕 𐑒𐑢𐑦𐑑"
+
+#: ../gnome-panel/panel-global.schemas.in.h:8
+msgid "Disable Lock Screen"
+msgstr "𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑤𐑪𐑒 𐑕𐑒𐑮𐑰𐑯"
+
+#: ../gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr "𐑛𐑦𐑕𐑱𐑚𐑩𐑤 𐑤𐑪𐑜𐑦𐑙 𐑬𐑑"
+
+#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑨𐑯𐑩𐑥𐑱𐑖𐑩𐑯𐑟"
+
+#: ../gnome-panel/panel-global.schemas.in.h:11
+msgid "Enable tooltips"
+msgstr "𐑦𐑯𐑱𐑚𐑩𐑤 𐑑𐑵𐑤𐑑𐑦𐑐𐑕"
+
+#: ../gnome-panel/panel-global.schemas.in.h:12
+msgid "Highlight launchers on mouseover"
+msgstr "𐑣𐑲𐑤𐑲𐑑 𐑤𐑪𐑯𐑗𐑻𐑟 𐑪𐑯 𐑥𐑬𐑕𐑴𐑝𐑼"
+
+#: ../gnome-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑩 𐑛𐑲𐑩𐑤𐑪𐑜 𐑦𐑟 𐑖𐑴𐑯 𐑭𐑕𐑒𐑦𐑙 𐑓𐑹 𐑒𐑪𐑯𐑓𐑼𐑥𐑱𐑖𐑩𐑯 𐑦𐑓 𐑞 𐑿𐑟𐑼 𐑢𐑪𐑯𐑑𐑕 𐑑 𐑮𐑦𐑥𐑵𐑝 𐑩 𐑐𐑨𐑯𐑩𐑤."
+
+#: ../gnome-panel/panel-global.schemas.in.h:14
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑩 𐑛𐑮𐑷𐑼 𐑢𐑦𐑤 𐑷𐑑𐑩𐑥𐑨𐑑𐑦𐑒𐑤𐑦 𐑚𐑰 𐑒𐑤𐑴𐑟𐑛 𐑢𐑧𐑯 𐑞 𐑿𐑟𐑼 𐑒𐑤𐑦𐑒𐑕 𐑩 𐑤𐑪𐑯𐑗𐑻 𐑦𐑯 𐑦𐑑."
+
+#: ../gnome-panel/panel-global.schemas.in.h:15
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑩 𐑤𐑪𐑯𐑗𐑻 𐑦𐑟 𐑣𐑲𐑤𐑲𐑑𐑩𐑛 𐑢𐑧𐑯 𐑞 𐑿𐑟𐑼 𐑥𐑵𐑝𐑟 𐑞 𐑐𐑶𐑯𐑑𐑼 𐑴𐑝𐑼 𐑦𐑑."
+
+#: ../gnome-panel/panel-global.schemas.in.h:16
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑩𐑤𐑬 𐑩 𐑿𐑟𐑼 𐑑 𐑓𐑹𐑕 𐑩𐑯 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯 𐑑 𐑒𐑢𐑦𐑑 𐑚𐑲 𐑮𐑦𐑥𐑵𐑝𐑦𐑙 𐑨𐑒𐑕𐑧𐑕 "
+"𐑑 𐑞 𐑓𐑹𐑕 𐑒𐑢𐑦𐑑 𐑚𐑳𐑑𐑩𐑯."
+
+#: ../gnome-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑩𐑤𐑬 𐑩 𐑿𐑟𐑼 𐑑 𐑤𐑪𐑒 𐑞𐑺 𐑕𐑒𐑮𐑰𐑯, 𐑚𐑲 𐑮𐑦𐑥𐑵𐑝𐑦𐑙 𐑨𐑒𐑕𐑧𐑕 𐑑 𐑞 𐑤𐑪𐑒 "
+"𐑕𐑒𐑮𐑰𐑯 𐑥𐑧𐑯𐑿 𐑧𐑯𐑑𐑮𐑦𐑟."
+
+#: ../gnome-panel/panel-global.schemas.in.h:18
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑩𐑤𐑬 𐑩 𐑿𐑟𐑼 𐑑 𐑤𐑪𐑜 𐑬𐑑, 𐑚𐑲 𐑮𐑦𐑥𐑵𐑝𐑦𐑙 𐑨𐑒𐑕𐑧𐑕 𐑑 𐑞 𐑤𐑪𐑜 𐑬𐑑 𐑥𐑧𐑯𐑿 "
+"𐑧𐑯𐑑𐑮𐑦𐑟."
+
+#: ../gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑤 𐑯𐑪𐑑 𐑩𐑤𐑬 𐑧𐑯𐑦 𐑗𐑱𐑯𐑡𐑩𐑟 𐑑 𐑞 𐑒𐑩𐑯𐑓𐑦𐑜𐑘𐑼𐑱𐑖𐑩𐑯 𐑝 𐑞 𐑐𐑨𐑯𐑩𐑤. "
+"𐑦𐑯𐑛𐑦𐑝𐑦𐑛𐑿𐑩𐑤 𐑨𐑐𐑤𐑩𐑑𐑕 𐑥𐑱 𐑯𐑰𐑛 𐑑 𐑚𐑰 𐑤𐑪𐑒𐑑 𐑛𐑬𐑯 𐑕𐑧𐑐𐑼𐑩𐑑𐑤𐑦 𐑣𐑬𐑧𐑝𐑼. 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑥𐑳𐑕𐑑 𐑚𐑰 "
+"𐑮𐑰𐑕𐑑𐑸𐑑𐑩𐑛 𐑓𐑹 𐑞𐑦𐑕 𐑑 𐑑𐑱𐑒 𐑦𐑓𐑧𐑒𐑑."
+
+#: ../gnome-panel/panel-global.schemas.in.h:20
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "𐑦𐑓 𐑑𐑮𐑵, 𐑑𐑵𐑤𐑑𐑦𐑐𐑕 𐑸 𐑖𐑴𐑯 𐑓𐑹 𐑪𐑚𐑡𐑧𐑒𐑑𐑕 𐑦𐑯 𐑐𐑨𐑯𐑩𐑤𐑟."
+
+#: ../gnome-panel/panel-menu-bar.c:106
+msgid "Browse and run installed applications"
+msgstr "𐑚𐑮𐑬𐑟 𐑯 𐑮𐑳𐑯 𐑦𐑯𐑕𐑑𐑷𐑤𐑛 𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟"
+
+#: ../gnome-panel/panel-menu-bar.c:108
+msgid "Access documents, folders and network places"
+msgstr "𐑨𐑒𐑕𐑧𐑕 𐑛𐑪𐑒𐑿𐑥𐑩𐑯𐑑𐑕, 𐑓𐑴𐑤𐑛𐑼𐑟 𐑯 𐑯𐑧𐑑𐑢𐑻𐑒 𐑐𐑤𐑱𐑕𐑩𐑟"
+
+#: ../gnome-panel/panel-menu-bar.c:110
+msgid "Change desktop appearance and behavior, get help, or log out"
+msgstr "𐑗𐑱𐑯𐑡 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑩𐑐𐑽𐑩𐑯𐑕 𐑯 𐑚𐑦𐑣𐑱𐑝𐑘𐑼, 𐑜𐑧𐑑 𐑣𐑧𐑤𐑐, 𐑹 𐑤𐑪𐑜 𐑬𐑑"
+
+#: ../gnome-panel/panel-menu-bar.c:145
+msgid "Applications"
+msgstr "𐑩𐑐𐑤𐑦𐑒𐑱𐑕𐑩𐑯𐑟"
+
+#: ../gnome-panel/panel-menu-bar.c:351 ../gnome-panel/panel-menu-button.c:668
+msgid "_Edit Menus"
+msgstr "_𐑧𐑛𐑦𐑑 𐑥𐑧𐑯𐑿𐑟"
+
+#: ../gnome-panel/panel-menu-items.c:394
+msgid "Bookmarks"
+msgstr "𐑚𐑫𐑒𐑥𐑸𐑒𐑕"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel-menu-items.c:416 ../gnome-panel/panel.c:534
+#, c-format
+msgid "Open '%s'"
+msgstr "𐑴𐑐𐑩𐑯 '%s'"
+
+#: ../gnome-panel/panel-menu-items.c:484
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑕𐑒𐑨𐑯 %s 𐑓𐑹 𐑥𐑰𐑛𐑦𐑩 𐑗𐑱𐑯𐑡𐑩𐑟"
+
+#: ../gnome-panel/panel-menu-items.c:527
+#, c-format
+msgid "Rescan %s"
+msgstr "𐑮𐑰𐑕𐑒𐑨𐑯 %s"
+
+#: ../gnome-panel/panel-menu-items.c:564
+#, c-format
+msgid "Unable to mount %s"
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑥𐑬𐑯𐑑 %s"
+
+#: ../gnome-panel/panel-menu-items.c:627
+#, c-format
+msgid "Mount %s"
+msgstr "𐑥𐑬𐑯𐑑 %s"
+
+#: ../gnome-panel/panel-menu-items.c:830
+msgid "Removable Media"
+msgstr "𐑮𐑦𐑥𐑵𐑝𐑩𐑚𐑩𐑤 𐑥𐑰𐑛𐑦𐑩"
+
+#: ../gnome-panel/panel-menu-items.c:911
+msgid "Network Places"
+msgstr "𐑯𐑧𐑑𐑢𐑻𐑒 𐑐𐑤𐑱𐑕𐑩𐑟"
+
+#: ../gnome-panel/panel-menu-items.c:950
+msgid "Open your personal folder"
+msgstr "𐑴𐑐𐑩𐑯 𐑿𐑼 𐑐𐑻𐑕𐑩𐑯𐑩𐑤 𐑓𐑴𐑤𐑛𐑼"
+
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../gnome-panel/panel-menu-items.c:969
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "𐑛𐑧𐑕𐑒𐑑𐑪𐑐"
+
+#: ../gnome-panel/panel-menu-items.c:970
+msgid "Open the contents of your desktop in a folder"
+msgstr "𐑴𐑐𐑩𐑯 𐑞 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕 𐑝 𐑿𐑼 𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑦𐑯 𐑩 𐑓𐑴𐑤𐑛𐑼"
+
+#: ../gnome-panel/panel-menu-items.c:1358
+msgid "Places"
+msgstr "𐑐𐑤𐑱𐑕𐑩𐑟"
+
+#: ../gnome-panel/panel-menu-items.c:1387
+msgid "System"
+msgstr "𐑕𐑦𐑕𐑑𐑩𐑥"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../gnome-panel/panel-menu-items.c:1468
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "1"
+
+#. keep those strings in sync with the ones in
+#. * panel-action-button.c
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1480
+#, c-format
+msgid "Log Out %s..."
+msgstr "𐑤𐑪𐑜 𐑬𐑑 %s..."
+
+#. Translators: this string is used ONLY if you translated
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1484
+#, c-format
+msgid "Log out %s of this session to log in as a different user"
+msgstr "𐑤𐑪𐑜 𐑬𐑑 %s 𐑝 𐑞𐑦𐑕 𐑕𐑧𐑖𐑩𐑯 𐑑 𐑤𐑪𐑜 𐑦𐑯 𐑨𐑟 𐑩 𐑛𐑦𐑓𐑼𐑩𐑯𐑑 𐑿𐑟𐑼"
+
+#: ../gnome-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "𐑨𐑒𐑖𐑩𐑯 𐑚𐑳𐑑𐑩𐑯 𐑑𐑲𐑐"
+
+#: ../gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr "𐑨𐑐𐑤𐑩𐑑 ·𐑚𐑭𐑯𐑭𐑚𐑴 IID"
+
+#: ../gnome-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "𐑲𐑒𐑪𐑯 𐑿𐑕𐑑 𐑓𐑹 𐑪𐑚𐑡𐑧𐑒𐑑'𐑕 𐑚𐑳𐑑𐑩𐑯"
+
+#: ../gnome-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 custom_icon 𐑒𐑰 𐑦𐑟 𐑿𐑟𐑛 𐑨𐑟 𐑩 𐑒𐑳𐑕𐑑𐑩𐑥 𐑲𐑒𐑪𐑯 𐑓𐑹 𐑞 𐑚𐑳𐑑𐑩𐑯. 𐑦𐑓 𐑓𐑷𐑤𐑕, 𐑞 "
+"custom_icon 𐑒𐑰 𐑦𐑟 𐑦𐑜𐑯𐑹𐑛. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 object_type 𐑒𐑰 𐑦𐑟 "
+"\"menu-object\" 𐑹 \"drawer-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 menu_path 𐑒𐑰 𐑦𐑟 𐑿𐑟𐑛 𐑨𐑟 𐑞 𐑐𐑭𐑔 𐑓𐑮𐑪𐑥 𐑢𐑦𐑗 𐑞 𐑥𐑧𐑯𐑿 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕 𐑖𐑫𐑛 𐑚𐑰 "
+"𐑒𐑩𐑯𐑕𐑑𐑮𐑳𐑒𐑑𐑩𐑛. 𐑦𐑓 𐑓𐑷𐑤𐑕, 𐑞 menu_path 𐑒𐑰 𐑦𐑟 𐑦𐑜𐑯𐑹𐑛. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"object_type 𐑒𐑰 𐑦𐑟 \"menu-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑝 𐑞 𐑪𐑚𐑡𐑧𐑒𐑑 𐑦𐑟 𐑦𐑯𐑑𐑻𐑐𐑮𐑩𐑑𐑩𐑛 𐑮𐑧𐑤𐑩𐑑𐑦𐑝 𐑑 𐑞 𐑮𐑲𐑑 (𐑹 𐑚𐑪𐑑𐑫𐑥 𐑦𐑓 "
+"𐑝𐑻𐑑𐑦𐑒𐑩𐑤) 𐑧𐑡 𐑝 𐑞 𐑐𐑨𐑯𐑩𐑤."
+
+#: ../gnome-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"𐑦𐑓 𐑑𐑮𐑵, 𐑞 𐑿𐑟𐑼 𐑥𐑱 𐑯𐑪𐑑 𐑥𐑵𐑝 𐑞 𐑨𐑐𐑤𐑩𐑑 𐑢𐑦𐑞𐑬𐑑 𐑓𐑻𐑕𐑑 𐑳𐑯𐑤𐑪𐑒𐑦𐑙 𐑞 𐑪𐑚𐑡𐑧𐑒𐑑 𐑿𐑟𐑦𐑙 𐑞 "
+"\"𐑩𐑯𐑤𐑭𐑒\" 𐑥𐑧𐑯𐑿𐑲𐑑𐑩𐑥."
+
+#: ../gnome-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr "𐑦𐑯𐑑𐑻𐑐𐑮𐑩𐑑 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑮𐑧𐑤𐑩𐑑𐑦𐑝 𐑑 𐑚𐑪𐑑𐑫𐑥/𐑮𐑲𐑑 𐑧𐑡"
+
+#: ../gnome-panel/panel-object.schemas.in.h:9
+msgid "Launcher location"
+msgstr "𐑤𐑪𐑯𐑗𐑻 𐑤𐑴𐑒𐑱𐑖𐑩𐑯"
+
+#: ../gnome-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the panel"
+msgstr "𐑤𐑪𐑒 𐑞 𐑪𐑚𐑡𐑧𐑒𐑑 𐑑 𐑞 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "𐑥𐑧𐑯𐑿 𐑒𐑪𐑯𐑑𐑧𐑯𐑑 𐑐𐑭𐑔"
+
+#: ../gnome-panel/panel-object.schemas.in.h:12
+msgid "Object's position on the panel"
+msgstr "𐑩𐑚𐑡𐑧𐑒𐑑𐑕 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑪𐑯 𐑞 𐑐𐑨𐑯𐑩𐑤"
+
+#: ../gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑩𐑑𐑨𐑗𐑑 𐑑 𐑛𐑮𐑷𐑼"
+
+#: ../gnome-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑 𐑑𐑲𐑐"
+
+#: ../gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"𐑞 ·𐑚𐑭𐑯𐑭𐑚𐑴 𐑦𐑥𐑐𐑤𐑩𐑥𐑧𐑯𐑑𐑱𐑖𐑩𐑯 ID 𐑝 𐑞 𐑨𐑐𐑤𐑩𐑑 - 𐑧.𐑡𐑰. \"OAFIID:GNOME_ClockApplet\". "
+"𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 object_type 𐑒𐑰 𐑦𐑟 \"bonobo-applet\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"𐑞 𐑨𐑒𐑖𐑩𐑯 𐑑𐑲𐑐 𐑞𐑦𐑕 𐑚𐑳𐑑𐑩𐑯 𐑮𐑧𐑐𐑮𐑩𐑟𐑧𐑯𐑑𐑕. 𐑐𐑪𐑕𐑩𐑚𐑩𐑤 𐑝𐑨𐑤𐑿𐑟 𐑸 \"lock\", \"logout\", "
+"\"run\", \"search\" 𐑯 \"screenshot\". 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 object_type "
+"𐑒𐑰 𐑦𐑟 \"action-applet\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"𐑞 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑲𐑼 𐑝 𐑞 𐑐𐑨𐑯𐑩𐑤 𐑩𐑑𐑨𐑗𐑑 𐑑 𐑞𐑦𐑕 𐑛𐑮𐑷𐑼. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"object_type 𐑒𐑰 𐑦𐑟 \"drawer-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "𐑞 𐑲𐑛𐑧𐑯𐑑𐑦𐑓𐑲𐑼 𐑝 𐑞 𐑑𐑪𐑐𐑤𐑧𐑝𐑩𐑤 𐑐𐑨𐑯𐑩𐑤 𐑢𐑦𐑗 𐑒𐑩𐑯𐑑𐑱𐑯𐑟 𐑞𐑦𐑕 𐑪𐑚𐑡𐑧𐑒𐑑."
+
+#: ../gnome-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"𐑞 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑝 𐑞 .𐑛𐑧𐑕𐑒𐑑𐑪𐑐 𐑓𐑲𐑤 𐑛𐑦𐑕𐑒𐑮𐑲𐑚𐑦𐑙 𐑞 𐑤𐑪𐑯𐑗𐑻. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"object_type 𐑒𐑰 𐑦𐑟 \"launcher-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"𐑞 𐑤𐑴𐑒𐑱𐑖𐑩𐑯 𐑝 𐑞 𐑦𐑥𐑦𐑡 𐑓𐑲𐑤 𐑿𐑕𐑑 𐑨𐑟 𐑞 𐑲𐑒𐑪𐑯 𐑓𐑹 𐑞 𐑪𐑚𐑡𐑧𐑒𐑑'𐑕 𐑚𐑳𐑑𐑩𐑯. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 "
+"𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 object_type 𐑒𐑰 𐑦𐑟 \"drawer-object\" 𐑹 \"menu-object\" 𐑯 𐑞 "
+"use_custom_icon 𐑒𐑰 𐑦𐑟 𐑑𐑮𐑵."
+
+#: ../gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"𐑞 𐑐𐑭𐑔 𐑓𐑮𐑪𐑥 𐑢𐑦𐑗 𐑞 𐑥𐑧𐑯𐑿 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕 𐑦𐑟 𐑒𐑪𐑯𐑕𐑑𐑮𐑳𐑒𐑑𐑧𐑛. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 "
+"use_menu_path 𐑒𐑰 𐑦𐑟 𐑑𐑮𐑵 𐑯 𐑞 object_type 𐑒𐑰 𐑦𐑟 \"menu-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"𐑞 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑝 𐑞𐑦𐑕 𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑. 𐑞 𐑐𐑩𐑟𐑦𐑖𐑩𐑯 𐑦𐑟 𐑕𐑐𐑧𐑕𐑦𐑓𐑲𐑛 𐑚𐑲 𐑞 𐑯𐑳𐑥𐑚𐑼 𐑝 𐑐𐑦𐑒𐑕𐑩𐑤𐑟 "
+"𐑓𐑮𐑪𐑥 𐑞 𐑤𐑧𐑓𐑑 (𐑹 𐑑𐑪𐑐 𐑦𐑓 𐑝𐑻𐑑𐑦𐑒𐑩𐑤) 𐑐𐑨𐑯𐑩𐑤 𐑧𐑡."
+
+#: ../gnome-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"𐑞 𐑑𐑧𐑒𐑕𐑑 𐑑 𐑛𐑦𐑕𐑐𐑤𐑱 𐑦𐑯 𐑩 tooltip 𐑓𐑹 𐑞𐑦𐑕 𐑛𐑮𐑷𐑼 𐑹 𐑞𐑦𐑕 𐑥𐑧𐑯𐑿. 𐑞𐑦𐑕 𐑒𐑰 𐑦𐑟 𐑴𐑯𐑤𐑦 "
+"𐑮𐑧𐑤𐑩𐑝𐑩𐑯𐑑 𐑦𐑓 𐑞 object_type 𐑒𐑰 𐑦𐑟 \"drawer-object\" 𐑹 \"menu-object\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"𐑞 𐑑𐑲𐑐 𐑝 𐑞𐑦𐑕 𐑐𐑨𐑯𐑩𐑤 𐑩𐑚𐑡𐑧𐑒𐑑. 𐑐𐑪𐑕𐑩𐑚𐑩𐑤 𐑝𐑨𐑤𐑿𐑟 𐑸 \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" 𐑯 \"menu-bar\"."
+
+#: ../gnome-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr "𐑑𐑵𐑤𐑑𐑦𐑐 𐑛𐑩𐑕𐑐𐑤𐑱𐑛 𐑓𐑹 𐑛𐑮𐑷𐑼 𐑹 𐑥𐑧𐑯𐑿"
+
+#: ../gnome-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "𐑑𐑪𐑐𐑤𐑧𐑝𐑩𐑤 𐑐𐑨𐑯𐑩𐑤 𐑒𐑩𐑯𐑑𐑱𐑯𐑦𐑙 𐑩𐑚𐑡𐑧𐑒𐑑"
+
+#: ../gnome-panel/panel-object.schemas.in.h:27
+msgid "Use custom icon for object's button"
+msgstr "𐑿𐑟 𐑒𐑳𐑕𐑑𐑩𐑥 𐑲𐑒𐑪𐑯 𐑓𐑹 𐑪𐑚𐑡𐑧𐑒𐑑'𐑕 𐑚𐑳𐑑𐑩𐑯"
+
+#: ../gnome-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr "𐑿𐑟 𐑒𐑳𐑕𐑑𐑩𐑥 𐑐𐑭𐑔 𐑓𐑹 𐑥𐑧𐑯𐑿 𐑒𐑪𐑯𐑑𐑩𐑯𐑑𐑕"
+
+#: ../gnome-panel/panel-profile.c:768 ../gnome-panel/panel-profile.c:795
+#: ../gnome-panel/panel-profile.c:831 ../gnome-panel/panel-profile.c:1696
+#, c-format
+msgid "Error reading GConf string value '%s': %s"
+msgstr "𐑻𐑼 𐑮𐑰𐑛𐑦𐑙 GConf 𐑕𐑑𐑮𐑦𐑙 𐑝𐑨𐑤𐑿 '%s': %s"
+
+#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
+#: ../gnome-panel/panel-profile.c:810 ../gnome-panel/panel-profile.c:1592
+#: ../gnome-panel/panel-profile.c:1665 ../gnome-panel/panel-profile.c:1747
+#, c-format
+msgid "Error reading GConf integer value '%s': %s"
+msgstr "𐑻𐑼 𐑮𐑰𐑛𐑦𐑙 GConf 𐑦𐑯𐑑𐑩𐑡𐑼 𐑝𐑨𐑤𐑿 '%s': %s"
+
+#: ../gnome-panel/panel-profile.c:1602
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"𐑐𐑨𐑯𐑩𐑤 '%s' 𐑦𐑟 𐑕𐑧𐑑 𐑑 𐑚𐑰 𐑛𐑩𐑕𐑐𐑤𐑱𐑛 𐑪𐑯 𐑕𐑒𐑮𐑰𐑯 %d 𐑢𐑦𐑗 𐑦𐑟 𐑯𐑪𐑑 𐑒𐑳𐑮𐑩𐑯𐑑𐑤𐑦 𐑩𐑝𐑱𐑤𐑩𐑚𐑩𐑤. "
+"𐑯𐑪𐑑 𐑤𐑴𐑛𐑦𐑙 𐑞𐑦𐑕 𐑐𐑨𐑯𐑩𐑤."
+
+#: ../gnome-panel/panel-profile.c:1680
+#, c-format
+msgid "Error reading GConf boolean value '%s': %s"
+msgstr "𐑻𐑼 𐑮𐑰𐑛𐑦𐑙 GConf 𐑚𐑵𐑤𐑰𐑩𐑯 𐑝𐑨𐑤𐑿 '%s': %s"
+
+#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../libpanel-applet/panel-test-applets.c:54
+msgctxt "Orientation"
+msgid "Top"
+msgstr "𐑑𐑪𐑐"
+
+#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../libpanel-applet/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "𐑚𐑪𐑑𐑫𐑥"
+
+#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../libpanel-applet/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Left"
+msgstr "𐑤𐑧𐑓𐑑"
+
+#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../libpanel-applet/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Right"
+msgstr "𐑮𐑲𐑑"
+
+#: ../gnome-panel/panel-properties-dialog.c:949
+msgid "Drawer Properties"
+msgstr "𐑛𐑮𐑷𐑼 𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟"
+
+#: ../gnome-panel/panel-properties-dialog.c:1057
+#: ../gnome-panel/panel-run-dialog.c:1928
+#, c-format
+msgid "Unable to load file '%s'."
+msgstr "𐑳𐑯𐑱𐑚𐑩𐑤 𐑑 𐑤𐑴𐑛 𐑓𐑲𐑤 '%s'."
+
+#: ../gnome-panel/panel-properties-dialog.c:1062
+msgid "Could not display properties dialog"
+msgstr "𐑒𐑫𐑛 𐑯𐑪𐑑 𐑛𐑩𐑕𐑐𐑤𐑱 𐑐𐑮𐑪𐑐𐑼𐑑𐑦𐑟 𐑛𐑲𐑩𐑤𐑪𐑜"
+
