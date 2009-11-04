@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-02 19:37+0200\n"
-"PO-Revision-Date: 2009-10-06 17:39+0200\n"
+"POT-Creation-Date: 2009-11-05 00:11+0100\n"
+"PO-Revision-Date: 2009-11-05 00:11+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Preferències"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3733
+#: ../applets/clock/clock.c:3715
 msgid "Clock"
 msgstr "Rellotge"
 
@@ -82,7 +82,7 @@ msgstr "Mostra l'hora i data actuals"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
+#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:448
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -96,8 +96,8 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
-#: ../applets/clock/clock.c:1616 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:453
+#: ../applets/clock/clock.c:1599 ../applets/clock/clock-location-tile.c:476
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -145,7 +145,7 @@ msgstr "Calendari"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:448
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -156,7 +156,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:453 ../applets/clock/clock.c:1593
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -165,7 +165,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:476
+#: ../applets/clock/clock.c:464
 msgid "%a %b %e"
 msgstr "%a, %e de %b"
 
@@ -173,7 +173,7 @@ msgstr "%a, %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:483
+#: ../applets/clock/clock.c:471
 #, c-format
 msgid ""
 "%1$s\n"
@@ -186,7 +186,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:491
+#: ../applets/clock/clock.c:479
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -195,27 +195,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:674
+#: ../applets/clock/clock.c:658
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d de %B (%%s)"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:688
 msgid "Click to hide your appointments and tasks"
 msgstr "Feu clic per a ocultar les vostres cites i tasques"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:691
 msgid "Click to view your appointments and tasks"
 msgstr "Feu clic per a veure les vostres cites i tasques"
 
-#: ../applets/clock/clock.c:711
+#: ../applets/clock/clock.c:695
 msgid "Click to hide month calendar"
 msgstr "Feu clic per a ocultar el calendari del mes"
 
-#: ../applets/clock/clock.c:714
+#: ../applets/clock/clock.c:698
 msgid "Click to view month calendar"
 msgstr "Feu clic per a veure el calendari del mes"
 
-#: ../applets/clock/clock.c:1449
+#: ../applets/clock/clock.c:1432
 msgid "Computer Clock"
 msgstr "Rellotge del sistema"
 
@@ -225,7 +225,7 @@ msgstr "Rellotge del sistema"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1595
+#: ../applets/clock/clock.c:1578
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -235,72 +235,72 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1603
+#: ../applets/clock/clock.c:1586
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1656
+#: ../applets/clock/clock.c:1639
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B del %Y"
 
-#: ../applets/clock/clock.c:1687
+#: ../applets/clock/clock.c:1670
 msgid "Set System Time..."
 msgstr "Establiu l'hora del sistema..."
 
-#: ../applets/clock/clock.c:1688
+#: ../applets/clock/clock.c:1671
 msgid "Set System Time"
 msgstr "Establiu l'hora del sistema"
 
-#: ../applets/clock/clock.c:1703
+#: ../applets/clock/clock.c:1686
 msgid "Failed to set the system time"
 msgstr "No s'ha pogut establir l'hora del sistema"
 
-#: ../applets/clock/clock.c:2766
+#: ../applets/clock/clock.c:2748
 msgid "Custom format"
 msgstr "Format personalitzat"
 
-#: ../applets/clock/clock.c:3224
+#: ../applets/clock/clock.c:3206
 msgid "Choose Location"
 msgstr "Seleccioneu l'ubicació"
 
-#: ../applets/clock/clock.c:3299
+#: ../applets/clock/clock.c:3281
 msgid "Edit Location"
 msgstr "Edita l'ubicació"
 
-#: ../applets/clock/clock.c:3445
+#: ../applets/clock/clock.c:3427
 msgid "City Name"
 msgstr "Nom de la ciutat"
 
-#: ../applets/clock/clock.c:3449
+#: ../applets/clock/clock.c:3431
 msgid "City Time Zone"
 msgstr "Fus horari de la ciutat"
 
-#: ../applets/clock/clock.c:3629
+#: ../applets/clock/clock.c:3611
 msgid "24 hour"
 msgstr "24 hores"
 
 # La u de «Unix» és semiconsonant, no? iv
-#: ../applets/clock/clock.c:3630
+#: ../applets/clock/clock.c:3612
 msgid "UNIX time"
 msgstr "Hora de UNIX"
 
-#: ../applets/clock/clock.c:3631
+#: ../applets/clock/clock.c:3613
 msgid "Internet time"
 msgstr "Hora d'Internet"
 
-#: ../applets/clock/clock.c:3639
+#: ../applets/clock/clock.c:3621
 msgid "Custom _format:"
 msgstr "_Format personalitzat:"
 
-#: ../applets/clock/clock.c:3736
+#: ../applets/clock/clock.c:3718
 msgid "The Clock displays the current time and date"
 msgstr "El rellotge mostra l'hora i la data actuals"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3739 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3721 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -339,7 +339,7 @@ msgstr "Hora actual:"
 
 #: ../applets/clock/clock.ui.h:7
 msgid "Display"
-msgstr "Mostra"
+msgstr "Pantalla"
 
 #: ../applets/clock/clock.ui.h:8
 msgid "East"
@@ -400,7 +400,7 @@ msgstr "El temps"
 
 #: ../applets/clock/clock.ui.h:23
 msgid "West"
-msgstr "Est"
+msgstr "Oest"
 
 #: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
@@ -603,9 +603,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.6 en favor "
-"a la clau «format». L'esquema es reté per compatibilitat amb versions "
-"anteriors."
+"L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.6 en favor a la "
+"clau «format». L'esquema es reté per compatibilitat amb versions anteriors."
 
 #: ../applets/clock/clock.schemas.in.h:45
 msgid ""
@@ -1876,8 +1875,8 @@ msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
-"Si forceu que surti una aplicació, es poden perdre els canvis sense "
-"desar dels documents oberts."
+"Si forceu que surti una aplicació, es poden perdre els canvis sense desar "
+"dels documents oberts."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
