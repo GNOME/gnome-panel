@@ -9,16 +9,18 @@
 # Xiong Jiang <jxiong@offtopic.org>, 2003
 #   YangZhang <zyangmath@gmail.com>, 2008
 # 甘露(Gan Lu) <rhythm.gan@gmail.com>, 2009
-# arccos(L.Q) <boyermoore@gmail.com>, 2009
+# Richard Ma <richard.ma.19850509@gmail.com>, 2009
+# Aron Xu <happyaron.xu@gmail.com>, 2009.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2009-11-04 23:19+0000\n"
-"PO-Revision-Date: 2009-11-06 19:52+0800\n"
-"Last-Translator: arccos (L.Q) <boyermoore@gmail.com>\n"
-"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"POT-Creation-Date: 2009-11-06 11:54+0000\n"
+"PO-Revision-Date: 2009-11-13 23:12+0800\n"
+"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -202,7 +204,7 @@ msgstr "%1$s %2$s"
 #. * it will be used to insert the timezone name later.
 #: ../applets/clock/clock.c:658
 msgid "%A %B %d (%%s)"
-msgstr "%b月%d日，星期%a (%%s)"
+msgstr "%m月%d日，星期%a (%%s)"
 
 #: ../applets/clock/clock.c:688
 msgid "Click to hide your appointments and tasks"
@@ -269,13 +271,11 @@ msgstr "自定义格式"
 
 #: ../applets/clock/clock.c:3206
 msgid "Choose Location"
-msgstr "位置"
+msgstr "选择位置"
 
 #: ../applets/clock/clock.c:3281
-#, fuzzy
-#| msgid "Location"
 msgid "Edit Location"
-msgstr "位置"
+msgstr "编辑位置"
 
 #: ../applets/clock/clock.c:3427
 msgid "City Name"
@@ -319,8 +319,7 @@ msgstr ""
 "Zipeco <zipeco@btamail.net.cn>\n"
 "Wang Li <charles@linux.net.cn>\n"
 "Funda Wang <fundawang@gmail.com>\n"
-"甘露 (Gan Lu) <rhythm.gan@gmail.com>\n"
-"arccos (L.Q) <boyermoore@gmail.com>"
+"甘露 (Gan Lu) <rhythm.gan@gmail.com>"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
@@ -337,9 +336,8 @@ msgstr ""
 
 #: ../applets/clock/clock.ui.h:4
 #, fuzzy
-#| msgid "Custom format"
 msgid "Clock Format"
-msgstr "自定义格式"
+msgstr "时间格式"
 
 #: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
@@ -350,20 +348,12 @@ msgid "Current Time:"
 msgstr "当前时间："
 
 #: ../applets/clock/clock.ui.h:7
-#, fuzzy
-#| msgid "<b>Display</b>"
 msgid "Display"
-msgstr "<b>显示</b>"
+msgstr "显示"
 
 #: ../applets/clock/clock.ui.h:8
-#, fuzzy
-#| msgid ""
-#| "East\n"
-#| "West"
 msgid "East"
-msgstr ""
-"东\n"
-"西"
+msgstr "东"
 
 #: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
@@ -372,27 +362,19 @@ msgstr "常规"
 
 #: ../applets/clock/clock.ui.h:10
 msgid "L_atitude:"
-msgstr "纬度(_A)："
+msgstr "纬度(_a)："
 
 #: ../applets/clock/clock.ui.h:11
 msgid "L_ongitude:"
-msgstr "经度(_O)："
+msgstr "经度(_o)："
 
 #: ../applets/clock/clock.ui.h:13
-#, fuzzy
-#| msgid ""
-#| "North\n"
-#| "South"
 msgid "North"
-msgstr ""
-"北\n"
-"南"
+msgstr "北"
 
 #: ../applets/clock/clock.ui.h:14
-#, fuzzy
-#| msgid "<b>Panel Display</b>"
 msgid "Panel Display"
-msgstr "<b>面板显示</b>"
+msgstr "面板显示"
 
 #: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
@@ -411,18 +393,12 @@ msgid "Show the _date"
 msgstr "显示日期(_D)"
 
 #: ../applets/clock/clock.ui.h:19
-#, fuzzy
-#| msgid ""
-#| "North\n"
-#| "South"
 msgid "South"
-msgstr ""
-"北\n"
-"南"
+msgstr "南"
 
 #: ../applets/clock/clock.ui.h:20
 msgid "Time & Date"
-msgstr "时间和时期"
+msgstr "时间和日期"
 
 #: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
@@ -433,14 +409,8 @@ msgid "Weather"
 msgstr "天气"
 
 #: ../applets/clock/clock.ui.h:23
-#, fuzzy
-#| msgid ""
-#| "East\n"
-#| "West"
 msgid "West"
-msgstr ""
-"东\n"
-"西"
+msgstr "西"
 
 #: ../applets/clock/clock.ui.h:24
 msgid "_12 hour format"
@@ -514,7 +484,7 @@ msgstr "展开生日列表"
 
 #: ../applets/clock/clock.schemas.in.h:16
 msgid "Expand list of locations"
-msgstr "展开位置列表"
+msgstr "展开位置任务列表"
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
@@ -622,9 +592,6 @@ msgstr "显示风速时使用的单位"
 
 #: ../applets/clock/clock.schemas.in.h:43
 #, fuzzy
-#| msgid ""
-#| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-#| "key. The schema is retained for compatibility with older versions."
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
@@ -648,8 +615,8 @@ msgid ""
 "strftime() to obtain a specific format. See the strftime() manual for more "
 "information."
 msgstr ""
-"若 format 键值为“custom”，则此键指定了时钟小程序要使用的格式。您可以使用 "
-"strftime() 明白的格式符来获取特定格式。更多信息请参考 strftime() 手册。"
+"当 format 键设为“custom”时，此键指定了时钟小程序要使用的格式。您可以使用 "
+"strftime() 明白的格式符来获取特定格式。详细说明可参见 strftime() 的手册。"
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid ""
@@ -665,8 +632,8 @@ msgstr ""
 "此键指定了时钟小程序所使用的小时格式。可供选择的值为“12-hour”、“24-"
 "hour”、“internet”、“unix”和“custom”。如果设定为“internet”，时钟将显示 "
 "Internet 时间。Internet 时间将一天分为 1000“拍”。此系统中没有时区之分，所以全"
-"世界的时间都是相同的。如果设定为“unix”，时钟将会显示自 1970-01-01 开始"
-"已过的秒数。如果设定为“custom”，时钟将会根据 custom_format 中指定的格式来显"
+"世界的时间都是相同的。如果设定为“unix”，时钟将会以自新纪元(即 1970-01-01)开始"
+"已过的秒数。如果设定为“custom”，时钟将会根据 custom_format 键中指定的格式来显"
 "示时间。"
 
 #: ../applets/clock/clock.schemas.in.h:47
@@ -788,7 +755,7 @@ msgstr "配置硬件时钟需要特权。"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
-msgstr "显示一条游动的鱼或其它活动的动物"
+msgstr "显示一条正在游泳的鱼或其它活动的生物"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: ../applets/fish/fish.c:617
@@ -797,7 +764,7 @@ msgstr "小鱼"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
-msgstr "那条蠢鱼从哪里来"
+msgstr "自从那只蠢鱼来了以后"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
@@ -844,7 +811,7 @@ msgstr "(还有 George 的小帮助)"
 #: ../applets/fish/fish.c:652
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "%s 小鱼，当代圣贤"
+msgstr "%s 小鱼，当代祭司"
 
 #: ../applets/fish/fish.c:723
 msgid "Unable to locate the command to execute"
@@ -864,7 +831,7 @@ msgid ""
 msgstr ""
 "无法读取命令的输出\n"
 "\n"
-"详细信息：%s"
+"细节：%s"
 
 #: ../applets/fish/fish.c:906
 msgid "_Speak again"
@@ -884,7 +851,7 @@ msgid ""
 msgstr ""
 "无法执行“%s”\n"
 "\n"
-"详细信息：%s"
+"细节：%s"
 
 #: ../applets/fish/fish.c:1028
 #, c-format
@@ -895,7 +862,7 @@ msgid ""
 msgstr ""
 "无法从“%s”读取\n"
 "\n"
-"详细信息：%s"
+"细节：%s"
 
 #: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
@@ -916,7 +883,6 @@ msgstr "    "
 
 #: ../applets/fish/fish.ui.h:2
 #, fuzzy
-#| msgid "Animation speed"
 msgid "Animation"
 msgstr "动画速度"
 
@@ -964,7 +930,7 @@ msgstr "秒"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr "没有名字的鱼是一条了无生气的鱼。为赋予它生命，请给它命名。"
+msgstr "没有名字的鱼是非常傻的鱼。为赋予它生命，请给它命名。"
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -999,27 +965,27 @@ msgstr "小鱼的名字"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "此键指定了点击小鱼后尝试执行的命令。"
+msgstr "此处指定了点击小鱼后尝试执行的命令。"
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
-msgstr "此键指定的位图文件名，会被用来显示与该位图目录相关的小鱼的动画。"
+msgstr "此处指定的位图文件名，会被用来显示与该位图目录相关的小鱼的动画。"
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "此键指定了小鱼动画显示的帧数。"
+msgstr "此处指定了小鱼动画显示的帧数。"
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "此键指定了每帧动画显示的秒数。"
+msgstr "此处指定了每帧动画显示的秒数。"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "通知图标的显示区域"
+msgstr "通知图标显示的区域"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 #: ../applets/notification_area/main.c:150
@@ -1036,11 +1002,11 @@ msgstr "面板通知区域"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Factory for the window navigation related applets"
-msgstr "创建窗口导航相关小程序的车间"
+msgstr "创建有关窗口导航的小程序的车间"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "隐藏程序窗口并显示桌面"
+msgstr "隐藏窗口并显示桌面"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
@@ -1106,13 +1072,13 @@ msgstr "这个按钮让您隐藏所有的窗口并显示桌面。"
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
-msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行窗口管理器。"
+msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行桌面管理器。"
 
 #: ../applets/wncklet/window-list.c:611
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
-msgstr "窗口列表用一组钮集显示了所有窗口的列表，以便于您浏览它们。"
+msgstr "窗口列表以按钮集的方式显示了所有窗口的列表，以便于您浏览它们。"
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -1127,10 +1093,8 @@ msgid "Restore to na_tive workspace"
 msgstr "还原到原本工作区(_T)"
 
 #: ../applets/wncklet/window-list.ui.h:4
-#, fuzzy
-#| msgid "<b>Restoring Minimized Windows</b>"
 msgid "Restoring Minimized Windows"
-msgstr "<b>在恢复最小化的窗口时</b>"
+msgstr "在恢复最小化的窗口时"
 
 #: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
@@ -1141,16 +1105,12 @@ msgid "Show windows from a_ll workspaces"
 msgstr "显示所有工作区中的窗口(_L)"
 
 #: ../applets/wncklet/window-list.ui.h:7
-#, fuzzy
-#| msgid "<b>Window Grouping</b>"
 msgid "Window Grouping"
-msgstr "<b>窗口分组</b>"
+msgstr "窗口分组"
 
 #: ../applets/wncklet/window-list.ui.h:8
-#, fuzzy
-#| msgid "<b>Window List Content</b>"
 msgid "Window List Content"
-msgstr "<b>窗口列表内容</b>"
+msgstr "窗口列表内容"
 
 #: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
@@ -1189,11 +1149,11 @@ msgstr ""
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
-msgstr "窗口列表的最大数目"
+msgstr "窗口列表的最大大小"
 
 #: ../applets/wncklet/window-list.schemas.in.h:5
 msgid "Minimum window list size"
-msgstr "窗口列表的最小数目"
+msgstr "窗口列表的最小大小"
 
 #: ../applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
@@ -1233,18 +1193,18 @@ msgstr "列数"
 #: ../applets/wncklet/workspace-switcher.c:488
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 num_rows 键值时出错：%s\n"
+msgstr "载入工作区切换器的 num_rows 数值时出错：%s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:499
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_workspace_names 键值时出错：%s\n"
+msgstr "载入工作区切换器的 display_workspace_names 数值时出错：%s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:514
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_all_workspaces 键值时出错：%s\n"
+msgstr "载入工作区切换器的 display_all_workspaces 数值时出错：%s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
@@ -1269,10 +1229,8 @@ msgid "Show workspace _names in switcher"
 msgstr "在切换器中显示工作区名称(_N)"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
-#, fuzzy
-#| msgid "<b>Switcher</b>"
 msgid "Switcher"
-msgstr "<b>切换器</b>"
+msgstr "切换器"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "Workspace Names"
@@ -1288,7 +1246,6 @@ msgstr "工作区名称(_M)："
 
 #: ../applets/wncklet/workspace-switcher.ui.h:9
 #, fuzzy
-#| msgid "Workspace Names"
 msgid "Workspaces"
 msgstr "工作区名称"
 
@@ -1395,7 +1352,7 @@ msgstr "属性(_P)"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:31
 msgid "Create new file in the given directory"
-msgstr "在给定目录中创建新文件"
+msgstr "无法在给定的目录中创建新文件"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:32
 msgid "[FILE...]"
@@ -1493,7 +1450,7 @@ msgstr "将它作为菜单加进面板(_M)"
 #: ../gnome-panel/nothing.cP:601
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
-msgstr "您在第 %d 级玩完了！"
+msgstr "你在第 %d 级玩完了！"
 
 #. Translators: the first and third strings are similar to a
 #. * title, and the second string is a small information text.
@@ -1542,7 +1499,7 @@ msgstr "激活屏幕保护程序(_A)"
 
 #: ../gnome-panel/panel-action-button.c:135
 msgid "_Lock Screen"
-msgstr "锁定屏幕(_L)"
+msgstr "锁住屏幕(_L)"
 
 #: ../gnome-panel/panel-action-button.c:254
 msgid "Could not connect to server"
@@ -1590,7 +1547,7 @@ msgstr "强制退出"
 
 #: ../gnome-panel/panel-action-button.c:330
 msgid "Force a misbehaving application to quit"
-msgstr "强制退出行为异常的应用程序"
+msgstr "强制行为异常的应用程序退出"
 
 #. FIXME icon
 #: ../gnome-panel/panel-action-button.c:339
@@ -1647,7 +1604,7 @@ msgstr "分隔符"
 
 #: ../gnome-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
-msgstr "用以组织面板项的分隔符"
+msgstr "组织面板项的分隔符"
 
 #: ../gnome-panel/panel-addto.c:176
 msgid "A pop out drawer to store other items in"
@@ -1860,7 +1817,7 @@ msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
-"如果您选择强制退出此应用程序，该程序打开的文档中所有未保存的改变都将丢失。"
+"如果您选择强制退出此应用程序，该程序所打开的全部文档的未保存修改可能丢失。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2048,8 +2005,6 @@ msgid ""
 "This key is deprecated as it cannot be used to implement proper lockdown. "
 "The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 msgstr ""
-"不推荐使用此键，因其并不能实现合适的锁定操作。应使用以下键来代替 /desktop/"
-"gnome/lockdown/disable_lock_screen。"
 
 #: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
@@ -2119,7 +2074,7 @@ msgstr "打开您的个人文件夹"
 #: ../gnome-panel/panel-menu-items.c:1025
 msgctxt "Desktop Folder"
 msgid "Desktop"
-msgstr "桌面"
+msgstr "桌面文件夹"
 
 #: ../gnome-panel/panel-menu-items.c:1026
 msgid "Open the contents of your desktop in a folder"
@@ -2498,7 +2453,7 @@ msgstr "尝试打开“%s”时发生了未知错误。"
 
 #: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
-msgstr "清除最近文档的列表吗？"
+msgstr "清除最近的文档列表吗？"
 
 #: ../gnome-panel/panel-recent.c:149
 msgid ""
@@ -2506,7 +2461,7 @@ msgid ""
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"如果您清除最近文档的列表，您将清除下列内容：\n"
+"如果您清除最近的文档列表，您将清除下列内容：\n"
 "\n"
 "• 位置 -> 最近文档菜单项中的全部项目。\n"
 "• 全部应用程序的最近文档列表中的全部项目。"
@@ -2520,14 +2475,12 @@ msgid "Recent Documents"
 msgstr "最近的文档"
 
 #: ../gnome-panel/panel-recent.c:235
-#, fuzzy
-#| msgid "Clear Recent Documents"
 msgid "Clear Recent Documents..."
-msgstr "清除最近的文档"
+msgstr "清除最近的文档..."
 
 #: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
-msgstr "从最近文档的列表中清除全部项目"
+msgstr "从最近的文档列表中清除全部项目"
 
 #: ../gnome-panel/panel-run-dialog.c:391
 #, c-format
@@ -2865,7 +2818,7 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
-"指定用作背景图像的文件。如果图像含有 alpha 通道它将会整合到桌面背景图像中。"
+"指定用作背景图像的文件。如果图像含有 alpha 通道它就会组合到桌面背景图像中。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -3179,7 +3132,7 @@ msgstr "载入小程序 %s 失败"
 #. This is an utility to easily test various applets
 #: ../libpanel-applet/panel-test-applets.ui.h:2
 msgid "Test applet utility"
-msgstr "小程序测试工具"
+msgstr "测试小程序工具"
 
 #: ../libpanel-applet/panel-test-applets.ui.h:3
 msgid "_Applet:"
