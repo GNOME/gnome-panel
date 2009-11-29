@@ -599,7 +599,8 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 
        	icon_name = weather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
-        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48, 0, NULL);
+        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48,
+                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
         if (pixbuf)
                 gtk_tooltip_set_icon (tooltip, pixbuf);
 
@@ -701,7 +702,8 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
 
         icon_name = weather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
-        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
+        pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
+                                           GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
 
         if (pixbuf) {
                 gtk_image_set_from_pixbuf (GTK_IMAGE (priv->weather_icon), pixbuf);

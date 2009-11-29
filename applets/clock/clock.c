@@ -2023,7 +2023,8 @@ location_weather_updated_cb (ClockLocation *location,
 	icon_name = weather_info_get_icon_name (info);
 	/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
 	theme = gtk_icon_theme_get_default ();
-	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
+	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
+					   GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
 
 	temp = weather_info_get_temp_summary (info);
 
