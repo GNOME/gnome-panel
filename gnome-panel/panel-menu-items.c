@@ -62,6 +62,7 @@
 #define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
 #define COMPUTER_NAME_KEY       "/apps/nautilus/desktop/computer_icon_name"
 #define MAX_ITEMS_OR_SUBMENU    5
+#define MAX_BOOKMARK_ITEMS      100
 
 G_DEFINE_TYPE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
@@ -358,39 +359,70 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 	GtkWidget   *add_menu;
 	char        *filename;
-	char        *contents;
-	gchar      **lines;
+	GIOChannel  *io_channel;
 	GHashTable  *table;
 	int          i;
+	GSList      *lines = NULL;
 	GSList      *add_bookmarks, *l;
 	PanelBookmark *bookmark;
 
 	filename = g_build_filename (g_get_home_dir (),
 				     BOOKMARKS_FILENAME, NULL);
 
-	if (!g_file_get_contents (filename, &contents, NULL, NULL)) {
-		g_free (filename);
-		return;
-	}
-
+	io_channel = g_io_channel_new_file (filename, "r", NULL);
 	g_free (filename);
 
-	lines = g_strsplit (contents, "\n", -1);
-	g_free (contents);
+	if (!io_channel)
+		return;
+
+	/* We use a hard limit to avoid having users shooting their
+	 * own feet, and to avoid crashing the system if a misbehaving
+	 * application creates a big bookmars file.
+	 */
+	for (i = 0; i < MAX_BOOKMARK_ITEMS; i++) {
+		char      *contents;
+		gsize      length;
+		gsize      terminator_pos;
+		GIOStatus  status;
+
+		status = g_io_channel_read_line (io_channel, &contents, &length, &terminator_pos, NULL);
+
+		if (status != G_IO_STATUS_NORMAL)
+			break;
+
+		if (length == 0)
+			break;
+
+		/* Clear the line terminator (\n), if any */
+		if (terminator_pos > 0)
+			contents[terminator_pos] = '\0';
+
+		lines = g_slist_prepend (lines, contents);
+	}
+
+	g_io_channel_shutdown (io_channel, FALSE, NULL);
+	g_io_channel_unref (io_channel);
+
+	if (!lines)
+		return;
+
+	lines = g_slist_reverse (lines);
 
 	table = g_hash_table_new (g_str_hash, g_str_equal);
 	add_bookmarks = NULL;
 
-	for (i = 0; lines[i]; i++) {
-		if (lines[i][0] && !g_hash_table_lookup (table, lines[i])) {
+	for (l = lines; l; l = l->next) {
+		char *line = (char*) l->data;
+
+		if (line[0] && !g_hash_table_lookup (table, line)) {
 			GFile    *file;
 			char     *space;
 			char     *label;
 			gboolean  keep;
 
-			g_hash_table_insert (table, lines[i], lines[i]);
+			g_hash_table_insert (table, line, line);
 
-			space = strchr (lines[i], ' ');
+			space = strchr (line, ' ');
 			if (space) {
 				*space = '\0';
 				label = g_strdup (space + 1);
@@ -400,11 +432,11 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 			keep = FALSE;
 
-			if (g_str_has_prefix (lines[i], "x-nautilus-search:"))
+			if (g_str_has_prefix (line, "x-nautilus-search:"))
 				keep = TRUE;
 
 			if (!keep) {
-				file = g_file_new_for_uri (lines[i]);
+				file = g_file_new_for_uri (line);
 				keep = !g_file_is_native (file) ||
 				       g_file_query_exists (file, NULL);
 				g_object_unref (file);
@@ -417,14 +449,15 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			}
 
 			bookmark = g_malloc (sizeof (PanelBookmark));
-			bookmark->full_uri = g_strdup (lines[i]);
+			bookmark->full_uri = g_strdup (line);
 			bookmark->label = label;
 			add_bookmarks = g_slist_prepend (add_bookmarks, bookmark);
 		}
 	}
 
 	g_hash_table_destroy (table);
-	g_strfreev (lines);
+	g_slist_foreach (lines, (GFunc) g_free, NULL);
+	g_slist_free (lines);
 
 	add_bookmarks = g_slist_reverse (add_bookmarks);
 
