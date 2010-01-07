@@ -951,6 +951,10 @@ panel_util_get_icon_for_uri_known_folders (const char *uri)
 
 	path = g_filename_from_uri (uri, NULL, NULL);
 
+	/* Sanity check. We may be given a broken URI. */
+	if (path == NULL)
+		return NULL;
+
 	len = strlen (path);
 	if (path[len] == '/')
 		path[len] = '\0';
