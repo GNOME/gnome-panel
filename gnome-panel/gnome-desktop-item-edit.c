@@ -9,8 +9,7 @@
 
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
-
-#include "nothing.cP"
+#include "panel-util.h"
 
 /* FIXME Symbols needed by panel-util.c - sucky */
 #include "applet.h"

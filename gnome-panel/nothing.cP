@@ -5,8 +5,13 @@
 #include <X11/Xlib.h>
 #include <cairo.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnome/gnome-program.h>
-#include <libgnome/gnome-sound.h>
+#include <canberra-gtk.h>
+
+#ifdef CA_CHECK_VERSION
+#if CA_CHECK_VERSION(0, 13)
+#define HAVE_CANBERRA_GTK_MULTIHEAD_SAFE
+#endif
+#endif
 
 #include "panel-util.h"
 #include "nothing.h"
@@ -45,8 +50,6 @@ static int goat_width = 0,goat_height = 0;
 static int goat_timeout = 0;
 static int goat_x = -1, goat_y = -1;
 static int goat_accx = -1, goat_accy = -1;
-
-static char *goat_filename = NULL;
 
 static void
 destroy_egg(GtkWidget *widget, gpointer data)
@@ -123,8 +126,17 @@ goat_timeout_func(gpointer data)
 		sound = TRUE;
 	}
 
-	if (sound && goat_filename != NULL)
-		gnome_sound_play (goat_filename);
+	if (sound) {
+#ifdef HAVE_CANBERRA_GTK_MULTIHEAD_SAFE
+		ca_context_cancel (ca_gtk_context_get_for_screen (gtk_widget_get_screen (goat_darea)), 42);
+#else
+		ca_context_cancel (ca_gtk_context_get (), 42);
+#endif
+		ca_gtk_play_for_widget (goat_darea, 42,
+					CA_PROP_EVENT_ID, "bell-window-system",
+					CA_PROP_EVENT_DESCRIPTION, "Ouch! This box is small!",
+					NULL);
+	}
 
 	real_goat_frame = goat_frame/2;
 
@@ -256,14 +268,6 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 	clicks = 0;
 	
 	if(!goat_loaded) {
-		if (goat_filename == NULL)
-			goat_filename =
-				gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_SOUND, 
-							   /* FIXME "ricochet.wav", */
-							   "gnometris/turn.wav",
-							   TRUE /* only_if_exists */,
-							   NULL /* ret_locations */);
-
 		goat_darea = gtk_drawing_area_new();
 
 		g_signal_connect (G_OBJECT(goat_darea),"destroy",
