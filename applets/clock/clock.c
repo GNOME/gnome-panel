@@ -75,13 +75,12 @@
 
 #define NEVER_SENSITIVE "never_sensitive"
 
-#define N_GCONF_PREFS 12 /* Keep this in sync with the number of keys below! */
+#define N_GCONF_PREFS 11 /* Keep this in sync with the number of keys below! */
 #define KEY_FORMAT		"format"
 #define KEY_SHOW_SECONDS	"show_seconds"
 #define KEY_SHOW_DATE		"show_date"
 #define KEY_SHOW_WEATHER	"show_weather"
 #define KEY_SHOW_TEMPERATURE	"show_temperature"
-#define KEY_GMT_TIME		"gmt_time"
 #define KEY_CUSTOM_FORMAT	"custom_format"
 #define KEY_SHOW_WEEK		"show_week_numbers"
 #define KEY_CITIES		"cities"
@@ -161,7 +160,6 @@ struct _ClockData {
 	char        *custom_format;
 	gboolean     showseconds;
 	gboolean     showdate;
-	gboolean     gmt_time;
 	gboolean     showweek;
         gboolean     show_weather;
         gboolean     show_temperature;
@@ -190,7 +188,6 @@ struct _ClockData {
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
-        GtkWidget *gmt_time_check;
         GtkWidget *custom_hbox;
         GtkWidget *custom_label;
         GtkWidget *custom_entry;
@@ -539,10 +536,7 @@ format_time (ClockData *cd)
 
 	utf8 = NULL;
 
-	if (cd->gmt_time)
-		tm = gmtime (&cd->current_time);
-	else
-		tm = localtime (&cd->current_time);
+	tm = localtime (&cd->current_time);
 
 	if (cd->format == CLOCK_FORMAT_UNIX) {
 		if (use_two_line_format (cd)) {
@@ -644,10 +638,7 @@ update_tooltip (ClockData * cd)
                 struct tm now;
                 char *tip;
 
-		if (cd->gmt_time)
-			tm = gmtime (&cd->current_time);
-		else
-			tm = localtime (&cd->current_time);
+		tm = localtime (&cd->current_time);
 
 		utf8 = NULL;
 
@@ -853,8 +844,6 @@ create_calendar (ClockData *cd)
 				      cd->orient == PANEL_APPLET_ORIENT_UP);
 	g_free (prefs_dir);
 
-	calendar_window_set_utc_time (CALENDAR_WINDOW (window),
-				      cd->gmt_time);
 	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
 					cd->showweek);
 	calendar_window_set_time_format (CALENDAR_WINDOW (window),
@@ -1599,10 +1588,7 @@ copy_time (BonoboUIComponent *uic,
 				format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
 		}
 
-		if (cd->gmt_time)
-			tm = gmtime (&cd->current_time);
-		else
-			tm = localtime (&cd->current_time);
+		tm = localtime (&cd->current_time);
 
 		if (!format)
 			strcpy (string, "???");
@@ -1628,10 +1614,7 @@ copy_date (BonoboUIComponent *uic,
 	char string[256];
 	char *utf8, *loc;
 
-	if (cd->gmt_time)
-		tm = gmtime (&cd->current_time);
-	else
-		tm = localtime (&cd->current_time);
+	tm = localtime (&cd->current_time);
 
 	/* Translators: This is a strftime format string.
 	 * It is used to display a date in the full format (so that people can
@@ -2399,29 +2382,6 @@ speed_unit_changed (GConfClient  *client,
 }
 
 static void
-gmt_time_changed (GConfClient  *client,
-                  guint         cnxn_id,
-                  GConfEntry   *entry,
-                  ClockData    *clock)
-{
-	gboolean value;
-
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-
-	value = gconf_value_get_bool (entry->value);
-
-	clock->gmt_time = (value != 0);
-
-	refresh_clock_timeout (clock);
-
-	if (clock->calendar_popup != NULL) {
-		calendar_window_set_utc_time (CALENDAR_WINDOW (clock->calendar_popup), clock->gmt_time);
-                position_calendar_popup (clock);
-	}
-}
-
-static void
 custom_format_changed (GConfClient  *client,
                        guint         cnxn_id,
                        GConfEntry   *entry,
@@ -2493,7 +2453,6 @@ setup_gconf (ClockData *cd)
                 { KEY_SHOW_DATE,	(GConfClientNotifyFunc) show_date_changed },
                 { KEY_SHOW_WEATHER,	(GConfClientNotifyFunc) show_weather_changed },
                 { KEY_SHOW_TEMPERATURE,	(GConfClientNotifyFunc) show_temperature_changed },
-                { KEY_GMT_TIME,		(GConfClientNotifyFunc) gmt_time_changed },
                 { KEY_CUSTOM_FORMAT,	(GConfClientNotifyFunc) custom_format_changed },
                 { KEY_SHOW_WEEK,	(GConfClientNotifyFunc) show_week_changed },
                 { KEY_CITIES,		(GConfClientNotifyFunc) cities_changed },
@@ -2580,7 +2539,6 @@ load_gconf_settings (ClockData *cd)
 
         cd->show_weather = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEATHER, NULL);
         cd->show_temperature = panel_applet_gconf_get_bool (applet, KEY_SHOW_TEMPERATURE, NULL);
-	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
         cd->timeformat = NULL;
 
@@ -2756,28 +2714,24 @@ update_properties_for_format (ClockData   *cd,
         case CLOCK_FORMAT_24:
                 gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
                 gtk_widget_set_sensitive (cd->showdate_check, TRUE);
-                gtk_widget_set_sensitive (cd->gmt_time_check, TRUE);
 		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
 		gtk_widget_set_sensitive (cd->custom_label, FALSE);
                 break;
         case CLOCK_FORMAT_UNIX:
                 gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
                 gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-                gtk_widget_set_sensitive (cd->gmt_time_check, FALSE);
                 gtk_widget_set_sensitive (cd->custom_entry, FALSE);
                 gtk_widget_set_sensitive (cd->custom_label, FALSE);
                 break;
         case CLOCK_FORMAT_INTERNET:
                 gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
                 gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-		gtk_widget_set_sensitive (cd->gmt_time_check, FALSE);
 		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
 		gtk_widget_set_sensitive (cd->custom_label, FALSE);
                 break;
 	case CLOCK_FORMAT_CUSTOM:
 		gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
 		gtk_widget_set_sensitive (cd->showdate_check, FALSE);
-		gtk_widget_set_sensitive (cd->gmt_time_check, TRUE);
 		gtk_widget_set_sensitive (cd->custom_entry, TRUE);
 		gtk_widget_set_sensitive (cd->custom_label, TRUE);
                 break;
@@ -3664,7 +3618,6 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 				       KEY_CUSTOM_FORMAT);
 	setup_writability_sensitivity (cd, cd->showseconds_check, NULL, KEY_SHOW_SECONDS);
 	setup_writability_sensitivity (cd, cd->showdate_check, NULL, KEY_SHOW_DATE);
-	setup_writability_sensitivity (cd, cd->gmt_time_check, NULL, KEY_GMT_TIME);
 
 	gtk_widget_show (cd->props);
 #endif

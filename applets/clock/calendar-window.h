@@ -68,9 +68,6 @@ GtkWidget *calendar_window_get_locations_box (CalendarWindow *calwin);
 gboolean   calendar_window_get_invert_order (CalendarWindow *calwin);
 void       calendar_window_set_invert_order (CalendarWindow *calwin,
 					     gboolean        invert_order);
-gboolean   calendar_window_get_utc_time     (CalendarWindow *calwin);
-void       calendar_window_set_utc_time     (CalendarWindow *calwin,
-					     gboolean        utc_time);
 gboolean   calendar_window_get_show_weeks   (CalendarWindow *calwin);
 void       calendar_window_set_show_weeks   (CalendarWindow *calwin,
 					     gboolean        show_weeks);

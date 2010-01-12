@@ -84,7 +84,6 @@ struct _CalendarWindowPrivate {
 	char       *prefs_dir;
 
 	gboolean     invert_order;
-	gboolean     utc_time;
 	gboolean     show_weeks;
 	time_t      *current_time;
 
@@ -119,7 +118,6 @@ G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
 enum {
 	PROP_0,
 	PROP_INVERTORDER,
-	PROP_UTCTIME,
 	PROP_SHOWWEEKS,
 #ifdef HAVE_LIBECAL
 	PROP_TIMEFORMAT,
@@ -281,8 +279,7 @@ format_time (ClockFormat format,
              time_t      t,
              guint       year,
              guint       month,
-             guint       day,
-             gboolean    use_utc)
+             guint       day)
 {
         struct tm *tm;
         char      *time_format;
@@ -291,10 +288,7 @@ format_time (ClockFormat format,
         if (!t)
                 return NULL;
 
-        if (use_utc)
-                tm = gmtime (&t);
-        else
-                tm = localtime (&t);
+	tm = localtime (&t);
         if (!tm)
                 return NULL;
 
@@ -975,8 +969,7 @@ handle_appointments_changed (CalendarWindow *calwin)
                 else
                         start_text = format_time (calwin->priv->time_format,
                                                   appointment->start_time,
-                                                  year, month, day,
-                                                  calwin->priv->utc_time);
+                                                  year, month, day);
 
 
                 gtk_list_store_append (calwin->priv->appointments_model,
@@ -1544,10 +1537,7 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 		options &= ~(GTK_CALENDAR_SHOW_WEEK_NUMBERS);
 	gtk_calendar_set_display_options (GTK_CALENDAR (calendar), options);
 
-	if (calwin->priv->utc_time)
-		tm = gmtime (calwin->priv->current_time);
-	else
-		tm = localtime (calwin->priv->current_time);
+	tm = localtime (calwin->priv->current_time);
 
         gtk_calendar_select_month (GTK_CALENDAR (calendar),
                                    tm->tm_mon,
@@ -1752,10 +1742,6 @@ calendar_window_get_property (GObject    *object,
 		g_value_set_boolean (value,
 				     calendar_window_get_invert_order (calwin));
 		break;
-	case PROP_UTCTIME:
-		g_value_set_boolean (value,
-				     calendar_window_get_utc_time (calwin));
-		break;
 	case PROP_SHOWWEEKS:
 		g_value_set_boolean (value,
 				     calendar_window_get_show_weeks (calwin));
@@ -1796,10 +1782,6 @@ calendar_window_set_property (GObject       *object,
 	case PROP_INVERTORDER:
 		calendar_window_set_invert_order (calwin,
 						  g_value_get_boolean (value));
-		break;
-	case PROP_UTCTIME:
-		calendar_window_set_utc_time (calwin,
-					      g_value_get_boolean (value));
 		break;
 	case PROP_SHOWWEEKS:
 		calendar_window_set_show_weeks (calwin,
@@ -1898,15 +1880,6 @@ calendar_window_class_init (CalendarWindowClass *klass)
 		g_param_spec_boolean ("invert-order",
 				      "Invert Order",
 				      "Invert order of the calendar and tree views",
-				      FALSE,
-				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_UTCTIME,
-		g_param_spec_boolean ("utc-time",
-				      "UTC Time",
-				      "Use UTC time as a basis for the calendar",
 				      FALSE,
 				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
@@ -2028,33 +2001,6 @@ calendar_window_set_invert_order (CalendarWindow *calwin,
 	//FIXME: update the order of the content of the window
 
 	g_object_notify (G_OBJECT (calwin), "invert-order");
-}
-
-gboolean
-calendar_window_get_utc_time (CalendarWindow *calwin)
-{
-	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin), FALSE);
-
-	return calwin->priv->utc_time;
-}
-
-void
-calendar_window_set_utc_time (CalendarWindow *calwin,
-			      gboolean        utc_time)
-{
-	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
-
-	if (utc_time == calwin->priv->utc_time)
-		return;
-
-	calwin->priv->utc_time = utc_time;
-#ifdef HAVE_LIBECAL
-	/* Time to display for appointments has changed */
-	if (calwin->priv->appointments_model)
-		handle_appointments_changed (calwin);
-#endif
-
-	g_object_notify (G_OBJECT (calwin), "utc-time");
 }
 
 gboolean
