@@ -3,18 +3,10 @@ NULL =
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
-	-I$(top_builddir)/gnome-panel				\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
-	-DPANEL_DEBUG						\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DDATADIR=\""$(datadir)"\"				\
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(STANDARD_PROPERTIES_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
-	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
