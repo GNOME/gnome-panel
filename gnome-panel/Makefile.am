@@ -1,6 +1,6 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
-SUBDIRS = libpanel-util
+SUBDIRS = libegg libpanel-util
 
 NULL =
 
@@ -153,6 +153,7 @@ gnome_panel_SOURCES =			\
 	$(NULL)
 
 gnome_panel_LDADD =		\
+	$(top_builddir)/gnome-panel/libegg/libegg.la \
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	$(PANEL_LIBS)		\
 	$(X_LIBS)

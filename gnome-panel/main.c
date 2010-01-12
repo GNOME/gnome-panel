@@ -13,10 +13,12 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
-#include <libgnomeui/gnome-client.h>
-#include <libgnomeui/gnome-ui-init.h>
+
+#include <libegg/eggdesktopfile.h>
+#include <libegg/eggsmclient.h>
 
 #include <libpanel-util/panel-cleanup.h>
+#include <libpanel-util/panel-glib.h>
 
 #include "panel-gconf.h"
 #include "panel-profile.h"
@@ -49,28 +51,55 @@ static const GOptionEntry options[] = {
 int
 main (int argc, char **argv)
 {
+	char           *desktopfile;
 	GOptionContext *context;
-	GnomeProgram   *program;
+	GError         *error;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	context = g_option_context_new ("");
+	/* We will register explicitly when we're ready -- see panel-session.c */
+	egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_DISABLED);
 
+	g_set_prgname ("gnome-panel");
+
+	desktopfile = panel_g_lookup_in_applications_dirs ("gnome-panel.desktop");
+	if (desktopfile) {
+		egg_set_desktop_file (desktopfile);
+		g_free (desktopfile);
+	}
+
+	context = g_option_context_new ("");
+	g_option_context_add_group (context,
+				    egg_sm_client_get_option_group ());
+	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
-	program = gnome_program_init ("gnome-panel", VERSION,
-				      LIBGNOMEUI_MODULE,
-				      argc, argv,
-				      GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,
-				      GNOME_PARAM_GOPTION_CONTEXT, context,
-				      GNOME_PROGRAM_STANDARD_PROPERTIES,
-				      NULL);
-	panel_cleanup_register (PANEL_CLEAN_FUNC (g_object_unref), program);
+	gtk_init (&argc, &argv);
+#if 0
+	/* Hrm, not needed? */
+	if (!bonobo_init (&argc, argv)) {
+		g_printerr ("Cannot initialize bonobo.\n");
+		return 1;
+	}
+#endif
 
-	g_set_application_name (_("Panel"));
-	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
+	error = NULL;
+	if (!g_option_context_parse (context, &argc, &argv, &error)) {
+		g_printerr ("%s\n", error->message);
+		g_error_free (error);
+		g_option_context_free (context);
+
+		return 1;
+	}
+
+	g_option_context_free (context);
+
+	if (!egg_get_desktop_file ()) {
+		g_set_application_name (_("Panel"));
+		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
+	}
 
 	if (!panel_shell_register (replace)) {
 		panel_cleanup_do ();

@@ -24,56 +24,57 @@
 
 #include <config.h>
 
-#include <libgnomeui/gnome-client.h>
-
 #include <stdlib.h>
+
+#include <gdk/gdk.h>
+
+#include <libegg/eggsmclient.h>
 
 #include "panel-shell.h"
 
 #include "panel-session.h"
 
-static void
-panel_session_handle_die_request (GnomeClient *client)
-{
-	g_return_if_fail (GNOME_IS_CLIENT (client));
+static gboolean do_not_restart = FALSE;
 
+static void
+panel_session_handle_quit (EggSMClient *client,
+			   gpointer     data)
+{
 	panel_shell_quit ();
 }
 
 void
 panel_session_do_not_restart (void)
 {
-	GnomeClient *client;
+	do_not_restart = TRUE;
 
-	client = gnome_master_client ();
-
-	gnome_client_set_restart_style (client, GNOME_RESTART_IF_RUNNING);
+	if (egg_sm_client_get_mode () != EGG_SM_CLIENT_MODE_DISABLED)
+		egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_NO_RESTART);
 }
 
 void
 panel_session_init (void)
 {
-	GnomeClient *client;
-
-	client = gnome_master_client ();
+	EggSMClientMode  mode;
+	EggSMClient     *client;
 
 	/* Explicitly tell the session manager we're ready -- we don't do it
-	 * before.
-	 * TODO: when migrating away from libgnomeui, we need to keep this
-	 * late connection. In its current state, I don't think eggsmclient
-	 * supports this (because it connects to the session manager in a
-	 * post-options-parsing hook). */
-	gnome_client_connect (client);
+	 * before. Note: this depends on setting the mode to DISABLED early
+	 * during startup. */
+
+        if (do_not_restart || getenv ("GNOME_PANEL_DEBUG"))
+		mode = EGG_SM_CLIENT_MODE_NO_RESTART;
+	else
+		mode = EGG_SM_CLIENT_MODE_NORMAL;
+
+	egg_sm_client_startup (mode);
+
+	client = egg_sm_client_get ();
+
+	g_signal_connect (client, "quit",
+			  G_CALLBACK (panel_session_handle_quit), NULL);
 
 	/* We don't want the WM to try and save/restore our
 	 * window position */
 	gdk_set_sm_client_id (NULL);
-
-        if (!getenv ("GNOME_PANEL_DEBUG"))
-                gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
-
-        gnome_client_set_priority (client, 40);
-
-	g_signal_connect (client, "die",
-			  G_CALLBACK (panel_session_handle_die_request), NULL);
 }

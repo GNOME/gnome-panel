@@ -1216,9 +1216,6 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 	gtk_widget_show (arrow);
 
 	g_object_set_data (G_OBJECT (button),
-			   "gnome_disable_sound_events",
-			   GINT_TO_POINTER  (TRUE));
-	g_object_set_data (G_OBJECT (button),
 			   "arrow-type",
 			   GINT_TO_POINTER (arrow_type));
 
