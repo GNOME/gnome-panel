@@ -3,7 +3,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gtk/gtk.h>
-#include <libgnomeui/gnome-ui-init.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-keyfile.h>
@@ -27,7 +26,7 @@ static int dialogs = 0;
 static gboolean create_new = FALSE;
 static char **desktops = NULL;
 
-static const GOptionEntry options[] = {
+static GOptionEntry options[] = {
 	{ "create-new", 0, 0, G_OPTION_ARG_NONE, &create_new, N_("Create new file in the given directory"), NULL },
 	{ G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &desktops, NULL, N_("[FILE...]") },
 	{ NULL }
@@ -99,23 +98,22 @@ error_reported (GtkWidget  *dialog,
 int
 main (int argc, char * argv[])
 {
-	GOptionContext *context;
-	GnomeProgram *program;
+	GError *error = NULL;
 	int i;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	context = g_option_context_new (N_("- Edit .desktop files"));
-	g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
-	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
-
-	program = gnome_program_init ("gnome-desktop-item-edit", VERSION,
-				      LIBGNOMEUI_MODULE,
-				      argc, argv,
-				      GNOME_PARAM_GOPTION_CONTEXT, context,
-				      NULL);
+	if (!gtk_init_with_args (&argc, &argv,
+	                         _("- Edit .desktop files"),
+	                         options,
+	                         GETTEXT_PACKAGE,
+	                         &error)) {
+		g_printerr ("%s\n", error->message);
+		g_error_free (error);
+		return 1;
+	}
 
 	gtk_window_set_default_icon_name (PANEL_ICON_LAUNCHER);
 
@@ -223,8 +221,6 @@ main (int argc, char * argv[])
 
 	if (dialogs > 0)
 		gtk_main ();
-
-	g_object_unref (program);
 
         return 0;
 }
