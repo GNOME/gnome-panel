@@ -32,6 +32,7 @@
 #include <gconf/gconf-client.h>
 
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-xdg.h>
 
 #include "launcher.h"
 #include "panel-util.h"
@@ -1525,7 +1526,7 @@ create_menuitem (GtkWidget          *menu,
 
 			icon = gmenu_tree_entry_get_icon (entry);
 			if (!g_path_is_absolute (icon)) {
-				icon_no_ext = panel_util_icon_remove_extension (icon);
+				icon_no_ext = panel_xdg_icon_remove_extension (icon);
 				gtk_drag_source_set_icon_name (menuitem,
 							       icon_no_ext);
 				g_free (icon_no_ext);

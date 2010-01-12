@@ -32,6 +32,7 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
+#include <libpanel-util/panel-xdg.h>
 
 #include "applet.h"
 #include "nothing.h"
@@ -241,24 +242,6 @@ panel_uri_exists (const char *uri)
 }
 
 char *
-panel_util_icon_remove_extension (const char *icon)
-{
-	char *icon_no_extension;
-	char *p;
-
-	icon_no_extension = g_strdup (icon);
-	p = strrchr (icon_no_extension, '.');
-	if (p &&
-	    (strcmp (p, ".png") == 0 ||
-	     strcmp (p, ".xpm") == 0 ||
-	     strcmp (p, ".svg") == 0)) {
-	    *p = 0;
-	}
-
-	return icon_no_extension;
-}
-
-char *
 panel_find_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
 		 gint           size)
@@ -287,7 +270,7 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 
 	/* This is needed because some .desktop files have an icon name *and*
 	 * an extension as icon */
-	icon_no_extension = panel_util_icon_remove_extension (icon_name);
+	icon_no_extension = panel_xdg_icon_remove_extension (icon_name);
 
 	info = gtk_icon_theme_lookup_icon (icon_theme, icon_no_extension,
 					   size, 0);

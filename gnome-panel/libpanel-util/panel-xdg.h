@@ -1,7 +1,7 @@
 /*
- * panel-gtk.h: various small extensions to gtk+
+ * panel-xdg.h: miscellaneous XDG-related functions.
  *
- * Copyright (C) 2009-2010 Novell, Inc.
+ * Copyright (C) 2010 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -22,17 +22,18 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#ifndef PANEL_GTK_H
-#define PANEL_GTK_H
+#ifndef PANEL_XDG_H
+#define PANEL_XDG_H
 
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define PANEL_GTK_BUILDER_GET(builder, name) GTK_WIDGET (gtk_builder_get_object (builder, name))
+char *panel_xdg_icon_remove_extension (const char *icon);
 
-void panel_gtk_file_chooser_add_image_preview (GtkFileChooser *chooser);
+char *panel_xdg_icon_name_from_icon_path (const char *path,
+					  GdkScreen  *screen);
 
 G_END_DECLS
 
-#endif /* PANEL_GTK_H */
+#endif /* PANEL_XDG_H */

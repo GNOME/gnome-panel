@@ -28,11 +28,11 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
-#include <libgnomeui/gnome-icon-entry.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
+#include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
@@ -40,6 +40,7 @@
 #include "panel-gconf.h"
 #include "panel-util.h"
 #include "panel-globals.h"
+#include "panel-icon-names.h"
 
 typedef struct {
 	PanelToplevel *toplevel;
@@ -55,7 +56,7 @@ typedef struct {
 	GtkWidget     *size_label;
 	GtkWidget     *size_label_pixels;
 	GtkWidget     *icon_align;
-	GtkWidget     *icon_entry;
+	GtkWidget     *icon_chooser;
 	GtkWidget     *icon_label;
   	GtkWidget     *expand_toggle;
 	GtkWidget     *autohide_toggle;
@@ -78,9 +79,6 @@ typedef struct {
 
 	guint          toplevel_notify;
 	guint          background_notify;
-
-	/* The theme directory of the icon, see bug #119209 */
-	char          *icon_theme_dir;
 
 	/* FIXME: This is a workaround for GTK+ bug #327243 */
 	int            selection_emitted;
@@ -106,9 +104,6 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 	if (dialog->properties_dialog)
 		gtk_widget_destroy (dialog->properties_dialog);
 	dialog->properties_dialog = NULL;
-
-	g_free (dialog->icon_theme_dir);
-	dialog->icon_theme_dir = NULL;
 
 	g_free (dialog);
 }
@@ -246,83 +241,42 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 }
 
 static void
-panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
-				      GnomeIconEntry        *entry)
+panel_properties_dialog_icon_changed (PanelIconChooser      *chooser,
+				      const char            *icon,
+				      PanelPropertiesDialog *dialog)
 {
-	const char *icon = NULL;
-        char       *freeme = NULL;
-
-        icon = gnome_icon_entry_get_filename (entry);
-
-        /* Strip dir from the icon path if in the icon
-         * theme directory.  See bug #119209
-         */
-        if (icon && g_path_is_absolute (icon)) {
-                char *dir;
-
-                dir = g_path_get_dirname (icon);
-
-                if (dir && dialog->icon_theme_dir && strcmp (dir, dialog->icon_theme_dir) == 0)
-                        icon = freeme = g_path_get_basename (icon);
-
-                g_free (dir);
-        }
-
         panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
-
-        g_free (freeme);
 }
 
 static void
-panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
-					  GtkBuilder            *gui)
+panel_properties_dialog_setup_icon_chooser (PanelPropertiesDialog *dialog,
+					    GtkBuilder            *gui)
 {
 	char *custom_icon;
 
 	dialog->icon_align = PANEL_GTK_BUILDER_GET (gui, "icon_align");
 	g_return_if_fail (dialog->icon_align != NULL);
 
-	dialog->icon_entry = gnome_icon_entry_new ("panel-drawer-icon",
-						   _("Browse icons"));
-	gtk_widget_show (dialog->icon_entry);
+	dialog->icon_chooser = panel_icon_chooser_new (NULL);
+	panel_icon_chooser_set_fallback_icon_name (PANEL_ICON_CHOOSER (dialog->icon_chooser),
+						   PANEL_ICON_DRAWER);
+	gtk_widget_show (dialog->icon_chooser);
 	gtk_container_add (GTK_CONTAINER (dialog->icon_align),
-			   dialog->icon_entry);
+			   dialog->icon_chooser);
 
 	dialog->icon_label = PANEL_GTK_BUILDER_GET (gui, "icon_label");
 	g_return_if_fail (dialog->icon_label != NULL);
 
-	dialog->icon_theme_dir = NULL;
 	custom_icon = panel_profile_get_attached_custom_icon (dialog->toplevel);
-	if (custom_icon != NULL &&
-	    ! g_path_is_absolute (custom_icon)) {
-		/* if the icon is not absolute path name it comes from the
-		   theme, and as such we wish to store the theme directory
-		   where it comes from.  See bug #119209 */
-		char *icon;
-		
-		icon = panel_find_icon (gtk_icon_theme_get_default (),
-					custom_icon, 48);
-		if (icon != NULL)
-			dialog->icon_theme_dir = g_path_get_dirname (icon);
-
-		g_free (custom_icon);
-		custom_icon = icon;
-	}
-	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
+	panel_icon_chooser_set_icon (PANEL_ICON_CHOOSER (dialog->icon_chooser),
+				     custom_icon);
 	g_free (custom_icon);
 
-	if (dialog->icon_theme_dir == NULL) {
-		/* use the default pixmap directory as the standard icon_theme_dir,
-		 * since the standard directory is themed */
-		g_object_get (G_OBJECT (dialog->icon_entry), "pixmap_subdir",
-			      &(dialog->icon_theme_dir), NULL);
-	}
-
-	g_signal_connect_swapped (dialog->icon_entry, "changed",
-				  G_CALLBACK (panel_properties_dialog_icon_changed), dialog);
+	g_signal_connect (dialog->icon_chooser, "changed",
+			  G_CALLBACK (panel_properties_dialog_icon_changed), dialog);
 
 	if (!panel_profile_is_writable_attached_custom_icon (dialog->toplevel)) {
-		gtk_widget_set_sensitive (dialog->icon_entry, FALSE);
+		gtk_widget_set_sensitive (dialog->icon_chooser, FALSE);
 		gtk_widget_set_sensitive (dialog->icon_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_general);
 	}
@@ -416,53 +370,13 @@ panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
 }
 
 static void
-panel_properties_dialog_chooser_preview_update (GtkFileChooser *file_chooser,
-						gpointer data)
-{
-	GtkWidget *preview;
-	char      *filename;
-	GdkPixbuf *pixbuf;
-	gboolean   have_preview;
-
-	preview = GTK_WIDGET (data);
-	filename = gtk_file_chooser_get_preview_filename (file_chooser);
-
-	if (filename == NULL)
-		return;
-
-	pixbuf = gdk_pixbuf_new_from_file_at_size (filename, 128, 128, NULL);
-	have_preview = (pixbuf != NULL);
-	g_free (filename);
-
-	gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
-	if (pixbuf)
-		g_object_unref (pixbuf);
-
-	gtk_file_chooser_set_preview_widget_active (file_chooser,
-						    have_preview);
-}
-
-static void
 panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 					     GtkBuilder            *gui)
 {
-	GtkFileFilter *filter;
-	GtkWidget     *chooser_preview;
-	char          *image;
+	char *image;
 
 	dialog->image_chooser = PANEL_GTK_BUILDER_GET (gui, "image_chooser");
-
-	filter = gtk_file_filter_new ();
-	gtk_file_filter_add_pixbuf_formats (filter);
-	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
-				     filter);
-
-	chooser_preview = gtk_image_new ();
-	gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog->image_chooser),
-					     chooser_preview);
-	g_signal_connect (dialog->image_chooser, "update-preview",
-			  G_CALLBACK (panel_properties_dialog_chooser_preview_update),
-			  chooser_preview);
+	panel_gtk_file_chooser_add_image_preview (GTK_FILE_CHOOSER (dialog->image_chooser));
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
@@ -915,7 +829,7 @@ panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
 }
 
 static void
-panel_properties_dialog_remove_icon_entry (PanelPropertiesDialog *dialog)
+panel_properties_dialog_remove_icon_chooser (PanelPropertiesDialog *dialog)
 {
 	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
 
@@ -924,7 +838,7 @@ panel_properties_dialog_remove_icon_entry (PanelPropertiesDialog *dialog)
 
 	dialog->icon_label = NULL;
 	dialog->icon_align = NULL;
-	dialog->icon_entry = NULL;
+	dialog->icon_chooser = NULL;
 
 	gtk_table_resize (GTK_TABLE (dialog->general_table), 3, 2);
 }
@@ -946,7 +860,7 @@ panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
 					     gboolean               attached)
 {
 	if (!attached)
-		panel_properties_dialog_remove_icon_entry (dialog);
+		panel_properties_dialog_remove_icon_chooser (dialog);
 	else {
 		gtk_window_set_title (GTK_WINDOW (dialog->properties_dialog),
 				      _("Drawer Properties"));
@@ -987,7 +901,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	panel_properties_dialog_setup_orientation_combo  (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
-	panel_properties_dialog_setup_icon_entry         (dialog, gui);
+	panel_properties_dialog_setup_icon_chooser       (dialog, gui);
 	panel_properties_dialog_setup_expand_toggle      (dialog, gui);
 	panel_properties_dialog_setup_autohide_toggle    (dialog, gui);
 	panel_properties_dialog_setup_hidebuttons_toggle (dialog, gui);

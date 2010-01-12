@@ -25,7 +25,6 @@ void            panel_lock_screen_action           (GdkScreen    *screen,
                                                     const char   *action);
 gboolean        panel_lock_screen_action_available (const char   *action);
 
-char *          panel_util_icon_remove_extension (const char *icon);
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size);

@@ -9,6 +9,7 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
+	-DDATADIR=\""$(datadir)"\"				\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
@@ -28,7 +29,10 @@ libpanel_util_la_SOURCES=	\
 	panel-error.h			\
 	panel-glib.c			\
 	panel-glib.h			\
+	panel-gtk.c			\
 	panel-gtk.h			\
+	panel-icon-chooser.c		\
+	panel-icon-chooser.h		\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	panel-launch.c			\
@@ -39,6 +43,8 @@ libpanel_util_la_SOURCES=	\
 	panel-session-manager.h		\
 	panel-show.c			\
 	panel-show.h			\
+	panel-xdg.c			\
+	panel-xdg.h			\
 	$(NULL)
 
 -include $(top_srcdir)/git.mk
