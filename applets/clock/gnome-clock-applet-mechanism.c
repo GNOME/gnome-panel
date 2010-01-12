@@ -241,8 +241,15 @@ _check_polkit_for_action (GnomeClockAppletMechanism *mechanism, DBusGMethodInvoc
                                                             action,
                                                             NULL,
                                                             POLKIT_CHECK_AUTHORIZATION_FLAGS_ALLOW_USER_INTERACTION,
-                                                            NULL, NULL);
+                                                            NULL, &error);
         g_object_unref (subject);
+
+        if (error) {
+                dbus_g_method_return_error (context, error);
+                g_error_free (error);
+
+                return FALSE;
+        }
 
         if (!polkit_authorization_result_get_is_authorized (result)) {
                 error = g_error_new (GNOME_CLOCK_APPLET_MECHANISM_ERROR,
@@ -565,18 +572,27 @@ check_can_do (GnomeClockAppletMechanism *mechanism,
         const char *sender;
         PolkitSubject *subject;
         PolkitAuthorizationResult *result;
+        GError *error;
 
         /* Check that caller is privileged */
         sender = dbus_g_method_get_sender (context);
         subject = polkit_system_bus_name_new (sender);
 
+        error = NULL;
         result = polkit_authority_check_authorization_sync (mechanism->priv->auth,
                                                             subject,
                                                             action,
                                                             NULL,
                                                             0,
-                                                            NULL, NULL);
+                                                            NULL,
+                                                            &error);
         g_object_unref (subject);
+
+        if (error) {
+                dbus_g_method_return_error (context, error);
+                g_error_free (error);
+                return;
+        }
 
         if (polkit_authorization_result_get_is_authorized (result)) {
                 dbus_g_method_return (context, 2);
