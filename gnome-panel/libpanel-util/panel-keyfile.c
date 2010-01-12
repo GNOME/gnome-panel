@@ -42,7 +42,6 @@ panel_key_file_new_desktop (void)
 	retval = g_key_file_new ();
 
 	//FIXME? g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Name", _("No Name"));
-	g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Encoding", "UTF-8");
 	g_key_file_set_string (retval, G_KEY_FILE_DESKTOP_GROUP, "Version", "1.0");
 
 	return retval;
