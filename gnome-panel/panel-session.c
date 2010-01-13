@@ -67,7 +67,7 @@ panel_session_init (void)
 	else
 		mode = EGG_SM_CLIENT_MODE_NORMAL;
 
-	egg_sm_client_startup (mode);
+	egg_sm_client_set_mode (mode);
 
 	client = egg_sm_client_get ();
 

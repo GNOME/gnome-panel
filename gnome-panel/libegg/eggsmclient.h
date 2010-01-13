@@ -93,7 +93,6 @@ GOptionGroup    *egg_sm_client_get_option_group    (void);
 void             egg_sm_client_set_mode            (EggSMClientMode mode);
 EggSMClientMode  egg_sm_client_get_mode            (void);
 EggSMClient     *egg_sm_client_get                 (void);
-void             egg_sm_client_startup             (EggSMClientMode mode);
 
 /* Resuming a saved session */
 gboolean         egg_sm_client_is_resumed          (EggSMClient *client);
