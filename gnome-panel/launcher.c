@@ -955,6 +955,8 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 	}
 
 	location = panel_make_unique_desktop_uri (NULL, exec_or_uri);
+
+	error = NULL;
 	if (panel_key_file_to_file (key_file, location, &error)) {
 		panel_launcher_create (toplevel, position, location);
 	} else {
