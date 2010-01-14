@@ -40,18 +40,6 @@
  * Largely based on Michael Fulbright's work on Anaconda.
  */
 
-/* To compile a test program, do:
- * $ gcc -DSYSTZ_GET_TEST -Wall -g -O0 -o system-timezone-get `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
- * or:
- * $ gcc -DSYSTZ_SET_TEST -Wall -g -O0 -o system-timezone-set `pkg-config --cflags --libs glib-2.0 gobject-2.0 gio-2.0` system-timezone.c
- *
- * You can then read the system timezone with:
- * $ system-timezone-get
- * and simulate a set of system timezone (in /tmp/etc/...) with:
- * $ system-timezone-set "Europe/Paris"
- */
-
-
 /* FIXME: it'd be nice to filter out the timezones that we might get when
  * parsing config files that are not in zone.tab. Note that it's also wrong
  * in some cases: eg, in tzdata2008b, Asia/Calcutta got renamed to
@@ -68,23 +56,12 @@
 
 /* Files that we look at and that should be monitored */
 #define CHECK_NB 5
-#ifndef SYSTZ_SET_TEST
 #define ETC_TIMEZONE        "/etc/timezone"
 #define ETC_TIMEZONE_MAJ    "/etc/TIMEZONE"
 #define ETC_RC_CONF         "/etc/rc.conf"
 #define ETC_SYSCONFIG_CLOCK "/etc/sysconfig/clock"
 #define ETC_CONF_D_CLOCK    "/etc/conf.d/clock"
 #define ETC_LOCALTIME       "/etc/localtime"
-#else
-/* Filenames that will be writable for testing */
-#define TEST_PREFIX         "/tmp/systz-test"
-#define ETC_TIMEZONE        TEST_PREFIX"/etc/timezone"
-#define ETC_TIMEZONE_MAJ    TEST_PREFIX"/etc/TIMEZONE"
-#define ETC_RC_CONF         TEST_PREFIX"/etc/rc.conf"
-#define ETC_SYSCONFIG_CLOCK TEST_PREFIX"/etc/sysconfig/clock"
-#define ETC_CONF_D_CLOCK    TEST_PREFIX"/etc/conf.d/clock"
-#define ETC_LOCALTIME       TEST_PREFIX"/etc/localtime"
-#endif /* SYSTZ_SET_TEST */
 
 /* The first 4 characters in a timezone file, from tzfile.h */
 #define TZ_MAGIC "TZif"
@@ -1053,56 +1030,3 @@ system_timezone_error_quark (void)
 
         return ret;
 }
-
-#ifdef SYSTZ_GET_TEST
-int
-main (int    argc,
-      char **argv)
-{
-        char *tz;
-
-        tz = system_timezone_find ();
-        g_print ("%s\n", tz);
-        g_free (tz);
-
-        return 0;
-}
-#endif /* SYSTZ_GET_TEST */
-
-#ifdef SYSTZ_SET_TEST
-int
-main (int    argc,
-      char **argv)
-{
-        GError *error;
-        char   *dirname;
-
-        if (argc != 2) {
-                g_print ("Usage: %s TIMEZONE\n", argv[0]);
-                return 1;
-        }
-
-        dirname = g_path_get_dirname (ETC_TIMEZONE);
-        g_mkdir_with_parents (dirname, 0755);
-        g_free (dirname);
-        dirname = g_path_get_dirname (ETC_SYSCONFIG_CLOCK);
-        g_mkdir_with_parents (dirname, 0755);
-        g_free (dirname);
-        dirname = g_path_get_dirname (ETC_CONF_D_CLOCK);
-        g_mkdir_with_parents (dirname, 0755);
-        g_free (dirname);
-
-        error = NULL;
-        if (!system_timezone_set (argv[1], &error)) {
-                g_print ("%s\n", error->message);
-                g_error_free (error);
-                return 1;
-        }
-
-        g_print (TEST_PREFIX" is the test directory where files "
-                 "were written (feel free to populate this directory with "
-                 "files that should be modified by this program).\n");
-
-        return 0;
-}
-#endif /* SYSTZ_SET_TEST */

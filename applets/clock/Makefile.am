@@ -225,6 +225,17 @@ dbus_conf_DATA =
 polkit_DATA =
 endif
 
+noinst_PROGRAMS = test-system-timezone
+
+test_system_timezone_SOURCES = 	\
+	system-timezone.c	\
+	system-timezone.h	\
+	test-system-timezone.c	\
+	$(NULL)
+
+test_system_timezone_LDADD =	\
+	$(CLOCK_LDADD)		\
+	$(NULL)
 
 EXTRA_DIST =						\
 	GNOME_ClockApplet_Factory.server.in.in		\
