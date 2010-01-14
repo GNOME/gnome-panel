@@ -77,13 +77,11 @@ main (int argc, char **argv)
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	gtk_init (&argc, &argv);
-#if 0
-	/* Hrm, not needed? */
+
 	if (!bonobo_init (&argc, argv)) {
 		g_printerr ("Cannot initialize bonobo.\n");
 		return 1;
 	}
-#endif
 
 	error = NULL;
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
