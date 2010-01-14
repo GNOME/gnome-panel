@@ -190,12 +190,27 @@ system_timezone_constructor (GType                  type,
         priv->env_tz = g_strdup (g_getenv ("TZ"));
 
         for (i = 0; i < CHECK_NB; i++) {
-                GFile *file;
+                GFile     *file;
+                GFile     *parent;
+                GFileType  parent_type;
 
                 file = g_file_new_for_path (files_to_check[i]);
-                priv->monitors[i] = g_file_monitor_file (file,
-                                                         G_FILE_MONITOR_NONE,
-                                                         NULL, NULL);
+
+                parent = g_file_get_parent (file);
+                parent_type = g_file_query_file_type (parent, G_FILE_QUERY_INFO_NONE, NULL);
+                g_object_unref (parent);
+
+                /* We don't try to monitor the file if the parent directory
+                 * doesn't exist: this means we're on a system where this file
+                 * is not useful to determine the system timezone.
+                 * Since gio does not monitor file in non-existing directories
+                 * in a clever way (as of gio 2.22, it just polls every other
+                 * seconds to see if the directory now exists), this avoids
+                 * unnecessary wakeups. */
+                if (parent_type == G_FILE_TYPE_DIRECTORY)
+                        priv->monitors[i] = g_file_monitor_file (file,
+                                                                 G_FILE_MONITOR_NONE,
+                                                                 NULL, NULL);
                 g_object_unref (file);
 
                 if (priv->monitors[i])
@@ -227,7 +242,8 @@ system_timezone_finalize (GObject *obj)
         }
 
         for (i = 0; i < CHECK_NB; i++) {
-                g_object_unref (priv->monitors[i]);
+                if (priv->monitors[i])
+                        g_object_unref (priv->monitors[i]);
                 priv->monitors[i] = NULL;
         }
 
