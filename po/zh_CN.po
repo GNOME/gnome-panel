@@ -18,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
 "POT-Creation-Date: 2009-11-27 12:36+0000\n"
-"PO-Revision-Date: 2009-11-28 13:21+0800\n"
+"PO-Revision-Date: 2010-01-24 17:10+0800\n"
 "Last-Translator: 苏运强 <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -697,7 +697,7 @@ msgstr "%l:%M <small>%p</small>"
 #: ../applets/clock/clock-location-tile.c:577
 #, c-format
 msgid "%s, %s"
-msgstr "%s，%s"
+msgstr "%s %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
 #: ../applets/clock/clock-location-tile.c:589
@@ -709,12 +709,12 @@ msgstr "未知"
 #: ../applets/clock/clock-location-tile.c:591
 #, c-format
 msgid "%s, feels like %s"
-msgstr "气温 %s，体感温度 %s"
+msgstr "气温 %s / 体感 %s"
 
 #: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
-msgstr "日出：%s / 日落：%s"
+msgstr "日出 %s / 日落 %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
 #: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
@@ -1848,7 +1848,7 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"面板对象 ID 列表。每个 ID 都标明了一个独立的面板对象 (例如启动器、动作按钮或"
+"面板对象 ID 列表。每个 ID 都标明了一个独立的面板对象(例如启动器、动作按钮或"
 "菜单按钮/菜单栏)。关于这些小程序的设置保存在 /apps/panel/objects/$(id) 之中。"
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
@@ -2725,7 +2725,7 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"如果为 true，则图像将被缩放 (保持图像原本的宽高比) 到面板高度 (水平面板)。"
+"如果为 true，则图像将被缩放(保持图像原本的宽高比)到面板高度(水平面板)。"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
@@ -2749,7 +2749,7 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"如果为 true，则面板将占据整个屏幕的宽度 (如果是垂直面板则是高度)。此时面板只"
+"如果为 true，则面板将占据整个屏幕的宽度(如果是垂直面板则是高度)。此时面板只"
 "能置于屏幕边缘。如果为 false，则面板只具有能够容纳面板中所有小程序、启动器、"
 "按钮的最小空间。"
 
@@ -3086,7 +3086,7 @@ msgstr "指定小程序的初始大小(小、中、大等。)"
 #: ../libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "指定小程序的初始位置 (顶、底、左或右)"
+msgstr "指定小程序的初始位置(顶、底、左或右)"
 
 #: ../libpanel-applet/panel-test-applets.c:61
 msgctxt "Size"
