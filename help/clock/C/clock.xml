@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "2.5.3.1">
-  <!ENTITY manrevision "2.6">
-  <!ENTITY date "June 2009">
+  <!ENTITY manrevision "2.7">
+  <!ENTITY date "January 2010">
   <!ENTITY applet "Clock">
 ]>
 <!-- 
@@ -23,6 +23,7 @@
 	 <title>&applet; Manual</title> 
 	 <copyright> 
 		<year>2009</year> 
+		<year>2010</year>
 		<holder>Paul Cutler</holder> 
 	 </copyright>
 	 <copyright> 
@@ -101,6 +102,14 @@
 	 
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Paul Cutler</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Clock Applet Manual V2.6</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
 			 <para role="author">Paul Cutler</para> 
@@ -313,35 +322,36 @@ The <application>&applet;</application> applet displays the date and time, and w
 <!-- ============= Preferences ============================= -->
 
 <sect1 id="clock-settings"> 
-<title>Preferences</title> 
+<title>Clock Preferences</title> 
 	<para>
-	To configure <application>&applet;</application>, right-click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. </para>
+	To configure the <application>&applet;</application>, right-click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. You will be presented with three tabs to change preferences for <guimenuitem>General</guimenuitem>,  <guimenuitem>Locations</guimenuitem> or <guimenuitem>Weather</guimenuitem>.</para>
 	
-	
+
+<sect2 id="generalprefs">
+	<title>General Preferences</title>	
 	<variablelist> 
 		  <varlistentry> 
-			 <term><guilabel>Clock type</guilabel></term> 
+			 <term><guilabel>Clock Format</guilabel></term> 
 			 <listitem> 
 			 <para>Select one of the following options:</para> 
 			 <itemizedlist>
 			 <listitem>
 			 <para><guilabel>12 hour</guilabel></para>
 			 <para>Display the time in the a.m./p.m. format.</para>
-			 <note><para>This option is not shown if your session language does not use the 12 hour clock.</para></note>
+			 <note><para>This option is not shown if your session language does not use the 12 hour clock.
+			</para></note>
 			 </listitem>
 			 <listitem>
 			 <para><guilabel>24 hour</guilabel></para>
 			 <para>Display the time in the 00.00 to 24.00 format.</para>
 			 </listitem>
-			 <listitem>
-			 <para><guilabel>UNIX time</guilabel></para>
-			 <para>Display the time in seconds elapsed since January 1, 1970. Developers are the primary users of UNIX time. </para>
-			 </listitem>
-			 <listitem>
-			 <para><guilabel>Internet time</guilabel></para>
-			 <para>Display Internet time in the applet. Internet time is the same all over the world, which enables Internet users to synchronize to a common time. The day is divided into 1000 parts called ".beats".</para>
-			 </listitem>
 			 </itemizedlist>
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Show the date</guilabel></term>
+			 <listitem> 
+			 <para>Select this option to display the date in the applet.</para> 
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -351,18 +361,106 @@ The <application>&applet;</application> applet displays the date and time, and w
 			 </listitem> 
 		  </varlistentry>
 		  <varlistentry> 
-			 <term><guilabel>Show date</guilabel></term>
+			 <term><guilabel>Show the weather</guilabel></term>
 			 <listitem> 
-			 <para>Select this option to display the date in the applet.</para> 
+			 <para>Select this option to display the the current weather forecast at your location.
+			The weather will be displayed as an icon for sunny, cloudy, rain or more.</para> 
 			 </listitem> 
 		  </varlistentry>
 		  <varlistentry> 
-			 <term><guilabel>Use UTC</guilabel></term>
+			 <term><guilabel>Show temperature</guilabel></term>
 			 <listitem> 
-			 <para>Select this option to display Universal Coordinated Time, also known as Greenwich Mean Time, in the applet.</para> 
+			 <para>Select this option to display the temperature at your location.</para> 
 			 </listitem> 
 		  </varlistentry>
-	</variablelist>		  
+
+	</variablelist>
+
+</sect2>		
+
+<sect2 id="locationprefs">
+	<title>Location Preferences</title>
+
+	<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Locations</guilabel></term> 
+			 <listitem> 
+			 <para>You can add one or more locations and their local time to be displayed in the Clock.  
+			To add a location:</para> 
+			 <itemizedlist>
+			 <listitem>
+			 <para>Press <guilabel>Add</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para>Type the city, region or country name and as you type a list of options will appear
+			in a drop down box.  Select a match from the pop-up and the <guilabel>Timezone</guilabel>,
+			 <guilabel>Latitude</guilabel>, and <guilabel>Longitude</guilabel> entries will be 
+			automatically filled in.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem> 
+		  </varlistentry>
+	</variablelist>
+
+</sect2>  
 	
+
+<sect2 id="weatherprefs">
+	<title>Weather Preferences</title>
+
+	<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Weather</guilabel></term> 
+			 <listitem> 
+			 <para>You can display the Temperature unit in one of the following options from the drop down box:
+			</para> 
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>F</guilabel> (Fahrenheit)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>C</guilabel> (Celsius)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>K</guilabel> (Kelvin)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Default</guilabel> The default display for your region.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Wind speed unit</guilabel></term> 
+			 <listitem> 
+			 <para>You can display the Temperature unit in one of the following options from the drop down box:
+			</para> 
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>Beaufort scale</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Knots</guilabel></para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>mph</guilabel> (miles per hour)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>km/h</guilabel> (kilometers per hour)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Dm/a</guilabel> (meters per second)</para>
+			</listitem>
+			 <listitem>
+			 <para><guilabel>Default</guilabel> The default display for your region.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem> 
+		  </varlistentry>
+	</variablelist>
+
+
+</sect2>  
 </sect1> 
+
 </article> 
