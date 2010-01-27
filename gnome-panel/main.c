@@ -14,6 +14,8 @@
 
 #include <glib/gi18n.h>
 
+#include <bonobo/bonobo-main.h>
+
 #include <libegg/eggdesktopfile.h>
 #include <libegg/eggsmclient.h>
 
