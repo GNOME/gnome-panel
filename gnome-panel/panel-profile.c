@@ -1831,7 +1831,7 @@ panel_profile_load_and_show_toplevel (GConfClient       *client,
 	}
 
 	if (!loading_queued_applets)
-		panel_applet_load_queued_applets ();
+		panel_applet_load_queued_applets (FALSE);
 }
 
 static void
@@ -2241,7 +2241,7 @@ panel_profile_object_id_list_update (GConfClient       *client,
 	g_slist_free (sublist);
 	g_slist_free (object_ids);
 
-	panel_applet_load_queued_applets ();
+	panel_applet_load_queued_applets (FALSE);
 }
 
 static void
@@ -2538,7 +2538,7 @@ panel_profile_load (void)
 
 	panel_profile_ensure_toplevel_per_screen (client, PANEL_CONFIG_DIR);
 
-	panel_applet_load_queued_applets ();
+	panel_applet_load_queued_applets (TRUE);
 }
 
 static gboolean

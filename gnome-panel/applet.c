@@ -1031,25 +1031,36 @@ panel_applet_compare (const PanelAppletToLoad *a,
 }
 
 void
-panel_applet_load_queued_applets (void)
+panel_applet_load_queued_applets (gboolean initial_load)
 {
-	if (!panel_applets_to_load) {
-		panel_applet_queue_initial_unhide_toplevels (NULL);
-		return;
-        } else {
-		/* Install a timeout to make sure we don't block the unhiding
-		 * because of an applet that doesn't load */
-		panel_applet_unhide_toplevels_timeout =
-			g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
-					       panel_applet_queue_initial_unhide_toplevels,
-					       NULL);
+	if (initial_load) {
+		if (!panel_applets_to_load) {
+			panel_applet_queue_initial_unhide_toplevels (NULL);
+			return;
+		} else {
+			/* Install a timeout to make sure we don't block the
+			 * unhiding because of an applet that doesn't load */
+			panel_applet_unhide_toplevels_timeout =
+				g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
+						       panel_applet_queue_initial_unhide_toplevels,
+						       NULL);
+		}
 	}
 
 	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
 					      (GCompareFunc) panel_applet_compare);
 
 	if ( ! panel_applet_have_load_idle) {
-		g_idle_add (panel_applet_load_idle_handler, NULL);
+		/* on panel startup, we don't care about redraws of the
+		 * toplevels since they are hidden, so we give a higher
+		 * priority to loading of applets */
+		if (initial_load)
+			g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+					 panel_applet_load_idle_handler,
+					 NULL, NULL);
+		else
+			g_idle_add (panel_applet_load_idle_handler, NULL);
+
 		panel_applet_have_load_idle = TRUE;
 	}
 }

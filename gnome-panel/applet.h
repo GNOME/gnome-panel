@@ -70,7 +70,7 @@ void panel_applet_queue_applet_to_load (const char      *id,
 					int              position,
 					gboolean         right_stick,
 					gboolean         locked);
-void panel_applet_load_queued_applets  (void);
+void panel_applet_load_queued_applets  (gboolean initial_load);
 gboolean panel_applet_on_load_queue    (const char *id);
 
 
