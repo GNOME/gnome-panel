@@ -1361,7 +1361,7 @@ weather_tooltip (GtkWidget   *widget,
                         if (!info || !weather_info_is_valid (info))
                                 continue;
 
-                        weather_info_setup_tooltip (info, location, tooltip);
+                        weather_info_setup_tooltip (info, location, tooltip, cd->format);
 
                         return TRUE;
                 }
