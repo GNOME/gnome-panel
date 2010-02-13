@@ -6,21 +6,23 @@
 # Alexandru Szasz <alexxed@gmail.com>, 2007.
 # Adi Roiban https://launchpad.net/~adiroiban, 2008, 2009
 # TODO: "item" e tradus ca "item" și "element"
-# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2009
+# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2009-09-09 00:41+0000\n"
-"PO-Revision-Date: 2009-09-10 23:37+0300\n"
-"Last-Translator: Adi Roiban <adi@roiban.ro>\n"
-"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2010-02-11 13:18+0000\n"
+"PO-Revision-Date: 2010-02-12 21:33+0300\n"
+"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
+"Language-Team: Romanian GNOME Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
+"X-Generator: Virtaal 0.5.2\n"
 "X-Launchpad-Export-Date: 2009-08-02 14:36+0000\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -66,7 +68,7 @@ msgid "_Preferences"
 msgstr "_Preferințe"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3733
+#: ../applets/clock/clock.c:3668
 msgid "Clock"
 msgstr "Ceas"
 
@@ -86,7 +88,12 @@ msgstr "Obține ora și data curentă"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -100,56 +107,61 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
-#: ../applets/clock/clock.c:1616 ../applets/clock/clock-location-tile.c:476
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "Sarcini"
 
-#: ../applets/clock/calendar-window.c:853
-#: ../applets/clock/calendar-window.c:1029
-#: ../applets/clock/calendar-window.c:1665
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
 msgstr "Modifică"
 
-#: ../applets/clock/calendar-window.c:974
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "Toată ziua"
 
-#: ../applets/clock/calendar-window.c:1113
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "Întâlniri"
 
-#: ../applets/clock/calendar-window.c:1138
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "Aniversări"
 
-#: ../applets/clock/calendar-window.c:1163
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "Informații meteo"
 
-#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Locuri"
 
-#: ../applets/clock/calendar-window.c:1964
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "Calendar"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -160,7 +172,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -169,7 +181,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:476
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -177,7 +189,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:483
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -190,7 +202,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:491
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
@@ -199,27 +211,27 @@ msgstr "%2$s, %1$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:674
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A, %e %B (%%s)"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "Efectuați clic pentru a ascunde întâlnirile și sarcinile dumneavoastră"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "Clic pentru a vizualiza întâlniri și sarcini"
 
-#: ../applets/clock/clock.c:711
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "Clic pentru a ascunde calendar lunar"
 
-#: ../applets/clock/clock.c:714
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Clic pentru a vizualiza calendarul lunar"
 
-#: ../applets/clock/clock.c:1449
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "Ceas calculator"
 
@@ -229,7 +241,7 @@ msgstr "Ceas calculator"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1595
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -239,71 +251,71 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1603
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1656
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1687
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "Definește ora sistemului..."
 
-#: ../applets/clock/clock.c:1688
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "Definește ora sistemului"
 
-#: ../applets/clock/clock.c:1703
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "Nu s-a putut schimba ora sistemului"
 
-#: ../applets/clock/clock.c:2766
+#: ../applets/clock/clock.c:2706
 msgid "Custom format"
 msgstr "Format personalizat"
 
-#: ../applets/clock/clock.c:3224
+#: ../applets/clock/clock.c:3160
 msgid "Choose Location"
 msgstr "Alege locația"
 
-#: ../applets/clock/clock.c:3299
+#: ../applets/clock/clock.c:3235
 msgid "Edit Location"
 msgstr "Editează locația"
 
-#: ../applets/clock/clock.c:3445
+#: ../applets/clock/clock.c:3381
 msgid "City Name"
 msgstr "Nume oraș"
 
-#: ../applets/clock/clock.c:3449
+#: ../applets/clock/clock.c:3385
 msgid "City Time Zone"
 msgstr "Fus orar oraș"
 
-#: ../applets/clock/clock.c:3629
+#: ../applets/clock/clock.c:3565
 msgid "24 hour"
 msgstr "24 ore"
 
-#: ../applets/clock/clock.c:3630
+#: ../applets/clock/clock.c:3566
 msgid "UNIX time"
 msgstr "Timp UNIX"
 
-#: ../applets/clock/clock.c:3631
+#: ../applets/clock/clock.c:3567
 msgid "Internet time"
 msgstr "Timp Internet"
 
-#: ../applets/clock/clock.c:3639
+#: ../applets/clock/clock.c:3575
 msgid "Custom _format:"
 msgstr "_Format personalizat:"
 
-#: ../applets/clock/clock.c:3736
+#: ../applets/clock/clock.c:3671
 msgid "The Clock displays the current time and date"
 msgstr "Ceasul arată timpul și data curentă"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3739 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3674 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -520,93 +532,85 @@ msgid "If true, display seconds in time."
 msgstr "La activare, se vor afișa și secundele."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "La activare, arată timpul în zona de timp UTC."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "La activare, extinde lista cu întâlniri în fereastra calendarului."
 
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr ""
-"La activare, extinde lista cu întâlniri în fereastra calendarului."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "La activare, extinde lista cu aniversări în fereastra calendarului."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr ""
-"La activare, extinde lista cu aniversări în fereastra calendarului."
-
-#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "La activare, extinde lista locurilor în fereastra calendarului."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "La activare, extinde lista cu sarcini în fereastra calendarului."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
-"La activare, extinde lista cu informații meteo în fereastra "
-"calendarului."
+"La activare, extinde lista cu informații meteo în fereastra calendarului."
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "La activare, la trecerea mausului peste ceas se va afișa data într-un "
 "indiciu."
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
-msgstr ""
-"La activare, afișează temperatura alături de iconița cu vremea."
+msgstr "La activare, afișează temperatura alături de iconița cu vremea."
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show week numbers in the calendar."
 msgstr "La activare, arată numărul săptămânilor în calendar"
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "List of locations"
 msgstr "Listă de locuri"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
 msgstr "Arată data în ceas"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in tooltip"
 msgstr "Arată data ca indiciu"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show temperature in clock"
 msgstr "Afișează temperatura alături de ceas"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Show time with seconds"
 msgstr "Arată secundele în ceas"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show weather in clock"
 msgstr "Afișează vremea alături de ceas"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Show week numbers in calendar"
 msgstr "Arată numărul săptămânilor în calendar"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Speed unit"
 msgstr "Unitate de viteză"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "Unitate de temperatură"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
 msgstr "Unitatea de măsură folosită pentru a afișa temperaturile."
 
-#: ../applets/clock/clock.schemas.in.h:42
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing wind speed."
 msgstr "Unitatea de măsură folosită pentru a afișa viteza vântului."
 
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:42
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
@@ -615,6 +619,15 @@ msgstr ""
 "Utilizarea acestei chei este considerată învechită începând cu GNOME 2.22 "
 "pentru utilizarea într-o unealtă internă de configurare a ceasului. Schema "
 "este păstrată doar pentru compatibilitate cu versiuni mai vechi."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Utilizarea acestei chei în GNOME 2.28 este descurajată în favoarea "
+"utilizării fusurilor orare. Schema a fost păstrată însă din motive de "
+"compatibilitate."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -717,24 +730,24 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:608
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:620
+#: ../applets/clock/clock-location-tile.c:629
 msgid "Unknown"
 msgstr "Necunoscut"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:622
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, se simte ca %s"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:645
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Răsărit: %s / Apus: %s"
@@ -1335,6 +1348,71 @@ msgstr ""
 "(la aranjarea verticală) utilizează comutatorul spațiilor de lucru. Această "
 "valoare e relevantă doar dacă cheia „display_all_workspaces” este setată."
 
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Fișierul nu este un fișier .desktop valid"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Versiune fișier desktop necunoscută „%s”"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Se pornește %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Aplicația nu acceptă documente în linia de comandă"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Opțiune de lansare necunoscută: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+"Nu se pot trimite URI-uri către documente unei intrări desktop de tip "
+"„Type=Link”"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Nu este un element lansabil"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Dezactivează conexiunea la administratorul sesiunii"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Specifică fișierul ce conține configurația salvată"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FIȘIER"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Specifică ID-ul managerului de sesiune"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Opțiuni ale administrării de sesiune:"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Afișează opțiunile administrării de sesiune"
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
@@ -1345,6 +1423,10 @@ msgstr ""
 #: ../gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "Eroare"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Alege o iconiță"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1381,12 +1463,12 @@ msgstr "_Elimină din panou"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Nu se poate găsi un loc liber"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1627
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "Sertar"
 
@@ -1400,29 +1482,29 @@ msgstr "_Adaugă la sertar..."
 msgid "_Properties"
 msgstr "_Proprietăți"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:31
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
 msgstr "Creează un nou fișier în dosarul dat"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:32
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[FIȘIER...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:110
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
 msgstr "- Modificare fișierele .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Creează un lansator"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:174
-#: ../gnome-panel/gnome-desktop-item-edit.c:197
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
 msgstr "Proprietăți dosar"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Proprietăți lansator"
 
@@ -1434,7 +1516,7 @@ msgstr ""
 "Lansează alte aplicații și furnizează diverse utilitare pentru administrarea "
 "ferestrelor, afișarea orei, etc."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Panou"
 
@@ -1470,37 +1552,37 @@ msgstr "_Lansează"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Cheia %s nu este definită, nu se poate deschide aplicația de pornire\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1407
-#: ../gnome-panel/panel-ditem-editor.c:1441
-#: ../gnome-panel/panel-ditem-editor.c:1472
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Nu s-a putut salva aplicația de start"
 
-#: ../gnome-panel/main.c:43
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Înlocuiește un panou ce rulează curent"
 
-#: ../gnome-panel/menu.c:913
+#: ../gnome-panel/menu.c:914
 msgid "Add this launcher to _panel"
 msgstr "Adaugă acest lansator la _panou"
 
-#: ../gnome-panel/menu.c:920
+#: ../gnome-panel/menu.c:921
 msgid "Add this launcher to _desktop"
 msgstr "Adaugă acest lansator pe _desktop"
 
-#: ../gnome-panel/menu.c:932
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "Într_eg meniul"
 
-#: ../gnome-panel/menu.c:937
+#: ../gnome-panel/menu.c:938
 msgid "Add this as _drawer to panel"
 msgstr "Adaugă ca _sertar la panou"
 
-#: ../gnome-panel/menu.c:944
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "Adaugă ca _meniu la panou"
 
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:605
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>JOC TERMINAT</b> la nivelul %d!"
@@ -1509,42 +1591,42 @@ msgstr "<b>JOC TERMINAT</b> la nivelul %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:612
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:613
 msgid "Press 'q' to quit"
 msgstr "Apăsați „q” pentru a ieși"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:618
 msgid "Paused"
 msgstr "În pauză"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:621 ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:622
 msgid "Press 'p' to unpause"
 msgstr "Apăsați „p” pentru a relua"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:628
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Nivel: %s,  Vieți: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:633
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Stânga/Dreapta pentru a mișca, Spațiu pentru a trage, „p” pentru a face "
 "pauză, „q” pentru a ieși"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1373
 msgid "Killer GEGLs from Outer Space"
 msgstr "GEGLII ucigași din spațiu"
 
@@ -1788,80 +1870,75 @@ msgstr "Panou _nou"
 msgid "A_bout Panels"
 msgstr "De_spre panouri"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Aplicație"
 
-#: ../gnome-panel/panel-ditem-editor.c:119
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Aplicație in terminal"
 
-#: ../gnome-panel/panel-ditem-editor.c:121
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Locație"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Tip:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:632
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Nume:"
 
-#: ../gnome-panel/panel-ditem-editor.c:640
-#: ../gnome-panel/panel-properties-dialog.c:286
-msgid "Browse icons"
-msgstr "Răsfoiește iconițe"
-
-#: ../gnome-panel/panel-ditem-editor.c:658
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:665
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Co_mentariu:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1036
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Alege o aplicație..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1040
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Alege un fișier..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1208
-#: ../gnome-panel/panel-ditem-editor.c:1217
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "Com_andă:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1226
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Locație:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1408
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Numele aplicației de start nu este stabilit."
 
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Nu s-au putut salva proprietățile dosarului"
 
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Numele dosarului nu este definit"
 
-#: ../gnome-panel/panel-ditem-editor.c:1429
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "Comanda aplicației de start nu este stabilită."
 
-#: ../gnome-panel/panel-ditem-editor.c:1432
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Locația aplicației de start nu este stabilită"
 
-#: ../gnome-panel/panel-ditem-editor.c:1509
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Nu se poate afișa documentul de ajutor"
 
@@ -2116,65 +2193,65 @@ msgstr "Aplicații"
 msgid "_Edit Menus"
 msgstr "_Editare meniuri"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
 msgstr "Favorite"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:494 ../gnome-panel/panel.c:534
 #, c-format
 msgid "Open '%s'"
 msgstr "Deschide „%s”"
 
-#: ../gnome-panel/panel-menu-items.c:529
+#: ../gnome-panel/panel-menu-items.c:562
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Nu s-a putut analiza %s pentru schimbări"
 
-#: ../gnome-panel/panel-menu-items.c:572
+#: ../gnome-panel/panel-menu-items.c:605
 #, c-format
 msgid "Rescan %s"
 msgstr "Reanalizare %s"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:642
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nu s-a putut monta %s"
 
-#: ../gnome-panel/panel-menu-items.c:672
+#: ../gnome-panel/panel-menu-items.c:705
 #, c-format
 msgid "Mount %s"
 msgstr "Montează %s"
 
-#: ../gnome-panel/panel-menu-items.c:880
+#: ../gnome-panel/panel-menu-items.c:913
 msgid "Removable Media"
 msgstr "Medii amovibile"
 
-#: ../gnome-panel/panel-menu-items.c:967
+#: ../gnome-panel/panel-menu-items.c:1000
 msgid "Network Places"
 msgstr "Locuri din rețea"
 
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1039
 msgid "Open your personal folder"
 msgstr "Deschide dosar personal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1025
+#: ../gnome-panel/panel-menu-items.c:1058
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: ../gnome-panel/panel-menu-items.c:1026
+#: ../gnome-panel/panel-menu-items.c:1059
 msgid "Open the contents of your desktop in a folder"
 msgstr "Deschide conținutul desktopului într-un dosar"
 
-#: ../gnome-panel/panel-menu-items.c:1417
+#: ../gnome-panel/panel-menu-items.c:1450
 msgid "Places"
 msgstr "Locuri"
 
-#: ../gnome-panel/panel-menu-items.c:1446
+#: ../gnome-panel/panel-menu-items.c:1479
 msgid "System"
 msgstr "Sistem"
 
@@ -2183,7 +2260,7 @@ msgstr "Sistem"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1527
+#: ../gnome-panel/panel-menu-items.c:1560
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "0"
@@ -2192,14 +2269,14 @@ msgstr "0"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1539
+#: ../gnome-panel/panel-menu-items.c:1572
 #, c-format
 msgid "Log Out %s..."
 msgstr "Ieșire din cont %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1543
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -2414,41 +2491,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Eroare la citirea valorii logice GConf „%s”: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Sus"
 
-#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Jos"
 
-#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Stânga"
 
-#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Dreapta"
 
-#: ../gnome-panel/panel-properties-dialog.c:952
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Proprietăți sertar"
 
-#: ../gnome-panel/panel-properties-dialog.c:1067
+#: ../gnome-panel/panel-properties-dialog.c:981
 #: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Nu s-a putut încărca fișierul „%s”: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1073
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "Nu s-a putut afișa dialogul de proprietăți"
 
@@ -2701,67 +2778,67 @@ msgstr "Ascunde panou"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
 msgstr "Panou extins sus"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
 msgstr "Panou centrat sus"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
 msgstr "Panou flotant sus"
 
-#: ../gnome-panel/panel-toplevel.c:1601
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
 msgstr "Panou margine sus"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panou extins jos"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
 msgstr "Panou centrat jos"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
 msgstr "Panou flotant jos"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
 msgstr "Panou margine jos"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
 msgstr "Panou extins stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
 msgstr "Panou centrat stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
 msgstr "Panou flotant stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
 msgstr "Panou margine stânga"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
 msgstr "Panou extins dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
 msgstr "Panou centrat dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
 msgstr "Panou flotant dreapta"
 
-#: ../gnome-panel/panel-toplevel.c:1622
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
 msgstr "Panou margine dreapta"
 
@@ -3147,31 +3224,31 @@ msgstr "Coordonata Y a acestui panou"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Coordonata Y a panoului, începând din partea de jos a ecranului"
 
-#: ../gnome-panel/panel-util.c:323
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Iconița „%s” nu a fost găsită"
 
-#: ../gnome-panel/panel-util.c:426
+#: ../gnome-panel/panel-util.c:409
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Nu se poate executa „%s”"
 
-#: ../gnome-panel/panel-util.c:662
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "fișier"
 
-#: ../gnome-panel/panel-util.c:839
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
 msgstr "Dosar Acasă"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:851
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "Sistem de fișiere"
 
-#: ../gnome-panel/panel-util.c:998
+#: ../gnome-panel/panel-util.c:985
 msgid "Search"
 msgstr "Căută"
 
@@ -3180,7 +3257,7 @@ msgstr "Căută"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1044
+#: ../gnome-panel/panel-util.c:1031
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3300,3 +3377,8 @@ msgstr "Mini_aplicație:"
 msgid "_Prefs Dir:"
 msgstr "Dosar _preferințe:"
 
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr "La activare, arată timpul în zona de timp UTC."
+
+#~ msgid "Browse icons"
+#~ msgstr "Răsfoiește iconițe"
