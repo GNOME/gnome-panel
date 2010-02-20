@@ -11,6 +11,7 @@ INCLUDES =							\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DBUILDERDIR=\""$(uidir)"\"				\
+	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"                   \
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DLIBDIR=\""$(libdir)"\"				\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
@@ -137,8 +138,8 @@ gnome_clock_applet_mechanism_LDADD =	\
 	$(POLKIT_LIBS)
 
 if CLOCK_INPROCESS
-APPLET_TYPE     = shlib
-APPLET_LOCATION = $(pkglibdir)/libclock-applet.so
+APPLET_IN_PROCESS = true
+APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
 
 clock_appletlibdir = $(pkglibdir)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
@@ -150,7 +151,7 @@ $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
 
 libexec_PROGRAMS = 
 else
-APPLET_TYPE     = exe
+APPLET_IN_PROCESS = false
 APPLET_LOCATION = $(libexecdir)/clock-applet
 
 libexec_PROGRAMS = clock-applet 
@@ -170,18 +171,29 @@ ui_DATA		= clock.ui
 xmluidir 	= $(datadir)/gnome-2.0/ui
 xmlui_DATA	= GNOME_ClockApplet.xml
 
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_ClockApplet_Factory.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
+appletdir       = $(datadir)/gnome-panel/applets
+applet_in_files = GNOME_ClockApplet.panel-applet.in
+applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
-$(server_in_files): $(server_in_files).in Makefile
+$(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
-	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
-	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
-	    $< > $@
+            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+            -e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
+            -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+            $< > $@
 
-@INTLTOOL_SERVER_RULE@
+@PANEL_INTLTOOL_PANEL_APPLET_RULE@
+
+if !CLOCK_INPROCESS
+servicedir       = $(datadir)/dbus-1/services
+service_in_files = org.gnome.panel.applet.ClockAppletFactory.service.in
+service_DATA     = $(service_in_files:.service.in=.service)
+
+org.gnome.panel.applet.ClockAppletFactory.service: $(service_in_files)
+	$(AM_V_GEN)sed \
+            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+            $< > $@
+endif
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = clock.schemas.in
@@ -238,11 +250,12 @@ test_system_timezone_LDADD =	\
 	$(NULL)
 
 EXTRA_DIST =						\
-	GNOME_ClockApplet_Factory.server.in.in		\
+	GNOME_ClockApplet.panel-applet.in.in		\
 	$(schemas_in_files)				\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\
 	clock-marshallers.list				\
+	$(service_in_files)				\
 	$(dbus_services_in_files)			\
 	org.gnome.ClockApplet.Mechanism.conf		\
 	$(polkit_in_files)				\
@@ -250,8 +263,9 @@ EXTRA_DIST =						\
 
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
-	$(server_in_files)	\
-	$(server_DATA)		\
+	$(applet_DATA) 		\
+	$(applet_DATA).in	\
+	$(service_DATA)		\
 	$(schemas_DATA)		\
 	$(polkit_DATA)		\
 	$(dbus_services_DATA)

@@ -14,8 +14,6 @@
 
 #include <glib/gi18n.h>
 
-#include <bonobo/bonobo-main.h>
-
 #include <libegg/eggdesktopfile.h>
 #include <libegg/eggsmclient.h>
 
@@ -32,6 +30,7 @@
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
+#include "panel-applets-manager.h"
 #include "xstuff.h"
 
 #include "nothing.cP"
@@ -80,11 +79,6 @@ main (int argc, char **argv)
 
 	gtk_init (&argc, &argv);
 
-	if (!bonobo_init (&argc, argv)) {
-		g_printerr ("Cannot initialize bonobo.\n");
-		return 1;
-	}
-
 	error = NULL;
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
 		g_printerr ("%s\n", error->message);
@@ -106,6 +100,7 @@ main (int argc, char **argv)
 		return -1;
 	}
 
+	panel_applets_manager_init ();
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
@@ -137,6 +132,7 @@ main (int argc, char **argv)
 	gtk_main ();
 
 	panel_lockdown_finalize ();
+	panel_applets_manager_shutdown ();
 
 	gconf_client_remove_dir (panel_gconf_get_client (),
 				 "/desktop/gnome/interface",

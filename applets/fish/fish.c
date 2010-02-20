@@ -408,9 +408,8 @@ chooser_preview_update (GtkFileChooser *file_chooser,
 }
 
 static void 
-display_preferences_dialog (BonoboUIComponent *uic,
-			    FishApplet        *fish,
-			    const char        *verbname)
+display_preferences_dialog (GtkAction  *action,
+			    FishApplet *fish)
 {
 	GtkBuilder    *builder;
 	GError        *error;
@@ -570,17 +569,15 @@ display_preferences_dialog (BonoboUIComponent *uic,
 }
 
 static void
-display_help_dialog (BonoboUIComponent *uic,
-		     FishApplet        *fish,
-		     const char        *verbname)
+display_help_dialog (GtkAction  *action,
+		     FishApplet *fish)
 {
 	show_help (fish, NULL);
 }
 
 static void
-display_about_dialog (BonoboUIComponent *uic,
-		      FishApplet        *fish,
-		      const char        *verbname)
+display_about_dialog (GtkAction  *action,
+		      FishApplet *fish)
 {
 	const char *author_format = _("%s the Fish");
 	const char *about_format = _("%s has no use what-so-ever. "
@@ -1804,12 +1801,16 @@ setup_fish_widget (FishApplet *fish)
 	gtk_widget_show_all (widget);
 }
 
-static const BonoboUIVerb fish_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("FishPreferences", display_preferences_dialog),
-	BONOBO_UI_UNSAFE_VERB ("FishHelp",        display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("FishAbout",       display_about_dialog),
-
-        BONOBO_UI_VERB_END
+static const GtkActionEntry fish_menu_verbs [] = {
+	{ "FishPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+	  NULL, NULL,
+	  G_CALLBACK (display_preferences_dialog) },
+	{ "FishHelp", GTK_STOCK_HELP, N_("_Help"),
+	  NULL, NULL,
+	  G_CALLBACK (display_help_dialog) },
+	{ "FishAbout", GTK_STOCK_ABOUT, N_("_About"),
+	  NULL, NULL,
+	  G_CALLBACK (display_about_dialog) }
 };
 
 static void
@@ -1831,8 +1832,10 @@ fish_migrate_to_210 (FishApplet *fish)
 static gboolean
 fish_applet_fill (FishApplet *fish)
 {
-	PanelApplet *applet = (PanelApplet *) fish;
-	GError      *error = NULL;
+	PanelApplet    *applet = (PanelApplet *) fish;
+	GtkActionGroup *action_group;
+	gchar          *ui_path;
+	GError         *error = NULL;
 
 	fish->orientation = panel_applet_get_orient (applet);
 
@@ -1896,20 +1899,23 @@ fish_applet_fill (FishApplet *fish)
 		fish->rotate = FALSE; /* Fallback */
 	}
 
-	panel_applet_setup_menu_from_file (
-		applet, NULL, "GNOME_FishApplet.xml",
-		NULL, fish_menu_verbs, fish);
+	action_group = gtk_action_group_new ("Fish Applet Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group,
+				      fish_menu_verbs,
+				      G_N_ELEMENTS (fish_menu_verbs),
+				      fish);
+	ui_path = g_build_filename (FISH_MENU_UI_DIR, "GNOME_FishApplet.xml", NULL);
+	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
+	g_free (ui_path);
 
 	if (panel_applet_get_locked_down (applet)) {
-		BonoboUIComponent *popup_component;
+		GtkAction *action;
 
-		popup_component = panel_applet_get_popup_component (applet);
-
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/FishPreferences",
-					      "hidden", "1",
-					      NULL);
+		action = gtk_action_group_get_action (action_group, "FishPreferences");
+		gtk_action_set_visible (action, FALSE);
 	}
+	g_object_unref (action_group);
 
 #ifndef FISH_INPROCESS
 	gtk_window_set_default_icon_name (FISH_ICON);
@@ -1926,7 +1932,7 @@ fishy_factory (PanelApplet *applet,
 {
 	gboolean retval = FALSE;
 
-	if (!strcmp (iid, "OAFIID:GNOME_FishApplet"))
+	if (!strcmp (iid, "FishApplet"))
 		retval = fish_applet_fill (FISH_APPLET (applet));
 
 	return retval;
@@ -2098,17 +2104,16 @@ fish_applet_get_type (void)
 }
 
 #ifdef FISH_INPROCESS
-PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
-				   fish_applet_get_type (),
-				   "That-stupid-fish",
-				   fishy_factory,
-				   NULL)
+PANEL_APPLET_IN_PROCESS_FACTORY ("FishAppletFactory",
+				 fish_applet_get_type (),
+				 "That-stupid-fish",
+				 fishy_factory,
+				 NULL)
 
 #else
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
-			     fish_applet_get_type (),
-			     "That-stupid-fish",
-			     "0",
-			     fishy_factory,
-			     NULL)
+PANEL_APPLET_OUT_PROCESS_FACTORY ("FishAppletFactory",
+				  fish_applet_get_type (),
+				  "That-stupid-fish",
+				  fishy_factory,
+				  NULL)
 #endif

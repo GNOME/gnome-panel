@@ -25,8 +25,6 @@
 #include <config.h>
 #include <string.h>
 
-#include <libbonobo.h>
-
 #include <glib/gi18n.h>
 
 #include <gmenu-tree.h>
@@ -37,6 +35,7 @@
 #include "launcher.h"
 #include "panel.h"
 #include "drawer.h"
+#include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
@@ -182,16 +181,6 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  "DRAWER:NEW",
 	  TRUE }
 };
-
-static const char applet_requirements [] =
-	"has_all (repo_ids, ['IDL:Bonobo/Control:1.0',"
-	"		     'IDL:GNOME/Vertigo/PanelAppletShell:1.0']) && "
-	"defined (panel:icon)";
-
-static char *applet_sort_criteria [] = {
-	"name",
-	NULL
-	};
 
 enum {
 	COLUMN_ICON,
@@ -395,56 +384,23 @@ panel_addto_setup_internal_applet_drag (GtkTreeView *tree_view,
 static GSList *
 panel_addto_query_applets (GSList *list)
 {
-	Bonobo_ServerInfoList *applet_list;
-	CORBA_Environment   env;
-	const char * const *langs;
-	GSList             *langs_gslist;
-	int                 i;
+	GList *applet_list, *l;
 
-	CORBA_exception_init (&env);
+	applet_list = panel_applets_manager_get_applets ();
 
-	applet_list = bonobo_activation_query (applet_requirements,
-					       applet_sort_criteria,
-					       &env);
-	if (BONOBO_EX (&env)) {
-		g_warning (_("query returned exception %s\n"),
-			   BONOBO_EX_REPOID (&env));
-
-		CORBA_exception_free (&env);
-		CORBA_free (applet_list);
-
-		return NULL;
-	}
-
-	CORBA_exception_free (&env);
-
-	langs = g_get_language_names ();
-
-	langs_gslist = NULL;
-	for (i = 0; langs[i]; i++)
-		langs_gslist = g_slist_prepend (langs_gslist, (char *) langs[i]);
-
-	langs_gslist = g_slist_reverse (langs_gslist);
-
-	for (i = 0; i < applet_list->_length; i++) {
-		Bonobo_ServerInfo *info;
-		const char *name, *description, *icon;
+	for (l = applet_list; l; l = g_list_next (l)) {
+		PanelAppletInfo *info;
+		const char *iid, *name, *description, *icon;
 		PanelAddtoItemInfo *applet;
 
-		info = &applet_list->_buffer[i];
+		info = (PanelAppletInfo *)l->data;
 
-		name = bonobo_server_info_prop_lookup (info,
-						       "name",
-						       langs_gslist);
-		description = bonobo_server_info_prop_lookup (info,
-							      "description",
-							      langs_gslist);
-		icon = bonobo_server_info_prop_lookup (info,
-						       "panel:icon",
-						       NULL);
+		iid = panel_applet_info_get_iid (info);
+		name = panel_applet_info_get_name (info);
+		description = panel_applet_info_get_description (info);
+		icon = panel_applet_info_get_icon (info);
 
-		if (!name ||
-		    panel_lockdown_is_applet_disabled (info->iid)) {
+		if (!name || panel_lockdown_is_applet_disabled (iid)) {
 			continue;
 		}
 
@@ -453,14 +409,13 @@ panel_addto_query_applets (GSList *list)
 		applet->name = g_strdup (name);
 		applet->description = g_strdup (description);
 		applet->icon = g_strdup (icon);
-		applet->iid = g_strdup (info->iid);
+		applet->iid = g_strdup (iid);
 		applet->static_data = FALSE;
 
 		list = g_slist_prepend (list, applet);
 	}
 
-	g_slist_free (langs_gslist);
-	CORBA_free (applet_list);
+	g_list_free (applet_list);
 
 	return list;
 }

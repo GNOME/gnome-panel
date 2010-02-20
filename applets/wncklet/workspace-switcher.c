@@ -79,15 +79,12 @@ typedef struct {
 	guint listeners [3];
 } PagerData;
 
-static void display_properties_dialog (BonoboUIComponent *uic,
-				       PagerData         *pager,
-				       const gchar       *verbname);
-static void display_help_dialog       (BonoboUIComponent *uic,
-				       PagerData         *pager,
-				       const gchar       *verbname);
-static void display_about_dialog      (BonoboUIComponent *uic,
-				       PagerData         *pager,
-				       const gchar       *verbname);
+static void display_properties_dialog (GtkAction *action,
+				       PagerData *pager);
+static void display_help_dialog       (GtkAction *action,
+                                       PagerData *pager);
+static void display_about_dialog      (GtkAction *action,
+                                       PagerData *pager);
 
 static void
 pager_update (PagerData *pager)
@@ -338,11 +335,16 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 	g_free (pager);
 }
 
-static const BonoboUIVerb pager_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("PagerPreferences", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("PagerHelp",        display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("PagerAbout",       display_about_dialog),
-        BONOBO_UI_VERB_END
+static const GtkActionEntry pager_menu_actions [] = {
+        { "PagerPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+          NULL, NULL,
+          G_CALLBACK (display_properties_dialog) },
+        { "PagerHelp", GTK_STOCK_HELP, N_("_Help"),
+          NULL, NULL,
+          G_CALLBACK (display_help_dialog) },
+        { "PagerAbout", GTK_STOCK_ABOUT, N_("_About"),
+          NULL, NULL,
+          G_CALLBACK (display_about_dialog) }
 };
 
 static void
@@ -469,6 +471,8 @@ gboolean
 workspace_switcher_applet_fill (PanelApplet *applet)
 {
 	PagerData *pager;
+        GtkActionGroup *action_group;
+        gchar *ui_path;
 	GError *error;
 	gboolean display_names;
 	
@@ -546,8 +550,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	 * environments. See wnck_pager_set_orientation() doc */
 	pager_update (pager);
 
-	gtk_widget_show (pager->applet);
-
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "realize",
 			  G_CALLBACK (applet_realized),
@@ -568,45 +570,45 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  pager);
+        gtk_widget_show (pager->applet);
 
 	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
 					    GTK_WIDGET (pager->applet));
-	
+
+        action_group = gtk_action_group_new ("WorkspaceSwitcher Applet Actions");
+        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+        gtk_action_group_add_actions (action_group,
+                                      pager_menu_actions,
+                                      G_N_ELEMENTS (pager_menu_actions),
+                                      pager);
+        ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WorkspaceSwitcherApplet.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
-					   NULL,
-					   "GNOME_WorkspaceSwitcherApplet.xml",
-					   NULL,
-					   pager_menu_verbs,
-					   pager);
+					   ui_path, action_group);
+        g_free (ui_path);
 
 	if (panel_applet_get_locked_down (PANEL_APPLET (pager->applet))) {
-		BonoboUIComponent *popup_component;
+                GtkAction *action;
 
-		popup_component = panel_applet_get_popup_component (PANEL_APPLET (pager->applet));
-
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/PagerPreferences",
-					      "hidden", "1",
-					      NULL);
+                action = gtk_action_group_get_action (action_group, "PagerPreferences");
+                gtk_action_set_visible (action, FALSE);
 	}
+        g_object_unref (action_group);
 
 	return TRUE;
 }
 
 
 static void
-display_help_dialog (BonoboUIComponent *uic,
-		     PagerData         *pager,
-		     const gchar       *verbname)
+display_help_dialog (GtkAction *action,
+		     PagerData *pager)
 {
 	wncklet_display_help (pager->applet, "user-guide",
 			      "overview-workspaces", WORKSPACE_SWITCHER_ICON);
 }
 
 static void
-display_about_dialog (BonoboUIComponent *uic,
-		      PagerData         *pager,
-		      const gchar       *verbname)
+display_about_dialog (GtkAction *action,
+		      PagerData *pager)
 {
 	static const gchar *authors[] =
 	{
@@ -1035,9 +1037,8 @@ setup_dialog (GtkBuilder *builder,
 }
 
 static void 
-display_properties_dialog (BonoboUIComponent *uic,
-			   PagerData         *pager,
-			   const gchar       *verbname)
+display_properties_dialog (GtkAction *action,
+			   PagerData *pager)
 {
 	if (pager->properties_dialog == NULL) {
 		GtkBuilder *builder;

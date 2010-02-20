@@ -5,6 +5,7 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\"			\
 	-DFISH_BUILDERDIR=\""$(uidir)"\"			\
+	-DFISH_MENU_UI_DIR=\""$(xmluidir)"\" 			\
 	$(WARN_CFLAGS)						\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(FISH_CFLAGS)						\
@@ -18,8 +19,8 @@ FISH_LDADD =						\
 	$(LIBPANEL_APPLET_LIBS)
 
 if FISH_INPROCESS
-APPLET_TYPE     = shlib
-APPLET_LOCATION = $(pkglibdir)/libfish-applet-2.so
+APPLET_IN_PROCESS = true
+APPLET_LOCATION   = $(pkglibdir)/libfish-applet-2.so
 
 fish_applet_2libdir = $(pkglibdir)
 fish_applet_2lib_LTLIBRARIES = libfish-applet-2.la
@@ -28,7 +29,7 @@ libfish_applet_2_la_LIBADD = $(FISH_LDADD)
 libfish_applet_2_la_LDFLAGS = -module -avoid-version
 libfish_applet_2_la_CFLAGS =
 else
-APPLET_TYPE     = exe
+APPLET_IN_PROCESS = false
 APPLET_LOCATION = $(libexecdir)/fish-applet-2
 
 libexec_PROGRAMS = fish-applet-2
@@ -47,7 +48,8 @@ FISH_BITMAPS =		\
 EXTRA_DIST =					\
 	wanda.svg				\
 	$(FISH_BITMAPS)				\
-	GNOME_FishApplet_Factory.server.in.in	\
+	GNOME_FishApplet.panel-applet.in.in	\
+	$(service_in_files)			\
 	fish.schemas.in				\
 	$(ui_DATA)				\
 	$(xmlui_DATA)
@@ -61,20 +63,31 @@ fishbitmaps_DATA = $(FISH_BITMAPS)
 xmluidir	= $(datadir)/gnome-2.0/ui
 xmlui_DATA	= GNOME_FishApplet.xml
 
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_FishApplet_Factory.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
+CLEANFILES = $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
-$(server_in_files): $(server_in_files).in Makefile
+appletdir       = $(datadir)/gnome-panel/applets
+applet_in_files = GNOME_FishApplet.panel-applet.in
+applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
+
+$(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
 	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
+	    -e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
 	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 	    $< > $@
 
-CLEANFILES = $(server_DATA) $(server_DATA).in $(schemas_DATA)
+@PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
-@INTLTOOL_SERVER_RULE@
+if !FISH_INPROCESS
+servicedir       = $(datadir)/dbus-1/services
+service_in_files = org.gnome.panel.applet.FishAppletFactory.service.in
+service_DATA     = $(service_in_files:.service.in=.service)
+
+org.gnome.panel.applet.FishAppletFactory.service: $(service_in_files)
+	$(AM_V_GEN)sed \
+	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+	    $< > $@
+endif
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = fish.schemas.in

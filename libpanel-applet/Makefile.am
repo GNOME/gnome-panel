@@ -3,6 +3,7 @@ INCLUDES =							\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
 	-DPANEL_APPLET_BUILDERDIR=\""$(uidir)"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DEGG_DBUS_I_KNOW_API_IS_SUBJECT_TO_CHANGE		\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(WARN_CFLAGS)
@@ -10,22 +11,18 @@ INCLUDES =							\
 lib_LTLIBRARIES = libpanel-applet-2.la
 
 libpanel_applet_2_la_SOURCES =		\
+	$(BUILT_SOURCES)		\
 	panel-applet.h			\
 	panel-applet.c			\
+	panel-applet-factory.h		\
+	panel-applet-factory.c		\
 	panel-applet-gconf.c		\
-	panel-applet-gconf.h		\
-	panel-applet-shell.c		\
-	panel-applet-shell.h		\
-	panel-applet-private.h		\
-	panel-applet-marshal.c		\
-	panel-applet-marshal.h		\
-	panel-applet-enums.c		\
-	panel-applet-enums.h		\
-	$(CORBA_SRCLIST)
+	panel-applet-gconf.h
 
 libpanel_applet_2_la_LDFLAGS = \
-	-version-info $(LIB_PANEL_APPLET_LT_VERSION) \
+	-version-info $(LIB_PANEL_APPLET_LT_VERSION) 	\
 	-no-undefined
+
 libpanel_applet_2_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(X_LIBS)
@@ -35,43 +32,72 @@ libpanel_appletincludedir = $(includedir)/panel-2.0
 libpanel_appletinclude_HEADERS =	\
 	panel-applet.h			\
 	panel-applet-gconf.h		\
-	panel-applet-enums.h		\
-	GNOME_Panel.h
+	panel-applet-enums.h
 
-CORBA_SRCLIST =			\
-	GNOME_Panel-stubs.c	\
-	GNOME_Panel-skels.c	\
-	GNOME_Panel-common.c	\
-	GNOME_Panel.h
+libpanel_applet_dbus_xml = 			\
+	$(top_srcdir)/data/panel-applet.xml	\
+	$(top_srcdir)/libpanel-applet/panel-applet-factory.xml
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
-	$(AM_V_GEN)$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
+libpanel-applet-built-sources.stamp: $(libpanel_applet_dbus_xml)
+	eggdbus-binding-tool									\
+		--namespace "_Panel" 								\
+		--dbus-namespace "org.gnome.panel.applet"					\
+		--introspection-xml $(top_srcdir)/libpanel-applet/panel-applet-factory.xml	\
+		--introspection-xml $(top_srcdir)/data/panel-applet.xml				\
+		--stamp-file libpanel-applet-built-sources.stamp
 
-noinst_PROGRAMS = test-bonobo-applet
+EGGDBUS_SRCLIST = 		\
+	_panelappletfactory.h	\
+	_panelappletfactory.c	\
+	_panelbindingstypes.h	\
+	_panelbindings.h	\
+	_panelbindings.c	\
+	_panelbindingsmarshal.h	\
+	_panelbindingsmarshal.c	\
+	_panelapplet.h		\
+	_panelapplet.c		\
+	_panelappletorient.h	\
+	_panelappletorient.c
+
+noinst_PROGRAMS = test-dbus-applet
 
 bin_PROGRAMS = panel-test-applets
+
+panel_test_applets_CFLAGS = \
+	-I$(top_srcdir)/gnome-panel	\
+	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"
+
+panel_test_applets_SOURCES = \
+	$(top_srcdir)/gnome-panel/panel-applet-container.h 	\
+	$(top_srcdir)/gnome-panel/panel-applet-container.c 	\
+	$(top_srcdir)/gnome-panel/panel-applets-manager.h 	\
+	$(top_srcdir)/gnome-panel/panel-applets-manager.c	\
+	panel-test-applets.c
 
 panel_test_applets_LDFLAGS = -export-dynamic
 panel_test_applets_LDADD   =		\
 	$(LIBPANEL_APPLET_LIBS)		\
 	libpanel-applet-2.la
 
-test_bonobo_applet_LDADD =		\
+test_dbus_applet_LDADD =		\
 	$(LIBPANEL_APPLET_LIBS)		\
 	libpanel-applet-2.la
 
 BUILT_SOURCES = \
-	$(CORBA_SRCLIST)	\
-	panel-applet-enums.c	\
-	panel-applet-enums.h	\
-	panel-applet-marshal.c	\
+	libpanel-applet-built-sources.stamp	\
+	$(EGGDBUS_SRCLIST)			\
+	panel-applet-enums.c			\
+	panel-applet-enums.h			\
+	panel-applet-marshal.c			\
 	panel-applet-marshal.h
 
-$(libpanel_applet_2_la_OBJECTS) $(test_bonobo_applet_OBJECTS): $(BUILT_SOURCES)
+$(libpanel_applet_2_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 EXTRA_DIST =					\
-	GNOME_Panel_TestApplet.server.in	\
+	GNOME_Panel_TestApplet.panel-applet.in	\
+	panel-applet-factory.xml		\
 	panel-applet-marshal.list		\
+	_panelbindingsmarshal.list		\
 	libpanelapplet-2.0.pc.in		\
 	libpanelapplet-2.0-uninstalled.pc.in	\
 	panel-test-applets.ui
@@ -121,11 +147,11 @@ pkgconfig_DATA = libpanelapplet-2.0.pc
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_Panel_TestApplet.server.in
-noinst_DATA     = $(server_in_files:.server.in=.server)
+appletdir       = $(datadir)/gnome-panel/applets
+applet_in_files = GNOME_Panel_TestApplet.panel-applet.in
+noinst_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
-@INTLTOOL_SERVER_RULE@
+@PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)

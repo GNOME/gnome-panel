@@ -64,9 +64,8 @@ get_orientation_from_applet (PanelApplet *applet)
 }
 
 static void
-help_cb (BonoboUIComponent *uic,
-	 AppletData        *data,	  
-	 const gchar       *verbname)   
+help_cb (GtkAction  *action,
+	 AppletData *data)
 {
   GError *error = NULL;
   char   *uri;
@@ -119,9 +118,8 @@ help_cb (BonoboUIComponent *uic,
 }
 
 static void
-about_cb (BonoboUIComponent *uic,
-          AppletData        *data,
-          const gchar       *verbname)
+about_cb (GtkAction  *action,
+          AppletData *data)
 {
   GdkScreen    *screen;
 
@@ -169,10 +167,13 @@ about_cb (BonoboUIComponent *uic,
   gtk_window_present (GTK_WINDOW (data->about_dialog));
 }
 
-static const BonoboUIVerb menu_verbs [] = {
-  BONOBO_UI_UNSAFE_VERB ("SystemTrayHelp",       help_cb),
-  BONOBO_UI_UNSAFE_VERB ("SystemTrayAbout",      about_cb),
-  BONOBO_UI_VERB_END
+static const GtkActionEntry menu_actions [] = {
+	{ "SystemTrayHelp", GTK_STOCK_HELP, N_("_Help"),
+	  NULL, NULL,
+	  G_CALLBACK (help_cb) },
+	{ "SystemTrayAbout", GTK_STOCK_ABOUT, N_("_About"),
+	  NULL, NULL,
+	  G_CALLBACK (about_cb) }
 };
 
 static void
@@ -236,12 +237,14 @@ applet_factory (PanelApplet *applet,
                 const gchar *iid,
                 gpointer     user_data)
 {
-  NaTray     *tray;
-  AppletData *data;
-  AtkObject  *atko;
+  NaTray         *tray;
+  AppletData     *data;
+  GtkActionGroup *action_group;
+  gchar          *ui_path;
+  AtkObject      *atko;
 
-  if (!(strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") == 0 ||
-        strcmp (iid, "OAFIID:GNOME_SystemTrayApplet") == 0))
+  if (!(strcmp (iid, "NotificationArea") == 0 ||
+        strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
 
   tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
@@ -280,27 +283,31 @@ applet_factory (PanelApplet *applet,
 #endif
   gtk_widget_show_all (GTK_WIDGET (applet));
 
+  action_group = gtk_action_group_new ("ClockApplet Menu Actions");
+  gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+  gtk_action_group_add_actions (action_group,
+				menu_actions,
+				G_N_ELEMENTS (menu_actions),
+				data);
+  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "GNOME_NotificationAreaApplet.xml", NULL);
   panel_applet_setup_menu_from_file (applet,
-  			             NULL,
-                                     "GNOME_NotificationAreaApplet.xml",
-                                     NULL,
-                                     menu_verbs,
-                                     data);
-  
+				     ui_path, action_group);
+  g_free (ui_path);
+  g_object_unref (action_group);
+
   return TRUE;
 }
 
 #ifdef NOTIFICATION_AREA_INPROCESS
-PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
-				   PANEL_TYPE_APPLET,
-				   "NotificationArea",
-				   applet_factory,
-				   NULL)
+PANEL_APPLET_IN_PROCESS_FACTORY ("NotificationAreaAppletFactory",
+				 PANEL_TYPE_APPLET,
+				 "NotificationArea",
+				 applet_factory,
+				 NULL)
 #else
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
-			     PANEL_TYPE_APPLET,
-                             "NotificationArea",
-                             "0",
-                             applet_factory,
-                             NULL)
+PANEL_APPLET_OUT_PROCESS_FACTORY ("NotificationAreaAppletFactory",
+				  PANEL_TYPE_APPLET,
+				  "NotificationArea",
+				  applet_factory,
+				  NULL)
 #endif

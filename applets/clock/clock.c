@@ -211,19 +211,16 @@ static float get_itime    (time_t current_time);
 static void set_atk_name_description (GtkWidget *widget,
                                       const char *name,
                                       const char *desc);
-static void verb_display_properties_dialog (BonoboUIComponent *uic,
-                                            ClockData         *cd,
-                                            const gchar       *verbname);
+static void verb_display_properties_dialog (GtkAction  *action,
+                                            ClockData  *cd);
 
-static void display_properties_dialog (ClockData         *cd,
-                                       gboolean           start_in_locations_page);
-static void display_help_dialog       (BonoboUIComponent *uic,
-				       ClockData         *cd,
-				       const gchar       *verbname);
-static void display_about_dialog      (BonoboUIComponent *uic,
-				       ClockData         *cd,
-				       const gchar       *verbname);
-static void position_calendar_popup   (ClockData         *cd);
+static void display_properties_dialog (ClockData  *cd,
+                                       gboolean    start_in_locations_page);
+static void display_help_dialog       (GtkAction  *action,
+				       ClockData  *cd);
+static void display_about_dialog      (GtkAction  *action,
+				       ClockData  *cd);
+static void position_calendar_popup   (ClockData  *cd);
 static void update_orient (ClockData *cd);
 static void applet_change_orient (PanelApplet       *applet,
 				  PanelAppletOrient  orient,
@@ -1532,9 +1529,8 @@ panel_button_change_pixel_size (GtkWidget     *widget,
 }
 
 static void
-copy_time (BonoboUIComponent *uic,
-	   ClockData         *cd,
-	   const gchar       *verbname)
+copy_time (GtkAction *action,
+	   ClockData *cd)
 {
 	char string[256];
 	char *utf8;
@@ -1606,9 +1602,8 @@ copy_time (BonoboUIComponent *uic,
 }
 
 static void
-copy_date (BonoboUIComponent *uic,
-	   ClockData         *cd,
-	   const gchar       *verbname)
+copy_date (GtkAction *action,
+	   ClockData *cd)
 {
 	struct tm *tm;
 	char string[256];
@@ -1856,22 +1851,32 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 }
 
 static void
-config_date (BonoboUIComponent *uic,
-             ClockData         *cd,
-             const char        *verbname)
+config_date (GtkAction *action,
+             ClockData *cd)
 {
 	run_time_settings (NULL, cd);
 }
 
 /* current timestamp */
-static const BonoboUIVerb clock_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("ClockPreferences", verb_display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockHelp",        display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockAbout",       display_about_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockCopyTime",    copy_time),
-	BONOBO_UI_UNSAFE_VERB ("ClockCopyDate",    copy_date),
-        BONOBO_UI_UNSAFE_VERB ("ClockConfig",      config_date),
-	BONOBO_UI_VERB_END
+static const GtkActionEntry clock_menu_actions [] = {
+        { "ClockPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+          NULL, NULL,
+          G_CALLBACK (verb_display_properties_dialog) },
+        { "ClockHelp", GTK_STOCK_HELP, N_("_Help"),
+          NULL, NULL,
+          G_CALLBACK (display_help_dialog) },
+        { "ClockAbout", GTK_STOCK_ABOUT, N_("_About"),
+          NULL, NULL,
+          G_CALLBACK (display_about_dialog) },
+        { "ClockCopyTime", GTK_STOCK_COPY, N_("Copy _Time"),
+          NULL, NULL,
+          G_CALLBACK (copy_time) },
+        { "ClockCopyDate", GTK_STOCK_COPY, N_("Copy _Date"),
+          NULL, NULL,
+          G_CALLBACK (copy_date) },
+        { "ClockConfig", GTK_STOCK_PREFERENCES, N_("Ad_just Date & Time"),
+          NULL, NULL,
+          G_CALLBACK (config_date) }
 };
 
 static void
@@ -2569,10 +2574,12 @@ load_gconf_settings (ClockData *cd)
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
-	ClockData         *cd;
-	BonoboUIComponent *popup_component;
-        char              *filename;
-	GError            *error;
+	ClockData      *cd;
+        GtkActionGroup *action_group;
+        GtkAction      *action;
+        gchar          *ui_path;
+        char           *filename;
+	GError         *error;
 
 	panel_applet_add_preferences (applet, CLOCK_SCHEMA_DIR, NULL);
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
@@ -2624,34 +2631,32 @@ fill_clock_applet (PanelApplet *applet)
 	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),
 					    GTK_WIDGET (cd->applet));
 
+        action_group = gtk_action_group_new ("ClockApplet Menu Actions");
+        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+        gtk_action_group_add_actions (action_group,
+                                      clock_menu_actions,
+                                      G_N_ELEMENTS (clock_menu_actions),
+                                      cd);
+        ui_path = g_build_filename (CLOCK_MENU_UI_DIR, "GNOME_ClockApplet.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (cd->applet),
-					   NULL,
-					   "GNOME_ClockApplet.xml",
-					   NULL,
-					   clock_menu_verbs,
-					   cd);
-
-	popup_component = panel_applet_get_popup_component (PANEL_APPLET (cd->applet));
+					   ui_path, action_group);
+        g_free (ui_path);
 
 	if (panel_applet_get_locked_down (PANEL_APPLET (cd->applet))) {
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/ClockPreferences",
-					      "hidden", "1",
-					      NULL);
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/ClockConfig",
-					      "hidden", "1",
-					      NULL);
+                action = gtk_action_group_get_action (action_group, "ClockPreferences");
+                gtk_action_set_visible (action, FALSE);
+
+                action = gtk_action_group_get_action (action_group, "ClockConfig");
+                gtk_action_set_visible (action, FALSE);
 	}
 
 	cd->systz = system_timezone_new ();
 	g_signal_connect (cd->systz, "changed",
 			  G_CALLBACK (clock_timezone_changed), cd);
 
-        bonobo_ui_component_set_prop (popup_component,
-                                      "/commands/ClockConfig",
-                                      "hidden", can_set_system_time () ? "0" : "1",
-                                      NULL);
+        action = gtk_action_group_get_action (action_group, "ClockConfig");
+        gtk_action_set_visible (action, can_set_system_time ());
+        g_object_unref (action_group);
 
 	return TRUE;
 }
@@ -3624,25 +3629,22 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 }
 
 static void
-verb_display_properties_dialog (BonoboUIComponent *uic,
-                                ClockData         *cd,
-                                const gchar       *verbname)
+verb_display_properties_dialog (GtkAction *action,
+                                ClockData *cd)
 {
         display_properties_dialog (cd, FALSE);
 }
 
 static void
-display_help_dialog (BonoboUIComponent *uic,
-		     ClockData         *cd,
-		     const gchar       *verbname)
+display_help_dialog (GtkAction *action,
+                     ClockData *cd)
 {
 	clock_utils_display_help (cd->applet, "clock", NULL);
 }
 
 static void
-display_about_dialog (BonoboUIComponent *uic,
-		      ClockData         *cd,
-		      const gchar       *verbname)
+display_about_dialog (GtkAction *action,
+                      ClockData *cd)
 {
 	static const gchar *authors[] =
 	{
@@ -3697,23 +3699,22 @@ clock_factory (PanelApplet *applet,
 {
 	gboolean retval = FALSE;
 
-	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
+	if (!strcmp (iid, "ClockApplet"))
 		retval = fill_clock_applet (applet);
 
 	return retval;
 }
 
 #ifdef CLOCK_INPROCESS
-PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
-				   PANEL_TYPE_APPLET,
-				   "ClockApplet",
-				   clock_factory,
-				   NULL)
+PANEL_APPLET_IN_PROCESS_FACTORY ("ClockAppletFactory",
+                                 PANEL_TYPE_APPLET,
+                                 "ClockApplet",
+                                 clock_factory,
+                                 NULL)
 #else
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
-                             PANEL_TYPE_APPLET,
-                             "ClockApplet",
-                             "0",
-                             clock_factory,
-                             NULL)
+PANEL_APPLET_OUT_PROCESS_FACTORY ("ClockAppletFactory",
+                                  PANEL_TYPE_APPLET,
+                                  "ClockApplet",
+                                  clock_factory,
+                                  NULL)
 #endif

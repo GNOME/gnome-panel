@@ -53,18 +53,16 @@ typedef struct {
 } WindowMenu;
 
 static void
-window_menu_help (BonoboUIComponent *uic,
-                  WindowMenu        *window_menu,
-                  const char        *verb) 
+window_menu_help (GtkAction  *action,
+                  WindowMenu *window_menu)
 {
 	wncklet_display_help (window_menu->applet, "user-guide",
 			      "panel-windowselector", WINDOW_MENU_ICON);
 }
 
 static void
-window_menu_about (BonoboUIComponent *uic,
-                   WindowMenu        *window_menu,
-                   const char        *verb) 
+window_menu_about (GtkAction  *action,
+                   WindowMenu *window_menu)
 {
 	static const char *authors[] = {
 		"Mark McLoughlin <mark@skynet.ie>",
@@ -92,11 +90,14 @@ window_menu_about (BonoboUIComponent *uic,
 			       "WindowMenu");
 }
 
-static const BonoboUIVerb window_menu_verbs [] =
-{   
-	BONOBO_UI_UNSAFE_VERB ("WindowMenuHelp",  window_menu_help),
-	BONOBO_UI_UNSAFE_VERB ("WindowMenuAbout", window_menu_about),
-	BONOBO_UI_VERB_END
+static const GtkActionEntry window_menu_actions [] =
+{
+	{ "WindowMenuHelp", GTK_STOCK_HELP, N_("_Help"),
+	  NULL, NULL,
+	  G_CALLBACK (window_menu_help) },
+	{ "WindowMenuAbout", GTK_STOCK_ABOUT, N_("_About"),
+	  NULL, NULL,
+	  G_CALLBACK (window_menu_about) }
 };
 
 static void
@@ -236,6 +237,8 @@ gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
 	WindowMenu *window_menu;
+	GtkActionGroup *action_group;
+	gchar *ui_path;
 
 	window_menu = g_new0 (WindowMenu, 1);
 
@@ -250,8 +253,16 @@ window_menu_applet_fill (PanelApplet *applet)
 	g_signal_connect (window_menu->applet, "destroy",
 			  G_CALLBACK (window_menu_destroy), window_menu);
 
-	panel_applet_setup_menu_from_file (applet, NULL, "GNOME_WindowMenuApplet.xml",
-					   NULL, window_menu_verbs, window_menu);
+	action_group = gtk_action_group_new ("WindowMenu Applet Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group,
+				      window_menu_actions,
+				      G_N_ELEMENTS (window_menu_actions),
+				      window_menu);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WindowMenuApplet.xml", NULL);
+	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
+	g_free (ui_path);
+	g_object_unref (action_group);
 
 	window_menu->selector = wnck_selector_new ();
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 

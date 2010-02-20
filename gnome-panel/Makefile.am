@@ -14,7 +14,9 @@ INCLUDES =							\
 	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DDATADIR=\""$(datadir)"\"				\
+	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"			\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
+	-DEGG_DBUS_I_KNOW_API_IS_SUBJECT_TO_CHANGE		\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
 	$(WARN_CFLAGS)						\
@@ -34,21 +36,30 @@ bin_PROGRAMS = \
 
 $(gnome_panel_OBJECTS): $(BUILT_SOURCES)
 
-CORBA_SRCLIST =			\
-	GNOME_Panel-stubs.c	\
-	GNOME_Panel-skels.c	\
-	GNOME_Panel-common.c	\
-	GNOME_Panel.h		\
-	$(NULL)
+panel-built-sources.stamp: $(top_srcdir)/data/panel-applet.xml
+	eggdbus-binding-tool                                            \
+                --namespace "_Panel"                                    \
+                --dbus-namespace "org.gnome.panel.applet"               \
+                --introspection-xml $(top_srcdir)/data/panel-applet.xml \
+                --stamp-file panel-built-sources.stamp
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
-	$(AM_V_GEN)$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
+EGGDBUS_SRCLIST =               \
+	_panelbindingstypes.h	\
+	_panelbindings.h	\
+	_panelbindings.c	\
+        _panelbindingsmarshal.h \
+        _panelbindingsmarshal.c \
+        _panelapplet.h          \
+        _panelapplet.c		\
+	_panelappletorient.h	\
+	_panelappletorient.c
 
 BUILT_SOURCES = \
-	$(CORBA_SRCLIST)	\
-	panel-typebuiltins.c	\
-	panel-typebuiltins.h	\
-	panel-marshal.c		\
+	panel-built-sources.stamp	\
+	$(EGGDBUS_SRCLIST)		\
+	panel-typebuiltins.c		\
+	panel-typebuiltins.h		\
+	panel-marshal.c			\
 	panel-marshal.h
 
 panel_sources =			\
@@ -74,6 +85,8 @@ panel_sources =			\
 	panel-context-menu.c 	\
 	launcher.c		\
 	panel-applet-frame.c	\
+	panel-applet-container.c \
+	panel-applets-manager.c	\
 	panel-shell.c		\
 	panel-background.c	\
 	panel-background-monitor.c \
@@ -119,6 +132,8 @@ panel_headers =			\
 	panel-context-menu.h 	\
 	launcher.h		\
 	panel-applet-frame.h	\
+	panel-applet-container.h \
+	panel-applets-manager.h	\
 	panel-shell.h		\
 	panel-background.h	\
 	panel-background-monitor.h \
@@ -147,7 +162,7 @@ panel_headers =			\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
-	$(CORBA_SRCLIST)		\
+	$(EGGDBUS_SRCLIST)		\
 	$(panel_sources)		\
 	$(panel_headers)		\
 	$(NULL)
@@ -191,7 +206,6 @@ EXTRA_DIST =					\
 	nothing.h				\
 	$(schemas_in_files)			\
 	panel-compatibility.schemas		\
-	$(xmlui_DATA)				\
 	panel-marshal.list			\
 	gnome-panelrc				\
 	$(entries_DATA)				\
@@ -202,8 +216,7 @@ EXTRA_DIST =					\
 
 panel_enum_headers =					\
 	$(top_srcdir)/gnome-panel/panel-enums.h		\
-	$(top_srcdir)/gnome-panel/panel-types.h		\
-	GNOME_Panel.h
+	$(top_srcdir)/gnome-panel/panel-types.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@
@@ -239,9 +252,6 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 			--eprod "#define PANEL_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) >  $@
-
-xmluidir   = $(datadir)/gnome-2.0/ui
-xmlui_DATA = GNOME_Panel_Popup.xml
 
 rcdir = $(datadir)
 rc_DATA = gnome-panelrc

@@ -10,6 +10,7 @@ INCLUDES = \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPAGER_BUILDERDIR=\""$(uidir)"\" \
 	-DTASKLIST_BUILDERDIR=\""$(uidir)"\" \
+	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\" \
 	-DPREFIX=\"$(prefix)\" \
         -DSYSCONFDIR=\"$(sysconfdir)\" \
         -DDATADIR=\"$(datadir)\" \
@@ -35,8 +36,8 @@ WNCKLET_LDADD =						\
 	$(LIBPANEL_APPLET_LIBS)
 
 if WNCKLET_INPROCESS
-APPLET_TYPE     = shlib
-APPLET_LOCATION = $(pkglibdir)/libwnck-applet.so
+APPLET_IN_PROCESS = true
+APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
 
 wnck_appletlibdir = $(pkglibdir)
 wnck_appletlib_LTLIBRARIES = libwnck-applet.la
@@ -45,8 +46,8 @@ libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
 libwnck_applet_la_LDFLAGS = -module -avoid-version
 libwnck_applet_la_CFLAGS =
 else
-APPLET_TYPE     = exe
-APPLET_LOCATION = $(libexecdir)/wnck-applet
+APPLET_IN_PROCESS = false
+APPLET_LOCATION   = $(libexecdir)/wnck-applet
 
 libexec_PROGRAMS = wnck-applet
 wnck_applet_SOURCES = $(WNCKLET_SOURCES)
@@ -55,25 +56,37 @@ wnck_applet_CFLAGS =
 endif
 
 EXTRA_DIST = \
-	GNOME_Wncklet_Factory.server.in.in \
+	GNOME_Wncklet.panel-applet.in.in \
+	$(service_in_files) \
 	$(xmlui_DATA) \
 	$(schemas_in_files) \
 	$(ui_DATA)
 
-serverdir       = $(libdir)/bonobo/servers
-server_in_files = GNOME_Wncklet_Factory.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
+appletdir       = $(datadir)/gnome-panel/applets
+applet_in_files = GNOME_Wncklet.panel-applet.in
+applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
-$(server_in_files): $(server_in_files).in Makefile
+$(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
-	    -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-	    -e "s|\@TYPE\@|$(APPLET_TYPE)|" \
-	    -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
-	    $< > $@
+            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+            -e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
+            -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+            $< > $@
 
-@INTLTOOL_SERVER_RULE@
+@PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
-CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES) $(schemas_DATA)
+if !WNCKLET_INPROCESS
+servicedir       = $(datadir)/dbus-1/services
+service_in_files = org.gnome.panel.applet.WnckletFactory.service.in
+service_DATA     = $(service_in_files:.service.in=.service)
+
+org.gnome.panel.applet.WnckletFactory.service: $(service_in_files)
+	$(AM_V_GEN)sed \
+            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+            $< > $@
+endif
+
+CLEANFILES = $(BUILT_SOURCES) $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 xmluidir    = $(datadir)/gnome-2.0/ui
 xmlui_DATA  = \

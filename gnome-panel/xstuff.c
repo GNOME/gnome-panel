@@ -27,6 +27,7 @@
 #include "xstuff.h"
 
 static int (* xstuff_old_xio_error_handler) (Display *) = NULL;
+static int (* xstuff_old_x_error_handler)   (Display *, XErrorEvent *);
 static gboolean xstuff_display_is_dead = FALSE;
 
 static Atom
@@ -708,8 +709,28 @@ xstuff_is_display_dead (void)
 	return xstuff_display_is_dead;
 }
 
+static int
+xstuff_x_error_handler (Display *display, XErrorEvent *error)
+{
+	if (!error->error_code)
+		return 0;
+
+	/*
+	 * If we got a BadDrawable or a BadWindow, we ignore it for
+	 * now.  FIXME: We need to somehow distinguish real errors
+	 * from X-server-induced errors.  Keeping a list of windows
+	 * for which we will ignore BadDrawables would be a good idea.
+	 */
+	if (error->error_code == BadDrawable ||
+	    error->error_code == BadWindow)
+		return 0;
+
+	return xstuff_old_x_error_handler (display, error);
+}
+
 void
 xstuff_init (void)
 {
 	xstuff_old_xio_error_handler = XSetIOErrorHandler (xstuff_xio_error_handler);
+	xstuff_old_x_error_handler = XSetErrorHandler (xstuff_x_error_handler);
 }

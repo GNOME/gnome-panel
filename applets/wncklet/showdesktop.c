@@ -61,12 +61,10 @@ typedef struct {
 	GtkIconTheme *icon_theme;
 } ShowDesktopData;
 
-static void display_help_dialog  (BonoboUIComponent *uic,
-                                  ShowDesktopData   *sdd,
-                                  const gchar       *verbname);
-static void display_about_dialog (BonoboUIComponent *uic,
-                                  ShowDesktopData   *sdd,
-                                  const gchar       *verbname);
+static void display_help_dialog  (GtkAction       *action,
+                                  ShowDesktopData *sdd);
+static void display_about_dialog (GtkAction       *action,
+                                  ShowDesktopData *sdd);
 
 static void update_icon           (ShowDesktopData *sdd);
 static void update_button_state   (ShowDesktopData *sdd);
@@ -223,10 +221,13 @@ update_icon (ShowDesktopData *sdd)
         g_object_unref (icon);
 }
 
-static const BonoboUIVerb show_desktop_menu_verbs [] = {
-        BONOBO_UI_UNSAFE_VERB ("ShowDesktopHelp",        display_help_dialog),
-        BONOBO_UI_UNSAFE_VERB ("ShowDesktopAbout",       display_about_dialog),
-        BONOBO_UI_VERB_END
+static const GtkActionEntry show_desktop_menu_actions [] = {
+	{ "ShowDesktopHelp", GTK_STOCK_HELP, N_("_Help"),
+	  NULL, NULL,
+	  G_CALLBACK (display_help_dialog) },
+	{ "ShowDesktopAbout", GTK_STOCK_ABOUT, N_("_About"),
+	  NULL, NULL,
+	  G_CALLBACK (display_about_dialog) }
 };
 
 /* This updates things that should be consistent with the button's appearance,
@@ -409,6 +410,8 @@ gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
         ShowDesktopData *sdd;
+	GtkActionGroup  *action_group;
+	gchar           *ui_path;
 	AtkObject       *atk_obj;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
@@ -478,12 +481,17 @@ show_desktop_applet_fill (PanelApplet *applet)
 	panel_applet_set_background_widget (PANEL_APPLET (sdd->applet),
 					    GTK_WIDGET (sdd->applet));
 
-        panel_applet_setup_menu_from_file (PANEL_APPLET (sdd->applet),
-                                           NULL,
-                                           "GNOME_ShowDesktopApplet.xml",
-                                           NULL,
-                                           show_desktop_menu_verbs,
-                                           sdd);
+	action_group = gtk_action_group_new ("ShowDesktop Applet Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group,
+				      show_desktop_menu_actions,
+				      G_N_ELEMENTS (show_desktop_menu_actions),
+				      sdd);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_ShowDesktopApplet.xml", NULL);
+	panel_applet_setup_menu_from_file (PANEL_APPLET (sdd->applet),
+					   ui_path, action_group);
+	g_free (ui_path);
+	g_object_unref (action_group);
 
         g_signal_connect (G_OBJECT (sdd->applet),
                           "destroy",
@@ -505,18 +513,16 @@ show_desktop_applet_fill (PanelApplet *applet)
 }
 
 static void
-display_help_dialog (BonoboUIComponent *uic,
-                     ShowDesktopData   *sdd,
-                     const gchar       *verbname)
+display_help_dialog (GtkAction       *action,
+                     ShowDesktopData *sdd)
 {
 	wncklet_display_help (sdd->applet, "user-guide",
 			      "gospanel-564", SHOW_DESKTOP_ICON);
 }
 
 static void
-display_about_dialog (BonoboUIComponent *uic,
-                      ShowDesktopData   *sdd,
-                      const gchar       *verbname)
+display_about_dialog (GtkAction       *action,
+                      ShowDesktopData *sdd)
 {
         static const gchar *authors[] = {
                 "Havoc Pennington <hp@redhat.com>",

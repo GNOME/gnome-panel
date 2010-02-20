@@ -59,15 +59,12 @@ typedef struct {
 	guint listeners [3];
 } TasklistData;
 
-static void display_properties_dialog (BonoboUIComponent *uic,
-				       TasklistData      *tasklist,
-				       const gchar       *verbname);
-static void display_help_dialog       (BonoboUIComponent *uic,
-				       TasklistData      *tasklist,
-				       const gchar       *verbname);
-static void display_about_dialog      (BonoboUIComponent *uic,
-				       TasklistData      *tasklist,
-				       const gchar       *verbname);
+static void display_properties_dialog (GtkAction    *action,
+				       TasklistData *tasklist);
+static void display_help_dialog       (GtkAction    *action,
+				       TasklistData *tasklist);
+static void display_about_dialog      (GtkAction    *action,
+				       TasklistData *tasklist);
 
 static void
 tasklist_update (TasklistData *tasklist)
@@ -191,11 +188,16 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
         g_free (tasklist);
 }
 
-static const BonoboUIVerb tasklist_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("TasklistPreferences", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("TasklistHelp",        display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("TasklistAbout",       display_about_dialog),
-        BONOBO_UI_VERB_END
+static const GtkActionEntry tasklist_menu_actions [] = {
+	{ "TasklistPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
+	  NULL, NULL,
+	  G_CALLBACK (display_properties_dialog) },
+	{ "TasklistHelp", GTK_STOCK_HELP, N_("_Help"),
+	  NULL, NULL,
+	  G_CALLBACK (display_help_dialog) },
+	{ "TasklistAbout", GTK_STOCK_ABOUT, N_("_About"),
+	  NULL, NULL,
+	  G_CALLBACK (display_about_dialog) }
 };
 
 static void
@@ -462,6 +464,8 @@ gboolean
 window_list_applet_fill (PanelApplet *applet)
 {
 	TasklistData *tasklist;
+	GtkActionGroup *action_group;
+	gchar *ui_path;
 	GError *error;
 	GConfValue *value;
 
@@ -555,24 +559,25 @@ window_list_applet_fill (PanelApplet *applet)
 
 	panel_applet_set_background_widget (PANEL_APPLET (tasklist->applet),
 					    GTK_WIDGET (tasklist->applet));
-	
+
+	action_group = gtk_action_group_new ("Tasklist Applet Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group,
+				      tasklist_menu_actions,
+				      G_N_ELEMENTS (tasklist_menu_actions),
+				      tasklist);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WindowListApplet.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
-					   NULL,
-					   "GNOME_WindowListApplet.xml",
-					   NULL,
-					   tasklist_menu_verbs, 
-					   tasklist);
+					   ui_path, action_group);
+	g_free (ui_path);
 
 	if (panel_applet_get_locked_down (PANEL_APPLET (tasklist->applet))) {
-		BonoboUIComponent *popup_component;
+		GtkAction *action;
 
-		popup_component = panel_applet_get_popup_component (PANEL_APPLET (tasklist->applet));
-
-		bonobo_ui_component_set_prop (popup_component,
-					      "/commands/TasklistPreferences",
-					      "hidden", "1",
-					      NULL);
+		action = gtk_action_group_get_action (action_group, "TasklistPreferences");
+		gtk_action_set_visible (action, FALSE);
 	}
+	g_object_unref (action_group);
 
 	gtk_widget_show (tasklist->applet);
 	
@@ -581,18 +586,16 @@ window_list_applet_fill (PanelApplet *applet)
 
 
 static void
-display_help_dialog (BonoboUIComponent *uic,
-		     TasklistData      *tasklist,
-		     const gchar       *verbname)
+display_help_dialog (GtkAction    *action,
+		     TasklistData *tasklist)
 {
 	wncklet_display_help (tasklist->applet, "user-guide",
 			      "windowlist", WINDOW_LIST_ICON);
 }
 
 static void
-display_about_dialog (BonoboUIComponent *uic,
-		      TasklistData      *tasklist,
-		      const gchar       *verbname)
+display_about_dialog (GtkAction    *action,
+		      TasklistData *tasklist)
 {
 	static const gchar *authors[] =
 	{
@@ -766,9 +769,8 @@ setup_dialog (GtkBuilder   *builder,
 
 
 static void 
-display_properties_dialog (BonoboUIComponent *uic,
-			   TasklistData      *tasklist,
-			   const gchar       *verbname)
+display_properties_dialog (GtkAction    *action,
+			   TasklistData *tasklist)
 {
 	if (tasklist->properties_dialog == NULL) {
 		GtkBuilder *builder;

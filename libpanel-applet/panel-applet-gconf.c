@@ -25,7 +25,6 @@
 #include <gconf/gconf-client.h>
 
 #include "panel-applet-gconf.h"
-#include "panel-applet-private.h"
 
 static GConfClient *
 panel_applet_gconf_get_client (void)

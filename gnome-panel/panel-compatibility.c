@@ -32,14 +32,15 @@
 #include "panel-profile.h"
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
+#include "panel-applets-manager.h"
 #include "panel-globals.h"
 #include "panel-util.h"
 
 typedef enum {
-	PANEL_ORIENT_UP    = GNOME_Vertigo_PANEL_ORIENT_UP,
-	PANEL_ORIENT_DOWN  = GNOME_Vertigo_PANEL_ORIENT_DOWN,
-	PANEL_ORIENT_LEFT  = GNOME_Vertigo_PANEL_ORIENT_LEFT,
-	PANEL_ORIENT_RIGHT = GNOME_Vertigo_PANEL_ORIENT_RIGHT
+	PANEL_ORIENT_UP,
+	PANEL_ORIENT_DOWN,
+	PANEL_ORIENT_LEFT,
+	PANEL_ORIENT_RIGHT,
 } PanelOrient;
 
 static GConfEnumStringPair panel_orient_map [] = {
@@ -166,6 +167,16 @@ panel_compatibility_map_panel_type_string (const char *str,
 
 	return TRUE;
 }
+
+enum {
+	PANEL_SIZE_XX_SMALL = 12,
+	PANEL_SIZE_X_SMALL  = 24,
+	PANEL_SIZE_SMALL    = 36,
+	PANEL_SIZE_MEDIUM   = 48,
+	PANEL_SIZE_LARGE    = 64,
+	PANEL_SIZE_X_LARGE  = 80,
+	PANEL_SIZE_XX_LARGE = 128
+};
 
 static GConfEnumStringPair panel_size_map [] = {
 	{ PANEL_SIZE_XX_SMALL, "panel-size-xx-small" },
@@ -1088,4 +1099,34 @@ panel_compatiblity_migrate_screenshot_action (GConfClient *client,
 	gconf_client_set_string (client, key, "launcher-object", NULL);
 
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+}
+
+gchar *
+panel_compatiblity_get_applet_iid (const gchar *id)
+{
+	GConfClient *client = panel_gconf_get_client ();
+	PanelAppletInfo *info;
+	const char *key;
+	const char *iid;
+	gchar *applet_iid;
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
+	applet_iid = gconf_client_get_string (client, key, NULL);
+	if (applet_iid && applet_iid[0])
+		return applet_iid;
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
+	applet_iid = gconf_client_get_string (client, key, NULL);
+	if (!applet_iid || !applet_iid[0])
+		return NULL;
+
+	info = panel_applets_manager_get_applet_info_from_old_id (applet_iid);
+	if (!info)
+		return NULL;
+
+	iid = panel_applet_info_get_iid (info);
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
+	gconf_client_set_string (client, key, iid, NULL);
+
+	return g_strdup (iid);
 }

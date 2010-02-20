@@ -200,18 +200,18 @@ wncklet_factory (PanelApplet *applet,
 		type_registered = TRUE;
 	}
 
-	if (!strcmp (iid, "OAFIID:GNOME_WindowMenuApplet"))
+	if (!strcmp (iid, "WindowMenuApplet"))
 		retval = window_menu_applet_fill (applet);
 
-	else if (!strcmp (iid, "OAFIID:GNOME_WorkspaceSwitcherApplet")||
-	         !strcmp (iid, "OAFIID:GNOME_PagerApplet"))
+	else if (!strcmp (iid, "WorkspaceSwitcherApplet")||
+	         !strcmp (iid, "PagerApplet"))
 		retval = workspace_switcher_applet_fill (applet);
 
-	else if (!strcmp (iid, "OAFIID:GNOME_WindowListApplet") ||
-	         !strcmp (iid, "OAFIID:GNOME_TasklistApplet"))
+	else if (!strcmp (iid, "WindowListApplet") ||
+	         !strcmp (iid, "TasklistApplet"))
 		retval = window_list_applet_fill (applet);
 
-	else if (!strcmp (iid, "OAFIID:GNOME_ShowDesktopApplet"))
+	else if (!strcmp (iid, "ShowDesktopApplet"))
 		retval = show_desktop_applet_fill (applet);
 
 	return retval;
@@ -219,16 +219,15 @@ wncklet_factory (PanelApplet *applet,
 
 
 #ifdef WNCKLET_INPROCESS
-PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
-				   PANEL_TYPE_APPLET,
-				   "WindowNavigationApplets",
-				   wncklet_factory,
-				   NULL)
+PANEL_APPLET_IN_PROCESS_FACTORY ("WnckletFactory",
+				 PANEL_TYPE_APPLET,
+				 "Windo	wNavigationApplets",
+				 wncklet_factory,
+				 NULL)
 #else
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
-                             PANEL_TYPE_APPLET,
-                             "WindowNavigationApplets",
-                             "0",
-                             wncklet_factory,
-                             NULL)
+PANEL_APPLET_OUT_PROCESS_FACTORY ("WnckletFactory",
+				  PANEL_TYPE_APPLET,
+				  "WindowNavigationApplets",
+				  wncklet_factory,
+				  NULL)
 #endif

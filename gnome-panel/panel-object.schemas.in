@@ -94,6 +94,21 @@
       </locale>
     </schema>
 
+    <schema>
+      <key>/schemas/apps/panel/objects/applet_iid</key>
+      <owner>panel</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>Applet IID</short>
+        <long>
+          The implementation ID of the applet - e.g.
+          "ClockAppletFactory::ClockApplet". This key is only
+          relevant if the object_type key is "panel-applet".
+        </long>
+      </locale>
+    </schema>
+
     <!-- Applies to drawers -->
 
     <schema>

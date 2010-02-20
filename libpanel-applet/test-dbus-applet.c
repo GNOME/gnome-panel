@@ -1,71 +1,62 @@
-/*
- * test-bonobo-applet.c:
- *
- * Authors:
- *    Mark McLoughlin <mark@skynet.ie>
- *
- * Copyright 2001 Sun Microsystems, Inc.
- */
-
 #include <config.h>
 #include <string.h>
-
-#include <libbonoboui.h>
 
 #include "panel-applet.h"
 
 static void
-test_applet_on_do (BonoboUIComponent *uic,
-		   gpointer           user_data,
-		   const gchar       *verbname)
+test_applet_on_do (GtkAction   *action,
+		   gpointer     user_data)
 {
-        g_message ("%s called\n", verbname);
+        g_message ("%s called\n", gtk_action_get_name (action));
 }
 
-static const BonoboUIVerb test_applet_menu_verbs [] = {
-        BONOBO_UI_VERB ("TestAppletDo1", test_applet_on_do),
-        BONOBO_UI_VERB ("TestAppletDo2", test_applet_on_do),
-        BONOBO_UI_VERB ("TestAppletDo3", test_applet_on_do),
-
-        BONOBO_UI_VERB_END
+static const GtkActionEntry test_applet_menu_actions[] = {
+	{ "TestAppletDo1", NULL, "TestAppletDo1",
+	  NULL, NULL,
+	  G_CALLBACK (test_applet_on_do) },
+	{ "TestAppletDo2", NULL, "TestAppletDo2",
+	  NULL, NULL,
+	  G_CALLBACK (test_applet_on_do) },
+	{ "TestAppletDo3", NULL, "TestAppletDo3",
+	  NULL, NULL,
+	  G_CALLBACK (test_applet_on_do) }
 };
 
-static const char test_applet_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
-	"   <menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
-	"   <menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n"
-	"</popup>\n";
+static const char test_applet_menu_xml[] =
+	"<menuitem name=\"Test Item 1\" action=\"TestAppletDo1\" />\n"
+	"<menuitem name=\"Test Item 2\" action=\"TestAppletDo2\" />\n"
+	"<menuitem name=\"Test Item 3\" action=\"TestAppletDo3\" />\n";
 
-typedef struct {
+typedef struct _TestApplet      TestApplet;
+typedef struct _TestAppletClass TestAppletClass;
+
+struct _TestApplet {
 	PanelApplet   base;
 	GtkWidget    *label;
-} TestApplet;
+};
 
-static GType
-test_applet_get_type (void)
+struct _TestAppletClass {
+	PanelAppletClass   base_class;
+};
+
+static GType test_applet_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_TYPE (TestApplet, test_applet, PANEL_TYPE_APPLET);
+
+static void
+test_applet_init (TestApplet *applet)
 {
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelAppletClass),
-			NULL, NULL, NULL, NULL, NULL,
-			sizeof (TestApplet),
-			0, NULL, NULL
-		};
-
-		type = g_type_register_static (
-				PANEL_TYPE_APPLET, "TestApplet", &info, 0);
-	}
-
-	return type;
 }
 
 static void
-test_applet_handle_orient_change (TestApplet        *applet,
-				  PanelAppletOrient  orient,
-				  gpointer           dummy)
+test_applet_class_init (TestAppletClass *klass)
+{
+}
+
+static void
+test_applet_handle_orient_change (TestApplet       *applet,
+				  PanelAppletOrient orient,
+				  gpointer          dummy)
 {
         gchar *text;
 
@@ -84,31 +75,31 @@ test_applet_handle_size_change (TestApplet *applet,
 				gpointer    dummy)
 {
 	switch (size) {
-	case GNOME_Vertigo_PANEL_XX_SMALL:
+	case 12:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"xx-small\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_X_SMALL:
+	case 24:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"x-small\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_SMALL:
+	case 36:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"small\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_MEDIUM:
+	case 48:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"medium\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_LARGE:
+	case 64:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"large\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_X_LARGE:
+	case 80:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"x-large\">Hello</span>");
 		break;
-	case GNOME_Vertigo_PANEL_XX_LARGE:
+	case 128:
 		gtk_label_set_markup (
 			GTK_LABEL (applet->label), "<span size=\"xx-large\">Hello</span>");
 		break;
@@ -132,7 +123,7 @@ test_applet_handle_background_change (TestApplet                *applet,
 		break;
 	case PANEL_COLOR_BACKGROUND:
 		g_message ("Setting background to #%2x%2x%2x",
-			    color->red, color->green, color->blue);
+			   color->red, color->green, color->blue);
 		gdk_window_set_back_pixmap (applet->label->window, NULL, FALSE);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
@@ -148,16 +139,31 @@ test_applet_handle_background_change (TestApplet                *applet,
 static gboolean
 test_applet_fill (TestApplet *applet)
 {
+	GtkActionGroup *action_group;
+
 	applet->label = gtk_label_new (NULL);
 
 	gtk_container_add (GTK_CONTAINER (applet), applet->label);
 
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
-	test_applet_handle_size_change (applet, GNOME_Vertigo_PANEL_MEDIUM, NULL);
+	test_applet_handle_size_change (applet,
+					panel_applet_get_size (PANEL_APPLET (applet)),
+					NULL);
+	test_applet_handle_orient_change (applet,
+					  panel_applet_get_orient (PANEL_APPLET (applet)),
+					  NULL);
 
-	panel_applet_setup_menu (
-		PANEL_APPLET (applet), test_applet_menu_xml, test_applet_menu_verbs, NULL);
+	action_group = gtk_action_group_new ("TestAppletActions");
+	gtk_action_group_add_actions (action_group,
+				      test_applet_menu_actions,
+				      G_N_ELEMENTS (test_applet_menu_actions),
+				      applet);
+
+	panel_applet_setup_menu (PANEL_APPLET (applet),
+				 test_applet_menu_xml,
+				 action_group);
+	g_object_unref (action_group);
 
 	gtk_widget_set_tooltip_text (GTK_WIDGET (applet), "Hello Tip");
 
@@ -188,15 +194,16 @@ test_applet_factory (TestApplet  *applet,
 {
 	gboolean retval = FALSE;
     
-	if (!strcmp (iid, "OAFIID:GNOME_Panel_TestBonoboApplet"))
+	if (!strcmp (iid, "TestApplet"))
 		retval = test_applet_fill (applet); 
     
 	return retval;
 }
 
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Panel_TestBonoboApplet_Factory",
-			     test_applet_get_type (),
-			     "A Test Applet for the GNOME-2.0 Panel",
-			     "0",
-			     (PanelAppletFactoryCallback) test_applet_factory,
-			     NULL)
+
+PANEL_APPLET_OUT_PROCESS_FACTORY ("TestAppletFactory",
+				  test_applet_get_type (),
+				  "A Test Applet for the GNOME-3.0 Panel",
+				  (PanelAppletFactoryCallback) test_applet_factory,
+				  NULL)
+

@@ -27,6 +27,7 @@
 
 #include <gtk/gtk.h>
 
+#include "panel-applet-container.h"
 #include "panel-widget.h"
 #include "applet.h"
 
@@ -44,39 +45,39 @@ typedef struct _PanelAppletFrameClass   PanelAppletFrameClass;
 typedef struct _PanelAppletFramePrivate PanelAppletFramePrivate;
 
 struct _PanelAppletFrame{
-        GtkEventBox               event_box;
+	PanelAppletContainer container;
 
         PanelAppletFramePrivate  *priv;
 };
 
 struct _PanelAppletFrameClass {
-        GtkEventBoxClass          event_box_class;
+        PanelAppletContainerClass container_class;
 };
 
-GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
+GType panel_applet_frame_get_type           (void) G_GNUC_CONST;
 
-void       panel_applet_frame_create    (PanelToplevel    *toplevel,
-					 int               position,
-					 const char       *iid);
+void  panel_applet_frame_create             (PanelToplevel       *toplevel,
+					     int                  position,
+					     const char          *iid);
 
-void       panel_applet_frame_sync_menu_state    (PanelAppletFrame *frame);
+void  panel_applet_frame_sync_menu_state    (PanelAppletFrame    *frame);
 
-void       panel_applet_frame_change_orientation (PanelAppletFrame *frame,
-						  PanelOrientation  orientation);
+void  panel_applet_frame_change_orientation (PanelAppletFrame    *frame,
+					     PanelOrientation     orientation);
 
-void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
-					     PanelSize         size);
+void  panel_applet_frame_change_size        (PanelAppletFrame    *frame,
+					     guint                size);
 
-void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
-						 PanelBackgroundType  type);
+void  panel_applet_frame_change_background  (PanelAppletFrame    *frame,
+					     PanelBackgroundType  type);
 
-void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
-						 gboolean     locked,
-						 int          position,
-						 const char  *id);
+void  panel_applet_frame_load_from_gconf    (PanelWidget         *panel_widget,
+					     gboolean             locked,
+					     int                  position,
+					     const char          *id);
 
-void            panel_applet_frame_set_panel (PanelAppletFrame *frame,
-					      PanelWidget      *panel);
+void  panel_applet_frame_set_panel          (PanelAppletFrame    *frame,
+					     PanelWidget         *panel);
 
 G_END_DECLS
 
