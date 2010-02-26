@@ -26,8 +26,8 @@ import os
 import shutil
 import sys
 import urllib
+import ConfigParser
 
-import bonobo
 import gconf
 
 PANEL_SCHEMAS_OBJECTS_DIR='/schemas/apps/panel/objects'
@@ -44,6 +44,10 @@ PANEL_LAUNCHER_USER_DIR=os.path.join(os.path.expanduser('~'), '.gnome2', 'panel2
 PANEL_TYPE_NONE = 0
 PANEL_TYPE_APPLET = 1
 PANEL_TYPE_LAUNCHER = 2
+
+PANEL_APPLETS_EXTENSION='.panel-applet'
+PANEL_APPLETS_PATH='@PANEL_APPLETS_DIR@'
+PANEL_APPLET_FACTORY_GROUP='Applet Factory'
 
 class PanelAddException(Exception):
     pass
@@ -106,12 +110,42 @@ class PanelAdder:
 
             raise PanelAddException('Cannot find a panel identifier')
 
+    def _get_applet_list(self):
+        dirs = os.getenv('PANEL_APPLETS_DIR')
+        if not dirs:
+            dirs = PANEL_APPLETS_PATH
+
+        retval = dups = []
+        for path in dirs.split(":"):
+            if not os.path.isdir(path):
+                continue
+
+            if path in dups:
+                continue
+
+            dups.append(path)
+
+            for f in os.listdir(path):
+                if not f.endswith(PANEL_APPLETS_EXTENSION):
+                    continue
+
+                config = ConfigParser.RawConfigParser()
+                try:
+                    config.read(os.path.join(path, f))
+                except ConfigParser.ParsingError:
+                    continue
+
+                fid = config.get(PANEL_APPLET_FACTORY_GROUP, 'Id')
+                retval.extend(["%s::%s" % (fid, s) for s in config.sections() if s != PANEL_APPLET_FACTORY_GROUP])
+
+        return retval
+
     def _set_applet_iid(self, applet_iid):
         if not applet_iid:
             raise PanelAddException('No applet specified')
 
-        applets = bonobo.activation.query ("has_all (repo_ids, ['IDL:Bonobo/Control:1.0', 'IDL:GNOME/Vertigo/PanelAppletShell:1.0'])")
-        if not applet_iid in [ a.iid for a in applets ]:
+        applets = self._get_applet_list ()
+        if not applet_iid in applets:
             raise PanelAddException('%s is not a valid applet' % applet_iid)
 
         self.applet_iid = applet_iid
@@ -216,7 +250,7 @@ class PanelAdder:
 
         if self.type == PANEL_TYPE_APPLET:
             self.client.set_string(os.path.join(dir, 'object_type'), 'bonobo-applet')
-            self.client.set_string(os.path.join(dir, 'bonobo_iid'), self.applet_iid)
+            self.client.set_string(os.path.join(dir, 'applet_iid'), self.applet_iid)
             id_list = self._panel_get_list(PANEL_APPLETS_KEY)
             id_list.append(id)
             self.client.set_list(PANEL_APPLETS_KEY, gconf.VALUE_STRING, id_list)

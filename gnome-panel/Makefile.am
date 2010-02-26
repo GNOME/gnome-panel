@@ -197,7 +197,10 @@ ui_DATA =					\
 libexec_SCRIPTS = gnome-panel-add
 
 gnome-panel-add: gnome-panel-add.in Makefile
-	$(AM_V_GEN)sed -e s!\@PYTHON\@!@PYTHON@! < $< > $@
+	$(AM_V_GEN)sed 					\
+	    -e s!\@PYTHON\@!@PYTHON@! 			\
+	    -e s!\@PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
+	    < $< > $@
 	$(AM_V_at)chmod a+x $@
 
 EXTRA_DIST =					\
