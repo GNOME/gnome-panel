@@ -40,6 +40,8 @@ typedef struct _PanelAppletFactoryInfo {
 	ActivateAppletFunc activate_applet;
 	guint              n_applets;
 
+	gchar             *srcdir;
+
 	GList             *applet_list;
 	gboolean           has_old_ids;
 } PanelAppletFactoryInfo;
@@ -85,6 +87,7 @@ panel_applet_factory_info_free (PanelAppletFactoryInfo *info)
 			NULL);
 	g_list_free (info->applet_list);
 	info->applet_list = NULL;
+	g_free (info->srcdir);
 
 	g_slice_free (PanelAppletFactoryInfo, info);
 }
@@ -183,6 +186,8 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 		return NULL;
 	}
 
+	info->srcdir = g_path_get_dirname (filename);
+
 	return info;
 }
 
@@ -221,7 +226,9 @@ applets_directory_changed (GFileMonitor     *monitor,
 	case G_FILE_MONITOR_EVENT_CHANGED:
 	case G_FILE_MONITOR_EVENT_CREATED: {
 		PanelAppletFactoryInfo *info;
+		PanelAppletFactoryInfo *old_info;
 		gchar                  *filename;
+		GSList                 *dirs, *d;
 
 		filename = g_file_get_path (file);
 		if (!g_str_has_suffix (filename, PANEL_APPLETS_EXTENSION)) {
@@ -232,8 +239,42 @@ applets_directory_changed (GFileMonitor     *monitor,
 		info = panel_applets_manager_get_applet_factory_info_from_file (filename);
 		g_free (filename);
 
-		if (info)
+		if (!info)
+			return;
+
+		old_info = g_hash_table_lookup (applet_factories, info->id);
+		if (!old_info) {
+			/* New applet, just insert it */
 			g_hash_table_insert (applet_factories, g_strdup (info->id), info);
+			return;
+		}
+
+		/* Make sure we don't update an applet
+		 * that has changed in another source dir
+		 * unless it takes precedence over the
+		 * current one
+		 */
+		if (strcmp (info->srcdir, old_info->srcdir) == 0) {
+			g_hash_table_insert (applet_factories, g_strdup (info->id), info);
+			return;
+		}
+
+		dirs = panel_applets_manager_get_applets_dirs ();
+
+		for (d = dirs; d; d = g_slist_next (d)) {
+			gchar *path = (gchar *)d->data;
+
+			if (strcmp (path, old_info->srcdir) == 0) {
+				panel_applet_factory_info_free (info);
+				break;
+			} else if (strcmp (path, info->srcdir) == 0) {
+				g_hash_table_insert (applet_factories, g_strdup (info->id), info);
+				break;
+			}
+		}
+
+		g_slist_foreach (dirs, (GFunc)g_free, NULL);
+		g_slist_free (dirs);
 	}
 		break;
 	default:
