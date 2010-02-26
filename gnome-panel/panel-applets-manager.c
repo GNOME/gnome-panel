@@ -186,17 +186,28 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 	return info;
 }
 
-static gchar **
+static GSList *
 panel_applets_manager_get_applets_dirs (void)
 {
 	const gchar *dir = NULL;
+	gchar      **paths;
+	guint        i;
+	GSList      *retval = NULL;
 
 	dir = g_getenv ("PANEL_APPLETS_DIR");
+	if (!dir || strcmp (dir, "") == 0) {
+		return g_slist_prepend (NULL, g_strdup (PANEL_APPLETS_DIR));
+	}
 
-	if (!dir || g_ascii_strcasecmp (dir, "") == 0)
-		dir = PANEL_APPLETS_DIR;
+	paths = g_strsplit (dir, ":", 0);
+	for (i = 0; paths[i]; i++) {
+		if (g_slist_find_custom (retval, paths[i], (GCompareFunc)strcmp))
+			continue;
+		retval = g_slist_prepend (retval, g_strdup (paths[i]));
+	}
+	g_strfreev (paths);
 
-	return g_strsplit (dir, ":", 0);
+	return g_slist_reverse (retval);
 }
 
 static void
@@ -234,29 +245,29 @@ applets_directory_changed (GFileMonitor     *monitor,
 static gboolean
 _panel_applets_manager_init (void)
 {
-	gchar      **dirs;
+	GSList      *dirs, *d;
 	GDir        *dir;
 	const gchar *dirent;
-	gint         i = 0;
 	GError      *error = NULL;
 	gboolean     retval = FALSE;
 
 	dirs = panel_applets_manager_get_applets_dirs ();
-	while (dirs[i]) {
+	for (d = dirs; d; d = g_slist_next (d)) {
 		GFileMonitor *monitor;
 		GFile        *dir_file;
+		gchar        *path = (gchar *)d->data;
 
-		dir = g_dir_open (dirs[i], 0, &error);
+		dir = g_dir_open (path, 0, &error);
 		if (!dir) {
 			g_warning ("%s", error->message);
 			g_error_free (error);
+			g_free (path);
 
-			i++;
 			continue;
 		}
 
 		/* Monitor dir */
-		dir_file = g_file_new_for_path (dirs[i]);
+		dir_file = g_file_new_for_path (path);
 		monitor = g_file_monitor_directory (dir_file,
 						    G_FILE_MONITOR_NONE,
 						    NULL, NULL);
@@ -275,7 +286,7 @@ _panel_applets_manager_init (void)
 			if (!g_str_has_suffix (dirent, PANEL_APPLETS_EXTENSION))
 				continue;
 
-			file = g_build_filename (dirs[i], dirent, NULL);
+			file = g_build_filename (path, dirent, NULL);
 			info = panel_applets_manager_get_applet_factory_info_from_file (file);
 			g_free (file);
 
@@ -287,10 +298,10 @@ _panel_applets_manager_init (void)
 		}
 
 		g_dir_close (dir);
-		i++;
+		g_free (path);
 	}
 
-	g_strfreev (dirs);
+	g_slist_free (dirs);
 
 	return retval;
 }
