@@ -293,6 +293,11 @@ _panel_applets_manager_init (void)
 			if (!info)
 				continue;
 
+			if (g_hash_table_lookup (applet_factories, info->id)) {
+				panel_applet_factory_info_free (info);
+				continue;
+			}
+
 			g_hash_table_insert (applet_factories, g_strdup (info->id), info);
 			retval = TRUE;
 		}
