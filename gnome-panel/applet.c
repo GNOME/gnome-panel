@@ -57,7 +57,7 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 	case PANEL_OBJECT_LAUNCHER:
 		panel_launcher_set_dnd_enabled (info->data, dnd_enabled);
 		break;
-	case PANEL_OBJECT_BONOBO:
+	case PANEL_OBJECT_APPLET:
 		break;
 	case PANEL_OBJECT_LOGOUT:
 	case PANEL_OBJECT_LOCK:
@@ -194,7 +194,7 @@ panel_applet_locked_change_notify (GConfClient *client,
 
 	panel_applet_toggle_locked (info);
 
-	if (info->type == PANEL_OBJECT_BONOBO)
+	if (info->type == PANEL_OBJECT_APPLET)
 		panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (info->widget));
 	else
 		panel_applet_recreate_menu (info);
@@ -268,7 +268,7 @@ applet_callback_callback (GtkWidget      *widget,
 			PANEL_MENU_BAR (menu->info->widget), menu->name);
 		break;
 
-	case PANEL_OBJECT_BONOBO:
+	case PANEL_OBJECT_APPLET:
 		/*
 		 * Applet's menu's are handled differently
 		 */
@@ -692,7 +692,7 @@ applet_do_popup_menu (GtkWidget      *widget,
 	if (panel_applet_is_in_drag ())
 		return FALSE;
 
-	if (info->type == PANEL_OBJECT_BONOBO)
+	if (info->type == PANEL_OBJECT_APPLET)
 		return FALSE;
 
 	applet_show_menu (info, event);
@@ -753,7 +753,7 @@ panel_applet_destroy (GtkWidget  *widget,
 		}
 	}
 
-	if (info->type != PANEL_OBJECT_BONOBO)
+	if (info->type != PANEL_OBJECT_APPLET)
 		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menu),
 					      info);
 
@@ -919,7 +919,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	}
 
 	switch (applet->type) {
-	case PANEL_OBJECT_BONOBO:
+	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_load_from_gconf (
 					panel_widget,
 					applet->locked,
@@ -983,7 +983,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	}
 
 	/* Only the bonobo applets will do a late stop_loading */
-	if (applet->type != PANEL_OBJECT_BONOBO)
+	if (applet->type != PANEL_OBJECT_APPLET)
 		panel_applet_stop_loading (applet->id);
 
 	return TRUE;
@@ -1135,7 +1135,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	client  = panel_gconf_get_client ();
 
-	key_type = applet_info->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	key_type = applet_info->type == PANEL_OBJECT_APPLET ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 	
 	panel_widget = PANEL_WIDGET (applet_info->widget->parent);
 
@@ -1277,11 +1277,11 @@ panel_applet_register (GtkWidget       *applet,
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
-	if (type != PANEL_OBJECT_BONOBO)
+	if (type != PANEL_OBJECT_APPLET)
 		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menu),
 					   info);
 
-	key = panel_gconf_full_key ((type == PANEL_OBJECT_BONOBO) ?
+	key = panel_gconf_full_key ((type == PANEL_OBJECT_APPLET) ?
 				     PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS,
 				    id, "locked");
 	panel_gconf_notify_add_while_alive (key,
@@ -1347,7 +1347,7 @@ panel_applet_register (GtkWidget       *applet,
 	size_change (info, panel);
 	back_change (info, panel);
 
-	if (type != PANEL_OBJECT_BONOBO)
+	if (type != PANEL_OBJECT_APPLET)
 		gtk_widget_grab_focus (applet);
 	else
 		gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
@@ -1380,7 +1380,7 @@ panel_applet_can_freely_move (AppletInfo *applet)
 
 	client  = panel_gconf_get_client ();
 	
-	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
        
 	key = panel_gconf_full_key (key_type, applet->id, "position");
 	if (!gconf_client_key_is_writable (client, key, NULL))
@@ -1409,7 +1409,7 @@ panel_applet_lockable (AppletInfo *applet)
 	
 	client  = panel_gconf_get_client ();
 	
-	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 
 	key = panel_gconf_full_key (key_type, applet->id, "locked");
 

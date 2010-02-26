@@ -99,7 +99,7 @@ static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_DRAWER,    "drawer-object" },
 	{ PANEL_OBJECT_MENU,      "menu-object" },
 	{ PANEL_OBJECT_LAUNCHER,  "launcher-object" },
-	{ PANEL_OBJECT_BONOBO,    "bonobo-applet" },
+	{ PANEL_OBJECT_APPLET,    "bonobo-applet" },
 	{ PANEL_OBJECT_ACTION,    "action-applet" },
 	{ PANEL_OBJECT_MENU_BAR,  "menu-bar" },
 	{ PANEL_OBJECT_SEPARATOR, "separator" },
@@ -1870,7 +1870,7 @@ panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 	char              *id;
 	char              *dir;
 
-	key_type = (object_type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	key_type = (object_type == PANEL_OBJECT_APPLET) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 
 	client  = panel_gconf_get_client ();
 
@@ -1919,7 +1919,7 @@ panel_profile_delete_object (AppletInfo *applet_info)
 	PanelGConfKeyType  type;
 	const char        *id;
 
-	type = (applet_info->type) == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS :
+	type = (applet_info->type) == PANEL_OBJECT_APPLET ? PANEL_GCONF_APPLETS :
 							    PANEL_GCONF_OBJECTS;
 	id = panel_applet_get_id (applet_info);
 
@@ -2218,8 +2218,8 @@ panel_profile_object_id_list_update (GConfClient       *client,
 	for (l = existing_applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
-		if ((type == PANEL_GCONF_APPLETS && info->type == PANEL_OBJECT_BONOBO) ||
-		    (type == PANEL_GCONF_OBJECTS && info->type != PANEL_OBJECT_BONOBO))
+		if ((type == PANEL_GCONF_APPLETS && info->type == PANEL_OBJECT_APPLET) ||
+		    (type == PANEL_GCONF_OBJECTS && info->type != PANEL_OBJECT_APPLET))
 			sublist = g_slist_prepend (sublist, info);
 	}
 

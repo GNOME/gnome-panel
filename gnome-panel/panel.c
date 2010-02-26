@@ -68,7 +68,7 @@ orientation_change (AppletInfo  *info,
 	orientation = panel_widget_get_applet_orientation (panel);
 
 	switch (info->type) {
-	case PANEL_OBJECT_BONOBO:
+	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_change_orientation (
 				PANEL_APPLET_FRAME (info->widget), orientation);
 		break;
@@ -128,7 +128,7 @@ void
 size_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	if (info->type == PANEL_OBJECT_BONOBO)
+	if (info->type == PANEL_OBJECT_APPLET)
 		panel_applet_frame_change_size (
 			PANEL_APPLET_FRAME (info->widget), panel->sz);
 }
@@ -155,7 +155,7 @@ back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
 	switch (info->type) {
-	case PANEL_OBJECT_BONOBO:
+	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_change_background (
 			PANEL_APPLET_FRAME (info->widget), panel->background.type);
 		break;

@@ -336,7 +336,7 @@ panel_applet_frame_activated (PanelAppletContainer       *container,
 	info = panel_applet_register (GTK_WIDGET (frame), GTK_WIDGET (frame),
 				      NULL, frame->priv->panel,
 				      frame_act->locked, frame_act->position,
-				      frame_act->exactpos, PANEL_OBJECT_BONOBO,
+				      frame_act->exactpos, PANEL_OBJECT_APPLET,
 				      frame_act->id);
 	frame->priv->applet_info = info;
 
@@ -459,7 +459,7 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 
 	client =  panel_gconf_get_client ();
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_BONOBO, toplevel, position, FALSE);
+	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position, FALSE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
 	gconf_client_set_string (client, key, iid, NULL);

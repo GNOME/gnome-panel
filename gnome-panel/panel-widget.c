@@ -2584,7 +2584,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
 	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
-	if (info && info->type == PANEL_OBJECT_BONOBO)
+	if (info && info->type == PANEL_OBJECT_APPLET)
 		panel_applet_frame_set_panel (PANEL_APPLET_FRAME (ad->applet), new_panel);
 
 	if (GTK_WIDGET_CAN_FOCUS (new_panel))

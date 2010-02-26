@@ -537,7 +537,7 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 	g_free (id);
 
 	/* window menu on far left corner */
-        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, 0, TRUE);
+        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_APPLET, toplevel_id, 0, TRUE);
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
         gconf_client_set_string (client, key, "OAFIID:GNOME_WindowMenuApplet", NULL);
