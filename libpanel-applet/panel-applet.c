@@ -396,7 +396,7 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
 	int	    num_children;
 
 	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (applet));
-	if (!GTK_WIDGET_REALIZED (toplevel))
+	if (!gtk_widget_get_realized (toplevel))
 		return None;
 
 	xwin = GDK_WINDOW_XID (toplevel->window);
@@ -605,7 +605,7 @@ container_has_focusable_child (GtkContainer *container)
 
 	for (t = list; t; t = t->next) {
 		child = GTK_WIDGET (t->data);
-		if (GTK_WIDGET_CAN_FOCUS (child)) {
+		if (gtk_widget_get_can_focus (child)) {
 			retval = TRUE;
 			break;
 		} else if (GTK_IS_CONTAINER (child)) {
@@ -709,7 +709,7 @@ panel_applet_button_press (GtkWidget      *widget,
 	PanelApplet *applet = PANEL_APPLET (widget);
 
 	if (!container_has_focusable_child (GTK_CONTAINER (applet))) {
-		if (!GTK_WIDGET_HAS_FOCUS (widget)) {
+		if (!gtk_widget_has_focus (widget)) {
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
 		}
@@ -803,7 +803,7 @@ panel_applet_size_allocate (GtkWidget     *widget,
 		child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
 		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
 
-		if (GTK_WIDGET_REALIZED (widget))
+		if (gtk_widget_get_realized (widget))
 			gdk_window_move_resize (widget->window,
 						allocation->x + GTK_CONTAINER (widget)->border_width,
 						allocation->y + GTK_CONTAINER (widget)->border_width,
@@ -842,7 +842,7 @@ panel_applet_expose (GtkWidget      *widget,
 	GTK_WIDGET_CLASS (panel_applet_parent_class)->expose_event (widget,
 								    event);
 
-        if (!GTK_WIDGET_HAS_FOCUS (widget))
+        if (!gtk_widget_has_focus (widget))
 		return FALSE;
 
 	/*
@@ -890,7 +890,7 @@ panel_applet_focus (GtkWidget        *widget,
 	}
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
-	if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
+	if (!previous_focus_child && !gtk_widget_has_focus (widget)) {
 		if (gtk_widget_get_has_tooltip (widget)) {
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
@@ -901,7 +901,7 @@ panel_applet_focus (GtkWidget        *widget,
 	ret = GTK_WIDGET_CLASS (panel_applet_parent_class)->focus (widget, dir);
 
 	if (!ret && !previous_focus_child) {
- 		if (!GTK_WIDGET_HAS_FOCUS (widget))  {
+		if (!gtk_widget_has_focus (widget))  {
 			/*
 			 * Applet does not have a widget which can focus so set
 			 * the focus on the applet unless it already had focus
@@ -996,7 +996,7 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
-	if (!GTK_WIDGET_REALIZED (applet))
+	if (!gtk_widget_get_realized (GTK_WIDGET (applet)))
 		return NULL;
 
 	display = gdk_display_get_default ();
@@ -1056,7 +1056,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 
 	retval = PANEL_NO_BACKGROUND;
 
-	if (!GTK_WIDGET_REALIZED (applet) || !applet->priv->background)
+	if (!gtk_widget_get_realized (GTK_WIDGET (applet)) || !applet->priv->background)
 		return retval;
 
 	elements = g_strsplit (applet->priv->background, ":", -1);

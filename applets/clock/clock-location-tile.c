@@ -546,7 +546,7 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 		gtk_widget_show (priv->current_marker);
 	}
 	else {
-		if (GTK_WIDGET_VISIBLE (priv->current_marker)) {
+		if (gtk_widget_get_visible (priv->current_marker)) {
 			gtk_widget_hide (priv->current_marker);
 			gtk_widget_hide (priv->current_button);
 			gtk_widget_show (priv->current_spacer);

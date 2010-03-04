@@ -261,7 +261,7 @@ icon_tip_show_next (IconTip *icontip)
 
   na_fixed_tip_set_markup (icontip->fixedtip, buffer->text);
 
-  if (!GTK_WIDGET_MAPPED (icontip->fixedtip))
+  if (!gtk_widget_get_mapped (icontip->fixedtip))
     gtk_widget_show (icontip->fixedtip);
 
   icontip->id = buffer->id;

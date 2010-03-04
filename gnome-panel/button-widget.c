@@ -378,7 +378,7 @@ button_widget_expose (GtkWidget         *widget,
 	button_widget = BUTTON_WIDGET (widget);
 	button = GTK_BUTTON (widget);
 	
-	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget))
+	if (!gtk_widget_get_visible (widget) || !gtk_widget_get_mapped (widget))
 		return FALSE;
 
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
@@ -396,7 +396,7 @@ button_widget_expose (GtkWidget         *widget,
 						  0.8,
 						  TRUE);
 	} else if (panel_global_config_get_highlight_when_over () && 
-		   (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
+		   (button->in_button || gtk_widget_has_focus (widget)))
 		pb = g_object_ref (button_widget->priv->pixbuf_hc);
 	else
 		pb = g_object_ref (button_widget->priv->pixbuf);
@@ -462,7 +462,7 @@ button_widget_expose (GtkWidget         *widget,
 				   widget->allocation.height - 1);
 	}
 
-	if (GTK_WIDGET_HAS_FOCUS (widget)) {
+	if (gtk_widget_has_focus (widget)) {
 		gint focus_width, focus_pad;
 		gint x, y, width, height;
 
@@ -527,7 +527,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 
 	widget->allocation = *allocation;
 
-	if (GTK_WIDGET_REALIZED (widget)) {
+	if (gtk_widget_get_realized (widget)) {
 		gdk_window_move_resize (button->event_window, 
 					allocation->x,
 					allocation->y,
@@ -724,7 +724,7 @@ button_widget_set_activatable (ButtonWidget *button,
 	if (button->priv->activatable != activatable) {
 		button->priv->activatable = activatable;
 
-		if (GTK_WIDGET_DRAWABLE (button))
+		if (gtk_widget_is_drawable (GTK_WIDGET (button)))
 			gtk_widget_queue_draw (GTK_WIDGET (button));
 
 		g_object_notify (G_OBJECT (button), "activatable");

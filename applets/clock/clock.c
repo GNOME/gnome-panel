@@ -326,7 +326,7 @@ clock_set_timeout (ClockData *cd,
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
 		    !cd->showseconds && 
-		    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)))
+		    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)))
  			timeouttime += 1000 * (59 - now % 60);
  	}
 
@@ -344,7 +344,7 @@ clock_timeout_callback (gpointer data)
         time (&new_time);
 
 	if (!cd->showseconds && 
-	    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)) &&
+	    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)) &&
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
 		if (cd->format == CLOCK_FORMAT_INTERNET &&
@@ -615,11 +615,11 @@ update_clock (ClockData * cd)
 	update_tooltip (cd);
         update_location_tiles (cd);
 
-        if (cd->map_widget && cd->calendar_popup && GTK_WIDGET_VISIBLE (cd->calendar_popup))
+        if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
                 clock_map_update_time (CLOCK_MAP (cd->map_widget));
 
 	if (cd->current_time_label &&
-	    GTK_WIDGET_VISIBLE (cd->current_time_label)) {
+	    gtk_widget_get_visible (cd->current_time_label)) {
 		utf8 = format_time_24 (cd);
 		gtk_label_set_text (GTK_LABEL (cd->current_time_label), utf8);
 		g_free (utf8);
@@ -1231,7 +1231,7 @@ update_calendar_popup (ClockData *cd)
                 create_map_section (cd);
         }
 
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->panel_button)) {
+        if (cd->calendar_popup && gtk_widget_get_realized (cd->panel_button)) {
 		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
 		position_calendar_popup (cd);
 		gtk_window_present (GTK_WINDOW (cd->calendar_popup));

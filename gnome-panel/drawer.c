@@ -419,7 +419,7 @@ drawer_button_size_allocated (GtkWidget     *widget,
 			      GtkAllocation *alloc,
 			      Drawer        *drawer)
 {
-	if (!GTK_WIDGET_REALIZED (widget))
+	if (!gtk_widget_get_realized (widget))
 		return;
 
 	gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));

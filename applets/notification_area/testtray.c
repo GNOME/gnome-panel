@@ -53,7 +53,7 @@ update_child_count (TrayData *data)
   guint n_children = 0;
   char text[64];
 
-  if (!GTK_WIDGET_REALIZED (data->window))
+  if (!gtk_widget_get_realized (data->window))
     return;
 
   gtk_container_foreach (GTK_CONTAINER (data->box), (GtkCallback) do_add, &n_children);

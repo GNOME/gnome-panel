@@ -144,7 +144,7 @@ na_tray_child_size_allocate (GtkWidget      *widget,
    * Fake transparency: if the widget moved, we need to force the contents to
    *   be redrawn with the new offset for the parent-relative background.
    */
-  if ((moved || resized) && GTK_WIDGET_MAPPED (widget))
+  if ((moved || resized) && gtk_widget_get_mapped (widget))
     {
       if (na_tray_child_has_alpha (child))
         gdk_window_invalidate_rect (gdk_window_get_parent (widget->window),
@@ -154,7 +154,7 @@ na_tray_child_size_allocate (GtkWidget      *widget,
   GTK_WIDGET_CLASS (na_tray_child_parent_class)->size_allocate (widget,
                                                                 allocation);
 
-  if ((moved || resized) && GTK_WIDGET_MAPPED (widget))
+  if ((moved || resized) && gtk_widget_get_mapped (widget))
     {
       if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
         gdk_window_invalidate_rect (gdk_window_get_parent (widget->window),
@@ -378,7 +378,7 @@ na_tray_child_set_composited (NaTrayChild *child,
     return;
 
   child->composited = composited;
-  if (GTK_WIDGET_REALIZED (child))
+  if (gtk_widget_get_realized (GTK_WIDGET (child)))
     gdk_window_set_composited (GTK_WIDGET (child)->window, composited);
 }
 
@@ -391,7 +391,7 @@ na_tray_child_force_redraw (NaTrayChild *child)
 {
   GtkWidget *widget = GTK_WIDGET (child);
 
-  if (GTK_WIDGET_MAPPED (child) && child->parent_relative_bg)
+  if (gtk_widget_get_mapped (widget) && child->parent_relative_bg)
     {
 #if 1
       /* Sending an ExposeEvent might cause redraw problems if the

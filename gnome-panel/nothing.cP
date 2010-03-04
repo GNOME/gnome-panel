@@ -80,8 +80,8 @@ goat_timeout_func(gpointer data)
 	int old_x;
 	int old_y;
 
-	if(!GTK_WIDGET_REALIZED(goat_darea) ||
-	   !GTK_WIDGET_DRAWABLE(goat_darea))
+	if(!gtk_widget_get_realized(goat_darea) ||
+	   !gtk_widget_is_drawable(goat_darea))
 		return TRUE;
 
 	if (!goat_pix[0] || !goat_pix[1]) {
@@ -167,7 +167,7 @@ goat_expose(GtkWidget *widget, GdkEventExpose *event)
 {
 	cairo_t *cr;
 
-	if(!GTK_WIDGET_DRAWABLE(widget))
+	if(!gtk_widget_is_drawable(widget))
 		return FALSE;
 
 	cr = gdk_cairo_create (goat_darea->window);
@@ -654,7 +654,7 @@ inv_draw (gpointer data)
 		return FALSE;
 	}
 
-	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas) ||
+	if ( ! gtk_widget_is_drawable (geginv_canvas) ||
 	    geginv_pixmap == NULL)
 		return TRUE;
 
@@ -765,7 +765,7 @@ inv_draw_explosion (int x, int y)
 	GdkColor red;
 	GdkGC *gc;
 
-	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas))
+	if ( ! gtk_widget_is_drawable (geginv_canvas))
 		return;
 
 	cmap = gdk_drawable_get_colormap (geginv_canvas->window);
@@ -1323,7 +1323,7 @@ geginv_realized (GtkWidget *w, gpointer data)
 static gboolean
 inv_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	if ( ! GTK_WIDGET_DRAWABLE (widget) ||
+	if ( ! gtk_widget_is_drawable (widget) ||
 	    geginv_pixmap == NULL)
 		return FALSE;
 

@@ -70,7 +70,7 @@ static gboolean
 panel_separator_expose_event (GtkWidget      *widget,
 			      GdkEventExpose *event)
 {
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if (gtk_widget_is_drawable (widget)) {
 		GTK_WIDGET_CLASS (panel_separator_parent_class)->expose_event (widget, event);
 
 		panel_separator_paint (widget, &event->area);

@@ -258,7 +258,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	widget = GTK_WIDGET (toplevel);
 
-	if (!GTK_WIDGET_REALIZED (widget))
+	if (!gtk_widget_get_realized (widget))
 		return;
 
 	if (!(strut = panel_struts_find_strut (toplevel))) {
@@ -321,7 +321,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 void
 panel_struts_unset_window_hint (PanelToplevel *toplevel)
 {
-	if (!GTK_WIDGET_REALIZED (toplevel))
+	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		return;
 
 	panel_xutils_set_strut (GTK_WIDGET (toplevel)->window, 0, 0, 0, 0);

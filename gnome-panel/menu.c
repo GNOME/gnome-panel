@@ -191,7 +191,7 @@ reload_image_menu_items (void)
 		GtkWidget *image = l->data;
 		gboolean   is_mapped;
       
-		is_mapped = GTK_WIDGET_MAPPED (image);
+		is_mapped = gtk_widget_get_mapped (image);
 
 		if (is_mapped)
 			gtk_widget_unmap (image);
@@ -445,7 +445,7 @@ menu_item_style_set (GtkImage *image,
 
 	widget = GTK_WIDGET (image);
 
-	is_mapped = GTK_WIDGET_MAPPED (widget);
+	is_mapped = gtk_widget_get_mapped (widget);
 	if (is_mapped)
 		gtk_widget_unmap (widget);
 
@@ -515,7 +515,7 @@ load_icons_handler_again:
 	icons_to_load = g_list_delete_link (icons_to_load, icons_to_load);
 
 	/* if not visible anymore, just ignore */
-	if ( ! GTK_WIDGET_VISIBLE (icon->pixmap)) {
+	if ( ! gtk_widget_get_visible (icon->pixmap)) {
 		icon_to_load_free (icon);
 		/* we didn't do anything long/hard, so just do this again,
 		 * this is fun, don't go back to main loop */
@@ -827,7 +827,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 		GtkWidget *tmp = parent;
 
 		while (tmp) {
-			if (!GTK_WIDGET_MAPPED (tmp)) {
+			if (!gtk_widget_get_mapped (tmp)) {
 				viewable = FALSE;
 				break;
 			}
@@ -1039,7 +1039,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       
       while (tmp)
 	{
-	  if (!GTK_WIDGET_MAPPED (tmp))
+	  if (!gtk_widget_get_mapped (tmp))
 	    {
 	      viewable = FALSE;
 	      break;

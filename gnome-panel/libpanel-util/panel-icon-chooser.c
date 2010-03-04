@@ -374,7 +374,7 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	}
 
 	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (button));
-	if (GTK_WIDGET_TOPLEVEL (toplevel))
+	if (gtk_widget_is_toplevel (toplevel))
 		parent = GTK_WINDOW (toplevel);
 	else
 		parent = NULL;

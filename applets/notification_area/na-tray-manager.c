@@ -545,7 +545,7 @@ na_tray_manager_unmanage (NaTrayManager *manager)
 
   invisible = manager->invisible;
   g_assert (GTK_IS_INVISIBLE (invisible));
-  g_assert (GTK_WIDGET_REALIZED (invisible));
+  g_assert (gtk_widget_get_realized (invisible));
   g_assert (GDK_IS_WINDOW (invisible->window));
   
   display = gtk_widget_get_display (invisible);
