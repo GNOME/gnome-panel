@@ -1498,14 +1498,18 @@ create_menuitem (GtkWidget          *menu,
 			alias_directory ? gmenu_tree_directory_get_name (alias_directory) :
 					  gmenu_tree_entry_get_display_name (entry));
 
-	if ((alias_directory &&
-	     gmenu_tree_directory_get_comment (alias_directory)) ||
-	    (!alias_directory &&
-	     gmenu_tree_entry_get_comment (entry)))
+	if (alias_directory &&
+	    gmenu_tree_directory_get_comment (alias_directory))
 		panel_util_set_tooltip_text (menuitem,
-					     alias_directory ?
-						gmenu_tree_directory_get_comment (alias_directory) :
-						gmenu_tree_entry_get_comment (entry));
+					     gmenu_tree_directory_get_comment (alias_directory));
+	else if	(!alias_directory &&
+		 gmenu_tree_entry_get_comment (entry))
+		panel_util_set_tooltip_text (menuitem,
+					     gmenu_tree_entry_get_comment (entry));
+	else if	(!alias_directory &&
+		 gmenu_tree_entry_get_generic_name (entry))
+		panel_util_set_tooltip_text (menuitem,
+					     gmenu_tree_entry_get_generic_name (entry));
 
 	g_signal_connect_after (menuitem, "button_press_event",
 				G_CALLBACK (menuitem_button_press_event), NULL);
