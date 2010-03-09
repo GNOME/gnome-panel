@@ -1174,7 +1174,7 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 
 	ad = list->data;
 	do { 
-		i = ad->constrained;
+		i = ad->pos;
 		ad->pos = ad->constrained = pos--;
 		ad->cells = 1;
 		prev = list;
@@ -1182,7 +1182,7 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 		if(!list)
 			break;
 		ad = list->data;
-	} while(ad->constrained + ad->cells == i);
+	} while(ad->pos + ad->cells == i);
 
 	for (list = prev; list; list = list->next)
 		emit_applet_moved (panel, list->data);
