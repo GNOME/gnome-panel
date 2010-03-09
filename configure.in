@@ -39,7 +39,7 @@ GNOME_COMPILE_WARNINGS(maximum)
 
 AC_ARG_ENABLE(deprecations,
               [AC_HELP_STRING([--enable-deprecations],
-                              [warn about deprecated usages [default=no]])],,
+                              [warn about deprecated usages @<:@default=no@:>@])],,
               [enable_deprecations=no])
 
 if test "x$enable_deprecations" = "xyes"; then
@@ -99,6 +99,7 @@ AC_ARG_ENABLE(eds,
 		[Enable evolution-data-server dependencies @<:@default=auto@:>@]
 	),,enable_eds=auto)
 LIBECAL_REQUIREMENT=
+HAVE_EDS=no
 if test "x$enable_eds" = "xyes"; then
   LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
   CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
@@ -109,6 +110,7 @@ else
        AC_MSG_RESULT(yes)
        LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
        CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
+       HAVE_EDS=yes
     else
        AC_MSG_RESULT(no)
     fi
@@ -219,6 +221,9 @@ for i in $PANEL_INPROCESS_APPLETS; do
 		[Defined when compiling the wncklet applet in-process])
 	fi; fi; fi; fi
 done
+if test "x$PANEL_INPROCESS_APPLETS" = "x"; then
+	PANEL_INPROCESS_APPLETS="(none)"
+fi
 
 AM_CONDITIONAL(CLOCK_INPROCESS, test -n "$CLOCK_COMPILE_INPROCESS")
 AM_CONDITIONAL(FISH_INPROCESS, test -n "$FISH_COMPILE_INPROCESS")
@@ -257,6 +262,9 @@ dnl X RANDR extension
 
 if $PKG_CONFIG --exists "xrandr >= 1.2.0" ; then
 	AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
+	have_randr=yes
+else
+	have_randr=no
 fi
 
 dnl IDL directories
@@ -354,3 +362,34 @@ echo "         locales to fail. For full support please upgrade to GNU"
 echo "         gettext 0.12 or later."
 echo
 fi
+
+dnl ---------------------------------------------------------------------------
+dnl - Show summary
+dnl ---------------------------------------------------------------------------
+
+echo "
+              gnome-panel $VERSION
+              `echo gnome-panel $VERSION | sed "s/./=/g"`
+
+        prefix:                        ${prefix}
+        exec_prefix:                   ${exec_prefix}
+        libdir:                        ${libdir}
+        bindir:                        ${bindir}
+        sbindir:                       ${sbindir}
+        sysconfdir:                    ${sysconfdir}
+        localstatedir:                 ${localstatedir}
+        datadir:                       ${datadir}
+        source code location:          ${srcdir}
+        compiler:                      ${CC}
+        cflags:                        ${CFLAGS}
+        Maintainer mode:               ${USE_MAINTAINER_MODE}
+        Warn about deprecations:       ${enable_deprecations}
+
+        Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
+        Evolution-Data-Server support: ${HAVE_EDS}
+        PolicyKit support:             ${HAVE_POLKIT}
+        NetworkManager support:        ${HAVE_NETWORK_MANAGER}
+        XRandr support:                ${have_randr}
+        Build gtk-doc documentation:   ${enable_gtk_doc}
+
+"
