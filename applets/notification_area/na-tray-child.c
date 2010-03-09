@@ -428,3 +428,88 @@ na_tray_child_force_redraw (NaTrayChild *child)
 #endif
     }
 }
+
+/* from libwnck/xutils.c, comes as LGPLv2+ */
+static char *
+latin1_to_utf8 (const char *latin1)
+{
+  GString *str;
+  const char *p;
+
+  str = g_string_new (NULL);
+
+  p = latin1;
+  while (*p)
+    {
+      g_string_append_unichar (str, (gunichar) *p);
+      ++p;
+    }
+
+  return g_string_free (str, FALSE);
+}
+
+/* derived from libwnck/xutils.c, comes as LGPLv2+ */
+static void
+_get_wmclass (Display *xdisplay,
+              Window   xwindow,
+              char   **res_class,
+              char   **res_name)
+{
+  XClassHint ch;
+
+  ch.res_name = NULL;
+  ch.res_class = NULL;
+
+  gdk_error_trap_push ();
+  XGetClassHint (xdisplay, xwindow, &ch);
+  gdk_error_trap_pop ();
+
+  if (res_class)
+    *res_class = NULL;
+
+  if (res_name)
+    *res_name = NULL;
+
+  if (ch.res_name)
+    {
+      if (res_name)
+        *res_name = latin1_to_utf8 (ch.res_name);
+
+      XFree (ch.res_name);
+    }
+
+  if (ch.res_class)
+    {
+      if (res_class)
+        *res_class = latin1_to_utf8 (ch.res_class);
+
+      XFree (ch.res_class);
+    }
+}
+
+/**
+ * na_tray_child_get_wm_class;
+ * @child: a #NaTrayChild
+ * @res_name: return location for a string containing the application name of
+ * @child, or %NULL
+ * @res_class: return location for a string containing the application class of
+ * @child, or %NULL
+ *
+ * Fetches the resource associated with @child.
+ */
+void
+na_tray_child_get_wm_class (NaTrayChild  *child,
+                            char        **res_name,
+                            char        **res_class)
+{
+  GdkDisplay *display;
+
+  g_return_if_fail (NA_IS_TRAY_CHILD (child));
+
+  display = gtk_widget_get_display (GTK_WIDGET (child));
+
+  _get_wmclass (GDK_DISPLAY_XDISPLAY (display),
+                child->icon_window,
+                res_class,
+                res_name);
+}

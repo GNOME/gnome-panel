@@ -117,6 +117,105 @@ get_tray (TraysScreen *trays_screen)
   return trays_screen->all_trays->data;
 }
 
+const char *ordered_roles[] = {
+  "keyboard",
+  "volume",
+  "bluetooth",
+  "network",
+  "battery",
+  NULL
+};
+
+const char *wmclass_roles[] = {
+  "Bluetooth-applet", "bluetooth",
+  "Gnome-volume-control-applet", "volume",
+  "Nm-applet", "network",
+  "Gnome-power-manager", "battery",
+  "keyboard", "keyboard",
+  NULL,
+};
+
+static const char *
+find_role (const char *wmclass)
+{
+  int i;
+
+  for (i = 0; wmclass_roles[i]; i += 2)
+    {
+      if (strcmp (wmclass, wmclass_roles[i]) == 0)
+        return wmclass_roles[i + 1];
+    }
+
+  return NULL;
+}
+
+static int
+find_role_position (const char *role)
+{
+  int i;
+
+  for (i = 0; ordered_roles[i]; i++)
+    {
+      if (strcmp (role, ordered_roles[i]) == 0)
+        break;
+    }
+
+  return i + 1;
+}
+
+static int
+find_icon_position (NaTray    *tray,
+                    GtkWidget *icon)
+{
+  NaTrayPrivate *priv;
+  int            position;
+  char          *class_a;
+  const char    *role;
+  int            role_position;
+  GList         *l, *children;
+
+  /* We insert the icons with a known roles in a specific order (the one
+   * defined by ordered_roles), and all other icons at the beginning of the box
+   * (left in LTR). */
+
+  priv = tray->priv;
+  position = 0;
+
+  class_a = NULL;
+  na_tray_child_get_wm_class (NA_TRAY_CHILD (icon), NULL, &class_a);
+  if (!class_a)
+    return position;
+
+  role = find_role (class_a);
+  g_free (class_a);
+  if (!role)
+    return position;
+
+  role_position = find_role_position (role);
+  g_object_set_data (G_OBJECT (icon), "role-position", GINT_TO_POINTER (role_position));
+
+  children = gtk_container_get_children (GTK_CONTAINER (priv->box));
+  for (l = g_list_last (children); l; l = l->prev)
+    {
+      GtkWidget *child = l->data;
+      int        rp;
+
+      rp = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (child), "role-position"));
+      if (rp == 0 || rp < role_position)
+        {
+          position = g_list_index (children, child) + 1;
+          break;
+        }
+    }
+  g_list_free (children);
+
+  /* should never happen, but it doesn't hurt to be on the safe side */
+  if (position < 0)
+    position = 0;
+
+  return position;
+}
+
 static void
 tray_added (NaTrayManager *manager,
             GtkWidget     *icon,
@@ -124,6 +223,7 @@ tray_added (NaTrayManager *manager,
 {
   NaTray *tray;
   NaTrayPrivate *priv;
+  int position;
 
   tray = get_tray (trays_screen);
   if (tray == NULL)
@@ -132,10 +232,12 @@ tray_added (NaTrayManager *manager,
   priv = tray->priv;
 
   g_assert (priv->trays_screen == trays_screen);
-  
+
   g_hash_table_insert (trays_screen->icon_table, icon, tray);
 
-  gtk_box_pack_end (GTK_BOX (priv->box), icon, FALSE, FALSE, 0);
+  position = find_icon_position (tray, icon);
+  gtk_box_pack_start (GTK_BOX (priv->box), icon, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (priv->box), icon, position);
 
   gtk_widget_show (icon);
 }
