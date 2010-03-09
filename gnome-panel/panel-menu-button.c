@@ -349,7 +349,6 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 
 	GTK_BUTTON (button)->in_button = FALSE;
 	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
-	g_signal_emit_by_name (GTK_BUTTON (button), "button-release-event");
 }
 
 static void 
