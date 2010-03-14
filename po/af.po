@@ -2,21 +2,22 @@
 # Copyright (C) 2004 Zuza Software Foundation
 # This file is distributed under the same license as the gnome-panel package.
 # Zuza Software Foundation <info@translate.org.za>, 2004
-# F Wolff <friedel@translate.org.za>, 2008
+# F Wolff <friedel@translate.org.za>, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.6-branch\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-02 14:23+0100\n"
-"PO-Revision-Date: 2008-03-02 14:33+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
+"POT-Creation-Date: 2010-03-13 13:25+0000\n"
+"PO-Revision-Date: 2010-03-14 01:17+0100\n"
 "Last-Translator: F Wolff <friedel@translate.org.za>\n"
-"Language-Team: Afrikaans localisation list <translate-discuss-af@lists."
-"sourceforge.net>\n"
+"Language-Team: translate-discuss-af@lists.sourceforge.net\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: VirTaal 0.1\n"
+"X-Generator: Virtaal 0.5.2\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -47,9 +48,9 @@ msgstr "_Aangaande"
 #: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:709
-#: ../gnome-panel/panel-context-menu.c:280 ../gnome-panel/panel-menu-bar.c:334
-#: ../gnome-panel/panel-menu-button.c:659
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
+#: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -61,7 +62,7 @@ msgid "_Preferences"
 msgstr "_Voorkeure"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:4106
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "Horlosie"
 
@@ -77,75 +78,104 @@ msgstr "Fabriek vir die skep van horlosie-miniprogramme."
 msgid "Get the current time and date"
 msgstr "Vind die huidige tyd en datum"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:421
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:423
-#: ../applets/clock/clock.c:1553 ../applets/clock/clock-location-tile.c:485
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:250
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:765
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "Take"
 
-#: ../applets/clock/calendar-window.c:765
-#: ../applets/clock/calendar-window.c:938
-#: ../applets/clock/calendar-window.c:1554
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
-msgstr "Wysig"
+msgstr "Redigeer"
 
-#: ../applets/clock/calendar-window.c:883
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "Hele dag"
 
-#: ../applets/clock/calendar-window.c:1019
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "Afsprake"
 
-#: ../applets/clock/calendar-window.c:1044
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "Verjaarsdae en herdenkings"
 
-#: ../applets/clock/calendar-window.c:1069
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "Weerinligting"
 
-#: ../applets/clock/calendar-window.c:1554 ../applets/clock/clock.glade.h:17
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Liggings"
 
-#: ../applets/clock/calendar-window.c:1850
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "Kalender"
 
-#: ../applets/clock/clock.c:421
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:423 ../applets/clock/clock.c:1551
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:443
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -153,7 +183,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -166,255 +196,257 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:458
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%2$s, %1$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:640
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik om u afsprake en take te versteek"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "Klik om u afsprake en take te wys"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "Klik om die maandkalender te versteek"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Klik om die maandkalender te wys"
 
-#: ../applets/clock/clock.c:1401
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "Rekenaarhorlosie"
 
-#: ../applets/clock/clock.c:1546
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1548
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1590
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: ../applets/clock/clock.c:1665
-#, c-format
-msgid "Failed to launch time configuration tool: %s"
-msgstr "Kon nie tydopstellingsprogram laai nie: %s"
-
-#: ../applets/clock/clock.c:1694
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "Verstel stelseltyd..."
 
-#: ../applets/clock/clock.c:1695 ../applets/clock/clock.glade.h:21
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "Verstel stelseltyd"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "Kon nie stelseltyd verstel nie"
 
-#: ../applets/clock/clock.c:1882
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
-"'n Program om die datum en tyd op te stel kon nie gevind word nie. Miskien "
-"is daar nie een geïnstalleer nie?"
-
-#: ../applets/clock/clock.c:2751
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "Pasgemaakte formaat"
 
-#: ../applets/clock/clock.c:3549 ../applets/clock/clock-location.c:381
-#: ../applets/clock/clock-location-tile.c:584
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
+#: ../applets/clock/clock.c:3194
+msgid "Choose Location"
+msgstr "Kies ligging"
 
-#: ../applets/clock/clock.c:3807
+#: ../applets/clock/clock.c:3273
+msgid "Edit Location"
+msgstr "Redigeer ligging"
+
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "Stadnaam"
 
-#: ../applets/clock/clock.c:3811
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "Stad se tydsone"
 
-#: ../applets/clock/clock.c:4002
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "24-uur"
 
-#: ../applets/clock/clock.c:4003
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "UNIX-tyd"
 
-#: ../applets/clock/clock.c:4004
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "Internettyd"
 
-#: ../applets/clock/clock.c:4012
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "Pasgemaakte _formaat:"
 
-#: ../applets/clock/clock.c:4109
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "Die Horlosie wys die huidige tyd en datum"
 
 #. Translator credits
-#: ../applets/clock/clock.c:4112 ../applets/fish/fish.c:588
-#: ../applets/notification_area/main.c:140
-#: ../applets/wncklet/showdesktop.c:533 ../applets/wncklet/window-list.c:605
-#: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:620
-#: ../gnome-panel/panel-context-menu.c:134
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
+#: ../applets/notification_area/main.c:155
+#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
+#: ../applets/wncklet/window-menu.c:79
+#: ../applets/wncklet/workspace-switcher.c:621
+#: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr ""
 "Zuza Sagtewarestigting (http://translate.org.za)\n"
 "Friedel Wolff"
 
-#: ../applets/clock/clock.glade.h:1
-msgid "12 _hour format"
-msgstr "_12-uur-formaat"
-
-#: ../applets/clock/clock.glade.h:2
-msgid "24 h_our format"
-msgstr "2_4-uur-formaat"
-
-#: ../applets/clock/clock.glade.h:3
-msgid "<b>Clock Options</b>"
-msgstr "<b>Horlosie-keuses</b>"
-
-#: ../applets/clock/clock.glade.h:4
-msgid "<b>Display</b>"
-msgstr "<b>Aansig</b>"
-
-#: ../applets/clock/clock.glade.h:5
-msgid "<b>Panel Display</b>"
-msgstr "<b>Paneel-aansig</b>"
-
-#: ../applets/clock/clock.glade.h:6
-msgid "<b>Time Settings</b>"
-msgstr "<b>Tyd-verstellings</b>"
-
-#: ../applets/clock/clock.glade.h:7
+#: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
 msgstr "<i>(opsioneel)</i>"
 
-#: ../applets/clock/clock.glade.h:8
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Tik'n stad, streek of landnaam en kies die een wat pas uit die "
+"opspringlys.</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "Horlosieformaat"
+
+#: ../applets/clock/clock.ui.h:5
 msgid "Clock Preferences"
 msgstr "Horlosievoorkeure"
 
-#: ../applets/clock/clock.glade.h:9
+#: ../applets/clock/clock.ui.h:6
 msgid "Current Time:"
 msgstr "Huidige tyd:"
 
-#: ../applets/clock/clock.glade.h:10
-msgid ""
-"East\n"
-"West"
-msgstr ""
-"Oos\n"
-"Wes"
+#: ../applets/clock/clock.ui.h:7
+msgid "Display"
+msgstr "Aansig"
 
-#: ../applets/clock/clock.glade.h:12
-msgid "Find _Next"
-msgstr "Soek _volgende"
+#: ../applets/clock/clock.ui.h:8
+msgid "East"
+msgstr "Oos"
 
-#: ../applets/clock/clock.glade.h:13
-msgid "Find..."
-msgstr "Soek..."
-
-#: ../applets/clock/clock.glade.h:14
-#: ../gnome-panel/panel-properties-dialog.glade.h:9
+#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Algemeen"
 
-#: ../applets/clock/clock.glade.h:15
-msgid "Latitude:"
-msgstr "Breedtegraad:"
+#: ../applets/clock/clock.ui.h:10
+msgid "L_atitude:"
+msgstr "B_reedtegraad:"
 
-#: ../applets/clock/clock.glade.h:16
-msgid "Location Name:"
-msgstr "Ligging se naam:"
+#: ../applets/clock/clock.ui.h:11
+msgid "L_ongitude:"
+msgstr "L_engtegraad:"
 
-#: ../applets/clock/clock.glade.h:18
-msgid "Longitude:"
-msgstr "Lengtegraad"
+#: ../applets/clock/clock.ui.h:13
+msgid "North"
+msgstr "Noord"
 
-#: ../applets/clock/clock.glade.h:19
-msgid ""
-"North\n"
-"South"
-msgstr ""
-"Noord\n"
-"Suid"
+#: ../applets/clock/clock.ui.h:14
+msgid "Panel Display"
+msgstr "Paneel-aansig"
 
-#: ../applets/clock/clock.glade.h:22
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _temperature"
 msgstr "Wys _temperatuur"
 
-#: ../applets/clock/clock.glade.h:23
+#: ../applets/clock/clock.ui.h:16
 msgid "Show _weather"
 msgstr "Wys _weer"
 
-#: ../applets/clock/clock.glade.h:24
+#: ../applets/clock/clock.ui.h:17
 msgid "Show seco_nds"
 msgstr "Wys _sekondes"
 
-#: ../applets/clock/clock.glade.h:25
+#: ../applets/clock/clock.ui.h:18
 msgid "Show the _date"
 msgstr "Wys die _datum"
 
-#: ../applets/clock/clock.glade.h:26
-msgid "Time Settings"
-msgstr "Tyd-verstellings"
+#: ../applets/clock/clock.ui.h:19
+msgid "South"
+msgstr "Suid"
 
-#: ../applets/clock/clock.glade.h:27
+#: ../applets/clock/clock.ui.h:20
+msgid "Time & Date"
+msgstr "Tyd en datum"
+
+#: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
 msgstr "Tyd-_verstellings"
 
-#: ../applets/clock/clock.glade.h:28
-msgid "Time:"
-msgstr "Tyd:"
-
-#: ../applets/clock/clock.glade.h:29
-msgid "Timezone:"
-msgstr "Tydsone:"
-
-#: ../applets/clock/clock.glade.h:30
+#: ../applets/clock/clock.ui.h:22
 msgid "Weather"
 msgstr "Weer"
 
-#: ../applets/clock/clock.glade.h:31
-msgid "_Find:"
-msgstr "_Soek:"
+#: ../applets/clock/clock.ui.h:23
+msgid "West"
+msgstr "Wes"
 
-#: ../applets/clock/clock.glade.h:32
+#: ../applets/clock/clock.ui.h:24
+msgid "_12 hour format"
+msgstr "12-_uur-formaat"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_24 hour format"
+msgstr "_24-uur-formaat"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Location Name:"
+msgstr "_Ligging se naam:"
+
+#: ../applets/clock/clock.ui.h:27
 msgid "_Pressure unit:"
 msgstr "_Lugdruk-eenheid:"
 
-#: ../applets/clock/clock.glade.h:33
+#: ../applets/clock/clock.ui.h:28
+msgid "_Set System Time"
+msgstr "Verstel _stelseltyd"
+
+#: ../applets/clock/clock.ui.h:29
 msgid "_Temperature unit:"
 msgstr "_Temperatuur-eenheid:"
 
-#: ../applets/clock/clock.glade.h:34
+#: ../applets/clock/clock.ui.h:30
+msgid "_Time:"
+msgstr "_Tyd:"
+
+#: ../applets/clock/clock.ui.h:31
+msgid "_Timezone:"
+msgstr "_Tydsone:"
+
+#: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
 msgstr "_Sig-eenheid:"
 
-#: ../applets/clock/clock.glade.h:35
+#: ../applets/clock/clock.ui.h:33
 msgid "_Wind speed unit:"
 msgstr "_Windspoed-eenheid:"
 
@@ -478,93 +510,110 @@ msgid "If true, display seconds in time."
 msgstr "Indien as waar gemerk, vertoon die sekondes in die tyd."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr ""
-"Indien as waar gemerk, vertoon die tyd in Universele Gekoördineerde Tyd "
-"(UTC)."
-
-#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Indien as waar gemerk, vou die afspraaklys oop in die kalendervenster."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr ""
 "Indien as waar gemerk, vou die verjaardaglys oop in die kalendervenster."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Indien as waar gemerk, vou die liggingslys oop in die kalendervenster."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Indien as waar gemerk, vou die taaklys oop in die kalendervenster."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
 "Indien as waar gemerk, vou die lys met weerinligting oop in die "
 "kalendervenser."
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Indien as waar gemerk, wys die datum in 'n wyserwenk wanneer die wyser oor "
 "die horlosie is."
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
 msgstr "Indien as waar gemerk, wys die temperatuur langs die weerikoon."
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show week numbers in the calendar."
 msgstr "Indien as waar gemerk, wys weeknommers in die kalender."
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "List of locations"
 msgstr "Lys van liggings"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
 msgstr "Wys die datum in die horlosie"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in tooltip"
 msgstr "Wys die datum in die wyserwenk"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show temperature in clock"
 msgstr "Wys die temperatuur in die horlosie"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Show time with seconds"
 msgstr "Wys die tyd saam met die sekondes"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show weather in clock"
 msgstr "Wys die weer in die horlosie"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Show week numbers in calendar"
 msgstr "Vertoon weeknommmers in kalender"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Speed unit"
 msgstr "Spoedeenheid"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "Temperatuur-eenheid"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
 msgstr "Die eenheid om te gebruik om temperature te wys."
 
-#: ../applets/clock/clock.schemas.in.h:42
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing wind speed."
 msgstr "Die eenheid om te gebruik om windspoed te wys."
 
+#: ../applets/clock/clock.schemas.in.h:42
+#, fuzzy
+#| msgid ""
+#| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#| "key. The schema is retained for compatibility with older versions."
+msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Die gebruik van hierdie sleutel is in GNOME 2.6 afgekeur ten gunste van die "
+"'formaat'-sleutel. Die skema is behou om versoenbaar te wees met ouer "
+"weergawes."
+
 #: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Die gebruik van hierdie sleutel is in GNOME 2.28 afgekeur ten gunste van die "
+"gebruik van tydsones. Die skema is behou om versoenbaar te wees met ouer "
+"weergawes."
+
+#: ../applets/clock/clock.schemas.in.h:44
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -573,7 +622,7 @@ msgstr ""
 "'formaat'-sleutel. Die skema is behou om versoenbaar te wees met ouer "
 "weergawes."
 
-#: ../applets/clock/clock.schemas.in.h:44
+#: ../applets/clock/clock.schemas.in.h:45
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -586,7 +635,7 @@ msgstr ""
 "om 'n spesifieke formaat te bekom. Seen die handleiding vir strftime() vir "
 "meer inligting."
 
-#: ../applets/clock/clock.schemas.in.h:45
+#: ../applets/clock/clock.schemas.in.h:46
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -607,12 +656,6 @@ msgstr ""
 "die tyd vertoon volgens die formaat wat in die custom_format-sleutel "
 "gespesifiseer is."
 
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the program to run in order to configure the time."
-msgstr ""
-"Hierdie sleutel spesifiseer die program wat geloop moet word om die tyd op "
-"te stel."
-
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
 msgstr "Tydopstellingnutsprogram"
@@ -629,173 +672,117 @@ msgstr "Gebruik UNIX-tyd"
 msgid "Use UTC"
 msgstr "Gebruik UTC"
 
-#. make a fake location with a null TZ
-#. make a fake location with the current TZ
-#: ../applets/clock/clock-location.c:364 ../applets/clock/clock-location.c:371
-msgid "Unknown Location"
-msgstr "Onbekende ligging"
-
-#: ../applets/clock/clock-location-tile.c:194
+#: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "Kon nie stelsel se tydsone stel nie"
 
-#: ../applets/clock/clock-location-tile.c:239
-#: ../applets/clock/clock-location-tile.c:314
+#: ../applets/clock/clock-location-tile.c:240
 msgid "<small>Set...</small>"
 msgstr "<small>Stel...</small>"
 
-#: ../applets/clock/clock-location-tile.c:240
-#: ../applets/clock/clock-location-tile.c:315
+#: ../applets/clock/clock-location-tile.c:241
 msgid "<small>Set</small>"
 msgstr "<small>Stel</small>"
 
-#: ../applets/clock/clock-location-tile.c:320
-msgid "Set as current timezone for this computer"
-msgstr "Stel as huidige tydsone vir hierdie rekenaar"
+#: ../applets/clock/clock-location-tile.c:317
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "Stel as huidige ligging en gebruik sy tydsone vir die rekenaar"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:458
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:467
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:477
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
+#: ../applets/clock/clock-location-tile.c:609
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:594
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: ../applets/clock/clock-location-tile.c:595
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, voel soos %s"
 
-#: ../applets/clock/clock-location-tile.c:605
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sonop: %s / Sononder: %s"
 
-#: ../applets/clock/clock-utils.c:72 ../applets/fish/fish.c:160
-#: ../applets/notification_area/main.c:90 ../applets/wncklet/wncklet.c:109
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
+#: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Fout ondervind tydens vertoon van hulpleër: %s"
+msgid "Could not display help document '%s'"
+msgstr "Kon nie hulpdokument '%s' vertoon nie"
 
-#: ../applets/clock/timezone.glade.h:1
-msgid "<b>Active timezones</b>"
-msgstr "<b>Aktiewe tydsones</b>"
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
+msgid "Error displaying help document"
+msgstr "Fout met vertoon van hulpdokument"
 
-#: ../applets/clock/timezone.glade.h:2
-msgid "<b>Add timezone</b>"
-msgstr "<b>Voeg tydsone by</b>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
+msgid "Change system time"
+msgstr "Verander stelseltyd"
 
-#: ../applets/clock/timezone.glade.h:3
-msgid "<small><b>Location:</b></small>"
-msgstr "<small><b>Ligging:</b></small>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
+msgid "Change system time zone"
+msgstr "Verander stelsel se tydsone"
 
-#: ../applets/clock/timezone.glade.h:4
-msgid ""
-"<small><i>Click on the map to zoom and select the timezone of a city, or "
-"right click to zoom out.</i></small>"
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
+msgid "Configure hardware clock"
+msgstr "Stel hardewarehorlosie op"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
+#, fuzzy
+#| msgid "Failed to set the system timezone"
+msgid "Privileges are required to change the system time zone."
+msgstr "Kon nie stelsel se tydsone stel nie"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
+#, fuzzy
+#| msgid "Failed to set the system time"
+msgid "Privileges are required to change the system time."
+msgstr "Kon nie stelseltyd verstel nie"
+
+#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
+msgid "Privileges are required to configure the hardware clock."
 msgstr ""
-"<small><i>Klik op die kaart om in te zoem en kies die tysone van 'n stad, of "
-"klik regs om uit te zoem.</i></small>"
-
-#: ../applets/clock/timezone.glade.h:5
-msgid "Edit Timezones"
-msgstr "Wysig tydsones"
-
-#. Translators: the first %s is a place and the
-#. * second is a time. Result looks like this:
-#. * Europe/Paris - 15:45
-#: ../applets/clock/tz-sel-dialog.c:196
-#, c-format
-msgid "%s - %s"
-msgstr "%s - %s"
-
-#: ../applets/clock/tz-sel-dialog.c:205
-msgid "move the mouse on the map"
-msgstr "beweeg die muis op die kaart"
-
-#: ../applets/clock/tz-sel-dialog.c:207
-#, c-format
-msgid "<b>Location:</b> %s"
-msgstr "<b>Ligging:</b> %s"
-
-#: ../applets/clock/tz-sel-dialog.c:812
-msgid "Name"
-msgstr "Naam"
-
-#: ../applets/clock/tz-sel-dialog.c:825
-msgid "Timezone"
-msgstr "Tydsone"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:102
-#, c-format
-msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-msgstr "%s met dagligbesparing (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name as in "UTC"
-#. * the second string is "+" or nothing. The result looks like
-#. * this: BST (UTC +01:00)
-#: ../applets/clock/tz-window.c:111
-#, c-format
-msgid "%s (UTC %s%.2ld:%.2ld)"
-msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#. Translators: the first string is a timezone name (as in
-#. * "Europe/Paris"), the second string is a country name abbreviation
-#. * (as in "FR") and the last string is another line (it's the one
-#. * looking like "BST (UTC +01:00)")
-#: ../applets/clock/tz-window.c:121
-#, c-format
-msgid ""
-"%s - %s\n"
-"%s"
-msgstr ""
-"%s - %s\n"
-"%s"
-
-#: ../applets/clock/tz-window.c:283
-msgid "_Edit timezones..."
-msgstr "_Wysig tydsones..."
-
-#: ../applets/clock/tz-window.c:370
-msgid "Timezones"
-msgstr "Tydsones"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
 msgstr "Vertoon 'n swemmende vis of 'n ander geanimeerde kreatuur"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:582
+#: ../applets/fish/fish.c:617
 msgid "Fish"
 msgstr "Vis"
 
@@ -807,7 +794,7 @@ msgstr "Van Waar Daardie Dom Vis"
 msgid "Wanda Factory"
 msgstr "Wanda-fabriek"
 
-#: ../applets/fish/fish.c:249
+#: ../applets/fish/fish.c:273
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -821,17 +808,17 @@ msgstr ""
 "miniprogram \n"
 "\"prakties\" of \"bruikbaar\" maak."
 
-#: ../applets/fish/fish.c:436 ../gnome-panel/panel-properties-dialog.c:449
+#: ../applets/fish/fish.c:471
 msgid "Images"
 msgstr "Beelde"
 
-#: ../applets/fish/fish.c:550 ../applets/fish/fish.c:616
-#: ../applets/fish/fish.c:732
+#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
+#: ../applets/fish/fish.c:767
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s die Vis"
 
-#: ../applets/fish/fish.c:551
+#: ../applets/fish/fish.c:586
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -843,25 +830,25 @@ msgstr ""
 "op. Indien enige iemand dit gebruik, stuur hom onmiddellik vir 'n "
 "psigiatriese ondersoek."
 
-#: ../applets/fish/fish.c:575
+#: ../applets/fish/fish.c:610
 msgid "(with minor help from George)"
 msgstr "(met 'n klein bietjie hulp van George)"
 
-#: ../applets/fish/fish.c:617
+#: ../applets/fish/fish.c:652
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s die Vis, 'n moderne orakel"
 
-#: ../applets/fish/fish.c:688
+#: ../applets/fish/fish.c:723
 msgid "Unable to locate the command to execute"
 msgstr "Kon nie die bevel vind nie"
 
-#: ../applets/fish/fish.c:737
+#: ../applets/fish/fish.c:772
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s die Vis Sê:"
 
-#: ../applets/fish/fish.c:806
+#: ../applets/fish/fish.c:841
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -872,16 +859,16 @@ msgstr ""
 "\n"
 "Besonderhede: %s"
 
-#: ../applets/fish/fish.c:871
+#: ../applets/fish/fish.c:906
 msgid "_Speak again"
 msgstr "Nog 'n _spreuk"
 
-#: ../applets/fish/fish.c:954
+#: ../applets/fish/fish.c:989
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Die opgestelde opdrag werk nie en is vervang met: %s"
 
-#: ../applets/fish/fish.c:977
+#: ../applets/fish/fish.c:1012
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -892,7 +879,7 @@ msgstr ""
 "\n"
 "Besonderhede: %s"
 
-#: ../applets/fish/fish.c:993
+#: ../applets/fish/fish.c:1028
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -903,69 +890,64 @@ msgstr ""
 "\n"
 "Besonderhede: %s"
 
-#: ../applets/fish/fish.c:1611
+#: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
 msgstr "Die water moet skoongemaak word"
 
-#: ../applets/fish/fish.c:1613
+#: ../applets/fish/fish.c:1655
 msgid "Look at today's date!"
 msgstr "Kyk na vandag se datum!"
 
-#: ../applets/fish/fish.c:1706
+#: ../applets/fish/fish.c:1748
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s die Vis, die fortuinsoeker"
 
-#: ../applets/fish/fish.glade.h:1
-#: ../gnome-panel/panel-properties-dialog.glade.h:1
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.glade.h:2
-msgid "<b>Animation</b>"
-msgstr "<b>Animasie</b>"
+#: ../applets/fish/fish.ui.h:2
+msgid "Animation"
+msgstr "Animasie"
 
-#: ../applets/fish/fish.glade.h:3
-msgid "<b>General</b>"
-msgstr "<b>Algemeen</b>"
-
-#: ../applets/fish/fish.glade.h:4
+#: ../applets/fish/fish.ui.h:3
 msgid "Co_mmand to run when clicked:"
 msgstr "_Bevel om te loop wanneer gekliek word:"
 
-#: ../applets/fish/fish.glade.h:5
+#: ../applets/fish/fish.ui.h:4
 msgid "Fish Preferences"
 msgstr "Vis-voorkeure"
 
-#: ../applets/fish/fish.glade.h:6
+#: ../applets/fish/fish.ui.h:6
 msgid "Select an animation"
 msgstr "Kies 'n animasie"
 
-#: ../applets/fish/fish.glade.h:7
+#: ../applets/fish/fish.ui.h:7
 msgid "_File:"
 msgstr "_Lêer:"
 
-#: ../applets/fish/fish.glade.h:8
+#: ../applets/fish/fish.ui.h:8
 msgid "_Name of fish:"
 msgstr "_Naam van Vis:"
 
-#: ../applets/fish/fish.glade.h:9
+#: ../applets/fish/fish.ui.h:9
 msgid "_Pause per frame:"
 msgstr "_Pouse per raam:"
 
-#: ../applets/fish/fish.glade.h:10
+#: ../applets/fish/fish.ui.h:10
 msgid "_Rotate on vertical panels"
 msgstr "_Roteer op vertikale panele"
 
-#: ../applets/fish/fish.glade.h:11
+#: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
 msgstr "_Totale rame in animasie:"
 
-#: ../applets/fish/fish.glade.h:12
+#: ../applets/fish/fish.ui.h:12
 msgid "frames"
 msgstr "rame"
 
-#: ../applets/fish/fish.glade.h:13
+#: ../applets/fish/fish.ui.h:13
 msgid "seconds"
 msgstr "sekondes"
 
@@ -1043,7 +1025,7 @@ msgid "Area where notification icons appear"
 msgstr "Area waar meldingsikone verskyn"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:135
+#: ../applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "Meldingsarea"
 
@@ -1051,7 +1033,7 @@ msgstr "Meldingsarea"
 msgid "Notification Area Factory"
 msgstr "Meldingsarea-fabriek"
 
-#: ../applets/notification_area/main.c:224
+#: ../applets/notification_area/main.c:261
 msgid "Panel Notification Area"
 msgstr "Paneelmeldingsarea"
 
@@ -1080,7 +1062,7 @@ msgid "Switch between workspaces"
 msgstr "Wissel tussen werkruimtes"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:608
+#: ../applets/wncklet/window-list.c:609
 msgid "Window List"
 msgstr "Vensterlys"
 
@@ -1089,41 +1071,41 @@ msgid "Window Navigation Applet Factory"
 msgstr "Miniprogramfabriek: Vensternavigasie"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:78 ../applets/wncklet/window-menu.c:240
+#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
 msgid "Window Selector"
 msgstr "Vensterselekteerder"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:623
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid "Workspace Switcher"
 msgstr "Werkruimtewisselaar"
 
-#: ../applets/wncklet/showdesktop.c:183
+#: ../applets/wncklet/showdesktop.c:181
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kon nie %s laai nie: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:184
+#: ../applets/wncklet/showdesktop.c:182
 msgid "Icon not found"
 msgstr "Ikoon nie gevind nie"
 
-#: ../applets/wncklet/showdesktop.c:243
+#: ../applets/wncklet/showdesktop.c:241
 msgid "Click here to restore hidden windows."
 msgstr "Kliek hier om verborge vensters te herstel."
 
-#: ../applets/wncklet/showdesktop.c:245
+#: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliek hier om alle vensters te verberg en die werkarea te vertoon."
 
-#: ../applets/wncklet/showdesktop.c:455 ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
 msgid "Show Desktop Button"
 msgstr "Wys Werkarea-knop"
 
-#: ../applets/wncklet/showdesktop.c:538
+#: ../applets/wncklet/showdesktop.c:536
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Hierdie knop versteek alle vensters en wys die werkarea."
 
-#: ../applets/wncklet/showdesktop.c:568
+#: ../applets/wncklet/showdesktop.c:566
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -1131,7 +1113,7 @@ msgstr ""
 "Jou vensterbestuurder ondersteun nie die Wys werkarea-knop nie, of 'n "
 "vensterbestuurder loop nie."
 
-#: ../applets/wncklet/window-list.c:610
+#: ../applets/wncklet/window-list.c:611
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -1139,47 +1121,49 @@ msgstr ""
 "Die Vensterlys vertoon 'n lys van alle vensters in 'n stel knoppies en laat "
 "jou toe om hulle deur te blaai."
 
-#: ../applets/wncklet/window-list.glade.h:1
-msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>Herstel tans verkleinde vensters</b>"
-
-#: ../applets/wncklet/window-list.glade.h:2
-msgid "<b>Window Grouping</b>"
-msgstr "<b>Venstergroepering</b>"
-
-#: ../applets/wncklet/window-list.glade.h:3
-msgid "<b>Window List Content</b>"
-msgstr "<b>Vensterlysinhoud</b>"
-
-#: ../applets/wncklet/window-list.glade.h:4
+#: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
 msgstr "Groepeer vensters wanneer _ruimte beperk is"
 
-#: ../applets/wncklet/window-list.glade.h:5
+#: ../applets/wncklet/window-list.ui.h:2
 msgid "Restore to current _workspace"
 msgstr "Herstel na huidige _werkruimte"
 
-#: ../applets/wncklet/window-list.glade.h:6
+#: ../applets/wncklet/window-list.ui.h:3
 msgid "Restore to na_tive workspace"
 msgstr "Herstel na oorspronklike _werkruimte"
 
-#: ../applets/wncklet/window-list.glade.h:7
+#: ../applets/wncklet/window-list.ui.h:4
+#, fuzzy
+#| msgid "<b>Restoring Minimized Windows</b>"
+msgid "Restoring Minimized Windows"
+msgstr "<b>Herstel tans verkleinde vensters</b>"
+
+#: ../applets/wncklet/window-list.ui.h:5
 msgid "Sh_ow windows from current workspace"
 msgstr "Ver_toon vensters van huidige werkruimte"
 
-#: ../applets/wncklet/window-list.glade.h:8
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "Show windows from a_ll workspaces"
 msgstr "Vertoon vensters van a_lle werkruimtes"
 
-#: ../applets/wncklet/window-list.glade.h:9
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "Venstergroepering"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "Vensterlysinhoud"
+
+#: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
 msgstr "Vensterlysvoorkeure"
 
-#: ../applets/wncklet/window-list.glade.h:10
+#: ../applets/wncklet/window-list.ui.h:10
 msgid "_Always group windows"
 msgstr "_Groepeer vensters altyd"
 
-#: ../applets/wncklet/window-list.glade.h:11
+#: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "_Moet nooit vensters groepeer nie"
 
@@ -1189,7 +1173,7 @@ msgid ""
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Besluit wanneer om vensters van dieselfde toepassing in die vensterlys te "
-"groepeer. Moontlike waardes is \"nooit\", \"outo\" en \"altyd\"."
+"groepeer. Moontlike waardes is \"never\", \"auto\" en \"always\"."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
 msgid ""
@@ -1237,7 +1221,7 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Wanneer om vensters te groepeer"
 
-#: ../applets/wncklet/window-menu.c:82
+#: ../applets/wncklet/window-menu.c:86
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
@@ -1246,25 +1230,25 @@ msgstr ""
 "Die Vensterselekteerder vertoon 'n lys van alle vensters en laat jou toe om "
 "deur hulle te blaai."
 
-#: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:974
-#: ../applets/wncklet/workspace-switcher.glade.h:10
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "rye"
 
-#: ../applets/wncklet/workspace-switcher.c:213
-#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.c:214
+#: ../applets/wncklet/workspace-switcher.c:976
 msgid "columns"
 msgstr "kolomme"
 
-#: ../applets/wncklet/workspace-switcher.c:487
+#: ../applets/wncklet/workspace-switcher.c:488
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Fout ondervind tydens laai van num_rows-waarde vir die Werkruimte-wisselaar: "
 "%s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:498
+#: ../applets/wncklet/workspace-switcher.c:499
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -1272,14 +1256,14 @@ msgstr ""
 "Fout ondervind tydens laai van display_workspace_names-waarde vir die "
 "Werkruimte-wisselaar: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:513
+#: ../applets/wncklet/workspace-switcher.c:514
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fout ondervind tydens laai van display_all_workspaces-waarde vir die "
 "Werkruimte-wisselaar: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:625
+#: ../applets/wncklet/workspace-switcher.c:626
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1287,41 +1271,44 @@ msgstr ""
 "Die Werkruimte-wisselaar vertoon 'n klein weergawe van jou werkruimtes wat "
 "jou toelaat om jou vensters te bestuur."
 
-#: ../applets/wncklet/workspace-switcher.glade.h:1
-msgid "<b>Switcher</b>"
-msgstr "<b>Wisselaar</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:2
-msgid "<b>Workspaces</b>"
-msgstr "<b>Werkruimtes</b>"
-
-#: ../applets/wncklet/workspace-switcher.glade.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
 msgstr "Aantal _werkruimtes:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:4
+#: ../applets/wncklet/workspace-switcher.ui.h:2
 msgid "Show _all workspaces in:"
 msgstr "Vertoon _alle werkruimtes in:"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:5
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "Vertoon _slegs die huidige werkruimte"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show workspace _names in switcher"
 msgstr "Vertoon werkruimte_name in wisselaar"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:5
+#, fuzzy
+#| msgid "_Switch User"
+msgid "Switcher"
+msgstr "_Ruil gebruiker"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "Workspace Names"
 msgstr "Werkruimtename"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Workspace Switcher Preferences"
 msgstr "Voorkeure: Werkruimte-wisselaar"
 
-#: ../applets/wncklet/workspace-switcher.glade.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Workspace na_mes:"
 msgstr "Werkruimte_name:"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
+#, fuzzy
+msgid "Workspaces"
+msgstr "Werkruimtename"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1365,33 +1352,125 @@ msgstr ""
 "te vertoon. Hierdie sleutel is slegs relevant as die display_all_workspaces-"
 "sleutel as waar gemerk is."
 
-#: ../gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "GNOME-Paneeldop"
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Lêer is nie 'n geldige .desktop-lêer nie"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:542
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Nieherkende \"desktop\"-lêerweergawe '%s'"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Begin tans %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Toepassing aanvaar nie dokumente op die opdraglyn nie"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Nieherkende lanseerkeuse: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Nie 'n loopbare item nie"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Deaktiveer konneksie na sessiebestuurder"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Spesifiseer lêer wat gestoorde konfigurasie bevat"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "LÊER"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Spesifiseer sessiebestuurs-ID"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Sessiebestuurskeuses:"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Wys keuses vir sessiebestuur"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/panel-applet-frame.c:1000
+#: ../gnome-panel/panel-applet-frame.c:1088
+msgid "Error"
+msgstr "Fout"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Kies 'n ikoon"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:45
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Kon nie '%s' lanseer nie"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/launcher.c:161
+msgid "Could not launch application"
+msgstr "Kon nie toepassing begin nie"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:44
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "Kon nie ligging '%s' oopmaak nie"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:162
+msgid "No application to handle search folders is installed."
+msgstr ""
+
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
 msgid "Loc_k To Panel"
 msgstr "Sl_uit vas aan die paneel"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:525
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:527
 msgid "_Move"
 msgstr "_Skuif"
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:514
+#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
 msgid "_Remove From Panel"
 msgstr "_Verwyder van paneel"
 
-#: ../gnome-panel/applet.c:434
+#: ../gnome-panel/applet.c:437
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1239
-#, fuzzy
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
-msgstr "Kan nie 'n leë kol vind nie"
+msgstr "Kan nie oop spasie vind nie"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:170
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "Laai"
 
@@ -1399,35 +1478,35 @@ msgstr "Laai"
 msgid "_Add to Drawer..."
 msgstr "_Voeg by laai..."
 
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:891
-#: ../gnome-panel/panel-action-button.c:138
-#: ../gnome-panel/panel-context-menu.c:212
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
+#: ../gnome-panel/panel-action-button.c:141
+#: ../gnome-panel/panel-context-menu.c:216
 msgid "_Properties"
 msgstr "_Eienskappe"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
 msgstr "Skep nuwe lêer in die gegewe gids"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:28
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[LÊER...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:106
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
-msgstr "- Wysig .desktop-lêers"
+msgstr "- Redigeer .desktop-lêers"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:145
-#: ../gnome-panel/gnome-desktop-item-edit.c:199 ../gnome-panel/launcher.c:981
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Skep Laaier"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:170
-#: ../gnome-panel/gnome-desktop-item-edit.c:193
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
 msgstr "Gidseienskappe"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:176 ../gnome-panel/launcher.c:819
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Laaier-eienskappe"
 
@@ -1439,81 +1518,76 @@ msgstr ""
 "Lanseer ander toepassings en verskaf verskeie nutsprogramme om vensters te "
 "bestuur, die tyd te wys, ens."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Paneel"
 
-#: ../gnome-panel/launcher.c:170
+#: ../gnome-panel/launcher.c:118
 msgid "Could not show this URL"
 msgstr "Kon nie hierdie URL wys nie"
 
-#: ../gnome-panel/launcher.c:171
+#: ../gnome-panel/launcher.c:119
 msgid "No URL was specified."
 msgstr "Geen URL is gespesifiseer nie."
 
-#: ../gnome-panel/launcher.c:183
-#, c-format
-msgid "Could not show '%s'"
-msgstr "Kan nie '%s' vertoon nie"
-
-#: ../gnome-panel/launcher.c:229
-msgid "Could not launch application"
-msgstr "Kon nie toepassing begin nie"
-
-#: ../gnome-panel/launcher.c:297
+#: ../gnome-panel/launcher.c:227
 msgid "Could not use dropped item"
 msgstr "Kon nie gelosde item gebruik nie"
 
-#: ../gnome-panel/launcher.c:501
+#: ../gnome-panel/launcher.c:423
+#, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Geen URI is vir die paneellaaier-werkarealêer gespesifiseer nie\n"
 
-#: ../gnome-panel/launcher.c:544
+#: ../gnome-panel/launcher.c:462
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kon nie werkarea-lêer %s vir die paneellaaier %s%s oopmaak nie\n"
 
-#: ../gnome-panel/launcher.c:885
-#, fuzzy
+#: ../gnome-panel/launcher.c:801
 msgid "_Launch"
-msgstr "Laaier..."
+msgstr "_Lanseer"
 
-#: ../gnome-panel/launcher.c:924
+#: ../gnome-panel/launcher.c:840
 #, fuzzy, c-format
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Sleutel %s is nie gestel nie, laaier kan nie gelaai word nie\n"
 
-#: ../gnome-panel/launcher.c:1048 ../gnome-panel/panel-ditem-editor.c:1347
-#: ../gnome-panel/panel-ditem-editor.c:1381
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 #, fuzzy
 msgid "Could not save launcher"
 msgstr "Kan nie laaier skep nie"
 
-#: ../gnome-panel/menu.c:1004
+#: ../gnome-panel/main.c:47
+msgid "Replace a currently running panel"
+msgstr ""
+
+#: ../gnome-panel/menu.c:914
 #, fuzzy
 msgid "Add this launcher to _panel"
 msgstr "Voeg hierdie laaier by paneel"
 
-#: ../gnome-panel/menu.c:1011
+#: ../gnome-panel/menu.c:921
 #, fuzzy
 msgid "Add this launcher to _desktop"
 msgstr "Voeg hierdie laaier by paneel"
 
-#: ../gnome-panel/menu.c:1023
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "H_ele kieslys"
 
-#: ../gnome-panel/menu.c:1028
+#: ../gnome-panel/menu.c:938
 #, fuzzy
 msgid "Add this as _drawer to panel"
 msgstr "Voeg by as laai vir die paneel"
 
-#: ../gnome-panel/menu.c:1035
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "Voeg by as _kieslys vir die paneel"
 
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr ""
@@ -1522,279 +1596,249 @@ msgstr ""
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Druk 'q' om af te sluit"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr ""
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Druk 'p' om voort te gaan"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Vlak: %s,  Lewens: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "Links/Regs beweeg, Spasie vuur, 'p' om te wag, 'q' om af te sluit"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr ""
 
-#: ../gnome-panel/panel-action-button.c:126
+#: ../gnome-panel/panel-action-button.c:129
 msgid "_Activate Screensaver"
 msgstr "_Aktiveer skermbeskermer"
 
-#: ../gnome-panel/panel-action-button.c:132
+#: ../gnome-panel/panel-action-button.c:135
 msgid "_Lock Screen"
-msgstr "_Sluit Skerm"
+msgstr "_Sluit skerm"
 
-#: ../gnome-panel/panel-action-button.c:214
-#: ../gnome-panel/panel-menu-bar.c:409 ../gnome-panel/panel-menu-button.c:990
-#: ../gnome-panel/panel-util.c:752
-#, c-format
-msgid "Could not execute '%s'"
-msgstr "Kon nie '%s' uitvoer nie"
-
-#: ../gnome-panel/panel-action-button.c:253
+#: ../gnome-panel/panel-action-button.c:254
 msgid "Could not connect to server"
 msgstr "Kon nie aan bediener verbind nie"
 
-#: ../gnome-panel/panel-action-button.c:284
-msgid "Lock Screen"
-msgstr "Sluit Skerm"
-
 #: ../gnome-panel/panel-action-button.c:285
+msgid "Lock Screen"
+msgstr "Sluit skerm"
+
+#: ../gnome-panel/panel-action-button.c:286
 msgid "Protect your computer from unauthorized use"
 msgstr "Beskerm jou rekenaar teen ongemagtigde gebruik"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
-#. * panel:showusername|1)
-#: ../gnome-panel/panel-action-button.c:299
+#. * "1" (msgctxt: "panel:showusername"))
+#: ../gnome-panel/panel-action-button.c:300
 msgid "Log Out..."
 msgstr "Meld af..."
 
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:301
 msgid "Log out of this session to log in as a different user"
 msgstr "Meld af van hierdie sessie om aan te meld as 'n ander gebruiker"
 
-#: ../gnome-panel/panel-action-button.c:309
+#: ../gnome-panel/panel-action-button.c:310
 msgid "Run Application..."
 msgstr "Laat loop toepassing..."
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:311
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Laat 'n toepassing loop deur 'n bevel in te tik of van 'n lys te kies"
 
-#: ../gnome-panel/panel-action-button.c:319
-msgid "Search for Files..."
-msgstr "Soek Lêers..."
-
 #: ../gnome-panel/panel-action-button.c:320
+msgid "Search for Files..."
+msgstr "Soek lêers..."
+
+#: ../gnome-panel/panel-action-button.c:321
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Vind dokumente en gidse om hierdie rekenaar volgens naam of inhoud"
 
-#: ../gnome-panel/panel-action-button.c:328
+#: ../gnome-panel/panel-action-button.c:329
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
-msgstr "Forseer Sluiting"
+msgstr "Forseer afluiting"
 
-#: ../gnome-panel/panel-action-button.c:329
+#: ../gnome-panel/panel-action-button.c:330
 msgid "Force a misbehaving application to quit"
 msgstr "Forseer 'n onhebbelike toepassing om te sluit"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:338
+#: ../gnome-panel/panel-action-button.c:339
 msgid "Connect to Server..."
 msgstr "Verbind aan bediener..."
 
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:340
 msgid "Connect to a remote computer or shared disk"
 msgstr "Verbind aan 'n afgeleë rekenaar of gedeelde skyf"
 
-#: ../gnome-panel/panel-action-button.c:347
+#: ../gnome-panel/panel-action-button.c:348
 msgid "Shut Down..."
 msgstr "Skakel af..."
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:349
 msgid "Shut down the computer"
 msgstr "Skakel die rekenaar af"
 
-#: ../gnome-panel/panel-addto.c:111
+#: ../gnome-panel/panel-addto.c:116
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "Laat loop toepassing"
 
-#: ../gnome-panel/panel-addto.c:112
+#: ../gnome-panel/panel-addto.c:117
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "Skep Laaier"
 
-#: ../gnome-panel/panel-addto.c:122
+#: ../gnome-panel/panel-addto.c:127
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "Laat loop toepassing..."
 
-#: ../gnome-panel/panel-addto.c:123
+#: ../gnome-panel/panel-addto.c:128
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopieer 'n lanseerder van die toepassings-kieslys"
 
-#: ../gnome-panel/panel-addto.c:137 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "Hoofkieslys"
 
-#: ../gnome-panel/panel-addto.c:138
+#: ../gnome-panel/panel-addto.c:143
 msgid "The main GNOME menu"
 msgstr "Die hoof-GNOME-kieslys"
 
-#: ../gnome-panel/panel-addto.c:148
+#: ../gnome-panel/panel-addto.c:153
 msgid "Menu Bar"
 msgstr "Kieslysbalk"
 
-#: ../gnome-panel/panel-addto.c:149
+#: ../gnome-panel/panel-addto.c:154
 msgid "A custom menu bar"
 msgstr "'n Pasgemaakte kieslysbalk"
 
-#: ../gnome-panel/panel-addto.c:159
+#: ../gnome-panel/panel-addto.c:164
 msgid "Separator"
 msgstr "Skeier"
 
-#: ../gnome-panel/panel-addto.c:160
+#: ../gnome-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
 msgstr "'n Skeier om paneelitems te organiseer"
 
-#: ../gnome-panel/panel-addto.c:171
+#: ../gnome-panel/panel-addto.c:176
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: ../gnome-panel/panel-addto.c:262
+#: ../gnome-panel/panel-addto.c:267
 msgid "(empty)"
 msgstr "(leeg)"
 
-#: ../gnome-panel/panel-addto.c:402
-#: ../libpanel-applet/panel-test-applets.c:248
+#: ../gnome-panel/panel-addto.c:410
+#: ../libpanel-applet/panel-test-applets.c:249
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "navraag het uitsondering teruggegee %s\n"
 
-#: ../gnome-panel/panel-addto.c:1061
+#: ../gnome-panel/panel-addto.c:1071
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Vind 'n _item om by \"%s\" te voeg:"
 
-#: ../gnome-panel/panel-addto.c:1065
+#: ../gnome-panel/panel-addto.c:1075
+#, c-format
 msgid "Add to Drawer"
 msgstr "Voeg by laai"
 
-#: ../gnome-panel/panel-addto.c:1067
+#: ../gnome-panel/panel-addto.c:1077
 #, fuzzy
 msgid "Find an _item to add to the drawer:"
 msgstr "_Voeg by Paneel"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1079
+#, c-format
 msgid "Add to Panel"
 msgstr "Voeg by Paneel"
 
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1081
 #, fuzzy
 msgid "Find an _item to add to the panel:"
 msgstr "_Voeg by Paneel"
 
-#: ../gnome-panel/panel-applet-frame.c:840
+#: ../gnome-panel/panel-applet-frame.c:844
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Uitsondering van popup_menu '%s'\n"
 
-#: ../gnome-panel/panel-applet-frame.c:965
+#: ../gnome-panel/panel-applet-frame.c:969
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" het onverwags afgesluit"
 
-#: ../gnome-panel/panel-applet-frame.c:967
+#: ../gnome-panel/panel-applet-frame.c:971
 #, fuzzy
 msgid "Panel object has quit unexpectedly"
 msgstr "Paneelobjeksoort"
 
-#: ../gnome-panel/panel-applet-frame.c:974
+#: ../gnome-panel/panel-applet-frame.c:978
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 
-#: ../gnome-panel/panel-applet-frame.c:980
+#: ../gnome-panel/panel-applet-frame.c:984
 msgid "_Don't Reload"
 msgstr "M_oenie herlaai nie"
 
-#: ../gnome-panel/panel-applet-frame.c:981
+#: ../gnome-panel/panel-applet-frame.c:985
 msgid "_Reload"
 msgstr "_Herlaai"
 
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/panel-applet-frame.c:996
-#: ../gnome-panel/panel-applet-frame.c:1084 ../gnome-panel/panel-util.c:395
-msgid "Error"
-msgstr "Fout"
-
-#: ../gnome-panel/panel-applet-frame.c:1047
+#: ../gnome-panel/panel-applet-frame.c:1051
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Die paneel het 'n probleem ondervind tydens die laai van \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:1063
+#: ../gnome-panel/panel-applet-frame.c:1067
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Wil jy die mini-program uit jou opstelling skrap?"
 
-#: ../gnome-panel/panel-applet-frame.c:1137
+#: ../gnome-panel/panel-applet-frame.c:1141
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kon nie AppletShell-koppelvlak van kontrole bekom nie\n"
 
-#: ../gnome-panel/panel-bindings.c:153
-#, c-format
-msgid "Error watching gconf key '%s': %s"
-msgstr "Fout met dophou van gconf-sleutel '%s': %s"
-
-#: ../gnome-panel/panel-bindings.c:171
-#, c-format
-msgid "Error loading gconf directory '%s': %s"
-msgstr "Fout met laai van gconf-gids '%s': %s"
-
-#: ../gnome-panel/panel-bindings.c:185
-#, c-format
-msgid "Error getting value for '%s': %s"
-msgstr "Fout met bekom van waarde vir '%s': %s"
-
-#: ../gnome-panel/panel-context-menu.c:101
+#: ../gnome-panel/panel-context-menu.c:104
 msgid "And many, many others..."
 msgstr "En nog baie, baie meer..."
 
-#: ../gnome-panel/panel-context-menu.c:127
-msgid "The GNOME Panel"
-msgstr "Die GNOME Paneel"
-
 #: ../gnome-panel/panel-context-menu.c:130
+msgid "The GNOME Panel"
+msgstr "Die GNOME-paneel"
+
+#: ../gnome-panel/panel-context-menu.c:133
 msgid ""
 "This program is responsible for launching other applications and provides "
 "useful utilities."
@@ -1802,55 +1846,55 @@ msgstr ""
 "Hierdie program is verantwoordelik vir die lansering van ander toepassings "
 "en verskaf nuttige nutsgoed."
 
-#: ../gnome-panel/panel-context-menu.c:167
+#: ../gnome-panel/panel-context-menu.c:137
+msgid "About the GNOME Panel"
+msgstr "Aangaande die GNOME-paneel"
+
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "Cannot delete this panel"
 msgstr "Kan nie hierdie paneel skrap nie"
 
-#: ../gnome-panel/panel-context-menu.c:168
+#: ../gnome-panel/panel-context-menu.c:172
 msgid "You must always have at least one panel."
 msgstr "Mens moet altyd ten minste een paneel hê."
 
-#: ../gnome-panel/panel-context-menu.c:201
+#: ../gnome-panel/panel-context-menu.c:205
 msgid "_Add to Panel..."
 msgstr "_Voeg by paneel..."
 
-#: ../gnome-panel/panel-context-menu.c:222
+#: ../gnome-panel/panel-context-menu.c:226
 msgid "_Delete This Panel"
-msgstr "_Skrap Hierdie Paneel"
+msgstr "_Skrap hierdie paneel"
 
-#: ../gnome-panel/panel-context-menu.c:237
+#: ../gnome-panel/panel-context-menu.c:241
 msgid "_New Panel"
-msgstr "_Nuwe Paneel"
+msgstr "_Nuwe paneel"
 
-#: ../gnome-panel/panel-context-menu.c:288
+#: ../gnome-panel/panel-context-menu.c:293
 msgid "A_bout Panels"
-msgstr "_Oor panele"
+msgstr "Aa_ngaande panele"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Toepassing"
 
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Toepassing in terminaal"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Ligging"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:619
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Tipe:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:626
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Naam:"
-
-#: ../gnome-panel/panel-ditem-editor.c:634
-msgid "Browse icons"
-msgstr "Blaai deur ikone"
 
 #: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
@@ -1861,50 +1905,47 @@ msgstr "_Blaai..."
 msgid "Co_mment:"
 msgstr "Ko_mmentaar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1021
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Kies 'n toepassing..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1025
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Kies 'n lêer..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1150
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "Opdr_ag:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1159
-msgid "_Command:"
-msgstr "_Opdrag:"
-
-#: ../gnome-panel/panel-ditem-editor.c:1168
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Ligging:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1348
+#: ../gnome-panel/panel-ditem-editor.c:1358
 #, fuzzy
 msgid "The name of the launcher is not set."
 msgstr "Die ikoon van die bevel wat laat loop moet word."
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Kon nie gidseienskappe stoor nie"
 
-#: ../gnome-panel/panel-ditem-editor.c:1353
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Die naam van die gids is nie gestel nie."
 
-#: ../gnome-panel/panel-ditem-editor.c:1369
+#: ../gnome-panel/panel-ditem-editor.c:1379
 #, fuzzy
 msgid "The command of the launcher is not set."
 msgstr "Die ikoon van die bevel wat laat loop moet word."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1382
 #, fuzzy
 msgid "The location of the launcher is not set."
 msgstr "Die ikoon van die bevel wat laat loop moet word."
 
-#: ../gnome-panel/panel-ditem-editor.c:1453 ../gnome-panel/panel-util.c:185
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Kon nie hulpdokument vertoon nie"
 
@@ -1920,9 +1961,13 @@ msgid "Force this application to exit?"
 msgstr "Forseer hierdie toepassing om af te sluit?"
 
 #: ../gnome-panel/panel-force-quit.c:207
+#, fuzzy
+#| msgid ""
+#| "If you choose to force an application to exit, any open documents in it "
+#| "will be lost."
 msgid ""
-"If you choose to force an application to exit, any open documents in it will "
-"be lost."
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
 msgstr ""
 "As u kies om die toepassing te forseer om af te sluit sal enige oop "
 "dokumente daarin verlore wees."
@@ -1970,15 +2015,15 @@ msgstr ""
 #: ../gnome-panel/panel-general.schemas.in.h:5
 #, fuzzy
 msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "Aktiveer programlys in \"Laat Loop Toepassing\"-dialoog"
+msgstr "Aktiveer programlys in \"Laat loop toepassing\"-dialoog"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Aktiveer programlys in \"Laat Loop Toepassing\"-dialoog"
+msgstr "Aktiveer programlys in \"Laat loop toepassing\"-dialoog"
 
 #: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Vou programlys uit in \"Laat Loop Toepassing\"-dialoog"
+msgstr "Vou programlys uit in \"Laat loop toepassing\"-dialoog"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid ""
@@ -1992,7 +2037,7 @@ msgid ""
 "the enable_program_list key is true."
 msgstr ""
 "Indien as waar gemerk, word die lys van \"Bekende Toepassings\" in die "
-"\"Laat Loop Toepassing\"-dialoog uitgevou wanneer die dialoog geopen word. "
+"\"Laat loop toepassing\"-dialoog uitgevou wanneer die dialoog geopen word. "
 "Hierdie sleutel is slegs relevant as die enable_program_list-sleutel as waar "
 "gemerk is."
 
@@ -2003,7 +2048,7 @@ msgid ""
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
 "Indien as waar gemerk, word die lys van \"Bekende Toepassings\" in die "
-"\"Laat Loop Toepassing\"-dialoog beskikbaar gestel. Of die lys uitgevou word "
+"\"Laat loop toepassing\"-dialoog beskikbaar gestel. Of die lys uitgevou word "
 "of nie wanneer die dialoog vertoon word, word beheer deur die "
 "show_program_list-sleutel."
 
@@ -2062,27 +2107,23 @@ msgid "Disable Force Quit"
 msgstr "Deaktiveer Geforseerde Sluiting"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Lock Screen"
-msgstr "Deaktiveer Skermsluit"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
 msgstr "Deaktiveer Afmelding"
 
-#: ../gnome-panel/panel-global.schemas.in.h:10
+#: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Aktiveer animasies"
 
-#: ../gnome-panel/panel-global.schemas.in.h:11
+#: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
 msgstr "Aktiveer wyserwenke"
 
-#: ../gnome-panel/panel-global.schemas.in.h:12
+#: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Highlight launchers on mouseover"
 msgstr "Verlig laaiers by muishang"
 
-#: ../gnome-panel/panel-global.schemas.in.h:13
+#: ../gnome-panel/panel-global.schemas.in.h:12
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -2090,7 +2131,7 @@ msgstr ""
 "Indien as waar gemerk, word 'n dialoog vertoon wat vra vir bevestiging dat "
 "die gebruiker 'n paneel wil verwyder."
 
-#: ../gnome-panel/panel-global.schemas.in.h:14
+#: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -2098,14 +2139,14 @@ msgstr ""
 "Indien as waar gemerk, sal 'n laai outomaties gesluit word wanneer die "
 "gebruiker 'n laaier daarin kliek."
 
-#: ../gnome-panel/panel-global.schemas.in.h:15
+#: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Indien as waar gemerk, sal 'n laaier verlig word wanneer die gebruiker die "
 "wyser daaroor beweeg."
 
-#: ../gnome-panel/panel-global.schemas.in.h:16
+#: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -2114,15 +2155,7 @@ msgstr ""
 "toepassing te forseer om af te sluit nie, deur toegang tot die "
 "forseerafsluiting-knoppie te verwyder."
 
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
-msgstr ""
-"Indien as waar gemerk, sal die paneel nie 'n gebruiker toelaat om hul skerm "
-"te sluit nie, deur toegang tot die skermsluit-kieslysinskrywings te verwyder."
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
+#: ../gnome-panel/panel-global.schemas.in.h:16
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
@@ -2130,7 +2163,7 @@ msgstr ""
 "Indien as waar gemerk, sal die paneel nie 'n gebruiker toelaat om af te meld "
 "nie, deur toegang tot die afmelding-kieslysinskrywings te verwyder."
 
-#: ../gnome-panel/panel-global.schemas.in.h:19
+#: ../gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -2141,192 +2174,123 @@ msgstr ""
 "miniprogramme afsonderlik te sluit. Die paneel moet herbegin word sodat "
 "hierdie geaktiveer word."
 
-#: ../gnome-panel/panel-global.schemas.in.h:20
+#: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Indien as waar gemerk, word wyserwenke vir objekte in panele vertoon."
 
-#: ../gnome-panel/panel-logout.c:242
-#, c-format
+#: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"You will be automatically logged out in %d seconds."
-msgstr[0] ""
-"U is tans aangemeld as \"%s\".\n"
-"U sal outomaties afgemeld word oor %d sekonde."
-msgstr[1] ""
-"U is tans aangemeld as \"%s\".\n"
-"U sal outomaties afgemeld word oor %d sekondes."
-
-#: ../gnome-panel/panel-logout.c:253
-#, c-format
-msgid ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d second."
-msgid_plural ""
-"You are currently logged in as \"%s\".\n"
-"This system will be automatically shut down in %d seconds."
-msgstr[0] ""
-"U is tans aangemeld as \"%s\".\n"
-"Die stelsel sal outomaties afgeskakel word oor %d sekonde."
-msgstr[1] ""
-"U is tans aangemeld as \"%s\".\n"
-"Die stelsel sal outomaties afgeskakel word oor %d sekondes."
-
-#: ../gnome-panel/panel-logout.c:334
-msgid "Log out of this system now?"
-msgstr "Meld nou af van hierdie stelsel?"
-
-#: ../gnome-panel/panel-logout.c:340
-msgid "_Switch User"
-msgstr "_Ruil gebruiker"
-
-#: ../gnome-panel/panel-logout.c:346
-msgid "_Log Out"
-msgstr "Me_ld af"
-
-#: ../gnome-panel/panel-logout.c:351
-msgid "Shut down this system now?"
-msgstr "Skakel die stelsel nou af?"
-
-#: ../gnome-panel/panel-logout.c:356
-msgid "S_uspend"
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 msgstr ""
 
-#: ../gnome-panel/panel-logout.c:361
-msgid "_Hibernate"
-msgstr "_Hiberneer"
-
-#: ../gnome-panel/panel-logout.c:366
-msgid "_Restart"
-msgstr "He_rbegin"
-
-#: ../gnome-panel/panel-logout.c:375
-msgid "_Shut Down"
-msgstr "_Skakel af"
-
-#: ../gnome-panel/panel-menu-bar.c:97
-#, fuzzy
+#: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
-msgstr "Kon nie 'n geskikte toepassing vind nie"
+msgstr "Blaai en lanseer geïnstalleerde programme"
 
-#: ../gnome-panel/panel-menu-bar.c:99
+#: ../gnome-panel/panel-menu-bar.c:108
 msgid "Access documents, folders and network places"
 msgstr "Verkry toegang tot dokumente, gidse en plekke op die netwerk"
 
-#: ../gnome-panel/panel-menu-bar.c:101
+#: ../gnome-panel/panel-menu-bar.c:110
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr "Verander die werkskerm se voorkoms en gedrag, verkry hulp, of meld af"
 
-#: ../gnome-panel/panel-menu-bar.c:136
+#: ../gnome-panel/panel-menu-bar.c:147
 msgid "Applications"
 msgstr "Toepassings"
 
-#: ../gnome-panel/panel-menu-bar.c:342 ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
-msgstr "_Wysig kieslyste"
+msgstr "R_edigeer kieslyste"
 
-#: ../gnome-panel/panel-menu-items.c:135 ../gnome-panel/panel-run-dialog.c:351
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "Kon nie ligging '%s' oopmaak nie"
-
-#: ../gnome-panel/panel-menu-items.c:416
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
 msgstr "Boekmerke"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:438 ../gnome-panel/panel.c:531
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "Open '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:506
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan nie %s deursoek vir mediaveranderinge nie"
 
-#: ../gnome-panel/panel-menu-items.c:549
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "Deursoek %s weer"
 
-#: ../gnome-panel/panel-menu-items.c:585
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kon nie %s heg nie"
 
-#: ../gnome-panel/panel-menu-items.c:638
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "Heg %s"
 
-#: ../gnome-panel/panel-menu-items.c:841
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
 msgstr "Verwyderbare media"
 
-#: ../gnome-panel/panel-menu-items.c:922
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "Plekke op die netwerk"
 
-#: ../gnome-panel/panel-menu-items.c:961
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
 msgstr "Open u persoonlike gids"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
-#. * environment). Do not keep "Desktop Folder|"
-#. * in the translation
-#: ../gnome-panel/panel-menu-items.c:981
-msgid "Desktop Folder|Desktop"
+#. * environment).
+#: ../gnome-panel/panel-menu-items.c:1062
+msgctxt "Desktop Folder"
+msgid "Desktop"
 msgstr "Werkskerm"
 
-#: ../gnome-panel/panel-menu-items.c:982
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "Open die inhoud van die werkskerm in 'n gids"
 
-#: ../gnome-panel/panel-menu-items.c:1374
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Plekke"
 
-#: ../gnome-panel/panel-menu-items.c:1403
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "Stelsel"
 
-#. Translators: translate "panel:showusername|1" to anything
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1480
-msgid "panel:showusername|1"
-msgstr "1"
+#: ../gnome-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr ""
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
-#. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1492
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "Meld af as %s..."
 
 #. Translators: this string is used ONLY if you translated
-#. * "panel:showusername|1" to "1"
-#: ../gnome-panel/panel-menu-items.c:1496
+#. * "1" (msgctxt: "panel:showusername") to "1"
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Meld af as %s van hierdie sessie om as 'n ander gebruiker aan te meld"
-
-#: ../gnome-panel/panel-menu-items.c:1537
-#, fuzzy
-msgid "Could not launch menu item"
-msgstr "Kan nie inskrywing begin nie"
-
-#: ../gnome-panel/panel-mount-operation.c:124
-msgid "Enter Password"
-msgstr "Tik wagwoord"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2423,8 +2387,8 @@ msgid ""
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
 "Die aksiesoort wat hierdie knoppie verteenwoordig. Moontlike waardes is "
-"\"sluit\", \"afmeld\", \"loop\", \"soek\" en \"skermkiekie\". Hierdie "
-"sleutel is slegs relevant as die object_type-sleutel \"action-applet\" is."
+"\"lock\", \"logout\", \"run\", \"search\" en \"screenshot\". Hierdie sleutel "
+"is slegs relevant as die object_type-sleutel \"action-applet\" is."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
 msgid ""
@@ -2510,20 +2474,20 @@ msgstr "Gebruik pasgemaakte ikoon vir objek se knoppie"
 msgid "Use custom path for menu contents"
 msgstr "Gebruik pasgemaakte pad vir kieslysinhoud"
 
-#: ../gnome-panel/panel-profile.c:766 ../gnome-panel/panel-profile.c:793
-#: ../gnome-panel/panel-profile.c:829 ../gnome-panel/panel-profile.c:1694
+#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
+#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Kon nie GConf-stringwaarde '%s': %s lees nie"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:808 ../gnome-panel/panel-profile.c:1590
-#: ../gnome-panel/panel-profile.c:1663 ../gnome-panel/panel-profile.c:1745
+#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
+#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Kon nie GConf-heelgetalwaarde '%s': %s lees nie"
 
-#: ../gnome-panel/panel-profile.c:1600
+#: ../gnome-panel/panel-profile.c:1606
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2532,220 +2496,223 @@ msgstr ""
 "Paneel '%s' is gestel om op skerm %d te vertoon, wat tans nie beskikbaar is "
 "nie. Laai nie hierdie paneel nie."
 
-#: ../gnome-panel/panel-profile.c:1678
+#: ../gnome-panel/panel-profile.c:1684
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Kon nie GConf- Boolese waarde '%s': %s lees nie"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
-msgid "Orientation|Top"
+msgctxt "Orientation"
+msgid "Top"
 msgstr "Bo"
 
-#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
-msgid "Orientation|Bottom"
+msgctxt "Orientation"
+msgid "Bottom"
 msgstr "Onder"
 
-#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
-msgid "Orientation|Left"
+msgctxt "Orientation"
+msgid "Left"
 msgstr "Links"
 
-#: ../gnome-panel/panel-properties-dialog.c:127
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
-msgid "Orientation|Right"
+msgctxt "Orientation"
+msgid "Right"
 msgstr "Regs"
 
-#: ../gnome-panel/panel-properties-dialog.c:947
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Laai-eienskappe"
 
-#: ../gnome-panel/panel-properties-dialog.c:1055
-#: ../gnome-panel/panel-run-dialog.c:1963
+#: ../gnome-panel/panel-properties-dialog.c:981
+#: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
-msgid "Unable to load file '%s'."
-msgstr "Kon nie lêer '%s' laai nie."
+msgid "Unable to load file '%s': %s."
+msgstr "Kon nie lêer '%s' laai nie: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1060
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "Kon nie die dialoog met eienskappe wys nie"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:2
+#: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "<small>Opaque</small>"
 msgstr "<small>Ondeursigtig</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:3
+#: ../gnome-panel/panel-properties-dialog.ui.h:3
 msgid "<small>Transparent</small>"
 msgstr "<small>Deursigtig</small>"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:4
 msgid "Arro_ws on hide buttons"
 msgstr "Py_le op verbergknoppies"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
 msgid "Background"
 msgstr "Agtergrond"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
 msgid "Background _image:"
 msgstr "Agtergrond_beeld:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:7
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
 msgid "Co_lor:"
 msgstr "Kl_eur:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:8
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
 msgid "E_xpand"
 msgstr "Uit_vou"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:10
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
 msgid "Image Background Details"
 msgstr "Beeldagtergrondbesonderhede"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:11
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
 msgid "Panel Properties"
 msgstr "Paneeleienskappe"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:12
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
 msgid "Pick a color"
 msgstr "Kies 'n kleur"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:13
+#: ../gnome-panel/panel-properties-dialog.ui.h:13
 msgid "Rotate image when panel is _vertical"
 msgstr "Roteer beeld wanneer paneel _vertikaal is"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:14
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
 msgid "S_tyle:"
 msgstr "S_tyl:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:15
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
 msgid "Select background"
 msgstr "Kies agtergrond"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:16
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
 msgid "Show hide _buttons"
 msgstr "Vertoon verberg_knoppies"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:17
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
 msgid "Solid c_olor"
 msgstr "Soliede kl_eur"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:18
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
 msgid "Some of these properties are locked down"
 msgstr "Sommige van hierdie eienskappe is gesluit"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:19
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "St_retch"
 msgstr "R_ek"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:20
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
 msgid "_Autohide"
 msgstr "_Outoverberg"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
 msgid "_Icon:"
 msgstr "_Ikoon:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "_None (use system theme)"
 msgstr "_Geen (gebruik stelseltema)"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:23
-#: ../libpanel-applet/panel-test-applets.glade.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../libpanel-applet/panel-test-applets.ui.h:4
 msgid "_Orientation:"
 msgstr "_Oriëntering:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Scale"
 msgstr "_Skaal"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:25
-#: ../libpanel-applet/panel-test-applets.glade.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../libpanel-applet/panel-test-applets.ui.h:6
 msgid "_Size:"
 msgstr "_Grootte:"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
 msgstr "_Teël"
 
-#: ../gnome-panel/panel-properties-dialog.glade.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:27
 msgid "pixels"
 msgstr "pixels"
 
-#: ../gnome-panel/panel-recent.c:51
-msgid "Could not find a suitable application."
-msgstr "Kon nie 'n geskikte toepassing vind nie."
-
-#: ../gnome-panel/panel-recent.c:95 ../gnome-panel/panel-recent.c:105
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Kan nie onlangs gebruikte dokument \"%s\" open nie"
 
-#: ../gnome-panel/panel-recent.c:107
+#: ../gnome-panel/panel-recent.c:90
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "'n Onbekende fout het voorgekom terwyl probeer is om \"%s\" te open."
 
-#: ../gnome-panel/panel-recent.c:164
+#: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
 msgstr "Verwyder alles uit die Onlangse dokumente?"
 
-#: ../gnome-panel/panel-recent.c:166
+#: ../gnome-panel/panel-recent.c:149
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
-#: ../gnome-panel/panel-recent.c:178 ../gnome-panel/panel-recent.c:252
-#, fuzzy
+#: ../gnome-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
-msgstr "Onlangse dokumente"
+msgstr "Maak Onlangse dokumente skoon"
 
-#: ../gnome-panel/panel-recent.c:213
+#: ../gnome-panel/panel-recent.c:196
 msgid "Recent Documents"
 msgstr "Onlangse dokumente"
 
-#: ../gnome-panel/panel-recent.c:254
+#: ../gnome-panel/panel-recent.c:235
+msgid "Clear Recent Documents..."
+msgstr "Maak Onlangse dokumente skoon..."
+
+#: ../gnome-panel/panel-recent.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Verwyder alle items vanuit die lys van onlangse dokumente"
 
-#: ../gnome-panel/panel-run-dialog.c:322
+#: ../gnome-panel/panel-run-dialog.c:391
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kon nie bevel '%s' uitvoer nie"
 
-#: ../gnome-panel/panel-run-dialog.c:407
+#: ../gnome-panel/panel-run-dialog.c:444
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kon nie '%s' van UTF-8 omskakel nie"
 
-#: ../gnome-panel/panel-run-dialog.c:1215
+#: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
 msgstr "Kies 'n lêer om by die bevel aan te hang..."
 
-#: ../gnome-panel/panel-run-dialog.c:1591
-#: ../gnome-panel/panel-run-dialog.glade.h:10
+#: ../gnome-panel/panel-run-dialog.c:1634
+#: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Selekteer 'n toepassing om sy beskrywing te bekyk."
 
-#: ../gnome-panel/panel-run-dialog.c:1629
+#: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Sal bevel laat loop: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1660
+#: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 
-#: ../gnome-panel/panel-run-dialog.c:1967
+#: ../gnome-panel/panel-run-dialog.c:2024
 #, fuzzy
 msgid "Could not display run dialog"
 msgstr "Sit in loopdialoog"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:1
+#: ../gnome-panel/panel-run-dialog.ui.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
@@ -2753,7 +2720,7 @@ msgstr ""
 "Kliek hierdie knoppie om vir 'n lêer te blaai waarvan die naam aan die "
 "bevelstring aangehang moet word."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:2
+#: ../gnome-panel/panel-run-dialog.ui.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2761,150 +2728,124 @@ msgstr ""
 "Kliek hierdie knoppie om die geselekteerde toepassing of bevel in die "
 "bevelinskrywingsveld te laat loop."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:3
-msgid "Command entry"
-msgstr "Bevelinskrywing"
-
-#: ../gnome-panel/panel-run-dialog.glade.h:4
+#: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
 msgstr "Bevelikoon"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:5
-msgid "Enter a command string here to run it."
-msgstr "Tik 'n bevelstring hier in om dit te laat loop."
-
-#: ../gnome-panel/panel-run-dialog.glade.h:6
+#: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "List of known applications"
 msgstr "Vertoon lys van bekende toepassings"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:7
+#: ../gnome-panel/panel-run-dialog.ui.h:5
 msgid "Run Application"
 msgstr "Laat loop toepassing"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:8
+#: ../gnome-panel/panel-run-dialog.ui.h:6
 msgid "Run in _terminal"
 msgstr "Laat loop in _terminaal"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:9
+#: ../gnome-panel/panel-run-dialog.ui.h:7
 msgid "Run with _file..."
 msgstr "Laat loop met _lêer..."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:11
+#: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
 msgstr "Merk hierdie kassie om die bevel in 'n terminaalvenster te laat loop."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:12
+#: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
 msgstr "Vertoon lys van bekende _toepassings"
 
-#: ../gnome-panel/panel-run-dialog.glade.h:13
+#: ../gnome-panel/panel-run-dialog.ui.h:11
 msgid "The icon of the command to be run."
 msgstr "Die ikoon van die bevel wat laat loop moet word."
 
-#: ../gnome-panel/panel-run-dialog.glade.h:14
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-run-dialog.ui.h:12
+#: ../gnome-panel/panel-stock-icons.c:90
 msgid "_Run"
 msgstr "_Loop"
 
-#: ../gnome-panel/panel-shell.c:64
-#, c-format
-msgid ""
-"The panel could not register with the bonobo-activation server (error code: %"
-"d) and will exit.\n"
-"It may be automatically restarted."
-msgstr ""
-
-#: ../gnome-panel/panel-shell.c:74
-msgid "The panel has encountered a fatal error"
-msgstr ""
-
-#. FIXME: the checkbox is not correctly aligned in the dialog...
-#: ../gnome-panel/panel-shell.c:80
-msgid "Force the panel to not be automatically restarted"
-msgstr ""
-
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Force quit"
 msgstr "_Forseer afsluiting"
 
-#: ../gnome-panel/panel-stock-icons.c:93
-#, fuzzy
+#: ../gnome-panel/panel-stock-icons.c:92
 msgid "C_lear"
-msgstr "Kalender"
+msgstr "_Maak skoon"
 
-#: ../gnome-panel/panel-stock-icons.c:94
+#: ../gnome-panel/panel-stock-icons.c:93
 msgid "D_on't Delete"
 msgstr "M_oenie skrap nie"
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1188
 msgid "Hide Panel"
-msgstr "Verberg Paneel"
+msgstr "Verberg paneel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1559
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
-msgstr "Bokantste Uitgevoude Randpaneel"
+msgstr "Bokantste uitgevoude randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1560
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
-msgstr "Bokantste Gesentreerde Paneel"
+msgstr "Bokantste gesentreerde paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1561
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
-msgstr "Bokantste Swewende Paneel"
+msgstr "Bokantste swewende paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1562
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
-msgstr "Bokantste Randpaneel"
+msgstr "Bokantste randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1566
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
-msgstr "Onderkantste Uitgevoude Randpaneel"
+msgstr "Onderkantste uitgevoude randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1567
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
-msgstr "Onderkantste Gesentreerde Paneel"
+msgstr "Onderkantste gesentreerde paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1568
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
-msgstr "Onderkantste Swewende Paneel"
+msgstr "Onderkantste swewende paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1569
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
-msgstr "Onderkantste Randpaneel"
+msgstr "Onderkantste randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1573
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
-msgstr "Linkerkantste Uitgevoude Randpaneel"
+msgstr "Linkerkantste uitgevoude randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1574
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
-msgstr "Linkerkantste Gesentreerde Paneel"
+msgstr "Linkerkantste gesentreerde paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1575
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
-msgstr "Linkerkantste Swewende Paneel"
+msgstr "Linkerkantste swewende paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1576
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
-msgstr "Linkerkantste Randpaneel"
+msgstr "Linkerkantste randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1580
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
-msgstr "Regterkantste Uitgevoude Randpaneel"
+msgstr "Regterkantste uitgevoude randpaneel"
 
-#: ../gnome-panel/panel-toplevel.c:1581
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
-msgstr "Regterkantste Gesentreerde Paneel"
+msgstr "Regterkantste gesentreerde paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1582
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
-msgstr "Regterkantste Swewende Paneel"
+msgstr "Regterkantste swewende paneel"
 
-#: ../gnome-panel/panel-toplevel.c:1583
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
-msgstr "Regterkantste Randpaneel"
+msgstr "Regterkantste randpaneel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:1
 msgid "Animation speed"
@@ -3210,14 +3151,14 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Die oriëntering van die paneel. Moontlike waardes is \"bokant\", \"onderkant"
-"\", \"links\", \"regs\". In uitgevou-modus spesifiseer die sleutel aan "
-"watter skermkant die paneel is. In onuitgevou-modus is die verskil tussen "
-"\"bokant\" en \"onderkant\" minder belangrik - beide dui aan dat hierdie 'n "
-"horisontale paneel is - maar dit gee nogtans 'n nuttige wenk oor hoe sommige "
-"paneelobjekte hulle moet gedra. Op 'n \"bokant\"-paneel sal die "
-"kieslysknoppie byvoorbeeld onder die paneel uitspring, maar op 'n \"onderkant"
-"\"-paneel sal die kieslys bokant die paneel uitspring."
+"Die oriëntering van die paneel. Moontlike waardes is \"top\", \"bottom\", "
+"\"left\", \"right\". In uitgevou-modus spesifiseer die sleutel aan watter "
+"skermkant die paneel is. In onuitgevou-modus is die verskil tussen \"top\" "
+"en \"bottom\" minder belangrik - beide dui aan dat hierdie 'n horisontale "
+"paneel is - maar dit gee nogtans 'n nuttige wenk oor hoe sommige "
+"paneelobjekte hulle moet gedra. Op 'n \"top\"-paneel sal die kieslysknoppie "
+"byvoorbeeld onder die paneel uitspring, maar op 'n \"bottom\"-paneel sal die "
+"kieslys bokant die paneel uitspring."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
 msgid ""
@@ -3226,8 +3167,8 @@ msgid ""
 "enable_animations key is true."
 msgstr ""
 "Die spoed waarteen die paneelanimasies moet plaasvind. Moontlike waardes is "
-"\"stadig\", \"medium\" en \"vinnig\". Hierdie sleutel is slegs relevant as "
-"die enable_animations-sleutel as waar gemerk is."
+"\"slow\", \"medium\" en \"fast\". Hierdie sleutel is slegs relevant as die "
+"enable_animations-sleutel as waar gemerk is."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -3252,8 +3193,8 @@ msgid ""
 msgstr ""
 "Watter soort agtergrond vir hierdie paneel gebruik moet word. Moontlike "
 "waardes is \"gtk\" - die verstek-GTK+koppelvlakelement-agtergrond sal "
-"gebruik word, \"kleur\" - die kleursleutel sal as agtergrondkleur gebruik "
-"word, of \"beeld\" - die beeld deur die beeldsleutel gespesifiseer sal as "
+"gebruik word, \"color\" - die kleursleutel sal as agtergrondkleur gebruik "
+"word, of \"image\" - die beeld deur die beeldsleutel gespesifiseer sal as "
 "agtergrond gebruik word."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
@@ -3289,26 +3230,31 @@ msgstr "Y-koördinaat van paneel"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr ""
 
-#: ../gnome-panel/panel-util.c:657
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikoon '%s' nie gevind nie"
 
-#: ../gnome-panel/panel-util.c:880
+#: ../gnome-panel/panel-util.c:409
+#, c-format
+msgid "Could not execute '%s'"
+msgstr "Kon nie '%s' uitvoer nie"
+
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "lêer"
 
-#: ../gnome-panel/panel-util.c:1486
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
-msgstr "Tuis-gids"
+msgstr "Tuisgids"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:1498
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "Lêerstelsel"
 
-#: ../gnome-panel/panel-util.c:1645
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "Soek"
 
@@ -3317,21 +3263,21 @@ msgstr "Soek"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1691
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%2$s, %1$s"
 
-#: ../gnome-panel/panel.c:471
+#: ../gnome-panel/panel.c:474
 #, c-format
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: ../gnome-panel/panel.c:1299
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "Skrap hierdie laai?"
 
-#: ../gnome-panel/panel.c:1300
+#: ../gnome-panel/panel.c:1310
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -3340,11 +3286,11 @@ msgstr ""
 "Wanneer 'n paneel geskrap word, gaan die paneel en sy\n"
 " opstelling verlore. Skrap hierdie paneel?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "Skrap hierdie paneel?"
 
-#: ../gnome-panel/panel.c:1304
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3363,51 +3309,6 @@ msgstr "Toets Bonobo-miniprogram"
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
 msgstr "Toets Bonobo-miniprogramfabriek"
-
-#: ../libpanel-applet/panel-applet.c:1052
-#, c-format
-msgid "Incomplete '%s' background type received"
-msgstr "Onvolledige '%s'-agtergrondsoort ontvang"
-
-#: ../libpanel-applet/panel-applet.c:1066
-#, c-format
-msgid "Incomplete '%s' background type received: %s"
-msgstr "Onvolledige '%s'-agtergrondsoort ontvang: %s"
-
-#: ../libpanel-applet/panel-applet.c:1075
-#, c-format
-msgid "Failed to get pixmap %s"
-msgstr "Kon nie pixelkaart %s kry nie"
-
-#: ../libpanel-applet/panel-applet.c:1082
-msgid "Unknown background type received"
-msgstr "Onbekende agtergrondsoort ontvang"
-
-#: ../libpanel-applet/panel-applet.c:1306
-msgid "The Applet's containing Panel's orientation"
-msgstr "Die Miniprogramme wat Paneel se oriëntasie bevat"
-
-#: ../libpanel-applet/panel-applet.c:1314
-msgid "The Applet's containing Panel's size in pixels"
-msgstr "Die Miniprogramme wat Paneel se grootte in pixels bevat"
-
-#: ../libpanel-applet/panel-applet.c:1322
-msgid "The Applet's containing Panel's background color or pixmap"
-msgstr ""
-"Die Miniprogramme wat die Paneel se agtergrondkleur of pixelkaart bevat"
-
-#: ../libpanel-applet/panel-applet.c:1330
-msgid "The Applet's flags"
-msgstr "Die Miniprogramme se vlaggies"
-
-#: ../libpanel-applet/panel-applet.c:1338
-msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr ""
-"Reekse wat wenke gee oor watter groottes aanvaarbaar is vir miniprogram"
-
-#: ../libpanel-applet/panel-applet.c:1346
-msgid "The Applet's containing Panel is locked down"
-msgstr "Die Miniprogramme wat Paneel bevat, is gesluit"
 
 #: ../libpanel-applet/panel-test-applets.c:34
 msgid "Specify an applet IID to load"
@@ -3434,31 +3335,52 @@ msgstr ""
 "onderkant, links of regs)"
 
 #: ../libpanel-applet/panel-test-applets.c:61
-msgid "Size|XX Small"
+#, fuzzy
+#| msgid "Size|XX Small"
+msgctxt "Size"
+msgid "XX Small"
 msgstr "XX-klein"
 
 #: ../libpanel-applet/panel-test-applets.c:62
-msgid "Size|X Small"
+#, fuzzy
+#| msgid "Size|X Small"
+msgctxt "Size"
+msgid "X Small"
 msgstr "X-klein"
 
 #: ../libpanel-applet/panel-test-applets.c:63
-msgid "Size|Small"
+#, fuzzy
+#| msgid "Size|Small"
+msgctxt "Size"
+msgid "Small"
 msgstr "Klein"
 
 #: ../libpanel-applet/panel-test-applets.c:64
-msgid "Size|Medium"
+#, fuzzy
+#| msgid "Size|Medium"
+msgctxt "Size"
+msgid "Medium"
 msgstr "Medium"
 
 #: ../libpanel-applet/panel-test-applets.c:65
-msgid "Size|Large"
+#, fuzzy
+#| msgid "Size|Large"
+msgctxt "Size"
+msgid "Large"
 msgstr "Groot"
 
 #: ../libpanel-applet/panel-test-applets.c:66
-msgid "Size|X Large"
+#, fuzzy
+#| msgid "Size|X Large"
+msgctxt "Size"
+msgid "X Large"
 msgstr "X-groot"
 
 #: ../libpanel-applet/panel-test-applets.c:67
-msgid "Size|XX Large"
+#, fuzzy
+#| msgid "Size|XX Large"
+msgctxt "Size"
+msgid "XX Large"
 msgstr "XX-groot"
 
 #: ../libpanel-applet/panel-test-applets.c:129
@@ -3467,27 +3389,260 @@ msgid "Failed to load applet %s"
 msgstr "Kon nie miniprogram %s laai nie"
 
 #. This is an utility to easily test various applets
-#: ../libpanel-applet/panel-test-applets.glade.h:2
+#: ../libpanel-applet/panel-test-applets.ui.h:2
 #, fuzzy
 msgid "Test applet utility"
 msgstr "Paneelminiprogram-ID-lys"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:3
+#: ../libpanel-applet/panel-test-applets.ui.h:3
 msgid "_Applet:"
 msgstr "Miniprogr_am:"
 
-#: ../libpanel-applet/panel-test-applets.glade.h:5
+#: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
 msgstr "_Voorkeuregids:"
 
-#~ msgid "Change system time"
-#~ msgstr "Verander stelseltyd"
+#~ msgid "Failed to launch time configuration tool: %s"
+#~ msgstr "Kon nie tydopstellingsprogram laai nie: %s"
 
-#~ msgid "Change system time zone"
-#~ msgstr "Verander stelsel se tydsone"
+#~ msgid ""
+#~ "Failed to locate a program for configuring the date and time. Perhaps "
+#~ "none is installed?"
+#~ msgstr ""
+#~ "'n Program om die datum en tyd op te stel kon nie gevind word nie. "
+#~ "Miskien is daar nie een geïnstalleer nie?"
 
-#~ msgid "Configure hardware clock"
-#~ msgstr "Stel hardewarehorlosie op"
+#~ msgid "<b>Clock Options</b>"
+#~ msgstr "<b>Horlosie-keuses</b>"
+
+#~ msgid "<b>Time Settings</b>"
+#~ msgstr "<b>Tyd-verstellings</b>"
+
+#~ msgid "Find _Next"
+#~ msgstr "Soek _volgende"
+
+#~ msgid "Find..."
+#~ msgstr "Soek..."
+
+#~ msgid "Time Settings"
+#~ msgstr "Tyd-verstellings"
+
+#~ msgid "_Find:"
+#~ msgstr "_Soek:"
+
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr ""
+#~ "Indien as waar gemerk, vertoon die tyd in Universele Gekoördineerde Tyd "
+#~ "(UTC)."
+
+#~ msgid ""
+#~ "This key specifies the program to run in order to configure the time."
+#~ msgstr ""
+#~ "Hierdie sleutel spesifiseer die program wat geloop moet word om die tyd "
+#~ "op te stel."
+
+#~ msgid "Unknown Location"
+#~ msgstr "Onbekende ligging"
+
+#~ msgid "There was an error displaying help: %s"
+#~ msgstr "Fout ondervind tydens vertoon van hulpleër: %s"
+
+#~ msgid "<b>Active timezones</b>"
+#~ msgstr "<b>Aktiewe tydsones</b>"
+
+#~ msgid "<b>Add timezone</b>"
+#~ msgstr "<b>Voeg tydsone by</b>"
+
+#~ msgid "<small><b>Location:</b></small>"
+#~ msgstr "<small><b>Ligging:</b></small>"
+
+#~ msgid ""
+#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
+#~ "right click to zoom out.</i></small>"
+#~ msgstr ""
+#~ "<small><i>Klik op die kaart om in te zoem en kies die tysone van 'n stad, "
+#~ "of klik regs om uit te zoem.</i></small>"
+
+#~ msgid "Edit Timezones"
+#~ msgstr "Wysig tydsones"
+
+#~ msgid "%s - %s"
+#~ msgstr "%s - %s"
+
+#~ msgid "move the mouse on the map"
+#~ msgstr "beweeg die muis op die kaart"
+
+#~ msgid "<b>Location:</b> %s"
+#~ msgstr "<b>Ligging:</b> %s"
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgid "Timezone"
+#~ msgstr "Tydsone"
+
+#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s met dagligbesparing (UTC %s%.2ld:%.2ld)"
+
+#~ msgid "%s (UTC %s%.2ld:%.2ld)"
+#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
+
+#~ msgid ""
+#~ "%s - %s\n"
+#~ "%s"
+#~ msgstr ""
+#~ "%s - %s\n"
+#~ "%s"
+
+#~ msgid "_Edit timezones..."
+#~ msgstr "_Wysig tydsones..."
+
+#~ msgid "Timezones"
+#~ msgstr "Tydsones"
+
+#~ msgid "<b>Animation</b>"
+#~ msgstr "<b>Animasie</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Algemeen</b>"
+
+#~ msgid "<b>Switcher</b>"
+#~ msgstr "<b>Wisselaar</b>"
+
+#~ msgid "<b>Workspaces</b>"
+#~ msgstr "<b>Werkruimtes</b>"
+
+#~ msgid "GNOME Panel Shell"
+#~ msgstr "GNOME-Paneeldop"
+
+#~ msgid "Error watching gconf key '%s': %s"
+#~ msgstr "Fout met dophou van gconf-sleutel '%s': %s"
+
+#~ msgid "Error loading gconf directory '%s': %s"
+#~ msgstr "Fout met laai van gconf-gids '%s': %s"
+
+#~ msgid "Error getting value for '%s': %s"
+#~ msgstr "Fout met bekom van waarde vir '%s': %s"
+
+#~ msgid "Browse icons"
+#~ msgstr "Blaai deur ikone"
+
+#~ msgid "_Command:"
+#~ msgstr "_Opdrag:"
+
+#~ msgid "Disable Lock Screen"
+#~ msgstr "Deaktiveer Skermsluit"
+
+#~ msgid ""
+#~ "If true, the panel will not allow a user to lock their screen, by "
+#~ "removing access to the lock screen menu entries."
+#~ msgstr ""
+#~ "Indien as waar gemerk, sal die paneel nie 'n gebruiker toelaat om hul "
+#~ "skerm te sluit nie, deur toegang tot die skermsluit-kieslysinskrywings te "
+#~ "verwyder."
+
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d second."
+#~ msgid_plural ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "You will be automatically logged out in %d seconds."
+#~ msgstr[0] ""
+#~ "U is tans aangemeld as \"%s\".\n"
+#~ "U sal outomaties afgemeld word oor %d sekonde."
+#~ msgstr[1] ""
+#~ "U is tans aangemeld as \"%s\".\n"
+#~ "U sal outomaties afgemeld word oor %d sekondes."
+
+#~ msgid ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d second."
+#~ msgid_plural ""
+#~ "You are currently logged in as \"%s\".\n"
+#~ "This system will be automatically shut down in %d seconds."
+#~ msgstr[0] ""
+#~ "U is tans aangemeld as \"%s\".\n"
+#~ "Die stelsel sal outomaties afgeskakel word oor %d sekonde."
+#~ msgstr[1] ""
+#~ "U is tans aangemeld as \"%s\".\n"
+#~ "Die stelsel sal outomaties afgeskakel word oor %d sekondes."
+
+#~ msgid "Log out of this system now?"
+#~ msgstr "Meld nou af van hierdie stelsel?"
+
+#~ msgid "_Log Out"
+#~ msgstr "Me_ld af"
+
+#~ msgid "Shut down this system now?"
+#~ msgstr "Skakel die stelsel nou af?"
+
+#~ msgid "_Hibernate"
+#~ msgstr "_Hiberneer"
+
+#~ msgid "_Restart"
+#~ msgstr "He_rbegin"
+
+#~ msgid "_Shut Down"
+#~ msgstr "_Skakel af"
+
+#~ msgid "Desktop Folder|Desktop"
+#~ msgstr "Werkskerm"
+
+#~ msgid "panel:showusername|1"
+#~ msgstr "1"
+
+#~ msgid "Enter Password"
+#~ msgstr "Tik wagwoord"
+
+#~ msgid "Orientation|Top"
+#~ msgstr "Bo"
+
+#~ msgid "Orientation|Bottom"
+#~ msgstr "Onder"
+
+#~ msgid "Orientation|Left"
+#~ msgstr "Links"
+
+#~ msgid "Orientation|Right"
+#~ msgstr "Regs"
+
+#~ msgid "Could not find a suitable application."
+#~ msgstr "Kon nie 'n geskikte toepassing vind nie."
+
+#~ msgid "Command entry"
+#~ msgstr "Bevelinskrywing"
+
+#~ msgid "Enter a command string here to run it."
+#~ msgstr "Tik 'n bevelstring hier in om dit te laat loop."
+
+#~ msgid "Incomplete '%s' background type received"
+#~ msgstr "Onvolledige '%s'-agtergrondsoort ontvang"
+
+#~ msgid "Incomplete '%s' background type received: %s"
+#~ msgstr "Onvolledige '%s'-agtergrondsoort ontvang: %s"
+
+#~ msgid "Failed to get pixmap %s"
+#~ msgstr "Kon nie pixelkaart %s kry nie"
+
+#~ msgid "Unknown background type received"
+#~ msgstr "Onbekende agtergrondsoort ontvang"
+
+#~ msgid "The Applet's containing Panel's size in pixels"
+#~ msgstr "Die Miniprogramme wat Paneel se grootte in pixels bevat"
+
+#~ msgid "The Applet's containing Panel's background color or pixmap"
+#~ msgstr ""
+#~ "Die Miniprogramme wat die Paneel se agtergrondkleur of pixelkaart bevat"
+
+#~ msgid "The Applet's flags"
+#~ msgstr "Die Miniprogramme se vlaggies"
+
+#~ msgid "Ranges that hint what sizes are acceptable for the applet"
+#~ msgstr ""
+#~ "Reekse wat wenke gee oor watter groottes aanvaarbaar is vir miniprogram"
+
+#~ msgid "The Applet's containing Panel is locked down"
+#~ msgstr "Die Miniprogramme wat Paneel bevat, is gesluit"
 
 #~ msgid "%A %B %d"
 #~ msgstr "%A %B %d"
@@ -3683,18 +3838,6 @@ msgstr "_Voorkeuregids:"
 #~ msgid "Take window screenshot"
 #~ msgstr "Neem 'n skermkiekie van venster"
 
-#~ msgid "Top"
-#~ msgstr "Bokant"
-
-#~ msgid "Bottom"
-#~ msgstr "Onderkant"
-
-#~ msgid "Left"
-#~ msgstr "Links"
-
-#~ msgid "Right"
-#~ msgstr "Regs"
-
 #~ msgid "Details: %s"
 #~ msgstr "Besonderhede: %s"
 
@@ -3712,9 +3855,6 @@ msgstr "_Voorkeuregids:"
 
 #~ msgid "file not found"
 #~ msgstr "Lêer nie gevind nie"
-
-#~ msgid "Desktop"
-#~ msgstr "Werkarea"
 
 #, fuzzy
 #~ msgid "Workspace Selector"
@@ -3741,10 +3881,6 @@ msgstr "_Voorkeuregids:"
 
 #~ msgid "Actions"
 #~ msgstr "Aksies"
-
-#, fuzzy
-#~ msgid "Workspace List"
-#~ msgstr "Werkruimtename"
 
 #~ msgid "Specify a profile name to load"
 #~ msgstr "Spesifiseer 'n profielnaam om te laai"
@@ -3958,9 +4094,6 @@ msgstr "_Voorkeuregids:"
 #~ msgid "Drawer and panel _animation"
 #~ msgstr "Laaier- en paneel_animasie"
 
-#~ msgid "Fast"
-#~ msgstr "Vinnig"
-
 #~ msgid "Panel Preferences"
 #~ msgstr "Paneelvoorkeure"
 
@@ -4018,3 +4151,4 @@ msgstr "_Voorkeuregids:"
 
 #~ msgid "Quit from %s's desktop"
 #~ msgstr "Verlaat %s werkarea"
+
