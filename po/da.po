@@ -1,5 +1,5 @@
 # Danish translation of gnome-panel.
-# Copyright (C) 1998-99, 2000-09 Free Software Foundation, Inc.
+# Copyright (C) 1998-99, 2000-10 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Kenneth Christiansen <kenneth@ripen.dk>, 1998-2000.
@@ -8,7 +8,7 @@
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04, 05, 06.
 # Martin Willemoes Hansen <mwh@sysrq.dk>, 2004, 05.
 # Peter Bach <bach.peter@gmail.com>, 2007.
-# Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09.
+# Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09, 10.
 #
 # Konventioner:
 #
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-29 10:28+0200\n"
-"PO-Revision-Date: 2009-08-16 16:42+0200\n"
+"POT-Creation-Date: 2010-03-27 16:21+0100\n"
+"PO-Revision-Date: 2010-03-25 02:10+0100\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgid "_Preferences"
 msgstr "_Indstillinger"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3719
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "Ur"
 
@@ -100,7 +100,12 @@ msgstr "Vis det aktuelle tidspunkt og datoen"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M"
 
@@ -114,56 +119,61 @@ msgstr "%l:%M"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
-#: ../applets/clock/clock.c:1601 ../applets/clock/clock-location-tile.c:476
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "Opgaver"
 
-#: ../applets/clock/calendar-window.c:853
-#: ../applets/clock/calendar-window.c:1029
-#: ../applets/clock/calendar-window.c:1665
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
 msgstr "Redigér"
 
-#: ../applets/clock/calendar-window.c:974
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: ../applets/clock/calendar-window.c:1113
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "Aftaler"
 
-#: ../applets/clock/calendar-window.c:1138
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "Fødselsdage og årsdage"
 
-#: ../applets/clock/calendar-window.c:1163
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "Vejrinformation"
 
-#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Steder"
 
-#: ../applets/clock/calendar-window.c:1964
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S"
 
@@ -174,7 +184,7 @@ msgstr "%l:%M:%S"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1595
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -183,7 +193,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:476
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %e. %b"
 
@@ -191,7 +201,7 @@ msgstr "%a %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:483
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -204,7 +214,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:491
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -214,27 +224,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:674
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A den %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik for at skjule dine aftaler og opgaver"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "Klik for at vise dine aftaler og opgaver"
 
-#: ../applets/clock/clock.c:711
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "Klik for at skjule månedskalenderen"
 
-#: ../applets/clock/clock.c:714
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Klik for at vise din månedskalender"
 
-#: ../applets/clock/clock.c:1434
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "Computer-ur"
 
@@ -244,7 +254,7 @@ msgstr "Computer-ur"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1580
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%l:%M:%S"
 
@@ -254,71 +264,71 @@ msgstr "%l:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1588
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1641
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: ../applets/clock/clock.c:1672
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "Indstil systemtid..."
 
-#: ../applets/clock/clock.c:1673
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "Indstil systemtid"
 
-#: ../applets/clock/clock.c:1688
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "Kunne ikke indstille systemtid"
 
-#: ../applets/clock/clock.c:2752
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "Brugerdefineret format"
 
-#: ../applets/clock/clock.c:3210
+#: ../applets/clock/clock.c:3194
 msgid "Choose Location"
 msgstr "Vælg sted"
 
-#: ../applets/clock/clock.c:3285
+#: ../applets/clock/clock.c:3273
 msgid "Edit Location"
 msgstr "Redigér sted"
 
-#: ../applets/clock/clock.c:3431
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "Bynavn"
 
-#: ../applets/clock/clock.c:3435
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "Byens tidszone"
 
-#: ../applets/clock/clock.c:3615
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "24 timer"
 
-#: ../applets/clock/clock.c:3616
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "Unix-tid"
 
-#: ../applets/clock/clock.c:3617
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "Internet-tid"
 
-#: ../applets/clock/clock.c:3625
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "Brugerdefineret _format:"
 
-#: ../applets/clock/clock.c:3722
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "Urpanelprogrammet viser tiden og datoen"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3725 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -525,86 +535,82 @@ msgid "If true, display seconds in time."
 msgstr "Hvis sand, så vis sekunder i tidsangivelsen."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Vis tid i Universal Coordinated Time-zonen."
-
-#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Hvis sand, så fold listen af aftaler i kalendervinduet ud."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Hvis sand, så fold listen af fødselsdage i kalendervinduet ud."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Hvis sand, så fold listen af steder i kalendervinduet ud."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Hvis sand, så fold listen af opgaver i kalendervinduet ud."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "Hvis sand, så fold listen over vejrinformation i kalendervinduet ud."
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Hvis sand, så vis dato i et værktøjstip når musen er over uret."
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
 msgstr "Hvis sand, så vis temperaturen ved siden af vejrikonet."
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show week numbers in the calendar."
 msgstr "Hvis sand, så vis ugenumre i kalenderen."
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "List of locations"
 msgstr "Liste af steder"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
 msgstr "Vis dato i ur"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in tooltip"
 msgstr "Vis dato i værktøjstip"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show temperature in clock"
 msgstr "Vis temperaturen i uret"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Show time with seconds"
 msgstr "Vis tid med sekunder"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show weather in clock"
 msgstr "Vis vejret i uret"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Show week numbers in calendar"
 msgstr "Vis ugenumre i kalenderen"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Speed unit"
 msgstr "Fartenhed"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "Temperaturenhed"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
 msgstr "Enheden hvormed temperaturer angives."
 
-#: ../applets/clock/clock.schemas.in.h:42
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing wind speed."
 msgstr "Enheden hvormed vindhastighed angives."
 
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:42
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
@@ -613,6 +619,14 @@ msgstr ""
 "Brugen af denne nøgle blev forældet i Gnome 2.22 til fordel for et internt "
 "konfigurationsværktøj. Skemaet bevares af hensyn til kompatibilitet med "
 "ældre versioner."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Brugen af denne nøgle blev forældet i Gnome 2.28 til fordel for tidszoner. "
+"Skemaet bevares af hensyn til kompatibilitet med ældre versioner."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -715,24 +729,24 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "Ukendt"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, føles som %s"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Solopgang: %s / Solnedgang: %s"
@@ -1329,6 +1343,69 @@ msgstr ""
 "arbejdsområderne i. Nøglen er kun relevant hvis display_all_workspaces er "
 "sand."
 
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Filen er ikke en gyldig .desktop-fil"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Skrivebordsfilversion \"%s\" ikke genkendt"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Starter %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Programmet tager ikke dokumenter på kommandolinjen"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Opstartstilvalg ikke genkendt: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Kan ikke give dokument-URI'er til et \"Type=Link\"-skrivebordselement"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Ikke et kørbart element"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Deaktivér forbindelse til sessionshåndtering"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Angiv fil, der indeholder gemt konfiguration"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FIL"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Angiv id til sessionshåndtering"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "Id"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Tilvalg til sessionshåndtering:"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Vis tilvalg til sessionshåndtering"
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
@@ -1339,6 +1416,10 @@ msgstr ""
 #: ../gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "Fejl"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Vælg et ikon"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1375,12 +1456,12 @@ msgstr "F_jern fra panel"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Kan ikke finde en tom plads"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1627
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "Skuffe"
 
@@ -1394,29 +1475,29 @@ msgstr "_Tilføj til skuffe..."
 msgid "_Properties"
 msgstr "_Indstillinger"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:31
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
 msgstr "Opret en ny fil i den givne mappe"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:32
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[FIL...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:110
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
 msgstr "- Redigér .desktop-filer"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Opret genvej"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:174
-#: ../gnome-panel/gnome-desktop-item-edit.c:197
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
 msgstr "Mappe-egenskaber"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Egenskaber for genvej"
 
@@ -1428,7 +1509,7 @@ msgstr ""
 "Kør andre programmer og tilbyd forskellige værktøjer til vindueshåndtering, "
 "at vise hvad klokken er, osv."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Panel"
 
@@ -1463,37 +1544,37 @@ msgstr "_Start"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Nøglen %s er ikke angivet, kan ikke indlæse genvejj\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
-#: ../gnome-panel/panel-ditem-editor.c:1384
-#: ../gnome-panel/panel-ditem-editor.c:1415
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Kunne ikke gemme genvej"
 
-#: ../gnome-panel/main.c:43
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Erstat et nu kørende panel"
 
-#: ../gnome-panel/menu.c:913
+#: ../gnome-panel/menu.c:914
 msgid "Add this launcher to _panel"
 msgstr "Tilføj denne genvej til _panelet"
 
-#: ../gnome-panel/menu.c:920
+#: ../gnome-panel/menu.c:921
 msgid "Add this launcher to _desktop"
 msgstr "Tilføj denne genvej til _skrivebordet"
 
-#: ../gnome-panel/menu.c:932
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "_Hele menuen"
 
-#: ../gnome-panel/menu.c:937
+#: ../gnome-panel/menu.c:938
 msgid "Add this as _drawer to panel"
 msgstr "Tilføj som _skuffe på panelet"
 
-#: ../gnome-panel/menu.c:944
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "Tilføj som _menu på panelet"
 
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>SPILLET SLUT</b> på niveau %d!"
@@ -1502,42 +1583,42 @@ msgstr "<b>SPILLET SLUT</b> på niveau %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Tryk \"q\" for at afslutte"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "Pause"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Tryk \"p\" for at fortsætte"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Niveau: %s,  Liv: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Venstre/Højre for at bevæge sig, Mellemrum for at skyde, \"p\" for pause, \"q"
 "\" for at afslutte"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "Dræber-GEGLer fra det ydre rum"
 
@@ -1668,26 +1749,26 @@ msgstr "(tom)"
 msgid "query returned exception %s\n"
 msgstr "forespørgsel returnerede undtagelsen %s\n"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1071
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Find et _element at tilføje til \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1073
+#: ../gnome-panel/panel-addto.c:1075
 #, c-format
 msgid "Add to Drawer"
 msgstr "Tilføj til skuffe"
 
-#: ../gnome-panel/panel-addto.c:1075
+#: ../gnome-panel/panel-addto.c:1077
 msgid "Find an _item to add to the drawer:"
 msgstr "Find et _element at tilføje til skuffen:"
 
-#: ../gnome-panel/panel-addto.c:1077
+#: ../gnome-panel/panel-addto.c:1079
 #, c-format
 msgid "Add to Panel"
 msgstr "Tilføj til panel"
 
-#: ../gnome-panel/panel-addto.c:1079
+#: ../gnome-panel/panel-addto.c:1081
 msgid "Find an _item to add to the panel:"
 msgstr "Find et _element at tilføje til panelet:"
 
@@ -1780,80 +1861,75 @@ msgstr "_Nyt panel"
 msgid "A_bout Panels"
 msgstr "_Om paneler"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Program"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Program i terminal"
 
-#: ../gnome-panel/panel-ditem-editor.c:120
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Sted"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Type:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Navn:"
 
-#: ../gnome-panel/panel-ditem-editor.c:637
-#: ../gnome-panel/panel-properties-dialog.c:286
-msgid "Browse icons"
-msgstr "Gennemse ikoner"
-
-#: ../gnome-panel/panel-ditem-editor.c:655
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Gennemse..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:662
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Vælg et program..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1028
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Vælg en fil..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1153
-#: ../gnome-panel/panel-ditem-editor.c:1162
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "Komm_ando:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1171
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Sted:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Navnet på genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1355
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Kunne ikke gemme mappeegenskaber"
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Navnet på mappen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "Kommandoen for genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1375
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Placeringen af genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Kunne ikke vise hjælpedokument"
 
@@ -2100,65 +2176,65 @@ msgstr "Programmer"
 msgid "_Edit Menus"
 msgstr "_Redigér menuer"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
 msgstr "Bogmærker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "Åbn \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:529
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke skanne %s for medieændringer"
 
-#: ../gnome-panel/panel-menu-items.c:572
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "Omskan %s"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:672
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "Montér %s"
 
-#: ../gnome-panel/panel-menu-items.c:880
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
 msgstr "Flytbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:967
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "Netværkssteder"
 
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
 msgstr "Åbn din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1025
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1026
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åben indholdet af dit skrivebord i en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1417
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1446
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "System"
 
@@ -2168,7 +2244,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1527
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2177,14 +2253,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1539
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "Log %s ud..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1543
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Log %s ud af denne session for at logge på som en anden bruger"
@@ -2393,41 +2469,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Fejl ved læsning af boolesk GConf-værdi \"%s\": %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Top"
 
-#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Bund"
 
-#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Venstre"
 
-#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Højre"
 
-#: ../gnome-panel/panel-properties-dialog.c:952
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Skuffe-egenskaber"
 
-#: ../gnome-panel/panel-properties-dialog.c:1067
-#: ../gnome-panel/panel-run-dialog.c:2018
+#: ../gnome-panel/panel-properties-dialog.c:981
+#: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Kan ikke indlæse filen \"%s\": %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1073
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "Kunne ikke vise indstillingerne for skærmen"
 
@@ -2583,28 +2659,28 @@ msgstr "Kunne ikke udføre kommandoen \"%s\""
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunne ikke konvertere \"%s\" fra UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1255
+#: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
 msgstr "Vælg en fil af tilføje til kommandoen..."
 
-#: ../gnome-panel/panel-run-dialog.c:1633
+#: ../gnome-panel/panel-run-dialog.c:1634
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Vælg et program for et se dets beskrivelse."
 
-#: ../gnome-panel/panel-run-dialog.c:1671
+#: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Vil køre kommando: \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1704
+#: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI-listen som blev droppet på kør-vinduet havde ugyldigt format (%d) eller "
 "længde (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2023
+#: ../gnome-panel/panel-run-dialog.c:2024
 msgid "Could not display run dialog"
 msgstr "Kunne ikke vise \"Kør\"-vinduet"
 
@@ -2675,67 +2751,67 @@ msgstr "Skjul panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
 msgstr "Top-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
 msgstr "Top-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
 msgstr "Top-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1601
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
 msgstr "Top-kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bund-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
 msgstr "Bund-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
 msgstr "Bund-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
 msgstr "Bundkantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
 msgstr "Venstre-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
 msgstr "Venstre-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
 msgstr "Venstre-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
 msgstr "Venstre kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
 msgstr "Højre-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
 msgstr "Højre-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
 msgstr "Højre-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1622
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
 msgstr "Højre kantpanel"
 
@@ -3115,31 +3191,31 @@ msgstr "Lodret koordinat for panel"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Panelets y-koordinat, målt fra skærmens bund"
 
-#: ../gnome-panel/panel-util.c:323
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikonet \"%s\" ikke fundet"
 
-#: ../gnome-panel/panel-util.c:426
+#: ../gnome-panel/panel-util.c:409
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Kunne ikke starte \"%s\""
 
-#: ../gnome-panel/panel-util.c:662
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "fil"
 
-#: ../gnome-panel/panel-util.c:839
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
 msgstr "Hjemmemappe"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:851
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "Filsystem"
 
-#: ../gnome-panel/panel-util.c:998
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "Søg"
 
@@ -3148,7 +3224,7 @@ msgstr "Søg"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1044
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3158,11 +3234,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "Åbn adresse: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "Fjern denne skuffe?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3170,11 +3246,11 @@ msgstr ""
 "Når en skuffe fjernes, mister du både skuffen\n"
 "og dens opsætning."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "Fjern dette panel?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3267,6 +3343,12 @@ msgstr "_Panelprogram:"
 msgid "_Prefs Dir:"
 msgstr "_Indstillingsmappe:"
 
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr "Vis tid i Universal Coordinated Time-zonen."
+
+#~ msgid "Browse icons"
+#~ msgstr "Gennemse ikoner"
+
 #~ msgid "Failed to launch time configuration tool: %s"
 #~ msgstr "Kunne ikke starte tidskonfigurationsværktøjet: %s"
 
@@ -3346,9 +3428,6 @@ msgstr "_Indstillingsmappe:"
 #~ msgid "panel:showusername|1"
 #~ msgstr "1"
 
-#~ msgid "Could not launch menu item"
-#~ msgstr "Kunne ikke starte menupunkt"
-
 #~ msgid "Orientation|Top"
 #~ msgstr "Øverst"
 
@@ -3387,10 +3466,6 @@ msgstr "_Indstillingsmappe:"
 
 #~ msgid "Unknown background type received"
 #~ msgstr "Ukendt baggrundstype modtaget"
-
-# lidt kryptisk, men dette skulle være betydningen
-#~ msgid "The Applet's containing Panel's orientation"
-#~ msgstr "Orienteringen af det panel som indeholder panelprogrammet"
 
 #~ msgid "The Applet's containing Panel's size in pixels"
 #~ msgstr ""
