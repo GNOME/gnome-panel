@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-27 17:49+0100\n"
-"PO-Revision-Date: 2010-03-27 17:50+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"POT-Creation-Date: 2010-03-27 16:44+0000\n"
+"PO-Revision-Date: 2010-03-31 12:01+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2195,6 +2195,15 @@ msgstr "Sareko helbidea"
 msgid "Open your personal folder"
 msgstr "Ireki karpeta pertsonala"
 
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment).
+#: ../gnome-panel/panel-menu-items.c:1062
+#| msgid "Show Desktop"
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Mahaigaina"
+
 #: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "Ireki mahaigaineko edukia karpeta batean"
@@ -2206,6 +2215,16 @@ msgstr "Lekuak"
 #: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "Sistema"
+
+#. Below this, we only have log out/shutdown items
+#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
+#. * but "1" if "Log Out %s" doesn't make any sense in your
+#. * language (where %s is a username).
+#.
+#: ../gnome-panel/panel-menu-items.c:1564
+msgctxt "panel:showusername"
+msgid "1"
+msgstr "1"
 
 #. keep those strings in sync with the ones in
 #. * panel-action-button.c
@@ -2426,6 +2445,30 @@ msgstr ""
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Errorea '%s' Gconf balio boolearra irakurtzean: %s"
+
+#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../libpanel-applet/panel-test-applets.c:53
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Goian"
+
+#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../libpanel-applet/panel-test-applets.c:54
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Behean"
+
+#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../libpanel-applet/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Ezkerrean"
+
+#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../libpanel-applet/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Eskuinean"
 
 #: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
@@ -3233,6 +3276,41 @@ msgid "Specify the initial orientation of the applet (top, bottom, left or right
 msgstr ""
 "Zehaztu miniaplikazioaren hasierako orientazioa (goian, behean, ezkerrean "
 "edo eskuinean)"
+
+#: ../libpanel-applet/panel-test-applets.c:61
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Oso oso txikia"
+
+#: ../libpanel-applet/panel-test-applets.c:62
+msgctxt "Size"
+msgid "X Small"
+msgstr "Oso txikia"
+
+#: ../libpanel-applet/panel-test-applets.c:63
+msgctxt "Size"
+msgid "Small"
+msgstr "Txikia"
+
+#: ../libpanel-applet/panel-test-applets.c:64
+msgctxt "Size"
+msgid "Medium"
+msgstr "Tartekoa"
+
+#: ../libpanel-applet/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Large"
+msgstr "Handia"
+
+#: ../libpanel-applet/panel-test-applets.c:66
+msgctxt "Size"
+msgid "X Large"
+msgstr "Oso handia"
+
+#: ../libpanel-applet/panel-test-applets.c:67
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Oso oso handia"
 
 #: ../libpanel-applet/panel-test-applets.c:129
 #, c-format
