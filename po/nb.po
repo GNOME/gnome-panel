@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.29.x\n"
-"Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: 2010-01-22 14:40+0100\n"
+"Project-Id-Version: gnome-panel 2.31.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-05-11 20:36+0200\n"
 "PO-Revision-Date: 2010-01-22 14:41+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -47,7 +47,7 @@ msgstr "_Om"
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
-#: ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Hjelp"
 
@@ -59,7 +59,7 @@ msgid "_Preferences"
 msgstr "_Brukervalg"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3668
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "Klokke"
 
@@ -79,7 +79,12 @@ msgstr "Hent tid og dato"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
 #: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -93,8 +98,13 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
 #: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
 #: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -255,48 +265,48 @@ msgstr "Still klokken for systemet"
 msgid "Failed to set the system time"
 msgstr "Kunne ikke stille klokken for systemet"
 
-#: ../applets/clock/clock.c:2706
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "Tilpasset format"
 
-#: ../applets/clock/clock.c:3160
+#: ../applets/clock/clock.c:3194
 msgid "Choose Location"
 msgstr "Velg lokasjon"
 
-#: ../applets/clock/clock.c:3235
+#: ../applets/clock/clock.c:3273
 msgid "Edit Location"
 msgstr "Rediger lokasjon"
 
-#: ../applets/clock/clock.c:3381
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "Navn på by"
 
-#: ../applets/clock/clock.c:3385
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "Tidssone for by"
 
-#: ../applets/clock/clock.c:3565
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "24 timer"
 
-#: ../applets/clock/clock.c:3566
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
-#: ../applets/clock/clock.c:3567
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "Internett-tid"
 
-#: ../applets/clock/clock.c:3575
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "Tilpasset _format:"
 
-#: ../applets/clock/clock.c:3671
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "Klokken viser nåværende klokkeslett og dato"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3674 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -588,7 +598,9 @@ msgstr ""
 msgid ""
 "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
 "timezones. The schema is retained for compatibility with older versions."
-msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.28 til fordel for bruk av tidssoner. Denne bevares for kompatibilitet med eldre versjoner."
+msgstr ""
+"Bruk av denne nøkkelen gikk ut i GNOME 2.28 til fordel for bruk av "
+"tidssoner. Denne bevares for kompatibilitet med eldre versjoner."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -689,24 +701,24 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "Ukjent"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, føles som %s"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Soloppgang: %s / Solnedgang: %s"
@@ -1373,8 +1385,8 @@ msgstr "Vis alternativer for sesjonshåndtering"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
-#: ../gnome-panel/panel-applet-frame.c:1000
-#: ../gnome-panel/panel-applet-frame.c:1088
+#: ../gnome-panel/panel-applet-frame.c:1002
+#: ../gnome-panel/panel-applet-frame.c:1090
 msgid "Error"
 msgstr "Feil"
 
@@ -1417,7 +1429,7 @@ msgstr "Fje_rn fra panelet"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Kunne ikke finne en tom plass"
 
@@ -1470,7 +1482,7 @@ msgstr ""
 "Start andre programmer og bruk forskjellige verktøy for å håndtere vinduer, "
 "vis klokken etc."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:98
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Panel"
 
@@ -1511,7 +1523,7 @@ msgstr "Nøkkel %s er ikke satt. Kan ikke laste oppstarter\n"
 msgid "Could not save launcher"
 msgstr "Kunne ikke lagre oppstarter"
 
-#: ../gnome-panel/main.c:45
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Erstatt et eksisterende panel"
 
@@ -1535,7 +1547,7 @@ msgstr "Legg til som _skuff på panelet"
 msgid "Add this as _menu to panel"
 msgstr "Legg til som _meny på panelet"
 
-#: ../gnome-panel/nothing.cP:605
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>SPILL FERDIG</b> på nivå %d!"
@@ -1544,42 +1556,42 @@ msgstr "<b>SPILL FERDIG</b> på nivå %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:612
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:613
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Trykk «q» for å avslutte"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "Pause"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:621 ../gnome-panel/nothing.cP:632
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:622
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Trykk «p» for å fortsette"
 
-#: ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Nivå: %s, Liv: %s"
 
-#: ../gnome-panel/nothing.cP:633
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Venstre/høyre for å flytte, mellomrom for å skyte, «p» for å pause, «q» for å "
 "avslutte"
 
-#: ../gnome-panel/nothing.cP:1373
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "Morder-GEGLer fra det ytre rom"
 
@@ -1673,7 +1685,7 @@ msgstr "Oppstarter..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopier en oppstarter fra menyen programmer"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "Hovedmeny"
 
@@ -1734,21 +1746,21 @@ msgstr "Legg til på panelet"
 msgid "Find an _item to add to the panel:"
 msgstr "Velg en _oppføring som skal legges til på panelet:"
 
-#: ../gnome-panel/panel-applet-frame.c:844
+#: ../gnome-panel/panel-applet-frame.c:846
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Unntak fra popup_menu «%s»\n"
 
-#: ../gnome-panel/panel-applet-frame.c:969
+#: ../gnome-panel/panel-applet-frame.c:971
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» har avsluttet uventet"
 
-#: ../gnome-panel/panel-applet-frame.c:971
+#: ../gnome-panel/panel-applet-frame.c:973
 msgid "Panel object has quit unexpectedly"
 msgstr "Panelobjektet har avsluttet utventet"
 
-#: ../gnome-panel/panel-applet-frame.c:978
+#: ../gnome-panel/panel-applet-frame.c:980
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1756,24 +1768,24 @@ msgstr ""
 "Hvis du laster et panelobjekt på nytt vil det automatisk legges til på "
 "panelet."
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:986
 msgid "_Don't Reload"
 msgstr "I_kke start på nytt"
 
-#: ../gnome-panel/panel-applet-frame.c:985
+#: ../gnome-panel/panel-applet-frame.c:987
 msgid "_Reload"
 msgstr "Sta_rt på nytt"
 
-#: ../gnome-panel/panel-applet-frame.c:1051
+#: ../gnome-panel/panel-applet-frame.c:1053
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det oppsto et problem i panelet ved lasting av «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:1067
+#: ../gnome-panel/panel-applet-frame.c:1069
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du slette dette panelprogrammet fra din konfigurasjon?"
 
-#: ../gnome-panel/panel-applet-frame.c:1141
+#: ../gnome-panel/panel-applet-frame.c:1143
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke finne AppletShell-grensesnitt i kontrollen\n"
 
@@ -2138,7 +2150,7 @@ msgstr "Endre utseende og oppførsel for skrivebord, finn hjelp eller logg ut"
 msgid "Applications"
 msgstr "Programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "R_ediger menyer"
 
@@ -2147,60 +2159,60 @@ msgid "Bookmarks"
 msgstr "Bokmerker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:494 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "Åpne «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:562
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke søke etter endringer for medie på %s"
 
-#: ../gnome-panel/panel-menu-items.c:605
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "Oppdater %s"
 
-#: ../gnome-panel/panel-menu-items.c:642
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
 msgstr "Avtagbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:1000
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "Nettverkslokasjoner"
 
-#: ../gnome-panel/panel-menu-items.c:1039
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
 msgstr "Åpne din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1058
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1059
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1450
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1479
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "System"
 
@@ -2209,7 +2221,7 @@ msgstr "System"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1560
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2218,14 +2230,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1572
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "Logg ut %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1576
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Logg ut %s fra denne sesjonen for å logge inn som en annen bruker."
@@ -3182,7 +3194,7 @@ msgstr "Hjemmemappe"
 msgid "File System"
 msgstr "Filsystem"
 
-#: ../gnome-panel/panel-util.c:985
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "Søk"
 
@@ -3191,7 +3203,7 @@ msgstr "Søk"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1031
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3201,11 +3213,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "Åpne URL: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "Slett denne skuffen?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3213,11 +3225,11 @@ msgstr ""
 "Skuffen og alle dens innstillinger vil gå\n"
 "tapt hvis du sletter den."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "Slett dette panelet?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
