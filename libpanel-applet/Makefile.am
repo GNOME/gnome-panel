@@ -1,9 +1,7 @@
 INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
-	-DPANEL_APPLET_BUILDERDIR=\""$(uidir)"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DEGG_DBUS_I_KNOW_API_IS_SUBJECT_TO_CHANGE		\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(WARN_CFLAGS)
@@ -34,58 +32,13 @@ libpanel_appletinclude_HEADERS =	\
 	panel-applet-gconf.h		\
 	panel-applet-enums.h
 
-libpanel_applet_dbus_xml = 			\
-	$(top_srcdir)/data/panel-applet.xml	\
-	$(top_srcdir)/libpanel-applet/panel-applet-factory.xml
-
-libpanel-applet-built-sources.stamp: $(libpanel_applet_dbus_xml)
-	eggdbus-binding-tool									\
-		--namespace "_Panel" 								\
-		--dbus-namespace "org.gnome.panel.applet"					\
-		--introspection-xml $(top_srcdir)/libpanel-applet/panel-applet-factory.xml	\
-		--introspection-xml $(top_srcdir)/data/panel-applet.xml				\
-		--stamp-file libpanel-applet-built-sources.stamp
-
-EGGDBUS_SRCLIST = 		\
-	_panelappletfactory.h	\
-	_panelappletfactory.c	\
-	_panelbindingstypes.h	\
-	_panelbindings.h	\
-	_panelbindings.c	\
-	_panelbindingsmarshal.h	\
-	_panelbindingsmarshal.c	\
-	_panelapplet.h		\
-	_panelapplet.c		\
-	_panelappletorient.h	\
-	_panelappletorient.c
-
 noinst_PROGRAMS = test-dbus-applet
 
-bin_PROGRAMS = panel-test-applets
-
-panel_test_applets_CFLAGS = \
-	-I$(top_srcdir)/gnome-panel	\
-	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"
-
-panel_test_applets_SOURCES = \
-	$(top_srcdir)/gnome-panel/panel-applet-container.h 	\
-	$(top_srcdir)/gnome-panel/panel-applet-container.c 	\
-	$(top_srcdir)/gnome-panel/panel-applets-manager.h 	\
-	$(top_srcdir)/gnome-panel/panel-applets-manager.c	\
-	panel-test-applets.c
-
-panel_test_applets_LDFLAGS = -export-dynamic
-panel_test_applets_LDADD   =		\
-	$(LIBPANEL_APPLET_LIBS)		\
-	libpanel-applet-2.la
-
-test_dbus_applet_LDADD =		\
-	$(LIBPANEL_APPLET_LIBS)		\
-	libpanel-applet-2.la
+test_dbus_applet_LDADD =               \
+       $(LIBPANEL_APPLET_LIBS)         \
+       libpanel-applet-2.la
 
 BUILT_SOURCES = \
-	libpanel-applet-built-sources.stamp	\
-	$(EGGDBUS_SRCLIST)			\
 	panel-applet-enums.c			\
 	panel-applet-enums.h			\
 	panel-applet-marshal.c			\
@@ -95,12 +48,9 @@ $(libpanel_applet_2_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 EXTRA_DIST =					\
 	GNOME_Panel_TestApplet.panel-applet.in	\
-	panel-applet-factory.xml		\
 	panel-applet-marshal.list		\
-	_panelbindingsmarshal.list		\
 	libpanelapplet-2.0.pc.in		\
-	libpanelapplet-2.0-uninstalled.pc.in	\
-	panel-test-applets.ui
+	libpanelapplet-2.0-uninstalled.pc.in
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
@@ -138,9 +88,6 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 		     --eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
 		     --eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_applet_enum_headers) > $@
-
-uidir   = $(datadir)/gnome-panel/ui
-ui_DATA = panel-test-applets.ui
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc

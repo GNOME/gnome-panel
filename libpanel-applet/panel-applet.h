@@ -93,6 +93,7 @@ GType              panel_applet_get_type             (void) G_GNUC_CONST;
 GtkWidget         *panel_applet_new                  (void);
 guint32            panel_applet_get_xid              (PanelApplet *applet,
 						      GdkScreen   *screen);
+const gchar       *panel_applet_get_object_path      (PanelApplet *applet);
 
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 void               panel_applet_set_orient           (PanelApplet      *applet,

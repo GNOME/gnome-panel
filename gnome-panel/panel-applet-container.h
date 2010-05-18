@@ -57,135 +57,58 @@ struct _PanelAppletContainerClass {
 	GtkEventBoxClass parent_class;
 
 	/* Signals */
-	void (*applet_broken) (PanelAppletContainer *container);
-	void (*applet_move)   (PanelAppletContainer *container);
-	void (*applet_remove) (PanelAppletContainer *container);
-	void (*applet_lock)   (PanelAppletContainer *container,
-			       gboolean              locked);
+	void (*applet_broken)          (PanelAppletContainer *container);
+	void (*applet_move)            (PanelAppletContainer *container);
+	void (*applet_remove)          (PanelAppletContainer *container);
+	void (*applet_lock)            (PanelAppletContainer *container,
+					gboolean              locked);
+	void (*child_property_changed) (PanelAppletContainer *container,
+					const gchar          *property_name,
+					GVariant             *value);
 };
 
-GType      panel_applet_container_get_type                     (void) G_GNUC_CONST;
-GQuark     panel_applet_container_error_quark                  (void) G_GNUC_CONST;
-GtkWidget *panel_applet_container_new                          (void);
+GType      panel_applet_container_get_type                (void) G_GNUC_CONST;
+GQuark     panel_applet_container_error_quark             (void) G_GNUC_CONST;
+GtkWidget *panel_applet_container_new                     (void);
 
 
-void       panel_applet_container_add                          (PanelAppletContainer       *container,
-								const gchar                *iid,
-								GCancellable               *cancellable,
-								GAsyncReadyCallback         callback,
-								gpointer                    user_data,
-								const gchar                *first_prop_name,
-								...);
-gboolean   panel_applet_container_add_finish                   (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_popup_menu             (PanelAppletContainer       *container,
-								guint                       button,
-								guint32                     timestamp,
-								GCancellable               *cancellable,
-								GAsyncReadyCallback         callback,
-								gpointer                    user_data);
-gboolean   panel_applet_container_child_popup_menu_finish      (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_property           (PanelAppletContainer *container,
-								const gchar          *property_name,
-								const GValue         *value,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_property_finish    (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_uint               (PanelAppletContainer *container,
-								const gchar          *property_name,
-								guint                 value,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_uint_finish        (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_boolean            (PanelAppletContainer *container,
-								const gchar          *property_name,
-								gboolean              value,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_boolean_finish     (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_string             (PanelAppletContainer *container,
-								const gchar          *property_name,
-								const gchar          *value,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_string_finish      (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_size_hints         (PanelAppletContainer *container,
-								const gint           *size_hints,
-								guint                 n_hints,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_size_hints_finish  (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_set_orientation        (PanelAppletContainer *container,
-								PanelOrientation      orientation,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_set_orientation_finish (PanelAppletContainer *container,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_get_property           (PanelAppletContainer *container,
-								const gchar          *property_name,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_get_property_finish    (PanelAppletContainer *container,
-								GValue               *value,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_get_uint               (PanelAppletContainer *container,
-								const gchar          *property_name,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_get_uint_finish        (PanelAppletContainer *container,
-								guint                *value,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_get_boolean            (PanelAppletContainer *container,
-								const gchar          *property_name,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_get_boolean_finish     (PanelAppletContainer *container,
-								gboolean             *value,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_get_string             (PanelAppletContainer *container,
-								const gchar          *property_name,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_get_string_finish      (PanelAppletContainer *container,
-								gchar               **value,
-								GAsyncResult         *result,
-								GError              **error);
-void       panel_applet_container_child_get_size_hints         (PanelAppletContainer *container,
-								GCancellable         *cancellable,
-								GAsyncReadyCallback   callback,
-								gpointer              user_data);
-gboolean   panel_applet_container_child_get_size_hints_finish  (PanelAppletContainer *container,
-								gint                **size_hints,
-								guint                *n_elements,
-								GAsyncResult         *result,
-								GError              **error);
+void       panel_applet_container_add                     (PanelAppletContainer *container,
+							   const gchar          *iid,
+							   GCancellable        *cancellable,
+							   GAsyncReadyCallback  callback,
+							   gpointer             user_data,
+							   GVariant            *properties);
+gboolean   panel_applet_container_add_finish              (PanelAppletContainer *container,
+							   GAsyncResult         *result,
+							   GError              **error);
+void       panel_applet_container_child_popup_menu        (PanelAppletContainer *container,
+							   guint                 button,
+							   guint32               timestamp,
+							   GCancellable         *cancellable,
+							   GAsyncReadyCallback   callback,
+							   gpointer              user_data);
+gboolean   panel_applet_container_child_popup_menu_finish (PanelAppletContainer *container,
+							   GAsyncResult         *result,
+							   GError              **error);
+
+void       panel_applet_container_child_set               (PanelAppletContainer *container,
+							   const gchar          *property_name,
+							   const GVariant       *value,
+							   GCancellable         *cancellable,
+							   GAsyncReadyCallback   callback,
+							   gpointer              user_data);
+gboolean   panel_applet_container_child_set_finish        (PanelAppletContainer *container,
+							   GAsyncResult         *result,
+							   GError              **error);
+void       panel_applet_container_child_get               (PanelAppletContainer *container,
+							   const gchar          *property_name,
+							   GCancellable         *cancellable,
+							   GAsyncReadyCallback   callback,
+							   gpointer              user_data);
+GVariant  *panel_applet_container_child_get_finish        (PanelAppletContainer *container,
+							   GAsyncResult         *result,
+							   GError              **error);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_CONTAINER_H__ */

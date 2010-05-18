@@ -42,7 +42,6 @@
 #include <X11/Xatom.h>
 
 #include "panel-applet.h"
-#include "_panelapplet.h"
 #include "panel-applet-factory.h"
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
@@ -53,9 +52,12 @@ struct _PanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
 	GConfClient       *client;
+	GDBusConnection   *connection;
 
 	char              *id;
 	GClosure          *closure;
+	char              *object_path;
+	guint              object_id;
 	char              *prefs_key;
 
 	GtkUIManager      *ui_manager;
@@ -95,6 +97,7 @@ enum {
 	PROP_0,
 	PROP_ID,
 	PROP_CLOSURE,
+	PROP_CONNECTION,
 	PROP_PREFS_KEY,
 	PROP_ORIENT,
 	PROP_SIZE,
@@ -115,7 +118,7 @@ static void       panel_applet_menu_cmd_move       (GtkAction         *action,
 						    PanelApplet       *applet);
 static void       panel_applet_menu_cmd_lock       (GtkAction         *action,
 						    PanelApplet       *applet);
-static void       panel_applet_applet_iface_init   (_PanelAppletIface *iface);
+static void       panel_applet_register_object     (PanelApplet       *applet);
 
 static const gchar panel_menu_ui[] =
 	"<ui>\n"
@@ -144,8 +147,10 @@ static const GtkToggleActionEntry menu_toggle_entries[] = {
 	  G_CALLBACK (panel_applet_menu_cmd_lock) }
 };
 
-G_DEFINE_TYPE_WITH_CODE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX,
-	 G_IMPLEMENT_INTERFACE (_PANEL_TYPE_APPLET, panel_applet_applet_iface_init));
+G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
+
+#define PANEL_APPLET_INTERFACE   "org.gnome.panel.applet.Applet"
+#define PANEL_APPLET_OBJECT_PATH "/org/gnome/panel/applet/%s/%d"
 
 static void
 panel_applet_associate_schemas_in_dir (GConfClient  *client,
@@ -343,6 +348,34 @@ panel_applet_set_flags (PanelApplet      *applet,
 	applet->priv->flags = flags;
 
 	g_object_notify (G_OBJECT (applet), "flags");
+
+	if (applet->priv->connection) {
+		GVariantBuilder *builder;
+		GVariantBuilder *invalidated_builder;
+		GError          *error = NULL;
+
+		builder = g_variant_builder_new (G_VARIANT_TYPE_ARRAY);
+		invalidated_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+
+		g_variant_builder_add (builder, "{sv}", "Flags",
+				       g_variant_new_uint32 (applet->priv->flags));
+
+		g_dbus_connection_emit_signal (applet->priv->connection,
+					       NULL,
+					       applet->priv->object_path,
+					       "org.freedesktop.DBus.Properties",
+					       "PropertiesChanged",
+					       g_variant_new ("(sa{sv}as)",
+							      PANEL_APPLET_INTERFACE,
+							      builder,
+							      invalidated_builder),
+					       &error);
+		if (error) {
+			g_printerr ("Failed to send signal PropertiesChanged::Flags: %s\n",
+				    error->message);
+			g_error_free (error);
+		}
+	}
 }
 
 static void
@@ -399,21 +432,40 @@ panel_applet_set_size_hints (PanelApplet *applet,
 		applet->priv->size_hints[i] = size_hints[i] + base_size;
 
 	g_object_notify (G_OBJECT (applet), "size-hints");
-}
 
-static void
-panel_applet_set_size_hints_from_seq (PanelApplet     *applet,
-				      EggDBusArraySeq *seq)
-{
-	gint i;
-	gint n_elements;
+	if (applet->priv->connection) {
+		GVariantBuilder *builder;
+		GVariantBuilder *invalidated_builder;
+		GVariant       **children;
+		GError          *error = NULL;
 
-	n_elements = egg_dbus_array_seq_get_size (seq);
-	panel_applet_size_hints_ensure (applet, n_elements);
-	for (i = 0; i < n_elements; i++)
-		applet->priv->size_hints[i] = egg_dbus_array_seq_get_fixed (seq, i);
+		builder = g_variant_builder_new (G_VARIANT_TYPE_ARRAY);
+		invalidated_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
 
-	g_object_notify (G_OBJECT (applet), "size-hints");
+		children = g_new (GVariant *, applet->priv->size_hints_len);
+		for (i = 0; i < n_elements; i++)
+			children[i] = g_variant_new_int32 (applet->priv->size_hints[i]);
+		g_variant_builder_add (builder, "{sv}", "SizeHints",
+				       g_variant_new_array (G_VARIANT_TYPE_INT32,
+							    children, applet->priv->size_hints_len));
+		g_free (children);
+
+		g_dbus_connection_emit_signal (applet->priv->connection,
+					       NULL,
+					       applet->priv->object_path,
+					       "org.freedesktop.DBus.Properties",
+					       "PropertiesChanged",
+					       g_variant_new ("(sa{sv}as)",
+							      PANEL_APPLET_INTERFACE,
+							      builder,
+							      invalidated_builder),
+					       &error);
+		if (error) {
+			g_printerr ("Failed to send signal PropertiesChanged::SizeHints: %s\n",
+				    error->message);
+			g_error_free (error);
+		}
+	}
 }
 
 guint
@@ -498,8 +550,24 @@ panel_applet_set_locked (PanelApplet *applet,
 
 	panel_applet_menu_update_actions (applet);
 
-	g_signal_emit_by_name (applet, locked ? "lock" : "unlock");
 	g_object_notify (G_OBJECT (applet), "locked");
+
+	if (applet->priv->connection) {
+		GError *error = NULL;
+
+		g_dbus_connection_emit_signal (applet->priv->connection,
+					       NULL,
+					       applet->priv->object_path,
+					       PANEL_APPLET_INTERFACE,
+					       locked ? "Lock" : "Unlock",
+					       NULL, &error);
+		if (error) {
+			g_printerr ("Failed to send signal %s: %s\n",
+				    locked ? "Lock" : "Unlock",
+				    error->message);
+			g_error_free (error);
+		}
+	}
 }
 
 gboolean
@@ -689,14 +757,44 @@ static void
 panel_applet_menu_cmd_remove (GtkAction   *action,
 			      PanelApplet *applet)
 {
-	g_signal_emit_by_name (applet, "remove-from-panel");
+	GError *error = NULL;
+
+	if (!applet->priv->connection)
+		return;
+
+	g_dbus_connection_emit_signal (applet->priv->connection,
+				       NULL,
+				       applet->priv->object_path,
+				       PANEL_APPLET_INTERFACE,
+				       "RemoveFromPanel",
+				       NULL, &error);
+	if (error) {
+		g_printerr ("Failed to send signal RemoveFromPanel: %s\n",
+			    error->message);
+		g_error_free (error);
+	}
 }
 
 static void
 panel_applet_menu_cmd_move (GtkAction   *action,
 			    PanelApplet *applet)
 {
-	g_signal_emit_by_name (applet, "move");
+	GError *error = NULL;
+
+	if (!applet->priv->connection)
+		return;
+
+	g_dbus_connection_emit_signal (applet->priv->connection,
+				       NULL,
+				       applet->priv->object_path,
+				       PANEL_APPLET_INTERFACE,
+				       "Move",
+				       NULL, &error);
+	if (error) {
+		g_printerr ("Failed to send signal RemoveFromPanel: %s\n",
+			    error->message);
+		g_error_free (error);
+	}
 }
 
 static void
@@ -761,6 +859,20 @@ static void
 panel_applet_finalize (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
+
+	if (applet->priv->connection) {
+		if (applet->priv->object_id)
+			g_dbus_connection_unregister_object (applet->priv->connection,
+							     applet->priv->object_id);
+		applet->priv->object_id = 0;
+		g_object_unref (applet->priv->connection);
+		applet->priv->connection = NULL;
+	}
+
+	if (applet->priv->object_path) {
+		g_free (applet->priv->object_path);
+		applet->priv->object_path = NULL;
+	}
 
 	panel_applet_set_preferences_key (applet, NULL);
 
@@ -1516,11 +1628,14 @@ panel_applet_get_property (GObject    *object,
 	case PROP_CLOSURE:
 		g_value_set_pointer (value, applet->priv->closure);
 		break;
+	case PROP_CONNECTION:
+		g_value_set_object (value, applet->priv->connection);
+		break;
 	case PROP_PREFS_KEY:
 		g_value_set_string (value, applet->priv->prefs_key);
 		break;
 	case PROP_ORIENT:
-		g_value_set_enum (value, applet->priv->orient);
+		g_value_set_uint (value, applet->priv->orient);
 		break;
 	case PROP_SIZE:
 		g_value_set_uint (value, applet->priv->size);
@@ -1532,14 +1647,17 @@ panel_applet_get_property (GObject    *object,
 		g_value_set_uint (value, applet->priv->flags);
 		break;
 	case PROP_SIZE_HINTS: {
-		EggDBusArraySeq *array;
-		gint             i;
+		GVariant **children;
+		GVariant  *variant;
+		gint       i;
 
-		array = egg_dbus_array_seq_new (G_TYPE_INT, NULL, NULL, NULL);
+		children = g_new (GVariant *, applet->priv->size_hints_len);
 		for (i = 0; i < applet->priv->size_hints_len; i++)
-			egg_dbus_array_seq_add_fixed (array, applet->priv->size_hints[i]);
-		g_value_take_object (value, array);
-
+			children[i] = g_variant_new_int32 (applet->priv->size_hints[i]);
+		variant = g_variant_new_array (G_VARIANT_TYPE_INT32,
+					       children, applet->priv->size_hints_len);
+		g_free (children);
+		g_value_set_pointer (value, variant);
 	}
 		break;
 	case PROP_LOCKED:
@@ -1570,11 +1688,14 @@ panel_applet_set_property (GObject      *object,
 		g_closure_set_marshal (applet->priv->closure,
 				       panel_applet_marshal_BOOLEAN__STRING);
 		break;
+	case PROP_CONNECTION:
+		applet->priv->connection = g_value_dup_object (value);
+		break;
 	case PROP_PREFS_KEY:
 		panel_applet_set_preferences_key (applet, g_value_get_string (value));
 		break;
 	case PROP_ORIENT:
-		panel_applet_set_orient (applet, g_value_get_enum (value));
+		panel_applet_set_orient (applet, g_value_get_uint (value));
 		break;
 	case PROP_SIZE:
 		panel_applet_set_size (applet, g_value_get_uint (value));
@@ -1585,8 +1706,14 @@ panel_applet_set_property (GObject      *object,
 	case PROP_FLAGS:
 		panel_applet_set_flags (applet, g_value_get_uint (value));
 		break;
-	case PROP_SIZE_HINTS:
-		panel_applet_set_size_hints_from_seq (applet, g_value_get_object (value));
+	case PROP_SIZE_HINTS: {
+		const int *size_hints;
+		gsize      n_elements;
+
+		size_hints = g_variant_get_fixed_array (g_value_get_pointer (value),
+							&n_elements, sizeof (gint32));
+		panel_applet_set_size_hints (applet, size_hints, n_elements, 0);
+	}
 		break;
 	case PROP_LOCKED:
 		panel_applet_set_locked (applet, g_value_get_boolean (value));
@@ -1700,6 +1827,14 @@ panel_applet_init (PanelApplet *applet)
 }
 
 static void
+panel_applet_constructed (GObject *object)
+{
+	PanelApplet *applet = PANEL_APPLET (object);
+
+	panel_applet_register_object (applet);
+}
+
+static void
 panel_applet_class_init (PanelAppletClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
@@ -1709,6 +1844,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	gobject_class->get_property = panel_applet_get_property;
 	gobject_class->set_property = panel_applet_set_property;
+	gobject_class->constructed = panel_applet_constructed;
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
@@ -1735,12 +1871,74 @@ panel_applet_class_init (PanelAppletClass *klass)
 	g_object_class_install_property (gobject_class,
 					 PROP_CLOSURE,
 					 g_param_spec_pointer ("closure",
-							       "GClocure",
+							       "GClosure",
 							       "The Applet closure",
 							       G_PARAM_CONSTRUCT_ONLY |
 							       G_PARAM_READWRITE));
-
-	g_assert (_panel_applet_override_properties (gobject_class, PROP_PREFS_KEY) == PROP_LOCKED_DOWN);
+	g_object_class_install_property (gobject_class,
+					 PROP_CONNECTION,
+					 g_param_spec_object ("connection",
+							      "Connection",
+							      "The DBus Connection",
+							      G_TYPE_DBUS_CONNECTION,
+							      G_PARAM_CONSTRUCT_ONLY |
+							      G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_PREFS_KEY,
+					 g_param_spec_string ("prefs-key",
+							      "PrefsKey",
+							      "GConf Preferences Key",
+							      NULL,
+							      G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_ORIENT,
+					 g_param_spec_uint ("orient",
+							    "Orient",
+							    "Panel Applet Orientation",
+							    0, G_MAXUINT, 0, /* FIXME */
+							    G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_SIZE,
+					 g_param_spec_uint ("size",
+							    "Size",
+							    "Panel Applet Size",
+							    0, G_MAXUINT, 0,
+							    G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_BACKGROUND,
+					 g_param_spec_string ("background",
+							      "Background",
+							      "Panel Applet Background",
+							      NULL,
+							      G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_FLAGS,
+					 g_param_spec_uint ("flags",
+							    "Flags",
+							    "Panel Applet flags",
+							    0, G_MAXUINT, 0, /* FIXME */
+							    G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_SIZE_HINTS,
+					 /* FIXME: value_array? */
+					 g_param_spec_pointer ("size-hints",
+							       "SizeHints",
+							       "Panel Applet Size Hints",
+							       G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_LOCKED,
+					 g_param_spec_boolean ("locked",
+							       "Locked",
+							       "Whether Panel Applet is locked",
+							       FALSE,
+							       G_PARAM_READWRITE));
+	g_object_class_install_property (gobject_class,
+					 PROP_LOCKED_DOWN,
+					 g_param_spec_boolean ("locked-down",
+							       "LockedDown",
+							       "Whether Panel Applet is locked down",
+							       FALSE,
+							       G_PARAM_READWRITE));
 
 	panel_applet_signals [CHANGE_ORIENT] =
                 g_signal_new ("change_orient",
@@ -1809,21 +2007,160 @@ panel_applet_new (void)
 	return GTK_WIDGET (applet);
 }
 
-/* Panel Applet Interface */
 static void
-panel_applet_handle_popup_menu (_PanelApplet            *instance,
-				guint                    button,
-				guint                    time,
-				EggDBusMethodInvocation *method_invocation)
+method_call_cb (GDBusConnection       *connection,
+		const gchar           *sender,
+		const gchar           *object_path,
+		const gchar           *interface_name,
+		const gchar           *method_name,
+		GVariant              *parameters,
+		GDBusMethodInvocation *invocation,
+		gpointer               user_data)
 {
-	panel_applet_menu_popup (PANEL_APPLET (instance), button, time);
-	_panel_applet_handle_popup_menu_finish (method_invocation);
+	PanelApplet *applet = PANEL_APPLET (user_data);
+
+	if (g_strcmp0 (method_name, "PopupMenu") == 0) {
+		guint button;
+		guint time;
+
+		g_variant_get (parameters, "(uu)", &button, &time);
+		panel_applet_menu_popup (applet, button, time);
+
+		g_dbus_method_invocation_return_value (invocation, NULL);
+	}
 }
 
-static void
-panel_applet_applet_iface_init (_PanelAppletIface *iface)
+static GVariant *
+get_property_cb (GDBusConnection *connection,
+		 const gchar     *sender,
+		 const gchar     *object_path,
+		 const gchar     *interface_name,
+		 const gchar     *property_name,
+		 GError         **error,
+		 gpointer         user_data)
 {
-	iface->handle_popup_menu = panel_applet_handle_popup_menu;
+	PanelApplet *applet = PANEL_APPLET (user_data);
+	GVariant    *retval = NULL;
+
+	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
+		retval = g_variant_new_string (applet->priv->prefs_key ?
+					       applet->priv->prefs_key : "");
+	} else if (g_strcmp0 (property_name, "Orient") == 0) {
+		retval = g_variant_new_uint32 (applet->priv->orient);
+	} else if (g_strcmp0 (property_name, "Size") == 0) {
+		retval = g_variant_new_uint32 (applet->priv->size);
+	} else if (g_strcmp0 (property_name, "Background") == 0) {
+		retval = g_variant_new_string (applet->priv->background ?
+					       applet->priv->background : "");
+	} else if (g_strcmp0 (property_name, "Flags") == 0) {
+		retval = g_variant_new_uint32 (applet->priv->flags);
+	} else if (g_strcmp0 (property_name, "SizeHints") == 0) {
+		GVariant **children;
+		gint       i;
+
+		children = g_new (GVariant *, applet->priv->size_hints_len);
+		for (i = 0; i < applet->priv->size_hints_len; i++)
+			children[i] = g_variant_new_int32 (applet->priv->size_hints[i]);
+		retval = g_variant_new_array (G_VARIANT_TYPE_INT32,
+					      children, applet->priv->size_hints_len);
+		g_free (children);
+	} else if (g_strcmp0 (property_name, "Locked") == 0) {
+		retval = g_variant_new_boolean (applet->priv->locked);
+	} else if (g_strcmp0 (property_name, "LockedDown") == 0) {
+		retval = g_variant_new_boolean (applet->priv->locked_down);
+	}
+
+	return retval;
+}
+
+static gboolean
+set_property_cb (GDBusConnection *connection,
+		 const gchar     *sender,
+		 const gchar     *object_path,
+		 const gchar     *interface_name,
+		 const gchar     *property_name,
+		 GVariant        *value,
+		 GError         **error,
+		 gpointer         user_data)
+{
+	PanelApplet *applet = PANEL_APPLET (user_data);
+
+	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
+		panel_applet_set_preferences_key (applet, g_variant_get_string (value, NULL));
+	} else if (g_strcmp0 (property_name, "Orient") == 0) {
+		panel_applet_set_orient (applet, g_variant_get_uint32 (value));
+	} else if (g_strcmp0 (property_name, "Size") == 0) {
+		panel_applet_set_size (applet, g_variant_get_uint32 (value));
+	} else if (g_strcmp0 (property_name, "Background") == 0) {
+		panel_applet_set_background_string (applet, g_variant_get_string (value, NULL));
+	} else if (g_strcmp0 (property_name, "Flags") == 0) {
+		panel_applet_set_flags (applet, g_variant_get_uint32 (value));
+	} else if (g_strcmp0 (property_name, "SizeHints") == 0) {
+		const int *size_hints;
+		gsize      n_elements;
+
+		size_hints = g_variant_get_fixed_array (value, &n_elements, sizeof (gint32));
+		panel_applet_set_size_hints (applet, size_hints, n_elements, 0);
+	} else if (g_strcmp0 (property_name, "Locked") == 0) {
+		panel_applet_set_locked (applet, g_variant_get_boolean (value));
+	} else if (g_strcmp0 (property_name, "LockedDown") == 0) {
+		panel_applet_set_locked_down (applet, g_variant_get_boolean (value));
+	}
+
+	return TRUE;
+}
+
+static const gchar introspection_xml[] =
+	"<node>"
+	  "<interface name='org.gnome.panel.applet.Applet'>"
+	    "<method name='PopupMenu'>"
+	      "<arg name='button' type='u' direction='in'/>"
+	      "<arg name='time' type='u' direction='in'/>"
+	    "</method>"
+	    "<property name='PrefsKey' type='s' access='readwrite'/>"
+	    "<property name='Orient' type='u' access='readwrite' />"
+	    "<property name='Size' type='u' access='readwrite'/>"
+	    "<property name='Background' type='s' access='readwrite'/>"
+	    "<property name='Flags' type='u' access='readwrite'/>"
+	    "<property name='SizeHints' type='ai' access='readwrite'/>"
+	    "<property name='Locked' type='b' access='readwrite'/>"
+	    "<property name='LockedDown' type='b' access='readwrite'/>"
+	    "<signal name='Move' />"
+	    "<signal name='RemoveFromPanel' />"
+	    "<signal name='Lock' />"
+	    "<signal name='Unlock' />"
+	  "</interface>"
+	"</node>";
+
+static const GDBusInterfaceVTable interface_vtable = {
+	method_call_cb,
+	get_property_cb,
+	set_property_cb
+};
+
+static GDBusNodeInfo *introspection_data = NULL;
+
+static void
+panel_applet_register_object (PanelApplet *applet)
+{
+	GError     *error = NULL;
+	static gint id = 0;
+
+	if (!introspection_data)
+		introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
+
+	applet->priv->object_path = g_strdup_printf (PANEL_APPLET_OBJECT_PATH, applet->priv->id, id++);
+	applet->priv->object_id =
+		g_dbus_connection_register_object (applet->priv->connection,
+						   applet->priv->object_path,
+						   introspection_data->interfaces[0],
+						   &interface_vtable,
+						   applet, NULL,
+						   &error);
+	if (!applet->priv->object_id) {
+		g_printerr ("Failed to register object %s: %s\n", applet->priv->object_path, error->message);
+		g_error_free (error);
+	}
 }
 
 static void
@@ -1831,6 +2168,11 @@ panel_applet_factory_main_finalized (gpointer data,
 				     GObject *object)
 {
 	gtk_main_quit ();
+
+	if (introspection_data) {
+		g_dbus_node_info_unref (introspection_data);
+		introspection_data = NULL;
+	}
 }
 
 static int (*_x_error_func) (Display *, XErrorEvent *);
@@ -1948,4 +2290,10 @@ panel_applet_get_xid (PanelApplet *applet,
 	gtk_widget_show (applet->priv->plug);
 
 	return gtk_plug_get_id (GTK_PLUG (applet->priv->plug));
+}
+
+const gchar *
+panel_applet_get_object_path (PanelApplet *applet)
+{
+	return applet->priv->object_path;
 }

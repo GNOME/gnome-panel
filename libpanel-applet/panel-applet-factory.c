@@ -20,16 +20,12 @@
  */
 
 #include "panel-applet-factory.h"
-#include "_panelappletfactory.h"
 #include "panel-applet.h"
-#include "_panelapplet.h"
 
 struct _PanelAppletFactory {
 	GObject            base;
 
 	gchar             *factory_id;
-	EggDBusConnection *connection;
-
 	guint              n_applets;
 	GType              applet_type;
 	GClosure          *closure;
@@ -41,23 +37,13 @@ struct _PanelAppletFactoryClass {
 
 #define PANEL_APPLET_FACTORY_OBJECT_PATH  "/org/gnome/panel/applet/%s"
 #define PANEL_APPLET_FACTORY_SERVICE_NAME "org.gnome.panel.applet.%s"
-#define PANEL_APPLET_OBJECT_PATH          "/org/gnome/panel/applet/%s/%d"
 
-
-static void panel_applet_factory_factory_iface_init (_PanelAppletFactoryIface *iface);
-
-G_DEFINE_TYPE_WITH_CODE (PanelAppletFactory, panel_applet_factory, G_TYPE_OBJECT,
-	 G_IMPLEMENT_INTERFACE (_PANEL_TYPE_APPLET_FACTORY, panel_applet_factory_factory_iface_init));
+G_DEFINE_TYPE (PanelAppletFactory, panel_applet_factory, G_TYPE_OBJECT)
 
 static void
 panel_applet_factory_finalize (GObject *object)
 {
 	PanelAppletFactory *factory = PANEL_APPLET_FACTORY (object);
-
-	if (factory->connection) {
-		g_object_unref (factory->connection);
-		factory->connection = NULL;
-	}
 
 	if (factory->factory_id) {
 		g_free (factory->factory_id);
@@ -93,65 +79,6 @@ panel_applet_factory_applet_removed (PanelAppletFactory *factory,
 		g_object_unref (factory);
 }
 
-/* PanelAppletFactory Interface */
-static gboolean
-set_property (EggDBusHashMap *hash_map,
-	      gchar          *name,
-	      EggDBusVariant *variant,
-	      GObject        *applet)
-{
-	g_object_set_property (applet, name, egg_dbus_variant_get_gvalue (variant));
-
-	return FALSE;
-}
-
-static void
-panel_applet_factory_get_applet (_PanelAppletFactory     *_factory,
-				 const gchar             *applet_id,
-				 gint                     screen_num,
-				 EggDBusHashMap          *props,
-				 EggDBusMethodInvocation *method_invocation)
-{
-	PanelAppletFactory *factory = PANEL_APPLET_FACTORY (_factory);
-	GObject            *applet;
-	gchar              *object_path;
-	GdkScreen          *screen;
-	guint32             xid;
-	static gint         id = 0;
-
-	applet = g_object_new (factory->applet_type,
-			       "id", applet_id,
-			       "closure", factory->closure,
-			       NULL);
-	factory->n_applets++;
-
-	object_path = g_strdup_printf (PANEL_APPLET_OBJECT_PATH, applet_id, id++);
-	egg_dbus_connection_register_interface (factory->connection,
-						object_path,
-						_PANEL_TYPE_APPLET,
-						G_OBJECT (applet),
-						G_TYPE_INVALID);
-	g_object_weak_ref (applet, (GWeakNotify)panel_applet_factory_applet_removed, factory);
-
-	egg_dbus_hash_map_foreach (props,
-				   (EggDBusHashMapForeachFunc)set_property,
-				   applet);
-
-	screen = screen_num != -1 ?
-		gdk_display_get_screen (gdk_display_get_default (), screen_num) :
-		gdk_screen_get_default ();
-	xid = panel_applet_get_xid (PANEL_APPLET (applet), screen);
-
-	_panel_applet_factory_handle_get_applet_finish (method_invocation, object_path, xid);
-	g_free (object_path);
-}
-
-static void
-panel_applet_factory_factory_iface_init (_PanelAppletFactoryIface *factory_iface)
-{
-	factory_iface->handle_get_applet = panel_applet_factory_get_applet;
-}
-
 PanelAppletFactory *
 panel_applet_factory_new (const gchar *factory_id,
 			  GType        applet_type,
@@ -167,60 +94,165 @@ panel_applet_factory_new (const gchar *factory_id,
 	return factory;
 }
 
-gboolean
-panel_applet_factory_register_service (PanelAppletFactory *factory)
+static void
+set_applet_constructor_properties (GObject  *applet,
+				   GVariant *props)
 {
-	guint   request_name_result;
-	gchar  *service_name;
+	GVariantIter iter;
+	GVariant    *value;
+	gchar       *key;
+
+	g_variant_iter_init (&iter, props);
+	while (g_variant_iter_loop (&iter, "{sv}", &key, &value)) {
+		switch (g_variant_classify (value)) {
+		case G_VARIANT_CLASS_UINT32: {
+			guint32 v = g_variant_get_uint32 (value);
+
+			g_object_set (applet, key, v, NULL);
+		}
+			break;
+		case G_VARIANT_CLASS_STRING: {
+			const gchar *v = g_variant_get_string (value, NULL);
+
+			g_object_set (applet, key, v, NULL);
+		}
+			break;
+		case G_VARIANT_CLASS_BOOLEAN: {
+			gboolean v = g_variant_get_boolean (value);
+
+			g_object_set (applet, key, v, NULL);
+		}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+
+static void
+panel_applet_factory_get_applet (PanelAppletFactory    *factory,
+				 GDBusConnection       *connection,
+				 GVariant              *parameters,
+				 GDBusMethodInvocation *invocation)
+{
+	GObject     *applet;
+	const gchar *applet_id;
+	gint         screen_num;
+	GVariant    *props;
+	GdkScreen   *screen;
+	guint32      xid;
+	const gchar *object_path;
+
+	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
+
+	applet = g_object_new (factory->applet_type,
+			       "id", applet_id,
+			       "connection", connection,
+			       "closure", factory->closure,
+			       NULL);
+	factory->n_applets++;
+	g_object_weak_ref (applet, (GWeakNotify)panel_applet_factory_applet_removed, factory);
+
+	set_applet_constructor_properties (applet, props);
+	g_variant_unref (props);
+
+	screen = screen_num != -1 ?
+		gdk_display_get_screen (gdk_display_get_default (), screen_num) :
+		gdk_screen_get_default ();
+
+	xid = panel_applet_get_xid (PANEL_APPLET (applet), screen);
+	object_path = panel_applet_get_object_path (PANEL_APPLET (applet));
+
+	g_dbus_method_invocation_return_value (invocation,
+					       g_variant_new ("(ou)", object_path, xid));
+}
+
+static void
+method_call_cb (GDBusConnection       *connection,
+		const gchar           *sender,
+		const gchar           *object_path,
+		const gchar           *interface_name,
+		const gchar           *method_name,
+		GVariant              *parameters,
+		GDBusMethodInvocation *invocation,
+		gpointer               user_data)
+{
+	PanelAppletFactory *factory = PANEL_APPLET_FACTORY (user_data);
+
+	if (g_strcmp0 (method_name, "GetApplet") == 0) {
+		panel_applet_factory_get_applet (factory, connection, parameters, invocation);
+	}
+}
+
+static const gchar introspection_xml[] =
+	"<node>"
+	    "<interface name='org.gnome.panel.applet.AppletFactory'>"
+	      "<method name='GetApplet'>"
+	        "<arg name='applet_id' type='s' direction='in'/>"
+	        "<arg name='screen' type='i' direction='in'/>"
+	        "<arg name='props' type='a{sv}' direction='in'/>"
+	        "<arg name='applet' type='o' direction='out'/>"
+	        "<arg name='xid' type='u' direction='out'/>"
+	      "</method>"
+	    "</interface>"
+	  "</node>";
+
+static const GDBusInterfaceVTable interface_vtable = {
+	method_call_cb,
+	NULL,
+	NULL
+};
+
+static GDBusNodeInfo *introspection_data = NULL;
+
+static void
+on_name_acquired (GDBusConnection    *connection,
+		  const gchar        *name,
+		  PanelAppletFactory *factory)
+{
 	gchar  *object_path;
 	GError *error = NULL;
 
-	if (!factory->connection) {
-		factory->connection = egg_dbus_connection_get_for_bus (EGG_DBUS_BUS_TYPE_SESSION);
-		if (!factory->connection) {
-			g_printerr ("Failed to connect to the D-BUS daemon\n");
-
-			return FALSE;
-		}
+	if (!introspection_data)
+		introspection_data = g_dbus_node_info_new_for_xml (introspection_xml, NULL);
+	object_path = g_strdup_printf (PANEL_APPLET_FACTORY_OBJECT_PATH, factory->factory_id);
+	g_dbus_connection_register_object (connection,
+					   object_path,
+					   introspection_data->interfaces[0],
+					   &interface_vtable,
+					   factory, NULL,
+					   &error);
+	if (error) {
+		g_printerr ("Failed to register object %s: %s\n", object_path, error->message);
+		g_error_free (error);
 	}
+
+	g_free (object_path);
+}
+
+static void
+on_name_lost (GDBusConnection    *connection,
+	      const gchar        *name,
+	      PanelAppletFactory *factory)
+{
+	g_object_unref (factory);
+}
+
+gboolean
+panel_applet_factory_register_service (PanelAppletFactory *factory)
+{
+	gchar *service_name;
 
 	service_name = g_strdup_printf (PANEL_APPLET_FACTORY_SERVICE_NAME, factory->factory_id);
-	if (!egg_dbus_bus_request_name_sync (egg_dbus_connection_get_bus (factory->connection),
-					     EGG_DBUS_CALL_FLAGS_NONE,
-					     service_name,
-					     EGG_DBUS_REQUEST_NAME_FLAGS_DO_NOT_QUEUE,
-					     &request_name_result,
-					     NULL,
-					     &error)) {
-		g_printerr ("Failed to acquire daemon name: %s", error->message);
-		g_error_free (error);
-		g_free (service_name);
-
-		return FALSE;
-	}
+	g_bus_own_name (G_BUS_TYPE_SESSION,
+			service_name,
+			G_BUS_NAME_OWNER_FLAGS_NONE,
+			NULL,
+			(GBusNameAcquiredCallback) on_name_acquired,
+			(GBusNameLostCallback) on_name_lost,
+			factory, NULL);
 	g_free (service_name);
-
-	switch (request_name_result) {
-	case EGG_DBUS_REQUEST_NAME_REPLY_EXISTS:
-		g_printerr ("Panel applet already running, exiting.\n");
-
-		return FALSE;
-	case EGG_DBUS_REQUEST_NAME_REPLY_ALREADY_OWNED:
-	case EGG_DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER:
-		object_path = g_strdup_printf (PANEL_APPLET_FACTORY_OBJECT_PATH, factory->factory_id);
-		egg_dbus_connection_register_interface (factory->connection,
-							object_path,
-							_PANEL_TYPE_APPLET_FACTORY,
-							G_OBJECT (factory),
-							G_TYPE_INVALID);
-		g_free (object_path);
-
-		break;
-	default:
-		g_printerr ("Not primary owner of the service, exiting.\n");
-
-		return FALSE;
-	}
 
 	return TRUE;
 }

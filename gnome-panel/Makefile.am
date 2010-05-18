@@ -16,7 +16,6 @@ INCLUDES =							\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"			\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
-	-DEGG_DBUS_I_KNOW_API_IS_SUBJECT_TO_CHANGE		\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
 	$(WARN_CFLAGS)						\
@@ -32,31 +31,10 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 
 bin_PROGRAMS = \
 	gnome-panel 			\
-	gnome-desktop-item-edit
-
-$(gnome_panel_OBJECTS): $(BUILT_SOURCES)
-
-panel-built-sources.stamp: $(top_srcdir)/data/panel-applet.xml
-	eggdbus-binding-tool                                            \
-                --namespace "_Panel"                                    \
-                --dbus-namespace "org.gnome.panel.applet"               \
-                --introspection-xml $(top_srcdir)/data/panel-applet.xml \
-                --stamp-file panel-built-sources.stamp
-
-EGGDBUS_SRCLIST =               \
-	_panelbindingstypes.h	\
-	_panelbindings.h	\
-	_panelbindings.c	\
-        _panelbindingsmarshal.h \
-        _panelbindingsmarshal.c \
-        _panelapplet.h          \
-        _panelapplet.c		\
-	_panelappletorient.h	\
-	_panelappletorient.c
+	gnome-desktop-item-edit		\
+	panel-test-applets
 
 BUILT_SOURCES = \
-	panel-built-sources.stamp	\
-	$(EGGDBUS_SRCLIST)		\
 	panel-typebuiltins.c		\
 	panel-typebuiltins.h		\
 	panel-marshal.c			\
@@ -162,7 +140,6 @@ panel_headers =			\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
-	$(EGGDBUS_SRCLIST)		\
 	$(panel_sources)		\
 	$(panel_headers)		\
 	$(NULL)
@@ -192,7 +169,8 @@ gnome_desktop_item_edit_LDADD = 	\
 uidir = $(datadir)/gnome-panel/ui
 ui_DATA =					\
 	panel-properties-dialog.ui		\
-	panel-run-dialog.ui
+	panel-run-dialog.ui			\
+	panel-test-applets.ui
 
 libexec_SCRIPTS = gnome-panel-add
 
@@ -202,6 +180,15 @@ gnome-panel-add: gnome-panel-add.in Makefile
 	    -e s!\@PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
 	    < $< > $@
 	$(AM_V_at)chmod a+x $@
+
+panel_test_applets_SOURCES =		\
+	panel-applet-container.c	\
+	panel-applets-manager.c		\
+	panel-marshal.c			\
+	panel-test-applets.c
+
+panel_test_applets_LDFLAGS = -export-dynamic
+panel_test_applets_LDADD = $(PANEL_LIBS)
 
 EXTRA_DIST =					\
 	$(ui_DATA)				\

@@ -12,8 +12,6 @@
 #include <gtk/gtk.h>
 #include <gconf/gconf.h>
 
-#include "panel-applet.h"
-
 #include <gnome-panel/panel-applet-container.h>
 #include <gnome-panel/panel-applets-manager.h>
 
@@ -138,8 +136,9 @@ load_applet_into_window (const char *title,
 			 guint       size,
 			 guint       orientation)
 {
-	GtkWidget *container;
-	GtkWidget *applet_window;
+	GtkWidget       *container;
+	GtkWidget       *applet_window;
+	GVariantBuilder  builder;
 
 	container = panel_applet_container_new ();
 
@@ -153,14 +152,18 @@ load_applet_into_window (const char *title,
 			  G_CALLBACK (applet_broken_cb),
 			  applet_window);
 
+	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
+	g_variant_builder_add (&builder, "{sv}",
+			       "prefs-key", g_variant_new_string (prefs_key));
+	g_variant_builder_add (&builder, "{sv}",
+			       "size", g_variant_new_uint32 (size));
+	g_variant_builder_add (&builder, "{sv}",
+			       "orient", g_variant_new_uint32 (orientation));
 	panel_applet_container_add (PANEL_APPLET_CONTAINER (container),
 				    title, NULL,
 				    (GAsyncReadyCallback)applet_activated_cb,
 				    applet_window,
-				    "prefs-key", prefs_key,
-				    "size", size,
-				    "orient", orientation,
-				    NULL);
+				    g_variant_builder_end (&builder));
 }
 
 static void
@@ -322,9 +325,11 @@ main (int argc, char **argv)
 		return 1;
 	}
 
-	applets_dir = g_strdup_printf ("%s:./", PANEL_APPLETS_DIR);
-	g_setenv ("PANEL_APPLETS_DIR", applets_dir, FALSE);
-	g_free (applets_dir);
+	if (g_file_test ("../libpanel-applet", G_FILE_TEST_IS_DIR)) {
+		applets_dir = g_strdup_printf ("%s:../libpanel-applet", PANEL_APPLETS_DIR);
+		g_setenv ("PANEL_APPLETS_DIR", applets_dir, FALSE);
+		g_free (applets_dir);
+	}
 
 	panel_applets_manager_init ();
 
@@ -338,7 +343,7 @@ main (int argc, char **argv)
 	builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
 
-	uifile = PANEL_APPLET_BUILDERDIR "/panel-test-applets.ui";
+	uifile = BUILDERDIR "/panel-test-applets.ui";
 	gtk_builder_add_from_file (builder, uifile, &error);
 
 	if (error) {

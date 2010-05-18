@@ -92,21 +92,12 @@ static char *panel_applet_frame_get_background_string (PanelAppletFrame    *fram
 						       PanelBackgroundType  type);
 
 static void
-panel_applet_frame_get_flags_cb (PanelAppletContainer *container,
-				 GAsyncResult         *res,
-				 PanelAppletFrame     *frame)
+panel_applet_frame_update_flags (PanelAppletFrame *frame,
+				 guint             flags)
 {
 	gboolean major;
 	gboolean minor;
 	gboolean old_has_handle;
-	guint    flags;
-	GError  *error = NULL;
-
-	if (!panel_applet_container_child_get_uint_finish (container, &flags, res, &error)) {
-		g_warning ("%s\n", error->message);
-		g_error_free (error);
-		return;
-	}
 
 	major = flags & APPLET_EXPAND_MAJOR;
 	minor = flags & APPLET_EXPAND_MINOR;
@@ -128,21 +119,10 @@ panel_applet_frame_get_flags_cb (PanelAppletContainer *container,
 }
 
 static void
-panel_applet_frame_get_size_hints_cb (PanelAppletContainer *container,
-				      GAsyncResult         *res,
-				      PanelAppletFrame     *frame)
+panel_applet_frame_update_size_hints (PanelAppletFrame *frame,
+				      gint             *size_hints,
+				      guint             n_elements)
 {
-	gint   *size_hints = NULL;
-	guint   n_elements;
-	GError *error = NULL;
-
-	if (!panel_applet_container_child_get_size_hints_finish (container, &size_hints,
-								 &n_elements, res, &error)) {
-		g_warning ("%s\n", error->message);
-		g_error_free (error);
-		return;
-	}
-
 	if (frame->priv->has_handle) {
 		gint extra_size = HANDLE_SIZE + 1;
 		gint i;
@@ -151,6 +131,7 @@ panel_applet_frame_get_size_hints_cb (PanelAppletContainer *container,
 			size_hints[i] += extra_size;
 	}
 
+	/* It takes the ownership of size-hints array */
 	panel_widget_set_applet_size_hints (frame->priv->panel,
 					    GTK_WIDGET (frame),
 					    size_hints,
@@ -158,23 +139,76 @@ panel_applet_frame_get_size_hints_cb (PanelAppletContainer *container,
 }
 
 static void
+panel_applet_frame_get_flags_cb (PanelAppletContainer *container,
+				 GAsyncResult         *res,
+				 PanelAppletFrame     *frame)
+{
+	GVariant *value;
+	GError   *error = NULL;
+
+	value = panel_applet_container_child_get_finish (container, res, &error);
+	if (!value) {
+		g_warning ("%s\n", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	panel_applet_frame_update_flags (frame, g_variant_get_uint32 (value));
+	g_variant_unref (value);
+}
+
+static void
+panel_applet_frame_get_size_hints_cb (PanelAppletContainer *container,
+				      GAsyncResult         *res,
+				      PanelAppletFrame     *frame)
+{
+	GVariant   *value;
+	const gint *sz;
+	gint       *size_hints = NULL;
+	gsize       n_elements;
+	GError     *error = NULL;
+
+	value = panel_applet_container_child_get_finish (container, res, &error);
+	if (!value) {
+		g_warning ("%s\n", error->message);
+		g_error_free (error);
+		return;
+	}
+
+	sz = g_variant_get_fixed_array (value, &n_elements, sizeof (gint32));
+	if (n_elements > 0) {
+		size_hints = g_new (gint32, n_elements);
+		memcpy (size_hints, sz, n_elements * sizeof (gint32));
+	}
+	panel_applet_frame_update_size_hints (frame, size_hints, n_elements);
+	g_variant_unref (value);
+}
+
+static void
 panel_applet_frame_flags_changed (PanelAppletContainer *container,
-				  GParamSpec           *pspec,
+				  const gchar          *prop_name,
+				  GVariant             *value,
 				  PanelAppletFrame     *frame)
 {
-	panel_applet_container_child_get_uint (container, "flags", NULL,
-					       (GAsyncReadyCallback)panel_applet_frame_get_flags_cb,
-					       frame);
+	panel_applet_frame_update_flags (frame, g_variant_get_uint32 (value));
 }
 
 static void
 panel_applet_frame_size_hints_changed (PanelAppletContainer *container,
-				       GParamSpec           *pspec,
+				       const gchar          *prop_name,
+				       GVariant             *value,
 				       PanelAppletFrame     *frame)
 {
-	panel_applet_container_child_get_size_hints (container, NULL,
-						     (GAsyncReadyCallback)panel_applet_frame_get_size_hints_cb,
-						     frame);
+	const gint *sz;
+	gint       *size_hints = NULL;
+	gsize       n_elements;
+
+	sz = g_variant_get_fixed_array (value, &n_elements, sizeof (gint32));
+	if (n_elements > 0) {
+		size_hints = g_new (gint32, n_elements);
+		memcpy (size_hints, sz, n_elements * sizeof (gint32));
+	}
+	panel_applet_frame_update_size_hints (frame, size_hints, n_elements);
 }
 
 static void
@@ -182,16 +216,16 @@ panel_applet_frame_init_properties (PanelAppletFrame *frame)
 {
 	PanelAppletContainer *container = PANEL_APPLET_CONTAINER (frame);
 
-	panel_applet_container_child_get_uint (container, "flags", NULL,
-					       (GAsyncReadyCallback)panel_applet_frame_get_flags_cb,
-					       frame);
-	panel_applet_container_child_get_size_hints (container, NULL,
-						     (GAsyncReadyCallback)panel_applet_frame_get_size_hints_cb,
-						     frame);
-	g_signal_connect (container, "child-notify::flags",
+	panel_applet_container_child_get (container, "flags", NULL,
+					  (GAsyncReadyCallback)panel_applet_frame_get_flags_cb,
+					  frame);
+	panel_applet_container_child_get (container, "size-hints", NULL,
+					  (GAsyncReadyCallback)panel_applet_frame_get_size_hints_cb,
+					  frame);
+	g_signal_connect (container, "child-property-changed::flags",
 			  G_CALLBACK (panel_applet_frame_flags_changed),
 			  frame);
-	g_signal_connect (container, "child-notify::size-hints",
+	g_signal_connect (container, "child-property-changed::size-hints",
 			  G_CALLBACK (panel_applet_frame_size_hints_changed),
 			  frame);
 }
@@ -215,12 +249,12 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
 	locked_down = panel_lockdown_get_locked_down ();
 
-	panel_applet_container_child_set_boolean (PANEL_APPLET_CONTAINER (frame),
-						  "locked", lockable && locked,
-						  NULL, NULL, NULL);
-	panel_applet_container_child_set_boolean (PANEL_APPLET_CONTAINER (frame),
-						  "locked-down", locked_down,
-						  NULL, NULL, NULL);
+	panel_applet_container_child_set (PANEL_APPLET_CONTAINER (frame),
+					  "locked", g_variant_new_boolean (lockable && locked),
+					  NULL, NULL, NULL);
+	panel_applet_container_child_set (PANEL_APPLET_CONTAINER (frame),
+					  "locked-down", g_variant_new_boolean (locked_down),
+					  NULL, NULL, NULL);
 }
 
 enum {
@@ -314,6 +348,28 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gtk_widget_destroy (GTK_WIDGET (frame));
 }
 
+static guint
+get_panel_applet_orient (PanelOrientation orientation)
+{
+	/* For some reason libpanel-applet and panel use
+	 * a different logic for orientation, so we need
+	 * to convert it. We should fix this.
+	 */
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
+		return 1;
+	case PANEL_ORIENTATION_BOTTOM:
+		return 0;
+	case PANEL_ORIENTATION_LEFT:
+		return 3;
+	case PANEL_ORIENTATION_RIGHT:
+		return 2;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
 static void
 panel_applet_frame_activated (PanelAppletContainer       *container,
 			      GAsyncResult               *res,
@@ -374,8 +430,10 @@ panel_applet_frame_load (const gchar *iid,
 {
 	PanelAppletFrame           *frame;
 	PanelAppletFrameActivating *frame_act;
+	GVariantBuilder             builder;
 	gchar                      *prefs_key;
 	gchar                      *background;
+	guint                       orient;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
@@ -409,18 +467,35 @@ panel_applet_frame_load (const gchar *iid,
 	background = panel_applet_frame_get_background_string (frame,
 							       frame->priv->panel,
 							       frame->priv->panel->background.type);
+	orient = get_panel_applet_orient (panel_widget_get_applet_orientation (frame->priv->panel));
+
+	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
+	g_variant_builder_add (&builder, "{sv}",
+			       "prefs-key",
+			       g_variant_new_string (prefs_key));
+	g_variant_builder_add (&builder, "{sv}",
+			       "orient",
+			       g_variant_new_uint32 (orient));
+	g_variant_builder_add (&builder, "{sv}",
+			       "size",
+			       g_variant_new_uint32 (frame->priv->panel->sz));
+	g_variant_builder_add (&builder, "{sv}",
+			       "locked",
+			       g_variant_new_boolean (locked));
+	g_variant_builder_add (&builder, "{sv}",
+			       "locked-down",
+			       g_variant_new_boolean (panel_lockdown_get_locked_down ()));
+	if (background) {
+		g_variant_builder_add (&builder, "{sv}",
+				       "background",
+				       g_variant_new_string (background));
+	}
 
 	panel_applet_container_add (PANEL_APPLET_CONTAINER (frame),
 				    frame->priv->iid, NULL,
 				    (GAsyncReadyCallback)panel_applet_frame_activated,
 				    frame_act,
-				    "prefs-key", prefs_key,
-				    "background", background ? background : "",
-				    "orient", panel_widget_get_applet_orientation (frame->priv->panel),
-				    "size", frame->priv->panel->sz,
-				    "locked", locked,
-				    "locked-down", panel_lockdown_get_locked_down (),
-				    NULL);
+				    g_variant_builder_end (&builder));
 	g_free (prefs_key);
 	g_free (background);
 }
@@ -473,9 +548,9 @@ static void
 change_orientation_cb (PanelAppletContainer *container,
 		       GAsyncResult         *res)
 {
-	GError *error = NULL;
+	GError   *error = NULL;
 
-	if (!panel_applet_container_child_set_orientation_finish (container, res, &error)) {
+	if (!panel_applet_container_child_set_finish (container, res, &error)) {
 		g_warning ("%s\n", error->message);
 		g_error_free (error);
 
@@ -493,19 +568,21 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 		return;
 
 	frame->priv->orientation = orientation;
-	panel_applet_container_child_set_orientation (PANEL_APPLET_CONTAINER (frame),
-						      orientation,
-						      NULL,
-						      (GAsyncReadyCallback)change_orientation_cb,
-						      NULL);
+	panel_applet_container_child_set (PANEL_APPLET_CONTAINER (frame),
+					  "orient",
+					  g_variant_new_uint32 (get_panel_applet_orient (orientation)),
+					  NULL,
+					  (GAsyncReadyCallback)change_orientation_cb,
+					  NULL);
 }
 
 void
 panel_applet_frame_change_size (PanelAppletFrame *frame,
 				guint             size)
 {
-	panel_applet_container_child_set_uint (PANEL_APPLET_CONTAINER (frame),
-					       "size", size, NULL, NULL, NULL);
+	panel_applet_container_child_set (PANEL_APPLET_CONTAINER (frame),
+					  "size", g_variant_new_uint32 (size),
+					  NULL, NULL, NULL);
 }
 
 static char *
@@ -548,9 +625,10 @@ container_child_background_set (GObject      *source_object,
 	PanelAppletContainer *container = PANEL_APPLET_CONTAINER (source_object);
 	PanelAppletFrame     *frame = PANEL_APPLET_FRAME (source_object);
 
-	panel_applet_container_child_set_string_finish (container, res, NULL);
+	panel_applet_container_child_set_finish (container, res, NULL);
 
-	g_object_unref (frame->priv->bg_cancellable);
+	if (frame->priv->bg_cancellable)
+		g_object_unref (frame->priv->bg_cancellable);
 	frame->priv->bg_cancellable = NULL;
 }
 
@@ -579,11 +657,12 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 			g_cancellable_cancel (frame->priv->bg_cancellable);
 		frame->priv->bg_cancellable = g_cancellable_new ();
 
-		panel_applet_container_child_set_string (PANEL_APPLET_CONTAINER (frame),
-							 "background", bg_str,
-							 frame->priv->bg_cancellable,
-							 container_child_background_set,
-							 NULL);
+		panel_applet_container_child_set (PANEL_APPLET_CONTAINER (frame),
+						  "background",
+						  g_variant_new_string (bg_str),
+						  frame->priv->bg_cancellable,
+						  container_child_background_set,
+						  NULL);
 		g_free (bg_str);
 	}
 }
