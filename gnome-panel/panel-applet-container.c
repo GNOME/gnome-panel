@@ -443,8 +443,6 @@ on_factory_appeared (GDBusConnection   *connection,
 				get_applet_cb,
 				data->result);
 	g_free (object_path);
-
-	g_bus_unwatch_name (container->priv->name_watcher_id);
 }
 
 static void
