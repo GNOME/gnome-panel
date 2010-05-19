@@ -4,6 +4,7 @@
  * Copyright (C) 2001 Ximian, Inc.
  * Copyright (C) 2008 Red Hat, Inc.
  * Copyright (C) 2008 Novell, Inc.
+ * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -29,8 +30,6 @@
 #include <config.h>
 #include <glib/gi18n.h>
 
-#include <dbus/dbus-glib.h>
-
 #include <libpanel-util/panel-cleanup.h>
 
 #include "panel-profile.h"
@@ -40,17 +39,17 @@
 
 #define PANEL_DBUS_SERVICE "org.gnome.Panel"
 
-static DBusGConnection *dbus_connection = NULL;
-static DBusGProxy      *session_bus = NULL;
+static GDBusConnection *dbus_connection = NULL;
 
 static void
-panel_shell_on_name_lost (DBusGProxy *proxy,
-			  const char *name,
-			  gpointer   user_data)
+panel_shell_on_name_lost (GDBusConnection *connection,
+			  const gchar     *sender_name,
+			  const gchar     *object_path,
+			  const gchar     *interface_name,
+			  const gchar     *signal_name,
+			  GVariant        *parameters,
+			  gpointer         user_data)
 {
-	if (strcmp (name, PANEL_DBUS_SERVICE) != 0)
-		return;
-
 	/* We lost our DBus name, and there is something replacing us.
 	 * Tell the SM not to restart us automatically, then exit. */
 	g_printerr ("Panel leaving: a new panel shell is starting.\n");
@@ -63,72 +62,50 @@ static void
 panel_shell_cleanup (gpointer data)
 {
 	if (dbus_connection != NULL) {
-		dbus_g_connection_unref (dbus_connection);
+		g_object_unref (dbus_connection);
 		dbus_connection = NULL;
-	}
-
-	if (session_bus != NULL) {
-		g_object_unref (session_bus);
-		session_bus = NULL;
 	}
 }
 
 gboolean
 panel_shell_register (gboolean replace)
 {
-	GError   *error;
-	guint     request_name_reply;
-	guint32   flags;
-	gboolean  retval;
+	GBusNameOwnerFlags flags;
+	guint32            request_name_reply;
+	GVariant          *result;
+	gboolean           retval = FALSE;
+	GError            *error = NULL;
 
-	if (session_bus != NULL)
+	if (dbus_connection != NULL)
 		return TRUE;
-
-	retval = FALSE;
 
 	panel_cleanup_register (PANEL_CLEAN_FUNC (panel_shell_cleanup), NULL);
 
-	dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+	/* There isn't a sync version of g_bus_own_name,
+	 * so we have to requeste the name manually here.
+	 * there's no ui yet so it's safe using sync api
+	 */
+	dbus_connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
 	if (dbus_connection == NULL) {
-		g_warning ("Cannot register the panel shell: cannot connect "
-			   "to the session bus.");
+		g_warning ("Cannot register the panel shell: %s", error->message);
 		goto register_out;
 	}
 
-	session_bus = dbus_g_proxy_new_for_name (dbus_connection,
-						 "org.freedesktop.DBus",
-						 "/org/freedesktop/DBus",
-						 "org.freedesktop.DBus");
-	if (session_bus == NULL) {
-		g_warning ("Cannot register the panel shell: cannot connect "
-			   "to the session bus.");
-		goto register_out;
-	}
-
-	dbus_g_proxy_add_signal (session_bus,
-				 "NameLost",
-				 G_TYPE_STRING,
-				 G_TYPE_INVALID);
-
-	dbus_g_proxy_connect_signal (session_bus,
-				     "NameLost",
-				     G_CALLBACK (panel_shell_on_name_lost),
-				     NULL,
-				     NULL);
-
-	flags = DBUS_NAME_FLAG_DO_NOT_QUEUE|DBUS_NAME_FLAG_ALLOW_REPLACEMENT;
+	flags = G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT;
 	if (replace)
-		flags |= DBUS_NAME_FLAG_REPLACE_EXISTING;
-	error = NULL;
+		flags |= G_BUS_NAME_OWNER_FLAGS_REPLACE;
 
-	if (!dbus_g_proxy_call (session_bus,
-				"RequestName",
-				&error,
-				G_TYPE_STRING, PANEL_DBUS_SERVICE,
-				G_TYPE_UINT, flags,
-				G_TYPE_INVALID,
-				G_TYPE_UINT, &request_name_reply,
-				G_TYPE_INVALID)) {
+	result = g_dbus_connection_call_sync (dbus_connection,
+					      "org.freedesktop.DBus",
+					      "/org/freedesktop/DBus",
+					      "org.freedesktop.DBus",
+					      "RequestName",
+					      g_variant_new ("(su)",
+							     PANEL_DBUS_SERVICE,
+							     flags),
+					      G_DBUS_CALL_FLAGS_NONE,
+					      -1, NULL, &error);
+	if (!result) {
 		g_warning ("Cannot register the panel shell: %s",
 			   error->message);
 		g_error_free (error);
@@ -136,20 +113,31 @@ panel_shell_register (gboolean replace)
 		goto register_out;
 	}
 
-	if (request_name_reply == DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER ||
-	    request_name_reply == DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER)
+	g_variant_get (result, "(u)", &request_name_reply);
+	g_variant_unref (result);
+
+	switch (request_name_reply) {
+	case 1: /* DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER */
+	case 4: /* DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER */
 		retval = TRUE;
-	else if (request_name_reply == DBUS_REQUEST_NAME_REPLY_EXISTS)
+		g_dbus_connection_signal_subscribe (dbus_connection,
+						    "org.freedesktop.DBus",
+						    "org.freedesktop.DBus",
+						    "NameLost",
+						    "/org/freedesktop/DBus",
+						    PANEL_DBUS_SERVICE,
+						    (GDBusSignalCallback)panel_shell_on_name_lost,
+						    NULL, NULL);
+		break;
+	case 2: /* DBUS_REQUEST_NAME_REPLY_IN_QUEUE */
+	case 3: /* DBUS_REQUEST_NAME_REPLY_EXISTS */
 		g_printerr ("Cannot register the panel shell: there is "
 			    "already one running.\n");
-	else if (request_name_reply == DBUS_REQUEST_NAME_REPLY_IN_QUEUE)
-		/* This should never happen since we don't want to be queued. */
-		g_warning ("Cannot register the panel shell: it was queued "
-			   "after the running one, but this should not "
-			   "happen.");
-	else
+		break;
+	default:
 		g_warning ("Cannot register the panel shell: unhandled "
 			   "reply %u from RequestName", request_name_reply);
+	}
 
 register_out:
 
