@@ -1465,7 +1465,7 @@ update_pixmap (FishApplet *fish)
 	cairo_matrix_t matrix;
 	cairo_pattern_t *pattern;
 
-	if (!GTK_WIDGET_REALIZED (widget) ||
+	if (!gtk_widget_get_realized (widget) ||
 	    widget->allocation.width <= 0 ||
 	    widget->allocation.height <= 0)
 		return;

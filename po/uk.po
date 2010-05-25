@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-17 14:12+0300\n"
+"POT-Creation-Date: 2010-03-11 12:45+0200\n"
 "PO-Revision-Date: 2009-07-08 10:17+0300\n"
 "Last-Translator: wanderlust <wanderlust@ukr.net>\n"
 "Language-Team: ukrainian <Ukrainian <uk@li.org>>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
-msgstr "_Встановити дату й час..."
+msgstr "_Встановити дату і час..."
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -49,7 +49,7 @@ msgstr "_Про програму"
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
-#: ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Довідка"
 
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "П_араметри"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3733
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "Годинник"
 
@@ -81,7 +81,12 @@ msgstr "Показує поточну дату і час"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:451
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -95,56 +100,61 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:456
-#: ../applets/clock/clock.c:1616 ../applets/clock/clock-location-tile.c:476
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "Завдання"
 
-#: ../applets/clock/calendar-window.c:853
-#: ../applets/clock/calendar-window.c:1029
-#: ../applets/clock/calendar-window.c:1665
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
 msgstr "Правка"
 
-#: ../applets/clock/calendar-window.c:974
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "Весь день"
 
-#: ../applets/clock/calendar-window.c:1113
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "Зустрічі"
 
-#: ../applets/clock/calendar-window.c:1138
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "Дні народження та річниці"
 
-#: ../applets/clock/calendar-window.c:1163
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "Інформація про погоду"
 
-#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Адреси"
 
-#: ../applets/clock/calendar-window.c:1964
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "Календар"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:451
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -155,7 +165,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1610
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -164,7 +174,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:476
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -172,7 +182,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:483
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -185,7 +195,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:491
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -194,27 +204,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:674
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
-msgstr "Клацніть, щоб сховати зустрічі та завдання"
+msgstr "Натисніть, щоб сховати зустрічі та завдання"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
-msgstr "Клацніть для перегляду зустрічей та завдань"
+msgstr "Натисніть для перегляду зустрічей та завдань"
 
-#: ../applets/clock/clock.c:711
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
-msgstr "Клацніть, щоб сховати календар на місяць"
+msgstr "Натисніть, щоб сховати календар на місяць"
 
-#: ../applets/clock/clock.c:714
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
-msgstr "Клацніть для перегляду календаря на місяць"
+msgstr "Натисніть для перегляду календаря на місяць"
 
-#: ../applets/clock/clock.c:1449
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "Комп'ютерний годинник"
 
@@ -224,7 +234,7 @@ msgstr "Комп'ютерний годинник"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1595
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S %p"
 
@@ -234,71 +244,71 @@ msgstr "%H:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1603
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%H:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1656
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1687
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "Встановити системний час..."
 
-#: ../applets/clock/clock.c:1688
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "Встановити системний час"
 
-#: ../applets/clock/clock.c:1703
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "Помилка при встановленні системного часу"
 
-#: ../applets/clock/clock.c:2766
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "Власний формат"
 
-#: ../applets/clock/clock.c:3224
+#: ../applets/clock/clock.c:3194
 msgid "Choose Location"
 msgstr "Виберіть розташування"
 
-#: ../applets/clock/clock.c:3299
+#: ../applets/clock/clock.c:3273
 msgid "Edit Location"
 msgstr "Зміна розташування"
 
-#: ../applets/clock/clock.c:3445
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "Назва міста"
 
-#: ../applets/clock/clock.c:3449
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "Часовий пояс міста"
 
-#: ../applets/clock/clock.c:3629
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "24-годинний"
 
-#: ../applets/clock/clock.c:3630
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "в стилі UNIX"
 
-#: ../applets/clock/clock.c:3631
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "в стилі Internet"
 
-#: ../applets/clock/clock.c:3639
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "Власний _формат:"
 
-#: ../applets/clock/clock.c:3736
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "Годинник показує поточну дату і час"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3739 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -456,7 +466,7 @@ msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
 msgid "A list of locations to display in the calendar window."
-msgstr "Список місцевостей для відображення у вікні календаря."
+msgstr "Список місцевостей для показу у вікні календаря."
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -484,103 +494,99 @@ msgstr "Розкривати список інформації про погод
 
 #: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
-msgstr "Формат відображення часу"
+msgstr "Формат виводу часу"
 
 #: ../applets/clock/clock.schemas.in.h:20
 msgid "If true, display a weather icon."
-msgstr "Чи відображати значок погоди."
+msgstr "Чи виводити значок погоди."
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Чи показувати дату в годиннику, разом з часом."
+msgstr "Чи виводити дату в годиннику, разом з часом."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
-msgstr "Чи показувати секунди в часі."
+msgstr "Чи виводити секунди в часі."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Чи показувати час за Гринвічем (UCT)."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Чи виводити список зустрічей у вікні календаря."
 
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Чи показувати список зустрічей у вікні календаря."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Чи виводити список днів народжень у вікні календаря."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Чи показувати список днів народжень у вікні календаря."
-
-#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Чи розкривати список місцевостей у календарі."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Чи розкривати список завдань у календарі."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr "Чи розкривати інформацію про погоду у календарі."
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Чи показувати дату в підказці, коли вказівник миші знаходиться над "
 "годинником."
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Чи показувати температуру поруч із значком погоди."
+msgstr "Чи виводити температуру поруч із значком погоди."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "Чи виводити номери тижнів у календарі."
 
 #: ../applets/clock/clock.schemas.in.h:31
-msgid "If true, show week numbers in the calendar."
-msgstr "Чи показувати номери тижнів у календарі."
-
-#: ../applets/clock/clock.schemas.in.h:32
 msgid "List of locations"
 msgstr "Перелік місцевостей"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
-msgstr "Показувати дату в годиннику"
+msgstr "Виводити дату в годиннику"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "Виводити дату в підказці"
 
 #: ../applets/clock/clock.schemas.in.h:34
-msgid "Show date in tooltip"
-msgstr "Показувати дату в підказці"
+msgid "Show temperature in clock"
+msgstr "Виводити температуру в годиннику"
 
 #: ../applets/clock/clock.schemas.in.h:35
-msgid "Show temperature in clock"
-msgstr "Показувати температуру у годиннику"
+msgid "Show time with seconds"
+msgstr "Виводити секунди"
 
 #: ../applets/clock/clock.schemas.in.h:36
-msgid "Show time with seconds"
-msgstr "Показувати секунди"
+msgid "Show weather in clock"
+msgstr "Виводити погоду у годиннику"
 
 #: ../applets/clock/clock.schemas.in.h:37
-msgid "Show weather in clock"
-msgstr "Показувати погоду у годиннику"
+msgid "Show week numbers in calendar"
+msgstr "Виводити номери тижнів в календарі"
 
 #: ../applets/clock/clock.schemas.in.h:38
-msgid "Show week numbers in calendar"
-msgstr "Показувати номери тижнів в календарі"
-
-#: ../applets/clock/clock.schemas.in.h:39
 msgid "Speed unit"
 msgstr "Одиниці швидкості"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "Одиниці температури"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
-msgstr "Одиниці, що використовуються для відображення температури."
+msgstr "Одиниці, що використовуються для виводу температури."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "Одиниці, що використовуються для виводу швидкості."
 
 #: ../applets/clock/clock.schemas.in.h:42
-msgid "The unit to use when showing wind speed."
-msgstr "Одиниці, що використовуються для відображення швидкості."
-
-#: ../applets/clock/clock.schemas.in.h:43
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
@@ -589,6 +595,14 @@ msgstr ""
 "Використання цього ключа разом з внутрішньою програмою налаштування часу "
 "заборонено починаючи з GNOME 2.22. Даний ключ зберігається для сумісності з "
 "попередніми версіями."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Використання цього ключа небажане у GNOME 2.28 через використання часових поясів. "
+"Даний ключ зберігається для сумісності з попередніми версіями."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -624,11 +638,11 @@ msgstr ""
 "Цей ключ вказує формат часу, який використовується аплетом годинника. "
 "Можливі значення:  \"12-hour\", \"24-hour\", \"internet\", \"unix\" та "
 "\"custom\" (власний). Якщо встановлено значення \"internet\", годинник "
-"відображатиме час у стилі Інтернет. У стилі Інтернет день ділиться на 1000 "
+"виводить час у стилі Інтернет. У стилі Інтернет день ділиться на 1000 "
 "\"бітів (.beats)\". У цій системі немає часових поясів, час однаковий в "
-"усьому світі. Якщо встановлено \"unix\", годинник відображає час у секундах "
+"усьому світі. Якщо встановлено \"unix\", годинник виводить час у секундах "
 "з початку \"епохи\", тобто з 01.01.1970. Якщо встановлено \"custom\", "
-"годинник відображає час відповідно до формату вказаному у ключі "
+"годинник виводить час відповідно до формату вказаному у ключі "
 "custom_format."
 
 #: ../applets/clock/clock.schemas.in.h:47
@@ -692,24 +706,24 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "Невідомо"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, самопочуття %s"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Схід сонця: %s / Захід сонця: %s"
@@ -719,12 +733,12 @@ msgstr "Схід сонця: %s / Захід сонця: %s"
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
-msgstr "Не вдається відобразити документ довідки '%s'"
+msgstr "Не вдається вивести документ довідки '%s'"
 
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
 #: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
-msgstr "При відображенні довідки виникла помилка"
+msgstr "При вивести довідки виникла помилка"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
@@ -740,19 +754,19 @@ msgstr "Налаштувати апаратний годинник"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr "Привілеї, потрібні для зміни системного часового поясу."
+msgstr "Необхідні привілеї для зміни системного часового поясу."
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
-msgstr "Привілеї, потрібні для зміни системного часу."
+msgstr "Необхідні привілеї для зміни системного часу."
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
-msgstr "Привілеї, потрібні для зміни апаратного годинника."
+msgstr "Необхідні привілеї для апаратного годинника."
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
-msgstr "Відображає рибку, що пливе, чи інше анімаційне створіння"
+msgstr "Вивести рибку, що пливе, або інше анімаційне створіння"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: ../applets/fish/fish.c:617
@@ -761,7 +775,7 @@ msgstr "Рибка"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
-msgstr "Звідки приплила ця дурна рибка"
+msgstr "Звідки припливла ця дурна рибка"
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
@@ -1007,11 +1021,11 @@ msgstr "Фабрика для створення аплетів навігаці
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Кнопка згортає програми и вікна програм, щоб показати робочий стіл"
+msgstr "Сховати вікна програм і показати робочий стіл"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
-msgstr "Кнопка розчищення робочого столу"
+msgstr "Показати робочий стіл"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows using a menu"
@@ -1023,7 +1037,7 @@ msgstr "Перемикання між відкритими вікнами чер
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
-msgstr "Аплет перемикає відображення між робочими областями"
+msgstr "Аплет перемикає виводить між робочими областями"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 #: ../applets/wncklet/window-list.c:609
@@ -1055,15 +1069,15 @@ msgstr "Файл не знайдено"
 
 #: ../applets/wncklet/showdesktop.c:241
 msgid "Click here to restore hidden windows."
-msgstr "Клацніть тут, щоб відновити приховані вікна."
+msgstr "Написніть тут, щоб відновити приховані вікна."
 
 #: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to hide all windows and show the desktop."
-msgstr "Клацніть тут, щоб сховати всі вікна і показати робочий стіл."
+msgstr "Написніть тут, щоб сховати всі вікна і показати робочий стіл."
 
 #: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
 msgid "Show Desktop Button"
-msgstr "Кнопка розчищення робочий стіл"
+msgstr "Кнопка показу робочого столу"
 
 #: ../applets/wncklet/showdesktop.c:536
 msgid "This button lets you hide all windows and show the desktop."
@@ -1074,8 +1088,8 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"Або ваш віконний менеджер не підтримує кнопку розчищення робочого столу, або "
-"він не запущений."
+"Або ваш віконний менеджер не підтримує кнопку показу робочого столу, або він "
+"не запущений."
 
 #: ../applets/wncklet/window-list.c:611
 msgid ""
@@ -1189,12 +1203,12 @@ msgstr "Вибір вікон показує список усіх вікон т
 #: ../applets/wncklet/workspace-switcher.c:976
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
-msgstr "рядок(ів)"
+msgstr "рядків"
 
 #: ../applets/wncklet/workspace-switcher.c:214
 #: ../applets/wncklet/workspace-switcher.c:976
 msgid "columns"
-msgstr "стовпчик(ів)"
+msgstr "стовпців"
 
 #: ../applets/wncklet/workspace-switcher.c:488
 #, c-format
@@ -1275,7 +1289,7 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Якщо встановлено, то перемикач робочих областей відображатиме всі області, а "
+"Якщо встановлено, то перемикач робочих областей показує всі області, а "
 "не лише поточну."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
@@ -1284,7 +1298,7 @@ msgid ""
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"Якщо встановлено, то перемикач робочих областей відображатиме їх назви, а не "
+"Якщо встановлено, то перемикач робочих областей виводить їх назви, а не "
 "вікна в ньому. У іншому випадку будуть показані вікна робочої області. "
 "Параметр діє, лише за умови використання віконного менеджера Metacity."
 
@@ -1302,6 +1316,69 @@ msgstr ""
 "стовпчиків (при вертикальному), показує перемикач робочих областей. Цей "
 "параметр має сенс лише коли встановлено параметр display_all_workspaces."
 
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Файл не є коректним .desktop файлом"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Невизначений desktop файл Версія '%s'"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "Початок %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Програма не приймає документи з консолі"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Невизначена опція запуску: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Неможливо передати URIs документу до 'Type=Link' робочого столу"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Елемент, що не запускається "
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Вимкнути підключення до менеджеру сеансів"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Вкажіть файл, що містить збережені налаштування"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FILE"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Вкажіть ID управління сеансом"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Параметри управління сеансом"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Показати параметри управління сеансом"
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
@@ -1312,6 +1389,10 @@ msgstr ""
 #: ../gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "Помилка"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Виберіть іконку"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1348,12 +1429,12 @@ msgstr "В_идалити з панелі"
 msgid "???"
 msgstr "без назви"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "Не вдається знайти порожнє місце"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1627
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "Шухляда"
 
@@ -1367,29 +1448,29 @@ msgstr "Д_одати до шухляди..."
 msgid "_Properties"
 msgstr "В_ластивості"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:31
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
 msgstr "Створити новий файл у вказаному каталозі"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:32
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[ФАЙЛ...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:110
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
 msgstr "- Редагування файлів .desktop"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Створити кнопку запуску"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:174
-#: ../gnome-panel/gnome-desktop-item-edit.c:197
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
 msgstr "Властивості каталогу"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Властивості кнопки запуску"
 
@@ -1398,10 +1479,10 @@ msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr ""
-"Запуск інших програм та різні утиліти для керування вікнами, відображення "
+"Запуск інших програм та різні утиліти для керування вікнами, виводу "
 "часу, тощо."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Панель"
 
@@ -1436,37 +1517,37 @@ msgstr "_Запустити"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ключ %s не встановлено, неможливо завантажити кнопку запуску\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1407
-#: ../gnome-panel/panel-ditem-editor.c:1441
-#: ../gnome-panel/panel-ditem-editor.c:1472
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Не вдається зберегти кнопку запуску"
 
-#: ../gnome-panel/main.c:43
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Замінити поточну панель"
 
-#: ../gnome-panel/menu.c:913
+#: ../gnome-panel/menu.c:914
 msgid "Add this launcher to _panel"
 msgstr "Додати цю кнопку запуску до _панелі"
 
-#: ../gnome-panel/menu.c:920
+#: ../gnome-panel/menu.c:921
 msgid "Add this launcher to _desktop"
 msgstr "Додати цю кнопку запуску на _робочий стіл"
 
-#: ../gnome-panel/menu.c:932
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "Вс_е меню"
 
-#: ../gnome-panel/menu.c:937
+#: ../gnome-panel/menu.c:938
 msgid "Add this as _drawer to panel"
 msgstr "Додати до панелі як _шухляду"
 
-#: ../gnome-panel/menu.c:944
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "Додати до панелі як _меню"
 
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>Гру закінчено</b> на рівні %d!"
@@ -1475,42 +1556,42 @@ msgstr "<b>Гру закінчено</b> на рівні %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s    %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Для виходу натисніть 'q'"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "Зупинено"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Натисніть 'p' для продовження"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Рівень: %s, життя: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Користуйтесь стрілками для переміщення, пробіл для пострілів, 'p' для паузи, "
 "'q' для виходу"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "Вбивайте Геглів з інших світів"
 
@@ -1603,7 +1684,7 @@ msgstr "Виконати програму..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Скопіювати кнопку запуску з меню програм"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "Головне меню"
 
@@ -1751,82 +1832,77 @@ msgstr "_Створити панель"
 msgid "A_bout Panels"
 msgstr "_Про панелі"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Програма"
 
-#: ../gnome-panel/panel-ditem-editor.c:119
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Виконати у терміналі..."
 
-#: ../gnome-panel/panel-ditem-editor.c:121
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Адреса"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Тип:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:632
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Назва:"
 
-#: ../gnome-panel/panel-ditem-editor.c:640
-#: ../gnome-panel/panel-properties-dialog.c:286
-msgid "Browse icons"
-msgstr "Значки перегляду"
-
-#: ../gnome-panel/panel-ditem-editor.c:658
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "О_гляд..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:665
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Ко_ментар:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1036
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Виберіть програму..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1040
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Виберіть файл..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1208
-#: ../gnome-panel/panel-ditem-editor.c:1217
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "_Команда:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1226
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Адреса:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1408
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Назва кнопки запуску не встановлена."
 
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Не вдається записати властивості каталогу"
 
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Назва каталогу не встановлена."
 
-#: ../gnome-panel/panel-ditem-editor.c:1429
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "Не встановлена команда для кнопки запуску."
 
-#: ../gnome-panel/panel-ditem-editor.c:1432
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Не встановлена адреса для кнопки запуску."
 
-#: ../gnome-panel/panel-ditem-editor.c:1509
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
-msgstr "Не вдається відобразити документ довідки"
+msgstr "Не вдається вивести документ довідки"
 
 #: ../gnome-panel/panel-force-quit.c:76
 msgid ""
@@ -2066,69 +2142,69 @@ msgstr "Змінити зовнішній вигляд та поведінку, 
 msgid "Applications"
 msgstr "Програми"
 
-#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "_Правка меню"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
 msgstr "Закладки"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "Відкрити '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:529
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Не вдається визначити зміну носія у %s"
 
-#: ../gnome-panel/panel-menu-items.c:572
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "Пересканувати %s"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
-msgstr "Не вдається підключити каталог %s"
+msgstr "Не вдається приєднати каталог %s"
 
-#: ../gnome-panel/panel-menu-items.c:672
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
-msgstr "Підключити %s"
+msgstr "Приєднати %s"
 
-#: ../gnome-panel/panel-menu-items.c:880
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
-msgstr "Змінні носії"
+msgstr "Відєднувані носії"
 
-#: ../gnome-panel/panel-menu-items.c:967
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
-msgstr "Мережні місця"
+msgstr "Мережеве оточення"
 
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr "Відкрити особисту теку"
+msgstr "Відкрити особисту папку"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1025
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Робочий стіл"
 
-#: ../gnome-panel/panel-menu-items.c:1026
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
-msgstr "Відкрити зміст робочого столу як теку"
+msgstr "Відкрити зміст робочого столу як папку"
 
-#: ../gnome-panel/panel-menu-items.c:1417
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Місця"
 
-#: ../gnome-panel/panel-menu-items.c:1446
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "Система"
 
@@ -2137,7 +2213,7 @@ msgstr "Система"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1527
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2146,14 +2222,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1539
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "Завершити сеанс %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1543
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Вийти з сеансу користувача %s та зайти під іншим ім'ям"
@@ -2356,7 +2432,7 @@ msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
-"Панель \"%s\" налаштована для відображення на екрані %d, який зараз "
+"Панель \"%s\" налаштована для виводу на екрані %d, який зараз "
 "недоступний. Ця панель не завантажується."
 
 #: ../gnome-panel/panel-profile.c:1684
@@ -2364,41 +2440,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Помилка зчитування двійкового значення GConf \"%s\": %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Згори"
 
-#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Знизу"
 
-#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Ліворуч"
 
-#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Праворуч"
 
-#: ../gnome-panel/panel-properties-dialog.c:952
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Властивості шухляди"
 
-#: ../gnome-panel/panel-properties-dialog.c:1067
+#: ../gnome-panel/panel-properties-dialog.c:981
 #: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Не вдається прочитати файл «%s»: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1073
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "Не вдається вивести вікно властивостей"
 
@@ -2420,7 +2496,7 @@ msgstr "Тло"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:6
 msgid "Background _image:"
-msgstr "Зображення _тла:"
+msgstr "Тло _зображення:"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:7
 msgid "Co_lor:"
@@ -2650,67 +2726,67 @@ msgstr "Сховати панель"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
 msgstr "Верхня розширена бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
 msgstr "Верхня центрована панель"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
 msgstr "Верхня відірвана панель"
 
-#: ../gnome-panel/panel-toplevel.c:1601
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
 msgstr "Верхня бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
 msgstr "Нижня розширена бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
 msgstr "Нижня центрована панель"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
 msgstr "Нижня відірвана панель"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
 msgstr "Нижня бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
 msgstr "Ліва розширена бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
 msgstr "Ліва центрована панель"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
 msgstr "Ліва відірвана панель"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
 msgstr "Ліва бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
 msgstr "Права розширена бічна панель"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
 msgstr "Права центрована панель"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
 msgstr "Права відірвана панель"
 
-#: ../gnome-panel/panel-toplevel.c:1622
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
 msgstr "Права бічна панель"
 
@@ -2732,7 +2808,7 @@ msgstr "Непрозорість кольору тла"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:5
 msgid "Background image"
-msgstr "Зображення тла"
+msgstr "Зображення на тлі"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:6
 msgid "Background type"
@@ -2748,11 +2824,11 @@ msgstr "Центрувати панель вертикально"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
-msgstr "Увімкнути стрілки на кнопках прибирання"
+msgstr "Увімкнути стрілки на кнопках згортання"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Enable hide buttons"
-msgstr "Увімкнути кнопки прибирання"
+msgstr "Увімкнути кнопки згортання"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
@@ -2787,7 +2863,7 @@ msgid ""
 "happening instantly."
 msgstr ""
 "Якщо встановлено, то приховування та показ панелі буде анімаційним, а не "
-"моментальним."
+"миттєвим."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2874,11 +2950,11 @@ msgstr "Назва панелі"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
-msgstr "Затримка автоматичного приховування панелі"
+msgstr "Затримка автоматичного згортання панелі"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr "Затримка автоматичного показу панелі"
+msgstr "Затримка автоматичного згортання панелі"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
@@ -2890,7 +2966,7 @@ msgstr "Розмір панелі"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
-msgstr "Розвертати зображення на вертикальних панелях"
+msgstr "Повернути зображення на вертикальних панелях"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
@@ -2902,9 +2978,9 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
-"Вказує файл, що використовується для зображення тла. Якщо зображення містить "
-"альфа-канал, то його буде суміщено на прозорих ділянках із зображенням тла "
-"робочого столу."
+"Вказує файл, що використовується для зображення на тлі. Якщо зображення "
+"містить альфа-канал, то його буде суміщено на прозорих ділянках із "
+"зображенням на тлі робочого столу."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -3098,31 +3174,31 @@ msgstr "Вертикальна координата панелі"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Y-координата панелі, починаючи з низу екрану"
 
-#: ../gnome-panel/panel-util.c:323
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Значок '%s' не знайдено"
 
-#: ../gnome-panel/panel-util.c:426
+#: ../gnome-panel/panel-util.c:409
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Не вдається виконати \"%s\""
 
-#: ../gnome-panel/panel-util.c:662
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "файл"
 
-#: ../gnome-panel/panel-util.c:839
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
 msgstr "Домашній каталог"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:851
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "Файлова система"
 
-#: ../gnome-panel/panel-util.c:998
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "Пошук"
 
@@ -3131,7 +3207,7 @@ msgstr "Пошук"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1044
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3141,11 +3217,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "Відкрити URL посилання: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "Видалити цю шухляду?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3153,11 +3229,11 @@ msgstr ""
 "При видаленні шухляди буде втрачено\n"
 "усі його параметри."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "Видалити цю панель?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3247,3 +3323,5 @@ msgstr "_Аплет:"
 #: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
 msgstr "_Каталог параметрів:"
+
+

@@ -45,7 +45,7 @@ panel_frame_size_request (GtkWidget      *widget,
 	requisition->width = 1;
 	requisition->height = 1;
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+	if (bin->child && gtk_widget_get_visible (bin->child))
 		gtk_widget_size_request (bin->child, requisition);
 
 	requisition->width  += GTK_CONTAINER (widget)->border_width;
@@ -95,14 +95,14 @@ panel_frame_size_allocate (GtkWidget     *widget,
 	if (frame->edges & PANEL_EDGE_BOTTOM)
 		child_allocation.height -= widget->style->ythickness;
 
-	if (GTK_WIDGET_MAPPED (widget) &&
+	if (gtk_widget_get_mapped (widget) &&
 	    (child_allocation.x != bin->child->allocation.x ||
 	     child_allocation.y != bin->child->allocation.y ||
 	     child_allocation.width  != bin->child->allocation.width ||
 	     child_allocation.height != bin->child->allocation.height))
 		gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+	if (bin->child && gtk_widget_get_visible (bin->child))
 		gtk_widget_size_allocate (bin->child, &child_allocation);
 }
 
@@ -188,7 +188,7 @@ panel_frame_expose (GtkWidget      *widget,
 	PanelFrame *frame = (PanelFrame *) widget;
 	gboolean    retval = FALSE;
 
-	if (!GTK_WIDGET_DRAWABLE (widget))
+	if (!gtk_widget_is_drawable (widget))
 		return retval;
 
 	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event)

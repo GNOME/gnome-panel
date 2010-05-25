@@ -119,7 +119,7 @@ window_menu_on_expose (GtkWidget *widget,
 {
 	WindowMenu *window_menu = data;
 
-	if (GTK_WIDGET_HAS_FOCUS (window_menu->applet))
+	if (gtk_widget_has_focus (window_menu->applet))
 		gtk_paint_focus (widget->style,
 				 widget->window, 
 				 GTK_WIDGET_STATE (widget),

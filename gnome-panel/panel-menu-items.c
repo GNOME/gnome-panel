@@ -484,6 +484,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		char *label;
 		char *icon;
 		GFile *file;
+		GIcon *gicon;
 
 		bookmark = l->data;
 		
@@ -522,8 +523,10 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		if (!icon)
 			icon = g_strdup (PANEL_ICON_FOLDER);
 
+		gicon = g_themed_icon_new_with_default_fallbacks (icon);
+
 		//FIXME: drag and drop will be broken for x-nautilus-search uris
-		panel_menu_items_append_place_item (icon, NULL,
+		panel_menu_items_append_place_item (icon, gicon,
 						    label,
 						    tooltip,
 						    add_menu,
@@ -531,6 +534,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 						    bookmark->full_uri);
 
 		g_free (icon);
+		g_object_unref (gicon);
 		g_free (tooltip);
 		g_free (label);
 		g_free (bookmark->full_uri);

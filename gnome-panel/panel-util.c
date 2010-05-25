@@ -920,6 +920,7 @@ panel_util_get_file_icon_name_if_mount (GFile *file)
 	return ret;
 }
 
+/* TODO: convert this to a simple call to g_file_query_info? */
 static const char *
 panel_util_get_icon_for_uri_known_folders (const char *uri)
 {
@@ -949,6 +950,27 @@ panel_util_get_icon_for_uri_known_folders (const char *uri)
 	else if (strcmp (path,
 			 g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP)) == 0)
 		icon = PANEL_ICON_DESKTOP;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS)) == 0)
+		icon = PANEL_ICON_FOLDER_DOCUMENTS;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_DOWNLOAD)) == 0)
+		icon = PANEL_ICON_FOLDER_DOWNLOAD;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_MUSIC)) == 0)
+		icon = PANEL_ICON_FOLDER_MUSIC;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_PICTURES)) == 0)
+		icon = PANEL_ICON_FOLDER_PICTURES;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_PUBLIC_SHARE)) == 0)
+		icon = PANEL_ICON_FOLDER_PUBLIC_SHARE;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_TEMPLATES)) == 0)
+		icon = PANEL_ICON_FOLDER_TEMPLATES;
+	else if (g_strcmp0 (path,
+			    g_get_user_special_dir (G_USER_DIRECTORY_VIDEOS)) == 0)
+		icon = PANEL_ICON_FOLDER_VIDEOS;
 
 	g_free (path);
 
@@ -1040,6 +1062,9 @@ panel_util_get_label_for_uri (const char *text_uri)
 	return label;
 }
 
+/* FIXME: we probably want to return a GIcon, that would be built with
+ * g_themed_icon_new_with_default_fallbacks() since we can get an icon like
+ * "folder-music", where "folder" is the safe fallback. */
 char *
 panel_util_get_icon_for_uri (const char *text_uri)
 {

@@ -607,7 +607,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 	gdk_window_get_origin (applet->window, &menu_x, &menu_y);
 	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);
 
-	if (GTK_WIDGET_NO_WINDOW (applet)) {
+	if (!gtk_widget_get_has_window (applet)) {
 		menu_x += applet->allocation.x;
 		menu_y += applet->allocation.y;
 	}
@@ -672,7 +672,7 @@ applet_show_menu (AppletInfo     *info,
 	gtk_menu_set_screen (GTK_MENU (info->menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
-	if (!GTK_WIDGET_REALIZED (info->menu))
+	if (!gtk_widget_get_realized (info->menu))
 		gtk_widget_show (info->menu);
 
 	gtk_menu_popup (GTK_MENU (info->menu),
@@ -1259,7 +1259,7 @@ panel_applet_register (GtkWidget       *applet,
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
-	if ( ! GTK_WIDGET_NO_WINDOW (applet))
+	if (gtk_widget_get_has_window (applet))
 		gtk_widget_set_events (applet, (gtk_widget_get_events (applet) |
 						APPLET_EVENT_MASK) &
 				       ~( GDK_POINTER_MOTION_MASK |
@@ -1325,7 +1325,7 @@ panel_applet_register (GtkWidget       *applet,
 	}
 
 	if (BUTTON_IS_WIDGET (applet) ||
-	    !GTK_WIDGET_NO_WINDOW (applet)) {
+	    gtk_widget_get_has_window (applet)) {
 		g_signal_connect (applet, "button_press_event",
 				  G_CALLBACK (applet_button_press),
 				  info);

@@ -74,14 +74,15 @@ destroy_egg(GtkWidget *widget, gpointer data)
 static int
 goat_timeout_func(gpointer data)
 {
+	GtkAllocation allocation;
 	cairo_t *cr;
 	int real_goat_frame;
 	gboolean sound = FALSE;
 	int old_x;
 	int old_y;
 
-	if(!GTK_WIDGET_REALIZED(goat_darea) ||
-	   !GTK_WIDGET_DRAWABLE(goat_darea))
+	if(!gtk_widget_get_realized(goat_darea) ||
+	   !gtk_widget_is_drawable(goat_darea))
 		return TRUE;
 
 	if (!goat_pix[0] || !goat_pix[1]) {
@@ -89,7 +90,8 @@ goat_timeout_func(gpointer data)
 		return FALSE;
 	}
 	
-	cr = gdk_cairo_create (goat_darea->window);
+	gtk_widget_get_allocation (goat_darea, &allocation);
+	cr = gdk_cairo_create (gtk_widget_get_window (goat_darea));
 
 	if(goat_x == -1) {
 		cairo_set_source_rgb (cr, 1, 1, 1);
@@ -107,18 +109,18 @@ goat_timeout_func(gpointer data)
 	goat_y += goat_accy;
 
 
-	if(goat_x>goat_darea->allocation.width-2-goat_width) {
+	if(goat_x>allocation.width-2-goat_width) {
 		goat_accx = -(g_random_int()%4 +3);
-		goat_x = goat_darea->allocation.width-2-goat_width;
+		goat_x = allocation.width-2-goat_width;
 		sound = TRUE;
 	} else if(goat_x<2) {
 		goat_accx = g_random_int()%4 +3;
 		goat_x = 2;
 		sound = TRUE;
 	}
-	if(goat_y>goat_darea->allocation.height-2-goat_height) {
+	if(goat_y>allocation.height-2-goat_height) {
 		goat_accy = -(g_random_int()%4 +3);
-		goat_y = goat_darea->allocation.height-2-goat_height;
+		goat_y = allocation.height-2-goat_height;
 		sound = TRUE;
 	} else if(goat_y<2) {
 		goat_accy = g_random_int()%4 +3;
@@ -167,10 +169,10 @@ goat_expose(GtkWidget *widget, GdkEventExpose *event)
 {
 	cairo_t *cr;
 
-	if(!GTK_WIDGET_DRAWABLE(widget))
+	if(!gtk_widget_is_drawable(widget))
 		return FALSE;
 
-	cr = gdk_cairo_create (goat_darea->window);
+	cr = gdk_cairo_create (gtk_widget_get_window (goat_darea));
 
 	cairo_set_source_rgb (cr, 1, 1, 1);
 	cairo_paint (cr);
@@ -183,6 +185,7 @@ goat_expose(GtkWidget *widget, GdkEventExpose *event)
 static void
 goat_realize(GtkWidget *widget)
 {
+	GdkWindow *window;
 	int frame;
 	char *files[] = {
 		"gnome-gegl2.png",
@@ -190,6 +193,7 @@ goat_realize(GtkWidget *widget)
 	};
 	if(goat_pix[0])
 		return;
+	window = gtk_widget_get_window (widget);
 	for(frame=0;frame<2;frame++) {
 		GdkPixbuf *pb;
 		char      *file;
@@ -213,14 +217,14 @@ goat_realize(GtkWidget *widget)
 		width = gdk_pixbuf_get_width(pb);
 		height = gdk_pixbuf_get_height(pb);
 
-		goat_pix[frame] = gdk_pixmap_new(widget->window,
+		goat_pix[frame] = gdk_pixmap_new(window,
 						 width, height, -1);
 		cr = gdk_cairo_create (goat_pix[frame]);
 		gdk_cairo_set_source_pixbuf (cr, pb, 0, 0);
 		cairo_paint (cr);
 		cairo_destroy (cr);
 
-		goat_pix_rev[frame] = gdk_pixmap_new(widget->window,
+		goat_pix_rev[frame] = gdk_pixmap_new(window,
 						     width, height, -1);
 		cr = gdk_cairo_create (goat_pix_rev[frame]);
 		gdk_cairo_set_source_pixbuf (cr, pb, 0, 0);
@@ -645,6 +649,7 @@ inv_show_status (void)
 static gboolean
 inv_draw (gpointer data)
 {
+	GtkStyle *style;
 	GdkPixmap *goat;
 	GSList *li;
 	int i, j;
@@ -654,12 +659,14 @@ inv_draw (gpointer data)
 		return FALSE;
 	}
 
-	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas) ||
+	if ( ! gtk_widget_is_drawable (geginv_canvas) ||
 	    geginv_pixmap == NULL)
 		return TRUE;
 
+	style = gtk_widget_get_style (geginv_canvas);
+
 	gdk_draw_rectangle (geginv_pixmap,
-			    geginv_canvas->style->white_gc,
+			    style->white_gc,
 			    TRUE /* filled */,
 			    0, 0,
 			    inv_width, inv_height);
@@ -679,7 +686,7 @@ inv_draw (gpointer data)
 			y = invs[i][j].y*inv_factor - inv_goat_height/2,
 
 			gdk_draw_drawable (geginv_pixmap,
-					   geginv_canvas->style->white_gc,
+					   style->white_gc,
 					   goat,
 					   0, 0,
 					   x, y,
@@ -692,7 +699,7 @@ inv_draw (gpointer data)
 		InvShot *shot = li->data;
 
 		gdk_draw_rectangle (geginv_pixmap,
-				    geginv_canvas->style->black_gc,
+				    style->black_gc,
 				    TRUE /* filled */,
 				    (shot->x-1)*inv_factor,
 				    (shot->y-4)*inv_factor,
@@ -711,15 +718,15 @@ inv_draw (gpointer data)
 			mask = inv_phsh2_mask;
 		}
 
-		gdk_gc_set_clip_origin (geginv_canvas->style->white_gc,
+		gdk_gc_set_clip_origin (style->white_gc,
 					inv_our_x*inv_factor - inv_phsh_width/2,
 					550*inv_factor - inv_phsh_height/2);
 
-		gdk_gc_set_clip_mask (geginv_canvas->style->white_gc,
+		gdk_gc_set_clip_mask (style->white_gc,
 				      mask);
 
 		gdk_draw_drawable (geginv_pixmap,
-				   geginv_canvas->style->white_gc,
+				   style->white_gc,
 				   phsh,
 				   0, 0,
 				   inv_our_x*inv_factor - inv_phsh_width/2,
@@ -727,13 +734,13 @@ inv_draw (gpointer data)
 				   inv_phsh_width,
 				   inv_phsh_height);
 
-		gdk_gc_set_clip_origin (geginv_canvas->style->white_gc, 0, 0);
+		gdk_gc_set_clip_origin (style->white_gc, 0, 0);
 
-		gdk_gc_set_clip_mask (geginv_canvas->style->white_gc, NULL);
+		gdk_gc_set_clip_mask (style->white_gc, NULL);
 	}
 
-	gdk_draw_drawable (geginv_canvas->window,
-			   geginv_canvas->style->white_gc,
+	gdk_draw_drawable (gtk_widget_get_window (geginv_canvas),
+			   style->white_gc,
 			   geginv_pixmap,
 			   0, 0,
 			   0, 0,
@@ -760,24 +767,29 @@ inv_queue_draw (GtkWidget *window)
 static void
 inv_draw_explosion (int x, int y)
 {
+	GdkWindow *window;
+	GtkStyle *style;
 	int i;
 	GdkColormap *cmap;
 	GdkColor red;
 	GdkGC *gc;
 
-	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas))
+	if ( ! gtk_widget_is_drawable (geginv_canvas))
 		return;
 
-	cmap = gdk_drawable_get_colormap (geginv_canvas->window);
+	window = gtk_widget_get_window (geginv_canvas);
+	style = gtk_widget_get_style (geginv_canvas);
+
+	cmap = gdk_drawable_get_colormap (window);
 	gdk_color_parse ("red", &red);
 	gdk_colormap_alloc_color (cmap, &red, FALSE, TRUE);
 
-	gc = gdk_gc_new (geginv_canvas->window);
+	gc = gdk_gc_new (window);
 	gdk_gc_set_foreground (gc, &red);
 	gdk_gc_set_background (gc, &red);
 
 	for (i = 5; i < 100; i += 5) {
-		gdk_draw_arc (geginv_canvas->window,
+		gdk_draw_arc (window,
 			      gc,
 			      TRUE /* filled */,
 			      x-i, y-i,
@@ -790,8 +802,8 @@ inv_draw_explosion (int x, int y)
 	g_object_unref (G_OBJECT (gc));
 
 	for (i = 5; i < 100; i += 5) {
-		gdk_draw_arc (geginv_canvas->window,
-			      geginv_canvas->style->white_gc,
+		gdk_draw_arc (window,
+			      style->white_gc,
 			      TRUE /* filled */,
 			      x-i, y-i,
 			      i*2, i*2,
@@ -1315,7 +1327,7 @@ static void
 geginv_realized (GtkWidget *w, gpointer data)
 {
 	if (geginv_pixmap == NULL)
-		geginv_pixmap = gdk_pixmap_new (w->window,
+		geginv_pixmap = gdk_pixmap_new (gtk_widget_get_window (w),
 						inv_width, inv_height,
 						gtk_widget_get_visual (w)->depth);
 }
@@ -1323,7 +1335,7 @@ geginv_realized (GtkWidget *w, gpointer data)
 static gboolean
 inv_expose (GtkWidget *widget, GdkEventExpose *event)
 {
-	if ( ! GTK_WIDGET_DRAWABLE (widget) ||
+	if ( ! gtk_widget_is_drawable (widget) ||
 	    geginv_pixmap == NULL)
 		return FALSE;
 
@@ -1441,21 +1453,24 @@ move_window_handler (gpointer data)
 {
 	int x, y, sx, sy, wx, wy, foox, fooy;
 	GtkWidget *win = data;
+	GtkAllocation allocation;
 
 	data = g_object_get_data (G_OBJECT (win), "move_speed_x");
 	sx = GPOINTER_TO_INT (data);
 	data = g_object_get_data (G_OBJECT (win), "move_speed_y");
 	sy = GPOINTER_TO_INT (data);
 
-	gdk_window_get_pointer (NULL, &x, &y, NULL);
-	wx = win->allocation.x;
-	wy = win->allocation.y;
+	gtk_widget_get_allocation (win, &allocation);
 
-	foox = wx + (win->allocation.width / 2);
-	fooy = wy + (win->allocation.height / 2);
+	gdk_window_get_pointer (NULL, &x, &y, NULL);
+	wx = allocation.x;
+	wy = allocation.y;
+
+	foox = wx + (allocation.width / 2);
+	fooy = wy + (allocation.height / 2);
 
 	if (sqrt ((foox - x)*(foox - x) + (fooy - y)*(fooy - y)) <
-	    MAX (win->allocation.width, win->allocation.height)) {
+	    MAX (allocation.width, allocation.height)) {
 		if (foox < x) sx -= 5;
 		else sx += 5;
 		if (fooy < y) sy -= 5;
@@ -1475,14 +1490,15 @@ move_window_handler (gpointer data)
 
 	if (wx < 0) wx = 0;
 	if (wy < 0) wy = 0;
-	if (wx + win->allocation.width > gdk_screen_width ())
-		wx = gdk_screen_width () - win->allocation.width;
-	if (wy + win->allocation.height > gdk_screen_height ())
-		wy = gdk_screen_height () - win->allocation.height;
+	if (wx + allocation.width > gdk_screen_width ())
+		wx = gdk_screen_width () - allocation.width;
+	if (wy + allocation.height > gdk_screen_height ())
+		wy = gdk_screen_height () - allocation.height;
 
 	gtk_window_move (GTK_WINDOW (win), wx, wy);
-	win->allocation.x = wx;
-	win->allocation.y = wy;
+	allocation.x = wx;
+	allocation.y = wy;
+	gtk_widget_set_allocation (win, &allocation);
 
 	data = GINT_TO_POINTER (sx);
 	g_object_set_data (G_OBJECT (win), "move_speed_x", data);

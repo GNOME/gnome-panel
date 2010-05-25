@@ -527,6 +527,13 @@ drop_uri (PanelWidget *panel,
 	if (!icon)
 		icon = g_strdup (fallback_icon);
 
+	/* FIXME: we might get icons like "folder-music" that might not exist in
+	 * the icon theme. This would usually be okay if we could use fallback
+	 * icons (and get "folder" this way). However, this is not possible for
+	 * launchers: this could be an application that uses an icon named
+	 * folder-magic-app, for which we don't want fallbacks. We just want to
+	 * go to hicolor. */
+
 	file = g_file_new_for_uri (uri);
 	buf = g_file_get_parse_name (file);
 	g_object_unref (file);

@@ -1344,7 +1344,7 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 	display = gdk_display_get_default ();
 	widget  = GTK_WIDGET (toplevel);
 
-	if (!GTK_WIDGET_REALIZED (widget))
+	if (!gtk_widget_get_realized (widget))
 		return FALSE;
 
 	screen = NULL;
@@ -1554,14 +1554,14 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 		    toplevel->priv->y_centered)
 			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
 
-		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_left) ||
-		    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_right)) {
+		if (gtk_widget_get_visible (toplevel->priv->hide_button_left) ||
+		    gtk_widget_get_visible (toplevel->priv->hide_button_right)) {
 			inner_frame = TRUE;
 			edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
 		}
 
-		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_top) ||
-		    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_bottom)) {
+		if (gtk_widget_get_visible (toplevel->priv->hide_button_top) ||
+		    gtk_widget_get_visible (toplevel->priv->hide_button_bottom)) {
 			inner_frame = TRUE;
 			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
 		}
@@ -1697,8 +1697,8 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 
-	if (!GTK_WIDGET_REALIZED (toplevel->priv->attach_toplevel) ||
-	    !GTK_WIDGET_REALIZED (toplevel->priv->attach_widget))
+	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel->priv->attach_toplevel)) ||
+	    !gtk_widget_get_realized (toplevel->priv->attach_widget))
 		return;
 
 	toplevel_box = toplevel->priv->geometry;
@@ -2912,7 +2912,7 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 
 	widget = GTK_WIDGET (toplevel);
 
-	g_assert (GTK_WIDGET_REALIZED (widget));
+	g_assert (gtk_widget_get_realized (widget));
 
 	if (move && resize)
 		gdk_window_move_resize (widget->window,
@@ -3020,7 +3020,7 @@ panel_toplevel_check_resize (GtkContainer *container)
 
 	widget = GTK_WIDGET (container);
 
-	if (!GTK_WIDGET_VISIBLE (widget))
+	if (!gtk_widget_get_visible (widget))
 		return;
 
 	requisition.width  = -1;
@@ -3053,7 +3053,7 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	 * see if we need to move to a new monitor */
 	panel_toplevel_update_monitor (toplevel);
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+	if (bin->child && gtk_widget_get_visible (bin->child))
 		gtk_widget_size_request (bin->child, requisition);
 
 	old_geometry = toplevel->priv->geometry;
@@ -3063,7 +3063,7 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	requisition->width  = toplevel->priv->geometry.width;
 	requisition->height = toplevel->priv->geometry.height;
 
-	if (!GTK_WIDGET_REALIZED (widget))
+	if (!gtk_widget_get_realized (widget))
 		return;
 
 	if (old_geometry.width  != toplevel->priv->geometry.width ||
@@ -3124,14 +3124,14 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	challoc.width  = MAX (1, challoc.width);
 	challoc.height = MAX (1, challoc.height);
 
-	if (GTK_WIDGET_MAPPED (widget) &&
+	if (gtk_widget_get_mapped (widget) &&
 	    (challoc.x != bin->child->allocation.x ||
 	     challoc.y != bin->child->allocation.y ||
 	     challoc.width  != bin->child->allocation.width ||
 	     challoc.height != bin->child->allocation.height))
 	 	gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+	if (bin->child && gtk_widget_get_visible (bin->child))
 		gtk_widget_size_allocate (bin->child, &challoc);
 }
 
@@ -3143,7 +3143,7 @@ panel_toplevel_expose (GtkWidget      *widget,
 	PanelFrameEdge  edges;
 	gboolean        retval = FALSE;
 
-	if (!GTK_WIDGET_DRAWABLE (widget))
+	if (!gtk_widget_is_drawable (widget))
 		return retval;
 
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->expose_event)
@@ -3479,7 +3479,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 
 	if (toplevel->priv->attached) {
 		/* Re-map unmapped attached toplevels */
-		if (!GTK_WIDGET_MAPPED (toplevel))
+		if (!gtk_widget_get_mapped (GTK_WIDGET (toplevel)))
 			gtk_widget_map (GTK_WIDGET (toplevel));
 
 		gtk_window_present (GTK_WINDOW (toplevel->priv->attach_toplevel));
@@ -3546,7 +3546,7 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 		panel_toplevel_update_hide_buttons (toplevel);
 	}
 
-	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
+	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		panel_toplevel_start_animation (toplevel);
 	else if (toplevel->priv->attached)
 		gtk_widget_hide (GTK_WIDGET (toplevel));
@@ -3594,7 +3594,7 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 	if (toplevel->priv->attach_toplevel)
 		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
 
-	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
+	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		panel_toplevel_start_animation (toplevel);
 	else if (toplevel->priv->attached)
 		gtk_widget_show (GTK_WIDGET (toplevel));

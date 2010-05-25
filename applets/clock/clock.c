@@ -323,7 +323,7 @@ clock_set_timeout (ClockData *cd,
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
 		    !cd->showseconds && 
-		    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)))
+		    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)))
  			timeouttime += 1000 * (59 - now % 60);
  	}
 
@@ -341,7 +341,7 @@ clock_timeout_callback (gpointer data)
         time (&new_time);
 
 	if (!cd->showseconds && 
-	    (!cd->set_time_window || !GTK_WIDGET_VISIBLE (cd->set_time_window)) &&
+	    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)) &&
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
 		if (cd->format == CLOCK_FORMAT_INTERNET &&
@@ -612,11 +612,11 @@ update_clock (ClockData * cd)
 	update_tooltip (cd);
         update_location_tiles (cd);
 
-        if (cd->map_widget && cd->calendar_popup && GTK_WIDGET_VISIBLE (cd->calendar_popup))
+        if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
                 clock_map_update_time (CLOCK_MAP (cd->map_widget));
 
 	if (cd->current_time_label &&
-	    GTK_WIDGET_VISIBLE (cd->current_time_label)) {
+	    gtk_widget_get_visible (cd->current_time_label)) {
 		utf8 = format_time_24 (cd);
 		gtk_label_set_text (GTK_LABEL (cd->current_time_label), utf8);
 		g_free (utf8);
@@ -1228,7 +1228,7 @@ update_calendar_popup (ClockData *cd)
                 create_map_section (cd);
         }
 
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->panel_button)) {
+        if (cd->calendar_popup && gtk_widget_get_realized (cd->panel_button)) {
 		calendar_window_refresh (CALENDAR_WINDOW (cd->calendar_popup));
 		position_calendar_popup (cd);
 		gtk_window_present (GTK_WINDOW (cd->calendar_popup));
@@ -2028,7 +2028,8 @@ location_weather_updated_cb (ClockLocation *location,
 	icon_name = weather_info_get_icon_name (info);
 	/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
 	theme = gtk_icon_theme_get_default ();
-	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16, 0, NULL);
+	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
+					   GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
 
 	temp = weather_info_get_temp_summary (info);
 
@@ -3031,6 +3032,27 @@ fill_timezone_combo_from_location (ClockData *cd, ClockLocation *loc)
 }
 
 static void
+location_update_ok_sensitivity (ClockData *cd)
+{
+	GtkWidget *ok_button;
+        const gchar *timezone;
+        gchar *name;
+
+        ok_button = _clock_get_widget (cd, "edit-location-ok-button");
+
+        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
+        name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
+
+        if (timezone && name && name[0] != '\0') {
+                gtk_widget_set_sensitive (ok_button, TRUE);
+        } else {
+                gtk_widget_set_sensitive (ok_button, FALSE);
+        }
+
+        g_free (name);
+}
+
+static void
 location_changed (GObject *object, GParamSpec *param, ClockData *cd)
 {
         GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
@@ -3054,6 +3076,18 @@ location_changed (GObject *object, GParamSpec *param, ClockData *cd)
 
         if (gloc)
                 gweather_location_unref (gloc);
+}
+
+static void
+location_name_changed (GObject *object, ClockData *cd)
+{
+    location_update_ok_sensitivity (cd);
+}
+
+static void
+location_timezone_changed (GObject *object, GParamSpec *param, ClockData *cd)
+{
+    location_update_ok_sensitivity (cd);
 }
 
 static void
@@ -3170,6 +3204,8 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 				   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
 	}
 
+        location_update_ok_sensitivity (cd);
+
 	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
 	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
 
@@ -3231,6 +3267,8 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
         } else {
                 gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 1);
         }
+
+        location_update_ok_sensitivity (cd);
 
         g_object_set_data (G_OBJECT (edit_window), "clock-location", loc);
 
@@ -3514,6 +3552,8 @@ ensure_prefs_window_is_created (ClockData *cd)
 
         g_signal_connect (G_OBJECT (cd->location_entry), "notify::location",
                           G_CALLBACK (location_changed), cd);
+        g_signal_connect (G_OBJECT (cd->location_entry), "changed",
+                          G_CALLBACK (location_name_changed), cd);
 
         zone_box = _clock_get_widget (cd, "edit-location-timezone-box");
         cd->zone_combo = GWEATHER_TIMEZONE_MENU (gweather_timezone_menu_new (world));
@@ -3521,6 +3561,9 @@ ensure_prefs_window_is_created (ClockData *cd)
         gtk_container_add (GTK_CONTAINER (zone_box), GTK_WIDGET (cd->zone_combo));
         gtk_label_set_mnemonic_widget (GTK_LABEL (timezone_label),
                                        GTK_WIDGET (cd->zone_combo));
+
+        g_signal_connect (G_OBJECT (cd->zone_combo), "notify::tzid",
+                          G_CALLBACK (location_timezone_changed), cd);
 
         gweather_location_unref (world);
 

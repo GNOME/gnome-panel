@@ -306,7 +306,7 @@ panel_menu_bar_on_expose (GtkWidget      *widget,
 {
 	PanelMenuBar *menubar = data;
 
-	if (GTK_WIDGET_HAS_FOCUS (menubar))
+	if (gtk_widget_has_focus (GTK_WIDGET (menubar)))
 		gtk_paint_focus (widget->style,
 				 widget->window, 
 				 GTK_WIDGET_STATE (menubar),

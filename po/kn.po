@@ -3,20 +3,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Shankar Prasad <svenkate@redhat.com>, 2007, 2008, 2009.
+# Shankar Prasad <svenkate@redhat.com>, 2007, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master.kn\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
-"POT-Creation-Date: 2009-08-12 11:04+0000\n"
-"PO-Revision-Date: 2009-09-18 22:35+0530\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-21 12:57+0530\n"
+"PO-Revision-Date: 2010-04-21 13:01+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
-"Language-Team: Kannada <en@li.org>\n"
+"Language-Team: kn-IN <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -61,13 +61,13 @@ msgid "_Preferences"
 msgstr "ಆದ್ಯತೆಗಳು(_P)"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3689
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "ಗಡಿಯಾರ"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
-msgstr "ಗಡಿಯಾರ ಅನ್ವಯಾಂಶ (ಆಪ್ಲೆಟ್) ಕಾರ್ಖಾನೆ"
+msgstr "ಗಡಿಯಾರ ಆಪ್ಲೆಟ್ ಕಾರ್ಖಾನೆ"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
@@ -77,38 +77,57 @@ msgstr "ಗಡಿಯಾರ ಆಪ್ಲೆಟ್‌ಗಳನ್ನು ನಿರ�
 msgid "Get the current time and date"
 msgstr "ಪ್ರಸಕ್ತ ಸಮಯ ಹಾಗು ದಿನಾಂಕವನ್ನು ಪಡೆದುಕೊ"
 
-#: ../applets/clock/calendar-window.c:305 ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format.
-#. * There should be little need to translate this string.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:307 ../applets/clock/clock.c:450
-#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. Translators: If the event did not start on the current day
-#. * we will display the start date in the most abbreviated way
-#. * possible.
-#: ../applets/clock/calendar-window.c:313
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:846
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "ಕಾರ್ಯಗಳು"
 
-#: ../applets/clock/calendar-window.c:846
+#: ../applets/clock/calendar-window.c:847
 #: ../applets/clock/calendar-window.c:1022
-#: ../applets/clock/calendar-window.c:1658
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
 msgstr "ಸಂಪಾದನೆ"
 
-#: ../applets/clock/calendar-window.c:967
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "ಎಲ್ಲಾ ದಿನ"
 
@@ -124,28 +143,38 @@ msgstr "ಜನ್ಮದಿನಗಳು ಹಾಗು ವಾರ್ಷಿಕೋತ�
 msgid "Weather Information"
 msgstr "ಹವಾಮಾನ ಮಾಹಿತಿ"
 
-#: ../applets/clock/calendar-window.c:1658 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "ಸ್ಥಳಗಳು"
 
-#: ../applets/clock/calendar-window.c:1957
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "ದಿನದರ್ಶಿ"
 
-#: ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1572
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: ../applets/clock/clock.c:470
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -153,7 +182,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:477
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -166,106 +195,120 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:485
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
-#. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
-#. * use it to put in the timezone name later.
-#.
-#: ../applets/clock/clock.c:667
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
+#. * It is used to display a date. Please leave "%%s" as it is:
+#. * it will be used to insert the timezone name later.
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:697
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "ನಿಮ್ಮ ಅಪಾಯಿಂಟ್‍ಮೆಂಟ್‍ಗಳು ಹಾಗು ಕಾರ್ಯಗಳನ್ನು ಅಡಗಿಸಿಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:700
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "ನಿಮ್ಮ ಅಪಾಯಿಂಟ್‍ಮೆಂಟ್‍ಗಳು ಹಾಗು ಕಾರ್ಯಗಳನ್ನು ನೋಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:704
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ಅಡಗಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:707
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ನೋಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:1427
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "ಗಣಕದ ಗಡಿಯಾರ"
 
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1569
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1611
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1642
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಿ..."
 
-#: ../applets/clock/clock.c:1643
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಿ"
 
-#: ../applets/clock/clock.c:1658
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸಲು ವಿಫಲವಾಗಿದೆ"
 
-#: ../applets/clock/clock.c:2722
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "ಕಸ್ಟಮ್ ನಮೂನೆ"
 
-#: ../applets/clock/clock.c:3180
-#| msgid "Location"
+#: ../applets/clock/clock.c:3194
 msgid "Choose Location"
 msgstr "ಸ್ಥಳವನ್ನು ಆರಿಸಿ"
 
-#: ../applets/clock/clock.c:3255
-#| msgid "Location"
+#: ../applets/clock/clock.c:3273
 msgid "Edit Location"
 msgstr "ಸ್ಥಳವನ್ನು ಸಂಪಾದಿಸಿ"
 
-#: ../applets/clock/clock.c:3401
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "ಊರಿನ ಹೆಸರು"
 
-#: ../applets/clock/clock.c:3405
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "ಊರಿನ ಕಾಲವಲಯ"
 
-#: ../applets/clock/clock.c:3585
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "೨೪ ಗಂಟೆ"
 
-#: ../applets/clock/clock.c:3586
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "UNIX ಸಮಯ"
 
-#: ../applets/clock/clock.c:3587
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "ಅಂತರ್ಜಾಲ ಸಮಯ"
 
-#: ../applets/clock/clock.c:3595
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "ಕಸ್ಟಮ್ ನಮೂನೆ(_f):"
 
-#: ../applets/clock/clock.c:3692
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "ಗಡಿಯಾರವು ಪ್ರಸ್ತುತ ಸಮಯ ಹಾಗು ದಿನಾಂಕವನ್ನು ತೋರಿಸುತ್ತದೆ"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3695 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -288,7 +331,6 @@ msgstr ""
 "ಪುಟಿಕೆಯಿಂದ ಆರಿಸಿ.</i></small>"
 
 #: ../applets/clock/clock.ui.h:4
-#| msgid "Custom format"
 msgid "Clock Format"
 msgstr "ಗಡಿಯಾರದ ನಮೂನೆ"
 
@@ -301,14 +343,10 @@ msgid "Current Time:"
 msgstr "ಈಗಿನ ಸಮಯ:"
 
 #: ../applets/clock/clock.ui.h:7
-#| msgid "<b>Display</b>"
 msgid "Display"
 msgstr "ಪ್ರದರ್ಶಕ"
 
 #: ../applets/clock/clock.ui.h:8
-#| msgid ""
-#| "East\n"
-#| "West"
 msgid "East"
 msgstr "ಪೂರ್ವ"
 
@@ -318,24 +356,18 @@ msgid "General"
 msgstr "ಸಾಮಾನ್ಯ"
 
 #: ../applets/clock/clock.ui.h:10
-#| msgid "Latitude:"
 msgid "L_atitude:"
 msgstr "ಅಕ್ಷಾಂಶ(_a):"
 
 #: ../applets/clock/clock.ui.h:11
-#| msgid "Longitude:"
 msgid "L_ongitude:"
 msgstr "ರೇಖಾಂಶ(_o):"
 
 #: ../applets/clock/clock.ui.h:13
-#| msgid ""
-#| "North\n"
-#| "South"
 msgid "North"
 msgstr "ಉತ್ತರ"
 
 #: ../applets/clock/clock.ui.h:14
-#| msgid "<b>Panel Display</b>"
 msgid "Panel Display"
 msgstr "ಫಲಕ ಪ್ರದರ್ಶಕ"
 
@@ -356,9 +388,6 @@ msgid "Show the _date"
 msgstr "ದಿನಾಂಕವನ್ನು ತೋರಿಸು(_d)"
 
 #: ../applets/clock/clock.ui.h:19
-#| msgid ""
-#| "North\n"
-#| "South"
 msgid "South"
 msgstr "ದಕ್ಷಿಣ"
 
@@ -368,16 +397,13 @@ msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯ"
 
 #: ../applets/clock/clock.ui.h:21
 msgid "Time _Settings"
-msgstr "ಸಮಯದ ಸಂಯೋಜನೆಗಳು(_S)"
+msgstr "ಸಮಯದ ಸಿದ್ಧತೆಗಳು(_S)"
 
 #: ../applets/clock/clock.ui.h:22
 msgid "Weather"
 msgstr "ಹವಾಮಾನ"
 
 #: ../applets/clock/clock.ui.h:23
-#| msgid ""
-#| "East\n"
-#| "West"
 msgid "West"
 msgstr "ಪಶ್ಚಿಮ"
 
@@ -390,7 +416,6 @@ msgid "_24 hour format"
 msgstr "_24 ಗಂಟೆಯ ಮಾದರಿ"
 
 #: ../applets/clock/clock.ui.h:26
-#| msgid "Location Name:"
 msgid "_Location Name:"
 msgstr "ಸ್ಥಳದ ಹೆಸರು(_L):"
 
@@ -399,7 +424,6 @@ msgid "_Pressure unit:"
 msgstr "ಒತ್ತಡದ ಘಟಕ (_P):"
 
 #: ../applets/clock/clock.ui.h:28
-#| msgid "Set System Time"
 msgid "_Set System Time"
 msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಹೊಂದಿಸು(_S)"
 
@@ -408,12 +432,10 @@ msgid "_Temperature unit:"
 msgstr "ತಾಪಮಾನದ ಘಟಕ(_T):"
 
 #: ../applets/clock/clock.ui.h:30
-#| msgid "Time:"
 msgid "_Time:"
 msgstr "ಸಮಯ(_T):"
 
 #: ../applets/clock/clock.ui.h:31
-#| msgid "Timezone:"
 msgid "_Timezone:"
 msgstr "ಕಾಲವಲಯ(_T):"
 
@@ -484,95 +506,97 @@ msgid "If true, display seconds in time."
 msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಸಮಯವನ್ನು ಸೆಕೆಂಡುಗಳಲ್ಲಿ ತೋರಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "true ಆದಲ್ಲಿ, ಸಮಯವನ್ನು ಜಾಗತಿಕ ನಿರ್ದೇಶಾಂಕಗಳನ್ನು ಒಳಗೊಂಡಂತಹ ಕಾಲ ವಲಯದಲ್ಲಿ ತೋರಿಸು."
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್‌ಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್‌ಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಹುಟ್ಟಿದ ಹಬ್ಬಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಹುಟ್ಟಿದ ಹಬ್ಬಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಸ್ಥಳಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:26
-msgid "If true, expand the list of locations in the calendar window."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಸ್ಥಳಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಕಾರ್ಯಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:27
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಕಾರ್ಯಗಳ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಹವಮಾನ ಮಾಹಿತಿಯ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:28
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರ್ ವಿಂಡೋದಲ್ಲಿರುವ ಹವಮಾನ ಮಾಹಿತಿಯ ಪಟ್ಟಿಯನ್ನು ಹಿಗ್ಗಿಸು."
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಸೂಚಕವು ಗಡಿಯಾರದ ಮೇಲೆ ಇದ್ದಾಗ ಒಂದು ಸಲಹೆಸೂಚಕವು ದಿನಾಂಕವನ್ನು ತೋರಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:29
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "true ಆದಲ್ಲಿ, ಸೂಚಕವು ಗಡಿಯಾರದ ಮೇಲೆ ಇದ್ದಾಗ ಒಂದು ಸಲಹೆಸೂಚಕವು ದಿನಾಂಕವನ್ನು ತೋರಿಸು."
+msgid "If true, show the temperature next to the weather icon."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಹವಮಾನದ ಚಿಹ್ನೆಯ ಎದುರಿನಲ್ಲಿ ತಾಪಮಾನವು ತೋರಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:30
-msgid "If true, show the temperature next to the weather icon."
-msgstr "true ಆದಲ್ಲಿ, ಹವಮಾನದ ಚಿಹ್ನೆಯ ಎದುರಿನಲ್ಲಿ ತಾಪಮಾನವು ತೋರಿಸು."
+msgid "If true, show week numbers in the calendar."
+msgstr "ನಿಜವೆಂದಾದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರಿನಲ್ಲಿ ವಾರದ ಸಂಖ್ಯೆಗಳನ್ನು ತೋರಿಸು."
 
 #: ../applets/clock/clock.schemas.in.h:31
-msgid "If true, show week numbers in the calendar."
-msgstr "true ಆದಲ್ಲಿ, ಕ್ಯಾಲೆಂಡರಿನಲ್ಲಿ ವಾರದ ಸಂಖ್ಯೆಗಳನ್ನು ತೋರಿಸು."
-
-#: ../applets/clock/clock.schemas.in.h:32
 msgid "List of locations"
 msgstr "ತಾಣಗಳ ಪಟ್ಟಿ"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
 msgstr "ದಿನಾಂಕವನ್ನು ಗಡಿಯಾರದಲ್ಲಿ ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in tooltip"
-msgstr "ಸಲಹೆಸಾಧನದಲ್ಲಿ ದಿನಾಂಕವನ್ನು ತೋರಿಸು"
+msgstr "ಸಲಹೆಉಪಕರಣದಲ್ಲಿ ದಿನಾಂಕವನ್ನು ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show temperature in clock"
 msgstr "ಉಷ್ಣತೆಯನ್ನು ಗಡಿಯಾರದಲ್ಲಿ ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Show time with seconds"
 msgstr "ಸೆಕೆಂಡುಗಳೊಂದಿಗೆ ಸಮಯವನ್ನು ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show weather in clock"
 msgstr "ಹವಾಮಾನವನ್ನು ಗಡಿಯಾರದಲ್ಲಿ ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Show week numbers in calendar"
 msgstr "ಕ್ಯಾಲೆಂಡರಿನಲ್ಲಿ ವಾರದ ಸಂಖ್ಯೆಗಳನ್ನು ತೋರಿಸು"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Speed unit"
 msgstr "ವೇಗದ ಘಟಕ"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "ತಾಪಮಾನದ ಘಟಕ"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
 msgstr "ತಾಪಮಾನಗಳನ್ನು ತೋರಿಸುವಾಗ ಬಳಸಬೇಕಿರುವ ಘಟಕ."
 
-#: ../applets/clock/clock.schemas.in.h:42
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing wind speed."
 msgstr "ಗಾಳಿಯ ವೇಗವನ್ನು ತೋರಿಸುವಾಗ ಬಳಸಬೇಕಿರುವ ಘಟಕ."
 
-#: ../applets/clock/clock.schemas.in.h:43
-#| msgid ""
-#| "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-#| "key. The schema is retained for compatibility with older versions."
+#: ../applets/clock/clock.schemas.in.h:42
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
 "versions."
 msgstr ""
-"ಒಂದು ಆಂತರಿಕ ಸಮಯ ಸಂರಚನಾ ಉಪಕರಣದ ಬಳಕೆಯೊಂದಿಗೆ GNOME 2.22 ರಲ್ಲಿ ಈ ಕೀಲಿಯ ಬಳಕೆಯನ್ನು ನಿಲ್ಲಿಸಲಾಗಿತ್ತು. "
+"ಒಂದು ಆಂತರಿಕ ಸಮಯ ಸಂರಚನಾ ಉಪಕರಣದ ಬಳಕೆಯೊಂದಿಗೆ GNOME 2.22 ರಲ್ಲಿ ಈ ಕೀಲಿಯ ಬಳಕೆಯನ್ನು "
+"ನಿಲ್ಲಿಸಲಾಗಿತ್ತು. ಆದರೆ ಹಿಂದಿನ ಆವೃತ್ತಿಗಳಿಗೆ ಹೊಂದುವ ಸಲುವಾಗಿ ಸ್ಕೀಮಾವನ್ನು "
+"ಉಳಿಸಿಕೊಳ್ಳಲಾಗಿದೆ."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"ಕಾಲವಲಯಗಳ ಬಳಕೆಯ ಸಲುವಾಗಿ GNOME 2.8 ಈ ಕೀಲಿಯ ಬಳಕೆಯನ್ನು ನಿಲ್ಲಿಸಲಾಗಿದೆ. "
 "ಆದರೆ ಹಿಂದಿನ ಆವೃತ್ತಿಗಳಿಗೆ ಹೊಂದುವ ಸಲುವಾಗಿ ಸ್ಕೀಮಾವನ್ನು ಉಳಿಸಿಕೊಳ್ಳಲಾಗಿದೆ."
 
 #: ../applets/clock/clock.schemas.in.h:44
@@ -648,52 +672,51 @@ msgstr "<small>ಹೊಂದಿಸು</small>"
 msgid "Set location as current location and use its timezone for this computer"
 msgstr "ಈಗಿನ ಸ್ಥಳವನ್ನು ಗಣಕ ಸ್ಥಳವೆಂದು ಹಾಗು ಅದರ ಕಾಲವಲಯವನ್ನು ಈ ಗಣಕದ ಸಮಯವೆಂದು ಹೊಂದಿಸಿ"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
 #: ../applets/clock/clock-location-tile.c:453
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 24-hour format (the %p expands to am/pm), when the local weekday differs
-#. * from the weekday at the location (the %A expands to the weekday).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:462
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
-#. translators: This is a strftime format string that is used for formatting
-#. * the time that is displayed for locations in the popup. This string is used
-#. * for 12-hour format (the %p expands to am/pm).
-#. * There should be little need to translate this string.
-#.
-#: ../applets/clock/clock-location-tile.c:472
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:470
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:581
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:593
-#: ../applets/clock/clock-location-tile.c:601
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "ಗೊತ್ತಿರದ"
 
-#: ../applets/clock/clock-location-tile.c:594
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s ಎಂದೆನಿಸುತ್ತದೆ"
 
-#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ಸೂರ್ಯೋದಯ: %s / ಸೂರ್ಯಾಸ್ತ: %s"
@@ -712,11 +735,11 @@ msgstr "ಸಹಾಯದ ದಸ್ತಾವೇಜನ್ನು ತೋರಿಸು�
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
-msgstr "ಗಣಕದ ಸಮಯವನ್ನು ಬದಲಾಯಿಸಿ"
+msgstr "ವ್ಯವಸ್ಥೆಯ ಸಮಯವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
 msgid "Change system time zone"
-msgstr "ಗಣಕದ ಕಾಲವಲಯವನ್ನು ಬದಲಾಯಿಸಿ"
+msgstr "ವ್ಯವಸ್ಥೆಯ ಕಾಲವಲಯವನ್ನು ಬದಲಾಯಿಸಿ"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
 msgid "Configure hardware clock"
@@ -724,11 +747,11 @@ msgstr "ಯಂತ್ರಾಂಶದ ಗಡಿಯಾರವನ್ನು ಸಂರ�
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr "ಗಣಕದ ಕಾಲ ವಲಯವನ್ನು ಬದಲಾಯಿಸಲು ಸೂಕ್ತ ಅಧಿಕಾರದ ಅಗತ್ಯವಿರುತ್ತದೆ."
+msgstr "ವ್ಯವಸ್ಥೆಯ ಕಾಲ ವಲಯವನ್ನು ಬದಲಾಯಿಸಲು ಸೂಕ್ತ ಅಧಿಕಾರದ ಅಗತ್ಯವಿರುತ್ತದೆ."
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
-msgstr "ಗಣಕದ ಕಾಲವನ್ನು ಬದಲಾಯಿಸಲು ಸೂಕ್ತ ಅಧಿಕಾರದ ಅಗತ್ಯವಿರುತ್ತದೆ."
+msgstr "ವ್ಯವಸ್ಥೆಯ ಕಾಲವನ್ನು ಬದಲಾಯಿಸಲು ಸೂಕ್ತ ಅಧಿಕಾರದ ಅಗತ್ಯವಿರುತ್ತದೆ."
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
@@ -811,7 +834,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"ಆಜ್ಞೆಯ ಪ್ರದಾನವನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ\n"
+"ಆಜ್ಞೆಯ ಔಟ್‌ಪುಟ್ ಅನ್ನು ಓದಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ\n"
 "\n"
 "ವಿವರ: %s"
 
@@ -864,7 +887,6 @@ msgid "    "
 msgstr "    "
 
 #: ../applets/fish/fish.ui.h:2
-#| msgid "Animation speed"
 msgid "Animation"
 msgstr "ಸಜೀವನ(ಅನಿಮೇಶನ್‌)"
 
@@ -878,7 +900,7 @@ msgstr "ಮೀನಿನ ಆದ್ಯತೆಗಳು"
 
 #: ../applets/fish/fish.ui.h:6
 msgid "Select an animation"
-msgstr "ಒಂದು ಎನಿಮೇಶನ್ನನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
+msgstr "ಒಂದು ಸಜೀವನವನ್ನು(ಎನಿಮೇಶನ್‌) ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../applets/fish/fish.ui.h:7
 msgid "_File:"
@@ -898,7 +920,7 @@ msgstr "ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗಿಸು(_R)"
 
 #: ../applets/fish/fish.ui.h:11
 msgid "_Total frames in animation:"
-msgstr "ಎನಿಮೇಶನ್ನಿನಲ್ಲಿರುವ ಒಟ್ಟು ಚೌಕಟ್ಟುಗಳ ಸಂಖ್ಯೆ(_T):"
+msgstr "ಸಜೀವನದಲ್ಲಿನ(ಎನಿಮೇಶನ್‌) ಒಟ್ಟು ಚೌಕಟ್ಟುಗಳ ಸಂಖ್ಯೆ(_T):"
 
 #: ../applets/fish/fish.ui.h:12
 msgid "frames"
@@ -922,11 +944,11 @@ msgstr "ಕ್ಲಿಕ್ ಮಾಡಿದಾಗ ಕಾರ್ಯಗತಗೊಳ�
 
 #: ../applets/fish/fish.schemas.in.h:3
 msgid "Frames in fish's animation"
-msgstr "ಮೀನಿನ ಎನಿಮೇಶನ್‌ನಲ್ಲಿನ ಚೌಕಟ್ಟುಗಳು"
+msgstr "ಮೀನಿನ ಸಜೀವನದಲ್ಲಿನ(ಎನಿಮೇಶನ್‌) ಚೌಕಟ್ಟುಗಳು"
 
 #: ../applets/fish/fish.schemas.in.h:4
 msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "true ಆದಲ್ಲಿ, ಮೀನಿನ ಎನಿಮೇಶನ್ ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗುತ್ತಿರುವಂತೆ ಕಾಣಿಸುತ್ತದೆ."
+msgstr "ನಿಜವಾದಲ್ಲಿ, ಮೀನಿನ ಸಜೀವನವುಎನಿಮೇಶನ್) ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗುತ್ತಿರುವಂತೆ ಕಾಣಿಸುತ್ತದೆ."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -938,7 +960,7 @@ msgstr "ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗಿಸಿ"
 
 #: ../applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
-msgstr "ಮೀನಿನ ಎನಿಮೇಶನ್ನಿನ ಪಿಕ್ಸ್‍ಮ್ಯಾಪ್"
+msgstr "ಮೀನಿನ ಸಜೀವನದಲ್ಲಿನ(ಎನಿಮೇಶನ್‌) ಪಿಕ್ಸ್‍ಮ್ಯಾಪ್"
 
 #: ../applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
@@ -964,7 +986,7 @@ msgstr ""
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "ಮೀನಿನ ಎನಿಮೇಶನ್ನಿನಲ್ಲಿ ತೋರಿಸಲಾಗುವ ಚೌಕಟ್ಟುಗಳ ಸಂಖ್ಯೆಗಳನ್ನು ಈ ಕೀಲಿಯು ಸೂಚಿಸುತ್ತದೆ."
+msgstr "ಮೀನಿನ ಸಜೀವನದಲ್ಲಿ(ಎನಿಮೇಶನ್‌) ತೋರಿಸಲಾಗುವ ಚೌಕಟ್ಟುಗಳ ಸಂಖ್ಯೆಗಳನ್ನು ಈ ಕೀಲಿಯು ಸೂಚಿಸುತ್ತದೆ."
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -1075,7 +1097,7 @@ msgstr ""
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
-msgstr "ಸ್ತಳಾವಕಾಶದ ಮಿತಿ ಇದ್ದಾಗ ವಿಂಡೋಗಳನ್ನು ಗುಂಪುಗೂಡಿಸು(_s)"
+msgstr "ಸ್ಥಳಾವಕಾಶದ ಮಿತಿ ಇದ್ದಾಗ ವಿಂಡೋಗಳನ್ನು ಗುಂಪುಗೂಡಿಸು(_s)"
 
 #: ../applets/wncklet/window-list.ui.h:2
 msgid "Restore to current _workspace"
@@ -1086,7 +1108,6 @@ msgid "Restore to na_tive workspace"
 msgstr "ಸ್ಥಳೀಯ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮರಳಿಸ್ಥಾಪಿಸು(_t)"
 
 #: ../applets/wncklet/window-list.ui.h:4
-#| msgid "<b>Restoring Minimized Windows</b>"
 msgid "Restoring Minimized Windows"
 msgstr "ಚಿಕ್ಕದಾಗಿಸಲಾದ ವಿಂಡೋಗಳನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸಲಾಗುತ್ತಿದೆ"
 
@@ -1099,12 +1120,10 @@ msgid "Show windows from a_ll workspaces"
 msgstr "ಎಲ್ಲಾ ಕಾರ್ಯಕ್ಷೇತ್ರದ ವಿಂಡೋಗಳನ್ನು ತೋರಿಸು(_o)"
 
 #: ../applets/wncklet/window-list.ui.h:7
-#| msgid "<b>Window Grouping</b>"
 msgid "Window Grouping"
 msgstr "ವಿಂಡೋ ಗುಂಪುಗೂಡಿಕೆ"
 
 #: ../applets/wncklet/window-list.ui.h:8
-#| msgid "<b>Window List Content</b>"
 msgid "Window List Content"
 msgstr "ವಿಂಡೋ ಪಟ್ಟಿ ಒಳವಿಷಯ"
 
@@ -1133,7 +1152,7 @@ msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"true ಆದಲ್ಲಿ, ವಿಂಡೋ ಪಟ್ಟಿಯು ಎಲ್ಲಾ ಕಾರ್ಯ ಕ್ಷೇತ್ರಗಳಿಂದ ವಿಂಡೋಗಳನ್ನು ತೋರಿಸುತ್ತದೆ. ಇಲ್ಲದೆ "
+"ನಿಜವಾದಲ್ಲಿ, ವಿಂಡೋ ಪಟ್ಟಿಯು ಎಲ್ಲಾ ಕಾರ್ಯ ಕ್ಷೇತ್ರಗಳಿಂದ ವಿಂಡೋಗಳನ್ನು ತೋರಿಸುತ್ತದೆ. ಇಲ್ಲದೆ "
 "ಹೋದಲ್ಲಿ ಕೇವಲ ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರದ ವಿಂಡೋಗಳನ್ನು ಮಾತ್ರವೆ ತೋರಿಸಲಾಗುತ್ತದೆ."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
@@ -1141,7 +1160,7 @@ msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಚಿಕ್ಕದಾಗಿಸಲಾದ ಒಂದು ವಿಂಡೋವನ್ನು ಹಿಗ್ಗಿಸುವಾಗ, ಅದನ್ನು ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರಕ್ಕೆ "
+"ನಿಜವಾದಲ್ಲಿ, ಚಿಕ್ಕದಾಗಿಸಲಾದ ಒಂದು ವಿಂಡೋವನ್ನು ಹಿಗ್ಗಿಸುವಾಗ, ಅದನ್ನು ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರಕ್ಕೆ "
 "ವರ್ಗಾಯಿಸಲಾಗುವುದು. ಇಲ್ಲದೆ ಹೋದಲ್ಲಿ ವಿಂಡೋವಿನ ಕಾರ್ಯಕ್ಷೇತ್ರಕ್ಕೆ ಬದಲಾಯಿಸಿ."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
@@ -1235,7 +1254,6 @@ msgid "Show workspace _names in switcher"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರಗಳ ಹೆಸರುಗಳನ್ನು ಬದಲಾವಣೆಗಾರನಲ್ಲಿ ತೋರಿಸು(_n)"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
-#| msgid "<b>Switcher</b>"
 msgid "Switcher"
 msgstr "ಬದಲಾವಣೆಗಾರ"
 
@@ -1252,7 +1270,6 @@ msgid "Workspace na_mes:"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರದ ಹೆಸರುಗಳು(_m):"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:9
-#| msgid "Workspace Names"
 msgid "Workspaces"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರಗಳು"
 
@@ -1269,8 +1286,8 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಕಾರ್ಯಕ್ಷೇತ್ರ ಬದಲಾವಣೆಗಾರ ಎಲ್ಲಾ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳನ್ನು ತೋರಿಸುತ್ತದೆ. ಇಲ್ಲದೆ "
-"ಹೋದಲ್ಲಿ ಅದು ಕೇವಲ ಸದ್ಯದ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮಾತ್ರವೇ ತೋರಿಸುತ್ತದೆ."
+"ನಿಜವಾದಲ್ಲಿ, ಕಾರ್ಯಕ್ಷೇತ್ರ ಬದಲಾವಣೆಗಾರ ಎಲ್ಲಾ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳನ್ನು ತೋರಿಸುತ್ತದೆ. ಇಲ್ಲದೆ ಹೋದಲ್ಲಿ "
+"ಅದು ಕೇವಲ ಸದ್ಯದ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮಾತ್ರವೇ ತೋರಿಸುತ್ತದೆ."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
@@ -1278,9 +1295,9 @@ msgid ""
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಕಾರ್ಯಕ್ಷೇತ್ರ ಬದಲಾವಣೆಗಾರನಲ್ಲಿನ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳು ತಮ್ಮ ಹೆಸರುಗಳನ್ನು "
-"ತೋರಿಸುತ್ತವೆ. ಇಲ್ಲದೆ ಹೋದಲ್ಲಿ, ಅವು ಕಾರ್ಯಕ್ಷೇತ್ರದ ವಿಂಡೋಗಳನ್ನು ಮಾತ್ರವೆ ತೋರಿಸುತ್ತವೆ. "
-"ಮೆಟಾಸಿಟಿಯು ವಿಂಡೋ ವ್ಯವಸ್ಥಾಪಕವಾಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಸಂಯೋಜನೆಯು ಕೆಲಸ ಮಾಡುತ್ತದೆ."
+"ನಿಜವಾದಲ್ಲಿ, ಕಾರ್ಯಕ್ಷೇತ್ರ ಬದಲಾವಣೆಗಾರನಲ್ಲಿನ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳು ತಮ್ಮ ಹೆಸರುಗಳನ್ನು ತೋರಿಸುತ್ತವೆ. "
+"ಇಲ್ಲದೆ ಹೋದಲ್ಲಿ, ಅವು ಕಾರ್ಯಕ್ಷೇತ್ರದ ವಿಂಡೋಗಳನ್ನು ಮಾತ್ರವೆ ತೋರಿಸುತ್ತವೆ. ಮೆಟಾಸಿಟಿಯು ವಿಂಡೋ "
+"ವ್ಯವಸ್ಥಾಪಕವಾಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಸಿದ್ಧತೆಯು ಕೆಲಸ ಮಾಡುತ್ತದೆ."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -1296,6 +1313,69 @@ msgstr ""
 "ಹಾಗು ಕಾಲಂಗಳನ್ನು(ಲಂಬ ವಿನ್ಯಾಸಕ್ಕಾಗಿ)ಈ ಕೀಲಿಯು ಸೂಚಿಸುತ್ತದೆ. ಎಲ್ಲಾ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳನ್ನು "
 "ತೋರಿಸು ಕೀಲಿಯು true ಆಗಿದ್ದಲ್ಲಿ ಈ ಕೀಲಿಯು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "ಕಡತವು ಒಂದು ಸೂಕ್ತವಾದ .desktop ಕಡತವಾಗಿಲ್ಲ"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "%s ಅನ್ನು ಆರಂಭಿಸಲಾಗುತ್ತಿದೆ"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "ಅನ್ವಯವು ಆಜ್ಞಾ ಸಾಲಿನಲ್ಲಿ ದಸ್ತಾವೇಜುಗಳನ್ನು ಸ್ವೀಕರಿಸುವುದಿಲ್ಲ"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "ಗುರುತಿಸಲಾಗದ ಆರಂಭ ಆಯ್ಕೆ: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "ಆರಂಭಿಸಬಹುದಾದ ಒಂದು ಅಂಶವಾಗಿಲ್ಲ"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FILE"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "ID"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr ""
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr ""
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
@@ -1306,6 +1386,10 @@ msgstr ""
 #: ../gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "ದೋಷ"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "ಚಿಹ್ನೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1342,12 +1426,12 @@ msgstr "ಫಲಕದಿಂದ ತೆಗೆ(_R)"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
 msgstr "ಒಂದು ಖಾಲಿ ಸ್ಥಳವು ಕಂಡುಬಂದಿಲ್ಲ"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "ಡ್ರಾಯರ್"
 
@@ -1361,29 +1445,29 @@ msgstr "ಡ್ರಾಯರಿಗೆ ಸೇರಿಸು(_A)..."
 msgid "_Properties"
 msgstr "ಗುಣಲಕ್ಷಣಗಳು(_P)"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:31
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
 msgstr "ನೀಡಲಾದ ಕೋಶದಲ್ಲಿ ಹೊಸ ಕಡತವನ್ನು ರಚಿಸಿ"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:32
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:110
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
-msgstr "- ಸಂಪಾದಿಸು .ಗಣಕತೆರೆ ಕಡತಗಳು"
+msgstr "- .desktop ಕಡತಗಳನ್ನು ಸಂಪಾದಿಸು"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "ಆರಂಭಕವನ್ನು ನಿರ್ಮಿಸಿ"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:174
-#: ../gnome-panel/gnome-desktop-item-edit.c:197
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
 msgstr "ಕೋಶದ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "ಆರಂಭಕದ ಗುಣಲಕ್ಷಣಗಳು"
 
@@ -1395,7 +1479,7 @@ msgstr ""
 "ಇತರೆ ಅನ್ವಯಗಳನ್ನು ಆರಂಭಿಸು ಹಾಗು ವಿಂಡೋಗಳನ್ನು ನಿರ್ವಹಣೆ, ಸಮಯವನ್ನು ತೋರಿಕೆ ಮೊದಲಾದ "
 "ಸವಲತ್ತುಗಳನ್ನು ಒದಗಿಸು."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "ಫಲಕ"
 
@@ -1430,37 +1514,37 @@ msgstr "ಆರಂಭಿಸು(_L)"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "ಕೀಲಿ %s ಅನ್ನು ಹೊಂದಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ, ಆರಂಭಕವನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1350
-#: ../gnome-panel/panel-ditem-editor.c:1384
-#: ../gnome-panel/panel-ditem-editor.c:1415
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "ಆರಂಭಕವನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/main.c:43
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "ಪ್ರಸಕ್ತ ಚಾಲನೆಯಲ್ಲಿರುವ ಫಲಕವನ್ನು ಬದಲಾಯಿಸು"
 
-#: ../gnome-panel/menu.c:913
+#: ../gnome-panel/menu.c:914
 msgid "Add this launcher to _panel"
 msgstr "ಈ ಆರಂಭಕವನ್ನು ಫಲಕಕ್ಕೆ ಸೇರಿಸು(_p)"
 
-#: ../gnome-panel/menu.c:920
+#: ../gnome-panel/menu.c:921
 msgid "Add this launcher to _desktop"
 msgstr "ಈ ಆರಂಭಕವನ್ನು ಗಣಕತೆರೆಗೆ ಸೇರಿಸು(_d)"
 
-#: ../gnome-panel/menu.c:932
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "ಸಂಪೂರ್ಣ ಮೆನು(_E)"
 
-#: ../gnome-panel/menu.c:937
+#: ../gnome-panel/menu.c:938
 msgid "Add this as _drawer to panel"
 msgstr "ಇದನ್ನು ಡ್ರಾಯರ್ ಆಗಿ ಫಲಕಕ್ಕೆ ಸೇರಿಸು(_d)"
 
-#: ../gnome-panel/menu.c:944
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "ಇದನ್ನು ಮೆನು ಆಗಿ ಫಲಕಕ್ಕೆ ಸೇರಿಸು(_m)"
 
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>ಆಟ ಮುಗಿದಿದೆ</b> %d ಹಂತದಲ್ಲಿ!"
@@ -1469,40 +1553,40 @@ msgstr "<b>ಆಟ ಮುಗಿದಿದೆ</b> %d ಹಂತದಲ್ಲಿ!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "ನಿರ್ಗಮಿಸಲು q ಅನ್ನು ಒತ್ತಿ"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "ತಾತ್ಕಾಲಿಕ ಸ್ಥಗಿತಗೊಂಡಿದೆ"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "ತಾತ್ಕಾಲಿಕ ಸ್ಥಗಿತಗೊಳಿಸಲಾಗಿದ್ದನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಲು p ಅನ್ನು ಒತ್ತಿ"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "ಹಂತ: %s,  ಜೀವ: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "ಚಲಿಸಲು ಎಡ/ಬಲ, ಹೊಡೆಯಲು ಸ್ಪೇಸ್, ತಾತ್ಕಾಲಿಕವಾಗಿ ನಿಲ್ಲಿಸಲು 'p' , ನಿರ್ಗಮಿಸಲು 'q'"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "ಬಾಹ್ಯಾಕಾಶದಿಂದ ಬಂದಿರುವ ಕೊಲೆಗಾರ GEGLಗಳು"
 
@@ -1583,7 +1667,7 @@ msgstr "ಗಣಕವನ್ನು ಮುಚ್ಚು"
 
 #: ../gnome-panel/panel-addto.c:116
 msgid "Custom Application Launcher"
-msgstr "ಗ್ರಾಹಕ ಅನ್ವಯ ಆರಂಭಕ (Custom Application Launcher)"
+msgstr "ಇಚ್ಛೆಯ ಅನ್ವಯ ಆರಂಭಕ"
 
 #: ../gnome-panel/panel-addto.c:117
 msgid "Create a new launcher"
@@ -1635,26 +1719,26 @@ msgstr "(ಖಾಲಿ)"
 msgid "query returned exception %s\n"
 msgstr "ಮನವಿಯು %s ಎಂಬ ವಿನಾಯಿತಿಯೊಂದಿಗೆ ಮರಳಿದೆ\n"
 
-#: ../gnome-panel/panel-addto.c:1069
+#: ../gnome-panel/panel-addto.c:1071
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" ಗೆ ಸೇರಿಸಲು ಒಂದು ಅಂಶವನ್ನು ಪತ್ತೆ ಮಾಡು(_i):"
 
-#: ../gnome-panel/panel-addto.c:1073
+#: ../gnome-panel/panel-addto.c:1075
 #, c-format
 msgid "Add to Drawer"
 msgstr "ಡ್ರಾಯರಿಗೆ ಸೇರಿಸು"
 
-#: ../gnome-panel/panel-addto.c:1075
+#: ../gnome-panel/panel-addto.c:1077
 msgid "Find an _item to add to the drawer:"
 msgstr "ಡ್ರಾಯರಿಗೆ ಸೇರಿಸಲು ಒಂದು ಅಂಶವನ್ನು ಪತ್ತೆ ಮಾಡು(_i):"
 
-#: ../gnome-panel/panel-addto.c:1077
+#: ../gnome-panel/panel-addto.c:1079
 #, c-format
 msgid "Add to Panel"
 msgstr "ಫಲಕಕ್ಕೆ ಸೇರಿಸು"
 
-#: ../gnome-panel/panel-addto.c:1079
+#: ../gnome-panel/panel-addto.c:1081
 msgid "Find an _item to add to the panel:"
 msgstr "ಫಲಕಕ್ಕೆ ಸೇರಿಸಲು ಒಂದು ಅಂಶವನ್ನು ಪತ್ತೆ ಮಾಡು(_i):"
 
@@ -1745,80 +1829,75 @@ msgstr "ಹೊಸ ಫಲಕ(_N)"
 msgid "A_bout Panels"
 msgstr "ಫಲಕಗಳ ಬಗೆಗೆ(_b)"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "ಅನ್ವಯ"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
-msgstr "ಅನ್ವಯ ಟರ್ಮಿನಲ್ಲಿನಲ್ಲಿ"
+msgstr "ಟರ್ಮಿನಲ್‌ನಲ್ಲಿ ಅನ್ವಯ"
 
-#: ../gnome-panel/panel-ditem-editor.c:120
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
-msgstr "ತಾಣ"
+msgstr "ಸ್ಥಳ"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "ಬಗೆ(_Type):"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "ಹೆಸರು(_N):"
 
-#: ../gnome-panel/panel-ditem-editor.c:637
-#: ../gnome-panel/panel-properties-dialog.c:286
-msgid "Browse icons"
-msgstr "ಚಿಹ್ನೆಗಳನ್ನು ವೀಕ್ಷಿಸು"
-
-#: ../gnome-panel/panel-ditem-editor.c:655
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "ವೀಕ್ಷಿಸು(_B)..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:662
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "ಅಭಿಪ್ರಾಯ(_m):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1024
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "ಒಂದು ಅನ್ವಯವನ್ನು ಆರಿಸು..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1028
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "ಒಂದು ಕಡತವನ್ನು ಆರಿಸು..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1153
-#: ../gnome-panel/panel-ditem-editor.c:1162
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "ಆಜ್ಞೆ(_a):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1171
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
-msgstr "ತಾಣ(_L):"
+msgstr "ಸ್ಥಳ(_L):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಹೆಸರನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1355
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "ಕೋಶದ ಗುಣಲಕ್ಷಣಗಳನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1372
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಆಜ್ಞೆಯನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1375
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಸ್ಥಳವನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1452
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "ನೆರವಿನ ದಸ್ತಾವೇಜನ್ನು ತೋರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
@@ -1833,13 +1912,12 @@ msgid "Force this application to exit?"
 msgstr "ಈ ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಬೇಕೆ?"
 
 #: ../gnome-panel/panel-force-quit.c:207
-#| msgid ""
-#| "If you choose to force an application to exit, any open documents in it "
-#| "will be lost."
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
-msgstr "ನೀವು ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಲು ಬಯಸಿದಲ್ಲಿ, ಅದರಲ್ಲಿ ತೆರೆದಿರುವ ದಸ್ತಾವೇಜುಗಳಲ್ಲಿರುವ ಉಳಿಸದೆ ಇರುವ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
+msgstr ""
+"ನೀವು ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಲು ಬಯಸಿದಲ್ಲಿ, ಅದರಲ್ಲಿ ತೆರೆದಿರುವ "
+"ದಸ್ತಾವೇಜುಗಳಲ್ಲಿರುವ ಉಳಿಸದೆ ಇರುವ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1893,7 +1971,7 @@ msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದ
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
 msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "true ಆದಲ್ಲಿ, \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಸ್ವಯಂಪೂರ್ಣಗೊಳಿಕೆಯು ಲಭ್ಯವಿರುತ್ತದೆ."
+msgstr "ನಿಜವಾದಲ್ಲಿ, \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಸ್ವಯಂಪೂರ್ಣಗೊಳಿಕೆಯು ಲಭ್ಯವಿರುತ್ತದೆ."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1901,7 +1979,7 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಸಂವಾದವನ್ನು ತೆರೆದಾಗ \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\"ಸಂವಾದದಲ್ಲಿರುವ \"ಗೊತ್ತಿರುವ "
+"ನಿಜವಾದಲ್ಲಿ, ಸಂವಾದವನ್ನು ತೆರೆದಾಗ \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\"ಸಂವಾದದಲ್ಲಿರುವ \"ಗೊತ್ತಿರುವ "
 "ಅನ್ವಯಗಳು\" ವಿಸ್ತರಿಸಲ್ಪಡುತ್ತದೆ. enable_program_list ಕೀಲಿಯು true ಆದಲ್ಲಿ ಮಾತ್ರ ಇದು "
 "ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
@@ -1911,7 +1989,7 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"true ಆದಲ್ಲಿ, \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\"ಸಂವಾದದಲ್ಲಿರುವ \"ಗೊತ್ತಿರುವ ಅನ್ವಯಗಳು\" ಸಂವಾದವು "
+"ನಿಜವಾದಲ್ಲಿ, \"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\"ಸಂವಾದದಲ್ಲಿರುವ \"ಗೊತ್ತಿರುವ ಅನ್ವಯಗಳು\" ಸಂವಾದವು "
 "ಲಭ್ಯವಿರುತ್ತದೆ. ಸಂವಾದವನ್ನು ತೋರಿಸಿದಾಗ ಪಟ್ಟಿಯನ್ನು ವಿಸ್ತರಿಸಲಾಗುವುದೆ ಎನ್ನುವುದನ್ನು "
 "enable_program_list ಕೀಲಿಯಿಂದ ನಿಯಂತ್ರಿಸಲ್ಪಡುತ್ತದೆ."
 
@@ -1974,7 +2052,7 @@ msgstr "ನಿರ್ಗಮಿಸುವುದನ್ನು ಅಶಕ್ತಗೊ�
 #: ../gnome-panel/panel-global.schemas.in.h:9
 #: ../gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
-msgstr "ಎನಿಮೇಶನ್‌ಗಳನ್ನು ಶಕ್ತಗೊಳಿಸು"
+msgstr "ಸಜೀವನಗಳನ್ನು(ಎನಿಮೇಶ್) ಶಕ್ತಗೊಳಿಸು"
 
 #: ../gnome-panel/panel-global.schemas.in.h:10
 msgid "Enable tooltips"
@@ -1989,21 +2067,21 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಬಳಕೆದಾರನು ಒಂದು ಫಲಕವನ್ನು ತೆಗೆದುಹಾಕಲು ಬಯಸಿದಲ್ಲಿ ಅದನ್ನು ಖಚಿತಪಡಿಸುವಂತೆ "
-"ಕೇಳಲಾಗುವುದು."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಬಳಕೆದಾರನು ಒಂದು ಫಲಕವನ್ನು ತೆಗೆದುಹಾಕಲು ಬಯಸಿದಲ್ಲಿ ಅದನ್ನು "
+"ಖಚಿತಪಡಿಸುವಂತೆ ಕೇಳಲಾಗುವುದು."
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಬಳಕೆದಾರನು ಡ್ರಾಯರಿನ ಮೇಲೆ ಒಂದು ಆರಂಭಕವನ್ನು ಕ್ಲಿಕ್ಕಿಸಿದಾಗ ಡ್ರಾಯರ್ ತಾನಾಗಿಯೆ "
-"ಮುಚ್ಚಲ್ಪಡುತ್ತದೆ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಬಳಕೆದಾರನು ಡ್ರಾಯರಿನ ಮೇಲೆ ಒಂದು ಆರಂಭಕವನ್ನು ಕ್ಲಿಕ್ಕಿಸಿದಾಗ ಡ್ರಾಯರ್ "
+"ತಾನಾಗಿಯೆ ಮುಚ್ಚಲ್ಪಡುತ್ತದೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಬಳಕೆದಾರನು ತೆರೆಸೂಚಕವನ್ನು ಒಂದು ಆರಂಭಕದ ಮೇಲೆ ಕೊಂಡೊಯ್ದಾಗ ಅದು ಹೈಲೈಟ್ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಬಳಕೆದಾರನು ತೆರೆಸೂಚಕವನ್ನು ಒಂದು ಆರಂಭಕದ ಮೇಲೆ ಕೊಂಡೊಯ್ದಾಗ ಅದು ಹೈಲೈಟ್ "
 "ಮಾಡಲ್ಪಡುತ್ತದೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
@@ -2011,7 +2089,7 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚುವ ಗುಂಡಿಯ ನಿಲುಕಣೆಯನ್ನು ತೆಗೆದು ಹಾಕುವ ಮೂಲಕ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚುವ ಗುಂಡಿಯ ನಿಲುಕಣೆಯನ್ನು ತೆಗೆದು ಹಾಕುವ ಮೂಲಕ "
 "ಬಳಕೆದಾರನು ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚದಂತೆ ತಡೆಯುತ್ತದೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -2019,7 +2097,7 @@ msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"true ಆದಲ್ಲಿ, ನಿರ್ಗಮಿಸುವ ಮೆನು ನಮೂದಿಗೆ ನಿಲುಕಣೆಯನ್ನು ತೆಗೆದು ಹಾಕುವ ಮೂಲಕ ಬಳಕೆದಾರನು "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ನಿರ್ಗಮಿಸುವ ಮೆನು ನಮೂದಿಗೆ ನಿಲುಕಣೆಯನ್ನು ತೆಗೆದು ಹಾಕುವ ಮೂಲಕ ಬಳಕೆದಾರನು "
 "ನಿರ್ಗಮಿಸದಂತೆ ತಡೆಯುತ್ತದೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
@@ -2028,13 +2106,13 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಫಲಕದ ಸಂರಚನೆಯನ್ನು ಬದಲಾಯಿಸಲು ಫಲಕವು ಅನುವು ಮಾಡಿಕೊಡುವುದಿಲ್ಲ. ಆದರೆ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಫಲಕದ ಸಂರಚನೆಯನ್ನು ಬದಲಾಯಿಸಲು ಫಲಕವು ಅನುವು ಮಾಡಿಕೊಡುವುದಿಲ್ಲ. ಆದರೆ "
 "ಪ್ರತಿಯೊಂದು ಆಪ್ಲೆಟ್‌ಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಲಾಕ್ ಮಾಡಬೇಕಾಗುತ್ತದೆ. ಇದು ಕಾರ್ಯರೂಪಕ್ಕೆ ಬರಲು "
 "ಫಲಕವನ್ನು ಮರಳಿ ಆರಂಭಿಸಬೇಕಾಗುತ್ತದೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "true ಆದಲ್ಲಿ, ಫಲಕಗಳಲ್ಲಿ ಸಲಹೆಸೂಚನೆಗಳು ತೋರಿಸಲ್ಪಡುತ್ತವೆ."
+msgstr "ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಫಲಕಗಳಲ್ಲಿ ಸಲಹೆಸೂಚನೆಗಳು ತೋರಿಸಲ್ಪಡುತ್ತವೆ."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -2064,74 +2142,74 @@ msgstr "ಅನ್ವಯಗಳು"
 msgid "_Edit Menus"
 msgstr "ಅಂಶಗಳನ್ನು ಸಂಪಾದಿಸು(_E)"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
-msgstr "ಬುಕ್-ಮಾರ್ಕುಗಳು"
+msgstr "ಬುಕ್‌ಮಾರ್ಕುಗಳು"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' ಅನ್ನು ತೆರೆ"
 
-#: ../gnome-panel/panel-menu-items.c:529
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "ಮಾಧ್ಯಮ ಬದಲಾವಣೆಗಾಗಿ %s ಅನ್ನು ಶೋಧಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-menu-items.c:572
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
-msgstr "%s ಅನ್ನು ಇನ್ನೊಮ್ಮೆ ಸ್ಕ್ಯಾನ್ ಮಾಡು"
+msgstr "%s ಅನ್ನು ಇನ್ನೊಮ್ಮೆ ಶೋಧಿಸು"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
 msgstr "'%s' ಅನ್ನು ಆರೋಹಿಸಲಾಗಲಿಲ್ಲ"
 
-#: ../gnome-panel/panel-menu-items.c:672
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "%s ಅನ್ನು ಆರೋಹಿಸು"
 
-#: ../gnome-panel/panel-menu-items.c:880
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
 msgstr "ತೆಗೆಯಬಹುದಾದ ಮಾಧ್ಯಮ"
 
-#: ../gnome-panel/panel-menu-items.c:967
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "ಜಾಲಬಂಧ ಸ್ಥಳಗಳು"
 
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
 msgstr "ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಕಡತಕೋಶವನ್ನು ತೆರೆಯಿರಿ"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1025
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "ಗಣಕತೆರೆ"
 
-#: ../gnome-panel/panel-menu-items.c:1026
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "ನಿಮ್ಮ ಗಣಕತೆರೆಯಲ್ಲಿರುವವುಗಳನ್ನು ಒಂದು ಕಡತಕೋಶದಲ್ಲಿ ತೆರೆ"
 
-#: ../gnome-panel/panel-menu-items.c:1417
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "ಸ್ಥಳಗಳು"
 
-#: ../gnome-panel/panel-menu-items.c:1446
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
-msgstr "ಗಣಕ"
+msgstr "ವ್ಯವಸ್ಥೆ"
 
 #. Below this, we only have log out/shutdown items
 #. Translators: translate "1" (msgctxt: "panel:showusername") to anything
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1527
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2140,14 +2218,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1539
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s ಇಂದ ನಿರ್ಗಮಿಸು..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1543
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "ಬೇರೊಬ್ಬ ಬಳಕೆದಾರನಾಗಿ ಪ್ರವೇಶಿಸಲು ಈ ಅಧಿವೇಶನದ %s ಇಂದ ನಿರ್ಗಮಿಸು"
@@ -2170,9 +2248,9 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಗುಂಡಿಗಾಗಿನ ಇಚ್ಛೆಯ ಚಿಹ್ನೆಯಾಗಿ custom_icon ಕೀಲಿಯನ್ನು ಬಳಸಲಾಗುತ್ತದೆ. "
-"false ಆದಲ್ಲಿ, custom_icon ಆಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. object_type ಕೀಲಿಯು \"menu-object\" "
-"ಅಥವ \"drawer-object\" ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರವೆ ಇದು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಗುಂಡಿಗಾಗಿನ ಇಚ್ಛೆಯ ಚಿಹ್ನೆಯಾಗಿ custom_icon ಕೀಲಿಯನ್ನು ಬಳಸಲಾಗುತ್ತದೆ. "
+"ನಿಜವಾಗಿರದೆ ಇದ್ದಲ್ಲಿ, custom_icon ಆಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. object_type ಕೀಲಿಯು \"menu-"
+"object\" ಅಥವ \"drawer-object\" ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರವೆ ಇದು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -2180,16 +2258,16 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"true ಆದಲ್ಲಿ, menu_path ಕೀಲಿಯನ್ನು ಮೆನು ವಿಷಯಗಳನ್ನು ರಚಿಸಬೇಕಿರುವ ಮಾರ್ಗವಾಗಿ "
-"ಬಳಸಲ್ಪಡುತ್ತದೆ. false ಆದಲ್ಲಿ, menu_path ಕೀಲಿಯನ್ನು ಆಲಕ್ಷಿಸಲಾಗುತ್ತದೆ. object_type "
-"ಕೀಲಿಯು \"menu-object\" ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರವೆ ಈ ಕೀಲಿಯು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, menu_path ಕೀಲಿಯನ್ನು ಮೆನು ವಿಷಯಗಳನ್ನು ರಚಿಸಬೇಕಿರುವ ಮಾರ್ಗವಾಗಿ "
+"ಬಳಸಲ್ಪಡುತ್ತದೆ. ನಿಜವಾಗಿರದೆ ಇದ್ದಲ್ಲಿ, menu_path ಕೀಲಿಯನ್ನು ಕಡೆಗಣಿಸಲಾಗುತ್ತದೆ. "
+"object_type ಕೀಲಿಯು \"menu-object\" ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರವೆ ಈ ಕೀಲಿಯು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"true ಆದಲ್ಲಿ, ವಸ್ತುವಿನ ಸ್ಥಾನವನ್ನು ಫಲಕದ ಬಲ (ಅಥವ ಲಂಬವಾಗಿದ್ದಲ್ಲಿ ಕೆಳಗಿನ) ತುದಿಗೆ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ವಸ್ತುವಿನ ಸ್ಥಾನವನ್ನು ಫಲಕದ ಬಲ (ಅಥವ ಲಂಬವಾಗಿದ್ದಲ್ಲಿ ಕೆಳಗಿನ) ತುದಿಗೆ "
 "ಅನುಗುಣವಾಗಿ ವಿವರಿಸಲಾಗುತ್ತದೆ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
@@ -2197,8 +2275,8 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"true ಆದಲ್ಲಿ, \"ಅನ್‌ಲಾಕ್ ಮಾಡು\" ಮೆನು ಅಂಶವನ್ನು ಬಳಸಿಕೊಂಡು ವಸ್ತುವನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡದೆ ಆಪ್ಲೆಟ್ "
-"ಅನ್ನು ಬಳಕೆದಾರರು ಸ್ಥಳಾಂತರಿಸಲು ಸಾಧ್ಯವಿರುವುದಿಲ್ಲ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, \"ಅನ್‌ಲಾಕ್ ಮಾಡು\" ಮೆನು ಅಂಶವನ್ನು ಬಳಸಿಕೊಂಡು ವಸ್ತುವನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡದೆ "
+"ಆಪ್ಲೆಟ್ ಅನ್ನು ಬಳಕೆದಾರರು ಸ್ಥಳಾಂತರಿಸಲು ಸಾಧ್ಯವಿರುವುದಿಲ್ಲ."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2356,42 +2434,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "'%s' GConf ಬೂಲಿಯನ್ ಮೌಲ್ಯವನ್ನು ಓದುವಲ್ಲಿ ದೋಷ: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "ಮೇಲಕ್ಕೆ"
 
-#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "ಕೆಳಕ್ಕೆ"
 
-#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ಎಡ"
 
-#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "ಬಲ"
 
-#: ../gnome-panel/panel-properties-dialog.c:952
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "ಡ್ರಾಯರ್ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../gnome-panel/panel-properties-dialog.c:1067
-#: ../gnome-panel/panel-run-dialog.c:2018
+#: ../gnome-panel/panel-properties-dialog.c:981
+#: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
-#| msgid "Unable to load file '%s'."
 msgid "Unable to load file '%s': %s."
 msgstr "ಕಡತ '%s' ವನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:1073
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "ಗುಣಲಕ್ಷಣಗಳ ಸಂವಾದವನ್ನು ತೋರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
@@ -2478,7 +2555,7 @@ msgstr "ಯಾವುದೂ ಇಲ್ಲ(_N) (ಗಣಕದ ಥೀಮನ್ನು 
 #: ../gnome-panel/panel-properties-dialog.ui.h:23
 #: ../libpanel-applet/panel-test-applets.ui.h:4
 msgid "_Orientation:"
-msgstr "ವಾಲಿಕೆ(_Orientation):"
+msgstr "ವಾಲಿಕೆ(_O):"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Scale"
@@ -2531,7 +2608,6 @@ msgid "Recent Documents"
 msgstr "ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳು"
 
 #: ../gnome-panel/panel-recent.c:235
-#| msgid "Clear Recent Documents"
 msgid "Clear Recent Documents..."
 msgstr "ಇತ್ತಿಚಿನ ದಸ್ತಾವೇಜುಗಳನ್ನು ತೆರವುಗೊಳಿಸು..."
 
@@ -2549,28 +2625,28 @@ msgstr "ಆಜ್ಞೆ '%s' ಅನ್ನು ಚಲಾಯಿಸಲಾಗಿಲ�
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ಅನ್ನು UTF-8 ರಿಂದ ಮಾರ್ಪಡಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-run-dialog.c:1255
+#: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
 msgstr "ಆಜ್ಞೆಗೆ ಸೇರಿಸಲು ಒಂದು ಕಡತವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ..."
 
-#: ../gnome-panel/panel-run-dialog.c:1633
+#: ../gnome-panel/panel-run-dialog.c:1634
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "ಒಂದು ಅನ್ವಯದ ವಿವರಣೆಯನ್ನು ನೋಡಲು ಅದನ್ನು ಆಯ್ಕೆ ಮಾಡಿ."
 
-#: ../gnome-panel/panel-run-dialog.c:1671
+#: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ಈ ಆಜ್ಞೆಯನ್ನು ಚಲಾಯಿಸಲಾಗುವುದು : '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1704
+#: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "ಚಲಾಯಿಸುವ ಸಂವಾದದಲ್ಲಿ ಬೀಳಿಸಲಾದ URI ಪಟ್ಟಿಯು ಸರಿಯಲ್ಲದ ವಿನ್ಯಾಸ (%d) ಅಥವ ಉದ್ದವನ್ನು (%d) "
 "ಹೊಂದಿದೆ\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2023
+#: ../gnome-panel/panel-run-dialog.c:2024
 msgid "Could not display run dialog"
 msgstr "ಚಲಾಯಿಸುವ ಸಂವಾದವು ಕಂಡುಬಂದಿಲ್ಲ"
 
@@ -2637,79 +2713,79 @@ msgstr "ತೆರವುಗೊಳಿಸು(_l)"
 msgid "D_on't Delete"
 msgstr "ಅಳಿಸಬೇಡ(_o)"
 
-#: ../gnome-panel/panel-toplevel.c:1178
+#: ../gnome-panel/panel-toplevel.c:1188
 msgid "Hide Panel"
 msgstr "ಫಲಕವನ್ನು ಅಡಗಿಸು"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1588
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
 msgstr "ಮೇಲಿನ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1589
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
 msgstr "ಮೇಲಿನ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1590
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
 msgstr "ಮೇಲಿನ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1591
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
 msgstr "ಮೇಲಿನ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
 msgstr "ಕೆಳಗಿನ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
 msgstr "ಕೆಳಗಿನ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
 msgstr "ಕೆಳಗಿನ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
 msgstr "ಕೆಳಗಿನ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
 msgstr "ಎಡ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
 msgstr "ಎಡ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
 msgstr "ಎಡಭಾಗದಲ್ಲಿ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
 msgstr "ಎಡ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
 msgstr "ಬಲ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
 msgstr "ಬಲ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
 msgstr "ಬಲಭಾಗದ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
 msgstr "ಬಲ ಮೂಲೆಯ ಫಲಕ"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:1
 msgid "Animation speed"
-msgstr "ಅನಿಮೇಶನ್ ವೇಗ"
+msgstr "ಸಜೀವನದ(ಅನಿಮೇಶನ್) ವೇಗ"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2733,11 +2809,11 @@ msgstr "ಹಿನ್ನಲೆಯ ಬಗೆ"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr "x-ಆಕ್ಷಾಂಶದಲ್ಲಿರುವ ಮಧ್ಯ ಫಲಕ"
+msgstr "x-ಅಕ್ಷಾಂಶದಲ್ಲಿರುವ ಮಧ್ಯ ಫಲಕ"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr "y-ಅಕ್ಷ"
+msgstr "y-ಅಕ್ಷಾಂಶದಲ್ಲಿನ ಮಧ್ಯದ ಫಲಕ"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
@@ -2760,15 +2836,15 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಅಡಗಿಸುವ ಗುಂಡಿಯಲ್ಲಿ ಬಾಣಗಳನ್ನು ಇರಿಸಲಾಗುವುದು. enable_buttons ಕೀಲಿಯು "
-"true ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಕೀಲಿಯು ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಅಡಗಿಸುವ ಗುಂಡಿಯಲ್ಲಿ ಬಾಣಗಳನ್ನು ಇರಿಸಲಾಗುವುದು. enable_buttons"
+"(ಗುಂಡಿಯನ್ನು ಶಕ್ತಗೊಳಿಸು) ಕೀಲಿಯು ನಿಜವಾಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಕೀಲಿಯು ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಗುಂಡಿಗಳನ್ನು ಫಲಕದ ಎರಡೂ ಬದಿಯಲ್ಲಿ ಇರಿಸಲಾಗುವುದು ಹಾಗು ಇದನ್ನು ಬಳಸಿಕೊಂಡು "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಗುಂಡಿಗಳನ್ನು ಫಲಕದ ಎರಡೂ ಬದಿಯಲ್ಲಿ ಇರಿಸಲಾಗುವುದು ಹಾಗು ಇದನ್ನು ಬಳಸಿಕೊಂಡು "
 "ಕೇವಲ ಗುಂಡಿಯ ಮಾತ್ರವೆ ಕಾಣಿಸುತ್ತಿರುವಂತೆ ಫಲಕವನ್ನು ತೆರೆಯ ಅಂಚಿಗೆ ಎಳೆದೊಯ್ಯಬಹುದು."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
@@ -2776,21 +2852,21 @@ msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಈ ಫಲಕವನ್ನು ಅಡಗಿಸುವುದು ಹಾಗು ಕಾಣಿಸುವುದನ್ನು ತಕ್ಷಣ ಮಾಡುವ ಬದಲು ಎನಿಮೇಟ್ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಈ ಫಲಕವನ್ನು ಅಡಗಿಸುವುದು ಹಾಗು ಕಾಣಿಸುವುದನ್ನು ತಕ್ಷಣ ಮಾಡುವ ಬದಲು ಎನಿಮೇಟ್ "
 "ಮಾಡಲಾಗುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "true ಆದಲ್ಲಿ, ಫಲಕವನ್ನು ಲಂಬವಾಗಿ ಇರಿಸಿದಾಗ ಹಿನ್ನಲೆಯ ಚಿತ್ರವು ತಿರುಗಿಸಲ್ಪಡುತ್ತದೆ."
+msgstr "ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಫಲಕವನ್ನು ಲಂಬವಾಗಿ ಇರಿಸಿದಾಗ ಹಿನ್ನಲೆಯ ಚಿತ್ರವು ತಿರುಗಿಸಲ್ಪಡುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಚಿತ್ರದ ಗಾತ್ರವನ್ನು (ಚಿತ್ರದ ಆಕಾರ ಅನುಪಾತವನ್ನು ಹಾಗೆಯೆ ಉಳಿಸಿಕೊಂಡು) ಫಲಕದ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಚಿತ್ರದ ಗಾತ್ರವನ್ನು (ಚಿತ್ರದ ಆಕಾರ ಅನುಪಾತವನ್ನು ಹಾಗೆಯೆ ಉಳಿಸಿಕೊಂಡು) ಫಲಕದ "
 "ಎತ್ತರಕ್ಕೆ (ಅಡ್ಡಲಾಗಿದ್ದರೆ) ಸರಿಹೊಂದುವಂತೆ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
@@ -2798,7 +2874,7 @@ msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಚಿತ್ರದ ಗಾತ್ರವನ್ನು ಫಲಕದ ಆಕಾರಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ. ಚಿತ್ರದ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಚಿತ್ರದ ಗಾತ್ರವನ್ನು ಫಲಕದ ಆಕಾರಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಬದಲಾಯಿಸಲಾಗುತ್ತದೆ. ಚಿತ್ರದ "
 "ಆಕಾರ ಅನುಪಾತವನ್ನು ಉಳಿಸಿಕೊಳ್ಳುವುದಿಲ್ಲ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
@@ -2807,7 +2883,7 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"true ಆಗಿದ್ದಲ್ಲಿ, ಸೂಚಕವು ಫಲಕದ ಸ್ಥಳದಿಂದ ಹೊರ ತೆರಳಿದಾಗ ಫಲಕವು ತಾನಾಗಿಯೆ ಒಂದು ಮೂಲೆಯಲ್ಲಿ "
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಸೂಚಕವು ಫಲಕದ ಸ್ಥಳದಿಂದ ಹೊರ ತೆರಳಿದಾಗ ಫಲಕವು ತಾನಾಗಿಯೆ ಒಂದು ಮೂಲೆಯಲ್ಲಿ "
 "ಅಡಗಿಸಲ್ಪಡುತ್ತದೆ. ಸೂಚಕವನ್ನು ಆ ಮೂಲೆಗೆ ಕೊಂಡುಹೋದಾಗ ಫಲಕ ಮರಳಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
@@ -2817,10 +2893,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"true ಆದಲ್ಲಿ, ಫಲಕವು ಸಂಪೂರ್ಣ ತೆರೆಯ ಅಗಲವನ್ನು (ಇದು ಲಂಬ ಫಲಕವಾಗಿದ್ದರೆ ಎತ್ತರವಾಗಿರುತ್ತದೆ) "
-"ಆಕ್ರಮಿಸುತ್ತದೆ. ಈ ಕ್ರಮದಲ್ಲಿ ಫಲಕವನ್ನು ಕೇವಲ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಮಾತ್ರವೆ ಇರಿಸಬಹುದಾಗಿದೆ. "
-"false ಆಗಿದ್ದಲ್ಲಿ, ಫಲಕಕ್ಕೆ ಆಪ್ಲೆಟ್‌ಗಳನ್ನು, ಆರಂಭಕಗಳನ್ನು ಹಾಗು ಗುಂಡಿಗಳನ್ನು "
-"ಸೇರಿಸಿಕೊಳ್ಳುವಷ್ಟು ಮಾತ್ರವೆ ಫಲಕವು ದೊಡ್ಡದಾಗಿರುತ್ತದೆ."
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಫಲಕವು ಸಂಪೂರ್ಣ ತೆರೆಯ ಅಗಲವನ್ನು (ಇದು ಲಂಬ ಫಲಕವಾಗಿದ್ದರೆ "
+"ಎತ್ತರವಾಗಿರುತ್ತದೆ) ಆಕ್ರಮಿಸುತ್ತದೆ. ಈ ಕ್ರಮದಲ್ಲಿ ಫಲಕವನ್ನು ಕೇವಲ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಮಾತ್ರವೆ "
+"ಇರಿಸಬಹುದಾಗಿದೆ. ನಿಜವಾಗಿರದೆ ಇದ್ದಲ್ಲಿ, ಫಲಕಕ್ಕೆ ಆಪ್ಲೆಟ್‌ಗಳನ್ನು, ಆರಂಭಕಗಳನ್ನು ಹಾಗು "
+"ಗುಂಡಿಗಳನ್ನು ಸೇರಿಸಿಕೊಳ್ಳುವಷ್ಟು ಮಾತ್ರವೆ ಫಲಕವು ದೊಡ್ಡದಾಗಿರುತ್ತದೆ."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2829,7 +2905,7 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"true ಆದಲ್ಲಿ, x ಹಾಗು x_bottom ಕೀಲಿಗಳನ್ನು ಉಪೇಕ್ಷಿಸಲಾಗುವುದು ಹಾಗು ಫಲಕವನ್ನು ತೆರೆಯ x-"
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, x ಹಾಗು x_bottom ಕೀಲಿಗಳನ್ನು ಉಪೇಕ್ಷಿಸಲಾಗುವುದು ಹಾಗು ಫಲಕವನ್ನು ತೆರೆಯ x-"
 "ಅಕ್ಷದ ನಡುಮಧ್ಯದಲ್ಲಿ ಇರಿಸಲಾಗುವುದು. ಫಲಕದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿದಲ್ಲಿ ಅದು ಅದೆ ಸ್ಥಳದಲ್ಲಿ "
 "ಇರುತ್ತದೆ ಅಂದರೆ ಫಲಕವು ಎರಡೂ ಬದಿಯಲ್ಲಿ ಗಾತ್ರ ಬದಲಾವಣೆಗೊಳ್ಳುತ್ತದೆ. false ಆಗಿದ್ದಲ್ಲಿ, x "
 "ಹಾಗು x_bottom ಕೀಲಿಗಳು ಫಲಕದ ಸ್ಥಾನವನ್ನು ಸೂಚಿಸುತ್ತವೆ."
@@ -2841,7 +2917,7 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"true ಆದಲ್ಲಿ, y ಹಾಗು y_bottom ಕೀಲಿಗಳನ್ನು ಉಪೇಕ್ಷಿಸಲಾಗುವುದು ಹಾಗು ಫಲಕವನ್ನು ತೆರೆಯ y-"
+"ನಿಜವಾಗಿದ್ದಲ್ಲಿ, y ಹಾಗು y_bottom ಕೀಲಿಗಳನ್ನು ಉಪೇಕ್ಷಿಸಲಾಗುವುದು ಹಾಗು ಫಲಕವನ್ನು ತೆರೆಯ y-"
 "ಅಕ್ಷದ ನಡುಮಧ್ಯದಲ್ಲಿ ಇರಿಸಲಾಗುವುದು. ಫಲಕದ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿದಲ್ಲಿ ಅದು ಅದೆ ಸ್ಥಳದಲ್ಲಿ "
 "ಇರುತ್ತದೆ ಅಂದರೆ ಫಲಕವು ಎರಡೂ ಬದಿಯಲ್ಲಿ ಗಾತ್ರ ಬದಲಾವಣೆಗೊಳ್ಳುತ್ತದೆ. false ಆಗಿದ್ದಲ್ಲಿ, y "
 "ಹಾಗು y_bottom ಕೀಲಿಗಳು ಫಲಕದ ಸ್ಥಾನವನ್ನು ಸೂಚಿಸುತ್ತವೆ."
@@ -3083,31 +3159,31 @@ msgstr "ಫಲಕದ Y ಅಕ್ಷಾಂಶ"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "ಫಲಕದ y ಅಕ್ಷಾಂಶ, ತೆರೆಯ ಕೆಳಗಿನಿಂದ ಆರಂಭಗೊಳ್ಳುವ"
 
-#: ../gnome-panel/panel-util.c:323
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "ಚಿಹ್ನೆ '%s' ಯು ಕಂಡು ಬಂದಿಲ್ಲ"
 
-#: ../gnome-panel/panel-util.c:426
+#: ../gnome-panel/panel-util.c:409
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' ಅನ್ನು ಕಾರ್ಯಗತಗೊಳಿಸಲಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-util.c:662
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "ಕಡತ"
 
-#: ../gnome-panel/panel-util.c:839
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
-msgstr "ನೆಲೆ (Home) ಕಡತಕೋಶ"
+msgstr "ನೆಲೆ ಕಡತಕೋಶ"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:851
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "ಕಡತ ವ್ಯವಸ್ಥೆ"
 
-#: ../gnome-panel/panel-util.c:998
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "ಹುಡುಕು"
 
@@ -3116,7 +3192,7 @@ msgstr "ಹುಡುಕು"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1044
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3126,29 +3202,29 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "ಈ URL ಅನ್ನು ತೆರೆ: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "ಈ ಡ್ರಾಯರನ್ನು ಅಳಿಸಬೇಕೆ?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"ಒಂದು ಡ್ರಾಯರನ್ನು ಅಳಿಸಿದಾಗ, ಡ್ರಾಯರ್ ಹಾಗು ಅದರ ಸಂಯೋಜನೆಗಳೂ\n"
-"ಸಹ ಕಾಣೆಯಾಗುತ್ತದೆ."
+"ಒಂದು ಡ್ರಾಯರನ್ನು ಅಳಿಸಿದಾಗ, ಡ್ರಾಯರ್ ಹಾಗು ಅದರ ಸಿದ್ಧತೆಗಳೂ\n"
+"ಸಹ ಇಲ್ಲವಾಗುತ್ತದೆ."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಬೇಕೆ?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
-"ಫಲಕವನ್ನು ಅಳಿಸಿದಲ್ಲಿ, ಫಲಕ ಹಾಗು ಅದರ ಸಂಯೋಜನೆಗಳು\n"
-" ಕಾಣೆಯಾಗುತ್ತವೆ."
+"ಫಲಕವನ್ನು ಅಳಿಸಿದಲ್ಲಿ, ಫಲಕ ಹಾಗು ಅದರ ಸಿದ್ಧತೆಗಳು\n"
+"ಕಾಣೆಯಾಗುತ್ತವೆ."
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3221,7 +3297,7 @@ msgstr "%s ಅನ್ವಯವನ್ನು ಲೋಡ್‌ ಮಾಡುವಲ್�
 #. This is an utility to easily test various applets
 #: ../libpanel-applet/panel-test-applets.ui.h:2
 msgid "Test applet utility"
-msgstr "ಆಫ್ಲೆಟ್ ಸವಲತ್ತನ್ನು ಪರೀಕ್ಷಿಸಿ"
+msgstr "ಆಪ್ಲೆಟ್ ಸವಲತ್ತನ್ನು ಪರೀಕ್ಷಿಸಿ"
 
 #: ../libpanel-applet/panel-test-applets.ui.h:3
 msgid "_Applet:"
@@ -3231,3 +3307,21 @@ msgstr "ಆಪ್ಲೆಟ್(_A):"
 msgid "_Prefs Dir:"
 msgstr "ಆದ್ಯತೆಗಳ ಕೋಶ(_P):"
 
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr ""
+#~ "ನಿಜವೆಂದಾದಲ್ಲಿ, ಸಮಯವನ್ನು ಜಾಗತಿಕ ನಿರ್ದೇಶಾಂಕಗಳನ್ನು ಒಳಗೊಂಡಂತಹ ಕಾಲ ವಲಯದಲ್ಲಿ ತೋರಿಸು."
+
+#~ msgid "Failed to convert data for '%s': %s"
+#~ msgstr "'%s' ಗಾಗಿ ದತ್ತಾಂಶವನ್ನು ಬದಲಾಯಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
+
+#~ msgid "Failed to save '%s': %s"
+#~ msgstr "'%s' ಅನ್ನು ಉಳಿಸುವಲ್ಲಿ ವಿಫಲಗೊಂಡಿದೆ: %s"
+
+#~ msgid "Browse icons"
+#~ msgstr "ಚಿಹ್ನೆಗಳನ್ನು ವೀಕ್ಷಿಸು"
+
+#~ msgid "Padding"
+#~ msgstr "ಪ್ಯಾಡಿಂಗ್"
+
+#~ msgid "Padding that will be inserted between objects on this panel."
+#~ msgstr "ಈ ಪ್ಯಾನಲ್‌ನಲ್ಲಿನ ವಸ್ತುಗಳ ನಡುವ ಸೇರಿಸಲಾಗುವ ಪ್ಯಾಡಿಂಗ್"

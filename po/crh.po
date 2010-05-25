@@ -1,20 +1,20 @@
 # Qırımtatarca gnome-panel.
 # This file is distributed under the same license as the gnome-panel package.
 #
-# Reşat SABIQ <tilde.birlik@gmail.com>, 2009.
+# Reşat SABIQ <tilde.birlik@gmail.com>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-21 00:58-0500\n"
-"PO-Revision-Date: 2009-10-21 01:17-0500\n"
+"POT-Creation-Date: 2010-03-15 22:35-0500\n"
+"PO-Revision-Date: 2010-03-28 14:40-0500\n"
 "Last-Translator: Reşat SABIQ <tilde.birlik@gmail.com>\n"
-"Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists."
+"Language-Team: QIRIMTATARCA (Qırım Türkçesi) <tilde-birlik-tercime@lists."
 "sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
@@ -48,7 +48,7 @@ msgstr "_Aqqında"
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
-#: ../gnome-panel/panel-menu-button.c:664
+#: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
 msgstr "_Yardım"
 
@@ -60,7 +60,7 @@ msgid "_Preferences"
 msgstr "Tercih_ler"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3715
+#: ../applets/clock/clock.c:3711
 msgid "Clock"
 msgstr "Saat"
 
@@ -81,7 +81,12 @@ msgstr "Ağımdaki vaqıt ve tarihnı al"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:309 ../applets/clock/clock.c:448
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#: ../applets/clock/clock-location-tile.c:516
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -95,56 +100,61 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:314 ../applets/clock/clock.c:453
-#: ../applets/clock/clock.c:1599 ../applets/clock/clock-location-tile.c:476
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
+#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#: ../applets/clock/clock-location-tile.c:523
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:314
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:853
+#: ../applets/clock/calendar-window.c:847
 msgid "Tasks"
 msgstr "Vazifeler"
 
-#: ../applets/clock/calendar-window.c:853
-#: ../applets/clock/calendar-window.c:1029
-#: ../applets/clock/calendar-window.c:1665
+#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:1022
+#: ../applets/clock/calendar-window.c:1655
 msgid "Edit"
 msgstr "Tarir Et"
 
-#: ../applets/clock/calendar-window.c:974
+#: ../applets/clock/calendar-window.c:968
 msgid "All Day"
 msgstr "Kün Boyu"
 
-#: ../applets/clock/calendar-window.c:1113
+#: ../applets/clock/calendar-window.c:1106
 msgid "Appointments"
 msgstr "Körüşmeler"
 
-#: ../applets/clock/calendar-window.c:1138
+#: ../applets/clock/calendar-window.c:1131
 msgid "Birthdays and Anniversaries"
 msgstr "Doğum künleri ve Yıldönümleri"
 
-#: ../applets/clock/calendar-window.c:1163
+#: ../applets/clock/calendar-window.c:1156
 msgid "Weather Information"
 msgstr "Ava Durumı Malümatı"
 
-#: ../applets/clock/calendar-window.c:1665 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
 msgid "Locations"
 msgstr "Qonumlar"
 
-#: ../applets/clock/calendar-window.c:1964
+#: ../applets/clock/calendar-window.c:1937
 msgid "Calendar"
 msgstr "Taqvim"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:445
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -155,7 +165,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:453 ../applets/clock/clock.c:1593
+#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -164,7 +174,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:464
+#: ../applets/clock/clock.c:461
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -172,7 +182,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:471
+#: ../applets/clock/clock.c:468
 #, c-format
 msgid ""
 "%1$s\n"
@@ -185,7 +195,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:479
+#: ../applets/clock/clock.c:476
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -194,27 +204,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:658
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A, %d %B (%%s)"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "Körüşmeler ve vazifeleriñizni gizlemek içün çertiñiz"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "Körüşmeler ve vazifeleriñizni körmek içün çertiñiz"
 
-#: ../applets/clock/clock.c:695
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "Ay taqvimini gizlemek içün çertiñiz"
 
-#: ../applets/clock/clock.c:698
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Ay taqvimini körmek içün çertiñiz"
 
-#: ../applets/clock/clock.c:1432
+#: ../applets/clock/clock.c:1421
 msgid "Computer Clock"
 msgstr "Bilgisayar Saatı"
 
@@ -224,7 +234,7 @@ msgstr "Bilgisayar Saatı"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1578
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -234,73 +244,73 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1586
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1639
+#: ../applets/clock/clock.c:1622
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: ../applets/clock/clock.c:1670
+#: ../applets/clock/clock.c:1653
 msgid "Set System Time..."
 msgstr "Sistem Vaqtını Tesbit Et..."
 
-#: ../applets/clock/clock.c:1671
+#: ../applets/clock/clock.c:1654
 msgid "Set System Time"
 msgstr "Sistem Vaqtını Tesbit Et"
 
-#: ../applets/clock/clock.c:1686
+#: ../applets/clock/clock.c:1669
 msgid "Failed to set the system time"
 msgstr "Sistem vaqtını tesbit etüv muvafaqiyetsiz"
 
 # tüklü
-#: ../applets/clock/clock.c:2748
+#: ../applets/clock/clock.c:2707
 msgid "Custom format"
 msgstr "Hususiy format"
 
-#: ../applets/clock/clock.c:3206
+#: ../applets/clock/clock.c:3194
 msgid "Choose Location"
 msgstr "Qonumnı Sayla"
 
-#: ../applets/clock/clock.c:3281
+#: ../applets/clock/clock.c:3273
 msgid "Edit Location"
 msgstr "Qonumnı Tarir Et"
 
-#: ../applets/clock/clock.c:3427
+#: ../applets/clock/clock.c:3419
 msgid "City Name"
 msgstr "Şehеr İsmi"
 
 # tüklü
-#: ../applets/clock/clock.c:3431
+#: ../applets/clock/clock.c:3423
 msgid "City Time Zone"
 msgstr "Şeer Saat Tilimi"
 
-#: ../applets/clock/clock.c:3611
+#: ../applets/clock/clock.c:3608
 msgid "24 hour"
 msgstr "24 saatlıq"
 
-#: ../applets/clock/clock.c:3612
+#: ../applets/clock/clock.c:3609
 msgid "UNIX time"
 msgstr "UNIX saatı"
 
-#: ../applets/clock/clock.c:3613
+#: ../applets/clock/clock.c:3610
 msgid "Internet time"
 msgstr "İnternet saatı"
 
-#: ../applets/clock/clock.c:3621
+#: ../applets/clock/clock.c:3618
 msgid "Custom _format:"
 msgstr "Hususiy _format:"
 
-#: ../applets/clock/clock.c:3718
+#: ../applets/clock/clock.c:3714
 msgid "The Clock displays the current time and date"
 msgstr "Saat ağımdaki vaqıt ve tarihnı kösterir"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3721 ../applets/fish/fish.c:623
+#: ../applets/clock/clock.c:3717 ../applets/fish/fish.c:623
 #: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
 #: ../applets/wncklet/window-menu.c:79
@@ -498,93 +508,87 @@ msgstr "Eger doğru ise, vaqıtqa ilâve olaraq saat içinde tarihnı da köster
 msgid "If true, display seconds in time."
 msgstr "Eger doğru ise, vaqıtta saniyelerni köster."
 
-# tüklü
 #: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display time in Universal Coordinated Time zone."
-msgstr ""
-"Eger doğru ise, vaqıtnı Alemiy Eşkütümli Zaman (UTC) tilimine göre köster."
-
-#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Eger doğru ise, taqvim penceresinde körüşmeler cedvelini cayıldır."
 
-#: ../applets/clock/clock.schemas.in.h:25
+#: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Eger doğru ise, taqvim penceresinde doğum künleri cedvelini cayıldır."
 
-#: ../applets/clock/clock.schemas.in.h:26
+#: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Eger doğru ise, taqvim penceresinde qonumlar cedvelini cayıldır."
 
-#: ../applets/clock/clock.schemas.in.h:27
+#: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Eger doğru ise, taqvim penceresinde vazifeler cedvelini cayıldır."
 
-#: ../applets/clock/clock.schemas.in.h:28
+#: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
 "Eger doğru ise, taqvim penceresinde ava durumı malümatı cedvelini cayıldır."
 
-#: ../applets/clock/clock.schemas.in.h:29
+#: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Eger doğru ise, imleç saatnıñ üzerinde olğanda alet-qaranesinde tarihnı "
 "köster."
 
-#: ../applets/clock/clock.schemas.in.h:30
+#: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
 msgstr "Eger doğru ise, ava durumı işaretçiginiñ yanında araretni köster."
 
-#: ../applets/clock/clock.schemas.in.h:31
+#: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show week numbers in the calendar."
 msgstr "Eger doğru ise, taqvimde afta sayılarını köster."
 
-#: ../applets/clock/clock.schemas.in.h:32
+#: ../applets/clock/clock.schemas.in.h:31
 msgid "List of locations"
 msgstr "Qonumlarnıñ cedveli"
 
-#: ../applets/clock/clock.schemas.in.h:33
+#: ../applets/clock/clock.schemas.in.h:32
 msgid "Show date in clock"
 msgstr "Saatta tarihnı köster"
 
-#: ../applets/clock/clock.schemas.in.h:34
+#: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in tooltip"
 msgstr "Alet-qaranesinde tarihnı köster"
 
-#: ../applets/clock/clock.schemas.in.h:35
+#: ../applets/clock/clock.schemas.in.h:34
 msgid "Show temperature in clock"
 msgstr "Saatta araretni köster"
 
-#: ../applets/clock/clock.schemas.in.h:36
+#: ../applets/clock/clock.schemas.in.h:35
 msgid "Show time with seconds"
 msgstr "Vaqıtnı saniyeler ile köster"
 
-#: ../applets/clock/clock.schemas.in.h:37
+#: ../applets/clock/clock.schemas.in.h:36
 msgid "Show weather in clock"
 msgstr "Saatta ava durumını köster"
 
-#: ../applets/clock/clock.schemas.in.h:38
+#: ../applets/clock/clock.schemas.in.h:37
 msgid "Show week numbers in calendar"
 msgstr "Taqvimde afta sayılarını köster"
 
-#: ../applets/clock/clock.schemas.in.h:39
+#: ../applets/clock/clock.schemas.in.h:38
 msgid "Speed unit"
 msgstr "Sur'at birlemi"
 
-#: ../applets/clock/clock.schemas.in.h:40
+#: ../applets/clock/clock.schemas.in.h:39
 msgid "Temperature unit"
 msgstr "Araret birlemi"
 
-#: ../applets/clock/clock.schemas.in.h:41
+#: ../applets/clock/clock.schemas.in.h:40
 msgid "The unit to use when showing temperatures."
 msgstr "Araretler kösterilgende qullanılacaq birlem."
 
-#: ../applets/clock/clock.schemas.in.h:42
+#: ../applets/clock/clock.schemas.in.h:41
 msgid "The unit to use when showing wind speed."
 msgstr "Yel sur'atı kösterilgende qullanılacaq birlem."
 
 # tüklü
-#: ../applets/clock/clock.schemas.in.h:43
+#: ../applets/clock/clock.schemas.in.h:42
 msgid ""
 "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
 "time configuration tool. The schema is retained for compatibility with older "
@@ -593,6 +597,16 @@ msgstr ""
 "Bu anahtarnıñ qullanımı GNOME 2.22'de bir dahiliy vaqıt yapılandırma "
 "aletiniñ qullanımı ile takbih etilgen edi. Bu shema, eski sürümler ile telif "
 "qabiliyeti içün alıqoyulğandır."
+
+# tüklü
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Bu anahtarnıñ qullanımı GNOME 2.28'de saat tilimleri qullanımı lehine takbih "
+"etilgen edi. Bu shema, eski sürümler ile telif qabiliyeti içün "
+"alıqoyulğandır."
 
 # tüklü
 #: ../applets/clock/clock.schemas.in.h:44
@@ -613,7 +627,7 @@ msgstr ""
 "Bu anahtar, format anahtarı \"custom\"ğa tesbit etilgen olğanda saat "
 "uyğulamaçığı tarafından qullanılacaq formatnı belirtir. Belli bir formatnı "
 "etinmek içün strftime() tarafından añlaşılğan çevirim belirticilerini "
-"qullana bilirsiñiz. Daha çoq malümat içün strftime() qılavuzına baqıñız."
+"qullanabilirsiñiz. Daha çoq malümat içün strftime() qılavuzına baqıñız."
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid ""
@@ -697,24 +711,24 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:609
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:621
+#: ../applets/clock/clock-location-tile.c:630
 msgid "Unknown"
 msgstr "Namalüm"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s kibi sezilir"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:646
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Küneş doğuşı: %s / Küneş batışı: %s"
@@ -780,10 +794,10 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"İhtar:  Bu emir faydalı bir şey kibi körüne.\n"
-"Bu uyğulamaçıq faydasız olğanı içün, bunı yapmamağa istey bilirsiñiz.\n"
+"İhtar:  Bu buyruq faydalı bir şey kibi körüne.\n"
+"Bu uyğulamaçıq faydasız olğanı içün, bunı yapmamağa isteybilirsiñiz.\n"
 "%s uyğulamaçığını onı \"ameliy\" yaki faydalı \n"
-"yapacaq bir şey içün qullanmayuvıñıznı tevsiye etermiz."
+"yapacaq er angi şey içün qullanmayuvıñıznı tevsiye etermiz."
 
 #: ../applets/fish/fish.c:471
 msgid "Images"
@@ -805,7 +819,7 @@ msgid ""
 msgstr ""
 "%s ne olsa olsun iç bir qullanımğa yaramaz. Sadece disk fezasını ve derleme "
 "zamanını alır, ve yüklengen olsa qıymetli panel fezasını ve hafizanı alır. "
-"Eger onı qullanğan birev tapılsa, birden bir ruhiye teşkerüvine yüberilüvi "
+"Eger onı qullanğan birev tapılsa, birden bir ruhiye teşkerüvine yiberilmesi "
 "lâzim."
 
 #: ../applets/fish/fish.c:610
@@ -819,7 +833,7 @@ msgstr "%s el-Balıq, zemaneviy bir kâhin "
 
 #: ../applets/fish/fish.c:723
 msgid "Unable to locate the command to execute"
-msgstr "İfa etilecek emir qonumlandırılamay"
+msgstr "İfa etilecek buyruq qonumlandırılalmay"
 
 #: ../applets/fish/fish.c:772
 #, no-c-format
@@ -833,7 +847,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"Emir çıqtısı oqulamay\n"
+"Buyruq çıqtısı oqulalmay\n"
 "\n"
 "Tafsilât: %s"
 
@@ -844,7 +858,7 @@ msgstr "_Yañıdan söyle"
 #: ../applets/fish/fish.c:989
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr "Ayarlanğan emir çalışmay ve aşağıdaki ile deñiştirilgendir: %s"
+msgstr "Ayarlanğan buyruq çalışmay ve aşağıdaki ile ivaz etilgendir: %s"
 
 #: ../applets/fish/fish.c:1012
 #, c-format
@@ -853,7 +867,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"'%s' ifa etilamay\n"
+"'%s' ifa etilalmay\n"
 "\n"
 "Tafsilât: %s"
 
@@ -864,13 +878,13 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"'%s' oqulamay\n"
+"'%s' oqulalmay\n"
 "\n"
 "Tafsilât: %s"
 
 #: ../applets/fish/fish.c:1653
 msgid "The water needs changing"
-msgstr "Suvnıñ deñiştirilüvi kerek"
+msgstr "Suv deñiştirilmek kerek"
 
 #: ../applets/fish/fish.c:1655
 msgid "Look at today's date!"
@@ -940,7 +954,7 @@ msgstr ""
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
-msgstr "Çertme üzerine ifa etilecek emir"
+msgstr "Çertme üzerine ifa etilecek buyruq"
 
 #: ../applets/fish/fish.schemas.in.h:3
 msgid "Frames in fish's animation"
@@ -974,7 +988,7 @@ msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr ""
-"Bu anahtar balıq çertilgeninde ifa etilmege çalışılacaq emirni belirtir."
+"Bu anahtar balıq çertilgeninde ifa etilmege çalışılacaq buyruqnı belirtir."
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -982,7 +996,7 @@ msgid ""
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 "Bu anahtar, balıq uyğulamaçığında kösterilecek canlandırmada qullanılacaq "
-"suretniñ piks-haritaları (pixmaps) fihristine nisbeten dosye adını belirtir."
+"suretniñ piks-haritaları (pixmaps) cilbentine nisbeten dosye adını belirtir."
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
@@ -1324,6 +1338,70 @@ msgstr ""
 "belirtir. Bu anahtar, ancaq display_all_workspaces (episi çalışma-fezalarını "
 "köster) doğru olğanda alâqadardır."
 
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "Dosye keçerli bir .desktop dosyesi degildir"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "Tanılmağan masaüstü dosyesi Sürümi '%s'"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#, c-format
+msgid "Starting %s"
+msgstr "%s Başlatıla"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "Uyğulama buyruq satrında vesiqalarnı qabul etmey"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "Tanılmağan fırlatış ihtiyarı: %d"
+
+# tüklü
+#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "Vesiqa URİ'leri bir 'Tür=İlişim' masaüstü kirildisine keçirilalmay"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#, c-format
+msgid "Not a launchable item"
+msgstr "Fırlatılabilgen bir unsur degil"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Oturım idarecisine bağlantını ğayrı-qabilleştir"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Saqlanğan yapılandırılışnı ihtiva etken dosyeni belirt"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "DOSYE"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Oturım idaresi kimligini belirt"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "Kimlik"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Oturım idaresi ihtiyariyatı:"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Oturım idaresi ihtiyariyatını köster"
+
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
@@ -1334,6 +1412,10 @@ msgstr ""
 #: ../gnome-panel/panel-applet-frame.c:1088
 msgid "Error"
 msgstr "Hata"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+msgid "Choose an icon"
+msgstr "Bir işaretçik sayla"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:45
 #, c-format
@@ -1353,7 +1435,7 @@ msgstr "'%s' qonumı açılamadı"
 # tüklü
 #: ../gnome-panel/libpanel-util/panel-show.c:162
 msgid "No application to handle search folders is installed."
-msgstr "Qıdırma fihristlerini qollamaq içün iç bir uyğulama qurulğan degil."
+msgstr "Qıdırma cilbentlerini qollamaq içün iç bir uyğulama qurulğan degil."
 
 #: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
 msgid "Loc_k To Panel"
@@ -1371,12 +1453,12 @@ msgstr "Panelden _Çetleştir"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1321
 msgid "Cannot find an empty spot"
-msgstr "Boş bir benek tapılamay"
+msgstr "Boş bir benek tapılalmay"
 
 #: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1627
+#: ../gnome-panel/panel-toplevel.c:1624
 msgid "Drawer"
 msgstr "Çekmece"
 
@@ -1390,29 +1472,29 @@ msgstr "Çekmecege _Ekle..."
 msgid "_Properties"
 msgstr "_Hasiyetler"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:31
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
-msgstr "Berilgen fihristte yañı dosye icat et"
+msgstr "Berilgen cilbentte yañı dosye icat et"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:32
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
 msgid "[FILE...]"
 msgstr "[DOSYE...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:110
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
 msgid "- Edit .desktop files"
 msgstr "- .desktop dosyelerini tarir et"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:149
-#: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Fırlatıcı İcat Et"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:174
-#: ../gnome-panel/gnome-desktop-item-edit.c:197
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
 msgid "Directory Properties"
-msgstr "Fihrist Hasiyetleri"
+msgstr "Cilbent Hasiyetleri"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:180 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Fırlatıcı Hasiyetleri"
 
@@ -1425,7 +1507,7 @@ msgstr ""
 "Diger uyğulamalarnı fırlat ve pencerelerni idare etmek, vaqıtnı köstermek "
 "vs. içün çeşitli aletler temin et."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:72
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
 msgid "Panel"
 msgstr "Panel"
 
@@ -1458,41 +1540,41 @@ msgstr "_Fırlat"
 #: ../gnome-panel/launcher.c:840
 #, c-format
 msgid "Key %s is not set, cannot load launcher\n"
-msgstr "Anahtar %s tesbitli degil, fırlatıcı yüklenamay\n"
+msgstr "Anahtar %s tesbitli degil, fırlatıcı yüklenalmay\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1407
-#: ../gnome-panel/panel-ditem-editor.c:1441
-#: ../gnome-panel/panel-ditem-editor.c:1472
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Fırlatıcı saqlanamadı"
 
 # tüklü
-#: ../gnome-panel/main.c:43
+#: ../gnome-panel/main.c:47
 msgid "Replace a currently running panel"
 msgstr "Al-azırda çapmaqta olğan panel yerine qoy"
 
-#: ../gnome-panel/menu.c:913
+#: ../gnome-panel/menu.c:914
 msgid "Add this launcher to _panel"
 msgstr "Bu fırlatıcını _panelge ekle"
 
-#: ../gnome-panel/menu.c:920
+#: ../gnome-panel/menu.c:921
 msgid "Add this launcher to _desktop"
 msgstr "Bu fırlatıcını _masaüstüne ekle"
 
-#: ../gnome-panel/menu.c:932
+#: ../gnome-panel/menu.c:933
 msgid "_Entire menu"
 msgstr "_Bütün menü"
 
-#: ../gnome-panel/menu.c:937
+#: ../gnome-panel/menu.c:938
 msgid "Add this as _drawer to panel"
 msgstr "Bunı _çekmece olaraq panelge ekle"
 
-#: ../gnome-panel/menu.c:944
+#: ../gnome-panel/menu.c:945
 msgid "Add this as _menu to panel"
 msgstr "Bunı _menü olaraq panelge ekle"
 
 # tüklü
-#: ../gnome-panel/nothing.cP:601
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>OYUN BİTTİ</b> seviye %d!"
@@ -1501,40 +1583,40 @@ msgstr "<b>OYUN BİTTİ</b> seviye %d!"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:608
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:609
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Çıqmaq içün 'q' basıñız"
 
-#: ../gnome-panel/nothing.cP:614
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "Tınışlandı"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:617 ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Tınıştan çıqmaq içün 'p' basıñız"
 
-#: ../gnome-panel/nothing.cP:624
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Seviye: %s,  Ömürler: %s"
 
-#: ../gnome-panel/nothing.cP:629
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr "Sol/Sağ areket içün, Boşluq ateş içün, 'p' tınış içün, 'q' çıqış içün"
 
-#: ../gnome-panel/nothing.cP:1369
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "Tış Fezadan Qatil GEGL'ler"
 
@@ -1575,7 +1657,7 @@ msgstr "Uyğulama Çaptır..."
 
 #: ../gnome-panel/panel-action-button.c:311
 msgid "Run an application by typing a command or choosing from a list"
-msgstr "Bir emir kirseterek ya da cedvelden saylayaraq bir uyğulama çaptır"
+msgstr "Bir buyruq tuşlayaraq ya da cedvelden saylayaraq bir uyğulama çaptır"
 
 #: ../gnome-panel/panel-action-button.c:320
 msgid "Search for Files..."
@@ -1584,7 +1666,7 @@ msgstr "Dosyelerni Qıdır..."
 #: ../gnome-panel/panel-action-button.c:321
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
-"Bu bilgisayar üzerindeki vesiqalarnı ve fihristlerni isim ya da münderice "
+"Bu bilgisayar üzerindeki vesiqalarnı ve cilbentlerni isim ya da münderice "
 "boyunca tap"
 
 # tüklü
@@ -1630,7 +1712,7 @@ msgstr "Uyğulama Fırlatıcı..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Bir fırlatıcını uyğulamalar menüsinden kopiyala"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1081
 msgid "Main Menu"
 msgstr "Baş Menü"
 
@@ -1756,7 +1838,7 @@ msgstr "GNOME Paneli Aqqında"
 
 #: ../gnome-panel/panel-context-menu.c:171
 msgid "Cannot delete this panel"
-msgstr "Bu panel silinamay"
+msgstr "Bu panel silinalmay"
 
 #: ../gnome-panel/panel-context-menu.c:172
 msgid "You must always have at least one panel."
@@ -1778,81 +1860,76 @@ msgstr "_Yañı Panel"
 msgid "A_bout Panels"
 msgstr "Paneller _Aqqında"
 
-#: ../gnome-panel/panel-ditem-editor.c:117
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "Uyğulama"
 
 # tüklü
-#: ../gnome-panel/panel-ditem-editor.c:119
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "Terminalda Uyğulama"
 
-#: ../gnome-panel/panel-ditem-editor.c:121
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "Qonum"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Tür:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:632
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_İsim:"
 
-#: ../gnome-panel/panel-ditem-editor.c:640
-#: ../gnome-panel/panel-properties-dialog.c:286
-msgid "Browse icons"
-msgstr "İşaretçiklerni kezin"
-
-#: ../gnome-panel/panel-ditem-editor.c:658
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Kezin..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:665
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "_Şerh:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1036
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Bir uyğulama sayla..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1040
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Bir dosye sayla..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1208
-#: ../gnome-panel/panel-ditem-editor.c:1217
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "_Emir:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1226
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Qonum:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1408
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Fırlatıcınıñ ismi tesbit etilmegen."
 
-#: ../gnome-panel/panel-ditem-editor.c:1412
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
-msgstr "Fihrist hasiyetleri saqlanamadı"
+msgstr "Cilbent hasiyetleri saqlanamadı"
 
-#: ../gnome-panel/panel-ditem-editor.c:1413
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
-msgstr "Fihristniñ ismi tesbit etilmegen."
+msgstr "Cilbentniñ ismi tesbit etilmegen."
 
-#: ../gnome-panel/panel-ditem-editor.c:1429
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
-msgstr "Fırlatıcınıñ emri tesbit etilmegen."
+msgstr "Fırlatıcınıñ buyruğı tesbit etilmegen."
 
-#: ../gnome-panel/panel-ditem-editor.c:1432
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Fırlatıcınıñ qonumı tesbit etilmegen."
 
-#: ../gnome-panel/panel-ditem-editor.c:1509
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Yardım vesiqası kösterilamadı"
 
@@ -1873,7 +1950,7 @@ msgid ""
 "documents in it might get lost."
 msgstr ""
 "Eger bir uyğulamanı çıqmağa zorlasañız, içinde açıq olğan episi "
-"vesiqalardaki saqlanmağan deñişiklikler coyula bilir."
+"vesiqalardaki saqlanmağan deñişiklikler coyulabilir."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1983,8 +2060,8 @@ msgid ""
 msgstr ""
 "Panelniñ ihmal etecegi uyğulamaçıq IID'leriniñ (arayüz kimlikleriniñ) "
 "cedveli. Bu sayede, belli uyğulamaçıqlarnıñ menü içinde kösterilüvini yaki "
-"yüklenüvini ğayrı qabilleştire bilirsiñiz. Meselâ, mini-commander "
-"uyğulamaçığını ğayrı qabilleştirmek içün bu cedvelge 'OAFIID:"
+"yüklenüvini ğayrı-qabilleştirebilirsiñiz. Meselâ, mini-buyurıcı "
+"uyğulamaçığını ğayrı-qabilleştirmek içün bu cedvelge 'OAFIID:"
 "GNOME_MiniCommanderApplet' ekleñiz. Bunıñ tesirge kirüvi içün panel kene "
 "başlatılmalıdır."
 
@@ -2100,7 +2177,7 @@ msgstr "Qurulğan uyğulamlarnı kezin ve olarnı çaptır"
 # tüklü
 #: ../gnome-panel/panel-menu-bar.c:108
 msgid "Access documents, folders and network places"
-msgstr "Vesiqalarğa, fihristlerge ve şebeke yerlerine irişim"
+msgstr "Vesiqalarğa, cilbentlerge ve şebeke yerlerine irişim"
 
 #: ../gnome-panel/panel-menu-bar.c:110
 msgid "Change desktop appearance and behavior, get help, or log out"
@@ -2111,71 +2188,71 @@ msgstr ""
 msgid "Applications"
 msgstr "Uyğulamalar"
 
-#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
+#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:668
 msgid "_Edit Menus"
 msgstr "_Menülerni Tarir Et"
 
-#: ../gnome-panel/panel-menu-items.c:439
+#: ../gnome-panel/panel-menu-items.c:472
 msgid "Bookmarks"
 msgstr "Saife-imleri"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:461 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' Aç"
 
-#: ../gnome-panel/panel-menu-items.c:529
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
-msgstr "Müit deñişiklikleri içün %s taralamadı"
+msgstr "Vasat deñişiklikleri içün %s taralamadı"
 
-#: ../gnome-panel/panel-menu-items.c:572
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "%s Kene Taralsın"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
-msgstr "%s taqılamay"
+msgstr "%s taqılalmay"
 
 # tüklü
-#: ../gnome-panel/panel-menu-items.c:672
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "%s taqılsın"
 
 # tüklü
-#: ../gnome-panel/panel-menu-items.c:880
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
-msgstr "Çetleştirilebilgen Müitler"
+msgstr "Çetleştirilebilgen Vasatlar"
 
-#: ../gnome-panel/panel-menu-items.c:967
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "Şebeke Yerleri"
 
-#: ../gnome-panel/panel-menu-items.c:1006
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
-msgstr "Şahsiy fihristiñizni aç"
+msgstr "Şahsiy cilbentiñizni aç"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1025
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: ../gnome-panel/panel-menu-items.c:1026
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
-msgstr "Masaüstüñizniñ mündericesini bir fihristte aç"
+msgstr "Masaüstüñizniñ mündericesini bir cilbentte aç"
 
-#: ../gnome-panel/panel-menu-items.c:1417
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Yerler"
 
-#: ../gnome-panel/panel-menu-items.c:1446
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "Sistem"
 
@@ -2184,7 +2261,7 @@ msgstr "Sistem"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1527
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2193,14 +2270,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1539
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "%s Tışarı İmzalandırılsın..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1543
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -2411,41 +2488,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf mantıqiy qıymeti '%s' oqulğanda hata: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:128
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../libpanel-applet/panel-test-applets.c:53
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Töpe"
 
-#: ../gnome-panel/panel-properties-dialog.c:129
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Tüp"
 
-#: ../gnome-panel/panel-properties-dialog.c:130
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Sol"
 
-#: ../gnome-panel/panel-properties-dialog.c:131
+#: ../gnome-panel/panel-properties-dialog.c:126
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Sağ"
 
-#: ../gnome-panel/panel-properties-dialog.c:952
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Çekmece Hasiyetleri"
 
-#: ../gnome-panel/panel-properties-dialog.c:1067
+#: ../gnome-panel/panel-properties-dialog.c:981
 #: ../gnome-panel/panel-run-dialog.c:2019
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Dosye '%s' yüklenalmay: '%s'."
 
-#: ../gnome-panel/panel-properties-dialog.c:1073
+#: ../gnome-panel/panel-properties-dialog.c:987
 msgid "Could not display properties dialog"
 msgstr "Hasiyetler dialogı kösterilamadı"
 
@@ -2596,7 +2673,7 @@ msgstr "Demi qullanılğan vesiqalar cedvelindeki episi unsurlarnı temizle"
 #: ../gnome-panel/panel-run-dialog.c:391
 #, c-format
 msgid "Could not run command '%s'"
-msgstr "'%s' emri çaptırılamadı"
+msgstr "'%s' buyruğı çaptırılamadı"
 
 #: ../gnome-panel/panel-run-dialog.c:444
 #, c-format
@@ -2605,7 +2682,7 @@ msgstr "'%s', UTF-8'den çevirilamadı"
 
 #: ../gnome-panel/panel-run-dialog.c:1256
 msgid "Choose a file to append to the command..."
-msgstr "Emirniñ soñuna eklenecek bir dosye saylañız..."
+msgstr "Buyruqnıñ soñuna eklenecek bir dosye saylañız..."
 
 #: ../gnome-panel/panel-run-dialog.c:1634
 #: ../gnome-panel/panel-run-dialog.ui.h:8
@@ -2615,7 +2692,7 @@ msgstr "Tasvirini körmek içün bir uyğulama saylañız."
 #: ../gnome-panel/panel-run-dialog.c:1672
 #, c-format
 msgid "Will run command: '%s'"
-msgstr "Çaptırılacaq emir: '%s'"
+msgstr "Çaptırılacaq buyruq: '%s'"
 
 #: ../gnome-panel/panel-run-dialog.c:1705
 #, c-format
@@ -2633,20 +2710,20 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"İsmi emir satrınıñ soñuna eklenecek bir dosye içün kezinmek üzre bu dögmege "
-"çertiñiz."
+"İsmi buyruq satrınıñ soñuna eklenecek bir dosye içün kezinmek üzre bu "
+"dögmege çertiñiz."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Saylanğan uyğulamanı yaki emir kirişi alanındaki emirni çaptırmaq içün bu "
-"dögmege çertiñiz."
+"Saylanğan uyğulamanı yaki buyruq kirişi alanındaki buyruqnı çaptırmaq içün "
+"bu dögmege çertiñiz."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
-msgstr "Emir işaretçigi"
+msgstr "Buyruq işaretçigi"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "List of known applications"
@@ -2666,7 +2743,7 @@ msgstr "_Dosye ile çaptır..."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
-msgstr "Emirni bir terminal penceresinde çaptırmaq içün bu qutunı saylañız."
+msgstr "Buyruqnı bir terminal penceresinde çaptırmaq içün bu qutunı saylañız."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
@@ -2674,7 +2751,7 @@ msgstr "Bilingen _uyğulamalarnıñ cedvelini köster"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:11
 msgid "The icon of the command to be run."
-msgstr "Çaptırılacaq emirniñ işaretçigi."
+msgstr "Çaptırılacaq buyruqnıñ işaretçigi."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:12
 #: ../gnome-panel/panel-stock-icons.c:90
@@ -2699,68 +2776,68 @@ msgstr "Panelni Gizle"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Expanded Edge Panel"
 msgstr "Töpedeki Ağzı Cayıldırılğan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Centered Panel"
 msgstr "Töpedeki Merkezlengen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Floating Panel"
 msgstr "Töpedeki Yaldavuq Panel"
 
 # tüklü
-#: ../gnome-panel/panel-toplevel.c:1601
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Edge Panel"
 msgstr "Töpedeki Ağız Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Expanded Edge Panel"
 msgstr "Tüpteki Ağzı Cayıldırılğan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Centered Panel"
 msgstr "Tüpteki Merkezlengen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Floating Panel"
 msgstr "Tüpteki Yaldavuq Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Edge Panel"
 msgstr "Tüpteki Kenar Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Expanded Edge Panel"
 msgstr "Soldaki Ağzı Cayıldırılğan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Centered Panel"
 msgstr "Soldaki Merkezlengen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Floating Panel"
 msgstr "Soldaki Yaldavuq Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Edge Panel"
 msgstr "Soldaki Ağız Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Expanded Edge Panel"
 msgstr "Sağdaki Ağzı Cayıldırılğan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Centered Panel"
 msgstr "Sağdaki Merkezlengen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Floating Panel"
 msgstr "Sağdaki Yaldavuq Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1622
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Edge Panel"
 msgstr "Sağdaki Ağız Paneli"
 
@@ -2827,7 +2904,7 @@ msgid ""
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
 "Eger doğru ise, panelniñ er eki yanına panelni ekrannıñ ağzına sadece bir "
-"dögme körünir şekilge areket ettirmek içün qullanıla bilgen dögmeler "
+"dögme körünir şekilge areket ettirmek içün qullanılabilgen dögmeler "
 "yerleştirilecek."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
@@ -2883,8 +2960,8 @@ msgid ""
 msgstr ""
 "Eger doğru ise, panel bütün ekran kenişligini (eger vertikal panel ise, "
 "yüksekligini) qaplaycaq. Bu kelişte panel ancaq ekrannıñ bir ucunda "
-"yerleştirile bilir. Eger yañlış ise; panel sadece uyğulamaçıqlarnı, "
-"fırlatıcılarnı ve dögmelerni qonaqlay bilecek qadar iri olacaq."
+"yerleştirilebilir. Eger yañlış ise; panel sadece uyğulamaçıqlarnı, "
+"fırlatıcılarnı ve dögmelerni qonaqlaybilecek qadar iri olacaq."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2915,7 +2992,7 @@ msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
-"Xinerama tesbitinde, er ferdiy ekranda panel bulundıra bilirsiñiz. Bu "
+"Xinerama tesbitinde, er ferdiy ekranda panel bulundırabilirsiñiz. Bu "
 "anahtar, panelniñ kösterilgeni cari ekrannı belirtir."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
@@ -3080,7 +3157,7 @@ msgstr ""
 "\". Cayıldırılğan kelişte bu anahtar, panelniñ qaysı ekran ağzında "
 "bulunacağını belirtir. Cayıldırılmağan kelişte \"top\" ve \"bottom\" "
 "arasındaki farq daa az müimdir - er ekisi de bunıñ ufqiy bir panel "
-"olğanını belirtir - faqat kene de bazı panel nesneleriniñ nasıl davranuvı "
+"olğanını belirtir - faqat kene de bazı panel nesneleriniñ nasıl davranması "
 "lâzim olğanı aqqında faydalı bir kinaye berir. Meselâ, \"top\" panelinde "
 "menü dögmesi menüsini panelniñ altında peyda eter, albuki \"bottom\" "
 "panelinde menü panelniñ üstünde peyda etilir."
@@ -3101,7 +3178,7 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
-"Bu, bir panelni kimliklendirmek içün qullana bilecegiñiz, insanca oqunaqlı "
+"Bu, bir panelni kimliklendirmek içün qullanabilecegiñiz, insanca oqunaqlı "
 "bir isimdir. Onıñ asıl muradı, panelniñ pencere serlevası olaraq hızmet "
 "etmektir ki, bu, paneller arasında yürsetkende faydalıdır."
 
@@ -3126,7 +3203,7 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"Çoqlu-ekran tesbitinde, er ferdiy ekranda paneller bulundıra bilirsiñiz. Bu "
+"Çoqlu-ekran tesbitinde, er ferdiy ekranda paneller bulundırabilirsiñiz. Bu "
 "anahtar, panelniñ üzerinde kösterilecegi ağımdaki ekrannı belirtir."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
@@ -3153,31 +3230,31 @@ msgstr "Panelniñ Y koordinatı"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Panelniñ Y koordinatı, ekrannıñ tübünden başlayaraq"
 
-#: ../gnome-panel/panel-util.c:323
+#: ../gnome-panel/panel-util.c:306
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "'%s' işaretçigi tapılmadı"
 
-#: ../gnome-panel/panel-util.c:426
+#: ../gnome-panel/panel-util.c:409
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "'%s' ifa etilamadı"
 
-#: ../gnome-panel/panel-util.c:662
+#: ../gnome-panel/panel-util.c:645
 msgid "file"
 msgstr "dosye"
 
-#: ../gnome-panel/panel-util.c:839
+#: ../gnome-panel/panel-util.c:822
 msgid "Home Folder"
-msgstr "Ev Fihristi"
+msgstr "Ev Cilbenti"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:851
+#: ../gnome-panel/panel-util.c:834
 msgid "File System"
 msgstr "Dosye Sistemi"
 
-#: ../gnome-panel/panel-util.c:998
+#: ../gnome-panel/panel-util.c:1007
 msgid "Search"
 msgstr "Qıdıruv"
 
@@ -3186,7 +3263,7 @@ msgstr "Qıdıruv"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1044
+#: ../gnome-panel/panel-util.c:1053
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3196,11 +3273,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "URL Aç: %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1309
 msgid "Delete this drawer?"
 msgstr "Bu çekmece silinsinmi?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3208,11 +3285,11 @@ msgstr ""
 "Bir çekmece silingende, bahis mavzusı çekmece ve onıñ \n"
 "tesbitleri coyulacaqtır."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1313
 msgid "Delete this panel?"
 msgstr "Bu panel silinsinmi?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1314
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3304,7 +3381,15 @@ msgstr "_Uyğulamaçıq:"
 
 #: ../libpanel-applet/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
-msgstr "_Tercihler Fihristi:"
+msgstr "_Tercihler Cilbenti:"
+
+# tüklü
+#~ msgid "If true, display time in Universal Coordinated Time zone."
+#~ msgstr ""
+#~ "Eger doğru ise, vaqıtnı Alemiy Eşkütümli Zaman (UTC) tilimine göre köster."
+
+#~ msgid "Browse icons"
+#~ msgstr "İşaretçiklerni kezin"
 
 #~ msgid "Failed to launch time configuration tool: %s"
 #~ msgstr "Vaqıt ayarlama aleti fırlatılamadı: %s"

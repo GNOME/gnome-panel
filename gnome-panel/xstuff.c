@@ -595,7 +595,7 @@ xstuff_zoom_animate (GtkWidget *widget,
 		rect = *opt_rect;
 	else {
 		gdk_window_get_origin (widget->window, &rect.x, &rect.y);
-		if (GTK_WIDGET_NO_WINDOW (widget)) {
+		if (!gtk_widget_get_has_window (widget)) {
 			rect.x += widget->allocation.x;
 			rect.y += widget->allocation.y;
 		}

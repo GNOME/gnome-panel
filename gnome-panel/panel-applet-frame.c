@@ -694,7 +694,7 @@ panel_applet_frame_paint (GtkWidget    *widget,
 	if (!frame->priv->has_handle)
 		return;
   
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if (gtk_widget_is_drawable (widget)) {
 		GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
 		switch (frame->priv->orientation) {
@@ -728,7 +728,7 @@ static gboolean
 panel_applet_frame_expose (GtkWidget      *widget,
 			   GdkEventExpose *event)
 {
-	if (GTK_WIDGET_DRAWABLE (widget)) {
+	if (gtk_widget_is_drawable (widget)) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->expose_event (widget, event);
 
 		panel_applet_frame_paint (widget, &event->area);
@@ -779,7 +779,7 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	requisition->width = 0;
 	requisition->height = 0;
   
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child)) {
+	if (bin->child && gtk_widget_get_visible (bin->child)) {
 		gtk_widget_size_request (bin->child, &child_requisition);
 
 		requisition->width  = child_requisition.width;
@@ -875,14 +875,14 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	/* If the child allocation changed, that means that the frame is drawn
 	 * in a new place, so we must redraw the entire widget.
 	 */
-	if (GTK_WIDGET_MAPPED (widget) &&
+	if (gtk_widget_get_mapped (widget) &&
 	    (new_allocation.x != frame->priv->child_allocation.x ||
 	     new_allocation.y != frame->priv->child_allocation.y ||
 	     new_allocation.width != frame->priv->child_allocation.width ||
 	     new_allocation.height != frame->priv->child_allocation.height))
 	 	gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
 
-	if (GTK_WIDGET_REALIZED (widget)) {
+	if (gtk_widget_get_realized (widget)) {
 		gdk_window_move_resize (widget->window,
 			allocation->x + GTK_CONTAINER (widget)->border_width,
 			allocation->y + GTK_CONTAINER (widget)->border_width,
@@ -890,7 +890,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 			MAX (allocation->height - GTK_CONTAINER (widget)->border_width * 2, 0));
 	}
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+	if (bin->child && gtk_widget_get_visible (bin->child))
 		gtk_widget_size_allocate (bin->child, &new_allocation);
   
 	frame->priv->child_allocation = new_allocation;
