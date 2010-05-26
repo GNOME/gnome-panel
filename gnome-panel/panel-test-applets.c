@@ -12,8 +12,12 @@
 #include <gtk/gtk.h>
 #include <gconf/gconf.h>
 
-#include <gnome-panel/panel-applet-container.h>
-#include <gnome-panel/panel-applets-manager.h>
+#include <libpanel-util/panel-cleanup.h>
+
+#include <libpanel-applet-private/panel-applet-container.h>
+#include <libpanel-applet-private/panel-applets-manager-dbus.h>
+
+#include "panel-modules.h"
 
 G_GNUC_UNUSED void on_execute_button_clicked (GtkButton *button, gpointer dummy);
 
@@ -253,13 +257,14 @@ setup_combo (GtkWidget  *combo_box,
 static void
 setup_options (void)
 {
-	GList           *applet_list, *l;
-	int              i;
-	char            *prefs_dir;
-	char            *unique_key;
-	GtkListStore    *model;
-	GtkTreeIter      iter;
-	GtkCellRenderer *renderer;
+	PanelAppletsManager *manager;
+	GList               *applet_list, *l;
+	int                  i;
+	char                *prefs_dir;
+	char                *unique_key;
+	GtkListStore        *model;
+	GtkTreeIter          iter;
+	GtkCellRenderer     *renderer;
 
 	model = gtk_list_store_new (NUMBER_COLUMNS,
 				    G_TYPE_STRING,
@@ -268,7 +273,8 @@ setup_options (void)
 	gtk_combo_box_set_model (GTK_COMBO_BOX (applet_combo),
 				 GTK_TREE_MODEL (model));
 
-	applet_list = panel_applets_manager_get_applets ();
+	manager = g_object_new (PANEL_TYPE_APPLETS_MANAGER_DBUS, NULL);
+	applet_list = PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applets (manager);
 	for (l = applet_list, i = 1; l; l = g_list_next (l), i++) {
 		PanelAppletInfo *info = (PanelAppletInfo *)l->data;
 
@@ -279,6 +285,7 @@ setup_options (void)
 				    -1);
 	}
 	g_list_free (applet_list);
+	g_object_unref (manager);
 
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (applet_combo),
@@ -325,18 +332,19 @@ main (int argc, char **argv)
 		return 1;
 	}
 
+	panel_modules_ensure_loaded ();
+
 	if (g_file_test ("../libpanel-applet", G_FILE_TEST_IS_DIR)) {
 		applets_dir = g_strdup_printf ("%s:../libpanel-applet", PANEL_APPLETS_DIR);
-		g_setenv ("PANEL_APPLETS_DIR", applets_dir, FALSE);
+		g_setenv ("GNOME_PANEL_APPLETS_DIR", applets_dir, FALSE);
 		g_free (applets_dir);
 	}
-
-	panel_applets_manager_init ();
 
 	if (cli_iid) {
 		load_applet_from_command_line ();
 		gtk_main ();
-		panel_applets_manager_shutdown ();
+		panel_cleanup_do ();
+
 		return 0;
 	}
 
@@ -349,7 +357,7 @@ main (int argc, char **argv)
 	if (error) {
 		g_warning ("Error loading \"%s\": %s", uifile, error->message);
 		g_error_free (error);
-		panel_applets_manager_shutdown ();
+		panel_cleanup_do ();
 
 		return 1;
 	}
@@ -374,7 +382,7 @@ main (int argc, char **argv)
 
 	gtk_main ();
 
-	panel_applets_manager_shutdown ();
+	panel_cleanup_do ();
 
 	return 0;
 }

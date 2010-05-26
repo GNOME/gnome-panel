@@ -1,6 +1,6 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
-SUBDIRS = libegg libpanel-util
+SUBDIRS = libegg libpanel-applet-private libpanel-util
 
 NULL =
 
@@ -14,6 +14,7 @@ INCLUDES =							\
 	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DDATADIR=\""$(datadir)"\"				\
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\"			\
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"			\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
@@ -63,7 +64,6 @@ panel_sources =			\
 	panel-context-menu.c 	\
 	launcher.c		\
 	panel-applet-frame.c	\
-	panel-applet-container.c \
 	panel-applets-manager.c	\
 	panel-shell.c		\
 	panel-background.c	\
@@ -88,6 +88,8 @@ panel_sources =			\
 	panel-lockdown.c	\
 	panel-addto.c		\
 	panel-ditem-editor.c	\
+	panel-modules.c		\
+	panel-applet-info.c	\
 	$(NULL)
 
 panel_headers =			\
@@ -110,7 +112,6 @@ panel_headers =			\
 	panel-context-menu.h 	\
 	launcher.h		\
 	panel-applet-frame.h	\
-	panel-applet-container.h \
 	panel-applets-manager.h	\
 	panel-shell.h		\
 	panel-background.h	\
@@ -137,6 +138,8 @@ panel_headers =			\
 	panel-addto.h		\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
+	panel-modules.h		\
+	panel-applet-info.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
@@ -145,9 +148,10 @@ gnome_panel_SOURCES =			\
 	$(NULL)
 
 gnome_panel_LDADD =		\
-	$(top_builddir)/gnome-panel/libegg/libegg.la \
-	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
-	$(PANEL_LIBS)		\
+	$(top_builddir)/gnome-panel/libegg/libegg.la					\
+	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
+	$(PANEL_LIBS)									\
 	$(X_LIBS)
 
 gnome_panel_LDFLAGS = -export-dynamic
@@ -182,13 +186,17 @@ gnome-panel-add: gnome-panel-add.in Makefile
 	$(AM_V_at)chmod a+x $@
 
 panel_test_applets_SOURCES =		\
-	panel-applet-container.c	\
+	panel-modules.c			\
+	panel-applet-info.c		\
 	panel-applets-manager.c		\
 	panel-marshal.c			\
 	panel-test-applets.c
 
 panel_test_applets_LDFLAGS = -export-dynamic
-panel_test_applets_LDADD = $(PANEL_LIBS)
+panel_test_applets_LDADD = 		\
+	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private-mini.la	\
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la				\
+	$(PANEL_LIBS)
 
 EXTRA_DIST =					\
 	$(ui_DATA)				\

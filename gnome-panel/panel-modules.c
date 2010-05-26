@@ -1,0 +1,78 @@
+/*
+ * panel-modules.c
+ *
+ * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Vincent Untz <vuntz@gnome.org>
+ */
+
+#include <config.h>
+
+#include <gio/gio.h>
+
+#include <libpanel-applet-private/panel-applets-manager-dbus.h>
+
+#include "panel-applets-manager.h"
+
+#include "panel-modules.h"
+
+static void
+panel_modules_ensure_extension_points_registered (void)
+{
+	static gboolean registered_extensions = FALSE;
+	GIOExtensionPoint *ep;
+
+	if (!registered_extensions) {
+		registered_extensions = TRUE;
+
+		ep = g_io_extension_point_register (PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME);
+		g_io_extension_point_set_required_type (ep, PANEL_TYPE_APPLETS_MANAGER);
+	}
+ }
+
+void
+panel_modules_ensure_loaded (void)
+{
+	static gboolean loaded_dirs = FALSE;
+	const char *module_path;
+
+	panel_modules_ensure_extension_points_registered ();
+
+	if (!loaded_dirs) {
+		loaded_dirs = TRUE;
+
+		g_io_modules_scan_all_in_directory (PANEL_MODULES_DIR);
+
+		module_path = g_getenv ("GNOME_PANEL_EXTRA_MODULES");
+
+		if (module_path) {
+			gchar **paths;
+			int i;
+
+			paths = g_strsplit (module_path, ":", 0);
+
+			for (i = 0; paths[i] != NULL; i++)
+				g_io_modules_scan_all_in_directory (paths[i]);
+
+			g_strfreev (paths);
+		}
+
+		panel_applets_manager_dbus_get_type ();
+	}
+}

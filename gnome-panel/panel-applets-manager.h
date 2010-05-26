@@ -1,7 +1,8 @@
 /*
- * panel-applets-manmanger.h
+ * panel-applets-manager.h
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
+ * Copyright (C) 2010 Vincent Untz <vuntz@gnome.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -22,27 +23,67 @@
 #ifndef __PANEL_APPLETS_MANAGER_H__
 #define __PANEL_APPLETS_MANAGER_H__
 
-#include <glib.h>
+#include <glib-object.h>
+
+#include "panel-applet-frame.h"
+#include "panel-applet-info.h"
 
 G_BEGIN_DECLS
 
-typedef struct _PanelAppletInfo PanelAppletInfo;
+#define PANEL_TYPE_APPLETS_MANAGER		(panel_applets_manager_get_type ())
+#define PANEL_APPLETS_MANAGER(obj)		(G_TYPE_CHECK_INSTANCE_CAST ((obj), PANEL_TYPE_APPLETS_MANAGER, PanelAppletsManager))
+#define PANEL_APPLETS_MANAGER_CLASS(klass)	(G_TYPE_CHECK_CLASS_CAST ((klass), PANEL_TYPE_APPLETS_MANAGER, PanelAppletsManagerClass))
+#define PANEL_IS_APPLETS_MANAGER(obj)		(G_TYPE_CHECK_INSTANCE_TYPE ((obj), PANEL_TYPE_APPLETS_MANAGER))
+#define PANEL_IS_APPLETS_MANAGER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), PANEL_TYPE_APPLETS_MANAGER))
+#define PANEL_APPLETS_MANAGER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), PANEL_TYPE_APPLETS_MANAGER, PanelAppletsManagerClass))
 
-gboolean         panel_applets_manager_init                        (void);
-void             panel_applets_manager_shutdown                    (void);
-GList           *panel_applets_manager_get_applets                 (void);
+/**
+ * PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME:
+ *
+ * Extension point for #PanelAppletsManager functionality.
+ **/
+#define PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME "panel-applets-manager"
 
-gboolean         panel_applets_manager_factory_activate            (const gchar     *iid);
-void             panel_applets_manager_factory_deactivate          (const gchar     *iid);
+typedef struct _PanelAppletsManager		PanelAppletsManager;
+typedef struct _PanelAppletsManagerClass	PanelAppletsManagerClass;
 
-gboolean         panel_applets_manager_is_factory_in_process       (const gchar     *iid);
-PanelAppletInfo *panel_applets_manager_get_applet_info             (const gchar     *iid);
-PanelAppletInfo *panel_applets_manager_get_applet_info_from_old_id (const gchar     *iid);
+struct _PanelAppletsManagerClass {
+	GObjectClass parent_class;
 
-const gchar     *panel_applet_info_get_iid                         (PanelAppletInfo *info);
-const gchar     *panel_applet_info_get_name                        (PanelAppletInfo *info);
-const gchar     *panel_applet_info_get_description                 (PanelAppletInfo *info);
-const gchar     *panel_applet_info_get_icon                        (PanelAppletInfo *info);
+	GList *            (*get_applets)           (PanelAppletsManager  *manager);
+
+	gboolean           (*factory_activate)      (PanelAppletsManager  *manager,
+						     const gchar          *iid);
+	gboolean           (*factory_deactivate)    (PanelAppletsManager  *manager,
+						     const gchar          *iid);
+
+	PanelAppletInfo  * (*get_applet_info)       (PanelAppletsManager  *manager,
+						     const gchar          *iid);
+
+	PanelAppletInfo  * (*get_applet_info_from_old_id) (PanelAppletsManager  *manager,
+							   const gchar          *iid);
+
+	gboolean           (*load_applet)           (PanelAppletsManager         *manager,
+						     const gchar                 *iid,
+						     PanelAppletFrameActivating  *frame_act);
+};
+
+struct _PanelAppletsManager {
+	GObject parent;
+};
+
+GType             panel_applets_manager_get_type                    (void);
+
+GList            *panel_applets_manager_get_applets                 (void);
+
+gboolean          panel_applets_manager_factory_activate            (const gchar     *iid);
+void              panel_applets_manager_factory_deactivate          (const gchar     *iid);
+
+PanelAppletInfo  *panel_applets_manager_get_applet_info             (const gchar     *iid);
+PanelAppletInfo  *panel_applets_manager_get_applet_info_from_old_id (const gchar     *iid);
+
+gboolean          panel_applets_manager_load_applet                 (const gchar                *iid,
+								     PanelAppletFrameActivating *frame_act);
 
 G_END_DECLS
 

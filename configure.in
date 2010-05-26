@@ -269,6 +269,9 @@ else
 	have_randr=no
 fi
 
+dnl Modules dir
+AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
+
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
 
@@ -325,6 +328,7 @@ icons/48x48/Makefile
 icons/scalable/Makefile
 gnome-panel/Makefile
 gnome-panel/libegg/Makefile
+gnome-panel/libpanel-applet-private/Makefile
 gnome-panel/libpanel-util/Makefile
 gnome-panel/gnome-panel.desktop.in
 libpanel-applet/libpanelapplet-2.0.pc
