@@ -441,7 +441,7 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 						"IDL:GNOME/Vertigo/PanelAppletShell:1.0",
 						&env);
 	if (BONOBO_EX (&env)) {
-		g_warning (_("Unable to obtain AppletShell interface from control\n"));
+		g_warning ("Unable to obtain AppletShell interface from control\n");
 
 		retval = CORBA_OBJECT_NIL;
 	}

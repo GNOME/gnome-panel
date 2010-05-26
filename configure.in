@@ -1,7 +1,7 @@
 AC_INIT([gnome-panel], [2.30.1],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2])
+AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -439,6 +439,7 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Warn about deprecations:       ${enable_deprecations}
 
+        Bonobo applets support:        ${HAVE_BONOBO}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Evolution-Data-Server support: ${HAVE_EDS}
         PolicyKit support:             ${HAVE_POLKIT}

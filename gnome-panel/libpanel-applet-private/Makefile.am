@@ -3,6 +3,7 @@ NULL =
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
+	-I$(top_srcdir)/gnome-panel				\
 	-I$(top_builddir)/gnome-panel				\
 	-I$(top_builddir)/gnome-panel/libpanel-applets-private	\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
