@@ -715,12 +715,10 @@ xstuff_x_error_handler (Display *display, XErrorEvent *error)
 	if (!error->error_code)
 		return 0;
 
-	/*
-	 * If we got a BadDrawable or a BadWindow, we ignore it for
-	 * now.  FIXME: We need to somehow distinguish real errors
-	 * from X-server-induced errors.  Keeping a list of windows
-	 * for which we will ignore BadDrawables would be a good idea.
-	 */
+	/* If we got a BadDrawable or a BadWindow, we ignore it for now.
+	 * FIXME: We need to somehow distinguish real errors from
+	 * X-server-induced errors. Keeping a list of windows for which we will
+	 * ignore BadDrawables would be a good idea.  */
 	if (error->error_code == BadDrawable ||
 	    error->error_code == BadWindow)
 		return 0;

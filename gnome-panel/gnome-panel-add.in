@@ -111,11 +111,12 @@ class PanelAdder:
             raise PanelAddException('Cannot find a panel identifier')
 
     def _get_applet_list(self):
-        dirs = os.getenv('PANEL_APPLETS_DIR')
+        dirs = os.getenv('GNOME_PANEL_APPLETS_DIR')
         if not dirs:
             dirs = PANEL_APPLETS_PATH
 
-        retval = dups = []
+        retval = []
+        dups = []
         for path in dirs.split(":"):
             if not os.path.isdir(path):
                 continue

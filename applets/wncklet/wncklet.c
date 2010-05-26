@@ -221,7 +221,7 @@ wncklet_factory (PanelApplet *applet,
 #ifdef WNCKLET_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("WnckletFactory",
 				 PANEL_TYPE_APPLET,
-				 "Windo	wNavigationApplets",
+				 "WindowNavigationApplets",
 				 wncklet_factory,
 				 NULL)
 #else

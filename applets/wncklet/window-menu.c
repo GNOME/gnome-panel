@@ -259,7 +259,7 @@ window_menu_applet_fill (PanelApplet *applet)
 				      window_menu_actions,
 				      G_N_ELEMENTS (window_menu_actions),
 				      window_menu);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WindowMenuApplet.xml", NULL);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "window-menu-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
 	g_free (ui_path);
 	g_object_unref (action_group);

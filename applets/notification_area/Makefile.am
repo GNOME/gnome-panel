@@ -55,7 +55,7 @@ notification_area_applet_CFLAGS =
 endif
 
 appletdir       = $(datadir)/gnome-panel/applets
-applet_in_files = GNOME_NotificationAreaApplet.panel-applet.in
+applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
@@ -78,13 +78,13 @@ org.gnome.panel.applet.NotificationAreaAppletFactory.service: $(service_in_files
             $< > $@
 endif
 
-uidir = $(datadir)/gnome-2.0/ui
-ui_DATA = GNOME_NotificationAreaApplet.xml
+uidir = $(datadir)/gnome-panel/ui
+ui_DATA = notification-area-menu.xml
 
-EXTRA_DIST =					\
-	GNOME_NotificationAreaApplet.panel-applet.in.in	\
-	$(ui_DATA)				\
-	$(service_in_files)			\
+EXTRA_DIST =								\
+	org.gnome.panel.NotificationAreaApplet.panel-applet.in.in	\
+	$(ui_DATA)							\
+	$(service_in_files)						\
 	na-marshal.list
 
 BUILT_SOURCES = na-marshal.c na-marshal.h

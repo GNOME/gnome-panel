@@ -45,13 +45,13 @@ FISH_BITMAPS =		\
 	footguy.png	\
 	monkey.png
 
-EXTRA_DIST =					\
-	wanda.svg				\
-	$(FISH_BITMAPS)				\
-	GNOME_FishApplet.panel-applet.in.in	\
-	$(service_in_files)			\
-	fish.schemas.in				\
-	$(ui_DATA)				\
+EXTRA_DIST =						\
+	wanda.svg					\
+	$(FISH_BITMAPS)					\
+	org.gnome.panel.FishApplet.panel-applet.in.in	\
+	$(service_in_files)				\
+	fish.schemas.in					\
+	$(ui_DATA)					\
 	$(xmlui_DATA)
 
 uidir		= $(datadir)/gnome-panel/ui
@@ -60,13 +60,13 @@ ui_DATA		= fish.ui
 fishbitmapsdir = $(datadir)/gnome-panel/pixmaps
 fishbitmaps_DATA = $(FISH_BITMAPS)
 
-xmluidir	= $(datadir)/gnome-2.0/ui
-xmlui_DATA	= GNOME_FishApplet.xml
+xmluidir 	= $(datadir)/gnome-panel/ui
+xmlui_DATA	= fish-menu.xml
 
 CLEANFILES = $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 appletdir       = $(datadir)/gnome-panel/applets
-applet_in_files = GNOME_FishApplet.panel-applet.in
+applet_in_files = org.gnome.panel.FishApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile

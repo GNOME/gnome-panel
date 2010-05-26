@@ -570,7 +570,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  pager);
-        gtk_widget_show (pager->applet);
+
+	gtk_widget_show (pager->applet);
 
 	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
 					    GTK_WIDGET (pager->applet));
@@ -581,7 +582,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
                                       pager_menu_actions,
                                       G_N_ELEMENTS (pager_menu_actions),
                                       pager);
-        ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WorkspaceSwitcherApplet.xml", NULL);
+        ui_path = g_build_filename (WNCK_MENU_UI_DIR, "workspace-switcher-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
 					   ui_path, action_group);
         g_free (ui_path);

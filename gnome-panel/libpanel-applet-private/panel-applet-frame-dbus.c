@@ -46,7 +46,7 @@ struct _PanelAppletFrameDBusPrivate
 	GCancellable         *bg_cancellable;
 };
 
-/* Keep in sync with panel-applet.h. Uggh. */	
+/* Keep in sync with panel-applet.h. Uggh. */
 typedef enum {
 	APPLET_FLAGS_NONE   = 0,
 	APPLET_EXPAND_MAJOR = 1 << 0,

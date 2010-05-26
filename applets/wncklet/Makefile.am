@@ -56,14 +56,14 @@ wnck_applet_CFLAGS =
 endif
 
 EXTRA_DIST = \
-	GNOME_Wncklet.panel-applet.in.in \
+	org.gnome.panel.Wncklet.panel-applet.in.in \
 	$(service_in_files) \
 	$(xmlui_DATA) \
 	$(schemas_in_files) \
 	$(ui_DATA)
 
 appletdir       = $(datadir)/gnome-panel/applets
-applet_in_files = GNOME_Wncklet.panel-applet.in
+applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
@@ -88,12 +88,12 @@ endif
 
 CLEANFILES = $(BUILT_SOURCES) $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
-xmluidir    = $(datadir)/gnome-2.0/ui
+xmluidir    = $(datadir)/gnome-panel/ui
 xmlui_DATA  = \
-	GNOME_WindowMenuApplet.xml \
-	GNOME_WorkspaceSwitcherApplet.xml \
-	GNOME_ShowDesktopApplet.xml \
-	GNOME_WindowListApplet.xml
+	window-menu-menu.xml \
+	workspace-switcher-menu.xml \
+	showdesktop-menu.xml \
+	window-list-menu.xml
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = workspace-switcher.schemas.in window-list.schemas.in 

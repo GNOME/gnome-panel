@@ -982,7 +982,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 		break;
 	}
 
-	/* Only the bonobo applets will do a late stop_loading */
+	/* Only the real applets will do a late stop_loading */
 	if (applet->type != PANEL_OBJECT_APPLET)
 		panel_applet_stop_loading (applet->id);
 

@@ -2638,7 +2638,7 @@ fill_clock_applet (PanelApplet *applet)
                                       clock_menu_actions,
                                       G_N_ELEMENTS (clock_menu_actions),
                                       cd);
-        ui_path = g_build_filename (CLOCK_MENU_UI_DIR, "GNOME_ClockApplet.xml", NULL);
+        ui_path = g_build_filename (CLOCK_MENU_UI_DIR, "clock-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (cd->applet),
 					   ui_path, action_group);
         g_free (ui_path);

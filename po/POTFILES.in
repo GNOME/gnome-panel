@@ -1,7 +1,6 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
-applets/clock/GNOME_ClockApplet.panel-applet.in.in
 applets/clock/calendar-client.c
 applets/clock/calendar-window.c
 applets/clock/clock.c
@@ -11,14 +10,15 @@ applets/clock/clock-location.c
 applets/clock/clock-location-tile.c
 applets/clock/clock-utils.c
 applets/clock/org.gnome.clockapplet.mechanism.policy.in
-applets/fish/GNOME_FishApplet.panel-applet.in.in
+applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in
 applets/fish/fish.c
 [type: gettext/glade]applets/fish/fish.ui
 applets/fish/fish.schemas.in
-applets/notification_area/GNOME_NotificationAreaApplet.panel-applet.in.in
-applets/notification_area/na-tray-manager.c
+applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in
 applets/notification_area/main.c
-applets/wncklet/GNOME_Wncklet.panel-applet.in.in
+applets/notification_area/na-tray-manager.c
+applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in
+applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in
 applets/wncklet/showdesktop.c
 applets/wncklet/window-list.c
 [type: gettext/glade]applets/wncklet/window-list.ui
@@ -67,10 +67,10 @@ gnome-panel/panel-run-dialog.c
 gnome-panel/panel-separator.c
 gnome-panel/panel-shell.c
 gnome-panel/panel-stock-icons.c
+gnome-panel/panel-test-applets.c
+[type: gettext/glade]gnome-panel/panel-test-applets.ui
 gnome-panel/panel-toplevel.c
 gnome-panel/panel-toplevel.schemas.in
 gnome-panel/panel-util.c
 gnome-panel/panel.c
-libpanel-applet/GNOME_Panel_TestApplet.panel-applet.in
-libpanel-applet/panel-test-applets.c
-[type: gettext/glade]libpanel-applet/panel-test-applets.ui
+libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in

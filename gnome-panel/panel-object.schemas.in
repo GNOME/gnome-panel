@@ -87,9 +87,10 @@
       <locale name="C">
         <short>Applet Bonobo IID</short>
         <long>
-          The Bonobo implementation ID of the applet - e.g.
-          "OAFIID:GNOME_ClockApplet". This key is only
-          relevant if the object_type key is "bonobo-applet".
+          This key is deprecated, following the migration to a new library for
+          applets. The Bonobo implementation ID of the applet - e.g.
+          "OAFIID:GNOME_ClockApplet". This key is only relevant if the
+          object_type key is "bonobo-applet".
         </long>
       </locale>
     </schema>
@@ -104,7 +105,7 @@
         <long>
           The implementation ID of the applet - e.g.
           "ClockAppletFactory::ClockApplet". This key is only
-          relevant if the object_type key is "panel-applet".
+          relevant if the object_type key is "bonobo-applet".
         </long>
       </locale>
     </schema>

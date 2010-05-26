@@ -18,7 +18,7 @@ libpanel_applet_2_la_SOURCES =		\
 	panel-applet-gconf.h
 
 libpanel_applet_2_la_LDFLAGS = \
-	-version-info $(LIB_PANEL_APPLET_LT_VERSION) 	\
+	-version-info $(LIB_PANEL_APPLET_LT_VERSION)	\
 	-no-undefined
 
 libpanel_applet_2_la_LIBADD  = \
@@ -46,10 +46,10 @@ BUILT_SOURCES = \
 
 $(libpanel_applet_2_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
-EXTRA_DIST =					\
-	GNOME_Panel_TestApplet.panel-applet.in	\
-	panel-applet-marshal.list		\
-	libpanelapplet-2.0.pc.in		\
+EXTRA_DIST =						\
+	org.gnome.panel.TestApplet.panel-applet.in	\
+	panel-applet-marshal.list			\
+	libpanelapplet-2.0.pc.in			\
 	libpanelapplet-2.0-uninstalled.pc.in
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
@@ -95,7 +95,7 @@ pkgconfig_DATA = libpanelapplet-2.0.pc
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
 appletdir       = $(datadir)/gnome-panel/applets
-applet_in_files = GNOME_Panel_TestApplet.panel-applet.in
+applet_in_files = org.gnome.panel.TestApplet.panel-applet.in
 noinst_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@

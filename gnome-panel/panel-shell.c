@@ -81,10 +81,9 @@ panel_shell_register (gboolean replace)
 
 	panel_cleanup_register (PANEL_CLEAN_FUNC (panel_shell_cleanup), NULL);
 
-	/* There isn't a sync version of g_bus_own_name,
-	 * so we have to requeste the name manually here.
-	 * there's no ui yet so it's safe using sync api
-	 */
+	/* There isn't a sync version of g_bus_own_name, so we have to requeste
+	 * the name manually here. There's no ui yet so it's safe to use this
+	 * sync api */
 	dbus_connection = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
 	if (dbus_connection == NULL) {
 		g_warning ("Cannot register the panel shell: %s", error->message);

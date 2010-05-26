@@ -19,16 +19,17 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "panel-applet-factory.h"
 #include "panel-applet.h"
 
-struct _PanelAppletFactory {
-	GObject            base;
+#include "panel-applet-factory.h"
 
-	gchar             *factory_id;
-	guint              n_applets;
-	GType              applet_type;
-	GClosure          *closure;
+struct _PanelAppletFactory {
+	GObject    base;
+
+	gchar     *factory_id;
+	guint      n_applets;
+	GType      applet_type;
+	GClosure  *closure;
 };
 
 struct _PanelAppletFactoryClass {
@@ -75,7 +76,8 @@ static void
 panel_applet_factory_applet_removed (PanelAppletFactory *factory,
 				     GObject            *applet)
 {
-	if (--factory->n_applets == 0)
+	factory->n_applets--;
+	if (factory->n_applets == 0)
 		g_object_unref (factory);
 }
 
@@ -124,6 +126,7 @@ set_applet_constructor_properties (GObject  *applet,
 		}
 			break;
 		default:
+			g_assert_not_reached ();
 			break;
 		}
 	}
@@ -152,7 +155,7 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 			       "closure", factory->closure,
 			       NULL);
 	factory->n_applets++;
-	g_object_weak_ref (applet, (GWeakNotify)panel_applet_factory_applet_removed, factory);
+	g_object_weak_ref (applet, (GWeakNotify) panel_applet_factory_applet_removed, factory);
 
 	set_applet_constructor_properties (applet, props);
 	g_variant_unref (props);

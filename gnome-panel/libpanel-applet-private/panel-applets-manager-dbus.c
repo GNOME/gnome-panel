@@ -74,7 +74,7 @@ panel_applet_factory_info_free (PanelAppletFactoryInfo *info)
 	g_free (info->id);
 	g_free (info->location);
 	g_list_foreach (info->applet_list,
-			(GFunc)panel_applet_info_free,
+			(GFunc) panel_applet_info_free,
 			NULL);
 	g_list_free (info->applet_list);
 	info->applet_list = NULL;
@@ -207,7 +207,7 @@ panel_applets_manager_get_applets_dirs (void)
 
 	paths = g_strsplit (dir, ":", 0);
 	for (i = 0; paths[i]; i++) {
-		if (g_slist_find_custom (retval, paths[i], (GCompareFunc)g_strcmp0))
+		if (g_slist_find_custom (retval, paths[i], (GCompareFunc) g_strcmp0))
 			continue;
 		retval = g_slist_prepend (retval, g_strdup (paths[i]));
 	}
@@ -252,31 +252,29 @@ applets_directory_changed (GFileMonitor     *monitor,
 			return;
 		}
 
-		/* Make sure we don't update an applet
-		 * that has changed in another source dir
-		 * unless it takes precedence over the
-		 * current one
-		 */
+		/* Make sure we don't update an applet that has changed in
+		 * another source dir unless it takes precedence over the
+		 * current one */
 		if (g_strcmp0 (info->srcdir, old_info->srcdir) == 0) {
-			g_hash_table_insert (manager->priv->applet_factories, g_strdup (info->id), info);
+			g_hash_table_replace (manager->priv->applet_factories, g_strdup (info->id), info);
 			return;
 		}
 
 		dirs = panel_applets_manager_get_applets_dirs ();
 
 		for (d = dirs; d; d = g_slist_next (d)) {
-			gchar *path = (gchar *)d->data;
+			gchar *path = (gchar *) d->data;
 
 			if (g_strcmp0 (path, old_info->srcdir) == 0) {
 				panel_applet_factory_info_free (info);
 				break;
 			} else if (g_strcmp0 (path, info->srcdir) == 0) {
-				g_hash_table_insert (manager->priv->applet_factories, g_strdup (info->id), info);
+				g_hash_table_replace (manager->priv->applet_factories, g_strdup (info->id), info);
 				break;
 			}
 		}
 
-		g_slist_foreach (dirs, (GFunc)g_free, NULL);
+		g_slist_foreach (dirs, (GFunc) g_free, NULL);
 		g_slist_free (dirs);
 	}
 		break;
@@ -286,20 +284,19 @@ applets_directory_changed (GFileMonitor     *monitor,
 	}
 }
 
-static gboolean
-panel_applets_manager_load_applet_infos (PanelAppletsManagerDBus *manager)
+static void
+panel_applets_manager_dbus_load_applet_infos (PanelAppletsManagerDBus *manager)
 {
 	GSList      *dirs, *d;
 	GDir        *dir;
 	const gchar *dirent;
 	GError      *error = NULL;
-	gboolean     retval = FALSE;
 
 	dirs = panel_applets_manager_get_applets_dirs ();
 	for (d = dirs; d; d = g_slist_next (d)) {
 		GFileMonitor *monitor;
 		GFile        *dir_file;
-		gchar        *path = (gchar *)d->data;
+		gchar        *path = (gchar *) d->data;
 
 		dir = g_dir_open (path, 0, &error);
 		if (!dir) {
@@ -343,7 +340,6 @@ panel_applets_manager_load_applet_infos (PanelAppletsManagerDBus *manager)
 			}
 
 			g_hash_table_insert (manager->priv->applet_factories, g_strdup (info->id), info);
-			retval = TRUE;
 		}
 
 		g_dir_close (dir);
@@ -351,8 +347,6 @@ panel_applets_manager_load_applet_infos (PanelAppletsManagerDBus *manager)
 	}
 
 	g_slist_free (dirs);
-
-	return retval;
 }
 
 static GList *
@@ -368,7 +362,7 @@ panel_applets_manager_dbus_get_applets (PanelAppletsManager *manager)
 	while (g_hash_table_iter_next (&iter, &key, &value)) {
 		PanelAppletFactoryInfo *info;
 
-		info = (PanelAppletFactoryInfo *)value;
+		info = (PanelAppletFactoryInfo *) value;
 		retval = g_list_concat (retval, g_list_copy (info->applet_list));
 	}
 
@@ -431,7 +425,7 @@ panel_applets_manager_dbus_factory_activate (PanelAppletsManager *manager,
 		return FALSE;
 	}
 
-	if (!g_module_symbol (info->module, "_panel_applet_shlib_factory", (gpointer *)&activate_applet)) {
+	if (!g_module_symbol (info->module, "_panel_applet_shlib_factory", (gpointer *) &activate_applet)) {
 		/* FIXME: use a GError? */
 		g_warning ("Failed to load applet %s: %s\n",
 			   iid, g_module_error ());
@@ -474,10 +468,10 @@ panel_applets_manager_dbus_factory_deactivate (PanelAppletsManager *manager,
 	if (!info->module)
 		return TRUE;
 
-	if (--info->n_applets == 0) {
-		/* FIXME: we should close the module here,
-		 * however applet types are registered static
-		 */
+	info->n_applets--;
+	if (info->n_applets == 0) {
+		/* FIXME: we should close the module here, however applet types
+		 * are registered static */
 #if 0
 		g_module_close (info->module);
 		info->module = NULL;
@@ -499,7 +493,7 @@ panel_applets_manager_dbus_get_applet_info (PanelAppletsManager *manager,
 		return NULL;
 
 	for (l = info->applet_list; l; l = g_list_next (l)) {
-		PanelAppletInfo *ainfo = (PanelAppletInfo *)l->data;
+		PanelAppletInfo *ainfo = (PanelAppletInfo *) l->data;
 
 		if (g_strcmp0 (panel_applet_info_get_iid (ainfo), iid) == 0)
 			return ainfo;
@@ -522,7 +516,7 @@ panel_applets_manager_dbus_get_applet_info_from_old_id (PanelAppletsManager *man
 		PanelAppletFactoryInfo *info;
 		GList                  *l;
 
-		info = (PanelAppletFactoryInfo *)value;
+		info = (PanelAppletFactoryInfo *) value;
 		if (!info->has_old_ids)
 			continue;
 
@@ -531,7 +525,7 @@ panel_applets_manager_dbus_get_applet_info_from_old_id (PanelAppletsManager *man
 			gint             i = 0;
 			const gchar * const *old_ids;
 
-			ainfo = (PanelAppletInfo *)l->data;
+			ainfo = (PanelAppletInfo *) l->data;
 
 			old_ids = panel_applet_info_get_old_ids (ainfo);
 
@@ -563,7 +557,7 @@ panel_applets_manager_dbus_finalize (GObject *object)
 	PanelAppletsManagerDBus *manager = PANEL_APPLETS_MANAGER_DBUS (object);
 
 	if (manager->priv->monitors) {
-		g_list_foreach (manager->priv->monitors, (GFunc)g_object_unref, NULL);
+		g_list_foreach (manager->priv->monitors, (GFunc) g_object_unref, NULL);
 		g_list_free (manager->priv->monitors);
 		manager->priv->monitors = NULL;
 	}
@@ -588,7 +582,7 @@ panel_applets_manager_dbus_init (PanelAppletsManagerDBus *manager)
 								 (GDestroyNotify) g_free,
 								 (GDestroyNotify) panel_applet_factory_info_free);
 
-	panel_applets_manager_load_applet_infos (manager);
+	panel_applets_manager_dbus_load_applet_infos (manager);
 }
 
 static void

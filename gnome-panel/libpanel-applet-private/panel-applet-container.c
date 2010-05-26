@@ -95,7 +95,7 @@ panel_applet_container_init (PanelAppletContainer *container)
 	container->priv->pending_ops = g_hash_table_new_full (g_direct_hash,
 							      g_direct_equal,
 							      NULL,
-							      (GDestroyNotify)g_object_unref);
+							      (GDestroyNotify) g_object_unref);
 
 	gtk_container_add (GTK_CONTAINER (container),
 			   container->priv->socket);
@@ -343,7 +343,7 @@ on_proxy_appeared (GDBusConnection *connection,
 					    "PropertiesChanged",
 					    g_dbus_proxy_get_object_path (proxy),
 					    PANEL_APPLET_INTERFACE,
-					    (GDBusSignalCallback)on_property_changed,
+					    (GDBusSignalCallback) on_property_changed,
 					    container, NULL);
 
 	g_simple_async_result_complete (result);
@@ -392,7 +392,7 @@ get_applet_cb (GObject      *source_object,
 						 PANEL_APPLET_INTERFACE,
 						 G_TYPE_DBUS_PROXY,
 						 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
-						 (GBusProxyAppearedCallback)on_proxy_appeared,
+						 (GBusProxyAppearedCallback) on_proxy_appeared,
 						 NULL,
 						 result,
 						 NULL);
@@ -497,7 +497,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 				  (GBusNameAppearedCallback) on_factory_appeared,
 				  NULL,
 				  data,
-				  (GDestroyNotify)applet_factory_data_free);
+				  (GDestroyNotify) applet_factory_data_free);
 
 	g_free (bus_name);
 }
@@ -650,7 +650,7 @@ get_applet_property_cb (GObject      *source_object,
 		value = g_variant_get_variant (item);
 		g_variant_unref (item);
 		g_simple_async_result_set_op_res_gpointer (result, value,
-							   (GDestroyNotify)g_variant_unref);
+							   (GDestroyNotify) g_variant_unref);
 		g_variant_unref (retvals);
 	}
 

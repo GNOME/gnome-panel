@@ -91,16 +91,9 @@ struct _PanelAppletClass {
 GType              panel_applet_get_type             (void) G_GNUC_CONST;
  
 GtkWidget         *panel_applet_new                  (void);
-guint32            panel_applet_get_xid              (PanelApplet *applet,
-						      GdkScreen   *screen);
-const gchar       *panel_applet_get_object_path      (PanelApplet *applet);
 
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
-void               panel_applet_set_orient           (PanelApplet      *applet,
-						      PanelAppletOrient orient);
 guint              panel_applet_get_size             (PanelApplet *applet);
-void               panel_applet_set_size             (PanelApplet *applet,
-						      guint        size);
 PanelAppletBackgroundType
                    panel_applet_get_background       (PanelApplet *applet,
 						      /* return values */
@@ -125,20 +118,17 @@ void      	   panel_applet_set_size_hints       (PanelApplet      *applet,
 						      int               n_elements,
 						      int               base_size);
 
-gboolean           panel_applet_get_locked           (PanelApplet  *applet);
-void               panel_applet_set_locked           (PanelApplet  *applet,
-						      gboolean      locked);
 gboolean           panel_applet_get_locked_down      (PanelApplet  *applet);
-void               panel_applet_set_locked_down      (PanelApplet  *applet,
-						      gboolean      locked_down);
+
 void               panel_applet_request_focus        (PanelApplet  *applet,
 						      guint32       timestamp);
+
 void               panel_applet_setup_menu           (PanelApplet        *applet,
 						      const gchar        *xml,
 						      GtkActionGroup     *action_group);
-void               panel_applet_setup_menu_from_file (PanelApplet                *applet,
-						      const gchar                *filename,
-						      GtkActionGroup        *action_group);
+void               panel_applet_setup_menu_from_file (PanelApplet        *applet,
+						      const gchar        *filename,
+						      GtkActionGroup     *action_group);
 
 int                panel_applet_factory_main          (const gchar		  *factory_id,
 						       gboolean                    out_process,

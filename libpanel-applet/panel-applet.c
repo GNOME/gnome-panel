@@ -31,8 +31,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cairo.h>
 #include <glib/gi18n-lib.h>
+#include <cairo.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
@@ -303,8 +303,7 @@ panel_applet_set_preferences_key (PanelApplet *applet,
 	if (applet->priv->prefs_key == prefs_key)
 		return;
 
-	if (applet->priv->prefs_key && prefs_key &&
-	    strcmp (applet->priv->prefs_key, prefs_key) == 0)
+	if (g_strcmp0 (applet->priv->prefs_key, prefs_key) == 0)
 		return;
 
 	if (applet->priv->prefs_key) {
@@ -421,9 +420,7 @@ panel_applet_set_size_hints (PanelApplet *applet,
 {
 	gint i;
 
-	/* Make sure property has really changed
-	 * to avoid bus traffic
-	 */
+	/* Make sure property has really changed to avoid bus traffic */
 	if (!panel_applet_size_hints_changed (applet, size_hints, n_elements, base_size))
 		return;
 
@@ -476,7 +473,8 @@ panel_applet_get_size (PanelApplet *applet)
 	return applet->priv->size;
 }
 
-void
+/* Applets cannot set their size, so API is not public. */
+static void
 panel_applet_set_size (PanelApplet *applet,
 		       guint        size)
 {
@@ -501,7 +499,8 @@ panel_applet_get_orient (PanelApplet *applet)
 	return applet->priv->orient;
 }
 
-void
+/* Applets cannot set their orientation, so API is not public. */
+static void
 panel_applet_set_orient (PanelApplet      *applet,
 			 PanelAppletOrient orient)
 {
@@ -518,15 +517,19 @@ panel_applet_set_orient (PanelApplet      *applet,
 	g_object_notify (G_OBJECT (applet), "orient");
 }
 
-gboolean
+#if 0
+/* Locked should not be public API: it's not useful for applet writers to know
+ * if the applet is locked (as opposed to locked_down). */
+static gboolean
 panel_applet_get_locked (PanelApplet *applet)
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
 
 	return applet->priv->locked;
 }
+#endif
 
-void
+static void
 panel_applet_set_locked (PanelApplet *applet,
 			 gboolean     locked)
 {
@@ -578,7 +581,8 @@ panel_applet_get_locked_down (PanelApplet *applet)
 	return applet->priv->locked_down;
 }
 
-void
+/* Applets cannot set the lockdown state, so API is not public. */
+static void
 panel_applet_set_locked_down (PanelApplet *applet,
 			      gboolean     locked_down)
 {
@@ -849,7 +853,7 @@ panel_applet_setup_menu_from_file (PanelApplet    *applet,
 		panel_applet_setup_menu (applet, xml, applet_action_group);
 	} else {
 		g_warning ("%s", error->message);
-		g_clear_error (&error);
+		g_error_free (error);
 	}
 
 	g_free (xml);
@@ -928,7 +932,7 @@ container_has_focusable_child (GtkContainer *container)
 		}
 	}
 	g_list_free (list);
-	return retval;	
+	return retval;
 }
 
 static void
@@ -1010,12 +1014,10 @@ panel_applet_menu_popup (PanelApplet *applet,
 					  "/PanelAppletPopup");
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
-			(GtkMenuPositionFunc)panel_applet_position_menu,
+			(GtkMenuPositionFunc) panel_applet_position_menu,
 			applet,
 			button, time);
 }
-
-
 
 static gboolean
 panel_applet_can_focus (GtkWidget *widget)
@@ -1244,7 +1246,7 @@ panel_applet_expose (GtkWidget      *widget,
 			 x, y, width, height);
 
 	return FALSE;
-}                
+}
 
 static gboolean 
 panel_applet_focus (GtkWidget        *widget,
@@ -1308,7 +1310,7 @@ panel_applet_parse_color (const gchar *color_str,
 	color->red   = r;
 	color->green = g;
 	color->blue  = b;
-		
+
 	return TRUE;
 }
 
@@ -1440,7 +1442,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 
 	if (elements [0] && !strcmp (elements [0], "none" )) {
 		retval = PANEL_NO_BACKGROUND;
-		
+
 	} else if (elements [0] && !strcmp (elements [0], "color")) {
 		g_return_val_if_fail (color != NULL, PANEL_NO_BACKGROUND);
 
@@ -1506,8 +1508,7 @@ panel_applet_set_background_string (PanelApplet *applet,
 	if (applet->priv->background == background)
 		return;
 
-	if (applet->priv->background && background &&
-	    strcmp (applet->priv->background, background) == 0)
+	if (g_strcmp0 (applet->priv->background, background) == 0)
 		return;
 
 	if (applet->priv->background)
@@ -1733,7 +1734,7 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 {
 	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
-				      GTK_TYPE_DIRECTION_TYPE, direction);	
+				      GTK_TYPE_DIRECTION_TYPE, direction);
 	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
@@ -2183,12 +2184,10 @@ _x_error_handler (Display *display, XErrorEvent *error)
 	if (!error->error_code)
 		return 0;
 
-	/*
-	 * If we got a BadDrawable or a BadWindow, we ignore it for
-	 * now.  FIXME: We need to somehow distinguish real errors
-	 * from X-server-induced errors.  Keeping a list of windows
-	 * for which we will ignore BadDrawables would be a good idea.
-	 */
+	/* If we got a BadDrawable or a BadWindow, we ignore it for now.
+	 * FIXME: We need to somehow distinguish real errors from
+	 * X-server-induced errors. Keeping a list of windows for which we
+	 * will ignore BadDrawables would be a good idea. */
 	if (error->error_code == BadDrawable ||
 	    error->error_code == BadWindow)
 		return 0;
@@ -2198,19 +2197,19 @@ _x_error_handler (Display *display, XErrorEvent *error)
 
 /*
  * To do graphical embedding in the X window system, GNOME Panel
- * uses the classic foreign-window-reparenting trick.  The
- * GtkPlug/GtkSocket widgets are used for this purpose.  However,
+ * uses the classic foreign-window-reparenting trick. The
+ * GtkPlug/GtkSocket widgets are used for this purpose. However,
  * serious robustness problems arise if the GtkSocket end of the
- * connection unexpectedly dies.  The X server sends out DestroyNotify
+ * connection unexpectedly dies. The X server sends out DestroyNotify
  * events for the descendants of the GtkPlug (i.e., your embedded
- * component's windows) in effectively random order.  Furthermore, if
+ * component's windows) in effectively random order. Furthermore, if
  * you happened to be drawing on any of those windows when the
  * GtkSocket was destroyed (a common state of affairs), an X error
  * will kill your application.
  *
  * To solve this latter problem, GNOME Panel sets up its own X error
  * handler which ignores certain X errors that might have been
- * caused by such a scenario.  Other X errors get passed to gdk_x_error
+ * caused by such a scenario. Other X errors get passed to gdk_x_error
  * normally.
  */
 static void

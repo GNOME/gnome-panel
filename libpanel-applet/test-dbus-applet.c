@@ -4,8 +4,8 @@
 #include "panel-applet.h"
 
 static void
-test_applet_on_do (GtkAction   *action,
-		   gpointer     user_data)
+test_applet_on_do (GtkAction *action,
+		   gpointer   user_data)
 {
         g_message ("%s called\n", gtk_action_get_name (action));
 }
@@ -193,10 +193,10 @@ test_applet_factory (TestApplet  *applet,
 		     gpointer     data)
 {
 	gboolean retval = FALSE;
-    
+
 	if (!strcmp (iid, "TestApplet"))
-		retval = test_applet_fill (applet); 
-    
+		retval = test_applet_fill (applet);
+
 	return retval;
 }
 

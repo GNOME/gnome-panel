@@ -289,7 +289,7 @@ applet_factory (PanelApplet *applet,
 				menu_actions,
 				G_N_ELEMENTS (menu_actions),
 				data);
-  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "GNOME_NotificationAreaApplet.xml", NULL);
+  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
   panel_applet_setup_menu_from_file (applet,
 				     ui_path, action_group);
   g_free (ui_path);

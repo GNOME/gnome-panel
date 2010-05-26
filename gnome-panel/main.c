@@ -30,7 +30,6 @@
 #include "panel-action-protocol.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
-#include "panel-applets-manager.h"
 #include "xstuff.h"
 
 #include "nothing.cP"

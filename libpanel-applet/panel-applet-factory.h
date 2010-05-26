@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "panel-applet.h"
+
 G_BEGIN_DECLS
 
 #define PANEL_TYPE_APPLET_FACTORY            (panel_applet_factory_get_type ())
@@ -39,6 +41,12 @@ PanelAppletFactory *panel_applet_factory_new              (const gchar        *a
 							   GType               applet_type,
 							   GClosure           *closure);
 gboolean            panel_applet_factory_register_service (PanelAppletFactory *factory);
+
+/* This technically belongs to panel-applet.h, but it's not something that
+ * should be public API. */
+guint32            panel_applet_get_xid              (PanelApplet *applet,
+						      GdkScreen   *screen);
+const gchar       *panel_applet_get_object_path      (PanelApplet *applet);
 
 G_END_DECLS
 

@@ -168,11 +168,11 @@ endif
 uidir		= $(datadir)/gnome-panel/ui
 ui_DATA		= clock.ui
 
-xmluidir 	= $(datadir)/gnome-2.0/ui
-xmlui_DATA	= GNOME_ClockApplet.xml
+xmluidir 	= $(datadir)/gnome-panel/ui
+xmlui_DATA	= clock-menu.xml
 
 appletdir       = $(datadir)/gnome-panel/applets
-applet_in_files = GNOME_ClockApplet.panel-applet.in
+applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
@@ -250,7 +250,7 @@ test_system_timezone_LDADD =	\
 	$(NULL)
 
 EXTRA_DIST =						\
-	GNOME_ClockApplet.panel-applet.in.in		\
+	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(schemas_in_files)				\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\

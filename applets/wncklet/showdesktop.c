@@ -50,7 +50,7 @@ typedef struct {
         GtkWidget *image;
         GtkWidget *about_dialog;
 
-        PanelAppletOrient orient;
+        GtkOrientation orient;
         int size;
 
         WnckScreen *wnck_screen;
@@ -487,7 +487,7 @@ show_desktop_applet_fill (PanelApplet *applet)
 				      show_desktop_menu_actions,
 				      G_N_ELEMENTS (show_desktop_menu_actions),
 				      sdd);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_ShowDesktopApplet.xml", NULL);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "showdesktop-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (sdd->applet),
 					   ui_path, action_group);
 	g_free (ui_path);

@@ -1905,7 +1905,7 @@ fish_applet_fill (FishApplet *fish)
 				      fish_menu_verbs,
 				      G_N_ELEMENTS (fish_menu_verbs),
 				      fish);
-	ui_path = g_build_filename (FISH_MENU_UI_DIR, "GNOME_FishApplet.xml", NULL);
+	ui_path = g_build_filename (FISH_MENU_UI_DIR, "fish-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
 	g_free (ui_path);
 

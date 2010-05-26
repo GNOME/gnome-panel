@@ -566,7 +566,7 @@ window_list_applet_fill (PanelApplet *applet)
 				      tasklist_menu_actions,
 				      G_N_ELEMENTS (tasklist_menu_actions),
 				      tasklist);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "GNOME_WindowListApplet.xml", NULL);
+	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "window-list-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
 					   ui_path, action_group);
 	g_free (ui_path);
