@@ -29,7 +29,7 @@ NOTIFICATION_AREA_SOURCES =		\
 	na-marshal.h
 
 NOTIFICATION_AREA_LDADD =			\
-	../../libpanel-applet/libpanel-applet-2.la	\
+	../../libpanel-applet/libpanel-applet-3.la	\
 	$(X_LIBS)					\
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBPANEL_APPLET_LIBS)

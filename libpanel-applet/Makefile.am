@@ -6,9 +6,9 @@ INCLUDES =							\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(WARN_CFLAGS)
 
-lib_LTLIBRARIES = libpanel-applet-2.la
+lib_LTLIBRARIES = libpanel-applet-3.la
 
-libpanel_applet_2_la_SOURCES =		\
+libpanel_applet_3_la_SOURCES =		\
 	$(BUILT_SOURCES)		\
 	panel-applet.h			\
 	panel-applet.c			\
@@ -17,15 +17,15 @@ libpanel_applet_2_la_SOURCES =		\
 	panel-applet-gconf.c		\
 	panel-applet-gconf.h
 
-libpanel_applet_2_la_LDFLAGS = \
+libpanel_applet_3_la_LDFLAGS = \
 	-version-info $(LIB_PANEL_APPLET_LT_VERSION)	\
 	-no-undefined
 
-libpanel_applet_2_la_LIBADD  = \
+libpanel_applet_3_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(X_LIBS)
 
-libpanel_appletincludedir = $(includedir)/panel-2.0
+libpanel_appletincludedir = $(includedir)/gnome-panel-3.0/libpanel-applet
 
 libpanel_appletinclude_HEADERS =	\
 	panel-applet.h			\
@@ -36,7 +36,7 @@ noinst_PROGRAMS = test-dbus-applet
 
 test_dbus_applet_LDADD =               \
        $(LIBPANEL_APPLET_LIBS)         \
-       libpanel-applet-2.la
+       libpanel-applet-3.la
 
 BUILT_SOURCES = \
 	panel-applet-enums.c			\
@@ -44,13 +44,13 @@ BUILT_SOURCES = \
 	panel-applet-marshal.c			\
 	panel-applet-marshal.h
 
-$(libpanel_applet_2_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
+$(libpanel_applet_3_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 EXTRA_DIST =						\
 	org.gnome.panel.TestApplet.panel-applet.in	\
 	panel-applet-marshal.list			\
-	libpanelapplet-2.0.pc.in			\
-	libpanelapplet-2.0-uninstalled.pc.in
+	libpanelapplet-3.0.pc.in			\
+	libpanelapplet-3.0-uninstalled.pc.in
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
@@ -90,7 +90,7 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 		$(panel_applet_enum_headers) > $@
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libpanelapplet-2.0.pc
+pkgconfig_DATA = libpanelapplet-3.0.pc
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 

@@ -14,28 +14,28 @@ INCLUDES =							\
 FISH_SOURCES = fish.c
 
 FISH_LDADD =						\
-	../../libpanel-applet/libpanel-applet-2.la	\
+	../../libpanel-applet/libpanel-applet-3.la	\
 	$(FISH_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
 
 if FISH_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libfish-applet-2.so
+APPLET_LOCATION   = $(pkglibdir)/libfish-applet.so
 
-fish_applet_2libdir = $(pkglibdir)
-fish_applet_2lib_LTLIBRARIES = libfish-applet-2.la
-libfish_applet_2_la_SOURCES = $(FISH_SOURCES)
-libfish_applet_2_la_LIBADD = $(FISH_LDADD)
-libfish_applet_2_la_LDFLAGS = -module -avoid-version
-libfish_applet_2_la_CFLAGS =
+fish_applet_libdir = $(pkglibdir)
+fish_applet_lib_LTLIBRARIES = libfish-applet.la
+libfish_applet_la_SOURCES = $(FISH_SOURCES)
+libfish_applet_la_LIBADD = $(FISH_LDADD)
+libfish_applet_la_LDFLAGS = -module -avoid-version
+libfish_applet_la_CFLAGS =
 else
 APPLET_IN_PROCESS = false
-APPLET_LOCATION = $(libexecdir)/fish-applet-2
+APPLET_LOCATION = $(libexecdir)/fish-applet
 
-libexec_PROGRAMS = fish-applet-2
-fish_applet_2_SOURCES = $(FISH_SOURCES)
-fish_applet_2_LDADD = $(FISH_LDADD)
-fish_applet_2_CFLAGS =
+libexec_PROGRAMS = fish-applet
+fish_applet_SOURCES = $(FISH_SOURCES)
+fish_applet_LDADD = $(FISH_LDADD)
+fish_applet_CFLAGS =
 endif
 
 FISH_BITMAPS =		\

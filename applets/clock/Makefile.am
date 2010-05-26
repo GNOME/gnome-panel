@@ -63,7 +63,7 @@ CLOCK_SOURCES = 		\
 	$(SETTIME_SOURCES)
 
 CLOCK_LDADD =						\
-	../../libpanel-applet/libpanel-applet-2.la	\
+	../../libpanel-applet/libpanel-applet-3.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
 	$(POLKIT_LIBS)				\

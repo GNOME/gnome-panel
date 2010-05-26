@@ -31,7 +31,7 @@ WNCKLET_SOURCES = \
 $(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
-	../../libpanel-applet/libpanel-applet-2.la	\
+	../../libpanel-applet/libpanel-applet-3.la	\
 	$(WNCKLET_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
 
