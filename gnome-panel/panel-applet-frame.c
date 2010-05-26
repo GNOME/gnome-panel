@@ -847,7 +847,6 @@ panel_applet_frame_loading_failed (const char  *iid,
 	char      *problem_txt;
 	gboolean   locked_down;
 
-	panel_applet_stop_loading (id);
 	no_reload_applets = g_slist_prepend (no_reload_applets,
 					     g_strdup (id));
 
@@ -893,6 +892,10 @@ panel_applet_frame_loading_failed (const char  *iid,
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Error"));
 
 	gtk_widget_show_all (dialog);
+
+	/* Note: this call will free the memory for id, so the variable should
+	 * not get accessed afterwards. */
+	panel_applet_stop_loading (id);
 }
 
 static void
