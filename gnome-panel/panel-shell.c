@@ -102,6 +102,7 @@ panel_shell_register (gboolean replace)
 					      g_variant_new ("(su)",
 							     PANEL_DBUS_SERVICE,
 							     flags),
+					      G_VARIANT_TYPE ("(u)"),
 					      G_DBUS_CALL_FLAGS_NONE,
 					      -1, NULL, &error);
 	if (!result) {
