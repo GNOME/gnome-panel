@@ -38,7 +38,7 @@ G_DEFINE_TYPE_WITH_CODE (PanelAppletsManagerDBus,
 			 g_io_extension_point_implement (PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME,
 							 g_define_type_id,
 							 "dbus",
-							 5))
+							 10))
 
 struct _PanelAppletsManagerDBusPrivate
 {

@@ -52,14 +52,16 @@ panel_applet_info_new (const gchar  *iid,
 	info->icon = g_strdup (icon);
 
 	/* Bonobo compatibility */
-	len = g_strv_length ((gchar **) old_ids);
-	if (len > 0) {
-		int i;
+	if (old_ids != NULL) {
+		len = g_strv_length ((gchar **) old_ids);
+		if (len > 0) {
+			int i;
 
-		info->old_ids = g_new0 (gchar *, len + 1);
+			info->old_ids = g_new0 (gchar *, len + 1);
 
-		for (i = 0; i < len; i++)
-			info->old_ids[i] = g_strdup (old_ids[i]);
+			for (i = 0; i < len; i++)
+				info->old_ids[i] = g_strdup (old_ids[i]);
+		}
 	}
 
 	return info;

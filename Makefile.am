@@ -8,6 +8,10 @@ SUBDIRS =			\
 	doc			\
 	man
 
+if HAVE_BONOBO
+SUBDIRS += bonobo
+endif
+
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
