@@ -69,7 +69,7 @@ struct _PanelAppletFrameActivating {
 
 /* PanelAppletFrame implementation */
 
-G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_BIN)
+G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX)
 
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
@@ -177,22 +177,17 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	/* This is a GtkBin subclass, so we have to implement size request
-	 * ourselves in all cases, without relying on the parent class
-	 * implementation */
-  
-	requisition->width = 0;
-	requisition->height = 0;
-  
+	if (!frame->priv->has_handle) {
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_request (widget, requisition);
+		return;
+	}
+
 	if (bin->child && gtk_widget_get_visible (bin->child)) {
 		gtk_widget_size_request (bin->child, &child_requisition);
 
 		requisition->width  = child_requisition.width;
 		requisition->height = child_requisition.height;
 	}
-
-	if (!frame->priv->has_handle)
-		return;
 
 	requisition->width += GTK_CONTAINER (widget)->border_width;
 	requisition->height += GTK_CONTAINER (widget)->border_width;
@@ -229,14 +224,9 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	/* This is a GtkBin subclass, so we have to implement size allocation
-	 * ourselves in all cases, without relying on the parent class
-	 * implementation */
-
 	if (!frame->priv->has_handle) {
-		if (bin->child && gtk_widget_get_visible (bin->child))
-			gtk_widget_size_allocate (bin->child, allocation);
-
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
+										   allocation);
 		panel_applet_frame_update_background_size (frame,
 							   &old_allocation,
 							   allocation);
