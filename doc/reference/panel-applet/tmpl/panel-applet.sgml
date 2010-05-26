@@ -24,6 +24,9 @@ the cross process UI emmbedding required by applets possible.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT PanelApplet ##### -->
 <para>
 The #PanelApplet struct contains private data only.
@@ -76,7 +79,62 @@ Emitted when the applet has lost focus. This signal is used internally and is no
 @panelapplet: The object which received the signal.
 @direction: The direction of focus movement.
 
-<!-- ##### TYPEDEF PanelAppletOrient ##### -->
+<!-- ##### ARG PanelApplet:background ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:closure ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:connection ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:flags ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:id ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:locked ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:locked-down ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:orient ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:prefs-key ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:size ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG PanelApplet:size-hints ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM PanelAppletOrient ##### -->
 <para>
 The #PanelAppletOrient type specifies the orientation of the applet. The
 values may seem backward (e.g. %PANEL_APPLET_ORIENT_LEFT means the panel
@@ -84,34 +142,10 @@ is on the right hand side), but this is because the value is representative
 of the applet's <emphasis>orientation</emphasis>, not the panel's position.
 </para>
 
-
-<!-- ##### MACRO PANEL_APPLET_ORIENT_UP ##### -->
-<para>
-The applet is orientated up (i.e. the panel is at the bottom of the screen).
-</para>
-
-
-
-<!-- ##### MACRO PANEL_APPLET_ORIENT_DOWN ##### -->
-<para>
-The applet is orientated down (i.e. the panel is at the top of the screen).
-</para>
-
-
-
-<!-- ##### MACRO PANEL_APPLET_ORIENT_LEFT ##### -->
-<para>
-The applet is orientated left (i.e. the panel is at the right hand side of the screen).
-</para>
-
-
-
-<!-- ##### MACRO PANEL_APPLET_ORIENT_RIGHT ##### -->
-<para>
-The applet is orientated right (i.e. the panel is at the left hand side of the screen).
-</para>
-
-
+@PANEL_APPLET_ORIENT_UP: 
+@PANEL_APPLET_ORIENT_DOWN: 
+@PANEL_APPLET_ORIENT_LEFT: 
+@PANEL_APPLET_ORIENT_RIGHT: 
 
 <!-- ##### ENUM PanelAppletBackgroundType ##### -->
 <para>
@@ -169,6 +203,7 @@ useful as the applet is created before the #PanelAppletFactoryCallback
 is invoked.
 </para>
 
+@void: 
 @Returns: The #PanelApplet.
 
 
@@ -307,25 +342,6 @@ Set keyboard focus to @applet.
 @timestamp: timestamp of the event triggering the window focus
 
 
-<!-- ##### FUNCTION panel_applet_get_control ##### -->
-<para>
-Retrieves the #BonoboControl associated with @applet.
-</para>
-
-@applet: The #PanelApplet.
-@Returns: A #BonoboControl.
-
-
-<!-- ##### FUNCTION panel_applet_get_popup_component ##### -->
-<para>
-Retrieves the #BonoboUIComponent used for popup menus associated
-with @applet.
-</para>
-
-@applet: The #PanelApplet.
-@Returns: A #BonoboUIComponent.
-
-
 <!-- ##### FUNCTION panel_applet_setup_menu ##### -->
 <para>
 Sets up a popup menu for @applet described by the xml
@@ -335,6 +351,8 @@ for a description of the format of the xml.
 
 @applet: A #PanelApplet.
 @xml: The xml character string describing the popup menu.
+@action_group: 
+<!-- # Unused Parameters # -->
 @verb_list: The list of #BonoboUIVerbs for the menu.
 @user_data: The user data pointer for the menu.
 
@@ -347,6 +365,9 @@ the format of the xml.
 </para>
 
 @applet: A #PanelApplet.
+@filename: 
+@action_group: 
+<!-- # Unused Parameters # -->
 @opt_datadir: The data directory - i.e. ${prefix}/share (optional).
 @file: The file's name.
 @opt_app_name: The application's name (optional).
@@ -360,83 +381,13 @@ A generic 'main' routine for applets. This should not normally be
 used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
 </para>
 
-@iid: The bonobo-activation iid of the factory.
+@factory_id: 
+@out_process: 
 @applet_type: The #GType to instantiate.
 @callback: The factory callback.
 @data: The factory user data pointer.
 @Returns: 0 on success, 1 on failure.
-
-
-<!-- ##### FUNCTION panel_applet_factory_main_closure ##### -->
-<para>
-A generic 'main' routine for applets. This should not normally be
-used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
-</para>
-
+<!-- # Unused Parameters # -->
 @iid: The bonobo-activation iid of the factory.
-@applet_type: The #GType to instantiate.
-@closure: The factory callback closure.
-@Returns: 0 on success, 1 on failure.
-
-
-<!-- ##### MACRO PANEL_APPLET_BONOBO_FACTORY ##### -->
-<para>
-Defines a 'main' routine for the applet factory.
-</para>
-
-@iid: The bonobo-activation iid of the factory.
-@type: The #GType to instantiate.
-@name: The applet ID string.
-@version: The applet version string.
-@callback: The factory callback.
-@data: The factory user data pointer.
-
-
-<!-- ##### FUNCTION panel_applet_shlib_factory ##### -->
-<para>
-A generic shared library factory routine for applets. This should not
-normally be used directly as it is invoked by #PANEL_APPLET_BONOBO_SHLIB_FACTORY.
-</para>
-
-@iid: The bonobo-activation iid of the factory.
-@applet_type: The #GType to instantiate.
-@poa: The #PortableServer_POA passed to the shlib factory
-callback.
-@impl_ptr: The #gpointer passed to the shlib factory callback.
-@callback: The applet factory callback.
-@user_data: The factory user data pointer.
-@ev: The $CORBA_Environment passed to the shlib factory callback.
-@Returns: A #Bonobo_Unknown to return from the shlib factory
-callback.
-
-
-<!-- ##### FUNCTION panel_applet_shlib_factory_closure ##### -->
-<para>
-A generic shared library factory routine for applets. This should not
-normally be used directly as it is invoked by #PANEL_APPLET_BONOBO_SHLIB_FACTORY.
-</para>
-
-@iid: The bonobo-activation iid of the factory.
-@applet_type: The #GType to instantiate.
-@poa: The #PortableServer_POA passed to the shlib factory
-callback.
-@impl_ptr: The #gpointer passed to the shlib factory callback.
-@closure: The applet factory closure.
-@ev: The $CORBA_Environment passed to the shlib factory callback.
-@Returns: A #Bonobo_Unknown to return from the shlib factory
-callback.
-
-
-<!-- ##### MACRO PANEL_APPLET_BONOBO_SHLIB_FACTORY ##### -->
-<para>
-Defines a Bonobo Activation shared library plugin and associated
-factory callback.
-</para>
-
-@iid: The bonobo-activation iid of the factory.
-@type: The #GType to instantiate.
-@descr: A description of the applet.
-@callback: The factory callback.
-@data: The factory user data pointer.
 
 

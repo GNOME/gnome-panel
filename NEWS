@@ -1,4 +1,58 @@
 ==============
+Version 2.31.2
+==============
+
+Note to distributors: this release is the first release to come with a new
+dbus-based applet library. This library is similar to the bonobo-based one, but
+applets still need some porting work to use it. To minimize any potential
+disruption for users, the panel can still use bonobo applets, using an
+extension mechanism. The bonobo dependency is, however, optional and it's
+possible to build gnome-panel without it.
+
+While all the resources are currently shipped with gnome-panel, we are
+considering splitting all the bonobo-related code to a new module in the
+future.
+
+The dbus-based library for applets is named libpanel-applet-3 and it is
+currently not considered stable. API and ABI might change in the near future.
+
+
+  All
+
+	* Provide a dbus-based applet library (Carlos Garcia Campos, Vincent)
+	* Keep an optional bonobo-based applet library (Vincent)
+
+  Panel
+
+	* Make sure that newly-created panels become unhidden (Vincent)
+
+  Misc
+
+	* Require glib 2.25.7 (Carlos Garcia Campos)
+	* Make orbit and bonobo dependencies optional (Carlos Garcia Campos,
+	  Vincent)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Alexander Nyakhaychyk (be)
+	* Denis (br)
+	* David Planella (ca)
+	* David Planella (ca@valencia)
+	* Thomas Thurman (en@shaw)
+	* Jorge González (es)
+	* Iñaki Larrañaga Murgoitio (eu)
+	* Rajesh Ranjan (hi)
+	* Narine Martirosyan (hy)
+	* Andika Triwidada (id)
+	* IWAI, Masaharu (ja)
+	* Shankar Prasad (kn)
+	* Rūdolfs Mazurs (lv)
+	* Thierry Randrianiriana (mg)
+	* Sandeep Shedmake (mr)
+	* Kjartan Maraas (nb)
+
+==============
 Version 2.30.0
 ==============
 
