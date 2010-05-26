@@ -1033,18 +1033,18 @@ panel_applet_compare (const PanelAppletToLoad *a,
 void
 panel_applet_load_queued_applets (gboolean initial_load)
 {
-	if (initial_load) {
-		if (!panel_applets_to_load) {
-			panel_applet_queue_initial_unhide_toplevels (NULL);
-			return;
-		} else {
-			/* Install a timeout to make sure we don't block the
-			 * unhiding because of an applet that doesn't load */
-			panel_applet_unhide_toplevels_timeout =
-				g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
-						       panel_applet_queue_initial_unhide_toplevels,
-						       NULL);
-		}
+	if (!panel_applets_to_load) {
+		panel_applet_queue_initial_unhide_toplevels (NULL);
+		return;
+	}
+
+	if (initial_load && panel_applets_to_load) {
+		/* Install a timeout to make sure we don't block the
+		 * unhiding because of an applet that doesn't load */
+		panel_applet_unhide_toplevels_timeout =
+			g_timeout_add_seconds (UNHIDE_TOPLEVELS_TIMEOUT_SECONDS,
+					       panel_applet_queue_initial_unhide_toplevels,
+					       NULL);
 	}
 
 	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
