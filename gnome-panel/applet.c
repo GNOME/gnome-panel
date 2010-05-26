@@ -872,6 +872,7 @@ panel_applet_stop_loading (const char *id)
 static gboolean
 panel_applet_load_idle_handler (gpointer dummy)
 {
+	PanelObjectType    applet_type;
 	PanelAppletToLoad *applet = NULL;
 	PanelToplevel     *toplevel = NULL;
 	PanelWidget       *panel_widget;
@@ -918,7 +919,15 @@ panel_applet_load_idle_handler (gpointer dummy)
 			applet->position = -1;
 	}
 
-	switch (applet->type) {
+	/* We load applets asynchronously, so we specifically don't call
+	 * panel_applet_stop_loading() for this type. However, in case of
+	 * failure during the load, we might call panel_applet_stop_loading()
+	 * synchronously, which will make us lose the content of the applet
+	 * variable. So we save the type to be sure we always ignore the
+	 * applets. */
+	applet_type = applet->type;
+
+	switch (applet_type) {
 	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_load_from_gconf (
 					panel_widget,
@@ -983,7 +992,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	}
 
 	/* Only the real applets will do a late stop_loading */
-	if (applet->type != PANEL_OBJECT_APPLET)
+	if (applet_type != PANEL_OBJECT_APPLET)
 		panel_applet_stop_loading (applet->id);
 
 	return TRUE;
