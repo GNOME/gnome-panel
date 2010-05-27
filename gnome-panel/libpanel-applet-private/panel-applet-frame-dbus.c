@@ -249,7 +249,7 @@ panel_applet_frame_dbus_change_background (PanelAppletFrame    *frame,
 	char *bg_str;
 
 	bg_str = _panel_applet_frame_get_background_string (
-			frame, PANEL_WIDGET (GTK_WIDGET (frame)->parent), type);
+			frame, PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))), type);
 
 	if (bg_str != NULL) {
 		if (dbus_frame->priv->bg_cancellable)

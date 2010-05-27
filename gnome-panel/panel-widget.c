@@ -196,7 +196,7 @@ add_all_move_bindings (PanelWidget *panel)
 		 * by setting the focus to the PanelWidget for the
 		 * duration of the move.
 		 */
-		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (GTK_WIDGET (panel), TRUE);
 		gtk_widget_grab_focus (GTK_WIDGET (panel));
 		saved_focus_widget = focus_widget;
 	}
@@ -210,17 +210,17 @@ panel_widget_force_grab_focus (GtkWidget *widget)
 	 * This follows what gtk_socket_claim_focus() does
 	 */
 	if (!can_focus)
-		GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (widget, TRUE);
 	gtk_widget_grab_focus (widget);
 	if (!can_focus)
-		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (widget, FALSE);
 }
 
 static void
 panel_widget_reset_saved_focus (PanelWidget *panel)
 {
 	if (saved_focus_widget) {
-		GTK_WIDGET_UNSET_FLAGS (panel, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (GTK_WIDGET (panel), FALSE);
 		panel_widget_force_grab_focus (saved_focus_widget);
 		saved_focus_widget = NULL;
 	}
@@ -442,7 +442,7 @@ remove_panel_from_forbidden(PanelWidget *panel, PanelWidget *r)
 				   PANEL_APPLET_FORBIDDEN_PANELS,
 				   list);
 	}
-	parent_panel = panel->master_widget->parent;
+	parent_panel = gtk_widget_get_parent (panel->master_widget);
 	if (parent_panel)
 		remove_panel_from_forbidden(PANEL_WIDGET(parent_panel), r);
 }
@@ -468,7 +468,7 @@ add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
 				   PANEL_APPLET_FORBIDDEN_PANELS,
 				   list);
 	}
-	parent_panel = panel->master_widget->parent;
+	parent_panel = gtk_widget_get_parent (panel->master_widget);
 	if (parent_panel)
 		add_panel_to_forbidden(PANEL_WIDGET(parent_panel), r);
 }
@@ -498,7 +498,7 @@ panel_widget_reset_focus (GtkContainer *container,
 {
 	PanelWidget *panel = PANEL_WIDGET (container);
 
-	if (container->focus_child == widget) {
+	if (gtk_container_get_focus_child (container) == widget) {
 		GList *children;
 
 		children = gtk_container_get_children (container);
@@ -1316,7 +1316,7 @@ panel_widget_set_background_region (PanelWidget *panel)
 	if (!gtk_widget_get_realized (widget))
 		return;
 
-	gdk_window_get_origin (widget->window, &origin_x, &origin_y);
+	gdk_window_get_origin (gtk_widget_get_window (widget), &origin_x, &origin_y);
 
 	panel_background_change_region (
 		&panel->background, panel->orient,
@@ -1344,7 +1344,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	widget->allocation = *allocation;
 	if (gtk_widget_get_realized (widget))
-		gdk_window_move_resize (widget->window,
+		gdk_window_move_resize (gtk_widget_get_window (widget),
 					allocation->x, 
 					allocation->y,
 					allocation->width, 
@@ -1551,7 +1551,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 static void
 panel_widget_style_set (GtkWidget *widget,
 			GtkStyle  *previous_style)
-{
+{	
 	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
@@ -1583,6 +1583,7 @@ toplevel_configure_event (GtkWidget         *widget,
 static void
 panel_widget_realize (GtkWidget *widget)
 {
+	GdkWindow *window;
 	PanelWidget *panel = (PanelWidget *) widget;
 
 	g_signal_connect (panel->toplevel, "configure-event",
@@ -1590,16 +1591,18 @@ panel_widget_realize (GtkWidget *widget)
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
+	window = gtk_widget_get_window (widget);
+
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
-	gdk_window_ensure_native (widget->window);
+	gdk_window_ensure_native (window);
 
 	panel_background_set_default_style (
 		&panel->background,
 		&widget->style->bg [GTK_WIDGET_STATE (widget)],
 		widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]);
 
-	panel_background_realized (&panel->background, widget->window);
+	panel_background_realized (&panel->background, window);
 }
 
 static void
@@ -1731,8 +1734,8 @@ panel_widget_new (PanelToplevel  *toplevel,
 
 	panel = g_object_new (PANEL_TYPE_WIDGET, NULL);
 
-        GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
-        GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
+        gtk_widget_set_has_window (GTK_WIDGET (panel), TRUE);
+        gtk_widget_set_can_focus (GTK_WIDGET (panel), TRUE);
 
 	panel->orient = orient;
 	panel->sz = sz;
@@ -1829,6 +1832,8 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 				int          drag_off,
 				guint32      time_)
 {
+	GdkWindow *window;
+
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 	g_return_if_fail (GTK_IS_WIDGET (applet));
 
@@ -1843,13 +1848,15 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	panel_toplevel_push_autohide_disabler (panel->toplevel);
 
 	gtk_grab_add (applet);
-	if (applet->window) {
+
+	window = gtk_widget_get_window (applet);
+	if (window) {
 		GdkGrabStatus  status;
 		GdkCursor     *fleur_cursor;
 
 		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
 
-		status = gdk_pointer_grab (applet->window, FALSE,
+		status = gdk_pointer_grab (window, FALSE,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
 
@@ -2109,7 +2116,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		}
 	}
 
-	gdk_window_get_pointer(GTK_WIDGET(panel)->window,
+	gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(panel)),
 			       NULL,NULL,&mods);
 
 	movement = PANEL_SWITCH_MOVE;
@@ -2580,7 +2587,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->no_die++;
 
 	panel_widget_reset_saved_focus (old_panel);
-	if (GTK_CONTAINER (old_panel)->focus_child == applet)
+	if (gtk_container_get_focus_child (GTK_CONTAINER (old_panel)) == applet)
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
 	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
 
@@ -2588,7 +2595,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 		panel_applet_frame_set_panel (PANEL_APPLET_FRAME (ad->applet), new_panel);
 
 	if (gtk_widget_get_can_focus (GTK_WIDGET (new_panel)))
-		GTK_WIDGET_UNSET_FLAGS (new_panel, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (GTK_WIDGET (new_panel), FALSE);
 	if (focus_widget) {
 		panel_widget_force_grab_focus (focus_widget);
 	} else {
@@ -2794,7 +2801,7 @@ panel_widget_real_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
 	if (gtk_widget_get_can_focus (widget) && GTK_FIXED (widget)->children) {
-		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+		gtk_widget_set_can_focus (widget, FALSE);
 	}
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
 }
@@ -2812,7 +2819,7 @@ panel_widget_focus (PanelWidget *panel_widget)
 	 * on the panel as it is unset when this function is called.
 	 */
 	gtk_container_set_focus_child (GTK_CONTAINER (panel_widget), NULL);
-	GTK_WIDGET_SET_FLAGS (panel_widget, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (GTK_WIDGET (panel_widget), TRUE);
 	gtk_widget_grab_focus (GTK_WIDGET (panel_widget));
 }
 
