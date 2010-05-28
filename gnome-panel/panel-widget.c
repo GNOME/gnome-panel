@@ -1551,7 +1551,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 static void
 panel_widget_style_set (GtkWidget *widget,
 			GtkStyle  *previous_style)
-{	
+{
 	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
@@ -1583,7 +1583,7 @@ toplevel_configure_event (GtkWidget         *widget,
 static void
 panel_widget_realize (GtkWidget *widget)
 {
-	GdkWindow *window;
+	GdkWindow   *window;
 	PanelWidget *panel = (PanelWidget *) widget;
 
 	g_signal_connect (panel->toplevel, "configure-event",
