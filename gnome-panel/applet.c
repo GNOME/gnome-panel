@@ -81,7 +81,7 @@ panel_applet_toggle_locked (AppletInfo *info)
 	PanelWidget *panel_widget;
 	gboolean     locked;
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 	
 	locked = panel_widget_toggle_applet_locked (panel_widget, info->widget);
 
@@ -108,14 +108,17 @@ panel_applet_lock (GtkCheckMenuItem *menuitem,
 static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel;
+
+	parent = gtk_widget_get_parent (info->widget);
 
 	g_return_if_fail (info != NULL);
 	g_return_if_fail (info->widget != NULL);
-	g_return_if_fail (info->widget->parent != NULL);
-	g_return_if_fail (PANEL_IS_WIDGET (info->widget->parent));
+	g_return_if_fail (parent != NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
-	panel = PANEL_WIDGET (info->widget->parent);
+	panel = PANEL_WIDGET (parent);
 
 	panel_widget_applet_drag_start (panel, info->widget,
 					PW_DRAG_OFF_CENTER,
@@ -185,7 +188,7 @@ panel_applet_locked_change_notify (GConfClient *client,
 
 	locked = gconf_value_get_bool (value);
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 	applet_locked = panel_widget_get_applet_locked (panel_widget,
 							info->widget);
 
@@ -216,7 +219,7 @@ applet_user_menu_get_screen (AppletUserMenu *menu)
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (menu->info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (menu->info->widget));
 
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
@@ -287,7 +290,7 @@ applet_menu_show (GtkWidget *w,
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 }
@@ -299,7 +302,7 @@ applet_menu_deactivate (GtkWidget *w,
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 
 	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
 }
@@ -470,7 +473,7 @@ panel_applet_create_menu (AppletInfo *info)
 	PanelWidget *panel_widget;
 	gboolean     added_anything = FALSE;
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
 
 	menu = g_object_ref_sink (gtk_menu_new ());
 
@@ -574,7 +577,7 @@ panel_applet_menu_set_recurse (GtkMenu     *menu,
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 
 	for (l = children; l; l = l->next) {
-		GtkWidget *submenu = GTK_MENU_ITEM (l->data)->submenu;
+		GtkWidget *submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (l->data));
 
 		if (submenu)
 			panel_applet_menu_set_recurse (
@@ -591,39 +594,45 @@ panel_applet_position_menu (GtkMenu   *menu,
 			    gboolean  *push_in,
 			    GtkWidget *applet)
 {
+	GtkAllocation   allocation;
 	GtkRequisition  requisition;
 	GdkScreen      *screen;
+	GtkWidget      *parent;
 	int             menu_x = 0;
 	int             menu_y = 0;
 	int             pointer_x;
 	int             pointer_y;
 
-	g_return_if_fail (PANEL_IS_WIDGET (applet->parent));
+	parent = gtk_widget_get_parent (applet);
+
+	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
 	screen = gtk_widget_get_screen (applet);
 
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
-	gdk_window_get_origin (applet->window, &menu_x, &menu_y);
+	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
 	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);
 
+	gtk_widget_get_allocation (applet, &allocation);
+
 	if (!gtk_widget_get_has_window (applet)) {
-		menu_x += applet->allocation.x;
-		menu_y += applet->allocation.y;
+		menu_x += allocation.x;
+		menu_y += allocation.y;
 	}
 
-	if (PANEL_WIDGET (applet->parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
+	if (PANEL_WIDGET (parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
-			if (pointer_x < applet->allocation.width &&
+			if (pointer_x < allocation.width &&
 			    requisition.width < pointer_x)
 				menu_x += MIN (pointer_x,
-					       applet->allocation.width - requisition.width);
+					       allocation.width - requisition.width);
 		} else {
-			menu_x += applet->allocation.width - requisition.width;
-			if (pointer_x > 0 && pointer_x < applet->allocation.width &&
-			    pointer_x < applet->allocation.width - requisition.width) {
-				menu_x -= MIN (applet->allocation.width - pointer_x,
-					       applet->allocation.width - requisition.width);
+			menu_x += allocation.width - requisition.width;
+			if (pointer_x > 0 && pointer_x < allocation.width &&
+			    pointer_x < allocation.width - requisition.width) {
+				menu_x -= MIN (allocation.width - pointer_x,
+					       allocation.width - requisition.width);
 			}
 		}
 		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
@@ -631,17 +640,17 @@ panel_applet_position_menu (GtkMenu   *menu,
 		if (menu_y > gdk_screen_get_height (screen) / 2)
 			menu_y -= requisition.height;
 		else
-			menu_y += applet->allocation.height;
+			menu_y += allocation.height;
 	} else {
-		if (pointer_y < applet->allocation.height &&
+		if (pointer_y < allocation.height &&
 		    requisition.height < pointer_y)
-			menu_y += MIN (pointer_y, applet->allocation.height - requisition.height);
+			menu_y += MIN (pointer_y, allocation.height - requisition.height);
 		menu_y = MIN (menu_y, gdk_screen_get_height (screen) - requisition.height);
 
 		if (menu_x > gdk_screen_get_width (screen) / 2)
 			menu_x -= requisition.width;
 		else
-			menu_x += applet->allocation.width;
+			menu_x += allocation.width;
 	}
 
 	*x = menu_x;
@@ -653,11 +662,14 @@ static void
 applet_show_menu (AppletInfo     *info,
 		  GdkEventButton *event)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel_widget;
 
 	g_return_if_fail (info != NULL);
 
-	panel_widget = PANEL_WIDGET (info->widget->parent);
+	parent = gtk_widget_get_parent (info->widget);
+
+	panel_widget = PANEL_WIDGET (parent);
 
 	if (info->menu == NULL)
 		info->menu = panel_applet_create_menu (info);
@@ -667,7 +679,7 @@ applet_show_menu (AppletInfo     *info,
 
 	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
 				       "menu_panel",
-				       info->widget->parent);
+				       parent);
 
 	gtk_menu_set_screen (GTK_MENU (info->menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
@@ -1082,7 +1094,7 @@ panel_applet_get_toplevel_id (AppletInfo *applet)
 	g_return_val_if_fail (applet != NULL, NULL);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet->widget), NULL);
 
-	panel_widget = PANEL_WIDGET (applet->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (applet->widget));
 	if (!panel_widget)
 		return NULL;
 
@@ -1146,7 +1158,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	key_type = applet_info->type == PANEL_OBJECT_APPLET ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 	
-	panel_widget = PANEL_WIDGET (applet_info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (applet_info->widget));
 
 	/* FIXME: Instead of getting keys, comparing and setting, there
 	   should be a dirty flag */

@@ -45,24 +45,29 @@ static void
 panel_separator_paint (GtkWidget    *widget,
 		       GdkRectangle *area)
 {
+	GtkAllocation   allocation;
+	GtkStyle       *style;
 	PanelSeparator *separator;
 
 	separator = PANEL_SEPARATOR (widget);
 
+	gtk_widget_get_allocation (widget, &allocation);
+	style = gtk_widget_get_style (widget);
+
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_paint_vline (widget->style, widget->window,
-				 GTK_WIDGET_STATE (widget),
+		gtk_paint_vline (style, gtk_widget_get_window (widget),
+				 gtk_widget_get_state (widget),
 				 area, widget, "separator",
-				 widget->style->xthickness,
-				 widget->allocation.height - widget->style->xthickness,
-				 (widget->allocation.width - widget->style->xthickness) / 2);
+				 style->xthickness,
+				 allocation.height - style->xthickness,
+				 (allocation.width - style->xthickness) / 2);
 	} else {
-		gtk_paint_hline (widget->style, widget->window,
-				 GTK_WIDGET_STATE (widget),
+		gtk_paint_hline (style, gtk_widget_get_window (widget),
+				 gtk_widget_get_state (widget),
 				 area, widget, "separator",
-				 widget->style->ythickness,
-				 widget->allocation.width - widget->style->ythickness,
-				 (widget->allocation.height  - widget->style->ythickness) / 2);
+				 style->ythickness,
+				 allocation.width - style->ythickness,
+				 (allocation.height  - style->ythickness) / 2);
 	}
 }
 
@@ -104,12 +109,14 @@ panel_separator_size_allocate (GtkWidget     *widget,
 			       GtkAllocation *allocation)
 {
 	GtkAllocation    old_allocation;
+	GtkAllocation    widget_allocation;
 	PanelBackground *background;
 
-	old_allocation.x      = widget->allocation.x;
-	old_allocation.y      = widget->allocation.y;
-	old_allocation.width  = widget->allocation.width;
-	old_allocation.height = widget->allocation.height;
+	gtk_widget_get_allocation (widget, &widget_allocation);
+	old_allocation.x      = widget_allocation.x;
+	old_allocation.y      = widget_allocation.y;
+	old_allocation.width  = widget_allocation.width;
+	old_allocation.height = widget_allocation.height;
 
 	GTK_WIDGET_CLASS (panel_separator_parent_class)->size_allocate (widget, allocation);
 
@@ -132,13 +139,16 @@ static void
 panel_separator_parent_set (GtkWidget *widget,
 			   GtkWidget *previous_parent)
 {
+	GtkWidget      *parent;
 	PanelSeparator *separator;
 
 	separator = PANEL_SEPARATOR (widget);
 
-	g_assert (!widget->parent || PANEL_IS_WIDGET (widget->parent));
+	parent = gtk_widget_get_parent (widget);
 
-	separator->priv->panel = (PanelWidget *) widget->parent;
+	g_assert (!parent || PANEL_IS_WIDGET (parent));
+
+	separator->priv->panel = (PanelWidget *) parent;
 }
 
 static void

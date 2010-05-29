@@ -521,7 +521,7 @@ panel_action_button_drag_data_get (GtkWidget          *widget,
 				     panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
-		selection_data, selection_data->target,
+		selection_data, gtk_selection_data_get_target (selection_data),
 		8, (guchar *) drag_data, strlen (drag_data));
 
 	g_free (drag_data);
@@ -542,7 +542,7 @@ panel_action_button_clicked (GtkButton *gtk_button)
 	if (panel_global_config_get_drawer_auto_close ()) {
 		PanelToplevel *toplevel;
 
-		toplevel = PANEL_WIDGET (GTK_WIDGET (button)->parent)->toplevel;
+		toplevel = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (button)))->toplevel;
 
 		if (panel_toplevel_get_is_attached (toplevel))
 			panel_toplevel_hide (toplevel, FALSE, -1);
@@ -889,14 +889,14 @@ panel_action_button_set_dnd_enabled (PanelActionButton *button,
 			{ "application/x-panel-applet-internal", 0, 0 }
 		};
 
-		GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (GTK_WIDGET (button), TRUE);
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 		if (actions [button->priv->type].icon_name != NULL)
 			gtk_drag_source_set_icon_name (GTK_WIDGET (button),
 						       actions [button->priv->type].icon_name);
-		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (GTK_WIDGET (button), FALSE);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));
 

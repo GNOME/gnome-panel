@@ -1329,7 +1329,7 @@ geginv_realized (GtkWidget *w, gpointer data)
 	if (geginv_pixmap == NULL)
 		geginv_pixmap = gdk_pixmap_new (gtk_widget_get_window (w),
 						inv_width, inv_height,
-						gtk_widget_get_visual (w)->depth);
+						gdk_visual_get_best_depth());
 }
 
 static gboolean

@@ -41,12 +41,14 @@ panel_frame_size_request (GtkWidget      *widget,
 {
 	PanelFrame *frame = (PanelFrame *) widget;
 	GtkBin     *bin   = (GtkBin *) widget;
+	GtkWidget  *child;
 
 	requisition->width = 1;
 	requisition->height = 1;
 
-	if (bin->child && gtk_widget_get_visible (bin->child))
-		gtk_widget_size_request (bin->child, requisition);
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_request (child, requisition);
 
 	requisition->width  += GTK_CONTAINER (widget)->border_width;
 	requisition->height += GTK_CONTAINER (widget)->border_width;
@@ -68,6 +70,7 @@ panel_frame_size_allocate (GtkWidget     *widget,
 	PanelFrame    *frame = (PanelFrame *) widget;
 	GtkBin        *bin   = (GtkBin *) widget;
 	GtkAllocation  child_allocation;
+	GtkWidget     *child;
 	int            border_width;
 
 	widget->allocation = *allocation;
@@ -95,15 +98,17 @@ panel_frame_size_allocate (GtkWidget     *widget,
 	if (frame->edges & PANEL_EDGE_BOTTOM)
 		child_allocation.height -= widget->style->ythickness;
 
-	if (gtk_widget_get_mapped (widget) &&
-	    (child_allocation.x != bin->child->allocation.x ||
-	     child_allocation.y != bin->child->allocation.y ||
-	     child_allocation.width  != bin->child->allocation.width ||
-	     child_allocation.height != bin->child->allocation.height))
-		gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
+	child = gtk_bin_get_child (bin);
 
-	if (bin->child && gtk_widget_get_visible (bin->child))
-		gtk_widget_size_allocate (bin->child, &child_allocation);
+	if (gtk_widget_get_mapped (widget) &&
+	    (child_allocation.x != child->allocation.x ||
+	     child_allocation.y != child->allocation.y ||
+	     child_allocation.width  != child->allocation.width ||
+	     child_allocation.height != child->allocation.height))
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &widget->allocation, FALSE);
+
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_allocate (child, &child_allocation);
 }
 
 void

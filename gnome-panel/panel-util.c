@@ -96,6 +96,8 @@ panel_find_applet_index (GtkWidget *widget)
 void
 panel_push_window_busy (GtkWidget *window)
 {
+	GdkWindow *win;
+
 	int busy = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window),
 						       "Panel:WindowBusy"));
 
@@ -103,9 +105,10 @@ panel_push_window_busy (GtkWidget *window)
 
 	if (busy == 1) {
 		gtk_widget_set_sensitive (window, FALSE);
-		if (window->window != NULL) {
+		win = gtk_widget_get_window (window);
+		if (win != NULL) {
 			GdkCursor *cursor = gdk_cursor_new (GDK_WATCH);
-			gdk_window_set_cursor (window->window, cursor);
+			gdk_window_set_cursor (win, cursor);
 			gdk_cursor_unref (cursor);
 			gdk_flush ();
 		}
@@ -118,14 +121,17 @@ panel_push_window_busy (GtkWidget *window)
 void
 panel_pop_window_busy (GtkWidget *window)
 {
+	GdkWindow *win;
+
 	int busy = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window),
 						       "Panel:WindowBusy"));
 	busy --;
 
 	if (busy <= 0) {
 		gtk_widget_set_sensitive (window, TRUE);
-		if (window->window != NULL)
-			gdk_window_set_cursor (window->window, NULL);
+		win = gtk_widget_get_window (window);
+		if (win != NULL)
+			gdk_window_set_cursor (win, NULL);
 		g_object_set_data (G_OBJECT (window),
 				   "Panel:WindowBusy", NULL);
 	} else {

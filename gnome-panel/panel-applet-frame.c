@@ -119,8 +119,8 @@ panel_applet_frame_paint (GtkWidget    *widget,
 		}
 
 		gtk_paint_handle (
-			widget->style, widget->window,
-			GTK_WIDGET_STATE (widget),
+			gtk_widget_get_style (widget), gtk_widget_get_window (widget),
+			gtk_widget_get_state (widget),
 			GTK_SHADOW_OUT,
 			area, widget, "handlebox",
 			frame->priv->handle_rect.x,
@@ -172,7 +172,8 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 {
 	PanelAppletFrame *frame;
 	GtkBin           *bin;
-	GtkRequisition    child_requisition;  
+	GtkRequisition    child_requisition;
+	guint             border_width;
 
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
@@ -182,15 +183,16 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 		return;
 	}
 
-	if (bin->child && gtk_widget_get_visible (bin->child)) {
-		gtk_widget_size_request (bin->child, &child_requisition);
+	if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin))) {
+		gtk_widget_size_request (gtk_bin_get_child (bin), &child_requisition);
 
 		requisition->width  = child_requisition.width;
 		requisition->height = child_requisition.height;
 	}
 
-	requisition->width += GTK_CONTAINER (widget)->border_width;
-	requisition->height += GTK_CONTAINER (widget)->border_width;
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+	requisition->width += border_width;
+	requisition->height += border_width;
 
 	switch (frame->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
@@ -215,11 +217,14 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	GtkBin           *bin;
 	GtkAllocation     new_allocation;
 	GtkAllocation     old_allocation;
+	GtkAllocation     widget_allocation;
+	guint             border_width;
 
-	old_allocation.x      = widget->allocation.x;
-	old_allocation.y      = widget->allocation.y;
-	old_allocation.width  = widget->allocation.width;
-	old_allocation.height = widget->allocation.height;
+	gtk_widget_get_allocation (widget, &widget_allocation);
+	old_allocation.x      = widget_allocation.x;
+	old_allocation.y      = widget_allocation.y;
+	old_allocation.width  = widget_allocation.width;
+	old_allocation.height = widget_allocation.height;
 
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
@@ -233,7 +238,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		return;
 	}
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation (widget, allocation);
 
 	frame->priv->handle_rect.x = 0;
 	frame->priv->handle_rect.y = 0;
@@ -283,18 +288,19 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	     new_allocation.y != frame->priv->child_allocation.y ||
 	     new_allocation.width != frame->priv->child_allocation.width ||
 	     new_allocation.height != frame->priv->child_allocation.height))
-	 	gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &widget_allocation, FALSE);
 
 	if (gtk_widget_get_realized (widget)) {
-		gdk_window_move_resize (widget->window,
-			allocation->x + GTK_CONTAINER (widget)->border_width,
-			allocation->y + GTK_CONTAINER (widget)->border_width,
-			MAX (allocation->width - GTK_CONTAINER (widget)->border_width * 2, 0),
-			MAX (allocation->height - GTK_CONTAINER (widget)->border_width * 2, 0));
+		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+		gdk_window_move_resize (gtk_widget_get_window (widget),
+			allocation->x + border_width,
+			allocation->y + border_width,
+			MAX (allocation->width - border_width * 2, 0),
+			MAX (allocation->height - border_width * 2, 0));
 	}
 
-	if (bin->child && gtk_widget_get_visible (bin->child))
-		gtk_widget_size_allocate (bin->child, &new_allocation);
+	if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin)))
+		gtk_widget_size_allocate (gtk_bin_get_child (bin), &new_allocation);
   
 	frame->priv->child_allocation = new_allocation;
 
@@ -328,7 +334,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 	if (!frame->priv->has_handle)
 		return handled;
 
-	if (event->window != widget->window)
+	if (event->window != gtk_widget_get_window (widget))
 		return FALSE;
 
 	switch (event->button) {
@@ -427,7 +433,7 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	gboolean     movable;
 	gboolean     removable;
 
-	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
 
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_id_lists_are_writable ();
@@ -462,12 +468,12 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 				      PanelBackgroundType  type)
 {
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
-	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
+	g_return_if_fail (PANEL_IS_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))));
 
 	if (frame->priv->has_handle) {
 		PanelBackground *background;
 
-		background = &PANEL_WIDGET (GTK_WIDGET (frame)->parent)->background;
+		background = &PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)))->background;
 		panel_background_change_background_on_widget (background,
 							      GTK_WIDGET (frame));
 	}
@@ -589,11 +595,14 @@ _panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 					   PanelWidget         *panel,
 					   PanelBackgroundType  type)
 {
+	GtkAllocation allocation;
 	int x;
 	int y;
 
-	x = GTK_WIDGET (frame)->allocation.x;
-	y = GTK_WIDGET (frame)->allocation.y;
+	gtk_widget_get_allocation (GTK_WIDGET (frame), &allocation);
+
+	x = allocation.x;
+	y = allocation.y;
 
 	if (frame->priv->has_handle) {
 		switch (frame->priv->orientation) {
@@ -745,10 +754,10 @@ _panel_applet_frame_applet_move (PanelAppletFrame *frame)
 {
 	GtkWidget *widget = GTK_WIDGET (frame);
 
-	if (!PANEL_IS_WIDGET (widget->parent))
+	if (!PANEL_IS_WIDGET (gtk_widget_get_parent (widget)))
 		return;
 
-	panel_widget_applet_drag_start (PANEL_WIDGET (widget->parent),
+	panel_widget_applet_drag_start (PANEL_WIDGET (gtk_widget_get_parent (widget)),
 					widget,
 					PW_DRAG_OFF_CENTER,
 					GDK_CURRENT_TIME);
@@ -758,7 +767,7 @@ void
 _panel_applet_frame_applet_lock (PanelAppletFrame *frame,
 				 gboolean          locked)
 {
-	PanelWidget *panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+	PanelWidget *panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
 
 	if (panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame)) == locked)
 		return;

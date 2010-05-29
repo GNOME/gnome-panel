@@ -219,11 +219,13 @@ static void
 panel_menu_bar_parent_set (GtkWidget *widget,
 			   GtkWidget *previous_parent)
 {
+	GtkWidget    *parent;
 	PanelMenuBar *menubar = PANEL_MENU_BAR (widget);
 
-	g_assert (!widget->parent || PANEL_IS_WIDGET (widget->parent));
+	parent = gtk_widget_get_parent (widget);
+	g_assert (!parent || PANEL_IS_WIDGET (parent));
 
-	menubar->priv->panel = (PanelWidget *) widget->parent;
+	menubar->priv->panel = (PanelWidget *) parent;
 
 	if (menubar->priv->applications_menu)
 		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->applications_menu),
@@ -242,12 +244,14 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 			      GtkAllocation *allocation)
 {
 	GtkAllocation    old_allocation;
+	GtkAllocation    widget_allocation;
 	PanelBackground *background;
 
-	old_allocation.x      = widget->allocation.x;
-	old_allocation.y      = widget->allocation.y;
-	old_allocation.width  = widget->allocation.width;
-	old_allocation.height = widget->allocation.height;
+	gtk_widget_get_allocation (widget, &widget_allocation);
+	old_allocation.x      = widget_allocation.x;
+	old_allocation.y      = widget_allocation.y;
+	old_allocation.width  = widget_allocation.width;
+	old_allocation.height = widget_allocation.height;
 
 	GTK_WIDGET_CLASS (panel_menu_bar_parent_class)->size_allocate (widget, allocation);
 
@@ -307,9 +311,9 @@ panel_menu_bar_on_expose (GtkWidget      *widget,
 	PanelMenuBar *menubar = data;
 
 	if (gtk_widget_has_focus (GTK_WIDGET (menubar)))
-		gtk_paint_focus (widget->style,
-				 widget->window, 
-				 GTK_WIDGET_STATE (menubar),
+		gtk_paint_focus (gtk_widget_get_style (widget),
+				 gtk_widget_get_window (widget), 
+				 gtk_widget_get_state (GTK_WIDGET (menubar)),
 				 NULL,
 				 widget,
 				 "menubar-applet",
@@ -360,7 +364,7 @@ panel_menu_bar_load (PanelWidget *panel,
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
 	g_signal_connect_after (menubar, "expose-event",
 				G_CALLBACK (panel_menu_bar_on_expose), menubar);
-	GTK_WIDGET_SET_FLAGS (menubar, GTK_CAN_FOCUS);
+	gtk_widget_set_can_focus (GTK_WIDGET (menubar), TRUE);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
 }
@@ -458,7 +462,7 @@ set_item_text_gravity (GtkWidget *item)
 	PangoLayout  *layout;
 	PangoContext *context;
 
-	label = GTK_BIN (item)->child;
+	label = gtk_bin_get_child (GTK_BIN (item));
 	layout = gtk_label_get_layout (GTK_LABEL (label));
 	context = pango_layout_get_context (layout);
 	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
@@ -480,7 +484,7 @@ set_item_text_angle_and_alignment (GtkWidget *item,
 {
 	GtkWidget *label;
 
-	label = GTK_BIN (item)->child;
+	label = gtk_bin_get_child (GTK_BIN (item));
 
 	gtk_label_set_angle (GTK_LABEL (label), text_angle);
 

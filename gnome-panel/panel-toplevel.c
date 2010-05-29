@@ -418,7 +418,7 @@ panel_toplevel_warp_pointer (PanelToplevel *toplevel)
 	} else
 		panel_toplevel_init_resize_drag_offsets (toplevel, toplevel->priv->grab_op);
 
-	panel_warp_pointer (widget->window, x, y);
+	panel_warp_pointer (gtk_widget_get_window (widget), x, y);
 }
 
 static void
@@ -497,13 +497,13 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 				toplevel, toplevel->priv->grab_op);
 
 	cursor = gdk_cursor_new (cursor_type);
-	gdk_pointer_grab (widget->window, FALSE, 
+	gdk_pointer_grab (gtk_widget_get_window (widget), FALSE,
 			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 			  NULL, cursor, time_);
 	gdk_cursor_unref (cursor);
 
 	if (grab_keyboard)
-		gdk_keyboard_grab (widget->window, FALSE, time_);
+		gdk_keyboard_grab (gtk_widget_get_window (widget), FALSE, time_);
 }
 
 static void
@@ -1186,7 +1186,7 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 	button = gtk_button_new ();
 	obj = gtk_widget_get_accessible (button);
 	atk_object_set_name (obj, _("Hide Panel"));
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_DEFAULT);
+	gtk_widget_set_can_default (button, FALSE);
 
 	gtk_widget_style_get (GTK_WIDGET (toplevel),
 			      "arrow-size", &arrow_size,
@@ -1303,10 +1303,10 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 	if (toplevel->priv->arrows_enabled) {
 		int arrow_size;
 
-		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_top)->child);
-		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_bottom)->child);
-		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_left)->child);
-		gtk_widget_show (GTK_BIN (toplevel->priv->hide_button_right)->child);
+		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
+		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
+		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
+		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
 		gtk_widget_style_get (GTK_WIDGET (toplevel),
 				      "arrow-size", &arrow_size,
@@ -1321,10 +1321,10 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
 					     arrow_size, -1);
 	} else {
-		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_top)->child);
-		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_bottom)->child);
-		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_left)->child);
-		gtk_widget_hide (GTK_BIN (toplevel->priv->hide_button_right)->child);
+		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
+		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
+		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
+		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 
 		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    -1, -1);
 		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, -1, -1);
@@ -1693,6 +1693,7 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 	GdkRectangle      toplevel_box;
 	GdkRectangle      parent_box;
 	GdkRectangle      attach_box;
+	GtkAllocation allocation;
 	int               x_origin = 0, y_origin = 0;
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
@@ -1703,10 +1704,12 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 
 	toplevel_box = toplevel->priv->geometry;
 	parent_box   = toplevel->priv->attach_toplevel->priv->geometry;
-	attach_box   = GTK_WIDGET (toplevel->priv->attach_widget)->allocation;
+
+	gtk_widget_get_allocation (GTK_WIDGET (toplevel->priv->attach_widget), &allocation);
+	attach_box   = allocation;
 
 	if (attach_box.x != -1) {
-		gdk_window_get_origin (GTK_WIDGET (toplevel->priv->attach_widget)->window,
+		gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel->priv->attach_widget)),
 				       &x_origin, &y_origin);
 
 		attach_box.x += x_origin;
@@ -1911,6 +1914,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 				       int           *w,
 				       int           *h)
 {
+	GtkAllocation allocation;
 	int width, height;
 	int min_hide_size;
 	int monitor_height, monitor_width;
@@ -1938,22 +1942,20 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 
 	switch (toplevel->priv->state) {
 	case PANEL_STATE_HIDDEN_UP:
-		*y = - (height - MAX (toplevel->priv->hide_button_bottom->allocation.height,
-				      min_hide_size));
+		gtk_widget_get_allocation (toplevel->priv->hide_button_bottom, &allocation);
+		*y = - (height - MAX (allocation.height, min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_DOWN:
-		*y = monitor_height -
-			MAX (toplevel->priv->hide_button_top->allocation.height,
-			     min_hide_size);
+		gtk_widget_get_allocation (toplevel->priv->hide_button_top, &allocation);
+		*y = monitor_height - MAX (allocation.height, min_hide_size);
 		break;
 	case PANEL_STATE_HIDDEN_LEFT:
-		*x = - (width - MAX (toplevel->priv->hide_button_right->allocation.width,
-				    min_hide_size));
+		gtk_widget_get_allocation (toplevel->priv->hide_button_right, &allocation);
+		*x = - (width - MAX (allocation.width, min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_RIGHT:
-		*x = monitor_width -
-			MAX (toplevel->priv->hide_button_left->allocation.width,
-			     min_hide_size);
+		gtk_widget_get_allocation (toplevel->priv->hide_button_left, &allocation);
+		*x = monitor_width - MAX (allocation.width, min_hide_size);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -2264,7 +2266,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		GdkRectangle *geometry;
 		int           max_size;
 
-		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
+		style = gtk_widget_get_style (GTK_WIDGET (toplevel->priv->inner_frame));
 		geometry = &toplevel->priv->geometry;
 
 		if (x <= style->xthickness && x > 0 &&
@@ -2297,6 +2299,7 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
 			  PanelOrientation  orientation)
 {
+	GtkStyle         *style;
 	PangoContext     *context;
 	PangoFontMetrics *metrics;
 	int               focus_width = 0;
@@ -2306,8 +2309,9 @@ calculate_minimum_height (GtkWidget        *widget,
 	int               thickness;
   
 	context = gtk_widget_get_pango_context (widget);
+	style = gtk_widget_get_style (widget);
 	metrics = pango_context_get_metrics (context,
-					     widget->style->font_desc,
+					     style->font_desc,
 					     pango_context_get_language (context));
   
 	ascent  = pango_font_metrics_get_ascent  (metrics);
@@ -2321,8 +2325,8 @@ calculate_minimum_height (GtkWidget        *widget,
 			      NULL);
 
 	thickness = orientation & PANEL_HORIZONTAL_MASK ?
-		widget->style->ythickness :
-		widget->style->xthickness;
+		style->ythickness :
+		style->xthickness;
 
 	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
 }
@@ -2418,6 +2422,7 @@ static void
 panel_toplevel_update_size (PanelToplevel  *toplevel,
 			    GtkRequisition *requisition)
 {
+	GtkStyle  *style;
 	GtkWidget *widget;
 	int        monitor_width, monitor_height;
 	int        width, height;
@@ -2505,14 +2510,15 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 		height = MAX (MINIMUM_WIDTH, height);
 	}
 
+	style = gtk_widget_get_style (widget);
 	if (toplevel->priv->edges & PANEL_EDGE_TOP)
-		height += widget->style->ythickness;
+		height += style->ythickness;
 	if (toplevel->priv->edges & PANEL_EDGE_BOTTOM)
-		height += widget->style->ythickness;
+		height += style->ythickness;
 	if (toplevel->priv->edges & PANEL_EDGE_LEFT)
-		width += widget->style->ythickness;
+		width += style->ythickness;
 	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
-		width += widget->style->ythickness;
+		width += style->ythickness;
 
 	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_width);
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
@@ -2601,7 +2607,7 @@ panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
 {
 	GtkWidget *panel_widget;
 
-	panel_widget = GTK_WIDGET (attach_widget)->parent;
+	panel_widget = gtk_widget_get_parent (GTK_WIDGET (attach_widget));
 	if (!panel_widget)
 		return;
 
@@ -2661,7 +2667,7 @@ panel_toplevel_reverse_arrow (PanelToplevel *toplevel,
 
 	g_object_set_data (G_OBJECT (button), "arrow-type", GINT_TO_POINTER (arrow_type));
 
-	gtk_arrow_set (GTK_ARROW (GTK_BIN (button)->child), arrow_type, GTK_SHADOW_NONE);
+	gtk_arrow_set (GTK_ARROW (gtk_bin_get_child (GTK_BIN (button))), arrow_type, GTK_SHADOW_NONE);
 }
 
 static void
@@ -2915,17 +2921,17 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 	g_assert (gtk_widget_get_realized (widget));
 
 	if (move && resize)
-		gdk_window_move_resize (widget->window,
+		gdk_window_move_resize (gtk_widget_get_window (widget),
 					toplevel->priv->geometry.x,
 					toplevel->priv->geometry.y,
 					toplevel->priv->geometry.width,
 					toplevel->priv->geometry.height);
 	else if (move)
-		gdk_window_move (widget->window,
+		gdk_window_move (gtk_widget_get_window (widget),
 				 toplevel->priv->geometry.x,
 				 toplevel->priv->geometry.y);
 	else if (resize)
-		gdk_window_resize (widget->window,
+		gdk_window_resize (gtk_widget_get_window (widget),
 				   toplevel->priv->geometry.width,
 				   toplevel->priv->geometry.height);
 }
@@ -2948,6 +2954,7 @@ panel_toplevel_initially_hide (PanelToplevel *toplevel)
 static void
 panel_toplevel_realize (GtkWidget *widget)
 {
+	GdkWindow     *window;
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 
 	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
@@ -2957,10 +2964,12 @@ panel_toplevel_realize (GtkWidget *widget)
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
 
 	panel_struts_set_window_hint (toplevel);
-	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
 
-	gdk_window_set_group (widget->window, widget->window);
-	gdk_window_set_geometry_hints (widget->window, NULL, GDK_HINT_POS);
+	window = gtk_widget_get_window (widget);
+	panel_xutils_set_window_type (window, PANEL_XUTILS_TYPE_DOCK);
+
+	gdk_window_set_group (window, window);
+	gdk_window_set_geometry_hints (window, NULL, GDK_HINT_POS);
 
 	panel_toplevel_initially_hide (toplevel);
 
@@ -3015,6 +3024,7 @@ static void
 panel_toplevel_check_resize (GtkContainer *container)
 {
 	GtkAllocation   allocation;
+	GtkAllocation   widget_allocation;
 	GtkRequisition  requisition;
 	GtkWidget      *widget;
 
@@ -3028,11 +3038,12 @@ panel_toplevel_check_resize (GtkContainer *container)
 
 	gtk_widget_size_request (widget, &requisition);
 
-	if (widget->allocation.width  != requisition.width ||
-	    widget->allocation.height != requisition.height)
+	gtk_widget_get_allocation (widget, &widget_allocation);
+	if (widget_allocation.width  != requisition.width ||
+	    widget_allocation.height != requisition.height)
 		return;
 
-	allocation = widget->allocation;
+	allocation = widget_allocation;
 	gtk_widget_size_allocate (widget, &allocation);
 }
 
@@ -3043,6 +3054,7 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	PanelToplevel *toplevel;
 	GtkBin        *bin;
 	GdkRectangle   old_geometry;
+	GtkWidget     *child;
 	int            position_changed = FALSE;
 	int            size_changed = FALSE;
 
@@ -3053,8 +3065,9 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	 * see if we need to move to a new monitor */
 	panel_toplevel_update_monitor (toplevel);
 
-	if (bin->child && gtk_widget_get_visible (bin->child))
-		gtk_widget_size_request (bin->child, requisition);
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_request (child, requisition);
 
 	old_geometry = toplevel->priv->geometry;
 
@@ -3084,8 +3097,11 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 	GtkBin        *bin = (GtkBin *) widget;
 	GtkAllocation  challoc;
+	GtkAllocation  child_allocation;
+	GtkStyle      *style;
+	GtkWidget     *child;
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation (widget, allocation);
 
 	if (toplevel->priv->expand ||
 	    toplevel->priv->buttons_enabled ||
@@ -3105,40 +3121,49 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 		}
 	}
 
+	style = gtk_widget_get_style (widget);
+
 	if (toplevel->priv->edges & PANEL_EDGE_TOP) {
-		challoc.y += widget->style->ythickness;
-		challoc.height -= widget->style->ythickness;
+		challoc.y += style->ythickness;
+		challoc.height -= style->ythickness;
 	}
 
 	if (toplevel->priv->edges & PANEL_EDGE_LEFT) {
-		challoc.x += widget->style->xthickness;
-		challoc.width -= widget->style->xthickness;
+		challoc.x += style->xthickness;
+		challoc.width -= style->xthickness;
 	}
 
 	if (toplevel->priv->edges & PANEL_EDGE_BOTTOM)
-		challoc.height -= widget->style->ythickness;
+		challoc.height -= style->ythickness;
 
 	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
-		challoc.width -= widget->style->xthickness;
+		challoc.width -= style->xthickness;
 
 	challoc.width  = MAX (1, challoc.width);
 	challoc.height = MAX (1, challoc.height);
 
-	if (gtk_widget_get_mapped (widget) &&
-	    (challoc.x != bin->child->allocation.x ||
-	     challoc.y != bin->child->allocation.y ||
-	     challoc.width  != bin->child->allocation.width ||
-	     challoc.height != bin->child->allocation.height))
-	 	gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
+	child = gtk_bin_get_child (bin);
 
-	if (bin->child && gtk_widget_get_visible (bin->child))
-		gtk_widget_size_allocate (bin->child, &challoc);
+	gtk_widget_get_allocation (child, &child_allocation);
+	if (gtk_widget_get_mapped (widget) &&
+	    (challoc.x != child_allocation.x ||
+	     challoc.y != child_allocation.y ||
+	     challoc.width  != child_allocation.width ||
+	     challoc.height != child_allocation.height))
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &widget->allocation, FALSE);
+
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_allocate (child, &challoc);
 }
 
 static gboolean
 panel_toplevel_expose (GtkWidget      *widget,
 		       GdkEventExpose *event)
 {
+	GdkWindow      *window;
+	GtkAllocation   allocation;
+	GtkStateType    state;
+	GtkStyle       *style;
 	PanelToplevel  *toplevel = (PanelToplevel *) widget;
 	PanelFrameEdge  edges;
 	gboolean        retval = FALSE;
@@ -3157,17 +3182,22 @@ panel_toplevel_expose (GtkWidget      *widget,
 	    toplevel->priv->attached)
 		return retval;
 
+	gtk_widget_get_allocation (widget, &allocation);
+	state = gtk_widget_get_state (widget);
+	style = gtk_widget_get_style (widget);
+	window = gtk_widget_get_window (widget);
+
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		int x, y, width, height;
 		int xthickness, ythickness;
 
-		x      = widget->allocation.x;
-		y      = widget->allocation.y;
+		x      = allocation.x;
+		y      = allocation.y;
 		width  = HANDLE_SIZE;
-		height = widget->allocation.height;
+		height = allocation.height;
 
-		xthickness = widget->style->xthickness;
-		ythickness = widget->style->ythickness;
+		xthickness = style->xthickness;
+		ythickness = style->ythickness;
 
 		if (edges & PANEL_EDGE_TOP) {
 			y += ythickness;
@@ -3178,19 +3208,19 @@ panel_toplevel_expose (GtkWidget      *widget,
 		if (edges & PANEL_EDGE_LEFT)
 			x += xthickness;
 
-		gtk_paint_handle (widget->style, widget->window,
-				  GTK_WIDGET_STATE (widget),
+		gtk_paint_handle (style, window,
+				  state,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
 
-		x = widget->allocation.width - HANDLE_SIZE;
+		x = allocation.width - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_RIGHT)
 			x -= xthickness;
 
-		gtk_paint_handle (widget->style, widget->window,
-				  GTK_WIDGET_STATE (widget),
+		gtk_paint_handle (style, window,
+				  state,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
@@ -3199,13 +3229,13 @@ panel_toplevel_expose (GtkWidget      *widget,
 		int x, y, width, height;
 		int xthickness, ythickness;
 
-		x      = widget->allocation.x;
-		y      = widget->allocation.y;
-		width  = widget->allocation.width;
+		x      = allocation.x;
+		y      = allocation.y;
+		width  = allocation.width;
 		height = HANDLE_SIZE;
 
-		xthickness = widget->style->xthickness;
-		ythickness = widget->style->ythickness;
+		xthickness = style->xthickness;
+		ythickness = style->ythickness;
 
 		if (edges & PANEL_EDGE_LEFT) {
 			x += xthickness;
@@ -3216,19 +3246,19 @@ panel_toplevel_expose (GtkWidget      *widget,
 		if (edges & PANEL_EDGE_TOP)
 			y += ythickness;
 
-		gtk_paint_handle (widget->style, widget->window,
-				  GTK_WIDGET_STATE (widget),
+		gtk_paint_handle (style, window,
+				  state,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
 
-		y = widget->allocation.height - HANDLE_SIZE;
+		y = allocation.height - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_BOTTOM)
 			y -= ythickness;
 
-		gtk_paint_handle (widget->style, widget->window,
-				  GTK_WIDGET_STATE (widget),
+		gtk_paint_handle (style, window,
+				  state,
 				  GTK_SHADOW_OUT,
 				  &event->area, widget, "handlebox",
 				  x, y, width, height,
@@ -3450,7 +3480,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 					       &toplevel->priv->animation_end_height);
 	panel_toplevel_update_struts (toplevel, FALSE);
 
-	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, &cur_x, &cur_y);
+	gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel)), &cur_x, &cur_y);
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (toplevel));
 

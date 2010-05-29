@@ -115,6 +115,7 @@ button_widget_realize(GtkWidget *widget)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
+	GtkAllocation allocation;
 	GtkButton *button;
 
 	g_return_if_fail (widget != NULL);
@@ -122,13 +123,14 @@ button_widget_realize(GtkWidget *widget)
 
 	button = GTK_BUTTON (widget);
 
-	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+	gtk_widget_realize (widget);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+	gtk_widget_get_allocation (widget, &allocation);
+	attributes.x = allocation.x;
+	attributes.y = allocation.y;
+	attributes.width = allocation.width;
+	attributes.height = allocation.height;
 	attributes.wclass = GDK_INPUT_ONLY;
 	attributes.event_mask = (GDK_BUTTON_PRESS_MASK |
 				 GDK_BUTTON_RELEASE_MASK |
@@ -139,15 +141,15 @@ button_widget_realize(GtkWidget *widget)
 				 GDK_LEAVE_NOTIFY_MASK);
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gtk_widget_get_parent_window (widget);
-	g_object_ref (G_OBJECT (widget->window));
+	gtk_widget_set_window (widget, gtk_widget_get_parent_window (widget));
+	g_object_ref (G_OBJECT (gtk_widget_get_window (widget)));
       
 	button->event_window = gdk_window_new (gtk_widget_get_parent_window (widget),
 					       &attributes,
 					       attributes_mask);
 	gdk_window_set_user_data (button->event_window, widget);
 
-	widget->style = gtk_style_attach (widget->style, widget->window);
+	widget->style = gtk_style_attach (widget->style, gtk_widget_get_window (widget));
 
 	BUTTON_WIDGET (widget)->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
 	g_signal_connect_object (BUTTON_WIDGET (widget)->priv->icon_theme,
@@ -366,8 +368,11 @@ button_widget_expose (GtkWidget         *widget,
 		      GdkEventExpose    *event)
 {
 	ButtonWidget *button_widget;
+	GdkWindow *window;
+	GtkAllocation allocation;
 	GtkButton *button;
 	GdkRectangle area, image_bound;
+	GtkStyle *style;
 	int off;
 	int x, y, w, h;
 	GdkPixbuf *pb = NULL;
@@ -384,10 +389,12 @@ button_widget_expose (GtkWidget         *widget,
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
+	gtk_widget_get_allocation (widget, &allocation);
+
 	/* offset for pressed buttons */
 	off = (button_widget->priv->activatable &&
 	       button->in_button && button->button_down) ?
-		BUTTON_WIDGET_DISPLACEMENT * widget->allocation.height / 48.0 : 0;
+		BUTTON_WIDGET_DISPLACEMENT * allocation.height / 48.0 : 0;
 
 	if (!button_widget->priv->activatable) {
 		pb = gdk_pixbuf_copy (button_widget->priv->pixbuf);
@@ -405,8 +412,8 @@ button_widget_expose (GtkWidget         *widget,
 
 	w = gdk_pixbuf_get_width (pb);
 	h = gdk_pixbuf_get_height (pb);
-	x = widget->allocation.x + off + (widget->allocation.width - w)/2;
-	y = widget->allocation.y + off + (widget->allocation.height - h)/2;
+	x = allocation.x + off + (allocation.width - w)/2;
+	y = allocation.y + off + (allocation.height - h)/2;
 	
 	image_bound.x = x;
 	image_bound.y = y;      
@@ -415,9 +422,11 @@ button_widget_expose (GtkWidget         *widget,
 	
 	area = event->area;
 	
-	if (gdk_rectangle_intersect (&area, &widget->allocation, &area) &&
+	window = gtk_widget_get_window (widget);
+
+	if (gdk_rectangle_intersect (&area, &allocation, &area) &&
 	    gdk_rectangle_intersect (&image_bound, &area, &image_bound))
-		gdk_draw_pixbuf (widget->window, NULL, pb,
+		gdk_draw_pixbuf (window, NULL, pb,
 				 image_bound.x - x, image_bound.y - y,
 				 image_bound.x, image_bound.y,
 				 image_bound.width, image_bound.height,
@@ -426,6 +435,8 @@ button_widget_expose (GtkWidget         *widget,
 
 	g_object_unref (pb);
 	
+	style = gtk_widget_get_style (widget);
+
 	if (button_widget->priv->arrow) {
 		GtkArrowType arrow_type;
 		int          x, y, width, height;
@@ -433,15 +444,15 @@ button_widget_expose (GtkWidget         *widget,
 		x = y = width = height = -1;
 
 		arrow_type = calc_arrow (button_widget->priv->orientation,
-					 widget->allocation.width,
-					 widget->allocation.height,
+					 allocation.width,
+					 allocation.height,
 					 &x,
 					 &y,
 					 &width,
 					 &height);
 
-		gtk_paint_arrow (widget->style,
-				 widget->window,
+		gtk_paint_arrow (style,
+				 window,
 				 GTK_STATE_NORMAL,
 				 GTK_SHADOW_NONE,
 				 NULL,
@@ -449,17 +460,17 @@ button_widget_expose (GtkWidget         *widget,
 				 "panel-button",
 				 arrow_type,
 				 TRUE,
-				 widget->allocation.x + x,
-				 widget->allocation.y + y,
+				 allocation.x + x,
+				 allocation.y + y,
 				 width,
 				 height);
 	}
 
 	if (button_widget->priv->dnd_highlight) {
-		gdk_draw_rectangle(widget->window, widget->style->black_gc, FALSE,
-				   widget->allocation.x, widget->allocation.y,
-				   widget->allocation.width - 1,
-				   widget->allocation.height - 1);
+		gdk_draw_rectangle(window, style->black_gc, FALSE,
+				   allocation.x, allocation.y,
+				   allocation.width - 1,
+				   allocation.height - 1);
 	}
 
 	if (gtk_widget_has_focus (widget)) {
@@ -470,11 +481,11 @@ button_widget_expose (GtkWidget         *widget,
 				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
-		x = widget->allocation.x + focus_pad;
-		y = widget->allocation.y + focus_pad;
-		width = widget->allocation.width -  2 * focus_pad;
-		height = widget->allocation.height - 2 * focus_pad;
-		gtk_paint_focus (widget->style, widget->window,
+		x = allocation.x + focus_pad;
+		y = allocation.y + focus_pad;
+		width = allocation.width -  2 * focus_pad;
+		height = allocation.height - 2 * focus_pad;
+		gtk_paint_focus (style, window,
 				 GTK_STATE_NORMAL,
 				 &event->area, widget, "button",
 				 x, y, width, height);
@@ -525,7 +536,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 		button_widget_reload_pixbuf (button_widget);
 	}
 
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation (widget, allocation);
 
 	if (gtk_widget_get_realized (widget)) {
 		gdk_window_move_resize (button->event_window, 

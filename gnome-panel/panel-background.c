@@ -1076,31 +1076,33 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 	GdkPixmap       *pixmap;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
+	GtkAllocation    allocation;
 	GtkStyle        *style;
 
 	bg_pixmap = panel_background_get_pixmap (background);
 	if (!bg_pixmap)
 		return;
 
-	pixmap = gdk_pixmap_new (widget->window,
-				 widget->allocation.width,
-				 widget->allocation.height,
+	gtk_widget_get_allocation (widget, &allocation);
+	pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
+				 allocation.width,
+				 allocation.height,
 				 -1);
 
 	cr = gdk_cairo_create (GDK_DRAWABLE (pixmap));
 	gdk_cairo_set_source_pixmap (cr, (GdkPixmap *) bg_pixmap,
-				     -widget->allocation.x,
-				     -widget->allocation.y);
+				     -allocation.x,
+				     -allocation.y);
 	pattern = cairo_get_source (cr);
 	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
 	cairo_rectangle (cr, 0, 0,
-			 widget->allocation.width, widget->allocation.height);
+			 allocation.width, allocation.height);
 	cairo_fill (cr);
 
 	cairo_destroy (cr);
 
-	style = gtk_style_copy (widget->style);
+	style = gtk_style_copy (gtk_widget_get_style (widget));
 	if (style->bg_pixmap[GTK_STATE_NORMAL])
 		g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 	style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);

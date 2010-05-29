@@ -1160,9 +1160,13 @@ static void
 panel_run_dialog_update_content (PanelRunDialog *dialog,
 				 gboolean        show_list)
 {
+	GtkWidget *parent;
+
+	parent = gtk_widget_get_parent (dialog->list_expander);
+
 	if (!panel_profile_get_enable_program_list ()) {
-		if (dialog->list_expander->parent)
-			gtk_container_remove (GTK_CONTAINER (dialog->list_expander->parent),
+		if (parent)
+			gtk_container_remove (GTK_CONTAINER (parent),
 					      dialog->list_expander);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
@@ -1701,14 +1705,14 @@ entry_drag_data_received (GtkEditable      *entry,
 	char  *file;
 	int    i;
 
-        if (selection_data->format != 8 || selection_data->length == 0) {
+        if (gtk_selection_data_get_format (selection_data) != 8 || gtk_selection_data_get_length (selection_data) == 0) {
         	g_warning (_("URI list dropped on run dialog had wrong format (%d) or length (%d)\n"),
-			   selection_data->format,
-			   selection_data->length);
+			   gtk_selection_data_get_format (selection_data),
+			   gtk_selection_data_get_length (selection_data));
 		return;
         }
 
-	uris = g_uri_list_extract_uris ((const char *)selection_data->data);
+	uris = g_uri_list_extract_uris ((const char *)gtk_selection_data_get_data (selection_data));
 
 	if (!uris) {
 		gtk_drag_finish (context, FALSE, FALSE, time);
@@ -1871,7 +1875,7 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 
 	if (uri) {
 		gtk_selection_data_set (selection_data,
-					selection_data->target, 8,
+					gtk_selection_data_get_target (selection_data), 8,
 					(unsigned char *) uri, strlen (uri));
 		g_free (uri);
 	}
@@ -1962,7 +1966,7 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	gtk_widget_grab_focus (dialog->combobox);
 	gtk_widget_realize (dialog->run_dialog);
-	gdk_x11_window_set_user_time (dialog->run_dialog->window,
+	gdk_x11_window_set_user_time (gtk_widget_get_window (dialog->run_dialog),
 				      activate_time);
 	gtk_widget_show (dialog->run_dialog);
 	

@@ -391,7 +391,7 @@ panel_key_press_event (GtkWidget   *widget,
 	 * bindings do not work. We get around this by
 	 * activating the key bindings here.
 	 */ 
-	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget) &&
+	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
 	    event->keyval == GDK_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
 		return gtk_bindings_activate (GTK_OBJECT (widget),
@@ -724,6 +724,7 @@ static gboolean
 move_applet (PanelWidget *panel, int pos, int applet_index)
 {
 	GSList     *applet_list;
+	GtkWidget  *parent;
 	AppletInfo *info;
 
 	applet_list = panel_applet_list_applets ();
@@ -736,15 +737,17 @@ move_applet (PanelWidget *panel, int pos, int applet_index)
 	if (pos < 0)
 		pos = 0;
 
+	parent = gtk_widget_get_parent (info->widget);
+
 	if (info != NULL &&
 	    info->widget != NULL &&
-	    info->widget->parent != NULL &&
-	    PANEL_IS_WIDGET (info->widget->parent)) {
+	    parent != NULL &&
+	    PANEL_IS_WIDGET (parent)) {
 		GSList *forb;
 		forb = g_object_get_data (G_OBJECT (info->widget),
 					  PANEL_APPLET_FORBIDDEN_PANELS);
 		if ( ! g_slist_find (forb, panel))
-			panel_widget_reparent (PANEL_WIDGET (info->widget->parent),
+			panel_widget_reparent (PANEL_WIDGET (parent),
 					       panel,
 					       info->widget,
 					       pos);
@@ -1056,24 +1059,27 @@ panel_receive_dnd_data (PanelWidget      *panel,
 			guint             time_)
 {
 	gboolean success = FALSE;
+	guchar *data;
 
 	if (panel_lockdown_get_locked_down ()) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
 		return;
 	}
 
+	data = gtk_selection_data_get_data (selection_data);
+
 	switch (info) {
 	case TARGET_URL:
-		success = drop_urilist (panel, pos, (char *)selection_data->data);
+		success = drop_urilist (panel, pos, (char *)data);
 		break;
 	case TARGET_NETSCAPE_URL:
-		success = drop_url (panel, pos, (char *)selection_data->data);
+		success = drop_url (panel, pos, (char *)data);
 		break;
 	case TARGET_COLOR:
-		success = set_background_color (panel->toplevel, (guint16 *) selection_data->data);
+		success = set_background_color (panel->toplevel, (guint16 *) data);
 		break;
 	case TARGET_BGIMAGE:
-		success = set_background_image_from_uri (panel->toplevel, (char *) selection_data->data);
+		success = set_background_image_from_uri (panel->toplevel, (char *) data);
 		break;
 	case TARGET_BACKGROUND_RESET:
 		if (panel_profile_is_writable_background_type (panel->toplevel)) {
@@ -1084,7 +1090,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		}
 		break;
 	case TARGET_DIRECTORY:
-		success = drop_uri (panel, pos, (char *)selection_data->data,
+		success = drop_uri (panel, pos, (char *)data,
 				    PANEL_ICON_FOLDER);
 		break;
 	case TARGET_APPLET:
@@ -1093,18 +1099,18 @@ panel_receive_dnd_data (PanelWidget      *panel,
 			return;
 		}
 		if (panel_profile_id_lists_are_writable ()) {
-			panel_applet_frame_create (panel->toplevel, pos, (char *) selection_data->data);
+			panel_applet_frame_create (panel->toplevel, pos, (char *) data);
 			success = TRUE;
 		} else {
 			success = FALSE;
 		}
 		break;
 	case TARGET_APPLET_INTERNAL:
-		success = drop_internal_applet (panel, pos, (char *)selection_data->data,
+		success = drop_internal_applet (panel, pos, (char *)data,
 						context->action);
 		break;
 	case TARGET_ICON_INTERNAL:
-		success = drop_internal_icon (panel, pos, (char *)selection_data->data,
+		success = drop_internal_icon (panel, pos, (char *)data,
 					      context->action);
 		break;
 	default:
@@ -1243,12 +1249,14 @@ panel_screen_from_panel_widget (PanelWidget *panel)
 gboolean
 panel_is_applet_right_stick (GtkWidget *applet)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel_widget;
 
+	parent = gtk_widget_get_parent (applet);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
-	g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
 
-	panel_widget = PANEL_WIDGET (applet->parent);
+	panel_widget = PANEL_WIDGET (parent);
 
 	if (!panel_toplevel_get_expand (panel_widget->toplevel))
 		return FALSE;

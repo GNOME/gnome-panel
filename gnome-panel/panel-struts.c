@@ -311,7 +311,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 		break;
 	}
 
-	panel_xutils_set_strut (widget->window,
+	panel_xutils_set_strut (gtk_widget_get_window (widget),
 				strut->orientation,
 				strut_size,
 				strut->allocated_strut_start,
@@ -324,7 +324,7 @@ panel_struts_unset_window_hint (PanelToplevel *toplevel)
 	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		return;
 
-	panel_xutils_set_strut (GTK_WIDGET (toplevel)->window, 0, 0, 0, 0);
+	panel_xutils_set_strut (gtk_widget_get_window (GTK_WIDGET (toplevel)), 0, 0, 0, 0);
 }
 
 static inline int

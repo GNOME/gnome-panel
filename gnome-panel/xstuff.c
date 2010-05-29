@@ -370,7 +370,7 @@ zoom_expose (GtkWidget      *widget,
 		}
 
 
-		cr = gdk_cairo_create (widget->window);
+		cr = gdk_cairo_create (gtk_widget_get_window (widget));
 		cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 		cairo_set_source_rgba (cr, 0, 0, 0, 0.0);
 		cairo_rectangle (cr, 0, 0, width, height);
@@ -450,7 +450,7 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	/* see doc for gtk_widget_set_app_paintable() */
 	gtk_widget_realize (win);
-	gdk_window_set_back_pixmap (win->window, NULL, FALSE);
+	gdk_window_set_back_pixmap (gtk_widget_get_window (win), NULL, FALSE);
 	gtk_widget_show (win);
 
 	zoom->timeout_id = g_timeout_add (ZOOM_DELAY,
@@ -589,18 +589,20 @@ xstuff_zoom_animate (GtkWidget *widget,
 {
 	GdkScreen *gscreen;
 	GdkRectangle rect, dest;
+	GtkAllocation allocation;
 	int monitor;
 
 	if (opt_rect)
 		rect = *opt_rect;
 	else {
-		gdk_window_get_origin (widget->window, &rect.x, &rect.y);
+		gdk_window_get_origin (gtk_widget_get_window (widget), &rect.x, &rect.y);
+		gtk_widget_get_allocation (widget, &allocation);
 		if (!gtk_widget_get_has_window (widget)) {
-			rect.x += widget->allocation.x;
-			rect.y += widget->allocation.y;
+			rect.x += allocation.x;
+			rect.y += allocation.y;
 		}
-		rect.height = widget->allocation.height;
-		rect.width = widget->allocation.width;
+		rect.height = allocation.height;
+		rect.width = allocation.width;
 	}
 
 	gscreen = gtk_widget_get_screen (widget);
@@ -612,7 +614,7 @@ xstuff_zoom_animate (GtkWidget *widget,
 						pixbuf, orientation);
 	else {
 		monitor = gdk_screen_get_monitor_at_window (gscreen,
-							    widget->window);
+							    gtk_widget_get_window (widget));
 		gdk_screen_get_monitor_geometry (gscreen, monitor, &dest);
 
 		draw_zoom_animation (gscreen,

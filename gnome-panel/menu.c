@@ -1053,7 +1053,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
     }
   
-  if (xgrab_shell && !GTK_MENU(xgrab_shell)->torn_off)
+  if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
     {
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
 
@@ -1094,7 +1094,7 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 	g_free (uri);
 
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)uri_list,
+				gtk_selection_data_get_target (selection_data), 8, (guchar *)uri_list,
 				strlen (uri_list));
 	g_free (uri_list);
 }
@@ -1118,8 +1118,8 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	 * gtk_menu_item_size_request()
 	 */
 	req_height = icon_height;
-	req_height += (GTK_CONTAINER (menuitem)->border_width +
-		       menuitem->style->ythickness) * 2;
+	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
+		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
 	requisition->height = MAX (requisition->height, req_height);
 }
 
@@ -1206,7 +1206,7 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 			 guint time, const char *string)
 {
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)string,
+				gtk_selection_data_get_target (selection_data), 8, (guchar *)string,
 				strlen(string));
 }
 

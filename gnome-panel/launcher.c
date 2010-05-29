@@ -54,7 +54,7 @@ launcher_get_screen (Launcher *launcher)
 	g_return_val_if_fail (launcher->info != NULL, NULL);
 	g_return_val_if_fail (launcher->info->widget != NULL, NULL);
 
-	panel_widget = PANEL_WIDGET (launcher->info->widget->parent);
+	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (launcher->info->widget));
 
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
@@ -170,7 +170,7 @@ launcher_launch (Launcher  *launcher,
 		PanelToplevel *toplevel;
 		PanelToplevel *parent;
 
-		toplevel = PANEL_WIDGET (launcher->button->parent)->toplevel;
+		toplevel = PANEL_WIDGET (gtk_widget_get_parent (launcher->button))->toplevel;
 
 		if (panel_toplevel_get_is_attached (toplevel)) {
 			parent = panel_toplevel_get_attach_toplevel (toplevel);
@@ -207,7 +207,7 @@ drag_data_received_cb (GtkWidget        *widget,
 				     NULL);
 	
 	file_list = NULL;
-	uris = g_uri_list_extract_uris ((const char *) selection_data->data);
+	uris = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (selection_data));
 	for (i = 0; uris[i]; i++)
 		file_list = g_list_prepend (file_list, uris[i]);
 	file_list = g_list_reverse (file_list);
@@ -404,7 +404,7 @@ drag_data_get_cb (GtkWidget        *widget,
 		g_free (uri[0]);
 	} else if (info == TARGET_ICON_INTERNAL)
 		gtk_selection_data_set (selection_data,
-					selection_data->target, 8,
+					gtk_selection_data_get_target (selection_data), 8,
 					(unsigned char *) location,
 					strlen (location));
 
@@ -735,7 +735,7 @@ launcher_properties (Launcher  *launcher)
 							_("Launcher Properties"));
 
 	panel_widget_register_open_dialog (PANEL_WIDGET 
-					   (launcher->info->widget->parent),
+					   (gtk_widget_get_parent (launcher->info->widget)),
 					   launcher->prop_dialog);
 
 	panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (launcher->prop_dialog),
@@ -1094,7 +1094,7 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 			{ "text/uri-list", 0, TARGET_URI_LIST }
 		};
 
-		GTK_WIDGET_UNSET_FLAGS (launcher->button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (launcher->button, TRUE);
 		gtk_drag_source_set (launcher->button,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 2,
@@ -1106,7 +1106,7 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 							 pixbuf);
 			g_object_unref (pixbuf);
 		}
-		GTK_WIDGET_SET_FLAGS (launcher->button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (launcher->button, FALSE);
 	
 
 	} else

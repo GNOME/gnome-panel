@@ -1308,8 +1308,9 @@ queue_resize_on_all_applets(PanelWidget *panel)
 static void
 panel_widget_set_background_region (PanelWidget *panel)
 {
-	GtkWidget *widget;
-	int       origin_x = -1, origin_y = -1;
+	GtkWidget     *widget;
+	GtkAllocation allocation;
+	int           origin_x = -1, origin_y = -1;
 
 	widget = GTK_WIDGET (panel);
 
@@ -1318,11 +1319,13 @@ panel_widget_set_background_region (PanelWidget *panel)
 
 	gdk_window_get_origin (gtk_widget_get_window (widget), &origin_x, &origin_y);
 
+	gtk_widget_get_allocation (widget, &allocation);
+
 	panel_background_change_region (
 		&panel->background, panel->orient,
 		origin_x, origin_y,
-		widget->allocation.width,
-		widget->allocation.height);
+		allocation.width,
+		allocation.height);
 }
 
 static void
@@ -1342,7 +1345,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	old_size = panel->size;
 	ltr = gtk_widget_get_direction (widget) == GTK_TEXT_DIR_LTR;
 	
-	widget->allocation = *allocation;
+	gtk_widget_set_allocation (widget, allocation);
 	if (gtk_widget_get_realized (widget))
 		gdk_window_move_resize (gtk_widget_get_window (widget),
 					allocation->x, 
@@ -1525,7 +1528,8 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	int x,y;
 	int w,h;
-	GtkWidget *widget;
+	GtkAllocation allocation;
+	GtkWidget     *widget;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
@@ -1537,8 +1541,9 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 		return FALSE;
 
 	gtk_widget_get_pointer(widget, &x, &y);
-	w = widget->allocation.width;
-	h = widget->allocation.height;
+	gtk_widget_get_allocation (widget, &allocation);
+	w = allocation.width;
+	h = allocation.height;
 
 	if((x+overlap)>=0 &&
 	   (x-overlap)<=w &&
@@ -1552,22 +1557,34 @@ static void
 panel_widget_style_set (GtkWidget *widget,
 			GtkStyle  *previous_style)
 {
+	GtkStateType state;
+	GtkStyle     *style;
+
+	state = gtk_widget_get_state (widget);
+	style = gtk_widget_get_style (widget);
+
 	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
-			&widget->style->bg [GTK_WIDGET_STATE (widget)],
-			widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]);
+			&style->bg [state],
+			style->bg_pixmap [state]);
 }
 
 static void
 panel_widget_state_changed (GtkWidget    *widget,
 			    GtkStateType  previous_state)
 {
+	GtkStateType state;
+	GtkStyle     *style;
+
+	state = gtk_widget_get_state (widget);
+	style = gtk_widget_get_style (widget);
+
 	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
-			&widget->style->bg [GTK_WIDGET_STATE (widget)],
-			widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]);
+			&style->bg [state],
+			style->bg_pixmap [state]);
 }
 
 static gboolean
@@ -1583,8 +1600,13 @@ toplevel_configure_event (GtkWidget         *widget,
 static void
 panel_widget_realize (GtkWidget *widget)
 {
-	GdkWindow   *window;
-	PanelWidget *panel = (PanelWidget *) widget;
+	GdkWindow    *window;
+	GtkStateType state;
+	GtkStyle     *style;
+	PanelWidget  *panel = (PanelWidget *) widget;
+
+	state = gtk_widget_get_state (widget);
+	style = gtk_widget_get_style (widget);
 
 	g_signal_connect (panel->toplevel, "configure-event",
 			  G_CALLBACK (toplevel_configure_event), panel);
@@ -1599,8 +1621,8 @@ panel_widget_realize (GtkWidget *widget)
 
 	panel_background_set_default_style (
 		&panel->background,
-		&widget->style->bg [GTK_WIDGET_STATE (widget)],
-		widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]);
+		&style->bg [state],
+		style->bg_pixmap [state]);
 
 	panel_background_realized (&panel->background, window);
 }
@@ -2150,7 +2172,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 static int
 move_timeout_handler(gpointer data)
 {
-	PanelWidget *panel = data;
+	GtkAllocation allocation;
+	PanelWidget   *panel = data;
 	g_return_val_if_fail(PANEL_IS_WIDGET(data),FALSE);
 
 	if(been_moved &&
@@ -2169,8 +2192,9 @@ move_timeout_handler(gpointer data)
 		widget = panel->currently_dragged_applet->applet;
 
 		gtk_widget_get_pointer(widget, &x, &y);
-		w = widget->allocation.width;
-		h = widget->allocation.height;
+		gtk_widget_get_allocation (widget, &allocation);
+		w = allocation.width;
+		h = allocation.height;
 
 		/* if NOT inside return TRUE, this means we will be
 		 * kept inside the timeout until we hit the damn widget
@@ -2203,12 +2227,15 @@ static gboolean
 panel_widget_applet_button_press_event (GtkWidget      *widget,
 					GdkEventButton *event)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel;
 	guint32      event_time;
-	
-	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
 
-	panel = PANEL_WIDGET (widget->parent);
+	parent = gtk_widget_get_parent (widget);
+
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
+
+	panel = PANEL_WIDGET (parent);
 
 	/* don't propagate this event */
 	if (panel->currently_dragged_applet) {
@@ -2239,11 +2266,14 @@ static gboolean
 panel_widget_applet_button_release_event (GtkWidget      *widget,
 					  GdkEventButton *event)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel;
-	
-	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
 
-	panel = PANEL_WIDGET (widget->parent);
+	parent = gtk_widget_get_parent (widget);
+
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
+
+	panel = PANEL_WIDGET (parent);
 	
 	/* don't propagate this event */
 	if (panel->currently_dragged_applet) {
@@ -2262,14 +2292,17 @@ static gboolean
 panel_widget_applet_motion_notify_event (GtkWidget *widget,
 					 GdkEvent  *event)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel;
-	
-	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
+
+	parent = gtk_widget_get_parent (widget);
+
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
 
 	if (gdk_event_get_screen (event) != gtk_widget_get_screen (widget))
 		return FALSE;
 
-	panel = PANEL_WIDGET (widget->parent);
+	panel = PANEL_WIDGET (parent);
 	
 	schedule_try_move (panel, FALSE);
 
@@ -2280,11 +2313,14 @@ static gboolean
 panel_widget_applet_key_press_event (GtkWidget   *widget,
 				     GdkEventKey *event)
 {
+	GtkWidget   *parent;
 	PanelWidget *panel;
 	
-	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
+	parent = gtk_widget_get_parent (widget);
 
-	panel = PANEL_WIDGET (widget->parent);
+	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
+
+	panel = PANEL_WIDGET (parent);
 
 	if (!panel_applet_in_drag)
 		return FALSE;
@@ -2351,15 +2387,17 @@ static void
 panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 {
 	AppletData *ad;
+	GtkWidget  *parent;
 
 	g_return_if_fail (GTK_IS_WIDGET (applet));
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 	g_object_set_data (G_OBJECT (applet), PANEL_APPLET_DATA, NULL);
 
+	parent = gtk_widget_get_parent (applet);
 	/*if it wasn't yet removed*/
-	if(applet->parent) {
-		PanelWidget *panel = PANEL_WIDGET (applet->parent);
+	if(parent) {
+		PanelWidget *panel = PANEL_WIDGET (parent);
 
 		if (panel->currently_dragged_applet == ad)
 			panel_widget_applet_drag_end (panel);
@@ -2800,7 +2838,7 @@ static gboolean
 panel_widget_real_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
-	if (gtk_widget_get_can_focus (widget) && GTK_FIXED (widget)->children) {
+	if (gtk_widget_get_can_focus (widget) && gtk_container_get_children (GTK_CONTAINER (widget))) {
 		gtk_widget_set_can_focus (widget, FALSE);
 	}
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);

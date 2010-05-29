@@ -96,7 +96,7 @@ key_press_drawer (GtkWidget   *widget,
 	if (event->state & gtk_accelerator_get_default_mod_mask ())
 		return FALSE;
 
-	orient = PANEL_WIDGET (drawer->button->parent)->orient;
+	orient = PANEL_WIDGET (gtk_widget_get_parent (drawer->button))->orient;
 
 	switch (event->keyval) {
 	case GDK_Up:
@@ -299,7 +299,7 @@ drag_data_get_cb (GtkWidget          *widget,
 	foo = g_strdup_printf ("DRAWER:%d", panel_find_applet_index (widget));
 
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)foo,
+				gtk_selection_data_get_target (selection_data), 8, (guchar *)foo,
 				strlen (foo));
 
 	g_free (foo);
@@ -747,7 +747,7 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 			{ "application/x-panel-applet-internal", 0, 0 }
 		};
 
-		GTK_WIDGET_UNSET_FLAGS (drawer->button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (drawer->button, TRUE);
 		gtk_drag_source_set (drawer->button,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
@@ -756,7 +756,7 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 		gtk_drag_source_set_icon_name (drawer->button,
 					       button_widget_get_icon_name (BUTTON_WIDGET (drawer->button)));
 
-		GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (drawer->button, FALSE);
 
 	} else
 		gtk_drag_source_unset (drawer->button);

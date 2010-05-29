@@ -306,12 +306,14 @@ static void
 panel_menu_button_parent_set (GtkWidget *widget,
 			      GtkWidget *previous_parent)
 {
+	GtkWidget    *parent;
 	PanelMenuButton *button = PANEL_MENU_BUTTON (widget);
 
-	g_return_if_fail (!widget->parent || PANEL_IS_WIDGET (widget->parent));
+	parent = gtk_widget_get_parent (widget);
+	g_return_if_fail (!parent || PANEL_IS_WIDGET (parent));
 
-	if (widget->parent)
-		button->priv->toplevel = PANEL_WIDGET (widget->parent)->toplevel;
+	if (parent)
+		button->priv->toplevel = PANEL_WIDGET (parent)->toplevel;
 	else
 		button->priv->toplevel = NULL;
 
@@ -336,7 +338,7 @@ panel_menu_button_drag_data_get (GtkWidget        *widget,
 	drag_data = g_strdup_printf ("MENU:%d", panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
-		selection_data, selection_data->target,
+		selection_data, gtk_selection_data_get_target (selection_data),
 		8, (guchar *) drag_data, strlen (drag_data));
 
 	g_free (drag_data);
@@ -1006,7 +1008,7 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 		};
 		char *icon;
 
-		GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (GTK_WIDGET (button), TRUE);
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
@@ -1018,7 +1020,7 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 			g_free (icon);
 		}
 
-		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_widget_set_has_window (GTK_WIDGET (button), FALSE);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));
 }
@@ -1043,7 +1045,11 @@ panel_menu_button_accessible_get_n_children (AtkObject *obj)
 {
 	g_return_val_if_fail (PANEL_IS_MENU_BUTTON_ACCESSIBLE (obj), 0);
 
+#if GTK_CHECK_VERSION (2, 21, 0)
+	return gtk_accessible_get_widget (GTK_ACCESSIBLE (obj)) ? 1 : 0;
+#else
 	return GTK_ACCESSIBLE (obj)->widget ? 1 : 0;
+#endif
 }
 
 static AtkObject *
@@ -1058,7 +1064,11 @@ panel_menu_button_accessible_ref_child (AtkObject *obj,
 	if (index != 0)
 		return NULL;
 
+#if GTK_CHECK_VERSION (2, 21, 0)
+	if (!(button = PANEL_MENU_BUTTON (gtk_accessible_get_widget (GTK_ACCESSIBLE (obj)))))
+#else
 	if (!(button = PANEL_MENU_BUTTON (GTK_ACCESSIBLE (obj)->widget)))
+#endif
 		return NULL;
 
 	if (!(menu = panel_menu_button_create_menu (button)))
