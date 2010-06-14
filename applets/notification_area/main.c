@@ -210,6 +210,59 @@ free_applet_data (AppletData *data)
   g_slice_free (AppletData, data);
 }
 
+static void
+on_applet_realized (GtkWidget *widget,
+                    gpointer   user_data)
+{
+  PanelApplet    *applet;
+  AppletData     *data;
+  NaTray         *tray;
+  GtkActionGroup *action_group;
+  gchar          *ui_path;
+
+  applet = PANEL_APPLET (widget);
+  data = g_object_get_data (G_OBJECT (widget), "system-tray-data");
+
+  if (data != NULL)
+    return;
+
+  tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
+                                 get_orientation_from_applet (applet));
+
+  data = g_slice_new (AppletData);
+  data->applet = applet;
+  data->tray = tray;
+  data->about_dialog = NULL;
+
+  g_object_set_data_full (G_OBJECT (applet),
+                          "system-tray-data",
+                          data,
+                          (GDestroyNotify) free_applet_data);
+
+  g_signal_connect (applet, "change_orient",
+                    G_CALLBACK (applet_change_orientation), data);
+  g_signal_connect (applet, "change_background",
+                    G_CALLBACK (applet_change_background), data);
+  g_signal_connect (applet, "destroy",
+                    G_CALLBACK (applet_destroy), data);
+
+  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
+  gtk_widget_show (GTK_WIDGET (tray));
+
+  action_group = gtk_action_group_new ("ClockApplet Menu Actions");
+  gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+  gtk_action_group_add_actions (action_group,
+                                menu_actions,
+                                G_N_ELEMENTS (menu_actions),
+                                data);
+  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
+  panel_applet_setup_menu_from_file (applet,
+                                     ui_path, action_group);
+  g_free (ui_path);
+  g_object_unref (action_group);
+
+}
+
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
@@ -237,28 +290,17 @@ applet_factory (PanelApplet *applet,
                 const gchar *iid,
                 gpointer     user_data)
 {
-  NaTray         *tray;
-  AppletData     *data;
-  GtkActionGroup *action_group;
-  gchar          *ui_path;
-  AtkObject      *atko;
+  AtkObject *atko;
 
   if (!(strcmp (iid, "NotificationArea") == 0 ||
         strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
 
-  tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
-				 get_orientation_from_applet (applet));
-
-  data = g_slice_new (AppletData);
-  data->applet = applet;
-  data->tray = tray;
-  data->about_dialog = NULL;
-
-  g_object_set_data_full (G_OBJECT (applet),
-                          "system-tray-data",
-                          data,
-                          (GDestroyNotify) free_applet_data);
+  /* Defer loading until applet is added to panel so
+   * gtk_widget_get_screen returns correct information */
+  g_signal_connect (GTK_WIDGET (applet), "realize",
+                    G_CALLBACK (on_applet_realized),
+                    NULL);
 
   atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
   atk_object_set_name (atko, _("Panel Notification Area"));
@@ -266,35 +308,14 @@ applet_factory (PanelApplet *applet,
   panel_applet_set_flags (applet,
                           PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
   
-  g_signal_connect (applet, "change_orient",
-                    G_CALLBACK (applet_change_orientation), data);
-  g_signal_connect (applet, "change_background",
-                    G_CALLBACK (applet_change_background), data);
-  g_signal_connect (applet, "destroy",
-		    G_CALLBACK (applet_destroy), data);
-
   panel_applet_set_background_widget (applet, GTK_WIDGET (applet));
 
-  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
   force_no_focus_padding (GTK_WIDGET (applet));
 
 #ifndef NOTIFICATION_AREA_INPROCESS
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 #endif
   gtk_widget_show_all (GTK_WIDGET (applet));
-
-  action_group = gtk_action_group_new ("ClockApplet Menu Actions");
-  gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-  gtk_action_group_add_actions (action_group,
-				menu_actions,
-				G_N_ELEMENTS (menu_actions),
-				data);
-  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
-  panel_applet_setup_menu_from_file (applet,
-				     ui_path, action_group);
-  g_free (ui_path);
-  g_object_unref (action_group);
-
   return TRUE;
 }
 
