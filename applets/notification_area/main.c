@@ -209,6 +209,51 @@ free_applet_data (AppletData *data)
   g_slice_free (AppletData, data);
 }
 
+static void
+on_applet_realized (GtkWidget *widget,
+                    gpointer   user_data)
+{
+  PanelApplet *applet;
+  AppletData  *data;
+  NaTray      *tray;
+
+  applet = PANEL_APPLET (widget);
+  data = g_object_get_data (G_OBJECT (widget), "system-tray-data");
+
+  if (data != NULL)
+    return;
+
+  tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
+                                 get_orientation_from_applet (applet));
+
+  data = g_slice_new (AppletData);
+  data->applet = applet;
+  data->tray = tray;
+  data->about_dialog = NULL;
+
+  g_object_set_data_full (G_OBJECT (applet),
+                          "system-tray-data",
+                          data,
+                          (GDestroyNotify) free_applet_data);
+
+  g_signal_connect (applet, "change_orient",
+                    G_CALLBACK (applet_change_orientation), data);
+  g_signal_connect (applet, "change_background",
+                    G_CALLBACK (applet_change_background), data);
+  g_signal_connect (applet, "destroy",
+                    G_CALLBACK (applet_destroy), data);
+
+  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
+  gtk_widget_show (GTK_WIDGET (tray));
+
+  panel_applet_setup_menu_from_file (applet,
+                                     NULL,
+                                     "GNOME_NotificationAreaApplet.xml",
+                                     NULL,
+                                     menu_verbs,
+                                     data);
+}
+
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
@@ -236,26 +281,17 @@ applet_factory (PanelApplet *applet,
                 const gchar *iid,
                 gpointer     user_data)
 {
-  NaTray     *tray;
-  AppletData *data;
   AtkObject  *atko;
 
   if (!(strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") == 0 ||
         strcmp (iid, "OAFIID:GNOME_SystemTrayApplet") == 0))
     return FALSE;
 
-  tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
-				 get_orientation_from_applet (applet));
-
-  data = g_slice_new (AppletData);
-  data->applet = applet;
-  data->tray = tray;
-  data->about_dialog = NULL;
-
-  g_object_set_data_full (G_OBJECT (applet),
-                          "system-tray-data",
-                          data,
-                          (GDestroyNotify) free_applet_data);
+  /* Defer loading until applet is added to panel so
+   * gtk_widget_get_screen returns correct information */
+  g_signal_connect (GTK_WIDGET (applet), "realize",
+                    G_CALLBACK (on_applet_realized),
+                    NULL);
 
   atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
   atk_object_set_name (atko, _("Panel Notification Area"));
@@ -263,16 +299,8 @@ applet_factory (PanelApplet *applet,
   panel_applet_set_flags (applet,
                           PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
   
-  g_signal_connect (applet, "change_orient",
-                    G_CALLBACK (applet_change_orientation), data);
-  g_signal_connect (applet, "change_background",
-                    G_CALLBACK (applet_change_background), data);
-  g_signal_connect (applet, "destroy",
-		    G_CALLBACK (applet_destroy), data);
-
   panel_applet_set_background_widget (applet, GTK_WIDGET (applet));
 
-  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
   force_no_focus_padding (GTK_WIDGET (applet));
 
 #ifndef NOTIFICATION_AREA_INPROCESS
@@ -280,13 +308,6 @@ applet_factory (PanelApplet *applet,
 #endif
   gtk_widget_show_all (GTK_WIDGET (applet));
 
-  panel_applet_setup_menu_from_file (applet,
-  			             NULL,
-                                     "GNOME_NotificationAreaApplet.xml",
-                                     NULL,
-                                     menu_verbs,
-                                     data);
-  
   return TRUE;
 }
 
