@@ -27,7 +27,6 @@
 struct _PanelAppletContainerPrivate {
 	GDBusProxy *applet_proxy;
 
-	guint       proxy_watcher_id;
 	guint       name_watcher_id;
 	gchar      *bus_name;
 
@@ -142,11 +141,6 @@ panel_applet_container_dispose (GObject *object)
 		container->priv->name_watcher_id = 0;
 	}
 
-	if (container->priv->proxy_watcher_id > 0) {
-		g_bus_unwatch_proxy (container->priv->proxy_watcher_id);
-		container->priv->proxy_watcher_id = 0;
-	}
-
 	if (container->priv->applet_proxy) {
 		g_object_unref (container->priv->applet_proxy);
 		container->priv->applet_proxy = NULL;
@@ -255,10 +249,6 @@ panel_applet_container_plug_removed (PanelAppletContainer *container)
 		g_bus_unwatch_name (container->priv->name_watcher_id);
 		container->priv->name_watcher_id = 0;
 	}
-	if (container->priv->proxy_watcher_id > 0) {
-		g_bus_unwatch_proxy (container->priv->proxy_watcher_id);
-		container->priv->proxy_watcher_id = 0;
-	}
 
 	g_object_unref (container->priv->applet_proxy);
 	container->priv->applet_proxy = NULL;
@@ -322,23 +312,33 @@ on_property_changed (GDBusConnection      *connection,
 }
 
 static void
-on_proxy_appeared (GDBusConnection *connection,
-		   const gchar     *name,
-		   const gchar     *name_owner,
-		   GDBusProxy      *proxy,
-		   gpointer         user_data)
+on_proxy_appeared (GObject      *source_object,
+		   GAsyncResult *res,
+		   gpointer      user_data)
 {
 	GSimpleAsyncResult   *result = G_SIMPLE_ASYNC_RESULT (user_data);
 	PanelAppletContainer *container;
+	GDBusProxy           *proxy;
+	GError               *error = NULL;
+
+	proxy = g_dbus_proxy_new_finish (res, &error);
+	if (!proxy) {
+		g_simple_async_result_set_from_error (result, error);
+		g_error_free (error);
+		g_simple_async_result_complete (result);
+		g_object_unref (result);
+
+		return;
+	}
 
 	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
 
-	container->priv->applet_proxy = g_object_ref (proxy);
+	container->priv->applet_proxy = proxy;
 	g_signal_connect (container->priv->applet_proxy, "g-signal",
 			  G_CALLBACK (panel_applet_container_child_signal),
 			  container);
-	g_dbus_connection_signal_subscribe (connection,
-					    name_owner,
+	g_dbus_connection_signal_subscribe (g_dbus_proxy_get_connection (proxy),
+					    g_dbus_proxy_get_name (proxy),
 					    "org.freedesktop.DBus.Properties",
 					    "PropertiesChanged",
 					    g_dbus_proxy_get_object_path (proxy),
@@ -384,18 +384,16 @@ get_applet_cb (GObject      *source_object,
 	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
 	g_variant_get (retvals, "(&ou)", &applet_path, &container->priv->xid);
 
-	container->priv->proxy_watcher_id =
-		g_bus_watch_proxy_on_connection (connection,
-						 container->priv->bus_name,
-						 G_BUS_NAME_WATCHER_FLAGS_NONE,
-						 applet_path,
-						 PANEL_APPLET_INTERFACE,
-						 G_TYPE_DBUS_PROXY,
-						 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
-						 (GBusProxyAppearedCallback) on_proxy_appeared,
-						 NULL,
-						 result,
-						 NULL);
+	g_dbus_proxy_new (connection,
+			  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+			  NULL,
+			  container->priv->bus_name,
+			  applet_path,
+			  PANEL_APPLET_INTERFACE,
+			  NULL,
+			  (GAsyncReadyCallback) on_proxy_appeared,
+			  result);
+
 	g_variant_unref (retvals);
 
 	/* g_async_result_get_source_object returns new ref */
@@ -601,7 +599,7 @@ panel_applet_container_child_set (PanelAppletContainer *container,
 	g_hash_table_insert (container->priv->pending_ops, result, cancellable);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
-				g_dbus_proxy_get_unique_bus_name (proxy),
+				g_dbus_proxy_get_name (proxy),
 				g_dbus_proxy_get_object_path (proxy),
 				"org.freedesktop.DBus.Properties",
 				"Set",
@@ -701,7 +699,7 @@ panel_applet_container_child_get (PanelAppletContainer *container,
 	g_hash_table_insert (container->priv->pending_ops, result, cancellable);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
-				g_dbus_proxy_get_unique_bus_name (proxy),
+				g_dbus_proxy_get_name (proxy),
 				g_dbus_proxy_get_object_path (proxy),
 				"org.freedesktop.DBus.Properties",
 				"Get",
@@ -772,7 +770,7 @@ panel_applet_container_child_popup_menu (PanelAppletContainer *container,
 					    panel_applet_container_child_popup_menu);
 
 	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
-				g_dbus_proxy_get_unique_bus_name (proxy),
+				g_dbus_proxy_get_name (proxy),
 				g_dbus_proxy_get_object_path (proxy),
 				PANEL_APPLET_INTERFACE,
 				"PopupMenu",
