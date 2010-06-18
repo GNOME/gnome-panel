@@ -370,7 +370,6 @@ get_applet_cb (GObject      *source_object,
 	const gchar          *applet_path;
 	GError               *error = NULL;
 
-	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
 	retvals = g_dbus_connection_call_finish (connection, res, &error);
 	if (!retvals) {
 		g_simple_async_result_set_from_error (result, error);
