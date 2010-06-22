@@ -66,7 +66,7 @@ CLOCK_LDADD =						\
 	$(CLOCK_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
 	$(POLKIT_LIBS)				\
-	-lgweather
+	-lgweather -lm
 
 BUILT_SOURCES =					\
 	clock-marshallers.c			\
