@@ -306,8 +306,8 @@ static void
 panel_menu_button_parent_set (GtkWidget *widget,
 			      GtkWidget *previous_parent)
 {
-	GtkWidget    *parent;
 	PanelMenuButton *button = PANEL_MENU_BUTTON (widget);
+	GtkWidget       *parent;
 
 	parent = gtk_widget_get_parent (widget);
 	g_return_if_fail (!parent || PANEL_IS_WIDGET (parent));

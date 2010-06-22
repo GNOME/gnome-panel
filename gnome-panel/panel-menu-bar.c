@@ -219,8 +219,8 @@ static void
 panel_menu_bar_parent_set (GtkWidget *widget,
 			   GtkWidget *previous_parent)
 {
-	GtkWidget    *parent;
 	PanelMenuBar *menubar = PANEL_MENU_BAR (widget);
+	GtkWidget    *parent;
 
 	parent = gtk_widget_get_parent (widget);
 	g_assert (!parent || PANEL_IS_WIDGET (parent));
@@ -248,6 +248,7 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 	PanelBackground *background;
 
 	gtk_widget_get_allocation (widget, &widget_allocation);
+
 	old_allocation.x      = widget_allocation.x;
 	old_allocation.y      = widget_allocation.y;
 	old_allocation.width  = widget_allocation.width;
@@ -312,7 +313,7 @@ panel_menu_bar_on_expose (GtkWidget      *widget,
 
 	if (gtk_widget_has_focus (GTK_WIDGET (menubar)))
 		gtk_paint_focus (gtk_widget_get_style (widget),
-				 gtk_widget_get_window (widget), 
+				 gtk_widget_get_window (widget),
 				 gtk_widget_get_state (GTK_WIDGET (menubar)),
 				 NULL,
 				 widget,

@@ -1073,10 +1073,10 @@ panel_background_set_image_background_on_widget (PanelBackground *background,
 						 GtkWidget       *widget)
 {
 	const GdkPixmap *bg_pixmap;
+	GtkAllocation    allocation;
 	GdkPixmap       *pixmap;
 	cairo_t         *cr;
 	cairo_pattern_t *pattern;
-	GtkAllocation    allocation;
 	GtkStyle        *style;
 
 	bg_pixmap = panel_background_get_pixmap (background);

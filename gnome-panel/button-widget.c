@@ -113,9 +113,9 @@ make_hc_pixbuf (GdkPixbuf *pb)
 static void
 button_widget_realize(GtkWidget *widget)
 {
+	GtkAllocation allocation;
 	GdkWindowAttr attributes;
 	gint attributes_mask;
-	GtkAllocation allocation;
 	GtkButton *button;
 
 	g_return_if_fail (widget != NULL);
@@ -123,10 +123,11 @@ button_widget_realize(GtkWidget *widget)
 
 	button = GTK_BUTTON (widget);
 
-	gtk_widget_realize (widget);
+	gtk_widget_set_realized (widget, TRUE);
+
+	gtk_widget_get_allocation (widget, &allocation);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	gtk_widget_get_allocation (widget, &allocation);
 	attributes.x = allocation.x;
 	attributes.y = allocation.y;
 	attributes.width = allocation.width;
@@ -142,7 +143,7 @@ button_widget_realize(GtkWidget *widget)
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
 	gtk_widget_set_window (widget, gtk_widget_get_parent_window (widget));
-	g_object_ref (G_OBJECT (gtk_widget_get_window (widget)));
+	g_object_ref (gtk_widget_get_window (widget));
       
 	button->event_window = gdk_window_new (gtk_widget_get_parent_window (widget),
 					       &attributes,
@@ -368,9 +369,9 @@ button_widget_expose (GtkWidget         *widget,
 		      GdkEventExpose    *event)
 {
 	ButtonWidget *button_widget;
+	GtkButton *button;
 	GdkWindow *window;
 	GtkAllocation allocation;
-	GtkButton *button;
 	GdkRectangle area, image_bound;
 	GtkStyle *style;
 	int off;
@@ -380,15 +381,16 @@ button_widget_expose (GtkWidget         *widget,
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	button_widget = BUTTON_WIDGET (widget);
-	button = GTK_BUTTON (widget);
-	
 	if (!gtk_widget_get_visible (widget) || !gtk_widget_get_mapped (widget))
 		return FALSE;
+
+	button_widget = BUTTON_WIDGET (widget);
 
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
+	button = GTK_BUTTON (widget);
+	window = gtk_widget_get_window (widget);
 	gtk_widget_get_allocation (widget, &allocation);
 
 	/* offset for pressed buttons */
@@ -421,8 +423,6 @@ button_widget_expose (GtkWidget         *widget,
 	image_bound.height = h;
 	
 	area = event->area;
-	
-	window = gtk_widget_get_window (widget);
 
 	if (gdk_rectangle_intersect (&area, &allocation, &area) &&
 	    gdk_rectangle_intersect (&image_bound, &area, &image_bound))
@@ -434,7 +434,7 @@ button_widget_expose (GtkWidget         *widget,
 				 0, 0);
 
 	g_object_unref (pb);
-	
+
 	style = gtk_widget_get_style (widget);
 
 	if (button_widget->priv->arrow) {

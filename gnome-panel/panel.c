@@ -724,8 +724,8 @@ static gboolean
 move_applet (PanelWidget *panel, int pos, int applet_index)
 {
 	GSList     *applet_list;
-	GtkWidget  *parent;
 	AppletInfo *info;
+	GtkWidget  *parent;
 
 	applet_list = panel_applet_list_applets ();
 
@@ -1058,8 +1058,8 @@ panel_receive_dnd_data (PanelWidget      *panel,
 			GdkDragContext   *context,
 			guint             time_)
 {
-	gboolean success = FALSE;
-	guchar *data;
+	const guchar *data;
+	gboolean      success = FALSE;
 
 	if (panel_lockdown_get_locked_down ()) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
@@ -1252,8 +1252,10 @@ panel_is_applet_right_stick (GtkWidget *applet)
 	GtkWidget   *parent;
 	PanelWidget *panel_widget;
 
-	parent = gtk_widget_get_parent (applet);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
+
+	parent = gtk_widget_get_parent (applet);
+
 	g_return_val_if_fail (PANEL_IS_WIDGET (parent), FALSE);
 
 	panel_widget = PANEL_WIDGET (parent);

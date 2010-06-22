@@ -172,6 +172,7 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 {
 	PanelAppletFrame *frame;
 	GtkBin           *bin;
+	GtkWidget        *child;
 	GtkRequisition    child_requisition;
 	guint             border_width;
 
@@ -183,8 +184,9 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 		return;
 	}
 
-	if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin))) {
-		gtk_widget_size_request (gtk_bin_get_child (bin), &child_requisition);
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child)) {
+		gtk_widget_size_request (child, &child_requisition);
 
 		requisition->width  = child_requisition.width;
 		requisition->height = child_requisition.height;
@@ -215,12 +217,14 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 {
 	PanelAppletFrame *frame;
 	GtkBin           *bin;
+	GtkWidget        *child;
+	GdkWindow        *window;
 	GtkAllocation     new_allocation;
 	GtkAllocation     old_allocation;
 	GtkAllocation     widget_allocation;
-	guint             border_width;
 
 	gtk_widget_get_allocation (widget, &widget_allocation);
+
 	old_allocation.x      = widget_allocation.x;
 	old_allocation.y      = widget_allocation.y;
 	old_allocation.width  = widget_allocation.width;
@@ -238,6 +242,8 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		return;
 	}
 
+	window = gtk_widget_get_window (widget);
+	child = gtk_bin_get_child (bin);
 	gtk_widget_set_allocation (widget, allocation);
 
 	frame->priv->handle_rect.x = 0;
@@ -288,19 +294,21 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	     new_allocation.y != frame->priv->child_allocation.y ||
 	     new_allocation.width != frame->priv->child_allocation.width ||
 	     new_allocation.height != frame->priv->child_allocation.height))
-		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &widget_allocation, FALSE);
+		gdk_window_invalidate_rect (window, &widget_allocation, FALSE);
 
 	if (gtk_widget_get_realized (widget)) {
+		guint border_width;
+
 		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-		gdk_window_move_resize (gtk_widget_get_window (widget),
+		gdk_window_move_resize (window,
 			allocation->x + border_width,
 			allocation->y + border_width,
 			MAX (allocation->width - border_width * 2, 0),
 			MAX (allocation->height - border_width * 2, 0));
 	}
 
-	if (gtk_bin_get_child (bin) && gtk_widget_get_visible (gtk_bin_get_child (bin)))
-		gtk_widget_size_allocate (gtk_bin_get_child (bin), &new_allocation);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_allocate (child, &new_allocation);
   
 	frame->priv->child_allocation = new_allocation;
 
@@ -467,13 +475,18 @@ void
 panel_applet_frame_change_background (PanelAppletFrame    *frame,
 				      PanelBackgroundType  type)
 {
+	GtkWidget *parent;
+
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
-	g_return_if_fail (PANEL_IS_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))));
+
+	parent = gtk_widget_get_parent (GTK_WIDGET (frame));
+
+	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
 	if (frame->priv->has_handle) {
 		PanelBackground *background;
 
-		background = &PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)))->background;
+		background = &PANEL_WIDGET (parent)->background;
 		panel_background_change_background_on_widget (background,
 							      GTK_WIDGET (frame));
 	}
@@ -753,11 +766,12 @@ void
 _panel_applet_frame_applet_move (PanelAppletFrame *frame)
 {
 	GtkWidget *widget = GTK_WIDGET (frame);
+	GtkWidget *parent = gtk_widget_get_parent (widget);
 
-	if (!PANEL_IS_WIDGET (gtk_widget_get_parent (widget)))
+	if (!PANEL_IS_WIDGET (parent))
 		return;
 
-	panel_widget_applet_drag_start (PANEL_WIDGET (gtk_widget_get_parent (widget)),
+	panel_widget_applet_drag_start (PANEL_WIDGET (parent),
 					widget,
 					PW_DRAG_OFF_CENTER,
 					GDK_CURRENT_TIME);

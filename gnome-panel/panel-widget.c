@@ -1309,8 +1309,8 @@ static void
 panel_widget_set_background_region (PanelWidget *panel)
 {
 	GtkWidget     *widget;
-	GtkAllocation allocation;
-	int           origin_x = -1, origin_y = -1;
+	int            origin_x = -1, origin_y = -1;
+	GtkAllocation  allocation;
 
 	widget = GTK_WIDGET (panel);
 
@@ -1526,10 +1526,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 gboolean
 panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
-	int x,y;
-	int w,h;
-	GtkAllocation allocation;
 	GtkWidget     *widget;
+	GtkAllocation allocation;
+	int           x,y;
+	int           w,h;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
@@ -1541,6 +1541,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 		return FALSE;
 
 	gtk_widget_get_pointer(widget, &x, &y);
+
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
 	h = allocation.height;
@@ -1557,34 +1558,36 @@ static void
 panel_widget_style_set (GtkWidget *widget,
 			GtkStyle  *previous_style)
 {
-	GtkStateType state;
 	GtkStyle     *style;
+	GtkStateType  state;
 
-	state = gtk_widget_get_state (widget);
-	style = gtk_widget_get_style (widget);
+	if (gtk_widget_get_realized (widget)) {
+		style = gtk_widget_get_style (widget);
+		state = gtk_widget_get_state (widget);
 
-	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
 			style->bg_pixmap [state]);
+	}
 }
 
 static void
 panel_widget_state_changed (GtkWidget    *widget,
 			    GtkStateType  previous_state)
 {
-	GtkStateType state;
 	GtkStyle     *style;
+	GtkStateType  state;
 
-	state = gtk_widget_get_state (widget);
-	style = gtk_widget_get_style (widget);
+	if (gtk_widget_get_realized (widget)) {
+		style = gtk_widget_get_style (widget);
+		state = gtk_widget_get_state (widget);
 
-	if (gtk_widget_get_realized (widget))
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
 			style->bg_pixmap [state]);
+	}
 }
 
 static gboolean
@@ -1600,13 +1603,10 @@ toplevel_configure_event (GtkWidget         *widget,
 static void
 panel_widget_realize (GtkWidget *widget)
 {
-	GdkWindow    *window;
-	GtkStateType state;
-	GtkStyle     *style;
 	PanelWidget  *panel = (PanelWidget *) widget;
-
-	state = gtk_widget_get_state (widget);
-	style = gtk_widget_get_style (widget);
+	GdkWindow    *window;
+	GtkStyle     *style;
+	GtkStateType  state;
 
 	g_signal_connect (panel->toplevel, "configure-event",
 			  G_CALLBACK (toplevel_configure_event), panel);
@@ -1614,6 +1614,8 @@ panel_widget_realize (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
 	window = gtk_widget_get_window (widget);
+	style = gtk_widget_get_style (widget);
+	state = gtk_widget_get_state (widget);
 
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
@@ -2172,8 +2174,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 static int
 move_timeout_handler(gpointer data)
 {
-	GtkAllocation allocation;
 	PanelWidget   *panel = data;
+
 	g_return_val_if_fail(PANEL_IS_WIDGET(data),FALSE);
 
 	if(been_moved &&
@@ -2185,13 +2187,15 @@ move_timeout_handler(gpointer data)
 	been_moved = FALSE;
 
 	if(panel->currently_dragged_applet && repeat_if_outside) {
-		int x,y;
-		int w,h;
-		GtkWidget *widget;
+		GtkWidget     *widget;
+		GtkAllocation  allocation;
+		int            x,y;
+		int            w,h;
 
 		widget = panel->currently_dragged_applet->applet;
 
 		gtk_widget_get_pointer(widget, &x, &y);
+
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;
 		h = allocation.height;

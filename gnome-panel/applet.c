@@ -42,6 +42,12 @@ static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
 
 
+static inline PanelWidget *
+panel_applet_get_panel_widget (AppletInfo *info)
+{
+	return PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+}
+
 static void
 panel_applet_set_dnd_enabled (AppletInfo *info,
 			      gboolean    dnd_enabled)
@@ -81,7 +87,7 @@ panel_applet_toggle_locked (AppletInfo *info)
 	PanelWidget *panel_widget;
 	gboolean     locked;
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+	panel_widget = panel_applet_get_panel_widget (info);
 	
 	locked = panel_widget_toggle_applet_locked (panel_widget, info->widget);
 
@@ -111,10 +117,11 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 	GtkWidget   *parent;
 	PanelWidget *panel;
 
-	parent = gtk_widget_get_parent (info->widget);
-
 	g_return_if_fail (info != NULL);
 	g_return_if_fail (info->widget != NULL);
+
+	parent = gtk_widget_get_parent (info->widget);
+
 	g_return_if_fail (parent != NULL);
 	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
@@ -188,7 +195,7 @@ panel_applet_locked_change_notify (GConfClient *client,
 
 	locked = gconf_value_get_bool (value);
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+	panel_widget = panel_applet_get_panel_widget (info);
 	applet_locked = panel_widget_get_applet_locked (panel_widget,
 							info->widget);
 
@@ -219,7 +226,7 @@ applet_user_menu_get_screen (AppletUserMenu *menu)
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (menu->info->widget));
+	panel_widget = panel_applet_get_panel_widget (menu->info);
 
 	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
 }
@@ -290,7 +297,7 @@ applet_menu_show (GtkWidget *w,
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+	panel_widget = panel_applet_get_panel_widget (info);
 
 	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 }
@@ -302,7 +309,7 @@ applet_menu_deactivate (GtkWidget *w,
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+	panel_widget = panel_applet_get_panel_widget (info);
 
 	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
 }
@@ -473,7 +480,7 @@ panel_applet_create_menu (AppletInfo *info)
 	PanelWidget *panel_widget;
 	gboolean     added_anything = FALSE;
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (info->widget));
+	panel_widget = panel_applet_get_panel_widget (info);
 
 	menu = g_object_ref_sink (gtk_menu_new ());
 
@@ -662,14 +669,11 @@ static void
 applet_show_menu (AppletInfo     *info,
 		  GdkEventButton *event)
 {
-	GtkWidget   *parent;
 	PanelWidget *panel_widget;
 
 	g_return_if_fail (info != NULL);
 
-	parent = gtk_widget_get_parent (info->widget);
-
-	panel_widget = PANEL_WIDGET (parent);
+	panel_widget = panel_applet_get_panel_widget (info);
 
 	if (info->menu == NULL)
 		info->menu = panel_applet_create_menu (info);
@@ -679,7 +683,7 @@ applet_show_menu (AppletInfo     *info,
 
 	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
 				       "menu_panel",
-				       parent);
+				       panel_widget);
 
 	gtk_menu_set_screen (GTK_MENU (info->menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
@@ -1094,7 +1098,7 @@ panel_applet_get_toplevel_id (AppletInfo *applet)
 	g_return_val_if_fail (applet != NULL, NULL);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet->widget), NULL);
 
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (applet->widget));
+	panel_widget = panel_applet_get_panel_widget (applet);
 	if (!panel_widget)
 		return NULL;
 
@@ -1158,7 +1162,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	key_type = applet_info->type == PANEL_OBJECT_APPLET ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 	
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (applet_info->widget));
+	panel_widget = panel_applet_get_panel_widget (applet_info);
 
 	/* FIXME: Instead of getting keys, comparing and setting, there
 	   should be a dirty flag */

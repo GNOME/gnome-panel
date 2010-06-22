@@ -1160,11 +1160,10 @@ static void
 panel_run_dialog_update_content (PanelRunDialog *dialog,
 				 gboolean        show_list)
 {
-	GtkWidget *parent;
-
-	parent = gtk_widget_get_parent (dialog->list_expander);
-
 	if (!panel_profile_get_enable_program_list ()) {
+		GtkWidget *parent;
+
+		parent = gtk_widget_get_parent (dialog->list_expander);
 		if (parent)
 			gtk_container_remove (GTK_CONTAINER (parent),
 					      dialog->list_expander);

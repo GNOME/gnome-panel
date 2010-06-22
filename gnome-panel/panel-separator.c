@@ -45,24 +45,26 @@ static void
 panel_separator_paint (GtkWidget    *widget,
 		       GdkRectangle *area)
 {
-	GtkAllocation   allocation;
-	GtkStyle       *style;
 	PanelSeparator *separator;
+	GdkWindow      *window;
+	GtkStyle       *style;
+	GtkAllocation   allocation;
 
 	separator = PANEL_SEPARATOR (widget);
 
-	gtk_widget_get_allocation (widget, &allocation);
+	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
+	gtk_widget_get_allocation (widget, &allocation);
 
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_paint_vline (style, gtk_widget_get_window (widget),
+		gtk_paint_vline (style, window,
 				 gtk_widget_get_state (widget),
 				 area, widget, "separator",
 				 style->xthickness,
 				 allocation.height - style->xthickness,
 				 (allocation.width - style->xthickness) / 2);
 	} else {
-		gtk_paint_hline (style, gtk_widget_get_window (widget),
+		gtk_paint_hline (style, window,
 				 gtk_widget_get_state (widget),
 				 area, widget, "separator",
 				 style->ythickness,
@@ -113,6 +115,7 @@ panel_separator_size_allocate (GtkWidget     *widget,
 	PanelBackground *background;
 
 	gtk_widget_get_allocation (widget, &widget_allocation);
+
 	old_allocation.x      = widget_allocation.x;
 	old_allocation.y      = widget_allocation.y;
 	old_allocation.width  = widget_allocation.width;
@@ -139,13 +142,12 @@ static void
 panel_separator_parent_set (GtkWidget *widget,
 			   GtkWidget *previous_parent)
 {
-	GtkWidget      *parent;
 	PanelSeparator *separator;
+	GtkWidget      *parent;
 
 	separator = PANEL_SEPARATOR (widget);
 
 	parent = gtk_widget_get_parent (widget);
-
 	g_assert (!parent || PANEL_IS_WIDGET (parent));
 
 	separator->priv->panel = (PanelWidget *) parent;
