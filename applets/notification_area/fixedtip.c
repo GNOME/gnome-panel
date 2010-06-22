@@ -58,7 +58,8 @@ expose_handler (GtkWidget *fixedtip)
 
   gtk_widget_size_request (fixedtip, &req);
 
-  gtk_paint_flat_box (fixedtip->style, fixedtip->window,
+  gtk_paint_flat_box (gtk_widget_get_style (fixedtip),
+                      gtk_widget_get_window (fixedtip),
                       GTK_STATE_NORMAL, GTK_SHADOW_OUT, 
                       NULL, fixedtip, "tooltip",
                       0, 0, req.width, req.height);
@@ -120,6 +121,7 @@ static void
 na_fixed_tip_position (NaFixedTip *fixedtip)
 {
   GdkScreen      *screen;
+  GdkWindow      *parent_window;
   GtkRequisition  req;
   int             root_x;
   int             root_y;
@@ -129,12 +131,14 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
   int             screen_height;
 
   screen = gtk_widget_get_screen (fixedtip->priv->parent);
+  parent_window = gtk_widget_get_window (fixedtip->priv->parent);
+
   gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
 
   gtk_widget_size_request (GTK_WIDGET (fixedtip), &req);
 
-  gdk_window_get_origin (fixedtip->priv->parent->window, &root_x, &root_y);
-  gdk_drawable_get_size (GDK_DRAWABLE (fixedtip->priv->parent->window),
+  gdk_window_get_origin (parent_window, &root_x, &root_y);
+  gdk_drawable_get_size (GDK_DRAWABLE (parent_window),
                          &parent_width, &parent_height);
 
   screen_width = gdk_screen_get_width (screen);
@@ -192,10 +196,9 @@ na_fixed_tip_new (GtkWidget      *parent,
 
   g_return_val_if_fail (parent != NULL, NULL);
 
-  fixedtip = g_object_new (NA_TYPE_FIXED_TIP, NULL);
-
-  /* It doesn't work if we do this in na_fixed_tip_init(), so do it here */
-  GTK_WINDOW (fixedtip)->type = GTK_WINDOW_POPUP;
+  fixedtip = g_object_new (NA_TYPE_FIXED_TIP,
+                           "type", GTK_WINDOW_POPUP,
+                           NULL);
 
   fixedtip->priv->parent = parent;
 

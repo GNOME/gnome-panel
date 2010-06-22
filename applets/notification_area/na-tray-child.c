@@ -42,8 +42,11 @@ na_tray_child_realize (GtkWidget *widget)
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
   GdkVisual *visual = gtk_widget_get_visual (widget);
+  GdkWindow *window;
 
   GTK_WIDGET_CLASS (na_tray_child_parent_class)->realize (widget);
+
+  window = gtk_widget_get_window (widget);
 
   if (child->has_alpha)
     {
@@ -52,16 +55,16 @@ na_tray_child_realize (GtkWidget *widget)
 
       /* Set a transparent background */
       GdkColor transparent = { 0, 0, 0, 0 }; /* only pixel=0 matters */
-      gdk_window_set_background (widget->window, &transparent);
-      gdk_window_set_composited (widget->window, TRUE);
+      gdk_window_set_background (window, &transparent);
+      gdk_window_set_composited (window, TRUE);
 
       child->parent_relative_bg = FALSE;
     }
-  else if (visual == gdk_drawable_get_visual (GDK_DRAWABLE (gdk_window_get_parent (widget->window))))
+  else if (visual == gdk_drawable_get_visual (GDK_DRAWABLE (gdk_window_get_parent (window))))
     {
       /* Otherwise, if the visual matches the visual of the parent window, we
        * can use a parent-relative background and fake transparency. */
-      gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
+      gdk_window_set_back_pixmap (window, NULL, TRUE);
 
       child->parent_relative_bg = TRUE;
     }
@@ -71,7 +74,7 @@ na_tray_child_realize (GtkWidget *widget)
       child->parent_relative_bg = FALSE;
     }
 
-  gdk_window_set_composited (widget->window, child->composited);
+  gdk_window_set_composited (window, child->composited);
 
   gtk_widget_set_app_paintable (GTK_WIDGET (child),
                                 child->parent_relative_bg || child->has_alpha);
@@ -128,11 +131,14 @@ na_tray_child_size_allocate (GtkWidget      *widget,
                              GtkAllocation  *allocation)
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
+  GtkAllocation widget_allocation;
 
-  gboolean moved = allocation->x != widget->allocation.x ||
-                   allocation->y != widget->allocation.y;
-  gboolean resized = allocation->width != widget->allocation.width ||
-                     allocation->height != widget->allocation.height;
+  gtk_widget_get_allocation (widget, &widget_allocation);
+
+  gboolean moved = allocation->x != widget_allocation.x ||
+                   allocation->y != widget_allocation.y;
+  gboolean resized = allocation->width != widget_allocation.width ||
+                     allocation->height != widget_allocation.height;
 
   /* When we are allocating the widget while mapped we need special handling
    * for both real and fake transparency.
@@ -147,8 +153,8 @@ na_tray_child_size_allocate (GtkWidget      *widget,
   if ((moved || resized) && gtk_widget_get_mapped (widget))
     {
       if (na_tray_child_has_alpha (child))
-        gdk_window_invalidate_rect (gdk_window_get_parent (widget->window),
-                                    &widget->allocation, FALSE);
+        gdk_window_invalidate_rect (gdk_window_get_parent (gtk_widget_get_window (widget)),
+                                    &widget_allocation, FALSE);
     }
 
   GTK_WIDGET_CLASS (na_tray_child_parent_class)->size_allocate (widget,
@@ -157,8 +163,8 @@ na_tray_child_size_allocate (GtkWidget      *widget,
   if ((moved || resized) && gtk_widget_get_mapped (widget))
     {
       if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
-        gdk_window_invalidate_rect (gdk_window_get_parent (widget->window),
-                                    &widget->allocation, FALSE);
+        gdk_window_invalidate_rect (gdk_window_get_parent (gtk_widget_get_window (widget)),
+                                    &widget_allocation, FALSE);
       else if (moved && child->parent_relative_bg)
         na_tray_child_force_redraw (child);
     }
@@ -173,11 +179,12 @@ na_tray_child_expose_event (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
+  GdkWindow *window = gtk_widget_get_window (widget);
 
   if (na_tray_child_has_alpha (child))
     {
       /* Clear to transparent */
-      cairo_t *cr = gdk_cairo_create (widget->window);
+      cairo_t *cr = gdk_cairo_create (window);
       cairo_set_source_rgba (cr, 0, 0, 0, 0);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
       gdk_cairo_region (cr, event->region);
@@ -187,7 +194,7 @@ na_tray_child_expose_event (GtkWidget      *widget,
   else if (child->parent_relative_bg)
     {
       /* Clear to parent-relative pixmap */
-      gdk_window_clear_area (widget->window,
+      gdk_window_clear_area (window,
                              event->area.x, event->area.y,
                              event->area.width, event->area.height);
     }
@@ -227,6 +234,7 @@ na_tray_child_new (GdkScreen *screen,
   gboolean visual_has_alpha;
   GdkColormap *colormap;
   gboolean new_colormap;
+  int red_prec, green_prec, blue_prec, depth;
   int result;
 
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
@@ -272,7 +280,12 @@ na_tray_child_new (GdkScreen *screen,
 
   /* We have alpha if the visual has something other than red, green,
    * and blue */
-  visual_has_alpha = visual->red_prec + visual->blue_prec + visual->green_prec < visual->depth;
+  gdk_visual_get_red_pixel_details (visual, NULL, NULL, &red_prec);
+  gdk_visual_get_green_pixel_details (visual, NULL, NULL, &green_prec);
+  gdk_visual_get_blue_pixel_details (visual, NULL, NULL, &blue_prec);
+  depth = gdk_visual_get_depth (visual);
+
+  visual_has_alpha = red_prec + blue_prec + green_prec < depth;
   child->has_alpha = (visual_has_alpha &&
                       gdk_display_supports_composite (gdk_screen_get_display (screen)));
 
@@ -379,7 +392,8 @@ na_tray_child_set_composited (NaTrayChild *child,
 
   child->composited = composited;
   if (gtk_widget_get_realized (GTK_WIDGET (child)))
-    gdk_window_set_composited (GTK_WIDGET (child)->window, composited);
+    gdk_window_set_composited (gtk_widget_get_window (GTK_WIDGET (child)),
+                               composited);
 }
 
 /* If we are faking transparency with a window-relative background, force a
@@ -400,13 +414,18 @@ na_tray_child_force_redraw (NaTrayChild *child)
        */
       Display *xdisplay = GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (widget));
       XEvent xev;
+      GdkWindow *plug_window;
+      GtkAllocation allocation;
+
+      plug_window = gtk_socket_get_plug_window (GTK_SOCKET (child));
+      gtk_widget_get_allocation (widget, &allocation);
 
       xev.xexpose.type = Expose;
-      xev.xexpose.window = GDK_WINDOW_XWINDOW (GTK_SOCKET (child)->plug_window);
+      xev.xexpose.window = GDK_WINDOW_XWINDOW (plug_window);
       xev.xexpose.x = 0;
       xev.xexpose.y = 0;
-      xev.xexpose.width = widget->allocation.width;
-      xev.xexpose.height = widget->allocation.height;
+      xev.xexpose.width = allocation.width;
+      xev.xexpose.height = allocation.height;
       xev.xexpose.count = 0;
 
       gdk_error_trap_push ();

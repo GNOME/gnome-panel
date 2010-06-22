@@ -90,13 +90,14 @@ clock_face_init (ClockFace *this)
         priv->location = NULL;
         priv->size_widget = NULL;
 
-        GTK_WIDGET_SET_FLAGS (GTK_WIDGET (this), GTK_NO_WINDOW);
+        gtk_widget_set_has_window (GTK_WIDGET (this), FALSE);
 }
 
 static void
 draw (GtkWidget *this, cairo_t *cr)
 {
         ClockFacePrivate *priv;
+        GtkAllocation allocation;
         double x, y;
         double radius;
         int hours, minutes, seconds;
@@ -116,26 +117,27 @@ draw (GtkWidget *this, cairo_t *cr)
                 sec_length = 0.8;   /* not drawn currently */
         }
 
+        gtk_widget_get_allocation (this, &allocation);
 
-        x = this->allocation.x + this->allocation.width / 2;
-        y = this->allocation.y + this->allocation.height / 2;
-        radius = MIN (this->allocation.width / 2,
-                      this->allocation.height / 2) - 5;
+        x = allocation.x + allocation.width / 2;
+        y = allocation.y + allocation.height / 2;
+        radius = MIN (allocation.width / 2,
+                      allocation.height / 2) - 5;
 
         cairo_save (cr);
-        cairo_translate (cr, this->allocation.x, this->allocation.y);
+        cairo_translate (cr, allocation.x, allocation.y);
 
         /* clock back */
         if (priv->face_pixbuf) {
-                GdkWindow *window = this->window;
+                GdkWindow *window = gtk_widget_get_window (this);
 		gdk_draw_pixbuf (GDK_DRAWABLE (window),
 				 NULL,
 				 priv->face_pixbuf,
 				 0, 0,
-				 this->allocation.x,
-				 this->allocation.y,
-				 this->allocation.width,
-				 this->allocation.height,
+				 allocation.x,
+				 allocation.y,
+				 allocation.width,
+				 allocation.height,
 				 GDK_RGB_DITHER_NONE, 0, 0);
         }
 
@@ -188,7 +190,7 @@ clock_face_expose (GtkWidget *this, GdkEventExpose *event)
         cairo_t *cr;
 
         /* get a cairo_t */
-        cr = gdk_cairo_create (this->window);
+        cr = gdk_cairo_create (gtk_widget_get_window (this));
 
         cairo_rectangle (cr,
 			 event->area.x, event->area.y,
@@ -250,10 +252,13 @@ static void
 clock_face_size_allocate (GtkWidget     *this,
                           GtkAllocation *allocation)
 {
+        GtkAllocation this_allocation;
         GtkAllocation old_allocation;
 
-        old_allocation.width = this->allocation.width;
-        old_allocation.height = this->allocation.height;
+        gtk_widget_get_allocation (this, &this_allocation);
+
+        old_allocation.width = this_allocation.width;
+        old_allocation.height = this_allocation.height;
 
         if (GTK_WIDGET_CLASS (clock_face_parent_class)->size_allocate)
                 GTK_WIDGET_CLASS (clock_face_parent_class)->size_allocate (this, allocation);
@@ -304,12 +309,15 @@ update_time_and_face (ClockFace *this,
 		timeofday = CLOCK_FACE_NIGHT;
 
 	if (priv->timeofday != timeofday || force_face_loading) {
+                GtkAllocation allocation;
 		gint width, height;
 
 		priv->timeofday = timeofday;
 
-		width = GTK_WIDGET (this)->allocation.width;
-		height = GTK_WIDGET (this)->allocation.height;
+                gtk_widget_get_allocation (GTK_WIDGET (this), &allocation);
+
+		width = allocation.width;
+		height = allocation.height;
 
                 /* Only load the pixbuf if we have some space allocated.
                  * Note that 1x1 is not really some space... */

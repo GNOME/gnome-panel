@@ -1323,7 +1323,7 @@ constrain_list_size (GtkWidget      *widget,
         gtk_widget_size_request (constraint->tree, &req);
 
         requisition->height = MIN (req.height, max_height);
-        requisition->height += 2 * widget->style->ythickness;
+        requisition->height += 2 * gtk_widget_get_style (widget)->ythickness;
 }
 
 static void
@@ -1951,14 +1951,11 @@ calendar_window_new (time_t     *static_current_time,
 	CalendarWindow *calwin;
 
 	calwin = g_object_new (CALENDAR_TYPE_WINDOW,
+			       "type", GTK_WINDOW_TOPLEVEL,
 			       "current-time", static_current_time,
 			       "invert-order", invert_order,
 			       "prefs-dir", prefs_dir,
 			       NULL);
-
-	/* It doesn't work if we do this in calendar_window_init(), so do it
-	 * here */
-	GTK_WINDOW (calwin)->type = GTK_WINDOW_TOPLEVEL;
 
 	return GTK_WIDGET (calwin);
 }

@@ -135,6 +135,7 @@ button_size_allocated (GtkWidget       *button,
 static void
 update_icon (ShowDesktopData *sdd)
 {
+	GtkStyle  *style;
         int width, height;
         GdkPixbuf *icon;
         GdkPixbuf *scaled;
@@ -152,12 +153,14 @@ update_icon (ShowDesktopData *sdd)
 			      "focus-padding", &focus_pad,
 			      NULL);
 
+	style = gtk_widget_get_style (sdd->button);
+
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
-		thickness = sdd->button->style->ythickness;
+		thickness = style->ythickness;
 		break;
 	case GTK_ORIENTATION_VERTICAL:
-		thickness = sdd->button->style->xthickness;
+		thickness = style->xthickness;
 		break;
 	}
 

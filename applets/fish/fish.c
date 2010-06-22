@@ -72,6 +72,7 @@ typedef struct {
 
 	GtkWidget         *frame;
 	GtkWidget         *drawing_area;
+	GtkRequisition     requisition;
 	GdkRectangle       prev_allocation;
 	GdkPixmap         *pixmap;
 	guint              timeout;
@@ -893,6 +894,7 @@ display_fortune_dialog (FishApplet *fish)
 
 	if (!fish->fortune_dialog) {
 		GtkWidget *scrolled;
+		GtkWidget *vbox;
 		GdkScreen *screen;
 		int        screen_width;
 		int        screen_height;
@@ -956,15 +958,16 @@ display_fortune_dialog (FishApplet *fish)
 		gtk_misc_set_alignment (GTK_MISC (fish->fortune_cmd_label),
 					0, 0.5);
 
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
+		vbox = gtk_dialog_get_content_area (GTK_DIALOG (fish->fortune_dialog));
+		gtk_box_pack_start (GTK_BOX (vbox),
 				    fish->fortune_label,
 				    FALSE, FALSE, 6);
 
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
+		gtk_box_pack_start (GTK_BOX (vbox),
 				    scrolled,
 				    TRUE, TRUE, 6);
 
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
+		gtk_box_pack_start (GTK_BOX (vbox),
 				    fish->fortune_cmd_label,
 				    FALSE, FALSE, 6);
 
@@ -1455,19 +1458,22 @@ load_fish_image (FishApplet *fish)
 static void
 update_pixmap (FishApplet *fish)
 {
-	GtkWidget *widget = fish->drawing_area;
-	int        width  = -1;
-	int        height = -1;
-	int        pixbuf_width = -1;
-	int        pixbuf_height = -1;
-	gboolean   rotate = FALSE;
-	cairo_t   *cr;
+	GtkWidget     *widget = fish->drawing_area;
+	GtkAllocation  allocation;
+	int            width  = -1;
+	int            height = -1;
+	int            pixbuf_width = -1;
+	int            pixbuf_height = -1;
+	gboolean       rotate = FALSE;
+	cairo_t       *cr;
 	cairo_matrix_t matrix;
 	cairo_pattern_t *pattern;
 
+	gtk_widget_get_allocation (widget, &allocation);
+
 	if (!gtk_widget_get_realized (widget) ||
-	    widget->allocation.width <= 0 ||
-	    widget->allocation.height <= 0)
+	    allocation.width <= 0 ||
+	    allocation.height <= 0)
 		return;
 
 	if (!fish->pixbuf && !load_fish_image (fish))
@@ -1483,18 +1489,21 @@ update_pixmap (FishApplet *fish)
 
 	if (fish->orientation == PANEL_APPLET_ORIENT_UP ||
 	    fish->orientation == PANEL_APPLET_ORIENT_DOWN) {
-		height = widget->allocation.height;
+		height = allocation.height;
 		width  = pixbuf_width * ((gdouble) height / pixbuf_height);
-		widget->requisition.width = width / fish->n_frames;
+		fish->requisition.width = width / fish->n_frames;
+		fish->requisition.height = height;
 	} else {
 		if (!rotate) {
-			width = widget->allocation.width * fish->n_frames;
+			width = allocation.width * fish->n_frames;
 			height = pixbuf_height * ((gdouble) width / pixbuf_width);
-			widget->requisition.height = height;
+			fish->requisition.width = width;
+			fish->requisition.height = height;
 		} else {
-			width = widget->allocation.width;
+			width = allocation.width;
 			height = pixbuf_width * ((gdouble) width / pixbuf_height);
-			widget->requisition.height = height / fish->n_frames;
+			fish->requisition.width = width;
+			fish->requisition.height = height / fish->n_frames;
 		}
 	}
 
@@ -1505,7 +1514,8 @@ update_pixmap (FishApplet *fish)
 
 	if (fish->pixmap)
 		g_object_unref (fish->pixmap);
-	fish->pixmap = gdk_pixmap_new (widget->window, width, height, -1);
+	fish->pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
+				       width, height, -1);
 
 	gtk_widget_queue_resize (widget);
 
@@ -1563,12 +1573,19 @@ fish_applet_expose_event (GtkWidget      *widget,
 			  GdkEventExpose *event,
 			  FishApplet     *fish)
 {
+	GdkWindow    *window;
+	GtkStyle     *style;
+	GtkStateType  state;
 	int width, height;
 	int src_x, src_y;
 
 	g_return_val_if_fail (fish->pixmap != NULL, FALSE);
 
 	g_assert (fish->n_frames > 0);
+
+	window = gtk_widget_get_window (widget);
+	style = gtk_widget_get_style (widget);
+	state = gtk_widget_get_state (widget);
 
 	gdk_drawable_get_size (fish->pixmap, &width, &height);
 
@@ -1585,8 +1602,8 @@ fish_applet_expose_event (GtkWidget      *widget,
 	} else
 		src_x += ((width * fish->current_frame) / fish->n_frames);
 
-	gdk_draw_drawable (widget->window,
-			   widget->style->fg_gc [GTK_WIDGET_STATE (widget)],
+	gdk_draw_drawable (window,
+			   style->fg_gc [state],
 			   fish->pixmap,
 			   src_x, src_y,
 			   event->area.x, event->area.y,
@@ -1596,12 +1613,24 @@ fish_applet_expose_event (GtkWidget      *widget,
 }
 
 static void
+fish_applet_size_request (GtkWidget      *widget,
+			  GtkRequisition *requisition,
+			  FishApplet     *fish)
+{
+	*requisition = fish->requisition;
+}
+
+static void
 fish_applet_size_allocate (GtkWidget     *widget,
 			   GtkAllocation *allocation,
 			   FishApplet    *fish)
 {
-	if (widget->allocation.width  != fish->prev_allocation.width ||
-	    widget->allocation.height != fish->prev_allocation.height)
+	GtkAllocation widget_allocation;
+
+	gtk_widget_get_allocation (widget, &widget_allocation);
+
+	if (widget_allocation.width  != fish->prev_allocation.width ||
+	    widget_allocation.height != fish->prev_allocation.height)
 		update_pixmap (fish);
 
 	fish->prev_allocation = *allocation;
@@ -1766,6 +1795,8 @@ setup_fish_widget (FishApplet *fish)
 			  G_CALLBACK (fish_applet_realize), fish);
 	g_signal_connect (fish->drawing_area, "unrealize",
 			  G_CALLBACK (fish_applet_unrealize), fish);
+	g_signal_connect (fish->drawing_area, "size-request",
+			  G_CALLBACK (fish_applet_size_request), fish);
 	g_signal_connect (fish->drawing_area, "size-allocate",
 			  G_CALLBACK (fish_applet_size_allocate), fish);
 	g_signal_connect (fish->drawing_area, "expose-event",
@@ -2023,6 +2054,9 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->timeout       = 0;
 	fish->current_frame = 0;
 	fish->in_applet     = FALSE;
+
+	fish->requisition.width  = -1;
+	fish->requisition.height = -1;
 
 	fish->prev_allocation.x      = -1;
 	fish->prev_allocation.y      = -1;

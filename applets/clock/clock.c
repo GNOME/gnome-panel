@@ -290,7 +290,7 @@ calculate_minimum_width (GtkWidget   *widget,
 			      "focus-padding", &focus_pad,
 			      NULL);
 
-	width += 2 * (focus_width + focus_pad + widget->style->xthickness);
+	width += 2 * (focus_width + focus_pad + gtk_widget_get_style (widget)->xthickness);
 
 	return width;
 }
@@ -382,6 +382,7 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
                           PanelAppletOrient orientation)
 {
+	GtkStyle         *style;
         PangoContext     *context;
         PangoFontMetrics *metrics;
         int               focus_width = 0;
@@ -390,9 +391,10 @@ calculate_minimum_height (GtkWidget        *widget,
         int               descent;
         int               thickness;
 
+	style = gtk_widget_get_style (widget);
         context = gtk_widget_get_pango_context (widget);
         metrics = pango_context_get_metrics (context,
-                                             widget->style->font_desc,
+                                             style->font_desc,
                                              pango_context_get_language (context));
 
         ascent  = pango_font_metrics_get_ascent  (metrics);
@@ -407,9 +409,9 @@ calculate_minimum_height (GtkWidget        *widget,
 
         if (orientation == PANEL_APPLET_ORIENT_UP
             || orientation == PANEL_APPLET_ORIENT_DOWN) {
-                thickness = widget->style->ythickness;
+                thickness = style->ythickness;
         } else {
-                thickness = widget->style->xthickness;
+                thickness = style->xthickness;
         }
 
         return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
@@ -864,6 +866,7 @@ static void
 position_calendar_popup (ClockData *cd)
 {
 	GtkRequisition  req;
+	GtkAllocation   allocation;
 	GdkScreen      *screen;
 	GdkRectangle    monitor;
 	GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
@@ -874,15 +877,17 @@ position_calendar_popup (ClockData *cd)
 	gboolean        found_monitor = FALSE;
 
 	/* Get root origin of the toggle button, and position above that. */
-	gdk_window_get_origin (cd->panel_button->window, &x, &y);
+	gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
+			       &x, &y);
 
 	gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
 	gtk_widget_size_request (cd->calendar_popup, &req);
 	w = req.width;
 	h = req.height;
 
-	button_w = cd->panel_button->allocation.width;
-	button_h = cd->panel_button->allocation.height;
+	gtk_widget_get_allocation (cd->panel_button, &allocation);
+	button_w = allocation.width;
+	button_h = allocation.height;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
 
@@ -1436,19 +1441,21 @@ create_clock_widget (ClockData *cd)
 static void
 update_orient (ClockData *cd)
 {
-	const gchar *text;
-	int          min_width;
-	gdouble      new_angle;
-	gdouble      angle;
+	const gchar   *text;
+	int            min_width;
+	GtkAllocation  allocation;
+	gdouble        new_angle;
+	gdouble        angle;
 
 	text = gtk_label_get_text (GTK_LABEL (cd->clockw));
 	min_width = calculate_minimum_width (cd->panel_button, text);
+	gtk_widget_get_allocation (cd->panel_button, &allocation);
 
 	if (cd->orient == PANEL_APPLET_ORIENT_LEFT &&
-	    min_width > cd->panel_button->allocation.width)
+	    min_width > allocation.width)
 		new_angle = 270;
 	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT &&
-		 min_width > cd->panel_button->allocation.width)
+		 min_width > allocation.width)
 		new_angle = 90;
 	else
 		new_angle = 0;
@@ -2181,7 +2188,8 @@ location_start_element (GMarkupParseContext *context,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
-		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (cd->applet->window), NULL, NULL, NULL);
+		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (gtk_widget_get_window (cd->applet)),
+					     NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);
 }
@@ -2776,7 +2784,7 @@ set_show_seconds_cb (GtkWidget *w,
 {
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
 				     KEY_SHOW_SECONDS,
-				     GTK_TOGGLE_BUTTON (w)->active,
+				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
 				     NULL);
 }
 
@@ -2786,7 +2794,7 @@ set_show_date_cb (GtkWidget *w,
 {
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
 				     KEY_SHOW_DATE,
-				     GTK_TOGGLE_BUTTON (w)->active,
+				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
 				     NULL);
 }
 
@@ -2796,7 +2804,7 @@ set_show_weather_cb (GtkWidget *w,
 {
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
 				     KEY_SHOW_WEATHER,
-				     GTK_TOGGLE_BUTTON (w)->active,
+				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
 				     NULL);
 }
 
@@ -2806,7 +2814,7 @@ set_show_temperature_cb (GtkWidget *w,
 {
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
 				     KEY_SHOW_TEMPERATURE,
-				     GTK_TOGGLE_BUTTON (w)->active,
+				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w)),
 				     NULL);
 }
 

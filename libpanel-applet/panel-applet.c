@@ -633,7 +633,7 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
 	if (!gtk_widget_get_realized (toplevel))
 		return None;
 
-	xwin = GDK_WINDOW_XID (toplevel->window);
+	xwin = GDK_WINDOW_XID (gtk_widget_get_window (toplevel));
 
 	child = NULL;
 	parent = root = None;
@@ -943,6 +943,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 			    GtkWidget *widget)
 {
 	PanelApplet    *applet;
+	GtkAllocation   allocation;
 	GtkRequisition  requisition;
 	GdkScreen      *screen;
 	int             menu_x = 0;
@@ -957,26 +958,28 @@ panel_applet_position_menu (GtkMenu   *menu,
 	screen = gtk_widget_get_screen (widget);
 
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-	gdk_window_get_origin (widget->window, &menu_x, &menu_y);
+	gdk_window_get_origin (gtk_widget_get_window (widget),
+			       &menu_x, &menu_y);
 	gtk_widget_get_pointer (widget, &pointer_x, &pointer_y);
 
-	menu_x += widget->allocation.x;
-	menu_y += widget->allocation.y;
+	gtk_widget_get_allocation (widget, &allocation);
+
+	menu_x += allocation.x;
+	menu_y += allocation.y;
 
 	if (applet->priv->orient == PANEL_APPLET_ORIENT_UP ||
 	    applet->priv->orient == PANEL_APPLET_ORIENT_DOWN) {
 		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
-			if (pointer_x < widget->allocation.width &&
+			if (pointer_x < allocation.width &&
 			    requisition.width < pointer_x)
 				menu_x += MIN (pointer_x,
-					       widget->allocation.width - requisition.width);
+					       allocation.width - requisition.width);
 		} else {
-			menu_x += widget->allocation.width - requisition.width;
-			if (pointer_x > 0 && pointer_x < widget->allocation.width &&
-			    pointer_x < widget->allocation.width - requisition.width) {
-				menu_x -= MIN (widget->allocation.width - pointer_x,
-					       widget->allocation.width - requisition.width);
+			menu_x += allocation.width - requisition.width;
+			if (pointer_x > 0 && pointer_x < allocation.width &&
+			    pointer_x < allocation.width - requisition.width) {
+				menu_x -= MIN (allocation.width - pointer_x,
+					       allocation.width - requisition.width);
 			}
 		}
 		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
@@ -984,17 +987,17 @@ panel_applet_position_menu (GtkMenu   *menu,
 		if (menu_y > gdk_screen_get_height (screen) / 2)
 			menu_y -= requisition.height;
 		else
-			menu_y += widget->allocation.height;
+			menu_y += allocation.height;
 	} else  {
-		if (pointer_y < widget->allocation.height &&
+		if (pointer_y < allocation.height &&
 		    requisition.height < pointer_y)
-			menu_y += MIN (pointer_y, widget->allocation.height - requisition.height);
+			menu_y += MIN (pointer_y, allocation.height - requisition.height);
 		menu_y = MIN (menu_y, gdk_screen_get_height (screen) - requisition.height);
 
 		if (menu_x > gdk_screen_get_width (screen) / 2)
 			menu_x -= requisition.width;
 		else
-			menu_x += widget->allocation.width;
+			menu_x += allocation.width;
 
 	}
 
@@ -1040,10 +1043,15 @@ static gboolean
 panel_applet_button_event (GtkWidget      *widget,
 			   GdkEventButton *event)
 {
-	XEvent xevent;
+	GdkWindow *window;
+	GdkWindow *socket_window;
+	XEvent     xevent;
 
-	if (!GTK_WIDGET_TOPLEVEL (widget))
+	if (!gtk_widget_is_toplevel (widget))
 		return FALSE;
+
+	window = gtk_widget_get_window (widget);
+	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	if (event->type == GDK_BUTTON_PRESS) {
 		xevent.xbutton.type = ButtonPress;
@@ -1060,10 +1068,10 @@ panel_applet_button_event (GtkWidget      *widget,
 		xevent.xbutton.type = ButtonRelease;
 	}
 
-	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (widget->window);
-	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (GTK_PLUG (widget)->socket_window);
+	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
+	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (socket_window);
 	xevent.xbutton.root        = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window
-							 (gdk_drawable_get_screen (widget->window)));
+							 (gdk_drawable_get_screen (window)));
 	/*
 	 * FIXME: the following might cause
 	 *        big problems for non-GTK apps
@@ -1078,8 +1086,8 @@ panel_applet_button_event (GtkWidget      *widget,
 
 	gdk_error_trap_push ();
 
-	XSendEvent (GDK_WINDOW_XDISPLAY (widget->window),
-		    GDK_WINDOW_XWINDOW (GTK_PLUG (widget)->socket_window),
+	XSendEvent (GDK_WINDOW_XDISPLAY (window),
+		    GDK_WINDOW_XWINDOW (socket_window),
 		    False, NoEventMask, &xevent);
 
 	gdk_flush ();
@@ -1096,7 +1104,7 @@ panel_applet_button_press (GtkWidget      *widget,
 
 	if (!container_has_focusable_child (GTK_CONTAINER (applet))) {
 		if (!gtk_widget_has_focus (widget)) {
-			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_set_can_focus (widget, TRUE);
 			gtk_widget_grab_focus (widget);
 		}
 	}
@@ -1156,6 +1164,7 @@ panel_applet_size_allocate (GtkWidget     *widget,
 {
 	GtkAllocation  child_allocation;
 	GtkBin        *bin;
+	GtkWidget     *child;
 	int            border_width;
 	int            focus_width = 0;
 	PanelApplet   *applet;
@@ -1171,9 +1180,9 @@ panel_applet_size_allocate (GtkWidget     *widget,
 				      "focus-line-width", &focus_width,
 				      NULL);
 
-		border_width = GTK_CONTAINER (widget)->border_width;
+		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-		widget->allocation = *allocation;
+		gtk_widget_set_allocation (widget, allocation);
 		bin = GTK_BIN (widget);
 
 		child_allocation.x = focus_width;
@@ -1183,17 +1192,18 @@ panel_applet_size_allocate (GtkWidget     *widget,
 		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
 
 		if (gtk_widget_get_realized (widget))
-			gdk_window_move_resize (widget->window,
-						allocation->x + GTK_CONTAINER (widget)->border_width,
-						allocation->y + GTK_CONTAINER (widget)->border_width,
+			gdk_window_move_resize (gtk_widget_get_window (widget),
+						allocation->x + border_width,
+						allocation->y + border_width,
 						child_allocation.width,
 						child_allocation.height);
 
 		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
 		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
 
-		if (bin->child)
-			gtk_widget_size_allocate (bin->child, &child_allocation);
+		child = gtk_bin_get_child (bin);
+		if (child)
+			gtk_widget_size_allocate (child, &child_allocation);
 	}
 
 	applet = PANEL_APPLET (widget);
@@ -1211,6 +1221,7 @@ static gboolean
 panel_applet_expose (GtkWidget      *widget,
 		     GdkEventExpose *event) 
 {
+	GtkAllocation allocation;
 	int border_width;
 	int focus_width = 0;
 	int x, y, width, height;
@@ -1224,6 +1235,8 @@ panel_applet_expose (GtkWidget      *widget,
         if (!gtk_widget_has_focus (widget))
 		return FALSE;
 
+	gtk_widget_get_allocation (widget, &allocation);
+
 	/*
 	 * We are deliberately ignoring focus-padding here to
 	 * save valuable panel real estate.
@@ -1232,16 +1245,17 @@ panel_applet_expose (GtkWidget      *widget,
 			      "focus-line-width", &focus_width,
 			      NULL);
 
-	border_width = GTK_CONTAINER (widget)->border_width;
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-	x = widget->allocation.x;
-	y = widget->allocation.y;
+	x = allocation.x;
+	y = allocation.y;
 
-	width  = widget->allocation.width  - 2 * border_width;
-	height = widget->allocation.height - 2 * border_width;
+	width  = allocation.width  - 2 * border_width;
+	height = allocation.height - 2 * border_width;
 
-	gtk_paint_focus (widget->style, widget->window,
-			 GTK_WIDGET_STATE (widget),
+	gtk_paint_focus (gtk_widget_get_style (widget),
+			 gtk_widget_get_window (widget),
+			 gtk_widget_get_state (widget),
 			 &event->area, widget, "panel_applet",
 			 x, y, width, height);
 
@@ -1268,12 +1282,12 @@ panel_applet_focus (GtkWidget        *widget,
 		return FALSE;
 	}
 
-	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
+	previous_focus_child = gtk_container_get_focus_child (GTK_CONTAINER (widget));
 	if (!previous_focus_child && !gtk_widget_has_focus (widget)) {
 		if (gtk_widget_get_has_tooltip (widget)) {
-			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_set_can_focus (widget, TRUE);
 			gtk_widget_grab_focus (widget);
-			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_set_can_focus (widget, FALSE);
 			return TRUE;
 		}
 	}
@@ -1286,9 +1300,9 @@ panel_applet_focus (GtkWidget        *widget,
 			 * the focus on the applet unless it already had focus
 			 * because it had a tooltip.
 			 */ 
-			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_set_can_focus (widget, TRUE);
 			gtk_widget_grab_focus (widget);
-			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_set_can_focus (widget, FALSE);
 			ret = TRUE;
 		}
 	}
@@ -1368,6 +1382,7 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 	GdkPixmap       *pixmap;
 	GdkDisplay      *display;
 	GdkPixmap       *retval;
+	GdkWindow       *window;
 	int              width;
 	int              height;
 	cairo_t         *cr;
@@ -1380,6 +1395,8 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	display = gdk_display_get_default ();
 	display_grabbed = FALSE;
+
+	window = gtk_widget_get_window (GTK_WIDGET (applet));
 
 	pixmap = gdk_pixmap_lookup_for_display (display, xid);
 	if (pixmap)
@@ -1398,14 +1415,12 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 		return NULL;
 	}
 
-	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
-			       &width, &height);
-	retval = gdk_pixmap_new (GTK_WIDGET (applet)->window,
-				 width, height, -1);
+	gdk_drawable_get_size (GDK_DRAWABLE (window), &width, &height);
+	retval = gdk_pixmap_new (window, width, height, -1);
 
 	/* the pixmap has no colormap, and we need one */
 	gdk_drawable_set_colormap (GDK_DRAWABLE (pixmap),
-				   gdk_drawable_get_colormap (GTK_WIDGET (applet)->window));
+				   gdk_drawable_get_colormap (window));
 
 	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
 	gdk_cairo_set_source_pixmap (cr, pixmap, -x, -y);
@@ -1541,7 +1556,7 @@ panel_applet_update_background_for_widget (GtkWidget                 *widget,
 		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (widget->style);
+		style = gtk_style_copy (gtk_widget_get_style (widget));
 		if (style->bg_pixmap[GTK_STATE_NORMAL])
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);

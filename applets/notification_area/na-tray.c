@@ -535,9 +535,14 @@ na_tray_expose_icon (GtkWidget *widget,
 
   if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
     {
-      gdk_cairo_set_source_pixmap (cr, widget->window,
-				   widget->allocation.x,
-				   widget->allocation.y);
+      GtkAllocation allocation;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
+      gdk_cairo_set_source_pixmap (cr,
+                                   gtk_widget_get_window (widget),
+				   allocation.x,
+				   allocation.y);
       cairo_paint (cr);
     }
 }
@@ -546,7 +551,7 @@ static void
 na_tray_expose_box (GtkWidget      *box,
 		    GdkEventExpose *event)
 {
-  cairo_t *cr = gdk_cairo_create (box->window);
+  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (box));
 
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
