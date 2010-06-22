@@ -209,7 +209,7 @@ na_fixed_tip_new (GtkWidget      *parent,
   
   toplevel = gtk_widget_get_toplevel (parent);
   /*
-  if (toplevel && GTK_WIDGET_TOPLEVEL (toplevel) && GTK_IS_WINDOW (toplevel))
+  if (toplevel && gtk_widget_is_toplevel (toplevel) && GTK_IS_WINDOW (toplevel))
     gtk_window_set_transient_for (GTK_WINDOW (fixedtip), GTK_WINDOW (toplevel));
     */
 #endif
