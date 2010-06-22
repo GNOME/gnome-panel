@@ -309,15 +309,17 @@ else
     AC_MSG_ERROR(Bonobo compatibility modules explicity enabled but not available)
   fi
 
-  PKG_CHECK_MODULES(PANEL_MODULE_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED)
-  PKG_CHECK_MODULES(LIBPANEL_APPLET_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED)
+  if test "x$HAVE_BONOBO" = "xyes"; then
+    PKG_CHECK_MODULES(PANEL_MODULE_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED)
+    PKG_CHECK_MODULES(LIBPANEL_APPLET_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED)
 
-  dnl IDL directories
-  ORBIT_IDL="`$PKG_CONFIG --variable=orbit_idl ORBit-2.0`"
-  BONOBO_IDLDIR="`$PKG_CONFIG --variable=idldir libbonobo-2.0`"
-  BONOBO_ACT_IDLDIR="`$PKG_CONFIG --variable=idldir bonobo-activation-2.0`"
+    dnl IDL directories
+    ORBIT_IDL="`$PKG_CONFIG --variable=orbit_idl ORBit-2.0`"
+    BONOBO_IDLDIR="`$PKG_CONFIG --variable=idldir libbonobo-2.0`"
+    BONOBO_ACT_IDLDIR="`$PKG_CONFIG --variable=idldir bonobo-activation-2.0`"
 
-  AC_PATH_PROG(GIO_QUERYMODULES, gio-querymodules, no)
+    AC_PATH_PROG(GIO_QUERYMODULES, gio-querymodules, no)
+  fi
 fi
 
 AM_CONDITIONAL(HAVE_BONOBO, test "x$HAVE_BONOBO" = "xyes")
