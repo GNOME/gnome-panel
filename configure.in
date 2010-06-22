@@ -1,7 +1,7 @@
 AC_INIT([gnome-panel], [2.31.3],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar])
+AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -36,6 +36,9 @@ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GCONFTOOL, gconftool-2)
 
 GNOME_COMPILE_WARNINGS(maximum)
+
+# Check for introspection
+GOBJECT_INTROSPECTION_CHECK([0.6.7])
 
 m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
 PANEL_INTLTOOL_PANEL_APPLET_RULE='%.panel-applet: %.panel-applet.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; $(AM_V_GEN) LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'

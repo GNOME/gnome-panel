@@ -21,7 +21,7 @@ EXTRA_DIST = \
 	ChangeLog.pre-git	\
 	gnome-doc-utils.make
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper --enable-introspection
 DISTCLEANFILES =		\
 	gnome-doc-utils.make
 
