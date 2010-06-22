@@ -3155,8 +3155,12 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	    (challoc.x != child_allocation.x ||
 	     challoc.y != child_allocation.y ||
 	     challoc.width  != child_allocation.width ||
-	     challoc.height != child_allocation.height))
-		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &widget->allocation, FALSE);
+	     challoc.height != child_allocation.height)) {
+		GtkAllocation allocation;
+
+		gtk_widget_get_allocation (widget, &allocation);
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &allocation, FALSE);
+	}
 
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &challoc);
@@ -3465,10 +3469,11 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 static void
 panel_toplevel_start_animation (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
-	int        deltax, deltay, deltaw = 0, deltah = 0;
-	int        cur_x = -1, cur_y = -1;
-	long       t;
+	GdkScreen      *screen;
+	GtkRequisition  requisition;
+	int             deltax, deltay, deltaw = 0, deltah = 0;
+	int             cur_x = -1, cur_y = -1;
+	long            t;
 
 	panel_toplevel_calculate_animation_end_geometry (toplevel);
 
@@ -3492,13 +3497,13 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	deltax = toplevel->priv->animation_end_x - cur_x;
 	deltay = toplevel->priv->animation_end_y - cur_y;
 
+	gtk_widget_get_requisition (GTK_WIDGET (toplevel), &requisition);
+
 	if (toplevel->priv->animation_end_width != -1)
-		deltaw = toplevel->priv->animation_end_width -
-			GTK_WIDGET (toplevel)->requisition.width;
+		deltaw = toplevel->priv->animation_end_width - requisition.width;
 
 	if (toplevel->priv->animation_end_height != -1)
-		deltah = toplevel->priv->animation_end_height -
-			GTK_WIDGET (toplevel)->requisition.height;
+		deltah = toplevel->priv->animation_end_height - requisition.height;
 
 	if (deltax == 0 && deltay == 0 && deltaw == 0 && deltah == 0) {
 		toplevel->priv->animation_end_x      = -1;

@@ -287,8 +287,8 @@ panel_addto_drag_data_get_cb (GtkWidget        *widget,
 			      const char       *string)
 {
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *) string,
-				strlen (string));
+				gtk_selection_data_get_target (selection_data), 8,
+				(guchar *) string, strlen (string));
 }
 
 static void
@@ -1250,6 +1250,7 @@ static PanelAddtoDialog *
 panel_addto_dialog_new (PanelWidget *panel_widget)
 {
 	PanelAddtoDialog *dialog;
+	GtkWidget *dialog_vbox;
 	GtkWidget *vbox;
 	GtkWidget *inner_vbox;
 	GtkWidget *find_hbox;
@@ -1293,7 +1294,10 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 					 PANEL_ADDTO_RESPONSE_ADD);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog->addto_dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog->addto_dialog)->vbox), 2);
+
+	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog->addto_dialog));
+	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
+
 	g_signal_connect (G_OBJECT (dialog->addto_dialog), "response",
 			  G_CALLBACK (panel_addto_dialog_response), dialog);
 	g_signal_connect (dialog->addto_dialog, "destroy",
@@ -1301,8 +1305,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 
 	vbox = gtk_vbox_new (FALSE, 12);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->addto_dialog)->vbox),
-			   vbox);
+	gtk_container_add (GTK_CONTAINER (dialog_vbox), vbox);
 
 	inner_vbox = gtk_vbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), inner_vbox, TRUE, TRUE, 0);

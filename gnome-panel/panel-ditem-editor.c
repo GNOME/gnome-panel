@@ -599,18 +599,22 @@ static void
 panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 {
 	PanelDItemEditorPrivate *priv;
+	GtkWidget *dialog_vbox;
 
 	priv = dialog->priv;
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
+
+	dialog_vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+	gtk_box_set_spacing (GTK_BOX (dialog_vbox), 2);
+
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	priv->table = gtk_table_new (4, 3, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (priv->table), 5);
 	gtk_table_set_row_spacings (GTK_TABLE (priv->table), 6);
 	gtk_table_set_col_spacings (GTK_TABLE (priv->table), 12);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+	gtk_box_pack_start (GTK_BOX (dialog_vbox),
 			    priv->table, TRUE, TRUE, 0);
 	gtk_widget_show (priv->table);
 

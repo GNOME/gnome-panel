@@ -128,7 +128,7 @@ menu_get_panel (GtkWidget *menu)
 	g_return_val_if_fail (menu != NULL, NULL);
 
 	if (GTK_IS_MENU_ITEM (menu))
-		menu = menu->parent;
+		menu = gtk_widget_get_parent (menu);
 
 	g_return_val_if_fail (GTK_IS_MENU (menu), NULL);
 
@@ -137,7 +137,7 @@ menu_get_panel (GtkWidget *menu)
 		if (retval)
 			break;
 
-		menu = gtk_menu_get_attach_widget (GTK_MENU (menu))->parent;
+		menu = gtk_widget_get_parent (gtk_menu_get_attach_widget (GTK_MENU (menu)));
 		if (!GTK_IS_MENU (menu))
 			break;
 	}
@@ -814,7 +814,7 @@ static void
 restore_grabs(GtkWidget *w, gpointer data)
 {
 	GtkWidget *menu_item = data;
-	GtkMenu *menu = GTK_MENU(menu_item->parent); 
+	GtkMenu *menu = GTK_MENU (gtk_widget_get_parent (menu_item));
 	GtkWidget *xgrab_shell;
 	GtkWidget *parent;
 
@@ -831,7 +831,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 				viewable = FALSE;
 				break;
 			}
-			tmp = tmp->parent;
+			tmp = gtk_widget_get_parent (tmp);
 		}
 
 		if (viewable)
@@ -843,14 +843,16 @@ restore_grabs(GtkWidget *w, gpointer data)
 	/*only grab if this HAD a grab before*/
 	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
           {
-	    if (gdk_pointer_grab (xgrab_shell->window, TRUE,
+	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
+
+	    if (gdk_pointer_grab (window, TRUE,
 				  GDK_BUTTON_PRESS_MASK |
 				  GDK_BUTTON_RELEASE_MASK |
 				  GDK_ENTER_NOTIFY_MASK |
 				  GDK_LEAVE_NOTIFY_MASK,
 				  NULL, NULL, 0) == 0)
               {
-		if (gdk_keyboard_grab (xgrab_shell->window, TRUE,
+		if (gdk_keyboard_grab (window, TRUE,
 				       GDK_CURRENT_TIME) == 0)
 		  GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
 		else
@@ -1024,7 +1026,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 
   /* Find the last viewable ancestor, and make an X grab on it
    */
-  parent = widget->parent;
+  parent = gtk_widget_get_parent (widget);
   xgrab_shell = NULL;
 
   /* FIXME: workaround for a possible gtk+ bug
@@ -1044,7 +1046,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	      viewable = FALSE;
 	      break;
 	    }
-	  tmp = tmp->parent;
+	  tmp = gtk_widget_get_parent (tmp);
 	}
       
       if (viewable)
@@ -1055,15 +1057,16 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
   
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
     {
+      GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
 
-      if ((gdk_pointer_grab (xgrab_shell->window, TRUE,
+      if ((gdk_pointer_grab (window, TRUE,
 			     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
 			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
 			     GDK_POINTER_MOTION_MASK,
 			     NULL, cursor, GDK_CURRENT_TIME) == 0))
 	{
-	  if (gdk_keyboard_grab (xgrab_shell->window, TRUE,
+	  if (gdk_keyboard_grab (window, TRUE,
 				 GDK_CURRENT_TIME) == 0)
 	    GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
 	  else
@@ -1680,11 +1683,14 @@ static GtkWidget *
 populate_menu_from_directory (GtkWidget          *menu,
 			      GMenuTreeDirectory *directory)
 {	
+	GList    *children;
 	GSList   *l;
 	GSList   *items;
 	gboolean  add_separator;
 
-	add_separator = (GTK_MENU_SHELL (menu)->children != NULL);
+	children = gtk_container_get_children (GTK_CONTAINER (menu));
+	add_separator = (children != NULL);
+	g_list_free (children);
 
 	items = gmenu_tree_directory_get_contents (directory);
 
@@ -1858,8 +1864,7 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	gtk_icon_size_lookup (icon_size, NULL, &icon_height);
 
 	image = gtk_image_new ();
-	image->requisition.width  = icon_height;
-	image->requisition.height = icon_height;
+	gtk_widget_set_size_request (image, icon_height, icon_height);
 
 	/* this takes over the floating ref */
 	icon->pixmap = g_object_ref_sink (G_OBJECT (image));

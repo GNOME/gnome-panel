@@ -310,13 +310,13 @@ is_this_drop_ok (GtkWidget      *widget,
 	if (source == widget)
 		return FALSE;
 
-	if (!(context->actions & GDK_ACTION_COPY))
+	if (!(gdk_drag_context_get_actions (context) & GDK_ACTION_COPY))
 		return FALSE;
 
 	if (!text_uri_list)
 		text_uri_list = gdk_atom_intern_static_string ("text/uri-list");
 
-	for (l = context->targets; l; l = l->next) {
+	for (l = gdk_drag_context_list_targets (context); l; l = l->next) {
 		if (GDK_POINTER_TO_ATOM (l->data) == text_uri_list)
 			break;
 	}

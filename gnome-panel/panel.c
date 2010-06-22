@@ -897,10 +897,10 @@ panel_check_dnd_target_data (GtkWidget      *widget,
 	    !BUTTON_IS_WIDGET (widget))
 		return FALSE;
 
-	if (!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
+	if (!(gdk_drag_context_get_actions (context) & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
 		return FALSE;
 
-	for (l = context->targets; l; l = l->next) {
+	for (l = gdk_drag_context_list_targets (context); l; l = l->next) {
 		GdkAtom atom;
 		guint   info;
 
@@ -975,15 +975,19 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 
 	if (info == TARGET_ICON_INTERNAL ||
 	    info == TARGET_APPLET_INTERNAL) {
-		if (context->actions & GDK_ACTION_MOVE)
+		if (gdk_drag_context_get_actions (context) & GDK_ACTION_MOVE)
 			gdk_drag_status (context, GDK_ACTION_MOVE, time_);
 		else
-			gdk_drag_status (context, context->suggested_action, time_);
+			gdk_drag_status (context,
+					 gdk_drag_context_get_suggested_action (context),
+					 time_);
 
-	} else if (context->actions & GDK_ACTION_COPY)
+	} else if (gdk_drag_context_get_actions (context) & GDK_ACTION_COPY)
 		gdk_drag_status (context, GDK_ACTION_COPY, time_);
 	else
-		gdk_drag_status (context, context->suggested_action, time_);
+		gdk_drag_status (context,
+				 gdk_drag_context_get_suggested_action (context),
+				 time_);
 
 	return TRUE;
 
@@ -1094,7 +1098,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 				    PANEL_ICON_FOLDER);
 		break;
 	case TARGET_APPLET:
-		if (!selection_data->data) {
+		if (!gtk_selection_data_get_data (selection_data)) {
 			gtk_drag_finish (context, FALSE, FALSE, time_);
 			return;
 		}
@@ -1107,11 +1111,11 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		break;
 	case TARGET_APPLET_INTERNAL:
 		success = drop_internal_applet (panel, pos, (char *)data,
-						context->action);
+						gdk_drag_context_get_selected_action (context));
 		break;
 	case TARGET_ICON_INTERNAL:
 		success = drop_internal_icon (panel, pos, (char *)data,
-					      context->action);
+					      gdk_drag_context_get_selected_action (context));
 		break;
 	default:
 		gtk_drag_finish (context, FALSE, FALSE, time_);

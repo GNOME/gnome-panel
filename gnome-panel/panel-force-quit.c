@@ -44,12 +44,13 @@ static Atom wm_state_atom = None;
 static GtkWidget *
 display_popup_window (GdkScreen *screen)
 {
-	GtkWidget *retval;
-	GtkWidget *vbox;
-	GtkWidget *image;
-	GtkWidget *frame;
-	GtkWidget *label;
-	int        screen_width, screen_height;
+	GtkWidget     *retval;
+	GtkWidget     *vbox;
+	GtkWidget     *image;
+	GtkWidget     *frame;
+	GtkWidget     *label;
+	int            screen_width, screen_height;
+	GtkAllocation  allocation;
 
 	retval = gtk_window_new (GTK_WINDOW_POPUP);
 	atk_object_set_role (gtk_widget_get_accessible (retval), ATK_ROLE_ALERT);
@@ -85,9 +86,11 @@ display_popup_window (GdkScreen *screen)
 	screen_width  = gdk_screen_get_width  (screen);
 	screen_height = gdk_screen_get_height (screen);
 
+	gtk_widget_get_allocation (retval, &allocation);
+
 	gtk_window_move (GTK_WINDOW (retval),
-			 (screen_width  - retval->allocation.width) / 2,
-			 (screen_height - retval->allocation.height) / 2);
+			 (screen_width  - allocation.width) / 2,
+			 (screen_height - allocation.height) / 2);
 
 	gtk_widget_show (GTK_WIDGET (retval));
 
