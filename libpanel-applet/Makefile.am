@@ -103,17 +103,25 @@ INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
 INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 
 if HAVE_INTROSPECTION
-introspection_sources = $(libpanel_applet_3_la_SOURCES) $(libpanel_appletinclude_HEADERS)
+introspection_sources = 	\
+	panel-applet.c		\
+	panel-applet.h		\
+	panel-applet-gconf.c	\
+	panel-applet-gconf.h
+built_introspection_sources =	\
+	panel-applet-enums.c	\
+	panel-applet-enums.h
 
 PanelApplet-3.0.gir: libpanel-applet-3.la Makefile
 PanelApplet_3_0_gir_INCLUDES = GObject-2.0 Gtk-2.0 GConf-2.0
 PanelApplet_3_0_gir_CFLAGS =					\
-	-I$(top_builddir)/libpanel-applet                       \
-        -DPANEL_APPLET_DATADIR=\""$(datadir)"\"                 \
-        -DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"  \
-        $(LIBPANEL_APPLET_CFLAGS)
+	-I$(top_srcdir)/libpanel-applet				\
+	-I$(top_builddir)/libpanel-applet			\
+	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	$(LIBPANEL_APPLET_CFLAGS)
 PanelApplet_3_0_gir_LIBS = libpanel-applet-3.la
-PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources))
+PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
 INTROSPECTION_GIRS += PanelApplet-3.0.gir
 
 girdir = $(datadir)/gir-1.0
