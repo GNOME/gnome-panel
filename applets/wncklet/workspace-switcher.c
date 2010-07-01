@@ -546,8 +546,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	 * environments. See wnck_pager_set_orientation() doc */
 	pager_update (pager);
 
-	gtk_widget_show (pager->applet);
-
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "realize",
 			  G_CALLBACK (applet_realized),
@@ -568,6 +566,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  pager);
+
+	gtk_widget_show (pager->applet);
 
 	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
 					    GTK_WIDGET (pager->applet));
