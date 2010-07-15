@@ -53,6 +53,8 @@ void panel_warp_pointer           (GdkWindow             *gdk_window,
 				   int                    x,
 				   int                    y);
 
+guint panel_get_real_modifier_mask (guint modifier_mask);
+
 G_END_DECLS
 
 #endif /* __PANEL_XUTILS_H__ */
