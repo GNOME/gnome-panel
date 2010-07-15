@@ -31,6 +31,7 @@
 
 #include "panel-gconf.h"
 #include "panel-profile.h"
+#include "panel-xutils.h"
 
 #define BINDINGS_PREFIX    "/apps/metacity/window_keybindings"
 #define MOUSE_MODIFIER_DIR "/apps/metacity/general"
@@ -298,5 +299,5 @@ panel_bindings_get_mouse_button_modifier_keymask (void)
 	if (!initialised)
 		panel_bindings_initialise ();
 
-	return mouse_button_modifier_keymask;
+	return panel_get_real_modifier_mask (mouse_button_modifier_keymask);
 }
