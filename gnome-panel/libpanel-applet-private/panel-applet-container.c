@@ -343,6 +343,7 @@ on_proxy_appeared (GObject      *source_object,
 					    "PropertiesChanged",
 					    g_dbus_proxy_get_object_path (proxy),
 					    PANEL_APPLET_INTERFACE,
+					    G_DBUS_SIGNAL_FLAGS_NONE,
 					    (GDBusSignalCallback) on_property_changed,
 					    container, NULL);
 

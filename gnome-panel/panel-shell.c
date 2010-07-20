@@ -126,6 +126,7 @@ panel_shell_register (gboolean replace)
 						    "NameLost",
 						    "/org/freedesktop/DBus",
 						    PANEL_DBUS_SERVICE,
+						    G_DBUS_SIGNAL_FLAGS_NONE,
 						    (GDBusSignalCallback)panel_shell_on_name_lost,
 						    NULL, NULL);
 		break;
