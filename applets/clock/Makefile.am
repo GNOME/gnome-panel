@@ -29,16 +29,6 @@ CALENDAR_SOURCES =		\
 	calendar-debug.h
 endif
 
-if HAVE_POLKIT
-SETTIME_SOURCES =		\
-	set-timezone.c		\
-	set-timezone.h
-else
-SETTIME_SOURCES =		\
-	set-timezone-dummy.c	\
-	set-timezone.h
-endif
-
 CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
@@ -56,11 +46,12 @@ CLOCK_SOURCES = 		\
 	clock-sunpos.h		\
 	clock-utils.c		\
 	clock-utils.h		\
+	set-timezone.c		\
+	set-timezone.h		\
 	system-timezone.c	\
 	system-timezone.h	\
 	$(BUILT_SOURCES)	\
-	$(CALENDAR_SOURCES)	\
-	$(SETTIME_SOURCES)
+	$(CALENDAR_SOURCES)
 
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-3.la	\
@@ -112,31 +103,6 @@ clock-typebuiltins.h: @REBUILD@ $(clock_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(clock_enum_headers) >  $@
 
-gnome-clock-applet-mechanism-glue.h: $(srcdir)/gnome-clock-applet-mechanism.xml
-	$(AM_V_GEN)dbus-binding-tool \
-			--prefix=gnome_clock_applet_mechanism --mode=glib-server	\
-			--output=gnome-clock-applet-mechanism-glue.h			\
-			$(srcdir)/gnome-clock-applet-mechanism.xml
-
-gnome_clock_applet_mechanism_SOURCES =		\
-	gnome-clock-applet-mechanism.c		\
-	gnome-clock-applet-mechanism.h		\
-	gnome-clock-applet-mechanism-main.c	\
-	system-timezone.c			\
-	system-timezone.h
-
-if HAVE_POLKIT
-BUILT_SOURCES += gnome-clock-applet-mechanism-glue.h
-endif
-
-gnome_clock_applet_mechanism_INCLUDES =	\
-	$(CLOCK_MECHANISM_CFLAGS) 	\
-	$(POLKIT_CFLAGS)
-
-gnome_clock_applet_mechanism_LDADD =	\
-	$(CLOCK_MECHANISM_LIBS)		\
-	$(POLKIT_LIBS)
-
 if CLOCK_INPROCESS
 APPLET_IN_PROCESS = true
 APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
@@ -159,10 +125,6 @@ clock_applet_SOURCES = $(CLOCK_SOURCES)
 clock_applet_LDADD = $(CLOCK_LDADD)
 clock_applet_CFLAGS =
 $(clock_applet_OBJECTS): $(BUILT_SOURCES)
-endif
-
-if HAVE_POLKIT
-libexec_PROGRAMS += gnome-clock-applet-mechanism
 endif
 
 uidir		= $(datadir)/gnome-panel/ui
@@ -213,30 +175,6 @@ else
 install-data-local:
 endif
 
-dbus_servicesdir = $(datadir)/dbus-1/system-services
-dbus_confdir = $(sysconfdir)/dbus-1/system.d
-polkitdir = $(datadir)/polkit-1/actions
-
-dbus_services_in_files = org.gnome.ClockApplet.Mechanism.service.in
-polkit_in_files = org.gnome.clockapplet.mechanism.policy.in
-
-if HAVE_POLKIT
-dbus_services_DATA = $(dbus_services_in_files:.service.in=.service)
-
-$(dbus_services_DATA): $(dbus_services_in_files)
-	$(AM_V_GEN)sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
-
-dbus_conf_DATA = org.gnome.ClockApplet.Mechanism.conf
-
-@INTLTOOL_POLICY_RULE@
-polkit_DATA = $(polkit_in_files:.policy.in=.policy)
-
-else
-dbus_services_DATA =
-dbus_conf_DATA =
-polkit_DATA =
-endif
-
 noinst_PROGRAMS = test-system-timezone
 
 test_system_timezone_SOURCES = 	\
@@ -255,11 +193,7 @@ EXTRA_DIST =						\
 	$(xmlui_DATA)					\
 	$(ui_DATA)					\
 	clock-marshallers.list				\
-	$(service_in_files)				\
-	$(dbus_services_in_files)			\
-	org.gnome.ClockApplet.Mechanism.conf		\
-	$(polkit_in_files)				\
-	gnome-clock-applet-mechanism.xml
+	$(service_in_files)
 
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
