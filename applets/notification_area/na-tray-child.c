@@ -132,13 +132,14 @@ na_tray_child_size_allocate (GtkWidget      *widget,
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
   GtkAllocation widget_allocation;
+  gboolean moved, resized;
 
   gtk_widget_get_allocation (widget, &widget_allocation);
 
-  gboolean moved = allocation->x != widget_allocation.x ||
-                   allocation->y != widget_allocation.y;
-  gboolean resized = allocation->width != widget_allocation.width ||
-                     allocation->height != widget_allocation.height;
+  moved = (allocation->x != widget_allocation.x ||
+	   allocation->y != widget_allocation.y);
+  resized = (allocation->width != widget_allocation.width ||
+	     allocation->height != widget_allocation.height);
 
   /* When we are allocating the widget while mapped we need special handling
    * for both real and fake transparency.

@@ -585,9 +585,10 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
   Atom        orientation_atom;
   gulong      data[1];
 
+  if (!manager->invisible)
+    return;
   window = gtk_widget_get_window (manager->invisible);
-
-  if (!manager->invisible || !window)
+  if (!window)
     return;
 
   display = gtk_widget_get_display (manager->invisible);
@@ -617,9 +618,10 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
   Atom        visual_atom;
   gulong      data[1];
 
+  if (!manager->invisible)
+    return;
   window = gtk_widget_get_window (manager->invisible);
-
-  if (!manager->invisible || !window)
+  if (!window)
     return;
 
   /* The visual property is a hint to the tray icons as to what visual they
