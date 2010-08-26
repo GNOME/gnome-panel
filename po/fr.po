@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.fr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2010-01-12 22:51+0000\n"
+"POT-Creation-Date: 2010-08-23 14:11+0000\n"
 "PO-Revision-Date: 2010-02-06 23:07+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -29,70 +29,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: ../applets/clock/GNOME_ClockApplet.xml.h:1
-msgid "Ad_just Date & Time"
-msgstr "_Régler la date et l'heure"
-
-#: ../applets/clock/GNOME_ClockApplet.xml.h:2
-msgid "Copy _Date"
-msgstr "Copier la _date"
-
-#: ../applets/clock/GNOME_ClockApplet.xml.h:3
-msgid "Copy _Time"
-msgstr "Copier l'_heure"
-
-#: ../applets/clock/GNOME_ClockApplet.xml.h:4
-#: ../applets/fish/GNOME_FishApplet.xml.h:1
-#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
-#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
-#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:1
-#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
-#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-msgid "_About"
-msgstr "À _propos"
-
-#: ../applets/clock/GNOME_ClockApplet.xml.h:5
-#: ../applets/fish/GNOME_FishApplet.xml.h:2
-#: ../applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: ../applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
-#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:2
-#: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
-#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:345
-#: ../gnome-panel/panel-menu-button.c:664
-msgid "_Help"
-msgstr "Aid_e"
-
-#: ../applets/clock/GNOME_ClockApplet.xml.h:6
-#: ../applets/fish/GNOME_FishApplet.xml.h:3
-#: ../applets/wncklet/GNOME_WindowListApplet.xml.h:3
-#: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-msgid "_Preferences"
-msgstr "_Préférences"
-
-#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3668
-msgid "Clock"
-msgstr "Horloge"
-
-#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-msgid "Clock Applet Factory"
-msgstr "Fabrique pour l'applet Horloge"
-
-#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-msgid "Factory for creating clock applets."
-msgstr "Fabrique pour créer des applets Horloges."
-
-#: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-msgid "Get the current time and date"
-msgstr "Donne l'heure et la date actuelle"
-
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:445
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:444
+#: ../applets/clock/clock-location-tile.c:520
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -106,8 +52,13 @@ msgstr "%l:%M %p"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:450
-#: ../applets/clock/clock.c:1588 ../applets/clock/clock-location-tile.c:476
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:449
+#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/clock-location-tile.c:527
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -155,7 +106,7 @@ msgstr "Calendrier"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:445
+#: ../applets/clock/clock.c:444
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -166,7 +117,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:450 ../applets/clock/clock.c:1582
+#: ../applets/clock/clock.c:449 ../applets/clock/clock.c:1585
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -175,7 +126,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:461
+#: ../applets/clock/clock.c:460
 msgid "%a %b %e"
 msgstr "%a %e %b"
 
@@ -183,7 +134,7 @@ msgstr "%a %e %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:468
+#: ../applets/clock/clock.c:467
 #, c-format
 msgid ""
 "%1$s\n"
@@ -196,7 +147,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:476
+#: ../applets/clock/clock.c:475
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -205,27 +156,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:649
+#: ../applets/clock/clock.c:648
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:678
 msgid "Click to hide your appointments and tasks"
 msgstr "Cliquez pour masquer vos rendez-vous et vos tâches"
 
-#: ../applets/clock/clock.c:682
+#: ../applets/clock/clock.c:681
 msgid "Click to view your appointments and tasks"
 msgstr "Cliquez pour afficher vos rendez-vous et vos tâches"
 
-#: ../applets/clock/clock.c:686
+#: ../applets/clock/clock.c:685
 msgid "Click to hide month calendar"
 msgstr "Cliquez pour masquer le calendrier mensuel"
 
-#: ../applets/clock/clock.c:689
+#: ../applets/clock/clock.c:688
 msgid "Click to view month calendar"
 msgstr "Cliquez pour afficher le calendrier mensuel"
 
-#: ../applets/clock/clock.c:1421
+#: ../applets/clock/clock.c:1423
 msgid "Computer Clock"
 msgstr "Horloge"
 
@@ -235,7 +186,7 @@ msgstr "Horloge"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1567
+#: ../applets/clock/clock.c:1570
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -245,77 +196,118 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1575
+#: ../applets/clock/clock.c:1578
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1622
+#: ../applets/clock/clock.c:1624
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: ../applets/clock/clock.c:1653
+#: ../applets/clock/clock.c:1655
 msgid "Set System Time..."
 msgstr "Régler l'heure du système..."
 
-#: ../applets/clock/clock.c:1654
+#: ../applets/clock/clock.c:1656
 msgid "Set System Time"
 msgstr "Régler l'heure du système"
 
-#: ../applets/clock/clock.c:1669
+#: ../applets/clock/clock.c:1671
 msgid "Failed to set the system time"
 msgstr "Le réglage de l'heure du système a échoué"
 
-#: ../applets/clock/clock.c:2706
+#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1836
+#: ../applets/wncklet/window-list.c:192
+#: ../applets/wncklet/workspace-switcher.c:339
+msgid "_Preferences"
+msgstr "_Préférences"
+
+#: ../applets/clock/clock.c:1872 ../applets/fish/fish.c:1839
+#: ../applets/notification_area/main.c:171
+#: ../applets/wncklet/showdesktop.c:228 ../applets/wncklet/window-list.c:195
+#: ../applets/wncklet/window-menu.c:95
+#: ../applets/wncklet/workspace-switcher.c:342 ../gnome-panel/drawer.c:601
+#: ../gnome-panel/panel-action-button.c:710
+#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:350
+#: ../gnome-panel/panel-menu-button.c:665
+msgid "_Help"
+msgstr "Aid_e"
+
+#: ../applets/clock/clock.c:1875 ../applets/fish/fish.c:1842
+#: ../applets/notification_area/main.c:174
+#: ../applets/wncklet/showdesktop.c:231 ../applets/wncklet/window-list.c:198
+#: ../applets/wncklet/window-menu.c:98
+#: ../applets/wncklet/workspace-switcher.c:345
+msgid "_About"
+msgstr "À _propos"
+
+#: ../applets/clock/clock.c:1878
+msgid "Copy _Time"
+msgstr "Copier l'_heure"
+
+#: ../applets/clock/clock.c:1881
+msgid "Copy _Date"
+msgstr "Copier la _date"
+
+#: ../applets/clock/clock.c:1884
+msgid "Ad_just Date & Time"
+msgstr "_Régler la date et l'heure"
+
+#: ../applets/clock/clock.c:2720
 msgid "Custom format"
 msgstr "Format personnalisé"
 
 # Window title
-#: ../applets/clock/clock.c:3160
+#: ../applets/clock/clock.c:3207
 msgid "Choose Location"
 msgstr "Choix de l'emplacement"
 
 # Window title
-#: ../applets/clock/clock.c:3235
+#: ../applets/clock/clock.c:3286
 msgid "Edit Location"
 msgstr "Modification de l'emplacement"
 
-#: ../applets/clock/clock.c:3381
+#: ../applets/clock/clock.c:3432
 msgid "City Name"
 msgstr "Nom de la ville"
 
-#: ../applets/clock/clock.c:3385
+#: ../applets/clock/clock.c:3436
 msgid "City Time Zone"
 msgstr "Fuseau horaire de la ville"
 
-#: ../applets/clock/clock.c:3565
+#: ../applets/clock/clock.c:3621
 msgid "24 hour"
 msgstr "24 heures"
 
-#: ../applets/clock/clock.c:3566
+#: ../applets/clock/clock.c:3622
 msgid "UNIX time"
 msgstr "Heure UNIX"
 
-#: ../applets/clock/clock.c:3567
+#: ../applets/clock/clock.c:3623
 msgid "Internet time"
 msgstr "Heure Internet"
 
-#: ../applets/clock/clock.c:3575
+#: ../applets/clock/clock.c:3631
 msgid "Custom _format:"
 msgstr "_Format personnalisé :"
 
-#: ../applets/clock/clock.c:3671
+#: ../applets/clock/clock.c:3721
+msgid "Clock"
+msgstr "Horloge"
+
+#: ../applets/clock/clock.c:3724
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date actuelle"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3674 ../applets/fish/fish.c:623
-#: ../applets/notification_area/main.c:155
-#: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:606
-#: ../applets/wncklet/window-menu.c:79
-#: ../applets/wncklet/workspace-switcher.c:621
+#: ../applets/clock/clock.c:3727 ../applets/fish/fish.c:621
+#: ../applets/notification_area/main.c:153
+#: ../applets/wncklet/showdesktop.c:540 ../applets/wncklet/window-list.c:609
+#: ../applets/wncklet/window-menu.c:77
+#: ../applets/wncklet/workspace-switcher.c:619
 #: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr ""
@@ -520,12 +512,12 @@ msgstr "Si vrai, affiche les secondes dans l'heure."
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Si vrai, étend la liste des rendez-vous dans la fenêtre du calendrier"
+msgstr "Si vrai, étend la liste des rendez-vous dans la fenêtre du calendrier."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr ""
-"Si vrai, étend la liste des anniversaires dans la fenêtre du calendrier"
+"Si vrai, étend la liste des anniversaires dans la fenêtre du calendrier."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
@@ -683,15 +675,15 @@ msgstr "Utiliser UTC"
 msgid "Failed to set the system timezone"
 msgstr "Le réglage du fuseau horaire du système a échoué."
 
-#: ../applets/clock/clock-location-tile.c:240
+#: ../applets/clock/clock-location-tile.c:244
 msgid "<small>Set...</small>"
 msgstr "<small>Associer...</small>"
 
-#: ../applets/clock/clock-location-tile.c:241
+#: ../applets/clock/clock-location-tile.c:245
 msgid "<small>Set</small>"
 msgstr "<small>Associer</small>"
 
-#: ../applets/clock/clock-location-tile.c:317
+#: ../applets/clock/clock-location-tile.c:321
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Définir cet emplacement comme celui actuel et utiliser son fuseau horaire "
@@ -703,7 +695,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:453
+#: ../applets/clock/clock-location-tile.c:457
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -712,7 +704,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:461
+#: ../applets/clock/clock-location-tile.c:465
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -720,87 +712,45 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:470
+#: ../applets/clock/clock-location-tile.c:474
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:577
+#: ../applets/clock/clock-location-tile.c:613
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:589
-#: ../applets/clock/clock-location-tile.c:598
+#: ../applets/clock/clock-location-tile.c:625
+#: ../applets/clock/clock-location-tile.c:634
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:591
+#: ../applets/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, sensation %s"
 
-#: ../applets/clock/clock-location-tile.c:609
+#: ../applets/clock/clock-location-tile.c:650
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Lever du soleil : %s / Coucher : %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
-#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
+#: ../applets/notification_area/main.c:93 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Impossible d'afficher le document d'aide « %s »"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
-#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
+#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Erreur lors de l'affichage du document d'aide"
 
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
-msgid "Change system time"
-msgstr "Modifier l'heure du système"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
-msgid "Change system time zone"
-msgstr "Modifier le fuseau horaire du système"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
-msgid "Configure hardware clock"
-msgstr "Configurer l'horloge matérielle"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
-msgid "Privileges are required to change the system time zone."
-msgstr ""
-"La modification du fuseau horaire du système exige certains privilèges."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
-msgid "Privileges are required to change the system time."
-msgstr "La modification de l'heure du système exige certains privilèges."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
-msgid "Privileges are required to configure the hardware clock."
-msgstr "La configuration de l'horloge matérielle exige certains privilèges."
-
-#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Display a swimming fish or another animated creature"
-msgstr "Affiche un poisson qui nage ou une autre créature animée"
-
-#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: ../applets/fish/fish.c:617
-msgid "Fish"
-msgstr "Poisson"
-
-#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-msgid "From Whence That Stupid Fish Came"
-msgstr "Voilà d'où provient ce stupide poisson"
-
-#: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "Wanda Factory"
-msgstr "Fabrique de Wanda"
-
-#: ../applets/fish/fish.c:273
+#: ../applets/fish/fish.c:274
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -817,13 +767,13 @@ msgstr ""
 msgid "Images"
 msgstr "Images"
 
-#: ../applets/fish/fish.c:585 ../applets/fish/fish.c:651
-#: ../applets/fish/fish.c:767
+#: ../applets/fish/fish.c:583 ../applets/fish/fish.c:649
+#: ../applets/fish/fish.c:765
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s le poisson"
 
-#: ../applets/fish/fish.c:586
+#: ../applets/fish/fish.c:584
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -836,25 +786,29 @@ msgstr ""
 "personne est trouvée en flagrant délit d'utilisation de cette applet, elle "
 "devra être envoyée sans délai subir un test psychiatrique."
 
-#: ../applets/fish/fish.c:610
+#: ../applets/fish/fish.c:608
 msgid "(with minor help from George)"
 msgstr "(avec un peu d'aide de la part de George)"
 
-#: ../applets/fish/fish.c:652
+#: ../applets/fish/fish.c:615
+msgid "Fish"
+msgstr "Poisson"
+
+#: ../applets/fish/fish.c:650
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s le poisson, un oracle des temps modernes"
 
-#: ../applets/fish/fish.c:723
+#: ../applets/fish/fish.c:721
 msgid "Unable to locate the command to execute"
 msgstr "Impossible de localiser la commande à exécuter"
 
-#: ../applets/fish/fish.c:772
+#: ../applets/fish/fish.c:770
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s le poisson dit :"
 
-#: ../applets/fish/fish.c:841
+#: ../applets/fish/fish.c:839
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -865,7 +819,7 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#: ../applets/fish/fish.c:906
+#: ../applets/fish/fish.c:905
 msgid "_Speak again"
 msgstr "_Répéter"
 
@@ -896,15 +850,15 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#: ../applets/fish/fish.c:1653
+#: ../applets/fish/fish.c:1679
 msgid "The water needs changing"
 msgstr "L'eau a besoin d'être changée"
 
-#: ../applets/fish/fish.c:1655
+#: ../applets/fish/fish.c:1681
 msgid "Look at today's date!"
 msgstr "Regardez la date d'aujourd'hui !"
 
-#: ../applets/fish/fish.c:1748
+#: ../applets/fish/fish.c:1774
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s le poisson, le diseur de bonne aventure"
@@ -1023,93 +977,41 @@ msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
 "Cette clé indique le nombre de secondes séparant l'affichage de chaque trame."
 
-#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
-msgid "Area where notification icons appear"
-msgstr "Zone où les icônes de notification apparaîtront"
-
-#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:150
+#: ../applets/notification_area/main.c:148
 msgid "Notification Area"
 msgstr "Zone de notification"
 
-#: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
-msgid "Notification Area Factory"
-msgstr "Fabrique de zone de notification"
-
-#: ../applets/notification_area/main.c:261
+#: ../applets/notification_area/main.c:306
 msgid "Panel Notification Area"
 msgstr "Zone de notification du tableau de bord"
 
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-msgid "Factory for the window navigation related applets"
-msgstr "Fabrique pour les applets liées à la navigation dans les fenêtres"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
-msgid "Hide application windows and show the desktop"
-msgstr "Masquer les fenêtres d'applications et afficher le bureau"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
-msgid "Show Desktop"
-msgstr "Afficher le bureau"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-msgid "Switch between open windows using a menu"
-msgstr "Bascule entre les fenêtres ouvertes en utilisant un menu"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
-msgid "Switch between open windows using buttons"
-msgstr "Bascule entre les fenêtres ouvertes en utilisant des boutons"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-msgid "Switch between workspaces"
-msgstr "Bascule entre les espaces de travail"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-#: ../applets/wncklet/window-list.c:609
-msgid "Window List"
-msgstr "Liste des fenêtres"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-msgid "Window Navigation Applet Factory"
-msgstr "Fabrique pour l'applet de navigation de fenêtres"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: ../applets/wncklet/window-menu.c:82 ../applets/wncklet/window-menu.c:244
-msgid "Window Selector"
-msgstr "Sélecteur de fenêtres"
-
-#: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: ../applets/wncklet/workspace-switcher.c:624
-msgid "Workspace Switcher"
-msgstr "Sélecteur d'espaces de travail"
-
-#: ../applets/wncklet/showdesktop.c:181
+#: ../applets/wncklet/showdesktop.c:182
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Le chargement de %s a échoué : %s\n"
 
-#: ../applets/wncklet/showdesktop.c:182
+#: ../applets/wncklet/showdesktop.c:183
 msgid "Icon not found"
 msgstr "Icône non trouvée"
 
-#: ../applets/wncklet/showdesktop.c:241
+#: ../applets/wncklet/showdesktop.c:245
 msgid "Click here to restore hidden windows."
 msgstr "Cliquez ici pour restaurer les fenêtres cachées."
 
-#: ../applets/wncklet/showdesktop.c:243
+#: ../applets/wncklet/showdesktop.c:247
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Cliquez ici pour masquer toutes les fenêtres et afficher le bureau."
 
-#: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
+#: ../applets/wncklet/showdesktop.c:459 ../applets/wncklet/showdesktop.c:543
 msgid "Show Desktop Button"
 msgstr "Bouton d'affichage du bureau"
 
-#: ../applets/wncklet/showdesktop.c:536
+#: ../applets/wncklet/showdesktop.c:545
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Ce bouton vous permet de masquer toutes les fenêtres et d'afficher le bureau."
 
-#: ../applets/wncklet/showdesktop.c:566
+#: ../applets/wncklet/showdesktop.c:575
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -1118,7 +1020,11 @@ msgstr ""
 "du bureau, ou vous n'avez pas de gestionnaire de fenêtres en cours de "
 "fonctionnement."
 
-#: ../applets/wncklet/window-list.c:611
+#: ../applets/wncklet/window-list.c:612
+msgid "Window List"
+msgstr "Liste des fenêtres"
+
+#: ../applets/wncklet/window-list.c:614
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
@@ -1226,7 +1132,11 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Quand grouper les fenêtres"
 
-#: ../applets/wncklet/window-menu.c:86
+#: ../applets/wncklet/window-menu.c:80 ../applets/wncklet/window-menu.c:247
+msgid "Window Selector"
+msgstr "Sélecteur de fenêtres"
+
+#: ../applets/wncklet/window-menu.c:84
 msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
@@ -1234,25 +1144,25 @@ msgstr ""
 "Le sélecteur de fenêtres affiche une liste de toutes les fenêtres dans un "
 "menu et vous permet de les parcourir."
 
-#: ../applets/wncklet/workspace-switcher.c:214
-#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "lignes"
 
-#: ../applets/wncklet/workspace-switcher.c:214
-#: ../applets/wncklet/workspace-switcher.c:976
+#: ../applets/wncklet/workspace-switcher.c:211
+#: ../applets/wncklet/workspace-switcher.c:974
 msgid "columns"
 msgstr "colonnes"
 
-#: ../applets/wncklet/workspace-switcher.c:488
+#: ../applets/wncklet/workspace-switcher.c:492
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Erreur lors de la lecture de la valeur num_rows pour le sélecteur d'espaces "
 "de travail : %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:499
+#: ../applets/wncklet/workspace-switcher.c:503
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -1260,14 +1170,18 @@ msgstr ""
 "Erreur lors du chargement de la valeur display_workspace_names pour le "
 "sélecteur d'espaces de travail : %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:514
+#: ../applets/wncklet/workspace-switcher.c:518
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Erreur lors du chargement de la valeur display_all_workspaces pour le "
 "sélecteur d'espaces de travail : %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:626
+#: ../applets/wncklet/workspace-switcher.c:622
+msgid "Workspace Switcher"
+msgstr "Sélecteur d'espaces de travail"
+
+#: ../applets/wncklet/workspace-switcher.c:624
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1353,6 +1267,168 @@ msgstr ""
 "travail utilise pour afficher les espaces de travail. Cette clé n'est "
 "valable que si la clé display_all_workspaces est à vrai."
 
+#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr "Applet basique pour tester le tableau de bord de GNOME-2.0"
+
+#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+msgid "Test Bonobo Applet"
+msgstr "Applet de test Bonobo"
+
+#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr "Fabrique de l'applet de test Bonobo"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:34
+#: ../gnome-panel/panel-test-applets.c:36
+msgid "Specify an applet IID to load"
+msgstr "Indique l'IID d'une applet à charger"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:35
+#: ../gnome-panel/panel-test-applets.c:37
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+"Indique un emplacement GConf dans lequel les préférences de l'applet doivent "
+"être stockées"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:36
+#: ../gnome-panel/panel-test-applets.c:38
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+"Indique la taille initiale de l'applet (très très petit, moyen, grand, etc.)"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:37
+#: ../gnome-panel/panel-test-applets.c:39
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"Indique l'orientation initiale de l'applet (haut, bas, gauche, ou droite)"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:53
+#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Top"
+msgstr "En haut"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:54
+#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "En bas"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:55
+#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Left"
+msgstr "À gauche"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:56
+#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-test-applets.c:58
+msgctxt "Orientation"
+msgid "Right"
+msgstr "À droite"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:61
+#: ../gnome-panel/panel-test-applets.c:63
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Très très petit"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:62
+#: ../gnome-panel/panel-test-applets.c:64
+msgctxt "Size"
+msgid "X Small"
+msgstr "Très petit"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:63
+#: ../gnome-panel/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Small"
+msgstr "Petit"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:64
+#: ../gnome-panel/panel-test-applets.c:66
+msgctxt "Size"
+msgid "Medium"
+msgstr "Moyen"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:65
+#: ../gnome-panel/panel-test-applets.c:67
+msgctxt "Size"
+msgid "Large"
+msgstr "Grand"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:66
+#: ../gnome-panel/panel-test-applets.c:68
+msgctxt "Size"
+msgid "X Large"
+msgstr "Très grand"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:67
+#: ../gnome-panel/panel-test-applets.c:69
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Très très grand"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:129
+#: ../gnome-panel/panel-test-applets.c:127
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "Le chargement de l'applet %s a échoué"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:249
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "la requête a retourné l'exception %s\n"
+
+#. This is an utility to easily test various applets
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:2
+#: ../gnome-panel/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Utilitaire de test d'applet"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:3
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "_Applet :"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Orientation :"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:5
+#: ../gnome-panel/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "Répertoire des _préférences :"
+
+#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Taille :"
+
+#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:1
+#: ../gnome-panel/applet.c:554 ../libpanel-applet/panel-applet.c:145
+msgid "Loc_k To Panel"
+msgstr "_Verrouiller au tableau de bord"
+
+#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:2
+#: ../gnome-panel/applet.c:537 ../libpanel-applet/panel-applet.c:139
+msgid "_Move"
+msgstr "_Déplacer"
+
+#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:3
+#: ../gnome-panel/applet.c:526 ../libpanel-applet/panel-applet.c:136
+msgid "_Remove From Panel"
+msgstr "_Enlever du tableau de bord"
+
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
@@ -1382,39 +1458,38 @@ msgstr "Option de lancement non reconnue : %d"
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
-"Impossible de passer les URI de documents vers une entrée .desktop de type "
-"« Type=Link »"
+"Impossible de passer les URI de documents vers une entrée .desktop de type « Type=Link »"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:1394
 #, c-format
 msgid "Not a launchable item"
 msgstr "L'élément n'est pas exécutable"
 
-#: ../gnome-panel/libegg/eggsmclient.c:225
+#: ../gnome-panel/libegg/eggsmclient.c:226
 msgid "Disable connection to session manager"
 msgstr "Désactive la connexion au gestionnaire de sessions"
 
-#: ../gnome-panel/libegg/eggsmclient.c:228
+#: ../gnome-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
 msgstr "Indique un fichier contenant la configuration enregistrée"
 
-#: ../gnome-panel/libegg/eggsmclient.c:228
+#: ../gnome-panel/libegg/eggsmclient.c:229
 msgid "FILE"
 msgstr "FICHIER"
 
-#: ../gnome-panel/libegg/eggsmclient.c:231
+#: ../gnome-panel/libegg/eggsmclient.c:232
 msgid "Specify session management ID"
 msgstr "Indique l'ID de la gestion de sessions"
 
-#: ../gnome-panel/libegg/eggsmclient.c:231
+#: ../gnome-panel/libegg/eggsmclient.c:232
 msgid "ID"
 msgstr "ID"
 
-#: ../gnome-panel/libegg/eggsmclient.c:252
+#: ../gnome-panel/libegg/eggsmclient.c:253
 msgid "Session management options:"
 msgstr "Options de gestion de sessions :"
 
-#: ../gnome-panel/libegg/eggsmclient.c:253
+#: ../gnome-panel/libegg/eggsmclient.c:254
 msgid "Show session management options"
 msgstr "Afficher les options de gestion de sessions"
 
@@ -1424,8 +1499,8 @@ msgstr "Afficher les options de gestion de sessions"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
-#: ../gnome-panel/panel-applet-frame.c:1000
-#: ../gnome-panel/panel-applet-frame.c:1088
+#: ../gnome-panel/panel-applet-frame.c:745
+#: ../gnome-panel/panel-applet-frame.c:915
 msgid "Error"
 msgstr "Erreur"
 
@@ -1455,28 +1530,16 @@ msgstr ""
 "Aucune application n'est installée pour prendre en charge les dossiers de "
 "recherche."
 
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:1 ../gnome-panel/applet.c:544
-msgid "Loc_k To Panel"
-msgstr "_Verrouiller au tableau de bord"
-
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:2 ../gnome-panel/applet.c:527
-msgid "_Move"
-msgstr "_Déplacer"
-
-#: ../gnome-panel/GNOME_Panel_Popup.xml.h:3 ../gnome-panel/applet.c:516
-msgid "_Remove From Panel"
-msgstr "_Enlever du tableau de bord"
-
-#: ../gnome-panel/applet.c:437
+#: ../gnome-panel/applet.c:447
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1310
+#: ../gnome-panel/applet.c:1346
 msgid "Cannot find an empty spot"
 msgstr "Impossible de trouver un emplacement vide"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:175
-#: ../gnome-panel/panel-toplevel.c:1624
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:174
+#: ../gnome-panel/panel-toplevel.c:1626
 msgid "Drawer"
 msgstr "Tiroir"
 
@@ -1525,7 +1588,7 @@ msgstr ""
 "Lancer des applications supplémentaires et différents utilitaires pour gérer "
 "les fenêtres, indiquer l'heure, etc."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:100
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:93
 msgid "Panel"
 msgstr "Tableau de bord"
 
@@ -1563,9 +1626,9 @@ msgstr "_Lancer"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "La clé %s n'est pas définie, impossible de charger le lanceur\n"
 
-#: ../gnome-panel/launcher.c:964 ../gnome-panel/panel-ditem-editor.c:1357
-#: ../gnome-panel/panel-ditem-editor.c:1391
-#: ../gnome-panel/panel-ditem-editor.c:1422
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1361
+#: ../gnome-panel/panel-ditem-editor.c:1395
+#: ../gnome-panel/panel-ditem-editor.c:1426
 msgid "Could not save launcher"
 msgstr "Impossible d'enregistrer le lanceur"
 
@@ -1573,27 +1636,27 @@ msgstr "Impossible d'enregistrer le lanceur"
 msgid "Replace a currently running panel"
 msgstr "Remplace un tableau de bord en cours d'exécution"
 
-#: ../gnome-panel/menu.c:914
+#: ../gnome-panel/menu.c:916
 msgid "Add this launcher to _panel"
 msgstr "Ajouter ce lanceur au _tableau de bord"
 
-#: ../gnome-panel/menu.c:921
+#: ../gnome-panel/menu.c:923
 msgid "Add this launcher to _desktop"
 msgstr "Ajouter ce lanceur au _bureau"
 
-#: ../gnome-panel/menu.c:933
+#: ../gnome-panel/menu.c:935
 msgid "_Entire menu"
 msgstr "_Tout le menu"
 
-#: ../gnome-panel/menu.c:938
+#: ../gnome-panel/menu.c:940
 msgid "Add this as _drawer to panel"
 msgstr "Ajouter ceci comme t_iroir au tableau de bord"
 
-#: ../gnome-panel/menu.c:945
+#: ../gnome-panel/menu.c:947
 msgid "Add this as _menu to panel"
 msgstr "Ajouter ceci comme _menu au tableau de bord"
 
-#: ../gnome-panel/nothing.cP:605
+#: ../gnome-panel/nothing.cP:609
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
 msgstr "<b>Le jeu est terminé</b> au niveau %d !"
@@ -1602,42 +1665,42 @@ msgstr "<b>Le jeu est terminé</b> au niveau %d !"
 #. * title, and the second string is a small information text.
 #. * The spaces are there only to separate all the strings, so
 #. try to keep them as is.
-#: ../gnome-panel/nothing.cP:612
+#: ../gnome-panel/nothing.cP:616
 #, c-format
 msgid "%1$s   %2$s   %3$s"
 msgstr "%1$s   %2$s   %3$s"
 
-#: ../gnome-panel/nothing.cP:613
+#: ../gnome-panel/nothing.cP:617
 msgid "Press 'q' to quit"
 msgstr "Appuyez sur « q » pour quitter"
 
-#: ../gnome-panel/nothing.cP:618
+#: ../gnome-panel/nothing.cP:622
 msgid "Paused"
 msgstr "En pause"
 
 #. Translators: the first string is a title and the second
 #. * string is a small information text.
-#: ../gnome-panel/nothing.cP:621 ../gnome-panel/nothing.cP:632
+#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
 #, c-format
 msgid "%1$s\t%2$s"
 msgstr "%1$s\t%2$s"
 
-#: ../gnome-panel/nothing.cP:622
+#: ../gnome-panel/nothing.cP:626
 msgid "Press 'p' to unpause"
 msgstr "Appuyez sur « p » pour désactiver la pause"
 
-#: ../gnome-panel/nothing.cP:628
+#: ../gnome-panel/nothing.cP:632
 #, c-format
 msgid "Level: %s,  Lives: %s"
 msgstr "Niveau : %s, vies : %s"
 
-#: ../gnome-panel/nothing.cP:633
+#: ../gnome-panel/nothing.cP:637
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
 "Gauche/Droite pour déplacer, Espace pour tirer, « p » pour mettre en pause, "
 "« q » pour quitter"
 
-#: ../gnome-panel/nothing.cP:1373
+#: ../gnome-panel/nothing.cP:1385
 msgid "Killer GEGLs from Outer Space"
 msgstr "GEGL tueurs de l'espace intersidéral"
 
@@ -1695,7 +1758,7 @@ msgstr ""
 "leur contenu"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:221
+#: ../gnome-panel/panel-force-quit.c:224
 msgid "Force Quit"
 msgstr "Forcer à quitter"
 
@@ -1720,98 +1783,87 @@ msgstr "Éteindre..."
 msgid "Shut down the computer"
 msgstr "Éteint l'ordinateur"
 
-#: ../gnome-panel/panel-addto.c:116
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "Lanceur d'application personnalisé"
 
-#: ../gnome-panel/panel-addto.c:117
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "Crée un nouveau lanceur"
 
-#: ../gnome-panel/panel-addto.c:127
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "Lanceur d'application..."
 
-#: ../gnome-panel/panel-addto.c:128
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "Copie un lanceur depuis le menu d'applications"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:1082
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1091
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: ../gnome-panel/panel-addto.c:143
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "Le menu principal GNOME"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "Barre de menus"
 
-#: ../gnome-panel/panel-addto.c:154
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "Une barre de menus personnalisée"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "Séparateur"
 
-#: ../gnome-panel/panel-addto.c:165
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "Un séparateur pour organiser les éléments du tableau de bord"
 
-#: ../gnome-panel/panel-addto.c:176
+#: ../gnome-panel/panel-addto.c:175
 msgid "A pop out drawer to store other items in"
 msgstr "Un menu déroulant qui stocke d'autres éléments"
 
-#: ../gnome-panel/panel-addto.c:267
+#: ../gnome-panel/panel-addto.c:256
 msgid "(empty)"
 msgstr "(vide)"
 
-#: ../gnome-panel/panel-addto.c:410
-#: ../libpanel-applet/panel-test-applets.c:249
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "la requête a retourné l'exception %s\n"
-
-#: ../gnome-panel/panel-addto.c:1071
+#: ../gnome-panel/panel-addto.c:1026
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Chois_ir un élément à ajouter à « %s » :"
 
-#: ../gnome-panel/panel-addto.c:1075
+#: ../gnome-panel/panel-addto.c:1030
 #, c-format
 msgid "Add to Drawer"
 msgstr "Ajouter au tiroir"
 
-#: ../gnome-panel/panel-addto.c:1077
+#: ../gnome-panel/panel-addto.c:1032
 msgid "Find an _item to add to the drawer:"
 msgstr "Chois_ir un élément à ajouter au tiroir :"
 
-#: ../gnome-panel/panel-addto.c:1079
+#: ../gnome-panel/panel-addto.c:1034
 #, c-format
 msgid "Add to Panel"
 msgstr "Ajouter au tableau de bord"
 
-#: ../gnome-panel/panel-addto.c:1081
+#: ../gnome-panel/panel-addto.c:1036
 msgid "Find an _item to add to the panel:"
 msgstr "Chois_ir un élément à ajouter au tableau de bord :"
 
-#: ../gnome-panel/panel-applet-frame.c:844
-#, c-format
-msgid "Exception from popup_menu '%s'\n"
-msgstr "Exception du popup_menu « %s »\n"
-
-#: ../gnome-panel/panel-applet-frame.c:969
+#: ../gnome-panel/panel-applet-frame.c:714
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "« %s » a quitté inopinément"
 
-#: ../gnome-panel/panel-applet-frame.c:971
+#: ../gnome-panel/panel-applet-frame.c:716
 msgid "Panel object has quit unexpectedly"
 msgstr "L'élément du tableau de bord a quitté inopinément"
 
-#: ../gnome-panel/panel-applet-frame.c:978
+#: ../gnome-panel/panel-applet-frame.c:723
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1819,27 +1871,23 @@ msgstr ""
 "Si vous rechargez un élément d'un tableau de bord, il sera automatiquement "
 "ajouté au tableau."
 
-#: ../gnome-panel/panel-applet-frame.c:984
+#: ../gnome-panel/panel-applet-frame.c:729
 msgid "_Don't Reload"
 msgstr "_Ne pas recharger"
 
-#: ../gnome-panel/panel-applet-frame.c:985
+#: ../gnome-panel/panel-applet-frame.c:730
 msgid "_Reload"
 msgstr "_Recharger"
 
-#: ../gnome-panel/panel-applet-frame.c:1051
+#: ../gnome-panel/panel-applet-frame.c:878
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
 "Le tableau de bord a rencontré un problème lors du chargement de « %s »."
 
-#: ../gnome-panel/panel-applet-frame.c:1067
+#: ../gnome-panel/panel-applet-frame.c:894
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Voulez-vous supprimer l'applet de votre configuration ?"
-
-#: ../gnome-panel/panel-applet-frame.c:1141
-msgid "Unable to obtain AppletShell interface from control\n"
-msgstr "Impossible d'obtenir une interface AppletShell à partir du contrôle\n"
 
 #: ../gnome-panel/panel-context-menu.c:104
 msgid "And many, many others..."
@@ -1898,77 +1946,77 @@ msgid "Location"
 msgstr "Emplacement"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:618
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Type:"
 msgstr "_Type :"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:629
 msgid "_Name:"
 msgstr "_Nom :"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:656
 msgid "_Browse..."
 msgstr "_Parcourir..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:663
 msgid "Co_mment:"
 msgstr "Co_mmentaire :"
 
-#: ../gnome-panel/panel-ditem-editor.c:1008
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose an application..."
 msgstr "Choisissez une application..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1012
+#: ../gnome-panel/panel-ditem-editor.c:1016
 msgid "Choose a file..."
 msgstr "Choisissez un fichier..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1177
-#: ../gnome-panel/panel-ditem-editor.c:1186
+#: ../gnome-panel/panel-ditem-editor.c:1181
+#: ../gnome-panel/panel-ditem-editor.c:1190
 msgid "Comm_and:"
 msgstr "_Commande :"
 
-#: ../gnome-panel/panel-ditem-editor.c:1195
+#: ../gnome-panel/panel-ditem-editor.c:1199
 msgid "_Location:"
 msgstr "_Emplacement :"
 
-#: ../gnome-panel/panel-ditem-editor.c:1358
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "The name of the launcher is not set."
 msgstr "Le nom du lanceur n'est pas défini."
 
-#: ../gnome-panel/panel-ditem-editor.c:1362
+#: ../gnome-panel/panel-ditem-editor.c:1366
 msgid "Could not save directory properties"
 msgstr "Impossible d'enregistrer les propriétés du répertoire"
 
-#: ../gnome-panel/panel-ditem-editor.c:1363
+#: ../gnome-panel/panel-ditem-editor.c:1367
 msgid "The name of the directory is not set."
 msgstr "Le nom du répertoire n'est pas défini."
 
-#: ../gnome-panel/panel-ditem-editor.c:1379
+#: ../gnome-panel/panel-ditem-editor.c:1383
 msgid "The command of the launcher is not set."
 msgstr "La commande du lanceur n'est pas définie."
 
-#: ../gnome-panel/panel-ditem-editor.c:1382
+#: ../gnome-panel/panel-ditem-editor.c:1386
 msgid "The location of the launcher is not set."
 msgstr "La position du lanceur n'est pas indiquée."
 
-#: ../gnome-panel/panel-ditem-editor.c:1459
+#: ../gnome-panel/panel-ditem-editor.c:1463
 msgid "Could not display help document"
 msgstr "Impossible d'afficher le document d'aide"
 
-#: ../gnome-panel/panel-force-quit.c:76
+#: ../gnome-panel/panel-force-quit.c:77
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Cliquez sur la fenêtre pour forcer l'application à quitter. Pour annuler, "
 "appuyez sur Échap."
 
-#: ../gnome-panel/panel-force-quit.c:204
+#: ../gnome-panel/panel-force-quit.c:207
 msgid "Force this application to exit?"
 msgstr "Voulez-vous forcer cette application à quitter ?"
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:210
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2212,7 +2260,7 @@ msgstr ""
 msgid "Applications"
 msgstr "Applications"
 
-#: ../gnome-panel/panel-menu-bar.c:353 ../gnome-panel/panel-menu-button.c:669
+#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:670
 msgid "_Edit Menus"
 msgstr "É_diter les menus"
 
@@ -2221,60 +2269,60 @@ msgid "Bookmarks"
 msgstr "Signets"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:494 ../gnome-panel/panel.c:534
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
 #, c-format
 msgid "Open '%s'"
 msgstr "Ouvre « %s »"
 
-#: ../gnome-panel/panel-menu-items.c:562
+#: ../gnome-panel/panel-menu-items.c:566
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Impossible d'analyser %s pour des modifications de support"
 
-#: ../gnome-panel/panel-menu-items.c:605
+#: ../gnome-panel/panel-menu-items.c:609
 #, c-format
 msgid "Rescan %s"
 msgstr "Analyser %s à nouveau"
 
-#: ../gnome-panel/panel-menu-items.c:642
+#: ../gnome-panel/panel-menu-items.c:646
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Impossible de monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:709
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:917
 msgid "Removable Media"
 msgstr "Supports amovibles"
 
-#: ../gnome-panel/panel-menu-items.c:1000
+#: ../gnome-panel/panel-menu-items.c:1004
 msgid "Network Places"
 msgstr "Emplacements réseau"
 
-#: ../gnome-panel/panel-menu-items.c:1039
+#: ../gnome-panel/panel-menu-items.c:1043
 msgid "Open your personal folder"
 msgstr "Ouvre votre dossier personnel"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1058
+#: ../gnome-panel/panel-menu-items.c:1062
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Bureau"
 
-#: ../gnome-panel/panel-menu-items.c:1059
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Open the contents of your desktop in a folder"
 msgstr "Ouvre le contenu de votre bureau dans un dossier"
 
-#: ../gnome-panel/panel-menu-items.c:1450
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Raccourcis"
 
-#: ../gnome-panel/panel-menu-items.c:1479
+#: ../gnome-panel/panel-menu-items.c:1483
 msgid "System"
 msgstr "Système"
 
@@ -2283,7 +2331,7 @@ msgstr "Système"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1560
+#: ../gnome-panel/panel-menu-items.c:1564
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "42"
@@ -2292,14 +2340,14 @@ msgstr "42"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1572
+#: ../gnome-panel/panel-menu-items.c:1576
 #, c-format
 msgid "Log Out %s..."
 msgstr "Fermer la session de %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1576
+#: ../gnome-panel/panel-menu-items.c:1580
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr ""
@@ -2315,10 +2363,14 @@ msgid "Applet Bonobo IID"
 msgstr "IID d'applet Bonobo"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
+msgid "Applet IID"
+msgstr "IID d'applet"
+
+#: ../gnome-panel/panel-object.schemas.in.h:4
 msgid "Icon used for object's button"
 msgstr "Icône utilisée pour le bouton de l'élément"
 
-#: ../gnome-panel/panel-object.schemas.in.h:4
+#: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -2328,7 +2380,7 @@ msgstr ""
 "bouton, sinon, la clé custom_icon est ignorée. Cette clé n'est valable que "
 "si la clé object_type est « menu-object » ou « drawer-object »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:5
+#: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -2338,7 +2390,7 @@ msgstr ""
 "du menu devra être construit, sinon, la clé menu_path est ignorée. Cette clé "
 "n'est valable que si la clé object_type est « menu-object »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:6
+#: ../gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
@@ -2346,7 +2398,7 @@ msgstr ""
 "Si vrai, la position de l'élément est interprétée relativement au côté droit "
 "(ou bas si vertical) du tableau de bord."
 
-#: ../gnome-panel/panel-object.schemas.in.h:7
+#: ../gnome-panel/panel-object.schemas.in.h:8
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
@@ -2354,42 +2406,33 @@ msgstr ""
 "Si vrai, l'utilisateur ne pourra pas déplacer l'applet sans débloquer "
 "d'abord l'élément en utilisant l'élément de menu « Déverrouiller »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:8
+#: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Interprète la position relativement au côté bas/droit"
 
-#: ../gnome-panel/panel-object.schemas.in.h:9
+#: ../gnome-panel/panel-object.schemas.in.h:10
 msgid "Launcher location"
 msgstr "Emplacement du lanceur"
 
-#: ../gnome-panel/panel-object.schemas.in.h:10
+#: ../gnome-panel/panel-object.schemas.in.h:11
 msgid "Lock the object to the panel"
 msgstr "Verrouille l'élément sur le tableau de bord"
 
-#: ../gnome-panel/panel-object.schemas.in.h:11
+#: ../gnome-panel/panel-object.schemas.in.h:12
 msgid "Menu content path"
 msgstr "Chemin du contenu du menu"
 
-#: ../gnome-panel/panel-object.schemas.in.h:12
+#: ../gnome-panel/panel-object.schemas.in.h:13
 msgid "Object's position on the panel"
 msgstr "Position de l'élément sur le tableau de bord"
 
-#: ../gnome-panel/panel-object.schemas.in.h:13
+#: ../gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel attached to drawer"
 msgstr "Tableau de bord attaché à ce tiroir"
 
-#: ../gnome-panel/panel-object.schemas.in.h:14
+#: ../gnome-panel/panel-object.schemas.in.h:15
 msgid "Panel object type"
 msgstr "Type de l'élément du tableau de bord"
-
-#: ../gnome-panel/panel-object.schemas.in.h:15
-msgid ""
-"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr ""
-"L'ID de l'implémentation Bonobo de l'applet - c'est à dire « OAFIID:"
-"GNOME_ClockApplet ». Cette clé n'est valable que si la clé object_type est "
-"« bonobo-applet »."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2417,13 +2460,22 @@ msgstr ""
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
+"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"L'ID de l'implémentation de l'applet - c'est à dire "
+"« ClockAppletFactory::ClockApplet ». Cette clé n'est valable que si la clé object_type est "
+"« bonobo-applet »."
+
+#: ../gnome-panel/panel-object.schemas.in.h:20
+msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 "L'emplacement du fichier .desktop décrivant le lanceur. Cette clé n'est "
 "valable que si la clé object_type est « launcher-object »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:20
+#: ../gnome-panel/panel-object.schemas.in.h:21
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -2433,7 +2485,7 @@ msgstr ""
 "l'élément. Cette clé n'est valable que si la clé object_type est « drawer-"
 "object » ou « menu-object » et si la clé use_custom_icon est à vrai."
 
-#: ../gnome-panel/panel-object.schemas.in.h:21
+#: ../gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
@@ -2443,7 +2495,7 @@ msgstr ""
 "valable que si la clé use_menu_path est à vrai et que la clé object_type est "
 "« menu-object »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:22
+#: ../gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -2452,7 +2504,7 @@ msgstr ""
 "le nombre de pixels depuis le côté gauche (ou haut si vertical) du tableau "
 "de bord."
 
-#: ../gnome-panel/panel-object.schemas.in.h:23
+#: ../gnome-panel/panel-object.schemas.in.h:24
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
@@ -2461,7 +2513,7 @@ msgstr ""
 "n'est valable que si la clé object_type est « drawer-object » ou « menu-"
 "object »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:24
+#: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
@@ -2471,19 +2523,32 @@ msgstr ""
 "« drawer-object », « menu-object », « launcher-object », « bonobo-applet », "
 "« action-applet » et « menu-bar »."
 
-#: ../gnome-panel/panel-object.schemas.in.h:25
+#: ../gnome-panel/panel-object.schemas.in.h:26
+msgid ""
+"This key is deprecated, following the migration to a new library for "
+"applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
+"GNOME_ClockApplet\". This key is only relevant if the object_type key is "
+"\"bonobo-applet\"."
+msgstr ""
+"Cette clé est déconseillée, suite à la migration vers une nouvelle "
+"bibliothèque pour les applets. "
+"L'ID de l'implémentation Bonobo de l'applet - c'est à dire « OAFIID:"
+"GNOME_ClockApplet ». Cette clé n'est valable que si la clé object_type est "
+"« bonobo-applet »."
+
+#: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Tooltip displayed for drawer or menu"
 msgstr "Infobulle affichée pour les tiroirs et menus"
 
-#: ../gnome-panel/panel-object.schemas.in.h:26
+#: ../gnome-panel/panel-object.schemas.in.h:28
 msgid "Toplevel panel containing object"
 msgstr "Tableau de bord de haut niveau qui contient un élément"
 
-#: ../gnome-panel/panel-object.schemas.in.h:27
+#: ../gnome-panel/panel-object.schemas.in.h:29
 msgid "Use custom icon for object's button"
 msgstr "Utiliser une icône personnalisée pour le bouton de l'élément"
 
-#: ../gnome-panel/panel-object.schemas.in.h:28
+#: ../gnome-panel/panel-object.schemas.in.h:30
 msgid "Use custom path for menu contents"
 msgstr "Utiliser un chemin personnalisée pour le contenu du menu"
 
@@ -2514,36 +2579,12 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur booléenne GConf « %s » : %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:123
-#: ../libpanel-applet/panel-test-applets.c:53
-msgctxt "Orientation"
-msgid "Top"
-msgstr "En haut"
-
-#: ../gnome-panel/panel-properties-dialog.c:124
-#: ../libpanel-applet/panel-test-applets.c:54
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "En bas"
-
-#: ../gnome-panel/panel-properties-dialog.c:125
-#: ../libpanel-applet/panel-test-applets.c:55
-msgctxt "Orientation"
-msgid "Left"
-msgstr "À gauche"
-
-#: ../gnome-panel/panel-properties-dialog.c:126
-#: ../libpanel-applet/panel-test-applets.c:56
-msgctxt "Orientation"
-msgid "Right"
-msgstr "À droite"
-
 #: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Propriétés du tiroir"
 
 #: ../gnome-panel/panel-properties-dialog.c:981
-#: ../gnome-panel/panel-run-dialog.c:2019
+#: ../gnome-panel/panel-run-dialog.c:2022
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Impossible de charger le fichier « %s » : %s."
@@ -2632,19 +2673,9 @@ msgstr "_Icône :"
 msgid "_None (use system theme)"
 msgstr "A_ucun (utiliser le thème système)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-#: ../libpanel-applet/panel-test-applets.ui.h:4
-msgid "_Orientation:"
-msgstr "_Orientation :"
-
 #: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Scale"
 msgstr "_Redimensionné"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
-#: ../libpanel-applet/panel-test-applets.ui.h:6
-msgid "_Size:"
-msgstr "_Taille :"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "_Tile"
@@ -2708,28 +2739,28 @@ msgstr "Impossible de lancer la commande « %s »"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Impossible de convertir « %s » depuis UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1256
+#: ../gnome-panel/panel-run-dialog.c:1259
 msgid "Choose a file to append to the command..."
 msgstr "Choisissez un fichier à ajouter à la commande..."
 
-#: ../gnome-panel/panel-run-dialog.c:1634
+#: ../gnome-panel/panel-run-dialog.c:1637
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Sélectionnez une application pour voir sa description."
 
-#: ../gnome-panel/panel-run-dialog.c:1672
+#: ../gnome-panel/panel-run-dialog.c:1675
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Lancement de « %s »"
 
-#: ../gnome-panel/panel-run-dialog.c:1705
+#: ../gnome-panel/panel-run-dialog.c:1708
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "La liste d'URI déposée sur la boîte de dialogue de lancement a un mauvais "
 "format (%d) ou une mauvaise taille (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2024
+#: ../gnome-panel/panel-run-dialog.c:2027
 msgid "Could not display run dialog"
 msgstr "Impossible d'afficher le dialogue de lancement"
 
@@ -2800,73 +2831,73 @@ msgstr "_Vider"
 msgid "D_on't Delete"
 msgstr "_Ne pas supprimer"
 
-#: ../gnome-panel/panel-toplevel.c:1188
+#: ../gnome-panel/panel-toplevel.c:1190
 msgid "Hide Panel"
 msgstr "Masquer le tableau de bord"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Expanded Edge Panel"
 msgstr "Tableau de bord supérieur de côté étendu"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1598
 msgid "Top Centered Panel"
 msgstr "Tableau de bord supérieur centré"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1599
 msgid "Top Floating Panel"
 msgstr "Tableau de bord supérieur flottant"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1600
 msgid "Top Edge Panel"
 msgstr "Tableau de bord supérieur de côté"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Expanded Edge Panel"
 msgstr "Tableau de bord inférieur de côté étendu"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1605
 msgid "Bottom Centered Panel"
 msgstr "Tableau de bord inférieur centré"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1606
 msgid "Bottom Floating Panel"
 msgstr "Tableau de bord inférieur flottant"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1607
 msgid "Bottom Edge Panel"
 msgstr "Tableau de bord inférieur de côté"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Expanded Edge Panel"
 msgstr "Tableau de bord gauche de côté étendu"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1612
 msgid "Left Centered Panel"
 msgstr "Tableau de bord gauche centré"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1613
 msgid "Left Floating Panel"
 msgstr "Tableau de bord gauche flottant"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1614
 msgid "Left Edge Panel"
 msgstr "Tableau de bord gauche de côté"
 
-#: ../gnome-panel/panel-toplevel.c:1616
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Expanded Edge Panel"
 msgstr "Tableau de bord droit de côté étendu"
 
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1619
 msgid "Right Centered Panel"
 msgstr "Tableau de bord droit centré"
 
-#: ../gnome-panel/panel-toplevel.c:1618
+#: ../gnome-panel/panel-toplevel.c:1620
 msgid "Right Floating Panel"
 msgstr "Tableau de bord droit flottant"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1621
 msgid "Right Edge Panel"
 msgstr "Tableau de bord droit de côté"
 
@@ -3264,31 +3295,31 @@ msgstr "Ordonnée du tableau de bord"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Ordonnée du tableau de bord, à partir du bas de l'écran"
 
-#: ../gnome-panel/panel-util.c:306
+#: ../gnome-panel/panel-util.c:315
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Icône « %s » non trouvée"
 
-#: ../gnome-panel/panel-util.c:409
+#: ../gnome-panel/panel-util.c:418
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Impossible d'exécuter « %s »"
 
-#: ../gnome-panel/panel-util.c:645
+#: ../gnome-panel/panel-util.c:654
 msgid "file"
 msgstr "fichier"
 
-#: ../gnome-panel/panel-util.c:822
+#: ../gnome-panel/panel-util.c:831
 msgid "Home Folder"
 msgstr "Dossier personnel"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:834
+#: ../gnome-panel/panel-util.c:843
 msgid "File System"
 msgstr "Système de fichiers"
 
-#: ../gnome-panel/panel-util.c:985
+#: ../gnome-panel/panel-util.c:1016
 msgid "Search"
 msgstr "Recherche"
 
@@ -3297,7 +3328,7 @@ msgstr "Recherche"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1031
+#: ../gnome-panel/panel-util.c:1062
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s : %2$s"
@@ -3307,11 +3338,11 @@ msgstr "%1$s : %2$s"
 msgid "Open URL: %s"
 msgstr "Ouvrir l'URL : %s"
 
-#: ../gnome-panel/panel.c:1302
+#: ../gnome-panel/panel.c:1323
 msgid "Delete this drawer?"
 msgstr "Voulez-vous supprimer ce tiroir ?"
 
-#: ../gnome-panel/panel.c:1303
+#: ../gnome-panel/panel.c:1324
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -3319,11 +3350,11 @@ msgstr ""
 "Lorsqu'un tiroir est supprimé, le tiroir\n"
 "et ses réglages sont perdus."
 
-#: ../gnome-panel/panel.c:1306
+#: ../gnome-panel/panel.c:1327
 msgid "Delete this panel?"
 msgstr "Voulez-vous supprimer ce tableau de bord ?"
 
-#: ../gnome-panel/panel.c:1307
+#: ../gnome-panel/panel.c:1328
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3331,95 +3362,4 @@ msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses réglages sont perdus."
 
-#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
-msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "Applet basique pour tester le tableau de bord de GNOME-2.0"
 
-#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-msgid "Test Bonobo Applet"
-msgstr "Applet de test Bonobo"
-
-#: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
-msgid "Test Bonobo Applet Factory"
-msgstr "Fabrique de l'applet de test Bonobo"
-
-#: ../libpanel-applet/panel-test-applets.c:34
-msgid "Specify an applet IID to load"
-msgstr "Indique l'IID d'une applet à charger"
-
-#: ../libpanel-applet/panel-test-applets.c:35
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
-"Indique un emplacement GConf dans lequel les préférences de l'applet doivent "
-"être stockées"
-
-#: ../libpanel-applet/panel-test-applets.c:36
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
-"Indique la taille initiale de l'applet (très très petit, moyen, grand, etc.)"
-
-#: ../libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr ""
-"Indique l'orientation initiale de l'applet (haut, bas, gauche, ou droite)"
-
-#: ../libpanel-applet/panel-test-applets.c:61
-msgctxt "Size"
-msgid "XX Small"
-msgstr "Très très petit"
-
-#: ../libpanel-applet/panel-test-applets.c:62
-msgctxt "Size"
-msgid "X Small"
-msgstr "Très petit"
-
-#: ../libpanel-applet/panel-test-applets.c:63
-msgctxt "Size"
-msgid "Small"
-msgstr "Petit"
-
-#: ../libpanel-applet/panel-test-applets.c:64
-msgctxt "Size"
-msgid "Medium"
-msgstr "Moyen"
-
-#: ../libpanel-applet/panel-test-applets.c:65
-msgctxt "Size"
-msgid "Large"
-msgstr "Grand"
-
-#: ../libpanel-applet/panel-test-applets.c:66
-msgctxt "Size"
-msgid "X Large"
-msgstr "Très grand"
-
-#: ../libpanel-applet/panel-test-applets.c:67
-msgctxt "Size"
-msgid "XX Large"
-msgstr "Très très grand"
-
-#: ../libpanel-applet/panel-test-applets.c:129
-#, c-format
-msgid "Failed to load applet %s"
-msgstr "Le chargement de l'applet %s a échoué"
-
-#. This is an utility to easily test various applets
-#: ../libpanel-applet/panel-test-applets.ui.h:2
-msgid "Test applet utility"
-msgstr "Utilitaire de test d'applet"
-
-#: ../libpanel-applet/panel-test-applets.ui.h:3
-msgid "_Applet:"
-msgstr "_Applet :"
-
-#: ../libpanel-applet/panel-test-applets.ui.h:5
-msgid "_Prefs Dir:"
-msgstr "Répertoire des _préférences :"
-
-#~ msgid "If true, display time in Universal Coordinated Time zone."
-#~ msgstr "Si vrai, affiche l'heure en temps universel coordonné (UTC)."
-
-#~ msgid "Browse icons"
-#~ msgstr "Parcourir les icônes"
