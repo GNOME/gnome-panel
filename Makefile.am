@@ -42,6 +42,11 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/m4/gnome-doc-utils.m4 \
 	$(srcdir)/m4/gtk-doc.m4 \
-	$(srcdir)/m4/intltool.m4
+	$(srcdir)/m4/intltool.m4 \
+	$(srcdir)/m4/libtool.m4 \
+	$(srcdir)/m4/ltoptions.m4 \
+	$(srcdir)/m4/ltsugar.m4 \
+	$(srcdir)/m4/ltversion.m4 \
+	$(srcdir)/m4/lt~obsolete.m4
 
 -include $(top_srcdir)/git.mk
