@@ -1081,7 +1081,7 @@ panel_compatibility_migrate_applications_scheme (GConfClient *client,
 }
 
 void
-panel_compatiblity_migrate_screenshot_action (GConfClient *client,
+panel_compatibility_migrate_screenshot_action (GConfClient *client,
 					      const char  *id)
 {
 	const char *key;
@@ -1102,7 +1102,7 @@ panel_compatiblity_migrate_screenshot_action (GConfClient *client,
 }
 
 gchar *
-panel_compatiblity_get_applet_iid (const gchar *id)
+panel_compatibility_get_applet_iid (const gchar *id)
 {
 	GConfClient *client = panel_gconf_get_client ();
 	PanelAppletInfo *info;

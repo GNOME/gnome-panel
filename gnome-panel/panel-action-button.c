@@ -792,8 +792,8 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 
 	/* compatibility: migrate from GNOME < 2.13.90 */
 	if (type == PANEL_ACTION_SCREENSHOT)
-		panel_compatiblity_migrate_screenshot_action (panel_gconf_get_client (),
-							      id);
+		panel_compatibility_migrate_screenshot_action (panel_gconf_get_client (),
+							       id);
 	else
 		panel_action_button_load (type, panel, locked,
 					  position, exactpos, id, FALSE);

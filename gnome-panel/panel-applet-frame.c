@@ -970,7 +970,7 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	applet_iid = panel_compatiblity_get_applet_iid (id);
+	applet_iid = panel_compatibility_get_applet_iid (id);
 	if (!applet_iid) {
 		panel_applet_stop_loading (id);
 		return;
