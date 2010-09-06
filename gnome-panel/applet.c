@@ -841,6 +841,11 @@ panel_applet_on_load_queue (const char *id)
 		if (strcmp (applet->id, id) == 0)
 			return TRUE;
 	}
+	for (li = panel_applets_loading; li != NULL; li = li->next) {
+		PanelAppletToLoad *applet = li->data;
+		if (strcmp (applet->id, id) == 0)
+			return TRUE;
+	}
 	return FALSE;
 }
 
