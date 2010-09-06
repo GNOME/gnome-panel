@@ -908,7 +908,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	}
 
 	if (!l) {
-		/* All the rest of the applets don't have a panel */
+		/* All the remaining applets don't have a panel */
 		for (l = panel_applets_to_load; l; l = l->next)
 			free_applet_to_load (l->data);
 		g_slist_free (panel_applets_to_load);
@@ -1063,7 +1063,7 @@ panel_applet_load_queued_applets (gboolean initial_load)
 		return;
 	}
 
-	if (initial_load && panel_applets_to_load) {
+	if (panel_applets_to_load && panel_applet_unhide_toplevels_timeout == 0) {
 		/* Install a timeout to make sure we don't block the
 		 * unhiding because of an applet that doesn't load */
 		panel_applet_unhide_toplevels_timeout =
