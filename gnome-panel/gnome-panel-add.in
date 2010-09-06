@@ -28,6 +28,12 @@ import sys
 import urllib
 import ConfigParser
 
+try:
+    import bonobo
+    has_bonobo = True
+except ImportError:
+    has_bonobo = False
+
 import gconf
 
 PANEL_SCHEMAS_OBJECTS_DIR='/schemas/apps/panel/objects'
@@ -147,7 +153,12 @@ class PanelAdder:
 
         applets = self._get_applet_list ()
         if not applet_iid in applets:
-            raise PanelAddException('%s is not a valid applet' % applet_iid)
+            if has_bonobo:
+                applets = bonobo.activation.query ("has_all (repo_ids, ['IDL:Bonobo/Control:1.0', 'IDL:GNOME/Vertigo/PanelAppletShell:1.0'])")
+                if not applet_iid in [ a.iid for a in applets ]:
+                    raise PanelAddException('%s is not a valid applet' % applet_iid)
+            else:
+                raise PanelAddException('%s is not a valid applet' % applet_iid)
 
         self.applet_iid = applet_iid
 
