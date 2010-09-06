@@ -936,11 +936,15 @@ panel_applet_frame_load (const gchar *iid,
 	g_return_if_fail (id != NULL);
 
 	if (g_slist_find_custom (no_reload_applets, id,
-				 (GCompareFunc) strcmp))
+				 (GCompareFunc) strcmp)) {
+		panel_applet_stop_loading (id);
 		return;
+	}
 
-	if (panel_lockdown_is_applet_disabled (iid))
+	if (panel_lockdown_is_applet_disabled (iid)) {
+		panel_applet_stop_loading (id);
 		return;
+	}
 
 	frame_act = g_slice_new0 (PanelAppletFrameActivating);
 	frame_act->locked   = locked;
@@ -967,8 +971,10 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (id != NULL);
 
 	applet_iid = panel_compatiblity_get_applet_iid (id);
-	if (!applet_iid)
+	if (!applet_iid) {
+		panel_applet_stop_loading (id);
 		return;
+	}
 
 	panel_applet_frame_load (applet_iid, panel_widget,
 				 locked, position, TRUE, id);
