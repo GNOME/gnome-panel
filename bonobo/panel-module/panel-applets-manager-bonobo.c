@@ -164,7 +164,9 @@ static PanelAppletInfo *
 panel_applets_manager_bonobo_get_applet_info_from_old_id (PanelAppletsManager *manager,
 							  const gchar         *iid)
 {
-	return NULL;
+	PanelAppletsManagerBonobo *bonobo_manager = PANEL_APPLETS_MANAGER_BONOBO (manager);
+
+	return g_hash_table_lookup (bonobo_manager->priv->applets, iid);
 }
 
 static gboolean
