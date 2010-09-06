@@ -1107,26 +1107,61 @@ panel_compatibility_get_applet_iid (const gchar *id)
 	GConfClient *client = panel_gconf_get_client ();
 	PanelAppletInfo *info;
 	const char *key;
-	const char *iid;
 	gchar *applet_iid;
+	gboolean needs_migration;
+	const char *iid;
+
+	/*
+	 * There are two compatibility steps here:
+	 *
+	 * 1) we need to migrate from bonobo_iid to applet_iid if there's no
+	 *    value in the applet_iid key. Always.
+	 *
+	 * 2) we need to try to migrate the iid to a new iid. We can't assume
+	 *    that the fact that the applet_iid key was used mean anything
+	 *    since the value there could well be a bonobo iid.
+	 *    The reason we really have to try to migrate first is this case:
+	 *    if an applet was added with the bonobo iid but gets ported later
+	 *    to dbus, then the reference to the bonobo iid will only be valid
+	 *    as an old reference.
+	 *    And if migration fails, we just use the iid as it is.
+	 */
+
+	needs_migration = FALSE;
 
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
 	applet_iid = gconf_client_get_string (client, key, NULL);
-	if (applet_iid && applet_iid[0])
-		return applet_iid;
 
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
-	applet_iid = gconf_client_get_string (client, key, NULL);
-	if (!applet_iid || !applet_iid[0])
-		return NULL;
+	if (!applet_iid || !applet_iid[0]) {
+		needs_migration = TRUE;
+
+		key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
+		applet_iid = gconf_client_get_string (client, key, NULL);
+
+		if (!applet_iid || !applet_iid[0])
+			return NULL;
+	}
 
 	info = panel_applets_manager_get_applet_info_from_old_id (applet_iid);
+	if (!info)
+		info = panel_applets_manager_get_applet_info (applet_iid);
+
 	if (!info)
 		return NULL;
 
 	iid = panel_applet_info_get_iid (info);
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
-	gconf_client_set_string (client, key, iid, NULL);
+
+	/* migrate if the iid in the configuration is different than the real
+	 * iid that will get used */
+	if (!g_str_equal (iid, applet_iid))
+		needs_migration = TRUE;
+
+	g_free (applet_iid);
+
+	if (needs_migration) {
+		key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
+		gconf_client_set_string (client, key, iid, NULL);
+	}
 
 	return g_strdup (iid);
 }
