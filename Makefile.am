@@ -15,13 +15,14 @@ endif
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
-	MAINTAINERS		\
 	COPYING-DOCS		\
 	HACKING			\
+	MAINTAINERS		\
 	ChangeLog.pre-git	\
 	gnome-doc-utils.make
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper --enable-introspection
+
 DISTCLEANFILES =		\
 	gnome-doc-utils.make
 

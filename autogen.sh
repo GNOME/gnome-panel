@@ -4,11 +4,12 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="GNOME Panel"
+PKG_NAME="gnome-panel"
 REQUIRED_AUTOMAKE_VERSION=1.9
+REQUIRED_M4MACROS=introspection.m4
 
 (test -f $srcdir/configure.ac \
-  && test -d $srcdir/gnome-panel) || {
+  && test -f $srcdir/$PKG_NAME.doap) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level $PKG_NAME directory"
     exit 1
