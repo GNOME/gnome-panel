@@ -112,7 +112,8 @@ remove_popup (GtkWidget *popup)
 }
 
 static gboolean
-wm_state_set (Window window)
+wm_state_set (Display *display,
+	      Window   window)
 {
 	gulong  nitems;
 	gulong  bytes_after;
@@ -122,7 +123,7 @@ wm_state_set (Window window)
 	int     result;
 
 	gdk_error_trap_push ();
-	result = XGetWindowProperty (gdk_display, window, wm_state_atom,
+	result = XGetWindowProperty (display, window, wm_state_atom,
 				     0, G_MAXLONG, False, wm_state_atom,
 				     &ret_type, &ret_format, &nitems,
 				     &bytes_after, (gpointer) &prop);
@@ -142,7 +143,8 @@ wm_state_set (Window window)
 }
 
 static Window 
-find_managed_window (Window window)
+find_managed_window (Display *display,
+		     Window   window)
 {
 	Window  root;
 	Window  parent;
@@ -151,23 +153,23 @@ find_managed_window (Window window)
 	guint   nkids;
 	int     i, result;
 
-	if (wm_state_set (window))
+	if (wm_state_set (display, window))
 		return window;
 
 	gdk_error_trap_push ();
-	result = XQueryTree (gdk_display, window, &root, &parent, &kids, &nkids);
+	result = XQueryTree (display, window, &root, &parent, &kids, &nkids);
 	if (gdk_error_trap_pop () || !result)
 		return None;
 
 	retval = None;
 
 	for (i = 0; i < nkids; i++) {
-		if (wm_state_set (kids [i])) {
+		if (wm_state_set (display, kids [i])) {
 			retval = kids [i];
 			break;
 		}
 
-		retval = find_managed_window (kids [i]);
+		retval = find_managed_window (display, kids [i]);
 		if (retval != None)
 			break;
 	}
@@ -184,10 +186,13 @@ kill_window_response (GtkDialog *dialog,
 		      gpointer   user_data)
 {
 	if (response_id == GTK_RESPONSE_ACCEPT) {
+		Display *display;
 		Window window = (Window) user_data;
 
+		display = GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (GTK_WIDGET (dialog)));
+
 		gdk_error_trap_push ();
-		XKillClient (gdk_display, window);
+		XKillClient (display, window);
 		gdk_flush ();
 		gdk_error_trap_pop ();
 	}
@@ -241,12 +246,12 @@ handle_button_press_event (GtkWidget *popup,
 		return;
 
 	if (wm_state_atom == None)
-		wm_state_atom = XInternAtom (gdk_display, "WM_STATE", FALSE);
+		wm_state_atom = XInternAtom (event->display, "WM_STATE", FALSE);
 
-	window = find_managed_window (event->subwindow);
+	window = find_managed_window (event->display, event->subwindow);
 
 	if (window != None) {
-		if (!gdk_xid_table_lookup_for_display (gdk_display_get_default (), window))
+		if (!gdk_xid_table_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
 			kill_window_question ((gpointer) window);
 	}
 }
@@ -263,7 +268,7 @@ popup_filter (GdkXEvent *gdk_xevent,
 		handle_button_press_event (popup, &xevent->xkey);
 		return GDK_FILTER_REMOVE;
 	case KeyPress:
-		if (xevent->xkey.keycode == XKeysymToKeycode (gdk_display, XK_Escape)) {
+		if (xevent->xkey.keycode == XKeysymToKeycode (xevent->xany.display, XK_Escape)) {
 			remove_popup (popup);
 			return GDK_FILTER_REMOVE;
 		}

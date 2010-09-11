@@ -643,7 +643,7 @@ xstuff_get_current_workspace (GdkScreen *screen)
 				gdk_screen_get_root_window (screen));
 
 	gdk_error_trap_push ();
-	result = XGetWindowProperty (gdk_display,
+	result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen)),
 				     root_window,
 				     panel_atom_get ("_NET_CURRENT_DESKTOP"),
 				     0, G_MAXLONG,

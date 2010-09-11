@@ -175,6 +175,7 @@ guint
 panel_get_real_modifier_mask (guint mask)
 {
 	guint real_mask;
+	Display *display;
 	int i, min_keycode, max_keycode, keysyms_per_keycode;
 	int max_keycodes_per_modifier;
 	KeySym *keysyms_for_keycodes;
@@ -187,13 +188,15 @@ panel_get_real_modifier_mask (guint mask)
 		return mask;
 	}
 
-	XDisplayKeycodes (GDK_DISPLAY (), &min_keycode, &max_keycode);
-	keysyms_for_keycodes = XGetKeyboardMapping (GDK_DISPLAY (),
+	display = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
+
+	XDisplayKeycodes (display, &min_keycode, &max_keycode);
+	keysyms_for_keycodes = XGetKeyboardMapping (display,
 						    min_keycode,
 						    max_keycode - min_keycode + 1,
 						    &keysyms_per_keycode);
 
-	modifier_keymap = XGetModifierMapping (GDK_DISPLAY ());
+	modifier_keymap = XGetModifierMapping (display);
 	max_keycodes_per_modifier = modifier_keymap->max_keypermod;
 
 	/* Loop through all the modifiers and find out which "real"
