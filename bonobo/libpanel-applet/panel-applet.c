@@ -1783,7 +1783,7 @@ panel_applet_factory_main_closure (const gchar *iid,
 	data = panel_applet_callback_data_new (applet_type, closure);
 
 	display_iid = bonobo_activation_make_registration_id (
-		iid, DisplayString (gdk_display));
+		iid, DisplayString (gdk_display_get_default ()));
 	retval = bonobo_generic_factory_main (
 		display_iid,
 		(BonoboFactoryCallback) panel_applet_factory_callback,
