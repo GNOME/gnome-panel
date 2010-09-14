@@ -1,4 +1,4 @@
-AC_INIT([gnome-panel], [2.31.91],
+AC_INIT([gnome-panel], [2.31.92],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
@@ -15,7 +15,7 @@ GNOME_COMMON_INIT
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIB_PANEL_APPLET_LT_VERSION=0:3:0
+LIB_PANEL_APPLET_LT_VERSION=0:4:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 AM_MAINTAINER_MODE
@@ -250,7 +250,7 @@ dnl
 dnl Temporary bonobo checks here
 dnl
 
-LIB_PANEL_APPLET_BONOBO_LT_VERSION=2:70:2
+LIB_PANEL_APPLET_BONOBO_LT_VERSION=2:71:2
 AC_SUBST(LIB_PANEL_APPLET_BONOBO_LT_VERSION)
 
 LIBBONOBOUI_REQUIRED=2.1.1

@@ -1,4 +1,63 @@
 ===============
+Version 2.31.92
+===============
+
+This release fix various issues with panels staying hidden, or applets from the
+user configuration not being visible (because the applets are or were bonobo
+applets).
+
+  Panel
+
+	* Fix various issues where panels stay hidden on load or on addition
+	  (Vincent)
+	* Do not queue load of an applet if it's already being loaded (Vincent)
+	* Fix loading of bonobo applets that are already configured (Vincent)
+	* Understand bonobo IID in applet_iid keys (Vincent)
+	* Add back optional support for bonobo applets to gnome-panel-add
+	  (Vincent)
+	* Stop using deprecated gdk_display/GDK_DISPLAY() (Vincent)
+	* Prevent modules from being unloadable, which fixes a crash on logout
+	  (Ray Strode)
+
+  libpanel-applet
+
+	* Fix build with gobject-introspection 0.9.5 (Colin Walters)
+
+  libpanel-applet (bonobo)
+
+	* Stop using deprecated gdk_display (Vincent)
+
+  Misc
+
+	* Small build fixes (Vincent)
+	* Update information in README and other files (Vincent)
+	* Rewrite gnome-panel man page (Vincent)
+	* Explicitly link to xrandr (Vincent)
+
+  Docs Translators
+
+	* Yasumichi Akahoshi (ja)
+
+  Translators
+
+	* Alexander Shopov (bg)
+	* David Planella (ca)
+	* Philip Withnall (en_GB)
+	* Ivar Smolin (et)
+	* Claude Paroz (fr)
+	* Gabor Kelemen (hu)
+	* Dirgita (id)
+	* Luca Ferretti (it)
+	* Takayuki KUSANO (ja)
+	* Piotr Drąg (pl)
+	* Duarte Loreto (pt)
+	* Милош Поповић (sr)
+	* Miloš Popović (sr@latin)
+	* Dr.T.Vasudevan (ta)
+	* Chao-Hsiung Liao (zh_HK)
+	* Chao-Hsiung Liao (zh_TW)
+
+===============
 Version 2.31.90
 ===============
 
