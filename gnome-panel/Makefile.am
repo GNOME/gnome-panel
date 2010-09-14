@@ -19,6 +19,7 @@ INCLUDES =							\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
+	$(XRANDR_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
@@ -152,6 +153,7 @@ gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
+	$(XRANDR_LIBS)									\
 	$(X_LIBS)
 
 gnome_panel_LDFLAGS = -export-dynamic

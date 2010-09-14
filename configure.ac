@@ -235,11 +235,9 @@ AC_SUBST(X_LIBS)
 
 dnl X RANDR extension
 
-if $PKG_CONFIG --exists "xrandr >= 1.2.0" ; then
-	AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
-	have_randr=yes
-else
-	have_randr=no
+PKG_CHECK_MODULES(XRANDR, xrandr >= 1.2.0, have_randr=yes, have_randr=no)
+if test "x$have_randr" = "xyes"; then
+  AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
 fi
 
 dnl Modules dir
