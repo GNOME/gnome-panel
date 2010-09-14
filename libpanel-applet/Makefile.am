@@ -99,7 +99,7 @@ CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
 -include $(INTROSPECTION_MAKEFILE)
 INTROSPECTION_GIRS =
-INTROSPECTION_SCANNER_ARGS = --add-include-path=$(srcdir)
+INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path=$(srcdir)
 INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 
 if HAVE_INTROSPECTION
@@ -122,6 +122,9 @@ PanelApplet_3_0_gir_CFLAGS =					\
 	$(LIBPANEL_APPLET_CFLAGS)
 PanelApplet_3_0_gir_LIBS = libpanel-applet-3.la
 PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
+# When requiring gobject-introspection 0.9.5, use this:
+#PanelApplet_3_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel
+PanelApplet_3_0_gir_SCANNERFLAGS = --strip-prefix=Panel
 INTROSPECTION_GIRS += PanelApplet-3.0.gir
 
 girdir = $(datadir)/gir-1.0
