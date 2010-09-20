@@ -1,20 +1,17 @@
-INCLUDES = \
-	-I$(top_builddir) \
-	-I$(top_builddir)/applets/wncklet \
-	-I$(top_srcdir)/libpanel-applet \
-	-I$(top_builddir)/libpanel-applet \
-	$(WNCKLET_CFLAGS) \
-	$(LIBPANEL_APPLET_CFLAGS) \
-	$(DISABLE_DEPRECATED_CFLAGS) \
-	$(WARN_CFLAGS) \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	-DPAGER_BUILDERDIR=\""$(uidir)"\" \
-	-DTASKLIST_BUILDERDIR=\""$(uidir)"\" \
-	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\" \
-	-DPREFIX=\"$(prefix)\" \
-        -DSYSCONFDIR=\"$(sysconfdir)\" \
-        -DDATADIR=\"$(datadir)\" \
-        -DLIBDIR=\"$(libdir)\"
+AM_CPPFLAGS =							\
+	$(LIBPANEL_APPLET_CFLAGS)				\
+	$(WNCKLET_CFLAGS)					\
+	-I$(top_builddir)					\
+	-I$(top_builddir)/applets/wncklet			\
+	-I$(top_srcdir)/libpanel-applet				\
+	-I$(top_builddir)/libpanel-applet			\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DPAGER_BUILDERDIR=\""$(uidir)"\"			\
+	-DTASKLIST_BUILDERDIR=\""$(uidir)"\"			\
+	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
+	$(DISABLE_DEPRECATED_CFLAGS)
+
+AM_CFLAGS = $(WARN_CFLAGS)
 
 WNCKLET_SOURCES = \
 	wncklet.c \
@@ -27,8 +24,6 @@ WNCKLET_SOURCES = \
 	workspace-switcher.h \
 	showdesktop.c \
 	showdesktop.h
-
-$(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
 	../../libpanel-applet/libpanel-applet-3.la	\
@@ -44,7 +39,7 @@ wnck_appletlib_LTLIBRARIES = libwnck-applet.la
 libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
 libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
 libwnck_applet_la_LDFLAGS = -module -avoid-version
-libwnck_applet_la_CFLAGS =
+libwnck_applet_la_CFLAGS = $(AM_CFLAGS)
 else
 APPLET_IN_PROCESS = false
 APPLET_LOCATION   = $(libexecdir)/wnck-applet
@@ -52,15 +47,8 @@ APPLET_LOCATION   = $(libexecdir)/wnck-applet
 libexec_PROGRAMS = wnck-applet
 wnck_applet_SOURCES = $(WNCKLET_SOURCES)
 wnck_applet_LDADD = $(WNCKLET_LDADD)
-wnck_applet_CFLAGS =
+wnck_applet_CFLAGS = $(AM_CFLAGS)
 endif
-
-EXTRA_DIST = \
-	org.gnome.panel.Wncklet.panel-applet.in.in \
-	$(service_in_files) \
-	$(xmlui_DATA) \
-	$(schemas_in_files) \
-	$(ui_DATA)
 
 appletdir       = $(datadir)/gnome-panel/applets
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
@@ -68,10 +56,10 @@ applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
-            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-            -e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
-            -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
-            $< > $@
+		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+		-e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
+		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+		$< > $@
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
@@ -82,11 +70,12 @@ service_DATA     = $(service_in_files:.service.in=.service)
 
 org.gnome.panel.applet.WnckletFactory.service: $(service_in_files)
 	$(AM_V_GEN)sed \
-            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-            $< > $@
+		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+		$< > $@
 endif
 
-CLEANFILES = $(BUILT_SOURCES) $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
+uidir   = $(datadir)/gnome-panel/ui
+ui_DATA = workspace-switcher.ui window-list.ui
 
 xmluidir    = $(datadir)/gnome-panel/ui
 xmlui_DATA  = \
@@ -102,19 +91,25 @@ schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 if GCONF_SCHEMAS_INSTALL
-# don't do this if we are building in eg. rpm
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/wncklet/$$p ; \
 		done \
 	fi
-else
-install-data-local:
+uninstall-local:
+	for p in $(schema_DATA) ; do \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/wncklet/$$p ; \
+	done
 endif
 
-uidir   = $(datadir)/gnome-panel/ui
-ui_DATA = workspace-switcher.ui window-list.ui
+EXTRA_DIST = \
+	org.gnome.panel.Wncklet.panel-applet.in.in \
+	$(service_in_files) \
+	$(xmlui_DATA) \
+	$(schemas_in_files) \
+	$(ui_DATA)
 
+CLEANFILES = $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 -include $(top_srcdir)/git.mk

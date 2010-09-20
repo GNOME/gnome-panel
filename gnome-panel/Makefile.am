@@ -1,46 +1,23 @@
-## We require new-style dependency handling.
-AUTOMAKE_OPTIONS = 1.3
 SUBDIRS = libegg libpanel-applet-private libpanel-util
-
-NULL =
-
-INCLUDES =							\
-	-I.							\
-	-I$(srcdir)						\
-	-I$(top_builddir)/gnome-panel				\
-	-I$(top_builddir)/gnome-panel/libpanel-util		\
-	-DPANEL_DEBUG						\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
-	-DDATADIR=\""$(datadir)"\"				\
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\"			\
-	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"			\
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE				\
-	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(PANEL_CFLAGS)						\
-	$(XRANDR_CFLAGS)					\
-	$(WARN_CFLAGS)						\
-	$(NULL)
-
-# Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
-STANDARD_PROPERTIES_CFLAGS = 					\
-	-DPREFIX=\""$(prefix)"\"				\
-	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
-	-DLIBDIR=\""$(libdir)"\"				\
-	-DDATADIR=\""$(datadir)"\"				\
-	$(NULL)
 
 bin_PROGRAMS = \
 	gnome-panel 			\
 	gnome-desktop-item-edit		\
 	panel-test-applets
+libexec_SCRIPTS = gnome-panel-add
 
-BUILT_SOURCES = \
-	panel-typebuiltins.c		\
-	panel-typebuiltins.h		\
-	panel-marshal.c			\
-	panel-marshal.h
+AM_CPPFLAGS =							\
+	$(PANEL_CFLAGS)						\
+	-I.							\
+	-I$(srcdir)						\
+	-I$(top_builddir)/gnome-panel				\
+	-I$(top_builddir)/gnome-panel/libpanel-util		\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DBUILDERDIR=\""$(uidir)"\"				\
+	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
+	$(DISABLE_DEPRECATED_CFLAGS)
+
+AM_CFLAGS = $(WARN_CFLAGS)
 
 panel_sources =			\
 	panel-typebuiltins.c	\
@@ -48,32 +25,32 @@ panel_sources =			\
 	panel-marshal.c		\
 	panel-marshal.h		\
 	main.c			\
-	panel-widget.c  	\
-	button-widget.c  	\
+	panel-widget.c		\
+	button-widget.c		\
 	xstuff.c		\
 	panel-session.c		\
-	panel-compatibility.c   \
+	panel-compatibility.c	\
 	panel.c			\
 	applet.c		\
-	drawer.c  		\
-	panel-config-global.c  	\
+	drawer.c		\
+	panel-config-global.c	\
 	panel-util.c		\
 	panel-gconf.c		\
-	panel-properties-dialog.c \
+	panel-properties-dialog.c	\
 	panel-run-dialog.c	\
-	menu.c  		\
-	panel-context-menu.c 	\
+	menu.c			\
+	panel-context-menu.c	\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
 	panel-shell.c		\
 	panel-background.c	\
-	panel-background-monitor.c \
+	panel-background-monitor.c	\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
-	panel-menu-bar.c        \
-	panel-menu-button.c     \
-	panel-menu-items.c      \
+	panel-menu-bar.c	\
+	panel-menu-button.c	\
+	panel-menu-items.c	\
 	panel-separator.c	\
 	panel-recent.c		\
 	panel-action-protocol.c	\
@@ -84,14 +61,13 @@ panel_sources =			\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
 	panel-bindings.c	\
-	panel-profile.c         \
+	panel-profile.c		\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto.c		\
 	panel-ditem-editor.c	\
 	panel-modules.c		\
-	panel-applet-info.c	\
-	$(NULL)
+	panel-applet-info.c
 
 panel_headers =			\
 	panel-types.h		\
@@ -100,28 +76,28 @@ panel_headers =			\
 	button-widget.h		\
 	xstuff.h		\
 	panel-session.h		\
-	panel-compatibility.h   \
-	panel.h         	\
-	applet.h         	\
-	drawer.h  		\
+	panel-compatibility.h	\
+	panel.h			\
+	applet.h		\
+	drawer.h		\
 	panel-util.h		\
-	panel-properties-dialog.h \
-	panel-config-global.h  	\
+	panel-properties-dialog.h	\
+	panel-config-global.h	\
 	panel-gconf.h		\
 	panel-run-dialog.h	\
-	menu.h  		\
-	panel-context-menu.h 	\
+	menu.h			\
+	panel-context-menu.h	\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
 	panel-shell.h		\
 	panel-background.h	\
-	panel-background-monitor.h \
+	panel-background-monitor.h	\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
-	panel-menu-bar.h        \
-	panel-menu-button.h     \
-	panel-menu-items.h      \
+	panel-menu-bar.h	\
+	panel-menu-button.h	\
+	panel-menu-items.h	\
 	panel-separator.h	\
 	panel-recent.h		\
 	panel-action-protocol.h	\
@@ -132,7 +108,7 @@ panel_headers =			\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
 	panel-bindings.h	\
-	panel-profile.h         \
+	panel-profile.h		\
 	panel-enums.h		\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
@@ -140,13 +116,17 @@ panel_headers =			\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-modules.h		\
-	panel-applet-info.h	\
-	$(NULL)
+	panel-applet-info.h
 
 gnome_panel_SOURCES =			\
 	$(panel_sources)		\
-	$(panel_headers)		\
-	$(NULL)
+	$(panel_headers)
+
+gnome_panel_CPPFLAGS = 				\
+	$(AM_CPPFLAGS)				\
+	$(XRANDR_CFLAGS)			\
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
 
 gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libegg/libegg.la					\
@@ -156,36 +136,16 @@ gnome_panel_LDADD =		\
 	$(XRANDR_LIBS)									\
 	$(X_LIBS)
 
-gnome_panel_LDFLAGS = -export-dynamic
-
-gnome_desktop_item_edit_SOURCES = \
-	gnome-desktop-item-edit.c \
-	panel-ditem-editor.c	  \
-	panel-marshal.c		  \
-	panel-util.c		  \
+gnome_desktop_item_edit_SOURCES =	\
+	gnome-desktop-item-edit.c	\
+	panel-ditem-editor.c		\
+	panel-marshal.c			\
+	panel-util.c			\
 	xstuff.c
-
-gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_LDADD = 	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
-	$(PANEL_LIBS)			\
-	$(X_LIBS)
-
-uidir = $(datadir)/gnome-panel/ui
-ui_DATA =					\
-	panel-properties-dialog.ui		\
-	panel-run-dialog.ui			\
-	panel-test-applets.ui
-
-libexec_SCRIPTS = gnome-panel-add
-
-gnome-panel-add: gnome-panel-add.in Makefile
-	$(AM_V_GEN)sed 					\
-	    -e s!\@PYTHON\@!@PYTHON@! 			\
-	    -e s!\@PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
-	    < $< > $@
-	$(AM_V_at)chmod a+x $@
+	$(PANEL_LIBS)
 
 panel_test_applets_SOURCES =		\
 	panel-modules.c			\
@@ -194,25 +154,22 @@ panel_test_applets_SOURCES =		\
 	panel-marshal.c			\
 	panel-test-applets.c
 
-panel_test_applets_LDFLAGS = -export-dynamic
+panel_test_applets_CPPFLAGS =			\
+	$(AM_CPPFLAGS)				\
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
+	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"
+
 panel_test_applets_LDADD = 		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private-mini.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la				\
 	$(PANEL_LIBS)
 
-EXTRA_DIST =					\
-	$(ui_DATA)				\
-	nothing.cP				\
-	nothing.h				\
-	$(schemas_in_files)			\
-	panel-compatibility.schemas		\
-	panel-marshal.list			\
-	gnome-panelrc				\
-	$(entries_DATA)				\
-	$(desktop_in_files)			\
-	gnome-panel-add.in
-
-@INTLTOOL_DESKTOP_RULE@
+gnome-panel-add: gnome-panel-add.in Makefile
+	$(AM_V_GEN)sed 						\
+		-e s!\@PYTHON\@!@PYTHON@! 			\
+		-e s!\@PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
+		< $< > $@
+	$(AM_V_at)chmod a+x $@
 
 panel_enum_headers =					\
 	$(top_srcdir)/gnome-panel/panel-enums.h		\
@@ -251,10 +208,28 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 			--fprod "\n/* --- @filename@ --- */" \
 			--eprod "#define PANEL_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(panel_enum_headers) >  $@
+		$(panel_enum_headers) > $@
+
+BUILT_SOURCES = \
+	panel-typebuiltins.c		\
+	panel-typebuiltins.h		\
+	panel-marshal.c			\
+	panel-marshal.h
 
 rcdir = $(datadir)
 rc_DATA = gnome-panelrc
+
+uidir = $(datadir)/gnome-panel/ui
+ui_DATA =					\
+	panel-properties-dialog.ui		\
+	panel-run-dialog.ui			\
+	panel-test-applets.ui
+
+desktopdir = $(datadir)/applications
+desktop_in_files = gnome-panel.desktop.in
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
+@INTLTOOL_DESKTOP_RULE@
 
 entriesdir       = $(GCONF_SCHEMA_FILE_DIR)
 entries_DATA     = panel-default-setup.entries
@@ -264,13 +239,8 @@ schemas_in_files =				\
 	panel-global.schemas.in 		\
 	panel-general.schemas.in		\
 	panel-toplevel.schemas.in		\
-	panel-object.schemas.in			\
-	$(NULL)
+	panel-object.schemas.in
 schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
-
-desktopdir = $(datadir)/applications
-desktop_in_files = gnome-panel.desktop.in
-desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_SCHEMAS_RULE@
 
@@ -283,9 +253,23 @@ install-data-local:
 		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries ; \
 		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries /apps/panel ; \
 	fi
-else
-install-data-local:
+uninstall-local:
+	for p in $(schema_DATA) ; do \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/ngome-panel/$$p ; \
+	done
 endif
+
+EXTRA_DIST =					\
+	$(ui_DATA)				\
+	nothing.cP				\
+	nothing.h				\
+	$(schemas_in_files)			\
+	panel-compatibility.schemas		\
+	panel-marshal.list			\
+	gnome-panelrc				\
+	$(entries_DATA)				\
+	$(desktop_in_files)			\
+	gnome-panel-add.in
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \

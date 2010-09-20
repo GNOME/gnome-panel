@@ -1,5 +1,3 @@
-NULL =
-
 size = 22x22
 
 iconsdir = $(datadir)/icons/hicolor/$(size)/apps
@@ -15,8 +13,7 @@ icons_DATA =					\
 	gnome-panel.png				\
 	gnome-panel-window-list.png		\
 	gnome-panel-window-menu.png		\
-	gnome-panel-workspace-switcher.png	\
-	$(NULL)
+	gnome-panel-workspace-switcher.png
 
 icons_SOURCE =					\
 	gnome-panel-clock.svg			\
@@ -29,12 +26,7 @@ icons_SOURCE =					\
 	gnome-panel.svg				\
 	gnome-panel-window-list.xcf.bz2		\
 	gnome-panel-window-menu.xcf.bz2		\
-	gnome-panel-workspace-switcher.svg	\
-	$(NULL)
-
-EXTRA_DIST =		\
-	$(icons_DATA)	\
-	$(icons_SOURCE)
+	gnome-panel-workspace-switcher.svg
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
 
@@ -45,8 +37,12 @@ update-icon-cache:
 		echo "Updating Gtk icon cache."; \
 		$(gtk_update_icon_cache); \
 	else \
-		echo "*** Icon cache not updated.  After (un)install, run this:"; \
+		echo "*** Icon cache not updated. After (un)install, run this:"; \
 		echo "***   $(gtk_update_icon_cache)"; \
 	fi
+
+EXTRA_DIST =		\
+	$(icons_DATA)	\
+	$(icons_SOURCE)
 
 -include $(top_srcdir)/git.mk

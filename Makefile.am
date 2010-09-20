@@ -1,12 +1,12 @@
 SUBDIRS =			\
-	po 			\
-	icons			\
 	gnome-panel		\
 	libpanel-applet		\
 	applets			\
-	help			\
 	doc			\
-	man
+	help			\
+	icons			\
+	man			\
+	po
 
 if HAVE_BONOBO
 SUBDIRS += bonobo
@@ -14,14 +14,14 @@ endif
 
 ACLOCAL_AMFLAGS = -I m4
 
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --enable-introspection --disable-scrollkeeper
+
 EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING			\
 	MAINTAINERS		\
 	ChangeLog.pre-git	\
 	gnome-doc-utils.make
-
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-scrollkeeper --enable-introspection
 
 DISTCLEANFILES =		\
 	gnome-doc-utils.make

@@ -1,24 +1,26 @@
 SUBDIRS = pixmaps
 
-INCLUDES =							\
+noinst_LTLIBRARIES = libsystem-timezone.la
+noinst_PROGRAMS = test-system-timezone
+
+AM_CPPFLAGS =							\
+	$(LIBPANEL_APPLET_CFLAGS)				\
+	$(CLOCK_CFLAGS)						\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
-	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(GNOME_INCLUDEDIR)					\
-	$(WARN_CFLAGS)						\
-	$(CLOCK_CFLAGS)						\
-	$(POLKIT_CFLAGS)					\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	-DDATADIR=\""$(datadir)"\"				\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"                   \
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
-	-DLIBDIR=\""$(libdir)"\"				\
-	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
-	-DPREFIX=\""$(prefix)"\"				\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DBUILDERDIR=\""$(uidir)"\"				\
+	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
+	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
-	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
+	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE			\
+	$(DISABLE_DEPRECATED_CFLAGS)
+
+AM_CFLAGS = $(WARN_CFLAGS)
+
+libsystem_timezone_la_SOURCES = \
+	system-timezone.c	\
+	system-timezone.h
 
 if HAVE_LIBECAL
 CALENDAR_SOURCES =		\
@@ -48,8 +50,6 @@ CLOCK_SOURCES = 		\
 	clock-utils.h		\
 	set-timezone.c		\
 	set-timezone.h		\
-	system-timezone.c	\
-	system-timezone.h	\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)
 
@@ -57,14 +57,34 @@ CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-3.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
-	$(POLKIT_LIBS)				\
-	-lgweather -lm
+	libsystem-timezone.la				\
+	-lm
 
-BUILT_SOURCES =					\
-	clock-marshallers.c			\
-	clock-marshallers.h			\
-	clock-typebuiltins.c			\
-	clock-typebuiltins.h
+test_system_timezone_SOURCES = 	\
+	test-system-timezone.c
+test_system_timezone_LDADD = $(CLOCK_LDADD) libsystem-timezone.la
+
+if CLOCK_INPROCESS
+APPLET_IN_PROCESS = true
+APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
+
+clock_appletlibdir = $(pkglibdir)
+clock_appletlib_LTLIBRARIES = libclock-applet.la
+libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
+libclock_applet_la_LIBADD = $(CLOCK_LDADD)
+libclock_applet_la_LDFLAGS = -module -avoid-version
+libclock_applet_la_CFLAGS = $(AM_CFLAGS)
+$(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
+else
+APPLET_IN_PROCESS = false
+APPLET_LOCATION = $(libexecdir)/clock-applet
+
+libexec_PROGRAMS = clock-applet
+clock_applet_SOURCES = $(CLOCK_SOURCES)
+clock_applet_LDADD = $(CLOCK_LDADD)
+clock_applet_CFLAGS = $(AM_CFLAGS)
+$(clock_applet_OBJECTS): $(BUILT_SOURCES)
+endif
 
 clock-marshallers.c: clock-marshallers.list
 	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
@@ -101,37 +121,13 @@ clock-typebuiltins.h: @REBUILD@ $(clock_enum_headers)
 			--fprod "\n/* --- @filename@ --- */" \
 			--eprod "#define CLOCK_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(clock_enum_headers) >  $@
+		$(clock_enum_headers) > $@
 
-if CLOCK_INPROCESS
-APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
-
-clock_appletlibdir = $(pkglibdir)
-clock_appletlib_LTLIBRARIES = libclock-applet.la
-libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
-libclock_applet_la_LIBADD = $(CLOCK_LDADD)
-libclock_applet_la_LDFLAGS = -module -avoid-version
-libclock_applet_la_CFLAGS =
-$(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
-
-libexec_PROGRAMS = 
-else
-APPLET_IN_PROCESS = false
-APPLET_LOCATION = $(libexecdir)/clock-applet
-
-libexec_PROGRAMS = clock-applet 
-clock_applet_SOURCES = $(CLOCK_SOURCES)
-clock_applet_LDADD = $(CLOCK_LDADD)
-clock_applet_CFLAGS =
-$(clock_applet_OBJECTS): $(BUILT_SOURCES)
-endif
-
-uidir		= $(datadir)/gnome-panel/ui
-ui_DATA		= clock.ui
-
-xmluidir 	= $(datadir)/gnome-panel/ui
-xmlui_DATA	= clock-menu.xml
+BUILT_SOURCES =					\
+	clock-marshallers.c			\
+	clock-marshallers.h			\
+	clock-typebuiltins.c			\
+	clock-typebuiltins.h
 
 appletdir       = $(datadir)/gnome-panel/applets
 applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
@@ -139,10 +135,10 @@ applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
 $(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
-            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-            -e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
-            -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
-            $< > $@
+		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+		-e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
+		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+		$< > $@
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
@@ -153,9 +149,15 @@ service_DATA     = $(service_in_files:.service.in=.service)
 
 org.gnome.panel.applet.ClockAppletFactory.service: $(service_in_files)
 	$(AM_V_GEN)sed \
-            -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-            $< > $@
+		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
+		$< > $@
 endif
+
+uidir		= $(datadir)/gnome-panel/ui
+ui_DATA		= clock.ui
+
+xmluidir 	= $(datadir)/gnome-panel/ui
+xmlui_DATA	= clock-menu.xml
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = clock.schemas.in
@@ -164,28 +166,17 @@ schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 @INTLTOOL_SCHEMAS_RULE@
 
 if GCONF_SCHEMAS_INSTALL
-# don't do this if we are building in eg. rpm
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
-		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/clock/$$p ; \
+			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/clock/$$p ; \
 		done \
 	fi
-else
-install-data-local:
+uninstall-local:
+	for p in $(schema_DATA) ; do \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/clock/$$p ; \
+	done
 endif
-
-noinst_PROGRAMS = test-system-timezone
-
-test_system_timezone_SOURCES = 	\
-	system-timezone.c	\
-	system-timezone.h	\
-	test-system-timezone.c	\
-	$(NULL)
-
-test_system_timezone_LDADD =	\
-	$(CLOCK_LDADD)		\
-	$(NULL)
 
 EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\

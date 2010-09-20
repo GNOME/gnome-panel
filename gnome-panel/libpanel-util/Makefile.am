@@ -1,18 +1,16 @@
-NULL =
+noinst_LTLIBRARIES = libpanel-util.la
 
-INCLUDES =							\
+AM_CPPFLAGS =							\
+	$(PANEL_CFLAGS)						\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DDATADIR=\""$(datadir)"\"				\
-	$(DISABLE_DEPRECATED_CFLAGS)				\
-	$(PANEL_CFLAGS)						\
-	$(WARN_CFLAGS)						\
-	$(NULL)
+	$(DISABLE_DEPRECATED_CFLAGS)
 
-noinst_LTLIBRARIES=libpanel-util.la
+AM_CFLAGS = $(WARN_CFLAGS)
 
-libpanel_util_la_SOURCES=	\
+libpanel_util_la_SOURCES =		\
 	panel-cleanup.c			\
 	panel-cleanup.h			\
 	panel-dbus-service.c		\
@@ -36,7 +34,6 @@ libpanel_util_la_SOURCES=	\
 	panel-show.c			\
 	panel-show.h			\
 	panel-xdg.c			\
-	panel-xdg.h			\
-	$(NULL)
+	panel-xdg.h
 
 -include $(top_srcdir)/git.mk
