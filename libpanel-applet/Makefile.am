@@ -122,8 +122,8 @@ PanelApplet_3_0_gir_CFLAGS = $(AM_CPPFLAGS)
 PanelApplet_3_0_gir_LIBS = libpanel-applet-3.la
 PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
 # When requiring gobject-introspection 0.9.5, use this:
-#PanelApplet_3_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel
-PanelApplet_3_0_gir_SCANNERFLAGS = --strip-prefix=Panel
+#PanelApplet_3_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanelapplet-3.0
+PanelApplet_3_0_gir_SCANNERFLAGS = --strip-prefix=Panel --pkg-export=libpanelapplet-3.0
 INTROSPECTION_GIRS += PanelApplet-3.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)
