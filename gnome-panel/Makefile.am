@@ -136,6 +136,8 @@ gnome_panel_LDADD =		\
 	$(XRANDR_LIBS)									\
 	$(X_LIBS)
 
+gnome_panel_LDFLAGS = -export-dynamic
+
 gnome_desktop_item_edit_SOURCES =	\
 	gnome-desktop-item-edit.c	\
 	panel-ditem-editor.c		\
@@ -163,6 +165,8 @@ panel_test_applets_LDADD = 		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private-mini.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la				\
 	$(PANEL_LIBS)
+
+panel_test_applets_LDFLAGS = -export-dynamic
 
 gnome-panel-add: gnome-panel-add.in Makefile
 	$(AM_V_GEN)sed 						\
