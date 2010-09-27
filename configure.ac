@@ -44,12 +44,12 @@ m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
 PANEL_INTLTOOL_PANEL_APPLET_RULE='%.panel-applet: %.panel-applet.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; $(AM_V_GEN) LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
 AC_SUBST([PANEL_INTLTOOL_PANEL_APPLET_RULE])
 
-AC_ARG_ENABLE(deprecations,
-              [AC_HELP_STRING([--enable-deprecations],
-                              [warn about deprecated usages @<:@default=no@:>@])],,
-              [enable_deprecations=no])
+AC_ARG_ENABLE(deprecation_flags,
+              [AC_HELP_STRING([--enable-deprecation-flags],
+                              [use *_DISABLE_DEPRECATED flags @<:@default=no@:>@])],,
+              [enable_deprecation_flags=no])
 
-if test "x$enable_deprecations" = "xyes"; then
+if test "x$enable_deprecation_flags" = "xyes"; then
    DISABLE_DEPRECATED_CFLAGS=$DISABLE_DEPRECATED
    AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
 fi
@@ -412,7 +412,7 @@ echo "
         compiler:                      ${CC}
         cflags:                        ${CFLAGS}
         Maintainer mode:               ${USE_MAINTAINER_MODE}
-        Warn about deprecations:       ${enable_deprecations}
+        Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
 
         Bonobo applets support:        ${HAVE_BONOBO}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
