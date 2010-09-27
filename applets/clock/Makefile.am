@@ -3,17 +3,8 @@ SUBDIRS = pixmaps
 noinst_LTLIBRARIES = libsystem-timezone.la
 noinst_PROGRAMS = test-system-timezone
 
-AM_CPPFLAGS =							\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	$(CLOCK_CFLAGS)						\
-	-I$(srcdir)/../../libpanel-applet			\
-	-I$(top_builddir)/libpanel-applet			\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
-	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
-	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE			\
+AM_CPPFLAGS =				\
+	$(TZ_CFLAGS)			\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
@@ -21,6 +12,7 @@ AM_CFLAGS = $(WARN_CFLAGS)
 libsystem_timezone_la_SOURCES = \
 	system-timezone.c	\
 	system-timezone.h
+libsystem_timezone_la_LIBADD = $(TZ_LIBS)
 
 if HAVE_LIBECAL
 CALENDAR_SOURCES =		\
@@ -53,6 +45,19 @@ CLOCK_SOURCES = 		\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)
 
+CLOCK_CPPFLAGS =						\
+	$(AM_CPPFLAGS)						\
+	$(LIBPANEL_APPLET_CFLAGS)				\
+	$(CLOCK_CFLAGS)						\
+	-I$(srcdir)/../../libpanel-applet			\
+	-I$(top_builddir)/libpanel-applet			\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DBUILDERDIR=\""$(uidir)"\"				\
+	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
+	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
+	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
+	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
+
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-3.la	\
 	$(CLOCK_LIBS)					\
@@ -62,7 +67,7 @@ CLOCK_LDADD =						\
 
 test_system_timezone_SOURCES = 	\
 	test-system-timezone.c
-test_system_timezone_LDADD = $(CLOCK_LDADD) libsystem-timezone.la
+test_system_timezone_LDADD = libsystem-timezone.la
 
 if CLOCK_INPROCESS
 APPLET_IN_PROCESS = true
@@ -71,6 +76,7 @@ APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
 clock_appletlibdir = $(pkglibdir)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
 libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
+libclock_applet_la_CPPFLAGS = $(CLOCK_CPPFLAGS)
 libclock_applet_la_LIBADD = $(CLOCK_LDADD)
 libclock_applet_la_LDFLAGS = -module -avoid-version
 libclock_applet_la_CFLAGS = $(AM_CFLAGS)
@@ -81,6 +87,7 @@ APPLET_LOCATION = $(libexecdir)/clock-applet
 
 libexec_PROGRAMS = clock-applet
 clock_applet_SOURCES = $(CLOCK_SOURCES)
+clock_applet_CPPFLAGS = $(CLOCK_CPPFLAGS)
 clock_applet_LDADD = $(CLOCK_LDADD)
 clock_applet_CFLAGS = $(AM_CFLAGS)
 $(clock_applet_OBJECTS): $(BUILT_SOURCES)
