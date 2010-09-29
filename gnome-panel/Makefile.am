@@ -146,8 +146,9 @@ gnome_desktop_item_edit_SOURCES =	\
 	xstuff.c
 
 gnome_desktop_item_edit_LDADD = 	\
-	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
-	$(PANEL_LIBS)
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la	\
+	$(PANEL_LIBS)							\
+	$(X_LIBS)
 
 panel_test_applets_SOURCES =		\
 	panel-modules.c			\
