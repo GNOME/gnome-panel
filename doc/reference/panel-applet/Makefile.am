@@ -4,6 +4,7 @@ AUTOMAKE_OPTIONS = 1.6
 
 # The name of the module, e.g. 'glib'.
 DOC_MODULE=panel-applet
+DOC_MODULE_VERSION=3.0
 
 # The top-level SGML file. Change it if you want.
 DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml

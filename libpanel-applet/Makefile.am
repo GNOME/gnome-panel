@@ -117,7 +117,7 @@ built_introspection_sources =	\
 	panel-applet-enums.h
 
 PanelApplet-3.0.gir: libpanel-applet-3.la
-PanelApplet_3_0_gir_INCLUDES = GObject-2.0 Gtk-2.0 GConf-2.0
+PanelApplet_3_0_gir_INCLUDES = GObject-2.0 Gtk-3.0 GConf-2.0
 PanelApplet_3_0_gir_CFLAGS = $(AM_CPPFLAGS)
 PanelApplet_3_0_gir_LIBS = libpanel-applet-3.la
 PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
