@@ -305,20 +305,21 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 }
 
 static gboolean
-panel_menu_bar_on_expose (GtkWidget      *widget,
-			  GdkEventExpose *event,
-			  gpointer        data)
+panel_menu_bar_on_draw (GtkWidget *widget,
+			cairo_t   *cr,
+			gpointer   data)
 {
 	PanelMenuBar *menubar = data;
 
 	if (gtk_widget_has_focus (GTK_WIDGET (menubar)))
 		gtk_paint_focus (gtk_widget_get_style (widget),
-				 gtk_widget_get_window (widget),
+				 cr,
 				 gtk_widget_get_state (GTK_WIDGET (menubar)),
-				 NULL,
 				 widget,
 				 "menubar-applet",
-				 0, 0, -1, -1);
+				 0, 0,
+                                 gtk_widget_get_allocated_width (widget),
+                                 gtk_widget_get_allocated_height (widget));
 	return FALSE;
 }
 
@@ -363,8 +364,8 @@ panel_menu_bar_load (PanelWidget *panel,
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
 	g_signal_connect_after (menubar, "focus-out-event",
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
-	g_signal_connect_after (menubar, "expose-event",
-				G_CALLBACK (panel_menu_bar_on_expose), menubar);
+	g_signal_connect_after (menubar, "draw",
+				G_CALLBACK (panel_menu_bar_on_draw), menubar);
 	gtk_widget_set_can_focus (GTK_WIDGET (menubar), TRUE);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
@@ -440,10 +441,10 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 	 * As that function is private its code is replicated here.
 	 */
 	menu_shell = GTK_MENU_SHELL (menubar);
-	if (!menu_shell->active) {
+	if (!menu_shell->GSEAL(active)) {
 		gtk_grab_add (GTK_WIDGET (menu_shell));
-		menu_shell->have_grab = TRUE;
-		menu_shell->active = TRUE;
+		menu_shell->GSEAL(have_grab) = TRUE;
+		menu_shell->GSEAL(active) = TRUE;
 	}
 	gtk_menu_shell_select_item (menu_shell,
 				    gtk_menu_get_attach_widget (menu));

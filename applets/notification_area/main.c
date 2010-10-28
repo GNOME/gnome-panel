@@ -177,11 +177,9 @@ static const GtkActionEntry menu_actions [] = {
 };
 
 static void
-applet_change_background (PanelApplet               *applet,
-                          PanelAppletBackgroundType  type,
-                          GdkColor                  *color,
-                          GdkPixmap                 *pixmap,
-                          AppletData                *data)
+applet_change_background (PanelApplet     *applet,
+                          cairo_pattern_t *pattern,
+                          AppletData      *data)
 {
   na_tray_force_redraw (data->tray);
 }

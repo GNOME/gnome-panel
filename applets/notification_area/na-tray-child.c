@@ -60,11 +60,12 @@ na_tray_child_realize (GtkWidget *widget)
 
       child->parent_relative_bg = FALSE;
     }
-  else if (visual == gdk_drawable_get_visual (GDK_DRAWABLE (gdk_window_get_parent (window))))
+  else if (visual == gdk_window_get_visual (gdk_window_get_parent (window)))
     {
       /* Otherwise, if the visual matches the visual of the parent window, we
        * can use a parent-relative background and fake transparency. */
-      gdk_window_set_back_pixmap (window, NULL, TRUE);
+      // FIXMEchpe
+      gdk_window_set_background_pattern (window, NULL);
 
       child->parent_relative_bg = TRUE;
     }
@@ -176,28 +177,27 @@ na_tray_child_size_allocate (GtkWidget      *widget,
  * expose handler draws with real or fake transparency.
  */
 static gboolean
-na_tray_child_expose_event (GtkWidget      *widget,
-                            GdkEventExpose *event)
+na_tray_child_draw (GtkWidget *widget,
+                    cairo_t   *cr)
 {
   NaTrayChild *child = NA_TRAY_CHILD (widget);
-  GdkWindow *window = gtk_widget_get_window (widget);
 
   if (na_tray_child_has_alpha (child))
     {
       /* Clear to transparent */
-      cairo_t *cr = gdk_cairo_create (window);
       cairo_set_source_rgba (cr, 0, 0, 0, 0);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-      gdk_cairo_region (cr, event->region);
       cairo_fill (cr);
-      cairo_destroy (cr);
     }
   else if (child->parent_relative_bg)
     {
       /* Clear to parent-relative pixmap */
+      // FIXMEchpe
+      #if 0
       gdk_window_clear_area (window,
                              event->area.x, event->area.y,
                              event->area.width, event->area.height);
+      #endif
     }
 
   return FALSE;
@@ -221,7 +221,7 @@ na_tray_child_class_init (NaTrayChildClass *klass)
   widget_class->style_set = na_tray_child_style_set;
   widget_class->realize = na_tray_child_realize;
   widget_class->size_allocate = na_tray_child_size_allocate;
-  widget_class->expose_event = na_tray_child_expose_event;
+  widget_class->draw = na_tray_child_draw;
 }
 
 GtkWidget *
@@ -233,8 +233,6 @@ na_tray_child_new (GdkScreen *screen,
   NaTrayChild *child;
   GdkVisual *visual;
   gboolean visual_has_alpha;
-  GdkColormap *colormap;
-  gboolean new_colormap;
   int red_prec, green_prec, blue_prec, depth;
   int result;
 
@@ -250,9 +248,8 @@ na_tray_child_new (GdkScreen *screen,
   gdk_error_trap_push ();
   result = XGetWindowAttributes (xdisplay, icon_window,
                                  &window_attributes);
-  gdk_error_trap_pop ();
-
-  if (!result) /* Window already gone */
+  gdk_flush ();
+  if (gdk_error_trap_pop () || result != Success)
     return NULL;
 
   visual = gdk_x11_screen_lookup_visual (screen,
@@ -260,24 +257,10 @@ na_tray_child_new (GdkScreen *screen,
   if (!visual) /* Icon window is on another screen? */
     return NULL;
 
-  new_colormap = FALSE;
-
-  if (visual == gdk_screen_get_rgb_visual (screen))
-    colormap = gdk_screen_get_rgb_colormap (screen);
-  else if (visual == gdk_screen_get_rgba_visual (screen))
-    colormap = gdk_screen_get_rgba_colormap (screen);
-  else if (visual == gdk_screen_get_system_visual (screen))
-    colormap = gdk_screen_get_system_colormap (screen);
-  else
-    {
-      colormap = gdk_colormap_new (visual, FALSE);
-      new_colormap = TRUE;
-    }
-
   child = g_object_new (NA_TYPE_TRAY_CHILD, NULL);
   child->icon_window = icon_window;
 
-  gtk_widget_set_colormap (GTK_WIDGET (child), colormap);
+  gtk_widget_set_visual (GTK_WIDGET (child), visual);
 
   /* We have alpha if the visual has something other than red, green,
    * and blue */
@@ -291,9 +274,6 @@ na_tray_child_new (GdkScreen *screen,
                       gdk_display_supports_composite (gdk_screen_get_display (screen)));
 
   child->composited = child->has_alpha;
-
-  if (new_colormap)
-    g_object_unref (colormap);
 
   return GTK_WIDGET (child);
 }
@@ -430,15 +410,11 @@ na_tray_child_force_redraw (NaTrayChild *child)
       xev.xexpose.count = 0;
 
       gdk_error_trap_push ();
-      XSendEvent (GDK_DISPLAY_XDISPLAY (gtk_widget_get_display (widget)),
+      XSendEvent (xdisplay,
                   xev.xexpose.window,
                   False, ExposureMask,
                   &xev);
-      /* We have to sync to reliably catch errors from the XSendEvent(),
-       * since that is asynchronous.
-       */
-      XSync (xdisplay, False);
-      gdk_error_trap_pop ();
+      gdk_error_trap_pop_ignored ();
 #else
       /* Hiding and showing is the safe way to do it, but can result in more
        * flickering.
@@ -482,7 +458,7 @@ _get_wmclass (Display *xdisplay,
 
   gdk_error_trap_push ();
   XGetClassHint (xdisplay, xwindow, &ch);
-  gdk_error_trap_pop ();
+  gdk_error_trap_pop_ignored ();
 
   if (res_class)
     *res_class = NULL;

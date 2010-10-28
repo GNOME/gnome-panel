@@ -1578,6 +1578,7 @@ fish_applet_expose_event (GtkWidget      *widget,
 	GtkStateType  state;
 	int width, height;
 	int src_x, src_y;
+        cairo_t *cr;
 
 	g_return_val_if_fail (fish->pixmap != NULL, FALSE);
 
@@ -1589,25 +1590,27 @@ fish_applet_expose_event (GtkWidget      *widget,
 
 	gdk_drawable_get_size (fish->pixmap, &width, &height);
 
-	src_x = event->area.x;
-	src_y = event->area.y;
+	src_x = 0;
+	src_y = 0;
 
 	if (fish->rotate) {
 		if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
-			src_y += ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
+			src_y = ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
 		else if (fish->orientation == PANEL_APPLET_ORIENT_LEFT)
-			src_y += ((height * fish->current_frame) / fish->n_frames);
+			src_y = ((height * fish->current_frame) / fish->n_frames);
 		else
-			src_x += ((width * fish->current_frame) / fish->n_frames);
+			src_x = ((width * fish->current_frame) / fish->n_frames);
 	} else
-		src_x += ((width * fish->current_frame) / fish->n_frames);
+		src_x = ((width * fish->current_frame) / fish->n_frames);
 
-	gdk_draw_drawable (window,
-			   style->fg_gc [state],
-			   fish->pixmap,
-			   src_x, src_y,
-			   event->area.x, event->area.y,
-			   event->area.width, event->area.height);
+        cr = gdk_cairo_create (event->window);
+        gdk_cairo_region (cr, event->region);
+        cairo_clip (cr);
+
+        gdk_cairo_set_source_pixmap (cr, fish->pixmap, -src_x, -src_y);
+        cairo_paint (cr);
+
+        cairo_destroy (cr);
 
         return FALSE;
 }

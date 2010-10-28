@@ -316,19 +316,19 @@ static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 				       GtkColorButton        *color_button)
 {
-	GdkColor color;
+	GdkRGBA color;
 
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
-	gtk_color_button_get_color (color_button, &color);
-	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
+	gtk_color_button_get_rgba (color_button, &color);
+	panel_profile_set_background_color (dialog->toplevel, &color);
 }
 
 static void
 panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 					    GtkBuilder            *gui)
 {
-	PanelColor color;
+	GdkRGBA color;
 
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
@@ -337,8 +337,8 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
-	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
-				    &(color.gdk));
+	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+                                   &color);
 
 	g_signal_connect_swapped (dialog->color_button, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),

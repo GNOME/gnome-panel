@@ -110,7 +110,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (!window)
 		return GDK_FILTER_CONTINUE;
 
-	screen = gdk_drawable_get_screen (window);
+	screen = gdk_window_get_screen (window);
 
 	if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);

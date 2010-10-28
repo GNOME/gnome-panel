@@ -223,8 +223,7 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 
 	gdk_window_move_resize (window, x, y, w, h);
 
-	gdk_flush ();
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-x", GINT_TO_POINTER (x));
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-y", GINT_TO_POINTER (y));
@@ -313,9 +312,9 @@ zoom_timeout (GtkWidget *window)
 }
 
 static gboolean
-zoom_expose (GtkWidget      *widget,
-	     GdkEventExpose *event,
-	     gpointer        user_data)
+zoom_draw (GtkWidget *widget,
+	   cairo_t   *cr,
+           gpointer    user_data)
 {
 	CompositedZoomData *zoom;
 
@@ -336,7 +335,6 @@ zoom_expose (GtkWidget      *widget,
 		GdkPixbuf *scaled;
 		int width, height;
 		int x = 0, y = 0;
-		cairo_t *cr;
 
 		gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
 
@@ -370,7 +368,6 @@ zoom_expose (GtkWidget      *widget,
 		}
 
 
-		cr = gdk_cairo_create (gtk_widget_get_window (widget));
 		cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 		cairo_set_source_rgba (cr, 0, 0, 0, 0.0);
 		cairo_rectangle (cr, 0, 0, width, height);
@@ -380,7 +377,6 @@ zoom_expose (GtkWidget      *widget,
 		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 		cairo_paint_with_alpha (cr, MAX (zoom->opacity, 0));
 
-		cairo_destroy (cr);
 		g_object_unref (scaled);
 	}
 
@@ -415,7 +411,7 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 	gtk_window_set_keep_above (GTK_WINDOW (win), TRUE);
 	gtk_window_set_decorated (GTK_WINDOW (win), FALSE);
 	gtk_widget_set_app_paintable(win, TRUE);
-	gtk_widget_set_colormap (win, gdk_screen_get_rgba_colormap (gscreen));
+	gtk_widget_set_visual (win, gdk_screen_get_rgba_visual (gscreen));
 
 	gtk_window_set_gravity (GTK_WINDOW (win), GDK_GRAVITY_STATIC);
 	gtk_window_set_default_size (GTK_WINDOW (win),
@@ -445,12 +441,12 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	gtk_window_move (GTK_WINDOW (win), wx, wy);
 
-	g_signal_connect (G_OBJECT (win), "expose-event",
-			  G_CALLBACK (zoom_expose), zoom);
+	g_signal_connect (G_OBJECT (win), "draw",
+			  G_CALLBACK (zoom_draw), zoom);
 
 	/* see doc for gtk_widget_set_app_paintable() */
 	gtk_widget_realize (win);
-	gdk_window_set_back_pixmap (gtk_widget_get_window (win), NULL, FALSE);
+	gdk_window_set_background_pattern (gtk_widget_get_window (win), NULL);
 	gtk_widget_show (win);
 
 	zoom->timeout_id = g_timeout_add (ZOOM_DELAY,
@@ -480,11 +476,9 @@ draw_zoom_animation (GdkScreen *gscreen,
 	dpy = gdk_x11_display_get_xdisplay (gdk_screen_get_display (gscreen));
 	root_win = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (gscreen));
 	screen = gdk_screen_get_number (gscreen);
-	depth = gdk_drawable_get_depth (gdk_screen_get_root_window (gscreen));
+	depth = DefaultDepth(dpy,screen);
 
 	/* frame GC */
-	gdk_colormap_alloc_color (
-		gdk_screen_get_system_colormap (gscreen), &color, FALSE, TRUE);
 	gcv.function = GXxor;
 	/* this will raise the probability of the XORed color being different
 	 * of the original color in PseudoColor when not all color cells are
@@ -575,9 +569,6 @@ draw_zoom_animation (GdkScreen *gscreen,
 
 	XUngrabServer(dpy);
 	XFreeGC (dpy, frame_gc);
-	gdk_colormap_free_colors (gdk_screen_get_system_colormap (gscreen),
-				  &color, 1);
-
 }
 #undef FRAMES
 

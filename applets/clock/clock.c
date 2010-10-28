@@ -804,7 +804,7 @@ close_on_escape (GtkWidget       *widget,
 		 GdkEventKey     *event,
 		 GtkToggleButton *toggle_button)
 {
-	if (event->keyval == GDK_Escape) {
+	if (event->keyval == GDK_KEY_Escape) {
 		gtk_toggle_button_set_active (toggle_button, FALSE);
 		return TRUE;
 	}
@@ -3385,6 +3385,7 @@ fill_prefs_window (ClockData *cd)
 	GtkCellRenderer *renderer;
         GtkTreeViewColumn *col;
 	GtkListStore *store;
+        GtkTreeIter iter;
         int i;
 
 	/* Set the 12 hour / 24 hour widget */
@@ -3451,8 +3452,9 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; temperatures[i] != -1; i++)
-                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
-                                           gweather_prefs_get_temp_display_name (temperatures[i]));
+                gtk_list_store_insert_with_values (store, &iter, -1,
+                                                   0, gweather_prefs_get_temp_display_name (temperatures[i]),
+                                                   -1);
 
 	update_temperature_combo (cd);
 	g_signal_connect (widget, "changed",
@@ -3467,8 +3469,9 @@ fill_prefs_window (ClockData *cd)
 	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (widget), renderer, "text", 0, NULL);
 
         for (i = 0; speeds[i] != -1; i++)
-                gtk_combo_box_append_text (GTK_COMBO_BOX (widget),
-                                           gweather_prefs_get_speed_display_name (speeds[i]));
+                gtk_list_store_insert_with_values (store, &iter, -1,
+                                                   0, gweather_prefs_get_speed_display_name (speeds[i]),
+                                                   -1);
 
 	update_speed_combo (cd);
 	g_signal_connect (widget, "changed",

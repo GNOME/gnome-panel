@@ -46,6 +46,18 @@ The applet is orientated up (i.e. the panel is at the bottom of the screen).
 </para>
 
 
+<!-- ##### ENUM PanelAppletBackgroundType ##### -->
+<para>
+The #PanelAppletBackgroundType enumerated type specifies the type of
+background of a panel.
+</para>
+
+@PANEL_NO_BACKGROUND: The panel has no background, the default is used.
+@PANEL_COLOR_BACKGROUND: The panel has a color, i.e rgb value,
+background.
+@PANEL_PIXMAP_BACKGROUND:  The panel has either an image background
+or is translucent.
+
 <!-- ##### FUNCTION panel_applet_factory_main_closure ##### -->
 <para>
 A generic 'main' routine for applets. This should not normally be

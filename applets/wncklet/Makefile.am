@@ -26,7 +26,7 @@ WNCKLET_SOURCES = \
 	showdesktop.h
 
 WNCKLET_LDADD =						\
-	../../libpanel-applet/libpanel-applet-3.la	\
+	../../libpanel-applet/libpanel-applet-4.la	\
 	$(WNCKLET_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
 

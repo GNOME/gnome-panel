@@ -132,23 +132,13 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-applet_change_background (PanelApplet               *applet,
-			  PanelAppletBackgroundType  type,
-			  GdkColor                  *color,
-			  GdkPixmap                 *pixmap,
-			  TasklistData              *tasklist)
+applet_change_background (PanelApplet     *applet,
+			  cairo_pattern_t *pattern,
+			  TasklistData    *tasklist)
 {
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
-						 GTK_RELIEF_NORMAL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-	case PANEL_PIXMAP_BACKGROUND:
-		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
-						 GTK_RELIEF_NONE);
-		break;
-	}
+        wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
+                                         pattern != NULL ? GTK_RELIEF_NONE
+                                                         : GTK_RELIEF_NORMAL);
 }
 
 static void

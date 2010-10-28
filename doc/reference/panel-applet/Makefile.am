@@ -4,7 +4,7 @@ AUTOMAKE_OPTIONS = 1.6
 
 # The name of the module, e.g. 'glib'.
 DOC_MODULE=panel-applet
-DOC_MODULE_VERSION=3.0
+DOC_MODULE_VERSION=4.0
 
 # The top-level SGML file. Change it if you want.
 DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
@@ -56,7 +56,7 @@ GTKDOC_CFLAGS =					\
 GTKDOC_LIBS =						\
 	$(LDFLAGS)					\
 	$(PANEL_LIBS)					\
-	../../../libpanel-applet/libpanel-applet-3.la
+	../../../libpanel-applet/libpanel-applet-4.la
 
 include $(top_srcdir)/gtk-doc.make
 

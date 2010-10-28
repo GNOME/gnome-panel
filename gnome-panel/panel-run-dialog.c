@@ -149,7 +149,7 @@ _panel_run_get_recent_programs_list (void)
 }
 
 static void
-_panel_run_save_recent_programs_list (GtkComboBoxEntry *entry,
+_panel_run_save_recent_programs_list (GtkComboBox      *entry,
 				      char             *lastcommand)
 {
 	GtkTreeModel *model;
@@ -412,7 +412,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char     *disk;
 	char     *scheme;	
 	
-	command = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	command = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 	command = g_strchug (command);
 
 	if (!command || !command [0]) {
@@ -479,7 +479,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	if (result) {
 		/* only save working commands in history */
 		_panel_run_save_recent_programs_list
-			(GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
+			(GTK_COMBO_BOX (dialog->combobox), command);
 		
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -538,7 +538,7 @@ static void
 panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 				   const char     *file)
 {
-	char       *text;
+	const char *text;
 	char       *quoted, *temp;
 	GtkWidget  *entry;
 	
@@ -548,7 +548,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	
 	quoted = quote_string (file);
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = gtk_entry_get_text (GTK_ENTRY (entry));
 	if (text && text [0]) {
 		temp = g_strconcat (text, " ", quoted, NULL);
 		gtk_entry_set_text (GTK_ENTRY (entry), temp);
@@ -556,7 +556,6 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	} else
 		gtk_entry_set_text (GTK_ENTRY (entry), quoted);
 	
-	g_free (text);
 	g_free (quoted);
 }
 
@@ -664,7 +663,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		return FALSE;
 	}
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 	found_icon = NULL;
 	found_name = NULL;
 	fuzzy = FALSE;
@@ -1511,7 +1510,7 @@ entry_event (GtkEditable    *entry,
 		return FALSE;
 
 	/* tab completion */
-	if (event->keyval == GDK_Tab) {
+	if (event->keyval == GDK_KEY_Tab) {
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
 		if (dialog->completion_started &&
@@ -1607,7 +1606,7 @@ combobox_changed (GtkComboBox    *combobox,
 	char *start;
 	char *msg;
 
-	text = gtk_combo_box_get_active_text (combobox);
+        text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (combobox)))));
 
 	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
@@ -1751,8 +1750,8 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
 				 _panel_run_get_recent_programs_list ());
-	gtk_combo_box_entry_set_text_column
-		(GTK_COMBO_BOX_ENTRY (dialog->combobox), 0);
+	gtk_combo_box_set_entry_text_column
+		(GTK_COMBO_BOX (dialog->combobox), 0);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
@@ -1792,7 +1791,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	char     *scheme;
 	char     *save_uri;
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+        text = g_strdup (gtk_entry_get_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (dialog->combobox)))));
 	
 	if (!text || !text [0]) {
 		g_free (text);

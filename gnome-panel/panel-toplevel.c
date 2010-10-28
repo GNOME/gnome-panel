@@ -851,20 +851,20 @@ panel_toplevel_warp_pointer_increment (PanelToplevel *toplevel,
 	gdk_window_get_pointer (root_window, &new_x, &new_y, NULL);
 
 	switch (keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		new_y -= increment;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		new_x -= increment;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		new_y += increment;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		new_x += increment;
 		break;
 	default:
@@ -903,20 +903,20 @@ panel_toplevel_move_keyboard_expanded (PanelToplevel *toplevel,
 	PanelOrientation new_orientation;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		new_orientation = PANEL_ORIENTATION_TOP;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		new_orientation = PANEL_ORIENTATION_LEFT;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		new_orientation = PANEL_ORIENTATION_RIGHT;
 		break;
 	default:
@@ -936,26 +936,26 @@ panel_toplevel_initial_resize_keypress (PanelToplevel *toplevel,
 	PanelGrabOpType grab_op;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_UP;
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_LEFT;
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		if (!(toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_DOWN;
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		if (!(toplevel->priv->orientation & PANEL_VERTICAL_MASK))
 			return FALSE;
 		grab_op = PANEL_GRAB_OP_RESIZE_RIGHT;
@@ -978,14 +978,14 @@ panel_toplevel_handle_grab_op_key_event (PanelToplevel *toplevel,
 	gboolean retval = FALSE;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
-	case GDK_Left:
-	case GDK_KP_Left:
-	case GDK_Down:
-	case GDK_KP_Down:
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		switch (toplevel->priv->grab_op) {
 		case PANEL_GRAB_OP_MOVE:
 			if (toplevel->priv->expand)
@@ -1010,12 +1010,12 @@ panel_toplevel_handle_grab_op_key_event (PanelToplevel *toplevel,
 			break;
 		}
 		break;
-	case GDK_Escape: 
+	case GDK_KEY_Escape:
 		panel_toplevel_cancel_grab_op (toplevel, event->time);
-	case GDK_Return: /* drop through*/
-	case GDK_KP_Enter:
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_Return: /* drop through*/
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		panel_toplevel_end_grab_op (toplevel, event->time);
 		retval = TRUE;
 	default: /* drop through*/
@@ -3008,7 +3008,7 @@ panel_toplevel_unrealize (GtkWidget *widget)
 }
 
 static void
-panel_toplevel_destroy (GtkObject *widget)
+panel_toplevel_dispose (GObject *widget)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 	
@@ -3022,8 +3022,7 @@ panel_toplevel_destroy (GtkObject *widget)
 
 	panel_toplevel_disconnect_timeouts (toplevel);
 
-	if (GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy)
-		GTK_OBJECT_CLASS (panel_toplevel_parent_class)->destroy (widget);
+        G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
 }
 
 static void
@@ -3167,8 +3166,8 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-panel_toplevel_expose (GtkWidget      *widget,
-		       GdkEventExpose *event)
+panel_toplevel_draw (GtkWidget *widget,
+                     cairo_t   *cr)
 {
 	PanelToplevel  *toplevel = (PanelToplevel *) widget;
 	PanelFrameEdge  edges;
@@ -3176,16 +3175,14 @@ panel_toplevel_expose (GtkWidget      *widget,
 	GdkWindow      *window;
 	GtkStyle       *style;
 	GtkStateType    state;
-	GtkAllocation   allocation;
+        int awidth, aheight;
 
-	if (!gtk_widget_is_drawable (widget))
-		return retval;
-
-	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->expose_event)
-		retval = GTK_WIDGET_CLASS (panel_toplevel_parent_class)->expose_event (widget, event);
+	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->draw)
+		retval = GTK_WIDGET_CLASS (panel_toplevel_parent_class)->draw (widget, cr);
 
 	edges = toplevel->priv->edges;
-	panel_frame_draw (widget, edges);
+	/* FIXMEchpe: WTF!? */
+        panel_frame_draw (widget, cr, edges);
 
 	if (toplevel->priv->expand ||
 	    toplevel->priv->buttons_enabled ||
@@ -3195,16 +3192,17 @@ panel_toplevel_expose (GtkWidget      *widget,
 	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
-	gtk_widget_get_allocation (widget, &allocation);
+        awidth = gtk_widget_get_allocated_width (widget);
+        aheight = gtk_widget_get_allocated_height (widget);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		int x, y, width, height;
 		int xthickness, ythickness;
 
-		x      = allocation.x;
-		y      = allocation.y;
+		x      = 0;
+		y      = 0;
 		width  = HANDLE_SIZE;
-		height = allocation.height;
+		height = aheight;
 
 		xthickness = style->xthickness;
 		ythickness = style->ythickness;
@@ -3218,28 +3216,28 @@ panel_toplevel_expose (GtkWidget      *widget,
 		if (edges & PANEL_EDGE_LEFT)
 			x += xthickness;
 
-		gtk_paint_handle (style, window, state,
+		gtk_paint_handle (style, cr, state,
 				  GTK_SHADOW_OUT,
-				  &event->area, widget, "handlebox",
+				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
 
-		x = allocation.width - HANDLE_SIZE;
+		x = awidth - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_RIGHT)
 			x -= xthickness;
 
-		gtk_paint_handle (style, window, state,
+		gtk_paint_handle (style, cr, state,
 				  GTK_SHADOW_OUT,
-				  &event->area, widget, "handlebox",
+				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_VERTICAL);
 	} else {
 		int x, y, width, height;
 		int xthickness, ythickness;
 
-		x      = allocation.x;
-		y      = allocation.y;
-		width  = allocation.width;
+		x      = 0;
+		y      = 0;
+		width  = awidth;
 		height = HANDLE_SIZE;
 
 		xthickness = style->xthickness;
@@ -3254,19 +3252,19 @@ panel_toplevel_expose (GtkWidget      *widget,
 		if (edges & PANEL_EDGE_TOP)
 			y += ythickness;
 
-		gtk_paint_handle (style, window, state,
+		gtk_paint_handle (style, cr, state,
 				  GTK_SHADOW_OUT,
-				  &event->area, widget, "handlebox",
+				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
 
-		y = allocation.height - HANDLE_SIZE;
+		y = aheight - HANDLE_SIZE;
 		if (edges & PANEL_EDGE_BOTTOM)
 			y -= ythickness;
 
-		gtk_paint_handle (style, window, state,
+		gtk_paint_handle (style, cr, state,
 				  GTK_SHADOW_OUT,
-				  &event->area, widget, "handlebox",
+				  widget, "handlebox",
 				  x, y, width, height,
 				  GTK_ORIENTATION_HORIZONTAL);
 	}
@@ -4087,7 +4085,6 @@ static void
 panel_toplevel_class_init (PanelToplevelClass *klass)
 {
 	GObjectClass      *gobject_class   = (GObjectClass      *) klass;
-	GtkObjectClass    *gtkobject_class = (GtkObjectClass    *) klass;
 	GtkWidgetClass    *widget_class    = (GtkWidgetClass    *) klass;
 	GtkContainerClass *container_class = (GtkContainerClass *) klass;
 	GtkBindingSet     *binding_set;
@@ -4096,15 +4093,14 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
 	gobject_class->set_property = panel_toplevel_set_property;
         gobject_class->get_property = panel_toplevel_get_property;
+        gobject_class->dispose      = panel_toplevel_dispose;
 	gobject_class->finalize     = panel_toplevel_finalize;
-
-	gtkobject_class->destroy = panel_toplevel_destroy;
 
 	widget_class->realize              = panel_toplevel_realize;
 	widget_class->unrealize            = panel_toplevel_unrealize;
 	widget_class->size_request         = panel_toplevel_size_request;
 	widget_class->size_allocate        = panel_toplevel_size_allocate;
-	widget_class->expose_event         = panel_toplevel_expose;
+	widget_class->draw                 = panel_toplevel_draw;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
@@ -4451,7 +4447,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_TYPE_BOOLEAN,
 			      0);
 
-	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_F10, GDK_CONTROL_MASK,
                                      "popup_panel_menu", 0);
 
 	panel_bindings_set_entries (binding_set);
@@ -4617,6 +4613,9 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	                  "delete-event",
 	                  G_CALLBACK (gtk_true),
 	                  NULL);
+
+        /* We don't want a resize grip on the panel */
+        gtk_window_set_has_resize_grip (GTK_WINDOW (toplevel), FALSE);
 }
 
 PanelWidget *

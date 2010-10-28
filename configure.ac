@@ -1,4 +1,4 @@
-AC_INIT([gnome-panel], [2.32.1],
+AC_INIT([gnome-panel], [2.91.0],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
@@ -14,6 +14,9 @@ GNOME_COMMON_INIT
 # - If binary compatibility has been broken (eg removed or changed interfaces)
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
+
+m4_define([libpanel_applet_api_version],[4.0])
+AC_SUBST([LIBPANEL_APPLET_API_VERSION],[libpanel_applet_api_version])
 
 LIB_PANEL_APPLET_LT_VERSION=0:5:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
@@ -57,7 +60,7 @@ fi
 AC_CHECK_HEADERS(crt_externs.h)
 AC_CHECK_FUNCS(_NSGetEnviron)
 
-LIBGNOME_DESKTOP_REQUIRED=2.24.0
+LIBGNOME_DESKTOP_REQUIRED=2.91.0
 GDK_PIXBUF_REQUIRED=2.7.1
 PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.25.12
@@ -66,22 +69,22 @@ GTK_REQUIRED=2.91.2
 LIBWNCK_REQUIRED=2.91.0
 GCONF_REQUIRED=2.6.1
 LIBGNOME_MENU_REQUIRED=2.27.92
-LIBECAL_REQUIRED=1.6.0
-LIBEDATASERVER_REQUIRED=1.2.0
-LIBEDATASERVERUI_REQUIRED=1.2.0
+LIBECAL_REQUIRED=2.91.2
+LIBEDATASERVER_REQUIRED=2.91.2
+LIBEDATASERVERUI_REQUIRED=2.91.2
 CAIRO_REQUIRED=1.0.0
-GWEATHER_REQUIRED=2.27.90
+GWEATHER_REQUIRED=2.91.0
 DBUS_GLIB_REQUIRED=0.80
 
 dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-3.0)
 
-PKG_CHECK_MODULES(PANEL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgnome-menu >= $LIBGNOME_MENU_REQUIRED libcanberra-gtk dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
+PKG_CHECK_MODULES(PANEL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED cairo-xlib glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgnome-menu >= $LIBGNOME_MENU_REQUIRED libcanberra-gtk3 dbus-glib-1 >= $DBUS_GLIB_REQUIRED)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
-PKG_CHECK_MODULES(LIBPANEL_APPLET, gtk+-3.0 >= $GTK_REQUIRED gconf-2.0 >= $GCONF_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
+PKG_CHECK_MODULES(LIBPANEL_APPLET, gtk+-3.0 >= $GTK_REQUIRED cairo-xlib cairo-gobject gconf-2.0 >= $GCONF_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(LIBPANEL_APPLET_CFLAGS)
 AC_SUBST(LIBPANEL_APPLET_LIBS)
 
@@ -107,15 +110,15 @@ AC_ARG_ENABLE(eds,
 LIBECAL_REQUIREMENT=
 HAVE_EDS=no
 if test "x$enable_eds" = "xyes"; then
-  LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
+  LIBECAL_REQUIREMENT="libecal-3.0 >= $LIBECAL_REQUIRED libedataserver-3.0 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
+  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-3.0`/pixmaps/evolution-data-server
 else
   if test "x$enable_eds" != "xno"; then
     AC_MSG_CHECKING(for evolution-data-server)
-    if $PKG_CONFIG --exists libecal-1.2 libedataserverui-1.2 evolution-data-server-1.2; then
+    if $PKG_CONFIG --exists libecal-3.0 libedataserverui-3.0 evolution-data-server-3.0; then
        AC_MSG_RESULT(yes)
-       LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-1.2 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
+       LIBECAL_REQUIREMENT="libecal-3.0 >= $LIBECAL_REQUIRED libedataserver-3.0 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
+       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-3.0`/pixmaps/evolution-data-server
        HAVE_EDS=yes
     else
        AC_MSG_RESULT(no)
@@ -124,7 +127,7 @@ else
 fi
 if test -n "$LIBECAL_REQUIREMENT"; then
   AC_DEFINE([HAVE_LIBECAL], 1,
-            [Defined when evolution-data-server libecal-1.2 and libedataserverui-1.2 are detected])
+            [Defined when evolution-data-server libecal-3.0 and libedataserverui-3.0 are detected])
 fi
 AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
 AC_SUBST(CLOCK_EDS_ICONDIR)
@@ -133,7 +136,7 @@ PKG_CHECK_MODULES(TZ, gio-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(TZ_CFLAGS)
 AC_SUBST(TZ_LIBS)
 
-PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED $LIBECAL_REQUIREMENT librsvg-2.0 dbus-glib-1 gweather >= $GWEATHER_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED)
+PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED $LIBECAL_REQUIREMENT librsvg-2.0 dbus-glib-1 gweather-3.0 >= $GWEATHER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
@@ -348,7 +351,7 @@ if test "x$enable_rebuilds" = "xyes" && \
 fi
 AC_SUBST(REBUILD)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 icons/Makefile
 icons/16x16/Makefile
@@ -362,8 +365,6 @@ gnome-panel/libegg/Makefile
 gnome-panel/libpanel-applet-private/Makefile
 gnome-panel/libpanel-util/Makefile
 gnome-panel/gnome-panel.desktop.in
-libpanel-applet/libpanelapplet-3.0.pc
-libpanel-applet/libpanelapplet-3.0-uninstalled.pc
 libpanel-applet/Makefile
 po/Makefile.in
 applets/Makefile
@@ -386,6 +387,11 @@ bonobo/libpanel-applet/libpanelapplet-2.0-uninstalled.pc
 bonobo/libpanel-applet/Makefile
 bonobo/panel-module/Makefile
 ])
+
+AC_CONFIG_FILES(libpanel-applet/libpanelapplet-[]libpanel_applet_api_version[].pc:libpanel-applet/libpanelapplet.pc.in)
+AC_CONFIG_FILES(libpanel-applet/libpanelapplet-[]libpanel_applet_api_version[]-uninstalled.pc:libpanel-applet/libpanelapplet-uninstalled.pc.in)
+
+AC_OUTPUT
 
 if echo foo | xgettext --from-code=UTF-8 -LC -o - - 2>/dev/null ; then
 :;

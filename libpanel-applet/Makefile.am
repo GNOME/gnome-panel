@@ -1,4 +1,4 @@
-lib_LTLIBRARIES = libpanel-applet-3.la
+lib_LTLIBRARIES = libpanel-applet-4.la
 noinst_PROGRAMS = test-dbus-applet
 
 AM_CPPFLAGS =							\
@@ -9,13 +9,13 @@ AM_CPPFLAGS =							\
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-libpanel_appletincludedir = $(includedir)/gnome-panel-3.0/libpanel-applet
+libpanel_appletincludedir = $(includedir)/gnome-panel-4.0/libpanel-applet
 libpanel_appletinclude_HEADERS =	\
 	panel-applet.h			\
 	panel-applet-gconf.h		\
 	panel-applet-enums.h
 
-libpanel_applet_3_la_SOURCES =		\
+libpanel_applet_4_la_SOURCES =		\
 	$(BUILT_SOURCES)		\
 	panel-applet.h			\
 	panel-applet.c			\
@@ -24,19 +24,19 @@ libpanel_applet_3_la_SOURCES =		\
 	panel-applet-gconf.c		\
 	panel-applet-gconf.h
 
-libpanel_applet_3_la_LIBADD  = \
+libpanel_applet_4_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(X_LIBS)
 
-libpanel_applet_3_la_LDFLAGS = \
+libpanel_applet_4_la_LDFLAGS = \
 	-version-info $(LIB_PANEL_APPLET_LT_VERSION)	\
 	-no-undefined
 
 test_dbus_applet_LDADD =	\
 	$(LIBPANEL_APPLET_LIBS)	\
-	libpanel-applet-3.la
+	libpanel-applet-4.la
 
-$(libpanel_applet_3_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
+$(libpanel_applet_4_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
@@ -82,7 +82,7 @@ BUILT_SOURCES = \
 	panel-applet-marshal.h
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libpanelapplet-3.0.pc
+pkgconfig_DATA = libpanelapplet-4.0.pc
 
 appletdir       = $(datadir)/gnome-panel/applets
 applet_in_files = org.gnome.panel.TestApplet.panel-applet.in
@@ -93,8 +93,8 @@ noinst_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 EXTRA_DIST =						\
 	org.gnome.panel.TestApplet.panel-applet.in	\
 	panel-applet-marshal.list			\
-	libpanelapplet-3.0.pc.in			\
-	libpanelapplet-3.0-uninstalled.pc.in
+	libpanelapplet-4.0.pc.in			\
+	libpanelapplet-4.0-uninstalled.pc.in
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
@@ -116,15 +116,15 @@ built_introspection_sources =	\
 	panel-applet-enums.c	\
 	panel-applet-enums.h
 
-PanelApplet-3.0.gir: libpanel-applet-3.la
-PanelApplet_3_0_gir_INCLUDES = GObject-2.0 Gtk-3.0 GConf-2.0
-PanelApplet_3_0_gir_CFLAGS = $(AM_CPPFLAGS)
-PanelApplet_3_0_gir_LIBS = libpanel-applet-3.la
-PanelApplet_3_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
+PanelApplet-4.0.gir: libpanel-applet-4.la
+PanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-3.0 GConf-2.0
+PanelApplet_4_0_gir_CFLAGS = $(AM_CPPFLAGS)
+PanelApplet_4_0_gir_LIBS = libpanel-applet-4.la
+PanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
 # When requiring gobject-introspection 0.9.5, use this:
-#PanelApplet_3_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanelapplet-3.0
-PanelApplet_3_0_gir_SCANNERFLAGS = --strip-prefix=Panel --pkg-export=libpanelapplet-3.0
-INTROSPECTION_GIRS += PanelApplet-3.0.gir
+#PanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanelapplet-4.0
+PanelApplet_4_0_gir_SCANNERFLAGS = --strip-prefix=Panel --pkg-export=libpanelapplet-4.0
+INTROSPECTION_GIRS += PanelApplet-4.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)
 gir_DATA = $(INTROSPECTION_GIRS)

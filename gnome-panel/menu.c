@@ -837,11 +837,11 @@ restore_grabs(GtkWidget *w, gpointer data)
 		if (viewable)
 			xgrab_shell = parent;
 
-		parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+		parent = GTK_MENU_SHELL (parent)->GSEAL(parent_menu_shell);
 	}
 
 	/*only grab if this HAD a grab before*/
-	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
+	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab)))
           {
 	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
 
@@ -854,7 +854,7 @@ restore_grabs(GtkWidget *w, gpointer data)
               {
 		if (gdk_keyboard_grab (window, TRUE,
 				       GDK_CURRENT_TIME) == 0)
-		  GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+		  GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
 		else
 		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	      }
@@ -1052,7 +1052,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       if (viewable)
 	xgrab_shell = parent;
       
-      parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+      parent = GTK_MENU_SHELL (parent)->GSEAL(parent_menu_shell);
     }
   
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
@@ -1068,7 +1068,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	{
 	  if (gdk_keyboard_grab (window, TRUE,
 				 GDK_CURRENT_TIME) == 0)
-	    GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+	    GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
 	  else
 	    {
 	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
@@ -1590,8 +1590,8 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 {
 	guint idle_id;
 
-	while (GTK_MENU_SHELL (menu)->children)
-                gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
+	while (GTK_MENU_SHELL (menu)->GSEAL(children))
+                gtk_widget_destroy (GTK_MENU_SHELL (menu)->GSEAL(children)->data);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
@@ -1904,18 +1904,18 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 {
 	gboolean retval = FALSE;
 
-	if ((event->keyval == GDK_Menu) ||
-	    (event->keyval == GDK_F10 &&
+	if ((event->keyval == GDK_KEY_Menu) ||
+	    (event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
-		if (menu_shell->active_menu_item &&
-		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
+		if (menu_shell->GSEAL(active_menu_item) &&
+		    GTK_MENU_ITEM (menu_shell->GSEAL(active_menu_item))->GSEAL(submenu) == NULL) {
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (menu_shell->active_menu_item,
+			retval = show_item_menu (menu_shell->GSEAL(active_menu_item),
 						 &bevent);
 		}
 		

@@ -1,3 +1,5 @@
+#if 0
+
 #include <string.h>
 #include <math.h>
 #include <unistd.h>
@@ -501,13 +503,10 @@ check_screen (void)
         attributes.width = PHSHWIDTH;
         attributes.height = PHSHHEIGHT;
         attributes.wclass = GDK_INPUT_OUTPUT;
-        attributes.visual = gdk_rgb_get_visual();
-        attributes.colormap = gdk_rgb_get_colormap();
         attributes.event_mask = GDK_BUTTON_PRESS_MASK;
 
         phsh.win = gdk_window_new (NULL, &attributes,
-                                   GDK_WA_X | GDK_WA_Y |
-                                   GDK_WA_VISUAL | GDK_WA_COLORMAP);
+                                   GDK_WA_X | GDK_WA_Y);
         gdk_window_set_back_pixmap (phsh.win, phsh.phsh[0], FALSE);
         gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[0], 0, 0);
 
@@ -561,10 +560,8 @@ static GtkWidget *geginv_label = NULL;
 static GdkPixmap *geginv_pixmap = NULL;
 static GdkPixmap *inv_goat1 = NULL;
 static GdkPixmap *inv_goat2 = NULL;
-static GdkPixmap *inv_phsh1 = NULL;
-static GdkBitmap *inv_phsh1_mask = NULL;
-static GdkPixmap *inv_phsh2 = NULL;
-static GdkBitmap *inv_phsh2_mask = NULL;
+static GdkPixbuf *phsh1 = NULL;
+static GdkPixbuf *phsh2 = NULL;
 static int inv_phsh_state = 0;
 static int inv_goat_state = 0;
 static int inv_width = 0;
@@ -653,6 +650,7 @@ inv_draw (gpointer data)
 	GdkPixmap *goat;
 	GSList *li;
 	int i, j;
+        cairo_t *cr;
 
 	if (data != geginv) {
 		inv_draw_idle = 0;
@@ -665,11 +663,9 @@ inv_draw (gpointer data)
 
 	style = gtk_widget_get_style (geginv_canvas);
 
-	gdk_draw_rectangle (geginv_pixmap,
-			    style->white_gc,
-			    TRUE /* filled */,
-			    0, 0,
-			    inv_width, inv_height);
+        cr = gdk_cairo_create (geginv_pixmap);
+        cairo_set_source_rgb (cr, 1, 1, 1);
+        cairo_paint (cr);
 
 	if (inv_goat_state == 0)
 		goat = inv_goat1;
@@ -685,66 +681,45 @@ inv_draw (gpointer data)
 			x = invs[i][j].x*inv_factor - inv_goat_width/2,
 			y = invs[i][j].y*inv_factor - inv_goat_height/2,
 
-			gdk_draw_drawable (geginv_pixmap,
-					   style->white_gc,
-					   goat,
-					   0, 0,
-					   x, y,
-					   inv_goat_width,
-					   inv_goat_height);
+                        gdk_cairo_set_source_pixmap (cr, goat, x, y);
+                        cairo_paint (cr);
 		}
 	}
 
+        cairo_set_source_rgb (cr, 0, 0, 0);
 	for (li = inv_shots; li != NULL; li = li->next) {
 		InvShot *shot = li->data;
 
-		gdk_draw_rectangle (geginv_pixmap,
-				    style->black_gc,
-				    TRUE /* filled */,
-				    (shot->x-1)*inv_factor,
-				    (shot->y-4)*inv_factor,
-				    3, 8);
+                cairo_rectangle (cr, 
+                                 (shot->x-1)*inv_factor,
+                                 (shot->y-4)*inv_factor,
+                                 3, 8);
+                cairo_fill (cr);
 	}
 
 	if ( ! inv_game_over) {
-		GdkPixmap *phsh;
-		GdkBitmap *mask;
+		GdkPixbuf *phsh;
 
 		if (inv_phsh_state < 5) {
-			phsh = inv_phsh1;
-			mask = inv_phsh1_mask;
+			phsh = phsh1;
 		} else {
-			phsh = inv_phsh2;
-			mask = inv_phsh2_mask;
+			phsh = phsh2;
 		}
 
-		gdk_gc_set_clip_origin (style->white_gc,
-					inv_our_x*inv_factor - inv_phsh_width/2,
-					550*inv_factor - inv_phsh_height/2);
-
-		gdk_gc_set_clip_mask (style->white_gc,
-				      mask);
-
-		gdk_draw_drawable (geginv_pixmap,
-				   style->white_gc,
-				   phsh,
-				   0, 0,
-				   inv_our_x*inv_factor - inv_phsh_width/2,
-				   550*inv_factor - inv_phsh_height/2,
-				   inv_phsh_width,
-				   inv_phsh_height);
-
-		gdk_gc_set_clip_origin (style->white_gc, 0, 0);
-
-		gdk_gc_set_clip_mask (style->white_gc, NULL);
+                gdk_cairo_set_source_pixbuf (cr, phsh,
+                                             inv_our_x*inv_factor - inv_phsh_width/2,
+                                             550*inv_factor - inv_phsh_height/2);
+                cairo_paint (cr);
 	}
 
-	gdk_draw_drawable (gtk_widget_get_window (geginv_canvas),
-			   style->white_gc,
-			   geginv_pixmap,
-			   0, 0,
-			   0, 0,
-			   inv_width, inv_height);
+        cairo_destroy (cr);
+
+        cr = gdk_cairo_create (gtk_widget_get_window (geginv_canvas));
+
+        gdk_cairo_set_source_pixmap (cr, geginv_pixmap, 0, 0);
+        cairo_paint (cr);
+
+        cairo_destroy (cr);
 
 	gdk_flush ();
 
@@ -772,7 +747,7 @@ inv_draw_explosion (int x, int y)
 	int i;
 	GdkColormap *cmap;
 	GdkColor red;
-	GdkGC *gc;
+	cairo_t *cr;
 
 	if ( ! gtk_widget_is_drawable (geginv_canvas))
 		return;
@@ -782,37 +757,30 @@ inv_draw_explosion (int x, int y)
 
 	cmap = gdk_drawable_get_colormap (window);
 	gdk_color_parse ("red", &red);
-	gdk_colormap_alloc_color (cmap, &red, FALSE, TRUE);
 
-	gc = gdk_gc_new (window);
-	gdk_gc_set_foreground (gc, &red);
-	gdk_gc_set_background (gc, &red);
+        cr = gdk_cairo_create (window);
+
+        gdk_cairo_set_source_color (cr, &red);
 
 	for (i = 5; i < 100; i += 5) {
-		gdk_draw_arc (window,
-			      gc,
-			      TRUE /* filled */,
-			      x-i, y-i,
-			      i*2, i*2,
-			      0, 360*64);
+                cairo_arc (cr, x, y, i, 0, 2 * G_PI);
+                cairo_fill (cr);
+
 		gdk_flush ();
 		g_usleep (50000);
 	}
 
-	g_object_unref (G_OBJECT (gc));
+        cairo_set_source_rgb (cr, 1, 1, 1);
 
 	for (i = 5; i < 100; i += 5) {
-		gdk_draw_arc (window,
-			      style->white_gc,
-			      TRUE /* filled */,
-			      x-i, y-i,
-			      i*2, i*2,
-			      0, 360*64);
+                cairo_arc (cr, x, y, i, 0, 2 * G_PI);
+                cairo_fill (cr);
+
 		gdk_flush ();
 		g_usleep (50000);
 	}
 	
-	gdk_colormap_free_colors (cmap, &red, 1);
+        cairo_destroy (cr);
 
 	inv_queue_draw (geginv);
 }
@@ -1230,7 +1198,7 @@ inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
 static gboolean
 ensure_creatures (void)
 {
-	GdkPixbuf *pb, *pb1, *phsh1, *phsh2, *goat1, *goat2;
+	GdkPixbuf *pb, *pb1, *goat1, *goat2;
 	char *phsh_file;
 	char *goat_file;
 
@@ -1306,10 +1274,6 @@ ensure_creatures (void)
 	g_object_unref (G_OBJECT (goat1));
 	gdk_pixbuf_render_pixmap_and_mask (goat2, &inv_goat2, NULL, 127);
 	g_object_unref (G_OBJECT (goat2));
-	gdk_pixbuf_render_pixmap_and_mask (phsh1, &inv_phsh1, &inv_phsh1_mask, 127);
-	g_object_unref (G_OBJECT (phsh1));
-	gdk_pixbuf_render_pixmap_and_mask (phsh2, &inv_phsh2, &inv_phsh2_mask, 127);
-	g_object_unref (G_OBJECT (phsh2));
 
 	return TRUE;
 }
@@ -1566,3 +1530,15 @@ panel_dialog_window_event (GtkWidget *window,
 
 	return FALSE;
 }
+
+#endif
+
+#include "nothing.h"
+void         start_screen_check      (void) { }
+void         start_geginv            (void) { }
+gboolean     panel_dialog_window_event (GtkWidget *window,
+                                        GdkEvent  *event) { return FALSE; }
+int          config_event              (GtkWidget *widget,
+                                        GdkEvent  *event,
+                                        GtkNotebook *nbook) { return 0; }
+

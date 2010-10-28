@@ -44,25 +44,22 @@ struct _PanelBackground {
 	PanelBackgroundChangedNotify notify_changed;
 	gpointer                user_data;
 
-	PanelColor              color;
+	GdkRGBA                 color;
 	char                   *image;
 	GdkPixbuf              *loaded_image; 
 
 	GtkOrientation          orientation;
 	GdkRectangle            region;
-	GdkPixbuf              *transformed_image;
-	GdkPixbuf              *composited_image;
+        cairo_pattern_t        *transformed_pattern;
+	cairo_pattern_t        *composited_pattern;
 
 	PanelBackgroundMonitor *monitor;
 	GdkPixbuf              *desktop;
 	gulong                  monitor_signal;
 
-	GdkPixmap              *pixmap;
 	GdkWindow              *window;
-	GdkColormap            *colormap;
-	GdkGC                  *gc;
 
-	GdkPixmap              *default_pixmap;
+	cairo_pattern_t        *default_pattern;
 	GdkColor                default_color;
 
         guint                   fit_image : 1;
@@ -83,19 +80,15 @@ void  panel_background_init              (PanelBackground     *background,
 void  panel_background_free              (PanelBackground     *background);
 void  panel_background_set               (PanelBackground     *background,
 					  PanelBackgroundType  type,
-					  PanelColor          *color,
+					  const GdkRGBA       *color,
 					  const char          *image,
 					  gboolean             fit_image,
 					  gboolean             stretch_image,
 					  gboolean             rotate_image); 
 void  panel_background_set_type          (PanelBackground     *background,
 					  PanelBackgroundType  type);
-void  panel_background_set_gdk_color     (PanelBackground     *background,
-					  GdkColor            *gdk_color);
-void  panel_background_set_opacity       (PanelBackground     *background,
-					  guint16              opacity);
 void  panel_background_set_color         (PanelBackground     *background,
-					  PanelColor          *color);
+					  const GdkRGBA       *color);
 void  panel_background_set_image         (PanelBackground     *background,
 					  const char          *image);
 void  panel_background_set_fit           (PanelBackground     *background,
@@ -106,7 +99,7 @@ void  panel_background_set_rotate        (PanelBackground     *background,
 					  gboolean             rotate_image);
 void  panel_background_set_default_style (PanelBackground     *background,
 					  GdkColor            *color,
-					  GdkPixmap           *pixmap);
+					  cairo_pattern_t     *pattern);
 void  panel_background_realized          (PanelBackground     *background,
 					  GdkWindow           *window);
 void  panel_background_unrealized        (PanelBackground     *background);
@@ -121,8 +114,7 @@ char *panel_background_make_string       (PanelBackground     *background,
 					  int                  y);
 
 PanelBackgroundType  panel_background_get_type   (PanelBackground *background);
-const PanelColor    *panel_background_get_color  (PanelBackground *background);
-const GdkPixmap     *panel_background_get_pixmap (PanelBackground *background);
+const GdkRGBA       *panel_background_get_color  (PanelBackground *background);
 
 PanelBackgroundType
       panel_background_effective_type    (PanelBackground     *background);

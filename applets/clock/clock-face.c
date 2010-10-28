@@ -22,12 +22,10 @@
 
 static GHashTable *pixbuf_cache = NULL;
 
-#define CLOCK_FACE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), INTL_TYPE_CLOCK_FACE, ClockFacePrivate))
-
 G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
 
 static void clock_face_finalize (GObject *);
-static gboolean clock_face_expose (GtkWidget *clock, GdkEventExpose *event);
+static gboolean clock_face_draw (GtkWidget *clock, cairo_t *cr);
 static void clock_face_size_request (GtkWidget *clock,
 				     GtkRequisition *requisition);
 static void clock_face_size_allocate (GtkWidget     *clock,
@@ -37,8 +35,6 @@ static void update_time_and_face (ClockFace *this,
                                   gboolean   force_face_loading);
 static void clock_face_load_face (ClockFace *this,
 				  gint width, gint height);
-
-typedef struct _ClockFacePrivate ClockFacePrivate;
 
 typedef enum {
 	CLOCK_FACE_MORNING,
@@ -70,7 +66,7 @@ clock_face_class_init (ClockFaceClass *class)
         widget_class = GTK_WIDGET_CLASS (class);
 
         /* GtkWidget signals */
-        widget_class->expose_event = clock_face_expose;
+        widget_class->draw = clock_face_draw;
         widget_class->size_request = clock_face_size_request;
         widget_class->size_allocate = clock_face_size_allocate;
 
@@ -83,7 +79,9 @@ clock_face_class_init (ClockFaceClass *class)
 static void
 clock_face_init (ClockFace *this)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv;
+
+        priv = this->priv = G_TYPE_INSTANCE_GET_PRIVATE (this, INTL_TYPE_CLOCK_FACE, ClockFacePrivate);
 
         priv->size = CLOCK_FACE_SMALL;
         priv->timeofday = CLOCK_FACE_INVALID;
@@ -93,19 +91,19 @@ clock_face_init (ClockFace *this)
         gtk_widget_set_has_window (GTK_WIDGET (this), FALSE);
 }
 
-static void
-draw (GtkWidget *this, cairo_t *cr)
+static gboolean
+clock_face_draw (GtkWidget *this, cairo_t *cr)
 {
-        ClockFacePrivate *priv;
-        GtkAllocation allocation;
+        ClockFacePrivate *priv = CLOCK_FACE (this)->priv;
+        int width, height;
         double x, y;
         double radius;
         int hours, minutes, seconds;
-
         /* Hand lengths as a multiple of the clock radius */
         double hour_length, min_length, sec_length;
 
-        priv = CLOCK_FACE_GET_PRIVATE (this);
+        if (GTK_WIDGET_CLASS (clock_face_parent_class)->draw)
+                GTK_WIDGET_CLASS (clock_face_parent_class)->draw (this, cr);
 
         if (priv->size == CLOCK_FACE_LARGE) {
                 hour_length = 0.45;
@@ -117,31 +115,21 @@ draw (GtkWidget *this, cairo_t *cr)
                 sec_length = 0.8;   /* not drawn currently */
         }
 
-        gtk_widget_get_allocation (this, &allocation);
+        width = gtk_widget_get_allocated_width (this);
+        height = gtk_widget_get_allocated_width (this);
 
-        x = allocation.x + allocation.width / 2;
-        y = allocation.y + allocation.height / 2;
-        radius = MIN (allocation.width / 2,
-                      allocation.height / 2) - 5;
-
-        cairo_save (cr);
-        cairo_translate (cr, allocation.x, allocation.y);
+        x = width / 2;
+        y = height / 2;
+        radius = MIN (width / 2, height / 2) - 5;
 
         /* clock back */
         if (priv->face_pixbuf) {
-                GdkWindow *window = gtk_widget_get_window (this);
-		gdk_draw_pixbuf (GDK_DRAWABLE (window),
-				 NULL,
-				 priv->face_pixbuf,
-				 0, 0,
-				 allocation.x,
-				 allocation.y,
-				 allocation.width,
-				 allocation.height,
-				 GDK_RGB_DITHER_NONE, 0, 0);
-        }
+                cairo_save (cr);
 
-        cairo_restore (cr);
+                gdk_cairo_set_source_pixbuf (cr, priv->face_pixbuf, 0, 0);
+                cairo_paint (cr);
+                cairo_restore (cr);
+        }
 
         /* clock hands */
         hours = priv->time.tm_hour;
@@ -182,24 +170,6 @@ draw (GtkWidget *this, cairo_t *cr)
                 cairo_stroke (cr);
                 cairo_restore (cr);
         }
-}
-
-static gboolean
-clock_face_expose (GtkWidget *this, GdkEventExpose *event)
-{
-        cairo_t *cr;
-
-        /* get a cairo_t */
-        cr = gdk_cairo_create (gtk_widget_get_window (this));
-
-        cairo_rectangle (cr,
-			 event->area.x, event->area.y,
-			 event->area.width, event->area.height);
-        cairo_clip (cr);
-
-        draw (this, cr);
-
-        cairo_destroy (cr);
 
         return FALSE;
 }
@@ -214,7 +184,7 @@ static void
 clock_face_size_request (GtkWidget *this,
 			 GtkRequisition *requisition)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv = CLOCK_FACE (this)->priv;
 
         if (priv->size_widget != NULL) {
                 GtkRequisition req;
@@ -278,7 +248,7 @@ update_time_and_face (ClockFace *this,
         ClockFacePrivate *priv;
 	ClockFaceTimeOfDay timeofday;
 
-        priv = CLOCK_FACE_GET_PRIVATE (this);
+        priv = this->priv;
 
         /* update the time */
         if (priv->location) {
@@ -339,7 +309,7 @@ GtkWidget *
 clock_face_new (ClockFaceSize size)
 {
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFacePrivate *priv = CLOCK_FACE (obj)->priv;
 
         priv->size = size;
 
@@ -352,7 +322,7 @@ clock_face_new_with_location (ClockFaceSize size,
 			      GtkWidget *size_widget)
 {
         GObject *obj = g_object_new (INTL_TYPE_CLOCK_FACE, NULL);
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFacePrivate *priv = CLOCK_FACE (obj)->priv;
 
         priv->size = size;
         priv->location = g_object_ref (loc);
@@ -364,7 +334,8 @@ clock_face_new_with_location (ClockFaceSize size,
 static void
 clock_face_finalize (GObject *obj)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (obj);
+        ClockFace *face = CLOCK_FACE (obj);
+        ClockFacePrivate *priv = face->priv;
 
         if (priv->location) {
                 g_object_unref (priv->location);
@@ -400,7 +371,7 @@ remove_pixbuf_from_cache (const char *key,
 static void
 clock_face_load_face (ClockFace *this, gint width, gint height)
 {
-        ClockFacePrivate *priv = CLOCK_FACE_GET_PRIVATE (this);
+        ClockFacePrivate *priv = this->priv;
 	const gchar *size_string[2] = { "small", "large" };
         const gchar *daytime_string[4] = { "morning", "day", "evening", "night" };
 	gchar *cache_name;

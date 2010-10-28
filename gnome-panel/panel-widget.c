@@ -67,7 +67,7 @@ static void panel_widget_cadd           (GtkContainer     *container,
 					 GtkWidget        *widget);
 static void panel_widget_cremove        (GtkContainer     *container,
 					 GtkWidget        *widget);
-static void panel_widget_destroy        (GtkObject        *obj);
+static void panel_widget_dispose        (GObject          *obj);
 static void panel_widget_finalize       (GObject          *obj);
 static void panel_widget_realize        (GtkWidget        *widget);
 static void panel_widget_unrealize      (GtkWidget        *panel);
@@ -125,10 +125,10 @@ add_tab_bindings (GtkBindingSet    *binding_set,
    	          GdkModifierType   modifiers,
 		  gboolean          next)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Tab, modifiers,
 				      "tab_move", 1,
 				      G_TYPE_BOOLEAN, next);
-  	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+  	gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Tab, modifiers,
 				      "tab_move", 1,
 				      G_TYPE_BOOLEAN, next);
 }
@@ -138,16 +138,16 @@ add_move_bindings (GtkBindingSet    *binding_set,
 		   GdkModifierType   modifiers,
 		   const gchar      *name)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Up, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Up, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
-	gtk_binding_entry_add_signal (binding_set, GDK_Down, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Down, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
-	gtk_binding_entry_add_signal (binding_set, GDK_Left, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Left, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
-	gtk_binding_entry_add_signal (binding_set, GDK_Right, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Right, modifiers,
                                       name, 1,
                                       GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
 }
@@ -172,19 +172,19 @@ add_all_move_bindings (PanelWidget *panel)
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Escape, 0,
+                                      GDK_KEY_Escape, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_KP_Enter, 0,
+                                      GDK_KEY_KP_Enter, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Return, 0,
+                                      GDK_KEY_Return, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_KP_Space, 0,
+                                      GDK_KEY_KP_Space, 0,
                                       "end_move", 0);
 	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_space, 0,
+                                      GDK_KEY_space, 0,
                                       "end_move", 0);
 
 	focus_widget = gtk_window_get_focus (GTK_WINDOW (panel->toplevel));
@@ -231,18 +231,18 @@ remove_tab_bindings (GtkBindingSet    *binding_set,
 		     GdkModifierType   modifiers,
 		     gboolean          next)
 {
-	gtk_binding_entry_remove (binding_set, GDK_Tab, modifiers);
-  	gtk_binding_entry_remove (binding_set, GDK_KP_Tab, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Tab, modifiers);
+  	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Tab, modifiers);
 }
 
 static void
 remove_move_bindings (GtkBindingSet    *binding_set,
 		      GdkModifierType   modifiers)
 {
-	gtk_binding_entry_remove (binding_set, GDK_Up, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Down, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Left, modifiers);
-	gtk_binding_entry_remove (binding_set, GDK_Right, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Up, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Down, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Left, modifiers);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Right, modifiers);
 }
 
 static void
@@ -264,18 +264,17 @@ remove_all_move_bindings (PanelWidget *panel)
 	remove_tab_bindings (binding_set, 0, TRUE);
 	remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
-	gtk_binding_entry_remove (binding_set, GDK_Escape, 0);
-	gtk_binding_entry_remove (binding_set, GDK_KP_Enter, 0);
-	gtk_binding_entry_remove (binding_set, GDK_Return, 0);
-	gtk_binding_entry_remove (binding_set, GDK_KP_Space, 0);
-	gtk_binding_entry_remove (binding_set, GDK_space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Escape, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Enter, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_Return, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_KP_Space, 0);
+	gtk_binding_entry_remove (binding_set, GDK_KEY_space, 0);
 }
 
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
-	GtkObjectClass *object_class = (GtkObjectClass*) class;
-	GObjectClass *gobject_class = (GObjectClass*) class;
+	GObjectClass *object_class = (GObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
@@ -407,8 +406,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->tab_move = panel_widget_tab_move;
 	class->end_move = panel_widget_end_move;
 
-	object_class->destroy = panel_widget_destroy;
-	gobject_class->finalize = panel_widget_finalize;
+	object_class->dispose = panel_widget_dispose;
+	object_class->finalize = panel_widget_finalize;
 	
 	widget_class->size_request = panel_widget_size_request;
 	widget_class->size_allocate = panel_widget_size_allocate;
@@ -1568,7 +1567,7 @@ panel_widget_style_set (GtkWidget *widget,
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
-			style->bg_pixmap [state]);
+			style->background [state]);
 	}
 }
 
@@ -1586,7 +1585,7 @@ panel_widget_state_changed (GtkWidget    *widget,
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
 			&style->bg [state],
-			style->bg_pixmap [state]);
+			style->background [state]);
 	}
 }
 
@@ -1624,7 +1623,7 @@ panel_widget_realize (GtkWidget *widget)
 	panel_background_set_default_style (
 		&panel->background,
 		&style->bg [state],
-		style->bg_pixmap [state]);
+		style->background [state]);
 
 	panel_background_realized (&panel->background, window);
 }
@@ -1694,13 +1693,9 @@ panel_widget_destroy_open_dialogs (PanelWidget *panel_widget)
 }
 
 static void
-panel_widget_destroy (GtkObject *obj)
+panel_widget_dispose (GObject *obj)
 {
-	PanelWidget *panel;
-
-	g_return_if_fail (PANEL_IS_WIDGET (obj));
-
-	panel = PANEL_WIDGET (obj);
+	PanelWidget *panel = PANEL_WIDGET (obj);
 
 	panels = g_slist_remove (panels, panel);
 
@@ -1715,8 +1710,7 @@ panel_widget_destroy (GtkObject *obj)
 		panel->master_widget = NULL;
 	}
 
-	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
-		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
+        G_OBJECT_CLASS (panel_widget_parent_class)->dispose (obj);
 }
 
 static void
@@ -2329,7 +2323,7 @@ panel_widget_applet_key_press_event (GtkWidget   *widget,
 	if (!panel_applet_in_drag)
 		return FALSE;
 	
-	return gtk_bindings_activate (GTK_OBJECT (panel),
+	return gtk_bindings_activate (G_OBJECT (panel),
 				      ((GdkEventKey *)event)->keyval, 
 				      ((GdkEventKey *)event)->state);	
 }

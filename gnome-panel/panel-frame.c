@@ -121,14 +121,15 @@ panel_frame_size_allocate (GtkWidget     *widget,
 }
 
 void
-panel_frame_draw (GtkWidget      *widget,
-		  PanelFrameEdge  edges)
+panel_frame_draw (GtkWidget     *widget,
+                  cairo_t       *cr,
+                  PanelFrameEdge edges)
 {
+        PanelFrame *frame = (PanelFrame *) widget;
 	GdkWindow     *window;
 	GtkStyle      *style;
 	GtkStateType   state;
-	GtkAllocation  allocation;
-	GdkGC         *dark, *light, *black;
+	GdkColor      *dark, *light, *black;
 	int            x, y, width, height;
 	int            xthickness, ythickness;
 
@@ -138,88 +139,101 @@ panel_frame_draw (GtkWidget      *widget,
 	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
-	gtk_widget_get_allocation (widget, &allocation);
+        width = gtk_widget_get_allocated_width (widget);
+        height = gtk_widget_get_allocated_height (widget);
 
-	dark  = style->dark_gc [state];
-	light = style->light_gc [state];
-	black = style->black_gc;
+	dark  = &style->dark [state];
+	light = &style->light [state];
+	black = &style->black;
 
 	xthickness = style->xthickness;
 	ythickness = style->ythickness;
 
-	x      = allocation.x;
-	y      = allocation.y;
-	width  = allocation.width;
-	height = allocation.height;
-
 	/* Copied from gtk_default_draw_shadow() */
 
-	if (edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
+        x = y = 0;
+
+        cairo_set_line_width (cr, 1);
+
+	if (frame->edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
 		if (ythickness > 1) {
-			gdk_draw_line (window, dark,
-				       x, y + height - 2,
-				       x + width - 1, y + height - 2);
-			gdk_draw_line (window, black,
-				       x, y + height - 1,
-				       x + width - 1, y + height - 1);
-		} else
-			gdk_draw_line (window, dark,
-				       x, y + height - 1,
-				       x + width - 1, y + height - 1);
+                        gdk_cairo_set_source_color (cr, dark);
+                        cairo_move_to (cr, x + .5, y + height - 2 + .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + height - 2 + .5);
+                        cairo_stroke (cr);
+
+                        gdk_cairo_set_source_color (cr, black);
+                        cairo_move_to (cr, x + .5, y + height - 1 - .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+                        cairo_stroke (cr);
+		} else {
+			gdk_cairo_set_source_color (cr, dark);
+                        cairo_move_to (cr, x + .5, y + height - 1 - .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+                        cairo_stroke (cr);
+                }
 	}
 
-	if (edges & PANEL_EDGE_RIGHT && xthickness > 0) {
+	if (frame->edges & PANEL_EDGE_RIGHT && xthickness > 0) {
 		if (xthickness > 1) {
-			gdk_draw_line (window, dark,
-				       x + width - 2, y,
-				       x + width - 2, y + height - 1);
+                        gdk_cairo_set_source_color (cr, dark);
+                        cairo_move_to (cr, x + width - 2 - .5, y + .5);
+                        cairo_line_to (cr, x + width - 2 - .5, y + height - 1 - .5);
+                        cairo_stroke (cr);
 
-			gdk_draw_line (window, black,
-				       x + width - 1, y,
-				       x + width - 1, y + height - 1);
-		} else
-			gdk_draw_line (window, dark,
-				       x + width - 1, y,
-				       x + width - 1, y + height - 1);
+                        gdk_cairo_set_source_color (cr, black);
+                        cairo_move_to (cr, x + width - 1 - .5, y + .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+                        cairo_stroke (cr);
+                } else {
+                        gdk_cairo_set_source_color (cr, dark);
+                        cairo_move_to (cr, x + width - 1 - .5, y + .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
+                        cairo_stroke (cr);
+                }
 	}
 
-	if (edges & PANEL_EDGE_TOP && ythickness > 0) {
-		gdk_draw_line (window, light,
-			       x, y, x + width - 1, y);
+	if (frame->edges & PANEL_EDGE_TOP && ythickness > 0) {
+                gdk_cairo_set_source_color (cr, light);
+                cairo_move_to (cr, x + .5, y + .5);
+                cairo_line_to (cr, x + width - 1 - .5, y + .5);
+                cairo_stroke (cr);
 
-		if (ythickness > 1)
-			gdk_draw_line (window,
-				       style->bg_gc [state],
-				       x, y + 1, x + width - 1, y + 1);
+		if (ythickness > 1) {
+                        gdk_cairo_set_source_color (cr, &style->bg [state]);
+                        cairo_move_to (cr, x + .5, y + 1 + .5);
+                        cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
+                        cairo_stroke (cr);
+                }
 	}
 
-	if (edges & PANEL_EDGE_LEFT && xthickness > 0) {
-		gdk_draw_line (window, light,
-			       x, y, x, y + height - 1);
+	if (frame->edges & PANEL_EDGE_LEFT && xthickness > 0) {
+                gdk_cairo_set_source_color (cr, light);
+                cairo_move_to (cr, x + .5, y + .5);
+                cairo_line_to (cr, x + .5, y + height - 1 - .5);
+                cairo_stroke (cr);
 
-		if (xthickness > 1)
-			gdk_draw_line (window,
-				       style->bg_gc [state],
-				       x + 1, y, x + 1, y + height - 1);
+		if (xthickness > 1) {
+                      gdk_cairo_set_source_color (cr, &style->bg [state]);
+                      cairo_move_to (cr, x + 1 + .5, y + .5);
+                      cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
+                      cairo_stroke (cr);
+                }
 	}
 }
 
 static gboolean
-panel_frame_expose (GtkWidget      *widget,
-		    GdkEventExpose *event)
+panel_frame_real_draw (GtkWidget *widget,
+                       cairo_t *cr)
 {
-	PanelFrame *frame = (PanelFrame *) widget;
-	gboolean    retval = FALSE;
+        gboolean    retval = FALSE;
 
-	if (!gtk_widget_is_drawable (widget))
-		return retval;
+        if (GTK_WIDGET_CLASS (panel_frame_parent_class)->draw)
+                retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->draw (widget, cr);
 
-	if (GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event)
-		retval = GTK_WIDGET_CLASS (panel_frame_parent_class)->expose_event (widget, event);
+        panel_frame_draw (widget, cr, PANEL_FRAME (widget)->edges);
 
-	panel_frame_draw (widget, frame->edges);
-
-	return retval;
+        return retval;
 }
 
 static void
@@ -277,7 +291,7 @@ panel_frame_class_init (PanelFrameClass *klass)
 
 	widget_class->size_request  = panel_frame_size_request;
 	widget_class->size_allocate = panel_frame_size_allocate;
-	widget_class->expose_event  = panel_frame_expose;
+	widget_class->draw          = panel_frame_real_draw;
 
 	g_object_class_install_property (
 		gobject_class,

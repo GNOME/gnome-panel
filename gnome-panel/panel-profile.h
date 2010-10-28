@@ -116,15 +116,10 @@ PanelBackgroundType
 gboolean    panel_profile_is_writable_background_type (PanelToplevel       *toplevel);
 
 void        panel_profile_set_background_color        (PanelToplevel       *toplevel,
-						       PanelColor          *color);
+						       const GdkRGBA       *color);
 void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
-						       PanelColor          *color);
+						       GdkRGBA             *color);
 gboolean    panel_profile_is_writable_background_color (PanelToplevel       *toplevel);
-
-void        panel_profile_set_background_gdk_color    (PanelToplevel       *toplevel,
-						       GdkColor            *gdk_color);
-void        panel_profile_get_background_gdk_color    (PanelToplevel       *toplevel,
-						       GdkColor            *gdk_color);
 
 void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
 						       guint16              opacity);

@@ -113,20 +113,21 @@ window_menu_destroy (GtkWidget  *widget,
 }
 
 static gboolean
-window_menu_on_expose (GtkWidget *widget,
-                       GdkEventExpose *event,
-                       gpointer data)
+window_menu_on_draw (GtkWidget *widget,
+                     cairo_t   *cr,
+                     gpointer   data)
 {
-	WindowMenu *window_menu = data;
+        WindowMenu *window_menu = data;
 
 	if (gtk_widget_has_focus (window_menu->applet))
 		gtk_paint_focus (gtk_widget_get_style (widget),
-				 gtk_widget_get_window (widget), 
+				 cr,
 				 gtk_widget_get_state (widget),
-				 NULL,
 				 widget,
 				 "menu-applet",
-				 0, 0, -1, -1);
+				 0, 0,
+                                 gtk_widget_get_allocated_width (widget),
+                                 gtk_widget_get_allocated_height (widget));
 	return FALSE;
 }
 
@@ -193,12 +194,12 @@ window_menu_key_press_event (GtkWidget   *widget,
 	WnckSelector *selector;
 
 	switch (event->keyval) {
-	case GDK_KP_Enter:
-	case GDK_ISO_Enter:
-	case GDK_3270_Enter:
-	case GDK_Return:
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_ISO_Enter:
+	case GDK_KEY_3270_Enter:
+	case GDK_KEY_Return:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		selector = WNCK_SELECTOR(window_menu->selector);
 		/* 
 		 * We need to call _gtk_menu_shell_activate() here as is done in 
@@ -208,10 +209,10 @@ window_menu_key_press_event (GtkWidget   *widget,
 		 * As that function is private its code is replicated here.
 		 */
 		menu_shell = GTK_MENU_SHELL (selector);
-		if (!menu_shell->active) {
+		if (!menu_shell->GSEAL(active)) {
 			gtk_grab_add (GTK_WIDGET (menu_shell));
-			menu_shell->have_grab = TRUE;
-			menu_shell->active = TRUE;
+			menu_shell->GSEAL(have_grab) = TRUE;
+			menu_shell->GSEAL(active) = TRUE;
 		}
 		gtk_menu_shell_select_first (menu_shell, FALSE);
 		return TRUE;
@@ -280,8 +281,8 @@ window_menu_applet_fill (PanelApplet *applet)
 				G_CALLBACK (gtk_widget_queue_draw), window_menu);
 	g_signal_connect_after (G_OBJECT (window_menu->applet), "focus-out-event",
 				G_CALLBACK (gtk_widget_queue_draw), window_menu);
-	g_signal_connect_after (G_OBJECT (window_menu->selector), "expose-event",
-				G_CALLBACK (window_menu_on_expose), window_menu);
+	g_signal_connect_after (G_OBJECT (window_menu->selector), "draw",
+				G_CALLBACK (window_menu_on_draw), window_menu);
 
 	g_signal_connect (G_OBJECT (window_menu->selector), "button_press_event",
 			  G_CALLBACK (filter_button_press), window_menu);

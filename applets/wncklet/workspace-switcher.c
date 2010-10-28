@@ -213,25 +213,11 @@ applet_change_orient (PanelApplet       *applet,
 
 static void
 applet_change_background (PanelApplet               *applet,
-			  PanelAppletBackgroundType  type,
-			  GdkColor                  *color,
-			  GdkPixmap                 *pixmap,
+                          cairo_pattern_t           *pattern,
 			  PagerData                 *pager)
 {
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-					    GTK_SHADOW_IN);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-					    GTK_SHADOW_NONE);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-					    GTK_SHADOW_NONE);
-		break;
-	}
+        wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+                                    pattern != NULL ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
 }
 
 static gboolean
@@ -731,10 +717,12 @@ static void
 num_workspaces_value_changed (GtkSpinButton *button,
 			      PagerData     *pager)
 {
+#if 0
 	/* Slow down a bit after the first change, since it's moving really to
 	 * fast. See bug #336731 for background.
 	 * FIXME: remove this if bug 410520 gets fixed. */
 	button->timer_step = 0.2;
+#endif
 
         wnck_screen_change_workspace_count (pager->screen,
                                             gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)));
@@ -833,8 +821,8 @@ close_dialog (GtkWidget *button,
 	*/
 
 	col = gtk_tree_view_get_column(GTK_TREE_VIEW (pager->workspaces_tree),0);
-	if (col->editable_widget != NULL && GTK_IS_CELL_EDITABLE (col->editable_widget))
-	    gtk_cell_editable_editing_done(col->editable_widget);
+	if (col->GSEAL (editable_widget) != NULL && GTK_IS_CELL_EDITABLE (col->GSEAL (editable_widget)))
+	    gtk_cell_editable_editing_done(col->GSEAL (editable_widget));
 
 	gtk_widget_destroy (pager->properties_dialog);
 }

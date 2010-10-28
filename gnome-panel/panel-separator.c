@@ -41,46 +41,37 @@ struct _PanelSeparatorPrivate {
 
 G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
 
-static void
-panel_separator_paint (GtkWidget    *widget,
-		       GdkRectangle *area)
+static gboolean
+panel_separator_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
-	PanelSeparator *separator;
-	GdkWindow      *window;
-	GtkStyle       *style;
-	GtkAllocation   allocation;
+        PanelSeparator *separator = PANEL_SEPARATOR (widget);
+        GdkWindow      *window;
+        GtkStyle       *style;
+        int             width, height;
 
-	separator = PANEL_SEPARATOR (widget);
+        if (GTK_WIDGET_CLASS (panel_separator_parent_class)->draw)
+                GTK_WIDGET_CLASS (panel_separator_parent_class)->draw (widget, cr);
 
 	window = gtk_widget_get_window (widget);
 	style = gtk_widget_get_style (widget);
-	gtk_widget_get_allocation (widget, &allocation);
+        width = gtk_widget_get_allocated_width (widget);
+        height = gtk_widget_get_allocated_height (widget);
 
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_paint_vline (style, window,
+		gtk_paint_vline (style, cr,
 				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
+				 widget, "separator",
 				 style->xthickness,
-				 allocation.height - style->xthickness,
-				 (allocation.width - style->xthickness) / 2);
+				 height - style->xthickness,
+				 (width - style->xthickness) / 2);
 	} else {
-		gtk_paint_hline (style, window,
+		gtk_paint_hline (style, cr,
 				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
+				 widget, "separator",
 				 style->ythickness,
-				 allocation.width - style->ythickness,
-				 (allocation.height  - style->ythickness) / 2);
-	}
-}
-
-static gboolean
-panel_separator_expose_event (GtkWidget      *widget,
-			      GdkEventExpose *event)
-{
-	if (gtk_widget_is_drawable (widget)) {
-		GTK_WIDGET_CLASS (panel_separator_parent_class)->expose_event (widget, event);
-
-		panel_separator_paint (widget, &event->area);
+				 width - style->ythickness,
+				 (height  - style->ythickness) / 2);
 	}
 
 	return FALSE;
@@ -158,7 +149,7 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 {
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
-	widget_class->expose_event  = panel_separator_expose_event;
+	widget_class->draw          = panel_separator_draw;
 	widget_class->size_request  = panel_separator_size_request;
 	widget_class->size_allocate = panel_separator_size_allocate;
 	widget_class->parent_set    = panel_separator_parent_set;

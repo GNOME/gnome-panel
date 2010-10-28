@@ -111,31 +111,12 @@ test_applet_handle_size_change (TestApplet *applet,
 
 static void
 test_applet_handle_background_change (TestApplet                *applet,
-				      PanelAppletBackgroundType  type,
-				      GdkColor                  *color,
-				      GdkPixmap                 *pixmap,
+				      cairo_pattern_t           *pattern,
 				      gpointer                   dummy)
 {
 	GdkWindow *window = gtk_widget_get_window (applet->label);
 
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		g_message ("Setting background to default");
-		gdk_window_set_back_pixmap (window, NULL, FALSE);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		g_message ("Setting background to #%2x%2x%2x",
-			   color->red, color->green, color->blue);
-		gdk_window_set_back_pixmap (window, NULL, FALSE);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		g_message ("Setting background to '%p'", pixmap);
-		gdk_window_set_back_pixmap (window, pixmap, FALSE);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+        gdk_window_set_background_pattern (window, pattern);
 }
 
 static gboolean

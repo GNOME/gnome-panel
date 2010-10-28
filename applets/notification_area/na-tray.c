@@ -528,10 +528,10 @@ update_size_and_orientation (NaTray *tray)
  * gdk_window_set_composited(). We need to paint these children ourselves.
  */
 static void
-na_tray_expose_icon (GtkWidget *widget,
-		     gpointer   data)
+na_tray_draw_icon (GtkWidget *widget,
+		   gpointer   data)
 {
-  cairo_t *cr = data;
+  cairo_t *cr = (cairo_t *) data;
 
   if (na_tray_child_has_alpha (NA_TRAY_CHILD (widget)))
     {
@@ -539,26 +539,23 @@ na_tray_expose_icon (GtkWidget *widget,
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      gdk_cairo_set_source_pixmap (cr,
+      cairo_save (cr);
+      gdk_cairo_set_source_window (cr,
                                    gtk_widget_get_window (widget),
 				   allocation.x,
 				   allocation.y);
+      cairo_rectangle (cr, allocation.x, allocation.y, allocation.width, allocation.height);
+      cairo_clip (cr);
       cairo_paint (cr);
+      cairo_restore (cr);
     }
 }
 
 static void
-na_tray_expose_box (GtkWidget      *box,
-		    GdkEventExpose *event)
+na_tray_draw_box (GtkWidget *box,
+		  cairo_t   *cr)
 {
-  cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (box));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  gtk_container_foreach (GTK_CONTAINER (box), na_tray_expose_icon, cr);
-
-  cairo_destroy (cr);
+  gtk_container_foreach (GTK_CONTAINER (box), na_tray_draw_icon, cr);
 }
 
 static void
@@ -576,8 +573,8 @@ na_tray_init (NaTray *tray)
   gtk_widget_show (priv->frame);
 
   priv->box = g_object_new (na_box_get_type (), NULL);
-  g_signal_connect (priv->box, "expose-event",
-		    G_CALLBACK (na_tray_expose_box), tray);
+  g_signal_connect (priv->box, "draw",
+		    G_CALLBACK (na_tray_draw_box), NULL);
   gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
   gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
   gtk_widget_show (priv->box);

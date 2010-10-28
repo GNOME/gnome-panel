@@ -90,21 +90,20 @@ struct _PanelAppletFramePrivate {
 	guint            has_handle : 1;
 };
 
-static void
-panel_applet_frame_paint (GtkWidget    *widget,
-			  GdkRectangle *area)
+static gboolean
+panel_applet_frame_draw (GtkWidget *widget,
+                         cairo_t   *cr)
 {
-	PanelAppletFrame *frame;
+        PanelAppletFrame *frame = PANEL_APPLET_FRAME (widget);
+        GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
-	frame = PANEL_APPLET_FRAME (widget);
+        if (GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw)
+                GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw (widget, cr);
 
 	if (!frame->priv->has_handle)
-		return;
+		return FALSE;
   
-	if (gtk_widget_is_drawable (widget)) {
-		GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
-
-		switch (frame->priv->orientation) {
+        switch (frame->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 		case PANEL_ORIENTATION_BOTTOM:
 			orientation = GTK_ORIENTATION_VERTICAL;
@@ -116,32 +115,20 @@ panel_applet_frame_paint (GtkWidget    *widget,
 		default:
 			g_assert_not_reached ();
 			break;
-		}
+        }
 
-		gtk_paint_handle (
-			gtk_widget_get_style (widget), gtk_widget_get_window (widget),
-			gtk_widget_get_state (widget),
-			GTK_SHADOW_OUT,
-			area, widget, "handlebox",
-			frame->priv->handle_rect.x,
-                        frame->priv->handle_rect.y,
-                        frame->priv->handle_rect.width,
-                        frame->priv->handle_rect.height,
-                        orientation);
-	}
-}
+        gtk_paint_handle (gtk_widget_get_style (widget),
+                          cr,
+                          gtk_widget_get_state (widget),
+                          GTK_SHADOW_OUT,
+                          widget, "handlebox",
+                          frame->priv->handle_rect.x,
+                          frame->priv->handle_rect.y,
+                          frame->priv->handle_rect.width,
+                          frame->priv->handle_rect.height,
+                          orientation);
 
-static gboolean
-panel_applet_frame_expose (GtkWidget      *widget,
-			   GdkEventExpose *event)
-{
-	if (gtk_widget_is_drawable (widget)) {
-		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->expose_event (widget, event);
-
-		panel_applet_frame_paint (widget, &event->area);
-	}
-
-	return FALSE;
+        return FALSE;
 }
 
 static void
@@ -405,7 +392,7 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass)
 
 	gobject_class->finalize = panel_applet_frame_finalize;
 
-	widget_class->expose_event         = panel_applet_frame_expose;
+	widget_class->draw                 = panel_applet_frame_draw;
 	widget_class->size_request         = panel_applet_frame_size_request;
 	widget_class->size_allocate        = panel_applet_frame_size_allocate;
 	widget_class->button_press_event   = panel_applet_frame_button_changed;

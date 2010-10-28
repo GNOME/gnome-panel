@@ -113,50 +113,18 @@ make_hc_pixbuf (GdkPixbuf *pb)
 static void
 button_widget_realize(GtkWidget *widget)
 {
-	GtkAllocation allocation;
-	GdkWindowAttr attributes;
-	gint attributes_mask;
-	GtkButton *button;
+        // FIXMEchpe why?
+        gtk_widget_add_events (widget, GDK_POINTER_MOTION_MASK |
+                                       GDK_POINTER_MOTION_HINT_MASK |
+                                       GDK_KEY_PRESS_MASK);
 
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
-
-	button = GTK_BUTTON (widget);
-
-	gtk_widget_set_realized (widget, TRUE);
-
-	gtk_widget_get_allocation (widget, &allocation);
-
-	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = allocation.x;
-	attributes.y = allocation.y;
-	attributes.width = allocation.width;
-	attributes.height = allocation.height;
-	attributes.wclass = GDK_INPUT_ONLY;
-	attributes.event_mask = (GDK_BUTTON_PRESS_MASK |
-				 GDK_BUTTON_RELEASE_MASK |
-				 GDK_POINTER_MOTION_MASK |
-				 GDK_POINTER_MOTION_HINT_MASK |
-				 GDK_KEY_PRESS_MASK |
-				 GDK_ENTER_NOTIFY_MASK |
-				 GDK_LEAVE_NOTIFY_MASK);
-	attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-	gtk_widget_set_window (widget, gtk_widget_get_parent_window (widget));
-	g_object_ref (gtk_widget_get_window (widget));
-      
-	button->event_window = gdk_window_new (gtk_widget_get_parent_window (widget),
-					       &attributes,
-					       attributes_mask);
-	gdk_window_set_user_data (button->event_window, widget);
-
-	widget->style = gtk_style_attach (widget->style, gtk_widget_get_window (widget));
+        GTK_WIDGET_CLASS (button_widget_parent_class)->realize (widget);
 
 	BUTTON_WIDGET (widget)->priv->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
 	g_signal_connect_object (BUTTON_WIDGET (widget)->priv->icon_theme,
 				 "changed",
 				 G_CALLBACK (button_widget_icon_theme_changed),
-				 button,
+				 widget,
 				 G_CONNECT_SWAPPED);
 
 	button_widget_reload_pixbuf (BUTTON_WIDGET (widget));
@@ -165,18 +133,9 @@ button_widget_realize(GtkWidget *widget)
 static void
 button_widget_unrealize (GtkWidget *widget)
 {
-	GtkButton *button;
-
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
-
-	button = GTK_BUTTON (widget);
-
-	if (button->event_window != NULL) {
-		gdk_window_set_user_data (button->event_window, NULL);
-		gdk_window_destroy (button->event_window);
-		button->event_window = NULL;
-	}
+        g_signal_handlers_disconnect_by_func (BUTTON_WIDGET (widget)->priv->icon_theme,
+                                              G_CALLBACK (button_widget_icon_theme_changed),
+                                              widget);
 
 	GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize (widget);
 }
@@ -255,8 +214,6 @@ button_widget_get_property (GObject    *object,
 {
 	ButtonWidget *button;
 
-	g_return_if_fail (BUTTON_IS_WIDGET (object));
-
 	button = BUTTON_WIDGET (object);
 
 	switch (prop_id) {
@@ -291,8 +248,6 @@ button_widget_set_property (GObject      *object,
 			    GParamSpec   *pspec)
 {
 	ButtonWidget *button;
-
-	g_return_if_fail (BUTTON_IS_WIDGET (object));
 
 	button = BUTTON_WIDGET (object);
 
@@ -365,39 +320,29 @@ calc_arrow (PanelOrientation  orientation,
 }
 
 static gboolean
-button_widget_expose (GtkWidget         *widget,
-		      GdkEventExpose    *event)
+button_widget_draw (GtkWidget *widget,
+		    cairo_t   *cr)
 {
-	ButtonWidget *button_widget;
-	GtkButton *button;
-	GdkWindow *window;
-	GtkAllocation allocation;
-	GdkRectangle area, image_bound;
+	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+        GtkButton *button = GTK_BUTTON (widget);
 	GtkStyle *style;
 	int off;
-	int x, y, w, h;
+        int width, height;
+        int x, y, w, h;
 	GdkPixbuf *pb = NULL;
-  
-	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
-
-	if (!gtk_widget_get_visible (widget) || !gtk_widget_get_mapped (widget))
-		return FALSE;
-
-	button_widget = BUTTON_WIDGET (widget);
 
 	if (!button_widget->priv->pixbuf_hc && !button_widget->priv->pixbuf)
 		return FALSE;
 
-	button = GTK_BUTTON (widget);
-	window = gtk_widget_get_window (widget);
-	gtk_widget_get_allocation (widget, &allocation);
+	width = gtk_widget_get_allocated_width (widget);
+        height = gtk_widget_get_allocated_height (widget);
 
 	/* offset for pressed buttons */
 	off = (button_widget->priv->activatable &&
-	       button->in_button && button->button_down) ?
-		BUTTON_WIDGET_DISPLACEMENT * allocation.height / 48.0 : 0;
+	       button->GSEAL(in_button) && button->GSEAL(button_down)) ?
+		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
+        /* FIXMEchpe replace this by cairo ops too! */
 	if (!button_widget->priv->activatable) {
 		pb = gdk_pixbuf_copy (button_widget->priv->pixbuf);
 		gdk_pixbuf_saturate_and_pixelate (button_widget->priv->pixbuf,
@@ -405,7 +350,7 @@ button_widget_expose (GtkWidget         *widget,
 						  0.8,
 						  TRUE);
 	} else if (panel_global_config_get_highlight_when_over () && 
-		   (button->in_button || gtk_widget_has_focus (widget)))
+		   (button->GSEAL(in_button) || gtk_widget_has_focus (widget)))
 		pb = g_object_ref (button_widget->priv->pixbuf_hc);
 	else
 		pb = g_object_ref (button_widget->priv->pixbuf);
@@ -414,24 +359,14 @@ button_widget_expose (GtkWidget         *widget,
 
 	w = gdk_pixbuf_get_width (pb);
 	h = gdk_pixbuf_get_height (pb);
-	x = allocation.x + off + (allocation.width - w)/2;
-	y = allocation.y + off + (allocation.height - h)/2;
-	
-	image_bound.x = x;
-	image_bound.y = y;      
-	image_bound.width = w;
-	image_bound.height = h;
-	
-	area = event->area;
+	x = off + (width - w)/2;
+	y = off + (height - h)/2;
 
-	if (gdk_rectangle_intersect (&area, &allocation, &area) &&
-	    gdk_rectangle_intersect (&image_bound, &area, &image_bound))
-		gdk_draw_pixbuf (window, NULL, pb,
-				 image_bound.x - x, image_bound.y - y,
-				 image_bound.x, image_bound.y,
-				 image_bound.width, image_bound.height,
-				 GDK_RGB_DITHER_NORMAL,
-				 0, 0);
+        cairo_save (cr);
+        gdk_cairo_set_source_pixbuf (cr, pb, x, y);
+        cairo_rectangle (cr, x, y, w, h);
+        cairo_paint (cr);
+        cairo_restore (cr);
 
 	g_object_unref (pb);
 
@@ -439,56 +374,47 @@ button_widget_expose (GtkWidget         *widget,
 
 	if (button_widget->priv->arrow) {
 		GtkArrowType arrow_type;
-		int          x, y, width, height;
-
-		x = y = width = height = -1;
 
 		arrow_type = calc_arrow (button_widget->priv->orientation,
-					 allocation.width,
-					 allocation.height,
-					 &x,
-					 &y,
-					 &width,
-					 &height);
+					 width,
+					 height,
+					 &x, &y, &w, &h);
 
 		gtk_paint_arrow (style,
-				 window,
+				 cr,
 				 GTK_STATE_NORMAL,
 				 GTK_SHADOW_NONE,
-				 NULL,
 				 widget,
 				 "panel-button",
 				 arrow_type,
 				 TRUE,
-				 allocation.x + x,
-				 allocation.y + y,
-				 width,
-				 height);
+				 x, y, w, h);
 	}
 
 	if (button_widget->priv->dnd_highlight) {
-		gdk_draw_rectangle(window, style->black_gc, FALSE,
-				   allocation.x, allocation.y,
-				   allocation.width - 1,
-				   allocation.height - 1);
+                cairo_save (cr);
+                cairo_set_line_width (cr, 1);
+                gdk_cairo_set_source_color (cr, &style->black);
+                cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
+                cairo_stroke (cr);
+                cairo_restore (cr);
 	}
 
 	if (gtk_widget_has_focus (widget)) {
 		gint focus_width, focus_pad;
-		gint x, y, width, height;
 
 		gtk_widget_style_get (widget,
 				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
-		x = allocation.x + focus_pad;
-		y = allocation.y + focus_pad;
-		width = allocation.width -  2 * focus_pad;
-		height = allocation.height - 2 * focus_pad;
-		gtk_paint_focus (style, window,
+		x = focus_pad;
+		y = focus_pad;
+		w= width -  2 * focus_pad;
+		h= height - 2 * focus_pad;
+		gtk_paint_focus (style, cr,
 				 GTK_STATE_NORMAL,
-				 &event->area, widget, "button",
-				 x, y, width, height);
+				 widget, "button",
+				 x, y, w, h);
 	}
 	
 	return FALSE;
@@ -511,8 +437,9 @@ button_widget_size_allocate (GtkWidget     *widget,
 			     GtkAllocation *allocation)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
-	GtkButton    *button = GTK_BUTTON (widget);
 	int           size;
+
+        GTK_WIDGET_CLASS (button_widget_parent_class)->size_allocate (widget, allocation);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
 		size = allocation->height;
@@ -534,16 +461,6 @@ button_widget_size_allocate (GtkWidget     *widget,
 		button_widget->priv->size = size;
 
 		button_widget_reload_pixbuf (button_widget);
-	}
-
-	gtk_widget_set_allocation (widget, allocation);
-
-	if (gtk_widget_get_realized (widget)) {
-		gdk_window_move_resize (button->event_window, 
-					allocation->x,
-					allocation->y,
-					allocation->width,
-					allocation->height);
 	}
 }
 
@@ -581,9 +498,9 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
-	in_button = GTK_BUTTON (widget)->in_button;
+	in_button = GTK_BUTTON (widget)->GSEAL(in_button);
 	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
-	if (in_button != GTK_BUTTON (widget)->in_button &&
+	if (in_button != GTK_BUTTON (widget)->GSEAL(in_button) &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
@@ -597,9 +514,9 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
-	in_button = GTK_BUTTON (widget)->in_button;
+	in_button = GTK_BUTTON (widget)->GSEAL(in_button);
 	GTK_WIDGET_CLASS (button_widget_parent_class)->leave_notify_event (widget, event);
-	if (in_button != GTK_BUTTON (widget)->in_button &&
+	if (in_button != GTK_BUTTON (widget)->GSEAL(in_button) &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
@@ -647,7 +564,7 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	widget_class->button_press_event = button_widget_button_press;
 	widget_class->enter_notify_event = button_widget_enter_notify;
 	widget_class->leave_notify_event = button_widget_leave_notify;
-	widget_class->expose_event       = button_widget_expose;
+	widget_class->draw               = button_widget_draw;
 
 	button_class->activate = button_widget_activate;
 

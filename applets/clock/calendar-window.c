@@ -1808,7 +1808,7 @@ calendar_window_set_property (GObject       *object,
 }
 
 static void
-calendar_window_destroy (GtkObject *object)
+calendar_window_dispose (GObject *object)
 {
 #ifdef HAVE_LIBECAL
 	CalendarWindow *calwin;
@@ -1848,20 +1848,18 @@ calendar_window_destroy (GtkObject *object)
 	calwin->priv->gconfclient = NULL;
 #endif /* HAVE_LIBECAL */
 
-	GTK_OBJECT_CLASS (calendar_window_parent_class)->destroy (object);
+	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
 }
 
 static void
 calendar_window_class_init (CalendarWindowClass *klass)
 {
 	GObjectClass   *gobject_class   = G_OBJECT_CLASS (klass);
-	GtkObjectClass *gtkobject_class = GTK_OBJECT_CLASS (klass);
 
 	gobject_class->constructor = calendar_window_constructor;
 	gobject_class->get_property = calendar_window_get_property;
         gobject_class->set_property = calendar_window_set_property;
-
-	gtkobject_class->destroy = calendar_window_destroy;
+	gobject_class->dispose = calendar_window_dispose;
 
 	g_type_class_add_private (klass, sizeof (CalendarWindowPrivate));
 

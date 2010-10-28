@@ -60,8 +60,8 @@ static void clock_map_size_request (GtkWidget *this,
                                         GtkRequisition *requisition);
 static void clock_map_size_allocate (GtkWidget *this,
 					 GtkAllocation *allocation);
-static gboolean clock_map_expose (GtkWidget *this,
-				      GdkEventExpose *expose);
+static gboolean clock_map_draw (GtkWidget *this,
+                                cairo_t *cr);
 
 static void clock_map_place_locations (ClockMap *this);
 static void clock_map_render_shadow (ClockMap *this);
@@ -90,7 +90,7 @@ clock_map_class_init (ClockMapClass *this_class)
         /* GtkWidget signals */
         widget_class->size_request = clock_map_size_request;
         widget_class->size_allocate = clock_map_size_allocate;
-	widget_class->expose_event = clock_map_expose;
+	widget_class->draw = clock_map_draw;
 
         g_type_class_add_private (this_class, sizeof (ClockMapPrivate));
 
@@ -217,61 +217,32 @@ clock_map_refresh (ClockMap *this)
 }
 
 static gboolean
-clock_map_expose (GtkWidget *this, GdkEventExpose *event)
+clock_map_draw (GtkWidget *this, cairo_t *cr)
 {
         ClockMapPrivate *priv = PRIVATE (this);
-	GdkWindow *window;
 	GtkStyle *style;
-	GtkAllocation allocation;
-	GdkRectangle region;
-        cairo_t *cr;
+        int width, height;
 
-	window = gtk_widget_get_window (this);
 	style = gtk_widget_get_style (this);
-	gtk_widget_get_allocation (this, &allocation);
 
+        width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+        height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
+
+        // FIXMEchpe fix this!
 	if (!priv->shadow_map_pixbuf) {
-                g_warning ("Needed to refresh the map in expose event.");
+                g_warning ("Needed to refresh the map in draw event.");
 		clock_map_refresh (CLOCK_MAP (this));
         }
 
-        cr = gdk_cairo_create (window);
-
-	region.x = allocation.x;
-	region.y = allocation.y;
-	region.width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
-	region.height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
-
-	gdk_rectangle_intersect (&region, &(event->area), &region);
-	gdk_draw_pixbuf (window,
-			 style->black_gc,
-			 priv->shadow_map_pixbuf,
-			 region.x - allocation.x,
-			 region.y - allocation.y,
-			 region.x,
-			 region.y,
-			 region.width,
-			 region.height,
-			 GDK_RGB_DITHER_NORMAL,
-			 0, 0);
+        gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
+        cairo_rectangle (cr, 0, 0, width, height);
+        cairo_paint (cr);
 
         /* draw a simple outline */
-        cairo_rectangle (
-                cr,
-                allocation.x + 0.5, allocation.y + 0.5,
-                gdk_pixbuf_get_width (priv->shadow_map_pixbuf) - 1,
-                gdk_pixbuf_get_height (priv->shadow_map_pixbuf) - 1);
-
-        cairo_set_source_rgb (
-                cr,
-                style->mid [GTK_STATE_ACTIVE].red   / 65535.0,
-                style->mid [GTK_STATE_ACTIVE].green / 65535.0,
-                style->mid [GTK_STATE_ACTIVE].blue  / 65535.0);
-
+        cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
+        gdk_cairo_set_source_color (cr, &style->mid [GTK_STATE_ACTIVE]);
         cairo_set_line_width (cr, 1.0);
         cairo_stroke (cr);
-
-        cairo_destroy (cr);
 
 	return FALSE;
 }

@@ -349,7 +349,7 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 {
 	panel_toplevel_pop_autohide_disabler (button->priv->toplevel);
 
-	GTK_BUTTON (button)->in_button = FALSE;
+	GTK_BUTTON (button)->GSEAL(in_button) = FALSE;
 	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
 }
 

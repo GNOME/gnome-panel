@@ -647,10 +647,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
        * be embedded. In almost all cases, this will be the same as the visual
        * of the screen.
        */
-      GdkColormap *colormap;
-
-      colormap = gdk_screen_get_default_colormap (manager->screen);
-      xvisual = GDK_VISUAL_XVISUAL (gdk_colormap_get_visual (colormap));
+      xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (manager->screen));
     }
 
   data[0] = XVisualIDFromVisual (xvisual);
