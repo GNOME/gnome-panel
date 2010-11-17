@@ -28,7 +28,7 @@
 #include <glib.h>
 #include <gconf/gconf-value.h>
 
-#include <panel-applet.h>
+#include "panel-applet.h"
 
 G_BEGIN_DECLS
 
