@@ -29,17 +29,18 @@ libtray_la_SOURCES =		\
 NOTIFICATION_AREA_SOURCES = main.c
 
 NOTIFICATION_AREA_LDADD =				\
+	libtray.la    				        \                               
 	../../libpanel-applet/libpanel-applet-3.la	\
 	$(X_LIBS)					\
 	$(NOTIFICATION_AREA_LIBS)			\
-	$(LIBPANEL_APPLET_LIBS)				\
-	libtray.la
+	$(LIBPANEL_APPLET_LIBS)
 
 testtray_SOURCES = testtray.c
 testtray_LDADD =			\
+	libtray.la			\
 	$(X_LIBS)			\
-	$(NOTIFICATION_AREA_LIBS)	\
-	libtray.la
+	$(NOTIFICATION_AREA_LIBS)
+
 
 if NOTIFICATION_AREA_INPROCESS
 APPLET_IN_PROCESS = true
