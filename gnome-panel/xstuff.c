@@ -182,12 +182,6 @@ xstuff_is_compliant_wm (void)
 	return TRUE;
 }
 
-gboolean
-xstuff_net_wm_supports (const char *hint)
-{
-	return gdk_net_wm_supports (gdk_atom_intern (hint, FALSE));
-}
-
 /* This is such a broken stupid function. */   
 void
 xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
