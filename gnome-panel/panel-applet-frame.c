@@ -154,43 +154,76 @@ panel_applet_frame_update_background_size (PanelAppletFrame *frame,
 }
 
 static void
-panel_applet_frame_size_request (GtkWidget      *widget,
-				 GtkRequisition *requisition)
+panel_applet_frame_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	PanelAppletFrame *frame;
 	GtkBin           *bin;
 	GtkWidget        *child;
-	GtkRequisition    child_requisition;
 	guint             border_width;
 
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
-		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_request (widget, requisition);
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->get_preferred_width (widget, minimal_width, natural_width);
 		return;
 	}
 
 	child = gtk_bin_get_child (bin);
-	if (child && gtk_widget_get_visible (child)) {
-		gtk_widget_size_request (child, &child_requisition);
-
-		requisition->width  = child_requisition.width;
-		requisition->height = child_requisition.height;
-	}
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_width (child, minimal_width, natural_width);
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-	requisition->width += border_width;
-	requisition->height += border_width;
+	*minimal_width += border_width;
+	*natural_width += border_width;
 
 	switch (frame->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
 	case PANEL_ORIENTATION_BOTTOM:
-		requisition->width += HANDLE_SIZE;
+		*minimal_width += HANDLE_SIZE;
+		*natural_width += HANDLE_SIZE;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 	case PANEL_ORIENTATION_RIGHT:
-		requisition->height += HANDLE_SIZE;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+panel_applet_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	PanelAppletFrame *frame;
+	GtkBin           *bin;
+	GtkWidget        *child;
+	guint             border_width;
+
+	frame = PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
+	if (!frame->priv->has_handle) {
+		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->get_preferred_height (widget, minimal_height, natural_height);
+		return;
+	}
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_height (child, minimal_height, natural_height);
+
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+	*minimal_height += border_width;
+	*natural_height += border_width;
+
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
+		*minimal_height += HANDLE_SIZE;
+		*natural_height += HANDLE_SIZE;
+		break;
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		break;
 	default:
 		g_assert_not_reached ();
@@ -393,7 +426,8 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass)
 	gobject_class->finalize = panel_applet_frame_finalize;
 
 	widget_class->draw                 = panel_applet_frame_draw;
-	widget_class->size_request         = panel_applet_frame_size_request;
+	widget_class->get_preferred_width  = panel_applet_frame_get_preferred_width;
+	widget_class->get_preferred_height = panel_applet_frame_get_preferred_height;
 	widget_class->size_allocate        = panel_applet_frame_size_allocate;
 	widget_class->button_press_event   = panel_applet_frame_button_changed;
 	widget_class->button_release_event = panel_applet_frame_button_changed;

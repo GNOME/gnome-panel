@@ -728,10 +728,23 @@ na_tray_set_property (GObject      *object,
 }
 
 static void
-na_tray_size_request (GtkWidget        *widget,
-                      GtkRequisition   *requisition)
+na_tray_get_preferred_width (GtkWidget *widget,
+                             gint      *minimal_width,
+                             gint      *natural_width)
 {
-  gtk_widget_size_request (gtk_bin_get_child (GTK_BIN (widget)), requisition);
+  gtk_widget_get_preferred_width (gtk_bin_get_child (GTK_BIN (widget)),
+                                  minimal_width,
+                                  natural_width);
+}
+
+static void
+na_tray_get_preferred_height (GtkWidget *widget,
+                              gint      *minimal_height,
+                              gint      *natural_height)
+{
+  gtk_widget_get_preferred_height (gtk_bin_get_child (GTK_BIN (widget)),
+                                   minimal_height,
+                                   natural_height);
 }
 
 static void
@@ -750,8 +763,8 @@ na_tray_class_init (NaTrayClass *klass)
   gobject_class->constructor = na_tray_constructor;
   gobject_class->set_property = na_tray_set_property;
   gobject_class->dispose = na_tray_dispose;
-
-  widget_class->size_request = na_tray_size_request;
+  widget_class->get_preferred_width = na_tray_get_preferred_width;
+  widget_class->get_preferred_height = na_tray_get_preferred_height;
   widget_class->size_allocate = na_tray_size_allocate;
 
   g_object_class_install_property

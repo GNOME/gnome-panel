@@ -59,22 +59,26 @@ static guint panel_widget_signals [LAST_SIGNAL] = {0};
 static gboolean panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
 
-static void panel_widget_size_request   (GtkWidget        *widget,
-					 GtkRequisition   *requisition);
-static void panel_widget_size_allocate  (GtkWidget        *widget,
-					 GtkAllocation    *allocation);
-static void panel_widget_cadd           (GtkContainer     *container,
-					 GtkWidget        *widget);
-static void panel_widget_cremove        (GtkContainer     *container,
-					 GtkWidget        *widget);
-static void panel_widget_dispose        (GObject          *obj);
-static void panel_widget_finalize       (GObject          *obj);
-static void panel_widget_realize        (GtkWidget        *widget);
-static void panel_widget_unrealize      (GtkWidget        *panel);
-static void panel_widget_state_changed  (GtkWidget        *widget,
-					 GtkStateType      previous_state);
-static void panel_widget_style_set      (GtkWidget        *widget,
-					 GtkStyle         *previous_style);
+static void panel_widget_get_preferred_width  (GtkWidget        *widget,
+					       gint             *minimal_width,
+					       gint             *natural_width);
+static void panel_widget_get_preferred_height (GtkWidget        *widget,
+					       gint             *minimal_height,
+					       gint             *natural_height);
+static void panel_widget_size_allocate        (GtkWidget        *widget,
+					       GtkAllocation    *allocation);
+static void panel_widget_cadd                 (GtkContainer     *container,
+					       GtkWidget        *widget);
+static void panel_widget_cremove              (GtkContainer     *container,
+					       GtkWidget        *widget);
+static void panel_widget_dispose              (GObject          *obj);
+static void panel_widget_finalize             (GObject          *obj);
+static void panel_widget_realize              (GtkWidget        *widget);
+static void panel_widget_unrealize            (GtkWidget        *panel);
+static void panel_widget_state_changed        (GtkWidget        *widget,
+					       GtkStateType      previous_state);
+static void panel_widget_style_set            (GtkWidget        *widget,
+					       GtkStyle         *previous_style);
 
 static void panel_widget_background_changed (PanelBackground *background,
 					     PanelWidget     *panel);
@@ -409,7 +413,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	object_class->dispose = panel_widget_dispose;
 	object_class->finalize = panel_widget_finalize;
 	
-	widget_class->size_request = panel_widget_size_request;
+	widget_class->get_preferred_width = panel_widget_get_preferred_width;
+	widget_class->get_preferred_height = panel_widget_get_preferred_height;
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->realize = panel_widget_realize;
 	widget_class->unrealize = panel_widget_unrealize;
@@ -1212,29 +1217,34 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
-		GtkRequisition chreq;
-		gtk_widget_size_request(ad->applet,&chreq);
+		gint min_width, preferred_width;
+		gint min_height, preferred_height;
+
+		gtk_widget_get_preferred_width (ad->applet, &min_width, &preferred_width);
+		gtk_widget_get_preferred_width (ad->applet, &min_height, &preferred_height);
+
+		/* FIXME: do something with minimum sizes */
 
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if (requisition->height < chreq.height && !ad->size_constrained)
-				requisition->height = chreq.height;
+			if (requisition->height < preferred_height && !ad->size_constrained)
+				requisition->height = preferred_height;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
 								ad);
 
 			else if (panel->packed)
-				requisition->width += chreq.width;
+				requisition->width += preferred_width;
 		} else {
-			if (requisition->width < chreq.width && !ad->size_constrained)
-				requisition->width = chreq.width;
+			if (requisition->width < preferred_width && !ad->size_constrained)
+				requisition->width = preferred_width;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
 								ad);
 
 			else if (panel->packed)
-				requisition->height += chreq.height;
+				requisition->height += preferred_height;
 		}
 	}
 
@@ -1291,6 +1301,26 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		if (requisition->height < 12 && !dont_fill)
 			requisition->height = 12;
 	}
+}
+
+static void
+panel_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+
+        panel_widget_size_request (widget, &requisition);
+
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void
+panel_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+
+        panel_widget_size_request (widget, &requisition);
+
+	*minimal_height = *natural_height = requisition.height;
 }
 
 static void

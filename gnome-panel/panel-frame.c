@@ -36,8 +36,7 @@ enum {
 };
 
 static void
-panel_frame_size_request (GtkWidget      *widget,
-			  GtkRequisition *requisition)
+panel_frame_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	PanelFrame *frame = (PanelFrame *) widget;
 	GtkBin     *bin   = (GtkBin *) widget;
@@ -48,24 +47,57 @@ panel_frame_size_request (GtkWidget      *widget,
 	style = gtk_widget_get_style (widget);
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-	requisition->width = 1;
-	requisition->height = 1;
+	*minimal_width = 1;
+	*natural_width = 1;
 
 	child = gtk_bin_get_child (bin);
 	if (child && gtk_widget_get_visible (child))
-		gtk_widget_size_request (child, requisition);
+		gtk_widget_get_preferred_width (child, minimal_width, natural_width);
 
-	requisition->width  += border_width;
-	requisition->height += border_width;
+	*minimal_width += border_width;
+	*natural_width += border_width;
 
-	if (frame->edges & PANEL_EDGE_TOP)
-		requisition->height += style->xthickness;
-	if (frame->edges & PANEL_EDGE_BOTTOM)
-		requisition->height += style->xthickness;
-	if (frame->edges & PANEL_EDGE_LEFT)
-		requisition->width += style->ythickness;
-	if (frame->edges & PANEL_EDGE_RIGHT)
-		requisition->width += style->ythickness;
+	if (frame->edges & PANEL_EDGE_LEFT) {
+		*minimal_width += style->ythickness;
+		*natural_width += style->ythickness;
+	}
+	if (frame->edges & PANEL_EDGE_RIGHT) {
+		*minimal_width += style->ythickness;
+		*natural_width += style->ythickness;
+	}
+}
+
+static void
+panel_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	PanelFrame *frame = (PanelFrame *) widget;
+	GtkBin     *bin   = (GtkBin *) widget;
+	GtkStyle   *style;
+	GtkWidget  *child;
+	int         border_width;
+
+	style = gtk_widget_get_style (widget);
+	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+	*minimal_height = 1;
+	*natural_height = 1;
+
+	child = gtk_bin_get_child (bin);
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_get_preferred_height (child, minimal_height, natural_height);
+
+	*minimal_height += border_width;
+	*natural_height += border_width;
+
+
+	if (frame->edges & PANEL_EDGE_TOP) {
+		*minimal_height += style->xthickness;
+		*natural_height += style->xthickness;
+	}
+	if (frame->edges & PANEL_EDGE_BOTTOM) {
+		*minimal_height += style->xthickness;
+		*natural_height += style->xthickness;
+	}
 }
 
 static void
@@ -289,9 +321,10 @@ panel_frame_class_init (PanelFrameClass *klass)
 	gobject_class->set_property = panel_frame_set_property;
         gobject_class->get_property = panel_frame_get_property;
 
-	widget_class->size_request  = panel_frame_size_request;
-	widget_class->size_allocate = panel_frame_size_allocate;
-	widget_class->draw          = panel_frame_real_draw;
+	widget_class->get_preferred_width  = panel_frame_get_preferred_width;
+	widget_class->get_preferred_height = panel_frame_get_preferred_height;
+	widget_class->size_allocate        = panel_frame_size_allocate;
+	widget_class->draw                 = panel_frame_real_draw;
 
 	g_object_class_install_property (
 		gobject_class,

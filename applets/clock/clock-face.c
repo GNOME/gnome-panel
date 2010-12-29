@@ -24,12 +24,17 @@ static GHashTable *pixbuf_cache = NULL;
 
 G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
 
-static void clock_face_finalize (GObject *);
-static gboolean clock_face_draw (GtkWidget *clock, cairo_t *cr);
-static void clock_face_size_request (GtkWidget *clock,
-				     GtkRequisition *requisition);
-static void clock_face_size_allocate (GtkWidget     *clock,
-				      GtkAllocation *allocation);
+static void     clock_face_finalize             (GObject *);
+static gboolean clock_face_draw                 (GtkWidget     *clock,
+                                                 cairo_t       *cr);
+static void     clock_face_get_preferred_width  (GtkWidget     *this,
+                                                 gint          *minimal_width,
+                                                 gint          *natural_width);
+static void     clock_face_get_preferred_height (GtkWidget     *this,
+                                                 gint          *minimal_height,
+                                                 gint          *natural_height);
+static void     clock_face_size_allocate        (GtkWidget     *clock,
+				                 GtkAllocation *allocation);
 
 static void update_time_and_face (ClockFace *this,
                                   gboolean   force_face_loading);
@@ -67,7 +72,8 @@ clock_face_class_init (ClockFaceClass *class)
 
         /* GtkWidget signals */
         widget_class->draw = clock_face_draw;
-        widget_class->size_request = clock_face_size_request;
+        widget_class->get_preferred_width  = clock_face_get_preferred_width;
+        widget_class->get_preferred_height = clock_face_get_preferred_height;
         widget_class->size_allocate = clock_face_size_allocate;
 
         /* GObject signals */
@@ -181,40 +187,68 @@ clock_face_redraw_canvas (ClockFace *this)
 }
 
 static void
-clock_face_size_request (GtkWidget *this,
-			 GtkRequisition *requisition)
+clock_face_get_preferred_width (GtkWidget *this,
+                                gint      *minimal_width,
+                                gint      *natural_width)
 {
         ClockFacePrivate *priv = CLOCK_FACE (this)->priv;
 
         if (priv->size_widget != NULL) {
-                GtkRequisition req;
+               int child_minimal_height;
+               int child_natural_height;
 
                 /* Tie our size to the height of the size_widget */
-                gtk_widget_size_request (GTK_WIDGET (priv->size_widget), &req);
+                gtk_widget_get_preferred_height (GTK_WIDGET (priv->size_widget),
+                                                 &child_minimal_height,
+                                                 &child_natural_height);
 
                 /* Pad out our height by a little bit - this improves
                    the balance */
-                requisition->width = req.height + req.height / 8;
-                requisition->height = req.height + req.height / 8;
+                *minimal_width = child_minimal_height + child_minimal_height / 8;
+                *natural_width = child_natural_height + child_natural_height / 8;
         } else if (priv->face_pixbuf != NULL) {
-                int w, h;
-
                 /* Use the size of the current pixbuf */
-                w = gdk_pixbuf_get_width (GDK_PIXBUF (priv->face_pixbuf));
-                h = gdk_pixbuf_get_height (GDK_PIXBUF (priv->face_pixbuf));
-
-                requisition->width = w;
-                requisition->height = h;
+                *minimal_width = *natural_width = gdk_pixbuf_get_width (GDK_PIXBUF (priv->face_pixbuf));
         } else {
                 /* we don't know anything, so use known dimensions for the svg
                  * files */
-                if (priv->size == CLOCK_FACE_LARGE) {
-                        requisition->width = 50;
-                        requisition->height = 50;
-                } else {
-                        requisition->width = 36;
-                        requisition->height = 36;
-                }
+                if (priv->size == CLOCK_FACE_LARGE)
+                        *minimal_width = *natural_width = 50;
+                else
+                        *minimal_width = *natural_width = 36;
+        }
+}
+
+static void
+clock_face_get_preferred_height (GtkWidget *this,
+                                 gint      *minimal_height,
+                                 gint      *natural_height)
+{
+        ClockFacePrivate *priv = CLOCK_FACE (this)->priv;
+
+        if (priv->size_widget != NULL) {
+               int child_minimal_height;
+               int child_natural_height;
+
+                /* Tie our size to the height of the size_widget */
+                gtk_widget_get_preferred_height (GTK_WIDGET (priv->size_widget),
+                                                 &child_minimal_height,
+                                                 &child_natural_height);
+
+                /* Pad out our height by a little bit - this improves
+                   the balance */
+                *minimal_height = child_minimal_height + child_minimal_height / 8;
+                *natural_height = child_natural_height + child_natural_height / 8;
+        } else if (priv->face_pixbuf != NULL) {
+                /* Use the size of the current pixbuf */
+                *minimal_height = *natural_height = gdk_pixbuf_get_height (GDK_PIXBUF (priv->face_pixbuf));
+        } else {
+                /* we don't know anything, so use known dimensions for the svg
+                 * files */
+                if (priv->size == CLOCK_FACE_LARGE)
+                        *minimal_height = *natural_height = 50;
+                else
+                        *minimal_height = *natural_height = 36;
         }
 }
 

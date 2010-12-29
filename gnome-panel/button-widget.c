@@ -421,16 +421,21 @@ button_widget_draw (GtkWidget *widget,
 }
 
 static void
-button_widget_size_request (GtkWidget      *widget,
-			    GtkRequisition *requisition)
+button_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	if (button_widget->priv->pixbuf) {
-		requisition->width  = gdk_pixbuf_get_width  (button_widget->priv->pixbuf);
-		requisition->height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
-	}
+	*minimal_width = *natural_width = gdk_pixbuf_get_width  (button_widget->priv->pixbuf);
 }
+
+static void
+button_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+
+	*minimal_height = *natural_height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
+}
+
 
 static void
 button_widget_size_allocate (GtkWidget     *widget,
@@ -557,14 +562,15 @@ button_widget_class_init (ButtonWidgetClass *klass)
 
 	g_type_class_add_private (klass, sizeof (ButtonWidgetPrivate));
 	  
-	widget_class->realize            = button_widget_realize;
-	widget_class->unrealize          = button_widget_unrealize;
-	widget_class->size_allocate      = button_widget_size_allocate;
-	widget_class->size_request       = button_widget_size_request;
-	widget_class->button_press_event = button_widget_button_press;
-	widget_class->enter_notify_event = button_widget_enter_notify;
-	widget_class->leave_notify_event = button_widget_leave_notify;
-	widget_class->draw               = button_widget_draw;
+	widget_class->realize              = button_widget_realize;
+	widget_class->unrealize            = button_widget_unrealize;
+	widget_class->size_allocate        = button_widget_size_allocate;
+	widget_class->get_preferred_width  = button_widget_get_preferred_width;
+	widget_class->get_preferred_height = button_widget_get_preferred_height;
+	widget_class->button_press_event   = button_widget_button_press;
+	widget_class->enter_notify_event   = button_widget_enter_notify;
+	widget_class->leave_notify_event   = button_widget_leave_notify;
+	widget_class->draw                 = button_widget_draw;
 
 	button_class->activate = button_widget_activate;
 

@@ -78,8 +78,7 @@ panel_separator_draw (GtkWidget *widget,
 }
 
 static void
-panel_separator_size_request (GtkWidget      *widget,
-			      GtkRequisition *requisition)
+panel_separator_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
 {
 	PanelSeparator *separator;
 	int             size;
@@ -88,13 +87,26 @@ panel_separator_size_request (GtkWidget      *widget,
 
 	size = panel_toplevel_get_size (separator->priv->panel->toplevel);
 
-	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL) {
-		requisition->width = size;
-		requisition->height = SEPARATOR_SIZE;
-	} else {
-		requisition->width = SEPARATOR_SIZE;
-		requisition->height = size;
-	}
+	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
+		*minimal_width = *natural_width = size;
+	else
+		*minimal_width = *natural_width = SEPARATOR_SIZE;
+}
+
+static void
+panel_separator_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	PanelSeparator *separator;
+	int             size;
+
+	separator = PANEL_SEPARATOR (widget);
+
+	size = panel_toplevel_get_size (separator->priv->panel->toplevel);
+
+	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
+		*minimal_height = *natural_height = SEPARATOR_SIZE;
+	else
+		*minimal_height = *natural_height = size;
 }
 
 static void
@@ -149,10 +161,11 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 {
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
-	widget_class->draw          = panel_separator_draw;
-	widget_class->size_request  = panel_separator_size_request;
-	widget_class->size_allocate = panel_separator_size_allocate;
-	widget_class->parent_set    = panel_separator_parent_set;
+	widget_class->draw                 = panel_separator_draw;
+	widget_class->get_preferred_width  = panel_separator_get_preferred_width;
+	widget_class->get_preferred_height = panel_separator_get_preferred_height;
+	widget_class->size_allocate        = panel_separator_size_allocate;
+	widget_class->parent_set           = panel_separator_parent_set;
 
 	g_type_class_add_private (klass, sizeof (PanelSeparatorPrivate));
 }

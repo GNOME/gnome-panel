@@ -55,13 +55,17 @@ typedef struct {
         GdkPixbuf *shadow_map_pixbuf;
 } ClockMapPrivate;
 
-static void clock_map_finalize (GObject *);
-static void clock_map_size_request (GtkWidget *this,
-                                        GtkRequisition *requisition);
-static void clock_map_size_allocate (GtkWidget *this,
-					 GtkAllocation *allocation);
-static gboolean clock_map_draw (GtkWidget *this,
-                                cairo_t *cr);
+static void     clock_map_finalize             (GObject *);
+static void     clock_map_get_preferred_width  (GtkWidget     *this,
+                                                gint          *minimal_width,
+                                                gint          *natural_width);
+static void     clock_map_get_preferred_height (GtkWidget     *this,
+                                                gint          *minimal_height,
+                                                gint          *natural_height);
+static void     clock_map_size_allocate        (GtkWidget     *this,
+                                                GtkAllocation *allocation);
+static gboolean clock_map_draw                 (GtkWidget     *this,
+                                                cairo_t       *cr);
 
 static void clock_map_place_locations (ClockMap *this);
 static void clock_map_render_shadow (ClockMap *this);
@@ -88,7 +92,8 @@ clock_map_class_init (ClockMapClass *this_class)
         g_obj_class->finalize = clock_map_finalize;
 
         /* GtkWidget signals */
-        widget_class->size_request = clock_map_size_request;
+        widget_class->get_preferred_width  = clock_map_get_preferred_width;
+        widget_class->get_preferred_height = clock_map_get_preferred_height;
         widget_class->size_allocate = clock_map_size_allocate;
 	widget_class->draw = clock_map_draw;
 
@@ -248,10 +253,19 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
 }
 
 static void
-clock_map_size_request (GtkWidget *this, GtkRequisition *requisition)
+clock_map_get_preferred_width (GtkWidget *this,
+                               gint      *minimal_width,
+                               gint      *natural_width)
 {
-        requisition->width = 250;
-        requisition->height = 125;
+        *minimal_width = *natural_width = 250;
+}
+
+static void
+clock_map_get_preferred_height (GtkWidget *this,
+                                gint      *minimal_height,
+                                gint      *natural_height)
+{
+        *minimal_height = *natural_height = 125;
 }
 
 static void

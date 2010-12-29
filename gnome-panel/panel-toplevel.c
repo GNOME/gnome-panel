@@ -3062,6 +3062,7 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	GdkRectangle   old_geometry;
 	int            position_changed = FALSE;
 	int            size_changed = FALSE;
+	int            dummy; /* to pass a valid pointer */
 
 	toplevel = PANEL_TOPLEVEL (widget);
 	bin = GTK_BIN (widget);
@@ -3071,8 +3072,10 @@ panel_toplevel_size_request (GtkWidget      *widget,
 	panel_toplevel_update_monitor (toplevel);
 
 	child = gtk_bin_get_child (bin);
-	if (child && gtk_widget_get_visible (child))
-		gtk_widget_size_request (child, requisition);
+	if (child && gtk_widget_get_visible (child)) {
+		gtk_widget_get_preferred_width (child, &dummy, &requisition->width);
+		gtk_widget_get_preferred_height (child, &dummy, &requisition->height);
+	}
 
 	old_geometry = toplevel->priv->geometry;
 
@@ -3093,6 +3096,26 @@ panel_toplevel_size_request (GtkWidget      *widget,
 		position_changed = TRUE;
 
 	panel_toplevel_move_resize_window (toplevel, position_changed, size_changed);
+}
+
+static void
+panel_toplevel_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+{
+	GtkRequisition requisition;
+
+	panel_toplevel_size_request (widget, &requisition);
+
+	*minimal_width = *natural_width = requisition.width;
+}
+
+static void
+panel_toplevel_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+{
+	GtkRequisition requisition;
+
+	panel_toplevel_size_request (widget, &requisition);
+
+	*minimal_height = *natural_height = requisition.height;
 }
 
 static void
@@ -4098,7 +4121,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
 	widget_class->realize              = panel_toplevel_realize;
 	widget_class->unrealize            = panel_toplevel_unrealize;
-	widget_class->size_request         = panel_toplevel_size_request;
+	widget_class->get_preferred_width  = panel_toplevel_get_preferred_width;
+	widget_class->get_preferred_height = panel_toplevel_get_preferred_height;
 	widget_class->size_allocate        = panel_toplevel_size_allocate;
 	widget_class->draw                 = panel_toplevel_draw;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
