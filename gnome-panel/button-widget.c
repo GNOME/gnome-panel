@@ -324,8 +324,8 @@ button_widget_draw (GtkWidget *widget,
 		    cairo_t   *cr)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
-        GtkButton *button = GTK_BUTTON (widget);
 	GtkStyle *style;
+	GtkStateFlags state_flags;
 	int off;
         int width, height;
         int x, y, w, h;
@@ -338,8 +338,9 @@ button_widget_draw (GtkWidget *widget,
         height = gtk_widget_get_allocated_height (widget);
 
 	/* offset for pressed buttons */
+	state_flags = gtk_widget_get_state_flags (widget);
 	off = (button_widget->priv->activatable &&
-	       button->GSEAL(in_button) && button->GSEAL(button_down)) ?
+	       state_flags & (GTK_STATE_FLAG_PRELIGHT | GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
         /* FIXMEchpe replace this by cairo ops too! */
@@ -350,7 +351,7 @@ button_widget_draw (GtkWidget *widget,
 						  0.8,
 						  TRUE);
 	} else if (panel_global_config_get_highlight_when_over () && 
-		   (button->GSEAL(in_button) || gtk_widget_has_focus (widget)))
+		   (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget)))
 		pb = g_object_ref (button_widget->priv->pixbuf_hc);
 	else
 		pb = g_object_ref (button_widget->priv->pixbuf);
@@ -499,13 +500,18 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 static gboolean
 button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
+	GtkStateFlags state_flags;
 	gboolean in_button;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
-	in_button = GTK_BUTTON (widget)->GSEAL(in_button);
+	state_flags = gtk_widget_get_state_flags (widget);
+	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
+
 	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
-	if (in_button != GTK_BUTTON (widget)->GSEAL(in_button) &&
+
+	state_flags = gtk_widget_get_state_flags (widget);
+	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
@@ -515,13 +521,18 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
+	GtkStateFlags state_flags;
 	gboolean in_button;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
-	in_button = GTK_BUTTON (widget)->GSEAL(in_button);
+	state_flags = gtk_widget_get_state_flags (widget);
+	in_button = state_flags & GTK_STATE_FLAG_PRELIGHT;
+
 	GTK_WIDGET_CLASS (button_widget_parent_class)->leave_notify_event (widget, event);
-	if (in_button != GTK_BUTTON (widget)->GSEAL(in_button) &&
+
+	state_flags = gtk_widget_get_state_flags (widget);
+	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
 	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
