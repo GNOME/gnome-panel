@@ -424,7 +424,7 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 	}
 
 	gdk_window_get_geometry (monitor->gdkwindow,
-				 NULL, NULL, &rwidth, &rheight, NULL);
+				 NULL, NULL, &rwidth, &rheight);
 
 	monitor->width  = MIN (pwidth,  rwidth);
 	monitor->height = MIN (pheight, rheight);

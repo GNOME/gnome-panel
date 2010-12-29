@@ -1471,8 +1471,7 @@ panel_applet_get_background (PanelApplet *applet)
 	} else if (elements [0] && !strcmp (elements [0], "color")) {
                 GdkRGBA color;
 
-		if (!elements [1] || !gdk_rgba_parse (elements [1], &color)) {
-
+		if (!elements [1] || !gdk_rgba_parse (&color, elements [1])) {
 			g_warning ("Incomplete '%s' background type received", elements [0]);
 			goto out;
 		}
