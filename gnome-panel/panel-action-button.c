@@ -238,14 +238,25 @@ panel_action_force_quit (GtkWidget *widget)
 static void
 panel_action_connect_server (GtkWidget *widget)
 {
-	GdkScreen *screen;
-	GError    *error;
-	
+	GdkScreen           *screen;
+	GdkAppLaunchContext *launch_context;
+	GAppInfo            *app_info;
+	GError              *error;
+
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
+	app_info = g_app_info_create_from_commandline ("nautilus-connect-server",
+						       _("Connect to server"),
+						       G_APP_INFO_CREATE_NONE,
+						       &error);
 
-	gdk_spawn_command_line_on_screen (screen, "nautilus-connect-server",
-					  &error);
+	if (!error) {
+		launch_context = gdk_app_launch_context_new ();
+		gdk_app_launch_context_set_screen (launch_context, screen);
+		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
+
+		g_object_unref (launch_context);
+	}
 
 	if (error) {
 		panel_error_dialog (NULL, screen,
@@ -255,6 +266,8 @@ panel_action_connect_server (GtkWidget *widget)
 				    error->message);
 		g_clear_error (&error);
 	}
+
+	g_object_unref (app_info);
 }
 
 typedef struct {
