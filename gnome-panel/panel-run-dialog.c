@@ -44,7 +44,7 @@
 #include <gmenu-tree.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
-#include <libgnome/gnome-desktop-utils.h>
+#include <libgnome-desktop/gnome-desktop-utils.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>

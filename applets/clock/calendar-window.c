@@ -43,7 +43,7 @@
 #include <gconf/gconf-client.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
-#include <libgnome/gnome-desktop-utils.h>
+#include <libgnome-desktop/gnome-desktop-utils.h>
 
 #include "calendar-window.h"
 
