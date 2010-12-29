@@ -2188,7 +2188,7 @@ location_start_element (GMarkupParseContext *context,
 					  latitude, longitude, code, &prefs);
 
 	if (current && clock_location_is_current_timezone (loc))
-		clock_location_make_current (loc, GDK_WINDOW_XWINDOW (gtk_widget_get_window (cd->applet)),
+		clock_location_make_current (loc, GDK_WINDOW_XID (gtk_widget_get_window (cd->applet)),
 					     NULL, NULL, NULL);
 
         data->cities = g_list_append (data->cities, loc);

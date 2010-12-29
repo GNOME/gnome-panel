@@ -204,7 +204,7 @@ make_current (GtkWidget *widget, ClockLocationTile *tile)
 		GdkWindow *window = gtk_widget_get_window (toplevel);
 
 		if (window)
-			xid = GDK_WINDOW_XWINDOW (window);
+			xid = GDK_WINDOW_XID (window);
 	}
 
 	clock_location_make_current (priv->location,

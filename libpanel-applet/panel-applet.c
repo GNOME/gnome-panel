@@ -709,7 +709,7 @@ panel_applet_request_focus (PanelApplet	 *applet,
 	display = gdk_screen_get_display (screen);
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
-	xroot	 = GDK_WINDOW_XWINDOW (root);
+	xroot	 = GDK_WINDOW_XID (root);
 
 	panel_applet_init_atoms (xdisplay);
 
@@ -1072,8 +1072,8 @@ panel_applet_button_event (GtkWidget      *widget,
 	}
 
 	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
-	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (socket_window);
-	xevent.xbutton.root        = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window
+	xevent.xbutton.window      = GDK_WINDOW_XID (socket_window);
+	xevent.xbutton.root        = GDK_WINDOW_XID (gdk_screen_get_root_window
 							 (gdk_window_get_screen (window)));
 	/*
 	 * FIXME: the following might cause
@@ -1090,7 +1090,7 @@ panel_applet_button_event (GtkWidget      *widget,
 	gdk_error_trap_push ();
 
 	XSendEvent (GDK_WINDOW_XDISPLAY (window),
-		    GDK_WINDOW_XWINDOW (socket_window),
+		    GDK_WINDOW_XID (socket_window),
 		    False, NoEventMask, &xevent);
 
 	gdk_error_trap_pop_ignored ();
