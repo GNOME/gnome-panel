@@ -251,7 +251,7 @@ handle_button_press_event (GtkWidget *popup,
 	window = find_managed_window (event->display, event->subwindow);
 
 	if (window != None) {
-		if (!gdk_xid_table_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
+		if (gdk_x11_lookup_xdisplay (event->display), window)
 			kill_window_question ((gpointer) window);
 	}
 }
