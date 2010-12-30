@@ -399,6 +399,8 @@ panel_lock_screen_action (GdkScreen  *screen,
 {
 	GError  *error            = NULL;
 	char    *command          = NULL;
+	GdkAppLaunchContext *launch_context = NULL;
+	GAppInfo            *app_info = NULL;
 
 	g_return_if_fail (GDK_IS_SCREEN (screen));
 	g_return_if_fail (action != NULL);
@@ -412,7 +414,21 @@ panel_lock_screen_action (GdkScreen  *screen,
 	if (!command)
 		return;
 
-	if (!gdk_spawn_command_line_on_screen (screen, command, &error)) {
+	app_info = g_app_info_create_from_commandline (command,
+						       NULL,
+						       G_APP_INFO_CREATE_NONE,
+						       &error);
+
+	if (!error) {
+		launch_context = gdk_app_launch_context_new ();
+		gdk_app_launch_context_set_screen (launch_context, screen);
+		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
+
+		g_object_unref (launch_context);
+	}
+
+	/* error either by create or launch the command */
+	if (error) {
 		char *primary;
 
 		primary = g_strdup_printf (_("Could not execute '%s'"),
@@ -425,6 +441,7 @@ panel_lock_screen_action (GdkScreen  *screen,
 	}
 
 	g_free (command);
+	g_object_unref (app_info);
 }
 
 void
