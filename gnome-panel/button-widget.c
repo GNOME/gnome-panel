@@ -422,19 +422,27 @@ button_widget_draw (GtkWidget *widget,
 }
 
 static void
-button_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
+button_widget_get_preferred_width (GtkWidget *widget,
+				   gint *minimal_width,
+				   gint *natural_width)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	*minimal_width = *natural_width = gdk_pixbuf_get_width  (button_widget->priv->pixbuf);
+	if (button_widget->priv->pixbuf) {
+		*minimal_width = *natural_width = gdk_pixbuf_get_width (button_widget->priv->pixbuf);
+	}
 }
 
 static void
-button_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
+button_widget_get_preferred_height (GtkWidget *widget,
+				    gint *minimal_height,
+				    gint *natural_height)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	*minimal_height = *natural_height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
+	if (button_widget->priv->pixbuf) {
+		*minimal_height = *natural_height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
+	}
 }
 
 
