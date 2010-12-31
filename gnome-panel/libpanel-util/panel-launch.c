@@ -242,7 +242,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 				NULL, /* envp */
 				G_SPAWN_SEARCH_PATH,
 				set_environment,
-				&display,
+				display,
 				NULL,
 				&local_error);
 

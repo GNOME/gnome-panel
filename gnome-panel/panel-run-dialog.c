@@ -392,7 +392,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				NULL, /* envp */
 				G_SPAWN_SEARCH_PATH,
 				set_environment,
-				&display,
+				display,
 				NULL,
 				&error);
 
