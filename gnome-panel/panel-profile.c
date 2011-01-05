@@ -445,7 +445,7 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 
         key = panel_profile_get_toplevel_key (toplevel, "background/color");
         color_str = gconf_client_get_string (client, key, NULL);
-        if (!color_str || !gdk_rgba_parse(color_str, color)) {
+        if (!color_str || !gdk_rgba_parse(color, color_str)) {
                 color->red   = 0.;
                 color->green = 0.;
                 color->blue  = 0.;
@@ -785,7 +785,7 @@ get_background_color (GConfClient *client,
 		g_warning (_("Error reading GConf string value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-	} else if (!color_str || !gdk_rgba_parse (color_str, color)) {
+	} else if (!color_str || !gdk_rgba_parse (color, color_str)) {
 		color->red   = 0.;
 		color->green = 0.;
 		color->blue  = 0.;
@@ -1229,7 +1229,7 @@ panel_profile_background_change_notify (GConfClient   *client,
 
 			str = gconf_value_get_string (value);
 
-			if (gdk_rgba_parse (str, &color))
+			if (gdk_rgba_parse (&color, str))
 				panel_background_set_color (background, &color);
 		}
 #if 0
