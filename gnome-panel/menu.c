@@ -1589,9 +1589,13 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 			   GtkWidget *menu)
 {
 	guint idle_id;
+	GList *list, *l;
 
-	while (GTK_MENU_SHELL (menu)->GSEAL(children))
-                gtk_widget_destroy (GTK_MENU_SHELL (menu)->GSEAL(children)->data);
+	/* Remove existing items */
+	list = gtk_container_get_children (GTK_CONTAINER (menu));
+	for (l = list; l; l = l->next)
+		gtk_widget_destroy (l->data);
+	g_list_free (list);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
