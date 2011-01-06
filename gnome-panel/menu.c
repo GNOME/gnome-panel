@@ -1903,22 +1903,21 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 			      GdkEventKey *event)
 {
 	gboolean retval = FALSE;
+	GtkWidget *active_menu_item = NULL;
 
 	if ((event->keyval == GDK_KEY_Menu) ||
 	    (event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
-		if (menu_shell->GSEAL(active_menu_item) &&
-		    GTK_MENU_ITEM (menu_shell->GSEAL(active_menu_item))->GSEAL(submenu) == NULL) {
+		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
+		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (menu_shell->GSEAL(active_menu_item),
-						 &bevent);
+			retval = show_item_menu (active_menu_item, &bevent);
 		}
-		
 	}
 	return retval;
 }
