@@ -837,7 +837,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 		if (viewable)
 			xgrab_shell = parent;
 
-		parent = GTK_MENU_SHELL (parent)->GSEAL(parent_menu_shell);
+		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
 	}
 
 	/*only grab if this HAD a grab before*/
@@ -1052,7 +1052,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       if (viewable)
 	xgrab_shell = parent;
       
-      parent = GTK_MENU_SHELL (parent)->GSEAL(parent_menu_shell);
+      parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
     }
   
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
