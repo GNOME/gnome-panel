@@ -812,6 +812,9 @@ close_dialog (GtkWidget *button,
 {
 	PagerData *pager = data;
 	GtkTreeViewColumn *col;
+	GtkCellArea *area;
+	GtkCellEditable *edit_widget;
+
 
 	/* This is a hack. The "editable" signal for GtkCellRenderer is emitted
 	only on button press or focus cycle. Hence when the user changes the
@@ -820,9 +823,12 @@ close_dialog (GtkWidget *button,
 	to stop the editing. Thanks to Paolo for a better crack than the one I had.
 	*/
 
-	col = gtk_tree_view_get_column(GTK_TREE_VIEW (pager->workspaces_tree),0);
-	if (col->GSEAL (editable_widget) != NULL && GTK_IS_CELL_EDITABLE (col->GSEAL (editable_widget)))
-	    gtk_cell_editable_editing_done(col->GSEAL (editable_widget));
+	col = gtk_tree_view_get_column (GTK_TREE_VIEW (pager->workspaces_tree), 0);
+	area = gtk_cell_layout_get_area (GTK_CELL_LAYOUT (col));
+	edit_widget = gtk_cell_area_get_edit_widget (area);
+
+	if (edit_widget)
+		gtk_cell_editable_editing_done (edit_widget);
 
 	gtk_widget_destroy (pager->properties_dialog);
 }
