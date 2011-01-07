@@ -1908,7 +1908,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 					   APPLET_EVENT_MASK, NULL,
 					   fleur_cursor, time_);
 
-		gdk_cursor_unref (fleur_cursor);
+		g_object_unref (fleur_cursor);
 		gdk_flush ();
 
 		if (status != GDK_GRAB_SUCCESS) {

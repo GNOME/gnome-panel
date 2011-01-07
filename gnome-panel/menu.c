@@ -1075,7 +1075,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	    }
 	}
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
     }
 }
 
