@@ -616,7 +616,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 	screen = gtk_widget_get_screen (applet);
 
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
 	gtk_widget_get_pointer (applet, &pointer_x, &pointer_y);

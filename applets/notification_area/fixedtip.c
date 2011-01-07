@@ -137,7 +137,7 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 
   gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
 
-  gtk_widget_size_request (GTK_WIDGET (fixedtip), &req);
+  gtk_widget_get_preferred_size (GTK_WIDGET (fixedtip), &req, NULL);
 
   gdk_window_get_origin (parent_window, &root_x, &root_y);
   parent_width = gdk_window_get_width (parent_window);

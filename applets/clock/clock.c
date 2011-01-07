@@ -881,7 +881,7 @@ position_calendar_popup (ClockData *cd)
 			       &x, &y);
 
 	gtk_window_get_size (GTK_WINDOW (cd->calendar_popup), &w, &h);
-	gtk_widget_size_request (cd->calendar_popup, &req);
+	gtk_widget_get_preferred_size (cd->calendar_popup, &req, NULL);
 	w = req.width;
 	h = req.height;
 
