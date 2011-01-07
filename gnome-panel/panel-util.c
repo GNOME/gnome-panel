@@ -401,6 +401,7 @@ panel_lock_screen_action (GdkScreen  *screen,
 	char    *command          = NULL;
 	GdkAppLaunchContext *launch_context = NULL;
 	GAppInfo            *app_info = NULL;
+	GdkDisplay          *display;
 
 	g_return_if_fail (GDK_IS_SCREEN (screen));
 	g_return_if_fail (action != NULL);
@@ -420,7 +421,8 @@ panel_lock_screen_action (GdkScreen  *screen,
 						       &error);
 
 	if (!error) {
-		launch_context = gdk_app_launch_context_new ();
+		display = gdk_screen_get_display (screen);
+		launch_context = gdk_display_get_app_launch_context (display);
 		gdk_app_launch_context_set_screen (launch_context, screen);
 		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
 

@@ -242,6 +242,7 @@ panel_action_connect_server (GtkWidget *widget)
 	GdkAppLaunchContext *launch_context;
 	GAppInfo            *app_info;
 	GError              *error;
+	GdkDisplay          *display;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
@@ -251,7 +252,8 @@ panel_action_connect_server (GtkWidget *widget)
 						       &error);
 
 	if (!error) {
-		launch_context = gdk_app_launch_context_new ();
+		display = gdk_screen_get_display (screen);
+		launch_context = gdk_display_get_app_launch_context (display);
 		gdk_app_launch_context_set_screen (launch_context, screen);
 		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
 

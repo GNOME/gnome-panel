@@ -88,12 +88,14 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 	GdkAppLaunchContext *context;
 	GError              *local_error;
 	gboolean             retval;
+	GdkDisplay          *display;
 
 	g_return_val_if_fail (G_IS_APP_INFO (appinfo), FALSE);
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-	context = gdk_app_launch_context_new ();
+	display = gdk_screen_get_display (screen);
+	context = gdk_display_get_app_launch_context (display);
 	gdk_app_launch_context_set_screen (context, screen);
 	gdk_app_launch_context_set_timestamp (context, timestamp);
 
