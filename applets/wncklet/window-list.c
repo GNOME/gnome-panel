@@ -391,7 +391,7 @@ applet_size_request (GtkWidget      *widget,
 	GtkRequisition child_req;
     	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
 
-	gtk_widget_get_child_requisition (tasklist->applet, &child_req);
+	gtk_widget_get_preferred_size (tasklist->applet, &child_req, NULL);
 
 	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
 	g_assert (len % 2 == 0);
