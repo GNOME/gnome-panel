@@ -1341,9 +1341,13 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 	GdkDisplay *display;
 	GdkScreen  *screen;
 	GtkWidget  *widget;
+	GdkDeviceManager *device_manager;
+	GdkDevice  *pointer;
 	int         x, y;
 
 	display = gdk_display_get_default ();
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
 	widget  = GTK_WIDGET (toplevel);
 
 	if (!gtk_widget_get_realized (widget))
@@ -1351,7 +1355,7 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 
 	screen = NULL;
 	x = y = -1;
-	gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+	gdk_device_get_position (pointer, &screen, &x, &y);
 
 	if (screen != gtk_window_get_screen (GTK_WINDOW (toplevel)))
 		return FALSE;
