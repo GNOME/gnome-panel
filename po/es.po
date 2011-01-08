@@ -14,15 +14,15 @@
 # Ismael Olea <olea@hispafuentes.com> 2000.
 # Manuel de Vega Barreiro <barreiro@arrakis.es> 2000.
 # Juan Manuel García Molina <juanma_gm@wanadoo.es> 2001-2002.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&component=general\n"
-"POT-Creation-Date: 2010-10-18 17:20+0000\n"
-"PO-Revision-Date: 2010-10-24 12:05+0200\n"
+"POT-Creation-Date: 2011-01-08 01:43+0000\n"
+"PO-Revision-Date: 2011-01-08 12:21+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2450,13 +2450,18 @@ msgstr ""
 "El identificador del panel de nivel superior el cual contiene este objeto."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
+#| msgid ""
+#| "The implementation ID of the applet - e.g. \"ClockAppletFactory::"
+#| "ClockApplet\". This key is only relevant if the object_type key is "
+#| "\"bonobo-applet\"."
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
 "El ID de la implementación de la miniaplicación; ej. «ClockAppletFactory::"
 "ClockApplet». Esta clave sólo es relevante si el valor de la clave "
-"«object_type» es «bonobo-applet»."
+"«object_type» es «external-applet» (o la clave obsoleta «bonobo-applet»)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2506,13 +2511,18 @@ msgstr ""
 "object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
+#| msgid ""
+#| "The type of this panel object. Possible values are \"drawer-object\", "
+#| "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
+#| "\" and \"menu-bar\"."
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "El tipo de objeto del panel. Los valores posibles son «drawer-object», «menu-"
-"object», «launcher-object», «bonobo-applet», «action-applet» y «menu-bar»."
+"object», «launcher-object», «external-applet», «action-applet», «menu-bar» y "
+"«separator»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2542,20 +2552,20 @@ msgstr "Utilizar un icono personalizado para el botón del objeto"
 msgid "Use custom path for menu contents"
 msgstr "Utilizar una ruta personalizada para el contenido del menú"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Error al leer el valor de la cadena GConf «%s»: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Error al leer el valor entero GConf «%s»: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2564,7 +2574,7 @@ msgstr ""
 "El panel «%s» está configurado para mostrarse en la pantalla %d la cual no "
 "está disponible actualmente. Este panel no se cargará."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Error al leer el valor booleano GConf «%s»: %s"
