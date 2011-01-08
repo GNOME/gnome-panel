@@ -1064,9 +1064,7 @@ panel_applet_button_event (GtkWidget      *widget,
 		 * selected.
 		 * We don't want to hog the pointer on our parent.
 		 */
-		gdk_display_pointer_ungrab
-			(gtk_widget_get_display (widget),
-			 GDK_CURRENT_TIME);
+		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
 	} else {
 		xevent.xbutton.type = ButtonRelease;
 	}
