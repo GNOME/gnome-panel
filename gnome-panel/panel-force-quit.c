@@ -100,14 +100,22 @@ display_popup_window (GdkScreen *screen)
 static void
 remove_popup (GtkWidget *popup)
 {
-	GdkWindow *root;
+	GdkWindow     *root;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDeviceManager *device_manager;
 
 	root = gdk_screen_get_root_window (
 			gtk_window_get_screen (GTK_WINDOW (popup)));
 	gdk_window_remove_filter (root, (GdkFilterFunc) popup_filter, popup);
 
 	gtk_widget_destroy (popup);
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
+
+	display = gdk_window_get_display (root);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 }
 
@@ -288,6 +296,9 @@ panel_force_quit (GdkScreen *screen,
 	GdkCursor     *cross;
 	GtkWidget     *popup;
 	GdkWindow     *root;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDeviceManager *device_manager;
 
 	popup = display_popup_window (screen);
 
@@ -296,9 +307,18 @@ panel_force_quit (GdkScreen *screen,
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 
 	cross = gdk_cursor_new (GDK_CROSS);
-	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
-				   NULL, cross, time);
+
+	display = gdk_window_get_display (root);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+	status = gdk_device_grab (pointer, root,
+				  GDK_OWNERSHIP_NONE, FALSE,
+				  GDK_BUTTON_PRESS_MASK,
+				  cross, time);
+
 	g_object_unref (cross);
+
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
 		remove_popup (popup);

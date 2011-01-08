@@ -446,6 +446,9 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkWindow     *window;
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDeviceManager *device_manager;
 
 	if (toplevel->priv->state != PANEL_STATE_NORMAL ||
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
@@ -499,9 +502,16 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 				toplevel, toplevel->priv->grab_op);
 
 	cursor = gdk_cursor_new (cursor_type);
-	gdk_pointer_grab (window, FALSE,
-			  GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-			  NULL, cursor, time_);
+
+	display = gdk_window_get_display (window);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+	gdk_device_grab (pointer, window,
+		         GDK_OWNERSHIP_NONE, FALSE,
+			 GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+			 cursor, time_);
+
 	g_object_unref (cursor);
 
 	if (grab_keyboard)
@@ -513,6 +523,9 @@ panel_toplevel_end_grab_op (PanelToplevel *toplevel,
 			    guint32        time_)
 {
 	GtkWidget *widget;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDeviceManager *device_manager;
 
 	g_return_if_fail (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE);
 
@@ -523,7 +536,11 @@ panel_toplevel_end_grab_op (PanelToplevel *toplevel,
 
 	gtk_grab_remove (widget);
 
-	gdk_pointer_ungrab (time_);
+	display = gtk_widget_get_display (widget);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+
+	gdk_device_ungrab (pointer, time_);
 	gdk_keyboard_ungrab (time_);
 }
 
