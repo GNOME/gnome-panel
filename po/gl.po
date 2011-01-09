@@ -13,20 +13,20 @@
 # Mancomún - Centro de Referencia e Servizos de Software Libre <g11n@mancomun.org>, 2009.
 # Fran Dieguez <fran.dieguez@glug.es>, 2009.
 # Antón Méixome <meixome@mancomun.org>, 2009.
-# Fran Diéguez <frandieguez@ubuntu.com>, 2010.
+# Fran Diéguez <frandieguez@ubuntu.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-20 12:41+0200\n"
-"PO-Revision-Date: 2010-07-20 12:44+0200\n"
+"POT-Creation-Date: 2011-01-09 15:50+0100\n"
+"PO-Revision-Date: 2011-01-09 15:52+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: gl\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -739,30 +739,6 @@ msgstr "Non foi posíbel mostrar o documento de axuda «%s»"
 #: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Produciuse un erro ao mostrar o documento de axuda"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
-msgid "Change system time"
-msgstr "Cambiar a hora do sistema"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
-msgid "Change system time zone"
-msgstr "Cambiar o fuso horario do sistema"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
-msgid "Configure hardware clock"
-msgstr "Configurar o reloxo de hardware"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
-msgid "Privileges are required to change the system time zone."
-msgstr "Requírense privilexios para cambiar o fuso horario do sistema."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
-msgid "Privileges are required to change the system time."
-msgstr "Requírense privilexios para cambiar a hora do sistema."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
-msgid "Privileges are required to configure the hardware clock."
-msgstr "Requírense privilexios para configurar o reloxo de hardware."
 
 #: ../applets/fish/fish.c:274
 #, c-format
@@ -1548,7 +1524,7 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "Non foi posíbel encontrar un espazo baleiro"
 
@@ -1765,7 +1741,7 @@ msgstr ""
 "Localizar documentos e cartafoles neste computador por nome ou por contido"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Forzar a saída"
 
@@ -2019,11 +1995,11 @@ msgstr ""
 "Prema sobre unha xanela para forzar o aplicativo a saír. Para cancelar prema "
 "<ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Quere forzar a saída deste aplicativo?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2459,11 +2435,12 @@ msgstr "O identificador do panel de nivel superior que contén este obxecto."
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
 "O ID da implementación do miniaplicativo - por exemplo \"ClockAppletFactory::"
 "ClockApplet\". Esta chave só ten relevancia se a chave object_type é "
-"\"bonobo-applet\"."
+"\"external-applet\" (ou o obsoleto «bonobo-applet»)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2513,13 +2490,13 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
-"O tipo deste obxecto de panel. Os valores posíbeis son \"drawer-object"
-"\" (caixón), \"menu-object\" (menú), \"launcher-object\" (iniciador), "
-"\"bonobo-applet\" (miniaplicativo bonobo), \"action-applet\" (miniaplicativo "
-"de acción) e \"menu-bar\" (barra de menú)."
+"O tipo de este obxecto de panel. Os valores posíbeis son «drawer-"
+"object» (caixón), «menu-object» (menú), «launcher-object» (iniciador), "
+"«external-applet» (miniaplicativo externo), «action-applet» (miniaplicativo "
+"de acción), «menu-bar» (barra de menú) e «separator» (separador)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2549,20 +2526,20 @@ msgstr "Usar icona personalizada para o botón do obxecto"
 msgid "Use custom path for menu contents"
 msgstr "Usar un camiño personalizado para os contidos do menú"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Produciuse un erro ao ler o valor da cadea GConf «%s»: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Produciuse un erro ao ler o valor enteiro do GConf «%s»: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2571,7 +2548,7 @@ msgstr ""
 "O panel «%s» está configurado para mostrarse na pantalla %d, que non está "
 "dispoñíbel actualmente. Non se está cargando o panel."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Produciuse un erro ao ler o valor booleano GConf «%s»: %s"
@@ -3282,21 +3259,21 @@ msgstr "Non foi posíbel encontrar a icona «%s»"
 msgid "Could not execute '%s'"
 msgstr "Non foi posíbel executar «%s»"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "ficheiro"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Cartafol persoal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistema de ficheiros"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Buscar"
 
@@ -3305,7 +3282,7 @@ msgstr "Buscar"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3338,3 +3315,21 @@ msgid ""
 msgstr ""
 "Ao eliminar un panel pérdese o panel e todas\n"
 "as configuracións dese panel."
+
+#~ msgid "Change system time"
+#~ msgstr "Cambiar a hora do sistema"
+
+#~ msgid "Change system time zone"
+#~ msgstr "Cambiar o fuso horario do sistema"
+
+#~ msgid "Configure hardware clock"
+#~ msgstr "Configurar o reloxo de hardware"
+
+#~ msgid "Privileges are required to change the system time zone."
+#~ msgstr "Requírense privilexios para cambiar o fuso horario do sistema."
+
+#~ msgid "Privileges are required to change the system time."
+#~ msgstr "Requírense privilexios para cambiar a hora do sistema."
+
+#~ msgid "Privileges are required to configure the hardware clock."
+#~ msgstr "Requírense privilexios para configurar o reloxo de hardware."
