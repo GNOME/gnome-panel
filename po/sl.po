@@ -10,10 +10,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
-"POT-Creation-Date: 2010-07-02 09:31+0000\n"
-"PO-Revision-Date: 2010-12-28 17:54+0100\n"
-"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
+"POT-Creation-Date: 2011-01-09 16:41+0000\n"
+"PO-Revision-Date: 2011-01-09 20:27+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -697,30 +698,6 @@ msgstr "Ni mogoče prikazati dokumenta pomoči '%s'"
 #: ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
 msgstr "Napaka med prikazovanjem dokumenta pomoči"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
-msgid "Change system time"
-msgstr "Spremeni sistemski čas"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
-msgid "Change system time zone"
-msgstr "Spremeni časovno območje sistema"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
-msgid "Configure hardware clock"
-msgstr "Nastavi strojni čas"
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
-msgid "Privileges are required to change the system time zone."
-msgstr "Sprememba sistemskega časovnega območja zahteva skrbniški dostop."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
-msgid "Privileges are required to change the system time."
-msgstr "Sprememba sistemskega časa zahteva skrbniški dostop."
-
-#: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
-msgid "Privileges are required to configure the hardware clock."
-msgstr "Sprememba strojnega časa zahteva skrbniški dostop."
 
 #: ../applets/fish/fish.c:274
 #, c-format
@@ -1415,7 +1392,7 @@ msgstr "Ni nameščenega programa za iskanje map."
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "Ni mogoče najti praznega mesta"
 
@@ -1630,7 +1607,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Vsili končanje"
 
@@ -1873,11 +1850,11 @@ msgstr "Ni mogoče prikazati dokumenta pomoči"
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite tipko escape."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Ali naj bo program vsiljeno končan?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid "If you choose to force an application to exit, unsaved changes in any open documents in it might get lost."
 msgstr "V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti dokumenti programa."
 
@@ -2197,8 +2174,8 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Določilo vrhnjega pulta, ki vsebuje ta predmet."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "Vgradni ID za aplet, npr.: \"OAFIID:GNOME_ClockApplet\". Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"bonobo-applet\"."
+msgid "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet\". This key is only relevant if the object_type key is \"external-applet\" (or the deprecated \"bonobo-applet\")."
+msgstr "Vgradni ID za aplet, npr.: \"ClockAppletFactory::ClockApplet\". Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"external-applet\" (ali na opuščeni ključ \"bonobo-applet\")."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
@@ -2221,8 +2198,8 @@ msgid "The text to display in a tooltip for this drawer or this menu. This key i
 msgstr "Besedilo, ki se pokaže v namigu tega predalnika ali menija. Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"drawer_object\" ali \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
-msgstr "Vrsta predmeta pulta. Mogoče vrednosti so \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
+msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"menu-bar\" and \"separator\"."
+msgstr "Vrsta predmeta pulta. Mogoče vrednosti so \"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"separator\" and \"menu-bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid "This key is deprecated, following the migration to a new library for applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
@@ -2244,29 +2221,29 @@ msgstr "Uporabi prikrojeno ikono za gumb predmeta"
 msgid "Use custom path for menu contents"
 msgstr "Uporabi poljubno pot za vsebino menija"
 
-#: ../gnome-panel/panel-profile.c:772
-#: ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835
-#: ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774
+#: ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837
+#: ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Napaka med branjem vrednosti niza GConf '%s': %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814
-#: ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669
-#: ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816
+#: ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671
+#: ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Napaka med branjem GConf vrednosti celega števila '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
 msgstr "Pult '%s' je nastavljen za prikaz na zaslonu %d, ki pa trenutno ni na voljo. Nov pult ne bo naložen."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Napaka med branjem GConf boolean vrednosti '%s': %s"
@@ -2800,21 +2777,21 @@ msgstr "Ikone '%s' ni mogoče najti"
 msgid "Could not execute '%s'"
 msgstr "Ni mogoče izvršiti '%s'"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "datoteka"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Domača mapa"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Datotečni sistem"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Iskanje"
 
@@ -2823,7 +2800,7 @@ msgstr "Iskanje"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -2856,4 +2833,17 @@ msgid ""
 msgstr ""
 "Z brisanjem pulta se izbrišejo tudi\n"
 "vse njegove nastavitve."
+
+#~ msgid "Change system time"
+#~ msgstr "Spremeni sistemski čas"
+#~ msgid "Change system time zone"
+#~ msgstr "Spremeni časovno območje sistema"
+#~ msgid "Configure hardware clock"
+#~ msgstr "Nastavi strojni čas"
+#~ msgid "Privileges are required to change the system time zone."
+#~ msgstr "Sprememba sistemskega časovnega območja zahteva skrbniški dostop."
+#~ msgid "Privileges are required to change the system time."
+#~ msgstr "Sprememba sistemskega časa zahteva skrbniški dostop."
+#~ msgid "Privileges are required to configure the hardware clock."
+#~ msgstr "Sprememba strojnega časa zahteva skrbniški dostop."
 
