@@ -441,11 +441,15 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 	 * As that function is private its code is replicated here.
 	 */
 	menu_shell = GTK_MENU_SHELL (menubar);
+	/* FIXMEgpoo: We need either accessors or a workaround to
+	   grab the focus  */
+#if 0
 	if (!menu_shell->GSEAL(active)) {
 		gtk_grab_add (GTK_WIDGET (menu_shell));
 		menu_shell->GSEAL(have_grab) = TRUE;
 		menu_shell->GSEAL(active) = TRUE;
 	}
+#endif
 	gtk_menu_shell_select_item (menu_shell,
 				    gtk_menu_get_attach_widget (menu));
 }

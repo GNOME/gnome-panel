@@ -841,6 +841,9 @@ restore_grabs(GtkWidget *w, gpointer data)
 	}
 
 	/*only grab if this HAD a grab before*/
+	/* FIXMEgpoo: We need either accessors or a workaround to grab
+	   the focus */
+#if 0
 	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab)))
           {
 	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
@@ -859,7 +862,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	      }
          }
-	
+#endif
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
@@ -1083,7 +1086,12 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	{
 	  if (gdk_keyboard_grab (window, TRUE,
 				 GDK_CURRENT_TIME) == 0)
-	    GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
+	    /* FIXMEgpoo: We need either accessors or a workaround to grab
+	       the focus */
+#if 0
+	     GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
+#endif
+	      g_message ("xgrab\n");
 	  else
 	    {
 	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
