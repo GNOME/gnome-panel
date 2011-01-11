@@ -572,15 +572,42 @@ drop_nautilus_desktop_uri (PanelWidget *panel,
 	if (strncmp (basename, "trash", strlen ("trash")) == 0)
 		panel_applet_frame_create (panel->toplevel, pos,
 					   "OAFIID:GNOME_Panel_TrashApplet");
-	else if (strncmp (basename, "home", strlen ("home")) == 0)
-		panel_launcher_create_with_id (id, pos,
-					       "nautilus-home.desktop");
-	else if (strncmp (basename, "computer", strlen ("computer")) == 0)
-		panel_launcher_create_with_id (id, pos,
-					       "nautilus-computer.desktop");
+	else if (strncmp (basename, "home", strlen ("home")) == 0) {
+		char  *name;
+		char  *uri;
+		GFile *file;
+
+		file = g_file_new_for_path (g_get_home_dir ());
+		uri = g_file_get_uri (file);
+		name = panel_util_get_label_for_uri (uri);
+		g_free (uri);
+		g_object_unref (file);
+
+		panel_launcher_create_from_info (panel->toplevel,
+						 pos,
+						 TRUE, /* is_exec? */
+						 "nautilus --no-desktop", /* exec */
+						 name, /* name */
+						 _("Open your personal folder"), /* comment */
+						 PANEL_ICON_HOME); /* icon name */
+
+		g_free (name);
+	} else if (strncmp (basename, "computer", strlen ("computer")) == 0)
+		panel_launcher_create_from_info (panel->toplevel,
+						 pos,
+						 TRUE, /* is_exec? */
+						 "nautilus --no-desktop computer://", /* exec */
+						 _("Computer"), /* name */
+						 _("Browse all local and remote disks and folders accessible from this computer"), /* comment */
+						 PANEL_ICON_COMPUTER); /* icon name */
 	else if (strncmp (basename, "network", strlen ("network")) == 0)
-		panel_launcher_create_with_id (id, pos,
-					       "nautilus-scheme.desktop");
+		panel_launcher_create_from_info (panel->toplevel,
+						 pos,
+						 TRUE, /* is_exec? */
+						 "nautilus --no-desktop network://", /* exec */
+						 _("Network"), /* name */
+						 _("Browse bookmarked and local network locations"), /* comment */
+						 PANEL_ICON_NETWORK); /* icon name */
 	else
 		success = FALSE;
 
