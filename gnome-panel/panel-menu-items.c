@@ -139,7 +139,7 @@ activate_desktop_uri (GtkWidget *menuitem,
 	activate_path (menuitem,
 		       g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 }
- 
+
 static void
 panel_menu_items_append_from_desktop (GtkWidget *menu,
 				      char      *path,
@@ -1074,20 +1074,29 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
 					      COMPUTER_NAME_KEY,
 					      NULL);
-	panel_menu_items_append_from_desktop (places_menu,
-					      "nautilus-computer.desktop",
-					      gconf_name,
-                                              TRUE);
-	if (gconf_name)
-		g_free (gconf_name);
+
+	if (gconf_name == NULL) {
+		gconf_name = g_strdup (_("Computer"));
+	}
+
+	panel_menu_items_append_place_item (PANEL_ICON_COMPUTER, NULL,
+					    gconf_name,
+					    _("Browse all local and remote disks and folders accessible from this computer"),
+					    places_menu,
+					    G_CALLBACK (activate_uri),
+					    "computer://");
+	g_free (gconf_name);
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
 
-	panel_menu_items_append_from_desktop (places_menu,
-					      "network-scheme.desktop",
-					      NULL,
-                                              TRUE);
+	panel_menu_items_append_place_item (PANEL_ICON_NETWORK, NULL,
+					    _("Network"),
+					    _("Browse bookmarked and local network locations"),
+					    places_menu,
+					    G_CALLBACK (activate_uri),
+					    "network://");
+
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
 	if (panel_is_program_in_path ("nautilus-connect-server")) {
