@@ -32,9 +32,9 @@ WNCKLET_LDADD =						\
 
 if WNCKLET_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
+APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libwnck-applet.so
 
-wnck_appletlibdir = $(pkglibdir)
+wnck_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 wnck_appletlib_LTLIBRARIES = libwnck-applet.la
 libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
 libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
@@ -50,7 +50,7 @@ wnck_applet_LDADD = $(WNCKLET_LDADD)
 wnck_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-appletdir       = $(datadir)/gnome-panel/applets
+appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

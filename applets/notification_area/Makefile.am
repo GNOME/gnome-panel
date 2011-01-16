@@ -43,9 +43,9 @@ testtray_LDADD =			\
 
 if NOTIFICATION_AREA_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libnotification-area-applet.so
+APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libnotification-area-applet.so
 
-notification_area_appletlibdir = $(pkglibdir)
+notification_area_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
 libnotification_area_applet_la_SOURCES = $(NOTIFICATION_AREA_SOURCES)
 libnotification_area_applet_la_LIBADD = $(NOTIFICATION_AREA_LDADD)
@@ -70,7 +70,7 @@ na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
 
 BUILT_SOURCES = na-marshal.c na-marshal.h
 
-appletdir       = $(datadir)/gnome-panel/applets
+appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
 applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

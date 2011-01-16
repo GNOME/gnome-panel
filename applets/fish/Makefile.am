@@ -21,9 +21,9 @@ FISH_LDADD =						\
 
 if FISH_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libfish-applet.so
+APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libfish-applet.so
 
-fish_applet_libdir = $(pkglibdir)
+fish_applet_libdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 fish_applet_lib_LTLIBRARIES = libfish-applet.la
 libfish_applet_la_SOURCES = $(FISH_SOURCES)
 libfish_applet_la_LIBADD = $(FISH_LDADD)
@@ -39,7 +39,7 @@ fish_applet_LDADD = $(FISH_LDADD)
 fish_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-appletdir       = $(datadir)/gnome-panel/applets
+appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
 applet_in_files = org.gnome.panel.FishApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
