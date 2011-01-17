@@ -164,9 +164,7 @@ get_desktop_pixbuf (PanelBackground *background)
 static cairo_pattern_t *
 composite_image_onto_desktop (PanelBackground *background)
 {
-        static const cairo_user_data_key_t key;
 	int              width, height;
-	unsigned char   *data;
 	cairo_t         *cr;
 	cairo_surface_t *surface;
 	cairo_pattern_t *pattern;
@@ -180,16 +178,11 @@ composite_image_onto_desktop (PanelBackground *background)
 	width  = gdk_pixbuf_get_width  (background->desktop);
 	height = gdk_pixbuf_get_height (background->desktop);
 
-	data = g_malloc (width * height * 4);
-	if (!data)
-		return NULL;
-
-        // FIXMEchpe use surface similar to window or root window!
-	surface = cairo_image_surface_create_for_data (data,
-						       CAIRO_FORMAT_RGB24,
-						       width, height,
-						       width * 4);
-        cairo_surface_set_user_data (surface, &key, data, (cairo_destroy_func_t) g_free);
+	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
+        if (cairo_surface_status (surface)) {
+                cairo_surface_destroy (surface);
+                return NULL;
+        }
 
 	cr = cairo_create (surface);
 
