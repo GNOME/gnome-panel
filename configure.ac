@@ -252,7 +252,7 @@ dnl Modules dir
 AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
 
 dnl Applets dir
-AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
+AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/\$(LIBPANEL_APPLET_API_VERSION)/applets")
 
 dnl
 dnl Temporary bonobo checks here
