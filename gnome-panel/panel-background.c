@@ -232,15 +232,12 @@ composite_color_onto_desktop (PanelBackground *background)
                 return NULL;
         }
 
-        // FIXMEchpe is this correct way to composite here?
-
         cr = cairo_create (surface);
-        gdk_cairo_set_source_pixbuf (cr, background->desktop,
-                                     -background->region.x, -background->region.y);
+        gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
         cairo_paint (cr);
 
         gdk_cairo_set_source_rgba (cr, &background->color);
-        cairo_fill (cr);
+        cairo_paint (cr);
 
         cairo_destroy (cr);
 
