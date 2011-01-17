@@ -527,8 +527,7 @@ panel_background_update_has_alpha (PanelBackground *background)
 	gboolean has_alpha = FALSE;
 
 	if (background->type == PANEL_BACK_COLOR)
-		has_alpha = (background->color.alpha != 0xffff);
-
+		has_alpha = (background->color.alpha < 1.);
 	else if (background->type == PANEL_BACK_IMAGE &&
 		 background->loaded_image)
 		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
