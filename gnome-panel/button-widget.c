@@ -376,7 +376,6 @@ button_widget_draw (GtkWidget *widget,
 
         cairo_save (cr);
         gdk_cairo_set_source_pixbuf (cr, pb, x, y);
-        cairo_rectangle (cr, x, y, w, h);
         cairo_paint (cr);
         cairo_restore (cr);
 
