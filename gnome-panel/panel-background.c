@@ -40,26 +40,6 @@ static void load_background_file (PanelBackground *background);
 
 
 static void
-free_prepared_resources (PanelBackground *background)
-{
-	background->prepared = FALSE;
-
-	switch (background->type) {
-	case PANEL_BACK_NONE:
-		break;
-	case PANEL_BACK_COLOR:
-		if (!background->has_alpha)
-                        background->color.red = background->color.green = background->color.blue = 0.;
-		break;
-	case PANEL_BACK_IMAGE:
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-
-static void
 set_pixbuf_background (PanelBackground *background)
 {
 	g_assert (background->composited_pattern != NULL);
@@ -75,8 +55,6 @@ panel_background_prepare (PanelBackground *background)
 
 	if (!background->transformed)
 		return FALSE;
-
-	free_prepared_resources (background);
 
 	effective_type = panel_background_effective_type (background);
 
@@ -127,8 +105,7 @@ panel_background_prepare (PanelBackground *background)
 static void
 free_composited_resources (PanelBackground *background)
 {
-	free_prepared_resources (background);
-
+        background->prepared = FALSE;
 	background->composited = FALSE;
 
 	if (background->composited_pattern)
@@ -754,8 +731,7 @@ panel_background_realized (PanelBackground *background,
 void
 panel_background_unrealized (PanelBackground *background)
 {
-	free_prepared_resources (background);
-
+        background->prepared = FALSE;
 	if (background->window)
 		g_object_unref (background->window);
 	background->window = NULL;
