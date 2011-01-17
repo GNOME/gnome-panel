@@ -1217,34 +1217,30 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
-		gint min_width, preferred_width;
-		gint min_height, preferred_height;
+                GtkRequisition child_req;
 
-		gtk_widget_get_preferred_width (ad->applet, &min_width, &preferred_width);
-		gtk_widget_get_preferred_width (ad->applet, &min_height, &preferred_height);
-
-		/* FIXME: do something with minimum sizes */
+                gtk_widget_get_preferred_size (ad->applet, &child_req, NULL);
 
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if (requisition->height < preferred_height && !ad->size_constrained)
-				requisition->height = preferred_height;
+			if (requisition->height < child_req.height && !ad->size_constrained)
+				requisition->height = child_req.height;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
 								ad);
 
 			else if (panel->packed)
-				requisition->width += preferred_width;
+				requisition->width += child_req.width;
 		} else {
-			if (requisition->width < preferred_width && !ad->size_constrained)
-				requisition->width = preferred_width;
+			if (requisition->width < child_req.width && !ad->size_constrained)
+				requisition->width = child_req.width;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
 				ad_with_hints = g_list_prepend (ad_with_hints,
 								ad);
 
 			else if (panel->packed)
-				requisition->height += preferred_height;
+				requisition->height += child_req.height;
 		}
 	}
 
