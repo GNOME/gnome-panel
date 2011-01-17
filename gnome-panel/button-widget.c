@@ -350,8 +350,8 @@ button_widget_draw (GtkWidget *widget,
 
 	/* offset for pressed buttons */
 	state_flags = gtk_widget_get_state_flags (widget);
-	off = (button_widget->priv->activatable &&
-	       state_flags & (GTK_STATE_FLAG_PRELIGHT | GTK_STATE_FLAG_ACTIVE)) ?
+	off = (button_widget->priv->activatable && (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
+	       (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
 
         /* FIXMEchpe replace this by cairo ops too! */
