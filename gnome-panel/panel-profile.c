@@ -418,6 +418,36 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 
 TOPLEVEL_IS_WRITABLE_FUNC ("background/type", background, type)
 
+static void
+panel_profile_set_background_opacity (PanelToplevel *toplevel,
+				      gdouble        opacity)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
+	gconf_client_set_int (client, key, (guint16) ((opacity * 65535.) + 0.5), NULL);
+}
+
+static gdouble
+panel_profile_get_background_opacity (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+	guint16      opacity;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
+	opacity = gconf_client_get_int (client, key, NULL);
+
+	return opacity / 65535.;
+}
+
+TOPLEVEL_IS_WRITABLE_FUNC ("background/opacity", background, opacity)
+
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
 				    const GdkRGBA *color)
@@ -431,6 +461,8 @@ panel_profile_set_background_color (PanelToplevel *toplevel,
         color_str = gdk_rgba_to_string (color);
         key = panel_profile_get_toplevel_key (toplevel, "background/color");
         gconf_client_set_string (client, key, color_str, NULL);
+
+        panel_profile_set_background_opacity (toplevel, color->alpha);
 
         g_free (color_str);
 }
@@ -451,48 +483,14 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
                 color->red   = 0.;
                 color->green = 0.;
                 color->blue  = 0.;
-                color->alpha = 0.;
+                color->alpha = 1.;
         }
+        color->alpha = panel_profile_get_background_opacity (toplevel);
 
         g_free (color_str);
 }
 
 TOPLEVEL_IS_WRITABLE_FUNC ("background/color", background, color)
-
-void
-panel_profile_set_background_opacity (PanelToplevel *toplevel,
-				      guint16        opacity)
-{
-#if 0
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	gconf_client_set_int (client, key, opacity, NULL);
-#endif
-}
-
-guint16
-panel_profile_get_background_opacity (PanelToplevel *toplevel)
-{
-#if 0
-	GConfClient *client;
-	const char  *key;
-	guint16      opacity;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	opacity = gconf_client_get_int (client, key, NULL);
-
-	return opacity;
-#endif
-        return 0;
-}
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/opacity", background, opacity)
 
 void
 panel_profile_set_background_image (PanelToplevel *toplevel,
@@ -779,6 +777,7 @@ get_background_color (GConfClient *client,
 	GError     *error;
 	const char *key;
 	char       *color_str;
+        guint16     alpha;
 
 	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/color", toplevel_dir);
@@ -796,17 +795,17 @@ get_background_color (GConfClient *client,
 
 	g_free (color_str);
 
-#if 0
 	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/opacity", toplevel_dir);
-	color->alpha = gconf_client_get_int (client, key, &error);
+	alpha = gconf_client_get_int (client, key, &error);
 	if (error) {
 		g_warning (_("Error reading GConf integer value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-		color->alpha = 65535; /* fallback to fully opaque */
-	}
-#endif
+		color->alpha = 1.; /* fallback to fully opaque */
+	} else {
+                color->alpha = alpha / 65535.;
+        }
 }
 
 static char *
@@ -1234,12 +1233,18 @@ panel_profile_background_change_notify (GConfClient   *client,
 			if (gdk_rgba_parse (&color, str))
 				panel_background_set_color (background, &color);
 		}
-#if 0
 	} else if (!strcmp (key, "opacity")) {
-		if (value->type == GCONF_VALUE_INT)
-			panel_background_set_opacity (background,
-						      gconf_value_get_int (value));
-#endif
+		if (value->type == GCONF_VALUE_INT) {
+                        guint16 opacity;
+                        const GdkRGBA *bg_color;
+                        GdkRGBA color;
+
+                        opacity = gconf_value_get_int (value);
+                        bg_color = panel_background_get_color (background);
+                        color = *bg_color;
+                        color.alpha = opacity / 65535.;
+			panel_background_set_color (background, &color);
+                }
 	} else if (!strcmp (key, "image")) {
 		if (value->type == GCONF_VALUE_STRING)
 			panel_background_set_image (background,

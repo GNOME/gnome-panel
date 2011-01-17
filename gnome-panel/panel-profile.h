@@ -121,9 +121,6 @@ void        panel_profile_get_background_color        (PanelToplevel       *topl
 						       GdkRGBA             *color);
 gboolean    panel_profile_is_writable_background_color (PanelToplevel       *toplevel);
 
-void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
-						       guint16              opacity);
-guint16     panel_profile_get_background_opacity      (PanelToplevel       *toplevel);
 gboolean    panel_profile_is_writable_background_opacity (PanelToplevel       *toplevel);
 
 void        panel_profile_set_background_image        (PanelToplevel       *toplevel,
