@@ -50,7 +50,7 @@ struct _PanelBackground {
 
 	GtkOrientation          orientation;
 	GdkRectangle            region;
-        cairo_pattern_t        *transformed_pattern;
+        GdkPixbuf              *transformed_image;
 	cairo_pattern_t        *composited_pattern;
 
 	PanelBackgroundMonitor *monitor;

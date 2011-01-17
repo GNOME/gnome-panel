@@ -192,14 +192,18 @@ composite_image_onto_desktop (PanelBackground *background)
         cairo_surface_set_user_data (surface, &key, data, (cairo_destroy_func_t) g_free);
 
 	cr = cairo_create (surface);
-	cairo_set_source_rgb (cr, 1, 1, 1);
-	cairo_paint (cr);
 
-	gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-	cairo_rectangle (cr, 0, 0, width, height);
-	cairo_fill (cr);
+        if (background->has_alpha) {
+                cairo_set_source_rgb (cr, 1, 1, 1);
+                cairo_paint (cr);
 
-        cairo_set_source (cr, background->transformed_pattern);
+                gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
+                cairo_rectangle (cr, 0, 0, width, height);
+                cairo_fill (cr);
+        }
+
+        gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
+        cairo_pattern_set_extend (cairo_get_source (cr), CAIRO_EXTEND_REPEAT);
 	cairo_rectangle (cr, 0, 0, width, height);
 	cairo_fill (cr);
 
@@ -250,7 +254,7 @@ composite_color_onto_desktop (PanelBackground *background)
 static cairo_pattern_t *
 get_composited_pattern (PanelBackground *background)
 {
-	cairo_pattern_t *pattern;
+	cairo_pattern_t *pattern = NULL;
 
 	switch (background->type) {
 	case PANEL_BACK_NONE:
@@ -260,8 +264,6 @@ get_composited_pattern (PanelBackground *background)
 		break;
 	case PANEL_BACK_IMAGE:
 		pattern = composite_image_onto_desktop (background);
-		if (!pattern && background->transformed_pattern);
-			pattern = cairo_pattern_reference (background->transformed_pattern);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -288,14 +290,9 @@ panel_background_composite (PanelBackground *background)
 				get_composited_pattern (background);
 		break;
 	case PANEL_BACK_IMAGE:
-		if (background->transformed_pattern) {
-			if (background->has_alpha)
-				background->composited_pattern =
-					get_composited_pattern (background);
-			else
-				background->composited_pattern =
-					cairo_pattern_reference (background->transformed_pattern);
-		}
+		if (background->transformed_image)
+                        background->composited_pattern =
+                                get_composited_pattern (background);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -319,17 +316,16 @@ free_transformed_resources (PanelBackground *background)
 	if (background->type != PANEL_BACK_IMAGE)
 		return;
 
-	if (background->transformed_pattern)
-		cairo_pattern_destroy (background->transformed_pattern);
-	background->transformed_pattern = NULL;
+	if (background->transformed_image)
+                g_object_unref (background->transformed_image);
+	background->transformed_image = NULL;
 }
 
-static cairo_pattern_t *
-get_scaled_and_rotated_pattern (PanelBackground *background)
+static GdkPixbuf *
+get_scaled_and_rotated_pixbuf (PanelBackground *background)
 {
 	GdkPixbuf *scaled;
 	GdkPixbuf *retval;
-        cairo_pattern_t *pattern;
 	int        orig_width, orig_height;
 	int        panel_width, panel_height;
 	int        width, height;
@@ -445,19 +441,7 @@ get_scaled_and_rotated_pattern (PanelBackground *background)
 	} else
 		retval = scaled;
 
-        // FIXMEchpe this sucks
-        {
-                cairo_t *cr = gdk_cairo_create (background->window ? background->window : gdk_get_default_root_window());
-                gdk_cairo_set_source_pixbuf (cr, retval, 0, 0);
-                g_object_unref (retval);
-
-                pattern = cairo_pattern_reference (cairo_get_source (cr));
-                cairo_destroy (cr);
-        }
-
-        cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
-
-	return pattern;
+	return retval;
 }
 
 static gboolean
@@ -469,8 +453,8 @@ panel_background_transform (PanelBackground *background)
 	free_transformed_resources (background);
 
 	if (background->type == PANEL_BACK_IMAGE)
-		background->transformed_pattern =
-			get_scaled_and_rotated_pattern (background);
+		background->transformed_image =
+			get_scaled_and_rotated_pixbuf (background);
 
 	background->transformed = TRUE;
 
@@ -819,13 +803,13 @@ panel_background_init (PanelBackground              *background,
 	background->image        = NULL;
 	background->loaded_image = NULL;
 
-	background->orientation       = GTK_ORIENTATION_HORIZONTAL;
-	background->region.x          = -1;
-	background->region.y          = -1;
-	background->region.width      = -1;
-	background->region.height     = -1;
-	background->transformed_pattern = NULL;
-	background->composited_pattern  = NULL;
+	background->orientation        = GTK_ORIENTATION_HORIZONTAL;
+	background->region.x           = -1;
+	background->region.y           = -1;
+	background->region.width       = -1;
+	background->region.height      = -1;
+	background->transformed_image  = NULL;
+	background->composited_pattern = NULL;
 
 	background->monitor        = NULL;
 	background->desktop        = NULL;
