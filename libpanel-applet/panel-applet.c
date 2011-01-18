@@ -1512,6 +1512,12 @@ get_widget_style_properties (GtkWidget *widget)
 }
 
 static void
+reset_widget_style_properties (GtkWidget *widget)
+{
+        g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
+}
+
+static void
 panel_applet_update_background_for_widget (GtkWidget       *widget,
 					   cairo_pattern_t *pattern)
 {
@@ -1519,10 +1525,14 @@ panel_applet_update_background_for_widget (GtkWidget       *widget,
 
         gtk_widget_reset_style (widget);
 
-        if (!pattern)
-                return;
-
         properties = get_widget_style_properties (widget);
+
+        if (!pattern) {
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                   GTK_STYLE_PROVIDER (properties));
+                reset_widget_style_properties (widget);
+                return;
+        }
 
         switch (cairo_pattern_get_type (pattern)) {
         case CAIRO_PATTERN_TYPE_SOLID: {
