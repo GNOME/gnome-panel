@@ -1406,7 +1406,6 @@ panel_applet_get_pixmap (PanelApplet    *applet,
         cairo_fill (cr);
         gdk_error_trap_pop_ignored ();
 
-        cairo_pattern_destroy (pattern);
         cairo_surface_destroy (background);
 
         if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
