@@ -276,6 +276,7 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
+        GtkCssProvider *provider;
 
 	gobject_class->get_property = panel_menu_bar_get_property;
         gobject_class->set_property = panel_menu_bar_set_property;
@@ -295,13 +296,16 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 				   PANEL_ORIENTATION_TOP,
 				   G_PARAM_READWRITE));
 
-	gtk_rc_parse_string (
-		"style \"panel-menubar-style\"\n"
-		"{\n"
-		"  GtkMenuBar::shadow-type = none\n"
-		"  GtkMenuBar::internal-padding = 0\n"
-		"}\n"
-		"class \"PanelMenuBar\" style \"panel-menubar-style\"");
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "PanelMenuBar {\n"
+                                         " border-width: 0px;\n"
+                                         "}\n",
+                                         -1, NULL);
+        gtk_style_context_add_provider_for_screen (gdk_screen_get_default(),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 }
 
 static gboolean
