@@ -178,7 +178,9 @@ composite_image_onto_desktop (PanelBackground *background)
 	width  = gdk_pixbuf_get_width  (background->desktop);
 	height = gdk_pixbuf_get_height (background->desktop);
 
-	surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
+        surface = gdk_window_create_similar_surface (background->window,
+                                                     CAIRO_CONTENT_COLOR_ALPHA,
+                                                     width, height);
         if (cairo_surface_status (surface)) {
                 cairo_surface_destroy (surface);
                 return NULL;
