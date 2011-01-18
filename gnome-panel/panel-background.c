@@ -925,108 +925,112 @@ panel_background_effective_type (PanelBackground *background)
 	return retval;
 }
 
-static void
-panel_background_set_no_background_on_widget (PanelBackground *background,
-					      GtkWidget       *widget)
+static cairo_pattern_t *
+panel_background_get_pattern_for_widget (PanelBackground *background,
+                                         GtkWidget       *widget)
 {
-	GtkRcStyle *rc_style;
-
-	gtk_widget_set_style (widget, NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (widget, rc_style);
-	g_object_unref (rc_style);
-}
-
-static void
-panel_background_set_image_background_on_widget (PanelBackground *background,
-						 GtkWidget       *widget)
-{
-  // FIXMEchpe!!!
-#if 0
-	const GdkPixmap *bg_pixmap;
 	GtkAllocation    allocation;
-	GdkPixmap       *pixmap;
 	cairo_t         *cr;
+        cairo_surface_t *surface;
+        cairo_surface_t *bg_surface;
 	cairo_pattern_t *pattern;
-	GtkStyle        *style;
+        cairo_matrix_t   matrix;
 
-	bg_pixmap = panel_background_get_pixmap (background);
-	if (!bg_pixmap)
-		return;
+        if (!background->composited_pattern)
+                return NULL;
+
+        if (cairo_pattern_get_surface (background->composited_pattern, &bg_surface))
+                return NULL;
 
 	gtk_widget_get_allocation (widget, &allocation);
-	pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-				 allocation.width,
-				 allocation.height,
-				 -1);
+        surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                              allocation.width, allocation.height);
 
-	cr = gdk_cairo_create (GDK_DRAWABLE (pixmap));
-	gdk_cairo_set_source_pixmap (cr, (GdkPixmap *) bg_pixmap,
-				     -allocation.x,
-				     -allocation.y);
-	pattern = cairo_get_source (cr);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+	cr = cairo_create (surface);
+        cairo_set_source_surface (cr, bg_surface, -allocation.x, -allocation.y);
+        cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
+        cairo_fill (cr);
+        cairo_destroy (cr);
 
-	cairo_rectangle (cr, 0, 0,
-			 allocation.width, allocation.height);
-	cairo_fill (cr);
+        pattern = cairo_pattern_create_for_surface (surface);
+        cairo_matrix_init_translate (&matrix, 0, 0);
+        cairo_matrix_scale (&matrix, allocation.width, allocation.height);
+        cairo_pattern_set_matrix (pattern, &matrix);
+        cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
 
-	cairo_destroy (cr);
+        cairo_surface_destroy (surface);
 
-	style = gtk_style_copy (gtk_widget_get_style (widget));
-	if (style->bg_pixmap[GTK_STATE_NORMAL])
-		g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-	style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-	gtk_widget_set_style (widget, style);
-	g_object_unref (style);
+        return pattern;
+}
 
-	g_object_unref (pixmap);
-#endif
+static GtkStyleProperties *
+get_widget_style_properties (GtkWidget *widget)
+{
+        GtkStyleProperties *properties;
+
+        properties = g_object_get_data (G_OBJECT (widget), "panel-object-style-props");
+        if (!properties) {
+                properties = gtk_style_properties_new ();
+                g_object_set_data_full (G_OBJECT (widget), "panel-object-style-props",
+                                        properties, (GDestroyNotify)g_object_unref);
+        }
+        return properties;
 }
 
 static void
-panel_background_set_color_background_on_widget (PanelBackground *background,
-						 GtkWidget       *widget)
+reset_widget_style_properties (GtkWidget *widget)
 {
-	const GdkRGBA *color;
-        GdkColor gdkcolor;
-
-	color = panel_background_get_color (background);
-	if (color->alpha < 1.) {
-		panel_background_set_image_background_on_widget (background,
-								 widget);
-		return;
-	}
-
-        gdkcolor.red   = color->red   * 65535.;
-        gdkcolor.green = color->green * 65535.;
-        gdkcolor.blue  = color->blue  * 65535.;
-        gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &gdkcolor);
+        g_object_set_data (G_OBJECT (widget), "panel-object-style-props", NULL);
 }
 
 void
 panel_background_change_background_on_widget (PanelBackground *background,
 					      GtkWidget       *widget)
 {
-	PanelBackgroundType type;
+        GtkStyleProperties *properties;
 
-	panel_background_set_no_background_on_widget (background, widget);
+        gtk_widget_reset_style (widget);
 
-	type = panel_background_get_type (background);
+        properties = get_widget_style_properties (widget);
 
-	switch (type) {
+	switch (panel_background_get_type (background)) {
 	case PANEL_BACK_NONE:
-		break;
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                   GTK_STYLE_PROVIDER (properties));
+                reset_widget_style_properties (widget);
+                return;
 	case PANEL_BACK_COLOR:
-		panel_background_set_color_background_on_widget (background,
-								 widget);
-		break;
-	case PANEL_BACK_IMAGE:
-		panel_background_set_image_background_on_widget (background,
-								 widget);
+                if (!background->has_alpha) {
+                        gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                                  "background-color", &background->color,
+                                                  "background-image", NULL,
+                                                  NULL);
+                        break;
+                }
+                // Color with alpha, fallback to image
+	case PANEL_BACK_IMAGE: {
+                cairo_pattern_t *pattern;
+
+                pattern = panel_background_get_pattern_for_widget (background, widget);
+                if (pattern) {
+                        gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                                  "background-image", pattern,
+                                                  NULL);
+                        cairo_pattern_destroy (pattern);
+                } else {
+                        gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                           GTK_STYLE_PROVIDER (properties));
+                        reset_widget_style_properties (widget);
+                        return;
+                }
+        }
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
+
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (properties),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
