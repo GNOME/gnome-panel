@@ -30,6 +30,7 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdk.h>
 #include <cairo.h>
+#include <cairo-xlib.h>
 
 #include "panel-background-monitor.h"
 #include "panel-util.h"
@@ -862,38 +863,38 @@ panel_background_make_string (PanelBackground *background,
 			      int              x,
 			      int              y)
 {
-#if 0
 	PanelBackgroundType  effective_type;
-	char                *retval;
-	
-	retval = NULL;
+        GVariant            *variant;
+        gchar               *retval;
 
 	effective_type = panel_background_effective_type (background);
 
 	if (effective_type == PANEL_BACK_IMAGE ||
 	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
-		GdkNativeWindow pixmap_xid;
+                cairo_surface_t *surface;
 
-		if (!background->pixmap)
+		if (!background->composited_pattern)
 			return NULL;
 
-		pixmap_xid = gdk_x11_drawable_get_xid (
-				GDK_DRAWABLE (background->pixmap));
+                if (cairo_pattern_get_surface (background->composited_pattern, &surface))
+                        return NULL;
 
-		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
+                if (cairo_surface_get_type (surface) != CAIRO_SURFACE_TYPE_XLIB)
+                        return NULL;
 
-	} else if (effective_type == PANEL_BACK_COLOR)
-		retval = g_strdup_printf (
-				"color:%.4x%.4x%.4x",
-				background->color.gdk.red,
-				background->color.gdk.green,
-				background->color.gdk.blue);
-	else
-		retval = g_strdup ("none:");
+                variant = g_variant_new ("(uii)", (guint32)cairo_xlib_surface_get_drawable (surface),
+                                         x, y);
+	} else if (effective_type == PANEL_BACK_COLOR) {
+                variant = g_variant_new ("(dddd)",
+                                         background->color.red, background->color.green,
+                                         background->color.blue, background->color.alpha);
+	} else
+		variant = g_variant_new ("()");
+
+        retval = g_variant_print (variant, TRUE);
+        g_variant_unref (variant);
 
         return retval;
-#endif
-        return g_strdup ("none:"); // FIXMEchpe !!!
 }
 
 PanelBackgroundType

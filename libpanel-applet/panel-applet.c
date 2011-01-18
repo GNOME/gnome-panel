@@ -1344,67 +1344,35 @@ panel_applet_focus (GtkWidget        *widget,
 	return ret;
 }
 
-static gboolean
-panel_applet_parse_pixmap_str (const char *str,
-			       XID        *xid,
-			       int        *x,
-			       int        *y)
+static cairo_surface_t *
+panel_applet_create_foreign_surface_for_display (GdkDisplay     *display,
+                                                 GdkVisual      *visual,
+                                                 GdkNativeWindow xid)
 {
-	char **elements;
-	char  *tmp;
+        Window window;
+        gint x, y;
+        guint width, height, border, depth;
 
-	g_return_val_if_fail (str != NULL, FALSE);
-	g_return_val_if_fail (xid != NULL, FALSE);
-	g_return_val_if_fail (x != NULL, FALSE);
-	g_return_val_if_fail (y != NULL, FALSE);
+        if (!XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
+                           &x, &y, &width, &height, &border, &depth))
+                return NULL;
 
-	elements = g_strsplit (str, ",", -1);
-
-	if (!elements)
-		return FALSE;
-
-	if (!elements [0] || !*elements [0] ||
-	    !elements [1] || !*elements [1] ||
-	    !elements [2] || !*elements [2])
-		goto ERROR_AND_FREE;
-
-        errno = 0;
-        tmp = NULL;
-	*xid = g_ascii_strtoll (elements [0], &tmp, 10);
-	if (errno || tmp == elements [0])
-		goto ERROR_AND_FREE;
-
-        errno = 0;
-        tmp = NULL;
-	*x = g_ascii_strtoll (elements [1], &tmp, 10);
-	if (errno || tmp == elements [1])
-		goto ERROR_AND_FREE;
-
-        errno = 0;
-        tmp = NULL;
-	*y = g_ascii_strtoll (elements [2], &tmp, 10);
-	if (errno || tmp == elements [2])
-		goto ERROR_AND_FREE;
-
- 	g_strfreev (elements);
-	return TRUE;
-
- ERROR_AND_FREE:
- 	g_strfreev (elements);
-	return FALSE;
+        return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
+                                          xid, gdk_x11_visual_get_xvisual (visual),
+                                          width, height);
 }
 
 static cairo_pattern_t *
-panel_applet_get_pixmap (PanelApplet *applet,
-                         XID          xid,
-                         int          x,
-			 int          y)
+panel_applet_get_pixmap (PanelApplet    *applet,
+                         GdkNativeWindow xid,
+                         int             x,
+			 int             y)
 {
-	GdkDisplay      *display;
-        GdkVisual       *visual;
 	GdkWindow       *window;
 	int              width;
 	int              height;
+        cairo_t         *cr;
+        cairo_surface_t *background;
         cairo_surface_t *surface;
         cairo_matrix_t   matrix;
         cairo_pattern_t *pattern;
@@ -1416,26 +1384,41 @@ panel_applet_get_pixmap (PanelApplet *applet,
 
         window = gtk_widget_get_window (GTK_WIDGET (applet));
 
-	display = gdk_window_get_display (window);
-        visual = gdk_window_get_visual (window);
+        gdk_error_trap_push ();
+        background = panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
+                                                                      gdk_window_get_visual (window),
+                                                                      xid);
+        gdk_error_trap_pop_ignored ();
+        if (!background || cairo_surface_status (background)) {
+                if (background)
+                        cairo_surface_destroy (background);
+                return NULL;
+        }
+
         width = gdk_window_get_width (window);
         height = gdk_window_get_height (window);
+        surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
 
         gdk_error_trap_push ();
-        surface = cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
-                                             GDK_WINDOW_XID (window),
-                                             gdk_x11_visual_get_xvisual (visual),
-                                             width, height);
+        cr = cairo_create (surface);
+        cairo_set_source_surface (cr, background, -x, -y);
+        cairo_rectangle (cr, 0, 0, width, height);
+        cairo_fill (cr);
         gdk_error_trap_pop_ignored ();
-        if (cairo_surface_status (surface))
-                return NULL;
 
-        pattern = cairo_pattern_create_for_surface (surface);
+        cairo_pattern_destroy (pattern);
+        cairo_surface_destroy (background);
+
+        if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
+                pattern = cairo_pattern_create_for_surface (surface);
+                cairo_matrix_init_translate (&matrix, 0, 0);
+                cairo_matrix_scale (&matrix, width, height);
+                cairo_pattern_set_matrix (pattern, &matrix);
+                cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
+        }
+
+        cairo_destroy (cr);
         cairo_surface_destroy (surface);
-
-        cairo_matrix_init_translate (&matrix, -x, -y);
-        cairo_pattern_set_matrix (pattern, &matrix);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
 
 	return pattern;
 }
@@ -1452,52 +1435,49 @@ cairo_pattern_t *
 panel_applet_get_background (PanelApplet *applet)
 {
         cairo_pattern_t *pattern = NULL;
-        char           **elements;
+        GVariant        *variant;
+        GVariantIter     iter;
+        GError          *error = NULL;
 
         g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (applet)) || !applet->priv->background)
 		return NULL;
 
-	elements = g_strsplit (applet->priv->background, ":", -1);
-        if (elements == NULL)
+        variant = g_variant_parse (NULL, applet->priv->background,
+                                   NULL, NULL, &error);
+        if (!variant) {
+                g_warning ("Error parsing background %s: %s\n", applet->priv->background, error->message);
+                g_error_free (error);
                 return NULL;
-
-	if (elements [0] && !strcmp (elements [0], "none" )) {
-		pattern = NULL;
-
-	} else if (elements [0] && !strcmp (elements [0], "color")) {
-                GdkRGBA color;
-
-		if (!elements [1] || !gdk_rgba_parse (&color, elements [1])) {
-			g_warning ("Incomplete '%s' background type received", elements [0]);
-			goto out;
-		}
-
-                pattern = cairo_pattern_create_rgba (color.red, color.green, color.blue, color.alpha);
-	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-                XID xid;
-		int x, y;
-
-		if (!panel_applet_parse_pixmap_str (elements [1], &xid, &x, &y)) {
-			g_warning ("Incomplete '%s' background type received: %s",
-				   elements [0], elements [1]);
-                        goto out;
-		}
-
-                pattern = panel_applet_get_pixmap (applet, xid, x, y);
-		if (!pattern) {
-			g_warning ("Failed to get pixmap %s", elements [1]);
-                        goto out;
-		}
-	} else {
-		g_warning ("Unknown background type received");
         }
 
-    out:
-	g_strfreev (elements);
+        g_variant_iter_init (&iter, variant);
+        switch (g_variant_iter_n_children (&iter)) {
+        case 4: {
+                gdouble red, green, blue, alpha;
 
-	return pattern;
+                g_variant_get (variant, "(dddd)", &red, &green, &blue, &alpha);
+                pattern = cairo_pattern_create_rgba (red, green, blue, alpha);
+        }
+                break;
+        case 3: {
+                guint32 xid;
+                int x, y;
+
+                g_variant_get (variant, "(uii)", &xid, &x, &y);
+                pattern = panel_applet_get_pixmap (applet, xid, x, y);
+                if (!pattern)
+                        g_warning ("Failed to get pixmap %d, %d, %d", xid, x, y);
+        }
+                break;
+        default:
+                break;
+        }
+
+        g_variant_unref (variant);
+
+        return pattern;
 }
 
 static void
@@ -1518,69 +1498,56 @@ panel_applet_set_background_string (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "background");
 }
 
-static gboolean
-matrix_is_identity (cairo_matrix_t *matrix)
+static GtkStyleProperties *
+get_widget_style_properties (GtkWidget *widget)
 {
-  return matrix->xx == 1.0 && matrix->yy == 1.0 &&
-  matrix->yx == 0.0 && matrix->xy == 0.0 &&
-  matrix->x0 == 0.0 && matrix->y0 == 0.0;
+        GtkStyleProperties *properties;
+
+        properties = g_object_get_data (G_OBJECT (widget), "panel-applet-style-props");
+        if (!properties) {
+                properties = gtk_style_properties_new ();
+                g_object_set_data_full (G_OBJECT (widget), "panel-applet-style-props",
+                                        properties, (GDestroyNotify)g_object_unref);
+        }
+        return properties;
 }
 
 static void
 panel_applet_update_background_for_widget (GtkWidget       *widget,
 					   cairo_pattern_t *pattern)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
+        GtkStyleProperties *properties;
 
-	/* reset style */
-	gtk_widget_set_style (widget, NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (widget, rc_style);
-	g_object_unref (rc_style);
+        gtk_widget_reset_style (widget);
 
-        if (pattern == NULL) {
-          return;
-        }
+        if (!pattern)
+                return;
+
+        properties = get_widget_style_properties (widget);
 
         switch (cairo_pattern_get_type (pattern)) {
         case CAIRO_PATTERN_TYPE_SOLID: {
-                double r, b, g, a;
-                GdkColor color;
+                GdkRGBA color;
 
-                cairo_pattern_get_rgba (pattern, &r, &g, &b, &a);
-                color.pixel = 0;
-                color.red = r * 65535.;
-                color.green = g * 65535.;
-                color.blue = b * 65535.;
-		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, &color);
-		break;
+                cairo_pattern_get_rgba (pattern, &color.red, &color.green, &color.blue, &color.alpha);
+                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                          "background-color", &color,
+                                          "background-image", NULL,
+                                          NULL);
         }
-        case CAIRO_PATTERN_TYPE_SURFACE: {
-                cairo_surface_t *surface;
-                cairo_matrix_t matrix;
-                GdkWindow *window;
+                break;
+        case CAIRO_PATTERN_TYPE_SURFACE:
+                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                          "background-image", pattern,
+                                          NULL);
+                break;
+        default:
+                break;
+        }
 
-                window = gtk_widget_get_window (widget);
-                cairo_pattern_get_matrix (pattern, &matrix);
-                if (cairo_pattern_get_surface (pattern, &surface) == CAIRO_STATUS_SUCCESS &&
-                    matrix_is_identity (&matrix) &&
-                    cairo_surface_get_type (surface) == CAIRO_SURFACE_TYPE_XLIB &&
-                    cairo_xlib_surface_get_visual (surface) == GDK_VISUAL_XVISUAL (gdk_window_get_visual ((window))) &&
-                    cairo_xlib_surface_get_display (surface) == GDK_WINDOW_XDISPLAY (window)) {
-                        style = gtk_style_copy (gtk_widget_get_style (widget));
-                        if (style->background[GTK_STATE_NORMAL])
-                                cairo_pattern_destroy (style->background[GTK_STATE_NORMAL]);
-                        style->background[GTK_STATE_NORMAL] = cairo_pattern_reference (pattern);
-                        gtk_widget_set_style (widget, style);
-                        g_object_unref (style);
-                }
-		break;
-        }
-	default:
-                /* nothing */
-		break;
-	}
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (properties),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 static void
