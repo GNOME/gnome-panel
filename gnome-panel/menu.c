@@ -1126,13 +1126,11 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 }
 
 static void
-image_menuitem_size_request (GtkWidget      *menuitem,
-			     GtkRequisition *requisition,
-			     gpointer        data)
+image_menuitem_set_size_request (GtkWidget  *menuitem,
+                                 GtkIconSize icon_size)
 {
-	GtkIconSize icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
-	int         icon_height;
-	int         req_height;
+	int icon_height;
+	int req_height;
 
 	if (!gtk_icon_size_lookup (icon_size, NULL, &icon_height))
 		return;
@@ -1146,7 +1144,7 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	req_height = icon_height;
 	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
 		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
-	requisition->height = MAX (requisition->height, req_height);
+        gtk_widget_set_size_request (menuitem, -1, req_height);
 }
 
 static char *
@@ -1219,9 +1217,7 @@ setup_menuitem (GtkWidget   *menuitem,
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
 	} else if (icon_size != GTK_ICON_SIZE_INVALID)
-		g_signal_connect (menuitem, "size_request",
-				  G_CALLBACK (image_menuitem_size_request),
-				  GINT_TO_POINTER (icon_size));
+                image_menuitem_set_size_request (menuitem, icon_size);
 
 	gtk_widget_show (menuitem);
 }
