@@ -382,18 +382,14 @@ setup_gconf (TasklistData *tasklist)
 }
 
 static void
-applet_size_request (GtkWidget      *widget,
-		     GtkRequisition *requisition,
-		     TasklistData   *tasklist)
+applet_size_allocate (GtkWidget      *widget,
+                      GtkAllocation  *allocation,
+                      TasklistData   *tasklist)
 {
 	int len;
 	const int *size_hints;
-	GtkRequisition child_req;
-    	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
 
-	gtk_widget_get_preferred_size (tasklist->applet, &child_req, NULL);
-
-	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
+	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist), &len);
 	g_assert (len % 2 == 0);
 
         panel_applet_set_size_hints (PANEL_APPLET (tasklist->applet),
@@ -521,9 +517,8 @@ window_list_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
-
-	g_signal_connect (G_OBJECT (tasklist->applet), "size_request",
-			  G_CALLBACK (applet_size_request),
+	g_signal_connect (G_OBJECT (tasklist->applet), "size_allocate",
+			  G_CALLBACK (applet_size_allocate),
 			  tasklist);
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);
