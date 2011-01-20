@@ -134,22 +134,41 @@ window_menu_on_draw (GtkWidget *widget,
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
-        gboolean first_time = TRUE;
+        GtkCssProvider *provider;
 
-        if (first_time) {
-                gtk_rc_parse_string ("\n"
-                                     "   style \"window-menu-applet-button-style\"\n"
-                                     "   {\n"
-                                     "      GtkWidget::focus-line-width=0\n"
-                                     "      GtkWidget::focus-padding=0\n"
-                                     "   }\n"
-                                     "\n"
-                                     "    widget \"*.window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
-                                     "\n");
-                first_time = FALSE;
-        }
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#window-menu-applet-button {\n"
+                                         " border-width: 0px;\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px; }",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 
         gtk_widget_set_name (widget, "window-menu-applet-button");
+}
+
+static inline void
+force_no_shadow_and_padding (GtkWidget *widget)
+{
+        GtkCssProvider *provider;
+
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#window-menu-applet-selector {\n"
+                                         " border-width: 0px;\n"
+                                         " -GtkMenuBar-internal-padding: 0px;\n"
+                                         " -GtkMenuBar-shadow-type: none; }",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
+
+        gtk_widget_set_name (widget, "window-menu-applet-selector");
 }
 
 static void
@@ -270,6 +289,7 @@ window_menu_applet_fill (PanelApplet *applet)
 	g_object_unref (action_group);
 
 	window_menu->selector = wnck_selector_new ();
+        force_no_shadow_and_padding (window_menu->selector);
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 
 			   window_menu->selector);
 
