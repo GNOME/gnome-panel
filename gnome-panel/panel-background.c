@@ -65,7 +65,7 @@ panel_background_prepare (PanelBackground *background)
                         gdk_window_set_background_pattern (background->window,
                                                           background->default_pattern);
 		else
-			gdk_window_set_background (
+			gdk_window_set_background_rgba (
 				background->window, &background->default_color);
 		break;
 	case PANEL_BACK_COLOR:
@@ -672,7 +672,7 @@ panel_background_set (PanelBackground     *background,
 
 void
 panel_background_set_default_style (PanelBackground *background,
-				    GdkColor        *color,
+				    GdkRGBA         *color,
 				    cairo_pattern_t *pattern)
 {
 	g_return_if_fail (color != NULL);
@@ -814,10 +814,10 @@ panel_background_init (PanelBackground              *background,
 	background->window   = NULL;
 
 	background->default_pattern     = NULL;
-	background->default_color.red   = 0;
-	background->default_color.green = 0;
-	background->default_color.blue  = 0;
-	background->default_color.pixel = 0;
+	background->default_color.red   = 0.;
+	background->default_color.green = 0.;
+	background->default_color.blue  = 0.;
+	background->default_color.alpha = 1.;
 
 	background->fit_image     = FALSE;
 	background->stretch_image = FALSE;

@@ -75,10 +75,9 @@ static void panel_widget_dispose              (GObject          *obj);
 static void panel_widget_finalize             (GObject          *obj);
 static void panel_widget_realize              (GtkWidget        *widget);
 static void panel_widget_unrealize            (GtkWidget        *panel);
-static void panel_widget_state_changed        (GtkWidget        *widget,
-					       GtkStateType      previous_state);
-static void panel_widget_style_set            (GtkWidget        *widget,
-					       GtkStyle         *previous_style);
+static void panel_widget_state_flags_changed  (GtkWidget        *widget,
+					       GtkStateFlags     previous_state);
+static void panel_widget_style_updated        (GtkWidget        *widget);
 
 static void panel_widget_background_changed (PanelBackground *background,
 					     PanelWidget     *panel);
@@ -419,8 +418,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->realize = panel_widget_realize;
 	widget_class->unrealize = panel_widget_unrealize;
 	widget_class->focus = panel_widget_real_focus;
-	widget_class->state_changed = panel_widget_state_changed;
-	widget_class->style_set = panel_widget_style_set;
+	widget_class->state_flags_changed = panel_widget_state_flags_changed;
+	widget_class->style_updated = panel_widget_style_updated;
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
@@ -1580,39 +1579,43 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 }
 
 static void
-panel_widget_style_set (GtkWidget *widget,
-			GtkStyle  *previous_style)
+panel_widget_set_background_default_style (GtkWidget *widget)
 {
-	GtkStyle     *style;
-	GtkStateType  state;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+        GdkRGBA          bg_color;
+        cairo_pattern_t *bg_image;
 
 	if (gtk_widget_get_realized (widget)) {
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
+		context = gtk_widget_get_style_context (widget);
+		state = gtk_widget_get_state_flags (widget);
+
+                gtk_style_context_get_background_color (context, state, &bg_color);
+                gtk_style_context_get (context, state,
+                                       "background-image", &bg_image,
+                                       NULL);
 
 		panel_background_set_default_style (
 			&PANEL_WIDGET (widget)->background,
-			&style->bg [state],
-			style->background [state]);
+			&bg_color, bg_image);
+
+                if (bg_image)
+                        cairo_pattern_destroy (bg_image);
 	}
 }
 
 static void
-panel_widget_state_changed (GtkWidget    *widget,
-			    GtkStateType  previous_state)
+panel_widget_style_updated (GtkWidget *widget)
 {
-	GtkStyle     *style;
-	GtkStateType  state;
+        panel_widget_set_background_default_style (widget);
+        GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
+}
 
-	if (gtk_widget_get_realized (widget)) {
-		style = gtk_widget_get_style (widget);
-		state = gtk_widget_get_state (widget);
-
-		panel_background_set_default_style (
-			&PANEL_WIDGET (widget)->background,
-			&style->bg [state],
-			style->background [state]);
-	}
+static void
+panel_widget_state_flags_changed (GtkWidget    *widget,
+                                  GtkStateFlags previous_state)
+{
+        panel_widget_set_background_default_style (widget);
 }
 
 static gboolean
@@ -1628,10 +1631,8 @@ toplevel_configure_event (GtkWidget         *widget,
 static void
 panel_widget_realize (GtkWidget *widget)
 {
-	PanelWidget  *panel = (PanelWidget *) widget;
-	GdkWindow    *window;
-	GtkStyle     *style;
-	GtkStateType  state;
+	PanelWidget     *panel = (PanelWidget *) widget;
+	GdkWindow       *window;
 
 	g_signal_connect (panel->toplevel, "configure-event",
 			  G_CALLBACK (toplevel_configure_event), panel);
@@ -1639,18 +1640,11 @@ panel_widget_realize (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 
 	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
-
 	/* For auto-hidden panels with a colored background, we need native
 	 * windows to avoid some uglyness on unhide */
 	gdk_window_ensure_native (window);
 
-	panel_background_set_default_style (
-		&panel->background,
-		&style->bg [state],
-		style->background [state]);
-
+        panel_widget_set_background_default_style (widget);
 	panel_background_realized (&panel->background, window);
 }
 

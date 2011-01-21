@@ -60,7 +60,7 @@ struct _PanelBackground {
 	GdkWindow              *window;
 
 	cairo_pattern_t        *default_pattern;
-	GdkColor                default_color;
+	GdkRGBA                 default_color;
 
         guint                   fit_image : 1;
         guint                   stretch_image : 1;
@@ -98,7 +98,7 @@ void  panel_background_set_stretch       (PanelBackground     *background,
 void  panel_background_set_rotate        (PanelBackground     *background,
 					  gboolean             rotate_image);
 void  panel_background_set_default_style (PanelBackground     *background,
-					  GdkColor            *color,
+					  GdkRGBA             *color,
 					  cairo_pattern_t     *pattern);
 void  panel_background_realized          (PanelBackground     *background,
 					  GdkWindow           *window);
