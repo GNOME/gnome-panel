@@ -1892,9 +1892,8 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 }
 
 static void
-panel_run_dialog_style_set (GtkWidget      *widget,
-			    GtkStyle       *prev_style,
-			    PanelRunDialog *dialog)
+panel_run_dialog_style_updated (GtkWidget      *widget,
+                                PanelRunDialog *dialog)
 {
   if (dialog->icon_path) {
 	  char *icon_path;
@@ -1925,8 +1924,8 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 {
 	dialog->pixmap = PANEL_GTK_BUILDER_GET (gui, "icon_pixmap");
 	
-	g_signal_connect (dialog->pixmap, "style-set",
-			  G_CALLBACK (panel_run_dialog_style_set),
+	g_signal_connect (dialog->pixmap, "style-updated",
+			  G_CALLBACK (panel_run_dialog_style_updated),
 			  dialog);
 	g_signal_connect (dialog->pixmap, "screen-changed",
 			  G_CALLBACK (panel_run_dialog_screen_changed),
@@ -1987,7 +1986,7 @@ static void
 panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog)
 {
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
-			                      G_CALLBACK (panel_run_dialog_style_set),
+			                      G_CALLBACK (panel_run_dialog_style_updated),
 			                      dialog);
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
 			                      G_CALLBACK (panel_run_dialog_screen_changed),
