@@ -424,8 +424,8 @@ panel_make_menu_icon (GtkIconTheme *icon_theme,
 }
 
 static void
-menu_item_style_set (GtkImage *image,
-		     gpointer  data)
+menu_item_style_updated (GtkImage *image,
+                         gpointer  data)
 {
 	GtkWidget   *widget;
 	GdkPixbuf   *pixbuf;
@@ -480,8 +480,8 @@ do_icons_to_add (void)
 				GTK_IMAGE (icon_to_add->image),
 				icon_to_add->pixbuf);
 
-			g_signal_connect (icon_to_add->image, "style-set",
-					  G_CALLBACK (menu_item_style_set),
+			g_signal_connect (icon_to_add->image, "style-updated",
+					  G_CALLBACK (menu_item_style_updated),
 					  GINT_TO_POINTER (icon_to_add->icon_size));
 
 			g_object_unref (icon_to_add->pixbuf);
@@ -1129,6 +1129,10 @@ static void
 image_menuitem_set_size_request (GtkWidget  *menuitem,
                                  GtkIconSize icon_size)
 {
+        GtkStyleContext *context;
+        GtkStateFlags state;
+        GtkBorder padding, border;
+        int border_width;
 	int icon_height;
 	int req_height;
 
@@ -1141,9 +1145,14 @@ image_menuitem_set_size_request (GtkWidget  *menuitem,
 	 * This is a bit ugly, since we should keep this in sync with what's in
 	 * gtk_menu_item_size_request()
 	 */
+        context = gtk_widget_get_style_context (menuitem);
+        state = gtk_widget_get_state_flags (menuitem);
+        gtk_style_context_get_padding (context, state, &padding);
+        gtk_style_context_get_border (context, state, &border);
+
+        border_width = gtk_container_get_border_width (GTK_CONTAINER (menuitem));
 	req_height = icon_height;
-	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
-		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
+	req_height += (border_width * 2) + padding.top + padding.bottom + border.top + border.bottom;
         gtk_widget_set_size_request (menuitem, -1, req_height);
 }
 
