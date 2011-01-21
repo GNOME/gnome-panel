@@ -56,12 +56,17 @@ panel_frame_get_preferred_width (GtkWidget *widget, gint *minimal_width, gint *n
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_get_preferred_width (child, minimal_width, natural_width);
 
-	*minimal_width += border_width * 2;
-	*natural_width += border_width * 2;
+	*minimal_width += border_width;
+	*natural_width += border_width;
 
-	if ((frame->edges & PANEL_EDGE_LEFT) || (frame->edges & PANEL_EDGE_RIGHT)) {
-		*minimal_width += padding.top + padding.bottom;
-		*natural_width += padding.top + padding.bottom;
+	if (frame->edges & PANEL_EDGE_LEFT) {
+                *minimal_width += padding.left;
+                *natural_width += padding.left;
+        }
+
+        if (frame->edges & PANEL_EDGE_RIGHT) {
+		*minimal_width += padding.right;
+		*natural_width += padding.right;
 	}
 }
 
@@ -86,12 +91,17 @@ panel_frame_get_preferred_height (GtkWidget *widget, gint *minimal_height, gint 
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_get_preferred_height (child, minimal_height, natural_height);
 
-	*minimal_height += border_width * 2;
-	*natural_height += border_width * 2;
+	*minimal_height += border_width;
+	*natural_height += border_width;
 
-	if ((frame->edges & PANEL_EDGE_TOP) || (frame->edges & PANEL_EDGE_BOTTOM)) {
-		*minimal_height += padding.left + padding.right;
-		*natural_height += padding.left + padding.right;
+	if (frame->edges & PANEL_EDGE_TOP) {
+                *minimal_height += padding.top;
+                *natural_height += padding.top;
+        }
+
+        if (frame->edges & PANEL_EDGE_BOTTOM) {
+		*minimal_height += padding.bottom;
+		*natural_height += padding.bottom;
 	}
 }
 
@@ -120,20 +130,20 @@ panel_frame_size_allocate (GtkWidget     *widget,
 	child_allocation.height = allocation->height - 2 * border_width;
 
 	if (frame->edges & PANEL_EDGE_LEFT) {
-		child_allocation.x     += padding.left + padding.right;
-		child_allocation.width -= padding.left + padding.right;
+		child_allocation.x     += padding.left;
+		child_allocation.width -= padding.left;
 	}
 
 	if (frame->edges & PANEL_EDGE_TOP) {
-		child_allocation.y      += padding.top + padding.bottom;
-		child_allocation.height -= padding.top + padding.bottom;
+		child_allocation.y      += padding.top;
+		child_allocation.height -= padding.top;
 	}
 
 	if (frame->edges & PANEL_EDGE_RIGHT)
-		child_allocation.width -= padding.left + padding.right;
+		child_allocation.width -= padding.right;
 
 	if (frame->edges & PANEL_EDGE_BOTTOM)
-		child_allocation.height -= padding.top + padding.bottom;
+		child_allocation.height -= padding.bottom;
 
 	child = gtk_bin_get_child (bin);
 	gtk_widget_get_allocation (child, &child_allocation_current);
@@ -161,7 +171,6 @@ panel_frame_draw (GtkWidget     *widget,
         GdkRGBA           bg, dark, light;
         GtkSymbolicColor *c1, *c2;
 	int               x, y, width, height;
-        int               xthickness, ythickness;
         GtkBorder         padding;
 
 	if (edges == PANEL_EDGE_NONE)
@@ -188,8 +197,6 @@ panel_frame_draw (GtkWidget     *widget,
         gtk_symbolic_color_unref (c1);
 
         gtk_style_context_get_padding (context, state, &padding);
-	xthickness = padding.left + padding.right;
-	ythickness = padding.top + padding.bottom;
 
 	/* Copied from gtk_default_draw_shadow() */
 
@@ -197,8 +204,8 @@ panel_frame_draw (GtkWidget     *widget,
 
         cairo_set_line_width (cr, 1);
 
-	if (frame->edges & PANEL_EDGE_BOTTOM && ythickness > 0) {
-		if (ythickness > 1) {
+	if (frame->edges & PANEL_EDGE_BOTTOM && padding.bottom > 0) {
+		if (padding.bottom > 1) {
                         gdk_cairo_set_source_rgba (cr, &dark);
                         cairo_move_to (cr, x + .5, y + height - 2 + .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + height - 2 + .5);
@@ -216,8 +223,8 @@ panel_frame_draw (GtkWidget     *widget,
                 }
 	}
 
-	if (frame->edges & PANEL_EDGE_RIGHT && xthickness > 0) {
-		if (xthickness > 1) {
+	if (frame->edges & PANEL_EDGE_RIGHT && padding.right > 0) {
+		if (padding.right > 1) {
                         gdk_cairo_set_source_rgba (cr, &dark);
                         cairo_move_to (cr, x + width - 2 - .5, y + .5);
                         cairo_line_to (cr, x + width - 2 - .5, y + height - 1 - .5);
@@ -235,13 +242,13 @@ panel_frame_draw (GtkWidget     *widget,
                 }
 	}
 
-	if (frame->edges & PANEL_EDGE_TOP && ythickness > 0) {
+	if (frame->edges & PANEL_EDGE_TOP && padding.top > 0) {
                 gdk_cairo_set_source_rgba (cr, &light);
                 cairo_move_to (cr, x + .5, y + .5);
                 cairo_line_to (cr, x + width - 1 - .5, y + .5);
                 cairo_stroke (cr);
 
-		if (ythickness > 1) {
+		if (padding.right > 1) {
                         gdk_cairo_set_source_rgba (cr, &bg);
                         cairo_move_to (cr, x + .5, y + 1 + .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
@@ -249,13 +256,13 @@ panel_frame_draw (GtkWidget     *widget,
                 }
 	}
 
-	if (frame->edges & PANEL_EDGE_LEFT && xthickness > 0) {
+	if (frame->edges & PANEL_EDGE_LEFT && padding.left > 0) {
                 gdk_cairo_set_source_rgba (cr, &light);
                 cairo_move_to (cr, x + .5, y + .5);
                 cairo_line_to (cr, x + .5, y + height - 1 - .5);
                 cairo_stroke (cr);
 
-		if (xthickness > 1) {
+		if (padding.left > 1) {
                       gdk_cairo_set_source_rgba (cr, &bg);
                       cairo_move_to (cr, x + 1 + .5, y + .5);
                       cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
