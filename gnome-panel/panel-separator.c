@@ -45,34 +45,40 @@ static gboolean
 panel_separator_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-        PanelSeparator *separator = PANEL_SEPARATOR (widget);
-        GdkWindow      *window;
-        GtkStyle       *style;
-        int             width, height;
+        PanelSeparator  *separator = PANEL_SEPARATOR (widget);
+        GdkWindow       *window;
+        GtkStyleContext *context;
+        GtkStateFlags    state;
+        GtkBorder        padding;
+        int              width, height;
 
         if (GTK_WIDGET_CLASS (panel_separator_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_separator_parent_class)->draw (widget, cr);
 
 	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
+        state = gtk_widget_get_state_flags (widget);
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_height (widget);
 
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get_padding (context, state, &padding);
+
+        gtk_style_context_save (context);
+        gtk_style_context_set_state (context, state);
+
+        cairo_save (cr);
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_paint_vline (style, cr,
-				 gtk_widget_get_state (widget),
-				 widget, "separator",
-				 style->xthickness,
-				 height - style->xthickness,
-				 (width - style->xthickness) / 2);
+                gtk_render_line (context, cr,
+                                 (width - padding.left) / 2, 0,
+                                 (width - padding.left) / 2, height - 1);
 	} else {
-		gtk_paint_hline (style, cr,
-				 gtk_widget_get_state (widget),
-				 widget, "separator",
-				 style->ythickness,
-				 width - style->ythickness,
-				 (height  - style->ythickness) / 2);
+                gtk_render_line (context, cr,
+                                 0, (height - padding.top) / 2,
+                                 width - 1, (height - padding.top) / 2);
 	}
+        cairo_restore (cr);
+
+        gtk_style_context_restore (context);
 
 	return FALSE;
 }
