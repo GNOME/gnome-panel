@@ -95,38 +95,27 @@ panel_applet_frame_draw (GtkWidget *widget,
                          cairo_t   *cr)
 {
         PanelAppletFrame *frame = PANEL_APPLET_FRAME (widget);
-        GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
+	GtkStyleContext *context;
 
         if (GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw (widget, cr);
 
 	if (!frame->priv->has_handle)
 		return FALSE;
-  
-        switch (frame->priv->orientation) {
-		case PANEL_ORIENTATION_TOP:
-		case PANEL_ORIENTATION_BOTTOM:
-			orientation = GTK_ORIENTATION_VERTICAL;
-			break;
-		case PANEL_ORIENTATION_LEFT:
-		case PANEL_ORIENTATION_RIGHT:
-			orientation = GTK_ORIENTATION_HORIZONTAL;
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-        }
 
-        gtk_paint_handle (gtk_widget_get_style (widget),
-                          cr,
-                          gtk_widget_get_state (widget),
-                          GTK_SHADOW_OUT,
-                          widget, "handlebox",
-                          frame->priv->handle_rect.x,
-                          frame->priv->handle_rect.y,
-                          frame->priv->handle_rect.width,
-                          frame->priv->handle_rect.height,
-                          orientation);
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_save (context);
+	gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
+
+	cairo_save (cr);
+        gtk_render_handle (context, cr,
+			   frame->priv->handle_rect.x,
+			   frame->priv->handle_rect.y,
+			   frame->priv->handle_rect.width,
+			   frame->priv->handle_rect.height);
+	cairo_restore (cr);
+
+	gtk_style_context_restore (context);
 
         return FALSE;
 }
