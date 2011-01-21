@@ -680,7 +680,7 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 }
 
 static void
-panel_action_button_style_set (PanelActionButton *button)
+panel_action_button_style_update (PanelActionButton *button)
 {
 	if (actions [button->priv->type].icon_name != NULL)
 		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [button->priv->type].icon_name);
@@ -733,8 +733,8 @@ panel_action_button_load (PanelActionButtonType  type,
 
 	panel_action_button_connect_to_gconf (button);
 
-	g_signal_connect (button, "style-set",
-			  G_CALLBACK (panel_action_button_style_set), NULL);
+	g_signal_connect (button, "style-update",
+			  G_CALLBACK (panel_action_button_style_update), NULL);
 }
 
 void
