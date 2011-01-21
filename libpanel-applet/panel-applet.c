@@ -1260,9 +1260,10 @@ static gboolean
 panel_applet_draw (GtkWidget *widget,
 		   cairo_t   *cr)
 {
+        GtkStyleContext *context;
 	int border_width;
 	int focus_width = 0;
-	int x, y, width, height;
+	gdouble x, y, width, height;
 
 	GTK_WIDGET_CLASS (panel_applet_parent_class)->draw (widget, cr);
 
@@ -1287,11 +1288,14 @@ panel_applet_draw (GtkWidget *widget,
 	width  -= 2 * border_width;
 	height -= 2 * border_width;
 
-	gtk_paint_focus (gtk_widget_get_style (widget),
-			 cr,
-			 gtk_widget_get_state (widget),
-			 widget, "panel_applet",
-			 x, y, width, height);
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_save (context);
+
+        cairo_save (cr);
+        gtk_render_focus (context, cr, x, y, width, height);
+        cairo_restore (cr);
+
+        gtk_style_context_restore (context);
 
 	return FALSE;
 }
