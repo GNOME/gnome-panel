@@ -293,36 +293,40 @@ calc_arrow (PanelOrientation  orientation,
 	    int               button_height,
 	    int              *x,
 	    int              *y,
-	    int              *width,
-	    int              *height)
+            gdouble          *angle,
+	    gdouble          *size)
 {
 	GtkArrowType retval = GTK_ARROW_UP;
 	double scale;
 
 	scale = (orientation & PANEL_HORIZONTAL_MASK ? button_height : button_width) / 48.0;
 
-	*width  = 12 * scale;
-	*height = 12 * scale;
+        *size = 12 * scale;
+        *angle = 0;
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
 		*x     = scale * 3;
 		*y     = scale * (48 - 13);
+                *angle = G_PI;
 		retval = GTK_ARROW_DOWN;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		*x     = scale * (48 - 13);
 		*y     = scale * 1;
+                *angle = 0;
 		retval = GTK_ARROW_UP;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		*x     = scale * (48 - 13);
 		*y     = scale * 3;
+                *angle = G_PI / 2;
 		retval = GTK_ARROW_RIGHT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		*x     = scale * 1;
 		*y     = scale * 3;
+                *angle = 3 * (G_PI / 2);
 		retval = GTK_ARROW_LEFT;
 		break;
 	}
@@ -335,7 +339,7 @@ button_widget_draw (GtkWidget *widget,
 		    cairo_t   *cr)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
-	GtkStyle *style;
+	GtkStyleContext *context;
 	GtkStateFlags state_flags;
 	int off;
         int width, height;
@@ -381,31 +385,31 @@ button_widget_draw (GtkWidget *widget,
 
 	g_object_unref (pb);
 
-	style = gtk_widget_get_style (widget);
+        context = gtk_widget_get_style_context (widget);
 
 	if (button_widget->priv->arrow) {
 		GtkArrowType arrow_type;
+                gdouble angle, size;
+
+                gtk_style_context_save (context);
+                gtk_style_context_set_state (context, state_flags);
 
 		arrow_type = calc_arrow (button_widget->priv->orientation,
-					 width,
-					 height,
-					 &x, &y, &w, &h);
+					 width, height,
+					 &x, &y,
+                                         &angle, &size);
 
-		gtk_paint_arrow (style,
-				 cr,
-				 GTK_STATE_NORMAL,
-				 GTK_SHADOW_NONE,
-				 widget,
-				 "panel-button",
-				 arrow_type,
-				 TRUE,
-				 x, y, w, h);
+                cairo_save (cr);
+		gtk_render_arrow (context, cr, angle, x, y, size);
+                cairo_restore (cr);
+
+                gtk_style_context_restore (context);
 	}
 
 	if (button_widget->priv->dnd_highlight) {
                 cairo_save (cr);
                 cairo_set_line_width (cr, 1);
-                gdk_cairo_set_source_color (cr, &style->black);
+                cairo_set_source_rgb (cr, 0., 0., 0.);
                 cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
                 cairo_stroke (cr);
                 cairo_restore (cr);
@@ -414,18 +418,23 @@ button_widget_draw (GtkWidget *widget,
 	if (gtk_widget_has_focus (widget)) {
 		gint focus_width, focus_pad;
 
+                gtk_style_context_save (context);
+                gtk_style_context_set_state (context, state_flags);
+
 		gtk_widget_style_get (widget,
 				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
 		x = focus_pad;
 		y = focus_pad;
-		w= width -  2 * focus_pad;
-		h= height - 2 * focus_pad;
-		gtk_paint_focus (style, cr,
-				 GTK_STATE_NORMAL,
-				 widget, "button",
-				 x, y, w, h);
+		w = width -  2 * focus_pad;
+		h = height - 2 * focus_pad;
+
+                cairo_save (cr);
+		gtk_render_focus (context, cr, x, y, w, h);
+                cairo_restore (cr);
+
+                gtk_style_context_restore (context);
 	}
 	
 	return FALSE;
