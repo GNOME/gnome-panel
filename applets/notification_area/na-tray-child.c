@@ -249,7 +249,7 @@ na_tray_child_new (GdkScreen *screen,
   result = XGetWindowAttributes (xdisplay, icon_window,
                                  &window_attributes);
   gdk_flush ();
-  if (gdk_error_trap_pop () || result != Success)
+  if (gdk_error_trap_pop () || !result)
     return NULL;
 
   visual = gdk_x11_screen_lookup_visual (screen,
