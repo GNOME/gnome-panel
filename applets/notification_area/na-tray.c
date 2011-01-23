@@ -85,25 +85,6 @@ static TraysScreen *trays_screens = NULL;
 
 static void icon_tip_show_next (IconTip *icontip);
 
-/* NaBox, an instantiable GtkBox */
-
-typedef GtkBox      NaBox;
-typedef GtkBoxClass NaBoxClass;
-
-static GType na_box_get_type (void);
-
-G_DEFINE_TYPE (NaBox, na_box, GTK_TYPE_BOX)
-
-static void
-na_box_init (NaBox *box)
-{
-}
-
-static void
-na_box_class_init (NaBoxClass *klass)
-{
-}
-
 /* NaTray */
 
 G_DEFINE_TYPE (NaTray, na_tray, GTK_TYPE_BIN)
@@ -571,13 +552,6 @@ na_tray_init (NaTray *tray)
   priv->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   gtk_container_add (GTK_CONTAINER (tray), priv->frame);
   gtk_widget_show (priv->frame);
-
-  priv->box = g_object_new (na_box_get_type (), NULL);
-  g_signal_connect (priv->box, "draw",
-		    G_CALLBACK (na_tray_draw_box), NULL);
-  gtk_box_set_spacing (GTK_BOX (priv->box), ICON_SPACING);
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
-  gtk_widget_show (priv->box);
 }
 
 static GObject *
@@ -597,6 +571,12 @@ na_tray_constructor (GType type,
   priv = tray->priv;
 
   g_assert (priv->screen != NULL);
+
+  priv->box = gtk_box_new (priv->orientation, ICON_SPACING);
+  g_signal_connect (priv->box, "draw",
+                    G_CALLBACK (na_tray_draw_box), NULL);
+  gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
+  gtk_widget_show (priv->box);
 
   if (!initialized)
     {
