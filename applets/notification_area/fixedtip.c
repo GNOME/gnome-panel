@@ -54,16 +54,27 @@ button_press_handler (GtkWidget      *fixedtip,
 static gboolean
 na_fixed_tip_draw (GtkWidget *widget, cairo_t *cr)
 {
+  GtkStyleContext *context;
+  GtkStateFlags state;
   int width, height;
 
   width = gtk_widget_get_allocated_width (widget);
   height = gtk_widget_get_allocated_height (widget);
 
-  gtk_paint_flat_box (gtk_widget_get_style (widget),
-                      cr,
-                      GTK_STATE_NORMAL, GTK_SHADOW_OUT, 
-                      widget, "tooltip",
-                      0, 0, width, height);
+  state = gtk_widget_get_state_flags (widget);
+  context = gtk_widget_get_style_context (widget);
+  gtk_style_context_save (context);
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
+  gtk_style_context_set_state (context, state);
+
+  cairo_save (cr);
+  gtk_render_background (context, cr,
+                         0., 0.,
+                         (gdouble)width,
+                         (gdouble)height);
+  cairo_restore (cr);
+
+  gtk_style_context_restore (context);
 
   return FALSE;
 }
