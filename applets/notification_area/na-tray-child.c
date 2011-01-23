@@ -187,7 +187,7 @@ na_tray_child_draw (GtkWidget *widget,
       /* Clear to transparent */
       cairo_set_source_rgba (cr, 0, 0, 0, 0);
       cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-      cairo_fill (cr);
+      cairo_paint (cr);
     }
   else if (child->parent_relative_bg)
     {
