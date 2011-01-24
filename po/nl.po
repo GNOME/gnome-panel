@@ -11,7 +11,7 @@
 # Tino Meinen <a.t.meinen@chello.nl>, 2002. 2006, 2007.
 # Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2006
 # Daniel van Eeden <gnomenl@myname.nl>, 2008
-# Wouter Bolsterlee <wbolster@gnome.org>, 2006–2010
+# Wouter Bolsterlee <wbolster@gnome.org>, 2006–2011
 #
 # desktop - bureaublad
 # workspace - werkblad
@@ -19,12 +19,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2010-09-15 19:40+0000\n"
-"PO-Revision-Date: 2010-09-19 16:42+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-25 00:13+0100\n"
+"PO-Revision-Date: 2011-01-25 00:12+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2360,7 +2360,6 @@ msgid "Applet Bonobo IID"
 msgstr "Bonobo-IID van applet"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
-#| msgid "Applet Bonobo IID"
 msgid "Applet IID"
 msgstr "Applet-IID"
 
@@ -2459,17 +2458,14 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr "De identificatie van het topniveau-paneel dat dit object bevat."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-#| msgid ""
-#| "The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-#| "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-#| "\"bonobo-applet\"."
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
-"Het implementatie-ID van het applet - bijv. ‘"
-"ClockAppletFactory::ClockApplet’. Deze sleutel is slechts relevant als de sleutel "
-"‘object_type’ gelijk is aan ‘bonobo-applet’."
+"Het implementatie-ID van het applet - bijv. ‘ClockAppletFactory::"
+"ClockApplet’. Deze sleutel is slechts relevant als de sleutel ‘object_type’ "
+"gelijk is aan ‘external-applet’ (of het verouderde ‘bonobo-applet’)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2521,26 +2517,22 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "Het type van dit paneel-object. Mogelijke waarden zijn ‘drawer-object’, "
-"‘menu-object’, ‘launcher-object’, ‘bonobo-applet’, ‘action-applet’ en ‘menu-"
-"bar’."
+"‘menu-object’, ‘launcher-object’, ‘external-applet’, ‘action-applet’, ‘menu-"
+"bar’ en ‘separator’."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
-#| msgid ""
-#| "The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-#| "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-#| "\"bonobo-applet\"."
 msgid ""
 "This key is deprecated, following the migration to a new library for "
 "applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
 "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
 "\"bonobo-applet\"."
 msgstr ""
-"Deze sleutel is verouderd vanwege de migratie naar een nieuwe appletbibliotheek."
-"Het Bonobo-implementatie-ID van het applet - bijv. ‘OAFIID:"
+"Deze sleutel is verouderd vanwege de migratie naar een nieuwe "
+"appletbibliotheek.Het Bonobo-implementatie-ID van het applet - bijv. ‘OAFIID:"
 "GNOME_ClockApplet’. Deze sleutel is slechts relevant als de sleutel "
 "‘object_type’ gelijk is aan ‘bonobo-applet’."
 
@@ -2560,22 +2552,22 @@ msgstr "Aangepast pictogram gebruiken voor de knop van het object"
 msgid "Use custom path for menu contents"
 msgstr "Aangepast pad gebruiken voor de menu-inhoud"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 "Er is een fout opgetreden bij het lezen van GConf tekenreekswaarde ‘%s’: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr ""
 "Er is een fout opgetreden bij het lezen van GConf integerwaarde ‘%s’: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2584,7 +2576,7 @@ msgstr ""
 "Paneel ‘%s’ is ingesteld om op scherm %d weergegeven te worden, maar dat "
 "scherm is momenteel niet beschikbaar. Dit paneel wordt niet geladen."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
@@ -3313,22 +3305,22 @@ msgstr "Pictogram ‘%s’ niet gevonden"
 msgid "Could not execute '%s'"
 msgstr "Kon ‘%s’ niet uitvoeren"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "bestand"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Persoonlijke map"
 
 # Na overleg met Reinout voorlopig even "Werkplek" aangehouden (Wouter Bolsterlee)
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Bestandssysteem"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Zoeken"
 
@@ -3337,7 +3329,7 @@ msgstr "Zoeken"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s, %2$s"
