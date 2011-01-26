@@ -416,6 +416,7 @@ show_desktop_applet_fill (PanelApplet *applet)
 	GtkActionGroup  *action_group;
 	gchar           *ui_path;
 	AtkObject       *atk_obj;
+        GtkCssProvider  *provider;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -445,15 +446,16 @@ show_desktop_applet_fill (PanelApplet *applet)
         sdd->button = gtk_toggle_button_new ();
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
-	gtk_rc_parse_string ("\n"
-			     "   style \"showdesktop-button-style\"\n"
-			     "   {\n"
-			     "      GtkWidget::focus-line-width=0\n"
-			     "      GtkWidget::focus-padding=0\n"
-			     "   }\n"
-			     "\n"
-			     "    widget \"*.showdesktop-button\" style \"showdesktop-button-style\"\n"
-			     "\n");
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#showdesktop-button {\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px; }",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (sdd->button),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 
 	atk_obj = gtk_widget_get_accessible (sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));
