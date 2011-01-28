@@ -415,6 +415,9 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
                                                                  &pwidth, &pheight);
               if (!monitor->surface)
                       g_warning ("couldn't get background pixmap\n");
+        } else {
+                pwidth = cairo_image_surface_get_width (monitor->surface);
+                pheight = cairo_image_surface_get_height (monitor->surface);
         }
 
 	if (!monitor->surface) {
