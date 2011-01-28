@@ -174,9 +174,9 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 		if (error) {
 			//FIXME: this is not rendered at button->priv->size
 			button->priv->pixbuf =
-				gtk_widget_render_icon (GTK_WIDGET (button),
-							GTK_STOCK_MISSING_IMAGE,
-							(GtkIconSize) -1, NULL);
+				gtk_widget_render_icon_pixbuf (GTK_WIDGET (button),
+                                                               GTK_STOCK_MISSING_IMAGE,
+                                                               (GtkIconSize) -1);
 			g_free (error);
 		}
 
