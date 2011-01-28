@@ -81,7 +81,7 @@ panel_xutils_set_window_type (GdkWindow             *gdk_window,
 	XChangeProperty (display, window, net_wm_window_type,
 			 XA_ATOM, 32, PropModeReplace,
 			 (guchar *) &atoms, i);
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 }
 
 enum {
@@ -150,7 +150,7 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	XChangeProperty (display, window, net_wm_strut_partial,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 12);
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 }
 
 void
@@ -168,7 +168,7 @@ panel_warp_pointer (GdkWindow *gdk_window,
 
 	gdk_error_trap_push ();
 	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 }
 
 guint
