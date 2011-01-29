@@ -5,14 +5,14 @@
 # Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006.
 # Josep Puigdemont i Casamajó <josep.puigdemont@gmail.com>, 2006, 2007.
 # Gil Forcada <gilforcada@guifi.net>, 2008, 2009.
-# David Planella <david.planella@gmail.com>, 2010.
+# David Planella <david.planella@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.11.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-22 09:51+0200\n"
-"PO-Revision-Date: 2010-08-22 09:54+0200\n"
+"POT-Creation-Date: 2011-01-29 12:18+0100\n"
+"PO-Revision-Date: 2011-01-29 11:43+0100\n"
 "Last-Translator: David Planella <david.planella@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -1517,7 +1517,7 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "No s'ha pogut trobar cap forat lliure"
 
@@ -1738,7 +1738,7 @@ msgstr ""
 "Localitzeu documents i carpetes pel seu nom o contingut en aquest ordinador"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Força la sortida"
 
@@ -1990,11 +1990,11 @@ msgstr ""
 "Feu clic a una finestra per a forçar la sortida de l'aplicació. Per "
 "cancel·lar, premeu <ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Voleu forçar la sortida d'aquesta aplicació?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2430,11 +2430,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
-"L'ID d'implementació Bonobo de la miniaplicació - per exemple «ClockAppletFactory::"
+"L'ID d'implementació de la miniaplicació - per exemple «ClockAppletFactory::"
 "ClockApplet». Aquesta clau només té efecte si la clau object_type és "
-"«bonobo-applet»."
+"«external-applet» (o l'obsolet «bonobo-applet»)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2484,12 +2485,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "El tipus d'aquest objecte de quadre. Els valors possibles són «drawer-"
-"object», «menu-object», «launcher-object», «bonobo-applet», «action-applet» "
-"i «menu-bar»."
+"object», «menu-object», «launcher-object», «external-applet», «action-"
+"applet», «menu-bar» i «separator»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2499,10 +2500,9 @@ msgid ""
 "\"bonobo-applet\"."
 msgstr ""
 "No s'aconsella la utilització d'aquesta clau degut a la migració cap a una "
-"biblioteca nova de miniaplicacions. "
-"L'ID d'implementació Bonobo de la miniaplicació - per exemple «OAFIID:"
-"GNOME_ClockApplet». Aquesta clau només té efecte si la clau object_type és "
-"«bonobo-applet»."
+"biblioteca nova de miniaplicacions. L'ID d'implementació Bonobo de la "
+"miniaplicació - per exemple «OAFIID:GNOME_ClockApplet». Aquesta clau només "
+"té efecte si la clau object_type és «bonobo-applet»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Tooltip displayed for drawer or menu"
@@ -2520,21 +2520,21 @@ msgstr "Utilitza una icona personalitzada per al botó de l'objecte"
 msgid "Use custom path for menu contents"
 msgstr "Utilitza un camí personalitzat per als continguts del menú"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 "S'ha produït un error en llegir el valor GConf de tipus cadena «%s»: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "S'ha produït un error en llegir el valor GConf de tipus enter «%s»: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2543,7 +2543,7 @@ msgstr ""
 "El quadre «%s» està establert per a mostrar-se a la pantalla %d que no està "
 "actualment disponible. No es carrega aquest quadre."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
@@ -3265,21 +3265,21 @@ msgstr "No s'ha trobat la icona «%s»"
 msgid "Could not execute '%s'"
 msgstr "No s'ha pogut executar «%s»"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "fitxer"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Carpeta personal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistema de fitxers"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Cerca"
 
@@ -3288,7 +3288,7 @@ msgstr "Cerca"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
