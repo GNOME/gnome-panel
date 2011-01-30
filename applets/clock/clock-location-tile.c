@@ -194,21 +194,8 @@ static void
 make_current (GtkWidget *widget, ClockLocationTile *tile)
 {
         ClockLocationTilePrivate *priv = PRIVATE (tile);
-	GtkWidget *toplevel;
-	guint xid;
-
-	xid = 0;
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (tile));
-
-	if (toplevel) {
-		GdkWindow *window = gtk_widget_get_window (toplevel);
-
-		if (window)
-			xid = GDK_WINDOW_XID (window);
-	}
 
 	clock_location_make_current (priv->location,
-				     xid,
 				     (GFunc)make_current_cb, tile, NULL);
 }
 
