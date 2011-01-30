@@ -202,7 +202,7 @@ kill_window_response (GtkDialog *dialog,
 		gdk_error_trap_push ();
 		XKillClient (display, window);
 		gdk_flush ();
-		gdk_error_trap_pop ();
+		gdk_error_trap_pop_ignored ();
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
