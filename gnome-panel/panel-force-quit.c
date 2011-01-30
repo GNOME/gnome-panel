@@ -103,6 +103,7 @@ remove_popup (GtkWidget *popup)
 	GdkWindow     *root;
 	GdkDisplay    *display;
 	GdkDevice     *pointer;
+	GdkDevice     *keyboard;
 	GdkDeviceManager *device_manager;
 
 	root = gdk_screen_get_root_window (
@@ -114,9 +115,10 @@ remove_popup (GtkWidget *popup)
 	display = gdk_window_get_display (root);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+	gdk_device_ungrab (keyboard, GDK_CURRENT_TIME);
 }
 
 static gboolean
@@ -298,6 +300,7 @@ panel_force_quit (GdkScreen *screen,
 	GdkWindow     *root;
 	GdkDisplay    *display;
 	GdkDevice     *pointer;
+	GdkDevice     *keyboard;
 	GdkDeviceManager *device_manager;
 
 	popup = display_popup_window (screen);
@@ -311,6 +314,7 @@ panel_force_quit (GdkScreen *screen,
 	display = gdk_window_get_display (root);
 	device_manager = gdk_display_get_device_manager (display);
 	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
 
 	status = gdk_device_grab (pointer, root,
 				  GDK_OWNERSHIP_NONE, FALSE,
@@ -325,7 +329,10 @@ panel_force_quit (GdkScreen *screen,
 		return;
 	}
 
-	status = gdk_keyboard_grab (root, FALSE, time);
+	status = gdk_device_grab (keyboard, root,
+				  GDK_OWNERSHIP_NONE, FALSE,
+				  GDK_KEY_PRESS | GDK_KEY_RELEASE,
+				  NULL, time);
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Keyboard grab failed\n");
 		remove_popup (popup);
