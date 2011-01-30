@@ -270,27 +270,33 @@ static int
 calculate_minimum_width (GtkWidget   *widget,
 			 const gchar *text)
 {
-	PangoContext *context;
+	PangoContext *pango_context;
 	PangoLayout  *layout;
 	int	      width, height;
 	int	      focus_width = 0;
 	int	      focus_pad = 0;
+	GtkStyleContext *style_context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
 
-	context = gtk_widget_get_pango_context (widget);
+	pango_context = gtk_widget_get_pango_context (widget);
 
-	layout = pango_layout_new (context);
+	layout = pango_layout_new (pango_context);
 	pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
 	pango_layout_set_text (layout, text, -1);
 	pango_layout_get_pixel_size (layout, &width, &height);
 	g_object_unref (G_OBJECT (layout));
 	layout = NULL;
 
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
+	state = gtk_widget_get_state_flags (widget);
+	style_context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (style_context, state, &padding);
+	gtk_style_context_get_style (style_context,
+			             "focus-line-width", &focus_width,
+			             "focus-padding", &focus_pad,
+			             NULL);
 
-	width += 2 * (focus_width + focus_pad + gtk_widget_get_style (widget)->xthickness);
+	width += 2 * (focus_width + focus_pad) + padding.left + padding.right;
 
 	return width;
 }
@@ -382,39 +388,46 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
                           PanelAppletOrient orientation)
 {
-	GtkStyle         *style;
-        PangoContext     *context;
+        GtkStyleContext  *style_context;
+        GtkStateFlags    state;
+        GtkBorder        padding;
+        PangoContext     *pango_context;
         PangoFontMetrics *metrics;
+        const PangoFontDescription *font_desc;
         int               focus_width = 0;
         int               focus_pad = 0;
         int               ascent;
         int               descent;
         int               thickness;
 
-	style = gtk_widget_get_style (widget);
-        context = gtk_widget_get_pango_context (widget);
-        metrics = pango_context_get_metrics (context,
-                                             style->font_desc,
-                                             pango_context_get_language (context));
+        state = gtk_widget_get_state_flags (widget);
+        style_context = gtk_widget_get_style_context (widget);
+        font_desc = gtk_style_context_get_font (style_context, state);
+
+        pango_context = gtk_widget_get_pango_context (widget);
+        metrics = pango_context_get_metrics (pango_context,
+                                             font_desc,
+                                             pango_context_get_language (pango_context));
 
         ascent  = pango_font_metrics_get_ascent  (metrics);
         descent = pango_font_metrics_get_descent (metrics);
 
         pango_font_metrics_unref (metrics);
 
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              "focus-padding", &focus_pad,
-                              NULL);
+        gtk_style_context_get_padding (style_context, state, &padding);
+        gtk_style_context_get_style (style_context,
+                                     "focus-line-width", &focus_width,
+                                     "focus-padding", &focus_pad,
+                                     NULL);
 
         if (orientation == PANEL_APPLET_ORIENT_UP
             || orientation == PANEL_APPLET_ORIENT_DOWN) {
-                thickness = style->ythickness;
+                thickness = padding.top + padding.bottom;
         } else {
-                thickness = style->xthickness;
+                thickness = padding.left + padding.right;
         }
 
-        return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
+        return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
 }
 
 static gboolean
