@@ -167,7 +167,7 @@ update_icon (ShowDesktopData *sdd)
 		break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad) + thickness;
+	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
 
 	if (icon_size < 22)
 		icon_size = 16;
