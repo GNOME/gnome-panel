@@ -1063,6 +1063,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       gboolean      status;
       GdkDisplay    *display;
       GdkDevice     *pointer;
+      GdkDevice     *keyboard;
       GdkDeviceManager *device_manager;
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
@@ -1070,9 +1071,11 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       display = gdk_window_get_display (window);
       device_manager = gdk_display_get_device_manager (display);
       pointer = gdk_device_manager_get_client_pointer (device_manager);
+      keyboard = gdk_device_get_associated_device (pointer);
 
       /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
-	            or GDK_OWNERSHIP_APPLICATION */
+	            or GDK_OWNERSHIP_APPLICATION. Idem for the
+                    keyboard below */
       status = gdk_device_grab (pointer, window,
                                 GDK_OWNERSHIP_WINDOW, TRUE,
                                 GDK_BUTTON_PRESS_MASK
@@ -1084,8 +1087,10 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 
       if (!status)
 	{
-	  if (gdk_keyboard_grab (window, TRUE,
-				 GDK_CURRENT_TIME) == 0)
+	  if (gdk_device_grab (keyboard, window,
+			       GDK_OWNERSHIP_WINDOW, TRUE,
+			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
+			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
 	    /* FIXMEgpoo: We need either accessors or a workaround to grab
 	       the focus */
 #if 0
