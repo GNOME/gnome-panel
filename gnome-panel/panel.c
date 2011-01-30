@@ -18,6 +18,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
+#include <gtk/gtkx.h>
 
 #include <libpanel-util/panel-glib.h>
 

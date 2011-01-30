@@ -11,6 +11,7 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
 
 #include <libpanel-util/panel-list.h>
 

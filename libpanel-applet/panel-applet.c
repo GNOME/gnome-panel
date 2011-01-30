@@ -35,10 +35,9 @@
 #include <glib/gi18n-lib.h>
 #include <cairo.h>
 #include <cairo-gobject.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
 #include <X11/Xatom.h>

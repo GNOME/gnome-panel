@@ -20,6 +20,7 @@
  *
  */
 
+#include <gtk/gtkx.h>
 #include <string.h>
 #include "panel-applet-container.h"
 #include "panel-marshal.h"
