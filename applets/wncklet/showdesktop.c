@@ -135,7 +135,6 @@ button_size_allocated (GtkWidget       *button,
 static void
 update_icon (ShowDesktopData *sdd)
 {
-	GtkStyle  *style;
         int width, height;
         GdkPixbuf *icon;
         GdkPixbuf *scaled;
@@ -144,27 +143,31 @@ update_icon (ShowDesktopData *sdd)
 	int	   focus_width = 0;
 	int	   focus_pad = 0;
 	int	   thickness = 0;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
 
 	if (!sdd->icon_theme)
 		return;
 
-	gtk_widget_style_get (sdd->button,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
-
-	style = gtk_widget_get_style (sdd->button);
+	state = gtk_widget_get_state_flags (sdd->button);
+	context = gtk_widget_get_style_context (sdd->button);
+	gtk_style_context_get_padding (context, state, &padding);
+	gtk_style_context_get_style (context,
+			             "focus-line-width", &focus_width,
+			             "focus-padding", &focus_pad,
+			             NULL);
 
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
-		thickness = style->ythickness;
+		thickness = padding.top + padding.bottom;
 		break;
 	case GTK_ORIENTATION_VERTICAL:
-		thickness = style->xthickness;
+		thickness = padding.left + padding.right;
 		break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad + thickness);
+	icon_size = sdd->size - 2 * (focus_width + focus_pad) + thickness;
 
 	if (icon_size < 22)
 		icon_size = 16;
