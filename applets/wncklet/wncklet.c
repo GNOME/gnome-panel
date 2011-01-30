@@ -30,8 +30,7 @@
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <libwnck/screen.h>
-#include <libwnck/util.h>
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "window-menu.h"

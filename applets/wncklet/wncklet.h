@@ -24,8 +24,7 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-#include <libwnck/screen.h>
+#include <libwnck/libwnck.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>

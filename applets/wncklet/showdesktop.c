@@ -21,8 +21,6 @@
  * 02111-1307, USA.
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -32,7 +30,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include <libwnck/screen.h>
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"

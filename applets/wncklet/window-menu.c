@@ -25,8 +25,6 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -37,7 +35,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libwnck/selector.h>
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "window-menu.h"

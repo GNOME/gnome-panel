@@ -9,6 +9,7 @@ AM_CPPFLAGS =							\
 	-DPAGER_BUILDERDIR=\""$(uidir)"\"			\
 	-DTASKLIST_BUILDERDIR=\""$(uidir)"\"			\
 	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
