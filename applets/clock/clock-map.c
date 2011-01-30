@@ -225,10 +225,12 @@ static gboolean
 clock_map_draw (GtkWidget *this, cairo_t *cr)
 {
         ClockMapPrivate *priv = PRIVATE (this);
-	GtkStyle *style;
+	GtkStyleContext *context;
+	GdkRGBA  color;
         int width, height;
 
-	style = gtk_widget_get_style (this);
+        context = gtk_widget_get_style_context (this);
+        gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);
 
         width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
         height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
@@ -245,7 +247,7 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
 
         /* draw a simple outline */
         cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
-        gdk_cairo_set_source_color (cr, &style->mid [GTK_STATE_ACTIVE]);
+        gdk_cairo_set_source_rgba (cr, &color);
         cairo_set_line_width (cr, 1.0);
         cairo_stroke (cr);
 
