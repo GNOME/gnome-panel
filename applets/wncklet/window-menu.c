@@ -149,7 +149,8 @@ force_no_focus_padding (GtkWidget *widget)
                                          "#window-menu-applet-button {\n"
                                          " border-width: 0px;\n"
                                          " -GtkWidget-focus-line-width: 0px;\n"
-                                         " -GtkWidget-focus-padding: 0px; }",
+                                         " -GtkWidget-focus-padding: 0px;\n"
+					 "}",
                                          -1, NULL);
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
                                         GTK_STYLE_PROVIDER (provider),
