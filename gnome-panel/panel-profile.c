@@ -479,7 +479,7 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 
         key = panel_profile_get_toplevel_key (toplevel, "background/color");
         color_str = gconf_client_get_string (client, key, NULL);
-        if (!color_str || !gdk_rgba_parse(color, color_str)) {
+        if (!color_str || !gdk_rgba_parse (color, color_str)) {
                 color->red   = 0.;
                 color->green = 0.;
                 color->blue  = 0.;
@@ -1227,11 +1227,18 @@ panel_profile_background_change_notify (GConfClient   *client,
 		if (value->type == GCONF_VALUE_STRING) {
 			GdkRGBA color;
 			const char *str;
+                        const GdkRGBA *bg_color;
 
 			str = gconf_value_get_string (value);
 
-			if (gdk_rgba_parse (&color, str))
+			if (gdk_rgba_parse (&color, str)) {
+				/* we save rgba nowadays, but the opacity
+				 * setting is still living in a different key
+				 */
+				bg_color = panel_background_get_color (background);
+				color.alpha = bg_color->alpha;
 				panel_background_set_color (background, &color);
+			}
 		}
 	} else if (!strcmp (key, "opacity")) {
 		if (value->type == GCONF_VALUE_INT) {
