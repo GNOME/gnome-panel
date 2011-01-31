@@ -232,14 +232,13 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
         context = gtk_widget_get_style_context (this);
         gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);
 
-        width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
-        height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
-
-        // FIXMEchpe fix this!
 	if (!priv->shadow_map_pixbuf) {
                 g_warning ("Needed to refresh the map in draw event.");
 		clock_map_refresh (CLOCK_MAP (this));
         }
+
+        width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
+        height = gdk_pixbuf_get_height (priv->shadow_map_pixbuf);
 
         gdk_cairo_set_source_pixbuf (cr, priv->shadow_map_pixbuf, 0, 0);
         cairo_rectangle (cr, 0, 0, width, height);
