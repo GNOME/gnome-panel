@@ -1577,8 +1577,6 @@ fish_applet_expose_event (GtkWidget      *widget,
 			  FishApplet     *fish)
 {
 	GdkWindow    *window;
-	GtkStyle     *style;
-	GtkStateType  state;
 	int width, height;
 	int src_x, src_y;
         cairo_t *cr;
@@ -1588,8 +1586,6 @@ fish_applet_expose_event (GtkWidget      *widget,
 	g_assert (fish->n_frames > 0);
 
 	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
-	state = gtk_widget_get_state (widget);
 
 	width = cairo_xlib_surface_get_width (fish->surface);
 	height = cairo_xlib_surface_get_height (fish->surface);
