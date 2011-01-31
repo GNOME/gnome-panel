@@ -505,7 +505,7 @@ window_list_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	tasklist->tasklist = wnck_tasklist_new (NULL);
+	tasklist->tasklist = wnck_tasklist_new ();
 
         wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
                                        icon_loader_func,

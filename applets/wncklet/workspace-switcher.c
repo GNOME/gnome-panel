@@ -517,7 +517,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	pager->pager = wnck_pager_new (NULL);
+	pager->pager = wnck_pager_new ();
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
