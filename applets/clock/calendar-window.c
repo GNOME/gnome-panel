@@ -1322,21 +1322,28 @@ constrain_list_size (GtkWidget      *widget,
                      GtkRequisition *requisition,
                      ConstraintData *constraint)
 {
-        GtkRequisition req;
-        int            screen_h;
-        int            max_height;
+        GtkRequisition   req;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
+        int              screen_h;
+        int              max_height;
 
         /* constrain width to the calendar width */
-        gtk_widget_size_request (constraint->calendar, &req);
+        gtk_widget_get_preferred_size (constraint->calendar, &req, NULL);
         requisition->width = MIN (requisition->width, req.width);
 
 	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
         /* constrain height to be the tree height up to a max */
         max_height = (screen_h - req.height) / 3;
-        gtk_widget_size_request (constraint->tree, &req);
+        gtk_widget_get_preferred_size (constraint->tree, &req, NULL);
+
+	state = gtk_widget_get_state_flags (widget);
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (context, state, &padding);
 
         requisition->height = MIN (req.height, max_height);
-        requisition->height += 2 * gtk_widget_get_style (widget)->ythickness;
+        requisition->height += padding.top + padding.bottom;
 }
 
 static void
