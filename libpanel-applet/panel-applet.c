@@ -1134,6 +1134,20 @@ panel_applet_popup_menu (GtkWidget *widget)
 	return TRUE;
 }
 
+static GtkSizeRequestMode
+panel_applet_get_request_mode (GtkWidget *widget)
+{
+        PanelApplet *applet = PANEL_APPLET (widget);
+        PanelAppletOrient orientation;
+
+        orientation = panel_applet_get_orient (applet);
+        if (orientation == PANEL_APPLET_ORIENT_UP ||
+            orientation == PANEL_APPLET_ORIENT_DOWN)
+                return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
+
+        return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+}
+
 static void
 panel_applet_get_preferred_width (GtkWidget *widget,
                                   int       *minimum_width,
@@ -1156,20 +1170,6 @@ panel_applet_get_preferred_width (GtkWidget *widget,
 
         *minimum_width += 2 * focus_width;
         *natural_width += 2 * focus_width;
-}
-
-static GtkSizeRequestMode
-panel_applet_get_request_mode (GtkWidget *widget)
-{
-        PanelApplet *applet = PANEL_APPLET (widget);
-        PanelAppletOrient orientation;
-
-        orientation = panel_applet_get_orient (applet);
-        if (orientation == PANEL_APPLET_ORIENT_UP ||
-            orientation == PANEL_APPLET_ORIENT_DOWN)
-                return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
-
-        return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
 }
 
 static void
@@ -1366,10 +1366,10 @@ panel_applet_create_foreign_surface_for_display (GdkDisplay     *display,
 }
 
 static cairo_pattern_t *
-panel_applet_get_pixmap (PanelApplet    *applet,
-                         GdkNativeWindow xid,
-                         int             x,
-			 int             y)
+panel_applet_get_pattern_from_pixmap (PanelApplet    *applet,
+                                      GdkNativeWindow xid,
+                                      int             x,
+                                      int             y)
 {
 	GdkWindow       *window;
 	int              width;
@@ -1392,7 +1392,11 @@ panel_applet_get_pixmap (PanelApplet    *applet,
                                                                       gdk_window_get_visual (window),
                                                                       xid);
         gdk_error_trap_pop_ignored ();
-        if (!background || cairo_surface_status (background)) {
+
+        /* background can be NULL if the user changes the background very fast.
+         * We'll get the next update, so it's not a big deal. */
+        if (!background ||
+            cairo_surface_status (background) != CAIRO_STATUS_SUCCESS) {
                 if (background)
                         cairo_surface_destroy (background);
                 return NULL;
@@ -1468,7 +1472,7 @@ panel_applet_get_background (PanelApplet *applet)
                 int x, y;
 
                 g_variant_get (variant, "(uii)", &xid, &x, &y);
-                pattern = panel_applet_get_pixmap (applet, xid, x, y);
+                pattern = panel_applet_get_pattern_from_pixmap (applet, xid, x, y);
                 if (!pattern)
                         g_warning ("Failed to get pixmap %d, %d, %d", xid, x, y);
         }
@@ -1501,22 +1505,36 @@ panel_applet_set_background_string (PanelApplet *applet,
 }
 
 static GtkStyleProperties *
-get_widget_style_properties (GtkWidget *widget)
+_panel_applet_get_widget_style_properties (GtkWidget *widget,
+                                           gboolean   create_if_needed)
 {
         GtkStyleProperties *properties;
 
-        properties = g_object_get_data (G_OBJECT (widget), "panel-applet-style-props");
-        if (!properties) {
+        properties = g_object_get_data (G_OBJECT (widget),
+                                        "panel-applet-style-props");
+
+        if (!properties && create_if_needed) {
                 properties = gtk_style_properties_new ();
-                g_object_set_data_full (G_OBJECT (widget), "panel-applet-style-props",
-                                        properties, (GDestroyNotify)g_object_unref);
+                g_object_set_data_full (G_OBJECT (widget),
+                                        "panel-applet-style-props",
+                                        properties,
+                                        (GDestroyNotify) g_object_unref);
         }
+
         return properties;
 }
 
 static void
-reset_widget_style_properties (GtkWidget *widget)
+_panel_applet_reset_widget_style_properties (GtkWidget *widget)
 {
+        GtkStyleProperties *properties;
+
+        properties = _panel_applet_get_widget_style_properties (widget, FALSE);
+
+        if (properties)
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                   GTK_STYLE_PROVIDER (properties));
+
         g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
 }
 
@@ -1528,14 +1546,12 @@ panel_applet_update_background_for_widget (GtkWidget       *widget,
 
         gtk_widget_reset_style (widget);
 
-        properties = get_widget_style_properties (widget);
-
         if (!pattern) {
-                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
-                                                   GTK_STYLE_PROVIDER (properties));
-                reset_widget_style_properties (widget);
+                _panel_applet_reset_widget_style_properties (widget);
                 return;
         }
+
+        properties = _panel_applet_get_widget_style_properties (widget, TRUE);
 
         switch (cairo_pattern_get_type (pattern)) {
         case CAIRO_PATTERN_TYPE_SOLID: {
@@ -1550,6 +1566,8 @@ panel_applet_update_background_for_widget (GtkWidget       *widget,
                 break;
         case CAIRO_PATTERN_TYPE_SURFACE:
                 gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+					  /* background-color can't be NULL,
+					   * but is ignored anyway */
                                           "background-image", pattern,
                                           NULL);
                 break;
@@ -1557,6 +1575,8 @@ panel_applet_update_background_for_widget (GtkWidget       *widget,
                 break;
         }
 
+	/* Note: this actually replaces the old properties, since it's the same
+	 * pointer */
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
                                         GTK_STYLE_PROVIDER (properties),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);

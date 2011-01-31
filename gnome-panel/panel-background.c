@@ -40,14 +40,6 @@ static gboolean panel_background_composite (PanelBackground *background);
 static void load_background_file (PanelBackground *background);
 
 
-static void
-set_pixbuf_background (PanelBackground *background)
-{
-	g_assert (background->composited_pattern != NULL);
-
-        gdk_window_set_background_pattern (background->window, background->composited_pattern);
-}
-
 static gboolean
 panel_background_prepare (PanelBackground *background)
 {
@@ -71,13 +63,16 @@ panel_background_prepare (PanelBackground *background)
 	case PANEL_BACK_COLOR:
 		if (background->has_alpha &&
 		    background->composited_pattern)
-			set_pixbuf_background (background);
+			gdk_window_set_background_pattern (background->window,
+							   background->composited_pattern);
 		else
 			gdk_window_set_background_rgba (background->window,
                                                         &background->color);
 		break;
 	case PANEL_BACK_IMAGE:
-		set_pixbuf_background (background);
+		g_assert (background->composited_pattern != NULL);
+		gdk_window_set_background_pattern (background->window,
+						   background->composited_pattern);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -96,8 +91,6 @@ panel_background_prepare (PanelBackground *background)
 	if (GTK_IS_WIDGET (widget))
 	  gtk_widget_queue_draw (widget);
 
-	background->prepared = TRUE;
-
 	background->notify_changed (background, background->user_data);
 
 	return TRUE;
@@ -106,7 +99,6 @@ panel_background_prepare (PanelBackground *background)
 static void
 free_composited_resources (PanelBackground *background)
 {
-        background->prepared = FALSE;
 	background->composited = FALSE;
 
 	if (background->composited_pattern)
@@ -708,7 +700,6 @@ panel_background_realized (PanelBackground *background,
 void
 panel_background_unrealized (PanelBackground *background)
 {
-        background->prepared = FALSE;
 	if (background->window)
 		g_object_unref (background->window);
 	background->window = NULL;
@@ -827,7 +818,6 @@ panel_background_init (PanelBackground              *background,
 
 	background->transformed = FALSE;
 	background->composited  = FALSE;
-	background->prepared    = FALSE;
 }
 
 void
@@ -876,11 +866,10 @@ panel_background_make_string (PanelBackground *background,
 		if (!background->composited_pattern)
 			return NULL;
 
-                if (cairo_pattern_get_surface (background->composited_pattern, &surface))
+                if (cairo_pattern_get_surface (background->composited_pattern, &surface) != CAIRO_STATUS_SUCCESS)
                         return NULL;
 
-                if (cairo_surface_get_type (surface) != CAIRO_SURFACE_TYPE_XLIB)
-                        return NULL;
+                g_assert (cairo_surface_get_type (surface) == CAIRO_SURFACE_TYPE_XLIB);
 
                 variant = g_variant_new ("(uii)", (guint32)cairo_xlib_surface_get_drawable (surface),
                                          x, y);
@@ -939,7 +928,7 @@ panel_background_get_pattern_for_widget (PanelBackground *background,
         if (!background->composited_pattern)
                 return NULL;
 
-        if (cairo_pattern_get_surface (background->composited_pattern, &bg_surface))
+        if (cairo_pattern_get_surface (background->composited_pattern, &bg_surface) != CAIRO_STATUS_SUCCESS)
                 return NULL;
 
 	gtk_widget_get_allocation (widget, &allocation);
@@ -964,22 +953,37 @@ panel_background_get_pattern_for_widget (PanelBackground *background,
 }
 
 static GtkStyleProperties *
-get_widget_style_properties (GtkWidget *widget)
+_panel_background_get_widget_style_properties (GtkWidget *widget,
+                                               gboolean   create_if_needed)
 {
         GtkStyleProperties *properties;
 
-        properties = g_object_get_data (G_OBJECT (widget), "panel-object-style-props");
-        if (!properties) {
+        properties = g_object_get_data (G_OBJECT (widget),
+                                        "panel-object-style-props");
+
+        if (!properties && create_if_needed) {
                 properties = gtk_style_properties_new ();
-                g_object_set_data_full (G_OBJECT (widget), "panel-object-style-props",
-                                        properties, (GDestroyNotify)g_object_unref);
+                g_object_set_data_full (G_OBJECT (widget),
+                                        "panel-object-style-props",
+                                        properties,
+                                        (GDestroyNotify) g_object_unref);
         }
+
         return properties;
 }
 
 static void
-reset_widget_style_properties (GtkWidget *widget)
+_panel_background_reset_widget_style_properties (GtkWidget *widget)
 {
+        GtkStyleProperties *properties;
+
+        properties = _panel_background_get_widget_style_properties (widget, FALSE);
+
+        if (properties)
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                   GTK_STYLE_PROVIDER (properties));
+
+
         g_object_set_data (G_OBJECT (widget), "panel-object-style-props", NULL);
 }
 
@@ -991,16 +995,13 @@ panel_background_change_background_on_widget (PanelBackground *background,
 
         gtk_widget_reset_style (widget);
 
-        properties = get_widget_style_properties (widget);
-
 	switch (panel_background_get_type (background)) {
 	case PANEL_BACK_NONE:
-                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
-                                                   GTK_STYLE_PROVIDER (properties));
-                reset_widget_style_properties (widget);
+                _panel_background_reset_widget_style_properties (widget);
                 return;
 	case PANEL_BACK_COLOR:
                 if (!background->has_alpha) {
+                        properties = _panel_background_get_widget_style_properties (widget, TRUE);
                         gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
                                                   "background-color", &background->color,
                                                   "background-image", NULL,
@@ -1011,16 +1012,18 @@ panel_background_change_background_on_widget (PanelBackground *background,
 	case PANEL_BACK_IMAGE: {
                 cairo_pattern_t *pattern;
 
+                properties = _panel_background_get_widget_style_properties (widget, TRUE);
                 pattern = panel_background_get_pattern_for_widget (background, widget);
                 if (pattern) {
                         gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                                  /* background-color can't be
+                                                   * NULL, but is ignored
+                                                   * anyway */
                                                   "background-image", pattern,
                                                   NULL);
                         cairo_pattern_destroy (pattern);
                 } else {
-                        gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
-                                                           GTK_STYLE_PROVIDER (properties));
-                        reset_widget_style_properties (widget);
+                        _panel_background_reset_widget_style_properties (widget);
                         return;
                 }
         }
@@ -1030,6 +1033,8 @@ panel_background_change_background_on_widget (PanelBackground *background,
 		break;
 	}
 
+	/* Note: this actually replaces the old properties, since it's the same
+	 * pointer */
         gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
                                         GTK_STYLE_PROVIDER (properties),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);

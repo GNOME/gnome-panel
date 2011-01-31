@@ -71,7 +71,6 @@ struct _PanelBackground {
 	guint                   loaded : 1;
 	guint                   transformed : 1;
 	guint                   composited : 1;
-	guint                   prepared : 1;
 };
 
 void  panel_background_init              (PanelBackground     *background,
