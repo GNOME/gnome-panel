@@ -114,7 +114,7 @@ typedef struct {
 
 
 static gboolean load_fish_image          (FishApplet *fish);
-static void     update_surface            (FishApplet *fish);
+static void     update_surface           (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish,
 					  const char *message);
 static void     display_fortune_dialog   (FishApplet *fish);
@@ -1528,6 +1528,10 @@ update_surface (FishApplet *fish)
 		}
 	}
 
+	gtk_widget_set_size_request (fish->drawing_area,
+				     fish->requisition.width,
+				     fish->requisition.height);
+
 	g_assert (width != -1 && height != -1);
 
 	if (width == 0 || height == 0)
@@ -1592,14 +1596,13 @@ update_surface (FishApplet *fish)
 }
 
 static gboolean
-fish_applet_expose_event (GtkWidget      *widget,
-			  GdkEventExpose *event,
-			  FishApplet     *fish)
+fish_applet_draw (GtkWidget  *widget,
+		  cairo_t    *cr,
+		  FishApplet *fish)
 {
-	GdkWindow    *window;
+	GdkWindow *window;
 	int width, height;
 	int src_x, src_y;
-        cairo_t *cr;
 
 	g_return_val_if_fail (fish->surface != NULL, FALSE);
 
@@ -1623,24 +1626,12 @@ fish_applet_expose_event (GtkWidget      *widget,
 	} else
 		src_x = ((width * fish->current_frame) / fish->n_frames);
 
-        cr = gdk_cairo_create (event->window);
-        gdk_cairo_region (cr, event->region);
-        cairo_clip (cr);
-
+        cairo_save (cr);
         cairo_set_source_surface (cr, fish->surface, -src_x, -src_y);
         cairo_paint (cr);
-
-        cairo_destroy (cr);
+        cairo_restore (cr);
 
         return FALSE;
-}
-
-static void
-fish_applet_size_request (GtkWidget      *widget,
-			  GtkRequisition *requisition,
-			  FishApplet     *fish)
-{
-	*requisition = fish->requisition;
 }
 
 static void
@@ -1818,12 +1809,10 @@ setup_fish_widget (FishApplet *fish)
 			  G_CALLBACK (fish_applet_realize), fish);
 	g_signal_connect (fish->drawing_area, "unrealize",
 			  G_CALLBACK (fish_applet_unrealize), fish);
-	g_signal_connect (fish->drawing_area, "size-request",
-			  G_CALLBACK (fish_applet_size_request), fish);
 	g_signal_connect (fish->drawing_area, "size-allocate",
 			  G_CALLBACK (fish_applet_size_allocate), fish);
-	g_signal_connect (fish->drawing_area, "expose-event",
-			  G_CALLBACK (fish_applet_expose_event), fish);
+	g_signal_connect (fish->drawing_area, "draw",
+			  G_CALLBACK (fish_applet_draw), fish);
 
 	gtk_widget_add_events (widget, GDK_ENTER_NOTIFY_MASK | 
 				       GDK_LEAVE_NOTIFY_MASK |
