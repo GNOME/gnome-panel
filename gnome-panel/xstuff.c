@@ -464,21 +464,20 @@ draw_zoom_animation (GdkScreen *gscreen,
 	Display *dpy;
 	Window root_win;
 	int screen;
-	int depth;
 
 	dpy = gdk_x11_display_get_xdisplay (gdk_screen_get_display (gscreen));
 	root_win = GDK_WINDOW_XID (gdk_screen_get_root_window (gscreen));
 	screen = gdk_screen_get_number (gscreen);
-	depth = DefaultDepth(dpy,screen);
 
 	/* frame GC */
 	gcv.function = GXxor;
 	/* this will raise the probability of the XORed color being different
 	 * of the original color in PseudoColor when not all color cells are
 	 * initialized */
-	if (DefaultVisual(dpy, screen)->class==PseudoColor)
+	if (DefaultVisual(dpy, screen)->class==PseudoColor) {
+		int depth = DefaultDepth (dpy, screen);
 		gcv.plane_mask = (1<<(depth-1))|1;
-	else
+	} else
 		gcv.plane_mask = AllPlanes;
 	gcv.foreground = color.pixel;
 	if (gcv.foreground == 0)
