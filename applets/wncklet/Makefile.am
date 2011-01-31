@@ -51,7 +51,7 @@ wnck_applet_LDADD = $(WNCKLET_LDADD)
 wnck_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

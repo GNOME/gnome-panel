@@ -136,7 +136,7 @@ BUILT_SOURCES =					\
 	clock-typebuiltins.c			\
 	clock-typebuiltins.h
 
-appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

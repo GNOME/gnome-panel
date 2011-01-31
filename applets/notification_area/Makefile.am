@@ -70,7 +70,7 @@ na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
 
 BUILT_SOURCES = na-marshal.c na-marshal.h
 
-appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

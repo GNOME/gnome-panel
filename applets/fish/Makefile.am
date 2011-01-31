@@ -39,7 +39,7 @@ fish_applet_LDADD = $(FISH_LDADD)
 fish_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-appletdir       = $(datadir)/gnome-panel/$(LIBPANEL_APPLET_API_VERSION)/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.FishApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 
