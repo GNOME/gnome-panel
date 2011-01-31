@@ -121,9 +121,7 @@ PanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-3.0 GConf-2.0
 PanelApplet_4_0_gir_CFLAGS = $(AM_CPPFLAGS)
 PanelApplet_4_0_gir_LIBS = libpanel-applet-4.la
 PanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
-# When requiring gobject-introspection 0.9.5, use this:
-#PanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanelapplet-4.0
-PanelApplet_4_0_gir_SCANNERFLAGS = --strip-prefix=Panel --pkg-export=libpanelapplet-4.0
+PanelApplet_4_0_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanelapplet-4.0
 INTROSPECTION_GIRS += PanelApplet-4.0.gir
 
 girdir = $(INTROSPECTION_GIRDIR)
