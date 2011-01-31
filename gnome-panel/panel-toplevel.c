@@ -2337,39 +2337,40 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
 			  PanelOrientation  orientation)
 {
-	GtkStyleContext  *style_context;
 	GtkStateFlags     state;
-	PangoContext     *context;
+	GtkStyleContext  *style_context;
+        const PangoFontDescription *font_desc;
+	PangoContext     *pango_context;
 	PangoFontMetrics *metrics;
-	GtkBorder         border;
+	GtkBorder         padding;
 	int               focus_width = 0;
 	int               focus_pad = 0;
 	int               ascent;
 	int               descent;
 	int               thickness;
   
-	style_context = gtk_widget_get_style_context (widget);
 	state = gtk_widget_get_state_flags (widget);
+	style_context = gtk_widget_get_style_context (widget);
+        font_desc = gtk_style_context_get_font (style_context, state);
 
-	context = gtk_widget_get_pango_context (widget);
-	metrics = pango_context_get_metrics (context,
-					     gtk_style_context_get_font (style_context, state),
-					     pango_context_get_language (context));
-	gtk_style_context_get_border (style_context, state, &border);
-  
+	pango_context = gtk_widget_get_pango_context (widget);
+	metrics = pango_context_get_metrics (pango_context,
+					     font_desc,
+					     pango_context_get_language (pango_context));
 	ascent  = pango_font_metrics_get_ascent  (metrics);
 	descent = pango_font_metrics_get_descent (metrics);
   
 	pango_font_metrics_unref (metrics);
 
+	gtk_style_context_get_padding (style_context, state, &padding);
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
 			      "focus-padding", &focus_pad,
 			      NULL);
 
 	thickness = orientation & PANEL_HORIZONTAL_MASK ?
-		border.top + border.bottom :
-		border.left + border.right;
+		padding.top + padding.bottom :
+		padding.left + padding.right;
 
 	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad) + thickness;
 }

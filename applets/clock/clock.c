@@ -388,12 +388,12 @@ static int
 calculate_minimum_height (GtkWidget        *widget,
                           PanelAppletOrient orientation)
 {
+        GtkStateFlags     state;
         GtkStyleContext  *style_context;
-        GtkStateFlags    state;
-        GtkBorder        padding;
+        const PangoFontDescription *font_desc;
         PangoContext     *pango_context;
         PangoFontMetrics *metrics;
-        const PangoFontDescription *font_desc;
+        GtkBorder         padding;
         int               focus_width = 0;
         int               focus_pad = 0;
         int               ascent;
