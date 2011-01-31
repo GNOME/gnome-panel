@@ -110,15 +110,15 @@ AC_ARG_ENABLE(eds,
 LIBECAL_REQUIREMENT=
 HAVE_EDS=no
 if test "x$enable_eds" = "xyes"; then
-  LIBECAL_REQUIREMENT="libecal-3.0 >= $LIBECAL_REQUIRED libedataserver-3.0 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-3.0`/pixmaps/evolution-data-server
+  LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
+  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
 else
   if test "x$enable_eds" != "xno"; then
     AC_MSG_CHECKING(for evolution-data-server)
-    if $PKG_CONFIG --exists libecal-3.0 libedataserverui-3.0 evolution-data-server-3.0; then
+    if $PKG_CONFIG --exists libecal-1.2 libedataserverui-3.0 evolution-data-server-1.2; then
        AC_MSG_RESULT(yes)
-       LIBECAL_REQUIREMENT="libecal-3.0 >= $LIBECAL_REQUIRED libedataserver-3.0 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-2.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-3.0`/pixmaps/evolution-data-server
+       LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED libedataserverui-3.0 >= $LIBEDATASERVERUI_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
+       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
        HAVE_EDS=yes
     else
        AC_MSG_RESULT(no)
@@ -127,7 +127,7 @@ else
 fi
 if test -n "$LIBECAL_REQUIREMENT"; then
   AC_DEFINE([HAVE_LIBECAL], 1,
-            [Defined when evolution-data-server libecal-3.0 and libedataserverui-3.0 are detected])
+            [Defined when evolution-data-server libecal-1.2 and libedataserverui-3.0 are detected])
 fi
 AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
 AC_SUBST(CLOCK_EDS_ICONDIR)
