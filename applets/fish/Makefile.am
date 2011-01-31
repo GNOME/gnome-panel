@@ -15,7 +15,7 @@ AM_CFLAGS = $(WARN_CFLAGS)
 FISH_SOURCES = fish.c
 
 FISH_LDADD =						\
-	../../libpanel-applet/libpanel-applet-3.la	\
+	../../libpanel-applet/libpanel-applet-4.la	\
 	$(FISH_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
 
