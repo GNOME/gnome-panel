@@ -221,9 +221,6 @@ BUILT_SOURCES = \
 	panel-marshal.c			\
 	panel-marshal.h
 
-rcdir = $(datadir)
-rc_DATA = gnome-panelrc
-
 uidir = $(datadir)/gnome-panel/ui
 ui_DATA =					\
 	panel-properties-dialog.ui		\
@@ -271,7 +268,6 @@ EXTRA_DIST =					\
 	$(schemas_in_files)			\
 	panel-compatibility.schemas		\
 	panel-marshal.list			\
-	gnome-panelrc				\
 	$(entries_DATA)				\
 	$(desktop_in_files)			\
 	gnome-panel-add.in
