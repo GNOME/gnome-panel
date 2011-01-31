@@ -131,7 +131,6 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         /* clock back */
         if (priv->face_pixbuf) {
                 cairo_save (cr);
-
                 gdk_cairo_set_source_pixbuf (cr, priv->face_pixbuf, 0, 0);
                 cairo_paint (cr);
                 cairo_restore (cr);

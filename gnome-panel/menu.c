@@ -1091,12 +1091,13 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 			       GDK_OWNERSHIP_WINDOW, TRUE,
 			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
 			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+	    {
 	    /* FIXMEgpoo: We need either accessors or a workaround to grab
 	       the focus */
 #if 0
 	     GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
 #endif
-	      g_message ("xgrab\n");
+	    }
 	  else
 	    {
 	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);

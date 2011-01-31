@@ -813,7 +813,6 @@ close_dialog (GtkWidget *button,
 	GtkCellArea *area;
 	GtkCellEditable *edit_widget;
 
-
 	/* This is a hack. The "editable" signal for GtkCellRenderer is emitted
 	only on button press or focus cycle. Hence when the user changes the
 	name and closes the preferences dialog without a button-press he would
