@@ -31,6 +31,7 @@
 #include <time.h>
 
 #include <cairo.h>
+#include <cairo-xlib.h>
 
 #include <glib/gi18n.h>
 #include <glib-object.h>
@@ -73,8 +74,8 @@ typedef struct {
 	GtkWidget         *frame;
 	GtkWidget         *drawing_area;
 	GtkRequisition     requisition;
-	GdkRectangle       prev_allocation;
-	GdkPixmap         *pixmap;
+	GtkAllocation      prev_allocation;
+	cairo_surface_t   *surface;
 	guint              timeout;
 	int                current_frame;
 	gboolean           in_applet;
@@ -113,7 +114,7 @@ typedef struct {
 
 
 static gboolean load_fish_image          (FishApplet *fish);
-static void     update_pixmap            (FishApplet *fish);
+static void     update_surface            (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish,
 					  const char *message);
 static void     display_fortune_dialog   (FishApplet *fish);
@@ -1095,7 +1096,7 @@ image_changed_notify (GConfClient *client,
 	fish->image = g_strdup (value);
 
 	load_fish_image (fish);
-	update_pixmap (fish);
+	update_surface (fish);
 
 	if (fish->image_chooser) {
 		char *path_gconf;
@@ -1158,7 +1159,7 @@ n_frames_changed_notify (GConfClient *client,
 	if (fish->n_frames <= 0)
 		fish->n_frames = 1;
 
-	update_pixmap (fish);
+	update_surface (fish);
 
 	if (fish->frames_spin &&
 	    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (fish->frames_spin)) != fish->n_frames)
@@ -1254,13 +1255,13 @@ check_april_fools (FishApplet *fish)
 	     tm->tm_mday != fools_day   ||
 	     tm->tm_hour >= fools_hour_end)) {
 		fish->april_fools = FALSE;
-		update_pixmap (fish);
+		update_surface (fish);
 	} else if (tm->tm_mon  == fools_month    &&
 		 tm->tm_mday == fools_day        &&
 		 tm->tm_hour >= fools_hour_start &&
 		 tm->tm_hour <= fools_hour_end) {
 		fish->april_fools = TRUE;
-		update_pixmap (fish);
+		update_surface (fish);
 	}
 }
 
@@ -1337,7 +1338,7 @@ rotate_changed_notify (GConfClient *client,
 
 	if (fish->orientation == PANEL_APPLET_ORIENT_LEFT ||
 	    fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
-		update_pixmap (fish);
+		update_surface (fish);
 
 	if (fish->rotate_toggle &&
 	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (fish->rotate_toggle)) != fish->rotate)
@@ -1456,7 +1457,7 @@ load_fish_image (FishApplet *fish)
 }
 
 static void
-update_pixmap (FishApplet *fish)
+update_surface (FishApplet *fish)
 {
 	GtkWidget     *widget = fish->drawing_area;
 	GtkAllocation  allocation;
@@ -1512,16 +1513,18 @@ update_pixmap (FishApplet *fish)
 	if (width == 0 || height == 0)
 		return;
 
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-				       width, height, -1);
+	if (fish->surface)
+		cairo_surface_destroy (fish->surface);
+	fish->surface = gdk_window_create_similar_surface (
+			               gtk_widget_get_window (widget),
+			               CAIRO_CONTENT_COLOR_ALPHA,
+			               width, height);
 
 	gtk_widget_queue_resize (widget);
 
 	g_assert (pixbuf_width != -1 && pixbuf_height != -1);
 
-	cr = gdk_cairo_create (fish->pixmap);
+	cr = cairo_create (fish->surface);
 
 	cairo_set_source_rgb (cr, 1, 1, 1);
 	cairo_paint (cr);
@@ -1580,7 +1583,7 @@ fish_applet_expose_event (GtkWidget      *widget,
 	int src_x, src_y;
         cairo_t *cr;
 
-	g_return_val_if_fail (fish->pixmap != NULL, FALSE);
+	g_return_val_if_fail (fish->surface != NULL, FALSE);
 
 	g_assert (fish->n_frames > 0);
 
@@ -1588,7 +1591,8 @@ fish_applet_expose_event (GtkWidget      *widget,
 	style = gtk_widget_get_style (widget);
 	state = gtk_widget_get_state (widget);
 
-	gdk_drawable_get_size (fish->pixmap, &width, &height);
+	width = cairo_xlib_surface_get_width (fish->surface);
+	height = cairo_xlib_surface_get_height (fish->surface);
 
 	src_x = 0;
 	src_y = 0;
@@ -1607,7 +1611,7 @@ fish_applet_expose_event (GtkWidget      *widget,
         gdk_cairo_region (cr, event->region);
         cairo_clip (cr);
 
-        gdk_cairo_set_source_pixmap (cr, fish->pixmap, -src_x, -src_y);
+        cairo_set_source_surface (cr, fish->surface, -src_x, -src_y);
         cairo_paint (cr);
 
         cairo_destroy (cr);
@@ -1634,7 +1638,7 @@ fish_applet_size_allocate (GtkWidget     *widget,
 
 	if (widget_allocation.width  != fish->prev_allocation.width ||
 	    widget_allocation.height != fish->prev_allocation.height)
-		update_pixmap (fish);
+		update_surface (fish);
 
 	fish->prev_allocation = *allocation;
 }
@@ -1643,17 +1647,17 @@ static void
 fish_applet_realize (GtkWidget  *widget,
 		     FishApplet *fish)
 {
-	if (!fish->pixmap)
-		update_pixmap (fish);
+	if (!fish->surface)
+		update_surface (fish);
 }
 
 static void
 fish_applet_unrealize (GtkWidget  *widget,
 		       FishApplet *fish)
 {
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = NULL;
+	if (fish->surface)
+		cairo_surface_destroy (fish->surface);
+	fish->surface = NULL;
 }
 
 static void
@@ -1667,8 +1671,8 @@ fish_applet_change_orient (PanelApplet       *applet,
 
 	fish->orientation = orientation;
 
-	if (fish->pixmap)
-		update_pixmap (fish);
+	if (fish->surface)
+		update_surface (fish);
 }
 
 static void
@@ -1699,12 +1703,12 @@ handle_keypress (GtkWidget   *widget,
 		 FishApplet  *fish)
 {
 	switch (event->keyval) {
-	case GDK_space:
-	case GDK_KP_Space:
-	case GDK_Return:
-	case GDK_KP_Enter:
-	case GDK_ISO_Enter:
-	case GDK_3270_Enter:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
+	case GDK_KEY_Return:
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_ISO_Enter:
+	case GDK_KEY_3270_Enter:
 		if (fish->april_fools) {
 			change_water (fish);
 			return TRUE;
@@ -1822,7 +1826,7 @@ setup_fish_widget (FishApplet *fish)
 
 	load_fish_image (fish);
 
-	update_pixmap (fish);
+	update_surface (fish);
 
 	setup_timeout (fish);
 
@@ -1973,7 +1977,7 @@ fishy_factory (PanelApplet *applet,
 }
 
 static void
-fish_applet_destroy (GtkObject *object)
+fish_applet_dispose (GObject *object)
 {
 	FishApplet *fish = (FishApplet *) object;
 	int         i;
@@ -2005,9 +2009,9 @@ fish_applet_destroy (GtkObject *object)
 		g_object_unref (fish->client);
 	fish->client = NULL;
 
-	if (fish->pixmap)
-		g_object_unref (fish->pixmap);
-	fish->pixmap = NULL;
+	if (fish->surface)
+		cairo_surface_destroy (fish->surface);
+	fish->surface = NULL;
 
 	if (fish->pixbuf)
 		g_object_unref (fish->pixbuf);
@@ -2031,7 +2035,7 @@ fish_applet_destroy (GtkObject *object)
 
 	fish_close_channel (fish);
 
-	GTK_OBJECT_CLASS (parent_class)->destroy (object);
+	G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -2053,7 +2057,7 @@ fish_applet_instance_init (FishApplet      *fish,
 
 	fish->frame         = NULL;
 	fish->drawing_area  = NULL;
-	fish->pixmap        = NULL;
+	fish->surface       = NULL;
 	fish->timeout       = 0;
 	fish->current_frame = 0;
 	fish->in_applet     = FALSE;
@@ -2104,14 +2108,14 @@ fish_applet_instance_init (FishApplet      *fish,
 static void
 fish_applet_class_init (FishAppletClass *klass)
 {
-	PanelAppletClass *applet_class    = (PanelAppletClass *) klass;
-	GtkObjectClass   *gtkobject_class = (GtkObjectClass *) klass;
+	PanelAppletClass *applet_class  = (PanelAppletClass *) klass;
+	GObjectClass     *gobject_class = (GObjectClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);
 
 	applet_class->change_orient = fish_applet_change_orient;
 
-	gtkobject_class->destroy = fish_applet_destroy;
+	gobject_class->dispose = fish_applet_dispose;
 
 	init_fools_day ();
 }
