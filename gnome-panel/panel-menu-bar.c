@@ -134,9 +134,21 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
+        GtkCssProvider *provider;
 	GtkWidget *image;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
+
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "PanelMenuBar {\n"
+                                         " border-width: 0px;\n"
+                                         "}",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (menubar)),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 
 	menubar->priv->info = NULL;
 
@@ -276,7 +288,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
-        GtkCssProvider *provider;
 
 	gobject_class->get_property = panel_menu_bar_get_property;
         gobject_class->set_property = panel_menu_bar_set_property;
@@ -295,17 +306,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 				   PANEL_TYPE_ORIENTATION,
 				   PANEL_ORIENTATION_TOP,
 				   G_PARAM_READWRITE));
-
-        provider = gtk_css_provider_new ();
-        gtk_css_provider_load_from_data (provider,
-                                         "PanelMenuBar {\n"
-                                         " border-width: 0px;\n"
-                                         "}",
-                                         -1, NULL);
-        gtk_style_context_add_provider_for_screen (gdk_screen_get_default(),
-                                        GTK_STYLE_PROVIDER (provider),
-                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        g_object_unref (provider);
 }
 
 static gboolean
