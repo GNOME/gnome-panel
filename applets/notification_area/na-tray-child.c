@@ -64,7 +64,6 @@ na_tray_child_realize (GtkWidget *widget)
     {
       /* Otherwise, if the visual matches the visual of the parent window, we
        * can use a parent-relative background and fake transparency. */
-      // FIXMEchpe
       gdk_window_set_background_pattern (window, NULL);
 
       child->parent_relative_bg = TRUE;
@@ -173,8 +172,8 @@ na_tray_child_size_allocate (GtkWidget      *widget,
 }
 
 /* The plug window should completely occupy the area of the child, so we won't
- * get an expose event. But in case we do (the plug unmaps itself, say), this
- * expose handler draws with real or fake transparency.
+ * get a draw event. But in case we do (the plug unmaps itself, say), this
+ * draw handler draws with real or fake transparency.
  */
 static gboolean
 na_tray_child_draw (GtkWidget *widget,
@@ -191,13 +190,28 @@ na_tray_child_draw (GtkWidget *widget,
     }
   else if (child->parent_relative_bg)
     {
-      /* Clear to parent-relative pixmap */
-      // FIXMEchpe
-      #if 0
-      gdk_window_clear_area (window,
-                             event->area.x, event->area.y,
-                             event->area.width, event->area.height);
-      #endif
+      GdkWindow *window;
+      cairo_surface_t *target;
+      GdkRectangle clip_rect;
+
+      window = gtk_widget_get_window (widget);
+      target = cairo_get_group_target (cr);
+
+      gdk_cairo_get_clip_rectangle (cr, &clip_rect);
+
+      /* Clear to parent-relative pixmap
+       * We need to use direct X access here because GDK doesn't know about
+       * the parent relative pixmap. */
+      cairo_surface_flush (target);
+
+      XClearArea (GDK_WINDOW_XDISPLAY (window),
+                  GDK_WINDOW_XID (window),
+                  clip_rect.x, clip_rect.y,
+                  clip_rect.width, clip_rect.height,
+                  False);
+      cairo_surface_mark_dirty_rectangle (target,
+                                          clip_rect.x, clip_rect.y,
+                                          clip_rect.width, clip_rect.height);
     }
 
   return FALSE;
@@ -248,8 +262,9 @@ na_tray_child_new (GdkScreen *screen,
   gdk_error_trap_push ();
   result = XGetWindowAttributes (xdisplay, icon_window,
                                  &window_attributes);
-  gdk_flush ();
-  if (gdk_error_trap_pop () || !result)
+  gdk_error_trap_pop_ignored ();
+
+  if (!result) /* Window already gone */
     return NULL;
 
   visual = gdk_x11_screen_lookup_visual (screen,
