@@ -43,7 +43,7 @@
 #include <gconf/gconf-client.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
-#include <libgnome/gnome-desktop-utils.h>
+#include <libgnome-desktop/gnome-desktop-utils.h>
 
 #include "calendar-window.h"
 
@@ -140,6 +140,15 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 
 #ifdef HAVE_LIBECAL
 
+/*
+ * Set the DISPLAY variable, to be use by g_spawn_async.
+ */
+static void
+set_environment (gpointer display)
+{
+	g_setenv ("DISPLAY", display, TRUE);
+}
+
 static void
 clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 				 const char     *key_program,
@@ -154,6 +163,7 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	GdkScreen  *screen;
 	GError     *error;
 	gboolean    result;
+	char       *display;
 
 	key = g_strdup_printf ("%s%s", key_program, "/exec");
 	program = gconf_client_get_string (calwin->priv->gconfclient,
@@ -194,15 +204,18 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	if (terminal)
 		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
 
-	result = gdk_spawn_on_screen (screen,
-				      NULL, /* working directory */
-				      argv,
-				      NULL, /* envp */
-				      G_SPAWN_SEARCH_PATH,
-				      NULL, /* child setup func */
-				      NULL, /* user data */
-				      NULL, /* child pid */
-				      &error);
+	display = gdk_screen_make_display_name (screen);
+
+	result = g_spawn_async (NULL, /* working directory */
+			        argv,
+				NULL, /* envp */
+				G_SPAWN_SEARCH_PATH,
+				set_environment, /* child setup func */
+				&display, /* user data for child setup */
+				NULL,     /* child pid */
+				&error);
+
+	g_free (display);
 
 	if (!result) {
 		g_printerr ("Cannot launch calendar/tasks application: %s\n",
@@ -1298,48 +1311,34 @@ calendar_month_selected (GtkCalendar    *calendar,
         handle_tasks_changed (calwin);
 }
 
-typedef struct
-{
-        GtkWidget *calendar;
-        GtkWidget *tree;
-} ConstraintData;
-
-static void
-constrain_list_size (GtkWidget      *widget,
-                     GtkRequisition *requisition,
-                     ConstraintData *constraint)
-{
-        GtkRequisition req;
-        int            screen_h;
-        int            max_height;
-
-        /* constrain width to the calendar width */
-        gtk_widget_size_request (constraint->calendar, &req);
-        requisition->width = MIN (requisition->width, req.width);
-
-	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
-        /* constrain height to be the tree height up to a max */
-        max_height = (screen_h - req.height) / 3;
-        gtk_widget_size_request (constraint->tree, &req);
-
-        requisition->height = MIN (req.height, max_height);
-        requisition->height += 2 * gtk_widget_get_style (widget)->ythickness;
-}
-
 static void
 setup_list_size_constraint (GtkWidget *widget,
                             GtkWidget *calendar,
                             GtkWidget *tree)
 {
-        ConstraintData *constraint;
+	GtkRequisition   req;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
+	int              screen_h;
+	int              max_height;
+	int              req_height;
 
-        constraint           = g_new0 (ConstraintData, 1);
-        constraint->calendar = calendar;
-        constraint->tree     = tree;
+	/* constrain width to the calendar width */
+	gtk_widget_get_preferred_size (calendar, &req, NULL);
 
-        g_signal_connect_data (widget, "size-request",
-                               G_CALLBACK (constrain_list_size), constraint,
-                               (GClosureNotify) g_free, 0);
+	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
+        /* constrain height to be the tree height up to a max */
+	max_height = (screen_h - req.height) / 3;
+	gtk_widget_get_preferred_size (tree, &req, NULL);
+
+	state = gtk_widget_get_state_flags (widget);
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_get_padding (context, state, &padding);
+
+	req_height = MIN (req.height, max_height);
+	req_height += padding.top + padding.bottom;
+	gtk_widget_set_size_request (widget, req.width, req_height);
 }
 
 static void
@@ -1808,7 +1807,7 @@ calendar_window_set_property (GObject       *object,
 }
 
 static void
-calendar_window_destroy (GtkObject *object)
+calendar_window_dispose (GObject *object)
 {
 #ifdef HAVE_LIBECAL
 	CalendarWindow *calwin;
@@ -1848,20 +1847,18 @@ calendar_window_destroy (GtkObject *object)
 	calwin->priv->gconfclient = NULL;
 #endif /* HAVE_LIBECAL */
 
-	GTK_OBJECT_CLASS (calendar_window_parent_class)->destroy (object);
+	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
 }
 
 static void
 calendar_window_class_init (CalendarWindowClass *klass)
 {
 	GObjectClass   *gobject_class   = G_OBJECT_CLASS (klass);
-	GtkObjectClass *gtkobject_class = GTK_OBJECT_CLASS (klass);
 
 	gobject_class->constructor = calendar_window_constructor;
 	gobject_class->get_property = calendar_window_get_property;
         gobject_class->set_property = calendar_window_set_property;
-
-	gtkobject_class->destroy = calendar_window_destroy;
+	gobject_class->dispose = calendar_window_dispose;
 
 	g_type_class_add_private (klass, sizeof (CalendarWindowPrivate));
 

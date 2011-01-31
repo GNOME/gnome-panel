@@ -88,12 +88,14 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 	GdkAppLaunchContext *context;
 	GError              *local_error;
 	gboolean             retval;
+	GdkDisplay          *display;
 
 	g_return_val_if_fail (G_IS_APP_INFO (appinfo), FALSE);
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-	context = gdk_app_launch_context_new ();
+	display = gdk_screen_get_display (screen);
+	context = gdk_display_get_app_launch_context (display);
 	gdk_app_launch_context_set_screen (context, screen);
 	gdk_app_launch_context_set_timestamp (context, timestamp);
 
@@ -200,6 +202,15 @@ panel_launch_desktop_file (const char  *desktop_file,
 	return retval;
 }
 
+/*
+ * Set the DISPLAY variable, to be use by g_spawn_async.
+ */
+static void
+set_environment (gpointer display)
+{
+	g_setenv ("DISPLAY", display, TRUE);
+}
+
 gboolean
 panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 					 const char  *fallback_exec,
@@ -209,6 +220,7 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	char     *argv[2] = { (char *) fallback_exec, NULL };
 	GError   *local_error;
 	gboolean  retval;
+	char    *display;
 
 	g_return_val_if_fail (desktop_file != NULL, FALSE);
 	g_return_val_if_fail (fallback_exec != NULL, FALSE);
@@ -225,9 +237,18 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 		local_error = NULL;
 	}
 
-	retval = gdk_spawn_on_screen (screen, NULL, argv, NULL,
-				      G_SPAWN_SEARCH_PATH,
-				      NULL, NULL, NULL, &local_error);
+	display = gdk_screen_make_display_name (screen);
+
+	retval = g_spawn_async (NULL, /* working directory */
+				argv,
+				NULL, /* envp */
+				G_SPAWN_SEARCH_PATH,
+				set_environment,
+				display,
+				NULL,
+				&local_error);
+
+	g_free (display);
 
 	return _panel_launch_handle_error (fallback_exec,
 					   screen, local_error, error);

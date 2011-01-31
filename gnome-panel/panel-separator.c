@@ -41,54 +41,62 @@ struct _PanelSeparatorPrivate {
 
 G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
 
-static void
-panel_separator_paint (GtkWidget    *widget,
-		       GdkRectangle *area)
+static gboolean
+panel_separator_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
-	PanelSeparator *separator;
-	GdkWindow      *window;
-	GtkStyle       *style;
-	GtkAllocation   allocation;
+        PanelSeparator  *separator = PANEL_SEPARATOR (widget);
+        GdkWindow       *window;
+        GtkStyleContext *context;
+        GtkStateFlags    state;
+        GtkBorder        padding;
+        int              width, height;
 
-	separator = PANEL_SEPARATOR (widget);
+        if (GTK_WIDGET_CLASS (panel_separator_parent_class)->draw)
+                GTK_WIDGET_CLASS (panel_separator_parent_class)->draw (widget, cr);
 
 	window = gtk_widget_get_window (widget);
-	style = gtk_widget_get_style (widget);
-	gtk_widget_get_allocation (widget, &allocation);
+        state = gtk_widget_get_state_flags (widget);
+        width = gtk_widget_get_allocated_width (widget);
+        height = gtk_widget_get_allocated_height (widget);
 
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_get_padding (context, state, &padding);
+
+        gtk_style_context_save (context);
+        gtk_style_context_set_state (context, state);
+
+        cairo_save (cr);
 	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_paint_vline (style, window,
-				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
-				 style->xthickness,
-				 allocation.height - style->xthickness,
-				 (allocation.width - style->xthickness) / 2);
+                int x;
+
+                x= (width - padding.left - padding.right) / 2 + padding.left;
+                x = MIN (x, width - padding.right);
+
+                gtk_render_line (context, cr,
+                                 x, padding.top,
+                                 x, height - padding.bottom);
 	} else {
-		gtk_paint_hline (style, window,
-				 gtk_widget_get_state (widget),
-				 area, widget, "separator",
-				 style->ythickness,
-				 allocation.width - style->ythickness,
-				 (allocation.height  - style->ythickness) / 2);
-	}
-}
+                int y;
 
-static gboolean
-panel_separator_expose_event (GtkWidget      *widget,
-			      GdkEventExpose *event)
-{
-	if (gtk_widget_is_drawable (widget)) {
-		GTK_WIDGET_CLASS (panel_separator_parent_class)->expose_event (widget, event);
+                y = (height - padding.top - padding.bottom) / 2 + padding.top;
+                y = MIN (y, height - padding.bottom);
 
-		panel_separator_paint (widget, &event->area);
+                gtk_render_line (context, cr,
+                                 padding.left, y,
+                                 width - padding.right, y);
 	}
+        cairo_restore (cr);
+
+        gtk_style_context_restore (context);
 
 	return FALSE;
 }
 
 static void
-panel_separator_size_request (GtkWidget      *widget,
-			      GtkRequisition *requisition)
+panel_separator_get_preferred_width (GtkWidget *widget,
+				     gint      *minimal_width,
+				     gint      *natural_width)
 {
 	PanelSeparator *separator;
 	int             size;
@@ -97,13 +105,28 @@ panel_separator_size_request (GtkWidget      *widget,
 
 	size = panel_toplevel_get_size (separator->priv->panel->toplevel);
 
-	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL) {
-		requisition->width = size;
-		requisition->height = SEPARATOR_SIZE;
-	} else {
-		requisition->width = SEPARATOR_SIZE;
-		requisition->height = size;
-	}
+	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
+		*minimal_width = *natural_width = size;
+	else
+		*minimal_width = *natural_width = SEPARATOR_SIZE;
+}
+
+static void
+panel_separator_get_preferred_height (GtkWidget *widget,
+				      gint      *minimal_height,
+				      gint      *natural_height)
+{
+	PanelSeparator *separator;
+	int             size;
+
+	separator = PANEL_SEPARATOR (widget);
+
+	size = panel_toplevel_get_size (separator->priv->panel->toplevel);
+
+	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
+		*minimal_height = *natural_height = SEPARATOR_SIZE;
+	else
+		*minimal_height = *natural_height = size;
 }
 
 static void
@@ -158,10 +181,11 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 {
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
-	widget_class->expose_event  = panel_separator_expose_event;
-	widget_class->size_request  = panel_separator_size_request;
-	widget_class->size_allocate = panel_separator_size_allocate;
-	widget_class->parent_set    = panel_separator_parent_set;
+	widget_class->draw                 = panel_separator_draw;
+	widget_class->get_preferred_width  = panel_separator_get_preferred_width;
+	widget_class->get_preferred_height = panel_separator_get_preferred_height;
+	widget_class->size_allocate        = panel_separator_size_allocate;
+	widget_class->parent_set           = panel_separator_parent_set;
 
 	g_type_class_add_private (klass, sizeof (PanelSeparatorPrivate));
 }

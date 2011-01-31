@@ -537,7 +537,6 @@ free_make_current_data (gpointer data)
 
 void
 clock_location_make_current (ClockLocation *loc,
-			     guint          transient_parent_xid,
                              GFunc          callback,
                              gpointer       data,
                              GDestroyNotify destroy)
@@ -707,6 +706,7 @@ rad2dms (gfloat lat, gfloat lon)
 
 static GList *locations = NULL;
 
+#ifdef HAVE_NETWORK_MANAGER
 static void
 update_weather_infos (void)
 {
@@ -721,7 +721,6 @@ update_weather_infos (void)
 	}
 }
 
-#ifdef HAVE_NETWORK_MANAGER
 static void
 state_notify (DBusPendingCall *pending, gpointer data)
 {

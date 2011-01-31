@@ -9,6 +9,7 @@ AM_CPPFLAGS =							\
 	-DPAGER_BUILDERDIR=\""$(uidir)"\"			\
 	-DTASKLIST_BUILDERDIR=\""$(uidir)"\"			\
 	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
@@ -26,15 +27,15 @@ WNCKLET_SOURCES = \
 	showdesktop.h
 
 WNCKLET_LDADD =						\
-	../../libpanel-applet/libpanel-applet-3.la	\
+	../../libpanel-applet/libpanel-applet-4.la	\
 	$(WNCKLET_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
 
 if WNCKLET_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
+APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libwnck-applet.so
 
-wnck_appletlibdir = $(pkglibdir)
+wnck_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 wnck_appletlib_LTLIBRARIES = libwnck-applet.la
 libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
 libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
@@ -50,7 +51,7 @@ wnck_applet_LDADD = $(WNCKLET_LDADD)
 wnck_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-appletdir       = $(datadir)/gnome-panel/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

@@ -99,8 +99,8 @@ key_press_drawer (GtkWidget   *widget,
 	orient = PANEL_WIDGET (gtk_widget_get_parent (drawer->button))->orient;
 
 	switch (event->keyval) {
-	case GDK_Up:
-	case GDK_KP_Up:
+	case GDK_KEY_Up:
+	case GDK_KEY_KP_Up:
 		if (orient == GTK_ORIENTATION_HORIZONTAL) {
 			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
 				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_BACKWARD);
@@ -109,8 +109,8 @@ key_press_drawer (GtkWidget   *widget,
 			retval = FALSE;
 		}
 		break;
-	case GDK_Left:
-	case GDK_KP_Left:
+	case GDK_KEY_Left:
+	case GDK_KEY_KP_Left:
 		if (orient == GTK_ORIENTATION_VERTICAL) {
 			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
 				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_BACKWARD);
@@ -119,8 +119,8 @@ key_press_drawer (GtkWidget   *widget,
 			retval = FALSE;
 		}
 		break;
-	case GDK_Down:
-	case GDK_KP_Down:
+	case GDK_KEY_Down:
+	case GDK_KEY_KP_Down:
 		if (orient == GTK_ORIENTATION_HORIZONTAL) {
 			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
 				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_FORWARD);
@@ -129,8 +129,8 @@ key_press_drawer (GtkWidget   *widget,
 			retval = FALSE;
 		}
 		break;
-	case GDK_Right:
-	case GDK_KP_Right:
+	case GDK_KEY_Right:
+	case GDK_KEY_KP_Right:
 		if (orient == GTK_ORIENTATION_VERTICAL) {
 			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
 				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_FORWARD);
@@ -139,7 +139,7 @@ key_press_drawer (GtkWidget   *widget,
 			retval = FALSE;
 		}
 		break;
-	case GDK_Escape:
+	case GDK_KEY_Escape:
 		panel_toplevel_hide (drawer->toplevel, FALSE, -1);
 		break;
 	default:
@@ -162,7 +162,7 @@ key_press_drawer_widget (GtkWidget   *widget,
 {
 	PanelWidget *panel_widget;
 
-	if (event->keyval != GDK_Escape)
+	if (event->keyval != GDK_KEY_Escape)
 		return FALSE;
 
 	panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);

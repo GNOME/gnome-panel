@@ -424,8 +424,8 @@ panel_make_menu_icon (GtkIconTheme *icon_theme,
 }
 
 static void
-menu_item_style_set (GtkImage *image,
-		     gpointer  data)
+menu_item_style_updated (GtkImage *image,
+                         gpointer  data)
 {
 	GtkWidget   *widget;
 	GdkPixbuf   *pixbuf;
@@ -480,8 +480,8 @@ do_icons_to_add (void)
 				GTK_IMAGE (icon_to_add->image),
 				icon_to_add->pixbuf);
 
-			g_signal_connect (icon_to_add->image, "style-set",
-					  G_CALLBACK (menu_item_style_set),
+			g_signal_connect (icon_to_add->image, "style-updated",
+					  G_CALLBACK (menu_item_style_updated),
 					  GINT_TO_POINTER (icon_to_add->icon_size));
 
 			g_object_unref (icon_to_add->pixbuf);
@@ -837,11 +837,14 @@ restore_grabs(GtkWidget *w, gpointer data)
 		if (viewable)
 			xgrab_shell = parent;
 
-		parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
 	}
 
 	/*only grab if this HAD a grab before*/
-	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
+	/* FIXMEgpoo: We need either accessors or a workaround to grab
+	   the focus */
+#if 0
+	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab)))
           {
 	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
 
@@ -854,12 +857,12 @@ restore_grabs(GtkWidget *w, gpointer data)
               {
 		if (gdk_keyboard_grab (window, TRUE,
 				       GDK_CURRENT_TIME) == 0)
-		  GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+		  GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
 		else
 		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
 	      }
          }
-	
+#endif
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
@@ -1052,30 +1055,56 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       if (viewable)
 	xgrab_shell = parent;
       
-      parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+      parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
     }
   
   if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
     {
+      gboolean      status;
+      GdkDisplay    *display;
+      GdkDevice     *pointer;
+      GdkDevice     *keyboard;
+      GdkDeviceManager *device_manager;
       GdkWindow *window = gtk_widget_get_window (xgrab_shell);
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
 
-      if ((gdk_pointer_grab (window, TRUE,
-			     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
-			     GDK_POINTER_MOTION_MASK,
-			     NULL, cursor, GDK_CURRENT_TIME) == 0))
+      display = gdk_window_get_display (window);
+      device_manager = gdk_display_get_device_manager (display);
+      pointer = gdk_device_manager_get_client_pointer (device_manager);
+      keyboard = gdk_device_get_associated_device (pointer);
+
+      /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
+	            or GDK_OWNERSHIP_APPLICATION. Idem for the
+                    keyboard below */
+      status = gdk_device_grab (pointer, window,
+                                GDK_OWNERSHIP_WINDOW, TRUE,
+                                GDK_BUTTON_PRESS_MASK
+                                | GDK_BUTTON_RELEASE_MASK
+                                | GDK_ENTER_NOTIFY_MASK
+                                | GDK_LEAVE_NOTIFY_MASK
+                                | GDK_POINTER_MOTION_MASK,
+                                cursor, GDK_CURRENT_TIME);
+
+      if (!status)
 	{
-	  if (gdk_keyboard_grab (window, TRUE,
-				 GDK_CURRENT_TIME) == 0)
-	    GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+	  if (gdk_device_grab (keyboard, window,
+			       GDK_OWNERSHIP_WINDOW, TRUE,
+			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
+			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
+	    {
+	    /* FIXMEgpoo: We need either accessors or a workaround to grab
+	       the focus */
+#if 0
+	     GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
+#endif
+	    }
 	  else
 	    {
-	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
+	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
 	    }
 	}
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
     }
 }
 
@@ -1103,13 +1132,15 @@ drag_data_get_menu_cb (GtkWidget        *widget,
 }
 
 static void
-image_menuitem_size_request (GtkWidget      *menuitem,
-			     GtkRequisition *requisition,
-			     gpointer        data)
+image_menuitem_set_size_request (GtkWidget  *menuitem,
+                                 GtkIconSize icon_size)
 {
-	GtkIconSize icon_size = (GtkIconSize) GPOINTER_TO_INT (data);
-	int         icon_height;
-	int         req_height;
+        GtkStyleContext *context;
+        GtkStateFlags state;
+        GtkBorder padding, border;
+        int border_width;
+	int icon_height;
+	int req_height;
 
 	if (!gtk_icon_size_lookup (icon_size, NULL, &icon_height))
 		return;
@@ -1120,10 +1151,15 @@ image_menuitem_size_request (GtkWidget      *menuitem,
 	 * This is a bit ugly, since we should keep this in sync with what's in
 	 * gtk_menu_item_size_request()
 	 */
+        context = gtk_widget_get_style_context (menuitem);
+        state = gtk_widget_get_state_flags (menuitem);
+        gtk_style_context_get_padding (context, state, &padding);
+        gtk_style_context_get_border (context, state, &border);
+
+        border_width = gtk_container_get_border_width (GTK_CONTAINER (menuitem));
 	req_height = icon_height;
-	req_height += (gtk_container_get_border_width (GTK_CONTAINER (menuitem)) +
-		       (gtk_widget_get_style (menuitem))->ythickness) * 2;
-	requisition->height = MAX (requisition->height, req_height);
+	req_height += (border_width * 2) + padding.top + padding.bottom + border.top + border.bottom;
+        gtk_widget_set_size_request (menuitem, -1, req_height);
 }
 
 static char *
@@ -1196,9 +1232,7 @@ setup_menuitem (GtkWidget   *menuitem,
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 					       image);
 	} else if (icon_size != GTK_ICON_SIZE_INVALID)
-		g_signal_connect (menuitem, "size_request",
-				  G_CALLBACK (image_menuitem_size_request),
-				  GINT_TO_POINTER (icon_size));
+                image_menuitem_set_size_request (menuitem, icon_size);
 
 	gtk_widget_show (menuitem);
 }
@@ -1589,9 +1623,13 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 			   GtkWidget *menu)
 {
 	guint idle_id;
+	GList *list, *l;
 
-	while (GTK_MENU_SHELL (menu)->children)
-                gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
+	/* Remove existing items */
+	list = gtk_container_get_children (GTK_CONTAINER (menu));
+	for (l = list; l; l = l->next)
+		gtk_widget_destroy (l->data);
+	g_list_free (list);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
@@ -1903,22 +1941,21 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 			      GdkEventKey *event)
 {
 	gboolean retval = FALSE;
+	GtkWidget *active_menu_item = NULL;
 
-	if ((event->keyval == GDK_Menu) ||
-	    (event->keyval == GDK_F10 &&
+	if ((event->keyval == GDK_KEY_Menu) ||
+	    (event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
-		if (menu_shell->active_menu_item &&
-		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
+		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
+		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (menu_shell->active_menu_item,
-						 &bevent);
+			retval = show_item_menu (active_menu_item, &bevent);
 		}
-		
 	}
 	return retval;
 }

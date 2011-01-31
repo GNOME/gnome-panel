@@ -45,12 +45,6 @@ typedef enum {
 #define PANEL_APPLET_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET, PanelAppletClass))
 
 typedef enum {
-	PANEL_NO_BACKGROUND,
-	PANEL_COLOR_BACKGROUND,
-	PANEL_PIXMAP_BACKGROUND
-} PanelAppletBackgroundType;
-
-typedef enum {
 	PANEL_APPLET_FLAGS_NONE   = 0,
 	PANEL_APPLET_EXPAND_MAJOR = 1 << 0,
 	PANEL_APPLET_EXPAND_MINOR = 1 << 1,
@@ -80,10 +74,8 @@ struct _PanelAppletClass {
 	void (*change_size)   (PanelApplet       *applet,
 			       guint              size);
 
-	void (*change_background) (PanelApplet               *applet,
-				   PanelAppletBackgroundType  type,
-				   GdkColor                  *color,
-				   GdkPixmap                 *pixmap);
+	void (*change_background) (PanelApplet     *applet,
+				   cairo_pattern_t *pattern);
 	void (*move_focus_out_of_applet) (PanelApplet        *frame,
 					  GtkDirectionType    direction);
 };
@@ -94,11 +86,7 @@ GtkWidget         *panel_applet_new                  (void);
 
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 guint              panel_applet_get_size             (PanelApplet *applet);
-PanelAppletBackgroundType
-                   panel_applet_get_background       (PanelApplet *applet,
-						      /* return values */
-						      GdkColor    *color,
-						      GdkPixmap  **pixmap);
+cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);
 
 void               panel_applet_set_background_widget (PanelApplet *applet,
 						       GtkWidget   *widget);

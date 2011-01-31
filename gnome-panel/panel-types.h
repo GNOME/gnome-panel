@@ -11,9 +11,4 @@ typedef enum {
 	PANEL_SPEED_FAST
 } PanelSpeed;
 
-typedef struct {
-	GdkColor gdk;
-	guint16  alpha;
-} PanelColor;
-
 #endif

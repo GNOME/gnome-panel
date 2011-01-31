@@ -52,17 +52,29 @@ button_press_handler (GtkWidget      *fixedtip,
 }
 
 static gboolean
-expose_handler (GtkWidget *fixedtip)
+na_fixed_tip_draw (GtkWidget *widget, cairo_t *cr)
 {
-  GtkRequisition req;
+  GtkStyleContext *context;
+  GtkStateFlags state;
+  int width, height;
 
-  gtk_widget_size_request (fixedtip, &req);
+  width = gtk_widget_get_allocated_width (widget);
+  height = gtk_widget_get_allocated_height (widget);
 
-  gtk_paint_flat_box (gtk_widget_get_style (fixedtip),
-                      gtk_widget_get_window (fixedtip),
-                      GTK_STATE_NORMAL, GTK_SHADOW_OUT, 
-                      NULL, fixedtip, "tooltip",
-                      0, 0, req.width, req.height);
+  state = gtk_widget_get_state_flags (widget);
+  context = gtk_widget_get_style_context (widget);
+  gtk_style_context_save (context);
+  gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOOLTIP);
+  gtk_style_context_set_state (context, state);
+
+  cairo_save (cr);
+  gtk_render_background (context, cr,
+                         0., 0.,
+                         (gdouble)width,
+                         (gdouble)height);
+  cairo_restore (cr);
+
+  gtk_style_context_restore (context);
 
   return FALSE;
 }
@@ -70,6 +82,10 @@ expose_handler (GtkWidget *fixedtip)
 static void
 na_fixed_tip_class_init (NaFixedTipClass *class)
 {
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
+
+  widget_class->draw = na_fixed_tip_draw;
+
   fixedtip_signals[CLICKED] =
     g_signal_new ("clicked",
 		  G_OBJECT_CLASS_TYPE (class),
@@ -106,11 +122,8 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
   gtk_container_add (GTK_CONTAINER (fixedtip), label);
   fixedtip->priv->label = label;
 
-  g_signal_connect (fixedtip, "expose_event",
-                    G_CALLBACK (expose_handler), NULL);
-
   gtk_widget_add_events (GTK_WIDGET (fixedtip), GDK_BUTTON_PRESS_MASK);
-  
+
   g_signal_connect (fixedtip, "button_press_event",
                     G_CALLBACK (button_press_handler), NULL);
 
@@ -135,11 +148,11 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 
   gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
 
-  gtk_widget_size_request (GTK_WIDGET (fixedtip), &req);
+  gtk_widget_get_preferred_size (GTK_WIDGET (fixedtip), &req, NULL);
 
   gdk_window_get_origin (parent_window, &root_x, &root_y);
-  gdk_drawable_get_size (GDK_DRAWABLE (parent_window),
-                         &parent_width, &parent_height);
+  parent_width = gdk_window_get_width (parent_window);
+  parent_height = gdk_window_get_height (parent_window);
 
   screen_width = gdk_screen_get_width (screen);
   screen_height = gdk_screen_get_height (screen);

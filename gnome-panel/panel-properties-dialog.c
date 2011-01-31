@@ -316,19 +316,23 @@ static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 				       GtkColorButton        *color_button)
 {
-	GdkColor color;
+	GdkRGBA previous_color;
+	GdkRGBA color;
 
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
-	gtk_color_button_get_color (color_button, &color);
-	panel_profile_set_background_gdk_color (dialog->toplevel, &color);
+	gtk_color_button_get_rgba (color_button, &color);
+	panel_profile_get_background_color (dialog->toplevel, &previous_color);
+	color.alpha = previous_color.alpha;
+
+	panel_profile_set_background_color (dialog->toplevel, &color);
 }
 
 static void
 panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 					    GtkBuilder            *gui)
 {
-	PanelColor color;
+	GdkRGBA color;
 
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
@@ -337,8 +341,8 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
-	gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->color_button),
-				    &(color.gdk));
+	gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+                                   &color);
 
 	g_signal_connect_swapped (dialog->color_button, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
@@ -404,7 +408,7 @@ static void
 panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 {
 	gdouble percentage;
-	guint16 opacity;
+        GdkRGBA color;
 
 	percentage = gtk_range_get_value (GTK_RANGE (dialog->opacity_scale));
 
@@ -413,17 +417,17 @@ panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 	else if (percentage <= 2)
 		percentage = 0;
 
-	opacity = (percentage / 100) * 65535;
+	panel_profile_get_background_color (dialog->toplevel, &color);
+	color.alpha = (percentage / 100.);
 
-	panel_profile_set_background_opacity (dialog->toplevel, opacity);
+	panel_profile_set_background_color (dialog->toplevel, &color);
 }
 
 static void
 panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 					     GtkBuilder            *gui)
 {
-	guint16 opacity;
-	gdouble percentage;
+        GdkRGBA color;
 
 	dialog->opacity_scale = PANEL_GTK_BUILDER_GET (gui, "opacity_scale");
 	g_return_if_fail (dialog->opacity_scale != NULL);
@@ -432,11 +436,8 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 	dialog->opacity_legend = PANEL_GTK_BUILDER_GET (gui, "opacity_legend");
 	g_return_if_fail (dialog->opacity_legend != NULL);
 
-	opacity = panel_profile_get_background_opacity (dialog->toplevel);
-
-	percentage = (opacity * 100.0) / 65535;
-
-	gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
+        panel_profile_get_background_color (dialog->toplevel, &color);
+	gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), color.alpha * 100.0);
 
 	g_signal_connect_swapped (dialog->opacity_scale, "value_changed",
 				  G_CALLBACK (panel_properties_dialog_opacity_changed),

@@ -30,16 +30,18 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 #include <glib/gi18n-lib.h>
 #include <cairo.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
+#include <cairo-gobject.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
 #include <X11/Xatom.h>
+#include <cairo-xlib.h>
 
 #include "panel-applet.h"
 #include "panel-applet-factory.h"
@@ -706,7 +708,7 @@ panel_applet_request_focus (PanelApplet	 *applet,
 	display = gdk_screen_get_display (screen);
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
-	xroot	 = GDK_WINDOW_XWINDOW (root);
+	xroot	 = GDK_WINDOW_XID (root);
 
 	panel_applet_init_atoms (xdisplay);
 
@@ -957,7 +959,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 	screen = gtk_widget_get_screen (widget);
 
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 	gdk_window_get_origin (gtk_widget_get_window (widget),
 			       &menu_x, &menu_y);
 	gtk_widget_get_pointer (widget, &pointer_x, &pointer_y);
@@ -1061,17 +1063,15 @@ panel_applet_button_event (GtkWidget      *widget,
 		 * selected.
 		 * We don't want to hog the pointer on our parent.
 		 */
-		gdk_display_pointer_ungrab
-			(gtk_widget_get_display (widget),
-			 GDK_CURRENT_TIME);
+		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
 	} else {
 		xevent.xbutton.type = ButtonRelease;
 	}
 
 	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
-	xevent.xbutton.window      = GDK_WINDOW_XWINDOW (socket_window);
-	xevent.xbutton.root        = GDK_WINDOW_XWINDOW (gdk_screen_get_root_window
-							 (gdk_drawable_get_screen (window)));
+	xevent.xbutton.window      = GDK_WINDOW_XID (socket_window);
+	xevent.xbutton.root        = GDK_WINDOW_XID (gdk_screen_get_root_window
+							 (gdk_window_get_screen (window)));
 	/*
 	 * FIXME: the following might cause
 	 *        big problems for non-GTK apps
@@ -1087,11 +1087,10 @@ panel_applet_button_event (GtkWidget      *widget,
 	gdk_error_trap_push ();
 
 	XSendEvent (GDK_WINDOW_XDISPLAY (window),
-		    GDK_WINDOW_XWINDOW (socket_window),
+		    GDK_WINDOW_XID (socket_window),
 		    False, NoEventMask, &xevent);
 
-	gdk_flush ();
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 
 	return TRUE;
 }
@@ -1135,27 +1134,66 @@ panel_applet_popup_menu (GtkWidget *widget)
 	return TRUE;
 }
 
-static void
-panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
+static GtkSizeRequestMode
+panel_applet_get_request_mode (GtkWidget *widget)
 {
-	int focus_width = 0;
+        PanelApplet *applet = PANEL_APPLET (widget);
+        PanelAppletOrient orientation;
 
-	GTK_WIDGET_CLASS (panel_applet_parent_class)->size_request (widget,
-								    requisition);
+        orientation = panel_applet_get_orient (applet);
+        if (orientation == PANEL_APPLET_ORIENT_UP ||
+            orientation == PANEL_APPLET_ORIENT_DOWN)
+                return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
 
-	if (!panel_applet_can_focus (widget))
-		return;
+        return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+}
 
-	/*
-	 * We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
+static void
+panel_applet_get_preferred_width (GtkWidget *widget,
+                                  int       *minimum_width,
+                                  int       *natural_width)
+{
+        int focus_width = 0;
 
-	requisition->width  += 2 * focus_width;
-	requisition->height += 2 * focus_width;
+        GTK_WIDGET_CLASS (panel_applet_parent_class)->get_preferred_width (widget,
+                                                                           minimum_width,
+                                                                           natural_width);
+        if (!panel_applet_can_focus (widget))
+                return;
+
+        /* We are deliberately ignoring focus-padding here to
+         * save valuable panel real estate.
+         */
+        gtk_widget_style_get (widget,
+                              "focus-line-width", &focus_width,
+                              NULL);
+
+        *minimum_width += 2 * focus_width;
+        *natural_width += 2 * focus_width;
+}
+
+static void
+panel_applet_get_preferred_height (GtkWidget *widget,
+                                  int       *minimum_height,
+                                  int       *natural_height)
+{
+        int focus_width = 0;
+
+        GTK_WIDGET_CLASS (panel_applet_parent_class)->get_preferred_height (widget,
+                                                                            minimum_height,
+                                                                            natural_height);
+        if (!panel_applet_can_focus (widget))
+                return;
+
+        /* We are deliberately ignoring focus-padding here to
+         * save valuable panel real estate.
+         */
+        gtk_widget_style_get (widget,
+                              "focus-line-width", &focus_width,
+                              NULL);
+
+        *minimum_height += 2 * focus_width;
+        *natural_height += 2 * focus_width;
 }
 
 static void
@@ -1218,24 +1256,21 @@ panel_applet_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-panel_applet_expose (GtkWidget      *widget,
-		     GdkEventExpose *event) 
+panel_applet_draw (GtkWidget *widget,
+		   cairo_t   *cr)
 {
-	GtkAllocation allocation;
+        GtkStyleContext *context;
 	int border_width;
 	int focus_width = 0;
-	int x, y, width, height;
+	gdouble x, y, width, height;
 
-	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
-
-	GTK_WIDGET_CLASS (panel_applet_parent_class)->expose_event (widget,
-								    event);
+	GTK_WIDGET_CLASS (panel_applet_parent_class)->draw (widget, cr);
 
         if (!gtk_widget_has_focus (widget))
 		return FALSE;
 
-	gtk_widget_get_allocation (widget, &allocation);
+        width = gtk_widget_get_allocated_width (widget);
+        height = gtk_widget_get_allocated_height (widget);
 
 	/*
 	 * We are deliberately ignoring focus-padding here to
@@ -1247,17 +1282,19 @@ panel_applet_expose (GtkWidget      *widget,
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-	x = allocation.x;
-	y = allocation.y;
+	x = 0; // FIXME: border_width ?
+	y = 0; // FIXME: border_width ?
+	width  -= 2 * border_width;
+	height -= 2 * border_width;
 
-	width  = allocation.width  - 2 * border_width;
-	height = allocation.height - 2 * border_width;
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_save (context);
 
-	gtk_paint_focus (gtk_widget_get_style (widget),
-			 gtk_widget_get_window (widget),
-			 gtk_widget_get_state (widget),
-			 &event->area, widget, "panel_applet",
-			 x, y, width, height);
+        cairo_save (cr);
+        gtk_render_focus (context, cr, x, y, width, height);
+        cairo_restore (cr);
+
+        gtk_style_context_restore (context);
 
 	return FALSE;
 }
@@ -1310,210 +1347,143 @@ panel_applet_focus (GtkWidget        *widget,
 	return ret;
 }
 
-static gboolean
-panel_applet_parse_color (const gchar *color_str,
-			  GdkColor    *color)
+static cairo_surface_t *
+panel_applet_create_foreign_surface_for_display (GdkDisplay     *display,
+                                                 GdkVisual      *visual,
+                                                 GdkNativeWindow xid)
 {
-	int r, g, b;
+        Window window;
+        gint x, y;
+        guint width, height, border, depth;
 
-	g_assert (color_str && color);
+        if (!XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
+                           &x, &y, &width, &height, &border, &depth))
+                return NULL;
 
-	if (sscanf (color_str, "%4x%4x%4x", &r, &g, &b) != 3)
-		return FALSE;
-
-	color->red   = r;
-	color->green = g;
-	color->blue  = b;
-
-	return TRUE;
+        return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
+                                          xid, gdk_x11_visual_get_xvisual (visual),
+                                          width, height);
 }
 
-static gboolean
-panel_applet_parse_pixmap_str (const char *str,
-			       GdkNativeWindow *xid,
-			       int             *x,
-			       int             *y)
+static cairo_pattern_t *
+panel_applet_get_pattern_from_pixmap (PanelApplet    *applet,
+                                      GdkNativeWindow xid,
+                                      int             x,
+                                      int             y)
 {
-	char **elements;
-	char  *tmp;
-
-	g_return_val_if_fail (str != NULL, FALSE);
-	g_return_val_if_fail (xid != NULL, FALSE);
-	g_return_val_if_fail (x != NULL, FALSE);
-	g_return_val_if_fail (y != NULL, FALSE);
-
-	elements = g_strsplit (str, ",", -1);
-
-	if (!elements)
-		return FALSE;
-
-	if (!elements [0] || !*elements [0] ||
-	    !elements [1] || !*elements [1] ||
-	    !elements [2] || !*elements [2])
-		goto ERROR_AND_FREE;
-
-	*xid = strtol (elements [0], &tmp, 10);
-	if (tmp == elements [0])
-		goto ERROR_AND_FREE;
-
-	*x   = strtol (elements [1], &tmp, 10);
-	if (tmp == elements [1])
-		goto ERROR_AND_FREE;
-
-	*y   = strtol (elements [2], &tmp, 10);
-	if (tmp == elements [2])
-		goto ERROR_AND_FREE;
-
- 	g_strfreev (elements);
-	return TRUE;
-
- ERROR_AND_FREE:
- 	g_strfreev (elements);
-	return FALSE;
-}
-
-static GdkPixmap *
-panel_applet_get_pixmap (PanelApplet     *applet,
-			 GdkNativeWindow  xid,
-			 int              x,
-			 int              y)
-{
-	gboolean         display_grabbed;
-	GdkPixmap       *pixmap;
-	GdkDisplay      *display;
-	GdkPixmap       *retval;
 	GdkWindow       *window;
 	int              width;
 	int              height;
-	cairo_t         *cr;
-	cairo_pattern_t *pattern;
+        cairo_t         *cr;
+        cairo_surface_t *background;
+        cairo_surface_t *surface;
+        cairo_matrix_t   matrix;
+        cairo_pattern_t *pattern;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (applet)))
 		return NULL;
 
-	display = gdk_display_get_default ();
-	display_grabbed = FALSE;
+        window = gtk_widget_get_window (GTK_WIDGET (applet));
 
-	window = gtk_widget_get_window (GTK_WIDGET (applet));
+        gdk_error_trap_push ();
+        background = panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
+                                                                      gdk_window_get_visual (window),
+                                                                      xid);
+        gdk_error_trap_pop_ignored ();
 
-	pixmap = gdk_pixmap_lookup_for_display (display, xid);
-	if (pixmap)
-		g_object_ref (pixmap);
-	else {
-		display_grabbed = TRUE;
-		gdk_x11_display_grab (display);
-		pixmap = gdk_pixmap_foreign_new_for_display (display, xid);
-	}
+        /* background can be NULL if the user changes the background very fast.
+         * We'll get the next update, so it's not a big deal. */
+        if (!background ||
+            cairo_surface_status (background) != CAIRO_STATUS_SUCCESS) {
+                if (background)
+                        cairo_surface_destroy (background);
+                return NULL;
+        }
 
-	/* This can happen if the user changes the background very fast.
-	 * We'll get the next update, so it's not a big deal. */
-	if (pixmap == NULL) {
-		if (display_grabbed)
-			gdk_x11_display_ungrab (display);
-		return NULL;
-	}
+        width = gdk_window_get_width (window);
+        height = gdk_window_get_height (window);
+        surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
 
-	gdk_drawable_get_size (GDK_DRAWABLE (window), &width, &height);
-	retval = gdk_pixmap_new (window, width, height, -1);
+        gdk_error_trap_push ();
+        cr = cairo_create (surface);
+        cairo_set_source_surface (cr, background, -x, -y);
+        cairo_rectangle (cr, 0, 0, width, height);
+        cairo_fill (cr);
+        gdk_error_trap_pop_ignored ();
 
-	/* the pixmap has no colormap, and we need one */
-	gdk_drawable_set_colormap (GDK_DRAWABLE (pixmap),
-				   gdk_drawable_get_colormap (window));
+        cairo_surface_destroy (background);
 
-	cr = gdk_cairo_create (GDK_DRAWABLE (retval));
-	gdk_cairo_set_source_pixmap (cr, pixmap, -x, -y);
-	pattern = cairo_get_source (cr);
-	cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+        if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
+                pattern = cairo_pattern_create_for_surface (surface);
+                cairo_matrix_init_translate (&matrix, 0, 0);
+                cairo_matrix_scale (&matrix, width, height);
+                cairo_pattern_set_matrix (pattern, &matrix);
+                cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
+        }
 
-	cairo_rectangle (cr, 0, 0, width, height);
-	cairo_fill (cr);
+        cairo_destroy (cr);
+        cairo_surface_destroy (surface);
 
-	cairo_destroy (cr);
-
-	g_object_unref (pixmap);
-
-	if (display_grabbed)
-		gdk_x11_display_ungrab (display);
-
-	return retval;
+	return pattern;
 }
 
-static PanelAppletBackgroundType
-panel_applet_handle_background_string (PanelApplet  *applet,
-				       GdkColor     *color,
-				       GdkPixmap   **pixmap)
+/**
+ * panel_applet_get_background:
+ * @applet: a #PanelApplet
+ *
+ * Returns the background pattern for @applet, or %NULL if there is none.
+ *
+ * Returns: (transfer full): a new #cairo_pattern_t
+ */
+cairo_pattern_t *
+panel_applet_get_background (PanelApplet *applet)
 {
-	PanelAppletBackgroundType   retval;
-	char                      **elements;
+        cairo_pattern_t *pattern = NULL;
+        GVariant        *variant;
+        GVariantIter     iter;
+        GError          *error = NULL;
 
-	retval = PANEL_NO_BACKGROUND;
+        g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!gtk_widget_get_realized (GTK_WIDGET (applet)) || !applet->priv->background)
-		return retval;
+		return NULL;
 
-	elements = g_strsplit (applet->priv->background, ":", -1);
+        variant = g_variant_parse (NULL, applet->priv->background,
+                                   NULL, NULL, &error);
+        if (!variant) {
+                g_warning ("Error parsing background %s: %s\n", applet->priv->background, error->message);
+                g_error_free (error);
+                return NULL;
+        }
 
-	if (elements [0] && !strcmp (elements [0], "none" )) {
-		retval = PANEL_NO_BACKGROUND;
+        g_variant_iter_init (&iter, variant);
+        switch (g_variant_iter_n_children (&iter)) {
+        case 4: {
+                gdouble red, green, blue, alpha;
 
-	} else if (elements [0] && !strcmp (elements [0], "color")) {
-		g_return_val_if_fail (color != NULL, PANEL_NO_BACKGROUND);
+                g_variant_get (variant, "(dddd)", &red, &green, &blue, &alpha);
+                pattern = cairo_pattern_create_rgba (red, green, blue, alpha);
+        }
+                break;
+        case 3: {
+                guint32 xid;
+                int x, y;
 
-		if (!elements [1] || !panel_applet_parse_color (elements [1], color)) {
+                g_variant_get (variant, "(uii)", &xid, &x, &y);
+                pattern = panel_applet_get_pattern_from_pixmap (applet, xid, x, y);
+                if (!pattern)
+                        g_warning ("Failed to get pixmap %d, %d, %d", xid, x, y);
+        }
+                break;
+        default:
+                break;
+        }
 
-			g_warning ("Incomplete '%s' background type received", elements [0]);
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
-		}
+        g_variant_unref (variant);
 
-		retval = PANEL_COLOR_BACKGROUND;
-
-	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
-		GdkNativeWindow pixmap_id;
-		int             x, y;
-
-		g_return_val_if_fail (pixmap != NULL, PANEL_NO_BACKGROUND);
-
-		if (!panel_applet_parse_pixmap_str (elements [1], &pixmap_id, &x, &y)) {
-			g_warning ("Incomplete '%s' background type received: %s",
-				   elements [0], elements [1]);
-
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
-		}
-
-		*pixmap = panel_applet_get_pixmap (applet, pixmap_id, x, y);
-		if (!*pixmap) {
-			g_warning ("Failed to get pixmap %s", elements [1]);
-			g_strfreev (elements);
-			return PANEL_NO_BACKGROUND;
-		}
-
-		retval = PANEL_PIXMAP_BACKGROUND;
-	} else
-		g_warning ("Unknown background type received");
-
-	g_strfreev (elements);
-
-	return retval;
-}
-
-PanelAppletBackgroundType
-panel_applet_get_background (PanelApplet *applet,
-			     GdkColor *color,
-			     GdkPixmap **pixmap)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), PANEL_NO_BACKGROUND);
-
-	/* initial sanity */
-	if (pixmap != NULL)
-		*pixmap = NULL;
-	if (color != NULL)
-		memset (color, 0, sizeof (GdkColor));
-
-	return panel_applet_handle_background_string (applet, color, pixmap);
+        return pattern;
 }
 
 static void
@@ -1534,76 +1504,100 @@ panel_applet_set_background_string (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "background");
 }
 
-static void
-panel_applet_update_background_for_widget (GtkWidget                 *widget,
-					   PanelAppletBackgroundType  type,
-					   GdkColor                  *color,
-					   GdkPixmap                 *pixmap)
+static GtkStyleProperties *
+_panel_applet_get_widget_style_properties (GtkWidget *widget,
+                                           gboolean   create_if_needed)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
+        GtkStyleProperties *properties;
 
-	/* reset style */
-	gtk_widget_set_style (widget, NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (widget, rc_style);
-	g_object_unref (rc_style);
+        properties = g_object_get_data (G_OBJECT (widget),
+                                        "panel-applet-style-props");
 
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (gtk_widget_get_style (widget));
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (widget, style);
-		g_object_unref (style);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+        if (!properties && create_if_needed) {
+                properties = gtk_style_properties_new ();
+                g_object_set_data_full (G_OBJECT (widget),
+                                        "panel-applet-style-props",
+                                        properties,
+                                        (GDestroyNotify) g_object_unref);
+        }
+
+        return properties;
+}
+
+static void
+_panel_applet_reset_widget_style_properties (GtkWidget *widget)
+{
+        GtkStyleProperties *properties;
+
+        properties = _panel_applet_get_widget_style_properties (widget, FALSE);
+
+        if (properties)
+                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
+                                                   GTK_STYLE_PROVIDER (properties));
+
+        g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
+}
+
+static void
+panel_applet_update_background_for_widget (GtkWidget       *widget,
+					   cairo_pattern_t *pattern)
+{
+        GtkStyleProperties *properties;
+
+        gtk_widget_reset_style (widget);
+
+        if (!pattern) {
+                _panel_applet_reset_widget_style_properties (widget);
+                return;
+        }
+
+        properties = _panel_applet_get_widget_style_properties (widget, TRUE);
+
+        switch (cairo_pattern_get_type (pattern)) {
+        case CAIRO_PATTERN_TYPE_SOLID: {
+                GdkRGBA color;
+
+                cairo_pattern_get_rgba (pattern, &color.red, &color.green, &color.blue, &color.alpha);
+                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+                                          "background-color", &color,
+                                          "background-image", NULL,
+                                          NULL);
+        }
+                break;
+        case CAIRO_PATTERN_TYPE_SURFACE:
+                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
+					  /* background-color can't be NULL,
+					   * but is ignored anyway */
+                                          "background-image", pattern,
+                                          NULL);
+                break;
+        default:
+                break;
+        }
+
+	/* Note: this actually replaces the old properties, since it's the same
+	 * pointer */
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (properties),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 static void
 panel_applet_handle_background (PanelApplet *applet)
 {
-	PanelAppletBackgroundType  type;
-	GdkColor                   color;
-	GdkPixmap                 *pixmap;
+        cairo_pattern_t *pattern;
 
-	type = panel_applet_get_background (applet, &color, &pixmap);
+	pattern = panel_applet_get_background (applet);
 
 	if (applet->priv->background_widget)
 		panel_applet_update_background_for_widget (applet->priv->background_widget,
-							   type, &color, pixmap);
+							   pattern);
 
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       panel_applet_signals [CHANGE_BACKGROUND],
-			       0, PANEL_NO_BACKGROUND, NULL, NULL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       panel_applet_signals [CHANGE_BACKGROUND],
-			       0, PANEL_COLOR_BACKGROUND, &color, NULL);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		g_signal_emit (G_OBJECT (applet),
-			       panel_applet_signals [CHANGE_BACKGROUND],
-			       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
-
-		g_object_unref (pixmap);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+        g_signal_emit (G_OBJECT (applet),
+                        panel_applet_signals [CHANGE_BACKGROUND],
+                        0, pattern);
+        if (pattern)
+		cairo_pattern_destroy (pattern);
 }
 
 static void
@@ -1747,10 +1741,10 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 		  GdkModifierType  modifiers,
 		  GtkDirectionType direction)
 {
-	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
-	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+	gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
 				      GTK_TYPE_DIRECTION_TYPE, direction);
 }
@@ -1854,25 +1848,26 @@ static void
 panel_applet_class_init (PanelAppletClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
-	GtkObjectClass *object_class = (GtkObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 	GtkBindingSet *binding_set;
 
 	gobject_class->get_property = panel_applet_get_property;
 	gobject_class->set_property = panel_applet_set_property;
 	gobject_class->constructed = panel_applet_constructed;
+        gobject_class->finalize = panel_applet_finalize;
+
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->button_release_event = panel_applet_button_release;
-	widget_class->size_request = panel_applet_size_request;
+	widget_class->get_request_mode = panel_applet_get_request_mode;
+        widget_class->get_preferred_width = panel_applet_get_preferred_width;
+        widget_class->get_preferred_height = panel_applet_get_preferred_height;
 	widget_class->size_allocate = panel_applet_size_allocate;
-	widget_class->expose_event = panel_applet_expose;
+	widget_class->draw = panel_applet_draw;
 	widget_class->focus = panel_applet_focus;
 	widget_class->realize = panel_applet_realize;
 	widget_class->popup_menu = panel_applet_popup_menu;
-
-	gobject_class->finalize = panel_applet_finalize;
 
 	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
@@ -1906,6 +1901,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      "GConf Preferences Key",
 							      NULL,
 							      G_PARAM_READWRITE));
+        // FIXMEchpe GtkOrientation?
 	g_object_class_install_property (gobject_class,
 					 PROP_ORIENT,
 					 g_param_spec_uint ("orient",
@@ -1963,7 +1959,7 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, change_orient),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__UINT,
+                              g_cclosure_marshal_VOID__UINT,
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_UINT);
@@ -1975,7 +1971,7 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, change_size),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__INT,
+                              g_cclosure_marshal_VOID__INT,
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_INT);
@@ -1987,12 +1983,10 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, change_background),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__ENUM_BOXED_OBJECT,
+                              g_cclosure_marshal_VOID__BOXED,
                               G_TYPE_NONE,
-			      3,
-			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
-			      GDK_TYPE_COLOR,
-			      GDK_TYPE_PIXMAP);
+			      1,
+			      CAIRO_GOBJECT_TYPE_PATTERN);
 
 	panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =
                 g_signal_new ("move_focus_out_of_applet",
@@ -2001,12 +1995,12 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, move_focus_out_of_applet),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
 			      1,
 			      GTK_TYPE_DIRECTION_TYPE);
 
-	binding_set = gtk_binding_set_by_class (object_class);
+	binding_set = gtk_binding_set_by_class (gobject_class);
 	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
@@ -2293,16 +2287,13 @@ panel_applet_set_background_widget (PanelApplet *applet,
 {
 	applet->priv->background_widget = widget;
 
-	if (widget) {
-		PanelAppletBackgroundType  type;
-		GdkColor                   color;
-		GdkPixmap                 *pixmap;
+	if (widget && gtk_widget_get_realized (widget)) {
+		cairo_pattern_t *pattern;
 
-		type = panel_applet_get_background (applet, &color, &pixmap);
-		panel_applet_update_background_for_widget (widget, type,
-							   &color, pixmap);
-		if (type == PANEL_PIXMAP_BACKGROUND)
-			g_object_unref (pixmap);
+		pattern = panel_applet_get_background (applet);
+		panel_applet_update_background_for_widget (widget, pattern);
+		if (pattern)
+			cairo_pattern_destroy (pattern);
 	}
 }
 

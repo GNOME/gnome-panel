@@ -43,8 +43,7 @@
 #include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
-#define GNOME_DESKTOP_USE_UNSTABLE_API
-#include <libgnome/gnome-desktop-utils.h>
+#include <libgnome-desktop/gnome-desktop-utils.h>
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
@@ -149,7 +148,7 @@ _panel_run_get_recent_programs_list (void)
 }
 
 static void
-_panel_run_save_recent_programs_list (GtkComboBoxEntry *entry,
+_panel_run_save_recent_programs_list (GtkComboBox      *entry,
 				      char             *lastcommand)
 {
 	GtkTreeModel *model;
@@ -243,6 +242,16 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	panel_run_dialog_disconnect_pixmap (dialog);
 	
 	g_free (dialog);
+}
+
+static const char *
+panel_run_dialog_get_combo_text (PanelRunDialog *dialog)
+{
+	GtkWidget *entry;
+
+	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
+
+	return gtk_entry_get_text (GTK_ENTRY (entry));
 }
 
 static void
@@ -356,35 +365,46 @@ command_is_executable (const char   *command,
 	return TRUE;
 }
 
+/*
+ * Set the DISPLAY variable, to be use by g_spawn_async.
+ */
+static void
+set_environment (gpointer display)
+{
+  g_setenv ("DISPLAY", display, TRUE);
+}
+
 static gboolean
 panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
 				 const char     *locale_command)
 {
 	GdkScreen  *screen;
-	gboolean    result;	
+	gboolean    result;
 	GError     *error = NULL;
 	char      **argv;
 	int         argc;
-	
+	char    *display;
+
 	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
-		
+	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
+
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
 		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
-		   
-	result = gdk_spawn_on_screen (screen,
-				      NULL, /* working directory */
-				      argv,
-				      NULL, /* envp */
-				      G_SPAWN_SEARCH_PATH,
-				      NULL, /* child setup func */
-				      NULL, /* user data */
-				      NULL, /* child pid */
-				      &error);
-			
+
+	display = gdk_screen_make_display_name (screen);
+
+	result = g_spawn_async (NULL, /* working directory */
+				argv,
+				NULL, /* envp */
+				G_SPAWN_SEARCH_PATH,
+				set_environment,
+				display,
+				NULL,
+				&error);
+
 	if (!result) {
 		char *primary;
 
@@ -397,9 +417,10 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 
 		g_error_free (error);
 	}
-				
+
+	g_free (display);
 	g_strfreev (argv);
-	
+
 	return result;
 }
 
@@ -412,7 +433,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	char     *disk;
 	char     *scheme;	
 	
-	command = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	command = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	command = g_strchug (command);
 
 	if (!command || !command [0]) {
@@ -479,7 +500,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	if (result) {
 		/* only save working commands in history */
 		_panel_run_save_recent_programs_list
-			(GTK_COMBO_BOX_ENTRY (dialog->combobox), command);
+			(GTK_COMBO_BOX (dialog->combobox), command);
 		
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -538,7 +559,7 @@ static void
 panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 				   const char     *file)
 {
-	char       *text;
+	const char *text;
 	char       *quoted, *temp;
 	GtkWidget  *entry;
 	
@@ -548,7 +569,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	
 	quoted = quote_string (file);
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = gtk_entry_get_text (GTK_ENTRY (entry));
 	if (text && text [0]) {
 		temp = g_strconcat (text, " ", quoted, NULL);
 		gtk_entry_set_text (GTK_ENTRY (entry), temp);
@@ -556,7 +577,6 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	} else
 		gtk_entry_set_text (GTK_ENTRY (entry), quoted);
 	
-	g_free (text);
 	g_free (quoted);
 }
 
@@ -664,7 +684,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		return FALSE;
 	}
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+	text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	found_icon = NULL;
 	found_name = NULL;
 	fuzzy = FALSE;
@@ -1511,7 +1531,7 @@ entry_event (GtkEditable    *entry,
 		return FALSE;
 
 	/* tab completion */
-	if (event->keyval == GDK_Tab) {
+	if (event->keyval == GDK_KEY_Tab) {
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
 		if (dialog->completion_started &&
@@ -1607,7 +1627,7 @@ combobox_changed (GtkComboBox    *combobox,
 	char *start;
 	char *msg;
 
-	text = gtk_combo_box_get_active_text (combobox);
+        text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 
 	start = text;
 	while (*start != '\0' && g_ascii_isspace (*start))
@@ -1751,8 +1771,8 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
 				 _panel_run_get_recent_programs_list ());
-	gtk_combo_box_entry_set_text_column
-		(GTK_COMBO_BOX_ENTRY (dialog->combobox), 0);
+	gtk_combo_box_set_entry_text_column
+		(GTK_COMBO_BOX (dialog->combobox), 0);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
 
@@ -1792,7 +1812,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	char     *scheme;
 	char     *save_uri;
 
-	text = gtk_combo_box_get_active_text (GTK_COMBO_BOX (dialog->combobox));
+        text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	
 	if (!text || !text [0]) {
 		g_free (text);
@@ -1881,9 +1901,8 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 }
 
 static void
-panel_run_dialog_style_set (GtkWidget      *widget,
-			    GtkStyle       *prev_style,
-			    PanelRunDialog *dialog)
+panel_run_dialog_style_updated (GtkWidget      *widget,
+                                PanelRunDialog *dialog)
 {
   if (dialog->icon_path) {
 	  char *icon_path;
@@ -1914,8 +1933,8 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 {
 	dialog->pixmap = PANEL_GTK_BUILDER_GET (gui, "icon_pixmap");
 	
-	g_signal_connect (dialog->pixmap, "style-set",
-			  G_CALLBACK (panel_run_dialog_style_set),
+	g_signal_connect (dialog->pixmap, "style-updated",
+			  G_CALLBACK (panel_run_dialog_style_updated),
 			  dialog);
 	g_signal_connect (dialog->pixmap, "screen-changed",
 			  G_CALLBACK (panel_run_dialog_screen_changed),
@@ -1976,7 +1995,7 @@ static void
 panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog)
 {
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
-			                      G_CALLBACK (panel_run_dialog_style_set),
+			                      G_CALLBACK (panel_run_dialog_style_updated),
 			                      dialog);
 	g_signal_handlers_disconnect_by_func (dialog->pixmap,
 			                      G_CALLBACK (panel_run_dialog_screen_changed),

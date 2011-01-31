@@ -163,8 +163,7 @@ xstuff_is_compliant_wm (void)
 	int       size;
 
 	xdisplay = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
-	root_window = GDK_WINDOW_XWINDOW (
-				gdk_get_default_root_window ());
+	root_window = GDK_WINDOW_XID (gdk_get_default_root_window ());
 
         /* FIXME this is totally broken; should be using
          * gdk_net_wm_supports() on particular hints when we rely
@@ -181,12 +180,6 @@ xstuff_is_compliant_wm (void)
 	/* Actually checks for some of these */
 	g_free (data);
 	return TRUE;
-}
-
-gboolean
-xstuff_net_wm_supports (const char *hint)
-{
-	return gdk_net_wm_supports (gdk_atom_intern (hint, FALSE));
 }
 
 /* This is such a broken stupid function. */   
@@ -218,13 +211,12 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 	gdk_error_trap_push ();
 
 	XSetWMNormalHints (GDK_WINDOW_XDISPLAY (window),
-			   GDK_WINDOW_XWINDOW (window),
+			   GDK_WINDOW_XID (window),
 			   &size_hints);
 
 	gdk_window_move_resize (window, x, y, w, h);
 
-	gdk_flush ();
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-x", GINT_TO_POINTER (x));
 	g_object_set_data (G_OBJECT (window), "xstuff-cached-y", GINT_TO_POINTER (y));
@@ -246,7 +238,7 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window,
 	}
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
-                         GDK_WINDOW_XWINDOW (window),
+                         GDK_WINDOW_XID (window),
 			 panel_atom_get ("_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
                          (unsigned char *) atoms, 
@@ -268,7 +260,7 @@ xstuff_set_wmspec_strut (GdkWindow *window,
 	vals [3] = bottom;
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
-                         GDK_WINDOW_XWINDOW (window),
+                         GDK_WINDOW_XID (window),
 			 panel_atom_get ("_NET_WM_STRUT"),
                          XA_CARDINAL, 32, PropModeReplace,
                          (unsigned char *) vals, 4);
@@ -278,7 +270,7 @@ void
 xstuff_delete_property (GdkWindow *window, const char *name)
 {
 	Display *xdisplay = GDK_WINDOW_XDISPLAY (window);
-	Window   xwindow  = GDK_WINDOW_XWINDOW (window);
+	Window   xwindow  = GDK_WINDOW_XID (window);
 
         XDeleteProperty (xdisplay, xwindow,
 			 panel_atom_get (name));
@@ -313,9 +305,9 @@ zoom_timeout (GtkWidget *window)
 }
 
 static gboolean
-zoom_expose (GtkWidget      *widget,
-	     GdkEventExpose *event,
-	     gpointer        user_data)
+zoom_draw (GtkWidget *widget,
+	   cairo_t   *cr,
+           gpointer    user_data)
 {
 	CompositedZoomData *zoom;
 
@@ -336,7 +328,6 @@ zoom_expose (GtkWidget      *widget,
 		GdkPixbuf *scaled;
 		int width, height;
 		int x = 0, y = 0;
-		cairo_t *cr;
 
 		gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
 
@@ -370,7 +361,6 @@ zoom_expose (GtkWidget      *widget,
 		}
 
 
-		cr = gdk_cairo_create (gtk_widget_get_window (widget));
 		cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
 		cairo_set_source_rgba (cr, 0, 0, 0, 0.0);
 		cairo_rectangle (cr, 0, 0, width, height);
@@ -380,7 +370,6 @@ zoom_expose (GtkWidget      *widget,
 		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 		cairo_paint_with_alpha (cr, MAX (zoom->opacity, 0));
 
-		cairo_destroy (cr);
 		g_object_unref (scaled);
 	}
 
@@ -415,7 +404,7 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 	gtk_window_set_keep_above (GTK_WINDOW (win), TRUE);
 	gtk_window_set_decorated (GTK_WINDOW (win), FALSE);
 	gtk_widget_set_app_paintable(win, TRUE);
-	gtk_widget_set_colormap (win, gdk_screen_get_rgba_colormap (gscreen));
+	gtk_widget_set_visual (win, gdk_screen_get_rgba_visual (gscreen));
 
 	gtk_window_set_gravity (GTK_WINDOW (win), GDK_GRAVITY_STATIC);
 	gtk_window_set_default_size (GTK_WINDOW (win),
@@ -445,12 +434,12 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	gtk_window_move (GTK_WINDOW (win), wx, wy);
 
-	g_signal_connect (G_OBJECT (win), "expose-event",
-			  G_CALLBACK (zoom_expose), zoom);
+	g_signal_connect (G_OBJECT (win), "draw",
+			  G_CALLBACK (zoom_draw), zoom);
 
 	/* see doc for gtk_widget_set_app_paintable() */
 	gtk_widget_realize (win);
-	gdk_window_set_back_pixmap (gtk_widget_get_window (win), NULL, FALSE);
+	gdk_window_set_background_pattern (gtk_widget_get_window (win), NULL);
 	gtk_widget_show (win);
 
 	zoom->timeout_id = g_timeout_add (ZOOM_DELAY,
@@ -475,23 +464,20 @@ draw_zoom_animation (GdkScreen *gscreen,
 	Display *dpy;
 	Window root_win;
 	int screen;
-	int depth;
 
 	dpy = gdk_x11_display_get_xdisplay (gdk_screen_get_display (gscreen));
-	root_win = gdk_x11_drawable_get_xid (gdk_screen_get_root_window (gscreen));
+	root_win = GDK_WINDOW_XID (gdk_screen_get_root_window (gscreen));
 	screen = gdk_screen_get_number (gscreen);
-	depth = gdk_drawable_get_depth (gdk_screen_get_root_window (gscreen));
 
 	/* frame GC */
-	gdk_colormap_alloc_color (
-		gdk_screen_get_system_colormap (gscreen), &color, FALSE, TRUE);
 	gcv.function = GXxor;
 	/* this will raise the probability of the XORed color being different
 	 * of the original color in PseudoColor when not all color cells are
 	 * initialized */
-	if (DefaultVisual(dpy, screen)->class==PseudoColor)
+	if (DefaultVisual(dpy, screen)->class==PseudoColor) {
+		int depth = DefaultDepth (dpy, screen);
 		gcv.plane_mask = (1<<(depth-1))|1;
-	else
+	} else
 		gcv.plane_mask = AllPlanes;
 	gcv.foreground = color.pixel;
 	if (gcv.foreground == 0)
@@ -575,9 +561,6 @@ draw_zoom_animation (GdkScreen *gscreen,
 
 	XUngrabServer(dpy);
 	XFreeGC (dpy, frame_gc);
-	gdk_colormap_free_colors (gdk_screen_get_system_colormap (gscreen),
-				  &color, 1);
-
 }
 #undef FRAMES
 
@@ -639,8 +622,7 @@ xstuff_get_current_workspace (GdkScreen *screen)
 	int     result;
 	int     retval;
 
-	root_window = gdk_x11_drawable_get_xid (
-				gdk_screen_get_root_window (screen));
+	root_window = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
 
 	gdk_error_trap_push ();
 	result = XGetWindowProperty (GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen)),
@@ -685,12 +667,12 @@ xstuff_grab_key_on_all_screens (int      keycode,
 		if (grab)
 			XGrabKey (gdk_x11_display_get_xdisplay (display),
 				  keycode, modifiers,
-				  gdk_x11_drawable_get_xid (root),
+				  GDK_WINDOW_XID (root),
 				  True, GrabModeAsync, GrabModeAsync);
 		else
 			XUngrabKey (gdk_x11_display_get_xdisplay (display),
 				    keycode, modifiers,
-				    gdk_x11_drawable_get_xid (root));
+				    GDK_WINDOW_XID (root));
 	}
 }
 

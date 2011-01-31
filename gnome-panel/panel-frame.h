@@ -58,6 +58,7 @@ void            panel_frame_set_edges (PanelFrame     *toplevel,
 PanelFrameEdge  panel_frame_get_edges (PanelFrame     *toplevel);
 
 void            panel_frame_draw      (GtkWidget      *widget,
+                                       cairo_t        *cr,
 				       PanelFrameEdge  edges);
 
 G_END_DECLS

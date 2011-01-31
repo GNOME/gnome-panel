@@ -65,8 +65,8 @@ panel_context_menu_check_for_screen (GtkWidget *w,
 	static int times = 0;
 	if (ev->type != GDK_KEY_PRESS)
 		return FALSE;
-	if (ev->key.keyval == GDK_f ||
-	    ev->key.keyval == GDK_F) {
+	if (ev->key.keyval == GDK_KEY_f ||
+	    ev->key.keyval == GDK_KEY_F) {
 		times++;
 		if (times == 3) {
 			times = 0;

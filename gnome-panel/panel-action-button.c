@@ -239,13 +239,31 @@ static void
 panel_action_connect_server (GtkWidget *widget)
 {
 	GdkScreen *screen;
+	GAppInfo  *app_info;
 	GError    *error;
-	
+
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
+	app_info = g_app_info_create_from_commandline ("nautilus-connect-server",
+						       _("Connect to server"),
+						       G_APP_INFO_CREATE_NONE,
+						       &error);
 
-	gdk_spawn_command_line_on_screen (screen, "nautilus-connect-server",
-					  &error);
+	if (!error) {
+		GdkAppLaunchContext *launch_context;
+		GdkDisplay          *display;
+
+		display = gdk_screen_get_display (screen);
+		launch_context = gdk_display_get_app_launch_context (display);
+		gdk_app_launch_context_set_screen (launch_context, screen);
+
+		g_app_info_launch (app_info, NULL,
+				   G_APP_LAUNCH_CONTEXT (launch_context),
+				   &error);
+
+		g_object_unref (launch_context);
+		g_object_unref (app_info);
+	}
 
 	if (error) {
 		panel_error_dialog (NULL, screen,
@@ -665,7 +683,7 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 }
 
 static void
-panel_action_button_style_set (PanelActionButton *button)
+panel_action_button_style_updated (PanelActionButton *button)
 {
 	if (actions [button->priv->type].icon_name != NULL)
 		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [button->priv->type].icon_name);
@@ -718,8 +736,8 @@ panel_action_button_load (PanelActionButtonType  type,
 
 	panel_action_button_connect_to_gconf (button);
 
-	g_signal_connect (button, "style-set",
-			  G_CALLBACK (panel_action_button_style_set), NULL);
+	g_signal_connect (button, "style-updated",
+			  G_CALLBACK (panel_action_button_style_updated), NULL);
 }
 
 void

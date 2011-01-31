@@ -21,8 +21,6 @@
  * 02111-1307, USA.
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -32,7 +30,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include <libwnck/screen.h>
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"
@@ -135,7 +133,6 @@ button_size_allocated (GtkWidget       *button,
 static void
 update_icon (ShowDesktopData *sdd)
 {
-	GtkStyle  *style;
         int width, height;
         GdkPixbuf *icon;
         GdkPixbuf *scaled;
@@ -144,27 +141,31 @@ update_icon (ShowDesktopData *sdd)
 	int	   focus_width = 0;
 	int	   focus_pad = 0;
 	int	   thickness = 0;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
 
 	if (!sdd->icon_theme)
 		return;
 
-	gtk_widget_style_get (sdd->button,
-			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
-			      NULL);
-
-	style = gtk_widget_get_style (sdd->button);
+	state = gtk_widget_get_state_flags (sdd->button);
+	context = gtk_widget_get_style_context (sdd->button);
+	gtk_style_context_get_padding (context, state, &padding);
+	gtk_style_context_get_style (context,
+			             "focus-line-width", &focus_width,
+			             "focus-padding", &focus_pad,
+			             NULL);
 
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
-		thickness = style->ythickness;
+		thickness = padding.top + padding.bottom;
 		break;
 	case GTK_ORIENTATION_VERTICAL:
-		thickness = style->xthickness;
+		thickness = padding.left + padding.right;
 		break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad + thickness);
+	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
 
 	if (icon_size < 22)
 		icon_size = 16;
@@ -416,6 +417,7 @@ show_desktop_applet_fill (PanelApplet *applet)
 	GtkActionGroup  *action_group;
 	gchar           *ui_path;
 	AtkObject       *atk_obj;
+        GtkCssProvider  *provider;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -445,15 +447,17 @@ show_desktop_applet_fill (PanelApplet *applet)
         sdd->button = gtk_toggle_button_new ();
 
 	gtk_widget_set_name (sdd->button, "showdesktop-button");
-	gtk_rc_parse_string ("\n"
-			     "   style \"showdesktop-button-style\"\n"
-			     "   {\n"
-			     "      GtkWidget::focus-line-width=0\n"
-			     "      GtkWidget::focus-padding=0\n"
-			     "   }\n"
-			     "\n"
-			     "    widget \"*.showdesktop-button\" style \"showdesktop-button-style\"\n"
-			     "\n");
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#showdesktop-button {\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px;\n"
+					 "}",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (sdd->button),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 
 	atk_obj = gtk_widget_get_accessible (sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));

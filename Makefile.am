@@ -9,7 +9,8 @@ SUBDIRS =			\
 	po
 
 if HAVE_BONOBO
-SUBDIRS += bonobo
+# FIXMEchpe port this
+#SUBDIRS += bonobo
 endif
 
 ACLOCAL_AMFLAGS = -I m4

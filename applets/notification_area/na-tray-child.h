@@ -24,7 +24,7 @@
 #define __NA_TRAY_CHILD_H__
 
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
+#include <gtk/gtkx.h>
 
 G_BEGIN_DECLS
 

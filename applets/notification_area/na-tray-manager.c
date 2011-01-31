@@ -26,7 +26,6 @@
 
 #include "na-tray-manager.h"
 
-#include <gdkconfig.h>
 #include <glib/gi18n.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
@@ -299,8 +298,8 @@ na_tray_manager_handle_dock_request (NaTrayManager       *manager,
   if (!gtk_socket_get_plug_window (GTK_SOCKET (child)))
     {
       /* Embedding failed, we won't get a plug-removed signal */
+      /* This signal destroys the socket */
       g_signal_emit (manager, manager_signals[TRAY_ICON_REMOVED], 0, child);
-      gtk_widget_destroy (child);
       return;
     }
 
@@ -600,7 +599,7 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
 		SYSTEM_TRAY_ORIENTATION_VERT;
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
-		   GDK_WINDOW_XWINDOW (window),
+		   GDK_WINDOW_XID (window),
                    orientation_atom,
 		   XA_CARDINAL, 32,
 		   PropModeReplace,
@@ -638,25 +637,20 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
 
   if (gdk_screen_get_rgba_visual (manager->screen) != NULL &&
       gdk_display_supports_composite (display))
-    {
-      xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual (manager->screen));
-    }
+    xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual (manager->screen));
   else
     {
       /* We actually want the visual of the tray where the icons will
        * be embedded. In almost all cases, this will be the same as the visual
        * of the screen.
        */
-      GdkColormap *colormap;
-
-      colormap = gdk_screen_get_default_colormap (manager->screen);
-      xvisual = GDK_VISUAL_XVISUAL (gdk_colormap_get_visual (colormap));
+      xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (manager->screen));
     }
 
   data[0] = XVisualIDFromVisual (xvisual);
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
-                   GDK_WINDOW_XWINDOW (window),
+                   GDK_WINDOW_XID (window),
                    visual_atom,
                    XA_VISUALID, 32,
                    PropModeReplace,
@@ -734,7 +728,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
       xev.data.l[0] = timestamp;
       xev.data.l[1] = gdk_x11_atom_to_xatom_for_display (display,
                                                          manager->selection_atom);
-      xev.data.l[2] = GDK_WINDOW_XWINDOW (window);
+      xev.data.l[2] = GDK_WINDOW_XID (window);
       xev.data.l[3] = 0;	/* manager specific data */
       xev.data.l[4] = 0;	/* manager specific data */
 

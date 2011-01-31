@@ -59,7 +59,7 @@ CLOCK_CPPFLAGS =						\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 CLOCK_LDADD =						\
-	../../libpanel-applet/libpanel-applet-3.la	\
+	../../libpanel-applet/libpanel-applet-4.la	\
 	$(CLOCK_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
 	libsystem-timezone.la				\
@@ -71,9 +71,9 @@ test_system_timezone_LDADD = libsystem-timezone.la
 
 if CLOCK_INPROCESS
 APPLET_IN_PROCESS = true
-APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
+APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libclock-applet.so
 
-clock_appletlibdir = $(pkglibdir)
+clock_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
 libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
 libclock_applet_la_CPPFLAGS = $(CLOCK_CPPFLAGS)
@@ -136,7 +136,7 @@ BUILT_SOURCES =					\
 	clock-typebuiltins.c			\
 	clock-typebuiltins.h
 
-appletdir       = $(datadir)/gnome-panel/applets
+appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 

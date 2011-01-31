@@ -25,8 +25,6 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -37,7 +35,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <libwnck/selector.h>
+#include <libwnck/libwnck.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
@@ -113,40 +111,51 @@ window_menu_destroy (GtkWidget  *widget,
 }
 
 static gboolean
-window_menu_on_expose (GtkWidget *widget,
-                       GdkEventExpose *event,
-                       gpointer data)
+window_menu_on_draw (GtkWidget *widget,
+                     cairo_t   *cr,
+                     gpointer   data)
 {
-	WindowMenu *window_menu = data;
+        GtkStyleContext *context;
+        GtkStateFlags    state;
+        WindowMenu      *window_menu = data;
 
-	if (gtk_widget_has_focus (window_menu->applet))
-		gtk_paint_focus (gtk_widget_get_style (widget),
-				 gtk_widget_get_window (widget), 
-				 gtk_widget_get_state (widget),
-				 NULL,
-				 widget,
-				 "menu-applet",
-				 0, 0, -1, -1);
+	if (!gtk_widget_has_focus (window_menu->applet))
+                return FALSE;
+
+        state = gtk_widget_get_state_flags (widget);
+        context = gtk_widget_get_style_context (widget);
+        gtk_style_context_save (context);
+        gtk_style_context_set_state (context, state);
+
+        cairo_save (cr);
+        gtk_render_focus (context, cr,
+                          0., 0.,
+                          gtk_widget_get_allocated_width (widget),
+                          gtk_widget_get_allocated_height (widget));
+        cairo_restore (cr);
+
+        gtk_style_context_restore (context);
+
 	return FALSE;
 }
 
 static inline void
 force_no_focus_padding (GtkWidget *widget)
 {
-        gboolean first_time = TRUE;
+        GtkCssProvider *provider;
 
-        if (first_time) {
-                gtk_rc_parse_string ("\n"
-                                     "   style \"window-menu-applet-button-style\"\n"
-                                     "   {\n"
-                                     "      GtkWidget::focus-line-width=0\n"
-                                     "      GtkWidget::focus-padding=0\n"
-                                     "   }\n"
-                                     "\n"
-                                     "    widget \"*.window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
-                                     "\n");
-                first_time = FALSE;
-        }
+        provider = gtk_css_provider_new ();
+        gtk_css_provider_load_from_data (provider,
+                                         "#window-menu-applet-button {\n"
+                                         " border-width: 0px;\n"
+                                         " -GtkWidget-focus-line-width: 0px;\n"
+                                         " -GtkWidget-focus-padding: 0px;\n"
+					 "}",
+                                         -1, NULL);
+        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
+                                        GTK_STYLE_PROVIDER (provider),
+                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+        g_object_unref (provider);
 
         gtk_widget_set_name (widget, "window-menu-applet-button");
 }
@@ -193,12 +202,12 @@ window_menu_key_press_event (GtkWidget   *widget,
 	WnckSelector *selector;
 
 	switch (event->keyval) {
-	case GDK_KP_Enter:
-	case GDK_ISO_Enter:
-	case GDK_3270_Enter:
-	case GDK_Return:
-	case GDK_space:
-	case GDK_KP_Space:
+	case GDK_KEY_KP_Enter:
+	case GDK_KEY_ISO_Enter:
+	case GDK_KEY_3270_Enter:
+	case GDK_KEY_Return:
+	case GDK_KEY_space:
+	case GDK_KEY_KP_Space:
 		selector = WNCK_SELECTOR(window_menu->selector);
 		/* 
 		 * We need to call _gtk_menu_shell_activate() here as is done in 
@@ -208,11 +217,15 @@ window_menu_key_press_event (GtkWidget   *widget,
 		 * As that function is private its code is replicated here.
 		 */
 		menu_shell = GTK_MENU_SHELL (selector);
-		if (!menu_shell->active) {
+		/* FIXMEgpoo: We need either accessors or a workaround
+		   to grab the focus */
+#if 0
+		if (!menu_shell->GSEAL(active)) {
 			gtk_grab_add (GTK_WIDGET (menu_shell));
-			menu_shell->have_grab = TRUE;
-			menu_shell->active = TRUE;
+			menu_shell->GSEAL(have_grab) = TRUE;
+			menu_shell->GSEAL(active) = TRUE;
 		}
+#endif
 		gtk_menu_shell_select_first (menu_shell, FALSE);
 		return TRUE;
 	default:
@@ -280,8 +293,8 @@ window_menu_applet_fill (PanelApplet *applet)
 				G_CALLBACK (gtk_widget_queue_draw), window_menu);
 	g_signal_connect_after (G_OBJECT (window_menu->applet), "focus-out-event",
 				G_CALLBACK (gtk_widget_queue_draw), window_menu);
-	g_signal_connect_after (G_OBJECT (window_menu->selector), "expose-event",
-				G_CALLBACK (window_menu_on_expose), window_menu);
+	g_signal_connect_after (G_OBJECT (window_menu->selector), "draw",
+				G_CALLBACK (window_menu_on_draw), window_menu);
 
 	g_signal_connect (G_OBJECT (window_menu->selector), "button_press_event",
 			  G_CALLBACK (filter_button_press), window_menu);

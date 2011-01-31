@@ -18,6 +18,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
+#include <gtk/gtkx.h>
 
 #include <libpanel-util/panel-glib.h>
 
@@ -392,9 +393,9 @@ panel_key_press_event (GtkWidget   *widget,
 	 * activating the key bindings here.
 	 */ 
 	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
-	    event->keyval == GDK_F10 &&
+	    event->keyval == GDK_KEY_F10 &&
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
-		return gtk_bindings_activate (GTK_OBJECT (widget),
+		return gtk_bindings_activate (G_OBJECT (widget),
 					      event->keyval,
 					      event->state);
 
@@ -426,7 +427,7 @@ static gboolean
 set_background_color (PanelToplevel *toplevel,
 		      guint16       *dropped)
 {
-	PanelColor color;
+	GdkRGBA color;
 
 	if (!dropped)
 		return FALSE;
@@ -435,10 +436,10 @@ set_background_color (PanelToplevel *toplevel,
 	     ! panel_profile_is_writable_background_color (toplevel))
 		return FALSE;
 
-	color.gdk.red   = dropped [0];
-	color.gdk.green = dropped [1];
-	color.gdk.blue  = dropped [2];
-	color.alpha     = 65535;
+	color.red   = dropped [0] / 65535.;
+	color.green = dropped [1] / 65535.;
+	color.blue  = dropped [2] / 65535.;
+	color.alpha = 1.;
 
 	panel_profile_set_background_color (toplevel, &color);
 	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);

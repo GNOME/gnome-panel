@@ -26,7 +26,7 @@
 
 #include <stdlib.h>
 
-#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
 
 #include <libegg/eggsmclient.h>
 
@@ -76,5 +76,5 @@ panel_session_init (void)
 
 	/* We don't want the WM to try and save/restore our
 	 * window position */
-	gdk_set_sm_client_id (NULL);
+	gdk_x11_set_sm_client_id (NULL);
 }

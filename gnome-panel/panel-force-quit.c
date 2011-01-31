@@ -100,15 +100,25 @@ display_popup_window (GdkScreen *screen)
 static void
 remove_popup (GtkWidget *popup)
 {
-	GdkWindow *root;
+	GdkWindow     *root;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDevice     *keyboard;
+	GdkDeviceManager *device_manager;
 
 	root = gdk_screen_get_root_window (
 			gtk_window_get_screen (GTK_WINDOW (popup)));
 	gdk_window_remove_filter (root, (GdkFilterFunc) popup_filter, popup);
 
 	gtk_widget_destroy (popup);
-	gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
+
+	display = gdk_window_get_display (root);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
+
+	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	gdk_device_ungrab (keyboard, GDK_CURRENT_TIME);
 }
 
 static gboolean
@@ -194,7 +204,7 @@ kill_window_response (GtkDialog *dialog,
 		gdk_error_trap_push ();
 		XKillClient (display, window);
 		gdk_flush ();
-		gdk_error_trap_pop ();
+		gdk_error_trap_pop_ignored ();
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));
@@ -251,7 +261,7 @@ handle_button_press_event (GtkWidget *popup,
 	window = find_managed_window (event->display, event->subwindow);
 
 	if (window != None) {
-		if (!gdk_xid_table_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
+		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (event->display), window))
 			kill_window_question ((gpointer) window);
 	}
 }
@@ -288,6 +298,10 @@ panel_force_quit (GdkScreen *screen,
 	GdkCursor     *cross;
 	GtkWidget     *popup;
 	GdkWindow     *root;
+	GdkDisplay    *display;
+	GdkDevice     *pointer;
+	GdkDevice     *keyboard;
+	GdkDeviceManager *device_manager;
 
 	popup = display_popup_window (screen);
 
@@ -296,16 +310,29 @@ panel_force_quit (GdkScreen *screen,
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 
 	cross = gdk_cursor_new (GDK_CROSS);
-	status = gdk_pointer_grab (root, FALSE, GDK_BUTTON_PRESS_MASK,
-				   NULL, cross, time);
-	gdk_cursor_unref (cross);
+
+	display = gdk_window_get_display (root);
+	device_manager = gdk_display_get_device_manager (display);
+	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	keyboard = gdk_device_get_associated_device (pointer);
+
+	status = gdk_device_grab (pointer, root,
+				  GDK_OWNERSHIP_NONE, FALSE,
+				  GDK_BUTTON_PRESS_MASK,
+				  cross, time);
+
+	g_object_unref (cross);
+
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Pointer grab failed\n");
 		remove_popup (popup);
 		return;
 	}
 
-	status = gdk_keyboard_grab (root, FALSE, time);
+	status = gdk_device_grab (keyboard, root,
+				  GDK_OWNERSHIP_NONE, FALSE,
+				  GDK_KEY_PRESS | GDK_KEY_RELEASE,
+				  NULL, time);
 	if (status != GDK_GRAB_SUCCESS) {
 		g_warning ("Keyboard grab failed\n");
 		remove_popup (popup);

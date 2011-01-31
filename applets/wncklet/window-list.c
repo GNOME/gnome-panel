@@ -8,8 +8,6 @@
  *
  */
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -132,23 +130,13 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-applet_change_background (PanelApplet               *applet,
-			  PanelAppletBackgroundType  type,
-			  GdkColor                  *color,
-			  GdkPixmap                 *pixmap,
-			  TasklistData              *tasklist)
+applet_change_background (PanelApplet     *applet,
+			  cairo_pattern_t *pattern,
+			  TasklistData    *tasklist)
 {
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
-						 GTK_RELIEF_NORMAL);
-		break;
-	case PANEL_COLOR_BACKGROUND:
-	case PANEL_PIXMAP_BACKGROUND:
-		wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
-						 GTK_RELIEF_NONE);
-		break;
-	}
+        wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
+                                         pattern != NULL ? GTK_RELIEF_NONE
+                                                         : GTK_RELIEF_NORMAL);
 }
 
 static void
@@ -392,18 +380,14 @@ setup_gconf (TasklistData *tasklist)
 }
 
 static void
-applet_size_request (GtkWidget      *widget,
-		     GtkRequisition *requisition,
-		     TasklistData   *tasklist)
+applet_size_allocate (GtkWidget      *widget,
+                      GtkAllocation  *allocation,
+                      TasklistData   *tasklist)
 {
 	int len;
 	const int *size_hints;
-	GtkRequisition child_req;
-    	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
 
-	gtk_widget_get_child_requisition (tasklist->applet, &child_req);
-
-	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
+	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist), &len);
 	g_assert (len % 2 == 0);
 
         panel_applet_set_size_hints (PANEL_APPLET (tasklist->applet),
@@ -521,7 +505,7 @@ window_list_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	tasklist->tasklist = wnck_tasklist_new (NULL);
+	tasklist->tasklist = wnck_tasklist_new ();
 
         wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
                                        icon_loader_func,
@@ -531,9 +515,8 @@ window_list_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
-
-	g_signal_connect (G_OBJECT (tasklist->applet), "size_request",
-			  G_CALLBACK (applet_size_request),
+	g_signal_connect (G_OBJECT (tasklist->applet), "size_allocate",
+			  G_CALLBACK (applet_size_allocate),
 			  tasklist);
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);

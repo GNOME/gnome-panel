@@ -27,6 +27,7 @@ G_BEGIN_DECLS
 #define CLOCK_FACE_GET_CLASS          (G_TYPE_INSTANCE_GET_CLASS ((obj), INTL_TYPE_CLOCK_FACE, ClockFaceClass))
 
 typedef struct _ClockFace           ClockFace;
+typedef struct _ClockFacePrivate    ClockFacePrivate;
 typedef struct _ClockFaceClass      ClockFaceClass;
 
 struct _ClockFace
@@ -34,6 +35,7 @@ struct _ClockFace
         GtkWidget parent;
 
         /* < private > */
+        ClockFacePrivate *priv;
 };
 
 struct _ClockFaceClass

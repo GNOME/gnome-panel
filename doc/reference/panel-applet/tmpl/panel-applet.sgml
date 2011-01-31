@@ -41,8 +41,6 @@ determine which, if any, of @color and @pimxap is valid.
 
 @panelapplet: The object which received the signal.
 @arg1: 
-@arg2: 
-@arg3: 
 <!-- # Unused Parameters # -->
 @type: The #PanelAppletBackgroundType.
 @color: The #GdkColor if @type is #PANEL_COLOR_BACKGROUND.
@@ -147,18 +145,6 @@ of the applet's <emphasis>orientation</emphasis>, not the panel's position.
 @PANEL_APPLET_ORIENT_LEFT: 
 @PANEL_APPLET_ORIENT_RIGHT: 
 
-<!-- ##### ENUM PanelAppletBackgroundType ##### -->
-<para>
-The #PanelAppletBackgroundType enumerated type specifies the type of
-background of a panel.
-</para>
-
-@PANEL_NO_BACKGROUND: The panel has no background, the default is used.
-@PANEL_COLOR_BACKGROUND: The panel has a color, i.e rgb value,
-background.
-@PANEL_PIXMAP_BACKGROUND:  The panel has either an image background
-or is translucent.
-
 <!-- ##### ENUM PanelAppletFlags ##### -->
 <para>
 The #PanelAppletFlags associated with the applet are boolean flags which
@@ -247,9 +233,10 @@ portion of the panel's background pixmap.
 <!-- FIXME: give an example of how to use this -->
 
 @applet: A #PanelApplet.
+@Returns: The background type.
+<!-- # Unused Parameters # -->
 @color: A #GdkColor to be filled in.
 @pixmap: Returned #GdkPixmap.
-@Returns: The background type.
 
 
 <!-- ##### FUNCTION panel_applet_get_preferences_key ##### -->
