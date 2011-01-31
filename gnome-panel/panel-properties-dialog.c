@@ -316,11 +316,15 @@ static void
 panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
 				       GtkColorButton        *color_button)
 {
+	GdkRGBA previous_color;
 	GdkRGBA color;
 
 	g_assert (dialog->color_button == GTK_WIDGET (color_button));
 
 	gtk_color_button_get_rgba (color_button, &color);
+	panel_profile_get_background_color (dialog->toplevel, &previous_color);
+	color.alpha = previous_color.alpha;
+
 	panel_profile_set_background_color (dialog->toplevel, &color);
 }
 
@@ -413,8 +417,9 @@ panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
 	else if (percentage <= 2)
 		percentage = 0;
 
-        gtk_color_button_get_rgba (GTK_COLOR_BUTTON (dialog->color_button), &color);
-	color.alpha = (percentage / 100);
+	panel_profile_get_background_color (dialog->toplevel, &color);
+	color.alpha = (percentage / 100.);
+
 	panel_profile_set_background_color (dialog->toplevel, &color);
 }
 
