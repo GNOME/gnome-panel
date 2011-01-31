@@ -15,8 +15,8 @@ GNOME_COMMON_INIT
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-m4_define([libpanel_applet_api_version],[4.0])
-AC_SUBST([LIBPANEL_APPLET_API_VERSION],[libpanel_applet_api_version])
+LIBPANEL_APPLET_API_VERSION=4.0
+AC_SUBST([LIBPANEL_APPLET_API_VERSION],[$LIBPANEL_APPLET_API_VERSION])
 
 LIB_PANEL_APPLET_LT_VERSION=0:5:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
@@ -253,6 +253,7 @@ AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
 
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/\$(LIBPANEL_APPLET_API_VERSION)/applets")
+AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/\${libpanel_applet_api_version}/applets")
 
 dnl
 dnl Temporary bonobo checks here
@@ -388,8 +389,8 @@ bonobo/libpanel-applet/Makefile
 bonobo/panel-module/Makefile
 ])
 
-AC_CONFIG_FILES(libpanel-applet/libpanelapplet-[]libpanel_applet_api_version[].pc:libpanel-applet/libpanelapplet.pc.in)
-AC_CONFIG_FILES(libpanel-applet/libpanelapplet-[]libpanel_applet_api_version[]-uninstalled.pc:libpanel-applet/libpanelapplet-uninstalled.pc.in)
+AC_CONFIG_FILES(libpanel-applet/libpanelapplet-$LIBPANEL_APPLET_API_VERSION.pc:libpanel-applet/libpanelapplet.pc.in)
+AC_CONFIG_FILES(libpanel-applet/libpanelapplet-$LIBPANEL_APPLET_API_VERSION-uninstalled.pc:libpanel-applet/libpanelapplet-uninstalled.pc.in)
 
 AC_OUTPUT
 
