@@ -238,11 +238,9 @@ panel_action_force_quit (GtkWidget *widget)
 static void
 panel_action_connect_server (GtkWidget *widget)
 {
-	GdkScreen           *screen;
-	GdkAppLaunchContext *launch_context;
-	GAppInfo            *app_info;
-	GError              *error;
-	GdkDisplay          *display;
+	GdkScreen *screen;
+	GAppInfo  *app_info;
+	GError    *error;
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
 	error = NULL;
@@ -252,12 +250,19 @@ panel_action_connect_server (GtkWidget *widget)
 						       &error);
 
 	if (!error) {
+		GdkAppLaunchContext *launch_context;
+		GdkDisplay          *display;
+
 		display = gdk_screen_get_display (screen);
 		launch_context = gdk_display_get_app_launch_context (display);
 		gdk_app_launch_context_set_screen (launch_context, screen);
-		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
+
+		g_app_info_launch (app_info, NULL,
+				   G_APP_LAUNCH_CONTEXT (launch_context),
+				   &error);
 
 		g_object_unref (launch_context);
+		g_object_unref (app_info);
 	}
 
 	if (error) {
@@ -268,8 +273,6 @@ panel_action_connect_server (GtkWidget *widget)
 				    error->message);
 		g_clear_error (&error);
 	}
-
-	g_object_unref (app_info);
 }
 
 typedef struct {
