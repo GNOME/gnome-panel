@@ -140,6 +140,15 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 
 #ifdef HAVE_LIBECAL
 
+/*
+ * Set the DISPLAY variable, to be use by g_spawn_async.
+ */
+static void
+set_environment (gpointer display)
+{
+	g_setenv ("DISPLAY", display, TRUE);
+}
+
 static void
 clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 				 const char     *key_program,
@@ -154,6 +163,7 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	GdkScreen  *screen;
 	GError     *error;
 	gboolean    result;
+	char       *display;
 
 	key = g_strdup_printf ("%s%s", key_program, "/exec");
 	program = gconf_client_get_string (calwin->priv->gconfclient,
@@ -194,15 +204,18 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	if (terminal)
 		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
 
-	result = gdk_spawn_on_screen (screen,
-				      NULL, /* working directory */
-				      argv,
-				      NULL, /* envp */
-				      G_SPAWN_SEARCH_PATH,
-				      NULL, /* child setup func */
-				      NULL, /* user data */
-				      NULL, /* child pid */
-				      &error);
+	display = gdk_screen_make_display_name (screen);
+
+	result = g_spawn_async (NULL, /* working directory */
+			        argv,
+				NULL, /* envp */
+				G_SPAWN_SEARCH_PATH,
+				set_environment, /* child setup func */
+				&display, /* user data for child setup */
+				NULL,     /* child pid */
+				&error);
+
+	g_free (display);
 
 	if (!result) {
 		g_printerr ("Cannot launch calendar/tasks application: %s\n",
