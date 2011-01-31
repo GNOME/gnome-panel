@@ -32,6 +32,8 @@
 #include <X11/Xatom.h>
 #include <cairo-xlib.h>
 
+#include <libgnome-desktop/gnome-bg.h>
+
 #include "panel-background-monitor.h"
 #include "panel-util.h"
 
@@ -63,7 +65,7 @@ struct _PanelBackgroundMonitor {
 	GdkAtom    gdkatom;
 
         cairo_surface_t *surface;
-        GdkPixbuf *gdkpixbuf; // FIXMEchpe this is insane!!!
+        GdkPixbuf *gdkpixbuf;
 
 	int        width;
 	int        height;
@@ -235,104 +237,6 @@ panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 	return GDK_FILTER_CONTINUE;
 }
 
-/* copied from gnome-desktop. FIXMEchpe: switch panel-background{,-monitor} over to libgnome-desktop! */
-static cairo_surface_t *
-gnome_bg_get_surface_from_root (GdkScreen *screen,
-                                int *widthptr,
-                                int *heightptr)
-{
-        int result;
-        gint format;
-        gulong nitems;
-        gulong bytes_after;
-        guchar *data;
-        Atom type;
-        Display *display;
-        int screen_num;
-        cairo_surface_t *surface;
-        cairo_surface_t *source_pixmap;
-        int width, height;
-        cairo_t *cr;
-
-        display = GDK_DISPLAY_XDISPLAY (gdk_screen_get_display (screen));
-        screen_num = gdk_screen_get_number (screen);
-
-        result = XGetWindowProperty (display,
-                                     RootWindow (display, screen_num),
-                                     gdk_x11_get_xatom_by_name ("_XROOTPMAP_ID"),
-                                     0L, 1L, False, XA_PIXMAP,
-                                     &type, &format, &nitems, &bytes_after,
-                                     &data);
-        surface = NULL;
-        source_pixmap = NULL;
-
-        if (result != Success || type != XA_PIXMAP ||
-            format != 32 || nitems != 1) {
-                XFree (data);
-                data = NULL;
-        }
-
-        if (data != NULL) {
-                Pixmap xpixmap = *(Pixmap *) data;
-                Window root_return;
-                int x_ret, y_ret;
-                unsigned int w_ret, h_ret, bw_ret, depth_ret;
-
-                gdk_error_trap_push ();
-                if (XGetGeometry (GDK_SCREEN_XDISPLAY (screen),
-                                  xpixmap,
-                                  &root_return,
-                                  &x_ret, &y_ret, &w_ret, &h_ret, &bw_ret, &depth_ret)) {
-                        source_pixmap = cairo_xlib_surface_create (GDK_SCREEN_XDISPLAY (screen),
-                                                                   xpixmap,
-                                                                   GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (screen)),
-                                                                   w_ret, h_ret);
-                }
-
-                gdk_error_trap_pop_ignored ();
-        }
-
-        width = gdk_screen_get_width (screen);
-        height = gdk_screen_get_height (screen);
-
-        if (source_pixmap) {
-                surface = cairo_surface_create_similar (source_pixmap,
-                                                        CAIRO_CONTENT_COLOR,
-                                                        width, height);
-
-                cr = cairo_create (surface);
-                cairo_set_source_surface (cr, source_pixmap, 0, 0);
-                cairo_paint (cr);
-
-                if (cairo_status (cr) != CAIRO_STATUS_SUCCESS) {
-                        cairo_surface_destroy (surface);
-                        surface = NULL;
-                }
-
-                cairo_destroy (cr);
-        }
-
-#if 0
-        /* We don't need this fallback here */
-        if (surface == NULL) {
-                surface = gdk_window_create_similar_surface (gdk_screen_get_root_window (screen),
-                                                             CAIRO_CONTENT_COLOR,
-                                                             width, height);
-        }
-#endif
-
-        if (source_pixmap != NULL)
-                cairo_surface_destroy (source_pixmap);
-
-        if (data != NULL)
-                XFree (data);
-
-        *widthptr = width;
-        *heightptr = height;
-
-        return surface;
-}
-
 static GdkPixbuf *
 panel_background_monitor_tile_background (PanelBackgroundMonitor *monitor,
 					  int                     width,
@@ -410,21 +314,18 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 	gdk_x11_display_grab (display);
 	monitor->display_grabbed = TRUE;
 
-	if (!monitor->surface) {
-              monitor->surface = gnome_bg_get_surface_from_root (monitor->screen,
-                                                                 &pwidth, &pheight);
-              if (!monitor->surface)
-                      g_warning ("couldn't get background pixmap\n");
-        } else {
-                pwidth = cairo_image_surface_get_width (monitor->surface);
-                pheight = cairo_image_surface_get_height (monitor->surface);
-        }
+	if (!monitor->surface)
+              monitor->surface = gnome_bg_get_surface_from_root (monitor->screen);
 
 	if (!monitor->surface) {
+		g_warning ("couldn't get background pixmap\n");
 		gdk_x11_display_ungrab (display);
 		monitor->display_grabbed = FALSE;
 		return;
 	}
+
+	pwidth = cairo_xlib_surface_get_width (monitor->surface);
+	pheight = cairo_xlib_surface_get_height (monitor->surface);
 
 	gdk_window_get_geometry (monitor->gdkwindow,
 				 NULL, NULL, &rwidth, &rheight);

@@ -126,7 +126,8 @@ gnome_panel_CPPFLAGS = 				\
 	$(AM_CPPFLAGS)				\
 	$(XRANDR_CFLAGS)			\
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE		\
+	-DGNOME_DESKTOP_USE_UNSTABLE_API
 
 gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libegg/libegg.la					\
