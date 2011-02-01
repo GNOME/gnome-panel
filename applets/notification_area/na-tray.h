@@ -60,6 +60,11 @@ NaTray         *na_tray_new_for_screen  (GdkScreen     *screen,
 void            na_tray_set_orientation	(NaTray        *tray,
 					 GtkOrientation orientation);
 GtkOrientation  na_tray_get_orientation (NaTray        *tray);
+void            na_tray_set_colors      (NaTray        *tray,
+					 GdkColor      *fg,
+					 GdkColor      *error,
+					 GdkColor      *warning,
+					 GdkColor      *success);
 void		na_tray_force_redraw	(NaTray        *tray);
 
 G_END_DECLS
