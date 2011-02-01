@@ -73,6 +73,7 @@ GtkWidget *panel_applet_container_new                     (void);
 
 
 void       panel_applet_container_add                     (PanelAppletContainer *container,
+							   GdkScreen            *screen,
 							   const gchar          *iid,
 							   GCancellable        *cancellable,
 							   GAsyncReadyCallback  callback,
