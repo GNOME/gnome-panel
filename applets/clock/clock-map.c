@@ -227,10 +227,18 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
         ClockMapPrivate *priv = PRIVATE (this);
 	GtkStyleContext *context;
 	GdkRGBA  color;
+        GtkSymbolicColor *symbolic, *lighter_symbolic;
         int width, height;
 
         context = gtk_widget_get_style_context (this);
         gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);
+
+        /* Color for the outline. We want a light version of the active color */
+        symbolic = gtk_symbolic_color_new_literal (&color);
+        lighter_symbolic = gtk_symbolic_color_new_shade (symbolic, 3);
+        gtk_symbolic_color_resolve (lighter_symbolic, NULL, &color);
+        gtk_symbolic_color_unref (symbolic);
+        gtk_symbolic_color_unref (lighter_symbolic);
 
 	if (!priv->shadow_map_pixbuf) {
                 g_warning ("Needed to refresh the map in draw event.");
