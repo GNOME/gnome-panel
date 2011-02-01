@@ -64,7 +64,6 @@ LIBGNOME_DESKTOP_REQUIRED=2.91.0
 GDK_PIXBUF_REQUIRED=2.7.1
 PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.25.12
-GTK2_REQUIRED=2.20.0
 GTK_REQUIRED=2.91.7
 LIBWNCK_REQUIRED=2.91.0
 GCONF_REQUIRED=2.6.1
@@ -255,61 +254,6 @@ dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/\$(LIBPANEL_APPLET_API_VERSION)/applets")
 AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/\${libpanel_applet_api_version}/applets")
 
-dnl
-dnl Temporary bonobo checks here
-dnl
-
-LIB_PANEL_APPLET_BONOBO_LT_VERSION=2:73:2
-AC_SUBST(LIB_PANEL_APPLET_BONOBO_LT_VERSION)
-
-LIBBONOBOUI_REQUIRED=2.1.1
-ORBIT_REQUIRED=2.4.0
-
-AC_ARG_ENABLE(bonobo,
-	      AS_HELP_STRING([--enable-bonobo],[Enable Bonobo compatibility modules (auto)]),
-	      enable_bonobo=$enableval,
-	      enable_bonobo=auto)
-
-BONOBO_CFLAGS=
-BONOBO_LIBS=
-LIBPANEL_APPLET_BONOBO_CFLAGS=
-LIBPANEL_APPLET_BONOBO_LIBS=
-ORBIT_IDL=
-BONOBO_IDLDIR=
-BONOBO_ACT_IDLDIR=
-
-if test "x$enable_bonobo" = "xno" ; then
-  HAVE_BONOBO=no
-else
-  HAVE_BONOBO=no
-  PKG_CHECK_MODULES(BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED, HAVE_BONOBO=yes, HAVE_BONOBO=no)
-
-  if test "x$enable_bonobo" = "xyes" -a "x$HAVE_BONOBO" = "xno" ; then
-    AC_MSG_ERROR(Bonobo compatibility modules explicity enabled but not available)
-  fi
-
-  if test "x$HAVE_BONOBO" = "xyes"; then
-    PKG_CHECK_MODULES(PANEL_MODULE_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED)
-    PKG_CHECK_MODULES(LIBPANEL_APPLET_BONOBO, ORBit-2.0 >= $ORBIT_REQUIRED gtk+-2.0 >= $GTK2_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED gconf-2.0 >= $GCONF_REQUIRED)
-
-    dnl IDL directories
-    ORBIT_IDL="`$PKG_CONFIG --variable=orbit_idl ORBit-2.0`"
-    BONOBO_IDLDIR="`$PKG_CONFIG --variable=idldir libbonobo-2.0`"
-    BONOBO_ACT_IDLDIR="`$PKG_CONFIG --variable=idldir bonobo-activation-2.0`"
-
-    AC_PATH_PROG(GIO_QUERYMODULES, gio-querymodules, no)
-  fi
-fi
-
-AM_CONDITIONAL(HAVE_BONOBO, test "x$HAVE_BONOBO" = "xyes")
-AC_SUBST(BONOBO_CFLAGS)
-AC_SUBST(BONOBO_LIBS)
-AC_SUBST(LIBPANEL_APPLET_BONOBO_CFLAGS)
-AC_SUBST(LIBPANEL_APPLET_BONOBO_LIBS)
-AC_SUBST(ORBIT_IDL)
-AC_SUBST(BONOBO_IDLDIR)
-AC_SUBST(BONOBO_ACT_IDLDIR)
-
 dnl  Language Support
 
 GETTEXT_PACKAGE=gnome-panel-3.0
@@ -381,12 +325,6 @@ help/Makefile
 help/clock/Makefile
 help/fish/Makefile
 man/Makefile
-bonobo/Makefile
-bonobo/idl/Makefile
-bonobo/libpanel-applet/libpanelapplet-2.0.pc
-bonobo/libpanel-applet/libpanelapplet-2.0-uninstalled.pc
-bonobo/libpanel-applet/Makefile
-bonobo/panel-module/Makefile
 ])
 
 AC_CONFIG_FILES(libpanel-applet/libpanelapplet-$LIBPANEL_APPLET_API_VERSION.pc:libpanel-applet/libpanelapplet.pc.in)

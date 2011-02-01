@@ -8,11 +8,6 @@ SUBDIRS =			\
 	man			\
 	po
 
-if HAVE_BONOBO
-# FIXMEchpe port this
-#SUBDIRS += bonobo
-endif
-
 ACLOCAL_AMFLAGS = -I m4
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --enable-introspection --disable-scrollkeeper
