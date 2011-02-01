@@ -113,6 +113,9 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (!window)
 		return GDK_FILTER_CONTINUE;
 
+	if (window != gdk_screen_get_root_window (screen))
+		return GDK_FILTER_CONTINUE;
+
 	if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
@@ -129,12 +132,8 @@ void
 panel_action_protocol_init (void)
 {
 	GdkDisplay *display;
-	GdkAtom     gdk_atom_gnome_panel_action;
 
 	display = gdk_display_get_default ();
-
-	gdk_atom_gnome_panel_action =
-		gdk_atom_intern_static_string ("_GNOME_PANEL_ACTION");
 
 	atom_gnome_panel_action =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
@@ -153,7 +152,6 @@ panel_action_protocol_init (void)
 			     "_GNOME_PANEL_ACTION_KILL_DIALOG",
 			     FALSE);
 
-	gdk_display_add_client_message_filter (
-		display, gdk_atom_gnome_panel_action,
-		panel_action_protocol_filter, NULL);
+	/* We'll filter event sent on non-root windows later */
+	gdk_window_add_filter (NULL, panel_action_protocol_filter, NULL);
 }
