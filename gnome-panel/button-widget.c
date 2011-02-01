@@ -180,15 +180,6 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 			g_free (error);
 		}
 
-                /* We need to add a child to the button to get the right allocation of the pixbuf.
-                 * When the button is created without a pixbuf, get_preferred_width/height are
-                 * called the first time when the widget is allocated and 0x0 size is cached by
-                 * gtksizerequest. Since the widget doesn't change its size when a pixbuf is set,
-                 * gtk_widget_queue_resize() always uses the cached values instead of calling
-                 * get_preferred_width_height() again. So the actual size, based on pixbuf size,
-                 * is never used. We are overriding the draw() method, so having a child doesn't
-                 * affect the widget rendering anyway.
-                 */
                 gtk_button_set_image (GTK_BUTTON (button), gtk_image_new_from_pixbuf (button->priv->pixbuf));
 	}
 
@@ -445,10 +436,17 @@ button_widget_get_preferred_width (GtkWidget *widget,
 				   gint *natural_width)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+	GtkWidget *parent;
+	int size;
 
-	if (button_widget->priv->pixbuf) {
-		*minimal_width = *natural_width = gdk_pixbuf_get_width (button_widget->priv->pixbuf);
-	}
+	parent = gtk_widget_get_parent (widget);
+
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
+		size = gtk_widget_get_allocated_height (parent);
+	else
+		size = gtk_widget_get_allocated_width (parent);
+
+	*minimal_width = *natural_width = size;
 }
 
 static void
@@ -457,10 +455,17 @@ button_widget_get_preferred_height (GtkWidget *widget,
 				    gint *natural_height)
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+	GtkWidget *parent;
+	int size;
 
-	if (button_widget->priv->pixbuf) {
-		*minimal_height = *natural_height = gdk_pixbuf_get_height (button_widget->priv->pixbuf);
-	}
+	parent = gtk_widget_get_parent (widget);
+
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
+		size = gtk_widget_get_allocated_height (parent);
+	else
+		size = gtk_widget_get_allocated_width (parent);
+
+	*minimal_height = *natural_height = size;
 }
 
 
