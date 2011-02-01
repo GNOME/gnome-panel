@@ -446,6 +446,7 @@ on_factory_appeared (GDBusConnection   *connection,
 
 static void
 panel_applet_container_get_applet (PanelAppletContainer *container,
+				   GdkScreen            *screen,
 				   const gchar          *iid,
 				   GVariant             *props,
 				   GCancellable         *cancellable,
@@ -454,7 +455,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 {
 	GSimpleAsyncResult *result;
 	AppletFactoryData  *data;
-	gint                screen;
+	gint                screen_number;
 	gchar              *bus_name;
 	gchar              *factory_id;
 	gchar              *applet_id;
@@ -479,12 +480,14 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 	factory_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
 	applet_id += 2;
 
-	screen = gdk_screen_get_number (gtk_widget_get_screen (container->priv->socket));
+	/* we can't use the screen of the container widget since it's not in a
+	 * widget hierarchy yet */
+	screen_number = gdk_screen_get_number (screen);
 
 	data = g_new (AppletFactoryData, 1);
 	data->result = result;
 	data->factory_id = factory_id;
-	data->parameters = g_variant_new ("(si*)", applet_id, screen, props);
+	data->parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
 
 	bus_name = g_strdup_printf (PANEL_APPLET_BUS_NAME, factory_id);
@@ -503,6 +506,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 
 void
 panel_applet_container_add (PanelAppletContainer *container,
+			    GdkScreen            *screen,
 			    const gchar          *iid,
 			    GCancellable         *cancellable,
 			    GAsyncReadyCallback   callback,
@@ -514,7 +518,7 @@ panel_applet_container_add (PanelAppletContainer *container,
 
 	panel_applet_container_cancel_pending_operations (container);
 
-	panel_applet_container_get_applet (container, iid, properties,
+	panel_applet_container_get_applet (container, screen, iid, properties,
 					   cancellable, callback, user_data);
 }
 

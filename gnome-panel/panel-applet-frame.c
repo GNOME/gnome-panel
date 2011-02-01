@@ -805,6 +805,12 @@ panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act)
 	g_slice_free (PanelAppletFrameActivating, frame_act);
 }
 
+GdkScreen *
+panel_applet_frame_activating_get_screen (PanelAppletFrameActivating *frame_act)
+{
+	return gtk_widget_get_screen (frame_act->panel);
+}
+
 PanelOrientation
 panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act)
 {
