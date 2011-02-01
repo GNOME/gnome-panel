@@ -1204,7 +1204,6 @@ panel_desktop_menu_item_append_menu (GtkWidget *menu,
 		add_menu_separator (menu);
 
 	panel_menu_items_append_from_desktop (menu, "yelp.desktop", NULL, FALSE);
-	panel_menu_items_append_from_desktop (menu, "gnome-about.desktop", NULL, FALSE);
 
 	if (parent->priv->append_lock_logout)
 		panel_menu_items_append_lock_logout (menu);
