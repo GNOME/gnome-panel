@@ -26,7 +26,6 @@
 
 #include "na-tray-manager.h"
 
-#include <glib/gi18n.h>
 #if defined (GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
 #include <X11/Xatom.h>
