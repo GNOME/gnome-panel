@@ -463,8 +463,10 @@ is_appointment (GtkTreeModel *model,
 	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
 	if (uri)
 		return (g_ascii_strcasecmp (uri, "file")   == 0 ||
+			g_ascii_strcasecmp (uri, "local")   == 0 ||
 			g_ascii_strcasecmp (uri, "webcal") == 0 ||
 			g_ascii_strcasecmp (uri, "caldav") == 0 ||
+			g_ascii_strcasecmp (uri, "mapi")   == 0 ||
 			g_ascii_strcasecmp (uri, "exchange")  == 0 ||
 			g_ascii_strcasecmp (uri, "groupwise") == 0 ||
 			g_ascii_strcasecmp (uri, "google") == 0);
