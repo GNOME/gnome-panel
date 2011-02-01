@@ -1415,6 +1415,8 @@ panel_applet_get_pattern_from_pixmap (PanelApplet    *applet,
 
         cairo_surface_destroy (background);
 
+	pattern = NULL;
+
         if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
                 pattern = cairo_pattern_create_for_surface (surface);
                 cairo_matrix_init_translate (&matrix, 0, 0);
