@@ -65,6 +65,7 @@ typedef enum {
 	APPLICATIONS_MENU,
 #define DEFAULT_MENU      APPLICATIONS_MENU
 	SETTINGS_MENU,
+	GNOMECC_MENU,
 	LAST_MENU
 } MenuPathRoot;
 
@@ -76,6 +77,7 @@ typedef struct {
 
 static MenuPathRootItem root_items [] = {
 	{ APPLICATIONS_MENU, "applications", "applications.menu" },
+	{ GNOMECC_MENU,      "gnomecc",      "gnomecc.menu"      },
 	/* compatibility with GNOME < 2.91.0 */
 	{ SETTINGS_MENU,     "settings",     NULL                }
 };

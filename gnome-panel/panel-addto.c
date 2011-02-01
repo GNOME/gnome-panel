@@ -526,9 +526,17 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 						dialog, NULL);
 }
 
-static void panel_addto_make_application_list (GSList             **parent_list,
-					       GMenuTreeDirectory  *directory,
-					       const char          *filename);
+typedef enum {
+	PANEL_ADDTO_MENU_SHOW_DIRECTORIES = 1 << 0,
+	PANEL_ADDTO_MENU_SHOW_ENTRIES     = 1 << 1,
+	PANEL_ADDTO_MENU_SHOW_ALIAS       = 1 << 2
+#define PANEL_ADDTO_MENU_SHOW_ALL (PANEL_ADDTO_MENU_SHOW_DIRECTORIES | PANEL_ADDTO_MENU_SHOW_ENTRIES | PANEL_ADDTO_MENU_SHOW_ALIAS)
+} PanelAddtoMenuShowFlags;
+
+static void panel_addto_make_application_list (GSList                  **parent_list,
+					       GMenuTreeDirectory       *directory,
+					       const char               *filename,
+					       PanelAddtoMenuShowFlags   show_flags);
 
 static void
 panel_addto_prepend_directory (GSList             **parent_list,
@@ -557,7 +565,9 @@ panel_addto_prepend_directory (GSList             **parent_list,
 
 	*parent_list = g_slist_prepend (*parent_list, data);
 			
-	panel_addto_make_application_list (&data->children, directory, filename);
+	/* We always want to show everything in non-root directories */
+	panel_addto_make_application_list (&data->children, directory,
+					   filename, PANEL_ADDTO_MENU_SHOW_ALL);
 }
 
 static void
@@ -609,9 +619,10 @@ panel_addto_prepend_alias (GSList         **parent_list,
 }
 
 static void
-panel_addto_make_application_list (GSList             **parent_list,
-				   GMenuTreeDirectory  *directory,
-				   const char          *filename)
+panel_addto_make_application_list (GSList                  **parent_list,
+				   GMenuTreeDirectory       *directory,
+				   const char               *filename,
+				   PanelAddtoMenuShowFlags   show_flags)
 {
 	GSList *items;
 	GSList *l;
@@ -621,15 +632,18 @@ panel_addto_make_application_list (GSList             **parent_list,
 	for (l = items; l; l = l->next) {
 		switch (gmenu_tree_item_get_type (l->data)) {
 		case GMENU_TREE_ITEM_DIRECTORY:
-			panel_addto_prepend_directory (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_DIRECTORIES)
+				panel_addto_prepend_directory (parent_list, l->data, filename);
 			break;
 
 		case GMENU_TREE_ITEM_ENTRY:
-			panel_addto_prepend_entry (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_ENTRIES)
+				panel_addto_prepend_entry (parent_list, l->data, filename);
 			break;
 
 		case GMENU_TREE_ITEM_ALIAS:
-			panel_addto_prepend_alias (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_ALIAS)
+				panel_addto_prepend_alias (parent_list, l->data, filename);
 			break;
 
 		default:
@@ -702,7 +716,8 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
-						   root, "applications.menu");
+						   root, "applications.menu",
+						   PANEL_ADDTO_MENU_SHOW_ALL);
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 
 		gmenu_tree_item_unref (root);
@@ -710,7 +725,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	gmenu_tree_unref (tree);
 
-	tree = gmenu_tree_lookup ("settings.menu", GMENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_lookup ("gnomecc.menu", GMENU_TREE_FLAGS_NONE);
 	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
@@ -724,8 +739,11 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    COLUMN_SEARCH, NULL,
 				    -1);
 
+		/* The gnome-control-center shell does not display toplevel
+		 * entries that are not directories, so do the same. */
 		panel_addto_make_application_list (&dialog->settings_list,
-						   root, "settings.menu");
+						   root, "gnomecc.menu",
+						   PANEL_ADDTO_MENU_SHOW_DIRECTORIES);
 		panel_addto_populate_application_model (store, NULL,
 							dialog->settings_list);
 
