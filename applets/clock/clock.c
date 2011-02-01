@@ -45,6 +45,7 @@
 #include <panel-applet-gconf.h>
 
 #include <glib/gi18n.h>
+#include <gio/gdesktopappinfo.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -140,20 +141,12 @@ struct _ClockData {
         GWeatherTimezoneMenu *zone_combo;
 
 	GtkWidget *time_settings_button;
-	GtkWidget *calendar;
-	GtkWidget *hours_spin;
-	GtkWidget *minutes_spin;
-	GtkWidget *seconds_spin;
-	GtkWidget *set_time_button;
+	GAppInfo *datetime_appinfo;
 
 	GtkListStore *cities_store;
         GtkWidget *cities_section;
         GtkWidget *map_section;
         GtkWidget *map_widget;
-
-        /* Window to set the time */
-	GtkWidget *set_time_window;
-	GtkWidget *current_time_label;
 
 	/* preferences */
 	ClockFormat  format;
@@ -328,8 +321,7 @@ clock_set_timeout (ClockData *cd,
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
-		    !cd->showseconds && 
-		    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)))
+		    !cd->showseconds)
  			timeouttime += 1000 * (59 - now % 60);
  	}
 
@@ -347,7 +339,6 @@ clock_timeout_callback (gpointer data)
         time (&new_time);
 
 	if (!cd->showseconds && 
-	    (!cd->set_time_window || !gtk_widget_get_visible (cd->set_time_window)) &&
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
 		if (cd->format == CLOCK_FORMAT_INTERNET &&
@@ -629,13 +620,6 @@ update_clock (ClockData * cd)
 
         if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
                 clock_map_update_time (CLOCK_MAP (cd->map_widget));
-
-	if (cd->current_time_label &&
-	    gtk_widget_get_visible (cd->current_time_label)) {
-		utf8 = format_time_24 (cd);
-		gtk_label_set_text (GTK_LABEL (cd->current_time_label), utf8);
-		g_free (utf8);
-	}
 }
 
 static void
@@ -778,6 +762,10 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 	if (cd->calendar_popup)
 		gtk_widget_destroy (cd->calendar_popup);
 	cd->calendar_popup = NULL;
+
+	if (cd->datetime_appinfo)
+		g_object_unref (cd->datetime_appinfo);
+	cd->datetime_appinfo = NULL;
 
 	g_free (cd->timeformat);
 	g_free (cd->custom_format);
@@ -1658,220 +1646,64 @@ update_set_time_button (ClockData *cd)
 {
 	gint can_set;
 
+	if (!cd->time_settings_button)
+		return;
+
+	if (!cd->datetime_appinfo)
+		cd->datetime_appinfo = (GAppInfo *) g_desktop_app_info_new ("gnome-datetime-panel.desktop");
+
+	if (!cd->datetime_appinfo) {
+		gtk_widget_set_sensitive (cd->time_settings_button, FALSE);
+		return;
+	}
+
 	/* this returns more than just a boolean; check the documentation of
 	 * the dbus method for more information */
 	can_set = can_set_system_time ();
 
-	if (cd->time_settings_button)
-		gtk_widget_set_sensitive (cd->time_settings_button, can_set);
-
-	if (cd->set_time_button) {
-		gtk_widget_set_sensitive (cd->set_time_button, can_set != 0); 
-		gtk_button_set_label (GTK_BUTTON (cd->set_time_button),
-				      can_set == 1 ?
-					_("Set System Time...") :
-					_("Set System Time"));
-	}
-}
-
-static void
-set_time_callback (ClockData *cd, GError *error)
-{
-	GtkWidget *window;
-	GtkWidget *dialog;
-
-	if (error) {
-                dialog = gtk_message_dialog_new (NULL,
-                                                 0,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
-                                                 _("Failed to set the system time"));
-
-                gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
-                g_signal_connect (dialog, "response",
-                                  G_CALLBACK (gtk_widget_destroy), NULL);
-                gtk_window_present (GTK_WINDOW (dialog));
-
-                g_error_free (error);
-	}
-	else
-		update_set_time_button (cd);
-
-	window = _clock_get_widget (cd, "set-time-window");
-	gtk_widget_hide (window);
-}
-
-static void
-set_time (GtkWidget *widget, ClockData *cd)
-{
-	struct tm t;
-	time_t tim;
-	guint year, month, day;
-
-	time (&tim);
-	/* sets t.isdst -- we could set it to -1 to have mktime() guess the
-	 * right value , but we don't know if this works with all libc */
-	localtime_r (&tim, &t);
-
-	t.tm_sec = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->seconds_spin));
-	t.tm_min = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->minutes_spin));
-	t.tm_hour = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (cd->hours_spin));
-	gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, &day);
-	t.tm_year = year - 1900;
-	t.tm_mon = month;
-	t.tm_mday = day;
-
-	tim = mktime (&t);
-
-	set_system_time_async (tim, (GFunc)set_time_callback, cd, NULL);
-}
-
-static void
-cancel_time_settings (GtkWidget *button, ClockData *cd)
-{
-	gtk_widget_hide (cd->set_time_window);
-
-        refresh_click_timeout_time_only (cd);
-}
-
-static gboolean
-delete_time_settings (GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	cancel_time_settings (widget, data);
-
-	return TRUE;
-}
-
-static void
-fill_time_settings_window (ClockData *cd)
-{
-	time_t now_t;
-	struct tm now;
-
-	/* Fill the time settings */
-	tzset ();
-	time (&now_t);
-	localtime_r (&now_t, &now);
-
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->seconds_spin), now.tm_sec);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->minutes_spin), now.tm_min);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (cd->hours_spin), now.tm_hour);
-
-	gtk_calendar_select_month (GTK_CALENDAR (cd->calendar), now.tm_mon,
-				   now.tm_year + 1900);
-	gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), now.tm_mday);
-}
-
-static void
-wrap_cb (GtkSpinButton *spin, ClockData *cd)
-{
-	gdouble value;
-	gdouble min, max;
-	GtkSpinType direction;
-
-	value = gtk_spin_button_get_value (spin);
-	gtk_spin_button_get_range (spin, &min, &max);
-
-	if (value == min)
-		direction = GTK_SPIN_STEP_FORWARD;
-	else
-		direction = GTK_SPIN_STEP_BACKWARD;
-
-	if (spin == (GtkSpinButton *) cd->seconds_spin)
-		gtk_spin_button_spin (GTK_SPIN_BUTTON (cd->minutes_spin), direction, 1.0);
-	else if (spin == (GtkSpinButton *) cd->minutes_spin)
-		gtk_spin_button_spin (GTK_SPIN_BUTTON (cd->hours_spin), direction, 1.0);
-	else {
-		guint year, month, day;
-		GDate *date;
-
-		gtk_calendar_get_date (GTK_CALENDAR (cd->calendar), &year, &month, &day);
-
-		date = g_date_new_dmy (day, month + 1, year);
-
-		if (direction == GTK_SPIN_STEP_FORWARD)
-			g_date_add_days (date, 1);
-		else
-			g_date_subtract_days (date, 1);
-
-		year = g_date_get_year (date);
-		month = g_date_get_month (date) - 1;
-		day = g_date_get_day (date);
-
-		gtk_calendar_select_month (GTK_CALENDAR (cd->calendar), month, year);
-		gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), day);
-
-		g_date_free (date);
-	}
-}
-
-static gboolean
-output_cb (GtkSpinButton *spin,
-           gpointer       data)
-{
-	GtkAdjustment *adj;
-	gchar *text;
-	int value;
-
-	adj = gtk_spin_button_get_adjustment (spin);
-	value = (int) gtk_adjustment_get_value (adj);
-	text = g_strdup_printf ("%02d", value);
-	gtk_entry_set_text (GTK_ENTRY (spin), text);
-	g_free (text);
-
-	return TRUE;
-}
-
-static void
-ensure_time_settings_window_is_created (ClockData *cd)
-{
-        GtkWidget *cancel_button;
-
-	if (cd->set_time_window)
-		return;
-
-	cd->set_time_window = _clock_get_widget (cd, "set-time-window");
-	g_signal_connect (cd->set_time_window, "delete_event",
-			  G_CALLBACK (delete_time_settings), cd); 
-
-        cd->calendar = _clock_get_widget (cd, "calendar");
-        cd->hours_spin = _clock_get_widget (cd, "hours_spin");
-        cd->minutes_spin = _clock_get_widget (cd, "minutes_spin");
-        cd->seconds_spin = _clock_get_widget (cd, "seconds_spin");
-
-        gtk_entry_set_width_chars (GTK_ENTRY (cd->hours_spin), 2);
-        gtk_entry_set_width_chars (GTK_ENTRY (cd->minutes_spin), 2);
-        gtk_entry_set_width_chars (GTK_ENTRY (cd->seconds_spin), 2); 
-        gtk_entry_set_alignment (GTK_ENTRY (cd->hours_spin), 1.0);
-        gtk_entry_set_alignment (GTK_ENTRY (cd->minutes_spin), 1.0);
-        gtk_entry_set_alignment (GTK_ENTRY (cd->seconds_spin), 1.0);
-        g_signal_connect (cd->seconds_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
-        g_signal_connect (cd->minutes_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
-        g_signal_connect (cd->hours_spin, "wrapped", G_CALLBACK (wrap_cb), cd);
-
-	g_signal_connect (cd->minutes_spin, "output", G_CALLBACK (output_cb), cd);
-	g_signal_connect (cd->seconds_spin, "output", G_CALLBACK (output_cb), cd);
-
-	cd->set_time_button = _clock_get_widget (cd, "set-time-button");
-	g_signal_connect (cd->set_time_button, "clicked", G_CALLBACK (set_time), cd);
-
-	cancel_button = _clock_get_widget (cd, "cancel-set-time-button");
-	g_signal_connect (cancel_button, "clicked", G_CALLBACK (cancel_time_settings), cd);
-
-	cd->current_time_label = _clock_get_widget (cd, "current_time_label");
+	gtk_widget_set_sensitive (cd->time_settings_button, can_set);
 }
 
 static void
 run_time_settings (GtkWidget *unused, ClockData *cd)
 {
-	ensure_time_settings_window_is_created (cd);
-	fill_time_settings_window (cd);
+	GdkScreen           *screen;
+	GdkDisplay          *display;
+	GdkAppLaunchContext *context;
+	GError              *error;
 
 	update_set_time_button (cd);
 
-	gtk_window_present (GTK_WINDOW (cd->set_time_window));
+	if (!cd->datetime_appinfo)
+		return;
 
-        refresh_click_timeout_time_only (cd);
+	screen = gtk_widget_get_screen (cd->applet);
+        display = gdk_screen_get_display (screen);
+        context = gdk_display_get_app_launch_context (display);
+        gdk_app_launch_context_set_screen (context, screen);
+
+	error = NULL;
+	g_app_info_launch (cd->datetime_appinfo, NULL,
+			   (GAppLaunchContext *) context, &error);
+
+	g_object_unref (context);
+
+	if (error) {
+		GtkWidget *dialog;
+
+		dialog = gtk_message_dialog_new (NULL,
+						 0,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+                                                 _("Failed to open the time settings"));
+
+		gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog), "%s", error->message);
+		g_signal_connect (dialog, "response",
+				  G_CALLBACK (gtk_widget_destroy), NULL);
+		gtk_window_present (GTK_WINDOW (dialog));
+
+		g_error_free (error);
+	}
 }
 
 static void
