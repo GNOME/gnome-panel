@@ -36,6 +36,8 @@ void panel_compatibility_migrate_applications_scheme (GConfClient *client,
 						      const char  *key);
 void panel_compatibility_migrate_screenshot_action (GConfClient *client,
 						   const char  *id);
+void panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
+						      const char  *id);
 
 gchar *panel_compatibility_get_applet_iid (const gchar *id);
 

@@ -1101,6 +1101,26 @@ panel_compatibility_migrate_screenshot_action (GConfClient *client,
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
 
+void
+panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
+						 const char  *id)
+{
+	const char *key;
+
+	panel_profile_remove_from_list (PANEL_GCONF_OBJECTS, id);
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id,
+				    "launcher_location");
+	gconf_client_set_string (client, key,
+				 "gnome-control-center.desktop", NULL);
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id,
+				    "object_type");
+	gconf_client_set_string (client, key, "launcher-object", NULL);
+
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+}
+
 gchar *
 panel_compatibility_get_applet_iid (const gchar *id)
 {
