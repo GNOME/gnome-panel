@@ -620,10 +620,18 @@ drop_urilist (PanelWidget *panel,
 	      char        *urilist)
 {
 	char     **uris;
+	GFile     *home;
+	GFile     *trash;
+	GFile     *computer;
+	GFile     *network;
 	gboolean   success;
 	int        i;
 
 	uris = g_uri_list_extract_uris (urilist);
+	home = g_file_new_for_path (g_get_home_dir ());
+	trash = g_file_new_for_uri ("trash://");
+	computer = g_file_new_for_uri ("computer://");
+	network = g_file_new_for_uri ("network://");
 
 	success = TRUE;
 	for (i = 0; uris[i]; i++) {
@@ -655,6 +663,25 @@ drop_urilist (PanelWidget *panel,
 		}
 
 		file = g_file_new_for_uri (uri);
+
+		if (g_file_equal (home, file)) {
+			success = drop_nautilus_desktop_uri (panel, pos, "x-nautilus-desktop:///home");
+			g_object_unref (file);
+			continue;
+		} else if (g_file_equal (trash, file)) {
+			success = drop_nautilus_desktop_uri (panel, pos, "x-nautilus-desktop:///trash");
+			g_object_unref (file);
+			continue;
+		} else if (g_file_equal (computer, file)) {
+			success = drop_nautilus_desktop_uri (panel, pos, "x-nautilus-desktop:///computer");
+			g_object_unref (file);
+			continue;
+		} else if (g_file_equal (network, file)) {
+			success = drop_nautilus_desktop_uri (panel, pos, "x-nautilus-desktop:///network");
+			g_object_unref (file);
+			continue;
+		}
+
 		info = g_file_query_info (file,
 					  "standard::type,"
 					  "standard::content-type,"
@@ -711,6 +738,10 @@ drop_urilist (PanelWidget *panel,
 		g_object_unref (file);
 	}
 
+	g_object_unref (home);
+	g_object_unref (trash);
+	g_object_unref (computer);
+	g_object_unref (network);
 	g_strfreev (uris);
 
 	return success;
