@@ -564,11 +564,9 @@ na_tray_manager_set_orientation_property (NaTrayManager *manager)
   Atom        orientation_atom;
   gulong      data[1];
 
-  if (!manager->invisible)
-    return;
+  g_return_if_fail (manager->invisible != NULL);
   window = gtk_widget_get_window (manager->invisible);
-  if (!window)
-    return;
+  g_return_if_fail (window != NULL);
 
   display = gtk_widget_get_display (manager->invisible);
   orientation_atom = gdk_x11_get_xatom_by_name_for_display (display,
@@ -597,11 +595,9 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
   Atom        visual_atom;
   gulong      data[1];
 
-  if (!manager->invisible)
-    return;
+  g_return_if_fail (manager->invisible != NULL);
   window = gtk_widget_get_window (manager->invisible);
-  if (!window)
-    return;
+  g_return_if_fail (window != NULL);
 
   /* The visual property is a hint to the tray icons as to what visual they
    * should use for their windows. If the X server has RGBA colormaps, then
