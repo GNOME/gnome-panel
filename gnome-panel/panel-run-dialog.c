@@ -448,12 +448,6 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		g_free (command);
 		gtk_widget_destroy (dialog->run_dialog);
 		return;
-	} else if (!strcmp (command, "gegls from outer space")) {
-		start_geginv ();
-
-		g_free (command);
-		gtk_widget_destroy (dialog->run_dialog);
-		return;
 	}
 		
 	error = NULL;

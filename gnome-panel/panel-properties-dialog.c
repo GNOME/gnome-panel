@@ -35,7 +35,6 @@
 #include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-show.h>
 
-#include "nothing.h"
 #include "panel-profile.h"
 #include "panel-gconf.h"
 #include "panel-util.h"
@@ -939,10 +938,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	panel_toplevel_push_autohide_disabler (dialog->toplevel);
 	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),
 					   dialog->properties_dialog);
-
-	g_signal_connect (dialog->properties_dialog, "event",
-			  G_CALLBACK (config_event),
-			  PANEL_GTK_BUILDER_GET (gui, "notebook"));
 
 	gtk_widget_show (dialog->properties_dialog);
 

@@ -35,7 +35,6 @@
 #include <libpanel-util/panel-xdg.h>
 
 #include "applet.h"
-#include "nothing.h"
 #include "xstuff.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
