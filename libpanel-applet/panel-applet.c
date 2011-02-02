@@ -1348,9 +1348,9 @@ panel_applet_focus (GtkWidget        *widget,
 }
 
 static cairo_surface_t *
-panel_applet_create_foreign_surface_for_display (GdkDisplay     *display,
-                                                 GdkVisual      *visual,
-                                                 GdkNativeWindow xid)
+panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
+                                                 GdkVisual  *visual,
+                                                 Window      xid)
 {
         Window window;
         gint x, y;
@@ -1366,10 +1366,10 @@ panel_applet_create_foreign_surface_for_display (GdkDisplay     *display,
 }
 
 static cairo_pattern_t *
-panel_applet_get_pattern_from_pixmap (PanelApplet    *applet,
-                                      GdkNativeWindow xid,
-                                      int             x,
-                                      int             y)
+panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
+                                      Window       xid,
+                                      int          x,
+                                      int          y)
 {
 	GdkWindow       *window;
 	int              width;
