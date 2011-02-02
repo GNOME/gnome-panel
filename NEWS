@@ -1,4 +1,96 @@
 ==============
+Version 2.91.6
+==============
+
+This is the first version of gnome-panel with GTK+ 3 support. There are likely
+some regressions, and help to fix them is most welcome! Many thanks to Carlos
+Garcia Campos, Germán Póo-Caamaño, Benjamin Otte, Milan Bouchet-Valat and
+Christian Persch for the port!
+
+Also, the bonobo compatibility support has been removed for now. It might
+eventually re-appear in a separate tarball: some more work is needed there to
+avoid having bonobo used directly from inside the gnome-panel process.
+
+  All
+
+	* Port to GTK+ 3 (Carlos Garcia Campos, Germán Póo-Caamaño, Benjamin
+	  Otte, Milan Bouchet-Valat, Christian Persch, Vincent)
+
+  Panel
+
+	* Change references from bonobo-applet to external-applet in gconf
+	  (Vincent)
+	* Don't rely on nautilus desktop files, as they're going away (Cosimo
+	  Cecchi)
+	* Remove About GNOME menu item (Vincent)
+	* Do not show settings.menu in System menu, but just the control center
+	  (Vincent)
+	* Migrate settings: menu buttons to gnome-control-center launcher
+	  (Vincent)
+	* Support adding launchers (and menu buttons) from gnomecc.menu
+	  (Vincent)
+
+  libpanel-applet
+
+	* Add libpanel_applet_dir variable in libbpanelapplet.pc (Vincent)
+
+  libpanel-applet (bonobo)
+
+	* Drop the bonobo support (Vincent)
+
+  Clock Applet
+
+	* Show appointments from local/mapi eds providers (Milan Crha, Kåre
+	  Fiedler Chrisitiansen)
+	* Use the control center date/time panel instead of our own time
+	  setting dialog (Vincent)
+
+  Notification Area Applet
+
+	* Fix handling of SYSTEM_TRAY_CANCEL_MESSAGE (Vincent)
+	* Add support for _NET_SYSTEM_TRAY_COLORS (Dan Winship)
+	* Cleanups (Dan Winship)
+
+  Wnck Applets
+
+	* Update for libwnck 2.91.x API changes (Vincent)
+
+  Misc
+
+	* Finally drop gnome-panelrc (Vincent)
+	* Various build improvements (Vincent)
+
+  Docs Translators
+
+	* Gitte Illum Petersen (da)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Alexander Shopov (bg)
+	* David Planella (ca)
+	* Marek Černocký (cs)
+	* Christian Kirbach (de)
+	* Jorge González (es)
+	* Ivar Smolin (et)
+	* Arash Mousavi (fa)
+	* Fran Diéguez (gl)
+	* Yaron Shahrabani (he)
+	* Andika Triwidada (id)
+	* Torstein Adolf Winterseth (nb)
+	* Wouter Bolsterlee (nl)
+	* A S Alam (pa)
+	* Adi Roiban (ro)
+	* Yuri Myasoedov (ru)
+	* Matej Urbančič (sl)
+	* Daniel Nylander (sv)
+	* Sahran (ug)
+	* Maxim Dziumanenko (uk)
+	* Clytie Siddall (vi)
+	* Wei-Lun Chao (zh_HK)
+	* Wei-Lun Chao (zh_TW)
+
+==============
 Version 2.32.1
 ==============
 
