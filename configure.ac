@@ -311,6 +311,8 @@ gnome-panel/libpanel-applet-private/Makefile
 gnome-panel/libpanel-util/Makefile
 gnome-panel/gnome-panel.desktop.in
 libpanel-applet/Makefile
+libpanel-applet/libpanelapplet-4.0.pc
+libpanel-applet/libpanelapplet-4.0-uninstalled.pc
 po/Makefile.in
 applets/Makefile
 applets/clock/Makefile
@@ -326,9 +328,6 @@ help/clock/Makefile
 help/fish/Makefile
 man/Makefile
 ])
-
-AC_CONFIG_FILES(libpanel-applet/libpanelapplet-$LIBPANEL_APPLET_API_VERSION.pc:libpanel-applet/libpanelapplet.pc.in)
-AC_CONFIG_FILES(libpanel-applet/libpanelapplet-$LIBPANEL_APPLET_API_VERSION-uninstalled.pc:libpanel-applet/libpanelapplet-uninstalled.pc.in)
 
 AC_OUTPUT
 
