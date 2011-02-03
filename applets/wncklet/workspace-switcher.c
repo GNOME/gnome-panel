@@ -218,83 +218,6 @@ applet_change_background (PanelApplet               *applet,
                                     pattern != NULL ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
 }
 
-static gboolean
-applet_scroll (PanelApplet    *applet,
-               GdkEventScroll *event,
-               PagerData      *pager)
-{
-	GdkScrollDirection absolute_direction;
-	int                index;
-	int                n_workspaces;
-	int                n_columns;
-	int                in_last_row;
-	
-	if (event->type != GDK_SCROLL)
-		return FALSE;
-
-	index          = wnck_workspace_get_number (wnck_screen_get_active_workspace (pager->screen));
-	n_workspaces   = wnck_screen_get_workspace_count (pager->screen);
-	n_columns      = n_workspaces / pager->n_rows;
-	if (n_workspaces % pager->n_rows != 0)
-		n_columns++;
-	in_last_row    = n_workspaces % n_columns;
-	
-	absolute_direction = event->direction;
-	if (gtk_widget_get_direction (GTK_WIDGET (applet)) == GTK_TEXT_DIR_RTL) {
-		switch (event->direction) {
-		case GDK_SCROLL_DOWN:
-		case GDK_SCROLL_UP:
-			break;
-		case GDK_SCROLL_RIGHT:
-			absolute_direction = GDK_SCROLL_LEFT;
-			break;
-		case GDK_SCROLL_LEFT:
-			absolute_direction = GDK_SCROLL_RIGHT;
-			break;
-		}
-	}
-
-	switch (absolute_direction) {
-	case GDK_SCROLL_DOWN:
-		if (index + n_columns < n_workspaces)
-			index += n_columns;
-		else if ((index < n_workspaces - 1
-			  && index + in_last_row != n_workspaces - 1) ||
-			 (index == n_workspaces - 1
-			  && in_last_row != 0))
-			index = (index % n_columns) + 1;
-		break;
-		
-	case GDK_SCROLL_RIGHT:
-		if (index < n_workspaces - 1)
-			index++;
-		break;
-		
-	case GDK_SCROLL_UP:
-		if (index - n_columns >= 0)
-			index -= n_columns;
-		else if (index > 0)
-			index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
-			if (index >= n_workspaces)
-				index -= n_columns;
-		break;
-
-	case GDK_SCROLL_LEFT:
-		if (index > 0)
-			index--;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	wnck_workspace_activate (wnck_screen_get_workspace (pager->screen,
-							    index),
-				 event->time);
-	
-	return TRUE;
-}
-
 static void
 destroy_pager(GtkWidget * widget, PagerData *pager)
 {
@@ -540,10 +463,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
-			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "scroll-event",
-			  G_CALLBACK (applet_scroll),
 			  pager);
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_background",
