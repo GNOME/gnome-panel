@@ -140,11 +140,10 @@ activate_desktop_uri (GtkWidget *menuitem,
 		       g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
 }
 
-static void
-panel_menu_items_append_from_desktop (GtkWidget *menu,
-				      char      *path,
-				      char      *force_name,
-                                      gboolean   use_icon)
+static GtkWidget *
+panel_menu_item_desktop_new (char      *path,
+			     char      *force_name,
+			     gboolean   use_icon)
 {
 	GKeyFile  *key_file;
 	gboolean   loaded;
@@ -194,7 +193,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		g_key_file_free (key_file);
 		if (path_freeme)
 			g_free (path_freeme);
-		return;
+		return NULL;
 	}
 
 	/* For Application desktop files, respect TryExec */
@@ -203,7 +202,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 		g_key_file_free (key_file);
 		if (path_freeme)
 			g_free (path_freeme);
-		return;
+		return NULL;
 	}
 	is_application = (strcmp (type, "Application") == 0);
 	g_free (type);
@@ -224,7 +223,7 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 				g_key_file_free (key_file);
 				if (path_freeme)
 					g_free (path_freeme);
-				return;
+				return NULL;
 			}
 
 			g_free (prog);
@@ -251,7 +250,6 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	panel_util_set_tooltip_text (item, comment);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_activate_desktop_file),
 			       g_strdup (full_path),
@@ -277,16 +275,17 @@ panel_menu_items_append_from_desktop (GtkWidget *menu,
 
 	if (path_freeme)
 		g_free (path_freeme);
+
+	return item;
 }
 
-static void
-panel_menu_items_append_place_item (const char *icon_name,
-				    GIcon      *gicon,
-				    const char *title,
-				    const char *tooltip,
-				    GtkWidget  *menu,
-				    GCallback   callback,
-				    const char *uri)
+static GtkWidget *
+panel_menu_item_uri_new (const char *uri,
+			 const char *icon_name,
+			 GIcon      *gicon,
+			 const char *title,
+			 const char *tooltip,
+			 GCallback   callback)
 {
 	GtkWidget *item;
 	char      *user_data;
@@ -299,8 +298,6 @@ panel_menu_items_append_place_item (const char *icon_name,
 
 	panel_util_set_tooltip_text (item, tooltip);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
 	user_data = g_strdup (uri);
 	g_signal_connect_data (item, "activate", callback, user_data,
 			       (GClosureNotify) g_free, 0);
@@ -309,6 +306,8 @@ panel_menu_items_append_place_item (const char *icon_name,
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	setup_uri_drag (item, uri, icon_name);
+
+	return item;
 }
 
 static GtkWidget *
@@ -485,6 +484,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		char *icon;
 		GFile *file;
 		GIcon *gicon;
+		GtkWidget *menu_item;
 
 		bookmark = l->data;
 		
@@ -526,12 +526,12 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		gicon = g_themed_icon_new_with_default_fallbacks (icon);
 
 		//FIXME: drag and drop will be broken for x-nautilus-search uris
-		panel_menu_items_append_place_item (icon, gicon,
-						    label,
-						    tooltip,
-						    add_menu,
-						    G_CALLBACK (activate_uri),
-						    bookmark->full_uri);
+		menu_item = panel_menu_item_uri_new (bookmark->full_uri,
+						     icon, gicon,
+						     label,
+						     tooltip,
+						     G_CALLBACK (activate_uri));
+		gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), menu_item);
 
 		g_free (icon);
 		g_object_unref (gicon);
@@ -587,9 +587,8 @@ panel_menu_item_rescan_drive (GtkWidget *menuitem,
 				menuitem_to_screen (menuitem));
 }
 
-static void
-panel_menu_item_append_drive (GtkWidget *menu,
-			      GDrive    *drive)
+static GtkWidget *
+panel_menu_item_drive_new (GDrive *drive)
 {
 	GtkWidget *item;
 	GIcon     *icon;
@@ -612,8 +611,6 @@ panel_menu_item_append_drive (GtkWidget *menu,
 
 	g_free (title);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_rescan_drive),
 			       g_object_ref (drive),
@@ -621,6 +618,8 @@ panel_menu_item_append_drive (GtkWidget *menu,
 
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
+	return item;
 }
 
 typedef struct {
@@ -687,9 +686,8 @@ panel_menu_item_mount_volume (GtkWidget *menuitem,
 			volume_mount_cb, mount_data);
 }
 
-static void
-panel_menu_item_append_volume (GtkWidget *menu,
-			       GVolume   *volume)
+static GtkWidget *
+panel_menu_item_volume_new (GVolume *volume)
 {
 	GtkWidget *item;
 	GIcon     *icon;
@@ -712,8 +710,6 @@ panel_menu_item_append_volume (GtkWidget *menu,
 
 	g_free (title);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
 	g_signal_connect_data (item, "activate",
 			       G_CALLBACK (panel_menu_item_mount_volume),
 			       g_object_ref (volume),
@@ -721,16 +717,18 @@ panel_menu_item_append_volume (GtkWidget *menu,
 
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
+	return item;
 }
 
-static void
-panel_menu_item_append_mount (GtkWidget *menu,
-			      GMount    *mount)
+static GtkWidget *
+panel_menu_item_mount_new (GMount *mount)
 {
-	GFile  *root;
-	GIcon  *icon;
-	char   *display_name;
-	char   *activation_uri;
+	GtkWidget *item;
+	GFile     *root;
+	GIcon     *icon;
+	char      *display_name;
+	char      *activation_uri;
 
 	icon = g_mount_get_icon (mount);
 	display_name = g_mount_get_name (mount);
@@ -739,16 +737,16 @@ panel_menu_item_append_mount (GtkWidget *menu,
 	activation_uri = g_file_get_uri (root);
 	g_object_unref (root);
 
-	panel_menu_items_append_place_item (NULL, icon,
-					    display_name,
-					    display_name, //FIXME tooltip
-					    menu,
-					    G_CALLBACK (activate_uri),
-					    activation_uri);
+	item = panel_menu_item_uri_new (activation_uri, NULL, icon,
+					display_name,
+					display_name, //FIXME tooltip
+					G_CALLBACK (activate_uri));
 
 	g_object_unref (icon);
 	g_free (display_name);
 	g_free (activation_uri);
+
+	return item;
 }
 
 typedef enum {
@@ -924,24 +922,28 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	}
 
 	for (sl = items; sl; sl = sl->next) {
+		GtkWidget *menu_item;
 		item = sl->data;
+
 		switch (item->type) {
 		case PANEL_GIO_DRIVE:
-			panel_menu_item_append_drive (add_menu, item->u.drive);
+			menu_item = panel_menu_item_drive_new (item->u.drive);
 			g_object_unref (item->u.drive);
 			break;
 		case PANEL_GIO_VOLUME:
-			panel_menu_item_append_volume (add_menu, item->u.volume);
+			menu_item = panel_menu_item_volume_new (item->u.volume);
 			g_object_unref (item->u.volume);
 			break;
 		case PANEL_GIO_MOUNT:
-			panel_menu_item_append_mount (add_menu, item->u.mount);
+			menu_item = panel_menu_item_mount_new (item->u.mount);
 			g_object_unref (item->u.mount);
 			break;
 		default:
 			g_assert_not_reached ();
 		}
 		g_slice_free (PanelGioItem, item);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), menu_item);
 	}
 
 	g_slist_free (items);
@@ -1011,8 +1013,13 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	}
 
 	for (sl = add_mounts; sl; sl = sl->next) {
+		GtkWidget *item;
+
 		mount = sl->data;
-		panel_menu_item_append_mount (add_menu, mount);
+
+		item = panel_menu_item_mount_new (mount);
+		gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+
 		g_object_unref (mount);
 	}
 
@@ -1038,12 +1045,12 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	name = panel_util_get_label_for_uri (uri);
 	g_object_unref (file);
 	
-	panel_menu_items_append_place_item (PANEL_ICON_HOME, NULL,
-					    name,
-					    _("Open your personal folder"),
-					    places_menu,
-					    G_CALLBACK (activate_home_uri),
-					    uri);
+	item = panel_menu_item_uri_new (uri, PANEL_ICON_HOME, NULL,
+					name,
+					_("Open your personal folder"),
+					G_CALLBACK (activate_home_uri));
+	gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
+
 	g_free (name);
 	g_free (uri);
 
@@ -1054,17 +1061,17 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		uri = g_file_get_uri (file);
 		g_object_unref (file);
 		
-		panel_menu_items_append_place_item (
-				PANEL_ICON_DESKTOP, NULL,
+		item = panel_menu_item_uri_new (
+				/* FIXME: if the dir changes, we'd need to update the drag data since the uri is not the same */
+				uri, PANEL_ICON_DESKTOP, NULL,
 				/* Translators: Desktop is used here as in
 				 * "Desktop Folder" (this is not the Desktop
 				 * environment). */
 				C_("Desktop Folder", "Desktop"),
 				_("Open the contents of your desktop in a folder"),
-				places_menu,
-				G_CALLBACK (activate_desktop_uri),
-				/* FIXME: if the dir changes, we'd need to update the drag data since the uri is not the same */
-				uri);
+				G_CALLBACK (activate_desktop_uri));
+		gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
+
 		g_free (uri);
 	}
 
@@ -1079,23 +1086,23 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 		gconf_name = g_strdup (_("Computer"));
 	}
 
-	panel_menu_items_append_place_item (PANEL_ICON_COMPUTER, NULL,
-					    gconf_name,
-					    _("Browse all local and remote disks and folders accessible from this computer"),
-					    places_menu,
-					    G_CALLBACK (activate_uri),
-					    "computer://");
+	item = panel_menu_item_uri_new ("computer://",
+					PANEL_ICON_COMPUTER, NULL,
+					gconf_name,
+					_("Browse all local and remote disks and folders accessible from this computer"),
+					G_CALLBACK (activate_uri));
+	gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
 	g_free (gconf_name);
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
 
-	panel_menu_items_append_place_item (PANEL_ICON_NETWORK, NULL,
-					    _("Network"),
-					    _("Browse bookmarked and local network locations"),
-					    places_menu,
-					    G_CALLBACK (activate_uri),
-					    "network://");
+	item = panel_menu_item_uri_new ("network://",
+					PANEL_ICON_NETWORK, NULL,
+					_("Network"),
+					_("Browse bookmarked and local network locations"),
+					G_CALLBACK (activate_uri));
+	gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
 
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
@@ -1108,10 +1115,11 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	add_menu_separator (places_menu);
 
-	panel_menu_items_append_from_desktop (places_menu,
-					      "gnome-search-tool.desktop",
-					      NULL,
-                                              FALSE);
+	item = panel_menu_item_desktop_new ("gnome-search-tool.desktop",
+					    NULL,
+					    FALSE);
+	if (item)
+		gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
 
 	panel_recent_append_documents_menu (places_menu,
 					    place_item->priv->recent_manager);
@@ -1184,15 +1192,19 @@ static GtkWidget *
 panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 {
 	GtkWidget *desktop_menu;
+	GtkWidget *item;
 
 	desktop_menu = panel_create_menu ();
 
-	panel_menu_items_append_from_desktop (desktop_menu,
-					      "gnome-control-center.desktop",
-					      NULL, FALSE);
-	panel_menu_items_append_from_desktop (desktop_menu,
-					      "yelp.desktop",
-					      NULL, FALSE);
+	item = panel_menu_item_desktop_new ("gnome-control-center.desktop",
+					    NULL, FALSE);
+	if (item)
+		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
+
+	item = panel_menu_item_desktop_new ("yelp.desktop",
+					    NULL, FALSE);
+	if (item)
+		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
 
 	if (desktop_item->priv->append_lock_logout)
 		panel_menu_items_append_lock_logout (desktop_menu);
