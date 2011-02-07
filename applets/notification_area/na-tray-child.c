@@ -53,9 +53,10 @@ na_tray_child_realize (GtkWidget *widget)
        * extension. */
 
       /* Set a transparent background */
-      GdkColor transparent = { 0, 0, 0, 0 }; /* only pixel=0 matters */
-      gdk_window_set_background (window, &transparent);
+      cairo_pattern_t *transparent = cairo_pattern_create_rgba (0, 0, 0, 0);
+      gdk_window_set_background_pattern (window, transparent);
       gdk_window_set_composited (window, TRUE);
+      cairo_pattern_destroy (transparent);
 
       child->parent_relative_bg = FALSE;
     }
