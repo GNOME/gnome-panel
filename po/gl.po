@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-01 02:49+0100\n"
-"PO-Revision-Date: 2011-02-01 02:50+0100\n"
+"POT-Creation-Date: 2011-02-13 14:10+0100\n"
+"PO-Revision-Date: 2011-02-13 14:12+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
 "Language: gl\n"
@@ -38,7 +38,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:316 ../applets/clock/clock.c:457
+#: ../applets/clock/calendar-window.c:316 ../applets/clock/clock.c:448
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
@@ -57,8 +57,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:321 ../applets/clock/clock.c:462
-#: ../applets/clock/clock.c:1608 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:321 ../applets/clock/clock.c:453
+#: ../applets/clock/clock.c:1596 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -96,7 +96,7 @@ msgstr "Aniversarios e datas especiais"
 msgid "Weather Information"
 msgstr "Información do tempo"
 
-#: ../applets/clock/calendar-window.c:1656 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1656 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "Lugares"
 
@@ -107,7 +107,7 @@ msgstr "Calendario"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:448
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -118,7 +118,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:462 ../applets/clock/clock.c:1602
+#: ../applets/clock/clock.c:453 ../applets/clock/clock.c:1590
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -127,7 +127,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:473
+#: ../applets/clock/clock.c:464
 msgid "%a %b %e"
 msgstr "%a %e de %b"
 
@@ -135,7 +135,7 @@ msgstr "%a %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:480
+#: ../applets/clock/clock.c:471
 #, c-format
 msgid ""
 "%1$s\n"
@@ -148,7 +148,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:488
+#: ../applets/clock/clock.c:479
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -157,27 +157,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:661
+#: ../applets/clock/clock.c:645
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:675
 msgid "Click to hide your appointments and tasks"
 msgstr "Prema para agochar as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:694
+#: ../applets/clock/clock.c:678
 msgid "Click to view your appointments and tasks"
 msgstr "Prema para ver as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:698
+#: ../applets/clock/clock.c:682
 msgid "Click to hide month calendar"
 msgstr "Prema para agochar o calendario do mes"
 
-#: ../applets/clock/clock.c:701
+#: ../applets/clock/clock.c:685
 msgid "Click to view month calendar"
 msgstr "Prema para ver o calendario do mes"
 
-#: ../applets/clock/clock.c:1440
+#: ../applets/clock/clock.c:1428
 msgid "Computer Clock"
 msgstr "Reloxo do computador"
 
@@ -188,7 +188,7 @@ msgstr "Reloxo do computador"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1587
+#: ../applets/clock/clock.c:1575
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -198,116 +198,108 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1595
+#: ../applets/clock/clock.c:1583
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1641
+#: ../applets/clock/clock.c:1629
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1672
-msgid "Set System Time..."
-msgstr "Definir a hora do sistema…"
+#: ../applets/clock/clock.c:1698
+msgid "Failed to open the time settings"
+msgstr "Produciuse un fallo ao abrir as configuracións de hora"
 
-#: ../applets/clock/clock.c:1673
-msgid "Set System Time"
-msgstr "Definir a hora do sistema"
-
-#: ../applets/clock/clock.c:1688
-msgid "Failed to set the system time"
-msgstr "Produciuse un fallo ao estabelecer a hora do sistema"
-
-#: ../applets/clock/clock.c:1886 ../applets/fish/fish.c:1848
+#: ../applets/clock/clock.c:1718 ../applets/fish/fish.c:1859
 #: ../applets/wncklet/window-list.c:180
-#: ../applets/wncklet/workspace-switcher.c:323
+#: ../applets/wncklet/workspace-switcher.c:246
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: ../applets/clock/clock.c:1889 ../applets/fish/fish.c:1851
+#: ../applets/clock/clock.c:1721 ../applets/fish/fish.c:1862
 #: ../applets/notification_area/main.c:171
 #: ../applets/wncklet/showdesktop.c:229 ../applets/wncklet/window-list.c:183
 #: ../applets/wncklet/window-menu.c:93
-#: ../applets/wncklet/workspace-switcher.c:326 ../gnome-panel/drawer.c:601
+#: ../applets/wncklet/workspace-switcher.c:249 ../gnome-panel/drawer.c:601
 #: ../gnome-panel/panel-action-button.c:728
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:363
-#: ../gnome-panel/panel-menu-button.c:667
+#: ../gnome-panel/panel-menu-button.c:671
 msgid "_Help"
 msgstr "_Axuda"
 
-#: ../applets/clock/clock.c:1892 ../applets/fish/fish.c:1854
+#: ../applets/clock/clock.c:1724 ../applets/fish/fish.c:1865
 #: ../applets/notification_area/main.c:174
 #: ../applets/wncklet/showdesktop.c:232 ../applets/wncklet/window-list.c:186
 #: ../applets/wncklet/window-menu.c:96
-#: ../applets/wncklet/workspace-switcher.c:329
+#: ../applets/wncklet/workspace-switcher.c:252
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../applets/clock/clock.c:1895
+#: ../applets/clock/clock.c:1727
 msgid "Copy _Time"
 msgstr "Copiar a _hora"
 
-#: ../applets/clock/clock.c:1898
+#: ../applets/clock/clock.c:1730
 msgid "Copy _Date"
 msgstr "Copiar a _data"
 
-#: ../applets/clock/clock.c:1901
+#: ../applets/clock/clock.c:1733
 msgid "Ad_just Date & Time"
 msgstr "A_xustar a data e hora"
 
-#: ../applets/clock/clock.c:2736
+#: ../applets/clock/clock.c:2568
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:3223
+#: ../applets/clock/clock.c:3055
 msgid "Choose Location"
 msgstr "Escoller a localización"
 
-#: ../applets/clock/clock.c:3302
+#: ../applets/clock/clock.c:3134
 msgid "Edit Location"
 msgstr "Editar a localización"
 
-#: ../applets/clock/clock.c:3449
+#: ../applets/clock/clock.c:3281
 msgid "City Name"
 msgstr "Nome da cidade"
 
-#: ../applets/clock/clock.c:3453
+#: ../applets/clock/clock.c:3285
 msgid "City Time Zone"
 msgstr "Fuso horario da cidade"
 
-#: ../applets/clock/clock.c:3640
+#: ../applets/clock/clock.c:3472
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3641
+#: ../applets/clock/clock.c:3473
 msgid "UNIX time"
 msgstr "Hora Unix"
 
-#: ../applets/clock/clock.c:3642
+#: ../applets/clock/clock.c:3474
 msgid "Internet time"
 msgstr "Hora da Internet"
 
-#: ../applets/clock/clock.c:3650
+#: ../applets/clock/clock.c:3482
 msgid "Custom _format:"
 msgstr "_Formato personalizado:"
 
-#: ../applets/clock/clock.c:3740
+#: ../applets/clock/clock.c:3572
 msgid "Clock"
 msgstr "Reloxo"
 
-#: ../applets/clock/clock.c:3743
+#: ../applets/clock/clock.c:3575
 msgid "The Clock displays the current time and date"
 msgstr "O reloxo mostra a hora e a data actuais"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3746 ../applets/fish/fish.c:622
+#: ../applets/clock/clock.c:3578 ../applets/fish/fish.c:622
 #: ../applets/notification_area/main.c:153
 #: ../applets/wncklet/showdesktop.c:544 ../applets/wncklet/window-list.c:592
 #: ../applets/wncklet/window-menu.c:75
-#: ../applets/wncklet/workspace-switcher.c:603
+#: ../applets/wncklet/workspace-switcher.c:522
 #: ../gnome-panel/panel-context-menu.c:138
 msgid "translator-credits"
 msgstr ""
@@ -340,111 +332,95 @@ msgid "Clock Preferences"
 msgstr "Preferencias do reloxo"
 
 #: ../applets/clock/clock.ui.h:6
-msgid "Current Time:"
-msgstr "Hora actual:"
-
-#: ../applets/clock/clock.ui.h:7
 msgid "Display"
 msgstr "Mostrar"
 
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:7
 msgid "East"
 msgstr "Leste"
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Xeral"
 
-#: ../applets/clock/clock.ui.h:10
+#: ../applets/clock/clock.ui.h:9
 msgid "L_atitude:"
 msgstr "L_atitude:"
 
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:10
 msgid "L_ongitude:"
 msgstr "L_onxitude:"
 
-#: ../applets/clock/clock.ui.h:13
+#: ../applets/clock/clock.ui.h:12
 msgid "North"
 msgstr "Norte"
 
-#: ../applets/clock/clock.ui.h:14
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Mostrar panel"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:14
 msgid "Show _temperature"
 msgstr "Mostrar a _temperatura"
 
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _weather"
 msgstr "Mostrar o te_mpo atmosférico"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:16
 msgid "Show seco_nds"
 msgstr "Mostrar os segu_ndos"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:17
 msgid "Show the _date"
 msgstr "Mostrar a _data"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:18
 msgid "South"
 msgstr "Sur"
 
-#: ../applets/clock/clock.ui.h:20
-msgid "Time & Date"
-msgstr "Hora e Data"
-
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:19
 msgid "Time _Settings"
 msgstr "_Configuracións da hora"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:20
 msgid "Weather"
 msgstr "Tempo atmosférico"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:21
 msgid "West"
 msgstr "Oeste"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:22
 msgid "_12 hour format"
 msgstr "formato de _12 horas"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:23
 msgid "_24 hour format"
 msgstr "formato de _24 horas"
 
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:24
 msgid "_Location Name:"
 msgstr "Nome do _lugar:"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:25
 msgid "_Pressure unit:"
 msgstr "Unidade de _presión:"
 
-#: ../applets/clock/clock.ui.h:28
-msgid "_Set System Time"
-msgstr "Definir a hora do _sistema"
-
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:26
 msgid "_Temperature unit:"
 msgstr "Unidade de _temperatura:"
 
-#: ../applets/clock/clock.ui.h:30
-msgid "_Time:"
-msgstr "Hora:"
-
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Timezone:"
 msgstr "_Fuso horario:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Visibility unit:"
 msgstr "Unidade de _visibilidade:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "_Wind speed unit:"
 msgstr "Unidade da velocidade do v_ento:"
 
@@ -840,15 +816,15 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: ../applets/fish/fish.c:1693
+#: ../applets/fish/fish.c:1704
 msgid "The water needs changing"
 msgstr "Compre cambiar a auga"
 
-#: ../applets/fish/fish.c:1695
+#: ../applets/fish/fish.c:1706
 msgid "Look at today's date!"
 msgstr "Mira a data de hoxe!"
 
-#: ../applets/fish/fish.c:1788
+#: ../applets/fish/fish.c:1799
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s o peixe, o narrador da fortuna"
@@ -1136,24 +1112,24 @@ msgstr ""
 "navegar por elas."
 
 #: ../applets/wncklet/workspace-switcher.c:209
-#: ../applets/wncklet/workspace-switcher.c:965
+#: ../applets/wncklet/workspace-switcher.c:884
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "filas"
 
 #: ../applets/wncklet/workspace-switcher.c:209
-#: ../applets/wncklet/workspace-switcher.c:965
+#: ../applets/wncklet/workspace-switcher.c:884
 msgid "columns"
 msgstr "columnas"
 
-#: ../applets/wncklet/workspace-switcher.c:476
+#: ../applets/wncklet/workspace-switcher.c:399
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Produciuse un erro ao cargar o valor de num_rows para o selector de espazo "
 "de traballo: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:487
+#: ../applets/wncklet/workspace-switcher.c:410
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -1161,18 +1137,18 @@ msgstr ""
 "Produciuse un erro ao cargar o valor de display_workspace_names para o "
 "selector de espazo de traballo: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:502
+#: ../applets/wncklet/workspace-switcher.c:425
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Produciuse un erro ao cargar o valor de display_all_workspaces para o "
 "selector de espazo de traballo: %s\n"
 
-#: ../applets/wncklet/workspace-switcher.c:606
+#: ../applets/wncklet/workspace-switcher.c:525
 msgid "Workspace Switcher"
 msgstr "Selector de espazos de traballo"
 
-#: ../applets/wncklet/workspace-switcher.c:608
+#: ../applets/wncklet/workspace-switcher.c:527
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1327,7 +1303,7 @@ msgstr "Mostrar as opcións de xestión de sesión"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:82
+#: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:761
 #: ../gnome-panel/panel-applet-frame.c:931
 msgid "Error"
@@ -1493,54 +1469,6 @@ msgstr "Engadir isto como un cai_xón no panel"
 msgid "Add this as _menu to panel"
 msgstr "Engadir isto como un _menú no panel"
 
-#: ../gnome-panel/nothing.cP:606
-#, c-format
-msgid "<b>GAME OVER</b> at level %d!"
-msgstr "<b>REMATOU A PARTIDA</b> no nivel %d!"
-
-#. Translators: the first and third strings are similar to a
-#. * title, and the second string is a small information text.
-#. * The spaces are there only to separate all the strings, so
-#. try to keep them as is.
-#: ../gnome-panel/nothing.cP:613
-#, c-format
-msgid "%1$s   %2$s   %3$s"
-msgstr "%1$s   %2$s   %3$s"
-
-#: ../gnome-panel/nothing.cP:614
-msgid "Press 'q' to quit"
-msgstr "Prema 'q' para saír"
-
-#: ../gnome-panel/nothing.cP:619
-msgid "Paused"
-msgstr "Detido"
-
-#. Translators: the first string is a title and the second
-#. * string is a small information text.
-#: ../gnome-panel/nothing.cP:622 ../gnome-panel/nothing.cP:633
-#, c-format
-msgid "%1$s\t%2$s"
-msgstr "%1$s\t%2$s"
-
-#: ../gnome-panel/nothing.cP:623
-msgid "Press 'p' to unpause"
-msgstr "Prema 'p' para continuar"
-
-#: ../gnome-panel/nothing.cP:629
-#, c-format
-msgid "Level: %s,  Lives: %s"
-msgstr "Nivel: %s,  vidas: %s"
-
-#: ../gnome-panel/nothing.cP:634
-msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr ""
-"Esquerda/dereita para mover, barra de espazos para disparar, 'p' para deter "
-"e 'q' para saír"
-
-#: ../gnome-panel/nothing.cP:1349
-msgid "Killer GEGLs from Outer Space"
-msgstr "GEGL asasinos do espazo exterior"
-
 #: ../gnome-panel/panel-action-button.c:129
 msgid "_Activate Screensaver"
 msgstr "_Activar o protector de pantalla"
@@ -1635,7 +1563,7 @@ msgstr "Iniciador de aplicativo…"
 msgid "Copy a launcher from the applications menu"
 msgstr "Copia un iniciador do menú de aplicativos"
 
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1093
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1108
 msgid "Main Menu"
 msgstr "Menú principal"
 
@@ -1667,26 +1595,26 @@ msgstr "Un caixón extraíbel onde gardar outros elementos"
 msgid "(empty)"
 msgstr "(baleiro)"
 
-#: ../gnome-panel/panel-addto.c:1026
+#: ../gnome-panel/panel-addto.c:1044
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Buscar un _elemento para engadir a «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1030
+#: ../gnome-panel/panel-addto.c:1048
 #, c-format
 msgid "Add to Drawer"
 msgstr "Engadir ao caixón"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1050
 msgid "Find an _item to add to the drawer:"
 msgstr "Buscar un _elemento para engadilo ao caixón:"
 
-#: ../gnome-panel/panel-addto.c:1034
+#: ../gnome-panel/panel-addto.c:1052
 #, c-format
 msgid "Add to Panel"
 msgstr "Engadir ao panel"
 
-#: ../gnome-panel/panel-addto.c:1036
+#: ../gnome-panel/panel-addto.c:1054
 msgid "Find an _item to add to the panel:"
 msgstr "Buscar un _elemento para engadir ao panel:"
 
@@ -2088,11 +2016,11 @@ msgstr ""
 msgid "Applications"
 msgstr "Aplicativos"
 
-#: ../gnome-panel/panel-menu-bar.c:371 ../gnome-panel/panel-menu-button.c:672
+#: ../gnome-panel/panel-menu-bar.c:371 ../gnome-panel/panel-menu-button.c:676
 msgid "_Edit Menus"
 msgstr "_Editar menús"
 
-#: ../gnome-panel/panel-menu-items.c:472
+#: ../gnome-panel/panel-menu-items.c:471
 msgid "Bookmarks"
 msgstr "Marcadores"
 
@@ -2107,56 +2035,56 @@ msgstr "Abrir «%s»"
 msgid "Unable to scan %s for media changes"
 msgstr "Non é posíbel analizar %s para os cambios no soporte"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:608
 #, c-format
 msgid "Rescan %s"
 msgstr "Examinar %s de novo"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:645
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Non foi posíbel montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:709
+#: ../gnome-panel/panel-menu-items.c:707
 #, c-format
 msgid "Mount %s"
 msgstr "Montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:917
+#: ../gnome-panel/panel-menu-items.c:915
 msgid "Removable Media"
 msgstr "Soportes extraíbeis"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1006
 msgid "Network Places"
 msgstr "Lugares de rede"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1043 ../gnome-panel/panel.c:591
+#: ../gnome-panel/panel-menu-items.c:1050 ../gnome-panel/panel.c:591
 msgid "Open your personal folder"
 msgstr "Abrir o seu cartafol persoal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1070
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:1071
 msgid "Open the contents of your desktop in a folder"
 msgstr "Abrir os contidos do seu escritorio nun cartafol"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1079 ../gnome-panel/panel.c:600
+#: ../gnome-panel/panel-menu-items.c:1086 ../gnome-panel/panel.c:600
 msgid "Computer"
 msgstr "Computador"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:601
+#: ../gnome-panel/panel-menu-items.c:1092 ../gnome-panel/panel.c:601
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2165,20 +2093,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1094 ../gnome-panel/panel.c:608
+#: ../gnome-panel/panel-menu-items.c:1102 ../gnome-panel/panel.c:608
 msgid "Network"
 msgstr "Rede"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1095 ../gnome-panel/panel.c:609
+#: ../gnome-panel/panel-menu-items.c:1103 ../gnome-panel/panel.c:609
 msgid "Browse bookmarked and local network locations"
 msgstr "Explorar as redes locais e localizacións marcadas"
 
-#: ../gnome-panel/panel-menu-items.c:1436
+#: ../gnome-panel/panel-menu-items.c:1448
 msgid "Places"
 msgstr "Lugares"
 
-#: ../gnome-panel/panel-menu-items.c:1465
+#: ../gnome-panel/panel-menu-items.c:1477
 msgid "System"
 msgstr "Sistema"
 
@@ -2187,7 +2115,7 @@ msgstr "Sistema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1546
+#: ../gnome-panel/panel-menu-items.c:1558
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2196,14 +2124,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1558
+#: ../gnome-panel/panel-menu-items.c:1570
 #, c-format
 msgid "Log Out %s..."
 msgstr "Sair da sesión de %s…"
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1562
+#: ../gnome-panel/panel-menu-items.c:1574
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Saír da sesión de %s para entrar como un usuario diferente"
@@ -2434,41 +2362,41 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Produciuse un erro ao ler o valor booleano GConf «%s»: %s"
 
-#: ../gnome-panel/panel-properties-dialog.c:123
+#: ../gnome-panel/panel-properties-dialog.c:122
 #: ../gnome-panel/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Arriba"
 
-#: ../gnome-panel/panel-properties-dialog.c:124
+#: ../gnome-panel/panel-properties-dialog.c:123
 #: ../gnome-panel/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Abaixo"
 
-#: ../gnome-panel/panel-properties-dialog.c:125
+#: ../gnome-panel/panel-properties-dialog.c:124
 #: ../gnome-panel/panel-test-applets.c:57
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Esquerda"
 
-#: ../gnome-panel/panel-properties-dialog.c:126
+#: ../gnome-panel/panel-properties-dialog.c:125
 #: ../gnome-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Dereita"
 
-#: ../gnome-panel/panel-properties-dialog.c:867
+#: ../gnome-panel/panel-properties-dialog.c:866
 msgid "Drawer Properties"
 msgstr "Propiedades do caixón"
 
-#: ../gnome-panel/panel-properties-dialog.c:982
-#: ../gnome-panel/panel-run-dialog.c:2041
+#: ../gnome-panel/panel-properties-dialog.c:977
+#: ../gnome-panel/panel-run-dialog.c:2035
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Non é posíbel cargar o ficheiro «%s»: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:988
+#: ../gnome-panel/panel-properties-dialog.c:983
 msgid "Could not display properties dialog"
 msgstr "Non foi posíbel mostrar o diálogo de propiedades"
 
@@ -2619,33 +2547,33 @@ msgstr "Limpar todos os elementos da lista de documentos recentes"
 msgid "Could not run command '%s'"
 msgstr "Non foi posíbel executar a orde «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:465
+#: ../gnome-panel/panel-run-dialog.c:459
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Non foi posíbel converter «%s» desde UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1279
+#: ../gnome-panel/panel-run-dialog.c:1273
 msgid "Choose a file to append to the command..."
 msgstr "Escoller un ficheiro para engadirlle á orde…"
 
-#: ../gnome-panel/panel-run-dialog.c:1657
+#: ../gnome-panel/panel-run-dialog.c:1651
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Seleccionar un aplicativo para ver a súa descrición."
 
-#: ../gnome-panel/panel-run-dialog.c:1695
+#: ../gnome-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Executarase a orde: «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1728
+#: ../gnome-panel/panel-run-dialog.c:1722
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "A lista dos URI que se soltou no diálogo de execución ten un formato (%d) ou "
 "unha lonxitude (%d) incorrectos\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2046
+#: ../gnome-panel/panel-run-dialog.c:2040
 msgid "Could not display run dialog"
 msgstr "Non foi posíbel mostrar o diálogo de execución"
 
@@ -3240,31 +3168,31 @@ msgstr "Coordenada Y do panel"
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Coordenada Y do panel, comezando pola parte inferior da pantalla"
 
-#: ../gnome-panel/panel-util.c:315
+#: ../gnome-panel/panel-util.c:314
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Non foi posíbel atopar a icona «%s»"
 
-#: ../gnome-panel/panel-util.c:436
+#: ../gnome-panel/panel-util.c:435
 #, c-format
 msgid "Could not execute '%s'"
 msgstr "Non foi posíbel executar «%s»"
 
-#: ../gnome-panel/panel-util.c:681
+#: ../gnome-panel/panel-util.c:680
 msgid "file"
 msgstr "ficheiro"
 
-#: ../gnome-panel/panel-util.c:858
+#: ../gnome-panel/panel-util.c:857
 msgid "Home Folder"
 msgstr "Cartafol persoal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:870
+#: ../gnome-panel/panel-util.c:869
 msgid "File System"
 msgstr "Sistema de ficheiros"
 
-#: ../gnome-panel/panel-util.c:1043
+#: ../gnome-panel/panel-util.c:1042
 msgid "Search"
 msgstr "Buscar"
 
@@ -3273,7 +3201,7 @@ msgstr "Buscar"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1089
+#: ../gnome-panel/panel-util.c:1088
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3306,6 +3234,53 @@ msgid ""
 msgstr ""
 "Ao eliminar un panel pérdese o panel e todas\n"
 "as configuracións dese panel."
+
+#~ msgid "Set System Time..."
+#~ msgstr "Definir a hora do sistema…"
+
+#~ msgid "Set System Time"
+#~ msgstr "Definir a hora do sistema"
+
+#~ msgid "Current Time:"
+#~ msgstr "Hora actual:"
+
+#~ msgid "Time & Date"
+#~ msgstr "Hora e Data"
+
+#~ msgid "_Set System Time"
+#~ msgstr "Definir a hora do _sistema"
+
+#~ msgid "_Time:"
+#~ msgstr "Hora:"
+
+#~ msgid "<b>GAME OVER</b> at level %d!"
+#~ msgstr "<b>REMATOU A PARTIDA</b> no nivel %d!"
+
+#~ msgid "%1$s   %2$s   %3$s"
+#~ msgstr "%1$s   %2$s   %3$s"
+
+#~ msgid "Press 'q' to quit"
+#~ msgstr "Prema 'q' para saír"
+
+#~ msgid "Paused"
+#~ msgstr "Detido"
+
+#~ msgid "%1$s\t%2$s"
+#~ msgstr "%1$s\t%2$s"
+
+#~ msgid "Press 'p' to unpause"
+#~ msgstr "Prema 'p' para continuar"
+
+#~ msgid "Level: %s,  Lives: %s"
+#~ msgstr "Nivel: %s,  vidas: %s"
+
+#~ msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+#~ msgstr ""
+#~ "Esquerda/dereita para mover, barra de espazos para disparar, 'p' para "
+#~ "deter e 'q' para saír"
+
+#~ msgid "Killer GEGLs from Outer Space"
+#~ msgstr "GEGL asasinos do espazo exterior"
 
 #~ msgid "A simple applet for testing the GNOME-2.0 panel"
 #~ msgstr "Un miniaplicativo simple para probar o panel de GNOME-2.0"
