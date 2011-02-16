@@ -209,10 +209,6 @@ static void verb_display_properties_dialog (GtkAction  *action,
 
 static void display_properties_dialog (ClockData  *cd,
                                        gboolean    start_in_locations_page);
-static void display_help_dialog       (GtkAction  *action,
-				       ClockData  *cd);
-static void display_about_dialog      (GtkAction  *action,
-				       ClockData  *cd);
 static void position_calendar_popup   (ClockData  *cd);
 static void update_orient (ClockData *cd);
 static void applet_change_orient (PanelApplet       *applet,
@@ -1718,12 +1714,6 @@ static const GtkActionEntry clock_menu_actions [] = {
         { "ClockPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
           NULL, NULL,
           G_CALLBACK (verb_display_properties_dialog) },
-        { "ClockHelp", GTK_STOCK_HELP, N_("_Help"),
-          NULL, NULL,
-          G_CALLBACK (display_help_dialog) },
-        { "ClockAbout", GTK_STOCK_ABOUT, N_("_About"),
-          NULL, NULL,
-          G_CALLBACK (display_about_dialog) },
         { "ClockCopyTime", GTK_STOCK_COPY, N_("Copy _Time"),
           NULL, NULL,
           G_CALLBACK (copy_time) },
@@ -3535,63 +3525,6 @@ verb_display_properties_dialog (GtkAction *action,
                                 ClockData *cd)
 {
         display_properties_dialog (cd, FALSE);
-}
-
-static void
-display_help_dialog (GtkAction *action,
-                     ClockData *cd)
-{
-	clock_utils_display_help (cd->applet, "clock", NULL);
-}
-
-static void
-display_about_dialog (GtkAction *action,
-                      ClockData *cd)
-{
-	static const gchar *authors[] =
-	{
-		"George Lebl <jirka@5z.com>",
-		"Gediminas Paulauskas <menesis@delfi.lt>",
-		NULL
-	};
-	static const char *documenters[] =
-	{
-		"Dan Mueth <d-mueth@uchicago.edu>",
-		NULL
-	};
-
-	if (cd->about) {
-		gtk_window_set_screen (GTK_WINDOW (cd->about),
-				       gtk_widget_get_screen (cd->applet));
-		gtk_window_present (GTK_WINDOW (cd->about));
-		return;
-	}
-
-	cd->about = gtk_about_dialog_new ();
-	g_object_set (cd->about,
-		      "program-name",  _("Clock"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 1998-2004 Free Software Foundation, Inc.",
-		      "comments", _("The Clock displays the current time and date"),
-		      "authors", authors,
-		      "documenters", documenters,
-		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", CLOCK_ICON,
-		      NULL);
-
-	gtk_window_set_icon_name (GTK_WINDOW (cd->about), CLOCK_ICON);
-	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
-	gtk_window_set_screen (GTK_WINDOW (cd->about),
-			       gtk_widget_get_screen (cd->applet));
-
-	g_signal_connect (G_OBJECT(cd->about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &cd->about);
-
-	g_signal_connect (cd->about, "response",
-			  G_CALLBACK (gtk_widget_destroy),
-			  NULL);
-
-	gtk_widget_show (cd->about);
 }
 
 static gboolean
