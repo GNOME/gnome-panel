@@ -1323,12 +1323,33 @@ create_main_clock_button (void)
         return button;
 }
 
+ static void
+_gtk_label_make_bold (GtkLabel *label)
+{
+        PangoFontDescription *font_desc;
+
+        font_desc = pango_font_description_new ();
+
+        pango_font_description_set_weight (font_desc,
+                                           PANGO_WEIGHT_BOLD);
+
+        /* This will only affect the weight of the font, the rest is
+         * from the current state of the widget, which comes from the
+         * theme or user prefs, since the font desc only has the
+         * weight flag turned on.
+         */
+        gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
+
+        pango_font_description_free (font_desc);
+}
+
 static GtkWidget *
 create_main_clock_label (ClockData *cd)
 {
         GtkWidget *label;
 
         label = gtk_label_new (NULL);
+        _gtk_label_make_bold (GTK_LABEL (label));
 	g_signal_connect (label, "size_request",
 			  G_CALLBACK (clock_size_request),
 			  cd);
