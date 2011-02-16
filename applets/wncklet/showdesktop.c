@@ -59,11 +59,6 @@ typedef struct {
 	GtkIconTheme *icon_theme;
 } ShowDesktopData;
 
-static void display_help_dialog  (GtkAction       *action,
-                                  ShowDesktopData *sdd);
-static void display_about_dialog (GtkAction       *action,
-                                  ShowDesktopData *sdd);
-
 static void update_icon           (ShowDesktopData *sdd);
 static void update_button_state   (ShowDesktopData *sdd);
 static void update_button_display (ShowDesktopData *sdd);
@@ -226,12 +221,6 @@ update_icon (ShowDesktopData *sdd)
 }
 
 static const GtkActionEntry show_desktop_menu_actions [] = {
-	{ "ShowDesktopHelp", GTK_STOCK_HELP, N_("_Help"),
-	  NULL, NULL,
-	  G_CALLBACK (display_help_dialog) },
-	{ "ShowDesktopAbout", GTK_STOCK_ABOUT, N_("_About"),
-	  NULL, NULL,
-	  G_CALLBACK (display_about_dialog) }
 };
 
 /* This updates things that should be consistent with the button's appearance,
@@ -517,42 +506,6 @@ show_desktop_applet_fill (PanelApplet *applet)
   	gtk_widget_show_all (sdd->applet);
 
         return TRUE;
-}
-
-static void
-display_help_dialog (GtkAction       *action,
-                     ShowDesktopData *sdd)
-{
-	wncklet_display_help (sdd->applet, "user-guide",
-			      "gospanel-564", SHOW_DESKTOP_ICON);
-}
-
-static void
-display_about_dialog (GtkAction       *action,
-                      ShowDesktopData *sdd)
-{
-        static const gchar *authors[] = {
-                "Havoc Pennington <hp@redhat.com>",
-                NULL
-        };
-        static const char *documenters[] = {
-                "Sun GNOME Documentation Team <gdocteam@sun.com>",
-                NULL
-        };
-
-        /* Translator credits */
-        const char *translator_credits = _("translator-credits");
-
-	wncklet_display_about (sdd->applet, &sdd->about_dialog,
-			       _("Show Desktop Button"),
-			       "Copyright \xc2\xa9 2002 Red Hat, Inc.",
-			       _("This button lets you hide all windows and show the desktop."),
-			       authors,
-			       documenters,
-			       translator_credits,
-			       SHOW_DESKTOP_ICON,
-			       "show-desktop",
-			       "show-desktop");
 }
 
 static void

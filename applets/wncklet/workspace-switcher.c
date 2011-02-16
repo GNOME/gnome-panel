@@ -79,10 +79,6 @@ typedef struct {
 
 static void display_properties_dialog (GtkAction *action,
 				       PagerData *pager);
-static void display_help_dialog       (GtkAction *action,
-                                       PagerData *pager);
-static void display_about_dialog      (GtkAction *action,
-                                       PagerData *pager);
 
 static void
 pager_update (PagerData *pager)
@@ -246,12 +242,6 @@ static const GtkActionEntry pager_menu_actions [] = {
         { "PagerPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
           NULL, NULL,
           G_CALLBACK (display_properties_dialog) },
-        { "PagerHelp", GTK_STOCK_HELP, N_("_Help"),
-          NULL, NULL,
-          G_CALLBACK (display_help_dialog) },
-        { "PagerAbout", GTK_STOCK_ABOUT, N_("_About"),
-          NULL, NULL,
-          G_CALLBACK (display_about_dialog) }
 };
 
 static void
@@ -495,44 +485,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	return TRUE;
 }
-
-
-static void
-display_help_dialog (GtkAction *action,
-		     PagerData *pager)
-{
-	wncklet_display_help (pager->applet, "user-guide",
-			      "overview-workspaces", WORKSPACE_SWITCHER_ICON);
-}
-
-static void
-display_about_dialog (GtkAction *action,
-		      PagerData *pager)
-{
-	static const gchar *authors[] =
-	{
-		"Alexander Larsson <alla@lysator.liu.se>",
-		NULL
-	};
-	const char *documenters [] = {
-                "John Fleck <jfleck@inkstain.net>",
-                "Sun GNOME Documentation Team <gdocteam@sun.com>",
-                NULL
-	};
-	const char *translator_credits = _("translator-credits");
-
-	wncklet_display_about (pager->applet, &pager->about,
-			       _("Workspace Switcher"),
-			       "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-			       _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
-			       authors,
-			       documenters,
-			       translator_credits,
-			       WORKSPACE_SWITCHER_ICON,
-			       "pager",
-			       "Pager");
-}
-
 
 static void
 display_workspace_names_toggled (GtkToggleButton *button,

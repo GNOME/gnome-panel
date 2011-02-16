@@ -59,10 +59,6 @@ typedef struct {
 
 static void display_properties_dialog (GtkAction    *action,
 				       TasklistData *tasklist);
-static void display_help_dialog       (GtkAction    *action,
-				       TasklistData *tasklist);
-static void display_about_dialog      (GtkAction    *action,
-				       TasklistData *tasklist);
 
 static void
 tasklist_update (TasklistData *tasklist)
@@ -180,12 +176,6 @@ static const GtkActionEntry tasklist_menu_actions [] = {
 	{ "TasklistPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
 	  NULL, NULL,
 	  G_CALLBACK (display_properties_dialog) },
-	{ "TasklistHelp", GTK_STOCK_HELP, N_("_Help"),
-	  NULL, NULL,
-	  G_CALLBACK (display_help_dialog) },
-	{ "TasklistAbout", GTK_STOCK_ABOUT, N_("_About"),
-	  NULL, NULL,
-	  G_CALLBACK (display_about_dialog) }
 };
 
 static void
@@ -565,42 +555,6 @@ window_list_applet_fill (PanelApplet *applet)
 	gtk_widget_show (tasklist->applet);
 	
 	return TRUE;
-}
-
-
-static void
-display_help_dialog (GtkAction    *action,
-		     TasklistData *tasklist)
-{
-	wncklet_display_help (tasklist->applet, "user-guide",
-			      "windowlist", WINDOW_LIST_ICON);
-}
-
-static void
-display_about_dialog (GtkAction    *action,
-		      TasklistData *tasklist)
-{
-	static const gchar *authors[] =
-	{
-		"Alexander Larsson <alla@lysator.liu.se>",
-		NULL
-	};
-	const char *documenters [] = {
-		"Sun GNOME Documentation Team <gdocteam@sun.com>",
-		NULL
-	};
-	const char *translator_credits = _("translator-credits");
-
-	wncklet_display_about (tasklist->applet, &tasklist->about,
-			       _("Window List"),
-			       "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-			       _("The Window List shows a list of all windows in a set of buttons and lets you browse them."),
-			       authors,
-			       documenters,
-			       translator_credits,
-			       WINDOW_LIST_ICON,
-			       "tasklist",
-			       "Tasklist");
 }
 
 static void

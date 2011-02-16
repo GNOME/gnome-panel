@@ -50,52 +50,8 @@ typedef struct {
 	PanelAppletOrient orient;
 } WindowMenu;
 
-static void
-window_menu_help (GtkAction  *action,
-                  WindowMenu *window_menu)
-{
-	wncklet_display_help (window_menu->applet, "user-guide",
-			      "panel-windowselector", WINDOW_MENU_ICON);
-}
-
-static void
-window_menu_about (GtkAction  *action,
-                   WindowMenu *window_menu)
-{
-	static const char *authors[] = {
-		"Mark McLoughlin <mark@skynet.ie>",
-		"George Lebl <jirka@5z.com>",
-		"Jacob Berkman <jacob@helixcode.com>",
-		NULL
-	};
-	const char *documenters [] = { 
-                "Sun GNOME Documentation Team <gdocteam@sun.com>",
-                NULL 
-        };
-	const char *translator_credits = _("translator-credits");
-
-	wncklet_display_about (window_menu->applet, &window_menu->about_dialog,
-			       _("Window Selector"),
-			       "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
-			       "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
-			       "Copyright \xc2\xa9 2000 Helix Code, Inc.",
-			       _("The Window Selector shows a list of all windows in a menu and lets you browse them."),
-			       authors,
-			       documenters,
-			       translator_credits,
-			       WINDOW_MENU_ICON,
-			       "window-menu",
-			       "WindowMenu");
-}
-
 static const GtkActionEntry window_menu_actions [] =
 {
-	{ "WindowMenuHelp", GTK_STOCK_HELP, N_("_Help"),
-	  NULL, NULL,
-	  G_CALLBACK (window_menu_help) },
-	{ "WindowMenuAbout", GTK_STOCK_ABOUT, N_("_About"),
-	  NULL, NULL,
-	  G_CALLBACK (window_menu_about) }
 };
 
 static void
