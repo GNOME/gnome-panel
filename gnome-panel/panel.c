@@ -303,12 +303,15 @@ static GtkWidget *
 panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
 	if (!pd->menu) {
-		pd->menu = g_object_ref_sink (panel_context_menu_create (panel));
-		g_signal_connect (pd->menu, "deactivate",
-				  G_CALLBACK (context_menu_deactivate),
-				  pd);
-		g_signal_connect (pd->menu, "show",
-				  G_CALLBACK (context_menu_show), pd);
+		pd->menu = panel_context_menu_create (panel);
+		if (pd->menu != NULL) {
+			g_object_ref_sink (pd->menu);
+			g_signal_connect (pd->menu, "deactivate",
+					  G_CALLBACK (context_menu_deactivate),
+					  pd);
+			g_signal_connect (pd->menu, "show",
+					  G_CALLBACK (context_menu_show), pd);
+		}
 	}
 
 	return pd->menu;
@@ -330,7 +333,8 @@ make_popup_panel_menu (PanelWidget *panel_widget)
 
 	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
 	menu = panel_menu_get (panel_widget, pd);
-	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
+	if (menu)
+		g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
 
 	return menu;
 }

@@ -50,112 +50,6 @@
 #include "panel-icon-names.h"
 
 static void
-panel_context_menu_show_help (GtkWidget *w,
-			      gpointer data)
-{
-	panel_show_help (gtk_widget_get_screen (w),
-			 "user-guide", "gospanel-1", NULL);
-}
-
-static gboolean
-panel_context_menu_check_for_screen (GtkWidget *w,
-				     GdkEvent *ev,
-				     gpointer data)
-{
-	static int times = 0;
-	if (ev->type != GDK_KEY_PRESS)
-		return FALSE;
-	if (ev->key.keyval == GDK_KEY_f ||
-	    ev->key.keyval == GDK_KEY_F) {
-		times++;
-		if (times == 3) {
-			times = 0;
-			start_screen_check ();
-		}
-	}
-	return FALSE;
-}
-
-static void
-panel_context_menu_show_about_dialog (GtkWidget *menuitem)
-{
-	static GtkWidget *about = NULL;
-	char             *authors [] = {
-		"Alex Larsson <alexl@redhat.com>",
-		"Anders Carlsson <andersca@gnu.org>",
-		"Arvind Samptur <arvind.samptur@wipro.com>",
-		"Darin Adler <darin@bentspoon.com>",
-		"Elliot Lee <sopwith@redhat.com>",
-		"Federico Mena <quartic@gimp.org>",
-		"George Lebl <jirka@5z.com>",
-		"Glynn Foster <glynn.foster@sun.com>",
-		"Ian Main <imain@gtk.org>",
-		"Ian McKellar <yakk@yakk.net>",
-		"Jacob Berkman <jberkman@andrew.cmu.edu>",
-		"Mark McLoughlin <mark@skynet.ie>",
-		"Martin Baulig <baulig@suse.de>",
-		"Miguel de Icaza <miguel@kernel.org>",
-		"Owen Taylor <otaylor@redhat.com>",
-		"Padraig O'Briain <padraig.obriain@sun.com>",
-		"Seth Nickell <snickell@stanford.edu>",
-		"Stephen Browne <stephen.browne@sun.com>",
-		"Tom Tromey <tromey@cygnus.com>",
-		"Vincent Untz <vuntz@gnome.org>",
-		N_("And many, many others..."),
-		NULL
-	};
-	char *documenters[] = {
-	        "Alexander Kirillov <kirillov@math.sunysb.edu>",
-		"Dan Mueth <d-mueth@uchicago.edu>",
-		"Dave Mason <dcm@redhat.com>",
-		NULL
-	  };
-	int   i;
-
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
-				       menuitem_to_screen (menuitem));
-		gtk_window_present (GTK_WINDOW (about));
-		return;
-	}
-
-	for (i = 0; authors [i]; i++)
-		authors [i] = _(authors [i]);
-
-	/* Note: we don't use gtk_show_about_dialog() since some applets can
-	 * be loaded in this process and we don't want to share the about
-	 * dialog */
-	about = gtk_about_dialog_new ();
-	g_object_set (about,
-		      "program-name",  _("The GNOME Panel"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
-		      "comments", _("This program is responsible for launching other "
-				    "applications and provides useful utilities."),
-		      "authors", authors,
-		      "documenters", documenters,
-		      "title", _("About the GNOME Panel"),
-		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", PANEL_ICON_PANEL,
-		      NULL);
-
-	gtk_window_set_screen (GTK_WINDOW (about),
-			       menuitem_to_screen (menuitem));
-	g_signal_connect (about, "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &about);
-	g_signal_connect (about, "event",
-			  G_CALLBACK (panel_context_menu_check_for_screen),
-			  NULL);
-
-	g_signal_connect (about, "response",
-			  G_CALLBACK (gtk_widget_destroy),
-			  NULL);
-
-	gtk_widget_show (about);
-}
-
-static void
 panel_context_menu_create_new_panel (GtkWidget *menuitem)
 {
 	panel_profile_create_toplevel (gtk_widget_get_screen (menuitem));
@@ -248,16 +142,12 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 			  NULL);
 	gtk_widget_set_sensitive (menuitem, 
 				  panel_profile_id_lists_are_writable ());
-
-	add_menu_separator (menu);
 }
 
 GtkWidget *
 panel_context_menu_create (PanelWidget *panel)
 {
 	GtkWidget *retval;
-	GtkWidget *menuitem;
-	GtkWidget *image;
 
 	if (panel->master_widget) {
 		gpointer    *pointer;
@@ -276,30 +166,14 @@ panel_context_menu_create (PanelWidget *panel)
 		return info->menu;
 	}
 
+	if (panel_lockdown_get_locked_down ())
+		return NULL;
+
 	retval = create_empty_menu ();
 	gtk_widget_set_name (retval, "gnome-panel-context-menu");
 
-	if (!panel_lockdown_get_locked_down ())
-		panel_context_menu_build_edition (panel, retval);
+	panel_context_menu_build_edition (panel, retval);
 
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Help"));
-	image = gtk_image_new_from_stock (GTK_STOCK_HELP, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
-	gtk_widget_show (menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_context_menu_show_help), NULL);
-
-	menuitem = gtk_image_menu_item_new_with_mnemonic (_("A_bout Panels"));
-	image = gtk_image_new_from_stock (GTK_STOCK_ABOUT,
-					  GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
-	gtk_widget_show (menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_context_menu_show_about_dialog),
-			  NULL);
-	
 	//FIXME: can we get rid of this? (needed by menu_get_panel())
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
