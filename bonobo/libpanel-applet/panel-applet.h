@@ -157,21 +157,6 @@ int                panel_applet_factory_main_closure  (const gchar		  *iid,
 						       GType                       applet_type,
 						       GClosure                   *closure);
 
-Bonobo_Unknown     panel_applet_shlib_factory         (const char                 *iid,
-						       GType                       applet_type,
-						       PortableServer_POA          poa,
-						       gpointer                    impl_ptr,
-						       PanelAppletFactoryCallback  callback,
-						       gpointer                    user_data,
-						       CORBA_Environment          *ev);
-
-Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                 *iid,
-						       GType                       applet_type,
-						       PortableServer_POA          poa,
-						       gpointer                    impl_ptr,
-						       GClosure                   *closure,
-						       CORBA_Environment          *ev);
-
 /*
  * These macros are getting a bit unwieldy.
  *
@@ -231,23 +216,6 @@ int main (int argc, char *argv [])						\
 										\
 	return retval;								\
 }
-
-#define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, type, descr, callback, data)	\
-static Bonobo_Unknown								\
-__panel_applet_shlib_factory (PortableServer_POA  poa,				\
-			      const char         *oafiid,			\
-			      gpointer            impl_ptr,			\
-			      CORBA_Environment  *ev)				\
-{										\
-	_PANEL_APPLET_SETUP_GETTEXT (FALSE);					\
-        return panel_applet_shlib_factory ((iid), (type), poa, impl_ptr,	\
-					   (callback), (data), ev);		\
-}										\
-static BonoboActivationPluginObject plugin_list[] = {				\
-	{ (iid), __panel_applet_shlib_factory },				\
-	{ NULL }								\
-};										\
-const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
 
 G_END_DECLS
 

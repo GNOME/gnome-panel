@@ -40,7 +40,6 @@
 #include <bonobo/bonobo-types.h>
 #include <bonobo/bonobo-property-bag.h>
 #include <bonobo/bonobo-item-handler.h>
-#include <bonobo/bonobo-shlib-factory.h>
 #include <bonobo/bonobo-property-bag-client.h>
 #include <gconf/gconf.h>
 #include <gconf/gconf-client.h>
@@ -1809,54 +1808,6 @@ panel_applet_factory_main (const gchar                 *iid,
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
 	return panel_applet_factory_main_closure (iid, applet_type, closure);
-}
-
-Bonobo_Unknown
-panel_applet_shlib_factory_closure (const char         *iid,
-				    GType               applet_type,
-				    PortableServer_POA  poa,
-				    gpointer            impl_ptr,
-				    GClosure           *closure,
-				    CORBA_Environment  *ev)
-{
-	BonoboShlibFactory *factory;
-
-	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (closure != NULL, CORBA_OBJECT_NIL);
-
-	g_assert (g_type_is_a (applet_type, PANEL_TYPE_APPLET));
-
-	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-
-	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
-
-	factory = bonobo_shlib_factory_new_closure (
-			iid, poa, impl_ptr,
-			g_cclosure_new (G_CALLBACK (panel_applet_factory_callback),
-					panel_applet_callback_data_new (applet_type, closure),
-					(GClosureNotify) panel_applet_callback_data_free));
-
-        return CORBA_Object_duplicate (BONOBO_OBJREF (factory), ev);
-}
-
-Bonobo_Unknown
-panel_applet_shlib_factory (const char                 *iid,
-			    GType                       applet_type,
-			    PortableServer_POA          poa,
-			    gpointer                    impl_ptr,
-			    PanelAppletFactoryCallback  callback,
-			    gpointer                    user_data,
-			    CORBA_Environment          *ev)
-{
-	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (callback != NULL, CORBA_OBJECT_NIL);
-
-	return panel_applet_shlib_factory_closure (
-			iid, applet_type, poa, impl_ptr,
-			g_cclosure_new (G_CALLBACK (callback),
-					user_data, NULL),
-			ev);
 }
 
 void
