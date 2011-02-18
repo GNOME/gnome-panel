@@ -313,8 +313,9 @@ panel_menu_bar_load (PanelWidget *panel,
 		return;
 	}
 
-	if (panel_is_program_in_path ("alacarte") ||
-	    panel_is_program_in_path ("gmenu-simple-editor")) {
+	if (!panel_lockdown_get_locked_down ()
+	    && (panel_is_program_in_path ("alacarte") ||
+		panel_is_program_in_path ("gmenu-simple-editor"))) {
 		panel_applet_add_callback (menubar->priv->info,
 					   "edit",
 					   NULL,
