@@ -313,12 +313,6 @@ panel_menu_bar_load (PanelWidget *panel,
 		return;
 	}
 
-	panel_applet_add_callback (menubar->priv->info,
-				   "help",
-				   GTK_STOCK_HELP,
-				   _("_Help"),
-				   NULL);
-
 	if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor")) {
 		panel_applet_add_callback (menubar->priv->info,
