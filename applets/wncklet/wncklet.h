@@ -32,18 +32,6 @@
 
 G_BEGIN_DECLS
 
-void        wncklet_display_about       (GtkWidget   *applet,
-					 GtkWidget  **dialog,
-					 const char  *name,
-					 const char  *copyright,
-					 const char  *comments,
-					 const char **authors,
-					 const char **documenters,
-					 const char  *translator_credits,
-					 const char  *icon_name,
-					 const char  *wmclass_name,
-					 const char  *wmclass_class);
-
 void        wncklet_display_help        (GtkWidget  *widget,
 					 const char *doc_id,
 					 const char *link_id,

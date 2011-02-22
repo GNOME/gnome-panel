@@ -175,7 +175,7 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 static const GtkActionEntry tasklist_menu_actions [] = {
 	{ "TasklistPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
 	  NULL, NULL,
-	  G_CALLBACK (display_properties_dialog) },
+	  G_CALLBACK (display_properties_dialog) }
 };
 
 static void

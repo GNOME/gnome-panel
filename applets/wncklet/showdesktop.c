@@ -220,9 +220,6 @@ update_icon (ShowDesktopData *sdd)
         g_object_unref (icon);
 }
 
-static const GtkActionEntry show_desktop_menu_actions [] = {
-};
-
 /* This updates things that should be consistent with the button's appearance,
  * and update_button_state updates the button appearance itself
  */
@@ -403,8 +400,6 @@ gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
         ShowDesktopData *sdd;
-	GtkActionGroup  *action_group;
-	gchar           *ui_path;
 	AtkObject       *atk_obj;
         GtkCssProvider  *provider;
 
@@ -476,18 +471,6 @@ show_desktop_applet_fill (PanelApplet *applet)
 
 	panel_applet_set_background_widget (PANEL_APPLET (sdd->applet),
 					    GTK_WIDGET (sdd->applet));
-
-	action_group = gtk_action_group_new ("ShowDesktop Applet Actions");
-	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (action_group,
-				      show_desktop_menu_actions,
-				      G_N_ELEMENTS (show_desktop_menu_actions),
-				      sdd);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "showdesktop-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (PANEL_APPLET (sdd->applet),
-					   ui_path, action_group);
-	g_free (ui_path);
-	g_object_unref (action_group);
 
         g_signal_connect (G_OBJECT (sdd->applet),
                           "destroy",

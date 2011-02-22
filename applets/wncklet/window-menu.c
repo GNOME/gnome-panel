@@ -50,10 +50,6 @@ typedef struct {
 	PanelAppletOrient orient;
 } WindowMenu;
 
-static const GtkActionEntry window_menu_actions [] =
-{
-};
-
 static void
 window_menu_destroy (GtkWidget  *widget,
                      WindowMenu *window_menu)
@@ -206,8 +202,6 @@ gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
 	WindowMenu *window_menu;
-	GtkActionGroup *action_group;
-	gchar *ui_path;
 
 	window_menu = g_new0 (WindowMenu, 1);
 
@@ -221,17 +215,6 @@ window_menu_applet_fill (PanelApplet *applet)
 
 	g_signal_connect (window_menu->applet, "destroy",
 			  G_CALLBACK (window_menu_destroy), window_menu);
-
-	action_group = gtk_action_group_new ("WindowMenu Applet Actions");
-	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (action_group,
-				      window_menu_actions,
-				      G_N_ELEMENTS (window_menu_actions),
-				      window_menu);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "window-menu-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
-	g_free (ui_path);
-	g_object_unref (action_group);
 
 	window_menu->selector = wnck_selector_new ();
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 

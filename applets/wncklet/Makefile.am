@@ -80,9 +80,7 @@ ui_DATA = workspace-switcher.ui window-list.ui
 
 xmluidir    = $(datadir)/gnome-panel/ui
 xmlui_DATA  = \
-	window-menu-menu.xml \
 	workspace-switcher-menu.xml \
-	showdesktop-menu.xml \
 	window-list-menu.xml
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)

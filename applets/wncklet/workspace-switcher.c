@@ -241,7 +241,7 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 static const GtkActionEntry pager_menu_actions [] = {
         { "PagerPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
           NULL, NULL,
-          G_CALLBACK (display_properties_dialog) },
+          G_CALLBACK (display_properties_dialog) }
 };
 
 static void
