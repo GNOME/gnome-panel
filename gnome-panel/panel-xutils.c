@@ -171,6 +171,9 @@ panel_warp_pointer (GdkWindow *gdk_window,
 	gdk_error_trap_pop_ignored ();
 }
 
+/*
+ * Keep code in panel-applet-bindings.c in sync!
+ */
 guint
 panel_get_real_modifier_mask (guint mask)
 {

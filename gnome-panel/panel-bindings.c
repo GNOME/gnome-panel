@@ -162,6 +162,9 @@ panel_binding_watch (PanelBinding *binding,
 	}
 }
 
+/*
+ * Keep code in panel-applet-bindings.c in sync!
+ */
 static void
 panel_bindings_mouse_modifier_set_from_string (const char *str)
 {

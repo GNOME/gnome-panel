@@ -1225,6 +1225,9 @@ panel_util_get_file_optional_homedir (const char *location)
 	return file;
 }
 
+/*
+ * Keep code in panel-applet-bindings.c in sync!
+ */
 static void
 panel_util_key_event_is_binding (GdkEventKey *event,
 				 GType        type,
