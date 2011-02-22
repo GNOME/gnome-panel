@@ -70,12 +70,37 @@ panel_context_menu_delete_panel (PanelToplevel *toplevel)
         panel_delete (toplevel);
 }
 
+static gboolean
+panel_context_menu_check_for_screen (GtkWidget *w,
+				     GdkEvent *ev,
+				     gpointer data)
+{
+	static int times = 0;
+	if (!w) {
+		times = 0;
+		return FALSE;
+	}
+	if (ev->type != GDK_KEY_PRESS)
+		return FALSE;
+	if (ev->key.keyval == GDK_KEY_f ||
+	    ev->key.keyval == GDK_KEY_F) {
+		times++;
+		if (times == 3) {
+			times = 0;
+			start_screen_check ();
+		}
+	}
+	return FALSE;
+}
+
 static void
 panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 					    GtkWidget *menuitem)
 {
 	PanelWidget *panel_widget;
 	gboolean     sensitive;
+
+	panel_context_menu_check_for_screen (NULL, NULL, NULL);
 
 	panel_widget = menu_get_panel (menu);
 
@@ -176,6 +201,10 @@ panel_context_menu_create (PanelWidget *panel)
 
 	//FIXME: can we get rid of this? (needed by menu_get_panel())
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
+
+	g_signal_connect (retval, "event",
+			  G_CALLBACK (panel_context_menu_check_for_screen),
+			  NULL);
 
 	return retval;
 }
