@@ -88,7 +88,6 @@ struct _PanelAppletFramePrivate {
 	GdkRectangle     handle_rect;
 
 	guint            has_handle : 1;
-	guint            is_locked : 1;
 };
 
 static gboolean
@@ -101,7 +100,7 @@ panel_applet_frame_draw (GtkWidget *widget,
         if (GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw (widget, cr);
 
-	if (!frame->priv->has_handle || frame->priv->is_locked)
+	if (!frame->priv->has_handle)
 		return FALSE;
 
 	context = gtk_widget_get_style_context (widget);
@@ -154,7 +153,7 @@ panel_applet_frame_get_preferred_width(GtkWidget *widget, gint *minimal_width, g
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	if (!frame->priv->has_handle || frame->priv->is_locked) {
+	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->get_preferred_width (widget, minimal_width, natural_width);
 		return;
 	}
@@ -193,7 +192,7 @@ panel_applet_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	if (!frame->priv->has_handle || frame->priv->is_locked) {
+	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->get_preferred_height (widget, minimal_height, natural_height);
 		return;
 	}
@@ -243,7 +242,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
-	if (!frame->priv->has_handle || frame->priv->is_locked) {
+	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
 										   allocation);
 		panel_applet_frame_update_background_size (frame,
@@ -352,7 +351,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 
 	frame = PANEL_APPLET_FRAME (widget);
 
-	if (!frame->priv->has_handle || frame->priv->is_locked)
+	if (!frame->priv->has_handle)
 		return handled;
 
 	if (event->window != gtk_widget_get_window (widget))
@@ -453,9 +452,9 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 {
 	PanelWidget *panel_widget;
 	gboolean     locked_down;
+	gboolean     locked;
 	gboolean     lockable;
 	gboolean     movable;
-	gboolean     locked;
 	gboolean     removable;
 
 	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
@@ -466,7 +465,6 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
 	locked_down = panel_lockdown_get_locked_down ();
-	frame->priv->is_locked = (locked_down || locked || !movable);
 
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->sync_menu_state (frame, movable, removable, lockable, locked, locked_down);
 }
@@ -501,7 +499,7 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 
 	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
-	if (frame->priv->has_handle && !frame->priv->is_locked) {
+	if (frame->priv->has_handle) {
 		PanelBackground *background;
 
 		background = &PANEL_WIDGET (parent)->background;
@@ -606,7 +604,7 @@ _panel_applet_frame_update_size_hints (PanelAppletFrame *frame,
 				       gint             *size_hints,
 				       guint             n_elements)
 {
-	if (frame->priv->has_handle && !frame->priv->is_locked) {
+	if (frame->priv->has_handle) {
 		gint extra_size = HANDLE_SIZE + 1;
 		gint i;
 
@@ -635,7 +633,7 @@ _panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 	x = allocation.x;
 	y = allocation.y;
 
-	if (frame->priv->has_handle && !frame->priv->is_locked) {
+	if (frame->priv->has_handle) {
 		switch (frame->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 		case PANEL_ORIENTATION_BOTTOM:
