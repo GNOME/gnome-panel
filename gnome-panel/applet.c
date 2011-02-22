@@ -878,7 +878,7 @@ panel_applet_destroy (GtkWidget  *widget,
 						      G_CALLBACK (applet_menu_show), info);
                 g_signal_handlers_disconnect_by_func (info->edit_menu,
 						      G_CALLBACK (applet_menu_deactivate), info);
-		g_object_unref (info->menu);
+		g_object_unref (info->edit_menu);
         }
 	info->edit_menu = NULL;
 
