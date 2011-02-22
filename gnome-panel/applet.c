@@ -726,6 +726,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 static void
 applet_show_menu (AppletInfo     *info,
 		  GtkWidget      *menu,
+		  gboolean        custom_position,
 		  GdkEventButton *event)
 {
 	PanelWidget *panel_widget;
@@ -750,7 +751,8 @@ applet_show_menu (AppletInfo     *info,
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL,
 			NULL,
-			(GtkMenuPositionFunc) panel_applet_position_menu,
+			custom_position ?
+				(GtkMenuPositionFunc) panel_applet_position_menu : NULL,
 			info->widget,
 			event->button,
 			event->time);
@@ -784,9 +786,9 @@ applet_button_press (GtkWidget      *widget,
 	modifiers = event->state & GDK_MODIFIER_MASK;
 
 	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
-		applet_show_menu (info, panel_applet_get_edit_menu (info), event);
+		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, event);
 	else
-		applet_show_menu (info, panel_applet_get_menu (info), event);
+		applet_show_menu (info, panel_applet_get_menu (info), TRUE, event);
 
 	return TRUE;
 }
@@ -839,11 +841,11 @@ applet_key_press (GtkWidget   *widget,
 			break;
 	}
 
-	if (is_popup)
-		applet_show_menu (info, panel_applet_get_menu (info), &eventbutton);
-
 	if (is_edit_popup)
-		applet_show_menu (info, panel_applet_get_edit_menu (info), &eventbutton);
+		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, &eventbutton);
+
+	if (is_popup)
+		applet_show_menu (info, panel_applet_get_menu (info), TRUE, &eventbutton);
 
 	return (is_popup || is_edit_popup);
 }
