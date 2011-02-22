@@ -414,8 +414,14 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 static void
 panel_menu_button_recreate_menu (PanelMenuButton *button)
 {
-	if (button->priv->menu)
+	if (button->priv->menu) {
+		g_signal_handlers_disconnect_by_func (button->priv->menu,
+						      G_CALLBACK (panel_menu_button_menu_deactivated),
+						      button);
+
 		gtk_widget_destroy (button->priv->menu);
+	}
+
 	button->priv->menu = NULL;
 }
 
