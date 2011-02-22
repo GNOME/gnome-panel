@@ -29,55 +29,69 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
+#include "main.h"
 #include "na-tray-manager.h"
 #include "na-tray.h"
 #include "fixedtip.h"
 
 #define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
 
-typedef struct
+struct _NaTrayAppletPrivate
 {
-  PanelApplet *applet;
-  NaTray      *tray;
-  GtkWidget   *about_dialog;
-} AppletData;
+  NaTray *tray;
+};
+
+G_DEFINE_TYPE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
 
 static GtkOrientation
-get_orientation_from_applet (PanelApplet *applet)
+get_gtk_orientation_from_applet_orient (PanelAppletOrient orient)
 {
-  GtkOrientation orientation;
-
-  switch (panel_applet_get_orient (applet))
+  switch (orient)
     {
     case PANEL_APPLET_ORIENT_LEFT:
     case PANEL_APPLET_ORIENT_RIGHT:
-      orientation = GTK_ORIENTATION_VERTICAL;
-      break;
+      return GTK_ORIENTATION_VERTICAL;
     case PANEL_APPLET_ORIENT_UP:
     case PANEL_APPLET_ORIENT_DOWN:
     default:
-      orientation = GTK_ORIENTATION_HORIZONTAL;
-      break;
+      return GTK_ORIENTATION_HORIZONTAL;
     }
 
-  return orientation;
+  g_assert_not_reached ();
+
+  return GTK_ORIENTATION_HORIZONTAL;
 }
 
 static void
-applet_change_background (PanelApplet     *applet,
-                          cairo_pattern_t *pattern,
-                          AppletData      *data)
+na_tray_applet_realize (GtkWidget *widget)
 {
-  na_tray_force_redraw (data->tray);
+  NaTrayApplet      *applet = NA_TRAY_APPLET (widget);
+  PanelAppletOrient  orient;
+
+  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->realize (widget);
+
+  g_assert (applet->priv->tray == NULL);
+
+  orient = panel_applet_get_orient (PANEL_APPLET (widget));
+
+  applet->priv->tray = na_tray_new_for_screen (gtk_widget_get_screen (widget),
+                                               get_gtk_orientation_from_applet_orient (orient));
+
+  gtk_container_add (GTK_CONTAINER (widget), GTK_WIDGET (applet->priv->tray));
+  gtk_widget_show (GTK_WIDGET (applet->priv->tray));
 }
 
-
 static void
-applet_change_orientation (PanelApplet       *applet,
-                           PanelAppletOrient  orient,
-                           AppletData         *data)
+na_tray_applet_unrealize (GtkWidget *widget)
 {
-  na_tray_set_orientation (data->tray, get_orientation_from_applet (applet));
+  NaTrayApplet *applet = NA_TRAY_APPLET (widget);
+
+  g_assert (applet->priv->tray != NULL);
+
+  gtk_widget_destroy (GTK_WIDGET (applet->priv->tray));
+  applet->priv->tray = NULL;
+
+  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->unrealize (widget);
 }
 
 static inline gboolean
@@ -98,15 +112,20 @@ style_context_lookup_color (GtkStyleContext *context,
 }
 
 static void
-on_applet_style_updated (GtkWidget  *widget,
-                         AppletData *data)
+na_tray_applet_style_updated (GtkWidget *widget)
 {
+  NaTrayApplet    *applet = NA_TRAY_APPLET (widget);
   GtkStyleContext *context;
   GdkRGBA          rgba;
   GdkColor         fg;
   GdkColor         error;
   GdkColor         warning;
   GdkColor         success;
+
+  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->style_updated (widget);
+
+  if (!applet->priv->tray)
+    return;
 
   context = gtk_widget_get_style_context (widget);
 
@@ -122,62 +141,32 @@ on_applet_style_updated (GtkWidget  *widget,
   if (!style_context_lookup_color (context, "success_color", &success))
     success = fg;
 
-  na_tray_set_colors (data->tray, &fg, &error, &warning, &success);
+  na_tray_set_colors (applet->priv->tray, &fg, &error, &warning, &success);
 }
 
 static void
-applet_destroy (PanelApplet *applet,
-		AppletData  *data)
+na_tray_applet_change_background (PanelApplet     *panel_applet,
+                                  cairo_pattern_t *pattern)
 {
-  if (data->about_dialog)
-    gtk_widget_destroy (data->about_dialog);
-  g_assert (data->about_dialog == NULL);
-}
+  NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
 
-static void
-free_applet_data (AppletData *data)
-{
-  g_slice_free (AppletData, data);
-}
-
-static void
-on_applet_realized (GtkWidget *widget,
-                    gpointer   user_data)
-{
-  PanelApplet    *applet;
-  AppletData     *data;
-  NaTray         *tray;
-
-  applet = PANEL_APPLET (widget);
-  data = g_object_get_data (G_OBJECT (widget), "system-tray-data");
-
-  if (data != NULL)
+  if (!applet->priv->tray)
     return;
 
-  tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
-                                 get_orientation_from_applet (applet));
+  na_tray_force_redraw (applet->priv->tray);
+}
 
-  data = g_slice_new (AppletData);
-  data->applet = applet;
-  data->tray = tray;
-  data->about_dialog = NULL;
+static void
+na_tray_applet_change_orient (PanelApplet       *panel_applet,
+                              PanelAppletOrient  orient)
+{
+  NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
 
-  g_object_set_data_full (G_OBJECT (applet),
-                          "system-tray-data",
-                          data,
-                          (GDestroyNotify) free_applet_data);
+  if (!applet->priv->tray)
+    return;
 
-  g_signal_connect (applet, "change_orient",
-                    G_CALLBACK (applet_change_orientation), data);
-  g_signal_connect (applet, "change_background",
-                    G_CALLBACK (applet_change_background), data);
-  g_signal_connect (GTK_WIDGET (applet), "style-updated",
-                    G_CALLBACK (on_applet_style_updated), data);
-  g_signal_connect (applet, "destroy",
-                    G_CALLBACK (applet_destroy), data);
-
-  gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
-  gtk_widget_show (GTK_WIDGET (tray));
+  na_tray_set_orientation (applet->priv->tray,
+                           get_gtk_orientation_from_applet_orient (orient));
 }
 
 static inline void
@@ -187,7 +176,7 @@ force_no_focus_padding (GtkWidget *widget)
 
   provider = gtk_css_provider_new ();
   gtk_css_provider_load_from_data (provider,
-                                   "#na-tray {\n"
+                                   "NaTrayApplet {\n"
                                    " -GtkWidget-focus-line-width: 0px;\n"
                                    " -GtkWidget-focus-padding: 0px;\n"
 				   "}",
@@ -196,8 +185,45 @@ force_no_focus_padding (GtkWidget *widget)
                                   GTK_STYLE_PROVIDER (provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   g_object_unref (provider);
+}
 
-  gtk_widget_set_name (widget, "na-tray");
+static void
+na_tray_applet_class_init (NaTrayAppletClass *class)
+{
+  GtkWidgetClass   *widget_class = GTK_WIDGET_CLASS (class);
+  PanelAppletClass *applet_class = PANEL_APPLET_CLASS (class);
+
+  widget_class->realize = na_tray_applet_realize;
+  widget_class->unrealize = na_tray_applet_unrealize;
+  widget_class->style_updated = na_tray_applet_style_updated;
+  applet_class->change_background = na_tray_applet_change_background;
+  applet_class->change_orient = na_tray_applet_change_orient;
+
+  g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
+}
+
+static void
+na_tray_applet_init (NaTrayApplet *applet)
+{
+  AtkObject *atko;
+
+  applet->priv = G_TYPE_INSTANCE_GET_PRIVATE (applet, NA_TYPE_TRAY_APPLET,
+                                              NaTrayAppletPrivate);
+
+  /* Defer creating NaTray until applet is added to panel so
+   * gtk_widget_get_screen returns correct information */
+  applet->priv->tray = NULL;
+
+  atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
+  atk_object_set_name (atko, _("Panel Notification Area"));
+
+  panel_applet_set_flags (PANEL_APPLET (applet),
+                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
+
+  panel_applet_set_background_widget (PANEL_APPLET (applet),
+                                      GTK_WIDGET (applet));
+
+  force_no_focus_padding (GTK_WIDGET (applet));
 }
 
 static gboolean
@@ -205,44 +231,28 @@ applet_factory (PanelApplet *applet,
                 const gchar *iid,
                 gpointer     user_data)
 {
-  AtkObject *atko;
-
   if (!(strcmp (iid, "NotificationArea") == 0 ||
         strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
 
-  /* Defer loading until applet is added to panel so
-   * gtk_widget_get_screen returns correct information */
-  g_signal_connect (GTK_WIDGET (applet), "realize",
-                    G_CALLBACK (on_applet_realized),
-                    NULL);
-
-  atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
-  atk_object_set_name (atko, _("Panel Notification Area"));
-
-  panel_applet_set_flags (applet,
-                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
-  
-  panel_applet_set_background_widget (applet, GTK_WIDGET (applet));
-
-  force_no_focus_padding (GTK_WIDGET (applet));
-
 #ifndef NOTIFICATION_AREA_INPROCESS
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 #endif
+
   gtk_widget_show_all (GTK_WIDGET (applet));
+
   return TRUE;
 }
 
 #ifdef NOTIFICATION_AREA_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("NotificationAreaAppletFactory",
-				 PANEL_TYPE_APPLET,
+				 NA_TYPE_TRAY_APPLET,
 				 "NotificationArea",
 				 applet_factory,
 				 NULL)
 #else
 PANEL_APPLET_OUT_PROCESS_FACTORY ("NotificationAreaAppletFactory",
-				  PANEL_TYPE_APPLET,
+				  NA_TYPE_TRAY_APPLET,
 				  "NotificationArea",
 				  applet_factory,
 				  NULL)
