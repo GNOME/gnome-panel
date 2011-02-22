@@ -80,6 +80,51 @@ applet_change_orientation (PanelApplet       *applet,
   na_tray_set_orientation (data->tray, get_orientation_from_applet (applet));
 }
 
+static inline gboolean
+style_context_lookup_color (GtkStyleContext *context,
+                            const gchar     *color_name,
+                            GdkColor        *color)
+{
+  GdkRGBA rgba;
+
+  if (!gtk_style_context_lookup_color (context, color_name, &rgba))
+    return FALSE;
+
+  color->red   = rgba.red * 65535;
+  color->green = rgba.green * 65535;
+  color->blue  = rgba.blue * 65535;
+
+  return TRUE;
+}
+
+static void
+on_applet_style_updated (GtkWidget  *widget,
+                         AppletData *data)
+{
+  GtkStyleContext *context;
+  GdkRGBA          rgba;
+  GdkColor         fg;
+  GdkColor         error;
+  GdkColor         warning;
+  GdkColor         success;
+
+  context = gtk_widget_get_style_context (widget);
+
+  gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &rgba);
+  fg.red   = rgba.red * 65535;
+  fg.green = rgba.green * 65535;
+  fg.blue  = rgba.blue * 65535;
+
+  if (!style_context_lookup_color (context, "error_color", &error))
+    error = fg;
+  if (!style_context_lookup_color (context, "warning_color", &warning))
+    warning = fg;
+  if (!style_context_lookup_color (context, "success_color", &success))
+    success = fg;
+
+  na_tray_set_colors (data->tray, &fg, &error, &warning, &success);
+}
+
 static void
 applet_destroy (PanelApplet *applet,
 		AppletData  *data)
@@ -126,6 +171,8 @@ on_applet_realized (GtkWidget *widget,
                     G_CALLBACK (applet_change_orientation), data);
   g_signal_connect (applet, "change_background",
                     G_CALLBACK (applet_change_background), data);
+  g_signal_connect (GTK_WIDGET (applet), "style-updated",
+                    G_CALLBACK (on_applet_style_updated), data);
   g_signal_connect (applet, "destroy",
                     G_CALLBACK (applet_destroy), data);
 
