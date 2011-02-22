@@ -818,8 +818,7 @@ applet_key_press (GtkWidget   *widget,
 
 	if (is_edit_popup)
 		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, &eventbutton);
-
-	if (is_popup)
+	else if (is_popup)
 		applet_show_menu (info, panel_applet_get_menu (info), TRUE, &eventbutton);
 
 	return (is_popup || is_edit_popup);
