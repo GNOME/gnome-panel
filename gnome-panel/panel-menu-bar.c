@@ -422,12 +422,6 @@ panel_menu_bar_load (PanelWidget *panel,
 		return;
 	}
 
-	panel_applet_add_callback (menubar->priv->info,
-				   "help",
-				   GTK_STOCK_HELP,
-				   _("_Help"),
-				   NULL);
-
 	if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor")) {
 		panel_applet_add_callback (menubar->priv->info,
@@ -436,6 +430,12 @@ panel_menu_bar_load (PanelWidget *panel,
 					   _("_Edit Menus"),
 					   NULL);
 	}
+
+	panel_applet_add_callback (menubar->priv->info,
+				   "help",
+				   GTK_STOCK_HELP,
+				   _("_Help"),
+				   NULL);
 
 	g_signal_connect_after (menubar, "focus-in-event",
 				G_CALLBACK (gtk_widget_queue_draw), menubar);
