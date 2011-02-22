@@ -280,7 +280,6 @@ typedef struct {
 	char                   *icon_name;
 	char                   *text;
 	char                   *tooltip;
-	char                   *help_index;
 	char                   *drag_id;
 	void                  (*invoke)      (GtkWidget         *widget);
 	void                  (*setup_menu)  (PanelActionButton *button);
@@ -294,7 +293,7 @@ typedef struct {
 static PanelAction actions [] = {
 	{
 		PANEL_ACTION_NONE,
-		NULL, NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL,
 		NULL, NULL, NULL, NULL
 	},
 	{
@@ -302,7 +301,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_LOCKSCREEN,
 		N_("Lock Screen"),
 		N_("Protect your computer from unauthorized use"),
-		"gospanel-21",
 		"ACTION:lock:NEW",
 		panel_action_lock_screen,
 		panel_action_lock_setup_menu,
@@ -317,7 +315,6 @@ static PanelAction actions [] = {
 		 * "1" (msgctxt: "panel:showusername")) */
 		N_("Log Out..."),
 		N_("Log out of this session to log in as a different user"),
-		"gospanel-20",
 		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,
 		panel_lockdown_get_disable_log_out
@@ -327,7 +324,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_RUN,
 		N_("Run Application..."),
 		N_("Run an application by typing a command or choosing from a list"),
-		"gospanel-555",
 		"ACTION:run:NEW",
 		panel_action_run_program, NULL, NULL,
 		panel_lockdown_get_disable_command_line
@@ -337,7 +333,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_SEARCHTOOL,
 		N_("Search for Files..."),
 		N_("Locate documents and folders on this computer by name or content"),
-		"gospanel-554",
 		"ACTION:search:NEW",
 		panel_action_search, NULL, NULL, NULL
 	},
@@ -346,7 +341,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_FORCE_QUIT,
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
-		"gospanel-563",
 		"ACTION:force-quit:NEW",
 		panel_action_force_quit, NULL, NULL,
 		panel_lockdown_get_disable_force_quit
@@ -356,7 +350,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_REMOTE, //FIXME icon
 		N_("Connect to Server..."),
 		N_("Connect to a remote computer or shared disk"),
-		"nautilus-server-connect",
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
 	},
@@ -365,7 +358,6 @@ static PanelAction actions [] = {
 		PANEL_ICON_SHUTDOWN,
 		N_("Shut Down..."),
 		N_("Shut down the computer"),
-		"gospanel-20",
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
 		panel_action_shutdown_reboot_is_disabled
@@ -373,7 +365,7 @@ static PanelAction actions [] = {
 	/* deprecated actions */
 	{
 		PANEL_ACTION_SCREENSHOT,
-		NULL, NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL,
 		NULL, NULL, NULL, NULL
 	}
 };
@@ -722,12 +714,6 @@ panel_action_button_load (PanelActionButtonType  type,
 		return;
 	}
 
-	panel_applet_add_callback (button->priv->info,
-				   "help",
-				   GTK_STOCK_HELP,
-				   _("_Help"),
-				   NULL);
-
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
@@ -825,20 +811,6 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 	g_return_if_fail (callback_name != NULL);
 	g_return_if_fail (button->priv->type > PANEL_ACTION_NONE &&
 			  button->priv->type < PANEL_ACTION_LAST);
-
-	if (!strcmp (callback_name, "help")) {
-		GdkScreen *screen;
-
-		if (!actions [button->priv->type].help_index)
-			return;
-
-		screen = gtk_widget_get_screen (GTK_WIDGET (button));
-
-		panel_show_help (screen, "user-guide",
-				 actions [button->priv->type].help_index, NULL);
-
-		return;
-	}
 
 	if (actions [button->priv->type].invoke_menu)
 		actions [button->priv->type].invoke_menu (button, callback_name);
