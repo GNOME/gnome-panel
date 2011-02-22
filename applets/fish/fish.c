@@ -571,79 +571,6 @@ display_preferences_dialog (GtkAction  *action,
 }
 
 static void
-display_help_dialog (GtkAction  *action,
-		     FishApplet *fish)
-{
-	show_help (fish, NULL);
-}
-
-static void
-display_about_dialog (GtkAction  *action,
-		      FishApplet *fish)
-{
-	const char *author_format = _("%s the Fish");
-	const char *about_format = _("%s has no use what-so-ever. "
-				     "It only takes up disk space and "
-				     "compilation time, and if loaded it also "
-				     "takes up precious panel space and "
-				     "memory. Anybody found using it should be "
-				     "promptly sent for a psychiatric "
-				     "evaluation.");
-	const char  *documenters [] = {
-		"Telsa Gwynne <hobbit@aloss.ukuu.org.uk>",
-		"Sun GNOME Documentation Team <gdocteam@sun.com>",
-          	NULL
-	};
-
-	char        *authors [3];
-	char        *descr;
-
-	if (fish->about_dialog) {
-		gtk_window_set_screen (GTK_WINDOW (fish->about_dialog),
-				       gtk_widget_get_screen (GTK_WIDGET (fish)));
-		gtk_window_present (GTK_WINDOW (fish->about_dialog));
-		return;
-	}
-
-	authors [0] = g_strdup_printf (author_format, fish->name);
-	authors [1] = _("(with minor help from George)");
-	authors [2] = NULL;
-
-	descr = g_strdup_printf (about_format, fish->name);
-		
-	fish->about_dialog = gtk_about_dialog_new ();
-	g_object_set (fish->about_dialog,
-		      "program-name", _("Fish"),
-		      "version", "3.4.7.4ac19",
-		      "copyright", "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
-		      "comments", descr,
-		      "authors", (const char **) authors,
-		      "documenters", documenters,
-		      "translator-credits", _("translator-credits"),
-		      "logo-icon-name", FISH_ICON,
-		      NULL);
-
-	g_free (descr);
-	g_free (authors [0]);
-
-	gtk_window_set_icon_name (GTK_WINDOW (fish->about_dialog), FISH_ICON);
-	gtk_window_set_wmclass (
-		GTK_WINDOW (fish->about_dialog), "fish", "Fish");
-	gtk_window_set_screen (GTK_WINDOW (fish->about_dialog),
-			       gtk_widget_get_screen (GTK_WIDGET (fish)));
-
-	g_signal_connect (fish->about_dialog, "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &fish->about_dialog);
-
-	g_signal_connect (fish->about_dialog, "response",
-			  G_CALLBACK (gtk_widget_destroy),
-			  NULL);
-
-	gtk_widget_show (fish->about_dialog);
-}
-
-static void
 set_ally_name_desc (GtkWidget  *widget,
 		    FishApplet *fish)
 {
@@ -1858,13 +1785,7 @@ setup_fish_widget (FishApplet *fish)
 static const GtkActionEntry fish_menu_verbs [] = {
 	{ "FishPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
 	  NULL, NULL,
-	  G_CALLBACK (display_preferences_dialog) },
-	{ "FishHelp", GTK_STOCK_HELP, N_("_Help"),
-	  NULL, NULL,
-	  G_CALLBACK (display_help_dialog) },
-	{ "FishAbout", GTK_STOCK_ABOUT, N_("_About"),
-	  NULL, NULL,
-	  G_CALLBACK (display_about_dialog) }
+	  G_CALLBACK (display_preferences_dialog) }
 };
 
 static void
