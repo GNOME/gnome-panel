@@ -71,6 +71,66 @@ enum {
 
 static void panel_menu_bar_update_text_gravity (PanelMenuBar *menubar);
 
+static gboolean
+panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
+			       PanelMenuBar *menubar)
+{
+	g_object_set (menubar->priv->applications_item,
+		      "has-tooltip", TRUE, NULL);
+	g_object_set (menubar->priv->places_item,
+		      "has-tooltip", TRUE, NULL);
+	g_object_set (menubar->priv->desktop_item,
+		      "has-tooltip", TRUE, NULL);
+
+	return FALSE;
+}
+
+static gboolean
+panel_menu_bar_hide_tooltip_and_focus (GtkWidget    *widget,
+				       PanelMenuBar *menubar)
+{
+	/* remove focus that would be drawn on the currently focused child of
+	 * the toplevel. See bug#308632. */
+	gtk_window_set_focus (GTK_WINDOW (menubar->priv->panel->toplevel),
+			      NULL);
+
+	g_object_set (widget, "has-tooltip", FALSE, NULL);
+
+	return FALSE;
+}
+
+static void
+panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
+{
+	panel_util_set_tooltip_text (menubar->priv->applications_item,
+				     _("Browse and run installed applications"));
+	panel_util_set_tooltip_text (menubar->priv->places_item,
+				     _("Access documents, folders and network places"));
+	panel_util_set_tooltip_text (menubar->priv->desktop_item,
+				     _("Change desktop appearance and behavior, get help, or log out"));
+
+	//FIXME: this doesn't handle the right-click case. Sigh.
+	/* Hide tooltip if a menu is activated */
+	g_signal_connect (menubar->priv->applications_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
+			  menubar);
+	g_signal_connect (menubar->priv->places_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
+			  menubar);
+	g_signal_connect (menubar->priv->desktop_item,
+			  "activate",
+			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
+			  menubar);
+
+	/* Reset tooltip when the menu bar is not used */
+	g_signal_connect (GTK_MENU_SHELL (menubar),
+			  "deactivate",
+			  G_CALLBACK (panel_menu_bar_reinit_tooltip),
+			  menubar);
+}
+
 static void
 _gtk_label_make_bold (GtkLabel *label)
 {
@@ -132,6 +192,8 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
         _gtk_label_make_bold (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menubar->priv->desktop_item))));
+
+	panel_menu_bar_setup_tooltip (menubar);
 
 	panel_menu_bar_update_text_gravity (menubar);
 	g_signal_connect (menubar, "screen-changed",
