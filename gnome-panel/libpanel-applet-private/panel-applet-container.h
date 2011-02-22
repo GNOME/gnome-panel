@@ -91,6 +91,15 @@ void       panel_applet_container_child_popup_menu        (PanelAppletContainer 
 gboolean   panel_applet_container_child_popup_menu_finish (PanelAppletContainer *container,
 							   GAsyncResult         *result,
 							   GError              **error);
+void       panel_applet_container_child_popup_edit_menu   (PanelAppletContainer *container,
+							   guint                 button,
+							   guint32               timestamp,
+							   GCancellable         *cancellable,
+							   GAsyncReadyCallback   callback,
+							   gpointer              user_data);
+gboolean   panel_applet_container_child_popup_edit_menu_finish (PanelAppletContainer *container,
+								GAsyncResult         *result,
+								GError              **error);
 
 void       panel_applet_container_child_set               (PanelAppletContainer *container,
 							   const gchar          *property_name,

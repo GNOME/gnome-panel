@@ -59,6 +59,10 @@ struct _PanelAppletFrameClass {
 					   guint                button,
 					   guint32              timestamp);
 
+	void     (*popup_edit_menu)       (PanelAppletFrame    *frame,
+					   guint                button,
+					   guint32              timestamp);
+
 	void     (*change_orientation)    (PanelAppletFrame    *frame,
 					   PanelOrientation     orientation);
 

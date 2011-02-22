@@ -21,6 +21,8 @@ libpanel_applet_4_la_SOURCES =		\
 	panel-applet.c			\
 	panel-applet-factory.h		\
 	panel-applet-factory.c		\
+	panel-applet-bindings.h		\
+	panel-applet-bindings.c		\
 	panel-applet-gconf.c		\
 	panel-applet-gconf.h
 

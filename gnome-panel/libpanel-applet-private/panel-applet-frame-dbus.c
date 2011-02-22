@@ -185,6 +185,18 @@ panel_applet_frame_dbus_popup_menu (PanelAppletFrame *frame,
 }
 
 static void
+panel_applet_frame_dbus_popup_edit_menu (PanelAppletFrame *frame,
+					 guint             button,
+					 guint32           timestamp)
+{
+	PanelAppletFrameDBus *dbus_frame = PANEL_APPLET_FRAME_DBUS (frame);
+
+	panel_applet_container_child_popup_edit_menu (dbus_frame->priv->container,
+						      button, timestamp,
+						      NULL, NULL, NULL);
+}
+
+static void
 change_orientation_cb (PanelAppletContainer *container,
 		       GAsyncResult         *res,
 		       PanelAppletFrame     *frame)
@@ -380,6 +392,7 @@ panel_applet_frame_dbus_class_init (PanelAppletFrameDBusClass *class)
 	frame_class->init_properties = panel_applet_frame_dbus_init_properties;
 	frame_class->sync_menu_state = panel_applet_frame_dbus_sync_menu_state;
 	frame_class->popup_menu = panel_applet_frame_dbus_popup_menu;
+	frame_class->popup_edit_menu = panel_applet_frame_dbus_popup_edit_menu;
 	frame_class->change_orientation = panel_applet_frame_dbus_change_orientation;
 	frame_class->change_size = panel_applet_frame_dbus_change_size;
 	frame_class->change_background = panel_applet_frame_dbus_change_background;

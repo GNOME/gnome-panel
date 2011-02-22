@@ -44,11 +44,19 @@
 #include <cairo-xlib.h>
 
 #include "panel-applet.h"
+#include "panel-applet-bindings.h"
 #include "panel-applet-factory.h"
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
 
 #define PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, PanelAppletPrivate))
+
+
+/* FIXME
+    PopupEditMenu dbus method
+ */
+
+
 
 struct _PanelAppletPrivate {
 	GtkWidget         *plug;
@@ -126,7 +134,8 @@ static const gchar panel_menu_ui[] =
 	"<ui>\n"
 	"  <popup name=\"PanelAppletPopup\" action=\"PopupAction\">\n"
 	"    <placeholder name=\"AppletItems\"/>\n"
-	"    <separator/>\n"
+	"  </popup>\n"
+	"  <popup name=\"PanelAppletEditPopup\" action=\"PopupEditAction\">\n"
 	"    <menuitem name=\"RemoveItem\" action=\"Remove\"/>\n"
 	"    <menuitem name=\"MoveItem\" action=\"Move\"/>\n"
 	"    <separator/>\n"
@@ -135,6 +144,9 @@ static const gchar panel_menu_ui[] =
 	"</ui>\n";
 
 static const GtkActionEntry menu_entries[] = {
+	{ "PopupAction", NULL, "Popup Action",
+	  NULL, NULL,
+	  NULL },
 	{ "Remove", GTK_STOCK_REMOVE, N_("_Remove From Panel"),
 	  NULL, NULL,
 	  G_CALLBACK (panel_applet_menu_cmd_remove) },
@@ -882,6 +894,8 @@ panel_applet_finalize (GObject *object)
 
 	panel_applet_set_preferences_key (applet, NULL);
 
+	panel_applet_bindings_clean (applet->priv->client);
+
 	if (applet->priv->client)
 		g_object_unref (applet->priv->client);
 	applet->priv->client = NULL;
@@ -1014,12 +1028,45 @@ panel_applet_menu_popup (PanelApplet *applet,
 			 guint32      time)
 {
 	GtkWidget *menu;
+	GList     *children, *l;
+	gboolean   visible = FALSE;
 
 	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
 					  "/PanelAppletPopup");
+
+	children = gtk_container_get_children (GTK_CONTAINER (menu));
+	for (l = children; l != NULL; l = l->next) {
+		visible = gtk_widget_get_visible (GTK_WIDGET (l->data));
+		if (visible)
+			break;
+	}
+	g_list_free (children);
+
+	if (!visible)
+		return;
+
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
 			(GtkMenuPositionFunc) panel_applet_position_menu,
+			applet,
+			button, time);
+}
+
+static void
+panel_applet_edit_menu_popup (PanelApplet *applet,
+			      guint        button,
+			      guint32      time)
+{
+	GtkWidget *menu;
+
+	if (applet->priv->locked_down)
+		return;
+
+	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
+					  "/PanelAppletEditPopup");
+	gtk_menu_popup (GTK_MENU (menu),
+			NULL, NULL,
+			NULL,
 			applet,
 			button, time);
 }
@@ -1109,7 +1156,14 @@ panel_applet_button_press (GtkWidget      *widget,
 	}
 
 	if (event->button == 3) {
-		panel_applet_menu_popup (applet, event->button, event->time);
+		guint modifiers;
+
+		modifiers = event->state & GDK_MODIFIER_MASK;
+
+		if (modifiers == panel_applet_bindings_get_mouse_button_modifier_keymask ())
+			panel_applet_edit_menu_popup (applet, event->button, event->time);
+		else
+			panel_applet_menu_popup (applet, event->button, event->time);
 
 		return TRUE;
 	}
@@ -1127,11 +1181,20 @@ panel_applet_button_release (GtkWidget      *widget,
 }
 
 static gboolean
-panel_applet_popup_menu (GtkWidget *widget)
+panel_applet_key_press_event (GtkWidget   *widget,
+			      GdkEventKey *event)
 {
-	panel_applet_menu_popup (PANEL_APPLET (widget), 3, GDK_CURRENT_TIME);
+	gboolean is_popup = FALSE;
+	gboolean is_edit_popup = FALSE;
 
-	return TRUE;
+	panel_applet_bindings_key_event_is_popup (event, &is_popup, &is_edit_popup);
+
+	if (is_edit_popup)
+		panel_applet_edit_menu_popup (PANEL_APPLET (widget), 3, event->time);
+	else if (is_popup)
+		panel_applet_menu_popup (PANEL_APPLET (widget), 3, event->time);
+
+	return (is_popup || is_edit_popup);
 }
 
 static GtkSizeRequestMode
@@ -1824,6 +1887,7 @@ panel_applet_init (PanelApplet *applet)
 					   panel_menu_ui, -1, NULL);
 
 
+	panel_applet_bindings_init (applet->priv->client);
 
 
 	applet->priv->plug = gtk_plug_new (0);
@@ -1862,6 +1926,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->button_release_event = panel_applet_button_release;
+	widget_class->key_press_event = panel_applet_key_press_event;
 	widget_class->get_request_mode = panel_applet_get_request_mode;
         widget_class->get_preferred_width = panel_applet_get_preferred_width;
         widget_class->get_preferred_height = panel_applet_get_preferred_height;
@@ -1869,7 +1934,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	widget_class->draw = panel_applet_draw;
 	widget_class->focus = panel_applet_focus;
 	widget_class->realize = panel_applet_realize;
-	widget_class->popup_menu = panel_applet_popup_menu;
 
 	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
@@ -2039,6 +2103,14 @@ method_call_cb (GDBusConnection       *connection,
 		panel_applet_menu_popup (applet, button, time);
 
 		g_dbus_method_invocation_return_value (invocation, NULL);
+	} else if (g_strcmp0 (method_name, "PopupEditMenu") == 0) {
+		guint button;
+		guint time;
+
+		g_variant_get (parameters, "(uu)", &button, &time);
+		panel_applet_edit_menu_popup (applet, button, time);
+
+		g_dbus_method_invocation_return_value (invocation, NULL);
 	}
 }
 
@@ -2126,6 +2198,10 @@ static const gchar introspection_xml[] =
 	"<node>"
 	  "<interface name='org.gnome.panel.applet.Applet'>"
 	    "<method name='PopupMenu'>"
+	      "<arg name='button' type='u' direction='in'/>"
+	      "<arg name='time' type='u' direction='in'/>"
+	    "</method>"
+	    "<method name='PopupEditMenu'>"
 	      "<arg name='button' type='u' direction='in'/>"
 	      "<arg name='time' type='u' direction='in'/>"
 	    "</method>"

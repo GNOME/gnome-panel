@@ -798,3 +798,47 @@ panel_applet_container_child_popup_menu_finish (PanelAppletContainer *container,
 
 	return !g_simple_async_result_propagate_error (simple, error);
 }
+
+void
+panel_applet_container_child_popup_edit_menu (PanelAppletContainer *container,
+					      guint                 button,
+					      guint32               timestamp,
+					      GCancellable         *cancellable,
+					      GAsyncReadyCallback   callback,
+					      gpointer              user_data)
+{
+	GSimpleAsyncResult *result;
+	GDBusProxy         *proxy = container->priv->applet_proxy;
+
+	if (!proxy)
+		return;
+
+	result = g_simple_async_result_new (G_OBJECT (container),
+					    callback,
+					    user_data,
+					    panel_applet_container_child_popup_edit_menu);
+
+	g_dbus_connection_call (g_dbus_proxy_get_connection (proxy),
+				g_dbus_proxy_get_name (proxy),
+				g_dbus_proxy_get_object_path (proxy),
+				PANEL_APPLET_INTERFACE,
+				"PopupEditMenu",
+				g_variant_new ("(uu)", button, timestamp),
+				NULL,
+				G_DBUS_CALL_FLAGS_NO_AUTO_START,
+				-1, cancellable,
+				child_popup_menu_cb,
+				result);
+}
+
+gboolean
+panel_applet_container_child_popup_edit_menu_finish (PanelAppletContainer *container,
+						     GAsyncResult         *result,
+						     GError              **error)
+{
+	GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (result);
+
+	g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == panel_applet_container_child_popup_edit_menu);
+
+	return !g_simple_async_result_propagate_error (simple, error);
+}
