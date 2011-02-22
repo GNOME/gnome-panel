@@ -82,8 +82,6 @@ typedef struct {
 
 	GdkPixbuf         *pixbuf;
 
-	GtkWidget         *about_dialog;
-
 	GtkWidget         *preferences_dialog;
 	GtkWidget         *name_entry;
 	GtkWidget         *command_label;
@@ -1954,10 +1952,6 @@ fish_applet_dispose (GObject *object)
 		g_object_unref (fish->pixbuf);
 	fish->pixbuf = NULL;
 
-	if (fish->about_dialog)
-		gtk_widget_destroy (fish->about_dialog);
-	fish->about_dialog = NULL;
-
 	if (fish->preferences_dialog)
 		gtk_widget_destroy (fish->preferences_dialog);
 	fish->preferences_dialog = NULL;
@@ -2008,8 +2002,6 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->prev_allocation.height = -1;
 
 	fish->pixbuf = NULL;
-
-	fish->about_dialog = NULL;
 
 	fish->preferences_dialog = NULL;
 	fish->name_entry         = NULL;

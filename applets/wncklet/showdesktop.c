@@ -46,7 +46,6 @@ typedef struct {
         GtkWidget *applet;
         GtkWidget *button;
         GtkWidget *image;
-        GtkWidget *about_dialog;
 
         GtkOrientation orient;
         int size;
@@ -267,11 +266,6 @@ static void
 applet_destroyed (GtkWidget       *applet,
                   ShowDesktopData *sdd)
 {
-	if (sdd->about_dialog) {
-		gtk_widget_destroy (sdd->about_dialog);
-		sdd->about_dialog =  NULL;
-	}
-
 	if (sdd->button_activate != 0) {
 		g_source_remove (sdd->button_activate);
 		sdd->button_activate = 0;

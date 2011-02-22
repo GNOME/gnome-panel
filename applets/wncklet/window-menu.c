@@ -45,7 +45,6 @@
 typedef struct {
 	GtkWidget    *applet;
 	GtkWidget    *selector;
-	GtkWidget    *about_dialog;
 	int	      size;
 	PanelAppletOrient orient;
 } WindowMenu;
@@ -54,11 +53,6 @@ static void
 window_menu_destroy (GtkWidget  *widget,
                      WindowMenu *window_menu)
 {
-	if (window_menu->about_dialog) {
-		gtk_widget_destroy (window_menu->about_dialog);
-		window_menu->about_dialog = NULL;
-	}
-
 	g_free (window_menu);
 }
 
