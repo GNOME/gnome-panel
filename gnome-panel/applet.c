@@ -20,6 +20,7 @@
 #include "drawer.h"
 #include "launcher.h"
 #include "panel-addto.h"
+#include "panel-bindings.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "panel-applet-frame.h"
@@ -154,25 +155,50 @@ panel_applet_clean (AppletInfo *info)
 }
 
 static void
-panel_applet_recreate_menu (AppletInfo	*info)
+panel_applet_recreate_menu (AppletInfo *info)
 {
-	GList *l;
+	if (info->menu) {
+		GList *l;
 
-	if (!info->menu)
-		return;
+		for (l = info->user_menu; l; l = l->next) {
+			AppletUserMenu *menu = l->data;
 
-	for (l = info->user_menu; l; l = l->next) {
-		AppletUserMenu *menu = l->data;
+			menu->menuitem = NULL;
+			menu->submenu = NULL;
+		}
 
-		menu->menuitem =NULL;
-		menu->submenu =NULL;
+		g_signal_handlers_disconnect_by_func (info->menu,
+						      G_CALLBACK (applet_menu_show), info);
+		g_signal_handlers_disconnect_by_func (info->menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
+
+		g_object_unref (info->menu);
+		info->menu = NULL;
 	}
 
-        g_signal_handlers_disconnect_by_func (info->menu, G_CALLBACK (applet_menu_show), info);
-        g_signal_handlers_disconnect_by_func (info->menu, G_CALLBACK (applet_menu_deactivate), info);
+	panel_applet_get_menu (info);
+}
 
-	g_object_unref (info->menu);
-	info->menu = panel_applet_create_menu (info);
+static void
+panel_applet_recreate_edit_menu (AppletInfo *info)
+{
+	if (info->edit_menu) {
+		g_signal_handlers_disconnect_by_func (info->edit_menu,
+						      G_CALLBACK (applet_menu_show), info);
+		g_signal_handlers_disconnect_by_func (info->edit_menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
+		g_object_unref (info->edit_menu);
+		info->edit_menu = NULL;
+	}
+
+	panel_applet_get_edit_menu (info);
+}
+
+static void
+panel_applet_recreate_menus (AppletInfo *info)
+{
+	panel_applet_recreate_menu (info);
+	panel_applet_recreate_edit_menu (info);
 }
 
 static void
@@ -212,7 +238,7 @@ panel_applet_locked_change_notify (GConfClient *client,
 	if (info->type == PANEL_OBJECT_APPLET)
 		panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (info->widget));
 	else
-		panel_applet_recreate_menu (info);
+		panel_applet_recreate_edit_menu (info);
 }
 
 static void
@@ -476,16 +502,10 @@ add_to_submenus (AppletInfo *info,
 	g_free(n);
 }
 
-GtkWidget *
-panel_applet_create_menu (AppletInfo *info)
+static GtkWidget *
+panel_applet_create_bare_menu (AppletInfo *info)
 {
-	GtkWidget   *menu;
-	GtkWidget   *menuitem;
-	GList       *l;
-	PanelWidget *panel_widget;
-	gboolean     added_anything = FALSE;
-
-	panel_widget = panel_applet_get_panel_widget (info);
+	GtkWidget *menu;
 
 	menu = g_object_ref_sink (gtk_menu_new ());
 
@@ -496,6 +516,21 @@ panel_applet_create_menu (AppletInfo *info)
 			  G_CALLBACK (applet_menu_show), info);
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (applet_menu_deactivate), info);
+
+	return menu;
+}
+
+GtkWidget *
+panel_applet_get_menu (AppletInfo *info)
+{
+	GtkWidget   *menu;
+	GList       *l;
+	gboolean     added_anything = FALSE;
+
+	if (info->menu)
+		return info->menu;
+
+	menu = panel_applet_create_bare_menu (info);
 
 	for (l = info->user_menu; l; l = l->next) {
 		AppletUserMenu *user_menu = l->data;
@@ -509,72 +544,90 @@ panel_applet_create_menu (AppletInfo *info)
 		added_anything = TRUE;
 	}
 
-	if (!panel_lockdown_get_locked_down ()) {
-		GtkWidget *image;
-		gboolean   locked;
-		gboolean   lockable;
-		gboolean   movable;
-		gboolean   removable;
-
-		lockable = panel_applet_lockable (info);
-		movable = panel_applet_can_freely_move (info);
-		removable = panel_profile_id_lists_are_writable ();
-
-		locked = panel_widget_get_applet_locked (panel_widget, info->widget);
-
-		if (added_anything) {
-			menuitem = gtk_separator_menu_item_new ();
-			gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-			gtk_widget_show (menuitem);
-		}
-
-		menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
-		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
-						  GTK_ICON_SIZE_MENU);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (applet_remove_callback), info);
-		gtk_widget_show (menuitem);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
-		
-		menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (move_applet_callback), info);
-		gtk_widget_show (menuitem);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, !locked && movable);
-
-		g_assert (info->move_item == NULL);
-
-		info->move_item = menuitem;
-		g_object_add_weak_pointer (G_OBJECT (menuitem),
-					   (gpointer *) &info->move_item);
-
-		menuitem = gtk_separator_menu_item_new ();
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_show (menuitem);
-
-		menuitem = gtk_check_menu_item_new_with_mnemonic (_("Loc_k To Panel"));
-		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
-						locked);
-		g_signal_connect (menuitem, "toggled",
-				  G_CALLBACK (panel_applet_lock), info);
-		gtk_widget_show (menuitem);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, lockable);
-
-		added_anything = TRUE;
-	}
-
 	if ( ! added_anything) {
+                g_signal_handlers_disconnect_by_func (menu,
+						      G_CALLBACK (applet_menu_show), info);
+                g_signal_handlers_disconnect_by_func (menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
+
 		g_object_unref (menu);
 		return NULL;
 	}
 
-	return menu;
+	info->menu = menu;
+
+	return info->menu;
 }
+
+GtkWidget *
+panel_applet_get_edit_menu (AppletInfo *info)
+{
+	GtkWidget   *menu;
+	GtkWidget   *menuitem;
+	PanelWidget *panel_widget;
+	GtkWidget   *image;
+	gboolean     locked;
+	gboolean     lockable;
+	gboolean     movable;
+	gboolean     removable;
+
+	if (info->edit_menu)
+		return info->edit_menu;
+
+	if (panel_lockdown_get_locked_down ())
+		return NULL;
+
+	menu = panel_applet_create_bare_menu (info);
+	panel_widget = panel_applet_get_panel_widget (info);
+
+	lockable = panel_applet_lockable (info);
+	movable = panel_applet_can_freely_move (info);
+	removable = panel_profile_id_lists_are_writable ();
+
+	locked = panel_widget_get_applet_locked (panel_widget, info->widget);
+
+	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
+	image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
+					  GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+				       image);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (applet_remove_callback), info);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
+
+	menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (move_applet_callback), info);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_set_sensitive (menuitem, !locked && movable);
+
+	g_assert (info->move_item == NULL);
+
+	info->move_item = menuitem;
+	g_object_add_weak_pointer (G_OBJECT (menuitem),
+				   (gpointer *) &info->move_item);
+
+	menuitem = gtk_separator_menu_item_new ();
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_show (menuitem);
+
+	menuitem = gtk_check_menu_item_new_with_mnemonic (_("Loc_k To Panel"));
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
+					locked);
+	g_signal_connect (menuitem, "toggled",
+			  G_CALLBACK (panel_applet_lock), info);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_set_sensitive (menuitem, lockable);
+
+	info->edit_menu = menu;
+
+	return info->edit_menu;
+}
+
 
 void
 panel_applet_menu_set_recurse (GtkMenu     *menu,
@@ -672,31 +725,29 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 static void
 applet_show_menu (AppletInfo     *info,
+		  GtkWidget      *menu,
 		  GdkEventButton *event)
 {
 	PanelWidget *panel_widget;
 
 	g_return_if_fail (info != NULL);
 
-	panel_widget = panel_applet_get_panel_widget (info);
-
-	if (info->menu == NULL)
-		info->menu = panel_applet_create_menu (info);
-
-	if (info->menu == NULL)
+	if (menu == NULL)
 		return;
 
-	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
+	panel_widget = panel_applet_get_panel_widget (info);
+
+	panel_applet_menu_set_recurse (GTK_MENU (menu),
 				       "menu_panel",
 				       panel_widget);
 
-	gtk_menu_set_screen (GTK_MENU (info->menu),
+	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
 
-	if (!gtk_widget_get_realized (info->menu))
-		gtk_widget_show (info->menu);
+	if (!gtk_widget_get_realized (menu))
+		gtk_widget_show (menu);
 
-	gtk_menu_popup (GTK_MENU (info->menu),
+	gtk_menu_popup (GTK_MENU (menu),
 			NULL,
 			NULL,
 			(GtkMenuPositionFunc) panel_applet_position_menu,
@@ -706,31 +757,15 @@ applet_show_menu (AppletInfo     *info,
 }
 
 static gboolean
-applet_do_popup_menu (GtkWidget      *widget,
-		      GdkEventButton *event,
-		      AppletInfo     *info)
+applet_must_skip_menu (AppletInfo *info)
 {
 	if (panel_applet_is_in_drag ())
-		return FALSE;
+		return TRUE;
 
 	if (info->type == PANEL_OBJECT_APPLET)
-		return FALSE;
+		return TRUE;
 
-	applet_show_menu (info, event);
-
-	return TRUE;
-}
-
-static gboolean
-applet_popup_menu (GtkWidget      *widget,
-		   AppletInfo     *info)
-{
-	GdkEventButton event;
-
-	event.button = 3;
-	event.time = GDK_CURRENT_TIME;
-
-	return applet_do_popup_menu (widget, &event, info);
+	return FALSE;
 }
 
 static gboolean
@@ -738,10 +773,79 @@ applet_button_press (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     AppletInfo     *info)
 {
-	if (event->button == 3)
-		return applet_do_popup_menu (widget, event, info);
+	guint modifiers;
 
-	return FALSE;
+	if (event->button != 3)
+		return FALSE;
+
+	if (applet_must_skip_menu (info))
+		return FALSE;
+
+	modifiers = event->state & GDK_MODIFIER_MASK;
+
+	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
+		applet_show_menu (info, panel_applet_get_edit_menu (info), event);
+	else
+		applet_show_menu (info, panel_applet_get_menu (info), event);
+
+	return TRUE;
+}
+
+static gboolean
+applet_key_press (GtkWidget   *widget,
+		  GdkEventKey *event,
+		  AppletInfo  *info)
+{
+	GdkEventButton eventbutton;
+	GtkBindingSet *binding_set;
+	GtkBindingEntry *binding_entry;
+	gboolean is_popup = FALSE;
+	gboolean is_edit_popup = FALSE;
+
+	if (applet_must_skip_menu (info))
+		return FALSE;
+
+	eventbutton.button = 3;
+	eventbutton.time = event->time;
+
+	/* We're not connecting to the popup-menu signal since we want to be
+	 * able to deal with two cases:
+	 *  - exact keybinding of popup-menu => we open the context menu
+	 *  - keybinding of popup-menu + modifier from metacity => we open menu
+	 *    to "edit"
+	 */
+	binding_set = gtk_binding_set_by_class (g_type_class_peek (GTK_TYPE_WIDGET));
+
+	for (binding_entry = binding_set->entries;
+	     binding_entry != NULL;
+	     binding_entry = binding_entry->set_next) {
+		GtkBindingSignal *binding_signal;
+
+		for (binding_signal = binding_entry->signals;
+		     binding_signal != NULL;
+		     binding_signal = binding_signal->next) {
+			if (g_strcmp0 (binding_signal->signal_name, "popup-menu") == 0 ||
+			    g_strcmp0 (binding_signal->signal_name, "popup_menu") == 0) {
+				if (binding_entry->keyval != event->keyval)
+					break;
+
+				is_popup = (event->state & GDK_MODIFIER_MASK) == binding_entry->modifiers;
+				is_edit_popup = (event->state & GDK_MODIFIER_MASK) == (panel_bindings_get_mouse_button_modifier_keymask ()|binding_entry->modifiers);
+				break;
+			}
+		}
+
+		if (is_popup || is_edit_popup)
+			break;
+	}
+
+	if (is_popup)
+		applet_show_menu (info, panel_applet_get_menu (info), &eventbutton);
+
+	if (is_edit_popup)
+		applet_show_menu (info, panel_applet_get_edit_menu (info), &eventbutton);
+
+	return (is_popup || is_edit_popup);
 }
 
 static void
@@ -775,15 +879,26 @@ panel_applet_destroy (GtkWidget  *widget,
 	}
 
 	if (info->type != PANEL_OBJECT_APPLET)
-		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menu),
+		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menus),
 					      info);
 
 	if (info->menu) {
-                g_signal_handlers_disconnect_by_func (info->menu, G_CALLBACK (applet_menu_show), info);
-                g_signal_handlers_disconnect_by_func (info->menu, G_CALLBACK (applet_menu_deactivate), info);
+                g_signal_handlers_disconnect_by_func (info->menu,
+						      G_CALLBACK (applet_menu_show), info);
+                g_signal_handlers_disconnect_by_func (info->menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
 		g_object_unref (info->menu);
         }
 	info->menu = NULL;
+
+	if (info->edit_menu) {
+                g_signal_handlers_disconnect_by_func (info->edit_menu,
+						      G_CALLBACK (applet_menu_show), info);
+                g_signal_handlers_disconnect_by_func (info->edit_menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
+		g_object_unref (info->menu);
+        }
+	info->edit_menu = NULL;
 
 	if (info->data_destroy)
 		info->data_destroy (info->data);
@@ -1307,6 +1422,7 @@ panel_applet_register (GtkWidget       *applet,
 	info->type         = type;
 	info->widget       = applet;
 	info->menu         = NULL;
+	info->edit_menu    = NULL;
 	info->data         = data;
 	info->data_destroy = data_destroy;
 	info->user_menu    = NULL;
@@ -1316,7 +1432,7 @@ panel_applet_register (GtkWidget       *applet,
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
 	if (type != PANEL_OBJECT_APPLET)
-		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menu),
+		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menus),
 					   info);
 
 	key = panel_gconf_full_key ((type == PANEL_OBJECT_APPLET) ?
@@ -1368,8 +1484,8 @@ panel_applet_register (GtkWidget       *applet,
 				  G_CALLBACK (applet_button_press),
 				  info);
 
-		g_signal_connect (applet, "popup_menu",
-				  G_CALLBACK (applet_popup_menu),
+		g_signal_connect (applet, "key_press_event",
+				  G_CALLBACK (applet_key_press),
 				  info);
 	}
 

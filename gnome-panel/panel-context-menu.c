@@ -184,11 +184,7 @@ panel_context_menu_create (PanelWidget *panel)
 		g_assert (pointer != NULL);
 		info = (AppletInfo *) pointer;
 
-		if (info->menu == NULL) {
-			info->menu = panel_applet_create_menu (info);
-		}
-
-		return info->menu;
+		return panel_applet_get_menu (info);
 	}
 
 	if (panel_lockdown_get_locked_down ())
