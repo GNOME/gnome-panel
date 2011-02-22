@@ -67,6 +67,10 @@ void panel_util_key_event_is_popup (GdkEventKey *event,
 				    gboolean    *is_popup,
 				    gboolean    *is_popup_modifier);
 
+void panel_util_key_event_is_popup_panel (GdkEventKey *event,
+					  gboolean    *is_popup,
+					  gboolean    *is_popup_modifier);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

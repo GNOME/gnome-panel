@@ -22,6 +22,8 @@ gboolean panel_global_config_get_tooltips_enabled (void) { return FALSE; }
 gboolean panel_lockdown_get_disable_lock_screen (void) { return FALSE; }
 #include "panel-bindings.h"
 guint panel_bindings_get_mouse_button_modifier_keymask (void) { return 0; }
+#include "panel-toplevel.h"
+GType panel_toplevel_get_type (void) { return 0; }
 
 static int dialogs = 0;
 static gboolean create_new = FALSE;

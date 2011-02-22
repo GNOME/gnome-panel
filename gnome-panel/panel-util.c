@@ -1225,17 +1225,26 @@ panel_util_get_file_optional_homedir (const char *location)
 	return file;
 }
 
-void
-panel_util_key_event_is_popup (GdkEventKey *event,
-			       gboolean    *is_popup,
-			       gboolean    *is_popup_modifier)
+static void
+panel_util_key_event_is_binding (GdkEventKey *event,
+				 GType        type,
+				 const char  *signal_name,
+				 gboolean    *is_popup,
+				 gboolean    *is_popup_modifier)
 {
 	GtkBindingSet   *binding_set;
 	GtkBindingEntry *binding_entry;
 	gboolean         popup = FALSE;
 	gboolean         popup_modifier = FALSE;
+	char            *signal_dash;
+	char            *signal_underscore;
 
-	binding_set = gtk_binding_set_by_class (g_type_class_peek (GTK_TYPE_WIDGET));
+	signal_dash = g_strdup (signal_name);
+	g_strdelimit (signal_dash, "_", '-');
+	signal_underscore = g_strdup (signal_name);
+	g_strdelimit (signal_underscore, "-", '_');
+
+	binding_set = gtk_binding_set_by_class (g_type_class_peek (type));
 
 	for (binding_entry = binding_set->entries;
 	     binding_entry != NULL;
@@ -1245,8 +1254,8 @@ panel_util_key_event_is_popup (GdkEventKey *event,
 		for (binding_signal = binding_entry->signals;
 		     binding_signal != NULL;
 		     binding_signal = binding_signal->next) {
-			if (g_strcmp0 (binding_signal->signal_name, "popup-menu") == 0 ||
-			    g_strcmp0 (binding_signal->signal_name, "popup_menu") == 0) {
+			if (g_strcmp0 (binding_signal->signal_name, signal_dash) == 0 ||
+			    g_strcmp0 (binding_signal->signal_name, signal_underscore) == 0) {
 				if (binding_entry->keyval != event->keyval)
 					break;
 
@@ -1264,4 +1273,25 @@ panel_util_key_event_is_popup (GdkEventKey *event,
 		*is_popup = popup;
 	if (is_popup_modifier)
 		*is_popup_modifier = popup_modifier;
+
+	g_free (signal_dash);
+	g_free (signal_underscore);
+}
+
+void
+panel_util_key_event_is_popup (GdkEventKey *event,
+			       gboolean    *is_popup,
+			       gboolean    *is_popup_modifier)
+{
+	panel_util_key_event_is_binding (event, GTK_TYPE_WIDGET, "popup-menu",
+					 is_popup, is_popup_modifier);
+}
+
+void
+panel_util_key_event_is_popup_panel (GdkEventKey *event,
+				     gboolean    *is_popup,
+				     gboolean    *is_popup_modifier)
+{
+	panel_util_key_event_is_binding (event, PANEL_TYPE_TOPLEVEL, "popup-panel-menu",
+					 is_popup, is_popup_modifier);
 }

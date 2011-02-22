@@ -28,6 +28,7 @@
 #include "drawer.h"
 #include "button-widget.h"
 #include "launcher.h"
+#include "panel-bindings.h"
 #include "panel-context-menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
@@ -371,37 +372,37 @@ panel_popup_menu (PanelToplevel *toplevel,
 }
 
 static gboolean
-panel_popup_menu_signal (PanelToplevel *toplevel)
-{
-	return panel_popup_menu (toplevel, 3, GDK_CURRENT_TIME);
-}
-
-static gboolean
 panel_button_press_event (PanelToplevel  *toplevel,
 			  GdkEventButton *event)
 {
+	guint modifiers;
+
 	if (event->button != 3)
 		return FALSE;
 
-	return panel_popup_menu (toplevel, event->button, event->time);
+	modifiers = event->state & GDK_MODIFIER_MASK;
+
+	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
+		return panel_popup_menu (toplevel, event->button, event->time);
+
+	return FALSE;
 }
 
 static gboolean
-panel_key_press_event (GtkWidget   *widget,
-		       GdkEventKey *event)
+panel_key_press_event (PanelToplevel *toplevel,
+		       GdkEventKey   *event)
 {
-	/*
-  	 * If the focus widget is a GtkSocket, i.e. the
-	 * focus is in an applet in another process, then key 
-	 * bindings do not work. We get around this by
-	 * activating the key bindings here.
-	 */ 
-	if (GTK_IS_SOCKET (gtk_window_get_focus (GTK_WINDOW (widget))) &&
-	    event->keyval == GDK_KEY_F10 &&
-	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
-		return gtk_bindings_activate (G_OBJECT (widget),
-					      event->keyval,
-					      event->state);
+	gboolean is_popup = FALSE;
+
+	/* We're not connecting to the popup-menu signal since we want to be
+	 * able to handle keybinding of popup-menu + modifier from metacity */
+
+	panel_util_key_event_is_popup (event, NULL, &is_popup);
+	if (!is_popup)
+		panel_util_key_event_is_popup_panel (event, &is_popup, NULL);
+
+	if (is_popup)
+		return panel_popup_menu (toplevel, 3, event->time);
 
 	return FALSE;
 }
@@ -1293,8 +1294,6 @@ panel_setup (PanelToplevel *toplevel)
 			  G_CALLBACK (panel_key_press_event), NULL);
 	g_signal_connect (toplevel, "button-press-event",
 			  G_CALLBACK (panel_button_press_event), NULL);
-	g_signal_connect (toplevel, "popup-menu",
-			  G_CALLBACK (panel_popup_menu_signal), NULL);
 
 	g_signal_connect_swapped (toplevel, "notify::orientation",
 				  G_CALLBACK (panel_orient_change), panel_widget);
