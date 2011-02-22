@@ -34,6 +34,7 @@ void panel_lockdown_init     (void);
 void panel_lockdown_finalize (void);
 
 gboolean panel_lockdown_get_locked_down          (void);
+gboolean panel_lockdown_get_not_locked_down      (void);
 gboolean panel_lockdown_get_disable_command_line (void);
 gboolean panel_lockdown_get_disable_lock_screen  (void);
 gboolean panel_lockdown_get_disable_log_out      (void);

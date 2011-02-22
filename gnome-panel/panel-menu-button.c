@@ -680,7 +680,8 @@ panel_menu_button_load (const char  *menu_path,
         if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor"))
 		panel_applet_add_callback (info, "edit", NULL,
-					   _("_Edit Menus"), NULL);
+					   _("_Edit Menus"),
+					   panel_lockdown_get_not_locked_down);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);

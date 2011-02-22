@@ -326,6 +326,14 @@ panel_lockdown_get_locked_down (void)
 }
 
 gboolean
+panel_lockdown_get_not_locked_down (void)
+{
+        g_assert (panel_lockdown.initialized != FALSE);
+
+        return !panel_lockdown.locked_down;
+}
+
+gboolean
 panel_lockdown_get_disable_command_line (void)
 {
         g_assert (panel_lockdown.initialized != FALSE);
