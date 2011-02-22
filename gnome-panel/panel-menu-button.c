@@ -415,6 +415,9 @@ static void
 panel_menu_button_recreate_menu (PanelMenuButton *button)
 {
 	if (button->priv->menu) {
+		if (gtk_widget_get_visible (button->priv->menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (button->priv->menu));
+
 		g_signal_handlers_disconnect_by_func (button->priv->menu,
 						      G_CALLBACK (panel_menu_button_menu_deactivated),
 						      button);

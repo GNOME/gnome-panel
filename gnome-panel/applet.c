@@ -167,6 +167,9 @@ panel_applet_recreate_menu (AppletInfo *info)
 			menu->submenu = NULL;
 		}
 
+		if (gtk_widget_get_visible (info->menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->menu));
+
 		g_signal_handlers_disconnect_by_func (info->menu,
 						      G_CALLBACK (applet_menu_show), info);
 		g_signal_handlers_disconnect_by_func (info->menu,
@@ -183,6 +186,9 @@ static void
 panel_applet_recreate_edit_menu (AppletInfo *info)
 {
 	if (info->edit_menu) {
+		if (gtk_widget_get_visible (info->edit_menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->edit_menu));
+
 		g_signal_handlers_disconnect_by_func (info->edit_menu,
 						      G_CALLBACK (applet_menu_show), info);
 		g_signal_handlers_disconnect_by_func (info->edit_menu,
