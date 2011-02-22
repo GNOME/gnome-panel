@@ -63,9 +63,6 @@ get_orientation_from_applet (PanelApplet *applet)
   return orientation;
 }
 
-static const GtkActionEntry menu_actions [] = {
-};
-
 static void
 applet_change_background (PanelApplet     *applet,
                           cairo_pattern_t *pattern,
@@ -105,8 +102,6 @@ on_applet_realized (GtkWidget *widget,
   PanelApplet    *applet;
   AppletData     *data;
   NaTray         *tray;
-  GtkActionGroup *action_group;
-  gchar          *ui_path;
 
   applet = PANEL_APPLET (widget);
   data = g_object_get_data (G_OBJECT (widget), "system-tray-data");
@@ -136,19 +131,6 @@ on_applet_realized (GtkWidget *widget,
 
   gtk_container_add (GTK_CONTAINER (applet), GTK_WIDGET (tray));
   gtk_widget_show (GTK_WIDGET (tray));
-
-  action_group = gtk_action_group_new ("ClockApplet Menu Actions");
-  gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-  gtk_action_group_add_actions (action_group,
-                                menu_actions,
-                                G_N_ELEMENTS (menu_actions),
-                                data);
-  ui_path = g_build_filename (NOTIFICATION_AREA_MENU_UI_DIR, "notification-area-menu.xml", NULL);
-  panel_applet_setup_menu_from_file (applet,
-                                     ui_path, action_group);
-  g_free (ui_path);
-  g_object_unref (action_group);
-
 }
 
 static inline void

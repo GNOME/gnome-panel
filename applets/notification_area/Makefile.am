@@ -94,9 +94,6 @@ org.gnome.panel.applet.NotificationAreaAppletFactory.service: $(service_in_files
 		$< > $@
 endif
 
-uidir = $(datadir)/gnome-panel/ui
-ui_DATA = notification-area-menu.xml
-
 EXTRA_DIST =								\
 	org.gnome.panel.NotificationAreaApplet.panel-applet.in.in	\
 	$(ui_DATA)							\
