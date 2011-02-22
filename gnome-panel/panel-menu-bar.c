@@ -56,6 +56,7 @@ struct _PanelMenuBarPrivate {
 	AppletInfo  *info;
 	PanelWidget *panel;
 
+	GtkWidget   *image;
 	GtkWidget   *applications_menu;
 	GtkWidget   *applications_item;
 	GtkWidget   *places_item;
@@ -70,6 +71,18 @@ enum {
 };
 
 static void panel_menu_bar_update_text_gravity (PanelMenuBar *menubar);
+
+/* themeable size - "panel-foobar" -- This is only used for the icon of the
+ * Applications item in the menu bar */
+#define PANEL_DEFAULT_MENU_BAR_ICON_SIZE       24
+
+static GtkIconSize panel_menu_bar_icon_size = 0;
+
+static GtkIconSize
+panel_menu_bar_icon_get_size (void)
+{
+	return panel_menu_bar_icon_size;
+}
 
 static gboolean
 panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
@@ -176,6 +189,8 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	menubar->priv->applications_item = panel_image_menu_item_new ();
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
 				 _("Applications"));
+	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
+							     panel_menu_bar_icon_get_size ());
         _gtk_label_make_bold (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menubar->priv->applications_item))));
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
@@ -302,6 +317,24 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 }
 
 static void
+panel_menu_bar_style_updated (GtkWidget *widget)
+{
+	PanelMenuBar *menubar = PANEL_MENU_BAR (widget);
+	gboolean      visible;
+
+	GTK_WIDGET_CLASS (panel_menu_bar_parent_class)->style_updated (widget);
+
+	gtk_widget_style_get (widget, "icon-visible", &visible, NULL);
+
+	if (visible)
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
+					       menubar->priv->image);
+	else
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
+					       NULL);
+}
+
+static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
@@ -312,6 +345,7 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 
 	widget_class->parent_set = panel_menu_bar_parent_set;
 	widget_class->size_allocate = panel_menu_bar_size_allocate;
+	widget_class->style_updated = panel_menu_bar_style_updated;
 
 	g_type_class_add_private (klass, sizeof (PanelMenuBarPrivate));
 
@@ -324,6 +358,19 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 				   PANEL_TYPE_ORIENTATION,
 				   PANEL_ORIENTATION_TOP,
 				   G_PARAM_READWRITE));
+
+	gtk_widget_class_install_style_property (
+		widget_class,
+		g_param_spec_boolean ("icon-visible",
+				      "Icon visible",
+				      "Whether the menubar icon is visible",
+				      FALSE,
+				      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+	if (panel_menu_bar_icon_size == 0)
+		panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
+								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
+								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
 }
 
 static gboolean
