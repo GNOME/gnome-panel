@@ -36,6 +36,7 @@
 
 #include "applet.h"
 #include "xstuff.h"
+#include "panel-bindings.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-globals.h"
@@ -1222,4 +1223,45 @@ panel_util_get_file_optional_homedir (const char *location)
 	g_free (path);
 
 	return file;
+}
+
+void
+panel_util_key_event_is_popup (GdkEventKey *event,
+			       gboolean    *is_popup,
+			       gboolean    *is_popup_modifier)
+{
+	GtkBindingSet   *binding_set;
+	GtkBindingEntry *binding_entry;
+	gboolean         popup = FALSE;
+	gboolean         popup_modifier = FALSE;
+
+	binding_set = gtk_binding_set_by_class (g_type_class_peek (GTK_TYPE_WIDGET));
+
+	for (binding_entry = binding_set->entries;
+	     binding_entry != NULL;
+	     binding_entry = binding_entry->set_next) {
+		GtkBindingSignal *binding_signal;
+
+		for (binding_signal = binding_entry->signals;
+		     binding_signal != NULL;
+		     binding_signal = binding_signal->next) {
+			if (g_strcmp0 (binding_signal->signal_name, "popup-menu") == 0 ||
+			    g_strcmp0 (binding_signal->signal_name, "popup_menu") == 0) {
+				if (binding_entry->keyval != event->keyval)
+					break;
+
+				popup = (event->state & GDK_MODIFIER_MASK) == binding_entry->modifiers;
+				popup_modifier = (event->state & GDK_MODIFIER_MASK) == (panel_bindings_get_mouse_button_modifier_keymask ()|binding_entry->modifiers);
+				break;
+			}
+		}
+
+		if (popup || popup_modifier)
+			break;
+	}
+
+	if (is_popup)
+		*is_popup = popup;
+	if (is_popup_modifier)
+		*is_popup_modifier = popup_modifier;
 }

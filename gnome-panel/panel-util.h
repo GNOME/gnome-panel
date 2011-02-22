@@ -63,6 +63,10 @@ void panel_util_set_tooltip_text (GtkWidget  *widget,
 
 GFile *panel_util_get_file_optional_homedir (const char *location);
 
+void panel_util_key_event_is_popup (GdkEventKey *event,
+				    gboolean    *is_popup,
+				    gboolean    *is_popup_modifier);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */
