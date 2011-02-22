@@ -97,6 +97,8 @@ na_tray_manager_init (NaTrayManager *manager)
   manager->invisible = NULL;
   manager->socket_table = g_hash_table_new (NULL, NULL);
 
+  manager->padding = 0;
+
   manager->fg.red = 0;
   manager->fg.green = 0;
   manager->fg.blue = 0;
@@ -651,6 +653,34 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
 }
 
 static void
+na_tray_manager_set_padding_property (NaTrayManager *manager)
+{
+#ifdef GDK_WINDOWING_X11
+  GdkWindow  *window;
+  GdkDisplay *display;
+  Atom        atom;
+  gulong      data[1];
+
+  g_return_if_fail (manager->invisible != NULL);
+  window = gtk_widget_get_window (manager->invisible);
+  g_return_if_fail (window != NULL);
+
+  display = gtk_widget_get_display (manager->invisible);
+  atom = gdk_x11_get_xatom_by_name_for_display (display,
+                                                "_NET_SYSTEM_TRAY_PADDING");
+
+  data[0] = manager->padding;
+
+  XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
+                   GDK_WINDOW_XID (window),
+                   atom,
+                   XA_CARDINAL, 32,
+                   PropModeReplace,
+                   (guchar *) &data, 1);
+#endif
+}
+
+static void
 na_tray_manager_set_colors_property (NaTrayManager *manager)
 {
 #ifdef GDK_WINDOWING_X11
@@ -734,6 +764,7 @@ na_tray_manager_manage_screen_x11 (NaTrayManager *manager,
 
   na_tray_manager_set_orientation_property (manager);
   na_tray_manager_set_visual_property (manager);
+  na_tray_manager_set_padding_property (manager);
   na_tray_manager_set_colors_property (manager);
   
   window = gtk_widget_get_window (invisible);
@@ -866,6 +897,20 @@ na_tray_manager_set_orientation (NaTrayManager  *manager,
       na_tray_manager_set_orientation_property (manager);
 
       g_object_notify (G_OBJECT (manager), "orientation");
+    }
+}
+
+void
+na_tray_manager_set_padding (NaTrayManager *manager,
+                             gint           padding)
+{
+  g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
+
+  if (manager->padding != padding)
+    {
+      manager->padding = padding;
+
+      na_tray_manager_set_padding_property (manager);
     }
 }
 

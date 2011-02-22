@@ -56,6 +56,7 @@ struct _NaTrayManager
   GtkWidget *invisible;
   GdkScreen *screen;
   GtkOrientation orientation;
+  gint padding;
   GdkColor fg;
   GdkColor error;
   GdkColor warning;
@@ -96,6 +97,8 @@ gboolean        na_tray_manager_manage_screen   (NaTrayManager      *manager,
 void            na_tray_manager_set_orientation (NaTrayManager      *manager,
 						 GtkOrientation      orientation);
 GtkOrientation  na_tray_manager_get_orientation (NaTrayManager      *manager);
+void            na_tray_manager_set_padding     (NaTrayManager      *manager,
+						 gint                padding);
 void            na_tray_manager_set_colors      (NaTrayManager      *manager,
 						 GdkColor           *fg,
 						 GdkColor           *error,
