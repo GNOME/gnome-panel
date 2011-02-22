@@ -817,11 +817,11 @@ idle_redraw_cb (NaTray *tray)
 }
 
 void
-na_tray_set_colors (NaTray  *tray,
-                    GdkRGBA *fg,
-                    GdkRGBA *error,
-                    GdkRGBA *warning,
-                    GdkRGBA *success)
+na_tray_set_colors (NaTray   *tray,
+                    GdkColor *fg,
+                    GdkColor *error,
+                    GdkColor *warning,
+                    GdkColor *success)
 {
   NaTrayPrivate *priv = tray->priv;
 

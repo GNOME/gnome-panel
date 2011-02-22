@@ -56,10 +56,10 @@ struct _NaTrayManager
   GtkWidget *invisible;
   GdkScreen *screen;
   GtkOrientation orientation;
-  GdkRGBA  fg;
-  GdkRGBA  error;
-  GdkRGBA  warning;
-  GdkRGBA  success;
+  GdkColor fg;
+  GdkColor error;
+  GdkColor warning;
+  GdkColor success;
 
   GList *messages;
   GHashTable *socket_table;
@@ -97,10 +97,10 @@ void            na_tray_manager_set_orientation (NaTrayManager      *manager,
 						 GtkOrientation      orientation);
 GtkOrientation  na_tray_manager_get_orientation (NaTrayManager      *manager);
 void            na_tray_manager_set_colors      (NaTrayManager      *manager,
-						 GdkRGBA            *fg,
-						 GdkRGBA            *error,
-						 GdkRGBA            *warning,
-						 GdkRGBA            *success);
+						 GdkColor           *fg,
+						 GdkColor           *error,
+						 GdkColor           *warning,
+						 GdkColor           *success);
 
 
 G_END_DECLS

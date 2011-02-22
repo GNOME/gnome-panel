@@ -107,11 +107,6 @@ on_applet_realized (GtkWidget *widget,
   NaTray         *tray;
   GtkActionGroup *action_group;
   gchar          *ui_path;
-  GtkStyleContext *context;
-  GdkRGBA          fg;
-  GdkRGBA          warning;
-  GdkRGBA          error;
-  GdkRGBA          success;
 
   applet = PANEL_APPLET (widget);
   data = g_object_get_data (G_OBJECT (widget), "system-tray-data");
@@ -121,24 +116,6 @@ on_applet_realized (GtkWidget *widget,
 
   tray = na_tray_new_for_screen (gtk_widget_get_screen (GTK_WIDGET (applet)),
                                  get_orientation_from_applet (applet));
-  context = gtk_widget_get_style_context (GTK_WIDGET (applet));
-
-  gtk_style_context_get_color (context, 0, &fg);
-
-  if (!gtk_style_context_lookup_color (context, "success_color", &success))
-    {
-      success = fg;
-    }
-  if (!gtk_style_context_lookup_color (context, "warning_color", &warning))
-    {
-      warning = fg;
-    }
-  if (!gtk_style_context_lookup_color (context, "error_color", &error))
-    {
-      error = fg;
-    }
-
-  na_tray_set_colors (tray, &fg, &error, &warning, &success);
 
   data = g_slice_new (AppletData);
   data->applet = applet;
