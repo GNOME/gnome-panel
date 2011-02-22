@@ -668,8 +668,6 @@ panel_menu_button_load (const char  *menu_path,
 
 	button->priv->applet_id = g_strdup (info->id);
 
-	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
-
         if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor"))
 		panel_applet_add_callback (info, "edit", NULL,
