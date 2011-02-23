@@ -1,3 +1,91 @@
+===============
+Version 2.91.90
+===============
+
+This release changes in a major way the way people can "edit" panels (ie,
+create new panels, add new applets, move applets, remove applets, etc.): those
+"edit" features have always been accessible mostly through popup menus, but this
+often created accidental changes. Now, users have to press the same modifier as
+the one configured in metacity (by default, Alt) to access the menus showing
+those "edit" features. Other items from applets menus are still available in the
+standard popup menu.
+
+Packagers: please note that, following the above change, gnome-panel requires
+libpanel-applet 2.91.90 to work fine with applets.
+
+  Panel
+
+	* Code cleanups (Vincent)
+	* Fix dbus applets to work in multiscreen environment (Vincent)
+	* Update default panel layout to remove launchers, window menu, and show
+	  desktop button (William Jon McCann)
+	* Make panel menubar text bold (William Jon McCann)
+	* Hide icon from panel menubar by default; use
+	  "-PanelMenuBar-icon-visible: true;" in theme to make it visible again
+	  (Vincent)
+	* Remove help items from popup menus (William Jon McCann, Vincent)
+	* Move all "edit" features in popup menus in a popup menu that gets
+	  opened only when modifier is pressed (Vincent)
+	* Do not show "Edit Menus" in menubar context menu if locked down
+	  (Vincent)
+	* Do not lock any objects by default anymore (Vincent)
+
+  libpanel-applet
+
+	* Move all "edit" features in applet popup menus in a popup menu that
+	  gets opened only when modifier is pressed (Vincent)
+
+  All Appletso
+
+	* Remove help and about items from popup menu (William Jon McCann,
+	  Vincent)
+
+  Clock Applet
+
+	* Open evo with right date when clicking on calendar (Magnus E)
+	* Make text bold (William Jon McCann)
+
+  Notification Area Applet
+
+	* Synchronize with code from gnome-shell (Dan Winship)
+	* Set tray colors based on the ones set in the theme (Vincent, William
+	  Jon McCann)
+	* Add support for _NET_SYSTEM_TRAY_PADDING. The padding can be set in
+	  the theme with "-NaTrayApplet-icon-padding: 6;" (Matthias Clasen,
+	  Vincent)
+	* Code cleanup (Vincent)
+
+  Wnck Applets
+
+	* Remove switching workspace on scroll events (done in libwnck now)
+	  (Vincent)
+
+  Misc
+
+	* Build fix (Vincent)
+	* Free the fish! (Vincent)
+
+  Docs Translators
+
+	* Jorge González (es)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Alexander Shopov (bg)
+	* Runa Bhattacharjee (bn_IN)
+	* Mario Blättermann (de)
+	* Daniel Mustieles (es)
+	* Fran Diéguez (gl)
+	* Sweta Kothari (gu)
+	* Yaron Shahrabani (he)
+	* Dirgita (id)
+	* Torstein Adolf Winterseth (nb)
+	* Wouter Bolsterlee (nl)
+	* A S Alam (pa)
+	* Chao-Hsiung Liao (zh_HK)
+	* Chao-Hsiung Liao (zh_TW)
+
 ==============
 Version 2.91.6
 ==============
