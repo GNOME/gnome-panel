@@ -256,8 +256,15 @@ context_menu_show (GtkWidget *w,
 static void
 panel_recreate_context_menu (PanelData *pd)
 {
-	if (pd->menu)
+	if (pd->menu) {
+		if (gtk_widget_get_visible (pd->menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (pd->menu));
+
+		g_signal_handlers_disconnect_by_func (pd->menu,
+						      context_menu_deactivate,
+						      pd);
 		g_object_unref (pd->menu);
+	}
 	pd->menu = NULL;
 }
 
