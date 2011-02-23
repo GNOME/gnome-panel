@@ -121,7 +121,6 @@ struct _ClockData {
         GtkWidget *panel_temperature_label;
 
 	GtkWidget *props;
-	GtkWidget *about;
 	GtkWidget *calendar_popup;
 
         GtkWidget *clock_vbox;
@@ -746,10 +745,6 @@ destroy_clock (GtkWidget * widget, ClockData *cd)
 	if (cd->timeout)
 		g_source_remove (cd->timeout);
         cd->timeout = 0;
-
-	if (cd->about)
-		gtk_widget_destroy (cd->about);
-        cd->about = NULL;
 
 	if (cd->props)
 		gtk_widget_destroy (cd->props);

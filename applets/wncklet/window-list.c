@@ -53,8 +53,6 @@ typedef struct {
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
 
-	GtkWidget *about;
-
 	/* gconf listeners id */
 	guint listeners [3];
 } TasklistData;
@@ -184,9 +182,6 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 
 	if (tasklist->action_group)
 		g_object_unref (tasklist->action_group);
-
-	if (tasklist->about)
-		gtk_widget_destroy (tasklist->about);
 
         g_free (tasklist);
 }

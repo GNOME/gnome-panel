@@ -68,8 +68,6 @@ typedef struct {
 	GtkWidget *workspaces_tree;
 	GtkListStore *workspaces_store;
 
-	GtkWidget *about;
-	
 	GtkOrientation orientation;
 	int n_rows;				/* for vertical layout this is cols */
 	WnckPagerDisplayMode display_mode;
@@ -250,9 +248,6 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 
 	if (pager->action_group)
 		g_object_unref (pager->action_group);
-
-	if (pager->about)
-		gtk_widget_destroy (pager->about);
 
 	g_free (pager);
 }
