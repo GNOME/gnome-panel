@@ -835,6 +835,10 @@ create_calendar (ClockData *cd)
 				      cd->orient == PANEL_APPLET_ORIENT_UP);
 	g_free (prefs_dir);
 
+	g_object_bind_property (cd->applet, "locked-down",
+				window, "locked-down",
+				G_BINDING_DEFAULT|G_BINDING_SYNC_CREATE);
+
 	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
 					cd->showweek);
 	calendar_window_set_time_format (CALENDAR_WINDOW (window),

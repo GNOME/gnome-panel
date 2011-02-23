@@ -87,6 +87,8 @@ struct _CalendarWindowPrivate {
 	gboolean     show_weeks;
 	time_t      *current_time;
 
+	gboolean     locked_down;
+
 	GtkWidget *locations_list;
 
 #ifdef HAVE_LIBECAL
@@ -123,7 +125,8 @@ enum {
 	PROP_TIMEFORMAT,
 #endif
 	PROP_CURRENTTIMEP,
-	PROP_PREFSDIR
+	PROP_PREFSDIR,
+	PROP_LOCKEDDOWN
 };
 
 static time_t *calendar_window_get_current_time_p (CalendarWindow *calwin);
@@ -132,11 +135,15 @@ static void    calendar_window_set_current_time_p (CalendarWindow *calwin,
 static const char *calendar_window_get_prefs_dir  (CalendarWindow *calwin);
 static void    calendar_window_set_prefs_dir      (CalendarWindow *calwin,
 						   const char     *prefs_dir);
+static gboolean calendar_window_get_locked_down   (CalendarWindow *calwin);
+static void    calendar_window_set_locked_down    (CalendarWindow *calwin,
+						   gboolean        locked_down);
 static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 		  				   const char *title,
                   				   const char *button_label,
 		  				   const char *key,
-                  				   GCallback   callback);
+						   GCallback   callback,
+						   gboolean    bind_to_locked_down);
 
 #ifdef HAVE_LIBECAL
 
@@ -861,7 +868,8 @@ create_task_list (CalendarWindow *calwin,
 	list = create_hig_frame (calwin, 
                                  _("Tasks"), _("Edit"),
                                  KEY_TASKS_EXPANDED,
-                                 G_CALLBACK (edit_tasks)); 
+                                 G_CALLBACK (edit_tasks),
+				 FALSE);
  
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -1034,7 +1042,7 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
 	GtkTreeSelection  *selection;
 
 	
-	list = create_hig_frame (calwin, label, _("Edit"), key, callback);
+	list = create_hig_frame (calwin, label, _("Edit"), key, callback, FALSE);
 
         *scrolled_window = scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -1566,7 +1574,8 @@ create_hig_frame (CalendarWindow *calwin,
 		  const char *title,
                   const char *button_label,
 		  const char *key,
-                  GCallback   callback)
+		  GCallback   callback,
+		  gboolean    bind_to_locked_down)
 {
         GtkWidget *vbox;
         GtkWidget *alignment;
@@ -1615,6 +1624,11 @@ create_hig_frame (CalendarWindow *calwin,
                 gtk_container_add (GTK_CONTAINER (hbox), alignment);
 
                 g_signal_connect_swapped (button, "clicked", callback, calwin);
+
+		if (bind_to_locked_down)
+			g_object_bind_property (calwin, "locked-down",
+						button, "visible",
+						G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
         }
 
 #ifdef HAVE_LIBECAL
@@ -1636,7 +1650,8 @@ calendar_window_pack_locations (CalendarWindow *calwin, GtkWidget *vbox)
 	calwin->priv->locations_list = create_hig_frame (calwin,
 							 _("Locations"), _("Edit"),
 							 KEY_LOCATIONS_EXPANDED,
-							 G_CALLBACK (edit_locations));
+							 G_CALLBACK (edit_locations),
+							 TRUE);
 
 	/* we show the widget before adding to the container, since adding to
 	 * the container changes the visibility depending on the state of the
@@ -1742,6 +1757,10 @@ calendar_window_get_property (GObject    *object,
 		g_value_set_string (value,
 				    calendar_window_get_prefs_dir (calwin));
 		break;
+	case PROP_LOCKEDDOWN:
+		g_value_set_boolean (value,
+				     calendar_window_get_locked_down (calwin));
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -1782,6 +1801,10 @@ calendar_window_set_property (GObject       *object,
 	case PROP_PREFSDIR:
 		calendar_window_set_prefs_dir (calwin,
 					       g_value_get_string (value));
+		break;
+	case PROP_LOCKEDDOWN:
+		calendar_window_set_locked_down (calwin,
+						 g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1900,6 +1923,15 @@ calendar_window_class_init (CalendarWindowClass *klass)
 				     "Preferences directory in GConf",
 				     NULL,
 				     G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_LOCKEDDOWN,
+		g_param_spec_boolean ("locked-down",
+				      "Locked Down",
+				      "Whether the window should offer access to preferences",
+				      FALSE,
+				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -2102,4 +2134,26 @@ calendar_window_set_prefs_dir (CalendarWindow *calwin,
 		calwin->priv->prefs_dir = g_strdup (prefs_dir);
 
 	g_object_notify (G_OBJECT (calwin), "prefs-dir");
+}
+
+static gboolean
+calendar_window_get_locked_down (CalendarWindow *calwin)
+{
+	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin), FALSE);
+
+	return calwin->priv->locked_down;
+}
+
+static void
+calendar_window_set_locked_down (CalendarWindow *calwin,
+				 gboolean        locked_down)
+{
+	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
+
+	if (locked_down == calwin->priv->locked_down)
+		return;
+
+	calwin->priv->locked_down = locked_down;
+
+	g_object_notify (G_OBJECT (calwin), "locked-down");
 }
