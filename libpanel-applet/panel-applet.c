@@ -97,7 +97,6 @@ enum {
         CHANGE_SIZE,
         CHANGE_BACKGROUND,
 	MOVE_FOCUS_OUT_OF_APPLET,
-        SAVE_YOURSELF,
         LAST_SIGNAL
 };
 
