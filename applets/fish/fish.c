@@ -82,6 +82,8 @@ typedef struct {
 
 	GdkPixbuf         *pixbuf;
 
+	GtkActionGroup    *action_group;
+
 	GtkWidget         *preferences_dialog;
 	GtkWidget         *name_entry;
 	GtkWidget         *command_label;
@@ -1619,6 +1621,20 @@ fish_applet_change_orient (PanelApplet       *applet,
 }
 
 static void
+fish_applet_locked_down_notified (FishApplet *fish,
+				  GParamSpec *pspec,
+				  gpointer    user_data)
+{
+	gboolean   locked_down;
+	GtkAction *action;
+
+	locked_down = panel_applet_get_locked_down (PANEL_APPLET (fish));
+
+	action = gtk_action_group_get_action (fish->action_group, "FishPreferences");
+	gtk_action_set_visible (action, !locked_down);
+}
+
+static void
 change_water (FishApplet *fish)
 {
 	GtkWidget *dialog;
@@ -1806,7 +1822,6 @@ static gboolean
 fish_applet_fill (FishApplet *fish)
 {
 	PanelApplet    *applet = (PanelApplet *) fish;
-	GtkActionGroup *action_group;
 	gchar          *ui_path;
 	GError         *error = NULL;
 
@@ -1872,23 +1887,21 @@ fish_applet_fill (FishApplet *fish)
 		fish->rotate = FALSE; /* Fallback */
 	}
 
-	action_group = gtk_action_group_new ("Fish Applet Actions");
-	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (action_group,
+	fish->action_group = gtk_action_group_new ("Fish Applet Actions");
+	gtk_action_group_set_translation_domain (fish->action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (fish->action_group,
 				      fish_menu_verbs,
 				      G_N_ELEMENTS (fish_menu_verbs),
 				      fish);
 	ui_path = g_build_filename (FISH_MENU_UI_DIR, "fish-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
+	panel_applet_setup_menu_from_file (applet, ui_path, fish->action_group);
 	g_free (ui_path);
 
-	if (panel_applet_get_locked_down (applet)) {
-		GtkAction *action;
-
-		action = gtk_action_group_get_action (action_group, "FishPreferences");
-		gtk_action_set_visible (action, FALSE);
-	}
-	g_object_unref (action_group);
+	g_signal_connect (G_OBJECT (fish),
+			  "notify::locked-down",
+			  G_CALLBACK (fish_applet_locked_down_notified),
+			  NULL);
+	fish_applet_locked_down_notified (fish, NULL, NULL);
 
 #ifndef FISH_INPROCESS
 	gtk_window_set_default_icon_name (FISH_ICON);
@@ -1951,6 +1964,10 @@ fish_applet_dispose (GObject *object)
 	if (fish->pixbuf)
 		g_object_unref (fish->pixbuf);
 	fish->pixbuf = NULL;
+
+	if (fish->action_group)
+		g_object_unref (fish->action_group);
+	fish->action_group = NULL;
 
 	if (fish->preferences_dialog)
 		gtk_widget_destroy (fish->preferences_dialog);
