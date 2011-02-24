@@ -194,6 +194,8 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 {
 	GSList *list, *l;
 
+	g_assert (error != NULL);
+
 	list = gconf_client_all_entries (client, schema_dir, error);
 
 	if (*error != NULL)
@@ -292,7 +294,7 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
  * panel_applet_add_preferences:
  * @applet: a #PanelApplet.
  * @schema_dir: a GConf path of a schema directory.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Associates the per-instance GConf directory of @applet to the schemas
  * defined in @schema_dir. This must be called if the applet will save
@@ -302,9 +304,9 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 void
 panel_applet_add_preferences (PanelApplet  *applet,
 			      const gchar  *schema_dir,
-			      GError      **opt_error)
+			      GError      **error)
 {
-	GError **error = NULL;
+	GError **_error = NULL;
 	GError  *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
@@ -313,21 +315,19 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	if (!applet->priv->prefs_key)
 		return;
 
-	if (opt_error)
-		error = opt_error;
+	/* panel_applet_associate_schemas_in_dir() requires a non-NULL error */
+	if (error)
+		_error = error;
 	else
-		error = &our_error;
+		_error = &our_error;
 
 	panel_applet_associate_schemas_in_dir (applet->priv->client,
 					       applet->priv->prefs_key,
 					       schema_dir,
-					       error);
+					       _error);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",
-			   schema_dir, our_error->message);
+	if (!error && our_error)
 		g_error_free (our_error);
-	}
 }
 
 /**

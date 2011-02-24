@@ -38,48 +38,48 @@ gchar       *panel_applet_gconf_get_full_key (PanelApplet     *applet,
 void         panel_applet_gconf_set_bool     (PanelApplet     *applet,
 					      const gchar     *key,
 					      gboolean         the_bool,
-					      GError         **opt_error);
+					      GError         **error);
 void         panel_applet_gconf_set_int      (PanelApplet     *applet,
 					      const gchar     *key,
 					      gint             the_int,
-					      GError         **opt_error);
+					      GError         **error);
 void         panel_applet_gconf_set_string   (PanelApplet     *applet,
 					      const gchar     *key,
 					      const gchar     *the_string,
-					      GError         **opt_error);
+					      GError         **error);
 void         panel_applet_gconf_set_float    (PanelApplet     *applet,
 					      const gchar     *key,
 					      gdouble          the_float,
-					      GError         **opt_error);
+					      GError         **error);
 void         panel_applet_gconf_set_list     (PanelApplet     *applet,
 					      const gchar     *key,
 					      GConfValueType   list_type,
 					      GSList          *list,
-					      GError         **opt_error);
+					      GError         **error);
 void         panel_applet_gconf_set_value    (PanelApplet     *applet,
 					      const gchar     *key,
 					      GConfValue      *value,
-					      GError         **opt_error);
+					      GError         **error);
 
 gboolean     panel_applet_gconf_get_bool     (PanelApplet     *applet,
 					      const gchar     *key,
-					      GError         **opt_error);
+					      GError         **error);
 gint         panel_applet_gconf_get_int      (PanelApplet     *applet,
 					      const gchar     *key,
-					      GError         **opt_error);
+					      GError         **error);
 gchar       *panel_applet_gconf_get_string   (PanelApplet     *applet,
 					      const gchar     *key,
-					      GError         **opt_error);
+					      GError         **error);
 gdouble      panel_applet_gconf_get_float    (PanelApplet     *applet,
 					      const gchar     *key,
-					      GError         **opt_error);
+					      GError         **error);
 GSList      *panel_applet_gconf_get_list     (PanelApplet     *applet,
 					      const gchar     *key,
 					      GConfValueType   list_type,
-					      GError         **opt_error);
+					      GError         **error);
 GConfValue  *panel_applet_gconf_get_value    (PanelApplet     *applet,
 					      const gchar     *key,
-					      GError         **opt_error);
+					      GError         **error);
 
 G_END_DECLS
 

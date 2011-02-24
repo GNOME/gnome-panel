@@ -140,7 +140,7 @@ gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
 void               panel_applet_add_preferences      (PanelApplet  *applet,
 						      const gchar  *schema_dir,
-						      GError      **opt_error);
+						      GError      **error);
 
 PanelAppletFlags   panel_applet_get_flags            (PanelApplet      *applet);
 void      	   panel_applet_set_flags            (PanelApplet      *applet,

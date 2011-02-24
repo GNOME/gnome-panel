@@ -85,7 +85,7 @@ panel_applet_gconf_get_full_key (PanelApplet *applet,
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
  * @the_bool: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_bool() to update @key in the
  * per-instance GConf directory of @applet.
@@ -94,19 +94,12 @@ void
 panel_applet_gconf_set_bool (PanelApplet  *applet,
 			     const gchar  *key,
 			     gboolean      the_bool,
-			     GError      **opt_error)
+			     GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -115,11 +108,6 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
 	gconf_client_set_bool (client, full_key, the_bool, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
@@ -127,7 +115,7 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
  * @the_int: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_int() to update @key in the
  * per-instance GConf directory of @applet.
@@ -136,19 +124,12 @@ void
 panel_applet_gconf_set_int (PanelApplet  *applet,
 			    const gchar  *key,
 			    gint          the_int,
-			    GError      **opt_error)
+			    GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -157,11 +138,6 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
 	gconf_client_set_int (client, full_key, the_int, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
@@ -169,7 +145,7 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
  * @the_string: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_string() to update @key in the
  * per-instance GConf directory of @applet.
@@ -178,19 +154,12 @@ void
 panel_applet_gconf_set_string (PanelApplet  *applet,
 			       const gchar  *key,
 			       const gchar  *the_string,
-			       GError      **opt_error)
+			       GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -199,11 +168,6 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
 	gconf_client_set_string (client, full_key, the_string, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
@@ -211,7 +175,7 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
  * @the_float: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_float() to update @key in the
  * per-instance GConf directory of @applet.
@@ -220,19 +184,12 @@ void
 panel_applet_gconf_set_float (PanelApplet  *applet,
 			      const gchar  *key,
 			      gdouble       the_float,
-			      GError      **opt_error)
+			      GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -241,11 +198,6 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
 	gconf_client_set_float (client, full_key, the_float, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
@@ -254,7 +206,7 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
  * @key: a GConf key name.
  * @list_type: type of items in @list.
  * @list: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_list() to update @key in the
  * per-instance GConf directory of @applet.
@@ -264,19 +216,12 @@ panel_applet_gconf_set_list (PanelApplet     *applet,
 			     const gchar     *key,
 			     GConfValueType   list_type,
 			     GSList          *list,
-			     GError         **opt_error)
+			     GError         **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -285,11 +230,6 @@ panel_applet_gconf_set_list (PanelApplet     *applet,
 	gconf_client_set_list (client, full_key, list_type, list, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
@@ -297,7 +237,7 @@ panel_applet_gconf_set_list (PanelApplet     *applet,
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
  * @value: new value for @key.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_set_value() to update @key in the
  * per-instance GConf directory of @applet.
@@ -306,19 +246,12 @@ void
 panel_applet_gconf_set_value (PanelApplet  *applet,
 			      const gchar  *key,
 			      GConfValue   *value,
-			      GError      **opt_error)
+			      GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -327,18 +260,13 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
 	gconf_client_set (client, full_key, value, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 }
 
 /**
  * panel_applet_gconf_get_bool:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_bool() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -348,20 +276,13 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
 gboolean
 panel_applet_gconf_get_bool (PanelApplet  *applet,
 			     const gchar  *key,
-			     GError      **opt_error)
+			     GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	gboolean      retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -371,11 +292,6 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
 
 	g_free (full_key);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
-
 	return retval;
 }
 
@@ -383,7 +299,7 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
  * panel_applet_gconf_get_int:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_int() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -393,20 +309,13 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
 gint
 panel_applet_gconf_get_int (PanelApplet  *applet,
 			    const gchar  *key,
-			    GError      **opt_error)
+			    GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	gint          retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), -1);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -416,11 +325,6 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
 
 	g_free (full_key);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
-
 	return retval;
 }
 
@@ -428,7 +332,7 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
  * panel_applet_gconf_get_string:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_string() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -438,20 +342,13 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
 gchar *
 panel_applet_gconf_get_string (PanelApplet  *applet,
 			       const gchar  *key,
-			       GError      **opt_error)
+			       GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	gchar        *retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -461,11 +358,6 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
 
 	g_free (full_key);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
-
 	return retval;
 }
 
@@ -473,7 +365,7 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
  * panel_applet_gconf_get_float:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_float() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -483,20 +375,13 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
 gdouble
 panel_applet_gconf_get_float (PanelApplet  *applet,
 			      const gchar  *key,
-			      GError      **opt_error)
+			      GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	gdouble       retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0.0);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -506,11 +391,6 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
 
 	g_free (full_key);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
-
 	return retval;
 }
 
@@ -518,7 +398,7 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
  * panel_applet_gconf_get_value:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_value() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -528,20 +408,13 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
 GConfValue *
 panel_applet_gconf_get_value (PanelApplet  *applet,
 			      const gchar  *key,
-			      GError      **opt_error)
+			      GError      **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	GConfValue   *retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -551,11 +424,6 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
 
 	g_free (full_key);
 
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
-
 	return retval;
 }
 
@@ -563,7 +431,7 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
  * panel_applet_gconf_get_list:
  * @applet: a #PanelApplet.
  * @key: a GConf key name.
- * @opt_error: a #GError, or %NULL.
+ * @error: a #GError, or %NULL.
  *
  * Convenience wrapper around gconf_client_get_list() to get the value of @key
  * in the per-instance GConf directory of @applet.
@@ -575,20 +443,13 @@ GSList *
 panel_applet_gconf_get_list (PanelApplet     *applet,
 			     const gchar     *key,
 			     GConfValueType   list_type,
-			     GError         **opt_error)
+			     GError         **error)
 {
 	GConfClient  *client;
 	gchar        *full_key;
 	GSList       *retval;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (opt_error)
-		error = opt_error;
-	else
-		error = &our_error;
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
@@ -597,11 +458,6 @@ panel_applet_gconf_get_list (PanelApplet     *applet,
 	retval = gconf_client_get_list (client, full_key, list_type, error);
 
 	g_free (full_key);
-
-	if (!opt_error && our_error) {
-		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
-		g_error_free (our_error);
-	}
 
 	return retval;
 }
