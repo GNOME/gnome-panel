@@ -18,7 +18,7 @@ DOC_SOURCE_DIR=../../../libpanel-applet
 SCAN_OPTIONS=
 
 # Extra options to supply to gtkdoc-mkdb.
-MKDB_OPTIONS=--output-format=xml
+MKDB_OPTIONS=--xml-mode --output-format=xml
 
 # Extra options to supply to gtkdoc-fixref.
 FIXXREF_OPTIONS=
@@ -29,11 +29,10 @@ CFILE_GLOB=$(top_srcdir)/libpanel-applet/*.c
 
 # Header files to ignore when scanning.
 IGNORE_HFILES =					\
-	GNOME_Panel.h				\
+	panel-applet-bindings.h			\
 	panel-applet-enums.h			\
-	panel-applet-marshal.h			\
-	panel-applet-private.h			\
-	panel-applet-shell.h
+	panel-applet-factory.h			\
+	panel-applet-marshal.h
 
 # Images to copy into HTML directory.
 HTML_IMAGES =

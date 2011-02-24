@@ -26,6 +26,20 @@
 
 #include "panel-applet-gconf.h"
 
+/**
+ * SECTION:gconf
+ * @short_description: utility API to use GConf with applets.
+ * @stability: Unstable
+ *
+ * The <function>panel_applet_gconf_*()</function> set of API provides
+ * convenience functions to access GConf keys that are specific to an
+ * applet instance.
+ *
+ * Keep in mind that it might be worth considering using <link
+ * linkend="getting-started.settings">global settings</link> for your applet,
+ * instead of settings specific to an instance.
+ */
+
 static GConfClient *
 panel_applet_gconf_get_client (void)
 {
@@ -37,6 +51,14 @@ panel_applet_gconf_get_client (void)
 	return client;
 }
 
+/**
+ * panel_applet_gconf_get_full_key:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ *
+ * Returns the full GConf path of @key, in the per-instance GConf directory of
+ * @applet. The string should be freed by the caller.
+ **/
 gchar *
 panel_applet_gconf_get_full_key (PanelApplet *applet,
 				 const gchar *key)
@@ -58,6 +80,16 @@ panel_applet_gconf_get_full_key (PanelApplet *applet,
 	return full_key;
 }
 
+/**
+ * panel_applet_gconf_set_bool:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @the_bool: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_bool() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_bool (PanelApplet  *applet,
 			     const gchar  *key,
@@ -90,6 +122,16 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_set_int:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @the_int: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_int() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_int (PanelApplet  *applet,
 			    const gchar  *key,
@@ -122,6 +164,16 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_set_string:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @the_string: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_string() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_string (PanelApplet  *applet,
 			       const gchar  *key,
@@ -154,6 +206,16 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_set_float:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @the_float: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_float() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_float (PanelApplet  *applet,
 			      const gchar  *key,
@@ -186,6 +248,17 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_set_list:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @list_type: type of items in @list.
+ * @list: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_list() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_list (PanelApplet     *applet,
 			     const gchar     *key,
@@ -219,6 +292,16 @@ panel_applet_gconf_set_list (PanelApplet     *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_set_value:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @value: new value for @key.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_set_value() to update @key in the
+ * per-instance GConf directory of @applet.
+ **/
 void
 panel_applet_gconf_set_value (PanelApplet  *applet,
 			      const gchar  *key,
@@ -251,6 +334,17 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_gconf_get_bool:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_bool() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key.
+ **/
 gboolean
 panel_applet_gconf_get_bool (PanelApplet  *applet,
 			     const gchar  *key,
@@ -285,6 +379,17 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
 	return retval;
 }
 
+/**
+ * panel_applet_gconf_get_int:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_int() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key.
+ **/
 gint
 panel_applet_gconf_get_int (PanelApplet  *applet,
 			    const gchar  *key,
@@ -319,6 +424,17 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
 	return retval;
 }
 
+/**
+ * panel_applet_gconf_get_string:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_string() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key. The string should be freed by the caller.
+ **/
 gchar *
 panel_applet_gconf_get_string (PanelApplet  *applet,
 			       const gchar  *key,
@@ -353,6 +469,17 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
 	return retval;
 }
 
+/**
+ * panel_applet_gconf_get_float:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_float() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key.
+ **/
 gdouble
 panel_applet_gconf_get_float (PanelApplet  *applet,
 			      const gchar  *key,
@@ -387,6 +514,17 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
 	return retval;
 }
 
+/**
+ * panel_applet_gconf_get_value:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_value() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key.
+ **/
 GConfValue *
 panel_applet_gconf_get_value (PanelApplet  *applet,
 			      const gchar  *key,
@@ -421,6 +559,18 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
 	return retval;
 }
 
+/**
+ * panel_applet_gconf_get_list:
+ * @applet: a #PanelApplet.
+ * @key: a GConf key name.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Convenience wrapper around gconf_client_get_list() to get the value of @key
+ * in the per-instance GConf directory of @applet.
+ *
+ * Returns: the value of @key. The list and its content should be freed by the
+ * caller.
+ **/
 GSList *
 panel_applet_gconf_get_list (PanelApplet     *applet,
 			     const gchar     *key,

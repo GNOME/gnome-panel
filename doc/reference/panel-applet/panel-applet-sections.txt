@@ -1,38 +1,24 @@
 <INCLUDE>panel-applet.h</INCLUDE>
 
 <SECTION>
-<FILE>panel-applet</FILE>
+<FILE>applet</FILE>
+<TITLE>Panel Applet</TITLE>
 PanelApplet
 PanelAppletOrient
-PANEL_APPLET_ORIENT_UP
-PANEL_APPLET_ORIENT_DOWN
-PANEL_APPLET_ORIENT_LEFT
-PANEL_APPLET_ORIENT_RIGHT
-PanelAppletBackgroundType
 PanelAppletFlags
-PanelAppletFactoryCallback
-<TITLE>PanelApplet</TITLE>
-panel_applet_new
 panel_applet_get_orient
 panel_applet_get_size
+panel_applet_set_size_hints
 panel_applet_get_background
-panel_applet_get_preferences_key
-panel_applet_add_preferences
+panel_applet_set_background_widget
 panel_applet_get_flags
 panel_applet_set_flags
-panel_applet_set_size_hints
 panel_applet_get_locked_down
+panel_applet_add_preferences
+panel_applet_get_preferences_key
 panel_applet_request_focus
-panel_applet_get_control
-panel_applet_get_popup_component
 panel_applet_setup_menu
 panel_applet_setup_menu_from_file
-panel_applet_factory_main
-panel_applet_factory_main_closure
-PANEL_APPLET_BONOBO_FACTORY
-panel_applet_shlib_factory
-panel_applet_shlib_factory_closure
-PANEL_APPLET_BONOBO_SHLIB_FACTORY
 <SUBSECTION Standard>
 PANEL_APPLET
 PANEL_IS_APPLET
@@ -44,13 +30,23 @@ PANEL_APPLET_GET_CLASS
 <SUBSECTION Private>
 PanelAppletClass
 PanelAppletPrivate
+panel_applet_factory_setup_in_process
+</SECTION>
+
+<SECTION>
+<FILE>applet-factory</FILE>
+<TITLE>Panel Applet Factory</TITLE>
+PanelAppletFactoryCallback
+PANEL_APPLET_OUT_PROCESS_FACTORY
+PANEL_APPLET_IN_PROCESS_FACTORY
+panel_applet_factory_main
 </SECTION>
 
 <INCLUDE>panel-applet-gconf.h</INCLUDE>
 
 <SECTION>
-<FILE>panel-applet-gconf</FILE>
-<TITLE>Panel Applet GConf Utilities</TITLE>
+<FILE>gconf</FILE>
+<TITLE>GConf Utilities</TITLE>
 panel_applet_gconf_get_full_key
 panel_applet_gconf_get_bool
 panel_applet_gconf_get_int

@@ -56,7 +56,7 @@
      <title>Applet Factory</title>
 
      <para>
-      The applet factory is an implementation detail that is mostly hidden by the Panel Applet library, but it still appears in a few places (<link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY"><function>PANEL_APPLET_OUT_PROCESS_FACTORY</function></link>, <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY"><function>PANEL_APPLET_IN_PROCESS_FACTORY</function></link> and <link linkend="getting-started.install.panel-applet"><filename>.panel-applet</filename> files</link>) so it is important to understand what is an applet factory.
+      The applet factory is an implementation detail that is mostly hidden by the Panel Applet library, but it still appears in a few places (<link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link>, <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> and <link linkend="getting-started.install.panel-applet"><filename>.panel-applet</filename> files</link>) so it is important to understand what is an applet factory.
      </para>
 
      <para>
@@ -68,7 +68,7 @@
      </para>
 
      <para>
-      There is only one applet factory per applet binary, and it is always running before any applet instance is created by the applet binary. The applet factory is created via <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY"><function>PANEL_APPLET_OUT_PROCESS_FACTORY</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY"><function>PANEL_APPLET_IN_PROCESS_FACTORY</function></link>.
+      There is only one applet factory per applet binary, and it is always running before any applet instance is created by the applet binary. The applet factory is created via <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link>.
      </para>
 
     </sect2>
@@ -136,7 +136,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
     <itemizedlist>
      <listitem>
       <para>
-       <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY"><function>PANEL_APPLET_OUT_PROCESS_FACTORY</function></link>: this creates an <link linkend="getting-started.concepts.applet-factory">applet factory</link> named <constant>HelloWorldFactory</constant>, and each time this applet factory will create an applet instance, it will call <function>hello_world_factory_callback()</function> with a <link linkend="PanelApplet"><type>PanelApplet</type></link> object already created.
+       <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link>: this creates an <link linkend="getting-started.concepts.applet-factory">applet factory</link> named <constant>HelloWorldFactory</constant>, and each time this applet factory will create an applet instance, it will call <function>hello_world_factory_callback()</function> with a <link linkend="PanelApplet"><type>PanelApplet</type></link> object already created.
       </para>
      </listitem>
      <listitem>
@@ -150,13 +150,6 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
       </para>
      </listitem>
     </itemizedlist>
-
-      <para>libpanel-applet automatically creates a #PanelApplet object
-for you, passing this to your factory method. Here, you should fill
-the applet with your widgets just like a #GtkBin. For example, if you
-were writing a cdplayer applet you would create a #GtkHBox, pack the
-hbox with the cdplayer buttons and in turn add the hbox to the applet.
-      </para>
 
     <para>
      While the previous example is simple, it can be useful to directly subclass the <link linkend="PanelApplet"><type>PanelApplet</type></link> type. This makes it easy to have a per-applet instance private structure, among other benefits.
@@ -288,7 +281,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      </para>
 
      <para>
-      To setup the context menu of the applet, the <link linkend="panel-applet-setup-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function should be used, with a path to a <link linkend="getting-started.context-menu.xml-file">menu XML file</link> and a <type>GtkActionGroup</type> object containing all actions that are used in the menu XML file. The example below shows how to achieve this:
+      To setup the context menu of the applet, the <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function should be used, with a path to a <link linkend="getting-started.context-menu.xml-file">menu XML file</link> and a <type>GtkActionGroup</type> object containing all actions that are used in the menu XML file. The example below shows how to achieve this:
      </para>
 
      <example>
@@ -408,7 +401,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      </listitem>
      <listitem>
       <para>
-       We also change <function>hello_world_applet_start()</function> to add this <type>GtkActionGroup</type> object to the context menu of the applet, by calling <link linkend="panel-applet-setup-from-file"><function>panel_applet_setup_menu_from_file()</function></link>. This function takes as argument a path to the <link linkend="getting-started.context-menu.xml-file">menu XML file</link> that will define how to display the <type>GtkAction</type> objects in the context menu.
+       We also change <function>hello_world_applet_start()</function> to add this <type>GtkActionGroup</type> object to the context menu of the applet, by calling <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link>. This function takes as argument a path to the <link linkend="getting-started.context-menu.xml-file">menu XML file</link> that will define how to display the <type>GtkAction</type> objects in the context menu.
       </para>
      </listitem>
     </itemizedlist>
@@ -419,7 +412,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      <title>Menu XML File</title>
 
      <para>
-      The file that is used to setup menu with the <link linkend="panel-applet-setup-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function is a <type>GtkUIManager</type> UI definition file, without the top-level <constant>&lt;ui&gt;</constant> tag. It must only contain menuitem entries and separators. For example:
+      The file that is used to setup menu with the <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function is a <type>GtkUIManager</type> UI definition file, without the top-level <constant>&lt;ui&gt;</constant> tag. It must only contain menuitem entries and separators. For example:
      </para>
 
      <informalexample>
@@ -431,7 +424,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      </informalexample>
 
     <para>
-     Alternatively, the <link linkend="panel-applet-setup"><function>panel_applet_setup_menu()</function></link> function can be used with a string containing directly the XML.
+     Alternatively, the <link linkend="panel-applet-setup-menu"><function>panel_applet_setup_menu()</function></link> function can be used with a string containing directly the XML.
     </para>
 
     </sect2>
@@ -518,7 +511,7 @@ Icon=hello-world-icon
       <itemizedlist>
        <listitem>
         <para>
-         <constant>Id</constant> (string): the identifier of the applet factory. This must be the same name that will be used as the first parameter to <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY"><function>PANEL_APPLET_OUT_PROCESS_FACTORY</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY"><function>PANEL_APPLET_IN_PROCESS_FACTORY</function></link>.
+         <constant>Id</constant> (string): the identifier of the applet factory. This must be the same name that will be used as the first parameter to <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link>.
         </para>
        </listitem>
        <listitem>
@@ -665,7 +658,7 @@ g_object_bind_property (applet, "locked-down",
     <title>Out-of-Process vs In-Process</title>
 
     <para>
-     Applets can either live in their own process ("out-of-process") or in the panel process ("in-process"). The decision to choose one or the other is done at build time, with the macro that you use to define the applet factory: <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY"><function>PANEL_APPLET_OUT_PROCESS_FACTORY</function></link> is used for out-of-process applets while <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY"><function>PANEL_APPLET_IN_PROCESS_FACTORY</function></link> is used for in-process applets. Obviously, only one of those two macros can be used.
+     Applets can either live in their own process ("out-of-process") or in the panel process ("in-process"). The decision to choose one or the other is done at build time, with the macro that you use to define the applet factory: <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> is used for out-of-process applets while <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> is used for in-process applets. Obviously, only one of those two macros can be used.
     </para>
 
     <para>
@@ -742,8 +735,9 @@ PanelApplet.Applet.factory_main("HelloWorldFactory",
   <part id="reference">
     <title>API Reference</title>
 
-    <xi:include href="xml/panel-applet.xml"/>
-    <xi:include href="xml/panel-applet-gconf.xml"/>
+    <xi:include href="xml/applet.xml"/>
+    <xi:include href="xml/applet-factory.xml"/>
+    <xi:include href="xml/gconf.xml"/>
   </part>
 
 </book>

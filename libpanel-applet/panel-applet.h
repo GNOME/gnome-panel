@@ -30,6 +30,21 @@
 
 G_BEGIN_DECLS
 
+/**
+ * PanelAppletOrient:
+ * @PANEL_APPLET_ORIENT_UP: The #PanelApplet is on a horizontal panel, at the
+ * bottom of the screen. It is oriented towards the top of the screen.
+ * @PANEL_APPLET_ORIENT_DOWN: The #PanelApplet is on a horizontal panel, at the
+ * top of the screen. It is oriented towards the bottom of the screen.
+ * @PANEL_APPLET_ORIENT_LEFT: The #PanelApplet is on a vertical panel, at the
+ * right of the screen. It is oriented towards the left of the screen.
+ * @PANEL_APPLET_ORIENT_RIGHT: The #PanelApplet is on a vertical panel, at the
+ * left of the screen. It is oriented towards the right of the screen.
+ *
+ * Type defining the orientation of the applet. The values may seem backward
+ * (e.g. %PANEL_APPLET_ORIENT_RIGHT means the panel is on the left side), but
+ * this represents the direction the applet is oriented to.
+ **/
 typedef enum {
 	PANEL_APPLET_ORIENT_UP,
 	PANEL_APPLET_ORIENT_DOWN,
@@ -44,6 +59,23 @@ typedef enum {
 #define PANEL_IS_APPLET_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET))
 #define PANEL_APPLET_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET, PanelAppletClass))
 
+/**
+ * PanelAppletFlags:
+ * @PANEL_APPLET_FLAGS_NONE: No flags set.
+ * @PANEL_APPLET_EXPAND_MAJOR: On horizontal panels, the #PanelApplet will be
+ * allocated as much width as possible. On vertical panels, it will be
+ * allocated as much height as possible.
+ * @PANEL_APPLET_EXPAND_MINOR: On horizontal panels, the #PanelApplet will be
+ * allocated the full height of the panel. On vertical panels, it will be
+ * allocated the full width. Most applets should set this flag in order to use
+ * the full panel size and allow the applet to be Fitt's Law compliant.
+ * @PANEL_APPLET_HAS_HANDLE: The panel will draw a handle for the
+ * #PanelApplet. This handle will be usable to move the applet, and to open the
+ * context menu of the applet.
+ *
+ * Flags to be used with panel_applet_get_flags()/panel_applet_set_flags(), to
+ * indicate to the panel a specific behavior requested by the #PanelApplet.
+ **/
 typedef enum {
 	PANEL_APPLET_FLAGS_NONE   = 0,
 	PANEL_APPLET_EXPAND_MAJOR = 1 << 0,
@@ -55,6 +87,20 @@ typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
 typedef struct _PanelAppletPrivate PanelAppletPrivate;
 
+/**
+ * PanelAppletFactoryCallback:
+ * @applet: a newly-created #PanelApplet.
+ * @iid: identifier of the requested applet type.
+ * @user_data: user data.
+ *
+ * The type used for callbacks after. The callback will usually check that @iid
+ * is a valid applet type identifier for the applet factory, and will then fill
+ * @applet with widgets, connect to signals, etc.
+ *
+ * Returns: %TRUE if @iid is a valid applet type identifier for the applet
+ * factory and if the creation of @applet was successfully completed, %FALSE
+ * otherwise.
+ **/
 typedef gboolean (*PanelAppletFactoryCallback) (PanelApplet *applet,
 						const gchar *iid,
 						gpointer     user_data);
@@ -150,6 +196,28 @@ int                panel_applet_factory_setup_in_process (const gchar           
 	} while (0)
 #endif /* !defined(ENABLE_NLS) */
 
+/**
+ * PANEL_APPLET_OUT_PROCESS_FACTORY:
+ * @id: identifier of an applet factory.
+ * @type: GType of the applet this factory creates.
+ * @callback: (scope call): callback to be called when a new applet is created.
+ * @data: (closure): callback data.
+ *
+ * Convenience macro providing a main() function for an out-of-process applet.
+ * Internally, it will call panel_applet_factory_main() to create the
+ * @factory_id applet factory.
+ *
+ * Applet instances created by the applet factory will use @applet_type as
+ * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
+ * as @applet_type.
+ *
+ * On creation of the applet instances, @callback is called to setup the
+ * applet. If @callback returns %FALSE, the creation of the applet instance is
+ * cancelled.
+ *
+ * It can only be used once, and is incompatible with the use of
+ * %PANEL_APPLET_IN_PROCESS_FACTORY and panel_applet_factory_main().
+ **/
 #define PANEL_APPLET_OUT_PROCESS_FACTORY(id, type, callback, data)		\
 int main (int argc, char *argv [])						\
 {										\
@@ -182,6 +250,27 @@ int main (int argc, char *argv [])						\
 	return retval;								\
 }
 
+/**
+ * PANEL_APPLET_IN_PROCESS_FACTORY:
+ * @id: identifier of an applet factory.
+ * @type: GType of the applet this factory creates.
+ * @callback: (scope call): callback to be called when a new applet is created.
+ * @data: (closure): callback data.
+ *
+ * Convenience macro providing the symbol needed to automatically register the
+ * @factory_id applet factory for an in-process applet.
+ *
+ * Applet instances created by the applet factory will use @applet_type as
+ * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
+ * as @applet_type.
+ *
+ * On creation of the applet instances, @callback is called to setup the
+ * applet. If @callback returns %FALSE, the creation of the applet instance is
+ * cancelled.
+ *
+ * It can only be used once, and is incompatible with the use of
+ * %PANEL_APPLET_OUT_PROCESS_FACTORY and panel_applet_factory_main().
+ **/
 #define PANEL_APPLET_IN_PROCESS_FACTORY(id, type, callback, data)		\
 gboolean _panel_applet_shlib_factory (void);					\
 G_MODULE_EXPORT gint                                                            \

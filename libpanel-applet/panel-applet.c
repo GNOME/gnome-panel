@@ -49,6 +49,34 @@
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
 
+/**
+ * SECTION:applet
+ * @short_description: a widget embedded in a panel.
+ * @stability: Unstable
+ *
+ * Applets are small applications that are embedded in the GNOME panel. They
+ * can be used to give quick access to some features, or to display the state
+ * of something specific.
+ *
+ * The #PanelApplet API hides all of the embedding process as it handles all
+ * the communication with the GNOME panel. It is a subclass of #GtkBin, so you
+ * can add any kind of widgets to it.
+ *
+ * See the <link linkend="getting-started">Getting Started</link> section to
+ * learn how to properly use #PanelApplet.
+ */
+
+/**
+ * SECTION:applet-factory
+ * @short_description: the factory that will create applets.
+ * @stability: Unstable
+ *
+ * This API is used to create an <link
+ * linkend="getting-started.concepts.applet-factory">applet factory</link>. You
+ * need to call one and only one of these functions to get applets working in
+ * your binary.
+ */
+
 #define PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, PanelAppletPrivate))
 
 struct _PanelAppletPrivate {
@@ -260,6 +288,17 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 	g_slist_free (list);
 }
 
+/**
+ * panel_applet_add_preferences:
+ * @applet: a #PanelApplet.
+ * @schema_dir: a GConf path of a schema directory.
+ * @opt_error: a #GError, or %NULL.
+ *
+ * Associates the per-instance GConf directory of @applet to the schemas
+ * defined in @schema_dir. This must be called if the applet will save
+ * per-instance settings, to ensure that each key in the per-instance GConf
+ * directory has a defined type, sane default and documentation.
+ **/
 void
 panel_applet_add_preferences (PanelApplet  *applet,
 			      const gchar  *schema_dir,
@@ -291,6 +330,14 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	}
 }
 
+/**
+ * panel_applet_get_preferences_key:
+ * @applet: a #PanelApplet.
+ *
+ * Gets the GConf path to the per-instance settings of @applet.
+ *
+ * Returns: a copy of the GConf path to the per-instance settings of @applet.
+ **/
 char *
 panel_applet_get_preferences_key (PanelApplet *applet)
 {
@@ -333,6 +380,14 @@ panel_applet_set_preferences_key (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "prefs-key");
 }
 
+/**
+ * panel_applet_get_flags:
+ * @applet: a #PanelApplet.
+ *
+ * Gets the #PanelAppletFlags of @applet.
+ *
+ * Returns: the #PanelAppletFlags of @applet.
+ **/
 PanelAppletFlags
 panel_applet_get_flags (PanelApplet *applet)
 {
@@ -341,6 +396,14 @@ panel_applet_get_flags (PanelApplet *applet)
 	return applet->priv->flags;
 }
 
+/**
+ * panel_applet_set_flags:
+ * @applet: a #PanelApplet.
+ * @flags: #PanelAppletFlags to use for @applet.
+ *
+ * Sets the #PanelAppletFlags of @applet. Most of the time, at least
+ * %PANEL_APPLET_EXPAND_MINOR should be used.
+ **/
 void
 panel_applet_set_flags (PanelApplet      *applet,
 			PanelAppletFlags  flags)
@@ -418,6 +481,28 @@ panel_applet_size_hints_changed (PanelApplet *applet,
 	return FALSE;
 }
 
+/**
+ * panel_applet_set_size_hints:
+ * @applet: a #PanelApplet.
+ * @size_hints: array of sizes.
+ * @n_elements: length of @size_hints.
+ * @base_size: base size of the applet.
+ *
+ * Give hints to the panel about sizes @applet is comfortable with. This is
+ * generally useful for applets that can take a lot of space, in case the panel
+ * gets full and needs to restrict the size of some applets.
+ *
+ * @size_hints should have an even number of sizes. It is an array of (max,
+ * min) pairs where min(i) > max(i + 1).
+ *
+ * @base_size will be added to all sizes in @size_hints, and is therefore a way
+ * to guarantee a minimum size to @applet.
+ *
+ * The panel will try to allocate a size that is acceptable to @applet, i.e. in
+ * one of the (@base_size + max, @base_size + min) ranges.
+ *
+ * %PANEL_APPLET_EXPAND_MAJOR must be set for @applet to use size hints.
+ **/
 void
 panel_applet_set_size_hints (PanelApplet *applet,
 			     const int   *size_hints,
@@ -471,6 +556,18 @@ panel_applet_set_size_hints (PanelApplet *applet,
 	}
 }
 
+/**
+ * panel_applet_get_size:
+ * @applet: a #PanelApplet.
+ *
+ * Gets the size of the panel @applet is on. For a horizontal panel, the
+ * size if the height of the panel; for a vertical panel, the size is the width
+ * of the panel.
+ *
+ * Returns: the size of the panel @applet is on.
+ *
+ * Deprecated: 3.0: Use the allocation of @applet instead.
+ **/
 guint
 panel_applet_get_size (PanelApplet *applet)
 {
@@ -497,6 +594,14 @@ panel_applet_set_size (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "size");
 }
 
+/**
+ * panel_applet_get_orient:
+ * @applet: a #PanelApplet.
+ *
+ * Gets the #PanelAppletOrient of @applet.
+ *
+ * Returns: the #PanelAppletOrient of @applet.
+ **/
 PanelAppletOrient
 panel_applet_get_orient (PanelApplet *applet)
 {
@@ -579,6 +684,15 @@ panel_applet_set_locked (PanelApplet *applet,
 	}
 }
 
+/**
+ * panel_applet_get_locked_down:
+ * @applet: a #PanelApplet.
+ *
+ * Gets whether the panel @applet is on is locked down or not. A locked down
+ * applet should not allow any change to its configuration.
+ *
+ * Returns: %TRUE if the panel @applet is on is locked down, %FALSE otherwise.
+ **/
 gboolean
 panel_applet_get_locked_down (PanelApplet *applet)
 {
@@ -687,6 +801,15 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
 	return None;
 }
 
+/**
+ * panel_applet_request_focus:
+ * @applet: a #PanelApplet.
+ * @timestamp: the timestamp of the user interaction (typically a button or key
+ * press event) which triggered this call.
+ *
+ * Requests focus for @applet. There is no guarantee that @applet will
+ * successfully get focus after that call.
+ **/
 /* This function
  *   1) Gets the window id of the panel that contains the applet
  *	using XQueryTree and XGetWindowProperty to find an ancestor
@@ -817,6 +940,19 @@ panel_applet_menu_cmd_lock (GtkAction   *action,
 	panel_applet_set_locked (applet, locked);
 }
 
+/**
+ * panel_applet_setup_menu:
+ * @applet: a #PanelApplet.
+ * @xml: a menu XML string.
+ * @applet_action_group: a #GtkActionGroup.
+ *
+ * Sets up the context menu of @applet. @xml is a #GtkUIManager UI definition,
+ * describing how to display the menu items. @applet_action_group contains the
+ * various #GtkAction that are referenced in @xml.
+ *
+ * See also the <link linkend="getting-started.context-menu">Context
+ * Menu</link> section.
+ **/
 void
 panel_applet_setup_menu (PanelApplet    *applet,
 			 const gchar    *xml,
@@ -847,6 +983,20 @@ panel_applet_setup_menu (PanelApplet    *applet,
 	}
 }
 
+/**
+ * panel_applet_setup_menu_from_file:
+ * @applet: a #PanelApplet.
+ * @filename: path to a menu XML file.
+ * @applet_action_group: a #GtkActionGroup.
+ *
+ * Sets up the context menu of @applet. @filename is the path to a menu XML
+ * file, containing a #GtkUIManager UI definition that describes how to display
+ * the menu items. @applet_action_group contains the various #GtkAction that
+ * are referenced in @xml.
+ *
+ * See also the <link linkend="getting-started.context-menu">Context
+ * Menu</link> section.
+ **/
 void
 panel_applet_setup_menu_from_file (PanelApplet    *applet,
 				   const gchar    *filename,
@@ -1488,12 +1638,13 @@ panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
 
 /**
  * panel_applet_get_background:
- * @applet: a #PanelApplet
+ * @applet: a #PanelApplet.
  *
- * Returns the background pattern for @applet, or %NULL if there is none.
+ * Gets the background pattern for @applet, or %NULL if there is none.
  *
- * Returns: (transfer full): a new #cairo_pattern_t
- */
+ * Returns: (transfer full): a new #cairo_pattern_t to use as background for
+ * @applet.
+ **/
 cairo_pattern_t *
 panel_applet_get_background (PanelApplet *applet)
 {
@@ -1938,6 +2089,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
+	/**
+	 * PanelApplet:id: (skip)
+	 *
+	 * Implementation detail.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_ID,
 					 g_param_spec_string ("id",
@@ -1946,6 +2102,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      NULL,
 							      G_PARAM_CONSTRUCT_ONLY |
 							      G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:closure: (skip)
+	 *
+	 * Implementation detail.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_CLOSURE,
 					 g_param_spec_pointer ("closure",
@@ -1953,6 +2114,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 							       "The Applet closure",
 							       G_PARAM_CONSTRUCT_ONLY |
 							       G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:connection: (skip)
+	 *
+	 * Implementation detail.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_CONNECTION,
 					 g_param_spec_object ("connection",
@@ -1961,6 +2127,13 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      G_TYPE_DBUS_CONNECTION,
 							      G_PARAM_CONSTRUCT_ONLY |
 							      G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:prefs-key:
+	 *
+	 * The GConf path to the per-instance settings of the applet.
+	 *
+	 * This property gets set when the applet gets embedded.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_PREFS_KEY,
 					 g_param_spec_string ("prefs-key",
@@ -1968,7 +2141,14 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      "GConf Preferences Key",
 							      NULL,
 							      G_PARAM_READWRITE));
-        // FIXMEchpe GtkOrientation?
+	/**
+	 * PanelApplet:orient:
+	 *
+	 * The #PanelAppletOrient of the applet.
+	 *
+	 * This property gets set when the applet gets embedded, and can change
+	 * when the panel position changes.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_ORIENT,
 					 g_param_spec_uint ("orient",
@@ -1976,6 +2156,18 @@ panel_applet_class_init (PanelAppletClass *klass)
 							    "Panel Applet Orientation",
 							    0, G_MAXUINT, 0, /* FIXME */
 							    G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:size:
+	 *
+	 * The size of the panel the applet is on. For a horizontal panel, the
+	 * size if the height of the panel; for a vertical panel, the size is
+	 * the width of the panel.
+	 *
+	 * This property gets set when the applet gets embedded, and can change
+	 * when the panel size changes.
+         *
+	 * Deprecated: 3.0: Use the allocation of @applet instead.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE,
 					 g_param_spec_uint ("size",
@@ -1983,6 +2175,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 							    "Panel Applet Size",
 							    0, G_MAXUINT, 0,
 							    G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:background: (skip)
+	 *
+	 * Implementation detail.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_BACKGROUND,
 					 g_param_spec_string ("background",
@@ -1990,6 +2187,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      "Panel Applet Background",
 							      NULL,
 							      G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:flags:
+	 *
+	 * The #PanelAppletFlags of the applet.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_FLAGS,
 					 g_param_spec_uint ("flags",
@@ -1997,28 +2199,50 @@ panel_applet_class_init (PanelAppletClass *klass)
 							    "Panel Applet flags",
 							    0, G_MAXUINT, 0, /* FIXME */
 							    G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:size-hints:
+	 *
+	 * The size hints set for the applet. See panel_applet_set_size_hints().
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_SIZE_HINTS,
 					 /* FIXME: value_array? */
 					 g_param_spec_pointer ("size-hints",
 							       "SizeHints",
-							       "Panel Applet Size Hints",
+							       "Size hints of the applet",
 							       G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:locked:
+	 *
+	 * Whether the position of the applet is locked.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_LOCKED,
 					 g_param_spec_boolean ("locked",
 							       "Locked",
-							       "Whether Panel Applet is locked",
+							       "Whether the position of the applet is locked",
 							       FALSE,
 							       G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:locked-down:
+	 *
+	 * Whether the panel the applet is on is locked down.
+	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_LOCKED_DOWN,
 					 g_param_spec_boolean ("locked-down",
 							       "LockedDown",
-							       "Whether Panel Applet is locked down",
+							       "Whether the panel the applet is on is locked down",
 							       FALSE,
 							       G_PARAM_READWRITE));
 
+        /**
+         * PanelApplet::change-orient:
+         * @applet: the #PanelApplet which emitted the signal.
+         * @orient: the new #PanelAppletOrient of @applet.
+         *
+         * Emitted when the #PanelAppletOrient of @applet has changed.
+         **/
 	panel_applet_signals [CHANGE_ORIENT] =
                 g_signal_new ("change_orient",
                               G_TYPE_FROM_CLASS (klass),
@@ -2031,6 +2255,15 @@ panel_applet_class_init (PanelAppletClass *klass)
 			      1,
 			      G_TYPE_UINT);
 
+        /**
+         * PanelApplet::change-size:
+         * @applet: the #PanelApplet which emitted the signal.
+         * @size: the new size of the panel @applet is on.
+         *
+         * Emitted when the size of the panel @applet is on has changed.
+	 *
+	 * Deprecated: 3.0: Use the #GtkWidget::size-allocate signal instead.
+         **/
 	panel_applet_signals [CHANGE_SIZE] =
                 g_signal_new ("change_size",
                               G_TYPE_FROM_CLASS (klass),
@@ -2043,6 +2276,13 @@ panel_applet_class_init (PanelAppletClass *klass)
 			      1,
 			      G_TYPE_INT);
 
+        /**
+         * PanelApplet::change-background:
+         * @applet: the #PanelApplet which emitted the signal.
+         * @pattern: the new background pattern for @applet, or %NULL if there is none.
+         *
+         * Emitted when the background of @applet has changed.
+         **/
 	panel_applet_signals [CHANGE_BACKGROUND] =
                 g_signal_new ("change_background",
                               G_TYPE_FROM_CLASS (klass),
@@ -2055,6 +2295,14 @@ panel_applet_class_init (PanelAppletClass *klass)
 			      1,
 			      CAIRO_GOBJECT_TYPE_PATTERN);
 
+        /**
+         * PanelApplet::move-focus-out-of-applet: (skip)
+         * @applet: the #PanelApplet which emitted the signal.
+         * @direction: the move direction.
+         *
+	 * Emitted when the focus is moved out of @applet. This is an
+	 * implementation detail.
+         **/
 	panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =
                 g_signal_new ("move_focus_out_of_applet",
                               G_TYPE_FROM_CLASS (klass),
@@ -2342,13 +2590,30 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
 
 /**
  * panel_applet_factory_main:
- * @factory_id: Factory ID.
+ * @factory_id: identifier of an applet factory.
  * @applet_type: GType of the applet this factory creates.
- * @callback: (scope call): Callback to be called when a new applet is to be created.
- * @data: (closure): Callback data.
+ * @callback: (scope call): callback to be called when a new applet is created.
+ * @user_data: (closure): callback data.
+ *
+ * Creates the applet factory for @factory_id, so that the factory can create
+ * instances of the applet types it is associated with.
+ *
+ * Applet instances created by the applet factory will use @applet_type as
+ * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
+ * as @applet_type.
+ *
+ * On creation of the applet instances, @callback is called to setup the
+ * applet. If @callback returns %FALSE, the creation of the applet instance is
+ * cancelled.
+ *
+ * If using C, it is recommended to use #PANEL_APPLET_OUT_PROCESS_FACTORY
+ * instead as it will create a main() function for you.
+ *
+ * It can only be used once, and is incompatible with the use of
+ * %PANEL_APPLET_IN_PROCESS_FACTORY and %PANEL_APPLET_OUT_PROCESS_FACTORY.
  *
  * Returns: 0 on success, 1 if there is an error.
- */
+ **/
 int
 panel_applet_factory_main (const gchar               *factory_id,
 			   GType                      applet_type,
@@ -2361,13 +2626,27 @@ panel_applet_factory_main (const gchar               *factory_id,
 
 /**
  * panel_applet_factory_setup_in_process: (skip)
- * @factory_id: Factory ID.
+ * @factory_id: identifier of an applet factory.
  * @applet_type: GType of the applet this factory creates.
- * @callback: (scope call): Callback to be called when a new applet is to be created.
- * @data: (closure): Callback data.
+ * @callback: (scope call): callback to be called when a new applet is created.
+ * @user_data: (closure): callback data.
+ *
+ * Creates the applet factory for @factory_id, so that the factory can create
+ * instances of the applet types it is associated with.
+ *
+ * Applet instances created by the applet factory will use @applet_type as
+ * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
+ * as @applet_type.
+ *
+ * On creation of the applet instances, @callback is called to setup the
+ * applet. If @callback returns %FALSE, the creation of the applet instance is
+ * cancelled.
+ *
+ * It can only be used once, and is incompatible with the use of
+ * %PANEL_APPLET_IN_PROCESS_FACTORY and %PANEL_APPLET_OUT_PROCESS_FACTORY.
  *
  * Returns: 0 on success, 1 if there is an error.
- */
+ **/
 int
 panel_applet_factory_setup_in_process (const gchar               *factory_id,
 				       GType                      applet_type,
@@ -2378,6 +2657,15 @@ panel_applet_factory_setup_in_process (const gchar               *factory_id,
 						    callback, user_data);
 }
 
+/**
+ * panel_applet_set_background_widget:
+ * @applet: a #PanelApplet.
+ * @widget: a #GtkWidget.
+ *
+ * Configure #PanelApplet to automatically draw the background of the applet on
+ * @widget. It is generally enough to call this function with @applet as
+ * @widget.
+ **/
 void
 panel_applet_set_background_widget (PanelApplet *applet,
 				    GtkWidget   *widget)
