@@ -1759,8 +1759,12 @@ panel_applet_set_property (GObject      *object,
 		break;
 	case PROP_CLOSURE:
 		applet->priv->closure = g_value_get_pointer (value);
-		g_closure_set_marshal (applet->priv->closure,
-				       panel_applet_marshal_BOOLEAN__STRING);
+		/* We know closure should not be NULL, but we'll fail in
+		 * panel_applet_constructed() with a proper message if this is
+		 * the case. */
+		if (applet->priv->closure)
+			g_closure_set_marshal (applet->priv->closure,
+					       panel_applet_marshal_BOOLEAN__STRING);
 		break;
 	case PROP_CONNECTION:
 		applet->priv->connection = g_value_dup_object (value);
@@ -1906,7 +1910,12 @@ panel_applet_constructed (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
 
-	panel_applet_register_object (applet);
+	if (!applet->priv->connection || !applet->priv->closure || !applet->priv->id) {
+		g_printerr ("Bad use of PanelApplet API: you should not create a PanelApplet object yourself. Please use panel_applet_factory_main() instead.\n");
+		g_assert_not_reached ();
+	}
+
+	return panel_applet_register_object (applet);
 }
 
 static void
