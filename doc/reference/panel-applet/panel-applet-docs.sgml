@@ -248,6 +248,38 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      The Panel Applet library uses <type>GtkAction</type> to define menu items appearing in the context menu of the applet.
     </para>
 
+    <sect2 id="getting-started.context-menu.content">
+     <title>Guidelines for Context Menu</title>
+
+     <para>
+      To help guarantee consistency in the interaction with applets, there are some guidelines that are recommended to follow:
+     </para>
+
+     <itemizedlist>
+      <listitem>
+       <para>
+        Do not make the context menu too long: if you have more than five or six menu items, then it might be worth investing efforts on rethinking what is important in the menu.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        For the menu item that will enable the user to configure the applet, use "Preferences" for the label, and try to avoid "Configure", "Configuration", "Settings", etc.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        Avoid putting a "Help" menu item. The user will usually explicitly add the applet, so it is expected that he knows what the applet is about. Putting a "Help" menu item in the context menu is therefore too prominent. It might make sense to add a "Help" button in the Preferences dialog, though.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        If you agree, avoid putting a "About" menu item. To the user, applets are not different applications but elements of one global application, the panel. Of course, this means that credits for working on the applet are not visible to the user.
+       </para>
+      </listitem>
+     </itemizedlist>
+
+    </sect2>
+
     <sect2 id="getting-started.context-menu.setup">
      <title>Setting Up the Menu</title>
 
