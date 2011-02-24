@@ -121,7 +121,6 @@ int                panel_applet_factory_main          (const gchar		  *factory_i
 						       GType                       applet_type,
 						       PanelAppletFactoryCallback  callback,
 						       gpointer			   data);
-gboolean           _panel_applet_shlib_factory        (void);
 
 
 /*
@@ -179,6 +178,7 @@ int main (int argc, char *argv [])						\
 }
 
 #define PANEL_APPLET_IN_PROCESS_FACTORY(id, type, descr, callback, data)	\
+gboolean _panel_applet_shlib_factory (void);					\
 G_MODULE_EXPORT gint                                                            \
 _panel_applet_shlib_factory (void)					        \
 {										\
