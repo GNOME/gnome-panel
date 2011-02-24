@@ -2154,7 +2154,9 @@ panel_applet_class_init (PanelAppletClass *klass)
 					 g_param_spec_uint ("orient",
 							    "Orient",
 							    "Panel Applet Orientation",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    PANEL_APPLET_ORIENT_FIRST,
+							    PANEL_APPLET_ORIENT_LAST,
+							    PANEL_APPLET_ORIENT_UP,
 							    G_PARAM_READWRITE));
 	/**
 	 * PanelApplet:size:
@@ -2197,7 +2199,9 @@ panel_applet_class_init (PanelAppletClass *klass)
 					 g_param_spec_uint ("flags",
 							    "Flags",
 							    "Panel Applet flags",
-							    0, G_MAXUINT, 0, /* FIXME */
+							    PANEL_APPLET_FLAGS_NONE,
+							    PANEL_APPLET_FLAGS_ALL,
+							    PANEL_APPLET_FLAGS_NONE,
 							    G_PARAM_READWRITE));
 	/**
 	 * PanelApplet:size-hints:
