@@ -51,13 +51,6 @@
 
 #define PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, PanelAppletPrivate))
 
-
-/* FIXME
-    PopupEditMenu dbus method
- */
-
-
-
 struct _PanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
