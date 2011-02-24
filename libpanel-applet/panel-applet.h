@@ -145,7 +145,7 @@ int                panel_applet_factory_main          (const gchar		  *factory_i
 	} while (0)
 #endif /* !defined(ENABLE_NLS) */
 
-#define PANEL_APPLET_OUT_PROCESS_FACTORY(id, type, name, callback, data)	\
+#define PANEL_APPLET_OUT_PROCESS_FACTORY(id, type, callback, data)		\
 int main (int argc, char *argv [])						\
 {										\
 	GOptionContext *context;						\
@@ -177,7 +177,7 @@ int main (int argc, char *argv [])						\
 	return retval;								\
 }
 
-#define PANEL_APPLET_IN_PROCESS_FACTORY(id, type, descr, callback, data)	\
+#define PANEL_APPLET_IN_PROCESS_FACTORY(id, type, callback, data)		\
 gboolean _panel_applet_shlib_factory (void);					\
 G_MODULE_EXPORT gint                                                            \
 _panel_applet_shlib_factory (void)					        \

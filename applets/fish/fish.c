@@ -2076,14 +2076,12 @@ fish_applet_get_type (void)
 #ifdef FISH_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("FishAppletFactory",
 				 fish_applet_get_type (),
-				 "That-stupid-fish",
 				 fishy_factory,
 				 NULL)
 
 #else
 PANEL_APPLET_OUT_PROCESS_FACTORY ("FishAppletFactory",
 				  fish_applet_get_type (),
-				  "That-stupid-fish",
 				  fishy_factory,
 				  NULL)
 #endif

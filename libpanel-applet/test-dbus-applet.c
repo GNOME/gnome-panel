@@ -186,7 +186,6 @@ test_applet_factory (TestApplet  *applet,
 
 PANEL_APPLET_OUT_PROCESS_FACTORY ("TestAppletFactory",
 				  test_applet_get_type (),
-				  "A Test Applet for the GNOME-3.0 Panel",
 				  (PanelAppletFactoryCallback) test_applet_factory,
 				  NULL)
 

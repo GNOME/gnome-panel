@@ -3565,13 +3565,11 @@ clock_factory (PanelApplet *applet,
 #ifdef CLOCK_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("ClockAppletFactory",
                                  PANEL_TYPE_APPLET,
-                                 "ClockApplet",
                                  clock_factory,
                                  NULL)
 #else
 PANEL_APPLET_OUT_PROCESS_FACTORY ("ClockAppletFactory",
                                   PANEL_TYPE_APPLET,
-                                  "ClockApplet",
                                   clock_factory,
                                   NULL)
 #endif
