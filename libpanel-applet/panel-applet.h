@@ -118,10 +118,14 @@ void               panel_applet_setup_menu_from_file (PanelApplet        *applet
 						      GtkActionGroup     *action_group);
 
 int                panel_applet_factory_main          (const gchar		  *factory_id,
-						       gboolean                    out_process,
 						       GType                       applet_type,
 						       PanelAppletFactoryCallback  callback,
 						       gpointer			   data);
+
+int                panel_applet_factory_setup_in_process (const gchar               *factory_id,
+							  GType                      applet_type,
+							  PanelAppletFactoryCallback callback,
+							  gpointer                   data);
 
 
 /*
@@ -172,7 +176,7 @@ int main (int argc, char *argv [])						\
 										\
 	gtk_init (&argc, &argv);						\
                                                                                 \
-        retval = panel_applet_factory_main (id, TRUE, type, callback, data);    \
+        retval = panel_applet_factory_main (id, type, callback, data);          \
 	g_option_context_free (context);					\
 										\
 	return retval;								\
@@ -184,7 +188,8 @@ G_MODULE_EXPORT gint                                                            
 _panel_applet_shlib_factory (void)					        \
 {										\
 	_PANEL_APPLET_SETUP_GETTEXT (FALSE);					\
-        return panel_applet_factory_main (id, FALSE, type, callback, data);     \
+        return panel_applet_factory_setup_in_process (id, type,                 \
+                                                      callback, data);          \
 }
 
 G_END_DECLS

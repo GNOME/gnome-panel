@@ -2303,22 +2303,12 @@ _panel_applet_setup_x_error_handler (void)
 	_x_error_func = XSetErrorHandler (_x_error_handler);
 }
 
-/**
- * panel_applet_factory_main:
- * @factory_id: Factory ID.
- * @out_process: If the factory is on a separate process or not.
- * @applet_type: GType of the applet this factory creates.
- * @callback: (scope call): Callback to be called when a new applet is to be created.
- * @data: (closure): Callback data.
- *
- * Returns: 0 on success, 1 if there is an error.
- */
-int
-panel_applet_factory_main (const gchar               *factory_id,
-			   gboolean                   out_process,
-			   GType                      applet_type,
-			   PanelAppletFactoryCallback callback,
-			   gpointer                   user_data)
+static int
+_panel_applet_factory_main_internal (const gchar               *factory_id,
+				     gboolean                   out_process,
+				     GType                      applet_type,
+				     PanelAppletFactoryCallback callback,
+				     gpointer                   user_data)
 {
 	PanelAppletFactory *factory;
 	GClosure           *closure;
@@ -2348,6 +2338,44 @@ panel_applet_factory_main (const gchar               *factory_id,
 	g_object_unref (factory);
 
 	return 1;
+}
+
+/**
+ * panel_applet_factory_main:
+ * @factory_id: Factory ID.
+ * @applet_type: GType of the applet this factory creates.
+ * @callback: (scope call): Callback to be called when a new applet is to be created.
+ * @data: (closure): Callback data.
+ *
+ * Returns: 0 on success, 1 if there is an error.
+ */
+int
+panel_applet_factory_main (const gchar               *factory_id,
+			   GType                      applet_type,
+			   PanelAppletFactoryCallback callback,
+			   gpointer                   user_data)
+{
+	return _panel_applet_factory_main_internal (factory_id, TRUE, applet_type,
+						    callback, user_data);
+}
+
+/**
+ * panel_applet_factory_setup_in_process: (skip)
+ * @factory_id: Factory ID.
+ * @applet_type: GType of the applet this factory creates.
+ * @callback: (scope call): Callback to be called when a new applet is to be created.
+ * @data: (closure): Callback data.
+ *
+ * Returns: 0 on success, 1 if there is an error.
+ */
+int
+panel_applet_factory_setup_in_process (const gchar               *factory_id,
+				       GType                      applet_type,
+				       PanelAppletFactoryCallback callback,
+				       gpointer                   user_data)
+{
+	return _panel_applet_factory_main_internal (factory_id, FALSE, applet_type,
+						    callback, user_data);
 }
 
 void
