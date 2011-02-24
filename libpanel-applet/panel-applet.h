@@ -62,6 +62,7 @@ typedef gboolean (*PanelAppletFactoryCallback) (PanelApplet *applet,
 struct _PanelApplet {
 	GtkEventBox          event_box;
 
+	/*< private >*/
 	PanelAppletPrivate  *priv;
 };
 
