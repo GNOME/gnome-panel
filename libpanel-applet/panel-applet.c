@@ -944,10 +944,10 @@ panel_applet_menu_cmd_lock (GtkAction   *action,
  * panel_applet_setup_menu:
  * @applet: a #PanelApplet.
  * @xml: a menu XML string.
- * @applet_action_group: a #GtkActionGroup.
+ * @action_group: a #GtkActionGroup.
  *
  * Sets up the context menu of @applet. @xml is a #GtkUIManager UI definition,
- * describing how to display the menu items. @applet_action_group contains the
+ * describing how to display the menu items. @action_group contains the
  * various #GtkAction that are referenced in @xml.
  *
  * See also the <link linkend="getting-started.context-menu">Context
@@ -956,7 +956,7 @@ panel_applet_menu_cmd_lock (GtkAction   *action,
 void
 panel_applet_setup_menu (PanelApplet    *applet,
 			 const gchar    *xml,
-			 GtkActionGroup *applet_action_group)
+			 GtkActionGroup *action_group)
 {
 	gchar  *new_xml;
 	GError *error = NULL;
@@ -967,9 +967,9 @@ panel_applet_setup_menu (PanelApplet    *applet,
 	if (applet->priv->applet_action_group)
 		return;
 
-	applet->priv->applet_action_group = g_object_ref (applet_action_group);
+	applet->priv->applet_action_group = g_object_ref (action_group);
 	gtk_ui_manager_insert_action_group (applet->priv->ui_manager,
-					    applet_action_group, 0);
+					    action_group, 0);
 
 	new_xml = g_strdup_printf ("<ui><popup name=\"PanelAppletPopup\" action=\"AppletItems\">"
 				   "<placeholder name=\"AppletItems\">%s\n</placeholder>\n"
@@ -987,11 +987,11 @@ panel_applet_setup_menu (PanelApplet    *applet,
  * panel_applet_setup_menu_from_file:
  * @applet: a #PanelApplet.
  * @filename: path to a menu XML file.
- * @applet_action_group: a #GtkActionGroup.
+ * @action_group: a #GtkActionGroup.
  *
  * Sets up the context menu of @applet. @filename is the path to a menu XML
  * file, containing a #GtkUIManager UI definition that describes how to display
- * the menu items. @applet_action_group contains the various #GtkAction that
+ * the menu items. @action_group contains the various #GtkAction that
  * are referenced in @xml.
  *
  * See also the <link linkend="getting-started.context-menu">Context
@@ -1000,13 +1000,13 @@ panel_applet_setup_menu (PanelApplet    *applet,
 void
 panel_applet_setup_menu_from_file (PanelApplet    *applet,
 				   const gchar    *filename,
-				   GtkActionGroup *applet_action_group)
+				   GtkActionGroup *action_group)
 {
 	gchar  *xml = NULL;
 	GError *error = NULL;
 
 	if (g_file_get_contents (filename, &xml, NULL, &error)) {
-		panel_applet_setup_menu (applet, xml, applet_action_group);
+		panel_applet_setup_menu (applet, xml, action_group);
 	} else {
 		g_warning ("%s", error->message);
 		g_error_free (error);
@@ -2593,7 +2593,7 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
  * @factory_id: identifier of an applet factory.
  * @applet_type: GType of the applet this factory creates.
  * @callback: (scope call): callback to be called when a new applet is created.
- * @user_data: (closure): callback data.
+ * @data: (closure): callback data.
  *
  * Creates the applet factory for @factory_id, so that the factory can create
  * instances of the applet types it is associated with.
@@ -2618,10 +2618,10 @@ int
 panel_applet_factory_main (const gchar               *factory_id,
 			   GType                      applet_type,
 			   PanelAppletFactoryCallback callback,
-			   gpointer                   user_data)
+			   gpointer                   data)
 {
 	return _panel_applet_factory_main_internal (factory_id, TRUE, applet_type,
-						    callback, user_data);
+						    callback, data);
 }
 
 /**
@@ -2629,7 +2629,7 @@ panel_applet_factory_main (const gchar               *factory_id,
  * @factory_id: identifier of an applet factory.
  * @applet_type: GType of the applet this factory creates.
  * @callback: (scope call): callback to be called when a new applet is created.
- * @user_data: (closure): callback data.
+ * @data: (closure): callback data.
  *
  * Creates the applet factory for @factory_id, so that the factory can create
  * instances of the applet types it is associated with.
@@ -2651,10 +2651,10 @@ int
 panel_applet_factory_setup_in_process (const gchar               *factory_id,
 				       GType                      applet_type,
 				       PanelAppletFactoryCallback callback,
-				       gpointer                   user_data)
+				       gpointer                   data)
 {
 	return _panel_applet_factory_main_internal (factory_id, FALSE, applet_type,
-						    callback, user_data);
+						    callback, data);
 }
 
 /**
