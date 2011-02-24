@@ -82,8 +82,6 @@ struct _PanelAppletClass {
 
 GType              panel_applet_get_type             (void) G_GNUC_CONST;
  
-GtkWidget         *panel_applet_new                  (void);
-
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 guint              panel_applet_get_size             (PanelApplet *applet);
 cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);

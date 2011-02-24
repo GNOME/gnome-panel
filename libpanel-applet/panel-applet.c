@@ -2081,16 +2081,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 }
 
-GtkWidget *
-panel_applet_new (void)
-{
-	PanelApplet *applet;
-
-	applet = g_object_new (PANEL_TYPE_APPLET, NULL);
-
-	return GTK_WIDGET (applet);
-}
-
 static void
 method_call_cb (GDBusConnection       *connection,
 		const gchar           *sender,
