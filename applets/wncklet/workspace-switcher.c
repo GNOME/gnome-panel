@@ -52,8 +52,6 @@ typedef struct {
 	WnckScreen *screen;
 	PagerWM     wm;
 
-        GtkActionGroup *action_group;
-
 	/* Properties: */
 	GtkWidget *properties_dialog;
 	GtkWidget *workspaces_frame;
@@ -215,20 +213,6 @@ applet_change_background (PanelApplet               *applet,
 }
 
 static void
-applet_locked_down_notified (PanelApplet *applet,
-			     GParamSpec  *pspec,
-			     PagerData   *pager)
-{
-	gboolean   locked_down;
-	GtkAction *action;
-
-	locked_down = panel_applet_get_locked_down (applet);
-
-	action = gtk_action_group_get_action (pager->action_group, "PagerPreferences");
-	gtk_action_set_visible (action, !locked_down);
-}
-
-static void
 destroy_pager(GtkWidget * widget, PagerData *pager)
 {
 	GConfClient *client = gconf_client_get_default ();
@@ -245,9 +229,6 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy (pager->properties_dialog);
-
-	if (pager->action_group)
-		g_object_unref (pager->action_group);
 
 	g_free (pager);
 }
@@ -382,6 +363,8 @@ gboolean
 workspace_switcher_applet_fill (PanelApplet *applet)
 {
 	PagerData *pager;
+        GtkActionGroup *action_group;
+	GtkAction *action;
         gchar *ui_path;
 	GError *error;
 	gboolean display_names;
@@ -471,28 +454,29 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "notify::locked-down",
-			  G_CALLBACK (applet_locked_down_notified),
-			  pager);
 
 	gtk_widget_show (pager->applet);
 
 	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
 					    GTK_WIDGET (pager->applet));
 
-        pager->action_group = gtk_action_group_new ("WorkspaceSwitcher Applet Actions");
-        gtk_action_group_set_translation_domain (pager->action_group, GETTEXT_PACKAGE);
-        gtk_action_group_add_actions (pager->action_group,
+        action_group = gtk_action_group_new ("WorkspaceSwitcher Applet Actions");
+        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+        gtk_action_group_add_actions (action_group,
                                       pager_menu_actions,
                                       G_N_ELEMENTS (pager_menu_actions),
                                       pager);
         ui_path = g_build_filename (WNCK_MENU_UI_DIR, "workspace-switcher-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
-					   ui_path, pager->action_group);
+					   ui_path, action_group);
         g_free (ui_path);
 
-	applet_locked_down_notified (applet, NULL, pager);
+	action = gtk_action_group_get_action (action_group, "PagerPreferences");
+	g_object_bind_property (pager->applet, "locked-down",
+				action, "visible",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
+
+        g_object_unref (action_group);
 
 	return TRUE;
 }

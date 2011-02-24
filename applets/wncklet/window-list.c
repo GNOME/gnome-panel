@@ -39,8 +39,6 @@ typedef struct {
 	int size;
 
         GtkIconTheme *icon_theme;
-
-	GtkActionGroup *action_group;
   
 	/* Properties: */
 	GtkWidget *properties_dialog;
@@ -136,20 +134,6 @@ applet_change_background (PanelApplet     *applet,
 }
 
 static void
-applet_locked_down_notified (PanelApplet  *applet,
-			     GParamSpec   *pspec,
-			     TasklistData *tasklist)
-{
-	gboolean   locked_down;
-	GtkAction *action;
-
-	locked_down = panel_applet_get_locked_down (applet);
-
-	action = gtk_action_group_get_action (tasklist->action_group, "TasklistPreferences");
-	gtk_action_set_visible (action, !locked_down);
-}
-
-static void
 applet_change_pixel_size (PanelApplet  *applet,
 			  gint          size,
 			  TasklistData *tasklist)
@@ -179,9 +163,6 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy (tasklist->properties_dialog);
-
-	if (tasklist->action_group)
-		g_object_unref (tasklist->action_group);
 
         g_free (tasklist);
 }
@@ -452,6 +433,8 @@ gboolean
 window_list_applet_fill (PanelApplet *applet)
 {
 	TasklistData *tasklist;
+	GtkActionGroup *action_group;
+	GtkAction *action;
 	gchar *ui_path;
 	GError *error;
 	GConfValue *value;
@@ -542,26 +525,27 @@ window_list_applet_fill (PanelApplet *applet)
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
 			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "notify::locked-down",
-			  G_CALLBACK (applet_locked_down_notified),
-			  tasklist);
 
 	panel_applet_set_background_widget (PANEL_APPLET (tasklist->applet),
 					    GTK_WIDGET (tasklist->applet));
 
-	tasklist->action_group = gtk_action_group_new ("Tasklist Applet Actions");
-	gtk_action_group_set_translation_domain (tasklist->action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (tasklist->action_group,
+	action_group = gtk_action_group_new ("Tasklist Applet Actions");
+	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions (action_group,
 				      tasklist_menu_actions,
 				      G_N_ELEMENTS (tasklist_menu_actions),
 				      tasklist);
 	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "window-list-menu.xml", NULL);
 	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
-					   ui_path, tasklist->action_group);
+					   ui_path, action_group);
 	g_free (ui_path);
 
-	applet_locked_down_notified (applet, NULL, tasklist);
+	action = gtk_action_group_get_action (action_group, "TasklistPreferences");
+	g_object_bind_property (tasklist->applet, "locked-down",
+				action, "visible",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
+
+	g_object_unref (action_group);
 
 	gtk_widget_show (tasklist->applet);
 	

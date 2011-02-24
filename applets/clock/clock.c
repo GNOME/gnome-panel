@@ -2509,13 +2509,15 @@ fill_clock_applet (PanelApplet *applet)
 					   ui_path, action_group);
         g_free (ui_path);
 
-	if (panel_applet_get_locked_down (PANEL_APPLET (cd->applet))) {
-                action = gtk_action_group_get_action (action_group, "ClockPreferences");
-                gtk_action_set_visible (action, FALSE);
+	action = gtk_action_group_get_action (action_group, "ClockPreferences");
+	g_object_bind_property (cd->applet, "locked-down",
+				action, "visible",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
-                action = gtk_action_group_get_action (action_group, "ClockConfig");
-                gtk_action_set_visible (action, FALSE);
-	}
+	action = gtk_action_group_get_action (action_group, "ClockConfig");
+	g_object_bind_property (cd->applet, "locked-down",
+				action, "visible",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
 	cd->systz = system_timezone_new ();
 	g_signal_connect (cd->systz, "changed",
