@@ -267,7 +267,7 @@ update_frame_visibility (GtkWidget    *frame,
 
 enum {
         APPOINTMENT_COLUMN_UID,
-        APPOINTMENT_COLUMN_URI,
+        APPOINTMENT_COLUMN_TYPE,
         APPOINTMENT_COLUMN_SUMMARY,
         APPOINTMENT_COLUMN_DESCRIPTION,
         APPOINTMENT_COLUMN_START_TIME,
@@ -276,6 +276,12 @@ enum {
         APPOINTMENT_COLUMN_ALL_DAY,
         APPOINTMENT_COLUMN_PIXBUF,
         N_APPOINTMENT_COLUMNS
+};
+
+enum {
+	APPOINTMENT_TYPE_APPOINTMENT,
+	APPOINTMENT_TYPE_BIRTHDAY,
+	APPOINTMENT_TYPE_WEATHER
 };
 
 enum {
@@ -461,49 +467,14 @@ handle_task_percent_complete_edited (CalendarWindow      *calwin,
 }
 
 static gboolean
-is_appointment (GtkTreeModel *model,
-		GtkTreeIter  *iter,
-		gpointer      data)
+is_for_filter (GtkTreeModel *model,
+	      GtkTreeIter  *iter,
+	      gpointer      data)
 {
-	gchar *uri;
+	gint type;
 
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (g_ascii_strcasecmp (uri, "file")   == 0 ||
-			g_ascii_strcasecmp (uri, "local")   == 0 ||
-			g_ascii_strcasecmp (uri, "webcal") == 0 ||
-			g_ascii_strcasecmp (uri, "caldav") == 0 ||
-			g_ascii_strcasecmp (uri, "mapi")   == 0 ||
-			g_ascii_strcasecmp (uri, "exchange")  == 0 ||
-			g_ascii_strcasecmp (uri, "groupwise") == 0 ||
-			g_ascii_strcasecmp (uri, "google") == 0);
-	return FALSE;
-}
-
-static gboolean
-is_birthday (GtkTreeModel *model,
-	     GtkTreeIter  *iter,
-	     gpointer      data)
-{
-	gchar *uri;
-
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (g_ascii_strcasecmp (uri, "contacts") == 0);
-	return FALSE;
-}
-
-static gboolean
-is_weather (GtkTreeModel *model,
-	    GtkTreeIter  *iter,
-	    gpointer      data)
-{
-	gchar *uri;
-
-	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_URI, &uri, -1);
-	if (uri)
-		return (g_ascii_strcasecmp (uri, "weather") == 0);
-	return FALSE;
+	gtk_tree_model_get (model, iter, APPOINTMENT_COLUMN_TYPE, &type, -1);
+	return type == GPOINTER_TO_INT (data);
 }
 
 static gboolean
@@ -984,6 +955,7 @@ handle_appointments_changed (CalendarWindow *calwin)
                 CalendarAppointment *appointment = l->data;
                 GtkTreeIter          iter;
                 char                *start_text;
+                gint                 type;
 
                 g_assert (CALENDAR_EVENT (appointment)->type == CALENDAR_EVENT_APPOINTMENT);
 
@@ -994,12 +966,18 @@ handle_appointments_changed (CalendarWindow *calwin)
                                                   appointment->start_time,
                                                   year, month, day);
 
+                if (g_ascii_strcasecmp (appointment->uri, "weather") == 0)
+                        type = APPOINTMENT_TYPE_WEATHER;
+                else if (g_ascii_strcasecmp (appointment->uri, "contacts") == 0)
+                        type = APPOINTMENT_TYPE_BIRTHDAY;
+                else
+                        type = APPOINTMENT_TYPE_APPOINTMENT;
 
                 gtk_list_store_append (calwin->priv->appointments_model,
 				       &iter);
                 gtk_list_store_set (calwin->priv->appointments_model, &iter,
                                     APPOINTMENT_COLUMN_UID,         appointment->uid,
-                                    APPOINTMENT_COLUMN_URI,         appointment->uri,
+                                    APPOINTMENT_COLUMN_TYPE,        type,
                                     APPOINTMENT_COLUMN_SUMMARY,     appointment->summary,
                                     APPOINTMENT_COLUMN_DESCRIPTION, appointment->description,
                                     APPOINTMENT_COLUMN_START_TIME,  (gint64)appointment->start_time,
@@ -1026,7 +1004,7 @@ static GtkWidget *
 create_list_for_appointment_model (CalendarWindow      *calwin,
 				   const char          *label,
 				   GtkTreeModelFilter **filter,
-				   GtkTreeModelFilterVisibleFunc is_for_filter,
+				   gint                 filter_type,
 				   GtkTreeCellDataFunc  set_pixbuf_cell,
 				   gboolean             show_start,
 				   GtkWidget          **tree_view,
@@ -1066,7 +1044,7 @@ create_list_for_appointment_model (CalendarWindow      *calwin,
 		gtk_tree_model_filter_set_visible_func (
 				*filter,
 				(GtkTreeModelFilterVisibleFunc) is_for_filter,
-				calwin,
+				GINT_TO_POINTER (filter_type),
 				NULL);
         }
 
@@ -1128,7 +1106,7 @@ create_appointment_list (CalendarWindow  *calwin,
 					calwin,
 					_("Appointments"),
 					&calwin->priv->appointments_filter,
-					is_appointment,
+					APPOINTMENT_TYPE_APPOINTMENT,
 					appointment_pixbuf_cell_data_func,
 					TRUE,
 					tree_view,
@@ -1153,7 +1131,7 @@ create_birthday_list (CalendarWindow  *calwin,
 					calwin,
 					_("Birthdays and Anniversaries"),
 					&calwin->priv->birthdays_filter,
-					is_birthday,
+					APPOINTMENT_TYPE_BIRTHDAY,
 					birthday_pixbuf_cell_data_func,
 					FALSE,
 					tree_view,
@@ -1178,7 +1156,7 @@ create_weather_list (CalendarWindow  *calwin,
 					calwin,
 					_("Weather Information"),
 					&calwin->priv->weather_filter,
-					is_weather,
+					APPOINTMENT_TYPE_WEATHER,
 					weather_pixbuf_cell_data_func,
 					FALSE,
 					tree_view,
@@ -1240,7 +1218,7 @@ calendar_window_create_appointments_model (CalendarWindow *calwin)
 	calwin->priv->appointments_model =
 		gtk_list_store_new (N_APPOINTMENT_COLUMNS,
 				    G_TYPE_STRING,   /* uid              */
-				    G_TYPE_STRING,   /* uri              */
+				    G_TYPE_INT,      /* type             */
 				    G_TYPE_STRING,   /* summary          */
 				    G_TYPE_STRING,   /* description      */
 				    G_TYPE_INT64,    /* start time       */
