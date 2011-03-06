@@ -1,4 +1,68 @@
 ===============
+Version 2.91.91
+===============
+
+Note: this version breaks API in libpanel-applet (an unused argument was
+removed from FACTORY macros) and ABI (removed arguments and API). The version
+of the library was not bumped as we're still finalizing the 3.0 API, so make
+sure to rebuild all applets.
+
+  All
+
+	* Minor code cleanup (Vincent)
+
+  Panel
+
+	* Fix warning when lockdown setting changes (Vincent)
+
+  libpanel-applet
+
+	* Make sure people cannot misuse PanelApplet by documenting an API
+	  usage error on stderr (Vincent)
+	* Remove panel_applet_new() (Vincent)
+	* Remove unused name arg in FACTORY macros (Vincent)
+	* Remove out_process from panel_applet_factory_main() (Vincent)
+	* Add test applet in python (Vincent)
+	* Improve introspection coverage (Vincent)
+	* Stop printing errors for gconf API (Vincent)
+	* Correctly set min & max of orient and flags properties (Vincent)
+
+  Clock Applet
+
+	* Only display "edit locations" button if panel is not locked down
+	  (Vincent)
+	* Monitor locked-down property to update prefs visibility (Vincent)
+	* Better fix for missing calendar sources (David Woodhouse)
+
+  Fish Applet
+
+	* Monitor locked-down property to update prefs visibility (Vincent)
+
+  Wnck Applets
+
+	* Monitor locked-down property to update prefs visibility (Vincent)
+
+  Misc
+
+	* Rewrite (and complete) libpanel-applet documentation (Vincent)
+	* Remove libcanberra-gtk3 dependency (Vincent)
+	* Bump GTK+ 3 requirement to 3.0 (Carlos Garcia Campos)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* David Planella (ca)
+	* Kristjan SCHMIDT (eo)
+	* Bruno Brouard (fr)
+	* Rajesh Ranjan (hi)
+	* Changwoo Ryu (ko)
+	* Rūdolfs Mazurs (lv)
+	* Matej Urbančič (sl)
+	* Daniel Nylander (sv)
+	* Maxim Dziumanenko (uk)
+	* YunQiang Su (zh_CN)
+
+===============
 Version 2.91.90
 ===============
 
