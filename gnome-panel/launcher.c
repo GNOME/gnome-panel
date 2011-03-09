@@ -452,6 +452,8 @@ create_launcher (const char *location)
 							    G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
 							    &error);
 			g_free (path);
+		} else {
+			loaded = FALSE;
 		}
 	} else
 		loaded = panel_key_file_load_from_uri (key_file, location,

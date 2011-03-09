@@ -148,7 +148,7 @@ panel_show_nautilus_search_uri (GdkScreen    *screen,
 				GError      **error)
 {
 	char            *desktopfile;
-	GDesktopAppInfo *appinfo;
+	GDesktopAppInfo *appinfo = NULL;
 	gboolean         ret;
 
 	desktopfile = panel_g_lookup_in_applications_dirs ("nautilus-folder-handler.desktop");
