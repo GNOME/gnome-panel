@@ -109,11 +109,16 @@ panel_applet_frame_draw (GtkWidget *widget,
 	gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
 
 	cairo_save (cr);
-        gtk_render_handle (context, cr,
-			   frame->priv->handle_rect.x,
-			   frame->priv->handle_rect.y,
-			   frame->priv->handle_rect.width,
-			   frame->priv->handle_rect.height);
+	cairo_rectangle (cr,
+			 frame->priv->handle_rect.x,
+			 frame->priv->handle_rect.y,
+			 frame->priv->handle_rect.width,
+			 frame->priv->handle_rect.height);
+	cairo_clip (cr);
+	gtk_render_handle (context, cr,
+			   0, 0,
+			   gtk_widget_get_allocated_width (widget),
+			   gtk_widget_get_allocated_height (widget));
 	cairo_restore (cr);
 
 	gtk_style_context_restore (context);
