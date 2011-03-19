@@ -167,6 +167,7 @@ _gtk_label_make_bold (GtkLabel *label)
 static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
+        GtkStyleContext *context;
         GtkCssProvider *provider;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
@@ -177,10 +178,12 @@ panel_menu_bar_init (PanelMenuBar *menubar)
                                          " border-width: 0px;\n"
                                          "}",
                                          -1, NULL);
-        gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (menubar)),
+        context = gtk_widget_get_style_context (GTK_WIDGET (menubar));
+        gtk_style_context_add_provider (context,
                                         GTK_STYLE_PROVIDER (provider),
                                         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
         g_object_unref (provider);
+	gtk_style_context_add_class (context, "gnome-panel-menu-bar");
 
 	menubar->priv->info = NULL;
 

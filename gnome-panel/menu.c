@@ -215,6 +215,7 @@ GtkWidget *
 panel_create_menu (void)
 {
 	GtkWidget       *retval;
+	GtkStyleContext *context;
 	static gboolean  registered_icon_theme_changer = FALSE;
 
 	if (!registered_icon_theme_changer) {
@@ -226,6 +227,9 @@ panel_create_menu (void)
 	
 	retval = gtk_menu_new ();
 	gtk_widget_set_name (retval, "gnome-panel-main-menu");
+
+	context = gtk_widget_get_style_context (retval);
+	gtk_style_context_add_class (context, "gnome-panel-main-menu");
 
 	g_signal_connect (retval, "key_press_event",
 			  G_CALLBACK (panel_menu_key_press_handler),
@@ -1414,10 +1418,14 @@ GtkWidget *
 panel_image_menu_item_new (void)
 {
 	GtkWidget *menuitem;
+	GtkStyleContext *context;
 
 	menuitem = gtk_image_menu_item_new ();
 	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
 						   TRUE);
+	context = gtk_widget_get_style_context (menuitem);
+	gtk_style_context_add_class (context, "gnome-panel-menu-item");
+
 	return menuitem;
 }
 
