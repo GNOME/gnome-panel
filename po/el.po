@@ -36,14 +36,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-20 18:35+0300\n"
+"POT-Creation-Date: 2011-03-21 02:17+0200\n"
 "PO-Revision-Date: 2010-09-20 11:58+0200\n"
 "Last-Translator: Bakaoukas Nikolaos <nikolaos.x1@gmail.com>\n"
 "Language-Team: Greek <>\n"
-"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -1515,7 +1515,7 @@ msgstr "Προβολή επιλογών διαχείρισης συνεδρία�
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
 #: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -1626,8 +1626,8 @@ msgstr ""
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
-"Αδυναμία ανοίγματος αρχείου επιφάνειας εργασίας %s για τον εκκινητή μενού %s"
-"%s\n"
+"Αδυναμία ανοίγματος αρχείου επιφάνειας εργασίας %s για τον εκκινητή μενού %s%"
+"s\n"
 
 #: ../gnome-panel/launcher.c:801
 msgid "_Launch"
@@ -1890,13 +1890,13 @@ msgstr "Να _μη γίνει επαναφόρτωση"
 msgid "_Reload"
 msgstr "Ε_παναφόρτωση"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
 "Ο πίνακας εφαρμογών αντιμετώπισε ένα πρόβλημα κατά τη φόρτωση του \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Θέλετε να αφαιρέσετε τη μικροεφαρμογή από τη ρύθμιση σας;"
 
@@ -2473,11 +2473,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
 "Η ταυτότητα υλοποίησης της μικροεφαρμογής - π.χ. \"ClockAppletFactory::"
 "ClockApplet\". Αυτό το κλειδί είναι σχετικό μόνο εάν το κλειδί object_type "
-"είναι \"bonobo-applet\"."
+"είναι \"external-applet\" (ή το παρωχημένο \"bonobo-applet\")."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2529,12 +2530,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "Το είδος αυτού του αντικειμένου πίνακα εφαρμογών. Οι πιθανές τιμές είναι "
-"\"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", "
-"\"action-applet\" και \"menu-bar\"."
+"\"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", "
+"\"action-applet\", \"menu-bar\" και \"separator\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2564,20 +2565,20 @@ msgstr "Χρήση προσαρμοσμένου εικονιδίου για το
 msgid "Use custom path for menu contents"
 msgstr "Χρήση προσαρμοσμένης διαδρομής για τα περιεχόμενα του μενού"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής αλφαριθμητικού GConf '%s': %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής ακεραίου GConf '%s': %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2586,7 +2587,7 @@ msgstr ""
 "Ο πίνακας εφαρμογών '%s' έχει ορισθεί να εμφανίζεται στην οθόνη %d που αυτή "
 "τη στιγμή δεν είναι διαθέσιμη. Δε φορτώνεται αυτός ο πίνακας εφαρμογών."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής boolean GConf '%s': %s"
@@ -3317,21 +3318,21 @@ msgstr "Δεν βρέθηκε το εικονίδιο '%s'"
 msgid "Could not execute '%s'"
 msgstr "Αδύνατη η εκτέλεση του '%s'"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "αρχείο"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Προσωπικός φάκελος"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Σύστημα αρχείων"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Αναζήτηση"
 
@@ -3340,7 +3341,7 @@ msgstr "Αναζήτηση"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
