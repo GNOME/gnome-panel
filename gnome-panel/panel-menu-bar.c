@@ -145,26 +145,6 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 }
 
 static void
-_gtk_label_make_bold (GtkLabel *label)
-{
-        PangoFontDescription *font_desc;
-
-        font_desc = pango_font_description_new ();
-
-        pango_font_description_set_weight (font_desc,
-                                           PANGO_WEIGHT_BOLD);
-
-        /* This will only affect the weight of the font, the rest is
-         * from the current state of the widget, which comes from the
-         * theme or user prefs, since the font desc only has the
-         * weight flag turned on.
-         */
-        gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
-
-        pango_font_description_free (font_desc);
-}
-
-static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
         GtkStyleContext *context;
@@ -194,7 +174,6 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 				 _("Applications"));
 	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
 							     panel_menu_bar_icon_get_size ());
-        _gtk_label_make_bold (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menubar->priv->applications_item))));
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
 				   menubar->priv->applications_menu);
@@ -202,14 +181,12 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 			       menubar->priv->applications_item);
 
 	menubar->priv->places_item = panel_place_menu_item_new (FALSE);
-        _gtk_label_make_bold (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menubar->priv->places_item))));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
 
 	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
-        _gtk_label_make_bold (GTK_LABEL (gtk_bin_get_child (GTK_BIN (menubar->priv->desktop_item))));
 
 	panel_menu_bar_setup_tooltip (menubar);
 
