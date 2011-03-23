@@ -92,7 +92,7 @@ main (int argc, char **argv)
 
 	if (!panel_shell_register (replace)) {
 		panel_cleanup_do ();
-		return -1;
+		return 1;
 	}
 
 	panel_action_protocol_init ();
