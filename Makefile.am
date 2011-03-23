@@ -4,7 +4,7 @@ SUBDIRS =			\
 	applets			\
 	doc			\
 	help			\
-	icons			\
+	data			\
 	man			\
 	po
 

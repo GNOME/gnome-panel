@@ -298,13 +298,13 @@ AC_SUBST(REBUILD)
 
 AC_CONFIG_FILES([
 Makefile
-icons/Makefile
-icons/16x16/Makefile
-icons/22x22/Makefile
-icons/24x24/Makefile
-icons/32x32/Makefile
-icons/48x48/Makefile
-icons/scalable/Makefile
+data/Makefile
+data/16x16/Makefile
+data/22x22/Makefile
+data/24x24/Makefile
+data/32x32/Makefile
+data/48x48/Makefile
+data/scalable/Makefile
 gnome-panel/Makefile
 gnome-panel/libegg/Makefile
 gnome-panel/libpanel-applet-private/Makefile
