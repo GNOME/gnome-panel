@@ -20,7 +20,6 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
@@ -100,11 +99,6 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	gconf_client_add_dir (panel_gconf_get_client (),
-			      "/desktop/gnome/interface",
-			      GCONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-
 	panel_global_config_load ();
 	panel_lockdown_init ();
 	panel_profile_load ();
@@ -122,10 +116,6 @@ main (int argc, char **argv)
 	gtk_main ();
 
 	panel_lockdown_finalize ();
-
-	gconf_client_remove_dir (panel_gconf_get_client (),
-				 "/desktop/gnome/interface",
-				 NULL);
 
 	panel_cleanup_do ();
 
