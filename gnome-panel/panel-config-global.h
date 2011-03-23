@@ -34,7 +34,6 @@ void panel_global_config_load (void);
 
 gboolean panel_global_config_get_highlight_when_over  (void);
 gboolean panel_global_config_get_tooltips_enabled     (void);
-gboolean panel_global_config_get_confirm_panel_remove (void);
 
 G_END_DECLS
 

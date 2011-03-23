@@ -43,6 +43,7 @@
 #include "panel-globals.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 enum {
 	TARGET_URL,
@@ -1370,11 +1371,18 @@ panel_query_deletion (PanelToplevel *toplevel)
 void
 panel_delete (PanelToplevel *toplevel)
 {
+	GSettings   *settings;
+	gboolean     confirm;
 	PanelWidget *panel_widget;
+
+	settings = g_settings_new (PANEL_GENERAL_SCHEMA);
+	confirm = g_settings_get_boolean (settings,
+					  PANEL_GENERAL_CONFIRM_PANEL_REMOVAL_KEY);
+	g_object_unref (settings);
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	if (!panel_global_config_get_confirm_panel_remove () ||
+	if (!confirm ||
 	    !g_list_length (panel_widget->applet_list)) {
 		panel_delete_without_query (toplevel);
 		return;
