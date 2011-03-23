@@ -35,42 +35,6 @@
 #include "panel-util.h"
 
 void
-panel_compatibility_migrate_applications_scheme (GConfClient *client,
-						 const char  *key)
-{
-	char *location;
-
-	location = gconf_client_get_string (client, key, NULL);
-
-	if (!location)
-		return;
-
-	if (!strncmp (location, "applications:", strlen ("applications:")) ||
-	    !strncmp (location, "applications-all-users:", strlen ("applications-all-users:")) ||
-	    !strncmp (location, "all-applications:", strlen ("all-applications:")) ||
-	    !strncmp (location, "preferences:", strlen ("preferences:")) ||
-	    !strncmp (location, "preferences-all-users:", strlen ("preferences-all-users:")) ||
-	    !strncmp (location, "all-preferences:", strlen ("all-preferences:")) ||
-	    !strncmp (location, "system-settings:", strlen ("system-settings:")) ||
-	    !strncmp (location, "server-settings:", strlen ("server-settings:"))) {
-		char *basename;
-		char *new_location;
-
-		basename = g_path_get_basename (location);
-		new_location = panel_g_lookup_in_applications_dirs (basename);
-		g_free (basename);
-
-		if (new_location != NULL) {
-			gconf_client_set_string (client, key,
-						 new_location, NULL);
-			g_free (new_location);
-		}
-	}
-
-	g_free (location);
-}
-
-void
 panel_compatibility_migrate_screenshot_action (GConfClient *client,
 					      const char  *id)
 {
