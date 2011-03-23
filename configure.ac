@@ -43,6 +43,8 @@ GNOME_COMPILE_WARNINGS(maximum)
 # Check for introspection
 GOBJECT_INTROSPECTION_CHECK([0.9.5])
 
+GLIB_GSETTINGS
+
 m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
 PANEL_INTLTOOL_PANEL_APPLET_RULE='%.panel-applet: %.panel-applet.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; $(AM_V_GEN) LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
 AC_SUBST([PANEL_INTLTOOL_PANEL_APPLET_RULE])
