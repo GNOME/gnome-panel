@@ -61,6 +61,11 @@
   </schema>
 
   <schema id="org.gnome.gnome-panel.run-dialog" path="/org/gnome/gnome-panel/run-dialog/">
+    <key type="as" name="history">
+      <default>[]</default>
+      <summary>History of "Run Application" dialog</summary>
+      <description>The list of commands used in the past in the "Run Application" dialog.</description>
+    </key>
     <key name="enable-program-list" type="b">
       <default>true</default>
       <summary>Enable program list in "Run Application" dialog</summary>

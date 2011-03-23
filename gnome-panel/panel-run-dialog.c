@@ -40,7 +40,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <gconf/gconf-client.h>
 #include <gmenu-tree.h>
 
 #include <libgnome-desktop/gnome-desktop-utils.h>
@@ -52,7 +51,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "nothing.h"
-#include "panel-gconf.h"
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-enums.h"
@@ -64,6 +62,7 @@
 #include "panel-icon-names.h"
 
 #define PANEL_RUN_SCHEMA                 "org.gnome.gnome-panel.run-dialog"
+#define PANEL_RUN_HISTORY_KEY            "history"
 #define PANEL_RUN_ENABLE_COMPLETION_KEY  "enable-autocompletion"
 #define PANEL_RUN_ENABLE_LIST_KEY        "enable-program-list"
 #define PANEL_RUN_SHOW_LIST_KEY          "show-program-list"
@@ -120,72 +119,64 @@ static PanelRunDialog *static_dialog = NULL;
 
 static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
 
-#define PANEL_RUN_HISTORY_KEY "/apps/gnome-settings/gnome-panel/history-gnome-run"
-#define PANEL_RUN_MAX_HISTORY 10
+#define PANEL_RUN_MAX_HISTORY 20
 
 static GtkTreeModel *
-_panel_run_get_recent_programs_list (void)
+_panel_run_get_recent_programs_list (PanelRunDialog *dialog)
 {
-	GtkListStore *list;
-	GSList       *gconf_items;
-	GSList       *command;
-	int           i = 0;
+	GtkListStore  *list;
+	char         **commands;
+	int            i;
 
 	list = gtk_list_store_new (1, G_TYPE_STRING);
 
-	gconf_items = gconf_client_get_list (panel_gconf_get_client (),
-					     PANEL_RUN_HISTORY_KEY,
-					     GCONF_VALUE_STRING, NULL);
+	commands = g_settings_get_strv (dialog->run_settings,
+					PANEL_RUN_HISTORY_KEY);
 
-	for (command = gconf_items;
-	     command && i < PANEL_RUN_MAX_HISTORY;
-	     command = command->next) {
+	for (i = 0; commands[i] != NULL; i++) {
 		GtkTreeIter iter;
 		gtk_list_store_prepend (list, &iter);
-		gtk_list_store_set (list, &iter, 0, command->data, -1);
-		i++;
+		gtk_list_store_set (list, &iter, 0, commands[i], -1);
 	}
 
-	g_slist_free (gconf_items);
+	g_strfreev (commands);
 
 	return GTK_TREE_MODEL (list);
 }
 
 static void
-_panel_run_save_recent_programs_list (GtkComboBox      *entry,
-				      char             *lastcommand)
+_panel_run_save_recent_programs_list (PanelRunDialog *dialog,
+				      char           *last_command)
 {
-	GtkTreeModel *model;
-	GtkTreeIter   iter;
-	GSList       *gconf_items = NULL;
-	int           i = 0;
+	char **commands;
+	char **new_commands;
+	int    i;
+	int    size;
 
-	gconf_items = g_slist_prepend (gconf_items, lastcommand);
-	i++;
+	commands = g_settings_get_strv (dialog->run_settings,
+					PANEL_RUN_HISTORY_KEY);
 
-	model = gtk_combo_box_get_model (GTK_COMBO_BOX (entry));
+	/* do not save the same command twice in a row */
+	if (g_strcmp0 (commands[0], last_command) == 0)
+		return;
 
-	if (gtk_tree_model_get_iter_first (model, &iter)) {
-		char *command;
+	for (i = 0; commands[i] != NULL; i++);
+	size = MIN (i + 1, PANEL_RUN_MAX_HISTORY);
 
-		do {
-			gtk_tree_model_get (model, &iter, 0, &command, -1);
+	new_commands = g_new (char *, size + 1);
 
-			if (strcmp (command, lastcommand) == 0)
-				continue;
+	new_commands[0] = last_command;
+	new_commands[size] = NULL; /* last item */
 
-			gconf_items = g_slist_prepend (gconf_items, command);
-			i++;
-		} while (gtk_tree_model_iter_next (model, &iter) &&
-			 i < PANEL_RUN_MAX_HISTORY);
-	}
+	for (i = 1; i < size; i++)
+		new_commands[i] = commands[i-1];
 
-	gconf_client_set_list (panel_gconf_get_client (),
-			       PANEL_RUN_HISTORY_KEY,
-			       GCONF_VALUE_STRING, gconf_items,
-			       NULL);
+	g_settings_set_strv (dialog->run_settings,
+			     PANEL_RUN_HISTORY_KEY,
+			     (const char **) new_commands);
 
-	g_slist_free (gconf_items);
+	g_free (new_commands); /* we don't own the strings */
+	g_strfreev (commands);
 }
 
 static void
@@ -496,8 +487,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		
 	if (result) {
 		/* only save working commands in history */
-		_panel_run_save_recent_programs_list
-			(GTK_COMBO_BOX (dialog->combobox), command);
+		_panel_run_save_recent_programs_list (dialog, command);
 		
 		/* only close the dialog if we successfully showed or launched
 		 * something */
@@ -1746,7 +1736,7 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
 
 	gtk_combo_box_set_model (GTK_COMBO_BOX (dialog->combobox),
-				 _panel_run_get_recent_programs_list ());
+				 _panel_run_get_recent_programs_list (dialog));
 	gtk_combo_box_set_entry_text_column
 		(GTK_COMBO_BOX (dialog->combobox), 0);
 
