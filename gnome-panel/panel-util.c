@@ -37,12 +37,12 @@
 #include "applet.h"
 #include "xstuff.h"
 #include "panel-bindings.h"
-#include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
+#include "panel-schemas.h"
 
 char *
 panel_util_make_exec_uri_for_desktop (const char *exec)
@@ -1170,7 +1170,15 @@ panel_util_query_tooltip_cb (GtkWidget  *widget,
 			     GtkTooltip *tooltip,
 			     const char *text)
 {
-	if (!panel_global_config_get_tooltips_enabled ())
+	GSettings *gsettings;
+	gboolean   enable_tooltips;
+
+	gsettings = g_settings_new (PANEL_GENERAL_SCHEMA);
+	enable_tooltips = g_settings_get_boolean (gsettings,
+						  PANEL_GENERAL_ENABLE_TOOLTIPS_KEY);
+	g_object_unref (gsettings);
+
+	if (!enable_tooltips)
 		return FALSE;
 
 	gtk_tooltip_set_text (tooltip, text);

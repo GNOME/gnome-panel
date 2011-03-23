@@ -41,7 +41,6 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
-#include "panel-config-global.h"
 #include "panel-profile.h"
 #include "panel-properties-dialog.h"
 #include "panel-lockdown.h"

@@ -38,7 +38,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "applet.h"
-#include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-typebuiltins.h"

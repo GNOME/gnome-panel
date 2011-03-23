@@ -30,7 +30,6 @@
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
 #include "panel-util.h"
-#include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "panel-applet-frame.h"

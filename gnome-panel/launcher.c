@@ -32,7 +32,6 @@
 
 #include "button-widget.h"
 #include "panel-util.h"
-#include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"
 #include "xstuff.h"

@@ -37,7 +37,6 @@
 #include "launcher.h"
 #include "panel-util.h"
 #include "panel.h"
-#include "panel-config-global.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
 #include "panel-profile.h"

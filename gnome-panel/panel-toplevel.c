@@ -45,7 +45,6 @@
 #include "panel-widget.h"
 #include "panel-bindings.h"
 #include "panel-struts.h"
-#include "panel-config-global.h"
 #include "panel-lockdown.h"
 
 G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)

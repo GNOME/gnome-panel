@@ -22,7 +22,6 @@
 #include "panel-addto.h"
 #include "panel-bindings.h"
 #include "panel-gconf.h"
-#include "panel-config-global.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"

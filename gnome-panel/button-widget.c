@@ -11,7 +11,6 @@
 #include "panel-widget.h"
 #include "panel-types.h"
 #include "panel-util.h"
-#include "panel-config-global.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
 #include "panel-globals.h"

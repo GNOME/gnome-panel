@@ -16,8 +16,6 @@
 GSList *panel_applet_list_applets (void) { return NULL; }
 #include "panel-gconf.h"
 GConfClient *panel_gconf_get_client (void) { return NULL; }
-#include "panel-config-global.h"
-gboolean panel_global_config_get_tooltips_enabled (void) { return FALSE; }
 #include "panel-lockdown.h"
 gboolean panel_lockdown_get_disable_lock_screen (void) { return FALSE; }
 #include "panel-bindings.h"

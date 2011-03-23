@@ -21,7 +21,6 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "panel-profile.h"
-#include "panel-config-global.h"
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
@@ -99,7 +98,6 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	panel_global_config_load ();
 	panel_lockdown_init ();
 	panel_profile_load ();
 
