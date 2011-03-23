@@ -152,8 +152,8 @@ static const gchar panel_menu_ui[] =
 	"    <placeholder name=\"AppletItems\"/>\n"
 	"  </popup>\n"
 	"  <popup name=\"PanelAppletEditPopup\" action=\"PopupEditAction\">\n"
-	"    <menuitem name=\"RemoveItem\" action=\"Remove\"/>\n"
 	"    <menuitem name=\"MoveItem\" action=\"Move\"/>\n"
+	"    <menuitem name=\"RemoveItem\" action=\"Remove\"/>\n"
 	"  </popup>\n"
 	"</ui>\n";
 

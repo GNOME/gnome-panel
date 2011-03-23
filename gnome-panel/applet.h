@@ -20,7 +20,6 @@ typedef struct {
 
 	GtkWidget       *menu;
 	GtkWidget       *edit_menu;
-	GtkWidget       *move_item;
 	GList           *user_menu;
 
 	gpointer         data;

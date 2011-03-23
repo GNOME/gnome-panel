@@ -492,6 +492,13 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	movable = panel_applet_can_freely_move (info);
 	removable = panel_profile_id_lists_are_writable ();
 
+	menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (move_applet_callback), info);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_set_sensitive (menuitem, movable);
+
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
 	image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 					  GTK_ICON_SIZE_MENU);
@@ -502,19 +509,6 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_widget_set_sensitive (menuitem, removable);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (move_applet_callback), info);
-	gtk_widget_show (menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_set_sensitive (menuitem, movable);
-
-	g_assert (info->move_item == NULL);
-
-	info->move_item = menuitem;
-	g_object_add_weak_pointer (G_OBJECT (menuitem),
-				   (gpointer *) &info->move_item);
 
 	info->edit_menu = menu;
 
@@ -1247,7 +1241,6 @@ panel_applet_register (GtkWidget       *applet,
 	info->data         = data;
 	info->data_destroy = data_destroy;
 	info->user_menu    = NULL;
-	info->move_item    = NULL;
 	info->id           = g_strdup (id);
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
