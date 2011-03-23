@@ -84,9 +84,6 @@ static void panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 					    const char  *image_filename,
 					    const char  *fallback_image_filename);
 
-static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
-					      GdkEventKey *event);
-
 static inline gboolean
 desktop_is_home_dir (void)
 {	
@@ -230,10 +227,6 @@ panel_create_menu (void)
 
 	context = gtk_widget_get_style_context (retval);
 	gtk_style_context_add_class (context, "gnome-panel-main-menu");
-
-	g_signal_connect (retval, "key_press_event",
-			  G_CALLBACK (panel_menu_key_press_handler),
-			  NULL);
 
 	return retval;
 }
@@ -585,413 +578,6 @@ load_icons_handler_again:
 	return TRUE;
 }
 
-static void
-add_app_to_panel (GtkWidget      *item,
-		  GMenuTreeEntry *entry)
-{
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	PanelData     *pd;
-	int            position;
-
-	panel_widget = menu_get_panel (item);
-	toplevel = panel_widget->toplevel;
-
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-	position = pd ?  pd->insertion_pos : -1;
-
-	panel_launcher_create (toplevel,
-			       position,
-			       gmenu_tree_entry_get_desktop_file_path (entry));
-}
-
-
-static void
-add_app_to_desktop (GtkWidget      *item,
-		    GMenuTreeEntry *entry)
-{
-	char       *source_uri;
-	const char *source;
-	char       *target_dir;
-	char       *target_uri;
-	char       *target;
-	GError     *error;
-
-	g_return_if_fail (entry != NULL);
-
-	if (desktop_is_home_dir ()) {
-		target_dir = g_build_filename (g_get_home_dir (), NULL);
-	} else {
-		target_dir = g_strdup (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
-	}
-
-	source = gmenu_tree_entry_get_desktop_file_path (entry);
-	source_uri = g_filename_to_uri (source, NULL, NULL);
-
-	target_uri = panel_make_unique_desktop_uri (target_dir, source_uri);
-	g_free (target_dir);
-	g_free (source_uri);
-
-	g_return_if_fail (target_uri != NULL);
-
-	target = g_filename_from_uri (target_uri, NULL, NULL);
-	g_free (target_uri);
-
-	error = NULL;
-	panel_key_file_copy_and_mark_trusted (source, target, &error);
-
-	g_free (target);
-
-	if (error != NULL) {
-		g_warning ("Problem while copying launcher to desktop: %s",
-			   error->message);
-		g_error_free (error);
-	}
-}
-
-
-static void add_drawers_from_dir (GMenuTreeDirectory *directory,
-				  int                 pos,
-				  const char         *toplevel_id);
-
-static void
-add_drawers_from_alias (GMenuTreeAlias *alias,
-			const char     *toplevel_id)
-{
-	GMenuTreeItem *aliased_item;
-
-	aliased_item = gmenu_tree_alias_get_item (alias);
-
-	switch (gmenu_tree_item_get_type (aliased_item)) {
-	case GMENU_TREE_ITEM_DIRECTORY:
-		add_drawers_from_dir (GMENU_TREE_DIRECTORY (aliased_item),
-				      G_MAXINT/2,
-				      toplevel_id);
-		break;
-
-	case GMENU_TREE_ITEM_ENTRY:
-		panel_launcher_create_with_id (toplevel_id,
-					       G_MAXINT/2,
-					       gmenu_tree_entry_get_desktop_file_path (GMENU_TREE_ENTRY (aliased_item)));
-		break;
-
-	default:
-		break;
-	}
-
-	gmenu_tree_item_unref (aliased_item);
-}
-
-static void
-add_drawers_from_dir (GMenuTreeDirectory *directory,
-		      int                 pos,
-		      const char         *toplevel_id)
-{
-	const char *name;
-	const char *icon;
-	GSList     *items;
-	GSList     *l;
-	char       *attached_toplevel_id;
-
-	name = gmenu_tree_directory_get_name (directory);
-	icon = gmenu_tree_directory_get_icon (directory);
-
-	attached_toplevel_id = panel_drawer_create_with_id (toplevel_id,
-							    pos,
-							    icon,
-							    icon != NULL,
-							    name);
-	if (!attached_toplevel_id)
-		return;
-
-	items = gmenu_tree_directory_get_contents (directory);
-	for (l = items; l; l = l->next) {
-		GMenuTreeItem *item = l->data;
-
-		switch (gmenu_tree_item_get_type (item)) {
-		case GMENU_TREE_ITEM_ENTRY:
-			panel_launcher_create_with_id (attached_toplevel_id,
-						       G_MAXINT/2,
-						       gmenu_tree_entry_get_desktop_file_path (GMENU_TREE_ENTRY (item)));
-			break;
-
-		case GMENU_TREE_ITEM_DIRECTORY:
-			add_drawers_from_dir (GMENU_TREE_DIRECTORY (item),
-					      G_MAXINT/2,
-					      attached_toplevel_id);
-			break;
-
-		case GMENU_TREE_ITEM_ALIAS:
-			add_drawers_from_alias (GMENU_TREE_ALIAS (item), attached_toplevel_id);
-			break;
-
-		default:
-			break;
-		}
-
-		gmenu_tree_item_unref (item);
-	}
-
-	g_slist_free (items);
-
-	g_free (attached_toplevel_id);
-}
-
-static void
-add_menudrawer_to_panel (GtkWidget      *menuitem,
-			 GMenuTreeEntry *entry)
-
-{
-	GMenuTreeDirectory *directory;
-	PanelWidget       *panel;
-	PanelData         *pd;
-	int                insertion_pos;
-
-	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
-
-	panel = menu_get_panel (menuitem);
-
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	insertion_pos = pd ? pd->insertion_pos : -1;
-
-	add_drawers_from_dir (directory,
-			      insertion_pos,
-			      panel_profile_get_toplevel_id (panel->toplevel));
-
-	gmenu_tree_item_unref (directory);
-}
-
-static void
-add_menu_to_panel (GtkWidget      *menuitem,
-		   GMenuTreeEntry *entry)
-{
-	GMenuTreeDirectory *directory;
-	GMenuTree          *tree;
-	PanelWidget        *panel;
-	PanelData          *pd;
-	int                 insertion_pos;
-	char               *menu_path;
-	const char         *menu_filename;
-
-	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
-	if (!directory) {
-		g_warning ("Cannot find the filename for the menu: no directory");
-		return;
-	}
-
-	tree = gmenu_tree_directory_get_tree (directory);
-	if (!tree) {
-		gmenu_tree_item_unref (directory);
-		g_warning ("Cannot find the filename for the menu: no tree");
-		return;
-	}
-
-	menu_filename = gmenu_tree_get_menu_file (tree);
-	gmenu_tree_unref (tree);
-	if (!menu_filename) {
-		gmenu_tree_item_unref (directory);
-		g_warning ("Cannot find the filename for the menu: no filename");
-		return;
-	}
-
-	panel = menu_get_panel (menuitem);
-
-	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	insertion_pos = pd ? pd->insertion_pos : -1;
-
-	menu_path = gmenu_tree_directory_make_path (directory, NULL);
-
-	panel_menu_button_create (panel->toplevel,
-				  insertion_pos,
-				  menu_filename,
-				  menu_path,
-				  TRUE,
-				  gmenu_tree_directory_get_name (directory));
-
-	g_free (menu_path);
-
-	gmenu_tree_item_unref (directory);
-}
-
-/*most of this function stolen from the real gtk_menu_popup*/
-static void
-restore_grabs(GtkWidget *w, gpointer data)
-{
-	GtkWidget *menu_item = data;
-	GtkMenu *menu = GTK_MENU (gtk_widget_get_parent (menu_item));
-	GtkWidget *xgrab_shell;
-	GtkWidget *parent;
-
-	/* Find the last viewable ancestor, and make an X grab on it
-	 */
-	parent = GTK_WIDGET (menu);
-	xgrab_shell = NULL;
-	while (parent) {
-		gboolean viewable = TRUE;
-		GtkWidget *tmp = parent;
-
-		while (tmp) {
-			if (!gtk_widget_get_mapped (tmp)) {
-				viewable = FALSE;
-				break;
-			}
-			tmp = gtk_widget_get_parent (tmp);
-		}
-
-		if (viewable)
-			xgrab_shell = parent;
-
-		parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
-	}
-
-	/*only grab if this HAD a grab before*/
-	/* FIXMEgpoo: We need either accessors or a workaround to grab
-	   the focus */
-#if 0
-	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab)))
-          {
-	    GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-
-	    if (gdk_pointer_grab (window, TRUE,
-				  GDK_BUTTON_PRESS_MASK |
-				  GDK_BUTTON_RELEASE_MASK |
-				  GDK_ENTER_NOTIFY_MASK |
-				  GDK_LEAVE_NOTIFY_MASK,
-				  NULL, NULL, 0) == 0)
-              {
-		if (gdk_keyboard_grab (window, TRUE,
-				       GDK_CURRENT_TIME) == 0)
-		  GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
-		else
-		  gdk_pointer_ungrab (GDK_CURRENT_TIME);
-	      }
-         }
-#endif
-	gtk_grab_add (GTK_WIDGET (menu));
-}
-
-static void
-menu_destroy_context_menu (GtkWidget *item,
-			   GtkWidget *menu)
-{
-	g_signal_handlers_disconnect_by_func (menu, restore_grabs, item);
-	gtk_widget_destroy (menu);
-}
-
-static GtkWidget *
-create_item_context_menu (GtkWidget   *item,
-			  PanelWidget *panel_widget)
-{
-	GMenuTreeEntry     *entry;
-	GMenuTreeDirectory *directory;
-	GMenuTree          *tree;
-	GtkWidget          *menu;
-	GtkWidget          *submenu;
-	GtkWidget          *menuitem;
-	const char         *menu_filename;
-	gboolean            id_lists_writable;
-
-	id_lists_writable = panel_profile_id_lists_are_writable ();
-
-	entry = g_object_get_data (G_OBJECT (item), "panel-menu-tree-entry");
-	if (!entry)
-		return NULL;
-
-	directory = gmenu_tree_item_get_parent (GMENU_TREE_ITEM (entry));
-	if (!directory)
-		return NULL;
-
-	tree = gmenu_tree_directory_get_tree (directory);
-	gmenu_tree_item_unref (directory);
-	if (!tree)
-		return NULL;
-
-	menu_filename = gmenu_tree_get_menu_file (tree);
-	gmenu_tree_unref (tree);
-	if (!menu_filename)
-		return NULL;
-
-	menu = create_empty_menu ();
-	g_object_set_data (G_OBJECT (item), "panel-item-context-menu", menu);
-	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
-
-	g_signal_connect (item, "destroy",
-			  G_CALLBACK (menu_destroy_context_menu), menu);
-	g_signal_connect (menu, "deactivate",
-			  G_CALLBACK (restore_grabs), item);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _panel"));
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_app_to_panel), entry);
-	gtk_widget_set_sensitive (menuitem, id_lists_writable);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_show (menuitem);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this launcher to _desktop"));
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_app_to_desktop), entry);
-	gtk_widget_set_sensitive (menuitem, id_lists_writable);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_show (menuitem);
-
-
-	submenu = create_empty_menu ();
-
-	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("_Entire menu"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_show (menuitem);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this as _drawer to panel"));
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_menudrawer_to_panel), entry);
-	gtk_widget_set_sensitive (menuitem, id_lists_writable);
-	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-	gtk_widget_show (menuitem);
-
-	menuitem = gtk_menu_item_new_with_mnemonic (_("Add this as _menu to panel"));
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_menu_to_panel), entry);
-	gtk_widget_set_sensitive (menuitem, id_lists_writable);
-	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-	gtk_widget_show (menuitem);
-
-	return menu;
-}
-
-static gboolean
-show_item_menu (GtkWidget      *item,
-		GdkEventButton *bevent)
-{
-	PanelWidget *panel_widget;
-	GtkWidget   *menu;
-
-	if (panel_lockdown_get_locked_down ())
-		return FALSE;
-
-	panel_widget = menu_get_panel (item);
-
-	menu = g_object_get_data (G_OBJECT (item), "panel-item-context-menu");
-
-	if (!menu)
-		menu = create_item_context_menu (item, panel_widget);
-
-	if (!menu)
-		return FALSE;
-
-	gtk_menu_set_screen (GTK_MENU (menu),
-			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
-
-	gtk_menu_popup (GTK_MENU (menu),
-			NULL, NULL, NULL, NULL,
-			bevent->button,
-			bevent->time);
-
-	return TRUE;
-}
-
 gboolean
 menu_dummy_button_press_event (GtkWidget      *menuitem,
 			       GdkEventButton *event)
@@ -999,16 +585,6 @@ menu_dummy_button_press_event (GtkWidget      *menuitem,
 	if (event->button == 3)
 		return TRUE;
 
-	return FALSE;
-}
-
-static gboolean
-menuitem_button_press_event (GtkWidget      *menuitem,
-			     GdkEventButton *event)
-{
-	if (event->button == 3)
-		return show_item_menu (menuitem, event);
-	
 	return FALSE;
 }
 
@@ -1499,11 +1075,6 @@ create_header (GtkWidget       *menu,
 	menuitem = create_submenu_entry (menu, directory);
 	gmenu_tree_item_unref (directory);
 
-	g_object_set_data_full (G_OBJECT (menuitem),
-				"panel-gmenu-tree.header",
-				gmenu_tree_item_ref (header),
-				(GDestroyNotify) gmenu_tree_item_unref);
-
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (gtk_false), NULL);
 }
@@ -1516,19 +1087,6 @@ create_menuitem (GtkWidget          *menu,
 	GtkWidget  *menuitem;
 	
 	menuitem = panel_image_menu_item_new ();
-
-	g_object_set_data_full (G_OBJECT (menuitem),
-				"panel-menu-tree-entry",
-				gmenu_tree_item_ref (entry),
-				(GDestroyNotify) gmenu_tree_item_unref);
-
-	if (alias_directory)
-		//FIXME: we should probably use this data when we do dnd or
-		//context menu for this menu item
-		g_object_set_data_full (G_OBJECT (menuitem),
-					"panel-menu-tree-alias-directory",
-					gmenu_tree_item_ref (alias_directory),
-					(GDestroyNotify) gmenu_tree_item_unref);
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
@@ -1557,7 +1115,7 @@ create_menuitem (GtkWidget          *menu,
 					     gmenu_tree_entry_get_generic_name (entry));
 
 	g_signal_connect_after (menuitem, "button_press_event",
-				G_CALLBACK (menuitem_button_press_event), NULL);
+				G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	if (!panel_lockdown_get_locked_down ()) {
 		static GtkTargetEntry menu_item_targets[] = {
@@ -1942,28 +1500,4 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 			  G_CALLBACK (image_menu_destroy), NULL);
 
 	image_menu_items = g_slist_prepend (image_menu_items, image);
-}
-
-static gboolean
-panel_menu_key_press_handler (GtkWidget   *widget,
-			      GdkEventKey *event)
-{
-	gboolean retval = FALSE;
-	GtkWidget *active_menu_item = NULL;
-
-	if ((event->keyval == GDK_KEY_Menu) ||
-	    (event->keyval == GDK_KEY_F10 &&
-	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
-		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
-
-		active_menu_item = gtk_menu_shell_get_selected_item (menu_shell);
-		if (active_menu_item && gtk_menu_item_get_submenu (GTK_MENU_ITEM (active_menu_item)) == NULL) {
-			GdkEventButton bevent;
-
-			bevent.button = 3;
-			bevent.time = GDK_CURRENT_TIME;
-			retval = show_item_menu (active_menu_item, &bevent);
-		}
-	}
-	return retval;
 }
