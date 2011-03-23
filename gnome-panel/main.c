@@ -38,13 +38,10 @@
 GSList *panels = NULL;
 GSList *panel_list = NULL;
 
-static char     *deprecated_profile;
 static gboolean  replace = FALSE;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
-  /* keep this for compatibilty with old GNOME < 2.10 */
-  { "profile", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING, &deprecated_profile, NULL, NULL },
   { NULL }
 };
 
