@@ -60,12 +60,7 @@
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
 #include "panel-icon-names.h"
-
-#define PANEL_RUN_SCHEMA                 "org.gnome.gnome-panel.run-dialog"
-#define PANEL_RUN_HISTORY_KEY            "history"
-#define PANEL_RUN_ENABLE_COMPLETION_KEY  "enable-autocompletion"
-#define PANEL_RUN_ENABLE_LIST_KEY        "enable-program-list"
-#define PANEL_RUN_SHOW_LIST_KEY          "show-program-list"
+#include "panel-schemas.h"
 
 typedef struct {
 	GtkWidget        *run_dialog;

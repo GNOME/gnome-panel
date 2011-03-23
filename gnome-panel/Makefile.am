@@ -114,6 +114,7 @@ panel_headers =			\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-modules.h		\
+	panel-schemas.h		\
 	panel-applet-info.h
 
 gnome_panel_SOURCES =			\
