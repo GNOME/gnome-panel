@@ -69,13 +69,6 @@ void       panel_action_button_load_from_gconf  (PanelWidget            *panel,
 						 gboolean                exactpos,
 						 const char             *id);
 
-void       panel_action_button_load_compatible  (PanelObjectType         object_type,
-						 PanelWidget            *panel,
-						 gboolean                locked,
-						 int                     position,
-						 gboolean                exactpos,
-						 const char             *id);
-
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,
 						 const char             *callback_name);
 

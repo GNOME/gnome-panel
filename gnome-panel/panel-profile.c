@@ -103,9 +103,6 @@ static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_SEPARATOR, "separator" },
 	/* The following is for backwards compatibility with 2.30.x and earlier */
 	{ PANEL_OBJECT_APPLET,    "bonobo-applet" },
-	/* The following two are for backwards compatibility with 2.0.x */
-	{ PANEL_OBJECT_LOCK,      "lock-object" },
-	{ PANEL_OBJECT_LOGOUT,    "logout-object" },
 	{ 0,                      NULL }
 };
 

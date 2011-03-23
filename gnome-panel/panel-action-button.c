@@ -669,28 +669,18 @@ panel_action_button_load (PanelActionButtonType  type,
 			  gboolean               locked,
 			  int                    position,
 			  gboolean               exactpos,
-			  const char            *id,
-			  gboolean               compatibility)
+			  const char            *id)
 {
 	PanelActionButton *button;
-	PanelObjectType    object_type;
 
 	g_return_if_fail (panel != NULL);
 
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
-	object_type = PANEL_OBJECT_ACTION;
-	if (compatibility) { /* Backward compatibility with GNOME 2.0.x */
-		if (type == PANEL_ACTION_LOCK)
-			object_type = PANEL_OBJECT_LOCK;
-		else if (type == PANEL_ACTION_LOGOUT)
-			object_type = PANEL_OBJECT_LOGOUT;
-	}
-
 	button->priv->info = panel_applet_register (GTK_WIDGET (button),
 						    NULL, NULL,
 						    panel, locked, position,
-						    exactpos, object_type, id);
+						    exactpos, PANEL_OBJECT_ACTION, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -732,28 +722,6 @@ panel_action_button_create (PanelToplevel         *toplevel,
 	g_free (id);
 }
 
-/* This is only for backwards compatibility with 2.0.x
- * We load an old-style lock/logout button as an action
- * button but make sure to retain the lock/logout configuration
- * so logging back into 2.0.x still works.
- */
-void
-panel_action_button_load_compatible (PanelObjectType  object_type,
-				     PanelWidget     *panel,
-				     gboolean         locked,
-				     int              position,
-				     gboolean         exactpos,
-				     const char      *id)
-{
-	PanelActionButtonType action_type;
-
-	g_assert (object_type == PANEL_OBJECT_LOGOUT || object_type == PANEL_OBJECT_LOCK);
-
-	action_type = object_type == PANEL_OBJECT_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK;
-
-	panel_action_button_load (action_type, panel, locked, position, exactpos, id, TRUE);
-}
-
 void
 panel_action_button_load_from_gconf (PanelWidget *panel,
 				     gboolean     locked,
@@ -777,7 +745,7 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 	g_free (action_type);
 
 	panel_action_button_load (type, panel, locked,
-				  position, exactpos, id, FALSE);
+				  position, exactpos, id);
 }
 
 void
