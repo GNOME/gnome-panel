@@ -35,19 +35,10 @@
 
 typedef struct {
 	guint               tooltips_enabled : 1;
-	guint               highlight_when_over : 1;
 } GlobalConfig;
 
 static GlobalConfig global_config = { 0, };
 static gboolean global_config_initialised = FALSE;
-
-gboolean
-panel_global_config_get_highlight_when_over (void)
-{
-	g_assert (global_config_initialised == TRUE);
-
-	return global_config.highlight_when_over;
-}
 
 gboolean
 panel_global_config_get_tooltips_enabled (void)
@@ -74,10 +65,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 	if (strcmp (key, "tooltips_enabled") == 0)
 		global_config.tooltips_enabled =
 				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "highlight_launchers_on_mouseover") == 0)
-		global_config.highlight_when_over =
-			gconf_value_get_bool (value);
 }
 
 static void

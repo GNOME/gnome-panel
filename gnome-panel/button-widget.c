@@ -332,6 +332,7 @@ button_widget_draw (GtkWidget *widget,
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkStyleContext *context;
 	GtkStateFlags state_flags;
+	gboolean hover_highlight;
 	int off;
         int width, height;
         int x, y, w, h;
@@ -345,6 +346,8 @@ button_widget_draw (GtkWidget *widget,
 
 	/* offset for pressed buttons */
 	state_flags = gtk_widget_get_state_flags (widget);
+	gtk_widget_style_get (widget, "hover-highlight", &hover_highlight, NULL);
+
 	off = (button_widget->priv->activatable && (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
 	       (state_flags & GTK_STATE_FLAG_ACTIVE)) ?
 		BUTTON_WIDGET_DISPLACEMENT * height / 48.0 : 0;
@@ -356,7 +359,7 @@ button_widget_draw (GtkWidget *widget,
 						  pb,
 						  0.8,
 						  TRUE);
-	} else if (panel_global_config_get_highlight_when_over () && 
+	} else if (hover_highlight &&
 		   (state_flags & GTK_STATE_FLAG_PRELIGHT || gtk_widget_has_focus (widget)))
 		pb = g_object_ref (button_widget->priv->pixbuf_hc);
 	else
@@ -533,6 +536,7 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkStateFlags state_flags;
 	gboolean in_button;
+	gboolean hover_highlight;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
@@ -542,8 +546,10 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
 
 	state_flags = gtk_widget_get_state_flags (widget);
+	gtk_widget_style_get (widget, "hover-highlight", &hover_highlight, NULL);
+
 	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
-	    panel_global_config_get_highlight_when_over ())
+	    hover_highlight)
 		gtk_widget_queue_draw (widget);
 
 	return FALSE;
@@ -554,6 +560,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkStateFlags state_flags;
 	gboolean in_button;
+	gboolean hover_highlight;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 
@@ -563,8 +570,10 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	GTK_WIDGET_CLASS (button_widget_parent_class)->leave_notify_event (widget, event);
 
 	state_flags = gtk_widget_get_state_flags (widget);
+	gtk_widget_style_get (widget, "hover-highlight", &hover_highlight, NULL);
+
 	if (in_button != (state_flags & GTK_STATE_FLAG_PRELIGHT) &&
-	    panel_global_config_get_highlight_when_over ())
+	    hover_highlight)
 		gtk_widget_queue_draw (widget);
 
 	return FALSE;
@@ -670,6 +679,15 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					     "The desired icon for the ButtonWidget",
 					     NULL,
 					     G_PARAM_READWRITE));
+
+	gtk_widget_class_install_style_property (
+			widget_class,
+			g_param_spec_boolean ("hover-highlight",
+					      "Highlight on hover",
+					      "Whether to highlight the button on mouse over",
+					      TRUE,
+					      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
 }
 
 GtkWidget *
