@@ -351,6 +351,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 {
 	PanelAppletFrame *frame;
 	gboolean          handled = FALSE;
+	guint             modifiers;
 	GdkDisplay       *display;
 	GdkDevice        *pointer;
 	GdkDeviceManager *device_manager;
@@ -363,12 +364,15 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 	if (event->window != gtk_widget_get_window (widget))
 		return FALSE;
 
+	modifiers = event->state & GDK_MODIFIER_MASK;
+
 	switch (event->button) {
 	case 1:
 	case 2:
 		if (button_event_in_rect (event, &frame->priv->handle_rect)) {
-			if (event->type == GDK_BUTTON_PRESS ||
-			    event->type == GDK_2BUTTON_PRESS) {
+			if ((event->type == GDK_BUTTON_PRESS ||
+			     event->type == GDK_2BUTTON_PRESS) &&
+			    modifiers == panel_bindings_get_mouse_button_modifier_keymask ()){
 				panel_widget_applet_drag_start (
 					frame->priv->panel, GTK_WIDGET (frame),
 					PW_DRAG_OFF_CURSOR, event->time);
@@ -382,10 +386,6 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 	case 3:
 		if (event->type == GDK_BUTTON_PRESS ||
 		    event->type == GDK_2BUTTON_PRESS) {
-			guint modifiers;
-
-			modifiers = event->state & GDK_MODIFIER_MASK;
-
 			display = gtk_widget_get_display (widget);
 			device_manager = gdk_display_get_device_manager (display);
 			pointer = gdk_device_manager_get_client_pointer (device_manager);

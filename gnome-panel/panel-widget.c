@@ -19,6 +19,7 @@
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel.h"
+#include "panel-bindings.h"
 #include "panel-util.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
@@ -2161,6 +2162,7 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 {
 	GtkWidget   *parent;
 	PanelWidget *panel;
+	guint        modifiers;
 	guint32      event_time;
 
 	parent = gtk_widget_get_parent (widget);
@@ -2178,9 +2180,13 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	/* Begin drag if the middle mouse button is pressed, unless the panel
-	 * is locked down or a grab is active (meaning a menu is open) */
+	modifiers = event->state & GDK_MODIFIER_MASK;
+
+	/* Begin drag if the middle mouse button and modifier are pressed,
+	 * unless the panel is locked down or a grab is active (meaning a menu
+	 * is open) */
 	if (panel_lockdown_get_locked_down () || event->button != 2 ||
+	    modifiers != panel_bindings_get_mouse_button_modifier_keymask () ||
 	    gtk_grab_get_current() != NULL)
 		return FALSE;
 
