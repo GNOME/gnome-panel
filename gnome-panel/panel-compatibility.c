@@ -35,27 +35,6 @@
 #include "panel-util.h"
 
 void
-panel_compatibility_migrate_screenshot_action (GConfClient *client,
-					      const char  *id)
-{
-	const char *key;
-
-	panel_profile_remove_from_list (PANEL_GCONF_OBJECTS, id);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id,
-				    "launcher_location");
-	gconf_client_set_string (client, key, "gnome-screenshot.desktop", NULL);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id,
-				    "object_type");
-	//FIXME: ideally, we would use panel_object_type_map, but it's private
-	//in panel-profile.c
-	gconf_client_set_string (client, key, "launcher-object", NULL);
-
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
-}
-
-void
 panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
 						 const char  *id)
 {

@@ -49,7 +49,6 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
-#include "panel-compatibility.h"
 #include "panel-icon-names.h"
 
 G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
@@ -82,8 +81,6 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
 	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
-	/* compatibility with GNOME < 2.13.90 */
-	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
 	{ 0,                           NULL             },
 };
 
@@ -361,12 +358,6 @@ static PanelAction actions [] = {
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
 		panel_action_shutdown_reboot_is_disabled
-	},
-	/* deprecated actions */
-	{
-		PANEL_ACTION_SCREENSHOT,
-		NULL, NULL, NULL, NULL,
-		NULL, NULL, NULL, NULL
 	}
 };
 
@@ -375,7 +366,7 @@ panel_action_get_is_deprecated (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
 
-	return (type >= PANEL_ACTION_SCREENSHOT);
+	return (type > PANEL_ACTION_LAST_NON_DEPRECATED);
 }
 
 gboolean
@@ -785,13 +776,8 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 
 	g_free (action_type);
 
-	/* compatibility: migrate from GNOME < 2.13.90 */
-	if (type == PANEL_ACTION_SCREENSHOT)
-		panel_compatibility_migrate_screenshot_action (panel_gconf_get_client (),
-							       id);
-	else
-		panel_action_button_load (type, panel, locked,
-					  position, exactpos, id, FALSE);
+	panel_action_button_load (type, panel, locked,
+				  position, exactpos, id, FALSE);
 }
 
 void
