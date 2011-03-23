@@ -225,6 +225,9 @@ static GSList       *toplevel_list = NULL;
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
 
+static void panel_toplevel_set_animate          (PanelToplevel *toplevel,
+						 gboolean       animate);
+
 static void panel_toplevel_update_monitor       (PanelToplevel *toplevel);
 static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 						 int            monitor,
@@ -3383,12 +3386,36 @@ panel_toplevel_drag_threshold_changed (PanelToplevel *toplevel)
 }
 
 static void
+panel_toplevel_enable_animations_changed (PanelToplevel *toplevel)
+{
+	gboolean enable_animations;
+
+	enable_animations = TRUE;
+	g_object_get (G_OBJECT (toplevel->priv->gtk_settings),
+		      "gtk-enable-animations", &enable_animations,
+		      NULL);
+
+	panel_toplevel_set_animate (toplevel, enable_animations);
+}
+
+static void
+panel_toplevel_disconnect_gtk_settings (PanelToplevel *toplevel)
+{
+	if (!toplevel->priv->gtk_settings)
+		return;
+
+	g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
+					      G_CALLBACK (panel_toplevel_drag_threshold_changed),
+					      toplevel);
+	g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
+					      G_CALLBACK (panel_toplevel_enable_animations_changed),
+					      toplevel);
+}
+
+static void
 panel_toplevel_update_gtk_settings (PanelToplevel *toplevel)
 {
-	if (toplevel->priv->gtk_settings)
-		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
-						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
-						      toplevel);
+	panel_toplevel_disconnect_gtk_settings (toplevel);
 
 	toplevel->priv->gtk_settings = gtk_widget_get_settings (GTK_WIDGET (toplevel->priv->panel_widget));
 
@@ -3398,6 +3425,13 @@ panel_toplevel_update_gtk_settings (PanelToplevel *toplevel)
 				  toplevel);
 
 	panel_toplevel_drag_threshold_changed (toplevel);
+
+	g_signal_connect_swapped (G_OBJECT (toplevel->priv->gtk_settings),
+				  "notify::gtk-enable-animations",
+				  G_CALLBACK (panel_toplevel_enable_animations_changed),
+				  toplevel);
+
+	panel_toplevel_enable_animations_changed (toplevel);
 }
 
 static void
@@ -3591,12 +3625,8 @@ panel_toplevel_finalize (GObject *object)
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
 
-	if (toplevel->priv->gtk_settings) {
-		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
-						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
-						      toplevel);
-		toplevel->priv->gtk_settings = NULL;
-	}
+	panel_toplevel_disconnect_gtk_settings (toplevel);
+	toplevel->priv->gtk_settings = NULL;
 
 	if (toplevel->priv->description)
 		g_free (toplevel->priv->description);
@@ -3833,7 +3863,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"Animate",
 			"Enable hiding/showing animations",
 			TRUE,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+			G_PARAM_READABLE));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -4715,7 +4745,7 @@ panel_toplevel_get_unhide_delay (PanelToplevel *toplevel)
 	return toplevel->priv->unhide_delay;
 }
 
-void
+static void
 panel_toplevel_set_animate (PanelToplevel *toplevel,
 			    gboolean       animate)
 {

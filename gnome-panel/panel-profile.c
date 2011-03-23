@@ -1067,7 +1067,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 	else UPDATE_CENTERED ("x_centered", x, x_right)
 	else UPDATE_CENTERED ("y_centered", y, y_bottom)
 	else UPDATE_BOOL ("auto_hide", auto_hide)
-	else UPDATE_BOOL ("enable_animations", animate)
 	else UPDATE_BOOL ("enable_buttons", enable_buttons)
 	else UPDATE_BOOL ("enable_arrows", enable_arrows)
 	else UPDATE_INT ("hide_delay", hide_delay)
@@ -1596,7 +1595,6 @@ panel_profile_load_toplevel (GConfClient       *client,
 	GET_STRING ("orientation", orientation);
 	GET_INT ("size", size);
 	GET_BOOL ("auto_hide", auto_hide);
-	GET_BOOL ("enable_animations", animate);
 	GET_BOOL ("enable_buttons", enable_buttons);
 	GET_BOOL ("enable_arrows", enable_arrows);
 	GET_INT ("hide_delay", hide_delay);
