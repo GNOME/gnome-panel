@@ -23,16 +23,10 @@
 
 #include <config.h>
 
-#include "string.h"
-
-#include <libpanel-util/panel-glib.h>
-
 #include "panel-compatibility.h"
 
 #include "panel-profile.h"
-#include "panel-applet-frame.h"
 #include "panel-applets-manager.h"
-#include "panel-util.h"
 
 void
 panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
