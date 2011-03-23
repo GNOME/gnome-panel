@@ -2414,63 +2414,6 @@ panel_profile_load (void)
 	panel_applet_load_queued_applets (TRUE);
 }
 
-static gboolean
-get_program_listing_setting (const char *setting)
-{
-	GConfClient *client;
-	const char  *key;
-	gboolean     retval;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_gconf_general_key (setting);
-	retval = gconf_client_get_bool (client, key, NULL);
-
-	return retval;
-}
-
-gboolean
-panel_profile_get_show_program_list (void)
-{
-	return get_program_listing_setting ("show_program_list");
-}
-
-gboolean
-panel_profile_get_enable_program_list (void)
-{
-	return get_program_listing_setting ("enable_program_list");
-}
-
-gboolean
-panel_profile_get_enable_autocompletion (void)
-{
-	return get_program_listing_setting ("enable_autocompletion");
-}
-
-void
-panel_profile_set_show_program_list (gboolean show_program_list)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_gconf_general_key ("show_program_list");
-	gconf_client_set_bool (client, key, show_program_list, NULL);
-}
-
-gboolean
-panel_profile_is_writable_show_program_list (void)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_gconf_general_key ("show_program_list");
-	return gconf_client_key_is_writable (client, key, NULL);
-}
-
 gboolean
 panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 {

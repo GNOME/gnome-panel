@@ -56,7 +56,6 @@
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-enums.h"
-#include "panel-profile.h"
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
 #include "menu.h"
@@ -64,11 +63,17 @@
 #include "panel-xutils.h"
 #include "panel-icon-names.h"
 
+#define PANEL_RUN_SCHEMA                 "org.gnome.gnome-panel.run-dialog"
+#define PANEL_RUN_ENABLE_COMPLETION_KEY  "enable-autocompletion"
+#define PANEL_RUN_ENABLE_LIST_KEY        "enable-program-list"
+#define PANEL_RUN_SHOW_LIST_KEY          "show-program-list"
+
 typedef struct {
 	GtkWidget        *run_dialog;
 
+	GSettings        *run_settings;
+
 	GtkWidget        *main_box;
-	GtkWidget        *program_list_box;
 
 	GtkWidget        *combobox;
 	GtkWidget        *pixmap;
@@ -92,7 +97,6 @@ typedef struct {
 	int	          add_icons_idle_id;
 	int	          add_items_idle_id;
 	int		  find_command_idle_id;
-	int		  content_notify_id;
 	gboolean	  use_program_list;
 	gboolean	  completion_started;
 	
@@ -191,7 +195,7 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	
 	dialog->changed_id = 0;
 
-	g_object_unref (dialog->program_list_box);
+	g_object_unref (dialog->list_expander);
 	
 	g_slist_foreach (dialog->add_icon_paths, (GFunc) gtk_tree_path_free, NULL);
 	g_slist_free (dialog->add_icon_paths);
@@ -216,11 +220,6 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 		g_source_remove (dialog->find_command_idle_id);
 	dialog->find_command_idle_id = 0;
 
-	if (dialog->content_notify_id)
-		gconf_client_notify_remove (panel_gconf_get_client (),
-					    dialog->content_notify_id);
-	dialog->content_notify_id = 0;
-
 	if (dialog->dir_hash)
 		g_hash_table_destroy (dialog->dir_hash);
 	dialog->dir_hash = NULL;
@@ -240,7 +239,11 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	dialog->completion = NULL;
 
 	panel_run_dialog_disconnect_pixmap (dialog);
-	
+
+	if (dialog->run_settings)
+		g_object_unref (dialog->run_settings);
+	dialog->run_settings = NULL;
+
 	g_free (dialog);
 }
 
@@ -1142,107 +1145,81 @@ panel_run_dialog_setup_program_list (PanelRunDialog *dialog,
 	GtkTreeSelection *selection;
 	
 	dialog->program_list = PANEL_GTK_BUILDER_GET (gui, "program_list");
-	dialog->program_list_box = PANEL_GTK_BUILDER_GET (gui, "program_list_box");
 	dialog->program_label = PANEL_GTK_BUILDER_GET (gui, "program_label");
 	dialog->main_box = PANEL_GTK_BUILDER_GET (gui, "main_box");
 	
-	/* Ref the box so it doesn't get destroyed when it is
-	 * removed from the visible area of the dialog box.
-	 */
-	g_object_ref (dialog->program_list_box);
-	
-	if (panel_profile_get_enable_program_list ()) {
-		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
-		gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-	        g_signal_connect (selection, "changed",
-				  G_CALLBACK (program_list_selection_changed),
-				  dialog);
+	g_signal_connect (selection, "changed",
+			  G_CALLBACK (program_list_selection_changed),
+			  dialog);
 
-	        g_signal_connect (dialog->program_list, "row-activated",
-				  G_CALLBACK (program_list_selection_activated),
-				  dialog);
-
-		/* start loading the list of applications */
-		dialog->add_items_idle_id = 
-			g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) panel_run_dialog_add_items_idle, 
-					 dialog, NULL);
-	}
-}
-
-static void
-panel_run_dialog_update_content (PanelRunDialog *dialog,
-				 gboolean        show_list)
-{
-	if (!panel_profile_get_enable_program_list ()) {
-		GtkWidget *parent;
-
-		parent = gtk_widget_get_parent (dialog->list_expander);
-		if (parent)
-			gtk_container_remove (GTK_CONTAINER (parent),
-					      dialog->list_expander);
-
-		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
-                gtk_widget_grab_focus (dialog->combobox);
-		
-	} else if (show_list) {
-		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
-		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
-		gtk_widget_grab_focus (dialog->program_list);
-		
-        } else if (!show_list) {
-		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
-                gtk_widget_grab_focus (dialog->combobox);
-        }
-}
-
-static void
-panel_run_dialog_content_notify (GConfClient    *client,
-				 int             notify_id,
-				 GConfEntry     *entry,
-				 PanelRunDialog *dialog)
-{
-	panel_run_dialog_update_content (dialog, gconf_value_get_bool (entry->value));
-}
-
-static void
-list_expander_toggled (GtkExpander    *expander,
-		       GParamSpec     *pspec,
-		       PanelRunDialog *dialog)
-{
-	panel_profile_set_show_program_list (gtk_expander_get_expanded (expander));
+	g_signal_connect (dialog->program_list, "row-activated",
+			  G_CALLBACK (program_list_selection_activated),
+			  dialog);
 }
 
 static void
 panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 				      GtkBuilder     *gui)
 {
-	GConfClient *client;
-	const char *key;
-	
 	dialog->list_expander = PANEL_GTK_BUILDER_GET (gui, "list_expander");
 
-	if (panel_profile_get_enable_program_list ()) {
-		gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander),
-					   panel_profile_get_show_program_list ());
+	/* Ref the expander so it doesn't get destroyed when it is
+	 * removed from the visible area of the dialog box. */
+	g_object_ref (dialog->list_expander);
 
-		if ( ! panel_profile_is_writable_show_program_list ())
-			gtk_widget_set_sensitive (dialog->list_expander, FALSE);
-		
-	        g_signal_connect (dialog->list_expander, "notify::expanded",
-				  G_CALLBACK (list_expander_toggled),
-				  dialog);
-	
-		client = panel_gconf_get_client ();
-		key = panel_gconf_general_key ("show_program_list");
-	
-		dialog->content_notify_id =
-			gconf_client_notify_add (client, key,
-						 (GConfClientNotifyFunc) panel_run_dialog_content_notify,
-						 dialog, NULL, NULL);
-					 
-		if (!dialog->content_notify_id)
-			g_warning ("error setting up content change notification");
+	g_settings_bind (dialog->run_settings,
+			 PANEL_RUN_SHOW_LIST_KEY,
+			 dialog->list_expander,
+			 "expanded",
+			 G_SETTINGS_BIND_DEFAULT);
+}
+
+static void
+panel_run_dialog_update_program_list (GSettings      *settings,
+				      char           *key,
+				      PanelRunDialog *dialog)
+{
+	gboolean   enabled;
+	gboolean   shown;
+	GtkWidget *parent;
+
+	enabled = g_settings_get_boolean (dialog->run_settings,
+					  PANEL_RUN_ENABLE_LIST_KEY);
+
+	parent = gtk_widget_get_parent (dialog->list_expander);
+
+	if (enabled) {
+		if (dialog->program_list_store == NULL) {
+			/* start loading the list of applications */
+			dialog->add_items_idle_id =
+				g_idle_add_full (G_PRIORITY_LOW,
+						 (GSourceFunc) panel_run_dialog_add_items_idle,
+						 dialog, NULL);
+		}
+
+		if (!parent)
+			gtk_box_pack_end (GTK_BOX (dialog->main_box),
+					  dialog->list_expander,
+					  TRUE, TRUE, 0);
+	} else {
+		if (parent)
+			gtk_container_remove (GTK_CONTAINER (parent),
+					      dialog->list_expander);
+	}
+
+	shown = g_settings_get_boolean (dialog->run_settings,
+					PANEL_RUN_SHOW_LIST_KEY);
+
+	if (enabled && shown) {
+		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
+		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
+		gtk_widget_grab_focus (dialog->program_list);
+        } else {
+		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
+                gtk_widget_grab_focus (dialog->combobox);
 	}
 }
 
@@ -1521,7 +1498,8 @@ entry_event (GtkEditable    *entry,
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->program_list));
 	gtk_tree_selection_unselect_all (selection);
 
-	if (!panel_profile_get_enable_autocompletion ())
+	if (!g_settings_get_boolean (dialog->run_settings,
+				     PANEL_RUN_ENABLE_COMPLETION_KEY))
 		return FALSE;
 
 	/* tab completion */
@@ -1617,9 +1595,13 @@ static void
 combobox_changed (GtkComboBox    *combobox,
 		  PanelRunDialog *dialog)
 {
-	char *text;
-	char *start;
-	char *msg;
+	gboolean  program_list_enabled;
+	char     *text;
+	char     *start;
+	char     *msg;
+
+	program_list_enabled = g_settings_get_boolean (dialog->run_settings,
+						       PANEL_RUN_ENABLE_LIST_KEY);
 
         text = g_strdup (panel_run_dialog_get_combo_text (dialog));
 
@@ -1646,7 +1628,7 @@ combobox_changed (GtkComboBox    *combobox,
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
 		gtk_drag_source_unset (dialog->run_dialog);
 
-		if (panel_profile_get_enable_program_list ())
+		if (program_list_enabled)
 			gtk_label_set_text (GTK_LABEL (dialog->program_label),
 					    _("Select an application to view its description."));
 
@@ -1657,7 +1639,7 @@ combobox_changed (GtkComboBox    *combobox,
 			dialog->find_command_idle_id = 0;
 		}
 
-		if (panel_profile_get_enable_program_list ()) {
+		if (program_list_enabled) {
 			GtkTreeIter  iter;
 			GtkTreePath *path;
 
@@ -1684,7 +1666,7 @@ combobox_changed (GtkComboBox    *combobox,
 			     GDK_ACTION_COPY);
 	gtk_drag_source_add_uri_targets (dialog->run_dialog);
 
-	if (panel_profile_get_enable_program_list () &&
+	if (program_list_enabled &&
 	    !dialog->use_program_list) {
 		msg = g_strdup_printf (_("Will run command: '%s'"),
 				       start);
@@ -1693,7 +1675,7 @@ combobox_changed (GtkComboBox    *combobox,
 	}
 	
 	/* look up icon for the command */
-	if (panel_profile_get_enable_program_list () &&
+	if (program_list_enabled &&
 	    !dialog->use_program_list &&
 	    !dialog->find_command_idle_id)
 		dialog->find_command_idle_id =
@@ -1949,6 +1931,8 @@ panel_run_dialog_new (GdkScreen  *screen,
 	dialog = g_new0 (PanelRunDialog, 1);
 
 	dialog->run_dialog = PANEL_GTK_BUILDER_GET (gui, "panel_run_dialog");
+
+	dialog->run_settings = g_settings_new (PANEL_RUN_SCHEMA);
 	
 	g_signal_connect_swapped (dialog->run_dialog, "response",
 				  G_CALLBACK (panel_run_dialog_response), dialog);
@@ -1967,7 +1951,12 @@ panel_run_dialog_new (GdkScreen  *screen,
 
 	panel_run_dialog_set_default_icon    (dialog, FALSE);
 
-	panel_run_dialog_update_content (dialog, panel_profile_get_show_program_list ());
+	g_signal_connect (dialog->run_settings, "changed::"PANEL_RUN_ENABLE_LIST_KEY,
+			  G_CALLBACK (panel_run_dialog_update_program_list), dialog);
+	g_signal_connect (dialog->run_settings, "changed::"PANEL_RUN_SHOW_LIST_KEY,
+			  G_CALLBACK (panel_run_dialog_update_program_list), dialog);
+
+	panel_run_dialog_update_program_list (dialog->run_settings, NULL, dialog);
 
 	gtk_widget_set_sensitive (dialog->run_button, FALSE);
 	
