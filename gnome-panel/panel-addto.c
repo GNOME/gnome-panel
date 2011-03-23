@@ -34,7 +34,6 @@
 
 #include "launcher.h"
 #include "panel.h"
-#include "drawer.h"
 #include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
@@ -87,8 +86,7 @@ typedef enum {
 	PANEL_ADDTO_LAUNCHER_NEW,
 	PANEL_ADDTO_MENU,
 	PANEL_ADDTO_MENUBAR,
-	PANEL_ADDTO_SEPARATOR,
-	PANEL_ADDTO_DRAWER
+	PANEL_ADDTO_SEPARATOR
 } PanelAddtoItemType;
 
 typedef struct {
@@ -168,17 +166,6 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "SEPARATOR:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_DRAWER,
-	  N_("Drawer"),
-	  N_("A pop out drawer to store other items in"),
-	  PANEL_ICON_DRAWER,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "DRAWER:NEW",
 	  TRUE }
 };
 
@@ -805,11 +792,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		panel_separator_create (dialog->panel_widget->toplevel,
 					dialog->insertion_position);
 		break;
-	case PANEL_ADDTO_DRAWER:
-		panel_drawer_create (dialog->panel_widget->toplevel,
-				     dialog->insertion_position,
-				     NULL, FALSE, NULL);
-		break;
 	}
 }
 
@@ -1035,7 +1017,6 @@ static void
 panel_addto_name_change (PanelAddtoDialog *dialog,
 			 const char       *name)
 {
-	char *title;
 	char *label;
 
 	label = NULL;
@@ -1044,18 +1025,11 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 		label = g_strdup_printf (_("Find an _item to add to \"%s\":"),
 					 name);
 
-	if (panel_toplevel_get_is_attached (dialog->panel_widget->toplevel)) {
-		title = g_strdup_printf (_("Add to Drawer"));
-		if (label == NULL)
-			label = g_strdup (_("Find an _item to add to the drawer:"));
-	} else {
-		title = g_strdup_printf (_("Add to Panel"));
-		if (label == NULL)
-			label = g_strdup (_("Find an _item to add to the panel:"));
-	}
+	if (label == NULL)
+		label = g_strdup (_("Find an _item to add to the panel:"));
 
-	gtk_window_set_title (GTK_WINDOW (dialog->addto_dialog), title);
-	g_free (title);
+	gtk_window_set_title (GTK_WINDOW (dialog->addto_dialog),
+			      _("Add to Panel"));
 
 	gtk_label_set_text_with_mnemonic (GTK_LABEL (dialog->label), label);
 	g_free (label);

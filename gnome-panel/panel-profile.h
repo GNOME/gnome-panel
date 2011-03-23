@@ -143,15 +143,6 @@ void        panel_profile_set_background_rotate       (PanelToplevel       *topl
 gboolean    panel_profile_get_background_rotate       (PanelToplevel       *toplevel);
 gboolean    panel_profile_is_writable_background_rotate (PanelToplevel *toplevel);
 
-void        panel_profile_set_attached_custom_icon    (PanelToplevel        *toplevel,
-						       const char           *custom_icon);
-char       *panel_profile_get_attached_custom_icon    (PanelToplevel        *toplevel);
-gboolean    panel_profile_is_writable_attached_custom_icon (PanelToplevel        *toplevel);
-void        panel_profile_set_attached_tooltip        (PanelToplevel        *toplevel,
-						       const char           *custom_icon);
-char       *panel_profile_get_attached_tooltip        (PanelToplevel        *toplevel);
-gboolean    panel_profile_is_writable_attached_tooltip (PanelToplevel        *toplevel);
-
 guint       panel_profile_toplevel_notify_add         (PanelToplevel         *toplevel,
 						       const char            *key,
 						       GConfClientNotifyFunc  func,

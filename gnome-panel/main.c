@@ -112,11 +112,6 @@ main (int argc, char **argv)
 	panel_lockdown_init ();
 	panel_profile_load ();
 
-	/*add forbidden lists to ALL panels*/
-	g_slist_foreach (panels,
-			 (GFunc)panel_widget_add_forbidden,
-			 NULL);
-
 	xstuff_init ();
 
 	/* Flush to make sure our struts are seen by everyone starting

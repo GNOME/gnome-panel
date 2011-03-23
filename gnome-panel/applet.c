@@ -17,8 +17,8 @@
 #include <libpanel-util/panel-show.h>
 
 #include "button-widget.h"
-#include "drawer.h"
 #include "launcher.h"
+#include "panel.h"
 #include "panel-addto.h"
 #include "panel-bindings.h"
 #include "panel-gconf.h"
@@ -42,6 +42,7 @@ static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
 static guint   queued_position_source = 0;
 
+static GtkWidget *panel_applet_get_menu (AppletInfo *info);
 static void applet_menu_show       (GtkWidget *w, AppletInfo *info);
 static void applet_menu_deactivate (GtkWidget *w, AppletInfo *info);
 
@@ -56,9 +57,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 			      gboolean    dnd_enabled)
 {
 	switch (info->type) {
-	case PANEL_OBJECT_DRAWER:
-		panel_drawer_set_dnd_enabled (info->data, dnd_enabled);
-		break;
 	case PANEL_OBJECT_MENU:
 		panel_menu_button_set_dnd_enabled (PANEL_MENU_BUTTON (info->widget),
 						   dnd_enabled);
@@ -252,10 +250,7 @@ applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
 
-	if (info->type == PANEL_OBJECT_DRAWER)
-		drawer_query_deletion (info->data);
-	else
-		panel_profile_delete_object (info);
+	panel_profile_delete_object (info);
 }
 
 static inline GdkScreen *
@@ -284,21 +279,6 @@ applet_callback_callback (GtkWidget      *widget,
 			launcher_launch (menu->info->data, widget);
 		else if (!strcmp (menu->name, "properties"))
 			launcher_properties (menu->info->data);
-		break;
-	case PANEL_OBJECT_DRAWER: 
-		if (strcmp (menu->name, "add") == 0) {
-			Drawer *drawer = menu->info->data;
-
-			panel_addto_present (GTK_MENU_ITEM (widget),
-					     panel_toplevel_get_panel_widget (drawer->toplevel));
-		} else if (strcmp (menu->name, "properties") == 0) {
-			Drawer *drawer = menu->info->data;
-
-			panel_properties_dialog_present (drawer->toplevel);
-		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help (screen,
-					 "user-guide", "gospanel-18", NULL);
-		}
 		break;
 	case PANEL_OBJECT_MENU:
 		panel_menu_button_invoke_menu (
@@ -526,7 +506,7 @@ panel_applet_create_bare_menu (AppletInfo *info)
 	return menu;
 }
 
-GtkWidget *
+static GtkWidget *
 panel_applet_get_menu (AppletInfo *info)
 {
 	GtkWidget   *menu;
@@ -845,21 +825,6 @@ panel_applet_destroy (GtkWidget  *widget,
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
 
-	if (info->type == PANEL_OBJECT_DRAWER) {
-		Drawer *drawer = info->data;
-
-		if (drawer->toplevel) {
-			PanelWidget *panel_widget;
-
-			panel_widget = panel_toplevel_get_panel_widget (
-							drawer->toplevel);
-			panel_widget->master_widget = NULL;
-
-			gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
-			drawer->toplevel = NULL;
-		}
-	}
-
 	if (info->type != PANEL_OBJECT_APPLET)
 		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menus),
 					      info);
@@ -1057,12 +1022,6 @@ panel_applet_load_idle_handler (gpointer dummy)
 	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_load_from_gconf (
 					panel_widget,
-					applet->locked,
-					applet->position,
-					applet->id);
-		break;
-	case PANEL_OBJECT_DRAWER:
-		drawer_load_from_gconf (panel_widget,
 					applet->locked,
 					applet->position,
 					applet->id);
@@ -1423,22 +1382,6 @@ panel_applet_register (GtkWidget       *applet,
 	panel_gconf_notify_add_while_alive (key,
 					    (GConfClientNotifyFunc) panel_applet_locked_change_notify,
 					    G_OBJECT (applet));
-
-	if (type == PANEL_OBJECT_DRAWER) {
-		Drawer *drawer = data;
-		PanelWidget *assoc_panel;
-
-		assoc_panel = panel_toplevel_get_panel_widget (drawer->toplevel);
-
-		g_object_set_data (G_OBJECT (applet),
-				   PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
-		assoc_panel->master_widget = applet;
-		g_object_add_weak_pointer (
-			G_OBJECT (applet), (gpointer *) &assoc_panel->master_widget);
-	}
-
-	g_object_set_data (G_OBJECT (applet),
-			   PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 
 	registered_applets = g_slist_append (registered_applets, info);
 

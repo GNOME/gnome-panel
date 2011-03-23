@@ -239,48 +239,6 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 	}
 }
 
-static void
-panel_properties_dialog_icon_changed (PanelIconChooser      *chooser,
-				      const char            *icon,
-				      PanelPropertiesDialog *dialog)
-{
-        panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
-}
-
-static void
-panel_properties_dialog_setup_icon_chooser (PanelPropertiesDialog *dialog,
-					    GtkBuilder            *gui)
-{
-	char *custom_icon;
-
-	dialog->icon_align = PANEL_GTK_BUILDER_GET (gui, "icon_align");
-	g_return_if_fail (dialog->icon_align != NULL);
-
-	dialog->icon_chooser = panel_icon_chooser_new (NULL);
-	panel_icon_chooser_set_fallback_icon_name (PANEL_ICON_CHOOSER (dialog->icon_chooser),
-						   PANEL_ICON_DRAWER);
-	gtk_widget_show (dialog->icon_chooser);
-	gtk_container_add (GTK_CONTAINER (dialog->icon_align),
-			   dialog->icon_chooser);
-
-	dialog->icon_label = PANEL_GTK_BUILDER_GET (gui, "icon_label");
-	g_return_if_fail (dialog->icon_label != NULL);
-
-	custom_icon = panel_profile_get_attached_custom_icon (dialog->toplevel);
-	panel_icon_chooser_set_icon (PANEL_ICON_CHOOSER (dialog->icon_chooser),
-				     custom_icon);
-	g_free (custom_icon);
-
-	g_signal_connect (dialog->icon_chooser, "changed",
-			  G_CALLBACK (panel_properties_dialog_icon_changed), dialog);
-
-	if (!panel_profile_is_writable_attached_custom_icon (dialog->toplevel)) {
-		gtk_widget_set_sensitive (dialog->icon_chooser, FALSE);
-		gtk_widget_set_sensitive (dialog->icon_label, FALSE);
-		gtk_widget_show (dialog->writability_warn_general);
-	}
-}
-
 /* Note: this is only for toggle buttons on the general page, if needed for togglebuttons
    elsewhere you must make this respect the writability warning thing for the right page */
 #define SETUP_TOGGLE_BUTTON(wid, n, p)                                                            \
@@ -550,20 +508,13 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 				  int                    response,
 				  GtkWidget             *properties_dialog)
 {
-	char *help_id;
-
 	switch (response) {
 	case GTK_RESPONSE_CLOSE:
 		gtk_widget_destroy (properties_dialog);
 		break;
 	case GTK_RESPONSE_HELP:
-		if (panel_toplevel_get_is_attached (dialog->toplevel)) {
-			help_id = "gospanel-550";
-		} else {
-			help_id = "gospanel-28";
-		}
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "user-guide", help_id, NULL);
+				 "user-guide", "gospanel-28", NULL);
 		break;
 	default:
 		break;
@@ -795,80 +746,6 @@ panel_properties_dialog_background_notify (GConfClient           *client,
 		panel_properties_dialog_update_background_image (dialog, value);
 }
 
-static void
-panel_properties_dialog_remove_orientation_combo (PanelPropertiesDialog *dialog)
-{
-	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
-	GtkTable     *table     = GTK_TABLE (dialog->general_table);
-
-	g_object_ref (dialog->size_label);
-	g_object_ref (dialog->size_widgets);
-	g_object_ref (dialog->icon_label);
-	g_object_ref (dialog->icon_align);
-
-	gtk_container_remove (container, dialog->orientation_label);
-	gtk_container_remove (container, dialog->orientation_combo);
-	gtk_container_remove (container, dialog->size_label);
-	gtk_container_remove (container, dialog->size_widgets);
-	gtk_container_remove (container, dialog->icon_label);
-	gtk_container_remove (container, dialog->icon_align);
-
-	gtk_table_attach_defaults (table, dialog->size_label,   0, 1, 1, 2);
-	gtk_table_attach_defaults (table, dialog->size_widgets, 1, 2, 1, 2);
-	gtk_table_attach_defaults (table, dialog->icon_label,   0, 1, 2, 3);
-	gtk_table_attach_defaults (table, dialog->icon_align,   1, 2, 2, 3);
-
-	dialog->orientation_label = NULL;
-	dialog->orientation_combo = NULL;
-	g_object_unref (dialog->size_label);
-	g_object_unref (dialog->size_widgets);
-	g_object_unref (dialog->icon_label);
-	g_object_unref (dialog->icon_align);
-
-	gtk_table_resize (table, 3, 2);
-}
-
-static void
-panel_properties_dialog_remove_icon_chooser (PanelPropertiesDialog *dialog)
-{
-	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
-
-	gtk_container_remove (container, dialog->icon_label);
-	gtk_container_remove (container, dialog->icon_align);
-
-	dialog->icon_label = NULL;
-	dialog->icon_align = NULL;
-	dialog->icon_chooser = NULL;
-
-	gtk_table_resize (GTK_TABLE (dialog->general_table), 3, 2);
-}
-
-static void
-panel_properties_dialog_remove_toggles (PanelPropertiesDialog *dialog)
-{
-	GtkContainer *container = GTK_CONTAINER (dialog->general_vbox);
-
-	gtk_container_remove (container, dialog->autohide_toggle);
-	gtk_container_remove (container, dialog->expand_toggle);
-
-	dialog->autohide_toggle = NULL;
-	dialog->expand_toggle   = NULL;
-}
-
-static void
-panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
-					     gboolean               attached)
-{
-	if (!attached)
-		panel_properties_dialog_remove_icon_chooser (dialog);
-	else {
-		gtk_window_set_title (GTK_WINDOW (dialog->properties_dialog),
-				      _("Drawer Properties"));
-		panel_properties_dialog_remove_toggles (dialog);
-		panel_properties_dialog_remove_orientation_combo (dialog);
-	}
-}
-
 static PanelPropertiesDialog *
 panel_properties_dialog_new (PanelToplevel *toplevel,
 			     GtkBuilder    *gui)
@@ -901,7 +778,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	panel_properties_dialog_setup_orientation_combo  (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
-	panel_properties_dialog_setup_icon_chooser       (dialog, gui);
 	panel_properties_dialog_setup_expand_toggle      (dialog, gui);
 	panel_properties_dialog_setup_autohide_toggle    (dialog, gui);
 	panel_properties_dialog_setup_hidebuttons_toggle (dialog, gui);
@@ -931,9 +807,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			"background",
 			(GConfClientNotifyFunc) panel_properties_dialog_background_notify,
 			dialog);
-
-	panel_properties_dialog_update_for_attached (dialog,
-						     panel_toplevel_get_is_attached (dialog->toplevel));
 
 	panel_toplevel_push_autohide_disabler (dialog->toplevel);
 	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),

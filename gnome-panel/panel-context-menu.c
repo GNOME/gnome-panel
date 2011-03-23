@@ -41,7 +41,6 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
-#include "applet.h"
 #include "panel-config-global.h"
 #include "panel-profile.h"
 #include "panel-properties-dialog.h"
@@ -58,7 +57,7 @@ panel_context_menu_create_new_panel (GtkWidget *menuitem)
 static void
 panel_context_menu_delete_panel (PanelToplevel *toplevel)
 {
-	if (panel_toplevel_is_last_unattached (toplevel)) {
+	if (panel_toplevel_is_last (toplevel)) {
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
 				    "cannot_delete_last_panel", TRUE,
@@ -107,7 +106,7 @@ panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 	g_assert (PANEL_IS_TOPLEVEL (panel_widget->toplevel));
 
 	sensitive =
-		!panel_toplevel_is_last_unattached (panel_widget->toplevel) &&
+		!panel_toplevel_is_last (panel_widget->toplevel) &&
 		!panel_lockdown_get_locked_down () &&
 		panel_profile_id_lists_are_writable ();
 
@@ -173,19 +172,6 @@ GtkWidget *
 panel_context_menu_create (PanelWidget *panel)
 {
 	GtkWidget *retval;
-
-	if (panel->master_widget) {
-		gpointer    *pointer;
-		AppletInfo  *info;
-
-		pointer = g_object_get_data (G_OBJECT (panel->master_widget),
-					     "applet_info");
-
-		g_assert (pointer != NULL);
-		info = (AppletInfo *) pointer;
-
-		return panel_applet_get_menu (info);
-	}
 
 	if (panel_lockdown_get_locked_down ())
 		return NULL;

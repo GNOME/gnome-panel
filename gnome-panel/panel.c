@@ -25,7 +25,6 @@
 #include "panel.h"
 
 #include "applet.h"
-#include "drawer.h"
 #include "button-widget.h"
 #include "launcher.h"
 #include "panel-bindings.h"
@@ -81,20 +80,6 @@ orientation_change (AppletInfo  *info,
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 		panel_menu_bar_set_orientation (PANEL_MENU_BAR (info->widget), orientation);
-		break;
-	case PANEL_OBJECT_DRAWER: {
-		Drawer      *drawer = info->data;
-		PanelWidget *panel_widget;
-
-		panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
-
-		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
-
-		gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
-		gtk_container_foreach (GTK_CONTAINER (panel_widget),
-				       orient_change_foreach,
-				       panel_widget);
-		}
 		break;
 	case PANEL_OBJECT_SEPARATOR:
 		panel_separator_set_orientation (PANEL_SEPARATOR (info->widget),
@@ -206,23 +191,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
 	back_change(info,PANEL_WIDGET(widget));
-}
-
-static void
-panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
-{
-	PanelToplevel *toplevel;
-	AppletInfo    *info;
-
-	toplevel = PANEL_WIDGET (widget)->toplevel;
-	info = g_object_get_data (G_OBJECT (applet), "applet_info");
-
-	if (info->type == PANEL_OBJECT_DRAWER) {
-		Drawer *drawer = info->data;
-
-		if (drawer->toplevel)
-			panel_toplevel_queue_auto_hide (toplevel);
-	}
 }
 
 static gboolean
@@ -814,14 +782,10 @@ move_applet (PanelWidget *panel, int pos, int applet_index)
 	    info->widget != NULL &&
 	    parent != NULL &&
 	    PANEL_IS_WIDGET (parent)) {
-		GSList *forb;
-		forb = g_object_get_data (G_OBJECT (info->widget),
-					  PANEL_APPLET_FORBIDDEN_PANELS);
-		if ( ! g_slist_find (forb, panel))
-			panel_widget_reparent (PANEL_WIDGET (parent),
-					       panel,
-					       info->widget,
-					       pos);
+		panel_widget_reparent (PANEL_WIDGET (parent),
+				       panel,
+				       info->widget,
+				       pos);
 	}
 
 	return TRUE;
@@ -838,10 +802,9 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	if (applet_type == NULL)
 		return FALSE;
 
-	if (sscanf (applet_type, "MENU:%d", &applet_index) == 1 ||
-	    sscanf (applet_type, "DRAWER:%d", &applet_index) == 1) {
+	if (sscanf (applet_type, "MENU:%d", &applet_index) == 1) {
 		if (action != GDK_ACTION_MOVE)
-			g_warning ("Only MOVE supported for menus/drawers");
+			g_warning ("Only MOVE supported for menus");
 		success = move_applet (panel, pos, applet_index);
 
 	} else if (strncmp (applet_type, "MENU:", strlen ("MENU:")) == 0) {
@@ -864,14 +827,6 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 			success = drop_menu (panel, pos,
 					     menu_filename, menu_path);
 			g_free (menu_filename);
-		}
-
-	} else if (!strcmp (applet_type, "DRAWER:NEW")) {
-		if (panel_profile_id_lists_are_writable ()) {
-			panel_drawer_create (panel->toplevel, pos, NULL, FALSE, NULL);
-			success = TRUE;
-		} else {
-			success = FALSE;
 		}
 
 	} else if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
@@ -1027,22 +982,6 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 
 	if (panel_lockdown_get_locked_down ())
 		return FALSE;
-
-	if (info == TARGET_APPLET_INTERNAL) {
-		GtkWidget *source_widget;
-
-		source_widget = gtk_drag_get_source_widget (context);
-
-		if (BUTTON_IS_WIDGET (source_widget)) {
-			GSList *forb;
-
-			forb = g_object_get_data (G_OBJECT (source_widget),
-						  PANEL_APPLET_FORBIDDEN_PANELS);
-
-			if (g_slist_find (forb, panel))
-				return FALSE;
-		}
-	}
 
 	if (info == TARGET_ICON_INTERNAL ||
 	    info == TARGET_APPLET_INTERNAL) {
@@ -1244,10 +1183,6 @@ panel_widget_setup(PanelWidget *panel)
 			  G_CALLBACK(panel_applet_added),
 			  NULL);
 	g_signal_connect (G_OBJECT(panel),
-			  "applet_removed",
-			  G_CALLBACK(panel_applet_removed),
-			  NULL);
-	g_signal_connect (G_OBJECT(panel),
 			  "applet_move",
 			  G_CALLBACK(panel_applet_move),
 			  NULL);
@@ -1342,20 +1277,7 @@ panel_is_applet_right_stick (GtkWidget *applet)
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {
-	PanelWidget *panel_widget;
-
-	panel_widget = panel_toplevel_get_panel_widget (toplevel);
-
-	if (panel_toplevel_get_is_attached (toplevel) &&
-	    panel_widget->master_widget) {
-		AppletInfo *info;
-
-		info = g_object_get_data (G_OBJECT (panel_widget->master_widget),
-					  "applet_info");
-
-		panel_profile_delete_object (info);
-	} else
-		panel_profile_delete_toplevel (toplevel);
+	panel_profile_delete_toplevel (toplevel);
 } 
 
 static void
@@ -1385,28 +1307,19 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 {
 
 	GtkWidget *dialog;
-	char *text1;
-	char *text2;
-
-	if (panel_toplevel_get_is_attached (toplevel)) {
-		text1 = _("Delete this drawer?");
-		text2 = _("When a drawer is deleted, the drawer and its\n"
-			 "settings are lost.");
-	} else {
-		text1 = _("Delete this panel?");
-		text2 = _("When a panel is deleted, the panel and its\n"
-			 "settings are lost.");
-	}
 
 	dialog = gtk_message_dialog_new (
 			GTK_WINDOW (toplevel),
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING,
 			GTK_BUTTONS_NONE,
-			"%s", text1);
+			"%s", _("Delete this panel?"));
 	
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-	                                          "%s", text2);	
+	                                          "%s",
+						  _("When a panel is deleted, the panel and its\n"
+						  "settings are lost."));
+
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,

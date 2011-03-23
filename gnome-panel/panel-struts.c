@@ -345,43 +345,23 @@ orientation_to_order (PanelOrientation orientation)
         }
 }
 
-static inline int
-get_toplevel_depth (PanelToplevel *toplevel)
-{
-	int depth = 0;
-
-	while ((toplevel = panel_toplevel_get_attach_toplevel (toplevel)))
-		depth++;
-
-	return depth;
-}
-
 /* Sort in order of
  *   1) screen
  *   2) monitor
- *   3) depth (for drawers)
- *   4) top, bottom, left, right
- *   5) strut_start ascending
- *   6) strut_end descending
+ *   3) top, bottom, left, right
+ *   4) strut_start ascending
+ *   5) strut_end descending
  */
 static int
 panel_struts_compare (const PanelStrut *s1,
 		      const PanelStrut *s2)
 {
-	int s1_depth;
-	int s2_depth;
-
 	if (s1->screen != s2->screen)
 		return gdk_screen_get_number (s1->screen) -
 			gdk_screen_get_number (s2->screen);
 
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;
-
-	s1_depth = get_toplevel_depth (s1->toplevel);
-	s2_depth = get_toplevel_depth (s2->toplevel);
-	if (s1_depth != s2_depth)
-		return s2_depth - s1_depth;
 
         if (s1->orientation != s2->orientation)
                 return orientation_to_order (s1->orientation) -

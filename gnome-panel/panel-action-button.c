@@ -549,15 +549,6 @@ panel_action_button_clicked (GtkButton *gtk_button)
 	g_return_if_fail (button->priv->type > PANEL_ACTION_NONE);
 	g_return_if_fail (button->priv->type < PANEL_ACTION_LAST);
 
-	if (panel_global_config_get_drawer_auto_close ()) {
-		PanelToplevel *toplevel;
-
-		toplevel = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (button)))->toplevel;
-
-		if (panel_toplevel_get_is_attached (toplevel))
-			panel_toplevel_hide (toplevel, FALSE, -1);
-	}
-
 	if (actions [button->priv->type].invoke)
 		actions [button->priv->type].invoke (GTK_WIDGET (button));
 }

@@ -117,14 +117,6 @@ int                  panel_toplevel_get_monitor            (PanelToplevel       
 void                 panel_toplevel_rotate                 (PanelToplevel       *toplevel,
 							    gboolean             clockwise);
 
-void                 panel_toplevel_attach_to_widget       (PanelToplevel       *toplevel,
-							    PanelToplevel       *attach_toplevel,
-							    GtkWidget           *attach_widget);
-void                 panel_toplevel_detach                 (PanelToplevel       *toplevel);
-gboolean             panel_toplevel_get_is_attached        (PanelToplevel       *toplevel);
-PanelToplevel       *panel_toplevel_get_attach_toplevel    (PanelToplevel       *toplevel);
-GtkWidget           *panel_toplevel_get_attach_widget      (PanelToplevel       *toplevel);
-
 gboolean             panel_toplevel_get_is_floating	   (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_get_is_hidden          (PanelToplevel       *toplevel);
@@ -165,7 +157,7 @@ void                 panel_toplevel_set_enable_arrows      (PanelToplevel       
 gboolean             panel_toplevel_get_enable_arrows      (PanelToplevel       *toplevel);
 void                 panel_toplevel_update_edges           (PanelToplevel       *toplevel);
 
-gboolean             panel_toplevel_is_last_unattached     (PanelToplevel       *toplevel);
+gboolean             panel_toplevel_is_last                (PanelToplevel       *toplevel);
 int                  panel_toplevel_get_minimum_size       (PanelToplevel *toplevel);
 int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);
 GSList              *panel_toplevel_list_toplevels         (void);

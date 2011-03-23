@@ -36,7 +36,6 @@
 typedef struct {
 	guint               tooltips_enabled : 1;
 	guint               enable_animations : 1;
-	guint               drawer_auto_close : 1;
 	guint               confirm_panel_remove : 1;
 	guint               highlight_when_over : 1;
 } GlobalConfig;
@@ -58,14 +57,6 @@ panel_global_config_get_enable_animations (void)
 	g_assert (global_config_initialised == TRUE);
 
 	return global_config.enable_animations;
-}
-
-gboolean
-panel_global_config_get_drawer_auto_close (void)
-{
-	g_assert (global_config_initialised == TRUE);
-
-	return global_config.drawer_auto_close;
 }
 
 gboolean
@@ -105,10 +96,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 	else if (strcmp (key, "enable_animations") == 0)
 		global_config.enable_animations =
 				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "drawer_autoclose") == 0)
-		global_config.drawer_auto_close =
-			gconf_value_get_bool (value);
 
 	else if (strcmp (key, "confirm_panel_remove") == 0)
 		global_config.confirm_panel_remove =

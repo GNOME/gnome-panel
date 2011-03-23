@@ -5,7 +5,6 @@
 #define PANEL_ICON_BURNER		"nautilus-cd-burner"
 #define PANEL_ICON_COMPUTER		"computer"
 #define PANEL_ICON_DESKTOP		"user-desktop"
-#define PANEL_ICON_DRAWER		"gnome-panel-drawer"
 #define PANEL_ICON_FILESYSTEM		"drive-harddisk"
 #define PANEL_ICON_FOLDER		"folder"
 #define PANEL_ICON_FOLDER_DOCUMENTS	"folder-documents"

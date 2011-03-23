@@ -27,8 +27,6 @@ G_BEGIN_DECLS
 
 #define PANEL_MINIMUM_WIDTH 12
 
-#define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
-#define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"
 
 #ifndef TYPEDEF_PANEL_WIDGET
@@ -99,8 +97,6 @@ struct _PanelWidget
 
 	PanelBackground background;
 
-	GtkWidget      *master_widget;
-	
 	GtkWidget      *drop_widget;     /* widget that the panel checks for
 	                                  * the cursor on drops usually the
 	                                  * panel widget itself
@@ -155,9 +151,6 @@ int		panel_widget_add		(PanelWidget *panel,
 						 gboolean     locked,
 						 int          pos,
 						 gboolean     insert_at_pos);
-
-/*needs to be called for drawers after add*/
-void		panel_widget_add_forbidden	(PanelWidget *panel);
 
 /*move applet to a different panel*/
 int		panel_widget_reparent		(PanelWidget *old_panel,

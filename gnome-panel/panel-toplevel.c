@@ -62,8 +62,6 @@ G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 #define SNAP_TOLERANCE_FACTOR     6
 #define DEFAULT_ARROW_SIZE        20
 #define HANDLE_SIZE               10
-#define N_ATTACH_TOPLEVEL_SIGNALS 5
-#define N_ATTACH_WIDGET_SIGNALS   5
 
 typedef enum {
 	PANEL_GRAB_OP_NONE,
@@ -149,10 +147,6 @@ struct _PanelToplevelPrivate {
 	GtkWidget              *hide_button_left;
 	GtkWidget              *hide_button_right;
 
-	PanelToplevel          *attach_toplevel;
-	gulong                  attach_toplevel_signals [N_ATTACH_TOPLEVEL_SIGNALS];
-	GtkWidget              *attach_widget;
-	gulong                  attach_widget_signals [N_ATTACH_WIDGET_SIGNALS];
 	gint			n_autohide_disablers;
 
 	guint                   auto_hide : 1;
@@ -178,12 +172,6 @@ struct _PanelToplevelPrivate {
 	 * of the toplevel might change, so we need to compute new values for
 	 * those. */
 	guint                   position_centered : 1;
-
-	/* The toplevel is "attached" to another widget */
-	guint                   attached : 1;
-
-	/* Hidden temporarily because the attach_toplevel was hidden */
-	guint                   attach_hidden : 1;
 
 	/* More saved grab op state */
 	guint                   orig_x_centered : 1;
@@ -249,19 +237,13 @@ panel_toplevel_list_toplevels (void)
 	return toplevel_list;
 }
 
-/* Is this the last un-attached toplevel? */
 gboolean
-panel_toplevel_is_last_unattached (PanelToplevel *toplevel)
+panel_toplevel_is_last (PanelToplevel *toplevel)
 {
 	GSList *l;
 
-	if (panel_toplevel_get_is_attached (toplevel))
-		return FALSE;
-
 	for (l = toplevel_list; l; l = l->next) {
-		PanelToplevel *t = l->data;
-
-		if (t != toplevel && !panel_toplevel_get_is_attached (t))
+		if (l->data != toplevel)
 			return FALSE;
 	}
 
@@ -422,21 +404,6 @@ panel_toplevel_warp_pointer (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_begin_attached_move (PanelToplevel *toplevel,
-				    gboolean       is_keyboard,
-				    guint32        time_)
-{
-	PanelWidget *attached_panel_widget;
-
-	attached_panel_widget = panel_toplevel_get_panel_widget (toplevel->priv->attach_toplevel);
-
-	panel_widget_applet_drag_start (attached_panel_widget,
-					toplevel->priv->attach_widget,
-					is_keyboard ? PW_DRAG_OFF_CENTER : PW_DRAG_OFF_CURSOR,
-					time_);
-}
-
-static void
 panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 			      PanelGrabOpType  op_type,
 			      gboolean         grab_keyboard,
@@ -472,11 +439,6 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	     op_type == PANEL_GRAB_OP_RESIZE_RIGHT) &&
 	    ! panel_profile_is_writable_toplevel_size (toplevel))
 		return;
-
-	if (toplevel->priv->attached && op_type == PANEL_GRAB_OP_MOVE) {
-		panel_toplevel_begin_attached_move (toplevel, grab_keyboard, time_);
-		return;
-	}
 
 	widget = GTK_WIDGET (toplevel);
 	window = gtk_widget_get_window (widget);
@@ -1280,26 +1242,6 @@ panel_toplevel_update_buttons_showing (PanelToplevel *toplevel)
 		gtk_widget_hide (toplevel->priv->hide_button_left);
 		gtk_widget_hide (toplevel->priv->hide_button_right);
 	}
-
-	if (toplevel->priv->attached) {
-		switch (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel)) {
-		case PANEL_ORIENTATION_TOP:
-			gtk_widget_hide (toplevel->priv->hide_button_top);
-			break;
-		case PANEL_ORIENTATION_BOTTOM:
-			gtk_widget_hide (toplevel->priv->hide_button_bottom);
-			break;
-		case PANEL_ORIENTATION_LEFT:
-			gtk_widget_hide (toplevel->priv->hide_button_left);
-			break;
-		case PANEL_ORIENTATION_RIGHT:
-			gtk_widget_hide (toplevel->priv->hide_button_right);
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-		}
-	}
 }
 
 static void
@@ -1423,12 +1365,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 
 	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
-
-	if (toplevel->priv->attached) {
-		panel_struts_unregister_strut (toplevel);
-		panel_struts_set_window_hint (toplevel);
-		return FALSE;
-	}
 
 	/* In the case of the initial animation, we really want the struts to
 	 * represent what is at the end of the animation, to avoid desktop
@@ -1650,9 +1586,6 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 		},
 	};
 
-	if (toplevel->priv->attached)
-		return N_("Drawer");
-
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
 		orientation = 0;
@@ -1712,104 +1645,6 @@ panel_toplevel_update_description (PanelToplevel *toplevel)
 }
 
 static void
-panel_toplevel_update_attached_position (PanelToplevel *toplevel,
-					 gboolean       hidden,
-					 int           *x,
-					 int           *y,
-					 int           *w,
-					 int           *h)
-{
-	GtkAllocation     attach_allocation;
-	PanelOrientation  attach_orientation;
-	GdkRectangle      toplevel_box;
-	GdkRectangle      parent_box;
-	GdkRectangle      attach_box;
-	int               x_origin = 0, y_origin = 0;
-	int               monitor_x, monitor_y;
-	int               monitor_width, monitor_height;
-
-	if (!gtk_widget_get_realized (GTK_WIDGET (toplevel->priv->attach_toplevel)) ||
-	    !gtk_widget_get_realized (toplevel->priv->attach_widget))
-		return;
-
-	gtk_widget_get_allocation (GTK_WIDGET (toplevel->priv->attach_widget), &attach_allocation);
-
-	toplevel_box = toplevel->priv->geometry;
-	parent_box   = toplevel->priv->attach_toplevel->priv->geometry;
-	attach_box   = attach_allocation;
-
-	if (attach_box.x != -1) {
-		gdk_window_get_origin (gtk_widget_get_window (GTK_WIDGET (toplevel->priv->attach_widget)),
-				       &x_origin, &y_origin);
-
-		attach_box.x += x_origin;
-		attach_box.y += y_origin;
-	} else {
-		/* attach_widget isn't allocated. Put the toplevel
-		 * off screen.
-		 */
-		attach_box.x = -toplevel_box.width;
-		attach_box.y = -toplevel_box.height;
-	}
-
-	attach_orientation = panel_toplevel_get_orientation (
-					toplevel->priv->attach_toplevel);
-
-	if (attach_orientation & PANEL_HORIZONTAL_MASK)
-		*x = attach_box.x + attach_box.width / 2  - toplevel_box.width  / 2;
-	else
-		*y = attach_box.y + attach_box.height / 2 - toplevel_box.height / 2;
-
-	switch (attach_orientation) {
-	case PANEL_ORIENTATION_TOP:
-		*y = parent_box.y;
-		if (!hidden)
-			*y += parent_box.height;
-		else
-			*h = parent_box.height;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		*y = parent_box.y;
-		if (!hidden)
-			*y -= toplevel_box.height;
-		else
-			*h = parent_box.height;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		*x = parent_box.x;
-		if (!hidden)
-			*x += parent_box.width;
-		else
-			*w = parent_box.width;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		*x = parent_box.x;
-		if (!hidden)
-			*x -= toplevel_box.width;
-		else
-			*w = parent_box.width;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	panel_toplevel_get_monitor_geometry (toplevel,
-					     &monitor_x,
-					     &monitor_y,
-					     &monitor_width,
-					     &monitor_height);
-
-	*x -= monitor_x;
-	*y -= monitor_y;
-
-	if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-		*x = CLAMP (*x, 0, monitor_width  - toplevel->priv->original_width);
-	else
-		*y = CLAMP (*y, 0, monitor_height - toplevel->priv->original_height);
-}
-
-static void
 panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 				       int           *x,
 				       int           *y,
@@ -1821,11 +1656,6 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	int        snap_tolerance;
 
 	g_assert (x != NULL && y != NULL);
-
-	if (toplevel->priv->attached) {
-		panel_toplevel_update_attached_position (toplevel, FALSE, x, y, w, h);
-		return;
-	}
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -1955,11 +1785,6 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 		  toplevel->priv->state == PANEL_STATE_HIDDEN_DOWN ||
 		  toplevel->priv->state == PANEL_STATE_HIDDEN_LEFT ||
 		  toplevel->priv->state == PANEL_STATE_HIDDEN_RIGHT);
-
-	if (toplevel->priv->attached) {
-		panel_toplevel_update_attached_position (toplevel, TRUE, x, y, w, h);
-		return;
-	}
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -2096,10 +1921,7 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 		 * have a wrong value in a size request event */
 		toplevel->priv->initial_animation_done = TRUE;
 
-		if (toplevel->priv->attached && panel_toplevel_get_is_hidden (toplevel))
-			gtk_widget_unmap (GTK_WIDGET (toplevel));
-		else
-			gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
@@ -2490,7 +2312,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	height = requisition->height;
 
 	if (!toplevel->priv->expand &&
-	    !toplevel->priv->buttons_enabled && !toplevel->priv->attached)
+	    !toplevel->priv->buttons_enabled)
 		non_panel_widget_size = 2 * HANDLE_SIZE;
 	else
 		non_panel_widget_size = 0;
@@ -2506,26 +2328,12 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
-		else {
-			int max_width;
-
-			if (!toplevel->priv->attached)
-				max_width = monitor_width;
-			else {
-				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_LEFT)
-					max_width = monitor_width
-						    - toplevel->priv->geometry.x;
-				else
-					max_width = toplevel->priv->geometry.x +
-						    toplevel->priv->geometry.width;
-			}
-
+		else
 			width = panel_toplevel_update_size_from_hints (
 							toplevel,
 							requisition->width,
-							max_width,
+							monitor_width,
 							non_panel_widget_size);
-		}
 
 		width  = MAX (MINIMUM_WIDTH, width);
 	} else {
@@ -2535,26 +2343,12 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
-		else {
-			int max_height;
-
-			if (!toplevel->priv->attached)
-				max_height = monitor_height;
-			else {
-				if (panel_toplevel_get_orientation (toplevel->priv->attach_toplevel) == PANEL_ORIENTATION_TOP)
-					max_height = monitor_height
-						     - toplevel->priv->geometry.y;
-				else
-					max_height = toplevel->priv->geometry.y +
-						     toplevel->priv->geometry.height;
-			}
-
+		else
 			height = panel_toplevel_update_size_from_hints (
 							toplevel,
 							requisition->height,
-							max_height,
+							monitor_height,
 							non_panel_widget_size);
-		}
 
 		height = MAX (MINIMUM_WIDTH, height);
 	}
@@ -2600,292 +2394,6 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
-}
-
-static void
-panel_toplevel_attach_widget_destroyed (PanelToplevel *toplevel)
-{
-	panel_toplevel_detach (toplevel);
-}
-
-static gboolean
-panel_toplevel_attach_widget_configure (PanelToplevel *toplevel)
-{
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-
-	return FALSE;
-}
-
-static void
-panel_toplevel_update_attach_orientation (PanelToplevel *toplevel)
-{
-	PanelOrientation attach_orientation;
-	PanelOrientation orientation;
-
-	attach_orientation =
-		panel_toplevel_get_orientation (toplevel->priv->attach_toplevel);
-
-	orientation = toplevel->priv->orientation;
-
-	switch (attach_orientation) {
-	case PANEL_ORIENTATION_TOP:
-		orientation = PANEL_ORIENTATION_LEFT;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		orientation = PANEL_ORIENTATION_RIGHT;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		orientation = PANEL_ORIENTATION_TOP;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		orientation = PANEL_ORIENTATION_BOTTOM;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	panel_toplevel_set_orientation (toplevel, orientation);
-}
-
-static void
-panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
-					 GtkWidget     *previous_parent,
-					 GtkWidget     *attach_widget)
-{
-	GtkWidget *panel_widget;
-
-	panel_widget = gtk_widget_get_parent (GTK_WIDGET (attach_widget));
-	if (!panel_widget)
-		return;
-
-	g_assert (PANEL_IS_WIDGET (panel_widget));
-
-	toplevel->priv->attach_toplevel = PANEL_WIDGET (panel_widget)->toplevel;
-	panel_toplevel_update_attach_orientation (toplevel);
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-}
-
-static void
-panel_toplevel_attach_toplevel_hiding (PanelToplevel *toplevel)
-{
-	if (!panel_toplevel_get_is_hidden (toplevel)) {
-		panel_toplevel_hide (toplevel, FALSE, -1);
-
-		toplevel->priv->attach_hidden = TRUE;
-	}
-}
-
-static void
-panel_toplevel_attach_toplevel_unhiding (PanelToplevel *toplevel)
-{
-	if (!toplevel->priv->attach_hidden)
-		return;
-
-	toplevel->priv->attach_hidden = FALSE;
-
-	panel_toplevel_unhide (toplevel);
-}
-
-static void
-panel_toplevel_reverse_arrow (PanelToplevel *toplevel,
-			      GtkWidget     *button)
-{
-	GtkArrowType arrow_type;
-
-	arrow_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "arrow-type"));
-
-	switch (arrow_type) {
-	case GTK_ARROW_UP:
-		arrow_type = GTK_ARROW_DOWN;
-		break;
-	case GTK_ARROW_DOWN:
-		arrow_type = GTK_ARROW_UP;
-		break;
-	case GTK_ARROW_LEFT:
-		arrow_type = GTK_ARROW_RIGHT;
-		break;
-	case GTK_ARROW_RIGHT:
-		arrow_type = GTK_ARROW_LEFT;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	g_object_set_data (G_OBJECT (button), "arrow-type", GINT_TO_POINTER (arrow_type));
-
-	gtk_arrow_set (GTK_ARROW (gtk_bin_get_child (GTK_BIN (button))), arrow_type, GTK_SHADOW_NONE);
-}
-
-static void
-panel_toplevel_reverse_arrows (PanelToplevel *toplevel)
-{
-	panel_toplevel_reverse_arrow (toplevel, toplevel->priv->hide_button_top);
-	panel_toplevel_reverse_arrow (toplevel, toplevel->priv->hide_button_bottom);
-	panel_toplevel_reverse_arrow (toplevel, toplevel->priv->hide_button_left);
-	panel_toplevel_reverse_arrow (toplevel, toplevel->priv->hide_button_right);
-}
-
-static void
-panel_toplevel_disconnect_attached (PanelToplevel *toplevel)
-{
-	int i;
-
-	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++) {
-		if (!toplevel->priv->attach_toplevel_signals [i])
-			continue;
-
-		g_signal_handler_disconnect (
-			toplevel->priv->attach_toplevel,
-			toplevel->priv->attach_toplevel_signals [i]);
-		toplevel->priv->attach_toplevel_signals [i] = 0;
-	}
-
-	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++) {
-		if (!toplevel->priv->attach_widget_signals [i])
-			continue;
-		
-		g_signal_handler_disconnect (
-			toplevel->priv->attach_widget,
-			toplevel->priv->attach_widget_signals [i]);
-		toplevel->priv->attach_widget_signals [i] = 0;
-	}
-}
-
-static void
-panel_toplevel_connect_attached (PanelToplevel *toplevel)
-{
-	gulong *signals;
-	int     i = 0;
-
-	signals = toplevel->priv->attach_toplevel_signals;
-
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_toplevel, "destroy",
-		G_CALLBACK (panel_toplevel_attach_widget_destroyed), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_toplevel, "notify::orientation",
-		G_CALLBACK (panel_toplevel_update_attach_orientation), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_toplevel, "configure-event",
-		G_CALLBACK (panel_toplevel_attach_widget_configure), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_toplevel, "hiding",
-		G_CALLBACK (panel_toplevel_attach_toplevel_hiding), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_toplevel, "unhiding",
-		G_CALLBACK (panel_toplevel_attach_toplevel_unhiding), toplevel);
-
-	g_assert (i == N_ATTACH_TOPLEVEL_SIGNALS);
-
-	signals = toplevel->priv->attach_widget_signals;
-	i = 0;
-
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_widget, "destroy",
-		G_CALLBACK (panel_toplevel_attach_widget_destroyed), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_widget, "configure-event",
-		G_CALLBACK (panel_toplevel_attach_widget_configure), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_widget, "parent-set",
-		G_CALLBACK (panel_toplevel_attach_widget_parent_set), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_widget, "show",
-		G_CALLBACK (gtk_widget_show), toplevel);
-	signals [i++] = g_signal_connect_swapped (
-		toplevel->priv->attach_widget, "hide",
-		G_CALLBACK (gtk_widget_hide), toplevel);
-
-	g_assert (i == N_ATTACH_WIDGET_SIGNALS);
-} 
-
-void
-panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
-				 PanelToplevel *attach_toplevel,
-				 GtkWidget     *attach_widget)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (PANEL_IS_TOPLEVEL (attach_toplevel));
-	g_return_if_fail (GTK_IS_WIDGET (attach_widget));
-
-	if (toplevel->priv->attached)
-		panel_toplevel_disconnect_attached (toplevel);
-
-	toplevel->priv->attached = TRUE;
-
-	/* Cancelling the initial animation for drawers in
-	 * panel_toplevel_initially_hide() is not enough, since this will
-	 * happen only when the toplevel is realized, which might be too late
-	 * for drawers (since it's realized when the drawer is clicked) */
-	toplevel->priv->initial_animation_done = TRUE;
-
-	toplevel->priv->attach_toplevel = attach_toplevel;
-	toplevel->priv->attach_widget   = attach_widget;
-
-	panel_toplevel_connect_attached (toplevel);
-	
-	panel_toplevel_reverse_arrows (toplevel);
-	panel_toplevel_set_expand (toplevel, FALSE);
-	panel_toplevel_update_attach_orientation (toplevel);
-	panel_toplevel_update_hide_buttons (toplevel);
-
-	gtk_window_set_screen (GTK_WINDOW (toplevel),
-			       gtk_widget_get_screen (GTK_WIDGET (attach_toplevel)));
-	panel_toplevel_set_monitor (toplevel,
-			            panel_toplevel_get_monitor (attach_toplevel));
-	if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
-
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-}
-
-void
-panel_toplevel_detach (PanelToplevel *toplevel)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-
-	if (!toplevel->priv->attached)
-		return;
-
-	if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
-
-	panel_toplevel_disconnect_attached (toplevel);
-	
-	panel_toplevel_reverse_arrows (toplevel);
-
-	toplevel->priv->attached = FALSE;
-
-	toplevel->priv->attach_toplevel = NULL;
-	toplevel->priv->attach_widget   = NULL;
-
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-}
-
-gboolean
-panel_toplevel_get_is_attached (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->attached;
-}
-
-PanelToplevel *
-panel_toplevel_get_attach_toplevel (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
-
-	return toplevel->priv->attach_toplevel;
-}
-
-GtkWidget *
-panel_toplevel_get_attach_widget (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
-
-	return toplevel->priv->attach_widget;
 }
 
 static gboolean
@@ -2987,16 +2495,13 @@ panel_toplevel_move_resize_window (PanelToplevel *toplevel,
 static void
 panel_toplevel_initially_hide (PanelToplevel *toplevel)
 {
-	if (!toplevel->priv->attached) {
-		toplevel->priv->initial_animation_done = FALSE;
+	toplevel->priv->initial_animation_done = FALSE;
 
-		/* We start the panel off hidden until all the applets are
-		 * loaded, and then finally slide it down when it's ready to be
-		 * used */
-		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
-		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-	} else
-		toplevel->priv->initial_animation_done = TRUE;
+	/* We start the panel off hidden until all the applets are
+	 * loaded, and then finally slide it down when it's ready to be
+	 * used */
+	toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
 
 static void
@@ -3054,14 +2559,6 @@ panel_toplevel_dispose (GObject *widget)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 	
-	if (toplevel->priv->attached) {
-		panel_toplevel_disconnect_attached (toplevel);
-		toplevel->priv->attached = FALSE;
-
-		toplevel->priv->attach_toplevel = NULL;
-		toplevel->priv->attach_widget   = NULL;
-	}
-
 	panel_toplevel_disconnect_timeouts (toplevel);
 
         G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
@@ -3176,8 +2673,7 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	gtk_widget_set_allocation (widget, allocation);
 
 	if (toplevel->priv->expand ||
-	    toplevel->priv->buttons_enabled ||
-	    toplevel->priv->attached)
+	    toplevel->priv->buttons_enabled)
 		challoc = *allocation;
 	else {
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
@@ -3255,8 +2751,7 @@ panel_toplevel_draw (GtkWidget *widget,
         panel_frame_draw (widget, cr, edges);
 
 	if (toplevel->priv->expand ||
-	    toplevel->priv->buttons_enabled ||
-	    toplevel->priv->attached)
+	    toplevel->priv->buttons_enabled)
 		return retval;
 
 	window = gtk_widget_get_window (widget);
@@ -3353,7 +2848,7 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	/* Get the mouse-button modifier from metacity so that only intentional
 	 * moves are considered. We don't this for non-expanded panels since we
 	 * only have the handles that the user can grab. */
-	if ((toplevel->priv->expand || toplevel->priv->attached) &&
+	if (toplevel->priv->expand &&
 	    (event->state & GDK_MODIFIER_MASK) != panel_bindings_get_mouse_button_modifier_keymask ())
 		return FALSE;
 
@@ -3573,14 +3068,6 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		return;
 	}
 
-	if (toplevel->priv->attached) {
-		/* Re-map unmapped attached toplevels */
-		if (!gtk_widget_get_mapped (GTK_WIDGET (toplevel)))
-			gtk_widget_map (GTK_WIDGET (toplevel));
-
-		gtk_window_present (GTK_WINDOW (toplevel->priv->attach_toplevel));
-	}
-
 	g_get_current_time (&toplevel->priv->animation_start_time);
 
 	t = panel_toplevel_get_animation_time (toplevel);
@@ -3603,9 +3090,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 		return;
 
 	g_signal_emit (toplevel, toplevel_signals [HIDE_SIGNAL], 0);
-
-	if (toplevel->priv->attach_toplevel)
-		panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
 
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
@@ -3644,8 +3128,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 
 	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		panel_toplevel_start_animation (toplevel);
-	else if (toplevel->priv->attached)
-		gtk_widget_hide (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
@@ -3687,13 +3169,8 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 
 	panel_toplevel_update_hide_buttons (toplevel);
 
-	if (toplevel->priv->attach_toplevel)
-		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
-
 	if (toplevel->priv->animate && gtk_widget_get_realized (GTK_WIDGET (toplevel)))
 		panel_toplevel_start_animation (toplevel);
-	else if (toplevel->priv->attached)
-		gtk_widget_show (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
@@ -4119,15 +3596,6 @@ panel_toplevel_finalize (GObject *object)
 						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
 						      toplevel);
 		toplevel->priv->gtk_settings = NULL;
-	}
-
-	if (toplevel->priv->attached) {
-		panel_toplevel_disconnect_attached (toplevel);
-
-		toplevel->priv->attached = FALSE;
-
-		toplevel->priv->attach_toplevel = NULL;
-		toplevel->priv->attach_widget   = NULL;
 	}
 
 	if (toplevel->priv->description)
@@ -4572,8 +4040,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
-	int i;
-
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
 	toplevel->priv->expand          = TRUE;
@@ -4632,14 +4098,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->hide_button_left   = NULL;
 	toplevel->priv->hide_button_right  = NULL;
 
-	toplevel->priv->attach_toplevel = NULL;
-	toplevel->priv->attach_widget   = NULL;
 	toplevel->priv->n_autohide_disablers = 0;
-
-	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++)
-		toplevel->priv->attach_toplevel_signals [i] = 0;
-	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++)
-		toplevel->priv->attach_widget_signals [i] = 0;
 
 	toplevel->priv->auto_hide         = FALSE;
 	toplevel->priv->buttons_enabled   = TRUE;
@@ -4649,8 +4108,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animating         = FALSE;
 	toplevel->priv->grab_is_keyboard  = FALSE;
 	toplevel->priv->position_centered = FALSE;
-	toplevel->priv->attached          = FALSE;
-	toplevel->priv->attach_hidden     = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
 	toplevel->priv->initial_animation_done   = FALSE;
 

@@ -43,33 +43,6 @@ typedef enum {
 	PANEL_ORIENT_RIGHT,
 } PanelOrient;
 
-static GConfEnumStringPair panel_orient_map [] = {
-	{ PANEL_ORIENT_UP,    "panel-orient-up" },
-	{ PANEL_ORIENT_DOWN,  "panel-orient-down" },
-	{ PANEL_ORIENT_LEFT,  "panel-orient-left" },
-	{ PANEL_ORIENT_RIGHT, "panel-orient-right" },
-	{ 0,                  NULL }
-};
-
-static gboolean
-panel_compatibility_map_orient_string (const char  *str,
-				       PanelOrient *orient)
-{
-	int mapped;
-
-	g_return_val_if_fail (orient != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!gconf_string_to_enum (panel_orient_map, str, &mapped))
-		return FALSE;
-
-	*orient = mapped;
-
-	return TRUE;
-}
-
 static GConfEnumStringPair panel_orientation_map [] = {
 	{ GTK_ORIENTATION_HORIZONTAL, "panel-orientation-horizontal" },
 	{ GTK_ORIENTATION_VERTICAL,   "panel-orientation-vertical" },
@@ -132,7 +105,6 @@ panel_compatibility_map_edge_string (const char *str,
 
 typedef enum {
 	EDGE_PANEL,
-	DRAWER_PANEL,
 	ALIGNED_PANEL,
 	SLIDING_PANEL,
 	FLOATING_PANEL,
@@ -141,7 +113,6 @@ typedef enum {
 
 static GConfEnumStringPair panel_type_map [] = {
 	{ EDGE_PANEL,      "edge-panel" },
-	{ DRAWER_PANEL,    "drawer-panel" },
 	{ ALIGNED_PANEL,   "aligned-panel" },
 	{ SLIDING_PANEL,   "sliding-panel" },
 	{ FLOATING_PANEL,  "floating-panel" },
@@ -377,53 +348,6 @@ panel_compatibility_migrate_edge_panel_settings (GConfClient *client,
 }
 
 static void
-panel_compatibility_migrate_drawer_panel_settings (GConfClient *client,
-						   const char  *toplevel_dir,
-						   const char  *panel_dir)
-{
-	PanelOrient  orient;
-	const char  *key;
-	char        *orient_str;
-
-	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
-	gconf_client_set_bool (client, key, FALSE, NULL);
-
-	key = panel_gconf_sprintf ("%s/panel_orient", panel_dir);
-	orient_str = gconf_client_get_string (client, key, NULL);
-
-	if (panel_compatibility_map_orient_string (orient_str, &orient)) {
-		PanelOrientation orientation;
-
-		switch (orient) {
-		case PANEL_ORIENT_DOWN:
-			orientation = PANEL_ORIENTATION_TOP;
-			break;
-		case PANEL_ORIENT_UP:
-			orientation = PANEL_ORIENTATION_BOTTOM;
-			break;
-		case PANEL_ORIENT_RIGHT:
-			orientation = PANEL_ORIENTATION_LEFT;
-			break;
-		case PANEL_ORIENT_LEFT:
-			orientation = PANEL_ORIENTATION_RIGHT;
-			break;
-		default:
-			orientation = 0;
-			g_assert_not_reached ();
-			break;
-		}
-
-		key = panel_gconf_sprintf ("%s/orientation", toplevel_dir);
-		gconf_client_set_string (client,
-					 key,
-					 panel_profile_map_orientation (orientation),
-					 NULL);
-	}
-
-	g_free (orient_str);
-}
-
-static void
 panel_compatibility_migrate_corner_panel_settings (GConfClient *client,
 						   const char  *toplevel_dir,
 						   const char  *panel_dir)
@@ -549,8 +473,7 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 static void
 panel_compatibility_migrate_panel_type (GConfClient *client,
 					const char  *toplevel_dir,
-					const char  *panel_dir,
-					gboolean    *is_drawer)
+					const char  *panel_dir)
 {
 	PanelType   type;
 	const char *key;
@@ -569,10 +492,6 @@ panel_compatibility_migrate_panel_type (GConfClient *client,
 	switch (type) {
 	case EDGE_PANEL:
 		panel_compatibility_migrate_edge_panel_settings (client, toplevel_dir, panel_dir);
-		break;
-	case DRAWER_PANEL:
-		panel_compatibility_migrate_drawer_panel_settings (client, toplevel_dir, panel_dir);
-		*is_drawer = TRUE;
 		break;
 	case ALIGNED_PANEL:
 		panel_compatibility_migrate_corner_panel_settings (client, toplevel_dir, panel_dir);
@@ -595,8 +514,7 @@ panel_compatibility_migrate_panel_type (GConfClient *client,
 static char *
 panel_compatibility_migrate_panel_settings (GConfClient *client,
 					    GSList      *toplevel_id_list,
-					    const char  *panel_id,
-					    gboolean    *is_drawer)
+					    const char  *panel_id)
 {
 	const char *key;
 	char       *toplevel_id;
@@ -665,7 +583,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	gconf_client_set_bool (client, key, auto_hide, NULL);
 
 	/* migrate different panel types to toplevels */
-	panel_compatibility_migrate_panel_type (client, toplevel_dir, panel_dir, is_drawer);
+	panel_compatibility_migrate_panel_type (client, toplevel_dir, panel_dir);
 
 	/* background settings */
 	panel_compatibility_migrate_background_settings (client, toplevel_dir, panel_dir);
@@ -701,54 +619,6 @@ panel_compatibility_migrate_panel_id (GConfClient       *client,
 	g_free (panel_id);
 
 	return retval;
-}
-
-static void
-panel_compatibility_migrate_drawer_settings (GConfClient       *client,
-					     PanelGConfKeyType  key_type,
-					     const char        *object_id,
-					     GHashTable        *panel_id_hash)
-{
-	const char *key;
-	char       *toplevel_id;
-	char       *panel_id;
-	char       *custom_icon;
-	char       *pixmap;
-
-	/* unique-drawer-panel-id -> attached_toplevel_id */
-	key = panel_gconf_full_key (key_type, object_id, "attached_toplevel_id");
-	toplevel_id = gconf_client_get_string (client, key, NULL);
-
-	key = panel_gconf_full_key (key_type, object_id, "unique-drawer-panel-id");
-	panel_id = gconf_client_get_string (client, key, NULL);
-
-	if (!toplevel_id && panel_id &&
-	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
-		key = panel_gconf_full_key (key_type, object_id, "attached_toplevel_id");
-		gconf_client_set_string (client, key, toplevel_id, NULL);
-
-		toplevel_id = NULL;
-	}
-
-	/* pixmap -> custom_icon */	
-	key = panel_gconf_full_key (key_type, object_id, "custom_icon");
-	custom_icon = gconf_client_get_string (client, key, NULL);
-
-	key = panel_gconf_full_key (key_type, object_id, "pixmap");
-	pixmap = gconf_client_get_string (client, key, NULL);
-
-	if (!custom_icon && pixmap) {
-		key = panel_gconf_full_key (key_type, object_id, "custom_icon");
-		gconf_client_set_string (client, key, pixmap, NULL);
-
-		key = panel_gconf_full_key (key_type, object_id, "use_custom_icon");
-		gconf_client_set_bool (client, key, TRUE, NULL);
-	}
-
-	g_free (toplevel_id);
-	g_free (panel_id);
-	g_free (custom_icon);
-	g_free (pixmap);
 }
 
 static void
@@ -824,10 +694,6 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 
 		if (panel_profile_map_object_type_string (object_type_str, &object_type)) {
 			switch (object_type) {
-			case PANEL_OBJECT_DRAWER:
-				panel_compatibility_migrate_drawer_settings (
-						client, key_type, id, panel_id_hash);
-				break;
 			case PANEL_OBJECT_MENU:
 				panel_compatibility_migrate_menu_button_settings (
 						client, key_type, id);
@@ -937,16 +803,12 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 
 	for (l = panel_id_list; l; l = l->next) {
 		char     *new_id;
-		gboolean  is_drawer = FALSE;
 
 		new_id = panel_compatibility_migrate_panel_settings (client,
 								     toplevel_id_list,
-								     l->data,
-								     &is_drawer);
+								     l->data);
 
-		/* Drawer toplevels don't belong on the toplevel list */
-		if (!is_drawer)
-			toplevel_id_list = g_slist_prepend (toplevel_id_list, new_id);
+		toplevel_id_list = g_slist_prepend (toplevel_id_list, new_id);
 
 		g_hash_table_insert (panel_id_hash, l->data, new_id);
 	}

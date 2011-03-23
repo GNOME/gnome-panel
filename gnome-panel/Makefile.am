@@ -32,7 +32,6 @@ panel_sources =			\
 	panel-compatibility.c	\
 	panel.c			\
 	applet.c		\
-	drawer.c		\
 	panel-config-global.c	\
 	panel-util.c		\
 	panel-gconf.c		\
@@ -79,7 +78,6 @@ panel_headers =			\
 	panel-compatibility.h	\
 	panel.h			\
 	applet.h		\
-	drawer.h		\
 	panel-util.h		\
 	panel-properties-dialog.h	\
 	panel-config-global.h	\

@@ -4,7 +4,6 @@ iconsdir = $(datadir)/icons/hicolor/$(size)/apps
 
 icons_DATA =					\
 	gnome-panel-clock.png			\
-	gnome-panel-drawer.png			\
 	gnome-panel-fish.png			\
 	gnome-panel-force-quit.png		\
 	gnome-panel-launcher.png		\
@@ -17,7 +16,6 @@ icons_DATA =					\
 
 icons_SOURCE =					\
 	gnome-panel-clock.xcf.bz2		\
-	gnome-panel-drawer.svg			\
 	gnome-panel-fish.xcf.bz2		\
 	gnome-panel-force-quit.svg		\
 	gnome-panel-launcher.svg		\

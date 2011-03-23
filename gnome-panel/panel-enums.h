@@ -75,7 +75,6 @@ typedef enum {
 } PanelGConfKeyType;
 
 typedef enum {
-	PANEL_OBJECT_DRAWER,
 	PANEL_OBJECT_MENU,
 	PANEL_OBJECT_LAUNCHER,
 	PANEL_OBJECT_APPLET,
