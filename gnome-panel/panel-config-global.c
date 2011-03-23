@@ -35,7 +35,6 @@
 
 typedef struct {
 	guint               tooltips_enabled : 1;
-	guint               enable_animations : 1;
 	guint               confirm_panel_remove : 1;
 	guint               highlight_when_over : 1;
 } GlobalConfig;
@@ -49,14 +48,6 @@ panel_global_config_get_highlight_when_over (void)
 	g_assert (global_config_initialised == TRUE);
 
 	return global_config.highlight_when_over;
-}
-
-gboolean
-panel_global_config_get_enable_animations (void)
-{
-	g_assert (global_config_initialised == TRUE);
-
-	return global_config.enable_animations;
 }
 
 gboolean
@@ -91,10 +82,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 	if (strcmp (key, "tooltips_enabled") == 0)
 		global_config.tooltips_enabled =
-				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "enable_animations") == 0)
-		global_config.enable_animations =
 				gconf_value_get_bool (value);
 
 	else if (strcmp (key, "confirm_panel_remove") == 0)

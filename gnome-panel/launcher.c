@@ -96,6 +96,26 @@ launcher_register_error_dialog (Launcher *launcher,
 }
 
 static void
+launcher_do_zoom_animation (GtkWidget *widget)
+{
+	GtkSettings *settings;
+	gboolean     enable_animations;
+
+	settings = gtk_widget_get_settings (widget);
+
+	enable_animations = TRUE;
+	g_object_get (settings,
+		      "gtk-enable-animations", &enable_animations,
+		      NULL);
+
+	if (enable_animations)
+		xstuff_zoom_animate (widget,
+				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
+				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
+				     NULL);
+}
+
+static void
 launch_url (Launcher *launcher)
 {
 	char *url;
@@ -135,11 +155,7 @@ launcher_launch (Launcher  *launcher,
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->key_file != NULL);
 
-	if (panel_global_config_get_enable_animations ())
-		xstuff_zoom_animate (widget,
-				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
-				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
-				     NULL);
+	launcher_do_zoom_animation (widget);
 	
 	type = panel_key_file_get_string (launcher->key_file, "Type");
 	if (type && !strcmp (type, "Link"))
@@ -181,11 +197,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	int      i;
 	GList   *file_list;
 
-	if (panel_global_config_get_enable_animations ())
-		xstuff_zoom_animate (widget,
-				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
-				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
-				     NULL);
+	launcher_do_zoom_animation (widget);
 	
 	file_list = NULL;
 	uris = g_uri_list_extract_uris ((const char *) gtk_selection_data_get_data (selection_data));
