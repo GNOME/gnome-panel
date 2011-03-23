@@ -32,7 +32,6 @@
 #include <libpanel-util/panel-list.h>
 
 #include "applet.h"
-#include "panel-compatibility.h"
 #include "panel-gconf.h"
 #include "panel.h"
 #include "panel-widget.h"
@@ -2401,10 +2400,6 @@ panel_profile_load (void)
 	client  = panel_gconf_get_client ();
 
 	gconf_client_add_dir (client, PANEL_CONFIG_DIR "/general", GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-
-	panel_compatibility_maybe_copy_old_config (client);
-
-	panel_compatibility_migrate_panel_id_list (client);
 
 	panel_profile_load_list (client,
 				 PANEL_CONFIG_DIR,

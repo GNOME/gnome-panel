@@ -27,7 +27,6 @@
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-separator.h"
-#include "panel-compatibility.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-profile.h"
