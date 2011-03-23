@@ -75,8 +75,6 @@ struct _AppletData
 	guint           size_constrained : 1;
 	guint           expand_major : 1;
 	guint           expand_minor : 1;
-	guint           locked : 1;
-  
 };
 
 struct _PanelWidget
@@ -148,7 +146,6 @@ GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
   is on, we REALLY want to insert at the pos given by pos*/
 int		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget   *applet,
-						 gboolean     locked,
 						 int          pos,
 						 gboolean     insert_at_pos);
 
@@ -211,14 +208,6 @@ void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
 						   GtkWidget   *applet,
 						   int         *size_hints,
 						   int          size_hints_len);
-
-void     panel_widget_set_applet_locked           (PanelWidget *panel,
-						   GtkWidget   *applet,
-						   gboolean     locked);
-gboolean panel_widget_get_applet_locked           (PanelWidget *panel,
-						   GtkWidget   *applet);
-gboolean panel_widget_toggle_applet_locked        (PanelWidget *panel,
-						   GtkWidget   *applet);
 
 void     panel_widget_register_open_dialog        (PanelWidget *panel,
 						   GtkWidget   *dialog);  

@@ -475,7 +475,7 @@ panel_widget_cadd (GtkContainer *container,
 	g_return_if_fail (PANEL_IS_WIDGET (container));
 	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	panel_widget_add (PANEL_WIDGET (container), widget, FALSE, 0, FALSE);
+	panel_widget_add (PANEL_WIDGET (container), widget, 0, FALSE);
 }
 
 static void
@@ -586,41 +586,6 @@ get_size_from_hints (AppletData *ad, int cells)
 }
 
 static void
-panel_widget_jump_applet_right (PanelWidget *panel,
-				GList       *list,
-				GList       *next,
-				int          pos)
-{
-	AppletData *ad;
-	AppletData *nad = NULL;
-
-	ad = list->data;
-	if (next)
-		nad = next->data;
-
-	if (pos >= panel->size)
-		return;
-
-	if (!nad || nad->constrained >= pos + ad->min_cells)
-		goto jump_right;
-
-	if (!panel_widget_push_applet_right (panel, next, pos + ad->min_cells - nad->constrained)) {
-		panel_widget_jump_applet_right (panel,
-						list,
-						next->next,
-						nad->constrained + nad->min_cells);
-		return;
-	}
-
- jump_right:
-	ad->pos = ad->constrained = pos;
-	panel->applet_list = g_list_remove_link (panel->applet_list, list);
-	panel->applet_list = panel_g_list_insert_before (panel->applet_list, next, list);
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
-	emit_applet_moved (panel, ad);
-}
-
-static void
 panel_widget_switch_applet_right (PanelWidget *panel,
 				  GList       *list)
 {
@@ -643,14 +608,6 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 		return;
 	}
 
-	if (nad->locked) {
-		panel_widget_jump_applet_right (panel,
-						list,
-						list->next->next,
-						nad->constrained + nad->min_cells);
-		return;
-	}
-						  
 	nad->constrained = nad->pos = ad->constrained;
 	ad->constrained = ad->pos = ad->constrained + nad->min_cells;
 	panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
@@ -659,41 +616,6 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 
 	emit_applet_moved (panel, ad);
 	emit_applet_moved (panel, nad);
-}
-
-static void
-panel_widget_jump_applet_left (PanelWidget *panel,
-			       GList       *list,
-			       GList       *prev,
-			       int          pos)
-{
-	AppletData *ad;
-	AppletData *pad = NULL;
-
-	ad = list->data;
-	if (prev)
-		pad = prev->data;
-
-	if (pos < 0)
-		return;
-
-	if (!pad || pad->constrained + pad->min_cells <= pos)
-		goto jump_left;
-
-	if (!panel_widget_push_applet_left (panel, prev, pad->constrained + pad->min_cells - pos)) {
-		panel_widget_jump_applet_left (panel,
-					       list,
-					       prev->prev,
-					       pad->constrained - ad->min_cells);
-		return;
-	}
-
- jump_left:
-	ad->pos = ad->constrained = pos;
-	panel->applet_list = g_list_remove_link (panel->applet_list, list);
-	panel->applet_list = panel_g_list_insert_after (panel->applet_list, prev, list);
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
-	emit_applet_moved (panel, ad);
 }
 
 static void
@@ -717,14 +639,6 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 		return;
 	}
 
-	if (pad->locked) {
-		panel_widget_jump_applet_left (panel,
-					       list,
-					       list->prev->prev,
-					       pad->constrained - ad->min_cells);
-		return;
-	}
-
 	ad->constrained = ad->pos = pad->constrained;
 	pad->constrained = pad->pos = ad->constrained + ad->min_cells;
 	panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
@@ -733,55 +647,6 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 
 	emit_applet_moved (panel, ad);
 	emit_applet_moved (panel, pad);
-}
-
-static gboolean
-panel_widget_try_push_right (PanelWidget *panel,
-			     GList       *list,
-			     int          push)
-{
-	AppletData *ad;
-	AppletData *nad = NULL;
-
-	g_assert (list != NULL);
-
-	ad = list->data;
-	if (list->next)
-		nad = list->next->data;
-
-	if (ad->locked)
-		return FALSE;
-
-	if (ad->constrained + ad->min_cells + push >= panel->size)
-		return FALSE;
-
-	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + push)
-		return TRUE;
-
-	return panel_widget_try_push_right (panel, list->next, push);
-}
-
-static int
-panel_widget_get_right_jump_pos (PanelWidget *panel,
-				 AppletData  *ad,
-				 GList       *next,
-				 int          pos)
-{
-	AppletData *nad = NULL;
-
-	if (next)
-		nad = next->data;
-
-	if (!nad || nad->constrained >= pos + ad->min_cells)
-		return pos;
-
-	if (panel_widget_try_push_right (panel, next, pos + ad->min_cells - nad->constrained))
-		return pos;
-
-	return panel_widget_get_right_jump_pos (panel,
-						ad,
-						next->next,
-						nad->constrained + nad->min_cells);
 }
 
 static int
@@ -800,62 +665,7 @@ panel_widget_get_right_switch_pos (PanelWidget *panel,
 	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + MOVE_INCREMENT)
 		return ad->constrained + MOVE_INCREMENT;
 
-	if (nad->locked)
-		return panel_widget_get_right_jump_pos (panel,
-							ad,
-							list->next->next,
-							nad->constrained + nad->min_cells);
-
 	return nad->constrained + nad->min_cells - ad->cells;
-}
-
-static gboolean
-panel_widget_try_push_left (PanelWidget *panel,
-			    GList       *list,
-			    int          push)
-{
-	AppletData *ad;
-	AppletData *pad = NULL;
-
-	g_assert (list != NULL);
-
-	ad = list->data;
-	if (list->prev)
-		pad = list->prev->data;
-
-	if (ad->locked)
-		return FALSE;
-
-	if (ad->constrained - push < 0)
-		return FALSE;
-	
-	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - push)
-		return TRUE;
-
-	return panel_widget_try_push_left (panel, list->prev, push);
-}
-
-static int
-panel_widget_get_left_jump_pos (PanelWidget *panel,
-				AppletData  *ad,
-				GList       *prev,
-				int          pos)
-{
-	AppletData *pad = NULL;
-
-	if (prev)
-		pad = prev->data;
-
-	if (!pad || pad->constrained + pad->min_cells <= pos)
-		return pos;
-
-	if (panel_widget_try_push_left (panel, prev, pad->constrained + pad->min_cells - pos))
-		return pos;
-
-	return panel_widget_get_left_jump_pos (panel,
-					       ad,
-					       prev->prev,
-					       pad->constrained - ad->min_cells);
 }
 
 static int
@@ -874,12 +684,6 @@ panel_widget_get_left_switch_pos (PanelWidget *panel,
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT)
 		return ad->constrained - MOVE_INCREMENT;
 
-	if (pad->locked)
-		return panel_widget_get_left_jump_pos (panel,
-						       ad,
-						       list->prev->prev,
-						       pad->constrained - ad->min_cells);
-	
 	return pad->constrained;
 }
 
@@ -962,9 +766,6 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	if (ad->constrained + ad->min_cells + push >= panel->size)
 		return FALSE;
 
-	if (ad->locked)
-		return FALSE;
-
 	if (list->next)
 		nad = list->next->data;
 
@@ -999,9 +800,6 @@ panel_widget_push_applet_left (PanelWidget *panel,
 
 	ad = list->data;
 	if (ad->constrained - push < 0)
-		return FALSE;
-
-	if (ad->locked)
 		return FALSE;
 
 	if (list->prev)
@@ -1710,9 +1508,6 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 	g_return_val_if_fail (ad != NULL, FALSE);
-
-	if (ad->locked)
-		return FALSE;
 
 	/* Check if we can actually move this object in the
 	   configuration */
@@ -2437,7 +2232,6 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 int
 panel_widget_add (PanelWidget *panel,
 		  GtkWidget   *applet,
-		  gboolean     locked,
 		  int          pos,
 		  gboolean     insert_at_pos)
 {
@@ -2484,7 +2278,6 @@ panel_widget_add (PanelWidget *panel,
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
-		ad->locked = locked;
 		ad->size_hints = NULL;
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_DATA, ad);
@@ -2865,46 +2658,6 @@ panel_widget_set_applet_size_hints (PanelWidget *panel,
 	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
-}
-
-void
-panel_widget_set_applet_locked (PanelWidget *panel,
-				GtkWidget   *applet,
-				gboolean     locked)
-{
-	AppletData *ad;
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	if (!ad)
-		return;
-
-	ad->locked = locked;
-}
-
-gboolean
-panel_widget_get_applet_locked (PanelWidget *panel,
-				GtkWidget   *applet)
-{
-	AppletData *ad;
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	if (!ad)
-		return FALSE;
-
-	return ad->locked;
-}
-
-gboolean
-panel_widget_toggle_applet_locked (PanelWidget *panel,
-				   GtkWidget   *applet)
-{
-	AppletData *ad;
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	if (!ad)
-		return FALSE;
-
-	return ad->locked = !ad->locked;
 }
 
 gboolean

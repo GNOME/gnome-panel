@@ -757,7 +757,6 @@ lancher_properties_enabled (void)
 static Launcher *
 load_launcher_applet (const char       *location,
 		      PanelWidget      *panel,
-		      gboolean          locked,
 		      int               pos,
 		      gboolean          exactpos,
 		      const char       *id)
@@ -771,7 +770,7 @@ load_launcher_applet (const char       *location,
 
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher,
-						panel, locked, pos, exactpos,
+						panel, pos, exactpos,
 						PANEL_OBJECT_LAUNCHER, id);
 	if (!launcher->info) {
 		free_launcher (launcher);
@@ -801,7 +800,6 @@ load_launcher_applet (const char       *location,
 
 void
 launcher_load_from_gconf (PanelWidget *panel_widget,
-			  gboolean     locked,
 			  int          position,
 			  const char  *id)
 {
@@ -826,7 +824,6 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 
 	launcher = load_launcher_applet (launcher_location,
 					 panel_widget,
-					 locked,
 					 position,
 					 TRUE,
 					 id);

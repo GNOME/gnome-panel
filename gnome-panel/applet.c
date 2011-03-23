@@ -79,36 +79,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 
 }
 
-gboolean
-panel_applet_toggle_locked (AppletInfo *info)
-{
-	PanelWidget *panel_widget;
-	gboolean     locked;
-
-	panel_widget = panel_applet_get_panel_widget (info);
-	
-	locked = panel_widget_toggle_applet_locked (panel_widget, info->widget);
-
-	panel_applet_save_position (info, info->id, TRUE);
-	panel_applet_set_dnd_enabled (info, !locked);
-
-	return locked;
-}
-
-static void
-panel_applet_lock (GtkCheckMenuItem *menuitem,
-		   AppletInfo       *info)
-{
-	gboolean locked;
-
-	locked = panel_applet_toggle_locked (info);
-
-	gtk_check_menu_item_set_active (menuitem, locked);
-
-	if (info->move_item)
-		gtk_widget_set_sensitive (info->move_item, !locked);
-}
-
 static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)
 {
@@ -200,46 +170,6 @@ panel_applet_recreate_menus (AppletInfo *info)
 {
 	panel_applet_recreate_menu (info);
 	panel_applet_recreate_edit_menu (info);
-}
-
-static void
-panel_applet_locked_change_notify (GConfClient *client,
-				   guint        cnxn_id,
-				   GConfEntry  *entry,
-				   GtkWidget   *applet)
-{
-	GConfValue  *value;
-	gboolean     locked;
-	gboolean     applet_locked;
-	AppletInfo  *info;
-	PanelWidget *panel_widget;
-
-	g_assert (applet != NULL);
-
-	info = (AppletInfo  *) g_object_get_data (G_OBJECT (applet),
-						  "applet_info");
-	if (info == NULL)
-		return;
-
-	value = gconf_entry_get_value (entry);
-	if (value == NULL || value->type != GCONF_VALUE_BOOL)
-		return;
-
-	locked = gconf_value_get_bool (value);
-
-	panel_widget = panel_applet_get_panel_widget (info);
-	applet_locked = panel_widget_get_applet_locked (panel_widget,
-							info->widget);
-
-	if ((locked && applet_locked) || !(locked || applet_locked))
-		return;
-
-	panel_applet_toggle_locked (info);
-
-	if (info->type == PANEL_OBJECT_APPLET)
-		panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (info->widget));
-	else
-		panel_applet_recreate_edit_menu (info);
 }
 
 static void
@@ -547,8 +477,6 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	GtkWidget   *menuitem;
 	PanelWidget *panel_widget;
 	GtkWidget   *image;
-	gboolean     locked;
-	gboolean     lockable;
 	gboolean     movable;
 	gboolean     removable;
 
@@ -561,11 +489,8 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	menu = panel_applet_create_bare_menu (info);
 	panel_widget = panel_applet_get_panel_widget (info);
 
-	lockable = panel_applet_lockable (info);
 	movable = panel_applet_can_freely_move (info);
 	removable = panel_profile_id_lists_are_writable ();
-
-	locked = panel_widget_get_applet_locked (panel_widget, info->widget);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Remove From Panel"));
 	image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
@@ -576,33 +501,20 @@ panel_applet_get_edit_menu (AppletInfo *info)
 			  G_CALLBACK (applet_remove_callback), info);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_set_sensitive (menuitem, (!locked || lockable) && removable);
+	gtk_widget_set_sensitive (menuitem, removable);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (move_applet_callback), info);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_set_sensitive (menuitem, !locked && movable);
+	gtk_widget_set_sensitive (menuitem, movable);
 
 	g_assert (info->move_item == NULL);
 
 	info->move_item = menuitem;
 	g_object_add_weak_pointer (G_OBJECT (menuitem),
 				   (gpointer *) &info->move_item);
-
-	menuitem = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_show (menuitem);
-
-	menuitem = gtk_check_menu_item_new_with_mnemonic (_("Loc_k To Panel"));
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
-					locked);
-	g_signal_connect (menuitem, "toggled",
-			  G_CALLBACK (panel_applet_lock), info);
-	gtk_widget_show (menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_set_sensitive (menuitem, lockable);
 
 	info->edit_menu = menu;
 
@@ -871,7 +783,6 @@ typedef struct {
 	char            *toplevel_id;
 	int              position;
 	guint            right_stick : 1;
-	guint            locked : 1;
 } PanelAppletToLoad;
 
 /* Each time those lists get both empty,
@@ -1017,27 +928,23 @@ panel_applet_load_idle_handler (gpointer dummy)
 	case PANEL_OBJECT_APPLET:
 		panel_applet_frame_load_from_gconf (
 					panel_widget,
-					applet->locked,
 					applet->position,
 					applet->id);
 		break;
 	case PANEL_OBJECT_MENU:
 		panel_menu_button_load_from_gconf (panel_widget,
-						   applet->locked,
 						   applet->position,
 						   TRUE,
 						   applet->id);
 		break;
 	case PANEL_OBJECT_LAUNCHER:
 		launcher_load_from_gconf (panel_widget,
-					  applet->locked,
 					  applet->position,
 					  applet->id);
 		break;
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_load_from_gconf (
 				panel_widget,
-				applet->locked,
 				applet->position,
 				TRUE,
 				applet->id);
@@ -1045,14 +952,12 @@ panel_applet_load_idle_handler (gpointer dummy)
 	case PANEL_OBJECT_MENU_BAR:
 		panel_menu_bar_load_from_gconf (
 				panel_widget,
-				applet->locked,
 				applet->position,
 				TRUE,
 				applet->id);
 		break;
 	case PANEL_OBJECT_SEPARATOR:
 		panel_separator_load_from_gconf (panel_widget,
-						 applet->locked,
 						 applet->position,
 						 applet->id);
 		break;
@@ -1073,8 +978,7 @@ panel_applet_queue_applet_to_load (const char      *id,
 				   PanelObjectType  type,
 				   const char      *toplevel_id,
 				   int              position,
-				   gboolean         right_stick,
-				   gboolean         locked)
+				   gboolean         right_stick)
 {
 	PanelAppletToLoad *applet;
 
@@ -1090,7 +994,6 @@ panel_applet_queue_applet_to_load (const char      *id,
 	applet->toplevel_id = g_strdup (toplevel_id);
 	applet->position    = position;
 	applet->right_stick = right_stick != FALSE;
-	applet->locked      = locked != FALSE;
 
 	panel_applets_to_load = g_slist_prepend (panel_applets_to_load, applet);
 }
@@ -1190,7 +1093,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 	const char        *toplevel_id;
 	char              *old_toplevel_id;
 	gboolean           right_stick;
-	gboolean           locked;
 	int                position;
 
 	g_return_if_fail (applet_info != NULL);
@@ -1247,11 +1149,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 	if (gconf_client_key_is_writable (client, key, NULL) &&
 	    gconf_client_get_int (client, key, NULL) != position)
 		gconf_client_set_int (client, key, position, NULL);
-	
-	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
-	key = panel_gconf_full_key (key_type, id, "locked");
-	if (gconf_client_get_bool (client, key, NULL) ? 1 : 0 != locked)
-		gconf_client_set_bool (client, key, locked, NULL);
 }
 
 const char *
@@ -1327,14 +1224,12 @@ panel_applet_register (GtkWidget       *applet,
 		       gpointer         data,
 		       GDestroyNotify   data_destroy,
 		       PanelWidget     *panel,
-		       gboolean         locked,
 		       gint             pos,
 		       gboolean         exactpos,
 		       PanelObjectType  type,
 		       const char      *id)
 {
 	AppletInfo *info;
-	const char *key;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1361,23 +1256,16 @@ panel_applet_register (GtkWidget       *applet,
 		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menus),
 					   info);
 
-	key = panel_gconf_full_key ((type == PANEL_OBJECT_APPLET) ?
-				     PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS,
-				    id, "locked");
-	panel_gconf_notify_add_while_alive (key,
-					    (GConfClientNotifyFunc) panel_applet_locked_change_notify,
-					    G_OBJECT (applet));
-
 	registered_applets = g_slist_append (registered_applets, info);
 
-	if (panel_widget_add (panel, applet, locked, pos, exactpos) == -1 &&
-	    panel_widget_add (panel, applet, locked, 0, TRUE) == -1) {
+	if (panel_widget_add (panel, applet, pos, exactpos) == -1 &&
+	    panel_widget_add (panel, applet, 0, TRUE) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next) {
 			panel = PANEL_WIDGET (l->data);
 
-			if (panel_widget_add (panel, applet, locked, 0, TRUE) != -1)
+			if (panel_widget_add (panel, applet, 0, TRUE) != -1)
 				break;
 		}
 
@@ -1403,7 +1291,7 @@ panel_applet_register (GtkWidget       *applet,
 			  G_CALLBACK (panel_applet_destroy),
 			  info);
 
-	panel_applet_set_dnd_enabled (info, !locked);
+	panel_applet_set_dnd_enabled (info, TRUE);
 
 	gtk_widget_show_all (applet);
 
@@ -1459,23 +1347,4 @@ panel_applet_can_freely_move (AppletInfo *applet)
 		return FALSE;
 
 	return TRUE;
-}
-
-gboolean
-panel_applet_lockable (AppletInfo *applet)
-{
-	GConfClient        *client;
-	PanelGConfKeyType   key_type;
-	const char         *key;
-
-	if (panel_lockdown_get_locked_down ())
-		return FALSE;
-	
-	client  = panel_gconf_get_client ();
-	
-	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
-
-	key = panel_gconf_full_key (key_type, applet->id, "locked");
-
-	return gconf_client_key_is_writable (client, key, NULL);
 }

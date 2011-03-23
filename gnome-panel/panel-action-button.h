@@ -64,7 +64,6 @@ void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);
 
 void       panel_action_button_load_from_gconf  (PanelWidget            *panel,
-						 gboolean                locked,
 						 int                     position,
 						 gboolean                exactpos,
 						 const char             *id);

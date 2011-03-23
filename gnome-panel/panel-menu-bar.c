@@ -382,7 +382,6 @@ panel_menu_bar_on_draw (GtkWidget *widget,
 
 static void
 panel_menu_bar_load (PanelWidget *panel,
-		     gboolean     locked,
 		     int          position,
 		     gboolean     exactpos,
 		     const char  *id)
@@ -395,7 +394,7 @@ panel_menu_bar_load (PanelWidget *panel,
 
 	menubar->priv->info = panel_applet_register (
 					GTK_WIDGET (menubar), NULL, NULL,
-					panel, locked, position, exactpos,
+					panel, position, exactpos,
 					PANEL_OBJECT_MENU_BAR, id);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
@@ -430,12 +429,11 @@ panel_menu_bar_load (PanelWidget *panel,
 
 void
 panel_menu_bar_load_from_gconf (PanelWidget *panel,
-				gboolean     locked,
 				int          position,
 				gboolean     exactpos,
 				const char  *id)
 {
-	panel_menu_bar_load (panel, locked, position, exactpos, id);
+	panel_menu_bar_load (panel, position, exactpos, id);
 }
 
 void

@@ -60,8 +60,6 @@ struct _PanelAppletContainerClass {
 	void (*applet_broken)          (PanelAppletContainer *container);
 	void (*applet_move)            (PanelAppletContainer *container);
 	void (*applet_remove)          (PanelAppletContainer *container);
-	void (*applet_lock)            (PanelAppletContainer *container,
-					gboolean              locked);
 	void (*child_property_changed) (PanelAppletContainer *container,
 					const gchar          *property_name,
 					GVariant             *value);

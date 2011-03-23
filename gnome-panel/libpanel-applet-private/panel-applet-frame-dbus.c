@@ -158,15 +158,10 @@ static void
 panel_applet_frame_dbus_sync_menu_state (PanelAppletFrame *frame,
 					 gboolean          movable,
 					 gboolean          removable,
-					 gboolean          lockable,
-					 gboolean          locked,
 					 gboolean          locked_down)
 {
 	PanelAppletFrameDBus *dbus_frame = PANEL_APPLET_FRAME_DBUS (frame);
 
-	panel_applet_container_child_set (dbus_frame->priv->container,
-					  "locked", g_variant_new_boolean (lockable && locked),
-					  NULL, NULL, NULL);
 	panel_applet_container_child_set (dbus_frame->priv->container,
 					  "locked-down", g_variant_new_boolean (locked_down),
 					  NULL, NULL, NULL);
@@ -328,14 +323,6 @@ panel_applet_frame_dbus_applet_move (PanelAppletContainer *container,
 }
 
 static void
-panel_applet_frame_dbus_applet_lock (PanelAppletContainer *container,
-				     gboolean              locked,
-				     PanelAppletFrame     *frame)
-{
-	_panel_applet_frame_applet_lock (frame, locked);
-}
-
-static void
 panel_applet_frame_dbus_finalize (GObject *object)
 {
 	PanelAppletFrameDBus *frame = PANEL_APPLET_FRAME_DBUS (object);
@@ -375,9 +362,6 @@ panel_applet_frame_dbus_init (PanelAppletFrameDBus *frame)
 			  frame);
 	g_signal_connect (container, "applet-move",
 			  G_CALLBACK (panel_applet_frame_dbus_applet_move),
-			  frame);
-	g_signal_connect (container, "applet-lock",
-			  G_CALLBACK (panel_applet_frame_dbus_applet_lock),
 			  frame);
 }
 
@@ -456,9 +440,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 	g_variant_builder_add (&builder, "{sv}",
 			       "size",
 			       g_variant_new_uint32 (panel_applet_frame_activating_get_size (frame_act)));
-	g_variant_builder_add (&builder, "{sv}",
-			       "locked",
-			       g_variant_new_boolean (panel_applet_frame_activating_get_locked (frame_act)));
 	g_variant_builder_add (&builder, "{sv}",
 			       "locked-down",
 			       g_variant_new_boolean (panel_applet_frame_activating_get_locked_down (frame_act)));

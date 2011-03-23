@@ -648,7 +648,6 @@ panel_menu_button_load (const char  *menu_path,
 			gboolean     use_custom_icon,
 			const char  *tooltip,
 			PanelWidget *panel,
-			gboolean     locked,
 			int          position,
 			gboolean     exactpos,
 			const char  *id)
@@ -668,7 +667,7 @@ panel_menu_button_load (const char  *menu_path,
 			       NULL);
 
 	info = panel_applet_register (GTK_WIDGET (button), NULL, NULL,
-				      panel, locked, position, exactpos,
+				      panel, position, exactpos,
 				      PANEL_OBJECT_MENU, id);
 	if (!info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
@@ -879,7 +878,6 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 
 void
 panel_menu_button_load_from_gconf (PanelWidget *panel,
-				   gboolean     locked,
 				   int          position,
 				   gboolean     exactpos,
 				   const char  *id)
@@ -926,7 +924,6 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 				use_custom_icon,
 				tooltip,
 				panel,
-				locked,
 				position,
 				exactpos,
 				id);

@@ -49,7 +49,6 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      gpointer         data,
 				      GDestroyNotify   data_destroy,
 				      PanelWidget     *panel,
-				      gboolean         locked,
 				      gint             pos,
 				      gboolean         exactpos,
 				      PanelObjectType  type,
@@ -69,8 +68,7 @@ void panel_applet_queue_applet_to_load (const char      *id,
 					PanelObjectType  type,
 					const char      *toplevel_id,
 					int              position,
-					gboolean         right_stick,
-					gboolean         locked);
+					gboolean         right_stick);
 void panel_applet_load_queued_applets  (gboolean initial_load);
 gboolean panel_applet_on_load_queue    (const char *id);
 
@@ -95,16 +93,11 @@ int         panel_applet_get_position    (AppletInfo *applet);
    (position, toplevel_id, panel_right_stick) */
 gboolean    panel_applet_can_freely_move (AppletInfo *applet);
 
-/* True if the locked flag is writable */
-gboolean    panel_applet_lockable (AppletInfo *applet);
-
 GtkWidget  *panel_applet_get_edit_menu (AppletInfo *info);
 
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,
 					   gpointer     data);
-
-gboolean    panel_applet_toggle_locked  (AppletInfo *info);
 
 void panel_applet_position_menu (GtkMenu   *menu,
 				 int       *x,

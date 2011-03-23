@@ -229,7 +229,6 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 
 void
 panel_separator_load_from_gconf (PanelWidget *panel,
-				 gboolean     locked,
 				 int          position,
 				 const char  *id)
 {
@@ -239,7 +238,7 @@ panel_separator_load_from_gconf (PanelWidget *panel,
 
 	separator->priv->info = panel_applet_register (GTK_WIDGET (separator),
 						       NULL, NULL,
-						       panel, locked, position,
+						       panel, position,
 						       TRUE,
 						       PANEL_OBJECT_SEPARATOR,
 						       id);

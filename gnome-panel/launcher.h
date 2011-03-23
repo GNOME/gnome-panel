@@ -52,7 +52,6 @@ void		launcher_launch    		(Launcher  *launcher,
 void		launcher_properties		(Launcher  *launcher);
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
-						 gboolean     locked,
 						 gint         position,
 						 const char  *id);
 

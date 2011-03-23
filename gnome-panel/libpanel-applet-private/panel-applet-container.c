@@ -41,7 +41,6 @@ enum {
 	APPLET_BROKEN,
 	APPLET_MOVE,
 	APPLET_REMOVE,
-	APPLET_LOCK,
 	CHILD_PROPERTY_CHANGED,
 	LAST_SIGNAL
 };
@@ -60,7 +59,6 @@ static const AppletPropertyInfo applet_properties [] = {
 	{ "size-hints",  "SizeHints" },
 	{ "background",  "Background" },
 	{ "flags",       "Flags" },
-	{ "locked",      "Locked" },
 	{ "locked-down", "LockedDown" }
 };
 
@@ -189,16 +187,6 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 			      g_cclosure_marshal_VOID__VOID,
 			      G_TYPE_NONE,
 			      0);
-	signals[APPLET_LOCK] =
-		g_signal_new ("applet-lock",
-			      G_TYPE_FROM_CLASS (klass),
-			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (PanelAppletContainerClass, applet_lock),
-			      NULL,
-			      NULL,
-			      g_cclosure_marshal_VOID__BOOLEAN,
-			      G_TYPE_NONE,
-			      1, G_TYPE_BOOLEAN);
 	signals[CHILD_PROPERTY_CHANGED] =
 		g_signal_new ("child-property-changed",
 			      G_TYPE_FROM_CLASS (klass),
@@ -273,10 +261,6 @@ panel_applet_container_child_signal (GDBusProxy           *proxy,
 		g_signal_emit (container, signals[APPLET_MOVE], 0);
 	} else if (g_strcmp0 (signal_name, "RemoveFromPanel") == 0) {
 		g_signal_emit (container, signals[APPLET_REMOVE], 0);
-	} else if (g_strcmp0 (signal_name, "Lock") == 0) {
-		g_signal_emit (container, signals[APPLET_LOCK], 0, TRUE);
-	} else if (g_strcmp0 (signal_name, "Unlock") == 0) {
-		g_signal_emit (container, signals[APPLET_LOCK], 0, FALSE);
 	}
 }
 

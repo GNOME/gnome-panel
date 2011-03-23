@@ -57,7 +57,6 @@ void       panel_menu_bar_create           (PanelToplevel *toplevel,
 					    int            position);
 
 void       panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
-					    gboolean      locked,
 					    int           position,
 					    gboolean      exactpos,
 					    const char   *id);

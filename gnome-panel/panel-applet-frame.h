@@ -51,8 +51,6 @@ struct _PanelAppletFrameClass {
 	void     (*sync_menu_state)       (PanelAppletFrame    *frame,
 					   gboolean             movable,
 					   gboolean             removable,
-					   gboolean             lockable,
-					   gboolean             locked,
 					   gboolean             locked_down);
 
 	void     (*popup_menu)            (PanelAppletFrame    *frame,
@@ -86,7 +84,6 @@ void  panel_applet_frame_create             (PanelToplevel       *toplevel,
 					     const char          *iid);
 
 void  panel_applet_frame_load_from_gconf    (PanelWidget         *panel_widget,
-					     gboolean             locked,
 					     int                  position,
 					     const char          *id);
 
@@ -112,7 +109,6 @@ typedef struct _PanelAppletFrameActivating        PanelAppletFrameActivating;
 GdkScreen        *panel_applet_frame_activating_get_screen      (PanelAppletFrameActivating *frame_act);
 PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act);
 guint32           panel_applet_frame_activating_get_size        (PanelAppletFrameActivating *frame_act);
-gboolean          panel_applet_frame_activating_get_locked      (PanelAppletFrameActivating *frame_act);
 gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_conf_path   (PanelAppletFrameActivating *frame_act);
 
@@ -140,8 +136,7 @@ void  _panel_applet_frame_applet_broken         (PanelAppletFrame *frame);
 
 void  _panel_applet_frame_applet_remove         (PanelAppletFrame *frame);
 void  _panel_applet_frame_applet_move           (PanelAppletFrame *frame);
-void  _panel_applet_frame_applet_lock           (PanelAppletFrame *frame,
-						 gboolean          locked);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */

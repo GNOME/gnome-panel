@@ -55,7 +55,6 @@ GType  panel_separator_get_type          (void) G_GNUC_CONST;
 void   panel_separator_create            (PanelToplevel    *toplevel,
 					  int               position);
 void   panel_separator_load_from_gconf   (PanelWidget      *panel_widget,
-					  gboolean          locked,
 					  gint              position,
 					  const char       *id);
 void   panel_separator_set_orientation   (PanelSeparator   *separator,

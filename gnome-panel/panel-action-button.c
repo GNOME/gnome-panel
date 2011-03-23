@@ -666,7 +666,6 @@ panel_action_button_style_updated (PanelActionButton *button)
 static void
 panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
-			  gboolean               locked,
 			  int                    position,
 			  gboolean               exactpos,
 			  const char            *id)
@@ -679,7 +678,7 @@ panel_action_button_load (PanelActionButtonType  type,
 
 	button->priv->info = panel_applet_register (GTK_WIDGET (button),
 						    NULL, NULL,
-						    panel, locked, position,
+						    panel, position,
 						    exactpos, PANEL_OBJECT_ACTION, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
@@ -724,7 +723,6 @@ panel_action_button_create (PanelToplevel         *toplevel,
 
 void
 panel_action_button_load_from_gconf (PanelWidget *panel,
-				     gboolean     locked,
 				     int          position,
 				     gboolean     exactpos,
 				     const char  *id)
@@ -744,7 +742,7 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 
 	g_free (action_type);
 
-	panel_action_button_load (type, panel, locked,
+	panel_action_button_load (type, panel,
 				  position, exactpos, id);
 }
 

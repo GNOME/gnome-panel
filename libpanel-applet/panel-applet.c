@@ -109,7 +109,6 @@ struct _PanelAppletPrivate {
 
 	gboolean           moving_focus_out;
 
-	gboolean           locked;
 	gboolean           locked_down;
 };
 
@@ -134,7 +133,6 @@ enum {
 	PROP_BACKGROUND,
 	PROP_FLAGS,
 	PROP_SIZE_HINTS,
-	PROP_LOCKED,
 	PROP_LOCKED_DOWN
 };
 
@@ -146,8 +144,6 @@ static void       panel_applet_menu_cmd_remove     (GtkAction         *action,
 						    PanelApplet       *applet);
 static void       panel_applet_menu_cmd_move       (GtkAction         *action,
 						    PanelApplet       *applet);
-static void       panel_applet_menu_cmd_lock       (GtkAction         *action,
-						    PanelApplet       *applet);
 static void       panel_applet_register_object     (PanelApplet       *applet);
 
 static const gchar panel_menu_ui[] =
@@ -158,8 +154,6 @@ static const gchar panel_menu_ui[] =
 	"  <popup name=\"PanelAppletEditPopup\" action=\"PopupEditAction\">\n"
 	"    <menuitem name=\"RemoveItem\" action=\"Remove\"/>\n"
 	"    <menuitem name=\"MoveItem\" action=\"Move\"/>\n"
-	"    <separator/>\n"
-	"    <menuitem name=\"LockItem\" action=\"Lock\"/>\n"
 	"  </popup>\n"
 	"</ui>\n";
 
@@ -173,12 +167,6 @@ static const GtkActionEntry menu_entries[] = {
 	{ "Move", NULL, N_("_Move"),
 	  NULL, NULL,
 	  G_CALLBACK (panel_applet_menu_cmd_move) }
-};
-
-static const GtkToggleActionEntry menu_toggle_entries[] = {
-	{ "Lock", NULL, N_("Loc_k To Panel"),
-	  NULL, NULL,
-	  G_CALLBACK (panel_applet_menu_cmd_lock) }
 };
 
 G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
@@ -628,62 +616,6 @@ panel_applet_set_orient (PanelApplet      *applet,
 	g_object_notify (G_OBJECT (applet), "orient");
 }
 
-#if 0
-/* Locked should not be public API: it's not useful for applet writers to know
- * if the applet is locked (as opposed to locked_down). */
-static gboolean
-panel_applet_get_locked (PanelApplet *applet)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
-
-	return applet->priv->locked;
-}
-#endif
-
-static void
-panel_applet_set_locked (PanelApplet *applet,
-			 gboolean     locked)
-{
-	GtkAction *action;
-
-	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (applet->priv->locked == locked)
-		return;
-
-	applet->priv->locked = locked;
-
-	action = panel_applet_menu_get_action (applet, "Lock");
-	g_signal_handlers_block_by_func (action,
-					 panel_applet_menu_cmd_lock,
-					 applet);
-	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), locked);
-	g_signal_handlers_unblock_by_func (action,
-					   panel_applet_menu_cmd_lock,
-					   applet);
-
-	panel_applet_menu_update_actions (applet);
-
-	g_object_notify (G_OBJECT (applet), "locked");
-
-	if (applet->priv->connection) {
-		GError *error = NULL;
-
-		g_dbus_connection_emit_signal (applet->priv->connection,
-					       NULL,
-					       applet->priv->object_path,
-					       PANEL_APPLET_INTERFACE,
-					       locked ? "Lock" : "Unlock",
-					       NULL, &error);
-		if (error) {
-			g_printerr ("Failed to send signal %s: %s\n",
-				    locked ? "Lock" : "Unlock",
-				    error->message);
-			g_error_free (error);
-		}
-	}
-}
-
 /**
  * panel_applet_get_locked_down:
  * @applet: a #PanelApplet.
@@ -871,17 +803,12 @@ panel_applet_menu_get_action (PanelApplet *applet,
 static void
 panel_applet_menu_update_actions (PanelApplet *applet)
 {
-	gboolean locked = applet->priv->locked;
 	gboolean locked_down = applet->priv->locked_down;
 
-	g_object_set (panel_applet_menu_get_action (applet, "Lock"),
-		      "visible", !locked_down, NULL);
 	g_object_set (panel_applet_menu_get_action (applet, "Move"),
-		      "sensitive", !locked,
 		      "visible", !locked_down,
 		      NULL);
 	g_object_set (panel_applet_menu_get_action (applet, "Remove"),
-		      "sensitive", !locked,
 		      "visible", !locked_down,
 		      NULL);
 }
@@ -928,16 +855,6 @@ panel_applet_menu_cmd_move (GtkAction   *action,
 			    error->message);
 		g_error_free (error);
 	}
-}
-
-static void
-panel_applet_menu_cmd_lock (GtkAction   *action,
-			    PanelApplet *applet)
-{
-	gboolean locked;
-
-	locked = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
-	panel_applet_set_locked (applet, locked);
 }
 
 /**
@@ -1878,9 +1795,6 @@ panel_applet_get_property (GObject    *object,
 		g_value_set_pointer (value, variant);
 	}
 		break;
-	case PROP_LOCKED:
-		g_value_set_boolean (value, applet->priv->locked);
-		break;
 	case PROP_LOCKED_DOWN:
 		g_value_set_boolean (value, applet->priv->locked_down);
 		break;
@@ -1936,9 +1850,6 @@ panel_applet_set_property (GObject      *object,
 							&n_elements, sizeof (gint32));
 		panel_applet_set_size_hints (applet, size_hints, n_elements, 0);
 	}
-		break;
-	case PROP_LOCKED:
-		panel_applet_set_locked (applet, g_value_get_boolean (value));
 		break;
 	case PROP_LOCKED_DOWN:
 		panel_applet_set_locked_down (applet, g_value_get_boolean (value));
@@ -2022,10 +1933,6 @@ panel_applet_init (PanelApplet *applet)
 				      menu_entries,
 				      G_N_ELEMENTS (menu_entries),
 				      applet);
-	gtk_action_group_add_toggle_actions (applet->priv->panel_action_group,
-					     menu_toggle_entries,
-					     G_N_ELEMENTS (menu_toggle_entries),
-					     applet);
 
 	applet->priv->ui_manager = gtk_ui_manager_new ();
 	gtk_ui_manager_insert_action_group (applet->priv->ui_manager,
@@ -2216,18 +2123,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 							       "Size hints of the applet",
 							       G_PARAM_READWRITE));
 	/**
-	 * PanelApplet:locked:
-	 *
-	 * Whether the position of the applet is locked.
-	 **/
-	g_object_class_install_property (gobject_class,
-					 PROP_LOCKED,
-					 g_param_spec_boolean ("locked",
-							       "Locked",
-							       "Whether the position of the applet is locked",
-							       FALSE,
-							       G_PARAM_READWRITE));
-	/**
 	 * PanelApplet:locked-down:
 	 *
 	 * Whether the panel the applet is on is locked down.
@@ -2391,8 +2286,6 @@ get_property_cb (GDBusConnection *connection,
 		retval = g_variant_new_array (G_VARIANT_TYPE_INT32,
 					      children, applet->priv->size_hints_len);
 		g_free (children);
-	} else if (g_strcmp0 (property_name, "Locked") == 0) {
-		retval = g_variant_new_boolean (applet->priv->locked);
 	} else if (g_strcmp0 (property_name, "LockedDown") == 0) {
 		retval = g_variant_new_boolean (applet->priv->locked_down);
 	}
@@ -2428,8 +2321,6 @@ set_property_cb (GDBusConnection *connection,
 
 		size_hints = g_variant_get_fixed_array (value, &n_elements, sizeof (gint32));
 		panel_applet_set_size_hints (applet, size_hints, n_elements, 0);
-	} else if (g_strcmp0 (property_name, "Locked") == 0) {
-		panel_applet_set_locked (applet, g_variant_get_boolean (value));
 	} else if (g_strcmp0 (property_name, "LockedDown") == 0) {
 		panel_applet_set_locked_down (applet, g_variant_get_boolean (value));
 	}
@@ -2454,12 +2345,9 @@ static const gchar introspection_xml[] =
 	    "<property name='Background' type='s' access='readwrite'/>"
 	    "<property name='Flags' type='u' access='readwrite'/>"
 	    "<property name='SizeHints' type='ai' access='readwrite'/>"
-	    "<property name='Locked' type='b' access='readwrite'/>"
 	    "<property name='LockedDown' type='b' access='readwrite'/>"
 	    "<signal name='Move' />"
 	    "<signal name='RemoveFromPanel' />"
-	    "<signal name='Lock' />"
-	    "<signal name='Unlock' />"
 	  "</interface>"
 	"</node>";
 

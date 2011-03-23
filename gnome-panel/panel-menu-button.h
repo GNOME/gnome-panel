@@ -74,7 +74,6 @@ void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
 						  gboolean          use_custom_icon);
 
 void       panel_menu_button_load_from_gconf     (PanelWidget      *panel,
-						  gboolean          locked,
 						  int               position,
 						  gboolean          exactpos,
 						  const char       *id);
