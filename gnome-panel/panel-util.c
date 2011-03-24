@@ -333,21 +333,11 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
-#define PANEL_LAUNCHER_PERSONAL_PATH "panel2.d/default/launchers"
-
 static char *
 panel_launcher_get_personal_path (void)
 {
-        const char *override;
-
-        override = g_getenv ("GNOME22_USER_DIR");
-
-        if (override)
-               return g_build_filename (override,
-                                        PANEL_LAUNCHER_PERSONAL_PATH, NULL);
-        else
-                return g_build_filename (g_get_home_dir (), ".gnome2",
-                                         PANEL_LAUNCHER_PERSONAL_PATH, NULL);
+	return g_build_filename (g_get_user_config_dir (),
+				 "gnome-panel", "launchers", NULL);
 }
 
 gboolean
