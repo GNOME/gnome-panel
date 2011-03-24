@@ -22,88 +22,77 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #include "panel-cleanup.h"
-#include "panel-dbus-service.h"
 
 #include "panel-screensaver.h"
 
-static GObject *panel_screensaver_constructor (GType                  type,
-					       guint                  n_construct_properties,
-					       GObjectConstructParam *construct_properties);
+struct _PanelScreensaverPrivate {
+	GDBusProxy *proxy;
+};
 
-G_DEFINE_TYPE (PanelScreensaver, panel_screensaver, PANEL_TYPE_DBUS_SERVICE);
+G_DEFINE_TYPE (PanelScreensaver, panel_screensaver, G_TYPE_OBJECT);
 
 static void
 panel_screensaver_class_init (PanelScreensaverClass *klass)
 {
-	GObjectClass *object_class;
-
-	object_class = G_OBJECT_CLASS (klass);
-
-	object_class->constructor = panel_screensaver_constructor;
+	g_type_class_add_private (klass,
+				  sizeof (PanelScreensaverPrivate));
 }
 
 static void
-panel_screensaver_init (PanelScreensaver *manager)
+panel_screensaver_init (PanelScreensaver *screensaver)
 {
-}
+	GError *error;
 
-static GObject *
-panel_screensaver_constructor (GType                  type,
-				   guint                  n_construct_properties,
-				   GObjectConstructParam *construct_properties)
-{
-	GObject *obj;
-	GError  *error;
-
-	obj = G_OBJECT_CLASS (panel_screensaver_parent_class)->constructor (
-							type,
-							n_construct_properties,
-							construct_properties);
-
-
-	panel_dbus_service_define_service (PANEL_DBUS_SERVICE (obj),
-					   "org.gnome.ScreenSaver",
-					   "/org/gnome/ScreenSaver",
-					   "org.gnome.ScreenSaver");
+	screensaver->priv = G_TYPE_INSTANCE_GET_PRIVATE (screensaver,
+							 PANEL_TYPE_SCREENSAVER,
+							 PanelScreensaverPrivate);
 
 	error = NULL;
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),
-						   &error)) {
-		g_message ("Could not connect to screensaver: %s",
+	screensaver->priv->proxy = g_dbus_proxy_new_for_bus_sync (
+						G_BUS_TYPE_SESSION,
+						G_DBUS_PROXY_FLAGS_NONE,
+						NULL,
+						"org.gnome.ScreenSaver",
+						"/org/gnome/ScreenSaver",
+						"org.gnome.ScreenSaver",
+						NULL, &error);
+
+	if (error) {
+		g_warning ("Could not connect to screensaver: %s",
 			   error->message);
 		g_error_free (error);
 	}
-
-	return obj;
 }
 
 void
 panel_screensaver_lock (PanelScreensaver *screensaver)
 {
-	GError *error;
-	DBusGProxy *proxy;
+	GVariant *ret;
+	GError   *error;
 
 	g_return_if_fail (PANEL_IS_SCREENSAVER (screensaver));
 
-	error = NULL;
-
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (screensaver),
-						   &error)) {
-		g_warning ("Could not connect to screensaver: %s",
-			   error->message);
-		g_error_free (error);
+	if (!screensaver->priv->proxy) {
+		g_warning ("Screensaver service not available.");
 		return;
 	}
 
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (screensaver));
+	error = NULL;
+	ret = g_dbus_proxy_call_sync (screensaver->priv->proxy,
+				      "Lock",
+				      NULL,
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
 
-	if (!dbus_g_proxy_call (proxy, "Lock", &error,
-				G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	if (ret)
+		g_variant_unref (ret);
+
+	if (error) {
 		g_warning ("Could not ask screensaver to lock: %s",
 			   error->message);
 		g_error_free (error);
@@ -113,27 +102,29 @@ panel_screensaver_lock (PanelScreensaver *screensaver)
 void
 panel_screensaver_activate (PanelScreensaver *screensaver)
 {
-	GError *error;
-	DBusGProxy *proxy;
+	GVariant *ret;
+	GError   *error;
 
 	g_return_if_fail (PANEL_IS_SCREENSAVER (screensaver));
 
-	error = NULL;
-
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (screensaver),
-						   &error)) {
-		g_warning ("Could not connect to screensaver: %s",
-			   error->message);
-		g_error_free (error);
+	if (!screensaver->priv->proxy) {
+		g_warning ("Screensaver service not available.");
 		return;
 	}
 
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (screensaver));
+	error = NULL;
+	ret = g_dbus_proxy_call_sync (screensaver->priv->proxy,
+				      "SetActive",
+				      g_variant_new ("(b)", TRUE),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
 
-	if (!dbus_g_proxy_call (proxy, "SetActive", &error,
-				G_TYPE_BOOLEAN, TRUE, G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	if (ret)
+		g_variant_unref (ret);
+
+	if (error) {
 		g_warning ("Could not ask screensaver to activate: %s",
 			   error->message);
 		g_error_free (error);

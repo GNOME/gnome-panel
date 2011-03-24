@@ -22,89 +22,78 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 #include "panel-cleanup.h"
-#include "panel-dbus-service.h"
 
 #include "panel-session-manager.h"
 
-static GObject *panel_session_manager_constructor (GType                  type,
-						   guint                  n_construct_properties,
-						   GObjectConstructParam *construct_properties);
+struct _PanelSessionManagerPrivate {
+	GDBusProxy *proxy;
+};
 
-G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, PANEL_TYPE_DBUS_SERVICE);
+G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT);
 
 static void
 panel_session_manager_class_init (PanelSessionManagerClass *klass)
 {
-	GObjectClass *object_class;
-
-	object_class = G_OBJECT_CLASS (klass);
-
-	object_class->constructor = panel_session_manager_constructor;
+	g_type_class_add_private (klass,
+				  sizeof (PanelSessionManagerPrivate));
 }
 
 static void
 panel_session_manager_init (PanelSessionManager *manager)
 {
-}
+	GError *error;
 
-static GObject *
-panel_session_manager_constructor (GType                  type,
-				   guint                  n_construct_properties,
-				   GObjectConstructParam *construct_properties)
-{
-	GObject *obj;
-	GError  *error;
-
-	obj = G_OBJECT_CLASS (panel_session_manager_parent_class)->constructor (
-							type,
-							n_construct_properties,
-							construct_properties);
-
-
-	panel_dbus_service_define_service (PANEL_DBUS_SERVICE (obj),
-					   "org.gnome.SessionManager",
-					   "/org/gnome/SessionManager",
-					   "org.gnome.SessionManager");
+	manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
+						     PANEL_TYPE_SESSION_MANAGER,
+						     PanelSessionManagerPrivate);
 
 	error = NULL;
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (obj),
-						   &error)) {
-		g_message ("Could not connect to session manager: %s",
+	manager->priv->proxy = g_dbus_proxy_new_for_bus_sync (
+						G_BUS_TYPE_SESSION,
+						G_DBUS_PROXY_FLAGS_NONE,
+						NULL,
+						"org.gnome.SessionManager",
+						"/org/gnome/SessionManager",
+						"org.gnome.SessionManager",
+						NULL, &error);
+
+	if (error) {
+		g_warning ("Could not connect to session manager: %s",
 			   error->message);
 		g_error_free (error);
 	}
-
-	return obj;
 }
 
 void
 panel_session_manager_request_logout (PanelSessionManager           *manager,
 				      PanelSessionManagerLogoutType  mode)
 {
-	GError *error;
-	DBusGProxy *proxy;
+	GVariant *ret;
+	GError   *error;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 
-	error = NULL;
-
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
+	if (!manager->priv->proxy) {
+		g_warning ("Session manager service not available.");
 		return;
 	}
 
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	error = NULL;
+	ret = g_dbus_proxy_call_sync (manager->priv->proxy,
+				      "Logout",
+				      g_variant_new ("(u)", mode),
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
 
-	if (!dbus_g_proxy_call (proxy, "Logout", &error,
-				G_TYPE_UINT, mode, G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	if (ret)
+		g_variant_unref (ret);
+
+	if (error) {
 		g_warning ("Could not ask session manager to log out: %s",
 			   error->message);
 		g_error_free (error);
@@ -114,27 +103,29 @@ panel_session_manager_request_logout (PanelSessionManager           *manager,
 void
 panel_session_manager_request_shutdown (PanelSessionManager *manager)
 {
-	GError *error;
-	DBusGProxy *proxy;
+	GVariant *ret;
+	GError   *error;
 
 	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
 
-	error = NULL;
-
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
+	if (!manager->priv->proxy) {
+		g_warning ("Session manager service not available.");
 		return;
 	}
 
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	error = NULL;
+	ret = g_dbus_proxy_call_sync (manager->priv->proxy,
+				      "Shutdown",
+				      NULL,
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
 
-	if (!dbus_g_proxy_call (proxy, "Shutdown", &error,
-				G_TYPE_INVALID,
-				G_TYPE_INVALID) &&
-	    error != NULL) {
+	if (ret)
+		g_variant_unref (ret);
+
+	if (error) {
 		g_warning ("Could not ask session manager to shut down: %s",
 			   error->message);
 		g_error_free (error);
@@ -144,34 +135,35 @@ panel_session_manager_request_shutdown (PanelSessionManager *manager)
 gboolean
 panel_session_manager_is_shutdown_available (PanelSessionManager *manager)
 {
-	GError *error;
-	DBusGProxy *proxy;
-	gboolean is_shutdown_available;
+	GVariant *ret;
+	GError   *error;
+	gboolean  is_shutdown_available = FALSE;
 
 	g_return_val_if_fail (PANEL_IS_SESSION_MANAGER (manager), FALSE);
 
-	error = NULL;
-
-	if (!panel_dbus_service_ensure_connection (PANEL_DBUS_SERVICE (manager),
-						   &error)) {
-		g_warning ("Could not connect to session manager: %s",
-			   error->message);
-		g_error_free (error);
-
+	if (!manager->priv->proxy) {
+		g_warning ("Session manager service not available.");
 		return FALSE;
 	}
 
-	proxy = panel_dbus_service_get_proxy (PANEL_DBUS_SERVICE (manager));
+	error = NULL;
+	ret = g_dbus_proxy_call_sync (manager->priv->proxy,
+				      "CanShutdown",
+				      NULL,
+				      G_DBUS_CALL_FLAGS_NONE,
+				      -1,
+				      NULL,
+				      &error);
 
-	if (!dbus_g_proxy_call (proxy, "CanShutdown", &error,
-				G_TYPE_INVALID, G_TYPE_BOOLEAN,
-				&is_shutdown_available, G_TYPE_INVALID) &&
-	    error != NULL) {
+	if (error) {
 		g_warning ("Could not ask session manager if shut down is available: %s",
 			   error->message);
 		g_error_free (error);
 
 		return FALSE;
+	} else {
+		g_variant_get (ret, "(b)", &is_shutdown_available);
+		g_variant_unref (ret);
 	}
 
 	return is_shutdown_available;

@@ -27,8 +27,6 @@
 
 #include <glib-object.h>
 
-#include "panel-dbus-service.h"
-
 G_BEGIN_DECLS
 
 #define PANEL_TYPE_SESSION_MANAGER		(panel_session_manager_get_type ())
@@ -40,13 +38,17 @@ G_BEGIN_DECLS
 
 typedef struct _PanelSessionManager		PanelSessionManager;
 typedef struct _PanelSessionManagerClass	PanelSessionManagerClass;
+typedef struct _PanelSessionManagerPrivate	PanelSessionManagerPrivate;
 
 struct _PanelSessionManager {
-	PanelDBusService parent;
+	GObject parent;
+
+	/*< private > */
+	PanelSessionManagerPrivate *priv;
 };
 
 struct _PanelSessionManagerClass {
-	PanelDBusServiceClass parent_class;
+	GObjectClass parent_class;
 };
 
 GType panel_session_manager_get_type (void);

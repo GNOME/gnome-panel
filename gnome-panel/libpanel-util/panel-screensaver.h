@@ -27,8 +27,6 @@
 
 #include <glib-object.h>
 
-#include "panel-dbus-service.h"
-
 G_BEGIN_DECLS
 
 #define PANEL_TYPE_SCREENSAVER			(panel_screensaver_get_type ())
@@ -40,13 +38,17 @@ G_BEGIN_DECLS
 
 typedef struct _PanelScreensaver		PanelScreensaver;
 typedef struct _PanelScreensaverClass		PanelScreensaverClass;
+typedef struct _PanelScreensaverPrivate		PanelScreensaverPrivate;
 
 struct _PanelScreensaver {
-	PanelDBusService parent;
+	GObject parent;
+
+	/*< private > */
+	PanelScreensaverPrivate *priv;
 };
 
 struct _PanelScreensaverClass {
-	PanelDBusServiceClass parent_class;
+	GObjectClass parent_class;
 };
 
 GType panel_screensaver_get_type (void);
