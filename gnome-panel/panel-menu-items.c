@@ -88,15 +88,11 @@ struct _PanelPlaceMenuItemPrivate {
 	gulong       mount_added_id;
 	gulong       mount_changed_id;
 	gulong       mount_removed_id;
-
-	guint        use_image : 1;
 };
 
 struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
-
-	guint        use_image : 1;
 };
 
 static void
@@ -1419,8 +1415,6 @@ panel_place_menu_item_new (gboolean use_image)
 			image,
 			_("Places"));
 
-	menuitem->priv->use_image = use_image;
-
 	menuitem->priv->menu = panel_place_menu_item_create_menu (menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menuitem->priv->menu);
@@ -1447,8 +1441,6 @@ panel_desktop_menu_item_new (gboolean use_image,
 			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
 			image,
 			_("System"));
-
-	menuitem->priv->use_image = use_image;
 
 	menuitem->priv->menu = panel_desktop_menu_item_create_menu (menuitem,
 								    append_lock_logout);
