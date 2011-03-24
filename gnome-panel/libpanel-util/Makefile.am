@@ -13,6 +13,8 @@ AM_CFLAGS = $(WARN_CFLAGS)
 libpanel_util_la_SOURCES =		\
 	panel-cleanup.c			\
 	panel-cleanup.h			\
+	panel-dconf.c			\
+	panel-dconf.h			\
 	panel-error.c			\
 	panel-error.h			\
 	panel-glib.c			\
