@@ -44,6 +44,7 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
 #include "menu.h"
@@ -1569,15 +1570,18 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 
-	item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
-							 NULL, NULL, TRUE);
-	if (item != NULL) {
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_object_bind_property (panel_lockdown_get (),
-					"disable-log-out",
-					item,
-					"visible",
-					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
+	/* FIXME: should be dynamic */
+	if (panel_session_manager_is_shutdown_available (panel_session_manager_get ())) {
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
+								 NULL, NULL, TRUE);
+		if (item != NULL) {
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+			g_object_bind_property (panel_lockdown_get (),
+						"disable-log-out",
+						item,
+						"visible",
+						G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
+		}
 	}
 }
 
