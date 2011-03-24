@@ -27,6 +27,7 @@
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-icon-names.h"
+#include "panel-layout.h"
 #include "xstuff.h"
 
 #include "nothing.cP"
@@ -98,6 +99,11 @@ main (int argc, char **argv)
 	panel_init_stock_icons_and_items ();
 
 	panel_profile_load ();
+
+	if (!panel_layout_load ()) {
+		panel_cleanup_do ();
+		return 1;
+	}
 
 	xstuff_init ();
 

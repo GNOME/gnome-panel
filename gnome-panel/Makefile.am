@@ -12,6 +12,7 @@ AM_CPPFLAGS =							\
 	-I$(srcdir)						\
 	-I$(top_builddir)/gnome-panel				\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
+	-DPANELDATADIR=\""$(datadir)/gnome-panel"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DBUILDERDIR=\""$(uidir)"\"				\
 	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
@@ -64,6 +65,7 @@ panel_sources =			\
 	panel-lockdown.c	\
 	panel-addto.c		\
 	panel-ditem-editor.c	\
+	panel-layout.c		\
 	panel-modules.c		\
 	panel-applet-info.c
 
@@ -111,6 +113,7 @@ panel_headers =			\
 	panel-addto.h		\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
+	panel-layout.h		\
 	panel-modules.h		\
 	panel-schemas.h		\
 	panel-applet-info.h
