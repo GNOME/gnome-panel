@@ -120,15 +120,15 @@ static void
 panel_action_lock_setup_menu (PanelActionButton *button)
 {
 	panel_applet_add_callback (button->priv->info,
-				   "activate",
-				   NULL,
-				   _("_Activate Screensaver"),
-				   screensaver_enabled);
-
-	panel_applet_add_callback (button->priv->info,
 				   "lock",
 				   NULL,
 				   _("_Lock Screen"),
+				   screensaver_enabled);
+
+	panel_applet_add_callback (button->priv->info,
+				   "activate",
+				   NULL,
+				   _("_Activate Screensaver"),
 				   screensaver_enabled);
 
 	panel_applet_add_callback (button->priv->info,
