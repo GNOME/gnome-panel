@@ -17,6 +17,8 @@ libpanel_util_la_SOURCES =		\
 	panel-error.h			\
 	panel-glib.c			\
 	panel-glib.h			\
+	panel-gsettings.c		\
+	panel-gsettings.h		\
 	panel-gtk.c			\
 	panel-gtk.h			\
 	panel-icon-chooser.c		\
