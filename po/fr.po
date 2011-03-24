@@ -13,16 +13,16 @@
 # Myriam Malga <mmalga@redhat.com>, 2007.
 # Claude Paroz <claude@2xlibre.net>, 2007-2010.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007-2008.
-# Bruno Brouard <annoa.b@gmail.com>, 2009.
+# Bruno Brouard <annoa.b@gmail.com>, 2009,2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.fr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2010-08-23 14:11+0000\n"
-"PO-Revision-Date: 2010-02-06 23:07+0100\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-03-20 15:47+0000\n"
+"PO-Revision-Date: 2011-03-24 14:18+0100\n"
+"Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1458,7 +1458,8 @@ msgstr "Option de lancement non reconnue : %d"
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr ""
-"Impossible de passer les URI de documents vers une entrée .desktop de type « Type=Link »"
+"Impossible de passer les URI de documents vers une entrée .desktop de type "
+"« Type=Link »"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:1394
 #, c-format
@@ -1500,7 +1501,7 @@ msgstr "Afficher les options de gestion de sessions"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
 #: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Erreur"
 
@@ -1534,7 +1535,7 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "Impossible de trouver un emplacement vide"
 
@@ -1758,7 +1759,7 @@ msgstr ""
 "leur contenu"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Forcer à quitter"
 
@@ -1879,13 +1880,13 @@ msgstr "_Ne pas recharger"
 msgid "_Reload"
 msgstr "_Recharger"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
 "Le tableau de bord a rencontré un problème lors du chargement de « %s »."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Voulez-vous supprimer l'applet de votre configuration ?"
 
@@ -2012,11 +2013,11 @@ msgstr ""
 "Cliquez sur la fenêtre pour forcer l'application à quitter. Pour annuler, "
 "appuyez sur Échap."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Voulez-vous forcer cette application à quitter ?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2461,11 +2462,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
-"L'ID de l'implémentation de l'applet - c'est à dire "
-"« ClockAppletFactory::ClockApplet ». Cette clé n'est valable que si la clé object_type est "
-"« bonobo-applet »."
+"L'ID de l'implémentation de l'applet - c'est à dire « ClockAppletFactory::"
+"ClockApplet ». Cette clé n'est valable que si la clé object_type est « external-"
+"applet » (ou le déconseillé « bonobo-applet »)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2516,12 +2518,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "Le type de cet élément de tableau de bord. Les valeurs possibles sont "
-"« drawer-object », « menu-object », « launcher-object », « bonobo-applet », "
-"« action-applet » et « menu-bar »."
+"« drawer-object », « menu-object », « launcher-object », « external-applet », "
+"« action-applet », « menu-bar » et « séparateur »."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2531,10 +2533,9 @@ msgid ""
 "\"bonobo-applet\"."
 msgstr ""
 "Cette clé est déconseillée, suite à la migration vers une nouvelle "
-"bibliothèque pour les applets. "
-"L'ID de l'implémentation Bonobo de l'applet - c'est à dire « OAFIID:"
-"GNOME_ClockApplet ». Cette clé n'est valable que si la clé object_type est "
-"« bonobo-applet »."
+"bibliothèque pour les applets. L'ID de l'implémentation Bonobo de l'applet - "
+"c'est à dire « OAFIID:GNOME_ClockApplet ». Cette clé n'est valable que si la "
+"clé object_type est « bonobo-applet »."
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Tooltip displayed for drawer or menu"
@@ -2552,20 +2553,20 @@ msgstr "Utiliser une icône personnalisée pour le bouton de l'élément"
 msgid "Use custom path for menu contents"
 msgstr "Utiliser un chemin personnalisée pour le contenu du menu"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur chaîne GConf « %s » : %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur entière GConf « %s » : %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2574,7 +2575,7 @@ msgstr ""
 "Le tableau de bord « %s » est défini pour être affiché sur l'écran %d qui "
 "n'est actuellement pas disponible. Ne charge pas ce tableau de bord."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur booléenne GConf « %s » : %s"
@@ -3305,21 +3306,21 @@ msgstr "Icône « %s » non trouvée"
 msgid "Could not execute '%s'"
 msgstr "Impossible d'exécuter « %s »"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "fichier"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Dossier personnel"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Système de fichiers"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Recherche"
 
@@ -3328,7 +3329,7 @@ msgstr "Recherche"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s : %2$s"
@@ -3361,5 +3362,3 @@ msgid ""
 msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses réglages sont perdus."
-
-
