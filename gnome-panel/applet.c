@@ -1299,7 +1299,7 @@ panel_applet_register (GtkWidget       *applet,
 
 	panel_applet_set_dnd_enabled (info, TRUE);
 
-	gtk_widget_show_all (applet);
+	gtk_widget_show (applet);
 
 	orientation_change (info, panel);
 	size_change (info, panel);

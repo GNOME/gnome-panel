@@ -179,14 +179,17 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 				   menubar->priv->applications_menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->applications_item);
+	gtk_widget_show (menubar->priv->applications_item);
 
 	menubar->priv->places_item = panel_place_menu_item_new (FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
+	gtk_widget_show (menubar->priv->places_item);
 
 	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
+	gtk_widget_show (menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip (menubar);
 
