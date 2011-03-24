@@ -29,8 +29,6 @@
 
 #include "panel-lockdown.h"
 
-static PanelLockdown *shared_lockdown = NULL;
-
 struct _PanelLockdownPrivate {
         GSettings *desktop_settings;
         GSettings *panel_settings;
@@ -455,6 +453,8 @@ panel_lockdown_on_notify (PanelLockdown       *lockdown,
 PanelLockdown *
 panel_lockdown_get (void)
 {
+        static PanelLockdown *shared_lockdown = NULL;
+
         if (shared_lockdown == NULL) {
                 shared_lockdown = g_object_new (PANEL_TYPE_LOCKDOWN, NULL);
                 panel_cleanup_register (panel_cleanup_unref_and_nullify,
