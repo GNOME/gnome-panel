@@ -31,6 +31,7 @@
 #include <gdk/gdk.h>
 
 #include <libpanel-util/panel-cleanup.h>
+#include <libpanel-util/panel-dconf.h>
 #include <libpanel-util/panel-gsettings.h>
 
 #include "panel-schemas.h"
@@ -172,18 +173,20 @@ panel_layout_append_self_check (GSettings                 *settings,
 static char *
 panel_layout_find_free_id (const char *id_list_key,
                            const char *schema,
+                           const char *path_prefix,
                            const char *try_id,
                            int         screen_for_toplevels)
 {
         char      *unique_id;
         char     **existing_ids;
+        char     **existing_dirs;
         gboolean   existing;
         int        index;
         int        i;
 
-        /* TODO also check it doesn't exist in dconf */
         existing_ids = g_settings_get_strv (layout_settings,
                                             id_list_key);
+        existing_dirs = panel_dconf_list_subdirs (path_prefix);
 
         index = 0;
         existing = TRUE;
@@ -201,12 +204,16 @@ panel_layout_find_free_id (const char *id_list_key,
 
                 existing = FALSE;
 
-                for (i = 0; existing_ids[i] != NULL; i++) {
+                for (i = 0; !existing && existing_ids[i] != NULL; i++) {
                         if (g_strcmp0 (unique_id,
-                                       existing_ids[i]) == 0) {
+                                       existing_ids[i]) == 0)
+                                existing = TRUE;
+                }
+                for (i = 0; !existing && existing_dirs[i] != NULL; i++) {
+                        if (g_strcmp0 (unique_id,
+                                       existing_dirs[i]) == 0)
                                 existing = TRUE;
                                 break;
-                        }
                 }
 
                 if (existing)
@@ -235,18 +242,23 @@ panel_layout_find_free_id (const char *id_list_key,
 
                 existing = FALSE;
 
-                for (i = 0; existing_ids[i] != NULL; i++) {
+                for (i = 0; !existing && existing_ids[i] != NULL; i++) {
                         if (g_strcmp0 (unique_id,
-                                       existing_ids[i]) == 0) {
+                                       existing_ids[i]) == 0)
                                 existing = TRUE;
-                                break;
-                        }
+                }
+                for (i = 0; !existing && existing_dirs[i] != NULL; i++) {
+                        if (g_strcmp0 (unique_id,
+                                       existing_dirs[i]) == 0)
+                                existing = TRUE;
                 }
 
-                g_free (unique_id);
+                if (existing)
+                        g_free (unique_id);
                 index++;
         }
 
+        g_strfreev (existing_dirs);
         g_strfreev (existing_ids);
 
         return unique_id;
@@ -292,10 +304,10 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         if (id && !panel_gsettings_is_valid_keyname (id, error))
                 return FALSE;
 
-        unique_id = panel_layout_find_free_id (id_list_key, schema,
+        unique_id = panel_layout_find_free_id (id_list_key, schema, path_prefix,
                                                id, set_screen_to);
 
-        path = g_strdup_printf ("%s/%s/", path_prefix, unique_id);
+        path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
         settings = g_settings_new_with_path (schema, path);
         g_free (path);
 

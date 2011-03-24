@@ -25,11 +25,11 @@
 #define PANEL_LAYOUT_TOPLEVEL_ID_LIST     "toplevel-id-list"
 #define PANEL_LAYOUT_OBJECT_ID_LIST       "object-id-list"
 
-#define PANEL_LAYOUT_TOPLEVEL_PATH           "/org/gnome/gnome-panel/layout/toplevels"
+#define PANEL_LAYOUT_TOPLEVEL_PATH           "/org/gnome/gnome-panel/layout/toplevels/"
 #define PANEL_LAYOUT_TOPLEVEL_DEFAULT_PREFIX "toplevel"
-#define PANEL_LAYOUT_OBJECT_PATH             "/org/gnome/gnome-panel/layout/objects"
+#define PANEL_LAYOUT_OBJECT_PATH             "/org/gnome/gnome-panel/layout/objects/"
 #define PANEL_LAYOUT_OBJECT_DEFAULT_PREFIX   "object"
-#define PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX    "instance-config"
+#define PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX    "/instance-config/"
 
 #define PANEL_TOPLEVEL_SCHEMA           "org.gnome.gnome-panel.toplevel"
 #define PANEL_TOPLEVEL_NAME             "name"
