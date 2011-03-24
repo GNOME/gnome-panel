@@ -41,7 +41,6 @@
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
-#include "panel-lockdown.h"
 #include "panel-schemas.h"
 
 char *
@@ -332,118 +331,6 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	g_free (file);
 
 	return retval;
-}
-
-static char *
-panel_lock_screen_action_get_command (const char *action)
-{
-	char    *command          = NULL;
-	gboolean use_gscreensaver = FALSE;
-
-	if (panel_is_program_in_path ("gnome-screensaver-command")
-	    && panel_is_program_in_path ("gnome-screensaver-preferences"))
-		use_gscreensaver = TRUE;
-	else if (!panel_is_program_in_path ("xscreensaver-command"))
-		return NULL;
-
-	if (strcmp (action, "prefs") == 0) {
-		if (use_gscreensaver) {
-			command = g_strdup ("gnome-screensaver-preferences");
-		} else if (panel_is_program_in_path ("xscreensaver-demo")) {
-			command = g_strdup ("xscreensaver-demo");
-		} else {
-			command = NULL;
-		}
-	} else if (strcmp (action, "activate") == 0
-		   || strcmp (action, "lock") == 0) {
-		/* Neither gnome-screensaver or xscreensaver allow root
-		 * to lock the screen */
-		if (geteuid () == 0) {
-			command = NULL;
-		} else {
-			if (use_gscreensaver) {
-				command = g_strdup_printf ("gnome-screensaver-command --%s", action);
-			} else {
-				command = g_strdup_printf ("xscreensaver-command -%s", action);
-			}
-		}
-	}
-
-	return command;
-}
-
-gboolean
-panel_lock_screen_action_available (const char *action)
-{
-	char    *command;
-	gboolean enabled = FALSE;
-
-	g_return_val_if_fail (action != NULL, FALSE);
-
-	if (strcmp (action, "prefs") != 0 &&
-	    panel_lockdown_get_disable_lock_screen_s ())
-		return FALSE;
-
-	command = panel_lock_screen_action_get_command (action);
-	if (command)
-		enabled = TRUE;
-
-	g_free (command);
-
-	return enabled;
-}
-
-void
-panel_lock_screen_action (GdkScreen  *screen,
-			  const char *action)
-{
-	GError  *error            = NULL;
-	char    *command          = NULL;
-	GdkAppLaunchContext *launch_context = NULL;
-	GAppInfo            *app_info = NULL;
-	GdkDisplay          *display;
-
-	g_return_if_fail (GDK_IS_SCREEN (screen));
-	g_return_if_fail (action != NULL);
-
-	if (strcmp (action, "prefs") != 0 &&
-	    panel_lockdown_get_disable_lock_screen_s ())
-		return;
-
-	command = panel_lock_screen_action_get_command (action);
-
-	if (!command)
-		return;
-
-	app_info = g_app_info_create_from_commandline (command,
-						       NULL,
-						       G_APP_INFO_CREATE_NONE,
-						       &error);
-
-	if (!error) {
-		display = gdk_screen_get_display (screen);
-		launch_context = gdk_display_get_app_launch_context (display);
-		gdk_app_launch_context_set_screen (launch_context, screen);
-		g_app_info_launch (app_info, NULL, G_APP_LAUNCH_CONTEXT (launch_context), &error);
-
-		g_object_unref (launch_context);
-	}
-
-	/* error either by create or launch the command */
-	if (error) {
-		char *primary;
-
-		primary = g_strdup_printf (_("Could not execute '%s'"),
-					   command);
-		panel_error_dialog (NULL, screen,
-				    "cannot_exec_screensaver", TRUE,
-				    primary, error->message);
-		g_free (primary);
-		g_error_free (error);
-	}
-
-	g_free (command);
-	g_object_unref (app_info);
 }
 
 #define PANEL_LAUNCHER_PERSONAL_PATH "panel2.d/default/launchers"

@@ -16,8 +16,6 @@
 GSList *panel_applet_list_applets (void) { return NULL; }
 #include "panel-gconf.h"
 GConfClient *panel_gconf_get_client (void) { return NULL; }
-#include "panel-lockdown.h"
-gboolean panel_lockdown_get_disable_lock_screen_s (void) { return FALSE; }
 #include "panel-bindings.h"
 guint panel_bindings_get_mouse_button_modifier_keymask (void) { return 0; }
 #include "panel-toplevel.h"

@@ -33,7 +33,9 @@
 #include <glib/gi18n.h>
 
 #include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-screensaver.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
@@ -88,32 +90,36 @@ static GConfEnumStringPair panel_action_type_map [] = {
 static void
 panel_action_lock_screen (GtkWidget *widget)
 {
-	panel_lock_screen_action (gtk_widget_get_screen (widget), "lock");
+	panel_screensaver_lock (panel_screensaver_get ());
 }
 
 static gboolean
 screensaver_properties_enabled (void)
 {
+	char *desktop;
+	gboolean found;
+
 	if (panel_lockdown_get_panels_locked_down_s () ||
 	    panel_lockdown_get_disable_lock_screen_s ())
 		return FALSE;
 
-	return panel_lock_screen_action_available ("prefs");
+	desktop = panel_g_lookup_in_applications_dirs ("gnome-screen-panel.desktop");
+	found = (desktop != NULL);
+	g_free (desktop);
+
+	return found;
 }
 
 static gboolean
-screensaver_enabled (void)
+panel_action_lock_is_enabled (void)
 {
-	if (panel_lockdown_get_disable_lock_screen_s ())
-		return FALSE;
-
-	return panel_lock_screen_action_available ("lock");
+	return !panel_lockdown_get_disable_lock_screen_s ();
 }
 
 static gboolean
 panel_action_lock_is_disabled (void)
 {
-	return !screensaver_enabled ();
+	return !panel_action_lock_is_enabled ();
 }
 
 static void
@@ -123,13 +129,13 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 				   "lock",
 				   NULL,
 				   _("_Lock Screen"),
-				   screensaver_enabled);
+				   panel_action_lock_is_enabled);
 
 	panel_applet_add_callback (button->priv->info,
 				   "activate",
 				   NULL,
 				   _("_Activate Screensaver"),
-				   screensaver_enabled);
+				   NULL);
 
 	panel_applet_add_callback (button->priv->info,
 				   "prefs",
@@ -145,8 +151,16 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
 	g_return_if_fail (callback_name != NULL);
 
-	panel_lock_screen_action (gtk_widget_get_screen (GTK_WIDGET (button)),
-				  callback_name);
+	if (g_strcmp0 (callback_name, "lock") == 0)
+		panel_screensaver_lock (panel_screensaver_get ());
+	else if (g_strcmp0 (callback_name, "activate") == 0)
+		panel_screensaver_activate (panel_screensaver_get ());
+	else if (g_strcmp0 (callback_name, "prefs") == 0)
+		panel_launch_desktop_file ("gnome-screen-panel.desktop",
+					   gtk_widget_get_screen (GTK_WIDGET (button)),
+					   NULL);
+	else
+		g_assert_not_reached ();
 }
 
 /* Log Out

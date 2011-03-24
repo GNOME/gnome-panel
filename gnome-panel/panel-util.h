@@ -20,10 +20,6 @@ gboolean	panel_is_program_in_path (const char *program);
 gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 
-void            panel_lock_screen_action           (GdkScreen    *screen,
-                                                    const char   *action);
-gboolean        panel_lock_screen_action_available (const char   *action);
-
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size);
