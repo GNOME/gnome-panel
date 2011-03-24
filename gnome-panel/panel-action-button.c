@@ -88,14 +88,14 @@ static GConfEnumStringPair panel_action_type_map [] = {
 static void
 panel_action_lock_screen (GtkWidget *widget)
 {
-	panel_lock_screen (gtk_widget_get_screen (widget));
+	panel_lock_screen_action (gtk_widget_get_screen (widget), "lock");
 }
 
 static gboolean
 screensaver_properties_enabled (void)
 {
-	if (panel_lockdown_get_locked_down () ||
-	    panel_lockdown_get_disable_lock_screen ())
+	if (panel_lockdown_get_panels_locked_down_s () ||
+	    panel_lockdown_get_disable_lock_screen_s ())
 		return FALSE;
 
 	return panel_lock_screen_action_available ("prefs");
@@ -104,7 +104,7 @@ screensaver_properties_enabled (void)
 static gboolean
 screensaver_enabled (void)
 {
-	if (panel_lockdown_get_disable_lock_screen ())
+	if (panel_lockdown_get_disable_lock_screen_s ())
 		return FALSE;
 
 	return panel_lock_screen_action_available ("lock");
@@ -190,7 +190,7 @@ panel_action_shutdown_reboot_is_disabled (void)
 {
 	PanelSessionManager *manager;
 
-	if (panel_lockdown_get_disable_log_out())
+	if (panel_lockdown_get_disable_log_out_s ())
 		return TRUE;
 
 	manager = panel_session_manager_get ();
@@ -313,7 +313,7 @@ static PanelAction actions [] = {
 		N_("Log out of this session to log in as a different user"),
 		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,
-		panel_lockdown_get_disable_log_out
+		panel_lockdown_get_disable_log_out_s
 	},
 	{
 		PANEL_ACTION_RUN,
@@ -322,7 +322,7 @@ static PanelAction actions [] = {
 		N_("Run an application by typing a command or choosing from a list"),
 		"ACTION:run:NEW",
 		panel_action_run_program, NULL, NULL,
-		panel_lockdown_get_disable_command_line
+		panel_lockdown_get_disable_command_line_s
 	},
 	{
 		PANEL_ACTION_SEARCH,
@@ -339,7 +339,7 @@ static PanelAction actions [] = {
 		N_("Force a misbehaving application to quit"),
 		"ACTION:force-quit:NEW",
 		panel_action_force_quit, NULL, NULL,
-		panel_lockdown_get_disable_force_quit
+		panel_lockdown_get_disable_force_quit_s
 	},
 	{
 		PANEL_ACTION_CONNECT_SERVER,
@@ -425,8 +425,11 @@ panel_action_get_drag_id (PanelActionButtonType type)
 }
 
 static void
-panel_action_button_update_sensitivity (PanelActionButton *button)
+panel_action_button_update_sensitivity (PanelLockdown *lockdown,
+					gpointer       user_data)
 {
+	PanelActionButton *button = user_data;
+
 	if (actions [button->priv->type].is_disabled)
 		button_widget_set_activatable (BUTTON_WIDGET (button),
 					       !actions [button->priv->type].is_disabled ());
@@ -439,9 +442,6 @@ panel_action_button_finalize (GObject *object)
 
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
-
-	panel_lockdown_notify_remove (G_CALLBACK (panel_action_button_update_sensitivity),
-				      button);
 
 	gconf_client_notify_remove (panel_gconf_get_client (),
 				    button->priv->gconf_notify);
@@ -613,7 +613,7 @@ panel_action_button_set_type (PanelActionButton     *button,
 				     _(actions [type].tooltip));
 	panel_a11y_set_atk_name_desc (GTK_WIDGET (button), _(actions [type].tooltip), NULL);
 
-	panel_action_button_update_sensitivity (button);
+	panel_action_button_update_sensitivity (panel_lockdown_get (), button);
 }
 
 static void
@@ -651,8 +651,11 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 					 (GConfClientNotifyFunc) panel_action_button_type_changed,
 					 button, NULL, NULL);
 
-	panel_lockdown_notify_add (G_CALLBACK (panel_action_button_update_sensitivity),
-				   button);
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  NULL,
+				  G_OBJECT (button),
+				  panel_action_button_update_sensitivity,
+				  button);
 }
 
 static void

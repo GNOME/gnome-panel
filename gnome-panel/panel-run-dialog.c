@@ -1984,7 +1984,7 @@ panel_run_dialog_present (GdkScreen *screen,
 	GtkBuilder *gui;
 	GError     *error;
 
-	if (panel_lockdown_get_disable_command_line ())
+	if (panel_lockdown_get_disable_command_line_s ())
 		return;
 
 	if (static_dialog) {

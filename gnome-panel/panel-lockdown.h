@@ -1,6 +1,8 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
+/* vim: set sw=8 et: */
 /*
- * Copyright (C) 2004 Sun Microsystems, Inc.
+ * panel-lockdown.c: a lockdown tracker.
+ *
+ * Copyright (C) 2011 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,34 +20,66 @@
  * 02111-1307, USA.
  *
  * Authors:
- *      Matt Keenan  <matt.keenan@sun.com>
- *      Mark McLoughlin  <mark@skynet.ie>
+ *      Vincent Untz <vuntz@gnome.org>
  */
 
 #ifndef __PANEL_LOCKDOWN_H__
 #define __PANEL_LOCKDOWN_H__
 
-#include <glib.h>
-#include <glib-object.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
-void panel_lockdown_init     (void);
-void panel_lockdown_finalize (void);
+#define PANEL_TYPE_LOCKDOWN            (panel_lockdown_get_type ())
+#define PANEL_LOCKDOWN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), PANEL_TYPE_LOCKDOWN, PanelLockdown))
+#define PANEL_LOCKDOWN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), PANEL_TYPE_LOCKDOWN, PanelLockdownClass))
+#define PANEL_IS_LOCKDOWN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), PANEL_TYPE_LOCKDOWN))
+#define PANEL_IS_LOCKDOWN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), PANEL_TYPE_LOCKDOWN))
+#define PANEL_LOCKDOWN_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), PANEL_TYPE_LOCKDOWN, PanelLockdownClass))
 
-gboolean panel_lockdown_get_locked_down          (void);
-gboolean panel_lockdown_get_not_locked_down      (void);
-gboolean panel_lockdown_get_disable_command_line (void);
-gboolean panel_lockdown_get_disable_lock_screen  (void);
-gboolean panel_lockdown_get_disable_log_out      (void);
-gboolean panel_lockdown_get_disable_force_quit   (void);
+typedef struct _PanelLockdown          PanelLockdown;
+typedef struct _PanelLockdownClass     PanelLockdownClass;
+typedef struct _PanelLockdownPrivate   PanelLockdownPrivate;
 
-gboolean panel_lockdown_is_applet_disabled (const char *iid);
+struct _PanelLockdown {
+        GObject parent;
 
-void panel_lockdown_notify_add    (GCallback callback_func,
-                                   gpointer  user_data);
-void panel_lockdown_notify_remove (GCallback callback_func,
-                                   gpointer  user_data);
+        /*< private > */
+        PanelLockdownPrivate *priv;
+};
+
+struct _PanelLockdownClass {
+        GObjectClass parent_class;
+};
+
+GType panel_lockdown_get_type (void);
+
+gboolean panel_lockdown_get_panels_locked_down   (PanelLockdown *lockdown);
+gboolean panel_lockdown_get_disable_command_line (PanelLockdown *lockdown);
+gboolean panel_lockdown_get_disable_lock_screen  (PanelLockdown *lockdown);
+gboolean panel_lockdown_get_disable_log_out      (PanelLockdown *lockdown);
+gboolean panel_lockdown_get_disable_force_quit   (PanelLockdown *lockdown);
+
+gboolean panel_lockdown_is_applet_disabled       (PanelLockdown *lockdown,
+                                                  const char *iid);
+
+typedef void (*PanelLockdownNotify) (PanelLockdown *lockdown,
+                                     gpointer       user_data);
+
+void     panel_lockdown_on_notify                (PanelLockdown *      lockdown,
+                                                  const char          *property,
+                                                  GObject             *object_while_alive,
+                                                  PanelLockdownNotify  callback,
+                                                  gpointer             callback_data);
+
+PanelLockdown *panel_lockdown_get (void);
+
+gboolean panel_lockdown_get_panels_locked_down_s     (void);
+gboolean panel_lockdown_get_not_panels_locked_down_s (void);
+gboolean panel_lockdown_get_disable_command_line_s   (void);
+gboolean panel_lockdown_get_disable_lock_screen_s    (void);
+gboolean panel_lockdown_get_disable_log_out_s        (void);
+gboolean panel_lockdown_get_disable_force_quit_s     (void);
 
 G_END_DECLS
 

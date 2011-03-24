@@ -1,6 +1,8 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
+/* vim: set sw=8 et: */
 /*
- * Copyright (C) 2004 Sun Microsystems, Inc.
+ * panel-lockdown.c: a lockdown tracker.
+ *
+ * Copyright (C) 2011 Novell, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -18,433 +20,482 @@
  * 02111-1307, USA.
  *
  * Authors:
- *      Matt Keenan  <matt.keenan@sun.com>
- *      Mark McLoughlin  <mark@skynet.ie>
+ *      Vincent Untz <vuntz@gnome.org>
  */
 
-#include <config.h>
+#include <libpanel-util/panel-cleanup.h>
+
+#include "panel-schemas.h"
 
 #include "panel-lockdown.h"
 
-#include <string.h>
-#include "panel-gconf.h"
+static PanelLockdown *shared_lockdown = NULL;
 
-#define N_LISTENERS 6
+struct _PanelLockdownPrivate {
+        GSettings *desktop_settings;
+        GSettings *panel_settings;
 
-#define PANEL_GLOBAL_LOCKDOWN_DIR    "/apps/panel/global"
-#define DESKTOP_GNOME_LOCKDOWN_DIR   "/desktop/gnome/lockdown"
-#define PANEL_GLOBAL_LOCKED_DOWN_KEY PANEL_GLOBAL_LOCKDOWN_DIR  "/locked_down"
-#define DISABLE_COMMAND_LINE_KEY     DESKTOP_GNOME_LOCKDOWN_DIR "/disable_command_line"
-#define DISABLE_LOCK_SCREEN_KEY      DESKTOP_GNOME_LOCKDOWN_DIR  "/disable_lock_screen"
-#define DISABLE_LOG_OUT_KEY          PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_log_out"
-#define DISABLE_FORCE_QUIT_KEY       PANEL_GLOBAL_LOCKDOWN_DIR  "/disable_force_quit"
-#define DISABLED_APPLETS_KEY         PANEL_GLOBAL_LOCKDOWN_DIR  "/disabled_applets"
+        /* desktop-wide */
+        gboolean   disable_command_line;
+        gboolean   disable_lock_screen;
+        gboolean   disable_log_out;
 
-typedef struct {
-        guint   initialized : 1;
+        /* panel-specific */
+        gboolean   panels_locked_down;
+        gboolean   disable_force_quit;
+        char     **disabled_applets;
+};
 
-        guint   locked_down : 1;
-        guint   disable_command_line : 1;
-        guint   disable_lock_screen : 1;
-        guint   disable_log_out : 1;
-        guint   disable_force_quit : 1;
+enum {
+        PROP_0,
+        PROP_DISABLE_COMMAND_LINE,
+        PROP_DISABLE_LOCK_SCREEN,
+        PROP_DISABLE_LOG_OUT,
+        PROP_PANELS_LOCKED_DOWN,
+        PROP_DISABLE_FORCE_QUIT
+};
 
-        GSList *disabled_applets;
+G_DEFINE_TYPE (PanelLockdown, panel_lockdown, G_TYPE_OBJECT);
 
-        guint   listeners [N_LISTENERS];
-
-        GSList *closures;
-} PanelLockdown;
-
-static PanelLockdown panel_lockdown = { 0, };
-
-
-static inline void
-panel_lockdown_invoke_closures (PanelLockdown *lockdown)
+static void
+_panel_lockdown_disabled_applets_changed (GSettings     *settings,
+                                          char          *key,
+                                          PanelLockdown *lockdown)
 {
-        GSList *l;
+        if (lockdown->priv->disabled_applets)
+                g_strfreev (lockdown->priv->disabled_applets);
+        lockdown->priv->disabled_applets = g_settings_get_strv (lockdown->priv->panel_settings,
+                                                                PANEL_LOCKDOWN_DISABLED_APPLETS_KEY);
+}
 
-        for (l = lockdown->closures; l; l = l->next)
-                g_closure_invoke (l->data, NULL, 0, NULL, NULL);
+static GObject *
+panel_lockdown_constructor (GType                  type,
+                            guint                  n_construct_properties,
+                            GObjectConstructParam *construct_properties)
+{
+        GObject       *obj;
+        PanelLockdown *lockdown;
+
+        obj = G_OBJECT_CLASS (panel_lockdown_parent_class)->constructor (type,
+                                                                         n_construct_properties,
+                                                                         construct_properties);
+
+        lockdown = PANEL_LOCKDOWN (obj);
+
+        lockdown->priv->desktop_settings = g_settings_new (PANEL_DESKTOP_LOCKDOWN_SCHEMA);
+        lockdown->priv->panel_settings = g_settings_new (PANEL_LOCKDOWN_SCHEMA);
+
+        g_settings_bind (lockdown->priv->desktop_settings,
+                         PANEL_DESKTOP_DISABLE_COMMAND_LINE_KEY,
+                         lockdown,
+                         "disable-command-line",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->desktop_settings,
+                         PANEL_DESKTOP_DISABLE_LOCK_SCREEN_KEY,
+                         lockdown,
+                         "disable-lock-screen",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->desktop_settings,
+                         PANEL_DESKTOP_DISABLE_LOG_OUT_KEY,
+                         lockdown,
+                         "disable-log-out",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->panel_settings,
+                         PANEL_LOCKDOWN_COMPLETE_LOCKDOWN_KEY,
+                         lockdown,
+                         "panels-locked-down",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->panel_settings,
+                         PANEL_LOCKDOWN_DISABLE_FORCE_QUIT_KEY,
+                         lockdown,
+                         "disable-force-quit",
+                         G_SETTINGS_BIND_GET);
+
+        g_signal_connect (lockdown->priv->panel_settings,
+                          "changed::"PANEL_LOCKDOWN_DISABLED_APPLETS_KEY,
+                          G_CALLBACK (_panel_lockdown_disabled_applets_changed),
+                          lockdown);
+
+        _panel_lockdown_disabled_applets_changed (lockdown->priv->panel_settings,
+                                                  PANEL_LOCKDOWN_DISABLED_APPLETS_KEY,
+                                                  lockdown);
+
+        return obj;
 }
 
 static void
-locked_down_notify (GConfClient   *client,
-                    guint          cnxn_id,
-                    GConfEntry    *entry,
-                    PanelLockdown *lockdown)
+_panel_lockdown_set_property_helper (PanelLockdown *lockdown,
+                                     gboolean      *field,
+                                     const GValue  *value,
+                                     const char    *property)
 {
-        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+        gboolean new;
+
+        new = g_value_get_boolean (value);
+        if (new == *field)
                 return;
 
-        lockdown->locked_down = gconf_value_get_bool (entry->value);
-
-        panel_lockdown_invoke_closures (lockdown);
+        *field = new;
+        g_object_notify (G_OBJECT (lockdown), property);
 }
 
 static void
-disable_command_line_notify (GConfClient   *client,
-                             guint          cnxn_id,
-                             GConfEntry    *entry,
-                             PanelLockdown *lockdown)
+panel_lockdown_set_property (GObject      *object,
+                             guint         prop_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
 {
-        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-                return;
+        PanelLockdown *lockdown;
 
-        lockdown->disable_command_line = gconf_value_get_bool (entry->value);
+        g_return_if_fail (PANEL_IS_LOCKDOWN (object));
 
-        panel_lockdown_invoke_closures (lockdown);
-}
+        lockdown = PANEL_LOCKDOWN (object);
 
-static void
-disable_lock_screen_notify (GConfClient   *client,
-                            guint          cnxn_id,
-                            GConfEntry    *entry,
-                            PanelLockdown *lockdown)
-{
-        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_lock_screen = gconf_value_get_bool (entry->value);
-
-        panel_lockdown_invoke_closures (lockdown);
-}
-
-static void
-disable_log_out_notify (GConfClient   *client,
-                        guint          cnxn_id,
-                        GConfEntry    *entry,
-                        PanelLockdown *lockdown)
-{
-        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_log_out = gconf_value_get_bool (entry->value);
-
-        panel_lockdown_invoke_closures (lockdown);
-}
-
-static void
-disable_force_quit_notify (GConfClient   *client,
-                           guint          cnxn_id,
-                           GConfEntry    *entry,
-                           PanelLockdown *lockdown)
-{
-        if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-                return;
-
-        lockdown->disable_force_quit = gconf_value_get_bool (entry->value);
-
-        panel_lockdown_invoke_closures (lockdown);
-}
-
-static void
-disabled_applets_notify (GConfClient   *client,
-                         guint          cnxn_id,
-                         GConfEntry    *entry,
-                         PanelLockdown *lockdown)
-{
-        GSList *l;
-
-        if (!entry->value || entry->value->type != GCONF_VALUE_LIST ||
-            gconf_value_get_list_type (entry->value) != GCONF_VALUE_STRING)
-                return;
-
-        for (l = lockdown->disabled_applets; l; l = l->next)
-                g_free (l->data);
-        g_slist_free (lockdown->disabled_applets);
-        lockdown->disabled_applets = NULL;
-
-        for (l = gconf_value_get_list (entry->value); l; l = l->next) {
-                const char *iid = gconf_value_get_string (l->data);
-
-                lockdown->disabled_applets =
-                        g_slist_prepend (lockdown->disabled_applets,
-                                         g_strdup (iid));
+        switch (prop_id) {
+        case PROP_DISABLE_COMMAND_LINE:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->disable_command_line,
+                                                     value,
+                                                     "disable-command-line");
+                break;
+        case PROP_DISABLE_LOCK_SCREEN:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->disable_lock_screen,
+                                                     value,
+                                                     "disable-lock-screen");
+                break;
+        case PROP_DISABLE_LOG_OUT:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->disable_log_out,
+                                                     value,
+                                                     "disable-log-out");
+                break;
+        case PROP_PANELS_LOCKED_DOWN:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->panels_locked_down,
+                                                     value,
+                                                     "panels-locked-down");
+                break;
+        case PROP_DISABLE_FORCE_QUIT:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->disable_force_quit,
+                                                     value,
+                                                     "disable-force-quit");
+                break;
+        default:
+                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+                break;
         }
-
-        panel_lockdown_invoke_closures (lockdown);
 }
 
-static gboolean
-panel_lockdown_load_bool (PanelLockdown         *lockdown,
-                          GConfClient           *client,
-                          const char            *key,
-                          GConfClientNotifyFunc  notify_func,
-                          int                    listener)
+static void
+panel_lockdown_get_property (GObject    *object,
+                             guint       prop_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
 {
-        GError   *error = NULL;
-        gboolean  retval;
+        PanelLockdown *lockdown;
 
-        retval = gconf_client_get_bool (client, key, &error);
-        if (error) {
-                g_warning ("Error getting value of '%s': %s\n",
-                           key, error->message);
-                retval = FALSE;
+        g_return_if_fail (PANEL_IS_LOCKDOWN (object));
+
+        lockdown = PANEL_LOCKDOWN (object);
+
+        switch (prop_id) {
+        case PROP_DISABLE_COMMAND_LINE:
+                g_value_set_boolean (value, lockdown->priv->disable_command_line);
+                break;
+        case PROP_DISABLE_LOCK_SCREEN:
+                g_value_set_boolean (value, lockdown->priv->disable_lock_screen);
+                break;
+        case PROP_DISABLE_LOG_OUT:
+                g_value_set_boolean (value, lockdown->priv->disable_log_out);
+                break;
+        case PROP_PANELS_LOCKED_DOWN:
+                g_value_set_boolean (value, lockdown->priv->panels_locked_down);
+                break;
+        case PROP_DISABLE_FORCE_QUIT:
+                g_value_set_boolean (value, lockdown->priv->disable_force_quit);
+                break;
+        default:
+                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+                break;
         }
-
-        lockdown->listeners [listener] =
-                gconf_client_notify_add (client,
-                                         key,
-                                         notify_func,
-                                         lockdown,
-                                         NULL, NULL);
-
-        return retval;
 }
 
-static GSList *
-panel_lockdown_load_disabled_applets (PanelLockdown *lockdown,
-                                      GConfClient   *client,
-                                      int            listener)
+static void
+panel_lockdown_dispose (GObject *object)
 {
-        GSList *retval;
+        PanelLockdown *lockdown;
 
-        retval = gconf_client_get_list (client,
-                                        DISABLED_APPLETS_KEY,
-                                        GCONF_VALUE_STRING,
-                                        NULL);
+        lockdown = PANEL_LOCKDOWN (object);
 
-        lockdown->listeners [listener] =
-                gconf_client_notify_add (client,
-                                         DISABLED_APPLETS_KEY,
-                                         (GConfClientNotifyFunc) disabled_applets_notify,
-                                         lockdown,
-                                         NULL, NULL);
+        if (lockdown->priv->desktop_settings)
+                g_object_unref (lockdown->priv->desktop_settings);
+        lockdown->priv->desktop_settings = NULL;
 
-        return retval;
+        if (lockdown->priv->panel_settings)
+                g_object_unref (lockdown->priv->panel_settings);
+        lockdown->priv->panel_settings = NULL;
+
+        if (lockdown->priv->disabled_applets)
+                g_strfreev (lockdown->priv->disabled_applets);
+        lockdown->priv->disabled_applets = NULL;
+
+        G_OBJECT_CLASS (panel_lockdown_parent_class)->dispose (object);
 }
 
-void
-panel_lockdown_init (void)
+static void
+panel_lockdown_init (PanelLockdown *lockdown)
 {
-        GConfClient *client;
-        int          i = 0;
-
-        client = panel_gconf_get_client ();
-
-        gconf_client_add_dir (client,
-                              DESKTOP_GNOME_LOCKDOWN_DIR,
-                              GCONF_CLIENT_PRELOAD_ONELEVEL,
-                              NULL);
-
-        gconf_client_add_dir (client,
-                              PANEL_GLOBAL_LOCKDOWN_DIR,
-                              GCONF_CLIENT_PRELOAD_ONELEVEL,
-                              NULL);
-
-        panel_lockdown.locked_down =
-                panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          PANEL_GLOBAL_LOCKED_DOWN_KEY,
-                                          (GConfClientNotifyFunc) locked_down_notify,
-                                          i++);
-
-        panel_lockdown.disable_command_line =
-                panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_COMMAND_LINE_KEY,
-                                          (GConfClientNotifyFunc) disable_command_line_notify,
-                                          i++);
-        
-        panel_lockdown.disable_lock_screen =
-                panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_LOCK_SCREEN_KEY,
-                                          (GConfClientNotifyFunc) disable_lock_screen_notify,
-                                          i++);
-
-        panel_lockdown.disable_log_out =
-                panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_LOG_OUT_KEY,
-                                          (GConfClientNotifyFunc) disable_log_out_notify,
-                                          i++);
-
-        panel_lockdown.disable_force_quit =
-                panel_lockdown_load_bool (&panel_lockdown,
-                                          client,
-                                          DISABLE_FORCE_QUIT_KEY,
-                                          (GConfClientNotifyFunc) disable_force_quit_notify,
-                                          i++);
-
-        panel_lockdown.disabled_applets =
-                panel_lockdown_load_disabled_applets (&panel_lockdown,
-                                                      client,
-                                                      i++);
-
-        g_assert (i == N_LISTENERS);
-
-        panel_lockdown.initialized = TRUE;
+        lockdown->priv = G_TYPE_INSTANCE_GET_PRIVATE (lockdown,
+                                                      PANEL_TYPE_LOCKDOWN,
+                                                      PanelLockdownPrivate);
 }
 
-void
-panel_lockdown_finalize (void)
+static void
+panel_lockdown_class_init (PanelLockdownClass *lockdown_class)
 {
-        GConfClient *client;
-        GSList      *l;
-        int          i;
+        GObjectClass *gobject_class;
 
-        g_assert (panel_lockdown.initialized != FALSE);
+        gobject_class = G_OBJECT_CLASS (lockdown_class);
 
-        client = panel_gconf_get_client ();
+        gobject_class->constructor  = panel_lockdown_constructor;
+        gobject_class->set_property = panel_lockdown_set_property;
+        gobject_class->get_property = panel_lockdown_get_property;
+        gobject_class->dispose      = panel_lockdown_dispose;
 
-        for (l = panel_lockdown.disabled_applets; l; l = l->next)
-                g_free (l->data);
-        g_slist_free (panel_lockdown.disabled_applets);
-        panel_lockdown.disabled_applets = NULL;
+        g_object_class_install_property (
+                gobject_class,
+                PROP_DISABLE_COMMAND_LINE,
+                g_param_spec_boolean (
+                        "disable-command-line",
+                        "Disable command line",
+                        "Whether command line is disabled or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-        for (i = 0; i < N_LISTENERS; i++) {
-                if (panel_lockdown.listeners [i])
-                        gconf_client_notify_remove (client,
-                                                    panel_lockdown.listeners [i]);
-                panel_lockdown.listeners [i] = 0;
-        }
+        g_object_class_install_property (
+                gobject_class,
+                PROP_DISABLE_LOCK_SCREEN,
+                g_param_spec_boolean (
+                        "disable-lock-screen",
+                        "Disable lock screen",
+                        "Whether lock screen is disabled or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-        gconf_client_remove_dir (client,
-                                 PANEL_GLOBAL_LOCKDOWN_DIR,
-                                 NULL);
+        g_object_class_install_property (
+                gobject_class,
+                PROP_DISABLE_LOG_OUT,
+                g_param_spec_boolean (
+                        "disable-log-out",
+                        "Disable log out",
+                        "Whether log out is disabled or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-        gconf_client_remove_dir (client,
-                                 DESKTOP_GNOME_LOCKDOWN_DIR,
-                                 NULL);
+        g_object_class_install_property (
+                gobject_class,
+                PROP_PANELS_LOCKED_DOWN,
+                g_param_spec_boolean (
+                        "panels-locked-down",
+                        "Full locked down of panels",
+                        "Whether panels are fully locked down or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-        for (l = panel_lockdown.closures; l; l = l->next)
-                g_closure_unref (l->data);
-        g_slist_free (panel_lockdown.closures);
-        panel_lockdown.closures = NULL;
+        g_object_class_install_property (
+                gobject_class,
+                PROP_DISABLE_FORCE_QUIT,
+                g_param_spec_boolean (
+                        "disable-force-quit",
+                        "Disable force quit",
+                        "Whether force quit is disabled or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-        panel_lockdown.initialized = FALSE;
+        g_type_class_add_private (lockdown_class,
+                                  sizeof (PanelLockdownPrivate));
 }
 
 gboolean
-panel_lockdown_get_locked_down (void)
+panel_lockdown_is_applet_disabled (PanelLockdown *lockdown,
+                                   const char    *iid)
 {
-        g_assert (panel_lockdown.initialized != FALSE);
+        int i;
 
-        return panel_lockdown.locked_down;
-}
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
-gboolean
-panel_lockdown_get_not_locked_down (void)
-{
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        return !panel_lockdown.locked_down;
-}
-
-gboolean
-panel_lockdown_get_disable_command_line (void)
-{
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        return panel_lockdown.disable_command_line;
-}
-
-gboolean
-panel_lockdown_get_disable_lock_screen (void)
-{
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        return panel_lockdown.disable_lock_screen;
-}
-
-gboolean
-panel_lockdown_get_disable_log_out (void)
-{
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        return panel_lockdown.disable_log_out;
-}
-
-gboolean
-panel_lockdown_get_disable_force_quit (void)
-{
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        return panel_lockdown.disable_force_quit;
-}
-
-gboolean
-panel_lockdown_is_applet_disabled (const char *iid)
-{
-        GSList *l;
-
-        g_assert (panel_lockdown.initialized != FALSE);
-
-        for (l = panel_lockdown.disabled_applets; l; l = l->next)
-                if (!strcmp (l->data, iid))
+        for (i = 0; lockdown->priv->disabled_applets[i] != NULL; i++)
+                if (g_strcmp0 (lockdown->priv->disabled_applets[i], iid) == 0)
                         return TRUE;
 
         return FALSE;
 }
 
-static GClosure *
-panel_lockdown_notify_find (GSList    *closures,
-                            GCallback  callback_func,
-                            gpointer   user_data)
+gboolean
+panel_lockdown_get_disable_command_line (PanelLockdown *lockdown)
 {
-        GSList *l;
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
-        for (l = closures; l; l = l->next) {
-                GCClosure *cclosure = l->data;
-                GClosure  *closure  = l->data;
+        return lockdown->priv->disable_command_line;
+}
 
-                if (closure->data == user_data &&
-                    cclosure->callback == callback_func)
-                        return closure;
-        }
+gboolean
+panel_lockdown_get_disable_lock_screen (PanelLockdown *lockdown)
+{
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
-        return NULL;
+        return lockdown->priv->disable_lock_screen;
+}
+
+gboolean
+panel_lockdown_get_disable_log_out (PanelLockdown *lockdown)
+{
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
+
+        return lockdown->priv->disable_log_out;
+}
+
+gboolean
+panel_lockdown_get_panels_locked_down (PanelLockdown *lockdown)
+{
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
+
+        return lockdown->priv->panels_locked_down;
+}
+
+gboolean
+panel_lockdown_get_disable_force_quit (PanelLockdown *lockdown)
+{
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
+
+        return lockdown->priv->disable_force_quit;
+}
+
+typedef struct {
+        PanelLockdown       *lockdown;
+        PanelLockdownNotify  callback;
+        gpointer             callback_data;
+        guint                handler_id;
+} PanelLockdownNotifyData;
+
+static void
+_panel_lockdown_notify_data_destroy (gpointer data)
+{
+        PanelLockdownNotifyData *notify_data = data;
+
+        g_signal_handler_disconnect (notify_data->lockdown,
+                                     notify_data->handler_id);
+
+        g_slice_free (PanelLockdownNotifyData, notify_data);
 }
 
 static void
-marshal_user_data (GClosure     *closure,
-                   GValue       *return_value,
-                   guint         n_param_values,
-                   const GValue *param_values,
-                   gpointer      invocation_hint,
-                   gpointer      marshal_data)
+panel_lockdown_on_notify_notified (GObject    *gobject,
+                                   GParamSpec *pspec,
+                                   gpointer    user_data)
 {
-        GCClosure *cclosure = (GCClosure*) closure;
+        PanelLockdownNotifyData *notify_data = user_data;
 
-        g_return_if_fail (cclosure->callback != NULL);
-        g_return_if_fail (n_param_values == 0);
+        g_assert (notify_data->callback != NULL);
+        g_assert ((gpointer) notify_data->lockdown == (gpointer) gobject);
 
-        ((void (*) (gpointer *))cclosure->callback) (closure->data);
+        notify_data->callback (notify_data->lockdown,
+                               notify_data->callback_data);
 }
 
+/* An object can only call this once per property.
+ * User NULL property to notify for all lockdown changes. (except disabled_applets) */
 void
-panel_lockdown_notify_add (GCallback callback_func,
-                           gpointer  user_data)
+panel_lockdown_on_notify (PanelLockdown       *lockdown,
+                          const char          *property,
+                          GObject             *object_while_alive,
+                          PanelLockdownNotify  callback,
+                          gpointer             callback_data)
 {
-        GClosure *closure;
+        PanelLockdownNotifyData *notify_data;
+        char *key;
+        char *signal_name;
 
-        g_assert (panel_lockdown_notify_find (panel_lockdown.closures,
-                                              callback_func,
-                                              user_data) == NULL);
+        g_return_if_fail (PANEL_IS_LOCKDOWN (lockdown));
+        g_return_if_fail (G_IS_OBJECT (object_while_alive));
+        g_return_if_fail (callback != NULL);
 
-        closure = g_cclosure_new (callback_func, user_data, NULL);
-        g_closure_set_marshal (closure, marshal_user_data);
+        notify_data = g_slice_new0 (PanelLockdownNotifyData);
 
-        panel_lockdown.closures = g_slist_append (panel_lockdown.closures,
-                                                  closure);
+        notify_data->lockdown      = lockdown;
+        notify_data->callback      = callback;
+        notify_data->callback_data = callback_data;
+        notify_data->handler_id    = 0;
+
+        if (property)
+                key = g_strdup_printf ("panel-lockdown-%s", property);
+        else
+                key = g_strdup_printf ("panel-lockdown");
+        g_object_set_data_full (object_while_alive, key,
+                                notify_data,
+                                _panel_lockdown_notify_data_destroy);
+        g_free (key);
+
+        if (property)
+                signal_name = g_strdup_printf ("notify::%s", property);
+        else
+                signal_name = g_strdup_printf ("notify");
+        notify_data->handler_id = g_signal_connect (lockdown, signal_name,
+                                                    G_CALLBACK (panel_lockdown_on_notify_notified),
+                                                    notify_data);
+        g_free (signal_name);
 }
 
-void
-panel_lockdown_notify_remove (GCallback callback_func,
-                              gpointer  user_data)
+PanelLockdown *
+panel_lockdown_get (void)
 {
-        GClosure *closure;
+        if (shared_lockdown == NULL) {
+                shared_lockdown = g_object_new (PANEL_TYPE_LOCKDOWN, NULL);
+                panel_cleanup_register (panel_cleanup_unref_and_nullify,
+                                        &shared_lockdown);
+        }
 
-        closure = panel_lockdown_notify_find (panel_lockdown.closures,
-                                              callback_func,
-                                              user_data);
+        return shared_lockdown;
+}
 
-        g_assert (closure != NULL);
+gboolean
+panel_lockdown_get_disable_command_line_s (void)
+{
+        return panel_lockdown_get_disable_command_line (panel_lockdown_get ());
+}
 
-        panel_lockdown.closures = g_slist_remove (panel_lockdown.closures,
-                                                  closure);
+gboolean
+panel_lockdown_get_disable_lock_screen_s (void)
+{
+        return panel_lockdown_get_disable_lock_screen (panel_lockdown_get ());
+}
 
-        g_closure_unref (closure);
+gboolean
+panel_lockdown_get_disable_log_out_s (void)
+{
+        return panel_lockdown_get_disable_log_out (panel_lockdown_get ());
+}
+
+gboolean
+panel_lockdown_get_panels_locked_down_s (void)
+{
+        return panel_lockdown_get_panels_locked_down (panel_lockdown_get ());
+}
+
+gboolean
+panel_lockdown_get_not_panels_locked_down_s (void)
+{
+        return !panel_lockdown_get_panels_locked_down (panel_lockdown_get ());
+}
+
+gboolean
+panel_lockdown_get_disable_force_quit_s (void)
+{
+        return panel_lockdown_get_disable_force_quit (panel_lockdown_get ());
 }

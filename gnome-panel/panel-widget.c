@@ -1828,7 +1828,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	applet = ad->applet;
 	g_assert(GTK_IS_WIDGET(applet));
 
-	if(!panel_widget_is_cursor(panel,10)) {
+	if(!panel_widget_is_cursor(panel,10) &&
+	   !panel_lockdown_get_panels_locked_down_s ()) {
 		GSList *list;
 
 		for(list=panels;
@@ -1840,8 +1841,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			if (panel != new_panel &&
 			    panel_widget_is_cursor (new_panel,10) &&
 			    panel_screen_from_panel_widget (panel) ==
-			    panel_screen_from_panel_widget (new_panel) &&
-			    !panel_lockdown_get_locked_down ()) {
+			    panel_screen_from_panel_widget (new_panel)) {
 				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
 
 				if (pos < 0) pos = 0;
@@ -1980,7 +1980,8 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 	/* Begin drag if the middle mouse button and modifier are pressed,
 	 * unless the panel is locked down or a grab is active (meaning a menu
 	 * is open) */
-	if (panel_lockdown_get_locked_down () || event->button != 2 ||
+	if (panel_lockdown_get_panels_locked_down_s () ||
+	    event->button != 2 ||
 	    modifiers != panel_bindings_get_mouse_button_modifier_keymask () ||
 	    gtk_grab_get_current() != NULL)
 		return FALSE;
@@ -2511,6 +2512,9 @@ panel_widget_tab_move (PanelWidget *panel,
 	AppletData  *ad;
 	GSList      *l;
 
+	if (panel_lockdown_get_panels_locked_down_s ())
+		return;
+
 	ad = panel->currently_dragged_applet;
 
 	if (!ad)
@@ -2545,8 +2549,7 @@ panel_widget_tab_move (PanelWidget *panel,
 		new_panel = previous_panel;
 	
 	if (new_panel &&
-	    (new_panel != panel) &&
-	    !panel_lockdown_get_locked_down ())
+	    (new_panel != panel))
 		panel_widget_reparent (panel, new_panel, ad->applet, 0);
 }
 

@@ -834,7 +834,7 @@ setup_uri_drag (GtkWidget  *menuitem,
 		{ "text/uri-list", 0, 0 }
 	};
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return;
 
 	gtk_drag_source_set (menuitem,
@@ -864,7 +864,7 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return;
 
 	gtk_drag_source_set (menuitem,
@@ -1115,7 +1115,7 @@ create_menuitem (GtkWidget          *menu,
 	g_signal_connect_after (menuitem, "button_press_event",
 				G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	if (!panel_lockdown_get_locked_down ()) {
+	if (!panel_lockdown_get_panels_locked_down_s ()) {
 		static GtkTargetEntry menu_item_targets[] = {
 			{ "text/uri-list", 0, 0 }
 		};

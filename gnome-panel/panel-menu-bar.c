@@ -407,7 +407,7 @@ panel_menu_bar_load (PanelWidget *panel,
 					   "edit",
 					   NULL,
 					   _("_Edit Menus"),
-					   panel_lockdown_get_not_locked_down);
+					   panel_lockdown_get_not_panels_locked_down_s);
 	}
 
 	panel_applet_add_callback (menubar->priv->info,

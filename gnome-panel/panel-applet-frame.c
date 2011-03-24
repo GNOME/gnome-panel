@@ -416,9 +416,6 @@ panel_applet_frame_finalize (GObject *object)
 
 	panel_applets_manager_factory_deactivate (frame->priv->iid);
 
-	panel_lockdown_notify_remove (G_CALLBACK (panel_applet_frame_sync_menu_state),
-				      frame);
-
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 
@@ -460,19 +457,21 @@ panel_applet_frame_init_properties (PanelAppletFrame *frame)
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->init_properties (frame);
 }
 
-void
-panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
+static void
+panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
+				    gpointer       user_data)
 {
-	PanelWidget *panel_widget;
-	gboolean     locked_down;
-	gboolean     movable;
-	gboolean     removable;
+	PanelAppletFrame *frame = PANEL_APPLET_FRAME (user_data);
+	PanelWidget      *panel_widget;
+	gboolean          locked_down;
+	gboolean          movable;
+	gboolean          removable;
 
 	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
 
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_id_lists_are_writable ();
-	locked_down = panel_lockdown_get_locked_down ();
+	locked_down = panel_lockdown_get_panels_locked_down_s ();
 
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->sync_menu_state (frame, movable, removable, locked_down);
 }
@@ -573,11 +572,15 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	panel_widget_set_applet_size_constrained (frame->priv->panel,
 						  GTK_WIDGET (frame), TRUE);
 
-	panel_applet_frame_sync_menu_state (frame);
-	panel_applet_frame_init_properties (frame);
 
-	panel_lockdown_notify_add (G_CALLBACK (panel_applet_frame_sync_menu_state),
-				   frame);
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  NULL,
+				  G_OBJECT (frame),
+				  panel_applet_frame_sync_menu_state,
+				  frame);
+	panel_applet_frame_sync_menu_state (panel_lockdown_get (), frame);
+
+	panel_applet_frame_init_properties (frame);
 
 	panel_applet_stop_loading (frame_act->id);
 	panel_applet_frame_activating_free (frame_act);
@@ -836,7 +839,7 @@ panel_applet_frame_activating_get_size (PanelAppletFrameActivating *frame_act)
 gboolean
 panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act)
 {
-	return panel_lockdown_get_locked_down ();
+	return panel_lockdown_get_panels_locked_down_s ();
 }
 
 gchar *
@@ -853,7 +856,7 @@ panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 	gtk_widget_destroy (dialog);
 
 	if (response == LOADING_FAILED_RESPONSE_DELETE &&
-	    !panel_lockdown_get_locked_down () &&
+	    !panel_lockdown_get_panels_locked_down_s () &&
 	    panel_profile_id_lists_are_writable ()) {
 		GSList *item;
 
@@ -883,7 +886,7 @@ panel_applet_frame_loading_failed (const char  *iid,
 	no_reload_applets = g_slist_prepend (no_reload_applets,
 					     g_strdup (id));
 
-	locked_down = panel_lockdown_get_locked_down ();
+	locked_down = panel_lockdown_get_panels_locked_down_s ();
 
 	problem_txt = g_strdup_printf (_("The panel encountered a problem "
 					 "while loading \"%s\"."),
@@ -950,7 +953,7 @@ panel_applet_frame_load (const gchar *iid,
 		return;
 	}
 
-	if (panel_lockdown_is_applet_disabled (iid)) {
+	if (panel_lockdown_is_applet_disabled (panel_lockdown_get (), iid)) {
 		panel_applet_stop_loading (id);
 		return;
 	}

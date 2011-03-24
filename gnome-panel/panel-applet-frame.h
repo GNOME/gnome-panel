@@ -87,8 +87,6 @@ void  panel_applet_frame_load_from_gconf    (PanelWidget         *panel_widget,
 					     int                  position,
 					     const char          *id);
 
-void  panel_applet_frame_sync_menu_state    (PanelAppletFrame    *frame);
-
 void  panel_applet_frame_change_orientation (PanelAppletFrame    *frame,
 					     PanelOrientation     orientation);
 

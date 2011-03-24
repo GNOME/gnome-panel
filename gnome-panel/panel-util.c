@@ -381,7 +381,7 @@ panel_lock_screen_action_available (const char *action)
 	g_return_val_if_fail (action != NULL, FALSE);
 
 	if (strcmp (action, "prefs") != 0 &&
-	    panel_lockdown_get_disable_lock_screen ())
+	    panel_lockdown_get_disable_lock_screen_s ())
 		return FALSE;
 
 	command = panel_lock_screen_action_get_command (action);
@@ -407,7 +407,7 @@ panel_lock_screen_action (GdkScreen  *screen,
 	g_return_if_fail (action != NULL);
 
 	if (strcmp (action, "prefs") != 0 &&
-	    panel_lockdown_get_disable_lock_screen ())
+	    panel_lockdown_get_disable_lock_screen_s ())
 		return;
 
 	command = panel_lock_screen_action_get_command (action);
@@ -445,13 +445,6 @@ panel_lock_screen_action (GdkScreen  *screen,
 	g_free (command);
 	g_object_unref (app_info);
 }
-
-void
-panel_lock_screen (GdkScreen *screen)
-{
-	panel_lock_screen_action (screen, "lock");
-}
-
 
 #define PANEL_LAUNCHER_PERSONAL_PATH "panel2.d/default/launchers"
 

@@ -92,8 +92,6 @@ int         panel_applet_get_position    (AppletInfo *applet);
    (position, toplevel_id, panel_right_stick) */
 gboolean    panel_applet_can_freely_move (AppletInfo *applet);
 
-GtkWidget  *panel_applet_get_edit_menu (AppletInfo *info);
-
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,
 					   gpointer     data);

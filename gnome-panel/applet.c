@@ -147,31 +147,6 @@ panel_applet_recreate_menu (AppletInfo *info)
 }
 
 static void
-panel_applet_recreate_edit_menu (AppletInfo *info)
-{
-	if (info->edit_menu) {
-		if (gtk_widget_get_visible (info->edit_menu))
-			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->edit_menu));
-
-		g_signal_handlers_disconnect_by_func (info->edit_menu,
-						      G_CALLBACK (applet_menu_show), info);
-		g_signal_handlers_disconnect_by_func (info->edit_menu,
-						      G_CALLBACK (applet_menu_deactivate), info);
-		g_object_unref (info->edit_menu);
-		info->edit_menu = NULL;
-	}
-
-	panel_applet_get_edit_menu (info);
-}
-
-static void
-panel_applet_recreate_menus (AppletInfo *info)
-{
-	panel_applet_recreate_menu (info);
-	panel_applet_recreate_edit_menu (info);
-}
-
-static void
 applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
@@ -430,6 +405,15 @@ panel_applet_create_bare_menu (AppletInfo *info)
 	return menu;
 }
 
+static void
+panel_applet_menu_lockdown_changed (PanelLockdown *lockdown,
+				    gpointer       user_data)
+{
+	AppletInfo *info = user_data;
+
+	panel_applet_recreate_menu (info);
+}
+
 static GtkWidget *
 panel_applet_get_menu (AppletInfo *info)
 {
@@ -466,10 +450,36 @@ panel_applet_get_menu (AppletInfo *info)
 
 	info->menu = menu;
 
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  NULL,
+				  G_OBJECT (info->menu),
+				  panel_applet_menu_lockdown_changed,
+				  info);
+
 	return info->menu;
 }
 
-GtkWidget *
+static void
+panel_applet_edit_menu_lockdown_changed (PanelLockdown *lockdown,
+					 gpointer       user_data)
+{
+	AppletInfo *info = user_data;
+
+	if (!panel_lockdown_get_panels_locked_down (lockdown))
+		return;
+
+	if (info->edit_menu) {
+		if (gtk_widget_get_visible (info->edit_menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->edit_menu));
+
+                g_signal_handlers_disconnect_by_func (info->edit_menu,
+						      G_CALLBACK (applet_menu_deactivate), info);
+		gtk_widget_destroy (info->edit_menu);
+		info->edit_menu = NULL;
+	}
+}
+
+static GtkWidget *
 panel_applet_get_edit_menu (AppletInfo *info)
 {
 	GtkWidget   *menu;
@@ -482,7 +492,7 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	if (info->edit_menu)
 		return info->edit_menu;
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return NULL;
 
 	menu = panel_applet_create_bare_menu (info);
@@ -510,6 +520,12 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	gtk_widget_set_sensitive (menuitem, removable);
 
 	info->edit_menu = menu;
+
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  "panels-locked-down",
+				  G_OBJECT (info->edit_menu),
+				  panel_applet_edit_menu_lockdown_changed,
+				  info);
 
 	return info->edit_menu;
 }
@@ -725,11 +741,10 @@ panel_applet_destroy (GtkWidget  *widget,
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
 
-	if (info->type != PANEL_OBJECT_APPLET)
-		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menus),
-					      info);
-
 	if (info->menu) {
+		if (gtk_widget_get_visible (info->menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->menu));
+
                 g_signal_handlers_disconnect_by_func (info->menu,
 						      G_CALLBACK (applet_menu_show), info);
                 g_signal_handlers_disconnect_by_func (info->menu,
@@ -739,6 +754,9 @@ panel_applet_destroy (GtkWidget  *widget,
 	info->menu = NULL;
 
 	if (info->edit_menu) {
+		if (gtk_widget_get_visible (info->edit_menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (info->edit_menu));
+
                 g_signal_handlers_disconnect_by_func (info->edit_menu,
 						      G_CALLBACK (applet_menu_show), info);
                 g_signal_handlers_disconnect_by_func (info->edit_menu,
@@ -1244,10 +1262,6 @@ panel_applet_register (GtkWidget       *applet,
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
-	if (type != PANEL_OBJECT_APPLET)
-		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menus),
-					   info);
-
 	registered_applets = g_slist_append (registered_applets, info);
 
 	if (panel_widget_add (panel, applet, pos, exactpos) == -1 &&
@@ -1319,7 +1333,9 @@ panel_applet_can_freely_move (AppletInfo *applet)
 	PanelGConfKeyType  key_type;
 	const char        *key;
 
-	if (panel_lockdown_get_locked_down ())
+	/* if we check for more lockdown than this, then we'll need to update
+	 * callers that use panel_lockdown_on_notify() */
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return FALSE;
 
 	client  = panel_gconf_get_client ();

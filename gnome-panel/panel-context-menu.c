@@ -106,7 +106,7 @@ panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 
 	sensitive =
 		!panel_toplevel_is_last (panel_widget->toplevel) &&
-		!panel_lockdown_get_locked_down () &&
+		!panel_lockdown_get_panels_locked_down_s () &&
 		panel_profile_id_lists_are_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
@@ -172,10 +172,11 @@ panel_context_menu_create (PanelWidget *panel)
 {
 	GtkWidget *retval;
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return NULL;
 
 	retval = create_empty_menu ();
+
 	gtk_widget_set_name (retval, "gnome-panel-context-menu");
 
 	panel_context_menu_build_edition (panel, retval);

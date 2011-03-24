@@ -221,27 +221,9 @@ context_menu_show (GtkWidget *w,
 }
 
 static void
-panel_recreate_context_menu (PanelData *pd)
-{
-	if (pd->menu) {
-		if (gtk_widget_get_visible (pd->menu))
-			gtk_menu_shell_deactivate (GTK_MENU_SHELL (pd->menu));
-
-		g_signal_handlers_disconnect_by_func (pd->menu,
-						      context_menu_deactivate,
-						      pd);
-		g_object_unref (pd->menu);
-	}
-	pd->menu = NULL;
-}
-
-static void
 panel_destroy (PanelToplevel *toplevel,
 	       PanelData     *pd)
 {
-	panel_lockdown_notify_remove (G_CALLBACK (panel_recreate_context_menu),
-				      pd);
-
 	if (pd->menu) {
 		g_signal_handlers_disconnect_by_func (pd->menu,
 						      context_menu_deactivate,
@@ -274,6 +256,25 @@ panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 	panel_applet_save_position (info, info->id, FALSE);
 }
 
+static void
+panel_menu_lockdown_changed (PanelLockdown *lockdown,
+			     gpointer       user_data)
+{
+	PanelData *pd = user_data;
+
+	if (pd->menu) {
+		if (gtk_widget_get_visible (pd->menu))
+			gtk_menu_shell_deactivate (GTK_MENU_SHELL (pd->menu));
+
+		g_signal_handlers_disconnect_by_func (pd->menu,
+						      context_menu_deactivate,
+						      pd);
+
+		g_object_unref (pd->menu);
+		pd->menu = NULL;
+	}
+}
+
 static GtkWidget *
 panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
@@ -286,6 +287,12 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 					  pd);
 			g_signal_connect (pd->menu, "show",
 					  G_CALLBACK (context_menu_show), pd);
+
+			panel_lockdown_on_notify (panel_lockdown_get (),
+						  NULL,
+						  G_OBJECT (pd->menu),
+						  panel_menu_lockdown_changed,
+						  pd);
 		}
 	}
 
@@ -979,7 +986,7 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 	if (!panel)
 		return FALSE;
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return FALSE;
 
 	if (info == TARGET_ICON_INTERNAL ||
@@ -1074,7 +1081,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 	const guchar *data;
 	gboolean      success = FALSE;
 
-	if (panel_lockdown_get_locked_down ()) {
+	if (panel_lockdown_get_panels_locked_down_s ()) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
 		return;
 	}
@@ -1214,9 +1221,6 @@ panel_setup (PanelToplevel *toplevel)
 	panel_list = g_slist_append (panel_list, pd);
 	
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
-
-	panel_lockdown_notify_add (G_CALLBACK (panel_recreate_context_menu),
-				   pd);
 
 	panel_widget_setup (panel_widget);
 

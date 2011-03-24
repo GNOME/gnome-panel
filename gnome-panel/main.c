@@ -26,7 +26,6 @@
 #include "panel-session.h"
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
-#include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "xstuff.h"
 
@@ -98,7 +97,6 @@ main (int argc, char **argv)
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	panel_lockdown_init ();
 	panel_profile_load ();
 
 	xstuff_init ();
@@ -112,8 +110,6 @@ main (int argc, char **argv)
 	panel_session_init ();
 
 	gtk_main ();
-
-	panel_lockdown_finalize ();
 
 	panel_cleanup_do ();
 

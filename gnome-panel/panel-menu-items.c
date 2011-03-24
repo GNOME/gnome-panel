@@ -97,7 +97,6 @@ struct _PanelDesktopMenuItemPrivate {
 	PanelWidget *panel;
 
 	guint        use_image : 1;
-	guint        append_lock_logout : 1;
 };
 
 static void
@@ -313,11 +312,12 @@ panel_menu_item_uri_new (const char *uri,
 static GtkWidget *
 panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 					  const char            *label,
-					  const char            *tooltip)
+					  const char            *tooltip,
+					  gboolean               create_even_if_disabled)
 {
 	GtkWidget *item;
 
-	if (panel_action_get_is_disabled (action_type))
+	if (!create_even_if_disabled && panel_action_get_is_disabled (action_type))
 		return NULL;
 
 	item = gtk_image_menu_item_new ();
@@ -345,7 +345,7 @@ static GtkWidget *
 panel_menu_items_create_action_item (PanelActionButtonType action_type)
 {
 	return panel_menu_items_create_action_item_full (action_type,
-							 NULL, NULL);
+							 NULL, NULL, FALSE);
 }
 
 static void
@@ -1189,7 +1189,8 @@ panel_place_menu_item_mounts_changed (GVolumeMonitor *monitor,
 }
 
 static GtkWidget *
-panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
+panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
+				     gboolean append_lock_logout)
 {
 	GtkWidget *desktop_menu;
 	GtkWidget *item;
@@ -1206,24 +1207,10 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item)
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
 
-	if (desktop_item->priv->append_lock_logout)
+	if (append_lock_logout)
 		panel_menu_items_append_lock_logout (desktop_menu);
 
 	return desktop_menu;
-}
-
-static void
-panel_desktop_menu_item_recreate_menu (PanelDesktopMenuItem *desktop_item)
-{
-	if (desktop_item->priv->menu) {
-		gtk_widget_destroy (desktop_item->priv->menu);
-		desktop_item->priv->menu = panel_desktop_menu_item_create_menu (desktop_item);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (desktop_item),
-					   desktop_item->priv->menu);
-		panel_applet_menu_set_recurse (GTK_MENU (desktop_item->priv->menu),
-					       "menu_panel",
-					       desktop_item->priv->panel);
-	}
 }
 
 static void
@@ -1294,17 +1281,6 @@ panel_place_menu_item_finalize (GObject *object)
 	menuitem->priv->volume_monitor = NULL;
 
 	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
-}
-
-static void
-panel_desktop_menu_item_finalize (GObject *object)
-{
-	PanelDesktopMenuItem *menuitem = (PanelDesktopMenuItem *) object;
-
-	if (menuitem->priv->append_lock_logout)
-		panel_lockdown_notify_remove (G_CALLBACK (panel_desktop_menu_item_recreate_menu),
-					      menuitem);
-	G_OBJECT_CLASS (panel_desktop_menu_item_parent_class)->finalize (object);
 }
 
 static void
@@ -1421,10 +1397,6 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 static void
 panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 {
-	GObjectClass *gobject_class = (GObjectClass   *) klass;
-
-	gobject_class->finalize  = panel_desktop_menu_item_finalize;
-
 	g_type_class_add_private (klass, sizeof (PanelDesktopMenuItemPrivate));
 }
 
@@ -1478,12 +1450,8 @@ panel_desktop_menu_item_new (gboolean use_image,
 
 	menuitem->priv->use_image = use_image;
 
-	menuitem->priv->append_lock_logout = append_lock_logout;
-	if (append_lock_logout)
-		panel_lockdown_notify_add (G_CALLBACK (panel_desktop_menu_item_recreate_menu),
-					   menuitem);
-
-	menuitem->priv->menu = panel_desktop_menu_item_create_menu (menuitem);
+	menuitem->priv->menu = panel_desktop_menu_item_create_menu (menuitem,
+								    append_lock_logout);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menuitem->priv->menu);
 
@@ -1516,10 +1484,22 @@ panel_desktop_menu_item_set_panel (GtkWidget   *item,
 				       "menu_panel", panel);
 }
 
+static void
+panel_menu_items_lock_logout_separator_notified (PanelLockdown *lockdown,
+						 gpointer       user_data)
+{
+	GtkWidget *separator = user_data;
+
+	if (!panel_lockdown_get_disable_lock_screen (lockdown) ||
+	    !panel_lockdown_get_disable_log_out (lockdown))
+		gtk_widget_show (separator);
+	else
+		gtk_widget_hide (separator);
+}
+
 void
 panel_menu_items_append_lock_logout (GtkWidget *menu)
 {
-	gboolean    separator_inserted;
 	GList      *children;
 	GList      *last;
 	GtkWidget  *item;
@@ -1527,29 +1507,33 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	char       *label;
 	char       *tooltip;
 
-	separator_inserted = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 	last = g_list_last (children);
-	if (last != NULL) {
-		separator_inserted = GTK_IS_SEPARATOR (GTK_WIDGET (last->data));
-	}
+	if (last != NULL &&
+	    GTK_IS_SEPARATOR (last->data))
+		item = GTK_WIDGET (last->data);
+	else
+		item = add_menu_separator (menu);
 	g_list_free (children);
 
-	if (panel_lock_screen_action_available ("lock")) {
-		item = panel_menu_items_create_action_item (PANEL_ACTION_LOCK);
-		if (item != NULL) {
-			if (!separator_inserted) {
-				add_menu_separator (menu);
-				separator_inserted = TRUE;
-			}
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  NULL,
+				  G_OBJECT (item),
+				  panel_menu_items_lock_logout_separator_notified,
+				  item);
+	panel_menu_items_lock_logout_separator_notified (panel_lockdown_get (),
+							 item);
 
-			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		}
+	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOCK,
+							 NULL, NULL, TRUE);
+	if (item != NULL) {
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_object_bind_property (panel_lockdown_get (),
+					"disable-lock-screen",
+					item,
+					"visible",
+					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
-
-	if (panel_lockdown_get_disable_log_out ())
-		return;
-	/* Below this, we only have log out/shutdown items */
 
 	/* Translators: translate "1" (msgctxt: "panel:showusername") to anything
 	 * but "1" if "Log Out %s" doesn't make any sense in your
@@ -1580,25 +1564,28 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	}
 
 	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOGOUT,
-							 label, tooltip);
+							 label, tooltip, TRUE);
 	g_free (label);
 	g_free (tooltip);
 
 	if (item != NULL) {
-		if (!separator_inserted) {
-			add_menu_separator (menu);
-			separator_inserted = TRUE;
-		}
-
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_object_bind_property (panel_lockdown_get (),
+					"disable-log-out",
+					item,
+					"visible",
+					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 
-	item = panel_menu_items_create_action_item (PANEL_ACTION_SHUTDOWN);
+	item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
+							 NULL, NULL, TRUE);
 	if (item != NULL) {
-		if (!separator_inserted)
-			add_menu_separator (menu);
-
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_object_bind_property (panel_lockdown_get (),
+					"disable-log-out",
+					item,
+					"visible",
+					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 }
 

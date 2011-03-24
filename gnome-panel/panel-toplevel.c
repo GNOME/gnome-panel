@@ -424,7 +424,7 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
 		return;
 
-	if (panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_panels_locked_down_s ())
 		return;
 
 	/* If any of the position/orientation are not writable,

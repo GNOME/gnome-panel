@@ -2418,7 +2418,7 @@ panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 	const char *key;
 	GConfClient *client;
 
-	if (panel_lockdown_get_locked_down () ||
+	if (panel_lockdown_get_panels_locked_down_s () ||
 	    !panel_profile_is_writable_toplevel_orientation (toplevel))
 		return FALSE;
 

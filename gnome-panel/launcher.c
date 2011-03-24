@@ -758,8 +758,8 @@ launcher_properties (Launcher  *launcher)
 static gboolean
 lancher_properties_enabled (void)
 {
-	if (panel_lockdown_get_locked_down () ||
-	    panel_lockdown_get_disable_command_line ())
+	if (panel_lockdown_get_panels_locked_down_s () ||
+	    panel_lockdown_get_disable_command_line_s ())
 		return FALSE;
 
 	return TRUE;
@@ -880,7 +880,7 @@ ask_about_launcher (const char  *file,
 	GtkWidget *dialog;
 	GKeyFile  *key_file;
 
-	if (panel_lockdown_get_disable_command_line ())
+	if (panel_lockdown_get_disable_command_line_s ())
 		return;
 
 	dialog = panel_ditem_editor_new (NULL, NULL, NULL,

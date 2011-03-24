@@ -312,7 +312,7 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 			const GtkTargetEntry *target,
 			const char           *text)
 {
-	if (!text || panel_lockdown_get_locked_down ())
+	if (!text || panel_lockdown_get_panels_locked_down_s ())
 		return;
 	
 	gtk_tree_view_enable_model_drag_source (GTK_TREE_VIEW (tree_view),
@@ -387,7 +387,9 @@ panel_addto_query_applets (GSList *list)
 		description = panel_applet_info_get_description (info);
 		icon = panel_applet_info_get_icon (info);
 
-		if (!name || panel_lockdown_is_applet_disabled (iid)) {
+		if (!name ||
+		    panel_lockdown_is_applet_disabled (panel_lockdown_get (),
+						       iid)) {
 			continue;
 		}
 
@@ -464,7 +466,7 @@ panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 		}
 
 		if (special_addto_items [i].type == PANEL_ADDTO_LAUNCHER_NEW
-		    && panel_lockdown_get_disable_command_line ())
+		    && panel_lockdown_get_disable_command_line_s ())
 			continue;
 		
 		panel_addto_append_item (dialog, model, &special_addto_items [i]);

@@ -100,7 +100,6 @@ struct _PanelMenuButtonPrivate {
 };
 
 static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
-static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
 static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
@@ -191,9 +190,6 @@ static void
 panel_menu_button_finalize (GObject *object)
 {
 	PanelMenuButton *button = PANEL_MENU_BUTTON (object);
-
-	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_button_recreate_menu),
-				      button);
 
 	panel_menu_button_disconnect_from_gconf (button);
 
@@ -409,23 +405,6 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 				  button);
 
 	return button->priv->menu;
-}
-
-static void
-panel_menu_button_recreate_menu (PanelMenuButton *button)
-{
-	if (button->priv->menu) {
-		if (gtk_widget_get_visible (button->priv->menu))
-			gtk_menu_shell_deactivate (GTK_MENU_SHELL (button->priv->menu));
-
-		g_signal_handlers_disconnect_by_func (button->priv->menu,
-						      G_CALLBACK (panel_menu_button_menu_deactivated),
-						      button);
-
-		gtk_widget_destroy (button->priv->menu);
-	}
-
-	button->priv->menu = NULL;
 }
 
 void
@@ -680,15 +659,12 @@ panel_menu_button_load (const char  *menu_path,
 	    panel_is_program_in_path ("gmenu-simple-editor"))
 		panel_applet_add_callback (info, "edit", NULL,
 					   _("_Edit Menus"),
-					   panel_lockdown_get_not_locked_down);
+					   panel_lockdown_get_not_panels_locked_down_s);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
 	panel_menu_button_connect_to_gconf (button);
-
-	panel_lockdown_notify_add (G_CALLBACK (panel_menu_button_recreate_menu),
-				   button);
 }
 
 static char *
