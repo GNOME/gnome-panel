@@ -186,7 +186,7 @@ panel_layout_find_free_id (const char *id_list_key,
 
         existing_ids = g_settings_get_strv (layout_settings,
                                             id_list_key);
-        existing_dirs = panel_dconf_list_subdirs (path_prefix);
+        existing_dirs = panel_dconf_list_subdirs (path_prefix, TRUE);
 
         index = 0;
         existing = TRUE;

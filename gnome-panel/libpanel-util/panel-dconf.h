@@ -32,7 +32,8 @@ G_BEGIN_DECLS
 gboolean panel_dconf_recursive_reset (const gchar  *dir,
                                       GError     **error);
 
-gchar **panel_dconf_list_subdirs (const gchar *dir);
+gchar **panel_dconf_list_subdirs (const gchar *dir,
+                                  gboolean     remove_trailing_slash);
 
 G_END_DECLS
 

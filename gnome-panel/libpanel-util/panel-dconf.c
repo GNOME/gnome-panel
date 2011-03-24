@@ -22,6 +22,8 @@
  *	Vincent Untz <vuntz@gnome.org>
  */
 
+#include <string.h>
+
 #include <dconf-client.h>
 #include <dconf-paths.h>
 
@@ -49,7 +51,8 @@ panel_dconf_recursive_reset (const gchar  *dir,
 }
 
 gchar **
-panel_dconf_list_subdirs (const gchar *dir)
+panel_dconf_list_subdirs (const gchar *dir,
+                          gboolean     remove_trailing_slash)
 {
         GArray       *array;
         gchar       **children;
@@ -66,6 +69,10 @@ panel_dconf_list_subdirs (const gchar *dir)
         for (i = 0; children[i] != NULL; i++) {
                 if (dconf_is_rel_dir (children[i], NULL)) {
                         char *val = g_strdup (children[i]);
+
+                        if (remove_trailing_slash)
+                                val[strlen (val) - 1] = '\0';
+
                         array = g_array_append_val (array, val);
                 }
         }
