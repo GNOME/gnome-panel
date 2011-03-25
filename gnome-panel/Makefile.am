@@ -236,48 +236,16 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
-entriesdir       = $(GCONF_SCHEMA_FILE_DIR)
-entries_DATA     = panel-default-setup.entries
-
-schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
-schemas_in_files =				\
-	panel-global.schemas.in 		\
-	panel-general.schemas.in		\
-	panel-toplevel.schemas.in		\
-	panel-object.schemas.in
-schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)" ; then \
-		for p in $(schemas_DATA) ; do \
-			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
-		done ; \
-		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries ; \
-		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries /apps/panel ; \
-	fi
-uninstall-local:
-	for p in $(schema_DATA) ; do \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/ngome-panel/$$p ; \
-	done
-endif
-
 EXTRA_DIST =					\
 	$(ui_DATA)				\
 	nothing.cP				\
 	nothing.h				\
-	$(schemas_in_files)			\
-	panel-compatibility.schemas		\
 	panel-marshal.list			\
-	$(entries_DATA)				\
 	$(desktop_in_files)			\
 	gnome-panel-add.in
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
-	$(schemas_in_files:.schemas.in=.schemas) \
 	$(sys_DATA) \
 	$(desktop_DATA) \
 	gnome-panel-add
