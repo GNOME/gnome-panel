@@ -39,12 +39,13 @@
 #include "applet.h"
 #include "panel-widget.h"
 #include "panel-util.h"
-#include "panel-profile.h"
 #include "panel-globals.h"
 #include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-a11y.h"
+#include "panel-layout.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelMenuButton, panel_menu_button, BUTTON_TYPE_WIDGET)
 
@@ -79,8 +80,7 @@ static MenuPathRootItem root_items [] = {
 
 struct _PanelMenuButtonPrivate {
 	PanelToplevel         *toplevel;
-	guint                  gconf_notify;
-	char                  *applet_id;
+	GSettings             *settings_instance;
 
 	GtkWidget             *menu;
 
@@ -92,7 +92,6 @@ struct _PanelMenuButtonPrivate {
 	guint                  dnd_enabled : 1;
 };
 
-static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
 static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
@@ -166,9 +165,8 @@ panel_menu_button_init (PanelMenuButton *button)
 {
 	button->priv = PANEL_MENU_BUTTON_GET_PRIVATE (button);
 
-	button->priv->applet_id    = NULL;
-	button->priv->toplevel     = NULL;
-	button->priv->gconf_notify = 0;
+	button->priv->toplevel          = NULL;
+	button->priv->settings_instance = NULL;
 
 	button->priv->menu_path   = NULL;
 	button->priv->custom_icon = NULL;
@@ -182,16 +180,15 @@ panel_menu_button_finalize (GObject *object)
 {
 	PanelMenuButton *button = PANEL_MENU_BUTTON (object);
 
-	panel_menu_button_disconnect_from_gconf (button);
-
 	if (button->priv->menu) {
 		/* detaching the menu will kill our reference */
 		gtk_menu_detach (GTK_MENU (button->priv->menu));
 		button->priv->menu = NULL;
 	}
 
-	g_free (button->priv->applet_id);
-	button->priv->applet_id = NULL;
+	if (button->priv->settings_instance)
+		g_object_unref (button->priv->settings_instance);
+	button->priv->settings_instance = NULL;
 
 	g_free (button->priv->menu_path);
 	button->priv->menu_path = NULL;
@@ -509,68 +506,24 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 }
 
 static void
-panel_menu_button_gconf_notify (GConfClient     *client,
-				guint            cnxn_id,
-				GConfEntry      *entry,
-				PanelMenuButton *button)
+panel_menu_button_settings_changed (GSettings       *settings,
+				    char            *key,
+				    PanelMenuButton *button)
 {
-	GConfValue *value;
-	const char *key;
+	char *value = NULL;
 
-	key = panel_gconf_basename (gconf_entry_get_key (entry));
-
-	value = entry->value;
-
-	if (!strcmp (key, "menu_path")) {
-		if (value && value->type == GCONF_VALUE_STRING)
-			panel_menu_button_set_menu_path (button,
-							 gconf_value_get_string (value));
-	} else if (!strcmp (key, "custom_icon")) {
-		if (value && value->type == GCONF_VALUE_STRING)
-			panel_menu_button_set_custom_icon (button,
-							   gconf_value_get_string (value));
-	} else if (!strcmp (key, "tooltip")) {
-		if (value && value->type == GCONF_VALUE_STRING)
-			panel_menu_button_set_tooltip (button,
-						       gconf_value_get_string (value));
+	if (g_strcmp0 (key, PANEL_MENU_BUTTON_MENU_PATH_KEY) == 0) {
+		value = g_settings_get_string (settings, key);
+		panel_menu_button_set_menu_path (button, value);
+	} else if (g_strcmp0 (key, PANEL_MENU_BUTTON_CUSTOM_ICON_KEY) == 0) {
+		value = g_settings_get_string (settings, key);
+		panel_menu_button_set_custom_icon (button, value);
+	} else if (g_strcmp0 (key, PANEL_MENU_BUTTON_TOOLTIP_KEY) == 0) {
+		value = g_settings_get_string (settings, key);
+		panel_menu_button_set_tooltip (button, value);
 	}
-}
 
-static void
-panel_menu_button_connect_to_gconf (PanelMenuButton *button)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client  = panel_gconf_get_client ();
-
-	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
-				   button->priv->applet_id);
-	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-	button->priv->gconf_notify =
-		gconf_client_notify_add (client, key,
-					 (GConfClientNotifyFunc) panel_menu_button_gconf_notify,
-					 button, NULL, NULL);
-}
-
-static void
-panel_menu_button_disconnect_from_gconf (PanelMenuButton *button)
-{
-	GConfClient *client;
-	const char  *key;
-
-	if (!button->priv->gconf_notify)
-		return;
-
-	client  = panel_gconf_get_client ();
-
-	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
-				   button->priv->applet_id);
-
-	gconf_client_notify_remove (client, button->priv->gconf_notify);
-	button->priv->gconf_notify = 0;
-
-	gconf_client_remove_dir (client, key, NULL);
+	g_free (value);
 }
 
 static void
@@ -603,8 +556,6 @@ panel_menu_button_load_helper (const char  *menu_path,
 		return;
 	}
 
-	button->priv->applet_id = g_strdup (info->id);
-
         if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor"))
 		panel_applet_add_callback (info, "edit", NULL,
@@ -614,7 +565,13 @@ panel_menu_button_load_helper (const char  *menu_path,
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
-	panel_menu_button_connect_to_gconf (button);
+	button->priv->settings_instance = panel_layout_get_instance_settings (
+							settings,
+							PANEL_MENU_BUTTON_SCHEMA);
+
+	g_signal_connect (button->priv->settings_instance, "changed",
+			  G_CALLBACK (panel_menu_button_settings_changed),
+			  button);
 }
 
 static char *
@@ -761,12 +718,9 @@ panel_menu_button_set_tooltip (PanelMenuButton *button,
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	g_free (button->priv->tooltip);
-	button->priv->tooltip = NULL;
+	button->priv->tooltip = g_strdup (tooltip);
 
-	if (tooltip && tooltip [0]) {
-		button->priv->tooltip = g_strdup (tooltip);
-		panel_util_set_tooltip_text (GTK_WIDGET (button), tooltip);
-	}
+	panel_util_set_tooltip_text (GTK_WIDGET (button), tooltip);
 }
 
 void
@@ -774,28 +728,26 @@ panel_menu_button_load (PanelWidget *panel,
 			const char  *id,
 			GSettings   *settings)
 {
-	GConfClient  *client;
+	GSettings    *settings_instance;
 	char         *scheme;
 	MenuPathRoot  root;
-	const char   *key;
 	char         *menu_path;
 	char         *custom_icon;
 	char         *tooltip;
 
-	client  = panel_gconf_get_client ();
+	settings_instance = panel_layout_get_instance_settings (settings,
+								PANEL_MENU_BUTTON_SCHEMA);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
-	menu_path = gconf_client_get_string (client, key, NULL);
+	menu_path = g_settings_get_string (settings_instance,
+					   PANEL_MENU_BUTTON_MENU_PATH_KEY);
+	custom_icon = g_settings_get_string (settings_instance,
+					     PANEL_MENU_BUTTON_CUSTOM_ICON_KEY);
+	tooltip = g_settings_get_string (settings_instance,
+					 PANEL_MENU_BUTTON_TOOLTIP_KEY);
 
 	scheme = g_strndup (menu_path, strcspn (menu_path, ":"));
 	root = panel_menu_scheme_to_path_root (scheme);
 	g_free (scheme);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "custom_icon");
-	custom_icon = gconf_client_get_string (client, key, NULL);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
-	tooltip = gconf_client_get_string (client, key, NULL);
 
 	panel_menu_button_load_helper (menu_path,
 				       custom_icon,
@@ -807,6 +759,8 @@ panel_menu_button_load (PanelWidget *panel,
 	g_free (menu_path);
 	g_free (custom_icon);
 	g_free (tooltip);
+
+	g_object_unref (settings_instance);
 }
 
 gboolean
@@ -816,40 +770,48 @@ panel_menu_button_create (PanelToplevel *toplevel,
 			  const char    *menu_path,
 			  const char    *tooltip)
 {
-	GConfClient *client;
-	const char  *scheme;
-	const char  *key;
-	char        *id;
-
-	client  = panel_gconf_get_client ();
-
-	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
+	char       *id;
+	GSettings  *settings;
+	GSettings  *settings_instance;
+	const char *scheme;
 
 	scheme = panel_menu_filename_to_scheme (filename);
 
 	if (filename && !scheme) {
 		g_warning ("Failed to find menu scheme for %s\n", filename);
-		g_free (id);
 		return FALSE;
 	}
 
+	id = panel_layout_object_create_start (PANEL_OBJECT_MENU, NULL,
+					       panel_toplevel_get_toplevel_id (toplevel),
+					       position, FALSE,
+					       &settings);
+
+	settings_instance = panel_layout_get_instance_settings (settings,
+								PANEL_MENU_BUTTON_SCHEMA);
+
 	if (!PANEL_GLIB_STR_EMPTY (menu_path) && scheme) {
-		char       *menu_uri;
+		char *menu_uri;
 
 		menu_uri = g_strconcat (scheme, ":", menu_path, NULL);
 
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
-		gconf_client_set_string (client, key, menu_uri, NULL);
+		g_settings_set_string (settings_instance,
+				       PANEL_MENU_BUTTON_MENU_PATH_KEY,
+				       menu_uri);
 
 		g_free (menu_uri);
 	}
 
-	if (tooltip && tooltip [0]) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
-		gconf_client_set_string (client, key, tooltip, NULL);
+	if (!PANEL_GLIB_STR_EMPTY (tooltip)) {
+		g_settings_set_string (settings_instance,
+				       PANEL_MENU_BUTTON_TOOLTIP_KEY,
+				       tooltip);
 	}
 
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+	panel_layout_object_create_finish (id);
+
+	g_object_unref (settings_instance);
+	g_object_unref (settings);
 	g_free (id);
 
 	return TRUE;
