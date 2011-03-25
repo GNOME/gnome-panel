@@ -1002,20 +1002,10 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 			   int            position,
 			   const char    *iid)
 {
-	GConfClient *client;
-	const char  *key;
-	char        *id;
-
 	g_return_if_fail (iid != NULL);
 
-	client =  panel_gconf_get_client ();
-
-	id = panel_profile_prepare_object (PANEL_OBJECT_APPLET, toplevel, position, FALSE);
-
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
-	gconf_client_set_string (client, key, iid, NULL);
-
-	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
-
-	g_free (id);
+	panel_layout_object_create (PANEL_OBJECT_APPLET,
+				    iid,
+				    panel_toplevel_get_toplevel_id (toplevel),
+				    position, FALSE);
 }

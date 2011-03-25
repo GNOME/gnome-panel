@@ -41,9 +41,12 @@ void     panel_object_loader_stop_loading  (const char *id);
  * iid <=> object type mapping *
 \*******************************/
 
-gboolean panel_object_iid_to_type (const char       *iid,
-                                   PanelObjectType  *type,
-                                   char            **detail);
+char     *panel_object_type_to_iid (PanelObjectType  type,
+                                    const char      *detail);
+
+gboolean  panel_object_iid_to_type (const char       *iid,
+                                    PanelObjectType  *type,
+                                    char            **detail);
 
 G_END_DECLS
 

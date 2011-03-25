@@ -347,6 +347,8 @@ panel_object_loader_is_queued (const char *id)
  * iid <=> object type mapping *
 \*******************************/
 
+#define PANEL_INTERNAL_FACTORY "PanelInternalFactory"
+
 static struct {
         PanelObjectType  type;
         const char      *id;
@@ -358,6 +360,37 @@ static struct {
         { PANEL_OBJECT_LAUNCHER,  "Launcher"     , FALSE },
         { PANEL_OBJECT_SEPARATOR, "Separator"    , FALSE }
 };
+
+char *
+panel_object_type_to_iid (PanelObjectType  type,
+                          const char      *detail)
+{
+        int i;
+
+        if (type == PANEL_OBJECT_APPLET)
+                return g_strdup (detail);
+
+        for (i = 0; i < G_N_ELEMENTS (panel_object_iid_map); i++) {
+                if (panel_object_iid_map[i].type != type)
+                        continue;
+
+                if (panel_object_iid_map[i].has_detail &&
+                    PANEL_GLIB_STR_EMPTY (detail))
+                        return NULL;
+
+                if (panel_object_iid_map[i].has_detail)
+                        return g_strdup_printf ("%s::%s:%s",
+                                                PANEL_INTERNAL_FACTORY,
+                                                panel_object_iid_map[i].id,
+                                                detail);
+                else
+                        return g_strdup_printf ("%s::%s",
+                                                PANEL_INTERNAL_FACTORY,
+                                                panel_object_iid_map[i].id);
+        }
+
+        return NULL;
+}
 
 gboolean
 panel_object_iid_to_type (const char       *iid,
@@ -377,7 +410,7 @@ panel_object_iid_to_type (const char       *iid,
                 return FALSE;
 
 	factory_id = g_strndup (iid, strlen (iid) - strlen (instance_id));
-        is_applet = (g_strcmp0 (factory_id, "PanelInternalFactory") != 0);
+        is_applet = (g_strcmp0 (factory_id, PANEL_INTERNAL_FACTORY) != 0);
         g_free (factory_id);
 
         if (is_applet) {

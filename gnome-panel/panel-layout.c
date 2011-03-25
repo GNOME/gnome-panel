@@ -594,6 +594,87 @@ panel_layout_toplevel_create (GdkScreen *screen)
         g_free (unique_id);
 }
 
+void
+panel_layout_object_create (PanelObjectType   type,
+                            const char       *type_detail,
+                            const char       *toplevel_id,
+                            int               position,
+                            gboolean          pack_end)
+{
+        char *id;
+
+        id = panel_layout_object_create_start (type, type_detail,
+                                               toplevel_id, position, pack_end,
+                                               NULL);
+
+        if (!id)
+                return;
+
+        panel_layout_object_create_finish (id);
+
+        g_free (id);
+}
+
+char *
+panel_layout_object_create_start (PanelObjectType   type,
+                                  const char       *type_detail,
+                                  const char       *toplevel_id,
+                                  int               position,
+                                  gboolean          pack_end,
+                                  GSettings       **settings)
+{
+        char      *unique_id;
+        char      *path;
+        GSettings *settings_object;
+        char      *iid;
+
+        if (settings)
+                *settings = NULL;
+
+        iid = panel_object_type_to_iid (type, type_detail);
+        if (!iid)
+                return NULL;
+
+        unique_id = panel_layout_find_free_id (PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
+                                               PANEL_OBJECT_SCHEMA,
+                                               PANEL_LAYOUT_OBJECT_PATH,
+                                               NULL, -1);
+
+        path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_OBJECT_PATH, unique_id);
+        settings_object = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+        g_free (path);
+
+        g_settings_set_string (settings_object,
+                               PANEL_OBJECT_IID_KEY,
+                               iid);
+        g_settings_set_string (settings_object,
+                               PANEL_OBJECT_TOPLEVEL_ID_KEY,
+                               toplevel_id);
+        g_settings_set_int (settings_object,
+                            PANEL_OBJECT_POSITION_KEY,
+                            position);
+        g_settings_set_boolean (settings_object,
+                                PANEL_OBJECT_PACK_END_KEY,
+                                pack_end);
+
+        g_free (iid);
+
+        if (settings)
+                *settings = settings_object;
+        else
+                g_object_unref (settings_object);
+
+        return unique_id;
+}
+
+void
+panel_layout_object_create_finish (const char *object_id)
+{
+        panel_gsettings_append_strv (layout_settings,
+                                     PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
+                                     object_id);
+}
+
 
 /*******************\
  * Changing layout *
