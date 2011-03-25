@@ -28,7 +28,6 @@
 #include "panel-separator.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
-#include "panel-profile.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"

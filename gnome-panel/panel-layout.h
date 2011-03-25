@@ -26,6 +26,9 @@
 #define __PANEL_LAYOUT_H__
 
 #include <glib.h>
+#include <gdk/gdk.h>
+
+#include "panel-enums.h"
 
 G_BEGIN_DECLS
 

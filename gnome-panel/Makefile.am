@@ -60,7 +60,6 @@ panel_sources =			\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
 	panel-bindings.c	\
-	panel-profile.c		\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto.c		\
@@ -107,7 +106,6 @@ panel_headers =			\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
 	panel-bindings.h	\
-	panel-profile.h		\
 	panel-enums.h		\
 	panel-enums-gsettings.h	\
 	panel-force-quit.h	\

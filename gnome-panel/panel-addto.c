@@ -45,7 +45,6 @@
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-util.h"
-#include "panel-profile.h"
 #include "panel-addto.h"
 #include "panel-icon-names.h"
 

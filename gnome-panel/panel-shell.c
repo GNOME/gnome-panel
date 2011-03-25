@@ -29,11 +29,12 @@
 
 #include <config.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
 #include <libpanel-util/panel-cleanup.h>
 
-#include "panel-profile.h"
 #include "panel-session.h"
+#include "panel-toplevel.h"
 
 #include "panel-shell.h"
 

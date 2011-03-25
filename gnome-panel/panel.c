@@ -31,7 +31,6 @@
 #include "panel-context-menu.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
-#include "panel-profile.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"

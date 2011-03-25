@@ -37,7 +37,6 @@
 
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-profile.h"
 #include "panel-frame.h"
 #include "panel-xutils.h"
 #include "panel-multiscreen.h"

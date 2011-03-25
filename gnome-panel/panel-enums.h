@@ -51,12 +51,6 @@ typedef enum {
 } PanelState;
 
 typedef enum {
-	PANEL_GCONF_TOPLEVELS,
-	PANEL_GCONF_OBJECTS,
-	PANEL_GCONF_APPLETS
-} PanelGConfKeyType;
-
-typedef enum {
 	PANEL_OBJECT_MENU,
 	PANEL_OBJECT_LAUNCHER,
 	PANEL_OBJECT_APPLET,

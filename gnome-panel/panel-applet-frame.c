@@ -35,7 +35,6 @@
 
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
-#include "panel-profile.h"
 #include "panel.h"
 #include "applet.h"
 #include "panel-marshal.h"

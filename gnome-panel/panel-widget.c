@@ -25,7 +25,6 @@
 #include "panel-typebuiltins.h"
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
-#include "panel-profile.h"
 #include "panel-lockdown.h"
 
 #define MOVE_INCREMENT 1

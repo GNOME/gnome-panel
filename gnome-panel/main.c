@@ -20,7 +20,6 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-profile.h"
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
@@ -97,8 +96,6 @@ main (int argc, char **argv)
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
-
-	panel_profile_load ();
 
 	if (!panel_layout_load ()) {
 		panel_cleanup_do ();

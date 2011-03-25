@@ -28,35 +28,15 @@
 
 #include <gconf/gconf-client.h>
 
-#include "panel-enums.h"
-
-#define PANEL_CONFIG_DIR     "/apps/panel"
-#define PANEL_SCHEMAS_DIR    "/schemas/apps/panel"
-#define PANEL_DEFAULTS_DIR   "/apps/panel/default_setup"
-#define PANEL_OLD_CONFIG_DIR "/apps/panel/profiles/default"
-
 G_BEGIN_DECLS
 
 GConfClient *panel_gconf_get_client          (void);
 
 const char  *panel_gconf_sprintf             (const char        *format, ...) G_GNUC_PRINTF (1, 2);
-const char  *panel_gconf_basename            (const char        *key);
-const char  *panel_gconf_general_key         (const char        *key);
-const char  *panel_gconf_full_key            (PanelGConfKeyType  type,
-					      const char        *id,
-					      const char        *key);
-const char  *panel_gconf_key_type_to_id_list (PanelGConfKeyType  type);
 
-guint		panel_gconf_notify_add             (const char            *key,
-						    GConfClientNotifyFunc  notify_func,
-						    gpointer               user_data);
 guint		panel_gconf_notify_add_while_alive (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    GObject               *alive_object);
-
-void            panel_gconf_associate_schemas_in_dir       (GConfClient *client,
-							    const char  *profile_dir,
-							    const char  *schema_dir);
 
 G_END_DECLS
 

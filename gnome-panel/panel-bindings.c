@@ -30,7 +30,7 @@
 #include <glib/gi18n.h>
 
 #include "panel-gconf.h"
-#include "panel-profile.h"
+#include "panel-toplevel.h"
 #include "panel-xutils.h"
 
 #define BINDINGS_PREFIX    "/apps/metacity/window_keybindings"

@@ -25,8 +25,7 @@
 #ifndef __PANEL_COMPATIBILITY_H__
 #define __PANEL_COMPATIBILITY_H__
 
-#include <glib.h>
-#include <gconf/gconf-client.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 

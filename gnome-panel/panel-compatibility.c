@@ -26,7 +26,6 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "panel-applets-manager.h"
-#include "panel-profile.h"
 #include "panel-schemas.h"
 
 #include "panel-compatibility.h"
