@@ -3,9 +3,9 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-#include "panel-widget.h"
-#include "panel-gconf.h"
+
 #include "panel-enums.h"
+#include "panel-widget.h"
 
 G_BEGIN_DECLS
 

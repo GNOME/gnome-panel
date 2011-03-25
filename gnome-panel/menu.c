@@ -29,12 +29,12 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
-#include <gconf/gconf-client.h>
 
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-xdg.h>
 
 #include "launcher.h"
+#include "panel-gconf.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "panel-stock-icons.h"

@@ -29,7 +29,6 @@
 
 #include <glib/gi18n.h>
 
-#include <gconf/gconf.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 

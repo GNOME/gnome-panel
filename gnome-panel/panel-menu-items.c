@@ -49,6 +49,7 @@
 
 #include "menu.h"
 #include "panel-action-button.h"
+#include "panel-gconf.h"
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
