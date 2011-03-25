@@ -56,8 +56,6 @@ G_DEFINE_TYPE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
-#define LOGOUT_PROMPT_KEY "/apps/gnome-session/options/logout_prompt"
-
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
@@ -166,26 +164,11 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 static void
 panel_action_logout (GtkWidget *widget)
 {
-	PanelSessionManager *manager;
-	gboolean             not_prompt;
-
-	not_prompt = gconf_client_get_bool (panel_gconf_get_client (),
-					    LOGOUT_PROMPT_KEY, NULL);
-	/* this avoids handling errors from gconf since prompting is
-	 * safer */
-	not_prompt = !not_prompt;
-
-	manager = panel_session_manager_get ();
-
-	if (not_prompt)
-		panel_session_manager_request_logout (manager,
-						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION);
-	else
-		/* FIXME: we need to use widget to get the screen for the
-		 * confirmation dialog, see
-		 * http://bugzilla.gnome.org/show_bug.cgi?id=536914 */
-		panel_session_manager_request_logout (manager,
-						      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
+	/* FIXME: we need to use widget to get the screen for the
+	 * confirmation dialog, see
+	 * http://bugzilla.gnome.org/show_bug.cgi?id=536914 */
+	panel_session_manager_request_logout (panel_session_manager_get (),
+					      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
 }
 
 static void
