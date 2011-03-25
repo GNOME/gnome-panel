@@ -78,25 +78,25 @@ typedef struct {
 } PanelLayoutKeyDefinition;
 
 static PanelLayoutKeyDefinition panel_layout_toplevel_keys[] = {
-        { PANEL_TOPLEVEL_NAME,            G_TYPE_STRING   },
-        { PANEL_TOPLEVEL_SCREEN,          G_TYPE_INT      },
-        { PANEL_TOPLEVEL_MONITOR,         G_TYPE_INT      },
-        { PANEL_TOPLEVEL_EXPAND,          G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_ORIENTATION,     G_TYPE_STRING   },
-        { PANEL_TOPLEVEL_SIZE,            G_TYPE_INT      },
-        { PANEL_TOPLEVEL_X,               G_TYPE_INT      },
-        { PANEL_TOPLEVEL_Y,               G_TYPE_INT      },
-        { PANEL_TOPLEVEL_X_RIGHT,         G_TYPE_INT      },
-        { PANEL_TOPLEVEL_Y_BOTTOM,        G_TYPE_INT      },
-        { PANEL_TOPLEVEL_X_CENTERED,      G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_Y_CENTERED,      G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_AUTO_HIDE,       G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_ENABLE_BUTTONS,  G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_ENABLE_ARROWS,   G_TYPE_BOOLEAN  },
-        { PANEL_TOPLEVEL_HIDE_DELAY,      G_TYPE_INT      },
-        { PANEL_TOPLEVEL_UNHIDE_DELAY,    G_TYPE_INT      },
-        { PANEL_TOPLEVEL_AUTO_HIDE_SIZE,  G_TYPE_INT      },
-        { PANEL_TOPLEVEL_ANIMATION_SPEED, G_TYPE_STRING   }
+        { PANEL_TOPLEVEL_NAME_KEY,            G_TYPE_STRING   },
+        { PANEL_TOPLEVEL_SCREEN_KEY,          G_TYPE_INT      },
+        { PANEL_TOPLEVEL_MONITOR_KEY,         G_TYPE_INT      },
+        { PANEL_TOPLEVEL_EXPAND_KEY,          G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_ORIENTATION_KEY,     G_TYPE_STRING   },
+        { PANEL_TOPLEVEL_SIZE_KEY,            G_TYPE_INT      },
+        { PANEL_TOPLEVEL_X_KEY,               G_TYPE_INT      },
+        { PANEL_TOPLEVEL_Y_KEY,               G_TYPE_INT      },
+        { PANEL_TOPLEVEL_X_RIGHT_KEY,         G_TYPE_INT      },
+        { PANEL_TOPLEVEL_Y_BOTTOM_KEY,        G_TYPE_INT      },
+        { PANEL_TOPLEVEL_X_CENTERED_KEY,      G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_Y_CENTERED_KEY,      G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_AUTO_HIDE_KEY,       G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_ENABLE_BUTTONS_KEY,  G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,   G_TYPE_BOOLEAN  },
+        { PANEL_TOPLEVEL_HIDE_DELAY_KEY,      G_TYPE_INT      },
+        { PANEL_TOPLEVEL_UNHIDE_DELAY_KEY,    G_TYPE_INT      },
+        { PANEL_TOPLEVEL_AUTO_HIDE_SIZE_KEY,  G_TYPE_INT      },
+        { PANEL_TOPLEVEL_ANIMATION_SPEED_KEY, G_TYPE_STRING   }
 };
 
 static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
@@ -399,7 +399,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                 if (set_screen_to != -1 &&
                     g_strcmp0 (schema, PANEL_TOPLEVEL_SCHEMA) == 0)
                         g_settings_set_int (settings,
-                                            PANEL_TOPLEVEL_SCREEN,
+                                            PANEL_TOPLEVEL_SCREEN_KEY,
                                             set_screen_to);
 
                 panel_gsettings_append_strv (layout_settings,
@@ -435,7 +435,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
                                         keyfile, group,
                                         screen_for_toplevels,
                                         "Toplevel",
-                                        PANEL_LAYOUT_TOPLEVEL_ID_LIST,
+                                        PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                         PANEL_TOPLEVEL_SCHEMA,
                                         PANEL_LAYOUT_TOPLEVEL_PATH,
                                         PANEL_LAYOUT_TOPLEVEL_DEFAULT_PREFIX,
@@ -448,7 +448,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
                                         keyfile, group,
                                         -1,
                                         "Object",
-                                        PANEL_LAYOUT_OBJECT_ID_LIST,
+                                        PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                         PANEL_OBJECT_SCHEMA,
                                         PANEL_LAYOUT_OBJECT_PATH,
                                         PANEL_LAYOUT_OBJECT_DEFAULT_PREFIX,
@@ -562,7 +562,7 @@ panel_layout_load_toplevel (const char *toplevel_id)
 
         /* Check that the screen is valid */
         settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
-        screen = g_settings_get_int (settings, PANEL_TOPLEVEL_SCREEN);
+        screen = g_settings_get_int (settings, PANEL_TOPLEVEL_SCREEN_KEY);
         g_object_unref (settings);
 
         if (screen < 0 || screen >= panel_multiscreen_screens ()) {
@@ -652,7 +652,7 @@ panel_layout_load (void)
         panel_layout_init ();
 
         toplevels = g_settings_get_strv (layout_settings,
-                                         PANEL_LAYOUT_TOPLEVEL_ID_LIST);
+                                         PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
         if (!toplevels[0]) {
                 char *default_layout_file;
@@ -660,9 +660,9 @@ panel_layout_load (void)
                 g_strfreev (toplevels);
 
                 if (!g_settings_is_writable (layout_settings,
-                                             PANEL_LAYOUT_TOPLEVEL_ID_LIST) ||
+                                             PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) ||
                     !g_settings_is_writable (layout_settings,
-                                             PANEL_LAYOUT_OBJECT_ID_LIST)) {
+                                             PANEL_LAYOUT_OBJECT_ID_LIST_KEY)) {
                         g_printerr (_("Cannot create initial panel layout.\n"));
 
                         return FALSE;
@@ -673,7 +673,7 @@ panel_layout_load (void)
                 g_free (default_layout_file);
 
                 toplevels = g_settings_get_strv (layout_settings,
-                                                 PANEL_LAYOUT_TOPLEVEL_ID_LIST);
+                                                 PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
                 if (!toplevels[0]) {
                         g_strfreev (toplevels);
@@ -689,7 +689,7 @@ panel_layout_load (void)
         g_strfreev (toplevels);
 
         objects = g_settings_get_strv (layout_settings,
-                                       PANEL_LAYOUT_OBJECT_ID_LIST);
+                                       PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
 
         for (i = 0; objects[i] != NULL; i++)
                 panel_layout_load_object (objects[i]);

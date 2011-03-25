@@ -4358,55 +4358,55 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 	/* Delayed settings: the ones related to the position */
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_MONITOR,
+			 PANEL_TOPLEVEL_MONITOR_KEY,
 			 toplevel,
 			 "monitor",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_SIZE,
+			 PANEL_TOPLEVEL_SIZE_KEY,
 			 toplevel,
 			 "size",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_ORIENTATION,
+			 PANEL_TOPLEVEL_ORIENTATION_KEY,
 			 toplevel,
 			 "orientation",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_X,
+			 PANEL_TOPLEVEL_X_KEY,
 			 toplevel,
 			 "x",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_X_RIGHT,
+			 PANEL_TOPLEVEL_X_RIGHT_KEY,
 			 toplevel,
 			 "x-right",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_X_CENTERED,
+			 PANEL_TOPLEVEL_X_CENTERED_KEY,
 			 toplevel,
 			 "x-centered",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_Y,
+			 PANEL_TOPLEVEL_Y_KEY,
 			 toplevel,
 			 "y",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_Y_BOTTOM,
+			 PANEL_TOPLEVEL_Y_BOTTOM_KEY,
 			 toplevel,
 			 "y-bottom",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,
-			 PANEL_TOPLEVEL_Y_CENTERED,
+			 PANEL_TOPLEVEL_Y_CENTERED_KEY,
 			 toplevel,
 			 "y-centered",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
@@ -4414,7 +4414,7 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 	/* Normal settings */
 
 	g_settings_bind_with_mapping (toplevel->priv->settings,
-				      PANEL_TOPLEVEL_SCREEN,
+				      PANEL_TOPLEVEL_SCREEN_KEY,
 				      toplevel,
 				      "screen",
 				      G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY,
@@ -4423,63 +4423,57 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 				      toplevel, NULL);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_NAME,
+			 PANEL_TOPLEVEL_NAME_KEY,
 			 toplevel,
 			 "name",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_EXPAND,
+			 PANEL_TOPLEVEL_EXPAND_KEY,
 			 toplevel,
 			 "expand",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_AUTO_HIDE,
+			 PANEL_TOPLEVEL_AUTO_HIDE_KEY,
 			 toplevel,
 			 "auto-hide",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_HIDE_DELAY,
+			 PANEL_TOPLEVEL_HIDE_DELAY_KEY,
 			 toplevel,
 			 "hide-delay",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_UNHIDE_DELAY,
+			 PANEL_TOPLEVEL_UNHIDE_DELAY_KEY,
 			 toplevel,
 			 "unhide-delay",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_AUTO_HIDE_SIZE,
+			 PANEL_TOPLEVEL_AUTO_HIDE_SIZE_KEY,
 			 toplevel,
 			 "auto-hide-size",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_ANIMATION_SPEED,
+			 PANEL_TOPLEVEL_ANIMATION_SPEED_KEY,
 			 toplevel,
 			 "animation-speed",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_ENABLE_BUTTONS,
+			 PANEL_TOPLEVEL_ENABLE_BUTTONS_KEY,
 			 toplevel,
 			 "buttons-enabled",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_ENABLE_ARROWS,
+			 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
 			 toplevel,
 			 "arrows-enabled",
-			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
-
-	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_NAME,
-			 toplevel,
-			 "name",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 }
 
