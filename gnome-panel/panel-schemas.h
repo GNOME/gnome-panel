@@ -64,7 +64,7 @@
 #define PANEL_OBJECT_IID_KEY            "object-iid"
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY    "toplevel-id"
 #define PANEL_OBJECT_POSITION_KEY       "position"
-#define PANEL_OBJECT_PACK_END_KEY       "pack-end"
+#define PANEL_OBJECT_PACK_KEY           "pack"
 
 #define PANEL_LAUNCHER_SCHEMA      "org.gnome.gnome-panel.launcher"
 #define PANEL_LOCATION_KEY         "location"

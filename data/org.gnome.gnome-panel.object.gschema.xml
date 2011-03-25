@@ -15,10 +15,10 @@
       <summary>Object's position on the panel</summary>
       <description>The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge.</description>
     </key>
-    <key name="pack-end" type="b">
-      <default>false</default>
+    <key name="pack" enum="org.gnome.gnome-panel.PanelObjectPack">
+      <default>'start'</default>
       <summary>Interpret position relative to bottom/right edge</summary>
-      <description>If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.</description>
+      <description>If set to 'end', the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel.</description>
     </key>
   </schema>
 </schemalist>

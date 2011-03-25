@@ -865,9 +865,9 @@ panel_applet_save_position (AppletInfo *applet_info,
 	g_settings_set_string (applet_info->settings,
 			       PANEL_OBJECT_TOPLEVEL_ID_KEY,
 			       toplevel_id);
-	g_settings_set_boolean (applet_info->settings,
-				PANEL_OBJECT_PACK_END_KEY,
-				right_stick);
+	g_settings_set_enum (applet_info->settings,
+			     PANEL_OBJECT_PACK_KEY,
+			     right_stick ? PANEL_OBJECT_PACK_END : PANEL_OBJECT_PACK_START);
 	g_settings_set_int (applet_info->settings,
 			    PANEL_OBJECT_POSITION_KEY,
 			    position);
@@ -950,8 +950,9 @@ panel_applet_register (GtkWidget       *applet,
 		       gpointer         data,
 		       GDestroyNotify   data_destroy)
 {
-	AppletInfo *info;
-	int         pos;
+	AppletInfo      *info;
+	int              pos;
+	PanelObjectPack  pack;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -978,7 +979,8 @@ panel_applet_register (GtkWidget       *applet,
 
 	/* Find where to insert the applet */
         pos = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
-        if (g_settings_get_boolean (info->settings, PANEL_OBJECT_PACK_END_KEY)) {
+        pack = g_settings_get_enum (info->settings, PANEL_OBJECT_PACK_KEY);
+        if (pack == PANEL_OBJECT_PACK_END) {
                 if (!panel->packed)
                         pos = panel->size - pos;
                 else
@@ -1069,5 +1071,5 @@ panel_applet_can_freely_move (AppletInfo *applet)
 	        g_settings_is_writable (applet->settings,
 					PANEL_OBJECT_POSITION_KEY) &&
 	        g_settings_is_writable (applet->settings,
-					PANEL_OBJECT_PACK_END_KEY));
+					PANEL_OBJECT_PACK_KEY));
 }

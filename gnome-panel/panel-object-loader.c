@@ -244,6 +244,7 @@ panel_object_loader_queue (const char *id,
         PanelObjectToLoad *object;
         GSettings         *settings;
         char              *toplevel_id;
+        PanelObjectPack    pack;
 
         if (panel_object_loader_is_queued (id))
                 return;
@@ -260,6 +261,8 @@ panel_object_loader_queue (const char *id,
                 return;
         }
 
+        pack = g_settings_get_enum (settings, PANEL_OBJECT_PACK_KEY);
+
         object = g_new0 (PanelObjectToLoad, 1);
 
         object->id            = g_strdup (id);
@@ -268,8 +271,7 @@ panel_object_loader_queue (const char *id,
         object->toplevel_id   = toplevel_id;
         object->position      = g_settings_get_int (settings,
                                                     PANEL_OBJECT_POSITION_KEY);
-        object->right_stick   = g_settings_get_boolean (settings,
-                                                        PANEL_OBJECT_PACK_END_KEY);
+        object->right_stick   = (pack == PANEL_OBJECT_PACK_END);
 
         panel_objects_to_load = g_slist_prepend (panel_objects_to_load, object);
 

@@ -29,6 +29,10 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+	PANEL_OBJECT_PACK_START = 0,
+	PANEL_OBJECT_PACK_END   = 1
+} PanelObjectPack;
 
 typedef enum {
 	PANEL_ORIENTATION_TOP    = 1 << 0,
@@ -36,7 +40,6 @@ typedef enum {
 	PANEL_ORIENTATION_BOTTOM = 1 << 2,
 	PANEL_ORIENTATION_LEFT   = 1 << 3
 } PanelOrientation;
-
 
 typedef enum {
 	PANEL_ANIMATION_SLOW   = 0,

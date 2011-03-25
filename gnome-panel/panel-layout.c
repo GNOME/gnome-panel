@@ -110,7 +110,7 @@ static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
         { PANEL_OBJECT_IID_KEY,         G_TYPE_STRING   },
         { PANEL_OBJECT_TOPLEVEL_ID_KEY, G_TYPE_STRING   },
         { PANEL_OBJECT_POSITION_KEY,    G_TYPE_INT      },
-        { PANEL_OBJECT_PACK_END_KEY,    G_TYPE_BOOLEAN  }
+        { PANEL_OBJECT_PACK_KEY,        G_TYPE_STRING   }
 };
 
 static gboolean
@@ -674,9 +674,9 @@ panel_layout_object_create_start (PanelObjectType   type,
         g_settings_set_int (settings_object,
                             PANEL_OBJECT_POSITION_KEY,
                             position);
-        g_settings_set_boolean (settings_object,
-                                PANEL_OBJECT_PACK_END_KEY,
-                                pack_end);
+        g_settings_set_enum (settings_object,
+                             PANEL_OBJECT_PACK_KEY,
+                             pack_end ? PANEL_OBJECT_PACK_END : PANEL_OBJECT_PACK_START);
 
         g_free (iid);
 
