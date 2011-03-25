@@ -41,8 +41,6 @@ GConfClient *panel_gconf_get_client          (void);
 
 const char  *panel_gconf_sprintf             (const char        *format, ...) G_GNUC_PRINTF (1, 2);
 const char  *panel_gconf_basename            (const char        *key);
-char        *panel_gconf_dirname             (const char        *key);
-const char  *panel_gconf_global_key          (const char        *key);
 const char  *panel_gconf_general_key         (const char        *key);
 const char  *panel_gconf_full_key            (PanelGConfKeyType  type,
 					      const char        *id,
@@ -56,16 +54,9 @@ guint		panel_gconf_notify_add_while_alive (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    GObject               *alive_object);
 
-void            panel_gconf_copy_dir      (GConfClient  *client,
-					   const char   *src_dir,
-					   const char   *dest_dir);
-
 void            panel_gconf_associate_schemas_in_dir       (GConfClient *client,
 							    const char  *profile_dir,
 							    const char  *schema_dir);
-
-gint            panel_gconf_value_strcmp (gconstpointer a,
-					  gconstpointer b);
 
 G_END_DECLS
 

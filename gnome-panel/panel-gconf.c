@@ -125,12 +125,6 @@ panel_gconf_key_type_to_id_list (PanelGConfKeyType type)
 	return retval;
 }
 
-const char * 
-panel_gconf_global_key (const char *key)
-{
-	return panel_gconf_sprintf ("/apps/panel/global/%s", key);
-}
-
 const char *
 panel_gconf_general_key (const char *key)
 {
@@ -175,26 +169,6 @@ panel_gconf_basename (const char *key)
 	return retval ? retval + 1 : NULL;
 }
 
-char *
-panel_gconf_dirname (const char *key)
-{
-	char *retval;
-	int   len;
-
-	g_return_val_if_fail (key != NULL, NULL);
-
-	retval = strrchr (key, '/');
-	g_assert (retval != NULL);
-
-	len = retval - key;
-	g_assert (len > 0);
-
-	retval = g_new0 (char, len + 1);
-	memcpy (retval, key, len);
-
-	return retval;
-}
-
 static void
 panel_notify_object_dead (guint notify_id)
 {
@@ -226,57 +200,6 @@ panel_gconf_notify_add_while_alive (const char            *key,
 				   GUINT_TO_POINTER (notify_id));
 
 	return notify_id;
-}
-
-void
-panel_gconf_copy_dir (GConfClient  *client,
-		      const char   *src_dir,
-		      const char   *dest_dir)
-{
-	GSList *list, *l;
-
-	list = gconf_client_all_entries (client, src_dir, NULL);
-	for (l = list; l; l = l->next) {
-		GConfEntry *entry = l->data;
-		const char *key;
-		char       *tmp;
-
-		tmp = g_path_get_basename (gconf_entry_get_key (entry));
-		key = panel_gconf_sprintf ("%s/%s", dest_dir, tmp);
-		g_free (tmp);
-
-		gconf_engine_associate_schema (client->engine,
-					       key,
-					       gconf_entry_get_schema_name (entry),
-					       NULL);
-
-		if (!gconf_entry_get_is_default (entry) && entry->value)
-			gconf_client_set (client, key, entry->value, NULL);
-
-		gconf_entry_unref (entry);
-	}
-	g_slist_free (list);
-
-	list = gconf_client_all_dirs (client, src_dir, NULL);
-	for (l = list; l; l = l->next) {
-		char *subdir = l->data;
-		char *src_subdir;
-		char *dest_subdir;
-		char *tmp;
-
-		tmp = g_path_get_basename (subdir);
-		src_subdir  = gconf_concat_dir_and_key (src_dir,  tmp);
-		dest_subdir = gconf_concat_dir_and_key (dest_dir, tmp);
-		g_free (tmp);
-
-		panel_gconf_copy_dir (client, src_subdir, dest_subdir);
-
-		g_free (src_subdir);
-		g_free (dest_subdir);
-		g_free (subdir);
-	}
-
-	g_slist_free (list);
 }
 
 void
@@ -332,20 +255,4 @@ panel_gconf_associate_schemas_in_dir (GConfClient  *client,
 	}
 
 	g_slist_free (list);
-}
-
-gint
-panel_gconf_value_strcmp (gconstpointer a,
-			  gconstpointer b)
-{
-	const char *str_a;
-	const char *str_b;
-
-	if (a == b || !a || !b)
-		return 0;
-
-	str_a = gconf_value_get_string (a);
-	str_b = gconf_value_get_string (b);
-
-	return strcmp (str_a, str_b);
 }
