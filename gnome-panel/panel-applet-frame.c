@@ -846,7 +846,13 @@ panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame
 gchar *
 panel_applet_frame_activating_get_conf_path (PanelAppletFrameActivating *frame_act)
 {
-	return g_strdup_printf (PANEL_APPLET_PREFS_KEY, frame_act->id);
+	char *ret;
+
+	ret = g_strdup_printf (PANEL_APPLET_PREFS_KEY, frame_act->id);
+	/* gconf uses '_' and not '-' */
+	g_strdelimit (ret, "-", '_');
+
+	return ret;
 }
 
 static void
