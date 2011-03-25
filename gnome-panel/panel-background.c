@@ -32,6 +32,8 @@
 #include <cairo.h>
 #include <cairo-xlib.h>
 
+#include <libpanel-util/panel-glib.h>
+
 #include "panel-background-monitor.h"
 #include "panel-schemas.h"
 #include "panel-util.h"
@@ -551,8 +553,8 @@ panel_background_set_color (PanelBackground *background,
 }
 
 static void
-panel_background_set_image_no_update (PanelBackground *background,
-				      const char      *image)
+panel_background_set_image_uri_no_update (PanelBackground *background,
+					  const char      *uri)
 {
 	if (background->loaded_image)
 		g_object_unref (background->loaded_image);
@@ -562,24 +564,43 @@ panel_background_set_image_no_update (PanelBackground *background,
 		g_free (background->image);
 	background->image = NULL;
 
-	if (image && image [0])
-		background->image = g_strdup (image);
+	if (!PANEL_GLIB_STR_EMPTY (uri)) {
+		GFile *file;
+		file = g_file_new_for_uri (uri);
+
+		if (g_file_is_native (file))
+			background->image = g_file_get_path (file);
+
+		g_object_unref (file);
+	}
 
 	panel_background_update_has_alpha (background);
 }
 
 static void
-panel_background_set_image (PanelBackground *background,
-			    const char      *image)
+panel_background_set_image_uri (PanelBackground *background,
+				const char      *uri)
 {
-	if (!background->image && !image)
+	GFile *file;
+	char  *current_uri = NULL;
+
+	if (!background->image && !uri)
 		return;
 
-	if (background->image && image && !strcmp (background->image, image))
+	if (background->image) {
+		file = g_file_new_for_path (background->image);
+		current_uri = g_file_get_uri (file);
+		g_object_unref (file);
+	}
+
+	if (g_strcmp0 (current_uri, uri) == 0) {
+		g_free (current_uri);
 		return;
+	}
+	g_free (current_uri);
 
 	free_transformed_resources (background);
-	panel_background_set_image_no_update (background, image);
+	panel_background_set_image_uri_no_update (background, uri);
 	panel_background_transform (background);
 }
 
@@ -664,9 +685,9 @@ panel_background_settings_changed (GSettings       *settings,
 		if (gdk_rgba_parse (&color, value_str))
 			panel_background_set_color (background, &color);
 		g_free (value_str);
-	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_KEY) == 0) {
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_URI_KEY) == 0) {
 		value_str = g_settings_get_string (settings, key);
-		panel_background_set_image (background, value_str);
+		panel_background_set_image_uri (background, value_str);
 		g_free (value_str);
 	} else if (g_strcmp0 (key, PANEL_BACKGROUND_FIT_KEY) == 0) {
 		value_boolean = g_settings_get_boolean (settings, key);
@@ -674,7 +695,7 @@ panel_background_settings_changed (GSettings       *settings,
 	} else if (g_strcmp0 (key, PANEL_BACKGROUND_STRETCH_KEY) == 0) {
 		value_boolean = g_settings_get_boolean (settings, key);
 		panel_background_set_stretch (background, value_boolean);
-	} else if (g_strcmp0 (key, PANEL_BACKGROUND_ROTATE_KEY) == 0) {
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_ROTATE_KEY) == 0) {
 		value_boolean = g_settings_get_boolean (settings, key);
 		panel_background_set_rotate (background, value_boolean);
 	} else {
@@ -709,8 +730,8 @@ panel_background_settings_init (PanelBackground *background,
 	g_free (color_str);
 
 	image = g_settings_get_string (background->settings,
-				       PANEL_BACKGROUND_IMAGE_KEY);
-	panel_background_set_image_no_update (background, image);
+				       PANEL_BACKGROUND_IMAGE_URI_KEY);
+	panel_background_set_image_uri_no_update (background, image);
 	g_free (image);
 
 	fit_image = g_settings_get_boolean (background->settings,
@@ -722,7 +743,7 @@ panel_background_settings_init (PanelBackground *background,
 	panel_background_set_stretch_no_update (background, stretch_image);
 
 	rotate_image = g_settings_get_boolean (background->settings,
-					       PANEL_BACKGROUND_ROTATE_KEY);
+					       PANEL_BACKGROUND_IMAGE_ROTATE_KEY);
 	panel_background_set_rotate_no_update (background, rotate_image);
 
 	type = g_settings_get_enum (background->settings,

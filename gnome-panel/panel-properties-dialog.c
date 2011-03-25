@@ -354,32 +354,32 @@ panel_properties_dialog_arrows_toggle_setup (PanelPropertiesDialog *dialog,
 static void
 panel_properties_dialog_background_image_update (PanelPropertiesDialog *dialog)
 {
-	char *filename;
+	char *uri;
 
-	filename = g_settings_get_string (dialog->settings_background,
-					  PANEL_BACKGROUND_IMAGE_KEY);
+	uri = g_settings_get_string (dialog->settings_background,
+				     PANEL_BACKGROUND_IMAGE_URI_KEY);
 
-	if (PANEL_GLIB_STR_EMPTY (filename))
+	if (PANEL_GLIB_STR_EMPTY (uri))
 		gtk_file_chooser_unselect_all (GTK_FILE_CHOOSER (dialog->image_chooser));
 	else
-		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
-					       filename);
+		gtk_file_chooser_set_uri (GTK_FILE_CHOOSER (dialog->image_chooser),
+					  uri);
 
-	g_free (filename);
+	g_free (uri);
 }
 
 static void
 panel_properties_dialog_image_chooser_changed (PanelPropertiesDialog *dialog)
 {
-	char *image;
+	char *uri;
 
-	image = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
-	if (!image)
-		image = g_strdup ("");
+	uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog->image_chooser));
+	if (!uri)
+		uri = g_strdup ("");
 
 	g_settings_set_string (dialog->settings_background,
-			       PANEL_BACKGROUND_IMAGE_KEY, image);
-	g_free (image);
+			       PANEL_BACKGROUND_IMAGE_URI_KEY, uri);
+	g_free (uri);
 }
 
 static void
@@ -396,11 +396,11 @@ panel_properties_dialog_image_chooser_setup (PanelPropertiesDialog *dialog,
 				  dialog);
 
 	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_IMAGE_KEY,
+				  PANEL_BACKGROUND_IMAGE_URI_KEY,
 				  dialog->image_chooser, "sensitive", FALSE);
 
 	if (!g_settings_is_writable (dialog->settings_background,
-				     PANEL_BACKGROUND_IMAGE_KEY))
+				     PANEL_BACKGROUND_IMAGE_URI_KEY))
 		gtk_widget_show (dialog->writability_warn_background);
 }
 
@@ -672,7 +672,7 @@ panel_properties_dialog_background_changed (GSettings             *settings,
 {
 	if (g_strcmp0 (key, PANEL_BACKGROUND_TYPE_KEY) == 0)
 		panel_properties_dialog_background_type_update (dialog);
-	else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_KEY) == 0)
+	else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_URI_KEY) == 0)
 		panel_properties_dialog_background_image_update (dialog);
 	else if (g_strcmp0 (key, PANEL_BACKGROUND_COLOR_KEY) == 0)
 		panel_properties_dialog_background_color_update (dialog);
