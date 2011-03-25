@@ -58,20 +58,15 @@ gboolean   panel_menu_button_create              (PanelToplevel    *toplevel,
 						  int               position,
 						  const char       *filename,
 						  const char       *menu_path,
-						  gboolean          use_menu_path,
 						  const char       *tooltip);
 
+gboolean   panel_menu_button_is_main_menu        (PanelMenuButton  *button);
 void       panel_menu_button_set_menu_path       (PanelMenuButton  *button,
 						  const char       *menu_path);
 void       panel_menu_button_set_custom_icon     (PanelMenuButton  *button,
 						  const char       *custom_icon);
 void       panel_menu_button_set_tooltip         (PanelMenuButton *button,
 						  const char      *tooltip);
-void       panel_menu_button_set_use_menu_path   (PanelMenuButton  *button,
-						  gboolean          use_menu_path);
-gboolean   panel_menu_button_get_use_menu_path   (PanelMenuButton  *button);
-void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
-						  gboolean          use_custom_icon);
 
 void       panel_menu_button_load                (PanelWidget      *panel,
 						  const char       *id,

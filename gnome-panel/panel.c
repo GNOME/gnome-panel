@@ -553,7 +553,6 @@ drop_menu (PanelWidget *panel,
 					 position,
 					 menu_filename,
 					 menu_path,
-					 menu_path != NULL,
 					 NULL);
 
 }

@@ -32,6 +32,7 @@
 #include <gmenu-tree.h>
 
 #include <libpanel-util/panel-error.h>
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-show.h>
 
@@ -54,8 +55,6 @@ enum {
 	PROP_MENU_PATH,
 	PROP_CUSTOM_ICON,
 	PROP_TOOLTIP,
-	PROP_USE_MENU_PATH,
-	PROP_USE_CUSTOM_ICON,
 	PROP_DND_ENABLED
 };
 
@@ -90,8 +89,6 @@ struct _PanelMenuButtonPrivate {
 	char                  *tooltip;
 
 	MenuPathRoot           path_root;
-	guint                  use_menu_path : 1;
-	guint                  use_custom_icon : 1;
 	guint                  dnd_enabled : 1;
 };
 
@@ -178,8 +175,6 @@ panel_menu_button_init (PanelMenuButton *button)
 	button->priv->tooltip = NULL;
 
 	button->priv->path_root       = LAST_MENU;
-	button->priv->use_menu_path   = FALSE;
-	button->priv->use_custom_icon = FALSE;
 }
 
 static void
@@ -232,12 +227,6 @@ panel_menu_button_get_property (GObject    *object,
 	case PROP_TOOLTIP:
 		g_value_set_string (value, button->priv->tooltip);
 		break;
-	case PROP_USE_MENU_PATH:
-		g_value_set_boolean (value, button->priv->use_menu_path);
-		break;
-	case PROP_USE_CUSTOM_ICON:
-		g_value_set_boolean (value, button->priv->use_custom_icon);
-		break;
 	case PROP_DND_ENABLED:
 		g_value_set_boolean (value, button->priv->dnd_enabled);
 		break;
@@ -268,12 +257,6 @@ panel_menu_button_set_property (GObject      *object,
                 break;
 	case PROP_TOOLTIP:
 		panel_menu_button_set_tooltip (button, g_value_get_string (value));
-		break;
-	case PROP_USE_MENU_PATH:
-		panel_menu_button_set_use_menu_path (button, g_value_get_boolean (value));
-		break;
-	case PROP_USE_CUSTOM_ICON:
-		panel_menu_button_set_use_custom_icon (button, g_value_get_boolean (value));
 		break;
 	case PROP_DND_ENABLED:
 		panel_menu_button_set_dnd_enabled (button, g_value_get_boolean (value));
@@ -378,8 +361,8 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 
 	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
 
-	if (button->priv->use_menu_path          &&
-	    button->priv->path_root > FIRST_MENU &&
+	if (!PANEL_GLIB_STR_EMPTY (button->priv->menu_path) &&
+	    button->priv->path_root > FIRST_MENU            &&
 	    button->priv->path_root < LAST_MENU) {
 		const char *filename;
 
@@ -517,24 +500,6 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 
 	g_object_class_install_property (
 			gobject_class,
-			PROP_USE_MENU_PATH,
-                        g_param_spec_boolean ("use-menu-path",
-					      "Use Menu Path",
-					      "Use the path specified by the menu-path property",
-					      FALSE,
-					      G_PARAM_READWRITE));
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_USE_CUSTOM_ICON,
-                        g_param_spec_boolean ("use-custom-icon",
-					      "Use Custom Icon",
-					      "Use the icon specified by the custom-icon property",
-					      FALSE,
-					      G_PARAM_READWRITE));
-
-	g_object_class_install_property (
-			gobject_class,
 			PROP_DND_ENABLED,
                         g_param_spec_boolean ("dnd-enabled",
 					      "Drag and drop enabled",
@@ -568,14 +533,6 @@ panel_menu_button_gconf_notify (GConfClient     *client,
 		if (value && value->type == GCONF_VALUE_STRING)
 			panel_menu_button_set_tooltip (button,
 						       gconf_value_get_string (value));
-	} else if (!strcmp (key, "use_menu_path")) {
-		if (value && value->type == GCONF_VALUE_BOOL)
-			panel_menu_button_set_use_menu_path (button,
-							     gconf_value_get_bool (value));
-	} else if (!strcmp (key, "use_custom_icon")) {
-		if (value && value->type == GCONF_VALUE_BOOL)
-			panel_menu_button_set_use_custom_icon (button,
-							       gconf_value_get_bool (value));
 	}
 }
 
@@ -618,9 +575,7 @@ panel_menu_button_disconnect_from_gconf (PanelMenuButton *button)
 
 static void
 panel_menu_button_load_helper (const char  *menu_path,
-			       gboolean     use_menu_path,
 			       const char  *custom_icon,
-			       gboolean     use_custom_icon,
 			       const char  *tooltip,
 			       PanelWidget *panel,
 			       const char  *id,
@@ -635,8 +590,6 @@ panel_menu_button_load_helper (const char  *menu_path,
 			       "menu-path", menu_path,
 			       "custom-icon", custom_icon,
 			       "tooltip", tooltip,
-			       "use-menu-path", use_menu_path,
-			       "use-custom-icon", use_custom_icon,
 			       "has-arrow", TRUE,
 			       NULL);
 
@@ -672,13 +625,11 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 
 	retval = NULL;
 
-	if (button->priv->use_custom_icon &&
-	    button->priv->custom_icon)
+	if (!PANEL_GLIB_STR_EMPTY (button->priv->custom_icon))
 		retval = g_strdup (button->priv->custom_icon);
 
-	if (!retval                     &&
-	    button->priv->use_menu_path &&
-	    button->priv->menu_path     &&
+	if (!retval                                         &&
+	    !PANEL_GLIB_STR_EMPTY (button->priv->menu_path) &&
 	    panel_menu_button_create_menu (button)) {
 		directory = g_object_get_data (G_OBJECT (button->priv->menu),
 					       "panel-menu-tree-directory");
@@ -742,7 +693,15 @@ split_menu_uri (const char  *menu_uri,
 
 	return p;
 }
-                                                                                                             
+
+gboolean
+panel_menu_button_is_main_menu (PanelMenuButton *button)
+{
+	g_return_val_if_fail (PANEL_IS_MENU_BUTTON (button), FALSE);
+
+	return !PANEL_GLIB_STR_EMPTY (button->priv->menu_path);
+}
+
 void
 panel_menu_button_set_menu_path (PanelMenuButton *button,
 				 const char      *menu_uri)
@@ -811,45 +770,6 @@ panel_menu_button_set_tooltip (PanelMenuButton *button,
 }
 
 void
-panel_menu_button_set_use_menu_path (PanelMenuButton *button,
-				     gboolean         use_menu_path)
-{
-	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
-
-	use_menu_path = use_menu_path != FALSE;
-
-	if (button->priv->use_menu_path == use_menu_path)
-		return;
-
-	button->priv->use_menu_path = use_menu_path;
-
-	if (button->priv->menu)
-		gtk_menu_detach (GTK_MENU (button->priv->menu));
-	button->priv->menu = NULL;
-
-	panel_menu_button_set_icon (button);
-}
-
-gboolean
-panel_menu_button_get_use_menu_path (PanelMenuButton *button)
-{
-	g_return_val_if_fail (PANEL_IS_MENU_BUTTON (button), FALSE);
-
-	return button->priv->use_menu_path;
-}
-
-void
-panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
-				       gboolean         use_custom_icon)
-{
-	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
-
-	button->priv->use_custom_icon = use_custom_icon != FALSE;
-
-	panel_menu_button_set_icon (button);
-}
-
-void
 panel_menu_button_load (PanelWidget *panel,
 			const char  *id,
 			GSettings   *settings)
@@ -861,8 +781,6 @@ panel_menu_button_load (PanelWidget *panel,
 	char         *menu_path;
 	char         *custom_icon;
 	char         *tooltip;
-	gboolean      use_menu_path;
-	gboolean      use_custom_icon;
 
 	client  = panel_gconf_get_client ();
 
@@ -879,16 +797,8 @@ panel_menu_button_load (PanelWidget *panel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
 	tooltip = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_menu_path");
-	use_menu_path = gconf_client_get_bool (client, key, NULL);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_custom_icon");
-	use_custom_icon = gconf_client_get_bool (client, key, NULL);
-
 	panel_menu_button_load_helper (menu_path,
-				       use_menu_path,
 				       custom_icon,
-				       use_custom_icon,
 				       tooltip,
 				       panel,
 				       id,
@@ -904,7 +814,6 @@ panel_menu_button_create (PanelToplevel *toplevel,
 			  int            position,
 			  const char    *filename,
 			  const char    *menu_path,
-			  gboolean       use_menu_path,
 			  const char    *tooltip)
 {
 	GConfClient *client;
@@ -916,9 +825,6 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_menu_path");
-	gconf_client_set_bool (client, key, use_menu_path, NULL);
-
 	scheme = panel_menu_filename_to_scheme (filename);
 
 	if (filename && !scheme) {
@@ -927,7 +833,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 		return FALSE;
 	}
 
-	if (use_menu_path && menu_path && menu_path [0] && scheme) {
+	if (!PANEL_GLIB_STR_EMPTY (menu_path) && scheme) {
 		char       *menu_uri;
 
 		menu_uri = g_strconcat (scheme, ":", menu_path, NULL);

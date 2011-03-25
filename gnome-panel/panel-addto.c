@@ -784,7 +784,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 					  dialog->insertion_position,
 					  item_info->menu_filename,
 					  item_info->menu_path,
-					  item_info->menu_path != NULL,
 					  item_info->name);
 		break;
 	case PANEL_ADDTO_MENUBAR:
