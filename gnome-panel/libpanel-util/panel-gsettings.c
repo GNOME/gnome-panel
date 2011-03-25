@@ -121,3 +121,30 @@ panel_gsettings_append_strv (GSettings   *settings,
 
         return retval;
 }
+
+gboolean
+panel_gsettings_remove_all_from_strv (GSettings   *settings,
+                                      const gchar *key,
+                                      const gchar *value)
+{
+        GArray    *array;
+        gchar    **old;
+        gint       i;
+        gboolean   retval;
+
+        old = g_settings_get_strv (settings, key);
+        array = g_array_new (TRUE, TRUE, sizeof (gchar *));
+
+        for (i = 0; old[i] != NULL; i++) {
+                if (g_strcmp0 (old[i], value) != 0)
+                        array = g_array_append_val (array, old[i]);
+        }
+
+        retval = g_settings_set_strv (settings, key,
+                                      (const gchar **) array->data);
+
+        g_strfreev (old);
+        g_array_free (array, TRUE);
+
+        return retval;
+}

@@ -36,6 +36,10 @@ gboolean panel_gsettings_append_strv      (GSettings   *settings,
                                            const gchar *key,
                                            const gchar *value);
 
+gboolean panel_gsettings_remove_all_from_strv (GSettings   *settings,
+                                               const gchar *key,
+                                               const gchar *value);
+
 G_END_DECLS
 
 #endif /* __PANEL_GSETTINGS_H__ */
