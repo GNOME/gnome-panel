@@ -111,15 +111,21 @@ panel_object_loader_stop_loading (const char *id)
 
         for (l = panel_objects_loading; l; l = l->next) {
                 object = l->data;
-
                 if (g_strcmp0 (object->id, id) == 0)
                         break;
         }
-
-        /* this can happen if we reload an object after it crashed,
-         * for example */
         if (l != NULL) {
                 panel_objects_loading = g_slist_delete_link (panel_objects_loading, l);
+                free_object_to_load (object);
+        }
+
+        for (l = panel_objects_to_load; l; l = l->next) {
+                object = l->data;
+                if (g_strcmp0 (object->id, id) == 0)
+                        break;
+        }
+        if (l != NULL) {
+                panel_objects_to_load = g_slist_delete_link (panel_objects_to_load, l);
                 free_object_to_load (object);
         }
 
@@ -238,6 +244,9 @@ panel_object_loader_queue (const char *id,
         PanelObjectToLoad *object;
         GSettings         *settings;
         char              *toplevel_id;
+
+        if (panel_object_loader_is_queued (id))
+                return;
 
         settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA,
                                              settings_path);
