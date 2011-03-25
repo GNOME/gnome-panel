@@ -42,7 +42,7 @@
 #include "menu.h"
 #include "panel-menu-items.h"
 #include "panel-globals.h"
-#include "panel-profile.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
@@ -434,11 +434,9 @@ void
 panel_menu_bar_create (PanelToplevel *toplevel,
 		       int            position)
 {
-	char *id;
-
-	id = panel_profile_prepare_object (PANEL_OBJECT_MENU_BAR, toplevel, position, FALSE);
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
-	g_free (id);
+	panel_layout_object_create (PANEL_OBJECT_MENU_BAR, NULL,
+				    panel_toplevel_get_toplevel_id (toplevel),
+				    position, FALSE);
 }
 
 void

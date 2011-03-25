@@ -24,9 +24,10 @@
 
 #include <config.h>
 
-#include "panel-separator.h"
 #include "panel-background.h"
-#include "panel-profile.h"
+#include "panel-layout.h"
+
+#include "panel-separator.h"
 
 #define SEPARATOR_SIZE 10
 
@@ -258,12 +259,9 @@ void
 panel_separator_create (PanelToplevel *toplevel,
 			int            position)
 {
-	char *id;
-
-	id = panel_profile_prepare_object (PANEL_OBJECT_SEPARATOR,
-					   toplevel, position, FALSE);
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
-	g_free (id);
+	panel_layout_object_create (PANEL_OBJECT_SEPARATOR, NULL,
+				    panel_toplevel_get_toplevel_id (toplevel),
+				    position, FALSE);
 }
 
 void
