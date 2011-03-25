@@ -41,7 +41,6 @@
 
 #include "applet.h"
 #include "panel-gconf.h"
-#include "panel-profile.h"
 #include "panel-typebuiltins.h"
 #include "panel-force-quit.h"
 #include "panel-util.h"
@@ -49,6 +48,7 @@
 #include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 
@@ -655,23 +655,14 @@ panel_action_button_create (PanelToplevel         *toplevel,
 			    int                    position,
 			    PanelActionButtonType  type)
 {
-	GConfClient *client;
-	const char  *key;
-	char        *id;
+	const char *detail;
 
-	client  = panel_gconf_get_client ();
+	detail = gconf_enum_to_string (panel_action_type_map, type);
 
-	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position, FALSE);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "action_type");
-	gconf_client_set_string (client,
-				 key,
-				 gconf_enum_to_string (panel_action_type_map, type),
-				 NULL);
-
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
-
-	g_free (id);
+	panel_layout_object_create (PANEL_OBJECT_ACTION,
+				    detail,
+				    panel_toplevel_get_toplevel_id (toplevel),
+				    position, FALSE);
 }
 
 void
