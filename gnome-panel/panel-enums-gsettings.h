@@ -50,6 +50,12 @@ typedef enum {
 	PANEL_BACK_IMAGE = 2
 } PanelBackgroundType;
 
+typedef enum {
+	PANEL_BACKGROUND_IMAGE_STYLE_NONE    = 0,
+	PANEL_BACKGROUND_IMAGE_STYLE_STRETCH = 1,
+	PANEL_BACKGROUND_IMAGE_STYLE_FIT     = 2
+} PanelBackgroundImageStyle;
+
 G_END_DECLS
 
 #endif /* __PANEL_ENUMS_GSETTINGS_H__ */

@@ -56,8 +56,7 @@
 #define PANEL_BACKGROUND_TYPE_KEY         "type"
 #define PANEL_BACKGROUND_COLOR_KEY        "color"
 #define PANEL_BACKGROUND_IMAGE_URI_KEY    "image-uri"
-#define PANEL_BACKGROUND_FIT_KEY          "fit"
-#define PANEL_BACKGROUND_STRETCH_KEY      "stretch"
+#define PANEL_BACKGROUND_IMAGE_STYLE_KEY  "image-style"
 #define PANEL_BACKGROUND_IMAGE_ROTATE_KEY "image-rotate"
 #define PANEL_BACKGROUND_COLOR_DEFAULT    "rgba(255,255,255,.2)"
 

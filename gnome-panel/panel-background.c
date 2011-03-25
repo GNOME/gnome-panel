@@ -334,7 +334,26 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 	width  = orig_width;
 	height = orig_height;
 
-	if (background->fit_image) {
+	switch (background->style_image) {
+	case PANEL_BACKGROUND_IMAGE_STYLE_NONE:
+		if (background->orientation == GTK_ORIENTATION_VERTICAL &&
+			   background->rotate_image) {
+			int tmp = width;
+			width = height;
+			height = tmp;
+		}
+		break;
+	case PANEL_BACKGROUND_IMAGE_STYLE_STRETCH:
+		if (background->orientation == GTK_ORIENTATION_VERTICAL &&
+		    background->rotate_image) {
+			width  = panel_height;
+			height = panel_width;
+		} else {
+			width  = panel_width;
+			height = panel_height;
+		}
+		break;
+	case PANEL_BACKGROUND_IMAGE_STYLE_FIT:
 		switch (background->orientation) {
 		case GTK_ORIENTATION_HORIZONTAL:
 			width  = orig_width * panel_height / orig_height;
@@ -353,20 +372,10 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 			g_assert_not_reached ();
 			break;
 		}
-	} else if (background->stretch_image) {
-		if (background->orientation == GTK_ORIENTATION_VERTICAL &&
-		    background->rotate_image) {
-			width  = panel_height;
-			height = panel_width;
-		} else {
-			width  = panel_width;
-			height = panel_height;
-		}
-	} else if (background->orientation == GTK_ORIENTATION_VERTICAL &&
-		   background->rotate_image) {
-		int tmp = width;
-		width = height;
-		height = tmp;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
 	if (width == orig_width &&
@@ -605,44 +614,21 @@ panel_background_set_image_uri (PanelBackground *background,
 }
 
 static void
-panel_background_set_fit_no_update (PanelBackground *background,
-				    gboolean         fit_image)
+panel_background_set_image_style_no_update (PanelBackground           *background,
+					    PanelBackgroundImageStyle  style)
 {
-	background->fit_image = fit_image != FALSE;
+	background->style_image = style;
 }
 
 static void
-panel_background_set_fit (PanelBackground *background,
-			  gboolean         fit_image)
+panel_background_set_image_style (PanelBackground           *background,
+				  PanelBackgroundImageStyle  style)
 {
-	fit_image = fit_image != FALSE;
-
-	if (background->fit_image == fit_image)
+	if (background->style_image == style)
 		return;
 
 	free_transformed_resources (background);
-	panel_background_set_fit_no_update (background, fit_image);
-	panel_background_transform (background);
-}
-
-static void
-panel_background_set_stretch_no_update (PanelBackground *background,
-				        gboolean         stretch_image)
-{
-	background->stretch_image = stretch_image != FALSE;
-}
-
-static void
-panel_background_set_stretch (PanelBackground *background,
-			      gboolean         stretch_image)
-{
-	stretch_image = stretch_image != FALSE;
-
-	if (background->stretch_image == stretch_image)
-		return;
-
-	free_transformed_resources (background);
-	panel_background_set_stretch_no_update (background, stretch_image);
+	panel_background_set_image_style_no_update (background, style);
 	panel_background_transform (background);
 }
 
@@ -689,12 +675,10 @@ panel_background_settings_changed (GSettings       *settings,
 		value_str = g_settings_get_string (settings, key);
 		panel_background_set_image_uri (background, value_str);
 		g_free (value_str);
-	} else if (g_strcmp0 (key, PANEL_BACKGROUND_FIT_KEY) == 0) {
-		value_boolean = g_settings_get_boolean (settings, key);
-		panel_background_set_fit (background, value_boolean);
-	} else if (g_strcmp0 (key, PANEL_BACKGROUND_STRETCH_KEY) == 0) {
-		value_boolean = g_settings_get_boolean (settings, key);
-		panel_background_set_stretch (background, value_boolean);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_STYLE_KEY) == 0) {
+		PanelBackgroundImageStyle style;
+		style = g_settings_get_enum (settings, key);
+		panel_background_set_image_style (background, style);
 	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_ROTATE_KEY) == 0) {
 		value_boolean = g_settings_get_boolean (settings, key);
 		panel_background_set_rotate (background, value_boolean);
@@ -711,8 +695,7 @@ panel_background_settings_init (PanelBackground *background,
 	char                *color_str;
 	GdkRGBA              color;
 	char                *image;
-	gboolean             fit_image;
-	gboolean             stretch_image;
+	PanelBackgroundImageStyle style_image;
 	gboolean             rotate_image;
 
 	g_assert (background->settings == NULL);
@@ -734,13 +717,9 @@ panel_background_settings_init (PanelBackground *background,
 	panel_background_set_image_uri_no_update (background, image);
 	g_free (image);
 
-	fit_image = g_settings_get_boolean (background->settings,
-					    PANEL_BACKGROUND_FIT_KEY);
-	panel_background_set_fit_no_update (background, fit_image);
-
-	stretch_image = g_settings_get_boolean (background->settings,
-						PANEL_BACKGROUND_STRETCH_KEY);
-	panel_background_set_stretch_no_update (background, stretch_image);
+	style_image = g_settings_get_enum (background->settings,
+					   PANEL_BACKGROUND_IMAGE_STYLE_KEY);
+	panel_background_set_image_style_no_update (background, style_image);
 
 	rotate_image = g_settings_get_boolean (background->settings,
 					       PANEL_BACKGROUND_IMAGE_ROTATE_KEY);
@@ -823,8 +802,7 @@ panel_background_change_region (PanelBackground *background,
 			need_to_retransform = TRUE;
 		} else if ((background->region.width != width ||
 			    background->region.height != height) &&
-			   (background->fit_image ||
-			    background->stretch_image)) {
+			   (background->style_image != PANEL_BACKGROUND_IMAGE_STYLE_NONE)) {
 			/* or if the size changes and we are 
 			   stretching or fitting the image */
 			need_to_retransform = TRUE;
@@ -901,8 +879,7 @@ panel_background_init (PanelBackground              *background,
 	background->default_color.blue  = 0.;
 	background->default_color.alpha = 1.;
 
-	background->fit_image     = FALSE;
-	background->stretch_image = FALSE;
+	background->style_image   = PANEL_BACKGROUND_IMAGE_STYLE_NONE;
 	background->rotate_image  = FALSE;
 
 	background->has_alpha = FALSE;

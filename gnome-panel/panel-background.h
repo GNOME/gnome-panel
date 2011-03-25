@@ -64,8 +64,7 @@ struct _PanelBackground {
 	cairo_pattern_t        *default_pattern;
 	GdkRGBA                 default_color;
 
-        guint                   fit_image : 1;
-        guint                   stretch_image : 1;
+        PanelBackgroundImageStyle style_image;
         guint                   rotate_image : 1;
 
 	guint                   has_alpha : 1;
