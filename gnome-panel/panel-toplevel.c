@@ -289,6 +289,63 @@ panel_toplevel_is_last (PanelToplevel *toplevel)
 	return TRUE;
 }
 
+gboolean
+panel_toplevel_find_empty_spot (GdkScreen        *screen,
+				PanelOrientation *orientation,
+				int              *monitor)
+{
+	int      *filled_spots;
+	GSList   *li;
+	int       i;
+	gboolean  found_a_spot = FALSE;
+
+	*monitor = 0;
+	*orientation = PANEL_ORIENTATION_TOP;
+
+	filled_spots = g_new0 (int, panel_multiscreen_monitors (screen));
+
+	for (li = panel_toplevel_list_toplevels (); li != NULL; li = li->next) {
+		PanelToplevel *toplevel = li->data;
+		GdkScreen *toplevel_screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+		int toplevel_monitor = panel_toplevel_get_monitor (toplevel);
+
+		if (toplevel_screen != screen ||
+		    toplevel_monitor < 0)
+			continue;
+
+		filled_spots[toplevel_monitor] |= panel_toplevel_get_orientation (toplevel);
+	}
+
+	for (i = 0; i < panel_multiscreen_monitors (screen); i++) {
+		/* These are ordered based on "priority" of the
+		   orientation when picking it */
+		if ( ! (filled_spots[i] & PANEL_ORIENTATION_TOP)) {
+			*orientation = PANEL_ORIENTATION_TOP;
+			*monitor = i;
+			found_a_spot = TRUE;
+			break;
+		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_BOTTOM)) {
+			*orientation = PANEL_ORIENTATION_BOTTOM;
+			*monitor = i;
+			found_a_spot = TRUE;
+			break;
+		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_RIGHT)) {
+			*orientation = PANEL_ORIENTATION_RIGHT;
+			*monitor = i;
+			found_a_spot = TRUE;
+			break;
+		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_LEFT)) {
+			*orientation = PANEL_ORIENTATION_LEFT;
+			*monitor = i;
+			found_a_spot = TRUE;
+			break;
+		}
+	}
+
+	g_free (filled_spots);
+
+	return found_a_spot;
+}
 
 static GdkScreen *
 panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,

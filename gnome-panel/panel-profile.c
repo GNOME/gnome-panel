@@ -41,14 +41,6 @@
 #include "panel-toplevel.h"
 #include "panel-lockdown.h"
 
-static GConfEnumStringPair panel_orientation_map [] = {
-	{ PANEL_ORIENTATION_TOP,    "top"    },
-	{ PANEL_ORIENTATION_BOTTOM, "bottom" },
-	{ PANEL_ORIENTATION_LEFT,   "left"   },
-	{ PANEL_ORIENTATION_RIGHT,  "right"  },
-	{ 0,                        NULL     }
-};
-
 static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_MENU,      "menu-object" },
 	{ PANEL_OBJECT_LAUNCHER,  "launcher-object" },
@@ -60,12 +52,6 @@ static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_APPLET,    "bonobo-applet" },
 	{ 0,                      NULL }
 };
-
-const char *
-panel_profile_map_orientation (PanelOrientation orientation)
-{
-	return gconf_enum_to_string (panel_orientation_map, orientation);
-}
 
 char *
 panel_profile_find_new_id (PanelGConfKeyType type)
@@ -201,101 +187,6 @@ panel_profile_id_lists_are_writable (void)
     panel_profile_id_list_is_writable (PANEL_GCONF_APPLETS)   &&
     panel_profile_id_list_is_writable (PANEL_GCONF_OBJECTS);
 }
-
-static gboolean
-panel_profile_find_empty_spot (GdkScreen *screen,
-			       PanelOrientation *orientation,
-			       int *monitor)
-{
-	GSList *li;
-	int i;
-	int *filled_spots;
-	gboolean found_a_spot = FALSE;
-
-	*monitor = 0;
-	*orientation = PANEL_ORIENTATION_TOP;
-
-	filled_spots = g_new0 (int, panel_multiscreen_monitors (screen));
-
-	for (li = panel_toplevel_list_toplevels (); li != NULL; li = li->next) {
-		PanelToplevel *toplevel = li->data;
-		GdkScreen *toplevel_screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-		int toplevel_monitor = panel_toplevel_get_monitor (toplevel);
-
-		if (toplevel_screen != screen ||
-		    toplevel_monitor < 0)
-			continue;
-
-		filled_spots[toplevel_monitor] |= panel_toplevel_get_orientation (toplevel);
-	}
-
-	for (i = 0; i < panel_multiscreen_monitors (screen); i++) {
-		/* These are ordered based on "priority" of the
-		   orientation when picking it */
-		if ( ! (filled_spots[i] & PANEL_ORIENTATION_TOP)) {
-			*orientation = PANEL_ORIENTATION_TOP;
-			*monitor = i;
-			found_a_spot = TRUE;
-			break;
-		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_BOTTOM)) {
-			*orientation = PANEL_ORIENTATION_BOTTOM;
-			*monitor = i;
-			found_a_spot = TRUE;
-			break;
-		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_RIGHT)) {
-			*orientation = PANEL_ORIENTATION_RIGHT;
-			*monitor = i;
-			found_a_spot = TRUE;
-			break;
-		} else if ( ! (filled_spots[i] & PANEL_ORIENTATION_LEFT)) {
-			*orientation = PANEL_ORIENTATION_LEFT;
-			*monitor = i;
-			found_a_spot = TRUE;
-			break;
-		}
-	}
-
-	g_free (filled_spots);
-
-	return found_a_spot;
-}
-
-void
-panel_profile_create_toplevel (GdkScreen *screen)
-{
-	GConfClient     *client;
-	const char      *key;
-	char            *id;
-	char            *dir;
-	PanelOrientation orientation;
-	int              monitor;
-       
-	g_return_if_fail (screen != NULL);
-
-	client = panel_gconf_get_client ();
-
-	id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
-
-	dir = g_strdup_printf (PANEL_CONFIG_DIR "/toplevels/%s", id);
-	panel_gconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/toplevels");
-	g_free (dir);
-
-	key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, id, "screen");
-	gconf_client_set_int (client, key, gdk_screen_get_number (screen), NULL);
-
-	if (panel_profile_find_empty_spot (screen, &orientation, &monitor)) {
-		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, id, "monitor");
-		gconf_client_set_int (client, key, monitor, NULL);
-
-		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, id, "orientation");
-		gconf_client_set_string (client, key, panel_profile_map_orientation (orientation), NULL);
-	}
-	
-	panel_profile_add_to_list (PANEL_GCONF_TOPLEVELS, id);
-
-	g_free (id);
-}
-
 
 char *
 panel_profile_prepare_object_with_id (PanelObjectType  object_type,

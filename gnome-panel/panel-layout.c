@@ -549,6 +549,52 @@ panel_layout_append_from_file (const char *layout_file,
 }
 
 
+/***********************\
+ * New toplevel/object *
+\***********************/
+
+
+void
+panel_layout_toplevel_create (GdkScreen *screen)
+{
+        char             *unique_id;
+        char             *path;
+        GSettings        *settings;
+	PanelOrientation  orientation;
+	int               monitor;
+
+        unique_id = panel_layout_find_free_id (PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
+                                               PANEL_TOPLEVEL_SCHEMA,
+                                               PANEL_LAYOUT_TOPLEVEL_PATH,
+                                               NULL, -1);
+
+        path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_TOPLEVEL_PATH, unique_id);
+        settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
+        g_free (path);
+
+        g_settings_set_int (settings,
+                            PANEL_TOPLEVEL_SCREEN_KEY,
+                            gdk_screen_get_number (screen));
+
+        if (panel_toplevel_find_empty_spot (screen, &orientation, &monitor)) {
+                g_settings_set_enum (settings,
+                                     PANEL_TOPLEVEL_ORIENTATION_KEY,
+                                     orientation);
+                g_settings_set_int (settings,
+                                    PANEL_TOPLEVEL_MONITOR_KEY,
+                                    monitor);
+        }
+
+        g_object_unref (settings);
+
+        panel_gsettings_append_strv (layout_settings,
+                                     PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
+                                     unique_id);
+
+        g_free (unique_id);
+}
+
+
 /*******************\
  * Changing layout *
 \*******************/
@@ -766,8 +812,10 @@ panel_layout_changed_object (void)
 
         g_strfreev (ids);
 
-        if (loading)
-                panel_object_loader_do_load (FALSE);
+        /* Always do this, even if loading is FALSE: if a panel has been
+         * created, we want a do_load() to unhide it, even if there is no
+         * object to load */
+        panel_object_loader_do_load (FALSE);
 }
 
 static void

@@ -43,6 +43,7 @@
 #include "menu.h"
 #include "panel-profile.h"
 #include "panel-properties-dialog.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-addto.h"
 #include "panel-icon-names.h"
@@ -50,7 +51,7 @@
 static void
 panel_context_menu_create_new_panel (GtkWidget *menuitem)
 {
-	panel_profile_create_toplevel (gtk_widget_get_screen (menuitem));
+	panel_layout_toplevel_create (gtk_widget_get_screen (menuitem));
 }
 
 static void
