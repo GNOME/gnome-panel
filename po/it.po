@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.9x\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-03-12 21:38+0000\n"
+"POT-Creation-Date: 2011-03-22 19:23+0000\n"
 "PO-Revision-Date: 2011-03-11 01:46+0100\n"
 "Last-Translator: Luca Ferretti <lferrett@gnome.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
@@ -50,7 +50,7 @@ msgstr "%l.%M %p"
 #. * in France: 20:10).
 #.
 #: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1612 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%-H.%M"
@@ -113,7 +113,7 @@ msgstr "%l.%M.%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1606
+#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1585
 msgid "%H:%M:%S"
 msgstr "%-H.%M.%S"
 
@@ -172,7 +172,7 @@ msgstr "Fare clic per nascondere il calendario del mese"
 msgid "Click to view month calendar"
 msgstr "Fare clic per visualizzare il calendario del mese"
 
-#: ../applets/clock/clock.c:1444
+#: ../applets/clock/clock.c:1423
 msgid "Computer Clock"
 msgstr "Orologio del computer"
 
@@ -182,7 +182,7 @@ msgstr "Orologio del computer"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1570
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
@@ -192,72 +192,72 @@ msgstr "%l.%M.%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1599
+#: ../applets/clock/clock.c:1578
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1645
+#: ../applets/clock/clock.c:1624
 msgid "%A, %B %d %Y"
 msgstr "%A, %-d %B %Y"
 
-#: ../applets/clock/clock.c:1714
+#: ../applets/clock/clock.c:1693
 msgid "Failed to open the time settings"
 msgstr "Apertura delle impostazioni dell'ora non riuscita"
 
-#: ../applets/clock/clock.c:1734 ../applets/fish/fish.c:1784
+#: ../applets/clock/clock.c:1713 ../applets/fish/fish.c:1784
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:237
 msgid "_Preferences"
 msgstr "Preferen_ze"
 
-#: ../applets/clock/clock.c:1737
+#: ../applets/clock/clock.c:1716
 msgid "Copy _Time"
 msgstr "Copia _ora"
 
-#: ../applets/clock/clock.c:1740
+#: ../applets/clock/clock.c:1719
 msgid "Copy _Date"
 msgstr "Copia _data"
 
-#: ../applets/clock/clock.c:1743
+#: ../applets/clock/clock.c:1722
 msgid "Ad_just Date & Time"
 msgstr "Re_gola data e ora"
 
-#: ../applets/clock/clock.c:2580
+#: ../applets/clock/clock.c:2559
 msgid "Custom format"
 msgstr "Formato personalizzato"
 
-#: ../applets/clock/clock.c:3067
+#: ../applets/clock/clock.c:3046
 msgid "Choose Location"
 msgstr "Scegli località"
 
-#: ../applets/clock/clock.c:3146
+#: ../applets/clock/clock.c:3125
 msgid "Edit Location"
 msgstr "Modifica località"
 
-#: ../applets/clock/clock.c:3293
+#: ../applets/clock/clock.c:3272
 msgid "City Name"
 msgstr "Nome della città"
 
-#: ../applets/clock/clock.c:3297
+#: ../applets/clock/clock.c:3276
 msgid "City Time Zone"
 msgstr "Fuso orario della città"
 
-#: ../applets/clock/clock.c:3484
+#: ../applets/clock/clock.c:3463
 msgid "24 hour"
 msgstr "24 ore"
 
-#: ../applets/clock/clock.c:3485
+#: ../applets/clock/clock.c:3464
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: ../applets/clock/clock.c:3486
+#: ../applets/clock/clock.c:3465
 msgid "Internet time"
 msgstr "Ora Internet"
 
-#: ../applets/clock/clock.c:3494
+#: ../applets/clock/clock.c:3473
 msgid "Custom _format:"
 msgstr "_Formato personalizzato:"
 
@@ -1211,8 +1211,8 @@ msgstr "Mostra le opzioni di gestione sessione"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
-#: ../gnome-panel/panel-applet-frame.c:771
-#: ../gnome-panel/panel-applet-frame.c:947
+#: ../gnome-panel/panel-applet-frame.c:776
+#: ../gnome-panel/panel-applet-frame.c:952
 msgid "Error"
 msgstr "Errore"
 
@@ -1275,7 +1275,7 @@ msgstr "A_ggiungi al cassetto..."
 msgid "_Properties"
 msgstr "Pr_oprietà"
 
-#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-menu-bar.c:437
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-menu-bar.c:417
 msgid "_Help"
 msgstr "A_iuto"
 
@@ -1364,23 +1364,23 @@ msgstr "Impossibile salvare il lanciatore"
 msgid "Replace a currently running panel"
 msgstr "Sostituisce un pannello attualmente in esecuzione"
 
-#: ../gnome-panel/menu.c:919
+#: ../gnome-panel/menu.c:923
 msgid "Add this launcher to _panel"
 msgstr "Aggiungi questo lanciatore al _pannello"
 
-#: ../gnome-panel/menu.c:926
+#: ../gnome-panel/menu.c:930
 msgid "Add this launcher to _desktop"
 msgstr "Aggiungi questo lanciatore alla _scrivania"
 
-#: ../gnome-panel/menu.c:938
+#: ../gnome-panel/menu.c:942
 msgid "_Entire menu"
 msgstr "_Tutto il menù"
 
-#: ../gnome-panel/menu.c:943
+#: ../gnome-panel/menu.c:947
 msgid "Add this as _drawer to panel"
 msgstr "Aggiungi questo al pannello come _cassetto"
 
-#: ../gnome-panel/menu.c:950
+#: ../gnome-panel/menu.c:954
 msgid "Add this as _menu to panel"
 msgstr "Aggiungi questo al pannello come _menù"
 
@@ -1539,17 +1539,17 @@ msgstr "Trova un ele_mento da aggiungere al pannello:"
 # tradurre in modo da dare un genere ed un numero, specie considerando che dal
 # punto di vista dell'utente finale non è ancora chiaro se chiamale applet (f)
 # o oggetti (m)
-#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:745
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "Fine inattesa di «%s»"
 
-#: ../gnome-panel/panel-applet-frame.c:742
+#: ../gnome-panel/panel-applet-frame.c:747
 msgid "Panel object has quit unexpectedly"
 msgstr "Terminazione dell'oggetto del pannello inattesa"
 
 # il senso è quello.
-#: ../gnome-panel/panel-applet-frame.c:749
+#: ../gnome-panel/panel-applet-frame.c:754
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1557,20 +1557,20 @@ msgstr ""
 "Scegliendo di ricaricare un oggetto del pannello, tale oggetto viene in modo "
 "automatico aggiunto nuovamente al pannello."
 
-#: ../gnome-panel/panel-applet-frame.c:755
+#: ../gnome-panel/panel-applet-frame.c:760
 msgid "_Don't Reload"
 msgstr "_Non ricaricare"
 
-#: ../gnome-panel/panel-applet-frame.c:756
+#: ../gnome-panel/panel-applet-frame.c:761
 msgid "_Reload"
 msgstr "_Ricarica"
 
-#: ../gnome-panel/panel-applet-frame.c:910
+#: ../gnome-panel/panel-applet-frame.c:915
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Il pannello ha riscontrato un problema durante il caricamento di «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:926
+#: ../gnome-panel/panel-applet-frame.c:931
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Eliminare l'applet dalla propria configurazione?"
 
@@ -1916,11 +1916,11 @@ msgstr ""
 "Cambia l'aspetto e il comportamento dell'ambiente grafico, mostra l'aiuto o "
 "termina la sessione"
 
-#: ../gnome-panel/panel-menu-bar.c:191
+#: ../gnome-panel/panel-menu-bar.c:174
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: ../gnome-panel/panel-menu-bar.c:430 ../gnome-panel/panel-menu-button.c:683
+#: ../gnome-panel/panel-menu-bar.c:410 ../gnome-panel/panel-menu-button.c:683
 msgid "_Edit Menus"
 msgstr "_Modifica menù"
 
@@ -1993,7 +1993,7 @@ msgstr "Computer"
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
-"Esplora tutti i dischi e le cartele locali e remoti accessibili da questo "
+"Esplora tutti i dischi locali e remoti e le cartella accessibili da questo "
 "computer"
 
 #. is_exec?
