@@ -29,7 +29,7 @@
 #define PANEL_LAYOUT_TOPLEVEL_DEFAULT_PREFIX "toplevel"
 #define PANEL_LAYOUT_OBJECT_PATH             "/org/gnome/gnome-panel/layout/objects/"
 #define PANEL_LAYOUT_OBJECT_DEFAULT_PREFIX   "object"
-#define PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX    "/instance-config/"
+#define PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX    "instance-config/"
 
 #define PANEL_TOPLEVEL_SCHEMA               "org.gnome.gnome-panel.toplevel"
 #define PANEL_TOPLEVEL_NAME_KEY             "name"
@@ -65,5 +65,8 @@
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY    "toplevel-id"
 #define PANEL_OBJECT_POSITION_KEY       "position"
 #define PANEL_OBJECT_PACK_END_KEY       "pack-end"
+
+#define PANEL_LAUNCHER_SCHEMA      "org.gnome.gnome-panel.launcher"
+#define PANEL_LOCATION_KEY         "location"
 
 #endif /* __PANEL_SCHEMAS_H__ */

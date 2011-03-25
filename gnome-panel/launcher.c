@@ -32,16 +32,16 @@
 
 #include "button-widget.h"
 #include "panel-util.h"
-#include "panel-gconf.h"
-#include "panel-profile.h"
 #include "xstuff.h"
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
 #include "panel-globals.h"
 #include "panel-multiscreen.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
+#include "panel-schemas.h"
 
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
@@ -679,22 +679,19 @@ static void
 launcher_saved (GtkWidget *dialog,
 		Launcher  *launcher)
 {
-	const char  *uri;
-	GConfClient *client;
-	const char  *key;
+	const char *uri;
 
 	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
 	if (panel_launcher_get_filename (uri) != NULL)
 		uri = panel_launcher_get_filename (uri);
 
 	if (uri && launcher->location && strcmp (uri, launcher->location)) {
-		client = panel_gconf_get_client ();
+		GSettings *settings;
 
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
-					    launcher->info->id,
-					    "launcher_location");
-
-		gconf_client_set_string (client, key, uri, NULL);
+		settings = panel_layout_get_instance_settings (launcher->info->settings,
+							       PANEL_LAUNCHER_SCHEMA);
+		g_settings_set_string (settings, PANEL_LOCATION_KEY, uri);
+		g_object_unref (settings);
 
 		if (launcher->location)
 			g_free (launcher->location);
@@ -813,22 +810,23 @@ launcher_load (PanelWidget *panel_widget,
 	       const char  *id,
 	       GSettings   *settings)
 {
-	GConfClient *client;
-	Launcher    *launcher;
-	const char  *key;
-	char        *launcher_location;
+	GSettings *settings_instance;
+	Launcher  *launcher;
+	char      *launcher_location;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	client  = panel_gconf_get_client ();
+	settings_instance = panel_layout_get_instance_settings (settings,
+								PANEL_LAUNCHER_SCHEMA);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
-	launcher_location = gconf_client_get_string (client, key, NULL);
+	launcher_location = g_settings_get_string (settings_instance,
+						   PANEL_LOCATION_KEY);
 
-	if (!launcher_location) {
-		g_printerr (_("Key %s is not set, cannot load launcher\n"),
-			    key);
+	if (PANEL_GLIB_STR_EMPTY (launcher_location)) {
+		g_printerr (_("Launcher location is not set, cannot load launcher\n"));
+		g_free (launcher_location);
+		g_object_unref (settings_instance);
 		return;
 	}
 
@@ -837,8 +835,8 @@ launcher_load (PanelWidget *panel_widget,
 					 id, settings);
 
 	if (launcher) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
-		if (!gconf_client_key_is_writable (client, key, NULL)) {
+		if (!g_settings_is_writable (settings_instance,
+					     PANEL_LOCATION_KEY)) {
 			AppletUserMenu *menu;
 
 			menu = panel_applet_get_callback (launcher->info->user_menu,
@@ -849,6 +847,7 @@ launcher_load (PanelWidget *panel_widget,
 	}
 
 	g_free (launcher_location);
+	g_object_unref (settings_instance);
 }
 
 static void
@@ -962,20 +961,18 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 			       int            position,
 			       const char    *location)
 {
-	GConfClient *client;
-	const char  *key;
-	char        *id;
-	char        *no_uri;
-	const char  *new_location;
+	char       *id;
+	GSettings  *settings;
+	GSettings  *settings_instance;
+	char       *no_uri;
+	const char *new_location;
 
 	g_return_if_fail (location != NULL);
 
-	client = panel_gconf_get_client ();
-
-	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER,
-						   toplevel_id,
-						   position,
-						   FALSE);
+	id = panel_layout_object_create_start (PANEL_OBJECT_LAUNCHER,
+					       NULL,
+					       toplevel_id, position, FALSE,
+					       &settings);
 
 	no_uri = NULL;
 	/* if we have an URI, it might contain escaped characters (? : etc)
@@ -989,13 +986,16 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	if (new_location == NULL)
 		new_location = no_uri;
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS,
-				    id,
-				    "launcher_location");
-	gconf_client_set_string (client, key, new_location, NULL);
+	settings_instance = panel_layout_get_instance_settings (settings,
+								PANEL_LAUNCHER_SCHEMA);
 
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+	g_settings_set_string (settings_instance, PANEL_LOCATION_KEY,
+			       new_location);
 
+	panel_layout_object_create_finish (id);
+
+	g_object_unref (settings_instance);
+	g_object_unref (settings);
 	g_free (no_uri);
 	g_free (id);
 }
