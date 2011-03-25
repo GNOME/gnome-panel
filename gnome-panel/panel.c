@@ -42,6 +42,7 @@
 #include "panel-globals.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
+#include "panel-layout.h"
 #include "panel-schemas.h"
 
 enum {
@@ -817,12 +818,16 @@ drop_internal_icon (PanelWidget *panel,
 		return FALSE;
 
 	if (old_launcher && old_launcher->button) {
+		const char *object_id;
+
 		if (old_launcher->prop_dialog) {
 			g_signal_handler_disconnect (old_launcher->button,
 						     old_launcher->destroy_handler);
 			launcher_properties_destroy (old_launcher);
 		}
-		panel_profile_delete_object (old_launcher->info);
+
+		object_id = panel_applet_get_id (old_launcher->info);
+		panel_layout_delete_object (object_id);
 	}
 
 	return TRUE;
@@ -945,7 +950,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		info = g_slist_nth_data (applet_list, applet_index);
 
 		if (info)
-			panel_profile_delete_object (info);
+			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
 	return success;
@@ -1338,7 +1343,7 @@ panel_is_applet_right_stick (GtkWidget *applet)
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {
-	panel_profile_delete_toplevel (toplevel);
+	panel_layout_delete_toplevel (panel_toplevel_get_toplevel_id (toplevel));
 } 
 
 static void

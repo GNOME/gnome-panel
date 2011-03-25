@@ -36,7 +36,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "applet.h"
-#include "panel-compatibility.h"
 #include "panel-widget.h"
 #include "panel-util.h"
 #include "panel-profile.h"
@@ -64,7 +63,6 @@ typedef enum {
 	FIRST_MENU,
 	APPLICATIONS_MENU,
 #define DEFAULT_MENU      APPLICATIONS_MENU
-	SETTINGS_MENU,
 	GNOMECC_MENU,
 	LAST_MENU
 } MenuPathRoot;
@@ -77,9 +75,7 @@ typedef struct {
 
 static MenuPathRootItem root_items [] = {
 	{ APPLICATIONS_MENU, "applications", "applications.menu" },
-	{ GNOMECC_MENU,      "gnomecc",      "gnomecc.menu"      },
-	/* compatibility with GNOME < 2.91.0 */
-	{ SETTINGS_MENU,     "settings",     NULL                }
+	{ GNOMECC_MENU,      "gnomecc",      "gnomecc.menu"      }
 };
 
 struct _PanelMenuButtonPrivate {
@@ -876,11 +872,6 @@ panel_menu_button_load (PanelWidget *panel,
 	scheme = g_strndup (menu_path, strcspn (menu_path, ":"));
 	root = panel_menu_scheme_to_path_root (scheme);
 	g_free (scheme);
-	if (root == SETTINGS_MENU) {
-		panel_compatiblity_migrate_settings_menu_button (client, id);
-		g_free (menu_path);
-		return;
-       }
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);

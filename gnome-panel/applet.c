@@ -32,6 +32,7 @@
 #include "panel-menu-button.h"
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
@@ -150,7 +151,7 @@ applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
 
-	panel_profile_delete_object (info);
+	panel_layout_delete_object (info->id);
 }
 
 static inline GdkScreen *
@@ -999,7 +1000,7 @@ panel_applet_register (GtkWidget       *applet,
 
 		if (!l) {
 			g_warning (_("Cannot find an empty spot"));
-			panel_profile_delete_object (info);
+			panel_layout_delete_object (info->id);
 			return NULL;
 		}
 	}

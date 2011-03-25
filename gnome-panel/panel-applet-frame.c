@@ -40,6 +40,7 @@
 #include "applet.h"
 #include "panel-marshal.h"
 #include "panel-background.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-object-loader.h"
 #include "panel-stock-icons.h"
@@ -708,7 +709,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		   it, so we'll just ignore this.  FIXME: handle this
 		   more correctly I suppose. */
 		if (panel_profile_id_lists_are_writable ())
-			panel_profile_delete_object (info);
+			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
 	g_object_unref (frame);
@@ -784,7 +785,7 @@ _panel_applet_frame_applet_remove (PanelAppletFrame *frame)
 	info = frame->priv->applet_info;
 	frame->priv->applet_info = NULL;
 
-	panel_profile_delete_object (info);
+	panel_layout_delete_object (panel_applet_get_id (info));
 }
 
 void
@@ -875,7 +876,7 @@ panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 								 item);
 		}
 
-		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+		panel_layout_delete_object (id);
 	}
 
 	g_free (id);

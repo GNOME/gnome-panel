@@ -43,8 +43,14 @@
 
 #include "panel-layout.h"
 
-#define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
 static GSettings *layout_settings = NULL;
+
+#define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
+
+static void panel_layout_load_toplevel    (const char *toplevel_id);
+static void panel_layout_load_object      (const char *object_id);
+static void panel_layout_changed_toplevel (void);
+static void panel_layout_changed_object   (void);
 
 static GQuark
 panel_layout_error_quark (void)
@@ -542,6 +548,239 @@ panel_layout_append_from_file (const char *layout_file,
         panel_layout_append_from_file_real (layout_file, -1, error_fatal);
 }
 
+
+/*******************\
+ * Changing layout *
+\*******************/
+
+
+void
+panel_layout_delete_toplevel (const char *toplevel_id)
+{
+        char  *path;
+        char  *id_copy;
+        char **objects;
+        int    i;
+
+        if (PANEL_GLIB_STR_EMPTY (toplevel_id))
+                return;
+
+        /* The original will be freed if removal succeeds */
+        id_copy = g_strdup (toplevel_id);
+
+        if (!panel_gsettings_remove_all_from_strv (layout_settings,
+                                                   PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
+                                                   id_copy)) {
+                g_free (id_copy);
+                return;
+        }
+
+        path = g_strdup_printf ("%s%s/",
+                                PANEL_LAYOUT_TOPLEVEL_PATH, id_copy);
+        panel_dconf_recursive_reset (path, NULL);
+
+        /* remove all applets that were on this toplevel */
+
+        objects = g_settings_get_strv (layout_settings,
+                                       PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
+
+        for (i = 0; objects[i] != NULL; i++) {
+                GSettings *settings;
+                char       *object_toplevel_id;
+
+                path = g_strdup_printf ("%s%s/",
+                                        PANEL_LAYOUT_OBJECT_PATH, objects[i]);
+
+                settings = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
+                object_toplevel_id = g_settings_get_string (settings,
+                                                            PANEL_OBJECT_TOPLEVEL_ID_KEY);
+
+                g_object_unref (settings);
+                g_free (path);
+
+                if (g_strcmp0 (id_copy, object_toplevel_id) == 0)
+                        panel_layout_delete_object (objects[i]);
+
+                g_free (object_toplevel_id);
+        }
+
+        g_strfreev (objects);
+
+        g_free (id_copy);
+}
+
+void
+panel_layout_delete_object (const char *object_id)
+{
+        char *path;
+        char *id_copy;
+
+        if (PANEL_GLIB_STR_EMPTY (object_id))
+                return;
+
+        /* The original will be freed if removal succeeds */
+        id_copy = g_strdup (object_id);
+
+        if (!panel_gsettings_remove_all_from_strv (layout_settings,
+                                                   PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
+                                                   id_copy)) {
+                g_free (id_copy);
+                return;
+        }
+
+        path = g_strdup_printf ("%s%s/",
+                                PANEL_LAYOUT_OBJECT_PATH, id_copy);
+        panel_dconf_recursive_reset (path, NULL);
+
+        g_free (id_copy);
+}
+
+static void
+panel_layout_changed_toplevel (void)
+{
+        char       **ids;
+        GSList      *to_remove;
+        gboolean     loading;
+        gboolean     found;
+        const char  *id;
+        GSList      *l;
+        int          i;
+
+        ids = g_settings_get_strv (layout_settings,
+                                   PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
+
+        /* Remove what is not in the layout anymore */
+
+        to_remove = NULL;
+
+        for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
+                id = panel_toplevel_get_toplevel_id (l->data);
+                found = FALSE;
+
+                for (i = 0; ids[i] != NULL; i++) {
+                        if (g_strcmp0 (ids[i], id) == 0) {
+                                found = TRUE;
+                                break;
+                        }
+                }
+
+                if (!found)
+                        to_remove = g_slist_prepend (to_remove, l->data);
+        }
+
+        for (l = to_remove; l != NULL; l = l->next)
+                gtk_widget_destroy (GTK_WIDGET (l->data));
+
+        g_slist_free (to_remove);
+
+        /* Add what appeared in the layout */
+
+        loading = FALSE;
+
+        for (i = 0; ids[i] != NULL; i++) {
+                found = FALSE;
+
+                for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
+                        id = panel_toplevel_get_toplevel_id (l->data);
+                        if (g_strcmp0 (ids[i], id) == 0) {
+                                found = TRUE;
+                                break;
+                        }
+                }
+
+                if (!found) {
+                        panel_layout_load_toplevel (ids[i]);
+                        loading = TRUE;
+                }
+        }
+
+        g_strfreev (ids);
+
+        /* Reload list of objects to get those that might be on the new
+         * toplevels */
+        if (loading)
+                panel_layout_changed_object ();
+}
+
+static void
+panel_layout_changed_object (void)
+{
+        char       **ids;
+        GSList      *to_remove;
+        gboolean     loading;
+        gboolean     found;
+        const char  *id;
+        GSList      *l;
+        int          i;
+
+        ids = g_settings_get_strv (layout_settings,
+                                   PANEL_LAYOUT_OBJECT_ID_LIST_KEY);
+
+        /* Remove what is not in the layout anymore */
+
+        to_remove = NULL;
+
+        for (l = panel_applet_list_applets (); l != NULL; l = l->next) {
+                id = panel_applet_get_id (l->data);
+                found = FALSE;
+
+                for (i = 0; ids[i] != NULL; i++) {
+                        if (g_strcmp0 (ids[i], id) == 0) {
+                                found = TRUE;
+                                break;
+                        }
+                }
+
+                if (!found)
+                        to_remove = g_slist_prepend (to_remove, l->data);
+        }
+
+        for (l = to_remove; l != NULL; l = l->next)
+                panel_applet_clean (l->data);
+
+        g_slist_free (to_remove);
+
+        /* Add what appeared in the layout */
+
+        loading = FALSE;
+
+        for (i = 0; ids[i] != NULL; i++) {
+                found = FALSE;
+
+                if (panel_object_loader_is_queued (ids[i]))
+                        continue;
+
+                for (l = panel_applet_list_applets (); l != NULL; l = l->next) {
+                        id = panel_applet_get_id (l->data);
+                        if (g_strcmp0 (ids[i], id) == 0) {
+                                found = TRUE;
+                                break;
+                        }
+                }
+
+                if (!found) {
+                        panel_layout_load_object (ids[i]);
+                        loading = TRUE;
+                }
+        }
+
+        g_strfreev (ids);
+
+        if (loading)
+                panel_object_loader_do_load (FALSE);
+}
+
+static void
+panel_layout_changed (GSettings *settings,
+                      char      *key,
+                      gpointer   user_data)
+{
+        if (g_strcmp0 (key, PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) == 0)
+                panel_layout_changed_toplevel ();
+        else if (g_strcmp0 (key, PANEL_LAYOUT_OBJECT_ID_LIST_KEY) == 0)
+                panel_layout_changed_object ();
+}
+
 /******************\
  * Loading layout *
 \******************/
@@ -704,6 +943,13 @@ panel_layout_load (void)
 
         g_strfreev (objects);
 
+        g_signal_connect (layout_settings, "changed",
+                          G_CALLBACK (panel_layout_changed), NULL);
+
+        /* This needs to happen after we've loaded the current toplevels (to
+         * know if we have toplevels on all screens), and after we've connected
+         * to the settings changed notifications (to automatically load created
+         * toplevels) */
         panel_layout_ensure_toplevel_per_screen ();
 
         panel_object_loader_do_load (TRUE);

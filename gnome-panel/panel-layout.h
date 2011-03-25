@@ -34,6 +34,9 @@ void panel_layout_append_from_file (const char *layout_file,
 
 gboolean panel_layout_load (void);
 
+void panel_layout_delete_toplevel (const char *toplevel_id);
+void panel_layout_delete_object   (const char *object_id);
+
 G_END_DECLS
 
 #endif /* __PANEL_LAYOUT_H__ */
