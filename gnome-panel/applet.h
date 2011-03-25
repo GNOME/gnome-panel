@@ -17,6 +17,7 @@ G_BEGIN_DECLS
 typedef struct {
 	PanelObjectType  type;
 	GtkWidget       *widget;
+	GSettings       *settings;
 
 	GtkWidget       *menu;
 	GtkWidget       *edit_menu;
@@ -45,13 +46,12 @@ typedef struct {
 } AppletUserMenu;
 
 AppletInfo *panel_applet_register    (GtkWidget       *applet,
-				      gpointer         data,
-				      GDestroyNotify   data_destroy,
 				      PanelWidget     *panel,
-				      gint             pos,
-				      gboolean         exactpos,
 				      PanelObjectType  type,
-				      const char      *id);
+				      const char      *id,
+				      GSettings       *settings,
+				      gpointer         data,
+				      GDestroyNotify   data_destroy);
 
 const char *panel_applet_get_id           (AppletInfo      *info);
 const char *panel_applet_get_id_by_widget (GtkWidget       *widget);
@@ -77,6 +77,7 @@ void        panel_applet_save_position           (AppletInfo *applet_info,
 						  gboolean    immediate);
 
 int         panel_applet_get_position    (AppletInfo *applet);
+GSettings  *panel_applet_get_settings    (AppletInfo *applet);
 
 /* True if all the keys relevant to moving are writable
    (position, toplevel_id, panel_right_stick) */

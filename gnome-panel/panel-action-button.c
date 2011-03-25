@@ -680,11 +680,10 @@ panel_action_button_style_updated (PanelActionButton *button)
 }
 
 static void
-panel_action_button_load_helper (PanelActionButtonType  type,
-				 PanelWidget           *panel,
-				 int                    position,
-				 gboolean               exactpos,
-				 const char            *id)
+panel_action_button_load_helper (PanelWidget           *panel,
+				 const char            *id,
+				 GSettings             *settings,
+				 PanelActionButtonType  type)
 {
 	PanelActionButton *button;
 
@@ -692,10 +691,10 @@ panel_action_button_load_helper (PanelActionButtonType  type,
 
 	button = g_object_new (PANEL_TYPE_ACTION_BUTTON, "action-type", type, NULL);
 
-	button->priv->info = panel_applet_register (GTK_WIDGET (button),
-						    NULL, NULL,
-						    panel, position,
-						    exactpos, PANEL_OBJECT_ACTION, id);
+	button->priv->info = panel_applet_register (GTK_WIDGET (button), panel,
+						    PANEL_OBJECT_ACTION, id,
+						    settings,
+						    NULL, NULL);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -738,11 +737,9 @@ panel_action_button_create (PanelToplevel         *toplevel,
 }
 
 void
-panel_action_button_load (GSettings *settings,
-			  PanelWidget *panel,
-			  int          position,
-			  gboolean     exactpos,
+panel_action_button_load (PanelWidget *panel,
 			  const char  *id,
+			  GSettings *settings,
 			  const char  *detail_for_type)
 {
 	int type = PANEL_ACTION_NONE;
@@ -761,8 +758,7 @@ panel_action_button_load (GSettings *settings,
 		return;
 	}
 
-	panel_action_button_load_helper (type, panel,
-				  position, exactpos, id);
+	panel_action_button_load_helper (panel, id, settings, type);
 }
 
 void

@@ -776,7 +776,7 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		break;
 	case PANEL_ADDTO_LAUNCHER_NEW:
 		ask_about_launcher (NULL, dialog->panel_widget,
-				    dialog->insertion_position, FALSE);
+				    dialog->insertion_position);
 		break;
 	case PANEL_ADDTO_MENU:
 		panel_menu_button_create (dialog->panel_widget->toplevel,

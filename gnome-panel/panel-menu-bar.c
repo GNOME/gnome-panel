@@ -384,11 +384,9 @@ panel_menu_bar_on_draw (GtkWidget *widget,
 }
 
 void
-panel_menu_bar_load (GSettings   *settings,
-		     PanelWidget *panel,
-		     int          position,
-		     gboolean     exactpos,
-		     const char  *id)
+panel_menu_bar_load (PanelWidget *panel,
+		     const char  *id,
+		     GSettings   *settings)
 {
 	PanelMenuBar *menubar;
 
@@ -397,9 +395,10 @@ panel_menu_bar_load (GSettings   *settings,
 	menubar = g_object_new (PANEL_TYPE_MENU_BAR, NULL);
 
 	menubar->priv->info = panel_applet_register (
-					GTK_WIDGET (menubar), NULL, NULL,
-					panel, position, exactpos,
-					PANEL_OBJECT_MENU_BAR, id);
+					GTK_WIDGET (menubar), panel,
+					PANEL_OBJECT_MENU_BAR, id,
+					settings,
+					NULL, NULL);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
 		return;

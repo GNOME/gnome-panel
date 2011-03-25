@@ -63,11 +63,9 @@ void       panel_action_button_create           (PanelToplevel         *toplevel
 void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);
 
-void       panel_action_button_load             (GSettings              *settings,
-						 PanelWidget            *panel,
-						 int                     position,
-						 gboolean                exactpos,
+void       panel_action_button_load             (PanelWidget            *panel,
 						 const char             *id,
+						 GSettings              *settings,
 						 const char             *detail);
 
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,

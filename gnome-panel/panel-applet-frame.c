@@ -56,15 +56,13 @@ static void panel_applet_frame_loading_failed  (const char  *iid,
 
 static void panel_applet_frame_load_helper     (const gchar *iid,
 						PanelWidget *panel,
-						int          position,
-						gboolean     exactpos,
-						const char  *id);
+						const char  *id,
+						GSettings   *settings);
 
 struct _PanelAppletFrameActivating {
 	PanelWidget *panel;
-	int          position;
-	gboolean     exactpos;
 	char        *id;
+	GSettings   *settings;
 };
 
 /* PanelAppletFrame implementation */
@@ -563,11 +561,10 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	frame->priv->panel = frame_act->panel;
 	gtk_widget_show_all (GTK_WIDGET (frame));
 
-	info = panel_applet_register (GTK_WIDGET (frame), GTK_WIDGET (frame),
-				      NULL, frame->priv->panel,
-				      frame_act->position,
-				      frame_act->exactpos, PANEL_OBJECT_APPLET,
-				      frame_act->id);
+	info = panel_applet_register (GTK_WIDGET (frame), frame->priv->panel,
+				      PANEL_OBJECT_APPLET, frame_act->id,
+				      frame_act->settings,
+				      GTK_WIDGET (frame), NULL);
 	frame->priv->applet_info = info;
 
 	panel_widget_set_applet_size_constrained (frame->priv->panel,
@@ -687,22 +684,24 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		PanelWidget *panel;
 		char        *iid;
 		char        *id = NULL;
-		int          position = -1;
+		GSettings   *settings = NULL;
 
 		panel = frame->priv->panel;
 		iid   = g_strdup (frame->priv->iid);
 
 		if (info) {
 			id = g_strdup (info->id);
-			position  = panel_applet_get_position (info);
+			settings = panel_applet_get_settings (info);
+			g_object_ref (settings);
 			panel_applet_clean (info);
 		}
 
-		panel_applet_frame_load_helper (iid, panel,
-						position, TRUE, id);
+		panel_applet_frame_load_helper (iid, panel, id, settings);
 
 		g_free (iid);
 		g_free (id);
+		if (settings)
+			g_object_unref (settings);
 
 	} else if (info) {
 		/* if we can't write to applets list we can't really delete
@@ -815,6 +814,7 @@ enum {
 static void
 panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act)
 {
+	g_object_unref (frame_act->settings);
 	g_free (frame_act->id);
 	g_slice_free (PanelAppletFrameActivating, frame_act);
 }
@@ -938,9 +938,8 @@ panel_applet_frame_loading_failed (const char  *iid,
 static void
 panel_applet_frame_load_helper (const gchar *iid,
 				PanelWidget *panel,
-				int          position,
-				gboolean     exactpos,
-				const char  *id)
+				const char  *id,
+				GSettings   *settings)
 {
 	PanelAppletFrameActivating *frame_act;
 
@@ -961,9 +960,8 @@ panel_applet_frame_load_helper (const gchar *iid,
 
 	frame_act = g_slice_new0 (PanelAppletFrameActivating);
 	frame_act->panel    = panel;
-	frame_act->position = position;
-	frame_act->exactpos = exactpos;
 	frame_act->id       = g_strdup (id);
+	frame_act->settings = g_object_ref (settings);
 
 	if (!panel_applets_manager_load_applet (iid, frame_act)) {
 		panel_applet_frame_loading_failed (iid, panel, id);
@@ -972,10 +970,9 @@ panel_applet_frame_load_helper (const gchar *iid,
 }
 
 void
-panel_applet_frame_load (GSettings   *settings,
-			 PanelWidget *panel_widget,
-			 int          position,
-			 const char  *id)
+panel_applet_frame_load (PanelWidget *panel_widget,
+			 const char  *id,
+			 GSettings   *settings)
 {
 	gchar *applet_iid;
 
@@ -988,8 +985,7 @@ panel_applet_frame_load (GSettings   *settings,
 		return;
 	}
 
-	panel_applet_frame_load_helper (applet_iid, panel_widget,
-					position, TRUE, id);
+	panel_applet_frame_load_helper (applet_iid, panel_widget, id, settings);
 
 	g_free (applet_iid);
 }

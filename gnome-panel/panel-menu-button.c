@@ -627,9 +627,8 @@ panel_menu_button_load_helper (const char  *menu_path,
 			       gboolean     use_custom_icon,
 			       const char  *tooltip,
 			       PanelWidget *panel,
-			       int          position,
-			       gboolean     exactpos,
-			       const char  *id)
+			       const char  *id,
+			       GSettings   *settings)
 {
 	PanelMenuButton *button;
 	AppletInfo      *info;
@@ -645,9 +644,11 @@ panel_menu_button_load_helper (const char  *menu_path,
 			       "has-arrow", TRUE,
 			       NULL);
 
-	info = panel_applet_register (GTK_WIDGET (button), NULL, NULL,
-				      panel, position, exactpos,
-				      PANEL_OBJECT_MENU, id);
+	info = panel_applet_register (GTK_WIDGET (button),
+				      panel,
+				      PANEL_OBJECT_MENU, id,
+				      settings,
+				      NULL, NULL);
 	if (!info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -853,11 +854,9 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 }
 
 void
-panel_menu_button_load (GSettings   *settings,
-			PanelWidget *panel,
-			int          position,
-			gboolean     exactpos,
-			const char  *id)
+panel_menu_button_load (PanelWidget *panel,
+			const char  *id,
+			GSettings   *settings)
 {
 	GConfClient  *client;
 	char         *scheme;
@@ -901,9 +900,8 @@ panel_menu_button_load (GSettings   *settings,
 				       use_custom_icon,
 				       tooltip,
 				       panel,
-				       position,
-				       exactpos,
-				       id);
+				       id,
+				       settings);
 
 	g_free (menu_path);
 	g_free (custom_icon);

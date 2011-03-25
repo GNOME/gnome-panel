@@ -228,21 +228,20 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 }
 
 void
-panel_separator_load (GSettings *settings,
-		      PanelWidget *panel,
-		      int          position,
-		      const char  *id)
+panel_separator_load (PanelWidget *panel,
+		      const char  *id,
+		      GSettings   *settings)
 {
 	PanelSeparator *separator;
 
 	separator = g_object_new (PANEL_TYPE_SEPARATOR, NULL);
 
 	separator->priv->info = panel_applet_register (GTK_WIDGET (separator),
-						       NULL, NULL,
-						       panel, position,
-						       TRUE,
+						       panel,
 						       PANEL_OBJECT_SEPARATOR,
-						       id);
+						       id, settings,
+						       NULL, NULL
+						       );
 
 	if (!separator->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (separator));

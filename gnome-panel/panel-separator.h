@@ -54,10 +54,9 @@ struct _PanelSeparatorClass {
 GType  panel_separator_get_type          (void) G_GNUC_CONST;	
 void   panel_separator_create            (PanelToplevel    *toplevel,
 					  int               position);
-void   panel_separator_load              (GSettings        *settings,
-					  PanelWidget      *panel_widget,
-					  gint              position,
-					  const char       *id);
+void   panel_separator_load              (PanelWidget      *panel_widget,
+					  const char       *id,
+					  GSettings        *settings);
 void   panel_separator_set_orientation   (PanelSeparator   *separator,
 					  PanelOrientation  orientation);
 void   panel_separator_change_background (PanelSeparator   *separator);

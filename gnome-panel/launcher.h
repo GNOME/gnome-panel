@@ -51,17 +51,15 @@ void		launcher_launch    		(Launcher  *launcher,
 
 void		launcher_properties		(Launcher  *launcher);
 
-void            launcher_load                   (GSettings   *settings,
-						 PanelWidget *panel_widget,
-						 gint         position,
-						 const char  *id);
+void            launcher_load                   (PanelWidget *panel_widget,
+						 const char  *id,
+						 GSettings   *settings);
 
 void            panel_launcher_delete           (Launcher *launcher);
 
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
-						 int pos,
-						 gboolean exactpos);
+						 int pos);
 
 Launcher *	find_launcher			(const char *path);
 

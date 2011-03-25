@@ -73,11 +73,9 @@ gboolean   panel_menu_button_get_use_menu_path   (PanelMenuButton  *button);
 void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
 						  gboolean          use_custom_icon);
 
-void       panel_menu_button_load                (GSettings        *settings,
-						  PanelWidget      *panel,
-						  int               position,
-						  gboolean          exactpos,
-						  const char       *id);
+void       panel_menu_button_load                (PanelWidget      *panel,
+						  const char       *id,
+						  GSettings        *settings);
 
 void       panel_menu_button_invoke_menu         (PanelMenuButton  *button,
 						  const char       *callback_name);

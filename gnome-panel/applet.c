@@ -782,6 +782,10 @@ panel_applet_destroy (GtkWidget  *widget,
 	g_list_free (info->user_menu);
 	info->user_menu = NULL;
 
+	if (info->settings)
+		g_object_unref (info->settings);
+	info->settings = NULL;
+
 	g_free (info->id);
 	info->id = NULL;
 
@@ -962,15 +966,15 @@ panel_applet_get_by_type (PanelObjectType object_type, GdkScreen *screen)
 
 AppletInfo *
 panel_applet_register (GtkWidget       *applet,
-		       gpointer         data,
-		       GDestroyNotify   data_destroy,
 		       PanelWidget     *panel,
-		       gint             pos,
-		       gboolean         exactpos,
 		       PanelObjectType  type,
-		       const char      *id)
+		       const char      *id,
+		       GSettings       *settings,
+		       gpointer         data,
+		       GDestroyNotify   data_destroy)
 {
 	AppletInfo *info;
+	int         pos;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -983,6 +987,7 @@ panel_applet_register (GtkWidget       *applet,
 	info = g_new0 (AppletInfo, 1);
 	info->type         = type;
 	info->widget       = applet;
+	info->settings     = g_object_ref (settings);
 	info->menu         = NULL;
 	info->edit_menu    = NULL;
 	info->data         = data;
@@ -994,14 +999,24 @@ panel_applet_register (GtkWidget       *applet,
 
 	registered_applets = g_slist_append (registered_applets, info);
 
-	if (panel_widget_add (panel, applet, pos, exactpos) == -1 &&
-	    panel_widget_add (panel, applet, 0, TRUE) == -1) {
+	/* Find where to insert the applet */
+        pos = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
+        if (g_settings_get_boolean (info->settings, PANEL_OBJECT_PACK_END_KEY)) {
+                if (!panel->packed)
+                        pos = panel->size - pos;
+                else
+                        pos = -1;
+        }
+
+	/* Insert it */
+	if (panel_widget_add (panel, applet, pos, TRUE) == -1 &&
+	    panel_widget_add (panel, applet, 0, FALSE) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next) {
 			panel = PANEL_WIDGET (l->data);
 
-			if (panel_widget_add (panel, applet, 0, TRUE) != -1)
+			if (panel_widget_add (panel, applet, 0, FALSE) != -1)
 				break;
 		}
 
@@ -1054,6 +1069,14 @@ panel_applet_get_position (AppletInfo *applet)
 	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
 
 	return applet_data->pos;
+}
+
+GSettings *
+panel_applet_get_settings (AppletInfo *applet)
+{
+	g_return_val_if_fail (applet != NULL, NULL);
+
+	return applet->settings;
 }
 
 gboolean

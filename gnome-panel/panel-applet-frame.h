@@ -83,10 +83,9 @@ void  panel_applet_frame_create             (PanelToplevel       *toplevel,
 					     int                  position,
 					     const char          *iid);
 
-void  panel_applet_frame_load               (GSettings           *settings,
-					     PanelWidget         *panel_widget,
-					     int                  position,
-					     const char          *id);
+void  panel_applet_frame_load               (PanelWidget         *panel_widget,
+					     const char          *id,
+					     GSettings           *settings);
 
 void  panel_applet_frame_change_orientation (PanelAppletFrame    *frame,
 					     PanelOrientation     orientation);

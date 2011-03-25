@@ -766,11 +766,10 @@ lancher_properties_enabled (void)
 }
 
 static Launcher *
-load_launcher_applet (const char       *location,
-		      PanelWidget      *panel,
-		      int               pos,
-		      gboolean          exactpos,
-		      const char       *id)
+load_launcher_applet (const char  *location,
+		      PanelWidget *panel,
+		      const char  *id,
+		      GSettings   *settings)
 {
 	Launcher *launcher;
 
@@ -779,10 +778,10 @@ load_launcher_applet (const char       *location,
 	if (!launcher)
 		return NULL;
 
-	launcher->info = panel_applet_register (launcher->button, launcher,
-						free_launcher,
-						panel, pos, exactpos,
-						PANEL_OBJECT_LAUNCHER, id);
+	launcher->info = panel_applet_register (launcher->button, panel,
+						PANEL_OBJECT_LAUNCHER, id,
+						settings,
+						launcher, free_launcher);
 	if (!launcher->info) {
 		free_launcher (launcher);
 		return NULL;
@@ -810,10 +809,9 @@ load_launcher_applet (const char       *location,
 }
 
 void
-launcher_load (GSettings   *settings,
-	       PanelWidget *panel_widget,
-	       int          position,
-	       const char  *id)
+launcher_load (PanelWidget *panel_widget,
+	       const char  *id,
+	       GSettings   *settings)
 {
 	GConfClient *client;
 	Launcher    *launcher;
@@ -836,9 +834,7 @@ launcher_load (GSettings   *settings,
 
 	launcher = load_launcher_applet (launcher_location,
 					 panel_widget,
-					 position,
-					 TRUE,
-					 id);
+					 id, settings);
 
 	if (launcher) {
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
@@ -875,8 +871,7 @@ launcher_new_saved (GtkWidget *dialog,
 void
 ask_about_launcher (const char  *file,
 		    PanelWidget *panel,
-		    int          pos,
-		    gboolean     exactpos)
+		    int          pos)
 {
 	GtkWidget *dialog;
 	GKeyFile  *key_file;

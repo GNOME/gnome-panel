@@ -769,7 +769,7 @@ drop_urilist (PanelWidget *panel,
 					/* executable and local, so add a
 					 * launcher with it */
 					ask_about_launcher (filename, panel,
-							    pos, TRUE);
+							    pos);
 				else
 					success = FALSE;
 				g_free (filename);
@@ -928,7 +928,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 
 	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
 		if (panel_profile_id_lists_are_writable ()) {
-			ask_about_launcher (NULL, panel, pos, TRUE);
+			ask_about_launcher (NULL, panel, pos);
 			success = TRUE;
 		} else {
 			success = FALSE;
