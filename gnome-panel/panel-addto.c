@@ -958,13 +958,11 @@ panel_addto_dialog_free_application_list (GSList *application_list)
 static void
 panel_addto_dialog_free (PanelAddtoDialog *dialog)
 {
-	GConfClient *client;
-	GSList      *item;
-
-	client = panel_gconf_get_client ();
+	GSList *item;
 
 	if (dialog->name_notify)
-		g_signal_handler_disconnect (client, dialog->name_notify);
+		g_signal_handler_disconnect (dialog->panel_widget->toplevel,
+					     dialog->name_notify);
 	dialog->name_notify = 0;
 
 	if (dialog->search_text)
