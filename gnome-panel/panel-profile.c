@@ -72,25 +72,6 @@ static void panel_profile_object_id_list_update (GConfClient       *client,
 						 GConfValue        *value,
 						 PanelGConfKeyType  type);
 
-gboolean
-panel_profile_map_orientation_string (const char       *str,
-				      PanelOrientation *orientation)
-{
-	int mapped;
-
-	g_return_val_if_fail (orientation != NULL, FALSE);
-
-	if (!str)
-		return FALSE;
-
-	if (!gconf_string_to_enum (panel_orientation_map, str, &mapped))
-		return FALSE;
-
-	*orientation = mapped;
-
-	return TRUE;
-}
-
 const char *
 panel_profile_map_orientation (PanelOrientation orientation)
 {
@@ -170,51 +151,6 @@ panel_profile_find_new_id (PanelGConfKeyType type)
 
 	return retval;
 }
-
-static const char *
-panel_profile_get_toplevel_key (PanelToplevel *toplevel,
-				const char    *key)
-{
-	const char *id;
-
-	id = panel_toplevel_get_toplevel_id (toplevel);
-
-	return panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, id, key);
-}
-
-#define TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)                            \
-	gboolean                                                      \
-	panel_profile_is_writable_##p##_##s (PanelToplevel *toplevel) \
-	{                                                             \
-		GConfClient *client;                                  \
-		const char  *key;                                     \
-		client = panel_gconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		return gconf_client_key_is_writable (client, key, NULL); \
-	}
-
-PanelOrientation
-panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
-{
-	PanelOrientation  orientation;
-	GConfClient      *client;
-	const char       *key;
-	char             *str;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "orientation");
-	str = gconf_client_get_string (client, key, NULL);
-
-	if (!panel_profile_map_orientation_string (str, &orientation))
-	    orientation = panel_toplevel_get_orientation (toplevel);
-
-	g_free (str);
-
-	return orientation;
-}
-
-TOPLEVEL_IS_WRITABLE_FUNC ("orientation", toplevel, orientation)
 
 static void
 panel_profile_save_id_list (PanelGConfKeyType  type,
@@ -1012,52 +948,4 @@ panel_profile_load (void)
 				 (GConfClientNotifyFunc) panel_profile_object_id_list_notify);
 
 	panel_applet_load_queued_applets (TRUE);
-}
-
-gboolean
-panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
-{
-	const char *key;
-	GConfClient *client;
-
-	if (panel_lockdown_get_panels_locked_down_s () ||
-	    !panel_profile_is_writable_toplevel_orientation (toplevel))
-		return FALSE;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "screen");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	key = panel_profile_get_toplevel_key (toplevel, "monitor");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	/* For expanded panels we don't really have to check 
-	   x and y */
-	if (panel_toplevel_get_expand (toplevel))
-		return TRUE;
-
-	key = panel_profile_get_toplevel_key (toplevel, "x");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "x_right");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "x_centered");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	key = panel_profile_get_toplevel_key (toplevel, "y");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "y_bottom");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-	key = panel_profile_get_toplevel_key (toplevel, "y_centered");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	return TRUE;
 }

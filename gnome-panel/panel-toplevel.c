@@ -236,6 +236,8 @@ static GSList       *toplevel_list = NULL;
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
 
+static gboolean panel_toplevel_position_is_writable (PanelToplevel *toplevel);
+
 static void panel_toplevel_bind_gsettings       (PanelToplevel *toplevel);
 static void panel_toplevel_set_toplevel_id      (PanelToplevel *toplevel,
 						 const char    *toplevel_id);
@@ -465,7 +467,7 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	/* If any of the position/orientation are not writable,
 	   then we can't really move freely */
 	if (op_type == PANEL_GRAB_OP_MOVE &&
-	    ! panel_profile_can_be_moved_freely (toplevel))
+	    !panel_toplevel_position_is_writable (toplevel))
 		return;
 
 	/* If size is not writable, then we can't resize */
@@ -4288,6 +4290,36 @@ panel_toplevel_get_panel_widget (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 
 	return toplevel->priv->panel_widget;
+}
+
+static gboolean
+panel_toplevel_position_is_writable (PanelToplevel *toplevel)
+{
+	if (panel_lockdown_get_panels_locked_down_s () ||
+	    !(g_settings_is_writable (toplevel->priv->settings,
+				      PANEL_TOPLEVEL_SCREEN_KEY) &&
+	      g_settings_is_writable (toplevel->priv->settings,
+				      PANEL_TOPLEVEL_MONITOR_KEY) &&
+	      g_settings_is_writable (toplevel->priv->settings,
+				      PANEL_TOPLEVEL_ORIENTATION_KEY)))
+		return FALSE;
+
+	/* For expanded panels we don't really have to check x and y */
+	if (panel_toplevel_get_expand (toplevel))
+		return TRUE;
+
+	return (g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_X_KEY) &&
+		g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_Y_KEY) &&
+		g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_X_RIGHT_KEY) &&
+		g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_Y_BOTTOM_KEY) &&
+		g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_X_CENTERED_KEY) &&
+		g_settings_is_writable (toplevel->priv->settings,
+					PANEL_TOPLEVEL_Y_CENTERED_KEY));
 }
 
 static gboolean
