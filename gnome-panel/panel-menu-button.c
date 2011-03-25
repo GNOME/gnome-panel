@@ -621,15 +621,15 @@ panel_menu_button_disconnect_from_gconf (PanelMenuButton *button)
 }
 
 static void
-panel_menu_button_load (const char  *menu_path,
-			gboolean     use_menu_path,
-			const char  *custom_icon,
-			gboolean     use_custom_icon,
-			const char  *tooltip,
-			PanelWidget *panel,
-			int          position,
-			gboolean     exactpos,
-			const char  *id)
+panel_menu_button_load_helper (const char  *menu_path,
+			       gboolean     use_menu_path,
+			       const char  *custom_icon,
+			       gboolean     use_custom_icon,
+			       const char  *tooltip,
+			       PanelWidget *panel,
+			       int          position,
+			       gboolean     exactpos,
+			       const char  *id)
 {
 	PanelMenuButton *button;
 	AppletInfo      *info;
@@ -853,10 +853,11 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 }
 
 void
-panel_menu_button_load_from_gconf (PanelWidget *panel,
-				   int          position,
-				   gboolean     exactpos,
-				   const char  *id)
+panel_menu_button_load (GSettings   *settings,
+			PanelWidget *panel,
+			int          position,
+			gboolean     exactpos,
+			const char  *id)
 {
 	GConfClient  *client;
 	char         *scheme;
@@ -894,15 +895,15 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_custom_icon");
 	use_custom_icon = gconf_client_get_bool (client, key, NULL);
 
-	panel_menu_button_load (menu_path,
-				use_menu_path,
-				custom_icon,
-				use_custom_icon,
-				tooltip,
-				panel,
-				position,
-				exactpos,
-				id);
+	panel_menu_button_load_helper (menu_path,
+				       use_menu_path,
+				       custom_icon,
+				       use_custom_icon,
+				       tooltip,
+				       panel,
+				       position,
+				       exactpos,
+				       id);
 
 	g_free (menu_path);
 	g_free (custom_icon);

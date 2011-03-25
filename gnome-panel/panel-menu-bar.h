@@ -56,7 +56,8 @@ GType      panel_menu_bar_get_type  (void) G_GNUC_CONST;
 void       panel_menu_bar_create           (PanelToplevel *toplevel,
 					    int            position);
 
-void       panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
+void       panel_menu_bar_load             (GSettings    *settings,
+					    PanelWidget  *panel,
 					    int           position,
 					    gboolean      exactpos,
 					    const char   *id);

@@ -383,8 +383,9 @@ panel_menu_bar_on_draw (GtkWidget *widget,
 	return FALSE;
 }
 
-static void
-panel_menu_bar_load (PanelWidget *panel,
+void
+panel_menu_bar_load (GSettings   *settings,
+		     PanelWidget *panel,
 		     int          position,
 		     gboolean     exactpos,
 		     const char  *id)
@@ -428,15 +429,6 @@ panel_menu_bar_load (PanelWidget *panel,
 	gtk_widget_set_can_focus (GTK_WIDGET (menubar), TRUE);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
-}
-
-void
-panel_menu_bar_load_from_gconf (PanelWidget *panel,
-				int          position,
-				gboolean     exactpos,
-				const char  *id)
-{
-	panel_menu_bar_load (panel, position, exactpos, id);
 }
 
 void

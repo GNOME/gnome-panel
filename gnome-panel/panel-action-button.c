@@ -680,11 +680,11 @@ panel_action_button_style_updated (PanelActionButton *button)
 }
 
 static void
-panel_action_button_load (PanelActionButtonType  type,
-			  PanelWidget           *panel,
-			  int                    position,
-			  gboolean               exactpos,
-			  const char            *id)
+panel_action_button_load_helper (PanelActionButtonType  type,
+				 PanelWidget           *panel,
+				 int                    position,
+				 gboolean               exactpos,
+				 const char            *id)
 {
 	PanelActionButton *button;
 
@@ -738,27 +738,30 @@ panel_action_button_create (PanelToplevel         *toplevel,
 }
 
 void
-panel_action_button_load_from_gconf (PanelWidget *panel,
-				     int          position,
-				     gboolean     exactpos,
-				     const char  *id)
+panel_action_button_load (GSettings *settings,
+			  PanelWidget *panel,
+			  int          position,
+			  gboolean     exactpos,
+			  const char  *id,
+			  const char  *detail_for_type)
 {
-	int          type;
-	const char  *key;
-	char        *action_type;
+	int type = PANEL_ACTION_NONE;
+	int i;
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "action_type");
-	action_type = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
+	for (i = 0; panel_action_type_map[i].str != NULL; i++) {
+		if (g_strcmp0 (detail_for_type,
+			       panel_action_type_map[i].str) == 0) {
+			type = panel_action_type_map[i].enum_value;
+			break;
+		}
+	}
 
-	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type)) {
-		g_warning ("Unkown action type '%s' from %s", action_type, key);
-		g_free (action_type);
+	if (type == PANEL_ACTION_NONE) {
+		g_warning ("Unkown action type '%s", detail_for_type);
 		return;
 	}
 
-	g_free (action_type);
-
-	panel_action_button_load (type, panel,
+	panel_action_button_load_helper (type, panel,
 				  position, exactpos, id);
 }
 

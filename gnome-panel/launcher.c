@@ -810,9 +810,10 @@ load_launcher_applet (const char       *location,
 }
 
 void
-launcher_load_from_gconf (PanelWidget *panel_widget,
-			  int          position,
-			  const char  *id)
+launcher_load (GSettings   *settings,
+	       PanelWidget *panel_widget,
+	       int          position,
+	       const char  *id)
 {
 	GConfClient *client;
 	Launcher    *launcher;

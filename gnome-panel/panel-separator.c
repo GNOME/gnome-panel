@@ -228,9 +228,10 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 }
 
 void
-panel_separator_load_from_gconf (PanelWidget *panel,
-				 int          position,
-				 const char  *id)
+panel_separator_load (GSettings *settings,
+		      PanelWidget *panel,
+		      int          position,
+		      const char  *id)
 {
 	PanelSeparator *separator;
 

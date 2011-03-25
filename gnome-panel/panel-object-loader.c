@@ -195,41 +195,44 @@ panel_object_loader_idle_handler (gpointer dummy)
 
         switch (object_type) {
         case PANEL_OBJECT_APPLET:
-                panel_applet_frame_load (
-                                object->settings,
-                                panel_widget,
-                                object->position,
-                                object->id);
+                panel_applet_frame_load (object->settings,
+                                         panel_widget,
+                                         object->position,
+                                         object->id);
                 break;
         case PANEL_OBJECT_MENU:
-                panel_menu_button_load_from_gconf (panel_widget,
-                                object->position,
-                                TRUE,
-                                object->id);
+                panel_menu_button_load (object->settings,
+                                        panel_widget,
+                                        object->position,
+                                        TRUE,
+                                        object->id);
                 break;
         case PANEL_OBJECT_LAUNCHER:
-                launcher_load_from_gconf (panel_widget,
-                                object->position,
-                                object->id);
+                launcher_load (object->settings,
+                               panel_widget,
+                               object->position,
+                               object->id);
                 break;
         case PANEL_OBJECT_ACTION:
-                panel_action_button_load_from_gconf (
-                                panel_widget,
-                                object->position,
-                                TRUE,
-                                object->id);
+                panel_action_button_load (object->settings,
+                                          panel_widget,
+                                          object->position,
+                                          TRUE,
+                                          object->id,
+                                          object_type_detail);
                 break;
         case PANEL_OBJECT_MENU_BAR:
-                panel_menu_bar_load_from_gconf (
-                                panel_widget,
-                                object->position,
-                                TRUE,
-                                object->id);
+                panel_menu_bar_load (object->settings,
+                                     panel_widget,
+                                     object->position,
+                                     TRUE,
+                                     object->id);
                 break;
         case PANEL_OBJECT_SEPARATOR:
-                panel_separator_load_from_gconf (panel_widget,
-                                object->position,
-                                object->id);
+                panel_separator_load (object->settings,
+                                      panel_widget,
+                                      object->position,
+                                      object->id);
                 break;
         default:
                 g_assert_not_reached ();

@@ -51,7 +51,8 @@ void		launcher_launch    		(Launcher  *launcher,
 
 void		launcher_properties		(Launcher  *launcher);
 
-void            launcher_load_from_gconf        (PanelWidget *panel_widget,
+void            launcher_load                   (GSettings   *settings,
+						 PanelWidget *panel_widget,
 						 gint         position,
 						 const char  *id);
 
