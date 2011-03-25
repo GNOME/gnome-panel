@@ -512,7 +512,7 @@ drop_url (PanelWidget *panel,
 
 	g_return_val_if_fail (url != NULL, FALSE);
 
-	if (!panel_profile_id_lists_are_writable ())
+	if (!panel_layout_is_writable ())
 		return FALSE;
 
 	netscape_url = g_strsplit (url, "\n", 2);
@@ -546,7 +546,7 @@ drop_menu (PanelWidget *panel,
 	   const char  *menu_filename,
 	   const char  *menu_path)
 {
-	if (!panel_profile_id_lists_are_writable ())
+	if (!panel_layout_is_writable ())
 		return FALSE;
 
 	return panel_menu_button_create (panel->toplevel,
@@ -570,7 +570,7 @@ drop_uri (PanelWidget *panel,
 	char  *icon;
 	GFile *file;
 
-	if (!panel_profile_id_lists_are_writable ())
+	if (!panel_layout_is_writable ())
 		return FALSE;
 
 	name = panel_util_get_label_for_uri (uri);
@@ -757,7 +757,7 @@ drop_urilist (PanelWidget *panel,
 				   (!strcmp (mime, "application/x-gnome-app-info") ||
 				    !strcmp (mime, "application/x-desktop") ||
 				    !strcmp (mime, "application/x-kde-app-info"))) {
-				if (panel_profile_id_lists_are_writable ())
+				if (panel_layout_is_writable ())
 					panel_launcher_create (panel->toplevel, pos, uri);
 				else
 					success = FALSE;
@@ -766,7 +766,7 @@ drop_urilist (PanelWidget *panel,
 
 				filename = g_file_get_path (file);
 
-				if (panel_profile_id_lists_are_writable ())
+				if (panel_layout_is_writable ())
 					/* executable and local, so add a
 					 * launcher with it */
 					ask_about_launcher (filename, panel,
@@ -808,7 +808,7 @@ drop_internal_icon (PanelWidget *panel,
 	if (!icon_name)
 		return FALSE;
 
-	if (!panel_profile_id_lists_are_writable ())
+	if (!panel_layout_is_writable ())
 		return FALSE;
 
 	if (action == GDK_ACTION_MOVE)
@@ -904,7 +904,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		}
 
 	} else if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
-		if (panel_profile_id_lists_are_writable ()) {
+		if (panel_layout_is_writable ()) {
 			remove_applet = panel_action_button_load_from_drag (
 							panel->toplevel,
 							pos,
@@ -916,7 +916,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		}
 
 	} else if (!strcmp (applet_type, "MENUBAR:NEW")) {
-		if (panel_profile_id_lists_are_writable ()) {
+		if (panel_layout_is_writable ()) {
 			panel_menu_bar_create (panel->toplevel, pos);
 			success = TRUE;
 		} else {
@@ -924,7 +924,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		}
 
 	} else if (!strcmp(applet_type,"SEPARATOR:NEW")) {
-		if (panel_profile_id_lists_are_writable ()) {
+		if (panel_layout_is_writable ()) {
 			panel_separator_create (panel->toplevel, pos);
 			success = TRUE;
 		} else {
@@ -932,7 +932,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		}
 
 	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
-		if (panel_profile_id_lists_are_writable ()) {
+		if (panel_layout_is_writable ()) {
 			ask_about_launcher (NULL, panel, pos);
 			success = TRUE;
 		} else {
@@ -1181,7 +1181,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 			gtk_drag_finish (context, FALSE, FALSE, time_);
 			return;
 		}
-		if (panel_profile_id_lists_are_writable ()) {
+		if (panel_layout_is_writable ()) {
 			panel_applet_frame_create (panel->toplevel, pos, (char *) data);
 			success = TRUE;
 		} else {

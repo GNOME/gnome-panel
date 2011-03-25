@@ -470,7 +470,7 @@ panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
 	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
 
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
-	removable = panel_profile_id_lists_are_writable ();
+	removable = panel_layout_is_writable ();
 	locked_down = panel_lockdown_get_panels_locked_down_s ();
 
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->sync_menu_state (frame, movable, removable, locked_down);
@@ -708,7 +708,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		/* if we can't write to applets list we can't really delete
 		   it, so we'll just ignore this.  FIXME: handle this
 		   more correctly I suppose. */
-		if (panel_profile_id_lists_are_writable ())
+		if (panel_layout_is_writable ())
 			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
@@ -865,7 +865,7 @@ panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 
 	if (response == LOADING_FAILED_RESPONSE_DELETE &&
 	    !panel_lockdown_get_panels_locked_down_s () &&
-	    panel_profile_id_lists_are_writable ()) {
+	    panel_layout_is_writable ()) {
 		GSList *item;
 
 		item = g_slist_find_custom (no_reload_applets, id,

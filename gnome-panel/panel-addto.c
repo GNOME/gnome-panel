@@ -42,6 +42,7 @@
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
+#include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-util.h"
 #include "panel-profile.h"
@@ -484,7 +485,7 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 	if (dialog->filter_applet_model != NULL)
 		return;
 
-	if (panel_profile_id_lists_are_writable ()) {
+	if (panel_layout_is_writable ()) {
 		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
 		dialog->applet_list = panel_addto_prepend_internal_applets (dialog->applet_list);
 	}
@@ -498,7 +499,7 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	if (panel_profile_id_lists_are_writable ()) {
+	if (panel_layout_is_writable ()) {
 		panel_addto_append_special_applets (dialog, model);
 		if (dialog->applet_list)
 			panel_addto_append_item (dialog, model, NULL);
@@ -1164,7 +1165,7 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 				  TRUE);
 
 	/* only allow dragging applets if we can add applets */
-	if (panel_profile_id_lists_are_writable ()) {
+	if (panel_layout_is_writable ()) {
 		switch (data->type) {
 		case PANEL_ADDTO_LAUNCHER:
 			panel_addto_setup_launcher_drag (GTK_TREE_VIEW (dialog->tree_view),

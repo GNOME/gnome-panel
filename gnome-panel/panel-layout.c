@@ -600,6 +600,15 @@ panel_layout_toplevel_create (GdkScreen *screen)
 \*******************/
 
 
+gboolean
+panel_layout_is_writable (void)
+{
+        return (g_settings_is_writable (layout_settings,
+                                        PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) &&
+                g_settings_is_writable (layout_settings,
+                                        PANEL_LAYOUT_OBJECT_ID_LIST_KEY));
+}
+
 void
 panel_layout_delete_toplevel (const char *toplevel_id)
 {

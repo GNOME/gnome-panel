@@ -108,7 +108,7 @@ panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 	sensitive =
 		!panel_toplevel_is_last (panel_widget->toplevel) &&
 		!panel_lockdown_get_panels_locked_down_s () &&
-		panel_profile_id_lists_are_writable ();
+		panel_layout_is_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
 }
@@ -128,7 +128,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
         g_signal_connect (G_OBJECT (menuitem), "activate",
 	      	       	  G_CALLBACK (panel_addto_present), panel_widget);
 
-	if (!panel_profile_id_lists_are_writable ())
+	if (!panel_layout_is_writable ())
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Properties"));
@@ -165,7 +165,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 			  G_CALLBACK (panel_context_menu_create_new_panel), 
 			  NULL);
 	gtk_widget_set_sensitive (menuitem, 
-				  panel_profile_id_lists_are_writable ());
+				  panel_layout_is_writable ());
 }
 
 GtkWidget *

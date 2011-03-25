@@ -499,7 +499,7 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	panel_widget = panel_applet_get_panel_widget (info);
 
 	movable = panel_applet_can_freely_move (info);
-	removable = panel_profile_id_lists_are_writable ();
+	removable = panel_layout_is_writable ();
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
 	g_signal_connect (menuitem, "activate",

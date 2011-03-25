@@ -32,7 +32,9 @@ G_BEGIN_DECLS
 void panel_layout_append_from_file (const char *layout_file,
                                     gboolean    error_fatal);
 
-gboolean panel_layout_load (void);
+gboolean panel_layout_load         (void);
+
+gboolean panel_layout_is_writable  (void);
 
 void panel_layout_toplevel_create (GdkScreen  *screen);
 void panel_layout_delete_toplevel (const char *toplevel_id);

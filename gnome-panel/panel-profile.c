@@ -164,30 +164,6 @@ panel_profile_add_to_list (PanelGConfKeyType  type,
 	panel_profile_save_id_list (type, list, FALSE);
 }
 
-static gboolean
-panel_profile_id_list_is_writable (PanelGConfKeyType type)
-{
-	GConfClient *client;
-	const char  *key;
-	const char  *id_list;
-
-	client = panel_gconf_get_client ();
-
-	id_list = panel_gconf_key_type_to_id_list (type);
-
-	key = panel_gconf_general_key (id_list);
-	return gconf_client_key_is_writable (client, key, NULL);
-}
-
-gboolean
-panel_profile_id_lists_are_writable (void)
-{
-  return
-    panel_profile_id_list_is_writable (PANEL_GCONF_TOPLEVELS) &&
-    panel_profile_id_list_is_writable (PANEL_GCONF_APPLETS)   &&
-    panel_profile_id_list_is_writable (PANEL_GCONF_OBJECTS);
-}
-
 char *
 panel_profile_prepare_object_with_id (PanelObjectType  object_type,
 				      const char      *toplevel_id,
