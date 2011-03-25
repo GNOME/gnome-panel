@@ -68,8 +68,6 @@ struct _PanelActionButtonPrivate {
 	PanelActionButtonType  type;
 	AppletInfo            *info;
 
-	guint                  gconf_notify;
-	
 	guint                  dnd_enabled : 1;
 };
 
@@ -457,10 +455,6 @@ panel_action_button_finalize (GObject *object)
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
 
-	gconf_client_notify_remove (panel_gconf_get_client (),
-				    button->priv->gconf_notify);
-	button->priv->gconf_notify = 0;
-
 	G_OBJECT_CLASS (panel_action_button_parent_class)->finalize (object);
 }
 
@@ -582,7 +576,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 					   "The type of action this button implements",
 					   PANEL_TYPE_ACTION_BUTTON_TYPE,
 					   PANEL_ORIENTATION_TOP,
-					   G_PARAM_READWRITE));
+					   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -602,7 +596,6 @@ panel_action_button_init (PanelActionButton *button)
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;
 
-	button->priv->gconf_notify = 0;
 	button->priv->dnd_enabled  = FALSE;
 }
 
@@ -628,48 +621,6 @@ panel_action_button_set_type (PanelActionButton     *button,
 	panel_a11y_set_atk_name_desc (GTK_WIDGET (button), _(actions [type].tooltip), NULL);
 
 	panel_action_button_update_sensitivity (panel_lockdown_get (), button);
-}
-
-static void
-panel_action_button_type_changed (GConfClient       *client,
-				  guint              cnxn_id,
-				  GConfEntry        *entry,
-				  PanelActionButton *button)
-{
-	int         type;
-	const char *action_type;
-
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-
-	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
-		return;
-
-	action_type = gconf_value_get_string (entry->value);
-
-	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type))
-		return;
-
-	panel_action_button_set_type (button, type);
-}
-
-static void
-panel_action_button_connect_to_gconf (PanelActionButton *button)
-{
-	const char *key;
-
-	key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, button->priv->info->id, "action_type");
-
-	button->priv->gconf_notify =
-		gconf_client_notify_add (panel_gconf_get_client (), key, 
-					 (GConfClientNotifyFunc) panel_action_button_type_changed,
-					 button, NULL, NULL);
-
-	panel_lockdown_on_notify (panel_lockdown_get (),
-				  NULL,
-				  G_OBJECT (button),
-				  panel_action_button_update_sensitivity,
-				  button);
 }
 
 static void
@@ -706,7 +657,11 @@ panel_action_button_load_helper (PanelWidget           *panel,
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);
 
-	panel_action_button_connect_to_gconf (button);
+	panel_lockdown_on_notify (panel_lockdown_get (),
+				  NULL,
+				  G_OBJECT (button),
+				  panel_action_button_update_sensitivity,
+				  button);
 
 	g_signal_connect (button, "style-updated",
 			  G_CALLBACK (panel_action_button_style_updated), NULL);
