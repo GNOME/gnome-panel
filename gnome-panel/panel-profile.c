@@ -56,13 +56,6 @@ static GConfEnumStringPair panel_orientation_map [] = {
 	{ 0,                        NULL     }
 };
 
-static GConfEnumStringPair panel_background_type_map [] = {
-	{ PANEL_BACK_NONE,  "gtk"   },
-	{ PANEL_BACK_COLOR, "color" },
-	{ PANEL_BACK_IMAGE, "image" },
-	{ 0,                NULL    }
-};
-
 static GConfEnumStringPair panel_object_type_map [] = {
 	{ PANEL_OBJECT_MENU,      "menu-object" },
 	{ PANEL_OBJECT_LAUNCHER,  "launcher-object" },
@@ -102,12 +95,6 @@ const char *
 panel_profile_map_orientation (PanelOrientation orientation)
 {
 	return gconf_enum_to_string (panel_orientation_map, orientation);
-}
-
-const char *
-panel_profile_map_background_type (PanelBackgroundType  background_type)
-{
-	return gconf_enum_to_string (panel_background_type_map, background_type);
 }
 
 gboolean
@@ -205,133 +192,6 @@ panel_profile_get_toplevel_key (PanelToplevel *toplevel,
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
 		return gconf_client_key_is_writable (client, key, NULL); \
 	}
-
-void
-panel_profile_set_background_type (PanelToplevel       *toplevel,
-				   PanelBackgroundType  background_type)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/type");
-	gconf_client_set_string (client,
-				 key,
-				 panel_profile_map_background_type (background_type),
-			         NULL);
-}
-
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/type", background, type)
-
-static void
-panel_profile_set_background_opacity (PanelToplevel *toplevel,
-				      gdouble        opacity)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	gconf_client_set_int (client, key, (guint16) ((opacity * 65535.) + 0.5), NULL);
-}
-
-static gdouble
-panel_profile_get_background_opacity (PanelToplevel *toplevel)
-{
-	GConfClient *client;
-	const char  *key;
-	guint16      opacity;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
-	opacity = gconf_client_get_int (client, key, NULL);
-
-	return opacity / 65535.;
-}
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/opacity", background, opacity)
-
-void
-panel_profile_set_background_color (PanelToplevel *toplevel,
-				    const GdkRGBA *color)
-{
-        GConfClient *client;
-        const char  *key;
-        char        *color_str;
-
-        client = panel_gconf_get_client ();
-
-        color_str = gdk_rgba_to_string (color);
-        key = panel_profile_get_toplevel_key (toplevel, "background/color");
-        gconf_client_set_string (client, key, color_str, NULL);
-
-        panel_profile_set_background_opacity (toplevel, color->alpha);
-
-        g_free (color_str);
-}
-
-void
-panel_profile_get_background_color (PanelToplevel *toplevel,
-				    GdkRGBA       *color)
-{
-        GConfClient *client;
-        const char  *key;
-        char        *color_str;
-
-        client = panel_gconf_get_client ();
-
-        key = panel_profile_get_toplevel_key (toplevel, "background/color");
-        color_str = gconf_client_get_string (client, key, NULL);
-        if (!color_str || !gdk_rgba_parse (color, color_str)) {
-                color->red   = 0.;
-                color->green = 0.;
-                color->blue  = 0.;
-                color->alpha = 1.;
-        }
-        color->alpha = panel_profile_get_background_opacity (toplevel);
-
-        g_free (color_str);
-}
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/color", background, color)
-
-void
-panel_profile_set_background_image (PanelToplevel *toplevel,
-				    const char    *image)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/image");
-
-	if (image && image [0])
-		gconf_client_set_string (client, key, image, NULL);
-	else
-		gconf_client_unset (client, key, NULL);
-}
-
-char *
-panel_profile_get_background_image (PanelToplevel *toplevel)
-{
-	GConfClient *client;
-	const char  *key;
-	char        *retval;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "background/image");
-	retval = gconf_client_get_string (client, key, NULL);
-
-	return retval;
-}
-
-TOPLEVEL_IS_WRITABLE_FUNC ("background/image", background, image)
 
 PanelOrientation
 panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)

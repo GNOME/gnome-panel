@@ -388,23 +388,53 @@ panel_key_press_event (PanelToplevel *toplevel,
 	return FALSE;
 }
 
+static GSettings *
+get_settings_background_for_toplevel (PanelToplevel *toplevel)
+{
+	char      *toplevel_settings_path;
+	GSettings *settings;
+	GSettings *settings_background;
+
+	g_object_get (toplevel, "settings-path", &toplevel_settings_path, NULL);
+	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
+					     toplevel_settings_path);
+	settings_background = g_settings_get_child (settings,
+						    PANEL_BACKGROUND_SCHEMA_CHILD);
+
+	g_object_unref (settings);
+	g_free (toplevel_settings_path);
+
+	return settings_background;
+}
+
 static gboolean
 set_background_image_from_uri (PanelToplevel *toplevel,
 			       const char    *uri)
 {
-	char *image;
+	GFile     *file;
+	GSettings *settings;
 
-	if ( ! panel_profile_is_writable_background_type (toplevel) ||
-	     ! panel_profile_is_writable_background_image (toplevel))
+	file = g_file_new_for_uri (uri);
+	if (!g_file_is_native (file)) {
+		g_object_unref (file);
 		return FALSE;
+	}
+	g_object_unref (file);
 
-	if (!(image = g_filename_from_uri (uri, NULL, NULL)))
+	settings = get_settings_background_for_toplevel (toplevel);
+
+	if (!g_settings_is_writable (settings,
+				     PANEL_BACKGROUND_TYPE_KEY) ||
+	    !g_settings_is_writable (settings,
+				     PANEL_BACKGROUND_IMAGE_URI_KEY)) {
+		g_object_unref (settings);
 		return FALSE;
+	}
 
-	panel_profile_set_background_image (toplevel, image);
-	panel_profile_set_background_type (toplevel, PANEL_BACK_IMAGE);
+	g_settings_set_string (settings, PANEL_BACKGROUND_IMAGE_URI_KEY, uri);
+	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_IMAGE);
 
-	g_free (image);
+	g_object_unref (settings);
 
 	return FALSE;
 }
@@ -413,22 +443,55 @@ static gboolean
 set_background_color (PanelToplevel *toplevel,
 		      guint16       *dropped)
 {
-	GdkRGBA color;
+	GSettings *settings;
+	GdkRGBA    color;
+	char      *color_str;
 
 	if (!dropped)
 		return FALSE;
 
-	if ( ! panel_profile_is_writable_background_type (toplevel) ||
-	     ! panel_profile_is_writable_background_color (toplevel))
+	settings = get_settings_background_for_toplevel (toplevel);
+
+	if (!g_settings_is_writable (settings,
+				     PANEL_BACKGROUND_TYPE_KEY) ||
+	    !g_settings_is_writable (settings,
+				     PANEL_BACKGROUND_COLOR_KEY)) {
+		g_object_unref (settings);
 		return FALSE;
+	}
 
 	color.red   = dropped [0] / 65535.;
 	color.green = dropped [1] / 65535.;
 	color.blue  = dropped [2] / 65535.;
 	color.alpha = 1.;
 
-	panel_profile_set_background_color (toplevel, &color);
-	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);
+	color_str = gdk_rgba_to_string (&color);
+
+	g_settings_set_string (settings, PANEL_BACKGROUND_COLOR_KEY, color_str);
+	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_COLOR);
+
+	g_free (color_str);
+	g_object_unref (settings);
+
+	return TRUE;
+}
+
+static gboolean
+reset_background (PanelToplevel *toplevel)
+{
+	GSettings *settings;
+
+	settings = get_settings_background_for_toplevel (toplevel);
+
+	if (!g_settings_is_writable (settings,
+				     PANEL_BACKGROUND_TYPE_KEY)) {
+		g_object_unref (settings);
+		return FALSE;
+	}
+
+	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_NONE);
+
+	g_object_unref (settings);
 
 	return TRUE;
 }
@@ -1102,12 +1165,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		success = set_background_image_from_uri (panel->toplevel, (char *) data);
 		break;
 	case TARGET_BACKGROUND_RESET:
-		if (panel_profile_is_writable_background_type (panel->toplevel)) {
-			panel_profile_set_background_type (panel->toplevel, PANEL_BACK_NONE);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
+		success = reset_background (panel->toplevel);
 		break;
 	case TARGET_DIRECTORY:
 		success = drop_uri (panel, pos, (char *)data,
