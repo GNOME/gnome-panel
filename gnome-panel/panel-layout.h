@@ -43,6 +43,9 @@ void  panel_layout_object_create        (PanelObjectType   type,
 					 int               position,
 					 gboolean          pack_end);
 
+GSettings *panel_layout_get_instance_settings (GSettings  *settings_object,
+                                               const char *schema);
+
 char *panel_layout_object_create_start  (PanelObjectType   type,
 					 const char       *type_detail,
 					 const char       *toplevel_id,

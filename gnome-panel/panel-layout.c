@@ -615,6 +615,27 @@ panel_layout_object_create (PanelObjectType   type,
         g_free (id);
 }
 
+GSettings *
+panel_layout_get_instance_settings (GSettings  *settings_object,
+                                    const char *schema)
+{
+        char      *path;
+        char      *path_instance;
+        GSettings *settings_instance;
+
+        g_return_val_if_fail (G_IS_SETTINGS (settings_object), NULL);
+
+        g_object_get (settings_object, "path", &path, NULL);
+        path_instance = g_strdup_printf ("%s%s", path,
+                                         PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX);
+        g_free (path);
+
+        settings_instance = g_settings_new_with_path (schema, path_instance);
+        g_free (path_instance);
+
+        return settings_instance;
+}
+
 char *
 panel_layout_object_create_start (PanelObjectType   type,
                                   const char       *type_detail,
