@@ -33,7 +33,8 @@ G_BEGIN_DECLS
 void panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
 						      const char  *id);
 
-gchar *panel_compatibility_get_applet_iid (const gchar *id);
+gchar *panel_compatibility_get_applet_iid (GSettings   *settings,
+					   const gchar *id);
 
 G_END_DECLS
 

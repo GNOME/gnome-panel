@@ -52,7 +52,6 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      gboolean         exactpos,
 				      PanelObjectType  type,
 				      const char      *id);
-void panel_applet_stop_loading (const char *id);
 
 const char *panel_applet_get_id           (AppletInfo      *info);
 const char *panel_applet_get_id_by_widget (GtkWidget       *widget);
@@ -62,15 +61,6 @@ AppletInfo *panel_applet_get_by_type      (PanelObjectType  object_type, GdkScre
 GSList     *panel_applet_list_applets (void);
 
 void        panel_applet_clean        (AppletInfo    *info);
-
-void panel_applet_queue_applet_to_load (const char      *id,
-					PanelObjectType  type,
-					const char      *toplevel_id,
-					int              position,
-					gboolean         right_stick);
-void panel_applet_load_queued_applets  (gboolean initial_load);
-gboolean panel_applet_on_load_queue    (const char *id);
-
 
 void            panel_applet_add_callback    (AppletInfo          *info,
 					      const gchar         *callback_name,

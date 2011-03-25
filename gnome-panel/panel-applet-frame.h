@@ -83,7 +83,8 @@ void  panel_applet_frame_create             (PanelToplevel       *toplevel,
 					     int                  position,
 					     const char          *iid);
 
-void  panel_applet_frame_load_from_gconf    (PanelWidget         *panel_widget,
+void  panel_applet_frame_load               (GSettings           *settings,
+					     PanelWidget         *panel_widget,
 					     int                  position,
 					     const char          *id);
 

@@ -37,6 +37,7 @@
 
 #include "panel.h"
 #include "panel-multiscreen.h"
+#include "panel-object-loader.h"
 #include "panel-schemas.h"
 #include "panel-toplevel.h"
 
@@ -586,10 +587,17 @@ panel_layout_load_toplevel (const char *toplevel_id)
 static void
 panel_layout_load_object (const char *object_id)
 {
+        char *path;
+
         if (PANEL_GLIB_STR_EMPTY (object_id))
                 return;
 
-        /* TODO */
+        path = g_strdup_printf ("%s%s/",
+                                PANEL_LAYOUT_OBJECT_PATH, object_id);
+
+        panel_object_loader_queue (object_id, path);
+
+        g_free (path);
 }
 
 static char *
@@ -697,6 +705,8 @@ panel_layout_load (void)
         g_strfreev (objects);
 
         panel_layout_ensure_toplevel_per_screen ();
+
+        panel_object_loader_do_load (TRUE);
 
         return TRUE;
 }

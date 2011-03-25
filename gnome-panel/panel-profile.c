@@ -34,6 +34,7 @@
 #include "applet.h"
 #include "panel-gconf.h"
 #include "panel.h"
+#include "panel-object-loader.h"
 #include "panel-widget.h"
 #include "panel-util.h"
 #include "panel-multiscreen.h"
@@ -470,7 +471,7 @@ panel_profile_load_and_show_toplevel (GConfClient       *client,
 	}
 
 	if (!loading_queued_applets)
-		panel_applet_load_queued_applets (FALSE);
+		panel_object_loader_do_load (FALSE);
 }
 
 static void
@@ -566,49 +567,6 @@ panel_profile_load_object (GConfClient       *client,
 			   PanelGConfKeyType  type,
 			   const char        *id)
 {
-	PanelObjectType  object_type;
-	char            *object_dir;
-	const char      *key;
-	char            *type_string;
-	char            *toplevel_id;
-	int              position;
-	gboolean         right_stick;
-
-	object_dir = g_strdup_printf ("%s/%s/%s",
-				      profile_dir,
-				      type == PANEL_GCONF_OBJECTS ? "objects" : "applets",
-				      id);
-
-	gconf_client_add_dir (client, object_dir, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
-
-	key = panel_gconf_sprintf ("%s/object_type", object_dir);
-	type_string = gconf_client_get_string (client, key, NULL);
-        
-	if (!panel_profile_map_object_type_string (type_string, &object_type)) {
-		g_free (type_string);
-		gconf_client_remove_dir (client, object_dir, NULL);
-		g_free (object_dir);
-		return;
-	}
-	
-	key = panel_gconf_sprintf ("%s/position", object_dir);
-	position = gconf_client_get_int (client, key, NULL);
-	
-	key = panel_gconf_sprintf ("%s/toplevel_id", object_dir);
-	toplevel_id = gconf_client_get_string (client, key, NULL);
-
-	key = panel_gconf_sprintf ("%s/panel_right_stick", object_dir);
-	right_stick = gconf_client_get_bool (client, key, NULL);
-
-	panel_applet_queue_applet_to_load (id,
-					   object_type,
-					   toplevel_id,
-					   position,
-					   right_stick);
-
-	g_free (toplevel_id);
-	g_free (type_string);
-	g_free (object_dir);
 }
 
 static void
@@ -853,7 +811,7 @@ panel_profile_object_id_list_update (GConfClient       *client,
 				      object_ids,
 				      (PanelProfileGetIdFunc) panel_applet_get_id,
 				      (PanelProfileLoadFunc) panel_profile_load_object,
-				      (PanelProfileOnLoadQueue) panel_applet_on_load_queue);
+				      (PanelProfileOnLoadQueue) panel_object_loader_is_queued);
 
 	panel_profile_delete_removed_ids (client,
 					  type,
@@ -865,7 +823,7 @@ panel_profile_object_id_list_update (GConfClient       *client,
 	g_slist_free (sublist);
 	g_slist_free (object_ids);
 
-	panel_applet_load_queued_applets (FALSE);
+	panel_object_loader_do_load (FALSE);
 }
 
 static void
@@ -946,6 +904,4 @@ panel_profile_load (void)
 				 PANEL_GCONF_APPLETS,
 				 panel_profile_load_object,
 				 (GConfClientNotifyFunc) panel_profile_object_id_list_notify);
-
-	panel_applet_load_queued_applets (TRUE);
 }

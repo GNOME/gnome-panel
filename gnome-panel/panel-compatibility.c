@@ -23,10 +23,13 @@
 
 #include <config.h>
 
-#include "panel-compatibility.h"
+#include <libpanel-util/panel-glib.h>
 
-#include "panel-profile.h"
 #include "panel-applets-manager.h"
+#include "panel-profile.h"
+#include "panel-schemas.h"
+
+#include "panel-compatibility.h"
 
 void
 panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
@@ -49,66 +52,42 @@ panel_compatiblity_migrate_settings_menu_button (GConfClient *client,
 }
 
 gchar *
-panel_compatibility_get_applet_iid (const gchar *id)
+panel_compatibility_get_applet_iid (GSettings   *settings,
+				    const gchar *id)
 {
-	GConfClient *client = panel_gconf_get_client ();
 	PanelAppletInfo *info;
-	const char *key;
-	gchar *applet_iid;
+	gchar *object_iid;
 	gboolean needs_migration;
 	const char *iid;
 
-	/*
-	 * There are two compatibility steps here:
-	 *
-	 * 1) we need to migrate from bonobo_iid to applet_iid if there's no
-	 *    value in the applet_iid key. Always.
-	 *
-	 * 2) we need to try to migrate the iid to a new iid. We can't assume
-	 *    that the fact that the applet_iid key was used mean anything
-	 *    since the value there could well be a bonobo iid.
-	 *    The reason we really have to try to migrate first is this case:
-	 *    if an applet was added with the bonobo iid but gets ported later
-	 *    to dbus, then the reference to the bonobo iid will only be valid
-	 *    as an old reference.
-	 *    And if migration fails, we just use the iid as it is.
-	 */
-
 	needs_migration = FALSE;
 
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
-	applet_iid = gconf_client_get_string (client, key, NULL);
-
-	if (!applet_iid || !applet_iid[0]) {
-		needs_migration = TRUE;
-
-		key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
-		applet_iid = gconf_client_get_string (client, key, NULL);
-
-		if (!applet_iid || !applet_iid[0])
-			return NULL;
+	object_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
+	if (PANEL_GLIB_STR_EMPTY (object_iid)) {
+		g_free (object_iid);
+		return NULL;
 	}
 
-	info = panel_applets_manager_get_applet_info_from_old_id (applet_iid);
+	info = panel_applets_manager_get_applet_info_from_old_id (object_iid);
 	if (!info)
-		info = panel_applets_manager_get_applet_info (applet_iid);
+		info = panel_applets_manager_get_applet_info (object_iid);
 
-	if (!info)
+	if (!info) {
+		g_free (object_iid);
 		return NULL;
+	}
 
 	iid = panel_applet_info_get_iid (info);
 
 	/* migrate if the iid in the configuration is different than the real
 	 * iid that will get used */
-	if (!g_str_equal (iid, applet_iid))
+	if (!g_str_equal (iid, object_iid))
 		needs_migration = TRUE;
 
-	g_free (applet_iid);
+	g_free (object_iid);
 
-	if (needs_migration) {
-		key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "applet_iid");
-		gconf_client_set_string (client, key, iid, NULL);
-	}
+	if (needs_migration)
+		g_settings_set_string (settings, PANEL_OBJECT_IID_KEY, iid);
 
 	return g_strdup (iid);
 }

@@ -67,6 +67,7 @@ panel_sources =			\
 	panel-ditem-editor.c	\
 	panel-layout.c		\
 	panel-modules.c		\
+	panel-object-loader.c	\
 	panel-applet-info.c
 
 panel_headers =			\
@@ -116,6 +117,7 @@ panel_headers =			\
 	panel-icon-names.h	\
 	panel-layout.h		\
 	panel-modules.h		\
+	panel-object-loader.h	\
 	panel-schemas.h		\
 	panel-applet-info.h
 

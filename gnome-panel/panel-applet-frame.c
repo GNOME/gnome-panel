@@ -41,6 +41,7 @@
 #include "panel-marshal.h"
 #include "panel-background.h"
 #include "panel-lockdown.h"
+#include "panel-object-loader.h"
 #include "panel-stock-icons.h"
 #include "xstuff.h"
 #include "panel-compatibility.h"
@@ -53,7 +54,7 @@ static void panel_applet_frame_loading_failed  (const char  *iid,
 					        PanelWidget *panel,
 					        const char  *id);
 
-static void panel_applet_frame_load            (const gchar *iid,
+static void panel_applet_frame_load_helper     (const gchar *iid,
 						PanelWidget *panel,
 						int          position,
 						gboolean     exactpos,
@@ -582,7 +583,7 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 
 	panel_applet_frame_init_properties (frame);
 
-	panel_applet_stop_loading (frame_act->id);
+	panel_object_loader_stop_loading (frame_act->id);
 	panel_applet_frame_activating_free (frame_act);
 }
 
@@ -697,8 +698,8 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 			panel_applet_clean (info);
 		}
 
-		panel_applet_frame_load (iid, panel,
-					 position, TRUE, id);
+		panel_applet_frame_load_helper (iid, panel,
+						position, TRUE, id);
 
 		g_free (iid);
 		g_free (id);
@@ -931,15 +932,15 @@ panel_applet_frame_loading_failed (const char  *iid,
 
 	/* Note: this call will free the memory for id, so the variable should
 	 * not get accessed afterwards. */
-	panel_applet_stop_loading (id);
+	panel_object_loader_stop_loading (id);
 }
 
 static void
-panel_applet_frame_load (const gchar *iid,
-			 PanelWidget *panel,
-			 int          position,
-			 gboolean     exactpos,
-			 const char  *id)
+panel_applet_frame_load_helper (const gchar *iid,
+				PanelWidget *panel,
+				int          position,
+				gboolean     exactpos,
+				const char  *id)
 {
 	PanelAppletFrameActivating *frame_act;
 
@@ -949,12 +950,12 @@ panel_applet_frame_load (const gchar *iid,
 
 	if (g_slist_find_custom (no_reload_applets, id,
 				 (GCompareFunc) strcmp)) {
-		panel_applet_stop_loading (id);
+		panel_object_loader_stop_loading (id);
 		return;
 	}
 
 	if (panel_lockdown_is_applet_disabled (panel_lockdown_get (), iid)) {
-		panel_applet_stop_loading (id);
+		panel_object_loader_stop_loading (id);
 		return;
 	}
 
@@ -971,23 +972,24 @@ panel_applet_frame_load (const gchar *iid,
 }
 
 void
-panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
-				    int          position,
-				    const char  *id)
+panel_applet_frame_load (GSettings   *settings,
+			 PanelWidget *panel_widget,
+			 int          position,
+			 const char  *id)
 {
 	gchar *applet_iid;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	applet_iid = panel_compatibility_get_applet_iid (id);
+	applet_iid = panel_compatibility_get_applet_iid (settings, id);
 	if (!applet_iid) {
-		panel_applet_stop_loading (id);
+		panel_object_loader_stop_loading (id);
 		return;
 	}
 
-	panel_applet_frame_load (applet_iid, panel_widget,
-				 position, TRUE, id);
+	panel_applet_frame_load_helper (applet_iid, panel_widget,
+					position, TRUE, id);
 
 	g_free (applet_iid);
 }
