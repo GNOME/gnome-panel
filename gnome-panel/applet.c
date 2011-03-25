@@ -22,7 +22,6 @@
 #include "panel.h"
 #include "panel-addto.h"
 #include "panel-bindings.h"
-#include "panel-gconf.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
@@ -831,14 +830,10 @@ panel_applet_save_position (AppletInfo *applet_info,
 			    const char *id,
 			    gboolean    immediate)
 {
-	PanelGConfKeyType  key_type;
-	GConfClient       *client;
-	PanelWidget       *panel_widget;
-	const char        *key;
-	const char        *toplevel_id;
-	char              *old_toplevel_id;
-	gboolean           right_stick;
-	int                position;
+	PanelWidget *panel_widget;
+	const char  *toplevel_id;
+	gboolean     right_stick;
+	int          position;
 
 	g_return_if_fail (applet_info != NULL);
 
@@ -859,41 +854,23 @@ panel_applet_save_position (AppletInfo *applet_info,
 	if (!(toplevel_id = panel_applet_get_toplevel_id (applet_info)))
 		return;
 
-	client  = panel_gconf_get_client ();
-
-	key_type = applet_info->type == PANEL_OBJECT_APPLET ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
-	
 	panel_widget = panel_applet_get_panel_widget (applet_info);
 
-	/* FIXME: Instead of getting keys, comparing and setting, there
-	   should be a dirty flag */
-
-	key = panel_gconf_full_key (key_type, id, "toplevel_id");
-	old_toplevel_id = gconf_client_get_string (client, key, NULL);
-	if (old_toplevel_id == NULL || strcmp (old_toplevel_id, toplevel_id) != 0)
-		gconf_client_set_string (client, key, toplevel_id, NULL);
-	g_free (old_toplevel_id);
-
-	/* Note: changing some properties of the panel that may not be locked down
-	   (e.g. background) can change the state of the "panel_right_stick" and
-	   "position" properties of an applet that may in fact be locked down.
-	   So check if these are writable before attempting to write them */
-
 	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
-	key = panel_gconf_full_key (
-			key_type, id, "panel_right_stick");
-	if (gconf_client_key_is_writable (client, key, NULL) &&
-	    (gconf_client_get_bool (client, key, NULL) ? 1 : 0) != right_stick)
-		gconf_client_set_bool (client, key, right_stick, NULL);
 
 	position = panel_applet_get_position (applet_info);
 	if (right_stick && !panel_widget->packed)
 		position = panel_widget->size - position;
 
-	key = panel_gconf_full_key (key_type, id, "position");
-	if (gconf_client_key_is_writable (client, key, NULL) &&
-	    gconf_client_get_int (client, key, NULL) != position)
-		gconf_client_set_int (client, key, position, NULL);
+	g_settings_set_string (applet_info->settings,
+			       PANEL_OBJECT_TOPLEVEL_ID_KEY,
+			       toplevel_id);
+	g_settings_set_boolean (applet_info->settings,
+				PANEL_OBJECT_PACK_END_KEY,
+				right_stick);
+	g_settings_set_int (applet_info->settings,
+			    PANEL_OBJECT_POSITION_KEY,
+			    position);
 }
 
 const char *
@@ -1082,30 +1059,15 @@ panel_applet_get_settings (AppletInfo *applet)
 gboolean
 panel_applet_can_freely_move (AppletInfo *applet)
 {
-	GConfClient       *client;
-	PanelGConfKeyType  key_type;
-	const char        *key;
-
 	/* if we check for more lockdown than this, then we'll need to update
 	 * callers that use panel_lockdown_on_notify() */
 	if (panel_lockdown_get_panels_locked_down_s ())
 		return FALSE;
 
-	client  = panel_gconf_get_client ();
-	
-	key_type = (applet->type == PANEL_OBJECT_APPLET) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
-       
-	key = panel_gconf_full_key (key_type, applet->id, "position");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	key = panel_gconf_full_key (key_type, applet->id, "toplevel_id");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	key = panel_gconf_full_key (key_type, applet->id, "panel_right_stick");
-	if (!gconf_client_key_is_writable (client, key, NULL))
-		return FALSE;
-
-	return TRUE;
+	return (g_settings_is_writable (applet->settings,
+					PANEL_OBJECT_TOPLEVEL_ID_KEY) &&
+	        g_settings_is_writable (applet->settings,
+					PANEL_OBJECT_POSITION_KEY) &&
+	        g_settings_is_writable (applet->settings,
+					PANEL_OBJECT_PACK_END_KEY));
 }
