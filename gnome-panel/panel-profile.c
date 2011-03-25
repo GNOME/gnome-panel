@@ -333,22 +333,6 @@ panel_profile_get_background_image (PanelToplevel *toplevel)
 
 TOPLEVEL_IS_WRITABLE_FUNC ("background/image", background, image)
 
-void
-panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
-					PanelOrientation  orientation)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-
-	key = panel_profile_get_toplevel_key (toplevel, "orientation");
-	gconf_client_set_string (client,
-				 key,
-				 panel_profile_map_orientation (orientation),
-				 NULL);
-}
-
 PanelOrientation
 panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 {
@@ -371,89 +355,6 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 }
 
 TOPLEVEL_IS_WRITABLE_FUNC ("orientation", toplevel, orientation)
-
-#define TOPLEVEL_GET_SET_FUNCS(k, p, t, s, a)                         \
-	void                                                          \
-	panel_profile_set_##p##_##s (PanelToplevel *toplevel, a s)    \
-	{                                                             \
-		GConfClient *client;                                  \
-		const char  *key;                                     \
-		client = panel_gconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		gconf_client_set_##t (client, key, s, NULL);          \
-	}                                                             \
-	a                                                             \
-	panel_profile_get_##p##_##s (PanelToplevel *toplevel)         \
-	{                                                             \
-		GConfClient *client;                                  \
-		const char  *key;                                     \
-		a retval;                                             \
-		client = panel_gconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		retval = gconf_client_get_##t (client, key, NULL);    \
-		return retval;                                        \
-	}                                                             \
-        TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)
-
-TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,  size,           int)
-TOPLEVEL_GET_SET_FUNCS ("expand",             toplevel,   bool, expand,         gboolean)
-TOPLEVEL_GET_SET_FUNCS ("auto_hide",          toplevel,   bool, auto_hide,      gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_buttons",     toplevel,   bool, enable_buttons, gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_arrows",      toplevel,   bool, enable_arrows,  gboolean)
-
-#if 0
-static void
-panel_profile_toplevel_screen_changed (PanelToplevel *toplevel)
-{
-	ToplevelLocationChange change = { NULL };
-
-	change.screen_changed = TRUE;
-	change.screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-
-	panel_profile_queue_toplevel_location_change (toplevel, &change);
-}
-
-static void
-panel_profile_connect_to_toplevel (PanelToplevel *toplevel)
-{
-	g_signal_connect (toplevel, "notify::screen",
-			  G_CALLBACK (panel_profile_toplevel_screen_changed), NULL);
-}
-
-static void
-panel_profile_toplevel_change_notify (GConfClient   *client,
-				      guint          cnxn_id,
-				      GConfEntry    *entry,
-				      PanelToplevel *toplevel)
-{
-	GConfValue *value;
-	const char *key;
-
-	key = panel_gconf_basename (gconf_entry_get_key (entry));
-
-	if (!(value = gconf_entry_get_value (entry)))
-		return;
-
-	if (!strcmp (key, "screen")) {
-		if (value->type == GCONF_VALUE_INT) {
-			GdkScreen *screen;
-
-			screen = gdk_display_get_screen (
-					gdk_display_get_default (), 
-					gconf_value_get_int (value));
-			if (screen)
-				gtk_window_set_screen (GTK_WINDOW (toplevel), screen);
-			else
-				/* Make sure to set the key back to an actual
-				 * available screen so it will get loaded on
-				 * next startup.
-				 */
-				panel_profile_toplevel_screen_changed (toplevel);
-		}
-			
-	}
-}
-#endif
 
 static void
 panel_profile_save_id_list (PanelGConfKeyType  type,

@@ -59,6 +59,7 @@
 #define PANEL_BACKGROUND_FIT_KEY        "fit"
 #define PANEL_BACKGROUND_STRETCH_KEY    "stretch"
 #define PANEL_BACKGROUND_ROTATE_KEY     "rotate"
+#define PANEL_BACKGROUND_COLOR_DEFAULT  "rgba(255,255,255,.2)"
 
 #define PANEL_OBJECT_SCHEMA             "org.gnome.gnome-panel.object"
 #define PANEL_OBJECT_IID_KEY            "object-iid"

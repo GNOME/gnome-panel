@@ -474,7 +474,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	     op_type == PANEL_GRAB_OP_RESIZE_DOWN || 
 	     op_type == PANEL_GRAB_OP_RESIZE_LEFT || 
 	     op_type == PANEL_GRAB_OP_RESIZE_RIGHT) &&
-	    ! panel_profile_is_writable_toplevel_size (toplevel))
+	    ! g_settings_is_writable (toplevel->priv->settings,
+				      PANEL_TOPLEVEL_SIZE_KEY))
 		return;
 
 	widget = GTK_WIDGET (toplevel);

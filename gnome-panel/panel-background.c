@@ -704,7 +704,7 @@ panel_background_settings_init (PanelBackground *background,
 	color_str = g_settings_get_string (background->settings,
 					   PANEL_BACKGROUND_COLOR_KEY);
 	if (!gdk_rgba_parse (&color, color_str))
-		gdk_rgba_parse (&color, "rgba(255,255,255,.2)");
+		gdk_rgba_parse (&color, PANEL_BACKGROUND_COLOR_DEFAULT);
 	panel_background_set_color_no_update (background, &color);
 	g_free (color_str);
 
