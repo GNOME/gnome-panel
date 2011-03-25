@@ -613,7 +613,7 @@ drop_nautilus_desktop_uri (PanelWidget *panel,
 			return FALSE;
 
 	success = TRUE;
-	id = panel_toplevel_get_toplevel_id (panel->toplevel);
+	id = panel_toplevel_get_id (panel->toplevel);
 	basename = uri + strlen ("x-nautilus-desktop:///");
 
 	if (strncmp (basename, "trash", strlen ("trash")) == 0)
@@ -1340,7 +1340,7 @@ panel_is_applet_right_stick (GtkWidget *applet)
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {
-	panel_layout_delete_toplevel (panel_toplevel_get_toplevel_id (toplevel));
+	panel_layout_delete_toplevel (panel_toplevel_get_id (toplevel));
 } 
 
 static void

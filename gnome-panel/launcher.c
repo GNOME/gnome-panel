@@ -1005,7 +1005,7 @@ panel_launcher_create (PanelToplevel *toplevel,
 		       int            position,
 		       const char    *location)
 {
-	panel_launcher_create_with_id (panel_toplevel_get_toplevel_id (toplevel),
+	panel_launcher_create_with_id (panel_toplevel_get_id (toplevel),
 				       position,
 				       location);
 }

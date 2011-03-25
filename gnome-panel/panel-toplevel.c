@@ -4576,7 +4576,7 @@ panel_toplevel_set_toplevel_id (PanelToplevel *toplevel,
 }
 
 G_CONST_RETURN char *
-panel_toplevel_get_toplevel_id (PanelToplevel *toplevel)
+panel_toplevel_get_id (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 

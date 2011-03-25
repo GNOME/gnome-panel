@@ -76,7 +76,7 @@ GType                panel_toplevel_get_type               (void) G_GNUC_CONST;
 
 PanelWidget         *panel_toplevel_get_panel_widget       (PanelToplevel       *toplevel);
 
-G_CONST_RETURN char *panel_toplevel_get_toplevel_id        (PanelToplevel       *toplevel);
+G_CONST_RETURN char *panel_toplevel_get_id                 (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_name               (PanelToplevel       *toplevel,	
 							    const char          *name);
 G_CONST_RETURN char *panel_toplevel_get_name               (PanelToplevel       *toplevel);

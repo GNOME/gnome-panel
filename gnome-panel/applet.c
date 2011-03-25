@@ -803,7 +803,7 @@ panel_applet_get_toplevel_id (AppletInfo *applet)
 	if (!panel_widget)
 		return NULL;
 
-	return panel_toplevel_get_toplevel_id (panel_widget->toplevel);
+	return panel_toplevel_get_id (panel_widget->toplevel);
 }
 
 static gboolean

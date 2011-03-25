@@ -661,7 +661,7 @@ panel_action_button_create (PanelToplevel         *toplevel,
 
 	panel_layout_object_create (PANEL_OBJECT_ACTION,
 				    detail,
-				    panel_toplevel_get_toplevel_id (toplevel),
+				    panel_toplevel_get_id (toplevel),
 				    position, FALSE);
 }
 

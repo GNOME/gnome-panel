@@ -811,7 +811,7 @@ panel_layout_changed_toplevel (void)
         to_remove = NULL;
 
         for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
-                id = panel_toplevel_get_toplevel_id (l->data);
+                id = panel_toplevel_get_id (l->data);
                 found = FALSE;
 
                 for (i = 0; ids[i] != NULL; i++) {
@@ -838,7 +838,7 @@ panel_layout_changed_toplevel (void)
                 found = FALSE;
 
                 for (l = panel_toplevel_list_toplevels (); l != NULL; l = l->next) {
-                        id = panel_toplevel_get_toplevel_id (l->data);
+                        id = panel_toplevel_get_id (l->data);
                         if (g_strcmp0 (ids[i], id) == 0) {
                                 found = TRUE;
                                 break;

@@ -783,7 +783,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	}
 
 	id = panel_layout_object_create_start (PANEL_OBJECT_MENU, NULL,
-					       panel_toplevel_get_toplevel_id (toplevel),
+					       panel_toplevel_get_id (toplevel),
 					       position, FALSE,
 					       &settings);
 

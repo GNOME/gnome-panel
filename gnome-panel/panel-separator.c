@@ -260,7 +260,7 @@ panel_separator_create (PanelToplevel *toplevel,
 			int            position)
 {
 	panel_layout_object_create (PANEL_OBJECT_SEPARATOR, NULL,
-				    panel_toplevel_get_toplevel_id (toplevel),
+				    panel_toplevel_get_id (toplevel),
 				    position, FALSE);
 }
 
