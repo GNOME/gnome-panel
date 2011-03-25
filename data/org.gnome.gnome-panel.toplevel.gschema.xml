@@ -20,7 +20,7 @@
       <summary>Expand to occupy entire screen width</summary>
       <description>If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel.</description>
     </key>
-    <key name="orientation" type="s">
+    <key name="orientation" enum="org.gnome.gnome-panel.PanelOrientation">
       <default>'top'</default>
       <summary>Panel orientation</summary>
       <description>The orientation of the panel. Possible values are "top", "bottom", "left", "right". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between "top" and "bottom" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a "top" panel a menu button will pop up its menu below the panel, whereas on a "bottom" panel the menu will be popped up above the panel.</description>
@@ -90,7 +90,7 @@
       <summary>Visible pixels when hidden</summary>
       <description>Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true.</description>
     </key>
-    <key name="animation-speed" type="s">
+    <key name="animation-speed" enum="org.gnome.gnome-panel.PanelAnimationSpeed">
       <default>'fast'</default>
       <summary>Animation speed</summary>
       <description>The speed in which panel animations should occur. Possible values are "slow", "medium" and "fast". This key is only relevant if the enable_animations key is true.</description>
@@ -98,20 +98,15 @@
     <child name="background" schema="org.gnome.gnome-panel.toplevel.background"/>
   </schema>
   <schema id="org.gnome.gnome-panel.toplevel.background">
-    <key name="type" type="s">
-      <default>'gtk'</default>
+    <key name="type" enum="org.gnome.gnome-panel.PanelBackgroundType">
+      <default>'none'</default>
       <summary>Background type</summary>
-      <description>Which type of background should be used for this panel. Possible values are "gtk" - the default GTK+ widget background will be used, "color" - the color key will be used as background color or "image" - the image specified by the image key will be used as background.</description>
+      <description>Which type of background should be used for this panel. Possible values are "none" - the default GTK+ widget background will be used, "color" - the color key will be used as background color or "image" - the image specified by the image key will be used as background.</description>
     </key>
     <key name="color" type="s">
-      <default>'#ffffff'</default>
+      <default>'rgba(255,255,255,.2)'</default>
       <summary>Background color</summary>
       <description>Specifies the background color for the panel in #RGB format.</description>
-    </key>
-    <key name="opacity" type="i">
-      <default>6000</default>
-      <summary>Background color opacity</summary>
-      <description>Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image.</description>
     </key>
     <key name="image" type="s">
       <default>''</default>

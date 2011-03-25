@@ -108,6 +108,7 @@ panel_headers =			\
 	panel-bindings.h	\
 	panel-profile.h		\
 	panel-enums.h		\
+	panel-enums-gsettings.h	\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto.h		\
@@ -177,8 +178,9 @@ gnome-panel-add: gnome-panel-add.in Makefile
 		< $< > $@
 	$(AM_V_at)chmod a+x $@
 
-panel_enum_headers =					\
-	$(top_srcdir)/gnome-panel/panel-enums.h		\
+panel_enum_headers =						\
+	$(top_srcdir)/gnome-panel/panel-enums.h			\
+	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
 	$(top_srcdir)/gnome-panel/panel-types.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)

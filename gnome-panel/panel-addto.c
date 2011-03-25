@@ -963,7 +963,7 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	client = panel_gconf_get_client ();
 
 	if (dialog->name_notify)
-		gconf_client_notify_remove (client, dialog->name_notify);
+		g_signal_handler_disconnect (client, dialog->name_notify);
 	dialog->name_notify = 0;
 
 	if (dialog->search_text)
@@ -1016,11 +1016,12 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 }
 
 static void
-panel_addto_name_change (PanelAddtoDialog *dialog,
-			 const char       *name)
+panel_addto_name_change (PanelAddtoDialog *dialog)
 {
-	char *label;
+	const char *name;
+	char       *label;
 
+	name = panel_toplevel_get_name (dialog->panel_widget->toplevel);
 	label = NULL;
 
 	if (!PANEL_GLIB_STR_EMPTY (name))
@@ -1038,27 +1039,11 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 }
 
 static void
-panel_addto_name_notify (GConfClient      *client,
-			 guint             cnxn_id,
-			 GConfEntry       *entry,
+panel_addto_name_notify (GObject          *gobject,
+			 GParamSpec       *pspec,
 			 PanelAddtoDialog *dialog)
 {
-	GConfValue *value;
-	const char *key;
-	const char *text = NULL;
-
-	key = panel_gconf_basename (gconf_entry_get_key (entry));
-
-	if (strcmp (key, "name"))
-		return;
-
-	value = gconf_entry_get_value (entry);
-
-	if (value && value->type == GCONF_VALUE_STRING)
-		text = gconf_value_get_string (value);
-
-	if (text)
-		panel_addto_name_change (dialog, text);
+	panel_addto_name_change (dialog);
 }
 
 static gboolean
@@ -1261,12 +1246,10 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 
 	dialog->panel_widget = panel_widget;
 	dialog->name_notify =
-		panel_profile_toplevel_notify_add (
-			dialog->panel_widget->toplevel,
-			"name",
-			(GConfClientNotifyFunc) panel_addto_name_notify,
-			dialog);
-
+		g_signal_connect (dialog->panel_widget->toplevel,
+				  "notify::name",
+				  G_CALLBACK (panel_addto_name_notify),
+				  dialog);
 
 	dialog->addto_dialog = gtk_dialog_new ();
 	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
@@ -1384,8 +1367,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	panel_widget_register_open_dialog (panel_widget,
 					   dialog->addto_dialog);
 
-	panel_addto_name_change (dialog,
-				 panel_toplevel_get_name (dialog->panel_widget->toplevel));
+	panel_addto_name_change (dialog);
 
 	return dialog;
 }

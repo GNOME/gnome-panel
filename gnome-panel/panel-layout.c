@@ -32,8 +32,11 @@
 
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-dconf.h>
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gsettings.h>
 
+#include "panel.h"
+#include "panel-multiscreen.h"
 #include "panel-schemas.h"
 #include "panel-toplevel.h"
 
@@ -543,6 +546,52 @@ panel_layout_append_from_file (const char *layout_file,
 \******************/
 
 
+static void
+panel_layout_load_toplevel (const char *toplevel_id)
+{
+        PanelToplevel *toplevel;
+        char          *path;
+        GSettings     *settings;
+        int            screen;
+
+        if (PANEL_GLIB_STR_EMPTY (toplevel_id))
+                return;
+
+        path = g_strdup_printf ("%s%s/",
+                                PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
+
+        /* Check that the screen is valid */
+        settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
+        screen = g_settings_get_int (settings, PANEL_TOPLEVEL_SCREEN);
+        g_object_unref (settings);
+
+        if (screen < 0 || screen >= panel_multiscreen_screens ()) {
+                g_free (path);
+                return;
+        }
+
+        toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
+                                 "toplevel-id", toplevel_id,
+                                 "settings-path", path,
+                                 NULL);
+
+        g_free (path);
+
+        /* FIXME: we shouldn't have to do this manually */
+        panel_setup (toplevel);
+
+        gtk_widget_show (GTK_WIDGET (toplevel));
+}
+
+static void
+panel_layout_load_object (const char *object_id)
+{
+        if (PANEL_GLIB_STR_EMPTY (object_id))
+                return;
+
+        /* TODO */
+}
+
 static char *
 panel_layout_get_default_layout_file (void)
 {
@@ -598,6 +647,7 @@ panel_layout_load (void)
 {
         char **toplevels;
         char **objects;
+        int    i;
 
         panel_layout_init ();
 
@@ -633,8 +683,18 @@ panel_layout_load (void)
                 }
         }
 
+        for (i = 0; toplevels[i] != NULL; i++)
+                panel_layout_load_toplevel (toplevels[i]);
+
+        g_strfreev (toplevels);
+
         objects = g_settings_get_strv (layout_settings,
                                        PANEL_LAYOUT_OBJECT_ID_LIST);
+
+        for (i = 0; objects[i] != NULL; i++)
+                panel_layout_load_object (objects[i]);
+
+        g_strfreev (objects);
 
         panel_layout_ensure_toplevel_per_screen ();
 

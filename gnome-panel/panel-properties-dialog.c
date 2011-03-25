@@ -454,6 +454,7 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 	dialog->color_widgets     = PANEL_GTK_BUILDER_GET (gui, "color_widgets");
 	dialog->image_widgets     = PANEL_GTK_BUILDER_GET (gui, "image_widgets");
 
+#if 0
 	background_type = panel_profile_get_background_type (dialog->toplevel);
 	switch (background_type) {
 	case PANEL_BACK_NONE:
@@ -469,6 +470,7 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 		active_radio = NULL;
 		g_assert_not_reached ();
 	}
+#endif
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (active_radio), TRUE);
 
@@ -636,6 +638,7 @@ panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
 	if (!value || value->type != GCONF_VALUE_STRING)
 		return;
 
+#if 0
 	if (!panel_profile_map_background_type_string (gconf_value_get_string (value),
 						       &background_type))
 		return;
@@ -655,6 +658,7 @@ panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
 		g_assert_not_reached ();
 		break;
 	}
+#endif
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (active_radio), TRUE);
 }
@@ -789,24 +793,28 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 				  G_CALLBACK (panel_properties_update_arrows_toggle_visible),
 				  dialog);
 
+#if 0
 	dialog->toplevel_notify =
 		panel_profile_toplevel_notify_add (
 			dialog->toplevel,
 			NULL,
 			(GConfClientNotifyFunc) panel_properties_dialog_toplevel_notify,
 			dialog);
+#endif
 
 	panel_properties_dialog_setup_color_button      (dialog, gui);
 	panel_properties_dialog_setup_image_chooser     (dialog, gui);
 	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
 	panel_properties_dialog_setup_background_radios (dialog, gui);
 
+#if 0
 	dialog->background_notify =
 		panel_profile_toplevel_notify_add (
 			dialog->toplevel,
 			"background",
 			(GConfClientNotifyFunc) panel_properties_dialog_background_notify,
 			dialog);
+#endif
 
 	panel_toplevel_push_autohide_disabler (dialog->toplevel);
 	panel_widget_register_open_dialog (panel_toplevel_get_panel_widget (dialog->toplevel),

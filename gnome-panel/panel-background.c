@@ -33,6 +33,7 @@
 #include <cairo-xlib.h>
 
 #include "panel-background-monitor.h"
+#include "panel-schemas.h"
 #include "panel-util.h"
 
 
@@ -506,7 +507,7 @@ load_background_file (PanelBackground *background)
 	panel_background_update_has_alpha (background);
 }
 
-void
+static void
 panel_background_set_type (PanelBackground     *background,
 			   PanelBackgroundType  type)
 {
@@ -535,7 +536,7 @@ panel_background_set_color_no_update (PanelBackground *background,
         panel_background_update_has_alpha (background);
 }
 
-void
+static void
 panel_background_set_color (PanelBackground *background,
                             const GdkRGBA   *color)
 {
@@ -567,7 +568,7 @@ panel_background_set_image_no_update (PanelBackground *background,
 	panel_background_update_has_alpha (background);
 }
 
-void
+static void
 panel_background_set_image (PanelBackground *background,
 			    const char      *image)
 {
@@ -589,7 +590,7 @@ panel_background_set_fit_no_update (PanelBackground *background,
 	background->fit_image = fit_image != FALSE;
 }
 
-void
+static void
 panel_background_set_fit (PanelBackground *background,
 			  gboolean         fit_image)
 {
@@ -610,7 +611,7 @@ panel_background_set_stretch_no_update (PanelBackground *background,
 	background->stretch_image = stretch_image != FALSE;
 }
 
-void
+static void
 panel_background_set_stretch (PanelBackground *background,
 			      gboolean         stretch_image)
 {
@@ -631,7 +632,7 @@ panel_background_set_rotate_no_update (PanelBackground *background,
 	background->rotate_image = rotate_image != FALSE;
 }
 
-void
+static void
 panel_background_set_rotate (PanelBackground *background,
 			     gboolean         rotate_image)
 {
@@ -645,20 +646,87 @@ panel_background_set_rotate (PanelBackground *background,
 	panel_background_transform (background);
 }
 
-void
-panel_background_set (PanelBackground     *background,
-		      PanelBackgroundType  type,
-		      const GdkRGBA       *color,
-		      const char          *image,
-		      gboolean             fit_image,
-		      gboolean             stretch_image,
-		      gboolean             rotate_image)
+static void
+panel_background_settings_changed (GSettings       *settings,
+				   char            *key,
+				   PanelBackground *background)
 {
-	panel_background_set_color_no_update (background, color);
+	char     *value_str;
+	gboolean  value_boolean;
+
+	if (g_strcmp0 (key, PANEL_BACKGROUND_TYPE_KEY) == 0) {
+		PanelBackgroundType type;
+		type = g_settings_get_enum (settings, key);
+		panel_background_set_type (background, type);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_COLOR_KEY) == 0) {
+		GdkRGBA color;
+		value_str = g_settings_get_string (settings, key);
+		if (gdk_rgba_parse (&color, value_str))
+			panel_background_set_color (background, &color);
+		g_free (value_str);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_KEY) == 0) {
+		value_str = g_settings_get_string (settings, key);
+		panel_background_set_image (background, value_str);
+		g_free (value_str);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_FIT_KEY) == 0) {
+		value_boolean = g_settings_get_boolean (settings, key);
+		panel_background_set_fit (background, value_boolean);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_STRETCH_KEY) == 0) {
+		value_boolean = g_settings_get_boolean (settings, key);
+		panel_background_set_stretch (background, value_boolean);
+	} else if (g_strcmp0 (key, PANEL_BACKGROUND_ROTATE_KEY) == 0) {
+		value_boolean = g_settings_get_boolean (settings, key);
+		panel_background_set_rotate (background, value_boolean);
+	} else {
+		g_assert_not_reached ();
+	}
+}
+
+void
+panel_background_settings_init (PanelBackground *background,
+				GSettings       *settings)
+{
+	PanelBackgroundType  type;
+	char                *color_str;
+	GdkRGBA              color;
+	char                *image;
+	gboolean             fit_image;
+	gboolean             stretch_image;
+	gboolean             rotate_image;
+
+	g_assert (background->settings == NULL);
+
+	background->settings = g_object_ref (settings);
+	g_signal_connect (background->settings, "changed",
+			  G_CALLBACK (panel_background_settings_changed),
+			  background);
+
+	color_str = g_settings_get_string (background->settings,
+					   PANEL_BACKGROUND_COLOR_KEY);
+	if (!gdk_rgba_parse (&color, color_str))
+		gdk_rgba_parse (&color, "rgba(255,255,255,.2)");
+	panel_background_set_color_no_update (background, &color);
+	g_free (color_str);
+
+	image = g_settings_get_string (background->settings,
+				       PANEL_BACKGROUND_IMAGE_KEY);
 	panel_background_set_image_no_update (background, image);
+	g_free (image);
+
+	fit_image = g_settings_get_boolean (background->settings,
+					    PANEL_BACKGROUND_FIT_KEY);
 	panel_background_set_fit_no_update (background, fit_image);
+
+	stretch_image = g_settings_get_boolean (background->settings,
+						PANEL_BACKGROUND_STRETCH_KEY);
 	panel_background_set_stretch_no_update (background, stretch_image);
+
+	rotate_image = g_settings_get_boolean (background->settings,
+					       PANEL_BACKGROUND_ROTATE_KEY);
 	panel_background_set_rotate_no_update (background, rotate_image);
+
+	type = g_settings_get_enum (background->settings,
+				    PANEL_BACKGROUND_TYPE_KEY);
 	panel_background_set_type (background, type);
 }
 
@@ -778,6 +846,8 @@ panel_background_init (PanelBackground              *background,
 		       PanelBackgroundChangedNotify  notify_changed,
 		       gpointer                      user_data)
 {
+	background->settings = NULL;
+
 	background->type = PANEL_BACK_NONE;
 	background->notify_changed = notify_changed;
 	background->user_data = user_data;
@@ -826,6 +896,10 @@ panel_background_free (PanelBackground *background)
 	disconnect_background_monitor (background);
 
 	free_transformed_resources (background);
+
+	if (background->settings)
+		g_object_unref (background->settings);
+	background->settings = NULL;
 
 	if (background->image)
 		g_free (background->image);

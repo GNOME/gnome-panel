@@ -894,7 +894,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	for (l = panel_applets_to_load; l; l = l->next) {
 		applet = l->data;
 
-		toplevel = panel_profile_get_toplevel_by_id (applet->toplevel_id);
+		toplevel = panel_toplevel_get_by_id (applet->toplevel_id);
 		if (toplevel)
 			break;
 	}
@@ -1070,7 +1070,7 @@ panel_applet_get_toplevel_id (AppletInfo *applet)
 	if (!panel_widget)
 		return NULL;
 
-	return panel_profile_get_toplevel_id (panel_widget->toplevel);
+	return panel_toplevel_get_toplevel_id (panel_widget->toplevel);
 }
 
 static gboolean

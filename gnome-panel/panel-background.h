@@ -39,6 +39,8 @@ typedef void (*PanelBackgroundChangedNotify)
 				 gpointer         user_data);
 
 struct _PanelBackground {
+	GSettings              *settings;
+
 	PanelBackgroundType     type;
 
 	PanelBackgroundChangedNotify notify_changed;
@@ -76,26 +78,10 @@ struct _PanelBackground {
 void  panel_background_init              (PanelBackground     *background,
 					  PanelBackgroundChangedNotify notify_changed,
 					  gpointer             user_data);
+void  panel_background_settings_init     (PanelBackground     *background,
+					  GSettings           *settings);
 void  panel_background_free              (PanelBackground     *background);
-void  panel_background_set               (PanelBackground     *background,
-					  PanelBackgroundType  type,
-					  const GdkRGBA       *color,
-					  const char          *image,
-					  gboolean             fit_image,
-					  gboolean             stretch_image,
-					  gboolean             rotate_image); 
-void  panel_background_set_type          (PanelBackground     *background,
-					  PanelBackgroundType  type);
-void  panel_background_set_color         (PanelBackground     *background,
-					  const GdkRGBA       *color);
-void  panel_background_set_image         (PanelBackground     *background,
-					  const char          *image);
-void  panel_background_set_fit           (PanelBackground     *background,
-					  gboolean             fit_image);
-void  panel_background_set_stretch       (PanelBackground     *background,
-					  gboolean             stretch_image);
-void  panel_background_set_rotate        (PanelBackground     *background,
-					  gboolean             rotate_image);
+
 void  panel_background_set_default_style (PanelBackground     *background,
 					  GdkRGBA             *color,
 					  cairo_pattern_t     *pattern);

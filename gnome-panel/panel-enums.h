@@ -26,15 +26,9 @@
 #define __PANEL_ENUMS_H__
 
 #include <glib.h>
+#include "panel-enums-gsettings.h"
 
 G_BEGIN_DECLS
-
-typedef enum {
-	PANEL_ORIENTATION_TOP    = 1 << 0,
-	PANEL_ORIENTATION_RIGHT  = 1 << 1,
-	PANEL_ORIENTATION_BOTTOM = 1 << 2,
-	PANEL_ORIENTATION_LEFT   = 1 << 3
-} PanelOrientation;
 
 #define PANEL_HORIZONTAL_MASK (PANEL_ORIENTATION_TOP  | PANEL_ORIENTATION_BOTTOM)
 #define PANEL_VERTICAL_MASK   (PANEL_ORIENTATION_LEFT | PANEL_ORIENTATION_RIGHT)
@@ -55,18 +49,6 @@ typedef enum {
 	PANEL_STATE_HIDDEN_LEFT  = 4,
 	PANEL_STATE_HIDDEN_RIGHT = 5
 } PanelState;
-
-typedef enum {
-	PANEL_ANIMATION_SLOW   = 0,
-	PANEL_ANIMATION_MEDIUM = 1,
-	PANEL_ANIMATION_FAST   = 2
-} PanelAnimationSpeed;
-
-typedef enum {
-	PANEL_BACK_NONE  = 0,
-	PANEL_BACK_COLOR = 1,
-	PANEL_BACK_IMAGE = 2
-} PanelBackgroundType;
 
 typedef enum {
 	PANEL_GCONF_TOPLEVELS,

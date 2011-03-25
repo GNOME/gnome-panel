@@ -35,6 +35,8 @@
 #include <gdk/gdkkeysyms.h>
 #include <glib/gi18n.h>
 
+#include <libpanel-util/panel-glib.h>
+
 #include "panel-profile.h"
 #include "panel-frame.h"
 #include "panel-xutils.h"
@@ -46,6 +48,7 @@
 #include "panel-bindings.h"
 #include "panel-struts.h"
 #include "panel-lockdown.h"
+#include "panel-schemas.h"
 
 G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
@@ -73,6 +76,13 @@ typedef enum {
 } PanelGrabOpType;
 
 struct _PanelToplevelPrivate {
+	char                   *toplevel_id;
+
+	char                   *settings_path;
+	GSettings              *settings;
+	GSettings              *delayed_settings;
+	guint                   apply_delayed_id;
+
 	gboolean                expand;
 	PanelOrientation        orientation;
 	int                     size;
@@ -198,6 +208,8 @@ enum {
 
 enum {
 	PROP_0,
+	PROP_TOPLEVEL_ID,
+	PROP_SETTINGS_PATH,
 	PROP_NAME,
 	PROP_EXPAND,
 	PROP_ORIENTATION,
@@ -224,6 +236,11 @@ static GSList       *toplevel_list = NULL;
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
 
+static void panel_toplevel_bind_gsettings       (PanelToplevel *toplevel);
+static void panel_toplevel_set_toplevel_id      (PanelToplevel *toplevel,
+						 const char    *toplevel_id);
+static void panel_toplevel_set_settings_path    (PanelToplevel *toplevel,
+						 const char    *settings_path);
 static void panel_toplevel_set_animate          (PanelToplevel *toplevel,
 						 gboolean       animate);
 
@@ -237,6 +254,24 @@ GSList *
 panel_toplevel_list_toplevels (void)
 {
 	return toplevel_list;
+}
+
+PanelToplevel *
+panel_toplevel_get_by_id (const char *toplevel_id)
+{
+	GSList *l;
+
+	if (PANEL_GLIB_STR_EMPTY (toplevel_id))
+		return NULL;
+
+	for (l = toplevel_list; l; l = l->next) {
+		PanelToplevel *toplevel = l->data;
+
+		if (!g_strcmp0 (toplevel->priv->toplevel_id, toplevel_id))
+			return toplevel;
+	}
+
+	return NULL;
 }
 
 gboolean
@@ -3445,6 +3480,27 @@ panel_toplevel_screen_changed (GtkWidget *widget,
 	gtk_widget_queue_resize (widget);
 }
 
+static GObject *
+panel_toplevel_constructor (GType                  type,
+			    guint                  n_construct_properties,
+			    GObjectConstructParam *construct_properties)
+{
+	GObject       *obj;
+	PanelToplevel *toplevel;
+
+	obj = G_OBJECT_CLASS (panel_toplevel_parent_class)->constructor (type,
+									 n_construct_properties,
+									 construct_properties);
+
+	toplevel = PANEL_TOPLEVEL (obj);
+
+	/* We can't do that in init() as init() will set the properties to
+	 * their default, and this would write to gsettings */
+	panel_toplevel_bind_gsettings (toplevel);
+
+	return obj;
+}
+
 static void
 panel_toplevel_set_property (GObject      *object,
 			     guint         prop_id,
@@ -3458,6 +3514,12 @@ panel_toplevel_set_property (GObject      *object,
 	toplevel = PANEL_TOPLEVEL (object);
 
 	switch (prop_id) {
+	case PROP_TOPLEVEL_ID:
+		panel_toplevel_set_toplevel_id (toplevel, g_value_get_string (value));
+		break;
+	case PROP_SETTINGS_PATH:
+		panel_toplevel_set_settings_path (toplevel, g_value_get_string (value));
+		break;
 	case PROP_NAME:
 		panel_toplevel_set_name (toplevel, g_value_get_string (value));
 		break;
@@ -3552,6 +3614,12 @@ panel_toplevel_get_property (GObject    *object,
 	toplevel = PANEL_TOPLEVEL (object);
 
 	switch (prop_id) {
+	case PROP_TOPLEVEL_ID:
+		g_value_set_string (value, toplevel->priv->toplevel_id);
+		break;
+	case PROP_SETTINGS_PATH:
+		g_value_set_string (value, toplevel->priv->settings_path);
+		break;
 	case PROP_NAME:
 		g_value_set_string (value, panel_toplevel_get_name (toplevel));
 		break;
@@ -3635,6 +3703,26 @@ panel_toplevel_finalize (GObject *object)
 		g_free (toplevel->priv->name);
 	toplevel->priv->name = NULL;
 
+	if (toplevel->priv->apply_delayed_id)
+		g_source_remove (toplevel->priv->apply_delayed_id);
+	toplevel->priv->apply_delayed_id = 0;
+
+	if (toplevel->priv->delayed_settings)
+		g_object_unref (toplevel->priv->delayed_settings);
+	toplevel->priv->delayed_settings= NULL;
+
+	if (toplevel->priv->settings)
+		g_object_unref (toplevel->priv->settings);
+	toplevel->priv->settings= NULL;
+
+	if (toplevel->priv->settings_path)
+		g_free (toplevel->priv->settings_path);
+	toplevel->priv->settings_path = NULL;
+
+	if (toplevel->priv->toplevel_id)
+		g_free (toplevel->priv->toplevel_id);
+	toplevel->priv->toplevel_id = NULL;
+
 	G_OBJECT_CLASS (panel_toplevel_parent_class)->finalize (object);
 }
 
@@ -3648,6 +3736,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
         binding_set = gtk_binding_set_by_class (klass);
 
+	gobject_class->constructor  = panel_toplevel_constructor;
 	gobject_class->set_property = panel_toplevel_set_property;
         gobject_class->get_property = panel_toplevel_get_property;
         gobject_class->dispose      = panel_toplevel_dispose;
@@ -3683,6 +3772,26 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->begin_resize     = panel_toplevel_begin_resize;
 
 	g_type_class_add_private (klass, sizeof (PanelToplevelPrivate));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_TOPLEVEL_ID,
+		g_param_spec_string (
+			"toplevel-id",
+			"Panel identifier",
+			"Unique identifier of this panel",
+			NULL,
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_SETTINGS_PATH,
+		g_param_spec_string (
+			"settings-path",
+			"GSettings path",
+			"The GSettings path used for this panel",
+			NULL,
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -3778,7 +3887,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		gobject_class,
 		PROP_Y_BOTTOM,
 		g_param_spec_int (
-			"y_bottom",
+			"y-bottom",
 			"Y position, from the bottom",
 			"The Y position of the panel, starting from the bottom of the screen",
 			-1,
@@ -4071,6 +4180,13 @@ panel_toplevel_init (PanelToplevel *toplevel)
 {
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
+	toplevel->priv->toplevel_id      = NULL;
+
+	toplevel->priv->settings_path    = NULL;
+	toplevel->priv->settings         = NULL;
+	toplevel->priv->delayed_settings = NULL;
+	toplevel->priv->apply_delayed_id = 0;
+
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
 	toplevel->priv->size            = DEFAULT_SIZE;
@@ -4171,6 +4287,243 @@ panel_toplevel_get_panel_widget (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 
 	return toplevel->priv->panel_widget;
+}
+
+static gboolean
+panel_toplevel_apply_delayed_settings (PanelToplevel *toplevel)
+{
+	g_settings_apply (toplevel->priv->delayed_settings);
+
+	toplevel->priv->apply_delayed_id = 0;
+
+	return FALSE;
+}
+
+static void
+panel_toplevel_apply_delayed_settings_queue (PanelToplevel *toplevel)
+{
+	if (toplevel->priv->apply_delayed_id != 0)
+		return;
+
+	toplevel->priv->apply_delayed_id = g_timeout_add (500,
+							  (GSourceFunc) panel_toplevel_apply_delayed_settings,
+							  toplevel);
+}
+
+static gboolean
+panel_toplevel_settings_bind_get_screen (GValue   *value,
+					 GVariant *variant,
+					 gpointer  user_data)
+{
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (user_data);
+	GdkDisplay    *display;
+	GdkScreen     *screen;
+	int            screen_n;
+
+	display = gdk_display_get_default ();
+	screen_n = g_variant_get_int32 (variant);
+
+	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
+		/* Trigger an event so that the gsettings key gets updated, to
+		 * to set the key back to an actual available screen so it will
+		 * get loaded on next startup. */
+		g_object_notify (G_OBJECT (toplevel), "screen");
+		return FALSE;
+	}
+
+	screen = gdk_display_get_screen (display, screen_n);
+
+	if (screen != NULL)
+		g_value_set_object (value, screen);
+
+	return (screen != NULL);
+}
+
+static GVariant *
+panel_toplevel_settings_bind_set_screen (const GValue       *value,
+					 const GVariantType *expected_type,
+					 gpointer            user_data)
+{
+	GdkScreen *screen = g_value_get_object (value);
+
+	if (!screen || GDK_IS_SCREEN (screen))
+		screen = gdk_screen_get_default ();
+
+	return g_variant_new ("i", gdk_screen_get_number (screen));
+}
+
+static void
+panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
+{
+	/* Delayed settings: the ones related to the position */
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_MONITOR,
+			 toplevel,
+			 "monitor",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_SIZE,
+			 toplevel,
+			 "size",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_ORIENTATION,
+			 toplevel,
+			 "orientation",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_X,
+			 toplevel,
+			 "x",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_X_RIGHT,
+			 toplevel,
+			 "x-right",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_X_CENTERED,
+			 toplevel,
+			 "x-centered",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_Y,
+			 toplevel,
+			 "y",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_Y_BOTTOM,
+			 toplevel,
+			 "y-bottom",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_Y_CENTERED,
+			 toplevel,
+			 "y-centered",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	/* Normal settings */
+
+	g_settings_bind_with_mapping (toplevel->priv->settings,
+				      PANEL_TOPLEVEL_SCREEN,
+				      toplevel,
+				      "screen",
+				      G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY,
+				      panel_toplevel_settings_bind_get_screen,
+				      panel_toplevel_settings_bind_set_screen,
+				      toplevel, NULL);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_NAME,
+			 toplevel,
+			 "name",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_EXPAND,
+			 toplevel,
+			 "expand",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_AUTO_HIDE,
+			 toplevel,
+			 "auto-hide",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_HIDE_DELAY,
+			 toplevel,
+			 "hide-delay",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_UNHIDE_DELAY,
+			 toplevel,
+			 "unhide-delay",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_AUTO_HIDE_SIZE,
+			 toplevel,
+			 "auto-hide-size",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_ANIMATION_SPEED,
+			 toplevel,
+			 "animation-speed",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_ENABLE_BUTTONS,
+			 toplevel,
+			 "buttons-enabled",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_ENABLE_ARROWS,
+			 toplevel,
+			 "arrows-enabled",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+			 PANEL_TOPLEVEL_NAME,
+			 toplevel,
+			 "name",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+}
+
+static void
+panel_toplevel_set_toplevel_id (PanelToplevel *toplevel,
+				const char    *toplevel_id)
+{
+	g_assert (toplevel->priv->toplevel_id == NULL);
+
+	toplevel->priv->toplevel_id = g_strdup (toplevel_id);
+}
+
+G_CONST_RETURN char *
+panel_toplevel_get_toplevel_id (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->toplevel_id;
+}
+
+static void
+panel_toplevel_set_settings_path (PanelToplevel *toplevel,
+				  const char    *settings_path)
+{
+	GSettings *settings_background;
+
+	g_assert (toplevel->priv->settings_path == NULL);
+	g_assert (toplevel->priv->settings == NULL);
+	g_assert (toplevel->priv->delayed_settings == NULL);
+
+	toplevel->priv->settings_path = g_strdup (settings_path);
+	toplevel->priv->settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
+							     settings_path);
+	toplevel->priv->delayed_settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
+								     settings_path);
+	g_settings_delay (toplevel->priv->delayed_settings);
+
+	settings_background = g_settings_get_child (toplevel->priv->settings,
+						    PANEL_BACKGROUND_SCHEMA_CHILD);
+	/* FIXME: ideally, move this inside panel-widget.c since we're not
+	 * supposed to know about the backgrounds here */
+	panel_background_settings_init (&toplevel->priv->panel_widget->background,
+					settings_background);
+	g_object_unref (settings_background);
 }
 
 static void
@@ -4392,6 +4745,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
+	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "orientation");
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
@@ -4421,6 +4775,7 @@ panel_toplevel_set_size (PanelToplevel *toplevel,
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
+	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "size");
 }
 
@@ -4496,8 +4851,10 @@ panel_toplevel_set_x (PanelToplevel *toplevel,
 		g_object_notify (G_OBJECT (toplevel), "x-centered");
 	}
 
-	if (changed)
+	if (changed) {
+		panel_toplevel_apply_delayed_settings_queue (toplevel);
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	}
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
 }
@@ -4534,8 +4891,10 @@ panel_toplevel_set_y (PanelToplevel *toplevel,
 		g_object_notify (G_OBJECT (toplevel), "y-centered");
 	}
 
-	if (changed)
+	if (changed) {
+		panel_toplevel_apply_delayed_settings_queue (toplevel);
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	}
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
 }
@@ -4657,6 +5016,7 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 	if (monitor < panel_multiscreen_monitors (screen))
 		panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
+	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "monitor");
 }
 
