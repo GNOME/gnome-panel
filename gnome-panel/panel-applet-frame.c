@@ -73,7 +73,7 @@ G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX)
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
 #define HANDLE_SIZE 10
-#define PANEL_APPLET_PREFS_KEY "/apps/panel/applets/%s/prefs"
+#define PANEL_APPLET_PREFS_KEY "/apps/panel3-applets/%s"
 
 struct _PanelAppletFramePrivate {
 	PanelWidget     *panel;
@@ -848,10 +848,15 @@ gchar *
 panel_applet_frame_activating_get_conf_path (PanelAppletFrameActivating *frame_act)
 {
 	char *ret;
+	char *gconfied_id;
 
-	ret = g_strdup_printf (PANEL_APPLET_PREFS_KEY, frame_act->id);
 	/* gconf uses '_' and not '-' */
-	g_strdelimit (ret, "-", '_');
+	gconfied_id = g_strdup (frame_act->id);
+	g_strdelimit (gconfied_id, "-", '_');
+
+	ret = g_strdup_printf (PANEL_APPLET_PREFS_KEY, gconfied_id);
+
+	g_free (gconfied_id);
 
 	return ret;
 }
