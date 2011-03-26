@@ -53,13 +53,14 @@ typedef struct {
 } AppletPropertyInfo;
 
 static const AppletPropertyInfo applet_properties [] = {
-	{ "prefs-key",   "PrefsKey" },
-	{ "orient",      "Orient" },
-	{ "size",        "Size" },
-	{ "size-hints",  "SizeHints" },
-	{ "background",  "Background" },
-	{ "flags",       "Flags" },
-	{ "locked-down", "LockedDown" }
+	{ "settings-path", "SettingsPath" },
+	{ "prefs-key",     "PrefsKey" },
+	{ "orient",        "Orient" },
+	{ "size",          "Size" },
+	{ "size-hints",    "SizeHints" },
+	{ "background",    "Background" },
+	{ "flags",         "Flags" },
+	{ "locked-down",   "LockedDown" }
 };
 
 #define PANEL_APPLET_CONTAINER_GET_PRIVATE(o) \

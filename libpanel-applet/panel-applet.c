@@ -89,6 +89,7 @@ struct _PanelAppletPrivate {
 	GClosure          *closure;
 	char              *object_path;
 	guint              object_id;
+	char              *settings_path;
 	char              *prefs_key;
 
 	GtkUIManager      *ui_manager;
@@ -127,6 +128,7 @@ enum {
 	PROP_ID,
 	PROP_CLOSURE,
 	PROP_CONNECTION,
+	PROP_SETTINGS_PATH,
 	PROP_PREFS_KEY,
 	PROP_ORIENT,
 	PROP_SIZE,
@@ -366,6 +368,25 @@ panel_applet_set_preferences_key (PanelApplet *applet,
 	}
 
 	g_object_notify (G_OBJECT (applet), "prefs-key");
+}
+
+static void
+panel_applet_set_settings_path (PanelApplet *applet,
+				const char  *settings_path)
+{
+	if (applet->priv->settings_path == settings_path)
+		return;
+
+	if (g_strcmp0 (applet->priv->settings_path, settings_path) == 0)
+		return;
+
+	g_free (applet->priv->settings_path);
+	applet->priv->settings_path = NULL;
+
+	if (settings_path)
+		applet->priv->settings_path = g_strdup (settings_path);
+
+	g_object_notify (G_OBJECT (applet), "settings-path");
 }
 
 /**
@@ -976,6 +997,7 @@ panel_applet_finalize (GObject *object)
 
 	g_free (applet->priv->size_hints);
 	g_free (applet->priv->prefs_key);
+	g_free (applet->priv->settings_path);
 	g_free (applet->priv->background);
 	g_free (applet->priv->id);
 
@@ -1766,6 +1788,9 @@ panel_applet_get_property (GObject    *object,
 	case PROP_CONNECTION:
 		g_value_set_object (value, applet->priv->connection);
 		break;
+	case PROP_SETTINGS_PATH:
+		g_value_set_string (value, applet->priv->settings_path);
+		break;
 	case PROP_PREFS_KEY:
 		g_value_set_string (value, applet->priv->prefs_key);
 		break;
@@ -1826,6 +1851,9 @@ panel_applet_set_property (GObject      *object,
 		break;
 	case PROP_CONNECTION:
 		applet->priv->connection = g_value_dup_object (value);
+		break;
+	case PROP_SETTINGS_PATH:
+		panel_applet_set_settings_path (applet, g_value_get_string (value));
 		break;
 	case PROP_PREFS_KEY:
 		panel_applet_set_preferences_key (applet, g_value_get_string (value));
@@ -2033,6 +2061,20 @@ panel_applet_class_init (PanelAppletClass *klass)
 							      "The DBus Connection",
 							      G_TYPE_DBUS_CONNECTION,
 							      G_PARAM_CONSTRUCT_ONLY |
+							      G_PARAM_READWRITE));
+	/**
+	 * PanelApplet:settings-path:
+	 *
+	 * The GSettings path to the per-instance settings of the applet.
+	 *
+	 * This property gets set when the applet gets embedded.
+	 **/
+	g_object_class_install_property (gobject_class,
+					 PROP_SETTINGS_PATH,
+					 g_param_spec_string ("settings-path",
+							      "SettingsPath",
+							      "GSettings path to per-instance settings",
+							      NULL,
 							      G_PARAM_READWRITE));
 	/**
 	 * PanelApplet:prefs-key:
@@ -2264,7 +2306,10 @@ get_property_cb (GDBusConnection *connection,
 	PanelApplet *applet = PANEL_APPLET (user_data);
 	GVariant    *retval = NULL;
 
-	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
+	if (g_strcmp0 (property_name, "SettingsPath") == 0) {
+		retval = g_variant_new_string (applet->priv->settings_path ?
+					       applet->priv->settings_path : "");
+	} else if (g_strcmp0 (property_name, "PrefsKey") == 0) {
 		retval = g_variant_new_string (applet->priv->prefs_key ?
 					       applet->priv->prefs_key : "");
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
@@ -2305,7 +2350,9 @@ set_property_cb (GDBusConnection *connection,
 {
 	PanelApplet *applet = PANEL_APPLET (user_data);
 
-	if (g_strcmp0 (property_name, "PrefsKey") == 0) {
+	if (g_strcmp0 (property_name, "SettingsPath") == 0) {
+		panel_applet_set_settings_path (applet, g_variant_get_string (value, NULL));
+	} else if (g_strcmp0 (property_name, "PrefsKey") == 0) {
 		panel_applet_set_preferences_key (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		panel_applet_set_orient (applet, g_variant_get_uint32 (value));
@@ -2339,6 +2386,7 @@ static const gchar introspection_xml[] =
 	      "<arg name='button' type='u' direction='in'/>"
 	      "<arg name='time' type='u' direction='in'/>"
 	    "</method>"
+	    "<property name='SettingsPath' type='s' access='readwrite'/>"
 	    "<property name='PrefsKey' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
 	    "<property name='Size' type='u' access='readwrite'/>"

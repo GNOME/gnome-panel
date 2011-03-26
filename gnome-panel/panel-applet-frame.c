@@ -41,6 +41,7 @@
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-object-loader.h"
+#include "panel-schemas.h"
 #include "panel-stock-icons.h"
 #include "xstuff.h"
 #include "panel-compatibility.h"
@@ -840,6 +841,20 @@ gboolean
 panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act)
 {
 	return panel_lockdown_get_panels_locked_down_s ();
+}
+
+gchar *
+panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act)
+{
+        char *path;
+        char *path_instance;
+
+        g_object_get (frame_act->settings, "path", &path, NULL);
+        path_instance = g_strdup_printf ("%s%s", path,
+                                         PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX);
+        g_free (path);
+
+	return path_instance;
 }
 
 gchar *
