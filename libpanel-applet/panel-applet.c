@@ -370,6 +370,29 @@ panel_applet_set_preferences_key (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "prefs-key");
 }
 
+/**
+ * panel_applet_settings_new:
+ * @applet: a #PanelApplet.
+ * @schema: the name of the schema.
+ *
+ * Creates a new #GSettings object for the per-instance settings of @applet,
+ * with a given schema.
+ *
+ * Returns: a new #GSettings object for the per-instance settings of @applet.
+ **/
+GSettings *
+panel_applet_settings_new (PanelApplet *applet,
+			   const char  *schema)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
+	g_return_val_if_fail (schema != NULL, NULL);
+
+	if (!applet->priv->settings_path)
+		return NULL;
+
+	return g_settings_new_with_path (schema, applet->priv->settings_path);
+}
+
 static void
 panel_applet_set_settings_path (PanelApplet *applet,
 				const char  *settings_path)

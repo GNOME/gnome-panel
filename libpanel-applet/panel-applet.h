@@ -139,6 +139,9 @@ cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);
 void               panel_applet_set_background_widget (PanelApplet *applet,
 						       GtkWidget   *widget);
 
+GSettings         *panel_applet_settings_new         (PanelApplet *applet,
+						      const char  *schema);
+
 gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
 void               panel_applet_add_preferences      (PanelApplet  *applet,
