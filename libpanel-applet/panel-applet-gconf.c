@@ -58,6 +58,8 @@ panel_applet_gconf_get_client (void)
  *
  * Returns the full GConf path of @key, in the per-instance GConf directory of
  * @applet. The string should be freed by the caller.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 gchar *
 panel_applet_gconf_get_full_key (PanelApplet *applet,
@@ -89,6 +91,8 @@ panel_applet_gconf_get_full_key (PanelApplet *applet,
  *
  * Convenience wrapper around gconf_client_set_bool() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_bool (PanelApplet  *applet,
@@ -119,6 +123,8 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
  *
  * Convenience wrapper around gconf_client_set_int() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_int (PanelApplet  *applet,
@@ -149,6 +155,8 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
  *
  * Convenience wrapper around gconf_client_set_string() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_string (PanelApplet  *applet,
@@ -179,6 +187,8 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
  *
  * Convenience wrapper around gconf_client_set_float() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_float (PanelApplet  *applet,
@@ -210,6 +220,8 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
  *
  * Convenience wrapper around gconf_client_set_list() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_list (PanelApplet     *applet,
@@ -241,6 +253,8 @@ panel_applet_gconf_set_list (PanelApplet     *applet,
  *
  * Convenience wrapper around gconf_client_set_value() to update @key in the
  * per-instance GConf directory of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_gconf_set_value (PanelApplet  *applet,
@@ -272,6 +286,8 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
  * in the per-instance GConf directory of @applet.
  *
  * Returns: the value of @key.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 gboolean
 panel_applet_gconf_get_bool (PanelApplet  *applet,
@@ -305,6 +321,8 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
  * in the per-instance GConf directory of @applet.
  *
  * Returns: the value of @key.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 gint
 panel_applet_gconf_get_int (PanelApplet  *applet,
@@ -338,6 +356,8 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
  * in the per-instance GConf directory of @applet.
  *
  * Returns: the value of @key. The string should be freed by the caller.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 gchar *
 panel_applet_gconf_get_string (PanelApplet  *applet,
@@ -371,6 +391,8 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
  * in the per-instance GConf directory of @applet.
  *
  * Returns: the value of @key.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 gdouble
 panel_applet_gconf_get_float (PanelApplet  *applet,
@@ -404,6 +426,8 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
  * in the per-instance GConf directory of @applet.
  *
  * Returns: the value of @key.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 GConfValue *
 panel_applet_gconf_get_value (PanelApplet  *applet,
@@ -438,6 +462,8 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
  *
  * Returns: the value of @key. The list and its content should be freed by the
  * caller.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 GSList *
 panel_applet_gconf_get_list (PanelApplet     *applet,

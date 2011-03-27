@@ -290,6 +290,8 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
  * defined in @schema_dir. This must be called if the applet will save
  * per-instance settings, to ensure that each key in the per-instance GConf
  * directory has a defined type, sane default and documentation.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 void
 panel_applet_add_preferences (PanelApplet  *applet,
@@ -327,6 +329,8 @@ panel_applet_add_preferences (PanelApplet  *applet,
  * Gets the GConf path to the per-instance settings of @applet.
  *
  * Returns: a copy of the GConf path to the per-instance settings of @applet.
+ *
+ * Deprecated: 3.0: Use #GSettings to store per-instance settings.
  **/
 char *
 panel_applet_get_preferences_key (PanelApplet *applet)
@@ -2105,6 +2109,8 @@ panel_applet_class_init (PanelAppletClass *klass)
 	 * The GConf path to the per-instance settings of the applet.
 	 *
 	 * This property gets set when the applet gets embedded.
+	 *
+	 * Deprecated: 3.0: Use #GSettings to store per-instance settings.
 	 **/
 	g_object_class_install_property (gobject_class,
 					 PROP_PREFS_KEY,
