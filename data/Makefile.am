@@ -4,7 +4,6 @@ gsettings_ENUM_NAMESPACE = org.gnome.gnome-panel
 gsettings_ENUM_FILES = $(top_srcdir)/gnome-panel/panel-enums-gsettings.h
 
 gsettings_applets_schemas =						\
-	org.gnome.gnome-panel.applet.clock.gschema.xml			\
 	org.gnome.gnome-panel.applet.fish.gschema.xml			\
 	org.gnome.gnome-panel.applet.window-list.gschema.xml		\
 	org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml
