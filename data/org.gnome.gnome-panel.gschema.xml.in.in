@@ -1,0 +1,77 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+
+  <schema id="org.gnome.gnome-panel" path="/org/gnome/gnome-panel/">
+    <child name="general" schema="org.gnome.gnome-panel.general"/>
+    <child name="layout" schema="org.gnome.gnome-panel.layout"/>
+    <child name="lockdown" schema="org.gnome.gnome-panel.lockdown"/>
+    <child name="run-dialog" schema="org.gnome.gnome-panel.run-dialog"/>
+  </schema>
+
+  <schema id="org.gnome.gnome-panel.general" path="/org/gnome/gnome-panel/general/">
+    <key name="enable-tooltips" type="b">
+      <default>true</default>
+      <_summary>Enable tooltips</_summary>
+      <_description>If true, tooltips are shown for objects in panels. Tooltips can be disabled for the whole desktop with the gtk-enable-tooltips property in GTK+.</_description>
+    </key>
+    <key name="confirm-panel-removal" type="b">
+      <default>true</default>
+      <_summary>Confirm panel removal</_summary>
+      <_description>If true, a dialog is shown asking for confirmation if the user wants to remove a panel.</_description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.gnome-panel.layout" path="/org/gnome/gnome-panel/layout/">
+    <key name="toplevel-id-list" type="as">
+      <default>[]</default>
+      <_summary>Panel ID list</_summary>
+      <_description>A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id).</_description>
+    </key>
+    <key name="object-id-list" type="as">
+      <default>[]</default>
+      <_summary>Panel object ID list</_summary>
+      <_description>A list of panel object IDs. Each ID identifies an individual panel object (e.g. an applet, launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id).</_description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.gnome-panel.lockdown" path="/org/gnome/gnome-panel/lockdown/">
+    <key name="locked-down" type="b">
+      <default>false</default>
+      <_summary>Complete panel lockdown</_summary>
+      <_description>If true, the panel will not allow any changes to the configuration of the panel.  Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect.</_description>
+    </key>
+    <key name="disabled-applets" type="as">
+      <default>[]</default>
+      <_summary>Applet IIDs to disable from loading</_summary>
+      <_description>A list of applet IIDs that the panel will ignore.  This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list.  The panel must be restarted for this to take effect.</_description>
+    </key>
+    <key name="disable-force-quit" type="b">
+      <default>false</default>
+      <_summary>Disable Force Quit</_summary>
+      <_description>If true, the panel will not allow a user to force an application to quit by removing access to the force quit button.</_description>
+    </key>
+  </schema>
+
+  <schema id="org.gnome.gnome-panel.run-dialog" path="/org/gnome/gnome-panel/run-dialog/">
+    <key type="as" name="history">
+      <default>[]</default>
+      <_summary>History of "Run Application" dialog</_summary>
+      <_description>The list of commands used in the past in the "Run Application" dialog.</_description>
+    </key>
+    <key name="enable-program-list" type="b">
+      <default>true</default>
+      <_summary>Enable program list in "Run Application" dialog</_summary>
+      <_description>If true, the "Known Applications" listing in the "Run Application" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key.</_description>
+    </key>
+    <key name="show-program-list" type="b">
+      <default>false</default>
+      <_summary>Expand program list in "Run Application" dialog</_summary>
+      <_description>If true, the "Known Applications" listing in the "Run Application" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true.</_description>
+    </key>
+    <key name="enable-autocompletion" type="b">
+      <default>true</default>
+      <_summary>Enable autocompletion in "Run Application" dialog</_summary>
+      <_description>If true, autocompletion in the "Run Application" dialog is made available.</_description>
+    </key>
+  </schema>
+
+</schemalist>
