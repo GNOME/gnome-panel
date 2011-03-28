@@ -133,3 +133,12 @@ panel_gconf_notify_add_while_alive (const char            *key,
 
 	return notify_id;
 }
+
+gboolean
+panel_gconf_recursive_unset (const gchar  *dir,
+                             GError     **error)
+{
+        return gconf_client_recursive_unset (panel_gconf_get_client (), dir,
+					     GCONF_UNSET_INCLUDING_SCHEMA_NAMES,
+					     NULL);
+}

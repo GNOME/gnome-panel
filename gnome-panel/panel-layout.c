@@ -36,6 +36,7 @@
 #include <libpanel-util/panel-gsettings.h>
 
 #include "panel.h"
+#include "panel-gconf.h"
 #include "panel-multiscreen.h"
 #include "panel-object-loader.h"
 #include "panel-schemas.h"
@@ -46,6 +47,7 @@
 static GSettings *layout_settings = NULL;
 
 #define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
+#define PANEL_LAYOUT_OBJECT_GCONF_PATH_TEMPLATE "/apps/panel3-applets/%s"
 
 static void panel_layout_load_toplevel    (const char *toplevel_id);
 static void panel_layout_load_object      (const char *object_id);
@@ -615,6 +617,24 @@ panel_layout_object_create (PanelObjectType   type,
         g_free (id);
 }
 
+char *
+panel_layout_object_get_gconf_path (const char *object_id)
+{
+        char *ret;
+        char *gconfied_id;
+
+        /* gconf uses '_' and not '-' */
+        gconfied_id = g_strdup (object_id);
+        g_strdelimit (gconfied_id, "-", '_');
+
+        ret = g_strdup_printf (PANEL_LAYOUT_OBJECT_GCONF_PATH_TEMPLATE,
+                               gconfied_id);
+
+        g_free (gconfied_id);
+
+        return ret;
+}
+
 GSettings *
 panel_layout_get_instance_settings (GSettings  *settings_object,
                                     const char *schema)
@@ -788,6 +808,11 @@ panel_layout_delete_object (const char *object_id)
         path = g_strdup_printf ("%s%s/",
                                 PANEL_LAYOUT_OBJECT_PATH, id_copy);
         panel_dconf_recursive_reset (path, NULL);
+        g_free (path);
+
+        path = panel_layout_object_get_gconf_path (id_copy);
+        panel_gconf_recursive_unset (path, NULL);
+        g_free (path);
 
         g_free (id_copy);
 }

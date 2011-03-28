@@ -38,6 +38,9 @@ guint		panel_gconf_notify_add_while_alive (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    GObject               *alive_object);
 
+gboolean panel_gconf_recursive_unset (const gchar  *dir,
+                                      GError     **error);
+
 G_END_DECLS
 
 #endif /* __PANEL_GCONF_H__ */

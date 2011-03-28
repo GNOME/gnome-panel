@@ -46,6 +46,7 @@ void  panel_layout_object_create        (PanelObjectType   type,
 					 int               position,
 					 gboolean          pack_end);
 
+char      *panel_layout_object_get_gconf_path (const char *object_id);
 GSettings *panel_layout_get_instance_settings (GSettings  *settings_object,
                                                const char *schema);
 
