@@ -3,12 +3,22 @@ SUBDIRS = 16x16 22x22 24x24 32x32 48x48 scalable
 gsettings_ENUM_NAMESPACE = org.gnome.gnome-panel
 gsettings_ENUM_FILES = $(top_srcdir)/gnome-panel/panel-enums-gsettings.h
 
-gsettings_SCHEMAS =					\
+gsettings_applets_schemas =						\
+	org.gnome.gnome-panel.applet.clock.gschema.xml			\
+	org.gnome.gnome-panel.applet.fish.gschema.xml			\
+	org.gnome.gnome-panel.applet.window-list.gschema.xml		\
+	org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml
+
+gsettings_panel_schemas =				\
 	org.gnome.gnome-panel.gschema.xml		\
 	org.gnome.gnome-panel.launcher.gschema.xml	\
 	org.gnome.gnome-panel.menu-button.gschema.xml	\
 	org.gnome.gnome-panel.object.gschema.xml	\
 	org.gnome.gnome-panel.toplevel.gschema.xml
+
+gsettings_SCHEMAS =					\
+	$(gsettings_panel_schemas)			\
+	$(gsettings_applets_schemas)
 
 @GSETTINGS_RULES@
 
