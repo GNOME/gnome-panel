@@ -15,12 +15,10 @@
 #include <string.h>
 
 #include <panel-applet.h>
-#include <panel-applet-gconf.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
-#include <gconf/gconf-client.h>
 
 #include "wncklet.h"
 #include "window-list.h"
@@ -51,8 +49,7 @@ typedef struct {
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
 
-	/* gconf listeners id */
-	guint listeners [3];
+        GSettings *settings;
 } TasklistData;
 
 static void display_properties_dialog (GtkAction    *action,
@@ -149,17 +146,8 @@ applet_change_pixel_size (PanelApplet  *applet,
 static void
 destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
-	GConfClient *client = gconf_client_get_default ();
-
-	gconf_client_notify_remove (client, tasklist->listeners[0]);
-	gconf_client_notify_remove (client, tasklist->listeners[1]);
-	gconf_client_notify_remove (client, tasklist->listeners[2]);
-
-	g_object_unref (G_OBJECT (client));
-	
-	tasklist->listeners[0] = 0;
-	tasklist->listeners[1] = 0;
-	tasklist->listeners[2] = 0;
+	g_object_unref (tasklist->settings);
+	tasklist->settings = NULL;
 
 	if (tasklist->properties_dialog)
 		gtk_widget_destroy (tasklist->properties_dialog);
@@ -199,48 +187,18 @@ tasklist_properties_update_content_radio (TasklistData *tasklist)
 }
 
 static void
-display_all_workspaces_changed (GConfClient  *client,
-				guint         cnxn_id,
-				GConfEntry   *entry,
-				TasklistData *tasklist)
+display_all_workspaces_changed (GSettings    *settings,
+				const gchar  *key,
+                                TasklistData *tasklist)
 {
 	gboolean value;
 
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-	
-	value = gconf_value_get_bool (entry->value);
-	
+        value = g_settings_get_boolean (settings, key);
+
 	tasklist->include_all_workspaces = (value != 0);
 	tasklist_update (tasklist);
 
 	tasklist_properties_update_content_radio (tasklist);
-}
-
-static WnckTasklistGroupingType
-get_grouping_type (GConfValue *value)
-{
-	WnckTasklistGroupingType type = -1;
-	const char *str;
-
-	g_assert (value != NULL);
-
-	/* Backwards compat for old type: */
-	if (value->type == GCONF_VALUE_BOOL) {
-		type = (gconf_value_get_bool (value)) ? WNCK_TASKLIST_AUTO_GROUP:WNCK_TASKLIST_NEVER_GROUP;
-
-	} else if (value->type == GCONF_VALUE_STRING) {
-		str = gconf_value_get_string (value);
-		if (g_ascii_strcasecmp (str, "never") == 0) {
-			type = WNCK_TASKLIST_NEVER_GROUP;
-		} else if (g_ascii_strcasecmp (str, "auto") == 0) {
-			type = WNCK_TASKLIST_AUTO_GROUP;
-		} else if (g_ascii_strcasecmp (str, "always") == 0) {
-			type = WNCK_TASKLIST_ALWAYS_GROUP;
-		}
-	}
-
-	return type;
 }
 
 static GtkWidget *
@@ -262,29 +220,16 @@ get_grouping_button (TasklistData *tasklist,
 }
 
 static void
-group_windows_changed (GConfClient  *client,
-		       guint         cnxn_id,
-		       GConfEntry   *entry,
+group_windows_changed (GSettings    *settings,
+                       const gchar  *key,
 		       TasklistData *tasklist)
 {
-	WnckTasklistGroupingType type;
 	GtkWidget *button;
 
-	if (!entry->value ||
-	    (entry->value->type != GCONF_VALUE_BOOL &&
-	     entry->value->type != GCONF_VALUE_STRING))
-		return;
-
-	type = get_grouping_type (entry->value);
-	if (type == -1) {
-		g_warning ("tasklist: Unknown value for GConf key 'group_windows'");
-		return;
-	}
-		
-	tasklist->grouping = type;
+	tasklist->grouping = g_settings_get_enum (settings, key);
 	tasklist_update (tasklist);
 
-	button = get_grouping_button (tasklist, type);
+	button = get_grouping_button (tasklist, tasklist->grouping);
         if (button &&
 	    !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -311,17 +256,13 @@ tasklist_update_unminimization_radio (TasklistData *tasklist)
 
 
 static void
-move_unminimized_windows_changed (GConfClient  *client,
-				  guint         cnxn_id,
-				  GConfEntry   *entry,
+move_unminimized_windows_changed (GSettings    *settings,
+                                  const gchar  *key,
 				  TasklistData *tasklist)
 {
 	gboolean value;
 	
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-
-	value = gconf_value_get_bool (entry->value);
+	value = g_settings_get_boolean (settings, key);
 	
 	tasklist->move_unminimized_windows = (value != 0);
 	tasklist_update (tasklist);
@@ -332,36 +273,18 @@ move_unminimized_windows_changed (GConfClient  *client,
 static void
 setup_gconf (TasklistData *tasklist)
 {
-	GConfClient *client;
-	char *key;
+        tasklist->settings =
+          panel_applet_settings_new (PANEL_APPLET (tasklist->applet),
+                                     "org.gnome.gnome-panel.applet.window-list");
 
-	client = gconf_client_get_default ();
+        g_signal_connect (tasklist->settings, "changed::display-all-workspaces",
+                          G_CALLBACK (display_all_workspaces_changed), tasklist);
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
-					       "display_all_workspaces");
-	tasklist->listeners[0] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)display_all_workspaces_changed,
-				tasklist,
-				NULL, NULL);
-	g_free (key);
+        g_signal_connect (tasklist->settings, "changed::group-windows",
+                          G_CALLBACK (group_windows_changed), tasklist);
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
-					       "group_windows");
-	tasklist->listeners[1] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)group_windows_changed,
-				tasklist,
-				NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
-					       "move_unminimized_windows");
-	tasklist->listeners[2] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)move_unminimized_windows_changed,
-				tasklist,
-				NULL, NULL);
-	g_free (key);
-
-	g_object_unref (G_OBJECT (client));
+        g_signal_connect (tasklist->settings, "changed::move-unminimized-windows",
+                          G_CALLBACK (move_unminimized_windows_changed), tasklist);
 }
 
 static void
@@ -436,8 +359,6 @@ window_list_applet_fill (PanelApplet *applet)
 	GtkActionGroup *action_group;
 	GtkAction *action;
 	gchar *ui_path;
-	GError *error;
-	GConfValue *value;
 
 	tasklist = g_new0 (TasklistData, 1);
 
@@ -452,31 +373,9 @@ window_list_applet_fill (PanelApplet *applet)
 
 	setup_gconf (tasklist);
 
-	error = NULL;
-	tasklist->include_all_workspaces = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
-	if (error) {
-		g_error_free (error);
-		tasklist->include_all_workspaces = FALSE; /* Default value */
-	}
-
-	error = NULL;
-	tasklist->grouping = -1;
-	value = panel_applet_gconf_get_value (applet, "group_windows", &error);
-	if (error) {
-		g_error_free (error);
-	} else if (value) {
-		tasklist->grouping = get_grouping_type (value);
-		gconf_value_free (value);
-	}
-	if (tasklist->grouping < 0)
-		tasklist->grouping = WNCK_TASKLIST_AUTO_GROUP; /* Default value */
-	
-	error = NULL;
-	tasklist->move_unminimized_windows = panel_applet_gconf_get_bool (applet, "move_unminimized_windows", &error);
-	if (error) {
-		g_error_free (error);
-		tasklist->move_unminimized_windows = TRUE; /* Default value */
-	}
+	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
+	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
+	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
 
 	tasklist->size = panel_applet_get_size (applet);
 	switch (panel_applet_get_orient (applet)) {
@@ -559,52 +458,41 @@ group_windows_toggled (GtkToggleButton *button,
 	if (gtk_toggle_button_get_active (button)) {
 		char *str;
 		str = g_object_get_data (G_OBJECT (button), "group_value");
-		panel_applet_gconf_set_string (PANEL_APPLET (tasklist->applet),
-					       "group_windows", str,
-					       NULL);
+                g_settings_set_string (tasklist->settings, "group-windows", str);
 	}
 }
+
 static void
 move_minimized_toggled (GtkToggleButton *button,
 			TasklistData    *tasklist)
 {
-	panel_applet_gconf_set_bool (PANEL_APPLET (tasklist->applet),
-				     "move_unminimized_windows",
-				     gtk_toggle_button_get_active (button),
-				     NULL);
+	g_settings_set_boolean (tasklist->settings, "move-unminimized-windows",
+                                gtk_toggle_button_get_active (button));
 }
+
 static void
 display_all_workspaces_toggled (GtkToggleButton *button,
 				TasklistData    *tasklist)
 {
-	panel_applet_gconf_set_bool (PANEL_APPLET (tasklist->applet),
-				     "display_all_workspaces",
-				     gtk_toggle_button_get_active (button),
-				     NULL);
+	g_settings_set_boolean (tasklist->settings, "display-all-workspaces",
+                                gtk_toggle_button_get_active (button));
 }
 
 #define WID(s) GTK_WIDGET (gtk_builder_get_object (builder, s))
 
 static void
 setup_sensitivity (TasklistData *tasklist,
-		   GConfClient *client,
 		   GtkBuilder *builder,
 		   const char *wid1,
 		   const char *wid2,
 		   const char *wid3,
 		   const char *key)
 {
-	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
-	char *fullkey;
 	GtkWidget *w;
 
-	fullkey = panel_applet_gconf_get_full_key (applet, key);
-
-	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
-		g_free (fullkey);
+	if (g_settings_is_writable (tasklist->settings, key)) {
 		return;
 	}
-	g_free (fullkey);
 
 	w = WID (wid1);
 	g_assert (w != NULL);
@@ -627,49 +515,46 @@ static void
 setup_dialog (GtkBuilder   *builder,
 	      TasklistData *tasklist)
 {
-	GConfClient *client;
 	GtkWidget *button;
 	
-	client = gconf_client_get_default ();
-
 	tasklist->show_current_radio = WID ("show_current_radio");
 	tasklist->show_all_radio = WID ("show_all_radio");
 
-	setup_sensitivity (tasklist, client, builder,
+	setup_sensitivity (tasklist, builder,
 			   "show_current_radio",
 			   "show_all_radio",
 			   NULL,
-			   "display_all_workspaces" /* key */);
+			   "display-all-workspaces" /* key */);
 
 	tasklist->never_group_radio = WID ("never_group_radio");
 	tasklist->auto_group_radio = WID ("auto_group_radio");
 	tasklist->always_group_radio = WID ("always_group_radio");
 
-	setup_sensitivity (tasklist, client, builder,
+	setup_sensitivity (tasklist, builder,
 			   "never_group_radio",
 			   "auto_group_radio",
 			   "always_group_radio",
-			   "group_windows" /* key */);
+			   "group-windows" /* key */);
 
 	tasklist->minimized_windows_label = WID ("minimized_windows_label");
 	tasklist->move_minimized_radio = WID ("move_minimized_radio");
 	tasklist->change_workspace_radio = WID ("change_workspace_radio");
 
-	setup_sensitivity (tasklist, client, builder,
+	setup_sensitivity (tasklist, builder,
 			   "move_minimized_radio",
 			   "change_workspace_radio",
 			   NULL,
-			   "move_unminimized_windows" /* key */);
+			   "move-unminimized-windows" /* key */);
 
 	/* Window grouping: */
 	button = get_grouping_button (tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_object_set_data (G_OBJECT (tasklist->never_group_radio),
-			   "group_value", "never");
+			   "group_value", "never-group");
 	g_object_set_data (G_OBJECT (tasklist->auto_group_radio),
-			   "group_value", "auto");
+			   "group_value", "auto-group");
 	g_object_set_data (G_OBJECT (tasklist->always_group_radio),
-			   "group_value", "always");
+			   "group_value", "always-group");
 
 	g_signal_connect (G_OBJECT (tasklist->never_group_radio), "toggled",
 			  (GCallback) group_windows_toggled, tasklist);
@@ -694,8 +579,6 @@ setup_dialog (GtkBuilder   *builder,
 	g_signal_connect (tasklist->properties_dialog, "response",
 			  G_CALLBACK (response_cb),
 			  tasklist);
-
-	g_object_unref (G_OBJECT (client));
 }
 
 
