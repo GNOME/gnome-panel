@@ -15,26 +15,18 @@
 #include <string.h>
 
 #include <panel-applet.h>
-#include <panel-applet-gconf.h>
 
 #include <stdlib.h>
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
-#include <gconf/gconf-client.h>
 
 #include "workspace-switcher.h"
 
 #include "wncklet.h"
 
-/* even 16 is pretty darn dubious. */
-#define MAX_REASONABLE_ROWS 16
-#define DEFAULT_ROWS 1
-
 #define NEVER_SENSITIVE "never_sensitive"
-#define NUM_WORKSPACES "/apps/metacity/general/num_workspaces"
-#define WORKSPACE_NAME "/apps/metacity/workspace_names/name_1"
 
 #define WORKSPACE_SWITCHER_ICON "gnome-panel-workspace-switcher"
 
@@ -71,8 +63,7 @@ typedef struct {
 	WnckPagerDisplayMode display_mode;
 	gboolean display_all;
 
-	/* gconf listeners id */
-	guint listeners [3];
+        GSettings *settings;
 } PagerData;
 
 static void display_properties_dialog (GtkAction *action,
@@ -215,17 +206,7 @@ applet_change_background (PanelApplet               *applet,
 static void
 destroy_pager(GtkWidget * widget, PagerData *pager)
 {
-	GConfClient *client = gconf_client_get_default ();
-
-	gconf_client_notify_remove (client, pager->listeners[0]);
-	gconf_client_notify_remove (client, pager->listeners[1]);
-	gconf_client_notify_remove (client, pager->listeners[2]);
-
-	g_object_unref (G_OBJECT (client));
-
-	pager->listeners[0] = 0;
-	pager->listeners[1] = 0;
-	pager->listeners[2] = 0;
+	g_object_unref (G_OBJECT (pager->settings));
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy (pager->properties_dialog);
@@ -240,19 +221,13 @@ static const GtkActionEntry pager_menu_actions [] = {
 };
 
 static void
-num_rows_changed (GConfClient *client,
-		  guint        cnxn_id,
-		  GConfEntry  *entry,
+num_rows_changed (GSettings   *settings,
+		  const gchar *key,
 		  PagerData   *pager)
 {
-	int n_rows = DEFAULT_ROWS;
-	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_INT) {
-		n_rows = gconf_value_get_int (entry->value);
-	}
+	int n_rows;
 
-        n_rows = CLAMP (n_rows, 1, MAX_REASONABLE_ROWS);
+        n_rows = g_settings_get_int (settings, key);
         
 	pager->n_rows = n_rows;
 	pager_update (pager);
@@ -263,17 +238,13 @@ num_rows_changed (GConfClient *client,
 }
 
 static void
-display_workspace_names_changed (GConfClient *client,
-				 guint        cnxn_id,
-				 GConfEntry  *entry,
+display_workspace_names_changed (GSettings   *settings,
+				 const gchar *key,
 				 PagerData   *pager)
 {
-	gboolean value = FALSE; /* Default value */
-	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
+	gboolean value;
+       
+	value = g_settings_get_boolean (settings, key);
 
 	if (value) {
 		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
@@ -291,17 +262,13 @@ display_workspace_names_changed (GConfClient *client,
 
 
 static void
-all_workspaces_changed (GConfClient *client,
-			guint        cnxn_id,
-			GConfEntry  *entry,
+all_workspaces_changed (GSettings   *settings,
+			const gchar *key,
 			PagerData   *pager)
 {
-	gboolean value = TRUE; /* Default value */
-	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
+	gboolean value;
+
+	value = g_settings_get_boolean (settings, key);
 
 	pager->display_all = value;
 	pager_update (pager);
@@ -322,41 +289,16 @@ all_workspaces_changed (GConfClient *client,
 static void
 setup_gconf (PagerData *pager)
 {
-	GConfClient *client;
-	char *key;
+	pager->settings =
+	  panel_applet_settings_new (PANEL_APPLET (pager->applet),
+				     "org.gnome.gnome-panel.applet.workspace-switcher");
 
-	client = gconf_client_get_default ();
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
-					       "num_rows");
-	pager->listeners[0] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)num_rows_changed,
-				pager,
-				NULL, NULL);
-		
-	g_free (key);
-
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
-					       "display_workspace_names");
-	pager->listeners[1] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)display_workspace_names_changed,
-				pager,
-				NULL, NULL);
-		
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
-					       "display_all_workspaces");
-	pager->listeners[2] = gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)all_workspaces_changed,
-				pager,
-				NULL, NULL);
-		
-	g_free (key);
-
-	g_object_unref (G_OBJECT (client));
-
+	g_signal_connect (pager->settings, "changed::num-rows",
+			  G_CALLBACK (num_rows_changed), pager);
+	g_signal_connect (pager->settings, "changed::display-workspace-names",
+			  G_CALLBACK (display_workspace_names_changed), pager);
+	g_signal_connect (pager->settings, "changed::display-all-workspaces",
+			  G_CALLBACK (all_workspaces_changed), pager);
 }
 
 gboolean
@@ -366,7 +308,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
         GtkActionGroup *action_group;
 	GtkAction *action;
         gchar *ui_path;
-	GError *error;
 	gboolean display_names;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/workspace_switcher_applet/prefs", NULL);
@@ -379,25 +320,9 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	setup_gconf (pager);
 	
-	error = NULL;
-	pager->n_rows = panel_applet_gconf_get_int (applet, "num_rows", &error);
-	if (error) {
-                g_printerr (_("Error loading num_rows value for Workspace Switcher: %s\n"),
-                            error->message);
-		g_error_free (error);
-                /* leave current value */
-	}
+	pager->n_rows = g_settings_get_int (pager->settings, "num-rows");
 
-        pager->n_rows = CLAMP (pager->n_rows, 1, MAX_REASONABLE_ROWS);
-
-	error = NULL;
-	display_names = panel_applet_gconf_get_bool (applet, "display_workspace_names", &error);
-	if (error) {
-                g_printerr (_("Error loading display_workspace_names value for Workspace Switcher: %s\n"),
-                            error->message);
-		g_error_free (error);
-                /* leave current value */
-	}
+	display_names = g_settings_get_boolean (pager->settings, "display-workspace-names");
 
 	if (display_names) {
 		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
@@ -405,14 +330,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
 	}
 
-	error = NULL;
-	pager->display_all = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
-	if (error) {
-                g_printerr (_("Error loading display_all_workspaces value for Workspace Switcher: %s\n"),
-                            error->message);
-		g_error_free (error);
-                /* leave current value */
-	}
+	pager->display_all = g_settings_get_boolean (pager->settings, "display-all-workspaces");
 	
 	switch (panel_applet_get_orient (applet)) {
 	case PANEL_APPLET_ORIENT_LEFT:
@@ -485,30 +403,27 @@ static void
 display_workspace_names_toggled (GtkToggleButton *button,
 				 PagerData       *pager)
 {
-	panel_applet_gconf_set_bool (PANEL_APPLET (pager->applet),
-				     "display_workspace_names",
-				     gtk_toggle_button_get_active (button),
-				     NULL);
+	g_settings_set_boolean (pager->settings,
+				"display-workspace-names",
+				gtk_toggle_button_get_active (button));
 }
 
 static void
 all_workspaces_toggled (GtkToggleButton *button,
 			PagerData       *pager)
 {
-	panel_applet_gconf_set_bool (PANEL_APPLET (pager->applet),
-				     "display_all_workspaces",
-				     gtk_toggle_button_get_active (button),
-				     NULL);
+  	g_settings_set_boolean (pager->settings,
+				"display-all-workspaces",
+				gtk_toggle_button_get_active (button));
 }
 
 static void
 num_rows_value_changed (GtkSpinButton *button,
 			PagerData       *pager)
 {
-	panel_applet_gconf_set_int (PANEL_APPLET (pager->applet),
-				    "num_rows",
-				    gtk_spin_button_get_value_as_int (button),
-				    NULL);
+	g_settings_set_int (pager->settings,
+			    "num-rows",
+			    gtk_spin_button_get_value_as_int (button));
 }
 
 static void
@@ -706,23 +621,11 @@ setup_sensitivity (PagerData *pager,
 		   const char *wid3,
 		   const char *key)
 {
-	PanelApplet *applet = PANEL_APPLET (pager->applet);
-	GConfClient *client = gconf_client_get_default ();
-	char *fullkey;
 	GtkWidget *w;
 
-	if (key[0] == '/')
-		fullkey = g_strdup (key);
-	else
-		fullkey = panel_applet_gconf_get_full_key (applet, key);
-
-	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
-		g_object_unref (G_OBJECT (client));
-		g_free (fullkey);
+	if (g_settings_is_writable (pager->settings, key)) {
 		return;
 	}
-	g_object_unref (G_OBJECT (client));
-	g_free (fullkey);
 
 	w = WID (wid1);
 	g_assert (w != NULL);
@@ -765,7 +668,7 @@ setup_dialog (GtkBuilder *builder,
 			   "workspace_name_toggle",
 			   NULL,
 			   NULL,
-			   "display_workspace_names" /* key */);
+			   "display-workspace-names" /* key */);
 
 	pager->all_workspaces_radio = WID ("all_workspaces_radio");
 	pager->current_only_radio = WID ("current_only_radio");
@@ -773,7 +676,7 @@ setup_dialog (GtkBuilder *builder,
 			   "all_workspaces_radio",
 			   "current_only_radio",
 			   "label_row_col",
-			   "display_all_workspaces" /* key */);
+			   "display-all-workspaces" /* key */);
 
 	pager->num_rows_spin = WID ("num_rows_spin");
 	pager->label_row_col = WID("label_row_col");
@@ -781,21 +684,10 @@ setup_dialog (GtkBuilder *builder,
 			   "num_rows_spin",
 			   NULL,
 			   NULL,
-			   "num_rows" /* key */);
+			   "num-rows" /* key */);
 
 	pager->num_workspaces_spin = WID ("num_workspaces_spin");
-	setup_sensitivity (pager, builder,
-			   "num_workspaces_spin",
-			   NULL,
-			   NULL,
-			   NUM_WORKSPACES /* key */);
-
 	pager->workspaces_tree = WID ("workspaces_tree_view");
-	setup_sensitivity (pager, builder,
-			   "workspaces_tree_view",
-			   NULL,
-			   NULL,
-			   WORKSPACE_NAME /* key */);
 
 	/* Display workspace names: */
 	
