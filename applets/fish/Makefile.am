@@ -65,10 +65,15 @@ endif
 
 fishbitmapsdir = $(datadir)/gnome-panel/pixmaps
 fishbitmaps_DATA = 	\
+	wanda.fish	\
 	wanda.png	\
+	fishanim.fish	\
 	fishanim.png	\
+	oldwanda.fish	\
 	oldwanda.png	\
+	footguy.fish	\
 	footguy.png	\
+	monkey.fish	\
 	monkey.png
 
 uidir		= $(datadir)/gnome-panel/ui
@@ -77,34 +82,14 @@ ui_DATA		= fish.ui
 xmluidir 	= $(datadir)/gnome-panel/ui
 xmlui_DATA	= fish-menu.xml
 
-schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
-schemas_in_files = fish.schemas.in
-schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)" ; then \
-		for p in $(schemas_DATA) ; do \
-			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/fish/$$p ; \
-	done \
-	fi
-uninstall-local:
-	for p in $(schema_DATA) ; do \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/fish/$$p ; \
-	done
-endif
-
 EXTRA_DIST =						\
 	wanda.svg					\
 	$(fishbitmaps_DATA)				\
 	org.gnome.panel.FishApplet.panel-applet.in.in	\
 	$(service_in_files)				\
-	fish.schemas.in					\
 	$(ui_DATA)					\
 	$(xmlui_DATA)
 
-CLEANFILES = $(schemas_DATA) $(applet_DATA) $(applet_DATA).in $(service_DATA)
+CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 -include $(top_srcdir)/git.mk

@@ -6,7 +6,7 @@
       <description>A fish without a name is a pretty dull fish. Bring your fish to life by naming him.</description>
     </key>
     <key name="image" type="s">
-      <default>'wanda.png'</default>
+      <default>'wanda.fish'</default>
       <summary>The fish's animation pixmap</summary>
       <description>This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory.</description>
     </key>
@@ -15,13 +15,9 @@
       <summary>Command to execute on click</summary>
       <description>This key specifies the command that will be tried to execute when the fish is clicked.</description>
     </key>
-    <key name="frames" type="i">
-      <default>8</default>
-      <summary>Frames in fish's animation</summary>
-      <description>This key specifies the number of frames that will be displayed in the fish's animation.</description>
-    </key>
     <key name="speed" type="d">
       <default>0.3</default>
+      <range min="0.01" max="10.0"/>
       <summary>Pause per frame</summary>
       <description>This key specifies the number of seconds each frame will be displayed.</description>
     </key>
