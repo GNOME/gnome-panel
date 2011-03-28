@@ -474,7 +474,8 @@ panel_widget_cadd (GtkContainer *container,
 	g_return_if_fail (PANEL_IS_WIDGET (container));
 	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	panel_widget_add (PANEL_WIDGET (container), widget, 0, FALSE);
+	panel_widget_add (PANEL_WIDGET (container), widget,
+			  0, PANEL_OBJECT_PACK_START, FALSE);
 }
 
 static void
@@ -2227,15 +2228,23 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 }
 
 int
-panel_widget_add (PanelWidget *panel,
-		  GtkWidget   *applet,
-		  int          pos,
-		  gboolean     insert_at_pos)
+panel_widget_add (PanelWidget     *panel,
+		  GtkWidget       *applet,
+		  int              pos,
+		  PanelObjectPack  pack,
+		  gboolean         insert_at_pos)
 {
 	AppletData *ad = NULL;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet), -1);
+
+	if (pack == PANEL_OBJECT_PACK_END) {
+		if (!panel->packed)
+			pos = panel->size - pos;
+		else
+			pos = -1;
+	}
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 

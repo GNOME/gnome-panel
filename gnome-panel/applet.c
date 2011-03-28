@@ -980,22 +980,17 @@ panel_applet_register (GtkWidget       *applet,
 	/* Find where to insert the applet */
         pos = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
         pack = g_settings_get_enum (info->settings, PANEL_OBJECT_PACK_KEY);
-        if (pack == PANEL_OBJECT_PACK_END) {
-                if (!panel->packed)
-                        pos = panel->size - pos;
-                else
-                        pos = -1;
-        }
 
 	/* Insert it */
-	if (panel_widget_add (panel, applet, pos, TRUE) == -1 &&
-	    panel_widget_add (panel, applet, 0, FALSE) == -1) {
+	if (panel_widget_add (panel, applet, pos, pack, TRUE) == -1 &&
+	    panel_widget_add (panel, applet, 0, PANEL_OBJECT_PACK_START, FALSE) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next) {
 			panel = PANEL_WIDGET (l->data);
 
-			if (panel_widget_add (panel, applet, 0, FALSE) != -1)
+			if (panel_widget_add (panel, applet,
+					      0, PANEL_OBJECT_PACK_START, FALSE) != -1)
 				break;
 		}
 

@@ -145,10 +145,11 @@ GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
 						 int             sz);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
-int		panel_widget_add		(PanelWidget *panel,
-						 GtkWidget   *applet,
-						 int          pos,
-						 gboolean     insert_at_pos);
+int		panel_widget_add		(PanelWidget     *panel,
+						 GtkWidget       *applet,
+						 int              pos,
+						 PanelObjectPack  pack,
+						 gboolean         insert_at_pos);
 
 /*move applet to a different panel*/
 int		panel_widget_reparent		(PanelWidget *old_panel,
