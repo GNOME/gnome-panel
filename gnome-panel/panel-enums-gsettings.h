@@ -34,7 +34,7 @@ typedef enum {
 	PANEL_OBJECT_PACK_END   = 1
 } PanelObjectPack;
 
-typedef enum {
+typedef enum { /*< flags=0 >*/
 	PANEL_ORIENTATION_TOP    = 1 << 0,
 	PANEL_ORIENTATION_RIGHT  = 1 << 1,
 	PANEL_ORIENTATION_BOTTOM = 1 << 2,
