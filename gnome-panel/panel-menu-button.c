@@ -784,7 +784,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 	id = panel_layout_object_create_start (PANEL_OBJECT_MENU, NULL,
 					       panel_toplevel_get_id (toplevel),
-					       position, FALSE,
+					       position, PANEL_OBJECT_PACK_START,
 					       &settings);
 
 	settings_instance = panel_layout_get_instance_settings (settings,

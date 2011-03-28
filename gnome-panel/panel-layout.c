@@ -597,16 +597,16 @@ panel_layout_toplevel_create (GdkScreen *screen)
 }
 
 void
-panel_layout_object_create (PanelObjectType   type,
-                            const char       *type_detail,
-                            const char       *toplevel_id,
-                            int               position,
-                            gboolean          pack_end)
+panel_layout_object_create (PanelObjectType  type,
+                            const char      *type_detail,
+                            const char      *toplevel_id,
+                            int              position,
+                            PanelObjectPack  pack)
 {
         char *id;
 
         id = panel_layout_object_create_start (type, type_detail,
-                                               toplevel_id, position, pack_end,
+                                               toplevel_id, position, pack,
                                                NULL);
 
         if (!id)
@@ -661,7 +661,7 @@ panel_layout_object_create_start (PanelObjectType   type,
                                   const char       *type_detail,
                                   const char       *toplevel_id,
                                   int               position,
-                                  gboolean          pack_end,
+                                  PanelObjectPack   pack,
                                   GSettings       **settings)
 {
         char      *unique_id;
@@ -696,7 +696,7 @@ panel_layout_object_create_start (PanelObjectType   type,
                             position);
         g_settings_set_enum (settings_object,
                              PANEL_OBJECT_PACK_KEY,
-                             pack_end ? PANEL_OBJECT_PACK_END : PANEL_OBJECT_PACK_START);
+                             pack);
 
         g_free (iid);
 

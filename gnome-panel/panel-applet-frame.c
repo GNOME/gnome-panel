@@ -1013,5 +1013,5 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 	panel_layout_object_create (PANEL_OBJECT_APPLET,
 				    iid,
 				    panel_toplevel_get_id (toplevel),
-				    position, FALSE);
+				    position, PANEL_OBJECT_PACK_START);
 }

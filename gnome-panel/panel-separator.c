@@ -261,7 +261,7 @@ panel_separator_create (PanelToplevel *toplevel,
 {
 	panel_layout_object_create (PANEL_OBJECT_SEPARATOR, NULL,
 				    panel_toplevel_get_id (toplevel),
-				    position, FALSE);
+				    position, PANEL_OBJECT_PACK_START);
 }
 
 void

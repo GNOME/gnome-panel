@@ -436,7 +436,7 @@ panel_menu_bar_create (PanelToplevel *toplevel,
 {
 	panel_layout_object_create (PANEL_OBJECT_MENU_BAR, NULL,
 				    panel_toplevel_get_id (toplevel),
-				    position, FALSE);
+				    position, PANEL_OBJECT_PACK_START);
 }
 
 void

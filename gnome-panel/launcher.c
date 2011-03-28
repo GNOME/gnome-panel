@@ -971,7 +971,8 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 
 	id = panel_layout_object_create_start (PANEL_OBJECT_LAUNCHER,
 					       NULL,
-					       toplevel_id, position, FALSE,
+					       toplevel_id,
+					       position, PANEL_OBJECT_PACK_START,
 					       &settings);
 
 	no_uri = NULL;
