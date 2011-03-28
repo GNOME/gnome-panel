@@ -3766,8 +3766,10 @@ panel_toplevel_finalize (GObject *object)
 		g_source_remove (toplevel->priv->apply_delayed_id);
 	toplevel->priv->apply_delayed_id = 0;
 
-	if (toplevel->priv->delayed_settings)
+	if (toplevel->priv->delayed_settings) {
+		g_settings_apply (toplevel->priv->delayed_settings);
 		g_object_unref (toplevel->priv->delayed_settings);
+	}
 	toplevel->priv->delayed_settings= NULL;
 
 	if (toplevel->priv->settings)
