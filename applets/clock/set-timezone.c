@@ -79,7 +79,7 @@ can_set_call_finished (GObject      *source,
 
   if (reply != NULL)
     {
-      g_variant_get (reply, "(u)", cache->value);
+      g_variant_get (reply, "(i)", cache->value);
       g_variant_unref (reply);
     }
 
