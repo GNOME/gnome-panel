@@ -1,4 +1,82 @@
 ===============
+Version 2.91.93
+===============
+
+Notes:
+  - while GNOME is in deep freeze for GNOME 3, the release team was kind enough
+    to accept a huge freeze break to considerably improve the panel experience
+    in GNOME 3.
+  - it's worth pointing out that starting with this release, gnome-panel
+    ignores the GNOME 2 configuration and starts with a fresh configuration.
+    This is done on purpose; if there is interest, we might provide a helper
+    tool to migrate the old configuration.
+  - per-instance applet settings can now be in GSettings, or if the applet
+    still uses GConf, they will live under /apps/panel3-applets.
+
+Note to packagers: the way to define a default layout for gnome-panel has
+changed. Take a look at the panel-default-layout.layout file for an example;
+this is really easy now!
+
+  Panel
+
+	* Remove popup menu for items in applications menu (Vincent)
+	* Drop drawers (Vincent)
+	* Remove migration code for panel 2.x configuration (Vincent)
+	* Drop hidden --profile argument (Vincent)
+	* Also require modifier to move applets by clicking on handle (Vincent)
+	* Drop per-applet Lock setting (Vincent)
+	* Put Move before Remove in applet menu (Vincent)
+	* Migrate to GSettings (Vincent)
+	  This includes:
+	    * Rework the way we define te default layout
+	    * Better integration with GNOME 3.0 in general (for lockdown, for
+	      instance)
+	    * Still make it possible to have applets use GConf for their own
+	      settings
+	* Use gtk-enable-animations GtkSettings property instead of our own
+	  setting (Vincent)
+	* Remove setting to highlight launchers on mouse hover, and instead
+	  make this available in the theme with "-ButtonWidget-hover-highlight:
+	  false;" (Vincent)
+	* Move Lock before Activate in screensaver button popup (Vincent)
+	* Talk to gnome-screensaver via dbus (Vincent)
+	* Port to GDBus (Vincent)
+	* Stop saving launchers in ~/.gnome2, and use XDG config dir (Vincent)
+	* Remove unneeded check for 'logout-prompt' setting (Vincent)
+	* Change gconf path of applet prefs (Vincent)
+	* Prepare code for ability to use centered applets (Vincent)
+	* Code cleanups (Vincent)
+
+  libpanel-applets
+
+	* Add panel_applet_settings_new() API (Vincent)
+	* Mark all GConf-related API as deprecated (Vincent)
+
+  Fish Applet
+
+	* Port to GSettings (Vincent)
+	* Change the way to choose the image and number of frames, by using a
+	  keyfile. There's no UI for this anymore at the moment (Vincent)
+
+  Window List Applet
+
+	* Port to GSettings (Ryan Lortie)
+
+  Workspace Switcher Applet
+
+	* Port to GSettings (Ryan Lortie)
+
+  Translators
+
+	* Khaled Hosny (ar)
+	* Fran Diéguez (gl)
+	* A S Alam (pa)
+	* Piotr Drąg (pl)
+	* Rodrigo Padula de Oliveira (pt_BR)
+	* Daniel Nylander (sv)
+	* Sahran (ug)
+
+===============
 Version 2.91.92
 ===============
 
