@@ -1812,7 +1812,6 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	int pos;
 	int movement;
 	GtkWidget *applet;
-	GdkModifierType mods;
 	AppletData *ad;
 
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
@@ -1863,19 +1862,16 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		}
 	}
 
-	gdk_window_get_pointer(gtk_widget_get_window (GTK_WIDGET(panel)),
-			       NULL,NULL,&mods);
-
 	movement = PANEL_SWITCH_MOVE;
 
 	if (panel->packed) {
 		movement = PANEL_SWITCH_MOVE;
 	} else {
-		if (mods & GDK_CONTROL_MASK)
+		if (panel->dragged_state & GDK_CONTROL_MASK)
 			movement = PANEL_SWITCH_MOVE;
-		else if (mods & GDK_SHIFT_MASK)
+		else if (panel->dragged_state & GDK_SHIFT_MASK)
 			movement = PANEL_PUSH_MOVE;
-		else if (mods & GDK_MOD1_MASK)
+		else if (panel->dragged_state & GDK_MOD1_MASK)
 			movement = PANEL_FREE_MOVE;
 	}
 	
@@ -2036,6 +2032,7 @@ panel_widget_applet_motion_notify_event (GtkWidget *widget,
 		return FALSE;
 
 	panel = PANEL_WIDGET (parent);
+	panel->dragged_state = ((GdkEventMotion *) event)->state & GDK_MODIFIER_MASK;
 	
 	schedule_try_move (panel, FALSE);
 

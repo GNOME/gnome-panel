@@ -90,6 +90,7 @@ struct _PanelWidget
 	int             sz;
 
 	AppletData     *currently_dragged_applet;
+	guint           dragged_state;
 
 	int             thick;
 
