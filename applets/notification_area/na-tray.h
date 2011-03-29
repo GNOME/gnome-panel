@@ -62,6 +62,8 @@ void            na_tray_set_orientation	(NaTray        *tray,
 GtkOrientation  na_tray_get_orientation (NaTray        *tray);
 void            na_tray_set_padding     (NaTray        *tray,
 					 gint           padding);
+void            na_tray_set_icon_size   (NaTray        *tray,
+					 gint           icon_size);
 void            na_tray_set_colors      (NaTray        *tray,
 					 GdkColor      *fg,
 					 GdkColor      *error,

@@ -827,6 +827,16 @@ na_tray_set_padding (NaTray *tray,
 }
 
 void
+na_tray_set_icon_size (NaTray *tray,
+                       gint    size)
+{
+  NaTrayPrivate *priv = tray->priv;
+
+  if (get_tray (priv->trays_screen) == tray)
+    na_tray_manager_set_icon_size (priv->trays_screen->tray_manager, size);
+}
+
+void
 na_tray_set_colors (NaTray   *tray,
                     GdkColor *fg,
                     GdkColor *error,
