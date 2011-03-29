@@ -34,7 +34,6 @@
 #include <libpanel-util/panel-xdg.h>
 
 #include "launcher.h"
-#include "panel-gconf.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "panel-stock-icons.h"
@@ -80,16 +79,6 @@ static void panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 					    GIcon       *gicon,
 					    const char  *image_filename,
 					    const char  *fallback_image_filename);
-
-static inline gboolean
-desktop_is_home_dir (void)
-{	
-	return gconf_client_get_bool (
-			panel_gconf_get_client (),
-			"/apps/nautilus/preferences/desktop_is_home_dir",
-			NULL);
-}
-
 
 GtkWidget *
 add_menu_separator (GtkWidget *menu)
