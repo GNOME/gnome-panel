@@ -27,14 +27,11 @@ gint     can_set_system_timezone (void);
 
 gint     can_set_system_time     (void);
 
-void     set_system_time_async   (gint64         time,
-                                  GFunc          callback,
-                                  gpointer       data,
-                                  GDestroyNotify notify);
+void     set_system_timezone_async   (const gchar          *filename,
+                                      GAsyncReadyCallback   callback,
+                                      gpointer              user_data);
 
-void     set_system_timezone_async   (const gchar    *filename,
-                                      GFunc           callback,
-                                      gpointer        data,
-                                      GDestroyNotify  notify);
+gboolean set_system_timezone_finish  (GAsyncResult         *result,
+                                      GError              **error);
 
 #endif

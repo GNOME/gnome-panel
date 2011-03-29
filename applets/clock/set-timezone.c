@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*-
- *
- * Copyright (C) 2007 David Zeuthen <david@fubar.dk>
+/*
+ * Copyright (C) 2011 Codethink Limited
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
+ * Author: Ryan Lortie <desrt@desrt.ca>
  */
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif
 
+#include <gio/gio.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -29,263 +30,154 @@
 #include <string.h>
 #include <sys/wait.h>
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-
 #include "set-timezone.h"
-
-
-static DBusGConnection *
-get_system_bus (void)
-{
-        GError          *error;
-        static DBusGConnection *bus = NULL;
-
-	if (bus == NULL) {
-        	error = NULL;
-        	bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-        	if (bus == NULL) {
-                	g_warning ("Couldn't connect to system bus: %s", 
-				   error->message);
-                	g_error_free (error);
-		}
-        }
-
-        return bus;
-}
 
 #define CACHE_VALIDITY_SEC 2
 
-typedef  void (*CanDoFunc) (gint value);
+#define MECHANISM_BUS_NAME    "org.gnome.SettingsDaemon.DateTimeMechanism"
+#define MECHANISM_OBJECT_PATH "/"
+#define MECHANISM_INTERFACE   "org.gnome.SettingsDaemon.DateTimeMechanism"
 
-static void
-notify_can_do (DBusGProxy     *proxy,
-	       DBusGProxyCall *call,
-	       void           *user_data)
+typedef struct {
+  gboolean in_progress;
+  gint     value;
+  guint64  stamp;
+} Cache;
+
+static Cache can_set_time_cache;
+static Cache can_set_timezone_cache;
+
+static GDBusConnection *
+get_system_bus (GError **error)
 {
-	CanDoFunc callback = user_data;
-	GError *error = NULL;
-	gint value;
+  static GDBusConnection *system;
+  static gboolean initialised;
+  static GError *saved_error;
 
-	if (dbus_g_proxy_end_call (proxy, call,
-				   &error,
-				   G_TYPE_INT, &value,
-				   G_TYPE_INVALID)) {
-		callback (value);
-	}
+  if (!initialised)
+    {
+      system = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &saved_error);
+      initialised = TRUE;
+    }
+
+  if (system == NULL && error)
+    *error = g_error_copy (saved_error);
+
+  return system;
 }
 
 static void
-refresh_can_do (const gchar *action, CanDoFunc callback)
+can_set_call_finished (GObject      *source,
+                       GAsyncResult *result,
+                       gpointer      user_data)
 {
-        DBusGConnection *bus;
-        DBusGProxy      *proxy;
+  Cache *cache = user_data;
+  GVariant *reply;
 
-        bus = get_system_bus ();
-        if (bus == NULL)
-                return;
+  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
+                                         result, NULL);
 
-	proxy = dbus_g_proxy_new_for_name (bus,
-					   "org.gnome.SettingsDaemon.DateTimeMechanism",
-					   "/",
-					   "org.gnome.SettingsDaemon.DateTimeMechanism");
+  if (reply != NULL)
+    {
+      g_variant_get (reply, "(u)", cache->value);
+      g_variant_unref (reply);
+    }
 
-	dbus_g_proxy_begin_call_with_timeout (proxy,
-					      action,
-					      notify_can_do,
-					      callback, NULL,
-					      INT_MAX,
-					      G_TYPE_INVALID);
+  cache->stamp = g_get_monotonic_time ();
+  cache->in_progress = FALSE;
 }
 
-static gint   settimezone_cache = 0;
-static time_t settimezone_stamp = 0;
-
-static void
-update_can_settimezone (gint res)
+static int
+can_set (Cache *cache, const gchar *method_name)
 {
-	settimezone_cache = res;
-	time (&settimezone_stamp);
+  guint64 now = g_get_monotonic_time ();
+
+  if (now - cache->stamp > (CACHE_VALIDITY_SEC * 1000000))
+    {
+      if (!cache->in_progress)
+        {
+          GDBusConnection *system_bus = get_system_bus (NULL);
+
+          if (system_bus != NULL)
+            g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
+                                    MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
+                                    method_name, NULL, G_VARIANT_TYPE ("(i)"),
+                                    G_DBUS_CALL_FLAGS_NONE, -1, NULL,
+                                    can_set_call_finished, cache);
+
+          /* Even if the system bus was NULL, we want to set this in
+           * order to effectively wedge ourselves from ever trying
+           * again.
+           */
+          cache->in_progress = TRUE;
+        }
+    }
+
+  return cache->value;
 }
 
 gint
 can_set_system_timezone (void)
 {
-	time_t          now;
-
-	time (&now);
-	if (ABS (now - settimezone_stamp) > CACHE_VALIDITY_SEC) {
-		refresh_can_do ("CanSetTimezone", update_can_settimezone);
-		settimezone_stamp = now;
-	}
-
-	return settimezone_cache;
-}
-
-static gint   settime_cache = 0;
-static time_t settime_stamp = 0;
-
-static void
-update_can_settime (gint res)
-{
-	settime_cache = res;
-	time (&settime_stamp);
+  return can_set (&can_set_timezone_cache, "CanSetTimeZone");
 }
 
 gint
 can_set_system_time (void)
 {
-	time_t now;
-
-	time (&now);
-	if (ABS (now - settime_stamp) > CACHE_VALIDITY_SEC) {
-		refresh_can_do ("CanSetTime", update_can_settime);
-		settime_stamp = now;
-	}
-
-	return settime_cache;
+  return can_set (&can_set_time_cache, "CanSetTime");
 }
 
-typedef struct {
-	gint ref_count;
-        gchar *call;
-	gint64 time;
-	gchar *filename;
-	GFunc callback;
-	gpointer data;
-	GDestroyNotify notify;
-} SetTimeCallbackData;
-
-static void
-free_data (gpointer d)
+gboolean
+set_system_timezone_finish (GAsyncResult  *result,
+                            GError       **error)
 {
-	SetTimeCallbackData *data = d;
+  GDBusConnection *system_bus = get_system_bus (NULL);
+  GVariant *reply;
 
-	data->ref_count--;
-	if (data->ref_count == 0) {
-		if (data->notify)
-			data->notify (data->data);
-		g_free (data->filename);
-		g_free (data);
-	}
-}
+  /* detect if we set an error due to being unable to get the system bus */
+  if (g_simple_async_result_is_valid (result, NULL, set_system_timezone_async))
+    {
+      g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (result),
+                                             error);
+      return FALSE;
+    }
 
-static void
-set_time_notify (DBusGProxy     *proxy,
-		 DBusGProxyCall *call,
-		 void           *user_data)
-{
-	SetTimeCallbackData *data = user_data;
-	GError *error = NULL;
+  g_assert (system_bus != NULL);
 
-	if (dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID)) {
-		if (data->callback) 
-			data->callback (data->data, NULL);
-	}
-	else {
-		if (error->domain == DBUS_GERROR &&
-		    error->code == DBUS_GERROR_NO_REPLY) {
-			/* these errors happen because dbus doesn't
-			 * use monotonic clocks
-			 */	
-			g_warning ("ignoring no-reply error when setting time");
-			g_error_free (error);
-			if (data->callback)
-				data->callback (data->data, NULL);
-		}
-		else {
-			if (data->callback)
-				data->callback (data->data, error);
-			else
-				g_error_free (error);
-		}		
-	}
-}
+  reply = g_dbus_connection_call_finish (system_bus, result, error);
 
-static void
-set_time_async (SetTimeCallbackData *data)
-{
-        DBusGConnection *bus;
-        DBusGProxy      *proxy;
+  if (reply != NULL)
+    g_variant_unref (reply);
 
-        bus = get_system_bus ();
-        if (bus == NULL)
-                return;
-
-	proxy = dbus_g_proxy_new_for_name (bus,
-					   "org.gnome.SettingsDaemon.DateTimeMechanism",
-					   "/",
-					   "org.gnome.SettingsDaemon.DateTimeMechanism");
-
-	data->ref_count++;
-	if (strcmp (data->call, "SetTime") == 0)
-		dbus_g_proxy_begin_call_with_timeout (proxy, 
-						      "SetTime",
-						      set_time_notify,
-						      data, free_data,
-						      INT_MAX,
-						      /* parameters: */
-						      G_TYPE_INT64, data->time,
-						      G_TYPE_INVALID,
-						      /* return values: */
-						      G_TYPE_INVALID);
-	else 
-		dbus_g_proxy_begin_call_with_timeout (proxy, 
-						      "SetTimezone",
-						      set_time_notify,
-						      data, free_data,
-						      INT_MAX,
-						      /* parameters: */
-						      G_TYPE_STRING, data->filename,
-						      G_TYPE_INVALID,
-						      /* return values: */
-						      G_TYPE_INVALID);
+  return reply != NULL;
 }
 
 void
-set_system_time_async (gint64         time,
-		       GFunc          callback,
-		       gpointer       d,
-		       GDestroyNotify notify)
+set_system_timezone_async (const gchar         *filename,
+                           GAsyncReadyCallback  callback,
+                           gpointer             user_data)
 {
-	SetTimeCallbackData *data;
+  GDBusConnection *system_bus;
+  GError *error = NULL;
 
-	if (time == -1)
-		return;
+  system_bus = get_system_bus (&error);
 
-	data = g_new0 (SetTimeCallbackData, 1);
-	data->ref_count = 1;
-	data->call = "SetTime";
-	data->time = time;
-	data->filename = NULL;
-	data->callback = callback;
-	data->data = d;
-	data->notify = notify;
+  if (system_bus == NULL)
+    {
+      GSimpleAsyncResult *simple;
 
-	set_time_async (data);
-	free_data (data);
-}
+      simple = g_simple_async_result_new (NULL, callback, user_data,
+                                          set_system_timezone_async);
+      g_simple_async_result_set_from_error (simple, error);
+      g_simple_async_result_complete_in_idle (simple);
+      g_object_unref (simple);
+      g_error_free (error);
+    }
 
-void
-set_system_timezone_async (const gchar    *filename,
-			   GFunc           callback,
-			   gpointer        d,
-			   GDestroyNotify  notify)
-{
-	SetTimeCallbackData *data;
-
-	if (filename == NULL)
-		return;
-
-	data = g_new0 (SetTimeCallbackData, 1);
-	data->ref_count = 1;
-	data->call = "SetTimezone";
-	data->time = -1;
-	data->filename = g_strdup (filename);
-	data->callback = callback;
-	data->data = d;
-	data->notify = notify;
-
-	set_time_async (data);
-	free_data (data);
+  g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
+                          MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
+                          "SetTimeZone", g_variant_new ("(s)", filename),
+                          NULL, G_DBUS_CALL_FLAGS_NONE, -1, NULL,
+                          callback, user_data);
 }

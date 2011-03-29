@@ -17,8 +17,6 @@
 #include <gio/gio.h>
 
 #ifdef HAVE_NETWORK_MANAGER
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
 #include <NetworkManager/NetworkManager.h>
 #endif
 
@@ -502,9 +500,14 @@ typedef struct {
 } MakeCurrentData;
 
 static void
-make_current_cb (gpointer data, GError *error)
+make_current_cb (GObject      *source,
+                 GAsyncResult *result,
+                 gpointer      user_data)
 {
-	MakeCurrentData *mcdata = data;
+	MakeCurrentData *mcdata = user_data;
+	GError *error = NULL;
+
+	set_system_timezone_finish (result, &error);
 
 	if (error == NULL) {
 		if (current_location)
@@ -521,13 +524,7 @@ make_current_cb (gpointer data, GError *error)
 		mcdata->callback (mcdata->data, error);
 	else
 		g_error_free (error);
-}
 
-static void
-free_make_current_data (gpointer data)
-{
-	MakeCurrentData *mcdata = data;
-	
 	if (mcdata->destroy)
 		mcdata->destroy (mcdata->data);
 	
@@ -576,9 +573,8 @@ clock_location_make_current (ClockLocation *loc,
 
         filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
         set_system_timezone_async (filename,
-                                   (GFunc)make_current_cb,
-				   mcdata,
-                                   free_make_current_data);
+                                   make_current_cb,
+                                   mcdata);
         g_free (filename);
 }
 
@@ -722,94 +718,45 @@ update_weather_infos (void)
 }
 
 static void
-state_notify (DBusPendingCall *pending, gpointer data)
+network_monitor_signal (GDBusProxy  *proxy,
+			const gchar *sender_name,
+			const gchar *signal_name,
+			GVariant    *parameters,
+			gpointer     user_data)
 {
-	DBusMessage *msg = dbus_pending_call_steal_reply (pending);
+	if (g_str_equal (signal_name, "StateChanged")) {
+		if (g_variant_is_of_type (parameters, G_VARIANT_TYPE ("(u)"))) {
+			guint32 state;
 
-	if (!msg)
-		return;
+			g_variant_get (parameters, "(u)", &state);
 
-	if (dbus_message_get_type (msg) == DBUS_MESSAGE_TYPE_METHOD_RETURN) {
-		dbus_uint32_t result;
-
-		if (dbus_message_get_args (msg, NULL, 
-					   DBUS_TYPE_UINT32, &result,
-					   DBUS_TYPE_INVALID)) {
-			if (result == NM_STATE_CONNECTED) {
+			if (state == NM_STATE_CONNECTED) {
 				update_weather_infos ();
 			}
 		}
 	}
-
-	dbus_message_unref (msg);
-}
-
-static void 
-check_network (DBusConnection *connection)
-{
-	DBusMessage *message;
-	DBusPendingCall *reply;
-
-	message = dbus_message_new_method_call (NM_DBUS_SERVICE,
-						NM_DBUS_PATH,
-						NM_DBUS_INTERFACE,
-						"state");
-	if (dbus_connection_send_with_reply (connection, message, &reply, -1)) {
-		dbus_pending_call_set_notify (reply, state_notify, NULL, NULL);
-		dbus_pending_call_unref (reply);
-	}
-	
-	dbus_message_unref (message);
-}
-
-static DBusHandlerResult
-filter_func (DBusConnection *connection,
-             DBusMessage    *message,
-             void           *user_data)
-{
-	if (dbus_message_is_signal (message,
-				    NM_DBUS_INTERFACE, 
-				    "StateChanged")) {
-		check_network (connection);
-
-		return DBUS_HANDLER_RESULT_HANDLED;
-	}
-
-	return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
 static void
 setup_network_monitor (void)
 {
-        GError *error;
-	DBusError derror;
-        static DBusGConnection *bus = NULL;
-	DBusConnection *dbus;
+	GError *error = NULL;
+	GDBusProxy *proxy;
 
-        if (bus == NULL) {
-                error = NULL;
-                bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-                if (bus == NULL) {
-                        g_warning ("Couldn't connect to system bus: %s",
-                                   error->message);
-                        g_error_free (error);
+	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+					       NULL, NM_DBUS_SERVICE, NM_DBUS_PATH, NM_DBUS_INTERFACE,
+					       NULL, &error);
 
-			return;
-                }
+	if (proxy == NULL) {
+		g_warning ("Couldn't create NetworkManager proxy: %s",
+			   error->message);
+		g_error_free (error);
+		return;
+	}
 
-		dbus_error_init (&derror);
-		dbus = dbus_g_connection_get_connection (bus);
-                dbus_connection_add_filter (dbus, filter_func, NULL, NULL);
-                dbus_bus_add_match (dbus,
-                                    "type='signal',"
-				    "interface='" NM_DBUS_INTERFACE "'",
-                                    &derror);
-		if (dbus_error_is_set (&derror)) {
-			g_warning ("Couldn't register signal handler: %s: %s",
-				   derror.name, derror.message);
-			dbus_error_free (&derror);
-		}
-        }
+	g_signal_connect (proxy, "g-signal", G_CALLBACK (network_monitor_signal), NULL);
+	/* leak the proxy */
 }
 #endif
 
