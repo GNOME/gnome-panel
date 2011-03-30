@@ -94,7 +94,6 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 	panel = PANEL_WIDGET (parent);
 
 	panel_widget_applet_drag_start (panel, info->widget,
-					PW_DRAG_OFF_CENTER,
 					GDK_CURRENT_TIME);
 }
 

@@ -556,170 +556,437 @@ get_size_from_hints (AppletData *ad, int cells)
 	return MAX (cells, ad->min_cells);
 }
 
+/* Note: this can only be called at the beginning of size_allocate, which means
+ * that ad->constrained doesn't matter yet (it will be set to the correct
+ * value in size_allocate). */
 static void
+panel_widget_update_positions_packed_start (PanelWidget *panel)
+{
+	GList *list,*l;
+	AppletData *ad;
+	int size_all = 0;
+	int pos_next;
+
+	if (panel->packed)
+		return;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_START);
+
+	/* get size used by the objects */
+	for (l = list; l; l = l->next) {
+		ad = l->data;
+		size_all += ad->cells;
+	}
+
+	/* update absolute position of all applets based on this information,
+	 * starting with the first object */
+	pos_next = 0;
+	l = list;
+
+	while (l) {
+		ad = l->data;
+		ad->constrained = pos_next;
+		pos_next += ad->cells;
+		l = l->next;
+	}
+
+	g_list_free (list);
+}
+
+/* Note: only use this function when you can; see comment above
+ * panel_widget_update_positions_packed_start()
+ * For center specifically, we require ad->cells to be set. Note that we don't
+ * care much about min_cells: if we need it, this means objects will have to be
+ * pushed to accomodate other objects, which will kill centering anyway.
+ * (FIXME: hrm, not that sure about it ;-)) */
+static void
+panel_widget_update_positions_packed_center (PanelWidget *panel)
+{
+	GList *list,*l;
+	AppletData *ad;
+	int size_all = 0;
+	int pos_next;
+
+	if (panel->packed)
+		return;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
+
+	/* get size used by the objects */
+	for (l = list; l; l = l->next) {
+		ad = l->data;
+		size_all += ad->cells;
+	}
+
+	/* update absolute position of all applets based on this information,
+	 * starting with the first centered object */
+	pos_next = (panel->size - size_all) / 2;
+	l = list;
+
+	while (l) {
+		ad = l->data;
+		ad->constrained = pos_next;
+		pos_next += ad->cells;
+		l = l->next;
+	}
+
+	g_list_free (list);
+}
+
+/* Note: only use this function when you can; see comment above
+ * panel_widget_update_positions_packed_start() */
+static void
+panel_widget_update_positions_packed_end (PanelWidget *panel)
+{
+	GList *list,*l;
+	AppletData *ad;
+	int size_all = 0;
+	int pos_next;
+
+	if (panel->packed)
+		return;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_END);
+
+	/* get size used by the objects */
+	for (l = list; l; l = l->next) {
+		ad = l->data;
+		size_all += ad->cells;
+	}
+
+	/* update absolute position of all applets based on this information,
+	 * starting with the first object */
+	pos_next = panel->size - size_all;
+	l = list;
+
+	while (l) {
+		ad = l->data;
+		ad->constrained = pos_next;
+		pos_next += ad->cells;
+		l = l->next;
+	}
+
+	g_list_free (list);
+}
+
+static void
+panel_widget_update_positions (PanelWidget *panel)
+{
+	int i = 0;
+	GList *list;
+	AppletData *ad;
+
+	i = 0;
+
+	if (panel->packed) {
+		/* keep in sync with code in size_allocate */
+		for (list = panel->applet_list;
+		     list != NULL;
+		     list = g_list_next (list)) {
+			ad = list->data;
+			ad->constrained = i;
+			i += ad->cells;
+		}
+	} else {
+		/* Re-compute the ideal position of objects, based on their size */
+		panel_widget_update_positions_packed_start (panel);
+		panel_widget_update_positions_packed_center (panel);
+		panel_widget_update_positions_packed_end (panel);
+
+		/* Second pass: try to position from the start, to make sure
+		 * there's enough room. We don't use size hints yet. */
+		for (list = panel->applet_list;
+		     list != NULL;
+		     list = g_list_next (list)) {
+			ad = list->data;
+			if (ad->constrained < i)
+				ad->constrained = i;
+
+			i = ad->constrained + ad->cells;
+		}
+
+		/* Third pass: now expand from the end, and start using size
+		 * hints if we need more room */
+		i = panel->size;
+		for(list = g_list_last(panel->applet_list);
+		    list!=NULL;
+		    list = g_list_previous(list)) {
+			ad = list->data;
+			int cells;
+
+			if (ad->constrained + ad->min_cells > i)
+				ad->constrained = MAX (i - ad->min_cells, 0);
+
+			if (ad->expand_major) {
+				cells = (i - ad->constrained) - 1;
+
+				if (ad->size_hints)
+					cells = get_size_from_hints (ad, cells);
+				cells = MAX (cells, ad->min_cells);
+				cells = MIN (cells, panel->size);
+
+				ad->cells = cells;
+			}
+
+			i = ad->constrained;
+		}
+
+		/* EEEEK, there's not enough room, so shift applets even
+		 * at the expense of perhaps running out of room on the
+		 * right if there is no free space in the middle */
+		if(i < 0) {
+			i = 0;
+			for(list = panel->applet_list;
+			    list!=NULL;
+			    list = g_list_next(list)) {
+				ad = list->data;
+
+				if (ad->constrained < i)
+					ad->constrained = i;
+
+				i = ad->constrained + ad->cells;
+			}
+		}
+	}
+}
+
+static inline int
+panel_widget_get_moveby (PanelWidget *panel,
+			 AppletData  *ad)
+{
+	/* move relative to the center of the object */
+	return panel_widget_get_cursorloc (panel) - ad->constrained - ad->cells / 2;
+}
+
+static int
+panel_widget_move_get_pos_pack (PanelWidget *panel,
+				PanelObjectPackType pack_type)
+{
+	switch (pack_type) {
+	case PANEL_OBJECT_PACK_START:
+		return 0;
+		break;
+	case PANEL_OBJECT_PACK_CENTER:
+		return panel->size / 2;
+		break;
+	case PANEL_OBJECT_PACK_END:
+		return panel->size;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return 0;
+}
+
+static int
+panel_widget_move_get_pos_next_pack (PanelWidget *panel,
+				     AppletData  *ad,
+				     AppletData  *nad)
+{
+	if (!nad || nad->pack_type > ad->pack_type + 1)
+		return panel_widget_move_get_pos_pack (panel, ad->pack_type + 1);
+
+	return nad->constrained;
+}
+
+static int
+panel_widget_move_get_pos_prev_pack (PanelWidget *panel,
+				     AppletData  *ad,
+				     AppletData  *pad)
+{
+	if (!pad || pad->pack_type < ad->pack_type - 1)
+		return panel_widget_move_get_pos_pack (panel, ad->pack_type - 1);
+
+	return pad->constrained + pad->cells;
+}
+
+static void
+panel_widget_move_to_pack (PanelWidget         *panel,
+			   AppletData          *ad,
+			   PanelObjectPackType  new_pack_type,
+			   int                  pack_index)
+{
+	GList *l;
+
+	if (pack_index >= 0) {
+		for (l = panel->applet_list; l; l = l->next) {
+			AppletData *ad_to_move = l->data;
+			if (ad_to_move->pack_type == new_pack_type &&
+			    ad_to_move->pack_index >= pack_index) {
+				ad_to_move->pack_index++;
+				emit_applet_moved (panel, ad_to_move);
+			}
+		}
+	} else
+		pack_index = panel_widget_get_new_pack_index (panel, new_pack_type);
+
+	ad->pack_type = new_pack_type;
+	ad->pack_index = pack_index;
+}
+
+/*
+ * Switch move
+ */
+
+/* if force_switch is set, moveby will be ignored */
+static gboolean
 panel_widget_switch_applet_right (PanelWidget *panel,
-				  GList       *list)
+				  GList       *list,
+				  int          moveby,
+				  gboolean     force_switch)
 {
 	AppletData *ad;
-	AppletData *nad = NULL;
-	
-	g_assert (list != NULL);
+	AppletData *nad;
+	int         swap_index;
+	int         next_pos;
 
 	ad = list->data;
-	if (ad->constrained + ad->min_cells >= panel->size)
-		return;
 
-	if (list->next)
-		nad = list->next->data;
+	if (panel->packed && !list->next)
+		return FALSE;
 
-	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + MOVE_INCREMENT) {
-		ad->pos = ad->constrained += MOVE_INCREMENT;
-		gtk_widget_queue_resize (GTK_WIDGET (panel));
-		emit_applet_moved (panel, ad);
-		return;
+	if (ad->pack_type == PANEL_OBJECT_PACK_END && !list->next)
+		return FALSE;
+
+	/* count moveby from end of object => remove distance to go there */
+	moveby -= ad->cells / 2;
+
+	nad = list->next ? list->next->data : NULL;
+
+	/* Move inside same pack */
+	if (nad && nad->pack_type == ad->pack_type) {
+		if (force_switch ||
+		    (moveby >= nad->cells / 2)) {
+			swap_index = ad->pack_index;
+			ad->pack_index = nad->pack_index;
+			nad->pack_index = swap_index;
+
+			panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
+
+			emit_applet_moved (panel, nad);
+			emit_applet_moved (panel, ad);
+
+			panel_widget_update_positions (panel);
+			gtk_widget_queue_resize (GTK_WIDGET (panel));
+
+			return TRUE;
+		} else
+			return FALSE;
 	}
 
-	nad->constrained = nad->pos = ad->constrained;
-	ad->constrained = ad->pos = ad->constrained + nad->min_cells;
-	panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
+	/* Move to next pack */
+	next_pos = panel_widget_move_get_pos_next_pack (panel, ad, nad);
+	if (force_switch ||
+	    (moveby >= (next_pos - (ad->constrained + ad->cells)) / 2)) {
+		if (ad->pack_type + 1 == PANEL_OBJECT_PACK_END)
+			panel_widget_move_to_pack (panel, ad, ad->pack_type + 1, -1);
+		else
+			panel_widget_move_to_pack (panel, ad, ad->pack_type + 1, 0);
+		emit_applet_moved (panel, ad);
 
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
+		panel_widget_update_positions (panel);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 
-	emit_applet_moved (panel, ad);
-	emit_applet_moved (panel, nad);
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
-static void
+/* if force_switch is set, moveby will be ignored */
+static gboolean
 panel_widget_switch_applet_left (PanelWidget *panel,
-				 GList       *list)
+				 GList       *list,
+				 int          moveby,
+				 gboolean     force_switch)
 {
 	AppletData *ad;
-	AppletData *pad = NULL;
+	AppletData *pad;
+	int         swap_index;
+	int         prev_pos;
 
 	ad = list->data;
-	if (ad->constrained <= 0)
-		return;
 
-	if (list->prev)
-		pad = list->prev->data;
+	if (panel->packed && !list->prev)
+		return FALSE;
 
-	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT) {
-		ad->pos = ad->constrained -= MOVE_INCREMENT;
-		gtk_widget_queue_resize (GTK_WIDGET (panel));
-		emit_applet_moved (panel, ad);
-		return;
+	if (ad->pack_type == PANEL_OBJECT_PACK_START && !list->prev)
+		return FALSE;
+
+	/* count moveby from start of object => add distance to go there */
+	moveby += ad->cells / 2;
+
+	pad = list->prev ? list->prev->data : NULL;
+
+	/* Move inside same pack */
+	if (pad && pad->pack_type == ad->pack_type) {
+		if (force_switch ||
+		    (moveby <= - pad->cells / 2)) {
+			swap_index = ad->pack_index;
+			ad->pack_index = pad->pack_index;
+			pad->pack_index = swap_index;
+
+			panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
+
+			emit_applet_moved (panel, ad);
+			emit_applet_moved (panel, pad);
+
+			panel_widget_update_positions (panel);
+			gtk_widget_queue_resize (GTK_WIDGET (panel));
+
+			return TRUE;
+		} else
+			return FALSE;
 	}
 
-	ad->constrained = ad->pos = pad->constrained;
-	pad->constrained = pad->pos = ad->constrained + ad->min_cells;
-	panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
+	/* Move to prev pack */
+	prev_pos = panel_widget_move_get_pos_prev_pack (panel, ad, pad);
+	if (force_switch ||
+	    (moveby <=  - ((ad->constrained - prev_pos) / 2))) {
+		panel_widget_move_to_pack (panel, ad, ad->pack_type - 1, -1);
+		emit_applet_moved (panel, ad);
 
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
+		panel_widget_update_positions (panel);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 
-	emit_applet_moved (panel, ad);
-	emit_applet_moved (panel, pad);
-}
+		return TRUE;
+	}
 
-static int
-panel_widget_get_right_switch_pos (PanelWidget *panel,
-				   GList       *list)
-{
-	AppletData *ad;
-	AppletData *nad = NULL;
-
-	g_assert (list != NULL);
-
-	ad = list->data;
-	if (list->next)
-		nad = list->next->data;
-
-	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + MOVE_INCREMENT)
-		return ad->constrained + MOVE_INCREMENT;
-
-	return nad->constrained + nad->min_cells - ad->cells;
-}
-
-static int
-panel_widget_get_left_switch_pos (PanelWidget *panel,
-				  GList       *list)
-{
-	AppletData *ad;
-	AppletData *pad = NULL;
-
-	g_assert (list != NULL);
-
-	ad = list->data;
-	if (list->prev)
-		pad = list->prev->data;
-	
-	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT)
-		return ad->constrained - MOVE_INCREMENT;
-
-	return pad->constrained;
+	return FALSE;
 }
 
 static void
 panel_widget_switch_move (PanelWidget *panel,
-			  AppletData  *ad,
-			  int          moveby)
+			  AppletData  *ad)
 {
 	GList *list;
-	int    finalpos;
-	int    pos;
+	gboolean moved;
+	int      moveby;
 
 	g_return_if_fail (ad != NULL);
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
-	if (moveby == 0)
-		return;
-
 	list = g_list_find (panel->applet_list, ad);
 	g_return_if_fail (list != NULL);
 
-	finalpos = ad->constrained + moveby;
+	moveby = panel_widget_get_moveby (panel, ad);
 
-	if (ad->constrained < finalpos) {
-		AppletData *pad;
-
-		if (list->prev) {
-			pad = list->prev->data;
-			if (pad->expand_major)
-				gtk_widget_queue_resize (GTK_WIDGET (panel));
-		}
-
-		while (ad->constrained < finalpos) {
-			pos = panel_widget_get_right_switch_pos (panel, list);
-
-			if (abs (pos - finalpos) >= abs (ad->constrained - finalpos) ||
-			    pos + ad->min_cells > panel->size)
-				break;
-
-			panel_widget_switch_applet_right (panel, list);
-		}
-
-		if (list->prev) {
-			pad = list->prev->data;
-			if (pad->expand_major)
-				gtk_widget_queue_resize (GTK_WIDGET (panel));
+	if (moveby > ad->cells / 2) {
+		moved = TRUE;
+		while (moved && moveby > ad->cells / 2) {
+			moved = panel_widget_switch_applet_right (panel, list,
+								  moveby, FALSE);
+			moveby = panel_widget_get_moveby (panel, ad);
 		}
 	} else {
-		AppletData *nad;
-
-		if (list->next) {
-			nad = list->next->data;
-			if (nad->expand_major)
-				gtk_widget_queue_resize (GTK_WIDGET (panel));
+		moved = TRUE;
+		while (moved && moveby <= - ad->cells / 2) {
+			moved = panel_widget_switch_applet_left (panel, list,
+								 moveby, FALSE);
+			moveby = panel_widget_get_moveby (panel, ad);
 		}
-
-		while (ad->constrained > finalpos) {
-			pos = panel_widget_get_left_switch_pos (panel, list);
-
-			if (abs (pos - finalpos) >= abs (ad->constrained - finalpos) || pos < 0)
-				break;
-
-			panel_widget_switch_applet_left (panel, list);
-		}
-		
 	}
 }
 
@@ -728,6 +995,8 @@ panel_widget_push_applet_right (PanelWidget *panel,
 				GList       *list,
 				int          push)
 {
+	return FALSE;
+#if 0
 	AppletData *ad;
 	AppletData *nad = NULL;
 
@@ -757,6 +1026,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	emit_applet_moved (panel, ad);
 	
 	return TRUE;
+#endif
 }
 
 static int
@@ -764,6 +1034,8 @@ panel_widget_push_applet_left (PanelWidget *panel,
 			       GList       *list,
 			       int          push)
 {
+	return FALSE;
+#if 0
 	AppletData *ad;
 	AppletData *pad = NULL;
 
@@ -793,6 +1065,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 	emit_applet_moved (panel, ad);
 	
 	return TRUE;
+#endif
 }
 
 static void
@@ -839,123 +1112,6 @@ panel_widget_push_move (PanelWidget *panel,
 				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 	}
-}
-
-
-/* Note: this can only be called at the beginning of size_allocate, which means
- * that ad->constrained doesn't matter yet (it will be set to the correct
- * value in size_allocate). */
-static void
-panel_widget_update_packed_start (PanelWidget *panel)
-{
-	GList *list,*l;
-	AppletData *ad;
-	int size_all = 0;
-	int pos_next;
-
-	if (panel->packed)
-		return;
-
-	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_START);
-
-	/* get size used by the objects */
-	for (l = list; l; l = l->next) {
-		ad = l->data;
-		size_all += ad->cells;
-	}
-
-	/* update absolute position of all applets based on this information,
-	 * starting with the first object */
-	pos_next = 0;
-	l = list;
-
-	while (l) {
-		ad = l->data;
-		ad->abs_pos = pos_next;
-		pos_next += 1; /* += ad->cells is the exact right value, but 1
-				  is enough for the order */
-		l = l->next;
-	}
-
-	g_list_free (list);
-}
-
-/* Note: only use this function when you can; see comment above
- * panel_widget_update_packed_start()
- * For center specifically, we require ad->cells to be set. Note that we don't
- * care much about min_cells: if we need it, this means objects will have to be
- * pushed to accomodate other objects, which will kill centering anyway.
- * (FIXME: hrm, not that sure about it ;-)) */
-static void
-panel_widget_update_packed_center (PanelWidget *panel)
-{
-	GList *list,*l;
-	AppletData *ad;
-	int size_all = 0;
-	int pos_next;
-
-	if (panel->packed)
-		return;
-
-	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
-
-	/* get size used by the objects */
-	for (l = list; l; l = l->next) {
-		ad = l->data;
-		size_all += ad->cells;
-	}
-
-	/* update absolute position of all applets based on this information,
-	 * starting with the first centered object */
-	pos_next = (panel->size - size_all) / 2;
-	l = list;
-
-	while (l) {
-		ad = l->data;
-		ad->abs_pos = pos_next;
-		pos_next += 1; /* += ad->cells is the exact right value, but 1
-				  is enough for the order */
-		l = l->next;
-	}
-
-	g_list_free (list);
-}
-
-/* Note: only use this function when you can; see comment above
- * panel_widget_update_packed_start() */
-static void
-panel_widget_update_packed_end (PanelWidget *panel)
-{
-	GList *list,*l;
-	AppletData *ad;
-	int size_all = 0;
-	int pos_next;
-
-	if (panel->packed)
-		return;
-
-	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_END);
-
-	/* get size used by the objects */
-	for (l = list; l; l = l->next) {
-		ad = l->data;
-		size_all += ad->cells;
-	}
-
-	/* update absolute position of all applets based on this information,
-	 * starting with the first object */
-	pos_next = panel->size - size_all;
-	l = list;
-
-	while (l) {
-		ad = l->data;
-		ad->abs_pos = pos_next;
-		pos_next += 1; /* += ad->cells is the exact right value, but 1
-				  is enough for the order */
-		l = l->next;
-	}
-
-	g_list_free (list);
 }
 
 static void
@@ -1126,6 +1282,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *list;
 	int i;
 	gboolean ltr;
+	AppletData *ad;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
 	g_return_if_fail(allocation!=NULL);
@@ -1152,11 +1309,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		 * in size_request() */
 		int applet_using_hint_index = 0;
 
+		/* keep in sync with code in update_positions */
 		i = 0;
 		for(list = panel->applet_list;
 		    list!=NULL;
 		    list = g_list_next(list)) {
-			AppletData *ad = list->data;
+			ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
@@ -1207,7 +1365,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		for (list = panel->applet_list;
 		     list != NULL;
 		     list = g_list_next (list)) {
-			AppletData *ad = list->data;
+			ad = list->data;
 			GtkRequisition chreq;
 
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
@@ -1225,74 +1383,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			}
 		}
 
-		/* Re-compute the position of objects, based on their size */
-		panel_widget_update_packed_start (panel);
-		panel_widget_update_packed_center (panel);
-		panel_widget_update_packed_end (panel);
-
-		/* Second pass: try to position from the start, to make sure
-		 * there's enough room. We don't use size hints yet. */
-		i = 0;
-		for (list = panel->applet_list;
-		     list != NULL;
-		     list = g_list_next (list)) {
-			AppletData *ad = list->data;
-			ad->constrained = ad->abs_pos;
-
-			if (ad->constrained < i)
-				ad->constrained = i;
-
-			i = ad->constrained + ad->cells;
-		}
-
-		/* Third pass: now expand from the end, and start using size
-		 * hints if we need more room */
-		i = panel->size;
-		for(list = g_list_last(panel->applet_list);
-		    list!=NULL;
-		    list = g_list_previous(list)) {
-			AppletData *ad = list->data;
-			int cells;
-			
-			if (ad->constrained + ad->min_cells > i)
-				ad->constrained = MAX (i - ad->min_cells, 0);
-			
-			if (ad->expand_major) {
-				cells = (i - ad->constrained) - 1;
-
-				if (ad->size_hints) 
-					cells = get_size_from_hints (ad, cells);
-				cells = MAX (cells, ad->min_cells);
-				cells = MIN (cells, panel->size);
-
-				ad->cells = cells;
-			}
-
-			i = ad->constrained;
-		}
-
-		/* EEEEK, there's not enough room, so shift applets even
-		 * at the expense of perhaps running out of room on the
-		 * right if there is no free space in the middle */
-		if(i < 0) {
-			i = 0;
-			for(list = panel->applet_list;
-			    list!=NULL;
-			    list = g_list_next(list)) {
-				AppletData *ad = list->data;
-				
-				if (ad->constrained < i)
-					ad->constrained = i;
-				
-				i = ad->constrained + ad->cells;
-			}
-		}
+		panel_widget_update_positions (panel);
 
 		/* Last pass: actually allocate the size for each object */
 		for(list = panel->applet_list;
 		    list!=NULL;
 		    list = g_list_next(list)) {
-			AppletData *ad = list->data;
+			ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
@@ -1566,8 +1663,7 @@ static gboolean repeat_if_outside = FALSE;
 
 static gboolean
 panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
-					GtkWidget *applet,
-					int drag_off)
+					GtkWidget *applet)
 {
 	AppletData *ad;
 	AppletInfo *info;
@@ -1596,12 +1692,6 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 		  g_type_name(G_TYPE_FROM_INSTANCE (applet)), applet);
 #endif
 	panel->currently_dragged_applet = ad;
-	if (drag_off == PW_DRAG_OFF_CURSOR)
-		ad->drag_off = panel_widget_get_cursorloc (panel) - ad->constrained;
-	else if (drag_off == PW_DRAG_OFF_CENTER)
-		ad->drag_off = ad->cells / 2;
-	else
-		ad->drag_off = drag_off;
 
 	add_all_move_bindings (panel);
 
@@ -1634,7 +1724,6 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 void
 panel_widget_applet_drag_start (PanelWidget *panel,
 				GtkWidget   *applet,
-				int          drag_off,
 				guint32      time_)
 {
 	GdkWindow *window;
@@ -1647,7 +1736,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		  g_type_name(G_TYPE_FROM_INSTANCE(applet)), applet);
 #endif
 
-	if (!panel_widget_applet_drag_start_no_grab (panel, applet, drag_off))
+	if (!panel_widget_applet_drag_start_no_grab (panel, applet))
 		return;
 
 	panel_toplevel_push_autohide_disabler (panel->toplevel);
@@ -1727,7 +1816,6 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 /* get pack type & index for insertion at the cursor location in panel */
 void
 panel_widget_get_insert_at_cursor (PanelWidget         *widget,
-				   int                  offset,
 				   PanelObjectPackType *pack_type,
 				   int                 *pack_index)
 {
@@ -1737,7 +1825,7 @@ panel_widget_get_insert_at_cursor (PanelWidget         *widget,
 
 	g_return_if_fail (PANEL_IS_WIDGET (widget));
 
-	pos = panel_widget_get_cursorloc (widget) - offset;
+	pos = panel_widget_get_cursorloc (widget);
 
 	/* check if cursor is in an object; in this case, return the pack type
 	 * of the object */
@@ -1768,7 +1856,7 @@ panel_widget_get_insert_pack_type_at_cursor (PanelWidget *panel)
 	PanelObjectPackType ret = PANEL_OBJECT_PACK_START;
 	int                 pack_index = 0;
 
-	panel_widget_get_insert_at_cursor (panel, 0, &ret, &pack_index);
+	panel_widget_get_insert_at_cursor (panel, &ret, &pack_index);
 
 	return ret;
 }
@@ -1791,15 +1879,6 @@ panel_widget_get_new_pack_index (PanelWidget         *panel,
 	return max_pack_index + 1;
 }
 
-/*calculates the value to move the applet by*/
-static int
-panel_widget_get_moveby (PanelWidget *panel, int pos, int offset)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
-
-	return panel_widget_get_cursorloc (panel) - offset - pos;
-}
-
 /* schedule to run the below function */
 static void schedule_try_move (PanelWidget *panel, gboolean repeater);
 
@@ -1808,7 +1887,6 @@ static void
 panel_widget_applet_move_to_cursor (PanelWidget *panel)
 {
 	int moveby;
-	int pos;
 	int movement;
 	GtkWidget *applet;
 	AppletData *ad;
@@ -1819,8 +1897,6 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		return;
 
 	ad = panel->currently_dragged_applet;
-
-	pos = ad->constrained;
 
 	applet = ad->applet;
 	g_assert(GTK_IS_WIDGET(applet));
@@ -1843,7 +1919,6 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 				int                 pack_index = 0;
 
 				panel_widget_get_insert_at_cursor (new_panel,
-								   ad->drag_off,
 								   &pack_type,
 								   &pack_index);
 
@@ -1853,12 +1928,12 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 				if (!panel_widget_reparent (panel, new_panel, applet,
 							    pack_type, pack_index)) {
 					panel_widget_applet_drag_start (
-						panel, applet, ad->drag_off, GDK_CURRENT_TIME);
+						panel, applet, GDK_CURRENT_TIME);
 					continue;
 				}
 
 				panel_widget_applet_drag_start (
-					new_panel, applet, ad->drag_off, GDK_CURRENT_TIME);
+					new_panel, applet, GDK_CURRENT_TIME);
 				schedule_try_move (new_panel, TRUE);
 
 				return;
@@ -1879,11 +1954,10 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	
 	switch (movement) {
 	case PANEL_SWITCH_MOVE:
-		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
-		panel_widget_switch_move (panel, ad, moveby);
+		panel_widget_switch_move (panel, ad);
 		break;
 	case PANEL_PUSH_MOVE:
-		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
+		moveby = panel_widget_get_moveby (panel, ad);
 		panel_widget_push_move (panel, ad, moveby);
 		break;
 	}
@@ -1985,7 +2059,7 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 	if (event->send_event)
 		event_time = GDK_CURRENT_TIME;
 
-	panel_widget_applet_drag_start (panel, widget, PW_DRAG_OFF_CURSOR, event_time);
+	panel_widget_applet_drag_start (panel, widget, event_time);
 
 	return TRUE;
 }
@@ -2262,10 +2336,7 @@ panel_widget_add (PanelWidget         *panel,
 		ad->min_cells = 1;
 		ad->pack_type = pack_type;
 		ad->pack_index = pack_index;
-		/* both abs_pos and constrained will get updated later */
-		ad->abs_pos = 0;
 		ad->constrained = 0;
-		ad->drag_off = 0;
 		ad->no_die = 0;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
@@ -2302,7 +2373,6 @@ panel_widget_reparent (PanelWidget         *old_panel,
 	AppletData *ad;
 	GtkWidget *focus_widget = NULL;
 	AppletInfo* info;
-	GList *l;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel), FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel), FALSE);
@@ -2320,17 +2390,8 @@ panel_widget_reparent (PanelWidget         *old_panel,
 	
 	info = g_object_get_data (G_OBJECT (ad->applet), "applet_info");
 
-	for (l = new_panel->applet_list; l; l = l->next) {
-		AppletData *ad_to_move = l->data;
-		if (ad_to_move->pack_type == pack_type &&
-		    ad_to_move->pack_index >= pack_index) {
-			ad_to_move->pack_index++;
-			emit_applet_moved (new_panel, ad_to_move);
-		}
-	}
+	panel_widget_move_to_pack (new_panel, ad, pack_type, pack_index);
 
-	ad->pack_type = pack_type;
-	ad->pack_index = pack_index;
 	/* with reparent, we'll call cremove/cadd, which will reinsert ad at
 	 * the right place in the list */
 
@@ -2458,11 +2519,11 @@ panel_widget_switch_move_applet (PanelWidget      *panel,
 	switch (dir) {
 	case GTK_DIR_LEFT:
 	case GTK_DIR_UP:
-		panel_widget_switch_applet_left (panel, list);
+		panel_widget_switch_applet_left (panel, list, -1, TRUE);
 		break;
 	case GTK_DIR_RIGHT:
 	case GTK_DIR_DOWN:
-		panel_widget_switch_applet_right (panel, list);
+		panel_widget_switch_applet_right (panel, list, -1, TRUE);
 		break;
 	default:
 		return;

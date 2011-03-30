@@ -1259,7 +1259,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 
 	panel_widget = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (widget));
 
-	panel_widget_get_insert_at_cursor (panel_widget, 0, &pack_type, &pack_index);
+	panel_widget_get_insert_at_cursor (panel_widget, &pack_type, &pack_index);
 	
 	panel_receive_dnd_data (
 		panel_widget, info, pack_type, pack_index,

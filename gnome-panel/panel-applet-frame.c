@@ -371,7 +371,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 			    modifiers == panel_bindings_get_mouse_button_modifier_keymask ()){
 				panel_widget_applet_drag_start (
 					frame->priv->panel, GTK_WIDGET (frame),
-					PW_DRAG_OFF_CURSOR, event->time);
+					event->time);
 				handled = TRUE;
 			} else if (event->type == GDK_BUTTON_RELEASE) {
 				panel_widget_applet_drag_end (frame->priv->panel);
@@ -797,7 +797,6 @@ _panel_applet_frame_applet_move (PanelAppletFrame *frame)
 
 	panel_widget_applet_drag_start (PANEL_WIDGET (parent),
 					widget,
-					PW_DRAG_OFF_CENTER,
 					GDK_CURRENT_TIME);
 }
 

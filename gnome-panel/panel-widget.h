@@ -60,18 +60,11 @@ struct _AppletData
 	PanelObjectPackType pack_type;
 	int		    pack_index;
 
-	/* TODO hacky workaround to keep everything working (move functions */
-	int             pos;
-	/* absolute position from the left, after taking packing into account */
-	int             abs_pos;
 	/* constrained position from the left, after taking other objects into
 	 * account */
 	int             constrained;
 	int		cells;
 	int             min_cells;
-
-	int		drag_off; /* offset on the applet where drag
-				     was started */
 
 	int		no_die; /* if >0 never send the about to die
 				   signal, an int and not a bool for
@@ -165,15 +158,10 @@ int		panel_widget_reparent		(PanelWidget         *old_panel,
 						 PanelObjectPackType  pack_type,
 						 int                  pack_index);
 
-/* use these for drag_off for special cases */
-#define PW_DRAG_OFF_CURSOR -1
-#define PW_DRAG_OFF_CENTER -2
-
 /*drag*/
 gboolean        panel_applet_is_in_drag         (void);
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget   *applet,
-						 int          drag_off,
 						 guint32      time_);
 void		panel_widget_applet_drag_end	(PanelWidget *panel);
 
@@ -196,7 +184,6 @@ void		panel_widget_draw_icon		(PanelWidget *panel,
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /* get pack type & index for insertion at the cursor location in panel */
 void            panel_widget_get_insert_at_cursor (PanelWidget         *widget,
-						   int                  offset,
 						   PanelObjectPackType *pack_type,
 						   int                 *pack_index);
 /* get pack type for insertion at the cursor location in panel */
