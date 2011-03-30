@@ -77,16 +77,19 @@
     </key>
     <key name="hide-delay" type="i">
       <default>300</default>
+      <range min='0' max='10000'/>
       <_summary>Panel autohide delay</_summary>
       <_description>Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true.</_description>
     </key>
     <key name="unhide-delay" type="i">
       <default>100</default>
+      <range min='0' max='10000'/>
       <_summary>Panel autounhide delay</_summary>
       <_description>Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true.</_description>
     </key>
     <key name="auto-hide-size" type="i">
       <default>1</default>
+      <range min='1' max='100'/>
       <_summary>Visible pixels when hidden</_summary>
       <_description>Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true.</_description>
     </key>
