@@ -76,7 +76,6 @@ void        panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *id,
 						  gboolean    immediate);
 
-int         panel_applet_get_position    (AppletInfo *applet);
 GSettings  *panel_applet_get_settings    (AppletInfo *applet);
 
 /* True if all the keys relevant to moving are writable

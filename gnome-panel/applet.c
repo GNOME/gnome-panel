@@ -832,10 +832,10 @@ panel_applet_save_position (AppletInfo *applet_info,
 {
 	PanelWidget *panel_widget;
 	const char  *toplevel_id;
-	gboolean     right_stick;
-	int          position;
+	AppletData  *applet_data;
 
 	g_return_if_fail (applet_info != NULL);
+	g_return_if_fail (G_IS_OBJECT (applet_info->widget));
 
 	if (!immediate) {
 		if (!queued_position_source)
@@ -856,21 +856,18 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	panel_widget = panel_applet_get_panel_widget (applet_info);
 
-	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
-
-	position = panel_applet_get_position (applet_info);
-	if (right_stick && !panel_widget->packed)
-		position = panel_widget->size - position;
+	applet_data = g_object_get_data (G_OBJECT (applet_info->widget),
+					 PANEL_APPLET_DATA);
 
 	g_settings_set_string (applet_info->settings,
 			       PANEL_OBJECT_TOPLEVEL_ID_KEY,
 			       toplevel_id);
 	g_settings_set_enum (applet_info->settings,
 			     PANEL_OBJECT_PACK_TYPE_KEY,
-			     right_stick ? PANEL_OBJECT_PACK_END : PANEL_OBJECT_PACK_START);
+			     applet_data->pack_type);
 	g_settings_set_int (applet_info->settings,
-			    PANEL_OBJECT_POSITION_KEY,
-			    position);
+			    PANEL_OBJECT_PACK_INDEX_KEY,
+			    applet_data->pack_index);
 }
 
 const char *
@@ -951,8 +948,8 @@ panel_applet_register (GtkWidget       *applet,
 		       GDestroyNotify   data_destroy)
 {
 	AppletInfo          *info;
-	int                  pos;
 	PanelObjectPackType  pack_type;
+	int                  pack_index;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -978,28 +975,11 @@ panel_applet_register (GtkWidget       *applet,
 	registered_applets = g_slist_append (registered_applets, info);
 
 	/* Find where to insert the applet */
-        pos = g_settings_get_int (info->settings, PANEL_OBJECT_POSITION_KEY);
         pack_type = g_settings_get_enum (info->settings, PANEL_OBJECT_PACK_TYPE_KEY);
+        pack_index = g_settings_get_int (info->settings, PANEL_OBJECT_PACK_INDEX_KEY);
 
 	/* Insert it */
-	if (panel_widget_add (panel, applet, pos, pack_type, TRUE) == -1 &&
-	    panel_widget_add (panel, applet, 0, PANEL_OBJECT_PACK_START, FALSE) == -1) {
-		GSList *l;
-
-		for (l = panels; l; l = l->next) {
-			panel = PANEL_WIDGET (l->data);
-
-			if (panel_widget_add (panel, applet,
-					      0, PANEL_OBJECT_PACK_START, FALSE) != -1)
-				break;
-		}
-
-		if (!l) {
-			g_warning (_("Cannot find an empty spot"));
-			panel_layout_delete_object (info->id);
-			return NULL;
-		}
-	}
+	panel_widget_add (panel, applet, pack_type, pack_index, TRUE);
 
 	if (BUTTON_IS_WIDGET (applet) ||
 	    gtk_widget_get_has_window (applet)) {
@@ -1032,19 +1012,6 @@ panel_applet_register (GtkWidget       *applet,
 	return info;
 }
 
-int
-panel_applet_get_position (AppletInfo *applet)
-{
-	AppletData *applet_data;
-
-	g_return_val_if_fail (applet != NULL, 0);
-	g_return_val_if_fail (G_IS_OBJECT (applet->widget), 0);
-
-	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
-
-	return applet_data->pos;
-}
-
 GSettings *
 panel_applet_get_settings (AppletInfo *applet)
 {
@@ -1064,7 +1031,7 @@ panel_applet_can_freely_move (AppletInfo *applet)
 	return (g_settings_is_writable (applet->settings,
 					PANEL_OBJECT_TOPLEVEL_ID_KEY) &&
 	        g_settings_is_writable (applet->settings,
-					PANEL_OBJECT_POSITION_KEY) &&
+					PANEL_OBJECT_PACK_TYPE_KEY) &&
 	        g_settings_is_writable (applet->settings,
-					PANEL_OBJECT_PACK_TYPE_KEY));
+					PANEL_OBJECT_PACK_INDEX_KEY));
 }

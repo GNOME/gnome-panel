@@ -111,8 +111,8 @@ static PanelLayoutKeyDefinition panel_layout_toplevel_keys[] = {
 static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
         { PANEL_OBJECT_IID_KEY,         G_TYPE_STRING   },
         { PANEL_OBJECT_TOPLEVEL_ID_KEY, G_TYPE_STRING   },
-        { PANEL_OBJECT_POSITION_KEY,    G_TYPE_INT      },
-        { PANEL_OBJECT_PACK_TYPE_KEY,   G_TYPE_STRING   }
+        { PANEL_OBJECT_PACK_TYPE_KEY,   G_TYPE_STRING   },
+        { PANEL_OBJECT_PACK_INDEX_KEY,  G_TYPE_INT      }
 };
 
 static gboolean
@@ -600,13 +600,13 @@ void
 panel_layout_object_create (PanelObjectType      type,
                             const char          *type_detail,
                             const char          *toplevel_id,
-                            int                  position,
-                            PanelObjectPackType  pack_type)
+                            PanelObjectPackType  pack_type,
+                            int                  pack_index)
 {
         char *id;
 
         id = panel_layout_object_create_start (type, type_detail,
-                                               toplevel_id, position, pack_type,
+                                               toplevel_id, pack_type, pack_index,
                                                NULL);
 
         if (!id)
@@ -660,8 +660,8 @@ char *
 panel_layout_object_create_start (PanelObjectType       type,
                                   const char           *type_detail,
                                   const char           *toplevel_id,
-                                  int                   position,
                                   PanelObjectPackType   pack_type,
+                                  int                   pack_index,
                                   GSettings           **settings)
 {
         char      *unique_id;
@@ -691,12 +691,12 @@ panel_layout_object_create_start (PanelObjectType       type,
         g_settings_set_string (settings_object,
                                PANEL_OBJECT_TOPLEVEL_ID_KEY,
                                toplevel_id);
-        g_settings_set_int (settings_object,
-                            PANEL_OBJECT_POSITION_KEY,
-                            position);
         g_settings_set_enum (settings_object,
                              PANEL_OBJECT_PACK_TYPE_KEY,
                              pack_type);
+        g_settings_set_int (settings_object,
+                            PANEL_OBJECT_PACK_INDEX_KEY,
+                            pack_index);
 
         g_free (iid);
 

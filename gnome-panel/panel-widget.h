@@ -56,7 +56,16 @@ struct _AppletSizeHintsAlloc {
 struct _AppletData
 {
 	GtkWidget *	applet;
-	int		pos;
+
+	PanelObjectPackType pack_type;
+	int		    pack_index;
+
+	/* TODO hacky workaround to keep everything working (move functions */
+	int             pos;
+	/* absolute position from the left, after taking packing into account */
+	int             abs_pos;
+	/* constrained position from the left, after taking other objects into
+	 * account */
 	int             constrained;
 	int		cells;
 	int             min_cells;
@@ -143,13 +152,13 @@ GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
 						 gboolean        packed,
 						 GtkOrientation  orient,
 						 int             sz);
-/*add an applet to the panel, preferably at position pos, if insert_at_pos
-  is on, we REALLY want to insert at the pos given by pos*/
-int		panel_widget_add		(PanelWidget         *panel,
+/* add an applet to the panel; if use_pack_index is FALSE, pack_index is ignored
+ * and the applet is appended at the end of the pack list for pack_style */
+void		panel_widget_add		(PanelWidget         *panel,
 						 GtkWidget           *applet,
-						 int                  pos,
 						 PanelObjectPackType  pack_style,
-						 gboolean             insert_at_pos);
+						 int                  pack_index,
+						 gboolean             use_pack_index);
 
 /*move applet to a different panel*/
 int		panel_widget_reparent		(PanelWidget *old_panel,
@@ -184,9 +193,6 @@ void		panel_widget_draw_icon		(PanelWidget *panel,
 						 ButtonWidget *applet);
 
 
-/*tells us if an applet is "stuck" on the right side*/
-int		panel_widget_is_applet_stuck	(PanelWidget *panel,
-						 GtkWidget *applet);
 /*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
 

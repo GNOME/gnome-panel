@@ -52,8 +52,8 @@ typedef struct {
         char                *settings_path;
         GSettings           *settings;
         char                *toplevel_id;
-        int                  position;
         PanelObjectPackType  pack_type;
+        int                  pack_index;
 } PanelObjectToLoad;
 
 /* Each time those lists get both empty,
@@ -266,10 +266,10 @@ panel_object_loader_queue (const char *id,
         object->settings_path = g_strdup (settings_path);
         object->settings      = g_object_ref (settings);
         object->toplevel_id   = toplevel_id;
-        object->position      = g_settings_get_int (settings,
-                                                    PANEL_OBJECT_POSITION_KEY);
         object->pack_type     = g_settings_get_enum (settings,
                                                      PANEL_OBJECT_PACK_TYPE_KEY);
+        object->pack_index    = g_settings_get_int (settings,
+                                                    PANEL_OBJECT_PACK_INDEX_KEY);
 
         panel_objects_to_load = g_slist_prepend (panel_objects_to_load, object);
 
@@ -287,7 +287,11 @@ panel_object_compare (const PanelObjectToLoad *a,
         else if (a->pack_type != b->pack_type)
                 return a->pack_type - b->pack_type; /* start < center < end */
         else
-                return a->position - b->position;
+                /* note: for packed-end, we explicitly want to start loading
+                 * from the right/bottom instead of left/top to avoid moving
+                 * applets that are on the inside; so the maths are good even
+                 * in this case */
+                return a->pack_index - b->pack_index;
 }
 
 void
