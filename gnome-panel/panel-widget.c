@@ -900,6 +900,47 @@ panel_widget_update_packed_start (PanelWidget *panel)
 }
 
 /* Note: only use this function when you can; see comment above
+ * panel_widget_update_packed_start()
+ * For center specifically, we require ad->cells to be set. Note that we don't
+ * care much about min_cells: if we need it, this means objects will have to be
+ * pushed to accomodate other objects, which will kill centering anyway.
+ * (FIXME: hrm, not that sure about it ;-)) */
+static void
+panel_widget_update_packed_center (PanelWidget *panel)
+{
+	GList *list,*l;
+	AppletData *ad;
+	int size_all = 0;
+	int pos_next;
+
+	if (panel->packed)
+		return;
+
+	list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
+
+	/* get size used by the objects */
+	for (l = list; l; l = l->next) {
+		ad = l->data;
+		size_all += ad->cells;
+	}
+
+	/* update absolute position of all applets based on this information,
+	 * starting with the first centered object */
+	pos_next = (panel->size - size_all) / 2;
+	l = list;
+
+	while (l) {
+		ad = l->data;
+		ad->abs_pos = pos_next;
+		pos_next += 1; /* += ad->cells is the exact right value, but 1
+				  is enough for the order */
+		l = l->next;
+	}
+
+	g_list_free (list);
+}
+
+/* Note: only use this function when you can; see comment above
  * panel_widget_update_packed_start() */
 static void
 panel_widget_update_packed_end (PanelWidget *panel)
@@ -1205,6 +1246,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 		/* Re-compute the position of objects, based on their size */
 		panel_widget_update_packed_start (panel);
+		panel_widget_update_packed_center (panel);
 		panel_widget_update_packed_end (panel);
 
 		/* Second pass: try to position from the start, to make sure
@@ -2258,7 +2300,9 @@ panel_widget_add (PanelWidget         *panel,
 				pack_type = PANEL_OBJECT_PACK_END;
 				pack_index = 0;
 			} else {
-				list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_START);
+				list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_CENTER);
+				if (!list)
+					list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_START);
 
 				if (!list) {
 					pack_type = PANEL_OBJECT_PACK_START;
@@ -2274,6 +2318,11 @@ panel_widget_add (PanelWidget         *panel,
 			g_list_free (list);
 		} else {
 			GList *list,*l;
+
+			/* only support adding to start/end packs if no index
+			 * is provided */
+			if (pack_type == PANEL_OBJECT_PACK_CENTER)
+				pack_type = PANEL_OBJECT_PACK_START;
 
 			list = get_applet_list_pack (panel, pack_type);
 
