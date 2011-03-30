@@ -52,8 +52,9 @@ struct _PanelSeparatorClass {
 };
 
 GType  panel_separator_get_type          (void) G_GNUC_CONST;	
-void   panel_separator_create            (PanelToplevel    *toplevel,
-					  int               position);
+void   panel_separator_create            (PanelToplevel       *toplevel,
+					  PanelObjectPackType  pack_type,
+					  int                  pack_index);
 void   panel_separator_load              (PanelWidget      *panel_widget,
 					  const char       *id,
 					  GSettings        *settings);

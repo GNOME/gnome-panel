@@ -431,12 +431,13 @@ panel_menu_bar_load (PanelWidget *panel,
 }
 
 void
-panel_menu_bar_create (PanelToplevel *toplevel,
-		       int            position)
+panel_menu_bar_create (PanelToplevel       *toplevel,
+		       PanelObjectPackType  pack_type,
+		       int                  pack_index)
 {
 	panel_layout_object_create (PANEL_OBJECT_MENU_BAR, NULL,
 				    panel_toplevel_get_id (toplevel),
-				    position, PANEL_OBJECT_PACK_START);
+				    pack_type, pack_index);
 }
 
 void

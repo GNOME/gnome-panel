@@ -256,12 +256,13 @@ panel_separator_load (PanelWidget *panel,
 }
 
 void
-panel_separator_create (PanelToplevel *toplevel,
-			int            position)
+panel_separator_create (PanelToplevel       *toplevel,
+			PanelObjectPackType  pack_type,
+			int                  pack_index)
 {
 	panel_layout_object_create (PANEL_OBJECT_SEPARATOR, NULL,
 				    panel_toplevel_get_id (toplevel),
-				    position, PANEL_OBJECT_PACK_START);
+				    pack_type, pack_index);
 }
 
 void

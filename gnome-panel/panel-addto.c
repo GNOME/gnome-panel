@@ -73,7 +73,7 @@ typedef struct {
 
 	guint         name_notify;
 
-	int           insertion_position;
+	PanelObjectPackType insert_pack_type;
 } PanelAddtoDialog;
 
 static GQuark panel_addto_dialog_quark = 0;
@@ -753,17 +753,24 @@ static void
 panel_addto_add_item (PanelAddtoDialog   *dialog,
 	 	      PanelAddtoItemInfo *item_info)
 {
+	int pack_index;
+
 	g_assert (item_info != NULL);
+
+	pack_index = panel_widget_get_new_pack_index (dialog->panel_widget,
+						      dialog->insert_pack_type);
 
 	switch (item_info->type) {
 	case PANEL_ADDTO_APPLET:
 		panel_applet_frame_create (dialog->panel_widget->toplevel,
-					   dialog->insertion_position,
+					   dialog->insert_pack_type,
+					   pack_index,
 					   item_info->iid);
 		break;
 	case PANEL_ADDTO_ACTION:
 		panel_action_button_create (dialog->panel_widget->toplevel,
-					    dialog->insertion_position,
+					    dialog->insert_pack_type,
+					    pack_index,
 					    item_info->action_type);
 		break;
 	case PANEL_ADDTO_LAUNCHER_MENU:
@@ -771,27 +778,31 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		break;
 	case PANEL_ADDTO_LAUNCHER:
 		panel_launcher_create (dialog->panel_widget->toplevel,
-				       dialog->insertion_position,
+				       dialog->insert_pack_type,
+				       pack_index,
 				       item_info->launcher_path);
 		break;
 	case PANEL_ADDTO_LAUNCHER_NEW:
 		ask_about_launcher (NULL, dialog->panel_widget,
-				    dialog->insertion_position);
+				    dialog->insert_pack_type);
 		break;
 	case PANEL_ADDTO_MENU:
 		panel_menu_button_create (dialog->panel_widget->toplevel,
-					  dialog->insertion_position,
+					  dialog->insert_pack_type,
+					  pack_index,
 					  item_info->menu_filename,
 					  item_info->menu_path,
 					  item_info->name);
 		break;
 	case PANEL_ADDTO_MENUBAR:
 		panel_menu_bar_create (dialog->panel_widget->toplevel,
-				       dialog->insertion_position);
+				       dialog->insert_pack_type,
+				       pack_index);
 		break;
 	case PANEL_ADDTO_SEPARATOR:
 		panel_separator_create (dialog->panel_widget->toplevel,
-					dialog->insertion_position);
+					dialog->insert_pack_type,
+					pack_index);
 		break;
 	}
 }
@@ -1401,7 +1412,7 @@ panel_addto_present (GtkMenuItem *item,
 		panel_addto_present_applets (dialog);
 	}
 
-	dialog->insertion_position = pd ? pd->insertion_pos : -1;
+	dialog->insert_pack_type = pd ? pd->insert_pack_type : PANEL_OBJECT_PACK_START;
 	gtk_window_set_screen (GTK_WINDOW (dialog->addto_dialog), screen);
 	gtk_window_set_default_size (GTK_WINDOW (dialog->addto_dialog),
 				     height * 8 / 7, height);

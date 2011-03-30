@@ -1743,6 +1743,73 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 		return y;
 }
 
+/* get pack type & index for insertion at the cursor location in panel */
+void
+panel_widget_get_insert_at_cursor (PanelWidget         *widget,
+				   int                  offset,
+				   PanelObjectPackType *pack_type,
+				   int                 *pack_index)
+{
+	int         pos;
+	GList      *l;
+	AppletData *ad;
+
+	g_return_if_fail (PANEL_IS_WIDGET (widget));
+
+	pos = panel_widget_get_cursorloc (widget) - offset;
+
+	/* check if cursor is in an object; in this case, return the pack type
+	 * of the object */
+	for (l = widget->applet_list; l; l = l->next) {
+		ad = l->data;
+
+		if (ad->constrained <= pos) {
+			if (ad->constrained + ad->cells > pos) {
+				*pack_type = ad->pack_type;
+				*pack_index = ad->pack_index;
+			}
+		} else
+			break;
+	}
+
+	if (pos <= widget->size / 2)
+		*pack_type = PANEL_OBJECT_PACK_START;
+	else
+		*pack_type = PANEL_OBJECT_PACK_END;
+
+	*pack_index = panel_widget_get_new_pack_index (widget, *pack_type);
+}
+
+/* get pack type for insertion at the cursor location in panel */
+PanelObjectPackType
+panel_widget_get_insert_pack_type_at_cursor (PanelWidget *panel)
+{
+	PanelObjectPackType ret = PANEL_OBJECT_PACK_START;
+	int                 pack_index = 0;
+
+	panel_widget_get_insert_at_cursor (panel, 0, &ret, &pack_index);
+
+	return ret;
+}
+
+/* get index for insertion with pack type */
+int
+panel_widget_get_new_pack_index (PanelWidget         *panel,
+				 PanelObjectPackType  pack_type)
+{
+	GList      *l;
+	AppletData *ad;
+	int         max_pack_index = -1;
+
+	for (l = panel->applet_list; l; l = l->next) {
+		ad = l->data;
+		if (ad->pack_type == pack_type)
+			max_pack_index = MAX (max_pack_index, ad->pack_index);
+	}
+
+	return max_pack_index + 1;
+}
+
 /*calculates the value to move the applet by*/
 static int
 panel_widget_get_moveby (PanelWidget *panel, int pos, int offset)
@@ -1929,14 +1996,19 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			    panel_widget_is_cursor (new_panel,10) &&
 			    panel_screen_from_panel_widget (panel) ==
 			    panel_screen_from_panel_widget (new_panel)) {
-				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
+				PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
+				int                 pack_index = 0;
 
-				if (pos < 0) pos = 0;
+				panel_widget_get_insert_at_cursor (new_panel,
+								   ad->drag_off,
+								   &pack_type,
+								   &pack_index);
 
 				panel_widget_applet_drag_end (panel);
 
 				/*disable reentrancy into this function*/
-				if (!panel_widget_reparent (panel, new_panel, applet, pos)) {
+				if (!panel_widget_reparent (panel, new_panel, applet,
+							    pack_type, pack_index)) {
 					panel_widget_applet_drag_start (
 						panel, applet, ad->drag_off, GDK_CURRENT_TIME);
 					continue;
@@ -2383,19 +2455,21 @@ panel_widget_add (PanelWidget         *panel,
 }
 
 gboolean
-panel_widget_reparent (PanelWidget *old_panel,
-		       PanelWidget *new_panel,
-		       GtkWidget *applet,
-		       int pos)
+panel_widget_reparent (PanelWidget         *old_panel,
+		       PanelWidget         *new_panel,
+		       GtkWidget           *applet,
+		       PanelObjectPackType  pack_type,
+		       int                  pack_index)
 {
 	AppletData *ad;
 	GtkWidget *focus_widget = NULL;
 	AppletInfo* info;
+	GList *l;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel), FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel), FALSE);
 	g_return_val_if_fail(GTK_IS_WIDGET(applet), FALSE);
-	g_return_val_if_fail(pos>=0, FALSE);
+	g_return_val_if_fail(pack_index>=0, FALSE);
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 	g_return_val_if_fail(ad!=NULL, FALSE);
@@ -2408,9 +2482,19 @@ panel_widget_reparent (PanelWidget *old_panel,
 	
 	info = g_object_get_data (G_OBJECT (ad->applet), "applet_info");
 
-	ad->pos = ad->constrained = panel_widget_get_free_spot (new_panel, ad, pos);
-	if (ad->pos == -1)
-		ad->pos = ad->constrained = 0;
+	for (l = new_panel->applet_list; l; l = l->next) {
+		AppletData *ad_to_move = l->data;
+		if (ad_to_move->pack_type == pack_type &&
+		    ad_to_move->pack_index >= pack_index) {
+			ad_to_move->pack_index++;
+			emit_applet_moved (new_panel, ad_to_move);
+		}
+	}
+
+	ad->pack_type = pack_type;
+	ad->pack_index = pack_index;
+	/* with reparent, we'll call cremove/cadd, which will reinsert ad at
+	 * the right place in the list */
 
 	gtk_widget_queue_resize (GTK_WIDGET (new_panel));
 	gtk_widget_queue_resize (GTK_WIDGET (old_panel));
@@ -2620,7 +2704,8 @@ panel_widget_tab_move (PanelWidget *panel,
 	
 	if (new_panel &&
 	    (new_panel != panel))
-		panel_widget_reparent (panel, new_panel, ad->applet, 0);
+		panel_widget_reparent (panel, new_panel, ad->applet,
+				       PANEL_OBJECT_PACK_START, 0);
 }
 
 static void

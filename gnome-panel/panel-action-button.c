@@ -652,7 +652,8 @@ panel_action_button_load_helper (PanelWidget           *panel,
 
 void
 panel_action_button_create (PanelToplevel         *toplevel,
-			    int                    position,
+			    PanelObjectPackType    pack_type,
+			    int                    pack_index,
 			    PanelActionButtonType  type)
 {
 	const char *detail;
@@ -662,7 +663,7 @@ panel_action_button_create (PanelToplevel         *toplevel,
 	panel_layout_object_create (PANEL_OBJECT_ACTION,
 				    detail,
 				    panel_toplevel_get_id (toplevel),
-				    position, PANEL_OBJECT_PACK_START);
+				    pack_type, pack_index);
 }
 
 void
@@ -704,10 +705,11 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 }
 
 gboolean
-panel_action_button_load_from_drag (PanelToplevel *toplevel,
-				    int            position,
-				    const char    *drag_string,
-				    int           *old_applet_idx)
+panel_action_button_load_from_drag (PanelToplevel       *toplevel,
+				    PanelObjectPackType  pack_type,
+				    int                  pack_index,
+				    const char          *drag_string,
+				    int                 *old_applet_idx)
 {
 	PanelActionButtonType   type = PANEL_ACTION_NONE;
 	gboolean                retval = FALSE;
@@ -742,7 +744,7 @@ panel_action_button_load_from_drag (PanelToplevel *toplevel,
 
 	g_strfreev (elements);
 
-	panel_action_button_create (toplevel, position, type);
+	panel_action_button_create (toplevel, pack_type, pack_index, type);
 
 	return retval;
 }

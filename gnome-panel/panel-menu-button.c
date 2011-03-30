@@ -764,11 +764,12 @@ panel_menu_button_load (PanelWidget *panel,
 }
 
 gboolean
-panel_menu_button_create (PanelToplevel *toplevel,
-			  int            position,
-			  const char    *filename,
-			  const char    *menu_path,
-			  const char    *tooltip)
+panel_menu_button_create (PanelToplevel       *toplevel,
+			  PanelObjectPackType  pack_type,
+			  int                  pack_index,
+			  const char          *filename,
+			  const char          *menu_path,
+			  const char          *tooltip)
 {
 	char       *id;
 	GSettings  *settings;
@@ -784,7 +785,7 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 	id = panel_layout_object_create_start (PANEL_OBJECT_MENU, NULL,
 					       panel_toplevel_get_id (toplevel),
-					       position, PANEL_OBJECT_PACK_START,
+					       pack_type, pack_index,
 					       &settings);
 
 	settings_instance = panel_layout_get_instance_settings (settings,

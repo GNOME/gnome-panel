@@ -854,23 +854,27 @@ static void
 launcher_new_saved (GtkWidget *dialog,
 		    gpointer   data)
 {
-	PanelWidget *panel;
-	int          pos;
-	const char  *uri;
+	PanelWidget         *panel;
+	PanelObjectPackType  pack_type;
+	int                  pack_index;
+	const char          *uri;
 
-	pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
+	pack_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+				     "pack-type"));
 	panel = g_object_get_data (G_OBJECT (dialog), "panel");
+
+	pack_index = panel_widget_get_new_pack_index (panel, pack_type);
 
 	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
 	if (panel_launcher_get_filename (uri) != NULL)
 		uri = panel_launcher_get_filename (uri);
-	panel_launcher_create (panel->toplevel, pos, uri);
+	panel_launcher_create (panel->toplevel, pack_type, pack_index, uri);
 }
 
 void
-ask_about_launcher (const char  *file,
-		    PanelWidget *panel,
-		    int          pos)
+ask_about_launcher (const char          *file,
+		    PanelWidget         *panel,
+		    PanelObjectPackType  pack_type)
 {
 	GtkWidget *dialog;
 	GKeyFile  *key_file;
@@ -901,20 +905,22 @@ ask_about_launcher (const char  *file,
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (panel)));
 
-	g_object_set_data (G_OBJECT (dialog), "pos", GINT_TO_POINTER (pos));
+	g_object_set_data (G_OBJECT (dialog), "pack-type",
+			   GINT_TO_POINTER (pack_type));
 	g_object_set_data (G_OBJECT (dialog), "panel", panel);
 
 	gtk_widget_show (dialog);
 }
 
 void
-panel_launcher_create_from_info (PanelToplevel *toplevel,
-				 int            position,
-				 gboolean       exec_info,
-				 const char    *exec_or_uri,
-				 const char    *name,
-				 const char    *comment,
-				 const char    *icon)
+panel_launcher_create_from_info (PanelToplevel       *toplevel,
+				 PanelObjectPackType  pack_type,
+				 int                  pack_index,
+				 gboolean             exec_info,
+				 const char          *exec_or_uri,
+				 const char          *name,
+				 const char          *comment,
+				 const char          *icon)
 {
 	GKeyFile *key_file;
 	char     *location;
@@ -943,7 +949,7 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 
 	error = NULL;
 	if (panel_key_file_to_file (key_file, location, &error)) {
-		panel_launcher_create (toplevel, position, location);
+		panel_launcher_create (toplevel, pack_type, pack_index, location);
 	} else {
 		panel_error_dialog (GTK_WINDOW (toplevel),
 				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
@@ -956,10 +962,11 @@ panel_launcher_create_from_info (PanelToplevel *toplevel,
 	g_key_file_free (key_file);
 }
 
-void
-panel_launcher_create_with_id (const char    *toplevel_id,
-			       int            position,
-			       const char    *location)
+static void
+panel_launcher_create_with_id (const char          *toplevel_id,
+			       PanelObjectPackType  pack_type,
+			       int                  pack_index,
+			       const char          *location)
 {
 	char       *id;
 	GSettings  *settings;
@@ -971,8 +978,7 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 
 	id = panel_layout_object_create_start (PANEL_OBJECT_LAUNCHER,
 					       NULL,
-					       toplevel_id,
-					       position, PANEL_OBJECT_PACK_START,
+					       toplevel_id, pack_type, pack_index,
 					       &settings);
 
 	no_uri = NULL;
@@ -1002,19 +1008,21 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 }
 
 void
-panel_launcher_create (PanelToplevel *toplevel,
-		       int            position,
-		       const char    *location)
+panel_launcher_create (PanelToplevel       *toplevel,
+		       PanelObjectPackType  pack_type,
+		       int                  pack_index,
+		       const char          *location)
 {
 	panel_launcher_create_with_id (panel_toplevel_get_id (toplevel),
-				       position,
+				       pack_type, pack_index,
 				       location);
 }
 
 gboolean
-panel_launcher_create_copy (PanelToplevel *toplevel,
-			    int            position,
-			    const char    *location)
+panel_launcher_create_copy (PanelToplevel       *toplevel,
+			    PanelObjectPackType  pack_type,
+			    int                  pack_index,
+			    const char          *location)
 {
 	char       *new_location;
 	GFile      *source;
@@ -1036,7 +1044,7 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	}
 
 	filename = panel_launcher_get_filename (new_location);
-	panel_launcher_create (toplevel, position, filename);
+	panel_launcher_create (toplevel, pack_type, pack_index, filename);
 	g_free (new_location);
 
 	return TRUE;

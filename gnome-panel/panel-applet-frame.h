@@ -80,7 +80,8 @@ struct _PanelAppletFrame {
 GType panel_applet_frame_get_type           (void) G_GNUC_CONST;
 
 void  panel_applet_frame_create             (PanelToplevel       *toplevel,
-					     int                  position,
+					     PanelObjectPackType  pack_type,
+					     int                  pack_index,
 					     const char          *iid);
 
 void  panel_applet_frame_load               (PanelWidget         *panel_widget,

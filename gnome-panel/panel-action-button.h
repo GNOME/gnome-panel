@@ -57,7 +57,8 @@ struct _PanelActionButtonClass {
 GType      panel_action_button_get_type  (void) G_GNUC_CONST;
 
 void       panel_action_button_create           (PanelToplevel         *toplevel,
-						 int                    position,
+						 PanelObjectPackType    pack_type,
+						 int                    pack_index,
 						 PanelActionButtonType  type);
 
 void       panel_action_button_set_type         (PanelActionButton     *button,
@@ -75,7 +76,8 @@ void       panel_action_button_set_dnd_enabled  (PanelActionButton      *button,
 						 gboolean                dnd_enabled);
 
 gboolean   panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
-						 int                     position,
+						 PanelObjectPackType     pack_type,
+						 int                     pack_index,
 						 const char             *drag_string,
 						 int                    *old_applet_idx);
 

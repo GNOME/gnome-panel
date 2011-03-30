@@ -161,10 +161,11 @@ void		panel_widget_add		(PanelWidget         *panel,
 						 gboolean             use_pack_index);
 
 /*move applet to a different panel*/
-int		panel_widget_reparent		(PanelWidget *old_panel,
-						 PanelWidget *new_panel,
-						 GtkWidget *applet,
-						 int pos);
+int		panel_widget_reparent		(PanelWidget         *old_panel,
+						 PanelWidget         *new_panel,
+						 GtkWidget           *applet,
+						 PanelObjectPackType  pack_type,
+						 int                  pack_index);
 
 /* use these for drag_off for special cases */
 #define PW_DRAG_OFF_CURSOR -1
@@ -195,6 +196,16 @@ void		panel_widget_draw_icon		(PanelWidget *panel,
 
 /*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
+/* get pack type & index for insertion at the cursor location in panel */
+void            panel_widget_get_insert_at_cursor (PanelWidget         *widget,
+						   int                  offset,
+						   PanelObjectPackType *pack_type,
+						   int                 *pack_index);
+/* get pack type for insertion at the cursor location in panel */
+PanelObjectPackType panel_widget_get_insert_pack_type_at_cursor (PanelWidget *panel);
+/* get index for insertion with pack type */
+int                 panel_widget_get_new_pack_index   (PanelWidget          *panel,
+						       PanelObjectPackType   pack_type);
 
 /*needed for other panel types*/
 gboolean	panel_widget_is_cursor		(PanelWidget *panel,

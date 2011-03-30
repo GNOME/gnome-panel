@@ -1004,14 +1004,15 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 }
 
 void
-panel_applet_frame_create (PanelToplevel *toplevel,
-			   int            position,
-			   const char    *iid)
+panel_applet_frame_create (PanelToplevel       *toplevel,
+			   PanelObjectPackType  pack_type,
+			   int                  pack_index,
+			   const char          *iid)
 {
 	g_return_if_fail (iid != NULL);
 
 	panel_layout_object_create (PANEL_OBJECT_APPLET,
 				    iid,
 				    panel_toplevel_get_id (toplevel),
-				    position, PANEL_OBJECT_PACK_START);
+				    pack_type, pack_index);
 }
