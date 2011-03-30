@@ -112,7 +112,7 @@ static PanelLayoutKeyDefinition panel_layout_object_keys[] = {
         { PANEL_OBJECT_IID_KEY,         G_TYPE_STRING   },
         { PANEL_OBJECT_TOPLEVEL_ID_KEY, G_TYPE_STRING   },
         { PANEL_OBJECT_POSITION_KEY,    G_TYPE_INT      },
-        { PANEL_OBJECT_PACK_KEY,        G_TYPE_STRING   }
+        { PANEL_OBJECT_PACK_TYPE_KEY,   G_TYPE_STRING   }
 };
 
 static gboolean
@@ -597,16 +597,16 @@ panel_layout_toplevel_create (GdkScreen *screen)
 }
 
 void
-panel_layout_object_create (PanelObjectType  type,
-                            const char      *type_detail,
-                            const char      *toplevel_id,
-                            int              position,
-                            PanelObjectPack  pack)
+panel_layout_object_create (PanelObjectType      type,
+                            const char          *type_detail,
+                            const char          *toplevel_id,
+                            int                  position,
+                            PanelObjectPackType  pack_type)
 {
         char *id;
 
         id = panel_layout_object_create_start (type, type_detail,
-                                               toplevel_id, position, pack,
+                                               toplevel_id, position, pack_type,
                                                NULL);
 
         if (!id)
@@ -657,12 +657,12 @@ panel_layout_get_instance_settings (GSettings  *settings_object,
 }
 
 char *
-panel_layout_object_create_start (PanelObjectType   type,
-                                  const char       *type_detail,
-                                  const char       *toplevel_id,
-                                  int               position,
-                                  PanelObjectPack   pack,
-                                  GSettings       **settings)
+panel_layout_object_create_start (PanelObjectType       type,
+                                  const char           *type_detail,
+                                  const char           *toplevel_id,
+                                  int                   position,
+                                  PanelObjectPackType   pack_type,
+                                  GSettings           **settings)
 {
         char      *unique_id;
         char      *path;
@@ -695,8 +695,8 @@ panel_layout_object_create_start (PanelObjectType   type,
                             PANEL_OBJECT_POSITION_KEY,
                             position);
         g_settings_set_enum (settings_object,
-                             PANEL_OBJECT_PACK_KEY,
-                             pack);
+                             PANEL_OBJECT_PACK_TYPE_KEY,
+                             pack_type);
 
         g_free (iid);
 

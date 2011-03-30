@@ -2228,18 +2228,18 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 }
 
 int
-panel_widget_add (PanelWidget     *panel,
-		  GtkWidget       *applet,
-		  int              pos,
-		  PanelObjectPack  pack,
-		  gboolean         insert_at_pos)
+panel_widget_add (PanelWidget         *panel,
+		  GtkWidget           *applet,
+		  int                  pos,
+		  PanelObjectPackType  pack_type,
+		  gboolean             insert_at_pos)
 {
 	AppletData *ad = NULL;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet), -1);
 
-	if (pack == PANEL_OBJECT_PACK_END) {
+	if (pack_type == PANEL_OBJECT_PACK_END) {
 		if (!panel->packed)
 			pos = panel->size - pos;
 		else

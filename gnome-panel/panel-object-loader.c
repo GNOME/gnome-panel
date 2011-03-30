@@ -48,12 +48,12 @@
 #include "panel-object-loader.h"
 
 typedef struct {
-        char            *id;
-        char            *settings_path;
-        GSettings       *settings;
-        char            *toplevel_id;
-        int              position;
-        PanelObjectPack  pack;
+        char                *id;
+        char                *settings_path;
+        GSettings           *settings;
+        char                *toplevel_id;
+        int                  position;
+        PanelObjectPackType  pack_type;
 } PanelObjectToLoad;
 
 /* Each time those lists get both empty,
@@ -268,8 +268,8 @@ panel_object_loader_queue (const char *id,
         object->toplevel_id   = toplevel_id;
         object->position      = g_settings_get_int (settings,
                                                     PANEL_OBJECT_POSITION_KEY);
-        object->pack          = g_settings_get_enum (settings,
-                                                     PANEL_OBJECT_PACK_KEY);
+        object->pack_type     = g_settings_get_enum (settings,
+                                                     PANEL_OBJECT_PACK_TYPE_KEY);
 
         panel_objects_to_load = g_slist_prepend (panel_objects_to_load, object);
 
@@ -284,8 +284,8 @@ panel_object_compare (const PanelObjectToLoad *a,
 
         if ((c = g_strcmp0 (a->toplevel_id, b->toplevel_id)))
                 return c;
-        else if (a->pack != b->pack)
-                return a->pack - b->pack; /* start < center < end */
+        else if (a->pack_type != b->pack_type)
+                return a->pack_type - b->pack_type; /* start < center < end */
         else
                 return a->position - b->position;
 }
