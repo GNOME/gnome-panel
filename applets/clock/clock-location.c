@@ -740,23 +740,24 @@ network_monitor_signal (GDBusProxy  *proxy,
 static void
 setup_network_monitor (void)
 {
+	static GDBusProxy *proxy;
 	GError *error = NULL;
-	GDBusProxy *proxy;
 
-	proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
-					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
-					       NULL, NM_DBUS_SERVICE, NM_DBUS_PATH, NM_DBUS_INTERFACE,
-					       NULL, &error);
+        if (proxy == NULL) {
+		proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+						       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+						       NULL, NM_DBUS_SERVICE, NM_DBUS_PATH, NM_DBUS_INTERFACE,
+						       NULL, &error);
 
-	if (proxy == NULL) {
-		g_warning ("Couldn't create NetworkManager proxy: %s",
-			   error->message);
-		g_error_free (error);
-		return;
+		if (proxy == NULL) {
+			g_warning ("Couldn't create NetworkManager proxy: %s",
+				   error->message);
+			g_error_free (error);
+			return;
+		}
+
+		g_signal_connect (proxy, "g-signal", G_CALLBACK (network_monitor_signal), NULL);
 	}
-
-	g_signal_connect (proxy, "g-signal", G_CALLBACK (network_monitor_signal), NULL);
-	/* leak the proxy */
 }
 #endif
 
