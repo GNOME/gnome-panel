@@ -107,6 +107,10 @@ static void
 emit_applet_moved (PanelWidget *panel_widget,
 		   AppletData  *applet)
 {
+	/* we always want to queue a draw after moving, so do it here instead
+	 * of after the signal emission in all callers */
+	gtk_widget_queue_draw (applet->applet);
+
 	g_signal_emit (panel_widget,
 		       panel_widget_signals [APPLET_MOVE_SIGNAL], 0,
 		       applet->applet);
