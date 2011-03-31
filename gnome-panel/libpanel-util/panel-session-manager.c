@@ -179,7 +179,7 @@ panel_session_manager_get_presence (PanelSessionManager *manager)
 
         variant = g_dbus_proxy_get_cached_property (manager->priv->presence_proxy,
                                                     "status");
-        g_variant_get (variant, "(u)", &ret);
+        g_variant_get (variant, "u", &ret);
         g_variant_unref (variant);
 
         return ret;
