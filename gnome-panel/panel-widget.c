@@ -1443,7 +1443,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 				ad->min_cells = ad->cells;
 			} else {
-				ad->cells = ad->size_hints [ad->size_hints_len - 1];
+				ad->cells = ad->size_hints [0];
 				ad->min_cells = ad->size_hints [ad->size_hints_len - 1];
 			}
 		}
