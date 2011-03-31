@@ -40,6 +40,21 @@ typedef struct _PanelSessionManager		PanelSessionManager;
 typedef struct _PanelSessionManagerClass	PanelSessionManagerClass;
 typedef struct _PanelSessionManagerPrivate	PanelSessionManagerPrivate;
 
+/* Keep in sync with the values defined in gnome-session/session.h */
+typedef enum {
+        PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL = 0,
+        PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION,
+        PANEL_SESSION_MANAGER_LOGOUT_MODE_FORCE
+} PanelSessionManagerLogoutType;
+
+/* Keep in sync with the values defined in gnome-session/gsm-presence.h */
+typedef enum {
+        PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE = 0,
+        PANEL_SESSION_MANAGER_PRESENCE_INVISIBLE,
+        PANEL_SESSION_MANAGER_PRESENCE_BUSY,
+        PANEL_SESSION_MANAGER_PRESENCE_IDLE
+} PanelSessionManagerPresenceType;
+
 struct _PanelSessionManager {
 	GObject parent;
 
@@ -49,18 +64,19 @@ struct _PanelSessionManager {
 
 struct _PanelSessionManagerClass {
 	GObjectClass parent_class;
+
+        void (* presence_changed)  (PanelSessionManager             *manager,
+                                    PanelSessionManagerPresenceType  presence);
 };
 
 GType panel_session_manager_get_type (void);
 
-/* Keep in sync with the values defined in gnome-session/session.h */
-typedef enum {
-	PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL = 0,
-	PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION,
-	PANEL_SESSION_MANAGER_LOGOUT_MODE_FORCE
-} PanelSessionManagerLogoutType;
-
 PanelSessionManager *panel_session_manager_get (void);
+
+void panel_session_manager_set_presence     (PanelSessionManager             *session,
+                                             PanelSessionManagerPresenceType  presence);
+PanelSessionManagerPresenceType panel_session_manager_get_presence (PanelSessionManager *session);
+
 
 void panel_session_manager_request_logout   (PanelSessionManager           *session,
 					     PanelSessionManagerLogoutType  mode);
