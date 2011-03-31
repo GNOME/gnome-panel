@@ -172,7 +172,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 
 	{ PANEL_ADDTO_USER_MENU,
 	  N_("User Menu"),
-	  N_("User status menu"),
+	  N_("Menu to change your settings and your online status"),
 	  PANEL_ICON_USER_AVAILABLE,
 	  PANEL_ACTION_NONE,
 	  NULL,
