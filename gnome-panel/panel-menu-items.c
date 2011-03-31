@@ -438,6 +438,65 @@ panel_menu_items_create_action_item (PanelActionButtonType action_type)
 							 NULL, NULL, FALSE);
 }
 
+#define GDM_FLEXISERVER_COMMAND "gdmflexiserver"
+#define GDM_FLEXISERVER_ARGS    "--startnew"
+
+static void
+panel_menu_item_activate_switch_user (GtkWidget *menuitem,
+				      gpointer   user_data)
+{
+	GdkScreen *screen;
+	GAppInfo  *app_info;
+
+	if (panel_lockdown_get_disable_switch_user_s ())
+		return;
+
+	screen = gtk_widget_get_screen (GTK_WIDGET (menuitem));
+	app_info = g_app_info_create_from_commandline (GDM_FLEXISERVER_COMMAND " " GDM_FLEXISERVER_ARGS,
+						       GDM_FLEXISERVER_COMMAND,
+						       G_APP_INFO_CREATE_NONE,
+						       NULL);
+
+	if (app_info) {
+		GdkAppLaunchContext *launch_context;
+		GdkDisplay          *display;
+
+		display = gdk_screen_get_display (screen);
+		launch_context = gdk_display_get_app_launch_context (display);
+		gdk_app_launch_context_set_screen (launch_context, screen);
+
+		g_app_info_launch (app_info, NULL,
+				   G_APP_LAUNCH_CONTEXT (launch_context),
+				   NULL);
+
+		g_object_unref (launch_context);
+		g_object_unref (app_info);
+	}
+}
+
+static GtkWidget *
+panel_menu_items_create_switch_user (gboolean use_icon)
+{
+	GtkWidget *item;
+
+	if (use_icon) {
+		item = panel_image_menu_item_new ();
+        } else {
+		item = gtk_image_menu_item_new ();
+	}
+
+	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
+				   NULL, NULL, NULL, _("Switch User"));
+
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (panel_menu_item_activate_switch_user),
+			  NULL);
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
+	return item;
+}
+
 static void
 panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 {
@@ -1724,6 +1783,7 @@ panel_menu_items_lock_logout_separator_notified (PanelLockdown *lockdown,
 	GtkWidget *separator = user_data;
 
 	if (!panel_lockdown_get_disable_lock_screen (lockdown) ||
+	    !panel_lockdown_get_disable_switch_user (lockdown) ||
 	    !panel_lockdown_get_disable_log_out (lockdown))
 		gtk_widget_show (separator);
 	else
@@ -1736,9 +1796,6 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	GList      *children;
 	GList      *last;
 	GtkWidget  *item;
-	const char *translate;
-	char       *label;
-	char       *tooltip;
 
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 	last = g_list_last (children);
@@ -1768,38 +1825,19 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 
-	/* Translators: translate "1" (msgctxt: "panel:showusername") to anything
-	 * but "1" if "Log Out %s" doesn't make any sense in your
-	 * language (where %s is a username).
-	 */
-	translate = C_("panel:showusername", "1");
-	if (strcmp (translate, "1") == 0) {
-		const char *user_name;
+	item = panel_menu_items_create_switch_user (FALSE);
 
-		user_name = g_get_real_name ();
-		if (!user_name || !user_name [0])
-			user_name = g_get_user_name ();
-
-		/* keep those strings in sync with the ones in
-		 * panel-action-button.c */
-		/* Translators: this string is used ONLY if you translated
-		 * "1" (msgctxt: "panel:showusername") to "1" */
-		label = g_strdup_printf (_("Log Out %s..."),
-					 g_get_user_name ());
-		/* Translators: this string is used ONLY if you translated
-		 * "1" (msgctxt: "panel:showusername") to "1" */
-		tooltip = g_strdup_printf (_("Log out %s of this session to "
-					     "log in as a different user"),
-					   user_name);
-	} else {
-		label   = NULL;
-		tooltip = NULL;
+	if (item != NULL) {
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_object_bind_property (panel_lockdown_get (),
+					"disable-switch-user",
+					item,
+					"visible",
+					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 
 	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOGOUT,
-							 label, tooltip, TRUE);
-	g_free (label);
-	g_free (tooltip);
+							 NULL, NULL, TRUE);
 
 	if (item != NULL) {
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -1815,7 +1853,17 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
 								 NULL, NULL, TRUE);
 		if (item != NULL) {
+			GtkWidget *sep;
+
+			sep = add_menu_separator (menu);
+
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+			g_object_bind_property (panel_lockdown_get (),
+						"disable-log-out",
+						sep,
+						"visible",
+						G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 			g_object_bind_property (panel_lockdown_get (),
 						"disable-log-out",
 						item,
