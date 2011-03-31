@@ -69,6 +69,7 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 	case PANEL_OBJECT_SEPARATOR:
+	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:
 		g_assert_not_reached ();
@@ -198,6 +199,7 @@ applet_callback_callback (GtkWidget      *widget,
 		 */
 		break;
 	case PANEL_OBJECT_SEPARATOR:
+	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:
 		g_assert_not_reached ();

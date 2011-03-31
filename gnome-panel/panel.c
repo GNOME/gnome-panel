@@ -42,6 +42,7 @@
 #include "panel-icon-names.h"
 #include "panel-layout.h"
 #include "panel-schemas.h"
+#include "panel-user-menu.h"
 
 enum {
 	TARGET_URL,
@@ -77,6 +78,7 @@ orientation_change (AppletInfo  *info,
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
+	case PANEL_OBJECT_USER_MENU:
 		panel_menu_bar_object_set_orientation (PANEL_MENU_BAR_OBJECT (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_SEPARATOR:
@@ -145,6 +147,7 @@ back_change (AppletInfo  *info,
 			PANEL_APPLET_FRAME (info->widget), panel->background.type);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
+	case PANEL_OBJECT_USER_MENU:
 		panel_menu_bar_object_change_background (PANEL_MENU_BAR_OBJECT (info->widget));
 		break;
 	case PANEL_OBJECT_SEPARATOR:
@@ -950,6 +953,15 @@ drop_internal_applet (PanelWidget         *panel,
 	} else if (!strcmp(applet_type,"SEPARATOR:NEW")) {
 		if (panel_layout_is_writable ()) {
 			panel_separator_create (panel->toplevel,
+						pack_type, pack_index);
+			success = TRUE;
+		} else {
+			success = FALSE;
+		}
+
+	} else if (!strcmp (applet_type, "USERMENU:NEW")) {
+		if (panel_layout_is_writable ()) {
+			panel_user_menu_create (panel->toplevel,
 						pack_type, pack_index);
 			success = TRUE;
 		} else {

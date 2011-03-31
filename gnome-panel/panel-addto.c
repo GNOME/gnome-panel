@@ -47,6 +47,7 @@
 #include "panel-util.h"
 #include "panel-addto.h"
 #include "panel-icon-names.h"
+#include "panel-user-menu.h"
 
 typedef struct {
 	PanelWidget *panel_widget;
@@ -86,7 +87,8 @@ typedef enum {
 	PANEL_ADDTO_LAUNCHER_NEW,
 	PANEL_ADDTO_MENU,
 	PANEL_ADDTO_MENUBAR,
-	PANEL_ADDTO_SEPARATOR
+	PANEL_ADDTO_SEPARATOR,
+	PANEL_ADDTO_USER_MENU
 } PanelAddtoItemType;
 
 typedef struct {
@@ -166,7 +168,19 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  NULL,
 	  NULL,
 	  "SEPARATOR:NEW",
+	  TRUE },
+
+	{ PANEL_ADDTO_USER_MENU,
+	  N_("User Menu"),
+	  N_("User status menu"),
+	  PANEL_ICON_USER_AVAILABLE,
+	  PANEL_ACTION_NONE,
+	  NULL,
+	  NULL,
+	  NULL,
+	  "USERMENU:NEW",
 	  TRUE }
+
 };
 
 enum {
@@ -801,6 +815,11 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		break;
 	case PANEL_ADDTO_SEPARATOR:
 		panel_separator_create (dialog->panel_widget->toplevel,
+					dialog->insert_pack_type,
+					pack_index);
+		break;
+	case PANEL_ADDTO_USER_MENU:
+		panel_user_menu_create (dialog->panel_widget->toplevel,
 					dialog->insert_pack_type,
 					pack_index);
 		break;
