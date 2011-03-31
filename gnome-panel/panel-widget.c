@@ -89,6 +89,8 @@ static void panel_widget_end_move           (PanelWidget      *panel);
 static gboolean panel_widget_real_focus     (GtkWidget        *widget,
                                              GtkDirectionType  direction);
 
+static void panel_widget_update_positions   (PanelWidget      *panel);
+
 /************************
  convenience functions
  ************************/
@@ -483,6 +485,8 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 								widget);
 	if (ad)
 		panel->applet_list = g_list_remove (panel->applet_list, ad);
+
+	panel_widget_update_positions (panel);
 
 	g_signal_emit (G_OBJECT (container),
 		       panel_widget_signals[APPLET_REMOVED_SIGNAL],
