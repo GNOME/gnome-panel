@@ -48,6 +48,7 @@ panel_sources =			\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-menu-bar.c	\
+	panel-menu-bar-object.c	\
 	panel-menu-button.c	\
 	panel-menu-items.c	\
 	panel-separator.c	\
@@ -94,6 +95,7 @@ panel_headers =			\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-menu-bar.h	\
+	panel-menu-bar-object.h	\
 	panel-menu-button.h	\
 	panel-menu-items.h	\
 	panel-separator.h	\

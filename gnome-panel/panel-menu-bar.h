@@ -26,6 +26,8 @@
 #define __PANEL_MENU_BAR_H__
 
 #include <gtk/gtk.h>
+
+#include "panel-menu-bar-object.h"
 #include "panel-widget.h"
 
 G_BEGIN_DECLS
@@ -42,13 +44,13 @@ typedef struct _PanelMenuBarClass   PanelMenuBarClass;
 typedef struct _PanelMenuBarPrivate PanelMenuBarPrivate;
 
 struct _PanelMenuBar{
-	GtkMenuBar            menubar;
+	PanelMenuBarObject    menubar;
 
 	PanelMenuBarPrivate  *priv;
 };
 
 struct _PanelMenuBarClass {
-	GtkMenuBarClass       menubar_class;
+	PanelMenuBarObjectClass menubar_class;
 };
 
 GType      panel_menu_bar_get_type  (void) G_GNUC_CONST;
@@ -66,12 +68,6 @@ void       panel_menu_bar_invoke_menu      (PanelMenuBar *menubar,
 
 void       panel_menu_bar_popup_menu       (PanelMenuBar *menubar,
 					    guint32       activate_time);
-
-void       panel_menu_bar_change_background (PanelMenuBar *menubar);
-
-void             panel_menu_bar_set_orientation (PanelMenuBar     *menubar,
-						 PanelOrientation  orientation);
-PanelOrientation panel_menu_bar_get_orientation (PanelMenuBar     *menubar);
 
 G_END_DECLS
 

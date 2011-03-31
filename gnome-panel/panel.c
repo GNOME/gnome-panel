@@ -77,7 +77,7 @@ orientation_change (AppletInfo  *info,
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
-		panel_menu_bar_set_orientation (PANEL_MENU_BAR (info->widget), orientation);
+		panel_menu_bar_object_set_orientation (PANEL_MENU_BAR_OBJECT (info->widget), orientation);
 		break;
 	case PANEL_OBJECT_SEPARATOR:
 		panel_separator_set_orientation (PANEL_SEPARATOR (info->widget),
@@ -145,7 +145,7 @@ back_change (AppletInfo  *info,
 			PANEL_APPLET_FRAME (info->widget), panel->background.type);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
-		panel_menu_bar_change_background (PANEL_MENU_BAR (info->widget));
+		panel_menu_bar_object_change_background (PANEL_MENU_BAR_OBJECT (info->widget));
 		break;
 	case PANEL_OBJECT_SEPARATOR:
 		panel_separator_change_background (PANEL_SEPARATOR (info->widget));

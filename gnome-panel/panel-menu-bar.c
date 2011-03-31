@@ -35,20 +35,16 @@
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-show.h>
 
-#include "panel-util.h"
-#include "panel-background.h"
-#include "panel-action-button.h"
 #include "applet.h"
 #include "menu.h"
-#include "panel-menu-items.h"
-#include "panel-globals.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
-#include "panel-stock-icons.h"
-#include "panel-typebuiltins.h"
 #include "panel-icon-names.h"
+#include "panel-menu-bar-object.h"
+#include "panel-menu-items.h"
+#include "panel-util.h"
 
-G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, GTK_TYPE_MENU_BAR)
+G_DEFINE_TYPE (PanelMenuBar, panel_menu_bar, PANEL_TYPE_MENU_BAR_OBJECT)
 
 #define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
 
@@ -61,16 +57,7 @@ struct _PanelMenuBarPrivate {
 	GtkWidget   *applications_item;
 	GtkWidget   *places_item;
 	GtkWidget   *desktop_item;
-
-	PanelOrientation orientation;
 };
-
-enum {
-	PROP_0,
-	PROP_ORIENTATION,
-};
-
-static void panel_menu_bar_update_text_gravity (PanelMenuBar *menubar);
 
 /* themeable size - "panel-foobar" -- This is only used for the icon of the
  * Applications item in the menu bar */
@@ -147,23 +134,7 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
-        GtkStyleContext *context;
-        GtkCssProvider *provider;
-
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
-
-        provider = gtk_css_provider_new ();
-        gtk_css_provider_load_from_data (provider,
-                                         "PanelMenuBar {\n"
-                                         " border-width: 0px;\n"
-                                         "}",
-                                         -1, NULL);
-        context = gtk_widget_get_style_context (GTK_WIDGET (menubar));
-        gtk_style_context_add_provider (context,
-                                        GTK_STYLE_PROVIDER (provider),
-                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-        g_object_unref (provider);
-	gtk_style_context_add_class (context, "gnome-panel-menu-bar");
 
 	menubar->priv->info = NULL;
 
@@ -192,55 +163,6 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	gtk_widget_show (menubar->priv->desktop_item);
 
 	panel_menu_bar_setup_tooltip (menubar);
-
-	panel_menu_bar_update_text_gravity (menubar);
-	g_signal_connect (menubar, "screen-changed",
-			  G_CALLBACK (panel_menu_bar_update_text_gravity),
-			  NULL);
-}
-
-static void
-panel_menu_bar_get_property (GObject	*object,
-			     guint	 prop_id,
-			     GValue	*value,
-			     GParamSpec *pspec)
-{
-	PanelMenuBar *menubar;
-
-	g_return_if_fail (PANEL_IS_MENU_BAR (object));
-
-	menubar = PANEL_MENU_BAR (object);
-
-	switch (prop_id) {
-	case PROP_ORIENTATION:
-		g_value_set_enum (value, menubar->priv->orientation);
-		break;
-	default:
-		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-		break;
-	}
-}
-
-static void
-panel_menu_bar_set_property (GObject	  *object,
-			     guint	   prop_id,
-			     const GValue *value,
-			     GParamSpec	  *pspec)
-{
-	PanelMenuBar *menubar;
-
-	g_return_if_fail (PANEL_IS_MENU_BAR (object));
-
-	menubar = PANEL_MENU_BAR (object);
-
-	switch (prop_id) {
-	case PROP_ORIENTATION:
-		panel_menu_bar_set_orientation (menubar, g_value_get_enum (value));
-		break;
-	default:
-		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-		break;
-	}
 }
 
 static void
@@ -268,38 +190,6 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 }
 
 static void
-panel_menu_bar_size_allocate (GtkWidget     *widget,
-			      GtkAllocation *allocation)
-{
-	GtkAllocation    old_allocation;
-	GtkAllocation    widget_allocation;
-	PanelBackground *background;
-
-	gtk_widget_get_allocation (widget, &widget_allocation);
-
-	old_allocation.x      = widget_allocation.x;
-	old_allocation.y      = widget_allocation.y;
-	old_allocation.width  = widget_allocation.width;
-	old_allocation.height = widget_allocation.height;
-
-	GTK_WIDGET_CLASS (panel_menu_bar_parent_class)->size_allocate (widget, allocation);
-
-	if (old_allocation.x      == allocation->x &&
-	    old_allocation.y      == allocation->y &&
-	    old_allocation.width  == allocation->width &&
-	    old_allocation.height == allocation->height)
-		return;
-
-	background = &PANEL_MENU_BAR (widget)->priv->panel->background;
-
-	if (background->type == PANEL_BACK_NONE ||
-	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
-		return;
-
-	panel_menu_bar_change_background (PANEL_MENU_BAR (widget));
-}
-
-static void
 panel_menu_bar_style_updated (GtkWidget *widget)
 {
 	PanelMenuBar *menubar = PANEL_MENU_BAR (widget);
@@ -320,27 +210,12 @@ panel_menu_bar_style_updated (GtkWidget *widget)
 static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
-	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 
-	gobject_class->get_property = panel_menu_bar_get_property;
-        gobject_class->set_property = panel_menu_bar_set_property;
-
 	widget_class->parent_set = panel_menu_bar_parent_set;
-	widget_class->size_allocate = panel_menu_bar_size_allocate;
 	widget_class->style_updated = panel_menu_bar_style_updated;
 
 	g_type_class_add_private (klass, sizeof (PanelMenuBarPrivate));
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_ORIENTATION,
-		g_param_spec_enum ("orientation",
-				   "Orientation",
-				   "The PanelMenuBar orientation",
-				   PANEL_TYPE_ORIENTATION,
-				   PANEL_ORIENTATION_TOP,
-				   G_PARAM_READWRITE));
 
 	gtk_widget_class_install_style_property (
 		widget_class,
@@ -354,33 +229,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 		panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
 								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
 								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
-}
-
-static gboolean
-panel_menu_bar_on_draw (GtkWidget *widget,
-			cairo_t   *cr,
-			gpointer   data)
-{
-	PanelMenuBar *menubar = data;
-
-	if (gtk_widget_has_focus (GTK_WIDGET (menubar))) {
-                GtkStyleContext *context;
-
-                context = gtk_widget_get_style_context (widget);
-                gtk_style_context_save (context);
-                gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
-
-                cairo_save (cr);
-		gtk_render_focus (context, cr,
-                                  0, 0,
-                                  gtk_widget_get_allocated_width (widget),
-                                  gtk_widget_get_allocated_height (widget));
-                cairo_restore (cr);
-
-                gtk_style_context_restore (context);
-        }
-
-	return FALSE;
 }
 
 void
@@ -419,15 +267,8 @@ panel_menu_bar_load (PanelWidget *panel,
 				   _("_Help"),
 				   NULL);
 
-	g_signal_connect_after (menubar, "focus-in-event",
-				G_CALLBACK (gtk_widget_queue_draw), menubar);
-	g_signal_connect_after (menubar, "focus-out-event",
-				G_CALLBACK (gtk_widget_queue_draw), menubar);
-	g_signal_connect_after (menubar, "draw",
-				G_CALLBACK (panel_menu_bar_on_draw), menubar);
-	gtk_widget_set_can_focus (GTK_WIDGET (menubar), TRUE);
-
-	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
+	panel_menu_bar_object_object_load_finish (PANEL_MENU_BAR_OBJECT (menubar),
+						  panel);
 }
 
 void
@@ -500,122 +341,4 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 #endif
 	gtk_menu_shell_select_item (menu_shell,
 				    gtk_menu_get_attach_widget (menu));
-}
-
-void
-panel_menu_bar_change_background (PanelMenuBar *menubar)
-{
-	panel_background_change_background_on_widget (&menubar->priv->panel->background,
-						      GTK_WIDGET (menubar));
-}
-
-static void
-set_item_text_gravity (GtkWidget *item)
-{
-	GtkWidget    *label;
-	PangoLayout  *layout;
-	PangoContext *context;
-
-	label = gtk_bin_get_child (GTK_BIN (item));
-	layout = gtk_label_get_layout (GTK_LABEL (label));
-	context = pango_layout_get_context (layout);
-	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
-}
-
-static void
-panel_menu_bar_update_text_gravity (PanelMenuBar *menubar)
-{
-	set_item_text_gravity (menubar->priv->applications_item);
-	set_item_text_gravity (menubar->priv->places_item);
-	set_item_text_gravity (menubar->priv->desktop_item);
-}
-
-static void
-set_item_text_angle_and_alignment (GtkWidget *item,
-				   double     text_angle,
-				   float      xalign,
-				   float      yalign)
-{
-	GtkWidget *label;
-
-	label = gtk_bin_get_child (GTK_BIN (item));
-
-	gtk_label_set_angle (GTK_LABEL (label), text_angle);
-
-	gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
-}
-
-static void
-panel_menu_bar_update_orientation (PanelMenuBar *menubar)
-{
-	GtkPackDirection pack_direction;
-	double           text_angle;
-	float            text_xalign;
-	float            text_yalign;
-
-	pack_direction = GTK_PACK_DIRECTION_LTR;
-	text_angle = 0.0;
-	text_xalign = 0.0;
-	text_yalign = 0.5;
-
-	switch (menubar->priv->orientation) {
-	case PANEL_ORIENTATION_TOP:
-	case PANEL_ORIENTATION_BOTTOM:
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		pack_direction = GTK_PACK_DIRECTION_BTT;
-		text_angle = 90.0;
-		text_xalign = 0.5;
-		text_yalign = 0.0;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		pack_direction = GTK_PACK_DIRECTION_TTB;
-		text_angle = 270.0;
-		text_xalign = 0.5;
-		text_yalign = 0.0;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	gtk_menu_bar_set_pack_direction (GTK_MENU_BAR (menubar), pack_direction);
-	gtk_menu_bar_set_child_pack_direction (GTK_MENU_BAR (menubar), pack_direction);
-
-	set_item_text_angle_and_alignment (menubar->priv->applications_item,
-					   text_angle,
-					   text_xalign,
-					   text_yalign);
-	set_item_text_angle_and_alignment (menubar->priv->places_item,
-					   text_angle,
-					   text_xalign,
-					   text_yalign);
-	set_item_text_angle_and_alignment (menubar->priv->desktop_item,
-					   text_angle,
-					   text_xalign,
-					   text_yalign);
-}
-
-void
-panel_menu_bar_set_orientation (PanelMenuBar     *menubar,
-				PanelOrientation  orientation)
-{
-        g_return_if_fail (PANEL_IS_MENU_BAR (menubar));
-
-        if (menubar->priv->orientation == orientation)
-                return;
-
-        menubar->priv->orientation = orientation;
-
-        panel_menu_bar_update_orientation (menubar);
-
-        g_object_notify (G_OBJECT (menubar), "orientation");
-}
-
-PanelOrientation
-panel_menu_bar_get_orientation (PanelMenuBar *menubar)
-{
-        g_return_val_if_fail (PANEL_IS_MENU_BAR (menubar), 0);
-
-        return menubar->priv->orientation;
 }
