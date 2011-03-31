@@ -56,7 +56,6 @@ struct _PanelMenuBarPrivate {
 	GtkWidget   *applications_menu;
 	GtkWidget   *applications_item;
 	GtkWidget   *places_item;
-	GtkWidget   *desktop_item;
 };
 
 /* themeable size - "panel-foobar" -- This is only used for the icon of the
@@ -78,8 +77,6 @@ panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
 	g_object_set (menubar->priv->applications_item,
 		      "has-tooltip", TRUE, NULL);
 	g_object_set (menubar->priv->places_item,
-		      "has-tooltip", TRUE, NULL);
-	g_object_set (menubar->priv->desktop_item,
 		      "has-tooltip", TRUE, NULL);
 
 	return FALSE;
@@ -106,8 +103,6 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 				     _("Browse and run installed applications"));
 	panel_util_set_tooltip_text (menubar->priv->places_item,
 				     _("Access documents, folders and network places"));
-	panel_util_set_tooltip_text (menubar->priv->desktop_item,
-				     _("Change desktop appearance and behavior, get help, or log out"));
 
 	//FIXME: this doesn't handle the right-click case. Sigh.
 	/* Hide tooltip if a menu is activated */
@@ -116,10 +111,6 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
 			  menubar);
 	g_signal_connect (menubar->priv->places_item,
-			  "activate",
-			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
-			  menubar);
-	g_signal_connect (menubar->priv->desktop_item,
 			  "activate",
 			  G_CALLBACK (panel_menu_bar_hide_tooltip_and_focus),
 			  menubar);
@@ -157,11 +148,6 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 			       menubar->priv->places_item);
 	gtk_widget_show (menubar->priv->places_item);
 
-	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
-			       menubar->priv->desktop_item);
-	gtk_widget_show (menubar->priv->desktop_item);
-
 	panel_menu_bar_setup_tooltip (menubar);
 }
 
@@ -184,9 +170,6 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 	if (menubar->priv->places_item)
 		panel_place_menu_item_set_panel (menubar->priv->places_item,
 						 menubar->priv->panel);
-	if (menubar->priv->desktop_item)
-		panel_desktop_menu_item_set_panel (menubar->priv->desktop_item,
-						   menubar->priv->panel);
 }
 
 static void
