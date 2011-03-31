@@ -2342,7 +2342,14 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 
 			current_bonus = bonus;
 
-			while (using_hint[i].index > 0 && applets_hints[i].hints[using_hint[i].index - 1] < using_hint[i].size + current_bonus) {
+			/* first find the (max, min) range in hints that we
+			 * will use; since we try to allocate as much size as
+			 * possible, this means we want the (max, min) range
+			 * where min is the highest possible (ie, the range
+			 * with the smaller index possible), while still
+			 * keeping min smaller than the potential new size */
+			while (using_hint[i].index > 0 &&
+			       applets_hints[i].hints[using_hint[i].index - 1] < using_hint[i].size + current_bonus) {
 				new_size = applets_hints[i].hints[using_hint[i].index - 1];
 				current_bonus = using_hint[i].size
 						+ current_bonus - new_size;
@@ -2353,6 +2360,9 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 				using_hint[i].size = new_size;
 			}
 
+			/* now, give the bonus, while still keeping a size that
+			 * is lower than max from the (max, min) range we've
+			 * settled for */
 			new_size = MIN (applets_hints[i].hints[using_hint[i].index],
 					using_hint[i].size + current_bonus);
 			if (new_size > using_hint[i].size) {
@@ -2360,6 +2370,9 @@ panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
 				using_hint[i].size = new_size;
 			}
 
+
+			/* if there's some extra bonus to take, try to allocate
+			 * it too */
 			if (extra_bonus > 0) {
 				new_size = MIN (applets_hints[i].hints[using_hint[i].index],
 						using_hint[i].size + extra_bonus);
