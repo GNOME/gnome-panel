@@ -14,6 +14,7 @@
 #define PANEL_DESKTOP_DISABLE_COMMAND_LINE_KEY "disable-command-line"
 #define PANEL_DESKTOP_DISABLE_LOCK_SCREEN_KEY  "disable-lock-screen"
 #define PANEL_DESKTOP_DISABLE_LOG_OUT_KEY      "disable-log-out"
+#define PANEL_DESKTOP_DISABLE_SWITCH_USER_KEY  "disable-user-switching"
 
 #define PANEL_RUN_SCHEMA                 "org.gnome.gnome-panel.run-dialog"
 #define PANEL_RUN_HISTORY_KEY            "history"

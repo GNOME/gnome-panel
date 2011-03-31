@@ -58,6 +58,7 @@ gboolean panel_lockdown_get_panels_locked_down   (PanelLockdown *lockdown);
 gboolean panel_lockdown_get_disable_command_line (PanelLockdown *lockdown);
 gboolean panel_lockdown_get_disable_lock_screen  (PanelLockdown *lockdown);
 gboolean panel_lockdown_get_disable_log_out      (PanelLockdown *lockdown);
+gboolean panel_lockdown_get_disable_switch_user  (PanelLockdown *lockdown);
 gboolean panel_lockdown_get_disable_force_quit   (PanelLockdown *lockdown);
 
 gboolean panel_lockdown_is_applet_disabled       (PanelLockdown *lockdown,
@@ -79,6 +80,7 @@ gboolean panel_lockdown_get_not_panels_locked_down_s (void);
 gboolean panel_lockdown_get_disable_command_line_s   (void);
 gboolean panel_lockdown_get_disable_lock_screen_s    (void);
 gboolean panel_lockdown_get_disable_log_out_s        (void);
+gboolean panel_lockdown_get_disable_switch_user_s    (void);
 gboolean panel_lockdown_get_disable_force_quit_s     (void);
 
 G_END_DECLS

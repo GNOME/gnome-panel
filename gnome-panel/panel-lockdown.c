@@ -37,6 +37,7 @@ struct _PanelLockdownPrivate {
         gboolean   disable_command_line;
         gboolean   disable_lock_screen;
         gboolean   disable_log_out;
+        gboolean   disable_switch_user;
 
         /* panel-specific */
         gboolean   panels_locked_down;
@@ -49,6 +50,7 @@ enum {
         PROP_DISABLE_COMMAND_LINE,
         PROP_DISABLE_LOCK_SCREEN,
         PROP_DISABLE_LOG_OUT,
+        PROP_DISABLE_SWITCH_USER,
         PROP_PANELS_LOCKED_DOWN,
         PROP_DISABLE_FORCE_QUIT
 };
@@ -99,6 +101,12 @@ panel_lockdown_constructor (GType                  type,
                          PANEL_DESKTOP_DISABLE_LOG_OUT_KEY,
                          lockdown,
                          "disable-log-out",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->desktop_settings,
+                         PANEL_DESKTOP_DISABLE_SWITCH_USER_KEY,
+                         lockdown,
+                         "disable-switch-user",
                          G_SETTINGS_BIND_GET);
 
         g_settings_bind (lockdown->priv->panel_settings,
@@ -172,6 +180,12 @@ panel_lockdown_set_property (GObject      *object,
                                                      value,
                                                      "disable-log-out");
                 break;
+        case PROP_DISABLE_SWITCH_USER:
+                _panel_lockdown_set_property_helper (lockdown,
+                                                     &lockdown->priv->disable_switch_user,
+                                                     value,
+                                                     "disable-switch-user");
+                break;
         case PROP_PANELS_LOCKED_DOWN:
                 _panel_lockdown_set_property_helper (lockdown,
                                                      &lockdown->priv->panels_locked_down,
@@ -211,6 +225,9 @@ panel_lockdown_get_property (GObject    *object,
                 break;
         case PROP_DISABLE_LOG_OUT:
                 g_value_set_boolean (value, lockdown->priv->disable_log_out);
+                break;
+        case PROP_DISABLE_SWITCH_USER:
+                g_value_set_boolean (value, lockdown->priv->disable_switch_user);
                 break;
         case PROP_PANELS_LOCKED_DOWN:
                 g_value_set_boolean (value, lockdown->priv->panels_locked_down);
@@ -298,6 +315,16 @@ panel_lockdown_class_init (PanelLockdownClass *lockdown_class)
 
         g_object_class_install_property (
                 gobject_class,
+                PROP_DISABLE_SWITCH_USER,
+                g_param_spec_boolean (
+                        "disable-switch-user",
+                        "Disable user switching",
+                        "Whether user switching is disabled or not",
+                        TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+        g_object_class_install_property (
+                gobject_class,
                 PROP_PANELS_LOCKED_DOWN,
                 g_param_spec_boolean (
                         "panels-locked-down",
@@ -357,6 +384,14 @@ panel_lockdown_get_disable_log_out (PanelLockdown *lockdown)
         g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
         return lockdown->priv->disable_log_out;
+}
+
+gboolean
+panel_lockdown_get_disable_switch_user (PanelLockdown *lockdown)
+{
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
+
+        return lockdown->priv->disable_switch_user;
 }
 
 gboolean
@@ -480,6 +515,12 @@ gboolean
 panel_lockdown_get_disable_log_out_s (void)
 {
         return panel_lockdown_get_disable_log_out (panel_lockdown_get ());
+}
+
+gboolean
+panel_lockdown_get_disable_switch_user_s (void)
+{
+        return panel_lockdown_get_disable_switch_user (panel_lockdown_get ());
 }
 
 gboolean
