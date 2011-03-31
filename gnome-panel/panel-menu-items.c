@@ -1195,12 +1195,14 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 
 	desktop_menu = panel_create_menu ();
 
-	item = panel_menu_item_desktop_new ("gnome-control-center.desktop",
-					    NULL, FALSE);
+	item = panel_menu_item_desktop_new ("gnome-user-accounts-panel.desktop",
+					    _("My Account"), FALSE);
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
 
-	item = panel_menu_item_desktop_new ("yelp.desktop",
+	/* Do not force the string like in gnome-shell, but just use the one
+	 * from the .desktop file */
+	item = panel_menu_item_desktop_new ("gnome-control-center.desktop",
 					    NULL, FALSE);
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
