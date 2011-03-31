@@ -35,5 +35,7 @@
 #define PANEL_ICON_THEME		"preferences-desktop-theme"
 #define PANEL_ICON_TRASH		"user-trash"
 #define PANEL_ICON_UNKNOWN		"image-missing"
+#define PANEL_ICON_USER_AVAILABLE	"user-available-symbolic"
+#define PANEL_ICON_USER_BUSY		"user-busy-symbolic"
 
 #endif /* PANEL_ICON_NAMES_H */

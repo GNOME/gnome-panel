@@ -125,6 +125,7 @@ gnome_panel_SOURCES =			\
 
 gnome_panel_CPPFLAGS = 				\
 	$(AM_CPPFLAGS)				\
+	$(TELEPATHY_GLIB_CFLAGS)		\
 	$(XRANDR_CFLAGS)			\
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE		\
@@ -135,6 +136,7 @@ gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
+	$(TELEPATHY_GLIB_LIBS)								\
 	$(XRANDR_LIBS)									\
 	$(X_LIBS)
 

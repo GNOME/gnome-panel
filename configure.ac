@@ -70,6 +70,7 @@ GTK_REQUIRED=3.0
 LIBWNCK_REQUIRED=2.91.0
 GCONF_REQUIRED=2.6.1
 LIBGNOME_MENU_REQUIRED=2.27.92
+TELEPATHY_GLIB_REQUIRED=0.14.0
 LIBECAL_REQUIRED=2.91.2
 LIBEDATASERVER_REQUIRED=2.91.2
 LIBEDATASERVERUI_REQUIRED=2.91.2
@@ -84,6 +85,16 @@ PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-3.0)
 PKG_CHECK_MODULES(PANEL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED cairo-xlib glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgnome-menu >= $LIBGNOME_MENU_REQUIRED dconf)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
+
+AC_ARG_ENABLE(telepathy_glib, AS_HELP_STRING([--enable-telepathy-glib],[Enable telepathy-glib support (auto)]),enable_telepathy_glib=$enableval,enable_telepathy_glib=auto)
+if test "x$enable_telepathy_glib" = "xno" ; then
+  HAVE_TELEPATHY_GLIB=no
+else
+  PKG_CHECK_MODULES(TELEPATHY_GLIB, telepathy-glib >= $TELEPATHY_GLIB_REQUIRED, HAVE_TELEPATHY_GLIB=yes, HAVE_TELEPATHY_GLIB=no)
+fi
+if test "x$HAVE_TELEPATHY_GLIB" = "xyes" ; then
+    AC_DEFINE(HAVE_TELEPATHY_GLIB, 1, [Defined if telepathy-glib support is enabled])
+fi
 
 PKG_CHECK_MODULES(LIBPANEL_APPLET, gtk+-3.0 >= $GTK_REQUIRED cairo-xlib cairo-gobject gconf-2.0 >= $GCONF_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(LIBPANEL_APPLET_CFLAGS)
@@ -368,6 +379,7 @@ echo "
         Bonobo applets support:        ${HAVE_BONOBO}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Evolution-Data-Server support: ${HAVE_EDS}
+        Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
         NetworkManager support:        ${HAVE_NETWORK_MANAGER}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}

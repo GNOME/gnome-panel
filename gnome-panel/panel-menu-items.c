@@ -40,6 +40,10 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
+#ifdef HAVE_TELEPATHY_GLIB
+#include <telepathy-glib/account-manager.h>
+#endif
+
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
@@ -95,7 +99,88 @@ struct _PanelPlaceMenuItemPrivate {
 struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
+
+#ifdef HAVE_TELEPATHY_GLIB
+	TpAccountManager *account_manager;
+#endif
 };
+
+#ifdef HAVE_TELEPATHY_GLIB
+static void
+panel_menu_item_activate_presence (GtkWidget        *menuitem,
+				   TpAccountManager *account_manager)
+{
+	PanelSessionManagerPresenceType  presence_type;
+	TpConnectionPresenceType         tp_presence_type;
+	const char                      *status;
+	char                            *message;
+
+	presence_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menuitem),
+							    "panel-menu-presence"));
+
+	panel_session_manager_set_presence (panel_session_manager_get (),
+					    presence_type);
+
+	tp_presence_type = tp_account_manager_get_most_available_presence (account_manager,
+									   NULL,
+									   &message);
+
+	if (tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_UNSET ||
+	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_OFFLINE ||
+	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_UNKNOWN ||
+	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_ERROR)
+		goto free_message;
+
+	if (presence_type == PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE) {
+		tp_presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE;
+		status = "available";
+	} else if (presence_type == PANEL_SESSION_MANAGER_PRESENCE_BUSY) {
+		tp_presence_type = TP_CONNECTION_PRESENCE_TYPE_BUSY;
+		status = "busy";
+	} else
+		goto free_message;
+
+	tp_account_manager_set_all_requested_presences (account_manager,
+							tp_presence_type,
+							status, message);
+
+free_message:
+	g_free (message);
+}
+
+static GtkWidget *
+panel_menu_item_presence_new (TpAccountManager                *account_manager,
+			      PanelSessionManagerPresenceType  presence_type,
+			      const char                      *name,
+			      const char                      *icon,
+			      gboolean                         use_icon)
+{
+	GtkWidget *item;
+
+	if (!account_manager)
+		return NULL;
+
+	if (use_icon) {
+		item = panel_image_menu_item_new ();
+        } else {
+		item = gtk_image_menu_item_new ();
+	}
+
+	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
+				   icon, NULL, NULL, name);
+
+	g_object_set_data (G_OBJECT (item), "panel-menu-presence",
+			   GINT_TO_POINTER (presence_type));
+
+	g_signal_connect (item, "activate",
+			  G_CALLBACK (panel_menu_item_activate_presence),
+			  account_manager);
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
+	return item;
+}
+#endif
 
 static void
 activate_uri_on_screen (const char *uri,
@@ -1192,8 +1277,36 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 {
 	GtkWidget *desktop_menu;
 	GtkWidget *item;
+#ifdef HAVE_TELEPATHY_GLIB
+	gboolean   added;
+#endif
 
 	desktop_menu = panel_create_menu ();
+
+#ifdef HAVE_TELEPATHY_GLIB
+	desktop_item->priv->account_manager = tp_account_manager_dup ();
+
+	item = panel_menu_item_presence_new (desktop_item->priv->account_manager,
+					     PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE,
+					     _("Available"),
+					     PANEL_ICON_USER_AVAILABLE, TRUE);
+	if (item) {
+		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
+		added = TRUE;
+	}
+
+	item = panel_menu_item_presence_new (desktop_item->priv->account_manager,
+					     PANEL_SESSION_MANAGER_PRESENCE_BUSY,
+					     _("Busy"),
+					     PANEL_ICON_USER_BUSY, TRUE);
+	if (item) {
+		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
+		added = TRUE;
+	}
+
+	if (added)
+		add_menu_separator (desktop_menu);
+#endif
 
 	item = panel_menu_item_desktop_new ("gnome-user-accounts-panel.desktop",
 					    _("My Account"), FALSE);
@@ -1281,6 +1394,20 @@ panel_place_menu_item_finalize (GObject *object)
 	menuitem->priv->volume_monitor = NULL;
 
 	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
+}
+
+static void
+panel_desktop_menu_item_finalize (GObject *object)
+{
+	PanelDesktopMenuItem *menuitem = (PanelDesktopMenuItem *) object;
+
+#ifdef HAVE_TELEPATHY_GLIB
+	if (menuitem->priv->account_manager != NULL)
+		g_object_unref (menuitem->priv->account_manager);
+	menuitem->priv->account_manager = NULL;
+#endif
+
+	G_OBJECT_CLASS (panel_desktop_menu_item_parent_class)->finalize (object);
 }
 
 static void
@@ -1382,14 +1509,16 @@ static void
 panel_desktop_menu_item_init (PanelDesktopMenuItem *menuitem)
 {
 	menuitem->priv = PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE (menuitem);
+
+	menuitem->priv->account_manager = NULL;
 }
 
 static void
 panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 {
-	GObjectClass *gobject_class = (GObjectClass   *) klass;
+	GObjectClass *gobject_class = (GObjectClass *) klass;
 
-	gobject_class->finalize  = panel_place_menu_item_finalize;
+	gobject_class->finalize = panel_place_menu_item_finalize;
 
 	g_type_class_add_private (klass, sizeof (PanelPlaceMenuItemPrivate));
 }
@@ -1397,6 +1526,10 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 static void
 panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 {
+	GObjectClass *gobject_class = (GObjectClass *) klass;
+
+	gobject_class->finalize = panel_desktop_menu_item_finalize;
+
 	g_type_class_add_private (klass, sizeof (PanelDesktopMenuItemPrivate));
 }
 
