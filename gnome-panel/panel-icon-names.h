@@ -37,5 +37,7 @@
 #define PANEL_ICON_UNKNOWN		"image-missing"
 #define PANEL_ICON_USER_AVAILABLE	"user-available-symbolic"
 #define PANEL_ICON_USER_BUSY		"user-busy-symbolic"
+#define PANEL_ICON_USER_IDLE		"user-idle-symbolic"
+#define PANEL_ICON_USER_INVISIBLE	"user-invisible-symbolic"
 
 #endif /* PANEL_ICON_NAMES_H */

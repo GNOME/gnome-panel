@@ -1176,3 +1176,21 @@ panel_util_key_event_is_popup_panel (GdkEventKey *event,
 	panel_util_key_event_is_binding (event, PANEL_TYPE_TOPLEVEL, "popup-panel-menu",
 					 is_popup, is_popup_modifier);
 }
+
+char *
+panel_util_get_user_name (void)
+{
+	char *name;
+
+	name = g_locale_to_utf8 (g_get_real_name (), -1, NULL, NULL, NULL);
+
+	if (PANEL_GLIB_STR_EMPTY (name) || g_strcmp0 (name, "Unknown") == 0) {
+		g_free (name);
+		name = g_locale_to_utf8 (g_get_user_name (), -1 , NULL, NULL, NULL);
+	}
+
+	if (!name)
+		name = g_strdup (g_get_user_name ());
+
+	return name;
+}
