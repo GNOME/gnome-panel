@@ -588,6 +588,55 @@ panel_widget_compress_pack_indexes (PanelWidget *panel)
 	g_list_free (list);
 }
 
+static void
+panel_widget_update_size_hints_for_toplevel (PanelWidget *panel)
+{
+	GList *list;
+	GList *ad_with_hints = NULL;
+
+	panel->nb_applets_size_hints = 0;
+	if (panel->applets_hints != NULL)
+		g_free (panel->applets_hints);
+	panel->applets_hints = NULL;
+	if (panel->applets_using_hint != NULL)
+		g_free (panel->applets_using_hint);
+	panel->applets_using_hint = NULL;
+
+	if (!panel->packed)
+		return;
+
+	for (list = panel->applet_list; list; list = list->next) {
+		AppletData *ad = list->data;
+		if (ad->expand_major && ad->size_hints)
+			ad_with_hints = g_list_prepend (ad_with_hints, ad);
+	}
+
+	/* put the list in the correct order: this is important
+	 * since we'll use this order in the size_allocate() */
+	ad_with_hints = g_list_reverse (ad_with_hints);
+
+	panel->nb_applets_size_hints = g_list_length (ad_with_hints);
+
+	if (panel->nb_applets_size_hints > 0) {
+		int i;
+		panel->applets_hints = g_new0 (AppletSizeHints,
+					       panel->nb_applets_size_hints);
+		panel->applets_using_hint = g_new0 (AppletSizeHintsAlloc,
+						    panel->nb_applets_size_hints);
+
+		i = 0;
+		for (list = ad_with_hints;
+		     list != NULL;
+		     list = g_list_next (list)) {
+			AppletData *ad = list->data;
+
+			panel->applets_hints[i].hints = ad->size_hints;
+			panel->applets_hints[i].len = ad->size_hints_len;
+			i++;
+		}
+	}
+}
+
 /* Note: this can only be called at the beginning of size_allocate, which means
  * that ad->constrained doesn't matter yet (it will be set to the correct
  * value in size_allocate). */
@@ -711,6 +760,11 @@ panel_widget_update_positions (PanelWidget *panel)
 	i = 0;
 
 	if (panel->packed) {
+		/* Because of the following, we have to be very careful that
+		 * this code path is called only before a size_request() on the
+		 * toplevel */
+		panel_widget_update_size_hints_for_toplevel (panel);
+
 		/* keep in sync with code in size_allocate */
 		for (list = panel->applet_list;
 		     list != NULL;
@@ -1188,7 +1242,6 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 {
 	PanelWidget *panel;
 	GList *list;
-	GList *ad_with_hints;
 	gboolean dont_fill;
 
 	g_return_if_fail(PANEL_IS_WIDGET(widget));
@@ -1204,8 +1257,6 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		requisition->width = panel->sz;
 	}
 
-	ad_with_hints = NULL;
-
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
                 GtkRequisition child_req;
@@ -1213,68 +1264,32 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
                 gtk_widget_get_preferred_size (ad->applet, &child_req, NULL);
 
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if (requisition->height < child_req.height && !ad->size_constrained)
+			if (requisition->height < child_req.height &&
+			    !ad->size_constrained)
 				requisition->height = child_req.height;
 
-			if (panel->packed && ad->expand_major && ad->size_hints)
-				ad_with_hints = g_list_prepend (ad_with_hints,
-								ad);
-
-			else if (panel->packed)
+			if (panel->packed &&
+			    !(ad->expand_major && ad->size_hints))
 				requisition->width += child_req.width;
 		} else {
-			if (requisition->width < child_req.width && !ad->size_constrained)
+			if (requisition->width < child_req.width &&
+			    !ad->size_constrained)
 				requisition->width = child_req.width;
 
-			if (panel->packed && ad->expand_major && ad->size_hints)
-				ad_with_hints = g_list_prepend (ad_with_hints,
-								ad);
-
-			else if (panel->packed)
+			if (panel->packed &&
+			    !(ad->expand_major && ad->size_hints))
 				requisition->height += child_req.height;
 		}
 	}
 
 
-	panel->nb_applets_size_hints = 0;
-	if (panel->applets_hints != NULL)
-		g_free (panel->applets_hints);
-	panel->applets_hints = NULL;
-	if (panel->applets_using_hint != NULL)
-		g_free (panel->applets_using_hint);
-	panel->applets_using_hint = NULL;
-
-	if(!panel->packed) {
-		if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
+	if (!panel->packed) {
+		if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			requisition->width = panel->size;
-		} else {
+		else
 			requisition->height = panel->size;
-		}
-	} else {
-		/* put the list in the correct order: this is important
-		 * since we'll use this order in the size_allocate() */
-		ad_with_hints = g_list_reverse (ad_with_hints);
-
-		panel->nb_applets_size_hints = g_list_length (ad_with_hints);
-		if (panel->nb_applets_size_hints > 0) {
-			int i;
-			panel->applets_hints = g_new0 (AppletSizeHints, panel->nb_applets_size_hints);
-
-			i = 0;
-			for (list = ad_with_hints;
-			     list != NULL;
-			     list = g_list_next (list)) {
-				AppletData *ad = list->data;
-
-				panel->applets_hints[i].hints = ad->size_hints;
-				panel->applets_hints[i].len = ad->size_hints_len;
-				i++;
-			}
-
-			panel->applets_using_hint = g_new0 (AppletSizeHintsAlloc, panel->nb_applets_size_hints);
-		}
 	}
-	
+
 	dont_fill = panel->packed && panel->nb_applets_size_hints != 0;
 
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -2764,6 +2779,7 @@ panel_widget_set_applet_size_hints (PanelWidget *panel,
 		ad->size_hints = NULL;
 	}
 
+	panel_widget_update_size_hints_for_toplevel (panel);
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
 
