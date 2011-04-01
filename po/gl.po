@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-29 00:02+0200\n"
-"PO-Revision-Date: 2011-03-29 00:11+0200\n"
+"POT-Creation-Date: 2011-04-02 00:55+0200\n"
+"PO-Revision-Date: 2011-04-02 00:57+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -794,7 +794,7 @@ msgstr "_Rotar nos paneis verticais"
 msgid "seconds"
 msgstr "segundos"
 
-#: ../applets/notification_area/main.c:231
+#: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "Área de notificación do panel"
 
@@ -1715,7 +1715,7 @@ msgstr "Mostrar as opcións de xestión de sesión"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Erro"
 
@@ -1743,21 +1743,17 @@ msgid "No application to handle search folders is installed."
 msgstr ""
 "Non hai ningún aplicativo instalado para manexar a busca en cartafoles."
 
-#: ../gnome-panel/applet.c:362
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:503 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../gnome-panel/applet.c:510 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "E_liminar do panel"
-
-#: ../gnome-panel/applet.c:1003
-msgid "Cannot find an empty spot"
-msgstr "Non foi posíbel atopar un espazo baleiro"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1772,7 +1768,7 @@ msgid "- Edit .desktop files"
 msgstr "- Editar ficheiros .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:882
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "Crear un iniciador"
 
@@ -1837,7 +1833,7 @@ msgstr ""
 "A localización do iniciador non está estabelecida, non é posíbel cargar o "
 "iniciador\n"
 
-#: ../gnome-panel/launcher.c:951 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1925,60 +1921,68 @@ msgstr "Apagar…"
 msgid "Shut down the computer"
 msgstr "Apagar o computador"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "Iniciador de aplicativo personalizado"
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "Crear un novo iniciador"
 
-#: ../gnome-panel/panel-addto.c:124
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "Iniciador de aplicativo…"
 
-#: ../gnome-panel/panel-addto.c:125
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "Copia un iniciador do menú de aplicativos"
 
-#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:947
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "Menú principal"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "O menú principal do GNOME"
 
-#: ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "Barra de menú"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "Unha barra de menú personalizada"
 
-#: ../gnome-panel/panel-addto.c:161
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "Separador"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "Un separador para organizar os elementos do panel"
 
-#: ../gnome-panel/panel-addto.c:243
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "Menú do usuario"
+
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr "Menú para cambiar as súas configuracións e o seu estado en liña"
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(baleiro)"
 
-#: ../gnome-panel/panel-addto.c:1025
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Buscar un _elemento para engadir a «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1029
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "Buscar un _elemento para engadir ao panel:"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "Engadir ao panel"
 
@@ -2007,12 +2011,12 @@ msgstr "_Non recargar"
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: ../gnome-panel/panel-applet-frame.c:905
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "O panel atopou un problema ao cargar «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Quere eliminar o miniaplicativo da súa configuración?"
 
@@ -2133,97 +2137,95 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "Non é posíbel crear a disposición inicial do panel.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:119
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "Examinar e executar os aplicativos instalados"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "Acceder a documentos, cartafoles e sitios de rede"
 
-#: ../gnome-panel/panel-menu-bar.c:123
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr ""
-"Cambiar a aparencia e o comportamento do escritorio, obter axuda ou saír da "
-"sesión"
-
-#: ../gnome-panel/panel-menu-bar.c:174
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Aplicativos"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "_Editar menús"
 
-#: ../gnome-panel/panel-menu-bar.c:419
+#: ../gnome-panel/panel-menu-bar.c:250
 msgid "_Help"
 msgstr "_Axuda"
 
-#: ../gnome-panel/panel-menu-items.c:469
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "Cambiar de usuario"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "Marcadores"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:493 ../gnome-panel/panel.c:589
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "Abrir «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:564
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Non é posíbel analizar %s para os cambios no soporte"
 
-#: ../gnome-panel/panel-menu-items.c:606
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "Examinar %s de novo"
 
-#: ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Non foi posíbel montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "Montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "Soportes extraíbeis"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "Lugares de rede"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1048 ../gnome-panel/panel.c:638
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "Abrir o seu cartafol persoal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1068
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "Abrir os contidos do seu escritorio nun cartafol"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:647
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
 msgid "Computer"
 msgstr "Computador"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1090 ../gnome-panel/panel.c:648
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2232,47 +2234,30 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1100 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
 msgid "Network"
 msgstr "Rede"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1101 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
 msgid "Browse bookmarked and local network locations"
 msgstr "Explorar as redes locais e localizacións marcadas"
 
-#: ../gnome-panel/panel-menu-items.c:1418
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "Dispoñíbel"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "Ocupado"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "A miña conta"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "Lugares"
-
-#: ../gnome-panel/panel-menu-items.c:1445
-msgid "System"
-msgstr "Sistema"
-
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1536
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "1"
-
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1548
-#, c-format
-msgid "Log Out %s..."
-msgstr "Sair da sesión de %s…"
-
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1552
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Saír da sesión de %s para entrar como un usuario diferente"
 
 #: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
@@ -2725,16 +2710,16 @@ msgstr "Buscar"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:523
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir o URL: %s"
 
-#: ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "Quere eliminar este panel?"
 
-#: ../gnome-panel/panel.c:1383
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2742,21 +2727,26 @@ msgstr ""
 "Ao eliminar un panel pérdese o panel e todas\n"
 "as configuracións dese panel."
 
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "Dispoñíbel"
+#~ msgid "Cannot find an empty spot"
+#~ msgstr "Non foi posíbel atopar un espazo baleiro"
 
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "Ocupado"
+#~ msgid "Change desktop appearance and behavior, get help, or log out"
+#~ msgstr ""
+#~ "Cambiar a aparencia e o comportamento do escritorio, obter axuda ou saír "
+#~ "da sesión"
 
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "A miña conta"
+#~ msgid "System"
+#~ msgstr "Sistema"
 
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "Cambiar de usuario"
+#~ msgctxt "panel:showusername"
+#~ msgid "1"
+#~ msgstr "1"
+
+#~ msgid "Log Out %s..."
+#~ msgstr "Sair da sesión de %s…"
+
+#~ msgid "Log out %s of this session to log in as a different user"
+#~ msgstr "Saír da sesión de %s para entrar como un usuario diferente"
 
 #~ msgid "_About"
 #~ msgstr "_Sobre"
