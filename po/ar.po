@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-29 06:14+0200\n"
-"PO-Revision-Date: 2011-03-29 06:14+0300\n"
+"POT-Creation-Date: 2011-04-01 14:11+0200\n"
+"PO-Revision-Date: 2011-04-01 14:11+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -774,7 +774,7 @@ msgstr "ت_دوير على الشرائط العمودية"
 msgid "seconds"
 msgstr "ثواني"
 
-#: ../applets/notification_area/main.c:231
+#: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "مساحة التبليغ في الشريط"
 
@@ -1656,7 +1656,7 @@ msgstr "اعرض خيارات إدارة الجلسات"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "خطأ"
 
@@ -1683,21 +1683,17 @@ msgstr "لم يمكن فتح المكان '%s'"
 msgid "No application to handle search folders is installed."
 msgstr "لا يوجد برنامج للتحكم في مجلّدات البحث."
 
-#: ../gnome-panel/applet.c:362
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "؟؟؟"
 
-#: ../gnome-panel/applet.c:503 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "ا_نقل"
 
-#: ../gnome-panel/applet.c:510 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "ا_حذف من الشريط"
-
-#: ../gnome-panel/applet.c:1003
-msgid "Cannot find an empty spot"
-msgstr "لم يمكن العثور على بقعة فارغة"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1712,7 +1708,7 @@ msgid "- Edit .desktop files"
 msgstr "- حرّر ملفات .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:882
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "أنشئ مطلق"
 
@@ -1771,7 +1767,7 @@ msgstr "ال_خصائص"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "مكان المُطلق لم يُضبط، تعذّر تحميل المطلق\n"
 
-#: ../gnome-panel/launcher.c:951 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1858,60 +1854,68 @@ msgstr "أطفئ..."
 msgid "Shut down the computer"
 msgstr "أطفئ الحاسوب"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "مطلق تطبيق مخصّص"
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "أنشئ مطلقا جديدا"
 
-#: ../gnome-panel/panel-addto.c:124
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "مطلق تطبيق..."
 
-#: ../gnome-panel/panel-addto.c:125
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "انسخ مُطلِقا من قائمة التطبيقات"
 
-#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:947
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "القائمة الرئيسية"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "قائمة جنوم الرّئيسيّة"
 
-#: ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "شريط القوائم"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "شريط قوائم مخصّص"
 
-#: ../gnome-panel/panel-addto.c:161
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "فاصل"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "فاصل لتنظيم عناصر الشريط"
 
-#: ../gnome-panel/panel-addto.c:243
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "قائمة المستخدم"
+
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr "قائمة لتغيير الإعدادات وحالة تواجدك"
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(فارغ)"
 
-#: ../gnome-panel/panel-addto.c:1025
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "اختر _عنصرًا للإضافة ل \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1029
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "اختر _عنصرًا ليضاف إلى الشّريط:"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "أضِف إلى الشّريط"
 
@@ -1938,12 +1942,12 @@ msgstr "_لا تعِد التحميل"
 msgid "_Reload"
 msgstr "أ_عد التحميل"
 
-#: ../gnome-panel/panel-applet-frame.c:905
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "واجه الشريط مشكلة أثناء تحميل \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "هل تريد حذف البريمج من إعداداتك؟"
 
@@ -2061,142 +2065,125 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "تعذّر إنشاء النسق الأولي للشريط.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:119
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "تصفّح و شغّل التطبيقات المثبتة"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "المستندات، المجلدات و الأماكن الشبكية"
 
-#: ../gnome-panel/panel-menu-bar.c:123
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "غيّر مظهر وسلوك سطح المكتب أو احصل على المساعدة أو اخرج"
-
-#: ../gnome-panel/panel-menu-bar.c:174
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "تطبيقات"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "ح_رّر القوائم"
 
-#: ../gnome-panel/panel-menu-bar.c:419
+#: ../gnome-panel/panel-menu-bar.c:250
 msgid "_Help"
 msgstr "م_ساعدة"
 
-#: ../gnome-panel/panel-menu-items.c:469
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "بدّل المستخدم"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "العلامات"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:493 ../gnome-panel/panel.c:589
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "افتح '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:564
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "تعذّر مسح %s بحثا عن تغيرات الأجهزة"
 
-#: ../gnome-panel/panel-menu-items.c:606
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "أعد مسح %s"
 
-#: ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "تعذّر وصل %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "أوصل %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "الوسائط المنفصلة"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "أماكن الشبكة"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1048 ../gnome-panel/panel.c:638
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "افتح مجلدك الشخصي"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1068
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "سطح المكتب"
 
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "افتح محتويات سطح المكتب في مجلد"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:647
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
 msgid "Computer"
 msgstr "الحاسوب"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1090 ../gnome-panel/panel.c:648
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "تصفّح كل الأقراص والمجلّدات المحلّية والبعيدة المتاحة لهذا الحاسوب"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1100 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
 msgid "Network"
 msgstr "الشبكة"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1101 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
 msgid "Browse bookmarked and local network locations"
 msgstr "تصفح مواقع الشبكة والمحلّية المعلّمة"
 
-#: ../gnome-panel/panel-menu-items.c:1418
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "متاح"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "مشغول"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "حسابي"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "أماكن"
-
-#: ../gnome-panel/panel-menu-items.c:1445
-msgid "System"
-msgstr "نظام"
-
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1536
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "0"
-
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1548
-#, c-format
-msgid "Log Out %s..."
-msgstr "اخرج %s..."
-
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1552
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "أخرج %s من هذه الجلسة ليلج كمستخدم آخر"
 
 #: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
@@ -2640,16 +2627,16 @@ msgstr "بحث"
 msgid "%1$s: %2$s"
 msgstr "‏%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:523
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "افتح العنوان: %s"
 
-#: ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "هل تريد حذف هذا الشريط؟"
 
-#: ../gnome-panel/panel.c:1383
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2657,21 +2644,24 @@ msgstr ""
 "عند حذف الشريط، يحذف الشريط مع\n"
 "خصائصه."
 
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "متاح"
+#~ msgid "Cannot find an empty spot"
+#~ msgstr "لم يمكن العثور على بقعة فارغة"
 
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "مشغول"
+#~ msgid "Change desktop appearance and behavior, get help, or log out"
+#~ msgstr "غيّر مظهر وسلوك سطح المكتب أو احصل على المساعدة أو اخرج"
 
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "حسابي"
+#~ msgid "System"
+#~ msgstr "نظام"
 
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "بدّل المستخدم"
+#~ msgctxt "panel:showusername"
+#~ msgid "1"
+#~ msgstr "0"
+
+#~ msgid "Log Out %s..."
+#~ msgstr "اخرج %s..."
+
+#~ msgid "Log out %s of this session to log in as a different user"
+#~ msgstr "أخرج %s من هذه الجلسة ليلج كمستخدم آخر"
 
 #~ msgid "Select an animation"
 #~ msgstr "اختر رسم متحرك"
