@@ -1,4 +1,4 @@
-AC_INIT([gnome-panel], [2.91.94],
+AC_INIT([gnome-panel], [3.0.0],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
