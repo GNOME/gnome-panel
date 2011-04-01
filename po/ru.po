@@ -11,7 +11,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel trunk\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
 "POT-Creation-Date: 2011-03-02 16:30+0000\n"
 "PO-Revision-Date: 2011-03-13 19:02+0400\n"
 "Last-Translator: Yuri Myaseodov <omerta13@yandex.ru>\n"
@@ -19,7 +20,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. Translators: This is a strftime format string.
@@ -30,8 +32,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:329
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
@@ -50,10 +51,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:334
-#: ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1612
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:1612 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -91,8 +90,7 @@ msgstr "Дни рождения и годовщины"
 msgid "Weather Information"
 msgstr "Сведения о погоде"
 
-#: ../applets/clock/calendar-window.c:1629
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/calendar-window.c:1629 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "Местности"
 
@@ -114,8 +112,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1606
+#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1606
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -210,8 +207,7 @@ msgstr "%A, %d %B %Y"
 msgid "Failed to open the time settings"
 msgstr "Не удалось открыть параметры времени"
 
-#: ../applets/clock/clock.c:1734
-#: ../applets/fish/fish.c:1784
+#: ../applets/clock/clock.c:1734 ../applets/fish/fish.c:1784
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:237
 msgid "_Preferences"
@@ -271,8 +267,12 @@ msgstr "<i>(необязательно)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
 #: ../applets/clock/clock.ui.h:3
-msgid "<small><i>Type a city, region, or country name and then select a match from the pop-up.</i></small>"
-msgstr "<small><i>Введите название города, области или страны, затем выберите подходящий пояс из выпадающего списка</i></small>"
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Введите название города, области или страны, затем выберите "
+"подходящий пояс из выпадающего списка</i></small>"
 
 #: ../applets/clock/clock.ui.h:4
 msgid "Clock Format"
@@ -291,8 +291,7 @@ msgstr "Показ сведений"
 msgid "East"
 msgstr "восточной"
 
-#: ../applets/clock/clock.ui.h:8
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Общие"
@@ -432,7 +431,8 @@ msgstr "Если этот ключ установлен, показываетс�
 
 #: ../applets/clock/clock.schemas.in.h:21
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Если этот ключ установлен, в апплете показывается не только время, но и дата."
+msgstr ""
+"Если этот ключ установлен, в апплете показывается не только время, но и дата."
 
 #: ../applets/clock/clock.schemas.in.h:22
 msgid "If true, display seconds in time."
@@ -440,31 +440,41 @@ msgstr "Если этот ключ установлен, показываютс�
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Если этот ключ установлен, список встреч в окне календаря разворачивается."
+msgstr ""
+"Если этот ключ установлен, список встреч в окне календаря разворачивается."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Если этот ключ установлен, список дней рождений в окне календаря разворачивается."
+msgstr ""
+"Если этот ключ установлен, список дней рождений в окне календаря "
+"разворачивается."
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
-msgstr "Если этот ключ установлен, список мест в окне календаря разворачивается."
+msgstr ""
+"Если этот ключ установлен, список мест в окне календаря разворачивается."
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Если этот ключ установлен, список задач в окне календаря разворачивается."
+msgstr ""
+"Если этот ключ установлен, список задач в окне календаря разворачивается."
 
 #: ../applets/clock/clock.schemas.in.h:27
 msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Если этот ключ установлен, список прогнозов погоды в окне календаря разворачивается."
+msgstr ""
+"Если этот ключ установлен, список прогнозов погоды в окне календаря "
+"разворачивается."
 
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Если этот ключ установлен, при наведении указателя на апплет часов показывается всплывающая подсказка с датой."
+msgstr ""
+"Если этот ключ установлен, при наведении указателя на апплет часов "
+"показывается всплывающая подсказка с датой."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
-msgstr "Если этот ключ установлен, рядом со значком погоды показывается температура."
+msgstr ""
+"Если этот ключ установлен, рядом со значком погоды показывается температура."
 
 #: ../applets/clock/clock.schemas.in.h:30
 msgid "If true, show week numbers in the calendar."
@@ -515,24 +525,66 @@ msgid "The unit to use when showing wind speed."
 msgstr "Единица измерения, используемая для скорости ветра."
 
 #: ../applets/clock/clock.schemas.in.h:42
-msgid "The use of this key was deprecated in GNOME 2.22 with the use of an internal time configuration tool. The schema is retained for compatibility with older versions."
-msgstr "Использование этого ключа было объявлено устаревшим в GNOME 2.22 с помощью внутренних инструментов конфигурирования. Эта схема остаётся для совместимости с предыдущими версиями."
+msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Использование этого ключа было объявлено устаревшим в GNOME 2.22 с помощью "
+"внутренних инструментов конфигурирования. Эта схема остаётся для "
+"совместимости с предыдущими версиями."
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid "The use of this key was deprecated in GNOME 2.28 in favour of the use of timezones. The schema is retained for compatibility with older versions."
-msgstr "Использовать этот ключ не рекомендуется начиная с GNOME версии 2.28. Предпочтительнее пользоваться настройками часовых поясов. Данный ключ остаётся только для совместимости с предыдущими версиями."
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Использовать этот ключ не рекомендуется начиная с GNOME версии 2.28. "
+"Предпочтительнее пользоваться настройками часовых поясов. Данный ключ "
+"остаётся только для совместимости с предыдущими версиями."
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
-msgstr "Использовать этот ключ не рекомендуется начиная с GNOME версии 2.6. Предпочтительнее использовать ключ «format». Данный ключ остаётся только для совместимости с предыдущими версиями."
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Использовать этот ключ не рекомендуется начиная с GNOME версии 2.6. "
+"Предпочтительнее использовать ключ «format». Данный ключ остаётся только для "
+"совместимости с предыдущими версиями."
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
-msgstr "Этот ключ определяет формат, используемый апплетом часов, когда ключ формата установлен в значение «custom». Можно использовать последовательности, понимаемые функцией strftime(), для достижения желаемого формата. Для получения дополнительной информации смотрите руководство по функции strftime()."
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"Этот ключ определяет формат, используемый апплетом часов, когда ключ формата "
+"установлен в значение «custom». Можно использовать последовательности, "
+"понимаемые функцией strftime(), для достижения желаемого формата. Для "
+"получения дополнительной информации смотрите руководство по функции strftime"
+"()."
 
 #: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
-msgstr "Этот ключ определяет формат часов, используемый апплетом часов. Возможные значения: «12-hour», «24-hour», «internet», «unix» и «custom». Если этот ключ установлен в значение «internet», часы будут отображать время Интернета. В этой системе день делится на 1000 «ударов» (beats). Часовые пояса в этой системе отсутствуют, так что время одинаково во всём мире. Если ключ установлен в значение «unix», часы будут отображать время в секундах с начала «эпохи», то есть 1 января 1970 года. Если ключ установлен в значение «custom», часы будут отображать время в соответствии с форматом, определённым ключом «custom_format»."
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Этот ключ определяет формат часов, используемый апплетом часов. Возможные "
+"значения: «12-hour», «24-hour», «internet», «unix» и «custom». Если этот "
+"ключ установлен в значение «internet», часы будут отображать время "
+"Интернета. В этой системе день делится на 1000 «ударов» (beats). Часовые "
+"пояса в этой системе отсутствуют, так что время одинаково во всём мире. Если "
+"ключ установлен в значение «unix», часы будут отображать время в секундах с "
+"начала «эпохи», то есть 1 января 1970 года. Если ключ установлен в значение "
+"«custom», часы будут отображать время в соответствии с форматом, "
+"определённым ключом «custom_format»."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -615,16 +667,14 @@ msgstr "%s, ощущается как %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Восход: %s / Заход: %s"
 
-#: ../applets/clock/clock-utils.c:93
-#: ../applets/fish/fish.c:168
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
 #: ../applets/wncklet/wncklet.c:74
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Не удалось показать документ справки «%s»"
 
-#: ../applets/clock/clock-utils.c:122
-#: ../applets/fish/fish.c:194
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
 #: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "Произошла ошибка при отображении документа справки"
@@ -646,8 +696,7 @@ msgstr ""
 msgid "Images"
 msgstr "Изображения"
 
-#: ../applets/fish/fish.c:575
-#: ../applets/fish/fish.c:691
+#: ../applets/fish/fish.c:575 ../applets/fish/fish.c:691
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Рыбка по имени %s"
@@ -721,8 +770,7 @@ msgstr "Посмотри на сегодняшнее число!"
 msgid "%s the Fish, the fortune teller"
 msgstr "Рыбка по имени %s, гадалка"
 
-#: ../applets/fish/fish.ui.h:1
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
@@ -771,7 +819,9 @@ msgid "seconds"
 msgstr "секунд"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 msgstr "Рыбка без имени — скучная рыбка. Оживите рыбку, дав ей имя."
 
 #: ../applets/fish/fish.schemas.in.h:2
@@ -783,8 +833,11 @@ msgid "Frames in fish's animation"
 msgstr "Число кадров в анимации рыбки"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Если этот ключ установлен, на вертикальных панелях анимация будет отображаться в повёрнутом виде."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Если этот ключ установлен, на вертикальных панелях анимация будет "
+"отображаться в повёрнутом виде."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -803,20 +856,31 @@ msgid "The fish's name"
 msgstr "Имя рыбки"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
 msgstr "Этот ключ определяет команду, выполняемую при щелчке на рыбке."
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Этот ключ определяет имя файла изображения, которое будет использоваться для отображения анимации апплета рыбки, относительно каталога изображений (pixmap)."
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Этот ключ определяет имя файла изображения, которое будет использоваться для "
+"отображения анимации апплета рыбки, относительно каталога изображений "
+"(pixmap)."
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid "This key specifies the number of frames that will be displayed in the fish's animation."
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr "Этот ключ определяет число кадров, используемых в анимации рыбки."
 
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Этот ключ определяет количество секунд, в течение которых отображается каждый кадр."
+msgstr ""
+"Этот ключ определяет количество секунд, в течение которых отображается "
+"каждый кадр."
 
 #: ../applets/notification_area/main.c:231
 msgid "Panel Notification Area"
@@ -844,8 +908,12 @@ msgid "Show Desktop Button"
 msgstr "Кнопка расчистки рабочего стола"
 
 #: ../applets/wncklet/showdesktop.c:509
-msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
-msgstr "Либо менеджер окон не поддерживает кнопку расчистки рабочего стола, либо менеджер окон не запущен вовсе."
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Либо менеджер окон не поддерживает кнопку расчистки рабочего стола, либо "
+"менеджер окон не запущен вовсе."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -892,16 +960,28 @@ msgid "_Never group windows"
 msgstr "Никогда _не группировать окна"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Определяет, когда группировать окна одинаковых приложений в списке окон. Допустимые значения: «never», «auto» и «always»."
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Определяет, когда группировать окна одинаковых приложений в списке окон. "
+"Допустимые значения: «never», «auto» и «always»."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
-msgstr "Если этот ключ установлен, список окон будет отображать окна со всех рабочих мест, а не только с текущего."
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Если этот ключ установлен, список окон будет отображать окна со всех рабочих "
+"мест, а не только с текущего."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
-msgstr "Если этот ключ установлен, восстановление окна будет происходить на текущее рабочее место, а не на исходное."
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Если этот ключ установлен, восстановление окна будет происходить на текущее "
+"рабочее место, а не на исходное."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -920,8 +1000,12 @@ msgid "Show windows from all workspaces"
 msgstr "Показывать окна со всех рабочих мест"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
-msgstr "Использовать этот ключ в среде GNOME версии начиная с 2.20 не рекомендуется. Данный ключ остаётся только для совместимости с предыдущими версиями."
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"Использовать этот ключ в среде GNOME версии начиная с 2.20 не рекомендуется. "
+"Данный ключ остаётся только для совместимости с предыдущими версиями."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -945,17 +1029,24 @@ msgstr "столбцов(а)"
 #: ../applets/wncklet/workspace-switcher.c:385
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Произошла ошибка при загрузке значения num_rows для апплета переключателя рабочих мест: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения num_rows для апплета переключателя "
+"рабочих мест: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:396
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Произошла ошибка при загрузке значения display_workspace_names для апплета переключателя рабочих мест: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения display_workspace_names для апплета "
+"переключателя рабочих мест: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:411
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Произошла ошибка при загрузке значения display_all_workspaces для апплета переключателя рабочих мест: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения display_all_workspaces для апплета "
+"переключателя рабочих мест: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
@@ -1002,20 +1093,37 @@ msgid "Display workspace names"
 msgstr "Показывать названия рабочих мест"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
-msgstr "Если этот ключ установлен, переключатель будет показывать все рабочие места. Иначе будет показано только текущее."
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Если этот ключ установлен, переключатель будет показывать все рабочие места. "
+"Иначе будет показано только текущее."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
-msgstr "Если этот ключ установлен, переключатель будет показывать названия рабочих мест. Если не установлен, на рабочих местах будут показываться окна. Этот ключ работает только тогда, когда используется менеджер окон Metacity."
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
+msgstr ""
+"Если этот ключ установлен, переключатель будет показывать названия рабочих "
+"мест. Если не установлен, на рабочих местах будут показываться окна. Этот "
+"ключ работает только тогда, когда используется менеджер окон Metacity."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "Строк в переключателе"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
-msgstr "Этот ключ определяет, во сколько рядов (при горизонтальном размещении) или столбцов (при вертикальном размещении) переключатель будет показывать рабочие места. Имеет смысл только если установлен ключ display_all_workspaces."
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Этот ключ определяет, во сколько рядов (при горизонтальном размещении) или "
+"столбцов (при вертикальном размещении) переключатель будет показывать "
+"рабочие места. Имеет смысл только если установлен ключ "
+"display_all_workspaces."
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1118,18 +1226,15 @@ msgstr "Не найдено приложения для поиска в папк
 msgid "???"
 msgstr "без имени"
 
-#: ../gnome-panel/applet.c:595
-#: ../libpanel-applet/panel-applet.c:170
+#: ../gnome-panel/applet.c:595 ../libpanel-applet/panel-applet.c:170
 msgid "_Remove From Panel"
 msgstr "_Удалить с панели"
 
-#: ../gnome-panel/applet.c:606
-#: ../libpanel-applet/panel-applet.c:173
+#: ../gnome-panel/applet.c:606 ../libpanel-applet/panel-applet.c:173
 msgid "_Move"
 msgstr "Пере_местить"
 
-#: ../gnome-panel/applet.c:623
-#: ../libpanel-applet/panel-applet.c:179
+#: ../gnome-panel/applet.c:623 ../libpanel-applet/panel-applet.c:179
 msgid "Loc_k To Panel"
 msgstr "При_крепить к панели"
 
@@ -1137,8 +1242,7 @@ msgstr "При_крепить к панели"
 msgid "Cannot find an empty spot"
 msgstr "Не удалось найти свободное место"
 
-#: ../gnome-panel/drawer.c:350
-#: ../gnome-panel/panel-addto.c:174
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:174
 #: ../gnome-panel/panel-toplevel.c:1654
 msgid "Drawer"
 msgstr "Ящик"
@@ -1147,15 +1251,13 @@ msgstr "Ящик"
 msgid "_Add to Drawer..."
 msgstr "_Добавить в ящик…"
 
-#: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:807
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
 #: ../gnome-panel/panel-action-button.c:141
 #: ../gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Свойства"
 
-#: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-menu-bar.c:437
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-menu-bar.c:437
 msgid "_Help"
 msgstr "_Справка"
 
@@ -1172,8 +1274,7 @@ msgid "- Edit .desktop files"
 msgstr "— редактирование файлов .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:150
-#: ../gnome-panel/gnome-desktop-item-edit.c:204
-#: ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:204 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Создать кнопку запуска"
 
@@ -1182,17 +1283,19 @@ msgstr "Создать кнопку запуска"
 msgid "Directory Properties"
 msgstr "Свойства каталога"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:181
-#: ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:181 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Свойства кнопки запуска"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
-msgstr "Служит для запуска других приложений из меню и отображения вспомогательных апплетов, например, апплета времени или апплета управления окнами."
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Служит для запуска других приложений из меню и отображения вспомогательных "
+"апплетов, например, апплета времени или апплета управления окнами."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-#: ../gnome-panel/main.c:93
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:93
 msgid "Panel"
 msgstr "Панель"
 
@@ -1227,8 +1330,7 @@ msgstr "_Запустить"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ключ %s не установлен, невозможно загрузить кнопку запуска\n"
 
-#: ../gnome-panel/launcher.c:966
-#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1300,7 +1402,8 @@ msgstr "Выполнить программу…"
 
 #: ../gnome-panel/panel-action-button.c:326
 msgid "Run an application by typing a command or choosing from a list"
-msgstr "Выполнить программу, заданную введённой командой или выбранную из списка"
+msgstr ""
+"Выполнить программу, заданную введённой командой или выбранную из списка"
 
 #: ../gnome-panel/panel-action-button.c:334
 msgid "Search for Files..."
@@ -1352,8 +1455,7 @@ msgstr "Кнопка запуска…"
 msgid "Copy a launcher from the applications menu"
 msgstr "Скопировать кнопку запуска из меню приложений"
 
-#: ../gnome-panel/panel-addto.c:141
-#: ../gnome-panel/panel-menu-button.c:1116
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1116
 msgid "Main Menu"
 msgstr "Главное меню"
 
@@ -1418,8 +1520,12 @@ msgid "Panel object has quit unexpectedly"
 msgstr "Объект панели неожиданно завершил работу"
 
 #: ../gnome-panel/panel-applet-frame.c:749
-msgid "If you reload a panel object, it will automatically be added back to the panel."
-msgstr "Если вы перезагрузите объект панели, он будет автоматически добавлен обратно на панель."
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+"Если вы перезагрузите объект панели, он будет автоматически добавлен обратно "
+"на панель."
 
 #: ../gnome-panel/panel-applet-frame.c:755
 msgid "_Don't Reload"
@@ -1531,32 +1637,61 @@ msgid "Could not display help document"
 msgstr "Не удалось показать документ справки"
 
 #: ../gnome-panel/panel-force-quit.c:77
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Щёлкните на окне приложения, которые хотите принудительно завершить. Чтобы отменить, нажмите клавишу Esc."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Щёлкните на окне приложения, которые хотите принудительно завершить. Чтобы "
+"отменить, нажмите клавишу Esc."
 
 #: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Завершить работу этого приложения принудительно?"
 
 #: ../gnome-panel/panel-force-quit.c:225
-msgid "If you choose to force an application to exit, unsaved changes in any open documents in it might get lost."
-msgstr "Если вы завершите приложение принудительно, все изменения в открытых в нём документах могут быть потеряны."
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Если вы завершите приложение принудительно, все изменения в открытых в нём "
+"документах могут быть потеряны."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
-msgstr "Логический флаг, указывающий, была ли предыдущая конфигурация пользователя из /apps/panel/profiles/default перенесена на новое место в /apps/panel."
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"Логический флаг, указывающий, была ли предыдущая конфигурация пользователя "
+"из /apps/panel/profiles/default перенесена на новое место в /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Список идентификаторов панелей. Каждый идентификатор соответствует своей отдельной панели верхнего уровня. Параметры каждой из этих панелей хранятся в /apps/panel/toplevels/$(id)."
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"Список идентификаторов панелей. Каждый идентификатор соответствует своей "
+"отдельной панели верхнего уровня. Параметры каждой из этих панелей хранятся "
+"в /apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
-msgstr "Список идентификаторов апплетов панели. Каждый идентификатор обозначает отдельный апплет на панели. Параметры каждого из этих апплетов хранятся в /apps/panel/applets/$(id)."
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"Список идентификаторов апплетов панели. Каждый идентификатор обозначает "
+"отдельный апплет на панели. Параметры каждого из этих апплетов хранятся в /"
+"apps/panel/applets/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Список идентификаторов объектов панели. Каждый идентификатор обозначает отдельный объект панели (например, кнопку запуска, кнопку команды или меню). Параметры каждого из этих объектов хранятся в /apps/panel/objects/$(id)."
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"Список идентификаторов объектов панели. Каждый идентификатор обозначает "
+"отдельный объект панели (например, кнопку запуска, кнопку команды или меню). "
+"Параметры каждого из этих объектов хранятся в /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1571,16 +1706,31 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Разворачивать список программ в диалоге «Выполнить программу»"
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Если этот ключ установлен, в диалоге «Выполнить программу» будет включено автоматическое дополнение."
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Если этот ключ установлен, в диалоге «Выполнить программу» будет включено "
+"автоматическое дополнение."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
-msgstr "Если этот ключ установлен, список «Известные приложения» в диалоге «Выполнить программу» по умолчанию разворачивается. Этот ключ имеет смысл только в том случае, если установлен ключ enable_program_list."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Если этот ключ установлен, список «Известные приложения» в диалоге "
+"«Выполнить программу» по умолчанию разворачивается. Этот ключ имеет смысл "
+"только в том случае, если установлен ключ enable_program_list."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
-msgstr "Если этот ключ установлен, то в диалоге «Выполнить программу» становится доступным список «Известные приложения». Будет ли он развёрнут по умолчанию, зависит от ключа show_program_list."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Если этот ключ установлен, то в диалоге «Выполнить программу» становится "
+"доступным список «Известные приложения». Будет ли он развёрнут по умолчанию, "
+"зависит от ключа show_program_list."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1599,8 +1749,17 @@ msgid "Panel object ID list"
 msgstr "Список идентификаторов объектов панели"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
-msgstr "Список идентификаторов апплетов (IID), которые панель будет игнорировать. Таким образом можно запретить загрузку некоторых апплетов или их отображение в меню. Например, чтобы запретить апплет командной строки, добавьте к этому списку строку «OAFIID:GNOME_MiniCommanderApplet». Чтобы изменения в списке вступили в силу, панель нужно перезапустить."
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"Список идентификаторов апплетов (IID), которые панель будет игнорировать. "
+"Таким образом можно запретить загрузку некоторых апплетов или их отображение "
+"в меню. Например, чтобы запретить апплет командной строки, добавьте к этому "
+"списку строку «OAFIID:GNOME_MiniCommanderApplet». Чтобы изменения в списке "
+"вступили в силу, панель нужно перезапустить."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1644,36 +1803,68 @@ msgid "Highlight launchers on mouseover"
 msgstr "Подсвечивать кнопки запуска при наведении мыши"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
-msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
-msgstr "Если этот ключ установлен, при попытке удаления панели будет запрашиваться подтверждение."
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Если этот ключ установлен, при попытке удаления панели будет запрашиваться "
+"подтверждение."
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
-msgstr "Если этот ключ установлен, ящик будет автоматически закрываться при нажатии на одну из кнопок запуска в нём."
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Если этот ключ установлен, ящик будет автоматически закрываться при нажатии "
+"на одну из кнопок запуска в нём."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Если этот ключ установлен, кнопка запуска будет подсвечиваться при наведении на неё указателя."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Если этот ключ установлен, кнопка запуска будет подсвечиваться при наведении "
+"на неё указателя."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
-msgstr "Если этот ключ установлен, панель не будет позволять принудительно завершать приложение. Соответствующая кнопка будет недоступна."
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять принудительно завершать "
+"приложение. Соответствующая кнопка будет недоступна."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
-msgstr "Если этот ключ установлен, панель не будет позволять завершать сеанс. Соответствующие пункты меню будут недоступны."
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять завершать сеанс. "
+"Соответствующие пункты меню будут недоступны."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
-msgstr "Если этот ключ установлен, панель не будет позволять производить изменения в своих настройках. Однако отдельные апплеты могут потребовать отдельной блокировки. Чтобы этот ключ вступил в силу, панель необходимо перезапустить."
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять производить изменения в "
+"своих настройках. Однако отдельные апплеты могут потребовать отдельной "
+"блокировки. Чтобы этот ключ вступил в силу, панель необходимо перезапустить."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
-msgstr "Если этот ключ установлен, для объектов панели показываются всплывающие подсказки."
+msgstr ""
+"Если этот ключ установлен, для объектов панели показываются всплывающие "
+"подсказки."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid "This key is deprecated as it cannot be used to implement proper lockdown. The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
-msgstr "Этот ключ устарел, так как не может быть использован для осуществления надлежащей блокировка. Вместо него должен использоваться ключ /desktop/gnome/lockdown/disable_lock_screen."
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Этот ключ устарел, так как не может быть использован для осуществления "
+"надлежащей блокировка. Вместо него должен использоваться ключ /desktop/gnome/"
+"lockdown/disable_lock_screen."
 
 #: ../gnome-panel/panel-menu-bar.c:119
 msgid "Browse and run installed applications"
@@ -1685,14 +1876,14 @@ msgstr "Обратиться к документам, папкам и сетев
 
 #: ../gnome-panel/panel-menu-bar.c:123
 msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Изменить внешний вид и поведение рабочего стола, получить справку или выйти"
+msgstr ""
+"Изменить внешний вид и поведение рабочего стола, получить справку или выйти"
 
 #: ../gnome-panel/panel-menu-bar.c:191
 msgid "Applications"
 msgstr "Приложения"
 
-#: ../gnome-panel/panel-menu-bar.c:430
-#: ../gnome-panel/panel-menu-button.c:683
+#: ../gnome-panel/panel-menu-bar.c:430 ../gnome-panel/panel-menu-button.c:683
 msgid "_Edit Menus"
 msgstr "_Изменить меню"
 
@@ -1701,8 +1892,7 @@ msgid "Bookmarks"
 msgstr "Закладки"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:495
-#: ../gnome-panel/panel.c:554
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:554
 #, c-format
 msgid "Open '%s'"
 msgstr "Открыть «%s»"
@@ -1738,8 +1928,7 @@ msgstr "Сетевые ресурсы"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1050
-#: ../gnome-panel/panel.c:603
+#: ../gnome-panel/panel-menu-items.c:1050 ../gnome-panel/panel.c:603
 msgid "Open your personal folder"
 msgstr "Открыть вашу личную папку"
 
@@ -1757,29 +1946,28 @@ msgstr "Открыть рабочий стол как папку"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1086
-#: ../gnome-panel/panel.c:612
+#: ../gnome-panel/panel-menu-items.c:1086 ../gnome-panel/panel.c:612
 #| msgid "Computer Clock"
 msgid "Computer"
 msgstr "Компьютер"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1092
-#: ../gnome-panel/panel.c:613
-msgid "Browse all local and remote disks and folders accessible from this computer"
-msgstr "Просмотреть все локальные и удалённые диски и папки, доступные с этого компьютера"
+#: ../gnome-panel/panel-menu-items.c:1092 ../gnome-panel/panel.c:613
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+"Просмотреть все локальные и удалённые диски и папки, доступные с этого "
+"компьютера"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1102
-#: ../gnome-panel/panel.c:620
+#: ../gnome-panel/panel-menu-items.c:1102 ../gnome-panel/panel.c:620
 #| msgid "Network Places"
 msgid "Network"
 msgstr "Сеть"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1103
-#: ../gnome-panel/panel.c:621
+#: ../gnome-panel/panel-menu-items.c:1103 ../gnome-panel/panel.c:621
 msgid "Browse bookmarked and local network locations"
 msgstr "Просмотреть закладки и локальные сетевые ресурсы"
 
@@ -1815,7 +2003,8 @@ msgstr "Завершить сеанс пользователя %s…"
 #: ../gnome-panel/panel-menu-items.c:1574
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
-msgstr "Завершить сеанс пользователя %s и войти под именем другого пользователя"
+msgstr ""
+"Завершить сеанс пользователя %s и войти под именем другого пользователя"
 
 #: ../gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1834,20 +2023,42 @@ msgid "Icon used for object's button"
 msgstr "Значок, используемый для кнопки объекта"
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Если этот ключ установлен, то значение из ключа custom_icon используется как пользовательский значок для кнопки. Если не установлен, то значение ключа custom_icon будет проигнорировано. Этот параметр имеет смысл, только если ключ object_type содержит значение «menu-object» или «drawer-object»."
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Если этот ключ установлен, то значение из ключа custom_icon используется как "
+"пользовательский значок для кнопки. Если не установлен, то значение ключа "
+"custom_icon будет проигнорировано. Этот параметр имеет смысл, только если "
+"ключ object_type содержит значение «menu-object» или «drawer-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
-msgstr "Если этот ключ установлен, то значение из ключа menu_path используется как путь, из которого будет сконструировано меню. Если не установлен, то значение ключа menu_path будет проигнорировано. Этот параметр имеет смысл только если ключ object_type содержит значение «menu-object»."
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Если этот ключ установлен, то значение из ключа menu_path используется как "
+"путь, из которого будет сконструировано меню. Если не установлен, то "
+"значение ключа menu_path будет проигнорировано. Этот параметр имеет смысл "
+"только если ключ object_type содержит значение «menu-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
-msgstr "Если этот ключ установлен, то позиция объекта интерпретируется относительно правого (или нижнего для вертикальных панелей) края панели."
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Если этот ключ установлен, то позиция объекта интерпретируется относительно "
+"правого (или нижнего для вертикальных панелей) края панели."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
-msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
-msgstr "Если этот ключ установлен, то пользователь не может перемещать апплет, не отдав перед этим команду «Разблокировать»."
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Если этот ключ установлен, то пользователь не может перемещать апплет, не "
+"отдав перед этим команду «Разблокировать»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Interpret position relative to bottom/right edge"
@@ -1878,12 +2089,22 @@ msgid "Panel object type"
 msgstr "Тип объекта панели"
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
-msgstr "Тип действия, реализуемого кнопкой. Допустимые значения: «lock», «logout», «run», «search» and «screenshot». Этот параметр имеет смысл только в том случае, если object_type содержит «action-applet»."
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Тип действия, реализуемого кнопкой. Допустимые значения: «lock», «logout», "
+"«run», «search» and «screenshot». Этот параметр имеет смысл только в том "
+"случае, если object_type содержит «action-applet»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
-msgstr "Идентификатор панели, присоединенной к данному ящику. Этот параметр имеет смысл только в том случае, если ключ object_type содержит «drawer-object»."
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Идентификатор панели, присоединенной к данному ящику. Этот параметр имеет "
+"смысл только в том случае, если ключ object_type содержит «drawer-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1894,40 +2115,86 @@ msgstr "Идентификатор панели верхнего уровня, �
 #| "The implementation ID of the applet - e.g. \"ClockAppletFactory::"
 #| "ClockApplet\". This key is only relevant if the object_type key is "
 #| "\"bonobo-applet\"."
-msgid "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet\". This key is only relevant if the object_type key is \"external-applet\" (or the deprecated \"bonobo-applet\")."
-msgstr "Идентификатор реализации апплета, например, «ClockAppletFactory::ClockApplet». Этот ключ имеет смысл только в том случае, если ключ object_type содержит «external-applet» (или устаревшее «bonobo-applet»)."
+msgid ""
+"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
+msgstr ""
+"Идентификатор реализации апплета, например, «ClockAppletFactory::"
+"ClockApplet». Этот ключ имеет смысл только в том случае, если ключ "
+"object_type содержит «external-applet» (или устаревшее «bonobo-applet»)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
-msgstr "Местоположение файла .desktop, описывающего кнопку запуска. Этот параметр имеет смысл только в том случае, если тип объекта (object_type) содержит «launcher-object»."
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Местоположение файла .desktop, описывающего кнопку запуска. Этот параметр "
+"имеет смысл только в том случае, если тип объекта (object_type) содержит "
+"«launcher-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
-msgstr "Местоположение файла изображения, используемого как значок для кнопки объекта. Этот ключ имеет смысл только в том случае, если ключ object_type содержит «drawer-object» и ключ use_custom_icon установлен."
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Местоположение файла изображения, используемого как значок для кнопки "
+"объекта. Этот ключ имеет смысл только в том случае, если ключ object_type "
+"содержит «drawer-object» и ключ use_custom_icon установлен."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
-msgstr "Путь, из которого будет построено содержимое меню. Этот ключ имеет смысл только в том случае, если ключ use_menu_path установлен и ключ object_type имеет значение «menu-object»."
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Путь, из которого будет построено содержимое меню. Этот ключ имеет смысл "
+"только в том случае, если ключ use_menu_path установлен и ключ object_type "
+"имеет значение «menu-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
-msgstr "Положение объекта на панели. Положение определяется количеством пикселей от левого (или верхнего для вертикальных панелей) края панели."
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Положение объекта на панели. Положение определяется количеством пикселей от "
+"левого (или верхнего для вертикальных панелей) края панели."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr "Текст, используемый в качестве подсказки для данного ящика. Этот параметр имеет смысл только в том случае, если ключ object_type имеет значение «drawer-object» или «menu-object»."
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Текст, используемый в качестве подсказки для данного ящика. Этот параметр "
+"имеет смысл только в том случае, если ключ object_type имеет значение "
+"«drawer-object» или «menu-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 #| msgid ""
 #| "The type of this panel object. Possible values are \"drawer-object\", "
 #| "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
 #| "\" and \"menu-bar\"."
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"menu-bar\" and \"separator\"."
-msgstr "Тип объекта панели. Допустимые значения: «drawer-object», «menu-object», «launcher-object», «external-applet», «action-applet», «menu-bar» и «separator»."
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
+msgstr ""
+"Тип объекта панели. Допустимые значения: «drawer-object», «menu-object», "
+"«launcher-object», «external-applet», «action-applet», «menu-bar» и "
+"«separator»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
-msgid "This key is deprecated, following the migration to a new library for applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "Этот ключ устарел после перевода апплетов на новую библиотеку. Идентификатор реализации Bonobo апплета, например, «OAFIID:GNOME_ClockApplet». Этот ключ имеет смысл только в том случае, если ключ object_type содержит «bonobo-applet»."
+msgid ""
+"This key is deprecated, following the migration to a new library for "
+"applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
+"GNOME_ClockApplet\". This key is only relevant if the object_type key is "
+"\"bonobo-applet\"."
+msgstr ""
+"Этот ключ устарел после перевода апплетов на новую библиотеку. Идентификатор "
+"реализации Bonobo апплета, например, «OAFIID:GNOME_ClockApplet». Этот ключ "
+"имеет смысл только в том случае, если ключ object_type содержит «bonobo-"
+"applet»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Tooltip displayed for drawer or menu"
@@ -1945,27 +2212,27 @@ msgstr "Использовать другой значок для кнопки �
 msgid "Use custom path for menu contents"
 msgstr "Использовать другой путь к содержимому меню"
 
-#: ../gnome-panel/panel-profile.c:758
-#: ../gnome-panel/panel-profile.c:786
-#: ../gnome-panel/panel-profile.c:825
-#: ../gnome-panel/panel-profile.c:1705
+#: ../gnome-panel/panel-profile.c:758 ../gnome-panel/panel-profile.c:786
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1705
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Произошла ошибка при чтении из GConf строкового значения «%s»: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:802
-#: ../gnome-panel/panel-profile.c:1601
-#: ../gnome-panel/panel-profile.c:1674
-#: ../gnome-panel/panel-profile.c:1756
+#: ../gnome-panel/panel-profile.c:802 ../gnome-panel/panel-profile.c:1601
+#: ../gnome-panel/panel-profile.c:1674 ../gnome-panel/panel-profile.c:1756
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Произошла ошибка при чтении из GConf целочисленного значения «%s»: %s"
 
 #: ../gnome-panel/panel-profile.c:1611
 #, c-format
-msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
-msgstr "Панель «%s» настроена так, чтобы отображаться на экране %d, который в данный момент недоступен. Панель не загружена."
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"Панель «%s» настроена так, чтобы отображаться на экране %d, который в данный "
+"момент недоступен. Панель не загружена."
 
 #: ../gnome-panel/panel-profile.c:1689
 #, c-format
@@ -2112,8 +2379,7 @@ msgstr "Заполнять"
 msgid "pixels"
 msgstr "пикселей"
 
-#: ../gnome-panel/panel-recent.c:78
-#: ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Не удалось открыть недавно использовавшийся документ «%s»"
@@ -2135,7 +2401,8 @@ msgid ""
 msgstr ""
 "При очистке списка недавно использовавшихся документов будут очищены:\n"
 "• Все элементы меню Переход → Недавние документы.\n"
-"• Все элементы из списка недавно использовавшихся документов во всех приложениях."
+"• Все элементы из списка недавно использовавшихся документов во всех "
+"приложениях."
 
 #: ../gnome-panel/panel-recent.c:161
 msgid "Clear Recent Documents"
@@ -2180,19 +2447,29 @@ msgstr "Будет выполнена команда: «%s»"
 #: ../gnome-panel/panel-run-dialog.c:1722
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Список URI, брошенный на диалог запуска, имеет неверный формат (%d) или длину (%d)\n"
+msgstr ""
+"Список URI, брошенный на диалог запуска, имеет неверный формат (%d) или "
+"длину (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.c:2040
 msgid "Could not display run dialog"
 msgstr "Не удалось показать диалог запуска"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
-msgid "Click this button to browse for a file whose name to append to the command string."
-msgstr "Нажмите эту кнопку, чтобы выбрать файл, имя которого будет добавлено к командной строке."
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Нажмите эту кнопку, чтобы выбрать файл, имя которого будет добавлено к "
+"командной строке."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:2
-msgid "Click this button to run the selected application or the command in the command entry field."
-msgstr "Нажмите эту кнопку, чтобы запустить выбранное приложение или выполнить команду, указанную в поле ввода."
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Нажмите эту кнопку, чтобы запустить выбранное приложение или выполнить "
+"команду, указанную в поле ввода."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
@@ -2216,7 +2493,8 @@ msgstr "С _файлом…"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
-msgstr "Поставьте флажок в этом поле, чтобы запустить команду в окне терминала."
+msgstr ""
+"Поставьте флажок в этом поле, чтобы запустить команду в окне терминала."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
@@ -2248,15 +2526,18 @@ msgid "Specify an applet IID to load"
 msgstr "Указать идентификатор (IID) апплета для загрузки"
 
 #: ../gnome-panel/panel-test-applets.c:37
-msgid "Specify a gconf location in which the applet preferences should be stored"
-msgstr "Указать местоположение в системе GConf, где будут сохранены параметры апплета"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+"Указать местоположение в системе GConf, где будут сохранены параметры апплета"
 
 #: ../gnome-panel/panel-test-applets.c:38
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "Указать начальный размер апплета (xx-small, medium, large и так далее)"
 
 #: ../gnome-panel/panel-test-applets.c:39
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Указать начальное расположение апплета (top, bottom, left или right)"
 
 #: ../gnome-panel/panel-test-applets.c:63
@@ -2431,48 +2712,112 @@ msgid "Fit image to panel"
 msgstr "Подгонять размер изображения под размер панели"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
-msgstr "Если этот ключ установлен, то на кнопки скрытия/раскрытия будут нанесены стрелки. Этот параметр имеет смысл только в том случае, если установлен ключ enable_buttons."
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Если этот ключ установлен, то на кнопки скрытия/раскрытия будут нанесены "
+"стрелки. Этот параметр имеет смысл только в том случае, если установлен ключ "
+"enable_buttons."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Если этот ключ установлен, то на панели будут кнопки скрытия/раскрытия. Они используются для «вывода» панели за пределы экрана, так что остаётся видимой только кнопка, позволяющая «развернуть» панель обратно."
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Если этот ключ установлен, то на панели будут кнопки скрытия/раскрытия. Они "
+"используются для «вывода» панели за пределы экрана, так что остаётся видимой "
+"только кнопка, позволяющая «развернуть» панель обратно."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
-msgstr "Если этот ключ установлен, то скрытие и раскрытие панели будет анимированным, а не моментальным."
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Если этот ключ установлен, то скрытие и раскрытие панели будет "
+"анимированным, а не моментальным."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid "If true, the background image will be rotated when the panel is oriented vertically."
-msgstr "Если этот ключ установлен, то фоновое изображение будет повёрнуто, если панель ориентирована вертикально."
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Если этот ключ установлен, то фоновое изображение будет повёрнуто, если "
+"панель ориентирована вертикально."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
-msgstr "Если этот ключ установлен, то фоновое изображение будет масштабироваться (с сохранением соотношения высоты к ширине) до высоты панели (если панель горизонтальная)."
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Если этот ключ установлен, то фоновое изображение будет масштабироваться (с "
+"сохранением соотношения высоты к ширине) до высоты панели (если панель "
+"горизонтальная)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
-msgstr "Если этот ключ установлен, размер изображения будет изменен до размеров панели. Соотношение высоты к ширине изображения при этом не сохраняется."
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Если этот ключ установлен, размер изображения будет изменен до размеров "
+"панели. Соотношение высоты к ширине изображения при этом не сохраняется."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
-msgstr "Если этот ключ установлен, то панель будет автоматически скрываться в угол экрана при покидании указателем мыши пространства над панелью. Если поместить указатель в этот угол, панель снова появится."
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Если этот ключ установлен, то панель будет автоматически скрываться в угол "
+"экрана при покидании указателем мыши пространства над панелью. Если "
+"поместить указатель в этот угол, панель снова появится."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
-msgstr "Если этот ключ установлен, то панель будет занимать всю ширину экрана (или высоту, если панель вертикальная). Такие панели могут размещаться только по краям экрана. Если этот ключ не установлен, то панель будет занимать лишь столько пространства, сколько необходимо для размещения находящихся на ней апплетов и кнопок."
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Если этот ключ установлен, то панель будет занимать всю ширину экрана (или "
+"высоту, если панель вертикальная). Такие панели могут размещаться только по "
+"краям экрана. Если этот ключ не установлен, то панель будет занимать лишь "
+"столько пространства, сколько необходимо для размещения находящихся на ней "
+"апплетов и кнопок."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
-msgstr "Если этот ключ установлен, то ключи x и x_right игнорируются и панель помещается в центр оси X экрана. Если размер панели изменяется, она всё равно остаётся на том же месте (иными словами — расширяется одновременно в обе стороны). Если ключ не установлен, то ключи x и x_right определяют положение панели."
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Если этот ключ установлен, то ключи x и x_right игнорируются и панель "
+"помещается в центр оси X экрана. Если размер панели изменяется, она всё "
+"равно остаётся на том же месте (иными словами — расширяется одновременно в "
+"обе стороны). Если ключ не установлен, то ключи x и x_right определяют "
+"положение панели."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
-msgstr "Если этот ключ установлен, то ключи y и y_bottom игнорируются и панель помещается в центр оси Y экрана. Если размер панели изменяется, она всё равно остаётся на том же месте (иными словами — расширяется одновременно в обе стороны). Если ключ не установлен, то ключи y и y_bottom определяют положение панели."
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Если этот ключ установлен, то ключи y и y_bottom игнорируются и панель "
+"помещается в центр оси Y экрана. Если размер панели изменяется, она всё "
+"равно остаётся на том же месте (иными словами — расширяется одновременно в "
+"обе стороны). Если ключ не установлен, то ключи y и y_bottom определяют "
+"положение панели."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
-msgstr "При использовании системы Xinerama можно иметь разные панели на разных мониторах. Этот ключ определяет текущий монитор, на котором находится панель."
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"При использовании системы Xinerama можно иметь разные панели на разных "
+"мониторах. Этот ключ определяет текущий монитор, на котором находится панель."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2503,72 +2848,185 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Указывает цвет фона для панели в формате #RGB."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
-msgstr "Указывает файл, используемый в качестве фонового изображения. Если изображение содержит альфа-канал, то оно будет совмещено на прозрачных участках с изображением фона рабочего стола."
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Указывает файл, используемый в качестве фонового изображения. Если "
+"изображение содержит альфа-канал, то оно будет совмещено на прозрачных "
+"участках с изображением фона рабочего стола."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
-msgstr "Указывает задержку в миллисекундах между появлением указателя мыши в области панели и автоматическим раскрытием этой панели. Имеет смысл только в том случае, если установлен ключ auto_hide."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Указывает задержку в миллисекундах между появлением указателя мыши в области "
+"панели и автоматическим раскрытием этой панели. Имеет смысл только в том "
+"случае, если установлен ключ auto_hide."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
-msgstr "Указывает задержку в миллисекундах между покиданием указателем мыши области над панелью и автоматическим скрытием этой панели. Имеет смысл только в том случае, если установлен ключ auto_hide."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Указывает задержку в миллисекундах между покиданием указателем мыши области "
+"над панелью и автоматическим скрытием этой панели. Имеет смысл только в том "
+"случае, если установлен ключ auto_hide."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr "Указывает количество пикселей, видимых, когда панель автоматически скрывается за границу экрана. Этот ключ имеет смысл только в том случае, если установлен ключ auto_hide."
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Указывает количество пикселей, видимых, когда панель автоматически "
+"скрывается за границу экрана. Этот ключ имеет смысл только в том случае, "
+"если установлен ключ auto_hide."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
-msgstr "Определяет степень непрозрачности фонового цвета. Если цвет хотя бы частично прозрачен (то есть значение этого ключа меньше, чем 65535), то цвет будет совмещён с изображением фона рабочего стола."
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Определяет степень непрозрачности фонового цвета. Если цвет хотя бы частично "
+"прозрачен (то есть значение этого ключа меньше, чем 65535), то цвет будет "
+"совмещён с изображением фона рабочего стола."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "Растянуть изображение по панели"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
-msgstr "Высота панели (или ширина, если панель вертикальная). Панель определяет минимально допустимый размер «на ходу» исходя из размера шрифта и других соображений. Максимальный размер ограничен четвертью высоты экрана (или ширины, для вертикальных панелей)."
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Высота панели (или ширина, если панель вертикальная). Панель определяет "
+"минимально допустимый размер «на ходу» исходя из размера шрифта и других "
+"соображений. Максимальный размер ограничен четвертью высоты экрана (или "
+"ширины, для вертикальных панелей)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Расположение панели по оси X, считая от правой стороны экрана. Если установлено в -1, это значение игнорируется и используется ключ x. Если значение больше 0, тогда игнорируется значение ключа x. Этот ключ имеет эффект только в том случае, если панель не настроена на расширение до размеров экрана. В режиме расширения этот ключ игнорируется, и панель размещается у края экрана в соответствии со значением ключа ориентации."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Расположение панели по оси X, считая от правой стороны экрана. Если "
+"установлено в -1, это значение игнорируется и используется ключ x. Если "
+"значение больше 0, тогда игнорируется значение ключа x. Этот ключ имеет "
+"эффект только в том случае, если панель не настроена на расширение до "
+"размеров экрана. В режиме расширения этот ключ игнорируется, и панель "
+"размещается у края экрана в соответствии со значением ключа ориентации."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Расположение панели по оси X. Этот ключ имеет эффект только в том случае, если панель не настроена на расширение до размеров экрана. В режиме расширения этот ключ игнорируется, и панель размещается у края экрана в соответствии со значением ключа ориентации."
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Расположение панели по оси X. Этот ключ имеет эффект только в том случае, "
+"если панель не настроена на расширение до размеров экрана. В режиме "
+"расширения этот ключ игнорируется, и панель размещается у края экрана в "
+"соответствии со значением ключа ориентации."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Расположение панели по оси Y, считая от низа экрана. Если установлено в -1, это значение игнорируется и используется ключ y. Если значение больше 0, тогда игнорируется значение ключа y. Этот ключ имеет эффект только в том случае, если панель не настроена на расширение до размеров экрана. В режиме расширения этот ключ игнорируется, и панель размещается у края экрана в соответствии со значением ключа ориентации."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Расположение панели по оси Y, считая от низа экрана. Если установлено в -1, "
+"это значение игнорируется и используется ключ y. Если значение больше 0, "
+"тогда игнорируется значение ключа y. Этот ключ имеет эффект только в том "
+"случае, если панель не настроена на расширение до размеров экрана. В режиме "
+"расширения этот ключ игнорируется, и панель размещается у края экрана в "
+"соответствии со значением ключа ориентации."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Расположение панели по оси Y. Этот ключ имеет эффект только в том случае, если панель не настроена на расширение до размеров экрана. В режиме расширения этот ключ игнорируется, и панель размещается у края экрана в соответствии со значением ключа ориентации."
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Расположение панели по оси Y. Этот ключ имеет эффект только в том случае, "
+"если панель не настроена на расширение до размеров экрана. В режиме "
+"расширения этот ключ игнорируется, и панель размещается у края экрана в "
+"соответствии со значением ключа ориентации."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
-msgstr "Ориентация панели. Возможные значения: «top», «bottom», «left», «right». В режиме расширения значение определяет, у какой стороны экрана расположена панель. Если расширение до размеров экрана не используется, то разница между «top» и «bottom» менее важна — оба значения определяют, что это горизонтальная панель, но всё же определяет некоторые аспекты поведения объектов на панели. Например, при значении «top» выпадающее меню у кнопки меню будет ориентировано вниз, тогда как при «bottom» — вверх."
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Ориентация панели. Возможные значения: «top», «bottom», «left», «right». В "
+"режиме расширения значение определяет, у какой стороны экрана расположена "
+"панель. Если расширение до размеров экрана не используется, то разница между "
+"«top» и «bottom» менее важна — оба значения определяют, что это "
+"горизонтальная панель, но всё же определяет некоторые аспекты поведения "
+"объектов на панели. Например, при значении «top» выпадающее меню у кнопки "
+"меню будет ориентировано вниз, тогда как при «bottom» — вверх."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
-msgstr "Скорость, с которой должна производиться анимация. Допустимые значения: «slow» (медленно), «medium» (средне) и «fast» (быстро). Этот ключ действует только в том случае, если установлен ключ enable_animations."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Скорость, с которой должна производиться анимация. Допустимые значения: "
+"«slow» (медленно), «medium» (средне) и «fast» (быстро). Этот ключ действует "
+"только в том случае, если установлен ключ enable_animations."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
-msgstr "Удобное для чтения человеком имя панели. Основное назначение — служить заголовком окна панели, что полезно при переключении между панелями."
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Удобное для чтения человеком имя панели. Основное назначение — служить "
+"заголовком окна панели, что полезно при переключении между панелями."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "Количество отображаемых пикселей скрытой панели."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
-msgstr "Какой тип фона использовать для панели. Допустимые значения: «gtk» (будет использован общесистемный фон элементов GTK+), «color» (фон будет залит цветом, указанным в соответствующем ключе) и «image» (в качестве фона будет использовано указанное в соответствующем ключе изображение)."
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Какой тип фона использовать для панели. Допустимые значения: «gtk» (будет "
+"использован общесистемный фон элементов GTK+), «color» (фон будет залит "
+"цветом, указанным в соответствующем ключе) и «image» (в качестве фона будет "
+"использовано указанное в соответствующем ключе изображение)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
-msgstr "При наличии нескольких экранов можно иметь разные панели на разных экранах. Данный ключ определяет текущий экран, на котором находится панель."
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"При наличии нескольких экранов можно иметь разные панели на разных экранах. "
+"Данный ключ определяет текущий экран, на котором находится панель."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -2661,3 +3119,18 @@ msgstr ""
 "Если удалить панель, все её параметры\n"
 "будут утеряны."
 
+#: ../js/ui/statusMenu.js:184
+msgid "Available"
+msgstr "Доступен"
+
+#: ../js/ui/statusMenu.js:189
+msgid "Busy"
+msgstr "Занят"
+
+#: ../js/ui/statusMenu.js:197
+msgid "My Account"
+msgstr "Моя учётная запись"
+
+#: ../js/ui/statusMenu.js:213
+msgid "Switch User"
+msgstr "Сменить пользователя"

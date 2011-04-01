@@ -9,7 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
 "POT-Creation-Date: 2011-02-24 23:06+0000\n"
 "PO-Revision-Date: 2011-02-25 14:34+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
@@ -18,7 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-Language: Slovenian\n"
 "X-Poedit-Country: SLOVENIJA\n"
 "X-Poedit-SourceCharset: utf-8\n"
@@ -31,8 +33,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:323
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/calendar-window.c:323 ../applets/clock/clock.c:443
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%H.%M"
@@ -51,10 +52,8 @@ msgstr "%H.%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:328
-#: ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1612
-#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:328 ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:1612 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H.%M"
@@ -92,8 +91,7 @@ msgstr "Rojstni dnevi in obletnice"
 msgid "Weather Information"
 msgstr "Vremenske napovedi"
 
-#: ../applets/clock/calendar-window.c:1651
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/calendar-window.c:1651 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "Mesta"
 
@@ -115,8 +113,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1606
+#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1606
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -210,8 +207,7 @@ msgstr "%A, %d %B %Y"
 msgid "Failed to open the time settings"
 msgstr "Napaka med odpiranjem okna nastavitev sistemskega časa"
 
-#: ../applets/clock/clock.c:1734
-#: ../applets/fish/fish.c:1784
+#: ../applets/clock/clock.c:1734 ../applets/fish/fish.c:1784
 #: ../applets/wncklet/window-list.c:171
 #: ../applets/wncklet/workspace-switcher.c:237
 msgid "_Preferences"
@@ -271,8 +267,12 @@ msgstr "<i>(izbirno)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
 #: ../applets/clock/clock.ui.h:3
-msgid "<small><i>Type a city, region, or country name and then select a match from the pop-up.</i></small>"
-msgstr "<small><i>Vpišite ime mesta, območja ali države in nato izberite želeno mesto iz pojavnega okna.</i></small>"
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>Vpišite ime mesta, območja ali države in nato izberite želeno "
+"mesto iz pojavnega okna.</i></small>"
 
 #: ../applets/clock/clock.ui.h:4
 msgid "Clock Format"
@@ -290,8 +290,7 @@ msgstr "Pokaži"
 msgid "East"
 msgstr "Vzhod"
 
-#: ../applets/clock/clock.ui.h:8
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Splošno"
@@ -456,7 +455,9 @@ msgstr "Izbrana možnost omogoča prikaz podrobnosti vremena v oknu koledarja."
 
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Izbrana mžnost omogoča prikaz datuma v oblačku namiga, ko je kazalka miške nad uro."
+msgstr ""
+"Izbrana mžnost omogoča prikaz datuma v oblačku namiga, ko je kazalka miške "
+"nad uro."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
@@ -511,24 +512,59 @@ msgid "The unit to use when showing wind speed."
 msgstr "Enota za prikaz hitrosti vetra."
 
 #: ../applets/clock/clock.schemas.in.h:42
-msgid "The use of this key was deprecated in GNOME 2.22 with the use of an internal time configuration tool. The schema is retained for compatibility with older versions."
-msgstr "Uporaba tega ključa je od različice GNOME 2.22 naprej opuščena. Shema je ohranjena zaradi skladnosti s starejšimi različicami."
+msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"Uporaba tega ključa je od različice GNOME 2.22 naprej opuščena. Shema je "
+"ohranjena zaradi skladnosti s starejšimi različicami."
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid "The use of this key was deprecated in GNOME 2.28 in favour of the use of timezones. The schema is retained for compatibility with older versions."
-msgstr "Uporaba tega ključa je od GNOME 2.28 naprej opuščena v korist uporabe časovnih območij. Shema je ohranjena zaradi skladnosti s starejšimi različicami."
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"Uporaba tega ključa je od GNOME 2.28 naprej opuščena v korist uporabe "
+"časovnih območij. Shema je ohranjena zaradi skladnosti s starejšimi "
+"različicami."
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
-msgstr "Uporaba tega ključa je od GNOME 2.6 naprej opuščena v korist ključa 'format'. Shema je ohranjena zaradi skladnosti s starejšimi različicami."
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Uporaba tega ključa je od GNOME 2.6 naprej opuščena v korist ključa "
+"'format'. Shema je ohranjena zaradi skladnosti s starejšimi različicami."
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
-msgstr "Ključ navaja obliko, ki naj jo uporablja vstavek ure, kadar je ključ oblike nastavljen na \"po meri\". Za določitev oblike lahko uporabite tudi oznake funkcije strftime(), ki so podrobneje zapisane v priročniku."
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"Ključ navaja obliko, ki naj jo uporablja vstavek ure, kadar je ključ oblike "
+"nastavljen na \"po meri\". Za določitev oblike lahko uporabite tudi oznake "
+"funkcije strftime(), ki so podrobneje zapisane v priročniku."
 
 #: ../applets/clock/clock.schemas.in.h:46
-msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
-msgstr "Ključ navaja obliko zapisa ure v apletu ure. Mogoče vrednosti prikaza so \"12-hour\", \"24-hour\", \"internet\", \"unix\" in \"custom\" (po meri). Internetni sistem časa deli dan v 1000 \"utripov\". V tem sistemu ni časovnih območij, zato je čas enak povsod po svetu. Možnost \"unix\" prikazuje čas v sekundah od 1970-01-01. Možnost \"custom\" (po meri) pa prikazuje čas v obliki, ki jo določa nastavitev \"custom_format\"."
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Ključ navaja obliko zapisa ure v apletu ure. Mogoče vrednosti prikaza so "
+"\"12-hour\", \"24-hour\", \"internet\", \"unix\" in \"custom\" (po meri). "
+"Internetni sistem časa deli dan v 1000 \"utripov\". V tem sistemu ni "
+"časovnih območij, zato je čas enak povsod po svetu. Možnost \"unix\" "
+"prikazuje čas v sekundah od 1970-01-01. Možnost \"custom\" (po meri) pa "
+"prikazuje čas v obliki, ki jo določa nastavitev \"custom_format\"."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -560,7 +596,9 @@ msgstr "<small>Nastavi</small>"
 
 #: ../applets/clock/clock-location-tile.c:308
 msgid "Set location as current location and use its timezone for this computer"
-msgstr "Nastavi mesto kot trenutno mesto in uporabi trenutni čas časovnega območja izbranega mesta"
+msgstr ""
+"Nastavi mesto kot trenutno mesto in uporabi trenutni čas časovnega območja "
+"izbranega mesta"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -611,16 +649,14 @@ msgstr "%s, ki jih občutimo kot %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sončni vzhod: %s / Sončni zahod: %s"
 
-#: ../applets/clock/clock-utils.c:93
-#: ../applets/fish/fish.c:168
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:168
 #: ../applets/wncklet/wncklet.c:74
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ni mogoče prikazati dokumenta pomoči '%s'"
 
-#: ../applets/clock/clock-utils.c:122
-#: ../applets/fish/fish.c:194
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:194
 #: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "Napaka med prikazovanjem dokumenta pomoči"
@@ -642,8 +678,7 @@ msgstr ""
 msgid "Images"
 msgstr "Slike"
 
-#: ../applets/fish/fish.c:575
-#: ../applets/fish/fish.c:691
+#: ../applets/fish/fish.c:575 ../applets/fish/fish.c:691
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Riba %s"
@@ -717,8 +752,7 @@ msgstr "Poglejte današnji datum!"
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba %s, prerokovalka"
 
-#: ../applets/fish/fish.ui.h:1
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
@@ -767,8 +801,12 @@ msgid "seconds"
 msgstr "sekund"
 
 #: ../applets/fish/fish.schemas.in.h:1
-msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
-msgstr "Riba brez imena je precej dolgočasna riba. Oživite svojo ribo tako, da jo poimenujete."
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"Riba brez imena je precej dolgočasna riba. Oživite svojo ribo tako, da jo "
+"poimenujete."
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -779,8 +817,11 @@ msgid "Frames in fish's animation"
 msgstr "Število slik v animaciji ribe"
 
 #: ../applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Izbrana možnost omogoča, da bo ribja animacija na navpičnem pultu prikazana obrnjeno."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Izbrana možnost omogoča, da bo ribja animacija na navpičnem pultu prikazana "
+"obrnjeno."
 
 #: ../applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -799,15 +840,23 @@ msgid "The fish's name"
 msgstr "Ime ribe"
 
 #: ../applets/fish/fish.schemas.in.h:9
-msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
 msgstr "Ključ navaja ukaz, ki naj se izvrši ob kliku na ribo."
 
 #: ../applets/fish/fish.schemas.in.h:10
-msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
-msgstr "Ključ navaja ime datoteke kjer se nahajajo slike, ki bodo uporabljene za animacijo prikazano v apletu ribe, glede na mapo sličic."
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Ključ navaja ime datoteke kjer se nahajajo slike, ki bodo uporabljene za "
+"animacijo prikazano v apletu ribe, glede na mapo sličic."
 
 #: ../applets/fish/fish.schemas.in.h:11
-msgid "This key specifies the number of frames that will be displayed in the fish's animation."
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr "Ključ navaja število sličic v animaciji ribe."
 
 #: ../applets/fish/fish.schemas.in.h:12
@@ -841,8 +890,12 @@ msgid "Show Desktop Button"
 msgstr "Ikona pokaži namizje"
 
 #: ../applets/wncklet/showdesktop.c:509
-msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
-msgstr "Upravljalnik oken ne podpira prikaza gumba namizja ali pa upravljalnik oken ni zagnan."
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Upravljalnik oken ne podpira prikaza gumba namizja ali pa upravljalnik oken "
+"ni zagnan."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -889,16 +942,28 @@ msgid "_Never group windows"
 msgstr "_Nikoli ne združi oken"
 
 #: ../applets/wncklet/window-list.schemas.in.h:1
-msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
-msgstr "Določi, kdaj se okna v seznamu združujejo. Veljavne vrednosti so \"nikoli\", \"samodejno\" in \"vedno\"."
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Določi, kdaj se okna v seznamu združujejo. Veljavne vrednosti so \"nikoli\", "
+"\"samodejno\" in \"vedno\"."
 
 #: ../applets/wncklet/window-list.schemas.in.h:2
-msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
-msgstr "Izbrana možnost določa, da bo seznam oken prikazal okna vseh delovnih površin, sicer bodo prikazana le okna trenutne delovne površine."
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Izbrana možnost določa, da bo seznam oken prikazal okna vseh delovnih "
+"površin, sicer bodo prikazana le okna trenutne delovne površine."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
-msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
-msgstr "Izbrana možnost določa, da se ob povečanju okna to premakne na trenutno delovno površino, sicer se preklopi cela delovna površina."
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Izbrana možnost določa, da se ob povečanju okna to premakne na trenutno "
+"delovno površino, sicer se preklopi cela delovna površina."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -917,8 +982,12 @@ msgid "Show windows from all workspaces"
 msgstr "Pokaži okna vseh delovnih površin"
 
 #: ../applets/wncklet/window-list.schemas.in.h:8
-msgid "The use of this key was deprecated in GNOME 2.20. The schema is retained for compatibility with older versions."
-msgstr "Uporaba tega ključa je od GNOME 2.20 opuščena. Shema je ohranjena zaradi skladnosti s starejšimi različicami."
+msgid ""
+"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
+"compatibility with older versions."
+msgstr ""
+"Uporaba tega ključa je od GNOME 2.20 opuščena. Shema je ohranjena zaradi "
+"skladnosti s starejšimi različicami."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -942,17 +1011,23 @@ msgstr "stolpcev"
 #: ../applets/wncklet/workspace-switcher.c:385
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Napaka med nalaganjem števila vrstic za preklopnik delovnih površin: %s\n"
+msgstr ""
+"Napaka med nalaganjem števila vrstic za preklopnik delovnih površin: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:396
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Napaka med nalaganjem vrednosti prikaza imen delovnih površin za preklopnik delovnih površin: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Napaka med nalaganjem vrednosti prikaza imen delovnih površin za preklopnik "
+"delovnih površin: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:411
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Napaka med nalaganjem vrednosti prikaza vseh delovnih površin za preklopnik delovnih površin: %s\n"
+msgstr ""
+"Napaka med nalaganjem vrednosti prikaza vseh delovnih površin za preklopnik "
+"delovnih površin: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
@@ -999,20 +1074,35 @@ msgid "Display workspace names"
 msgstr "Pokaži imena delovnih površin"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
-msgstr "Izbrana možnost omogoča pokaz vseh delovnih površin, sicer je prikazana le trenutna."
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Izbrana možnost omogoča pokaz vseh delovnih površin, sicer je prikazana le "
+"trenutna."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
-msgstr "Izbrana možnost omogoča prikaz imen delovnih površin. V primeru, da možnosti ni izbrana bodo prikazana njihova okna."
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
+msgstr ""
+"Izbrana možnost omogoča prikaz imen delovnih površin. V primeru, da možnosti "
+"ni izbrana bodo prikazana njihova okna."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "Vrstice v preklopniku delovnih površin"
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
-msgstr "Ključ navaja koliko vrstic (za vodoravno postavitev) ali stolpcev (za navpično postavitev) se pokaže v preklopniku delovnih površin. Možnost je odvisna od možnosti prikaži vse delovne površine."
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Ključ navaja koliko vrstic (za vodoravno postavitev) ali stolpcev (za "
+"navpično postavitev) se pokaže v preklopniku delovnih površin. Možnost je "
+"odvisna od možnosti prikaži vse delovne površine."
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1042,7 +1132,8 @@ msgstr "Neprepoznana možnost zagona: %d"
 #: ../gnome-panel/libegg/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "Ni mogoče poslati naslova URI dokumenta na 'Vrsta=Povezava' vnos namizja"
+msgstr ""
+"Ni mogoče poslati naslova URI dokumenta na 'Vrsta=Povezava' vnos namizja"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:1404
 #, c-format
@@ -1115,18 +1206,15 @@ msgstr "Ni nameščenega programa za iskanje map."
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:595
-#: ../libpanel-applet/panel-applet.c:170
+#: ../gnome-panel/applet.c:595 ../libpanel-applet/panel-applet.c:170
 msgid "_Remove From Panel"
 msgstr "_Odstrani s pulta"
 
-#: ../gnome-panel/applet.c:606
-#: ../libpanel-applet/panel-applet.c:173
+#: ../gnome-panel/applet.c:606 ../libpanel-applet/panel-applet.c:173
 msgid "_Move"
 msgstr "_Premakni"
 
-#: ../gnome-panel/applet.c:623
-#: ../libpanel-applet/panel-applet.c:179
+#: ../gnome-panel/applet.c:623 ../libpanel-applet/panel-applet.c:179
 msgid "Loc_k To Panel"
 msgstr "Zak_leni na pult"
 
@@ -1134,8 +1222,7 @@ msgstr "Zak_leni na pult"
 msgid "Cannot find an empty spot"
 msgstr "Ni mogoče najti praznega mesta"
 
-#: ../gnome-panel/drawer.c:350
-#: ../gnome-panel/panel-addto.c:174
+#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:174
 #: ../gnome-panel/panel-toplevel.c:1654
 msgid "Drawer"
 msgstr "Predalnik"
@@ -1144,15 +1231,13 @@ msgstr "Predalnik"
 msgid "_Add to Drawer..."
 msgstr "_Dodaj v predalnik ..."
 
-#: ../gnome-panel/drawer.c:595
-#: ../gnome-panel/launcher.c:807
+#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
 #: ../gnome-panel/panel-action-button.c:141
 #: ../gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Lastnosti"
 
-#: ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-menu-bar.c:437
+#: ../gnome-panel/drawer.c:601 ../gnome-panel/panel-menu-bar.c:437
 msgid "_Help"
 msgstr "Pomo_č"
 
@@ -1169,8 +1254,7 @@ msgid "- Edit .desktop files"
 msgstr "- Urejanje datotek .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:150
-#: ../gnome-panel/gnome-desktop-item-edit.c:204
-#: ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:204 ../gnome-panel/launcher.c:897
 msgid "Create Launcher"
 msgstr "Ustvari zaganjalnik"
 
@@ -1179,17 +1263,19 @@ msgstr "Ustvari zaganjalnik"
 msgid "Directory Properties"
 msgstr "Lastnosti imenika"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:181
-#: ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:181 ../gnome-panel/launcher.c:735
 msgid "Launcher Properties"
 msgstr "Lastnosti zaganjalnika"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
-msgstr "Zagon drugih programov in podpora pri različnih pripomočkih za upravljanje z okni, časom ..."
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Zagon drugih programov in podpora pri različnih pripomočkih za upravljanje z "
+"okni, časom ..."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-#: ../gnome-panel/main.c:93
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:93
 msgid "Panel"
 msgstr "Pult"
 
@@ -1224,8 +1310,7 @@ msgstr "_Zaženi"
 msgid "Key %s is not set, cannot load launcher\n"
 msgstr "Ključ %s ni nastavljen, zato ni mogoče naložiti zaganjalnika\n"
 
-#: ../gnome-panel/launcher.c:966
-#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1348,8 +1433,7 @@ msgstr "Zaganjalnik programa ..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiraj zaganjalnik iz menija programov"
 
-#: ../gnome-panel/panel-addto.c:141
-#: ../gnome-panel/panel-menu-button.c:1116
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1116
 msgid "Main Menu"
 msgstr "Glavni meni"
 
@@ -1414,8 +1498,12 @@ msgid "Panel object has quit unexpectedly"
 msgstr "Predmet pulta se je nepričakovano končal"
 
 #: ../gnome-panel/panel-applet-frame.c:749
-msgid "If you reload a panel object, it will automatically be added back to the panel."
-msgstr "V primeru, da ponovno naložite predmet pulta, se bo samodejno dodal nazaj na pult."
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
+msgstr ""
+"V primeru, da ponovno naložite predmet pulta, se bo samodejno dodal nazaj na "
+"pult."
 
 #: ../gnome-panel/panel-applet-frame.c:755
 msgid "_Don't Reload"
@@ -1527,32 +1615,60 @@ msgid "Could not display help document"
 msgstr "Ni mogoče prikazati dokumenta pomoči"
 
 #: ../gnome-panel/panel-force-quit.c:77
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite tipko escape."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite "
+"tipko escape."
 
 #: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Ali naj bo program vsiljeno končan?"
 
 #: ../gnome-panel/panel-force-quit.c:225
-msgid "If you choose to force an application to exit, unsaved changes in any open documents in it might get lost."
-msgstr "V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti dokumenti programa."
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
+"dokumenti programa."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
-msgid "A boolean flag to indicate whether the user's previous configuration in /apps/panel/profiles/default has been copied to the new location in /apps/panel."
-msgstr "Zastavica Boolean določa ali so bile uporabnikove prejšnje nastavitve v /apps/panel/profiles/default prekopirane na novo mesto v /apps/panel."
+msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+"Zastavica Boolean določa ali so bile uporabnikove prejšnje nastavitve v /"
+"apps/panel/profiles/default prekopirane na novo mesto v /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
-msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr "Seznam ID številk pultov. Vsak ID predstavlja samostojen vrhnji pult. Nastavitve vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"Seznam ID številk pultov. Vsak ID predstavlja samostojen vrhnji pult. "
+"Nastavitve vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/applets/$(id)."
-msgstr "Seznam ID številk apletov. Vsak ID predstavlja samostojen vstavek pulta. Nastavitve za vsakega izmed vstavkov so shranjene v /apps/panel/applets/$(id)."
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
+msgstr ""
+"Seznam ID številk apletov. Vsak ID predstavlja samostojen vstavek pulta. "
+"Nastavitve za vsakega izmed vstavkov so shranjene v /apps/panel/applets/"
+"$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:4
-msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
-msgstr "Seznam ID številk predmetov pulta. Vsak ID predstavlja samostojen vstavek pulta (npr.: zaganjalnik, gumb dejanja ali gumb menija).  Nastavitve za vsakega izmed predmetov so shranjene v /apps/panel/objects/$(id)."
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"Seznam ID številk predmetov pulta. Vsak ID predstavlja samostojen vstavek "
+"pulta (npr.: zaganjalnik, gumb dejanja ali gumb menija).  Nastavitve za "
+"vsakega izmed predmetov so shranjene v /apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1567,16 +1683,31 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Razširi seznam programov v pogovornem oknu \"Zaženi program\""
 
 #: ../gnome-panel/panel-general.schemas.in.h:8
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "Izbrana možnost omogoča samodejno dopolnjevanje v pogovornem oknu \"Zaženi program\"."
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Izbrana možnost omogoča samodejno dopolnjevanje v pogovornem oknu \"Zaženi "
+"program\"."
 
 #: ../gnome-panel/panel-general.schemas.in.h:9
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
-msgstr "Izbrana možnost omogoča, da se seznam \"Znani programi\" v pogovornem oknu \"Zaženi program\" razširi ob odprtju pogovornega okna. Možnost je odvisna od uporabe možnosti omogoči seznam programov."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Izbrana možnost omogoča, da se seznam \"Znani programi\" v pogovornem oknu "
+"\"Zaženi program\" razširi ob odprtju pogovornega okna. Možnost je odvisna "
+"od uporabe možnosti omogoči seznam programov."
 
 #: ../gnome-panel/panel-general.schemas.in.h:10
-msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
-msgstr "Izbrana možnost omogoča, da postane seznam \"Znani programi\" na voljo znotraj pogovornega okna \"Zaženi program\". Oblika prikaza seznama je podana s ključem show_program_list."
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Izbrana možnost omogoča, da postane seznam \"Znani programi\" na voljo "
+"znotraj pogovornega okna \"Zaženi program\". Oblika prikaza seznama je "
+"podana s ključem show_program_list."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1595,8 +1726,16 @@ msgid "Panel object ID list"
 msgstr "Seznam ID številk predmetov pulta"
 
 #: ../gnome-panel/panel-global.schemas.in.h:1
-msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
-msgstr "Seznam IID številk apletov, ki jih bo pult prezrl. Na ta način lahko določenim vstavkom preprečite nalaganje in prikaz v meniju. Na primer, da preprečite vstavek mini-poveljnik v ta seznam dodajte 'OAFIID:GNOME_MiniCommanderApplet'. Možnost zahteva ponovni zagon pulta."
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"Seznam IID številk apletov, ki jih bo pult prezrl. Na ta način lahko "
+"določenim vstavkom preprečite nalaganje in prikaz v meniju. Na primer, da "
+"preprečite vstavek mini-poveljnik v ta seznam dodajte 'OAFIID:"
+"GNOME_MiniCommanderApplet'. Možnost zahteva ponovni zagon pulta."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1640,36 +1779,64 @@ msgid "Highlight launchers on mouseover"
 msgstr "Poudari zaganjalnike ob prehodu miške"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
-msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
-msgstr "Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je uporabnik prepričan o odstranitvi pulta."
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je "
+"uporabnik prepričan o odstranitvi pulta."
 
 #: ../gnome-panel/panel-global.schemas.in.h:13
-msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
-msgstr "Izbrana možnost onemogoča samodejno zapiranje predalnika, ko uporabnik v njem klikne na zaganjalnik."
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Izbrana možnost onemogoča samodejno zapiranje predalnika, ko uporabnik v "
+"njem klikne na zaganjalnik."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr "Izbrana možnost onemogoča poudarjanje zaganjalnika, ko je nad njem miška."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Izbrana možnost onemogoča poudarjanje zaganjalnika, ko je nad njem miška."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
-msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
-msgstr "Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da odstrani možnost iz menija."
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da "
+"odstrani možnost iz menija."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
-msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
-msgstr "Izbrana možnost onemogoča odjavo uporabnika tako, da odstrani možnost iz menija."
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Izbrana možnost onemogoča odjavo uporabnika tako, da odstrani možnost iz "
+"menija."
 
 #: ../gnome-panel/panel-global.schemas.in.h:17
-msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
-msgstr "Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti "
+"morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "Izbrana možnost omogoča prikaz namigov predmetov pultov."
 
 #: ../gnome-panel/panel-global.schemas.in.h:19
-msgid "This key is deprecated as it cannot be used to implement proper lockdown. The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
-msgstr "Ključ je opuščen, saj z njim ni mogoče izvesti ustreznega zaklepanja. Namesto tega mora biti uporabljen ključ /desktop/gnome/lockdown/disable_lock_screen."
+msgid ""
+"This key is deprecated as it cannot be used to implement proper lockdown. "
+"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
+msgstr ""
+"Ključ je opuščen, saj z njim ni mogoče izvesti ustreznega zaklepanja. "
+"Namesto tega mora biti uporabljen ključ /desktop/gnome/lockdown/"
+"disable_lock_screen."
 
 #: ../gnome-panel/panel-menu-bar.c:119
 msgid "Browse and run installed applications"
@@ -1687,8 +1854,7 @@ msgstr "Spreminjanje videza in obnašanja namizja, dostop do pomoči in odjave."
 msgid "Applications"
 msgstr "Programi"
 
-#: ../gnome-panel/panel-menu-bar.c:430
-#: ../gnome-panel/panel-menu-button.c:683
+#: ../gnome-panel/panel-menu-bar.c:430 ../gnome-panel/panel-menu-button.c:683
 msgid "_Edit Menus"
 msgstr "Ur_edi menije"
 
@@ -1697,8 +1863,7 @@ msgid "Bookmarks"
 msgstr "Zaznamki"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:495
-#: ../gnome-panel/panel.c:554
+#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:554
 #, c-format
 msgid "Open '%s'"
 msgstr "Odpri '%s'"
@@ -1734,8 +1899,7 @@ msgstr "Omrežna mesta"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1050
-#: ../gnome-panel/panel.c:603
+#: ../gnome-panel/panel-menu-items.c:1050 ../gnome-panel/panel.c:603
 msgid "Open your personal folder"
 msgstr "Dostop do osebne mape"
 
@@ -1753,27 +1917,24 @@ msgstr "Odpri vsebino namizja v mapi"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1086
-#: ../gnome-panel/panel.c:612
+#: ../gnome-panel/panel-menu-items.c:1086 ../gnome-panel/panel.c:612
 msgid "Computer"
 msgstr "Računalnik"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1092
-#: ../gnome-panel/panel.c:613
-msgid "Browse all local and remote disks and folders accessible from this computer"
+#: ../gnome-panel/panel-menu-items.c:1092 ../gnome-panel/panel.c:613
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
 msgstr "Brskanje po vseh dostopnih krajevnih in oddaljenih diskih in mapah"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1102
-#: ../gnome-panel/panel.c:620
+#: ../gnome-panel/panel-menu-items.c:1102 ../gnome-panel/panel.c:620
 msgid "Network"
 msgstr "Omrežje"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1103
-#: ../gnome-panel/panel.c:621
+#: ../gnome-panel/panel-menu-items.c:1103 ../gnome-panel/panel.c:621
 msgid "Browse bookmarked and local network locations"
 msgstr "Brskanje po zaznamovanih in krajevnih omrežnih povezavah"
 
@@ -1828,20 +1989,41 @@ msgid "Icon used for object's button"
 msgstr "Ikona uporabljena za gumb predmeta"
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
-msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr "Izbrana možnost omogoča, da je ključ custom_icon uporabljen kot prilagojena ikona za gumb, sicer je ključ prezrt. Ključ je uporabljen le, če je ključ object_type nastavljen na \"menu-object\" ali \"drawer-object\"."
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Izbrana možnost omogoča, da je ključ custom_icon uporabljen kot prilagojena "
+"ikona za gumb, sicer je ključ prezrt. Ključ je uporabljen le, če je ključ "
+"object_type nastavljen na \"menu-object\" ali \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
-msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
-msgstr "Izbrana možnost omogoča, da je ključ menu_path uporabljen kot pot, iz katere se ustvari vsebina menija, sicer je ključ prezrt. Ključ je uporabljen le, če je ključ object_type nastavljen na \"menu-object\"."
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Izbrana možnost omogoča, da je ključ menu_path uporabljen kot pot, iz katere "
+"se ustvari vsebina menija, sicer je ključ prezrt. Ključ je uporabljen le, če "
+"je ključ object_type nastavljen na \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:7
-msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
-msgstr "Izbrana možnost omogoča, da je položaj predmeta določen glede na desni (ali spodnji, če je navpičen) rob pulta."
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Izbrana možnost omogoča, da je položaj predmeta določen glede na desni (ali "
+"spodnji, če je navpičen) rob pulta."
 
 #: ../gnome-panel/panel-object.schemas.in.h:8
-msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
-msgstr "Izbrana možnost omogoča, da uporabnik ne more prestaviti apleta, brez predhodnega odklepanja predmeta z uporabo možnosti \"Odkleni\" iz menija predmeta."
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Izbrana možnost omogoča, da uporabnik ne more prestaviti apleta, brez "
+"predhodnega odklepanja predmeta z uporabo možnosti \"Odkleni\" iz menija "
+"predmeta."
 
 #: ../gnome-panel/panel-object.schemas.in.h:9
 msgid "Interpret position relative to bottom/right edge"
@@ -1872,48 +2054,102 @@ msgid "Panel object type"
 msgstr "Vrsta predmeta pulta"
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
-msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
-msgstr "Vrsta dejanja, ki ga ta gumb predstavlja. Možne vrednosti so \"lock\" (zakleni), \"logout\" (odjava), \"run\" (zaženi), \"search\" (poišči) in \"screenshot\" (zajem zaslona). Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"action-applet\"."
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Vrsta dejanja, ki ga ta gumb predstavlja. Možne vrednosti so \"lock"
+"\" (zakleni), \"logout\" (odjava), \"run\" (zaženi), \"search\" (poišči) in "
+"\"screenshot\" (zajem zaslona). Ključ je uporabljen le, kadar je ključ "
+"object_type nastavljen na \"action-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:17
-msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
-msgstr "Določilo pulta pripetega na ta predalnik. Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"drawer-object\"."
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Določilo pulta pripetega na ta predalnik. Ključ je uporabljen le, kadar je "
+"ključ object_type nastavljen na \"drawer-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Določilo vrhnjega pulta, ki vsebuje ta predmet."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-msgid "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet\". This key is only relevant if the object_type key is \"external-applet\" (or the deprecated \"bonobo-applet\")."
-msgstr "Vgradni ID za aplet, npr.: \"ClockAppletFactory::ClockApplet\". Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"external-applet\" (ali na opuščeni ključ \"bonobo-applet\")."
+msgid ""
+"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
+msgstr ""
+"Vgradni ID za aplet, npr.: \"ClockAppletFactory::ClockApplet\". Ključ je "
+"uporabljen le, kadar je ključ object_type nastavljen na \"external-applet"
+"\" (ali na opuščeni ključ \"bonobo-applet\")."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
-msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
-msgstr "Mesto datoteke .desktop, ki opisuje zaganjalnik. Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"launcher-object\"."
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Mesto datoteke .desktop, ki opisuje zaganjalnik. Ključ je uporabljen le, "
+"kadar je ključ object_type nastavljen na \"launcher-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:21
-msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
-msgstr "Mesto datoteke slike, ki se uporabi za ikono gumba predmeta. Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"drawer_object\" ali \"menu object\" in je ključ use_custom_icon izbran kot privzet."
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Mesto datoteke slike, ki se uporabi za ikono gumba predmeta. Ključ je "
+"uporabljen le, kadar je ključ object_type nastavljen na \"drawer_object\" "
+"ali \"menu object\" in je ključ use_custom_icon izbran kot privzet."
 
 #: ../gnome-panel/panel-object.schemas.in.h:22
-msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
-msgstr "Pot iz katere je ustvarjena vsebina menija. Možnost je odvisna od možnosti use_menu_path ter da je ključ object_type nastavljen na \"menu-object\"."
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Pot iz katere je ustvarjena vsebina menija. Možnost je odvisna od možnosti "
+"use_menu_path ter da je ključ object_type nastavljen na \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:23
-msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
-msgstr "Mesto predmeta pulta. Mesto je navedeno s številom točk od levega (oziroma vrhnjega) roba pulta."
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Mesto predmeta pulta. Mesto je navedeno s številom točk od levega (oziroma "
+"vrhnjega) roba pulta."
 
 #: ../gnome-panel/panel-object.schemas.in.h:24
-msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr "Besedilo, ki se pokaže v namigu tega predalnika ali menija. Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"drawer_object\" ali \"menu-object\"."
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Besedilo, ki se pokaže v namigu tega predalnika ali menija. Ključ je "
+"uporabljen le, kadar je ključ object_type nastavljen na \"drawer_object\" "
+"ali \"menu-object\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
-msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"menu-bar\" and \"separator\"."
-msgstr "Vrsta predmeta pulta. Mogoče vrednosti so \"drawer-object\", \"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"separator\" and \"menu-bar\"."
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
+msgstr ""
+"Vrsta predmeta pulta. Mogoče vrednosti so \"drawer-object\", \"menu-object"
+"\", \"launcher-object\", \"external-applet\", \"action-applet\", \"separator"
+"\" and \"menu-bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
-msgid "This key is deprecated, following the migration to a new library for applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "Ključ je opuščen s prehodom na nove knjižnice apletov. Vgradni Bonobo ID za aplet, npr.: \"OAFIID:GNOME_ClockApplet\". Ključ je uporabljen le, kadar je ključ object_type nastavljen na \"bonobo-applet\"."
+msgid ""
+"This key is deprecated, following the migration to a new library for "
+"applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
+"GNOME_ClockApplet\". This key is only relevant if the object_type key is "
+"\"bonobo-applet\"."
+msgstr ""
+"Ključ je opuščen s prehodom na nove knjižnice apletov. Vgradni Bonobo ID za "
+"aplet, npr.: \"OAFIID:GNOME_ClockApplet\". Ključ je uporabljen le, kadar je "
+"ključ object_type nastavljen na \"bonobo-applet\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:27
 msgid "Tooltip displayed for drawer or menu"
@@ -1931,27 +2167,27 @@ msgstr "Uporabi prikrojeno ikono za gumb predmeta"
 msgid "Use custom path for menu contents"
 msgstr "Uporabi poljubno pot za vsebino menija"
 
-#: ../gnome-panel/panel-profile.c:758
-#: ../gnome-panel/panel-profile.c:786
-#: ../gnome-panel/panel-profile.c:825
-#: ../gnome-panel/panel-profile.c:1705
+#: ../gnome-panel/panel-profile.c:758 ../gnome-panel/panel-profile.c:786
+#: ../gnome-panel/panel-profile.c:825 ../gnome-panel/panel-profile.c:1705
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Napaka med branjem vrednosti niza GConf '%s': %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:802
-#: ../gnome-panel/panel-profile.c:1601
-#: ../gnome-panel/panel-profile.c:1674
-#: ../gnome-panel/panel-profile.c:1756
+#: ../gnome-panel/panel-profile.c:802 ../gnome-panel/panel-profile.c:1601
+#: ../gnome-panel/panel-profile.c:1674 ../gnome-panel/panel-profile.c:1756
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Napaka med branjem GConf vrednosti celega števila '%s': %s"
 
 #: ../gnome-panel/panel-profile.c:1611
 #, c-format
-msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
-msgstr "Pult '%s' je nastavljen za prikaz na zaslonu %d, ki pa trenutno ni na voljo. Nov pult ne bo naložen."
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"Pult '%s' je nastavljen za prikaz na zaslonu %d, ki pa trenutno ni na voljo. "
+"Nov pult ne bo naložen."
 
 #: ../gnome-panel/panel-profile.c:1689
 #, c-format
@@ -2098,8 +2334,7 @@ msgstr "_Razpostavi"
 msgid "pixels"
 msgstr "točke"
 
-#: ../gnome-panel/panel-recent.c:78
-#: ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ni mogoče najti nedavno uporabljenega dokumenta \"%s\""
@@ -2173,12 +2408,17 @@ msgid "Could not display run dialog"
 msgstr "Ni mogoče prikazati pogovornega okna zaganjanja"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
-msgid "Click this button to browse for a file whose name to append to the command string."
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
 msgstr "Kliknite gumb za izbiro imena datoteke, ki bo pripeto ukazu."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:2
-msgid "Click this button to run the selected application or the command in the command entry field."
-msgstr "Kliknite gumb za zagon izbranega programa ali ukaza v vnosnem polju ukaza."
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Kliknite gumb za zagon izbranega programa ali ukaza v vnosnem polju ukaza."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
@@ -2234,15 +2474,18 @@ msgid "Specify an applet IID to load"
 msgstr "Navedi ID apleta za nalaganje"
 
 #: ../gnome-panel/panel-test-applets.c:37
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr "Navedi mesto datoteke gconf v kateri bodo shranjene možnosti apleta"
 
 #: ../gnome-panel/panel-test-applets.c:38
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Navedi začetno velikost apleta (zelo zelo majhna, srednja, velika, itd.)"
+msgstr ""
+"Navedi začetno velikost apleta (zelo zelo majhna, srednja, velika, itd.)"
 
 #: ../gnome-panel/panel-test-applets.c:39
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Navedi začetno usmerjenost apleta (zgoraj, spodaj, levo, desno)"
 
 #: ../gnome-panel/panel-test-applets.c:63
@@ -2417,48 +2660,101 @@ msgid "Fit image to panel"
 msgstr "Prilagodi velikost slike pultu"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
 msgstr "Izbrana možnost določa prikaz puščic na gumbih skrivanja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Izbrana možnost določa prikaz gumbov za stransko skrivanje pladnja na obeh njegovih koncih."
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Izbrana možnost določa prikaz gumbov za stransko skrivanje pladnja na obeh "
+"njegovih koncih."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
-msgstr "Izbrana možnost določa animirano skrivanje in odkrivanje pulta, namesto hipnega dejanja."
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Izbrana možnost določa animirano skrivanje in odkrivanje pulta, namesto "
+"hipnega dejanja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid "If true, the background image will be rotated when the panel is oriented vertically."
-msgstr "Izbrana možnost določa obrnjenost ozadja, kadar je pult usmerjen navpično."
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Izbrana možnost določa obrnjenost ozadja, kadar je pult usmerjen navpično."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
-msgstr "Izbrana možnost določa prilagojeno velikost slike na višino oziroma širino pulta (pri tem ni ohranjeno razmerje širine in višine slike)."
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Izbrana možnost določa prilagojeno velikost slike na višino oziroma širino "
+"pulta (pri tem ni ohranjeno razmerje širine in višine slike)."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
-msgstr "Izbrana možnost določa prilagoditev velikosti pultu. Razmerje širine in višine slike ni ohranjeno."
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Izbrana možnost določa prilagoditev velikosti pultu. Razmerje širine in "
+"višine slike ni ohranjeno."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
-msgstr "Izbrana možnost določa, da se pult samodejno skrije ob rob zaslona, ko nad njim ni miškine kazalke. Premik kazalke ob rob zaslona povzroči ponovno odkritje pulta."
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Izbrana možnost določa, da se pult samodejno skrije ob rob zaslona, ko nad "
+"njim ni miškine kazalke. Premik kazalke ob rob zaslona povzroči ponovno "
+"odkritje pulta."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
-msgstr "Izbrana možnost določa razširitev pulta na celotno širino (višino, če je navpičen) namizja. V tem načinu je lahko pult postavljen le na rob zaslona. Obratno pa bo pult velik le toliko, da bodo lahko na njem vsi apleti, zaganjalniki in gumbi."
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Izbrana možnost določa razširitev pulta na celotno širino (višino, če je "
+"navpičen) namizja. V tem načinu je lahko pult postavljen le na rob zaslona. "
+"Obratno pa bo pult velik le toliko, da bodo lahko na njem vsi apleti, "
+"zaganjalniki in gumbi."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
-msgstr "Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult postavi na sredino osi X. Sprememba velikosti pulta se odraža na obeh straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi X."
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult "
+"postavi na sredino osi X. Sprememba velikosti pulta se odraža na obeh "
+"straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi X."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
-msgstr "Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult postavi na sredino osi Y. Sprememba velikosti pulta se odraža na obeh straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi Y."
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Izbrana možnost omogoča, da je vrednost koordinate Y prezrta in se pult "
+"postavi na sredino osi Y. Sprememba velikosti pulta se odraža na obeh "
+"straneh pulta sorazmerno. Neizbrana možnost natančno določa lego pulta osi Y."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
-msgstr "V okoljih s Xineramo je mogoče imeti pulte na vsakem zaslonu posebej. Možnost določa trenutni zaslon na katerem je prikazan pult."
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"V okoljih s Xineramo je mogoče imeti pulte na vsakem zaslonu posebej. "
+"Možnost določa trenutni zaslon na katerem je prikazan pult."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
@@ -2489,72 +2785,171 @@ msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Navaja barvo ozadja pulta v obliki #RGB"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
-msgstr "Navaja datoteko, ki bo uporabljena kot slika ozadja. V primeru, da slika vsebuje alfa barve, bo slika prikazana združeno s sliko ozadja namizja."
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Navaja datoteko, ki bo uporabljena kot slika ozadja. V primeru, da slika "
+"vsebuje alfa barve, bo slika prikazana združeno s sliko ozadja namizja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
-msgstr "Navaja premor v milisekundah preden se pult ob dotiku kazala miške samodejno odkrije. Možnost je uporabljena le, kadar je uporabljena tudi možnost samodejnega skrivanja."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Navaja premor v milisekundah preden se pult ob dotiku kazala miške samodejno "
+"odkrije. Možnost je uporabljena le, kadar je uporabljena tudi možnost "
+"samodejnega skrivanja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
-msgstr "Navaja premor v milisekundah preden se pult ob dotiku kazala miške samodejno skrije. Možnost je uporabljena le, kadar je uporabljena tudi možnost samodejnega skrivanja."
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Navaja premor v milisekundah preden se pult ob dotiku kazala miške samodejno "
+"skrije. Možnost je uporabljena le, kadar je uporabljena tudi možnost "
+"samodejnega skrivanja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr "Navaja število točk, ki so vidni, ko se pult samodejno skrije za rob. Možnost je uporabljena le, kadar je uporabljena tudi možnost samodejnega skrivanja."
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Navaja število točk, ki so vidni, ko se pult samodejno skrije za rob. "
+"Možnost je uporabljena le, kadar je uporabljena tudi možnost samodejnega "
+"skrivanja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
-msgstr "Navaja prosojnost barve ozadja. V primeru, da je vrednost manj kot 65535, se bo barva ozadja pulta združila z barvo ozadja namizja."
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Navaja prosojnost barve ozadja. V primeru, da je vrednost manj kot 65535, se "
+"bo barva ozadja pulta združila z barvo ozadja namizja."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "Raztegni sliko na pultu"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
-msgstr "Višina (širina za vodoravni pult) pulta. Pult samodejno določi najmanjšo velikost, na osnovi velikosti pisave in drugih kazalcih. Največja vrednost je nastavljena na četrtino višine (ali širine) zaslona."
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Višina (širina za vodoravni pult) pulta. Pult samodejno določi najmanjšo "
+"velikost, na osnovi velikosti pisave in drugih kazalcih. Največja vrednost "
+"je nastavljena na četrtino višine (ali širine) zaslona."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi X z začetkom na dnu zaslona. Vrednost -1 omogoča uporabo določen vrednosti za Y koordinato. Vrednost večja kot 0 pa razveljavi vrednost koordinate. Možnost je pomembna le v skrčenem načinu. V razširjenem načinu lego določa nastavitev usmerjenosti."
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Mesto pulta na osi X z začetkom na dnu zaslona. Vrednost -1 omogoča uporabo "
+"določen vrednosti za Y koordinato. Vrednost večja kot 0 pa razveljavi "
+"vrednost koordinate. Možnost je pomembna le v skrčenem načinu. V razširjenem "
+"načinu lego določa nastavitev usmerjenosti."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi X. Ključ je uporabljen le v običajnem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona."
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Mesto pulta na osi X. Ključ je uporabljen le v običajnem načinu. V "
+"razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi Y z začetkom na dnu zaslona. Vrednost -1 omogoča uporabo določen vrednosti za Y koordinato. Vrednost večja kot 0 pa razveljavi vrednost koordinate. Možnost je pomembna le v skrčenem načinu. V razširjenem načinu lego določa nastavitev usmerjenosti."
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Mesto pulta na osi Y z začetkom na dnu zaslona. Vrednost -1 omogoča uporabo "
+"določen vrednosti za Y koordinato. Vrednost večja kot 0 pa razveljavi "
+"vrednost koordinate. Možnost je pomembna le v skrčenem načinu. V razširjenem "
+"načinu lego določa nastavitev usmerjenosti."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
-msgstr "Mesto pulta na osi Y. Ključ je uporabljen le v običajnem načinu. V razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona."
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Mesto pulta na osi Y. Ključ je uporabljen le v običajnem načinu. V "
+"razširjenem načinu je ta ključ prezrt in pult je postavljen ob rob zaslona."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
-msgstr "Usmerjenost pulta. Mogoče vrednosti so \"zgoraj\", \"spodaj\", \"levo\" in \"desno\". V razširjenem načinu možnost določa rob zaslona, na katerem se nahaja pult. V običajnem načinu je razlika med \"zgoraj\" in \"spodaj\" manj pomembna, saj obe vrednosti določata vodoravni pult. Pri možnosti \"zgoraj\" bo gumb menija postavil meni pod pult, pri možnosti \"spodaj\" pa nad pult."
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Usmerjenost pulta. Mogoče vrednosti so \"zgoraj\", \"spodaj\", \"levo\" in "
+"\"desno\". V razširjenem načinu možnost določa rob zaslona, na katerem se "
+"nahaja pult. V običajnem načinu je razlika med \"zgoraj\" in \"spodaj\" manj "
+"pomembna, saj obe vrednosti določata vodoravni pult. Pri možnosti \"zgoraj\" "
+"bo gumb menija postavil meni pod pult, pri možnosti \"spodaj\" pa nad pult."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
-msgstr "Hitrost animacij pulta. Mogoče vrednosti so \"počasi\", \"srednje\" in \"hitro\". Možnost se lahko uporabi le, kadar je omogočena tudi možnost omogoči animacije."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Hitrost animacij pulta. Mogoče vrednosti so \"počasi\", \"srednje\" in "
+"\"hitro\". Možnost se lahko uporabi le, kadar je omogočena tudi možnost "
+"omogoči animacije."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
-msgstr "Ime namenjeno prepoznavanju pulta. Ime se pojavi v nazivni vrstci okna pulta, s čimer se olajša prepoznavanje pulta."
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Ime namenjeno prepoznavanju pulta. Ime se pojavi v nazivni vrstci okna "
+"pulta, s čimer se olajša prepoznavanje pulta."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
 msgstr "Število vidnih točk, ko je skrit"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
-msgstr "Katera oblika ozadja naj bo uporabljena za ta pult. Mogoče vrednosti so \"gtk\" - privzeta barva ozadij gradnikov GTK+, \"barva\" - uporabljen bo ključ, ki določa barvo ozadja ali \"slika\" - slika navedena v ključu slike."
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Katera oblika ozadja naj bo uporabljena za ta pult. Mogoče vrednosti so \"gtk"
+"\" - privzeta barva ozadij gradnikov GTK+, \"barva\" - uporabljen bo ključ, "
+"ki določa barvo ozadja ali \"slika\" - slika navedena v ključu slike."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
-msgstr "Pri uporabi več zaslonov imate lahko pulte na vsakem zaslonu posebej. Ključ določa trenutni zaslon na katerem bo prikazan pult."
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"Pri uporabi več zaslonov imate lahko pulte na vsakem zaslonu posebej. Ključ "
+"določa trenutni zaslon na katerem bo prikazan pult."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -2646,6 +3041,22 @@ msgid ""
 msgstr ""
 "Z brisanjem pulta se izbrišejo tudi\n"
 "vse njegove nastavitve."
+
+#: ../js/ui/statusMenu.js:184
+msgid "Available"
+msgstr "Na voljo"
+
+#: ../js/ui/statusMenu.js:189
+msgid "Busy"
+msgstr "Zaposleno"
+
+#: ../js/ui/statusMenu.js:197
+msgid "My Account"
+msgstr "Račun"
+
+#: ../js/ui/statusMenu.js:213
+msgid "Switch User"
+msgstr "Preklopi uporabnika"
 
 #~ msgid "Set System Time..."
 #~ msgstr "Nastavitev sistemskega časa ..."
