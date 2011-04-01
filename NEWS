@@ -1,4 +1,96 @@
 ===============
+Version 2.91.94
+===============
+
+Notes:
+  - many thanks to the release team and to translators who kindly accepted
+    freeze breaks to considerably improve gnome-panel in GNOME 3.
+  - user who started gnome-panel 2.91.93 won't have the new default layout, and
+    some applets will not be positioned like they were. Those users can easily
+    manually fix the layout, though.
+
+  Panel
+
+	* Fix moving of panel objects to use switch mode again by default
+	  (Vincent)
+	* Completely rework how objects are positioned in the panel: they are
+	  now either left-aligned, centered, right-aligned (Vincent)
+	  This fixes many issues, including objects being mis-positioned after
+	  changes of the screen size.
+	* Make the clock centered in the default layout (Vincent)
+	* Add a user menu similar to the GNOME Shell one (Vincent)
+
+  Clock Applet
+
+	* Port to GDBus (Ryan Lortie)
+
+  Notification Area Applet
+
+	* Add support for _NET_SYSTEM_TRAY_ICON_SIZE to specify the size for
+	  icons. This can be set in the theme with the theme with
+	  "-NaTrayApplet-icon-size: 16;" (Ryan Lortie)
+
+  Misc
+
+	* The dbus-glib dependency is now completely gone
+	* There is a new optional dependency on telepathy-glib, for features
+	  used in the user menu
+
+  Translators
+
+	* F Wolff (af)
+	* Khaled Hosny (ar)
+	* Alexander Shopov (bg)
+	* David Planella (ca)
+	* Marek Černocký (cs)
+	* Ask Hjorth Larsen (da)
+	* Christian Kirbach (de)
+	* Bakaoukas Nikolaos (el)
+	* Bruce Cowan (en_GB)
+	* Daniel Mustieles (es)
+	* Ivar Smolin (et)
+	* Iñaki Larrañaga Murgoitio (eu)
+	* Arash Mousavi (fa)
+	* Tommi Vainikainen (fi)
+	* Bruno Brouard (fr)
+	* Seán de Búrca (ga)
+	* Fran Diéguez (gl)
+	* Sweta Kothari (gu)
+	* Yaron Shahrabani (he)
+	* Rajesh Ranjan (hi)
+	* Gabor Kelemen (hu)
+	* Dirgita (id)
+	* Luca Ferretti (it)
+	* Takayuki KUSANO (ja)
+	* Shankar Prasad (kn)
+	* Changwoo Ryu (ko)
+	* Gintautas Miliauskas (lt)
+	* Rudolfs (lv)
+	* Sandeep Shedmake (mr)
+	* Torstein Adolf Winterseth (nb)
+	* Wouter Bolsterlee (nl)
+	* Åsmund Skjæveland (nn)
+	* A S Alam (pa)
+	* Piotr Drąg (pl)
+	* Duarte Loreto (pt)
+	* Rodrigo Padula de Oliveira (pt_BR)
+	* Lucian Adrian Grijincu (ro)
+	* Yuri Myaseodov (ru)
+	* Matej Urbančič (sl)
+	* Милош Поповић (sr)
+	* Miloš Popović (sr@latin)
+	* Daniel Nylander (sv)
+	* Dr.Tirumurti Vasudevan (ta)
+	* Theppitak Karoonboonyanan (th)
+	* Baris Cicek (tr)
+	* Sahran (ug)
+	* Korostil Daniel (uk)
+	* Clytie Siddall (vi)
+	* YunQiang Su (zh_CN)
+	* Chao-Hsiung Liao (zh_HK)
+	* Chao-Hsiung Liao (zh_TW)
+
+===============
 Version 2.91.93
 ===============
 
