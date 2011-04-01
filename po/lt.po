@@ -11,16 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 00:11+0300\n"
-"PO-Revision-Date: 2010-09-28 00:11+0300\n"
+"POT-Creation-Date: 2011-04-01 22:45+0200\n"
+"PO-Revision-Date: 2011-04-01 22:48+0100\n"
 "Last-Translator: Gintautas Miliauskas <gintautas@miliauskas.lt>\n"
 "Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: lt\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Virtaal 0.4.0\n"
 
 #. Translators: This is a strftime format string.
@@ -31,8 +30,9 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:444
-#: ../applets/clock/clock-location-tile.c:520
+#: ../applets/clock/calendar-window.c:329
+#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
@@ -50,57 +50,60 @@ msgstr "%I:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:449
-#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:480
-#: ../applets/clock/clock-location-tile.c:527
+#: ../applets/clock/calendar-window.c:334
+#: ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:314
+#: ../applets/clock/calendar-window.c:340
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:840
 msgid "Tasks"
 msgstr "Užduotys"
 
-#: ../applets/clock/calendar-window.c:847
-#: ../applets/clock/calendar-window.c:1022
-#: ../applets/clock/calendar-window.c:1655
+#: ../applets/clock/calendar-window.c:840
+#: ../applets/clock/calendar-window.c:1023
+#: ../applets/clock/calendar-window.c:1629
 msgid "Edit"
 msgstr "Keisti"
 
-#: ../applets/clock/calendar-window.c:968
+#: ../applets/clock/calendar-window.c:963
 msgid "All Day"
 msgstr "Visa diena"
 
-#: ../applets/clock/calendar-window.c:1106
+#: ../applets/clock/calendar-window.c:1107
 msgid "Appointments"
 msgstr "Susitarimai susitikti"
 
-#: ../applets/clock/calendar-window.c:1131
+#: ../applets/clock/calendar-window.c:1132
 msgid "Birthdays and Anniversaries"
 msgstr "Gimtadieniai ir jubiliejai"
 
-#: ../applets/clock/calendar-window.c:1156
+#: ../applets/clock/calendar-window.c:1157
 msgid "Weather Information"
 msgstr "Orų informacija"
 
-#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1629
+#: ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "Vietos"
 
-#: ../applets/clock/calendar-window.c:1937
+#: ../applets/clock/calendar-window.c:1927
 msgid "Calendar"
 msgstr "Kalendorius"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:443
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -111,7 +114,8 @@ msgstr "%I:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:449 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:1585
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -120,7 +124,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:460
+#: ../applets/clock/clock.c:459
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -128,7 +132,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:467
+#: ../applets/clock/clock.c:466
 #, c-format
 msgid ""
 "%1$s\n"
@@ -141,7 +145,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:475
+#: ../applets/clock/clock.c:474
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -150,23 +154,23 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:648
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:678
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Spustelėję paslėpsite savo susitikimus ir užduotis"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Spustelėję pamatysite savo susitikimus ir užduotis"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Spustelėję paslėpsite mėnesio kalendorių"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Spustelėję pamatysite mėnesio kalendorių"
 
@@ -201,114 +205,64 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %Y m. %B %d d."
 
-#: ../applets/clock/clock.c:1655
-msgid "Set System Time..."
-msgstr "Nustatyti sistemos laiką..."
+#: ../applets/clock/clock.c:1693
+msgid "Failed to open the time settings"
+msgstr "Nepavyko atverti laiko nustatymų"
 
-#: ../applets/clock/clock.c:1656
-msgid "Set System Time"
-msgstr "Nustatyti sistemos laiką"
-
-#: ../applets/clock/clock.c:1671
-msgid "Failed to set the system time"
-msgstr "Nepavyko nustatyti sistemos laiko"
-
-#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1836
-#: ../applets/wncklet/window-list.c:192
-#: ../applets/wncklet/workspace-switcher.c:339
+#: ../applets/clock/clock.c:1713
+#: ../applets/fish/fish.c:1317
+#: ../applets/wncklet/window-list.c:159
+#: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Nustatymai"
 
-#: ../applets/clock/clock.c:1872 ../applets/fish/fish.c:1839
-#: ../applets/notification_area/main.c:171
-#: ../applets/wncklet/showdesktop.c:228 ../applets/wncklet/window-list.c:195
-#: ../applets/wncklet/window-menu.c:95
-#: ../applets/wncklet/workspace-switcher.c:342 ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:350
-#: ../gnome-panel/panel-menu-button.c:665
-msgid "_Help"
-msgstr "_Žinynas"
-
-#: ../applets/clock/clock.c:1875 ../applets/fish/fish.c:1842
-#: ../applets/notification_area/main.c:174
-#: ../applets/wncklet/showdesktop.c:231 ../applets/wncklet/window-list.c:198
-#: ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:345
-msgid "_About"
-msgstr "_Apie"
-
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1716
 msgid "Copy _Time"
 msgstr "Kopijuoti _laiką"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1719
 msgid "Copy _Date"
 msgstr "Kopijuoti _datą"
 
-#: ../applets/clock/clock.c:1884
+#: ../applets/clock/clock.c:1722
 msgid "Ad_just Date & Time"
 msgstr "Pati_kslinti datą ir laiką"
 
-#: ../applets/clock/clock.c:2720
+#: ../applets/clock/clock.c:2559
 msgid "Custom format"
 msgstr "Pasirinktinis formatas"
 
-#: ../applets/clock/clock.c:3207
+#: ../applets/clock/clock.c:3046
 msgid "Choose Location"
 msgstr "Pasirinkite vietą"
 
-#: ../applets/clock/clock.c:3286
+#: ../applets/clock/clock.c:3125
 msgid "Edit Location"
 msgstr "Keisti vietą"
 
-#: ../applets/clock/clock.c:3432
+#: ../applets/clock/clock.c:3272
 msgid "City Name"
 msgstr "Miesto pavadinimas"
 
-#: ../applets/clock/clock.c:3436
+#: ../applets/clock/clock.c:3276
 msgid "City Time Zone"
 msgstr "Miesto laiko juosta"
 
-#: ../applets/clock/clock.c:3621
+#: ../applets/clock/clock.c:3463
 msgid "24 hour"
 msgstr "24 valandų"
 
-#: ../applets/clock/clock.c:3622
+#: ../applets/clock/clock.c:3464
 msgid "UNIX time"
 msgstr "UNIX laikas"
 
-#: ../applets/clock/clock.c:3623
+#: ../applets/clock/clock.c:3465
 msgid "Internet time"
 msgstr "Interneto laikas"
 
-#: ../applets/clock/clock.c:3631
+#: ../applets/clock/clock.c:3473
 msgid "Custom _format:"
 msgstr "Pasirinktinis _formatas:"
-
-#: ../applets/clock/clock.c:3721
-msgid "Clock"
-msgstr "Laikrodis"
-
-#: ../applets/clock/clock.c:3724
-msgid "The Clock displays the current time and date"
-msgstr "Laikrodis rodo dabartinį laiką ir datą"
-
-#. Translator credits
-#: ../applets/clock/clock.c:3727 ../applets/fish/fish.c:621
-#: ../applets/notification_area/main.c:153
-#: ../applets/wncklet/showdesktop.c:540 ../applets/wncklet/window-list.c:609
-#: ../applets/wncklet/window-menu.c:77
-#: ../applets/wncklet/workspace-switcher.c:619
-#: ../gnome-panel/panel-context-menu.c:138
-msgid "translator-credits"
-msgstr ""
-"Vertėjai:\n"
-"Žygimantas Beručka <zygis@gnome.org>\n"
-"Gintautas Miliauskas <gintas@akl.lt>\n"
-"Justina Klingaitė <justina.klingaite@gmail.com>\n"
-"Vaidotas Zemlys <mpiktas@delfi.lt>\n"
-"Gediminas Paulauskas <menesis@chatsubo.lt>"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
@@ -316,12 +270,8 @@ msgstr "<i>(neprivaloma)</i>"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
 #: ../applets/clock/clock.ui.h:3
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr ""
-"<small><i>Įveskite miesto, regiono ar šalies pavadinimą, tuomet iškeltame "
-"lange pasirinkite atitikmenį.</i></small>"
+msgid "<small><i>Type a city, region, or country name and then select a match from the pop-up.</i></small>"
+msgstr "<small><i>Įveskite miesto, regiono ar šalies pavadinimą, tuomet iškeltame lange pasirinkite atitikmenį.</i></small>"
 
 #: ../applets/clock/clock.ui.h:4
 msgid "Clock Format"
@@ -332,111 +282,96 @@ msgid "Clock Preferences"
 msgstr "Laikrodžio nustatymai"
 
 #: ../applets/clock/clock.ui.h:6
-msgid "Current Time:"
-msgstr "Dabartinis laikas:"
-
-#: ../applets/clock/clock.ui.h:7
 msgid "Display"
 msgstr "Rodymas"
 
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:7
 msgid "East"
 msgstr "Rytai"
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../applets/clock/clock.ui.h:8
+#: ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Bendra"
 
-#: ../applets/clock/clock.ui.h:10
+#: ../applets/clock/clock.ui.h:9
 msgid "L_atitude:"
 msgstr "_Platuma:"
 
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:10
 msgid "L_ongitude:"
 msgstr "_Ilguma:"
 
-#: ../applets/clock/clock.ui.h:13
+#: ../applets/clock/clock.ui.h:12
 msgid "North"
 msgstr "Šiaurė"
 
-#: ../applets/clock/clock.ui.h:14
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Skydelio rodymas"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:14
 msgid "Show _temperature"
 msgstr "Rodyti _temperatūrą"
 
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _weather"
 msgstr "Rodyti _oro sąlygas"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:16
 msgid "Show seco_nds"
 msgstr "Rodyti _sekundes"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:17
 msgid "Show the _date"
 msgstr "Rodyti _datą"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:18
 msgid "South"
 msgstr "Pietūs"
 
-#: ../applets/clock/clock.ui.h:20
-msgid "Time & Date"
-msgstr "Laikas ir data"
-
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:19
 msgid "Time _Settings"
 msgstr "Laiko _parametrai"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:20
 msgid "Weather"
 msgstr "Oro sąlygos"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:21
 msgid "West"
 msgstr "Vakarai"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:22
 msgid "_12 hour format"
 msgstr "_12 valandų formatas"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:23
 msgid "_24 hour format"
 msgstr "_24 valandų formatas"
 
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:24
 msgid "_Location Name:"
 msgstr "_Vietos pavadinimas:"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:25
 msgid "_Pressure unit:"
 msgstr "_Slėgio vienetai:"
 
-#: ../applets/clock/clock.ui.h:28
-msgid "_Set System Time"
-msgstr "Nustatyti _sistemos laiką"
-
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:26
 msgid "_Temperature unit:"
 msgstr "_Temperatūros vienetai:"
 
-#: ../applets/clock/clock.ui.h:30
-msgid "_Time:"
-msgstr "_Laikas:"
-
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Timezone:"
 msgstr "Laiko _juosta:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Visibility unit:"
 msgstr "_Matomumo vienetai:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "_Wind speed unit:"
 msgstr "_Vėjo greičio vienetai:"
 
@@ -520,8 +455,7 @@ msgstr "Jei teigiama, kalendoriaus lange išskleisti orų informacijos sąrašą
 
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"Jei teigiama, kai žymeklis yra virš laikrodžio, paaiškinime rodyti datą."
+msgstr "Jei teigiama, kai žymeklis yra virš laikrodžio, paaiškinime rodyti datą."
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
@@ -576,62 +510,24 @@ msgid "The unit to use when showing wind speed."
 msgstr "Rodant vėjo greitį naudojamas vienetas."
 
 #: ../applets/clock/clock.schemas.in.h:42
-msgid ""
-"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
-"time configuration tool. The schema is retained for compatibility with older "
-"versions."
-msgstr ""
-"Šis raktas nebenaudojamas GNOME 2.22, vietoje jo naudojamas vidinis laiko "
-"konfigūravimo įrankis. Schema išsaugota dėl suderinamumo su senesnėmis "
-"versijomis."
+msgid "The use of this key was deprecated in GNOME 2.22 with the use of an internal time configuration tool. The schema is retained for compatibility with older versions."
+msgstr "Šis raktas nebenaudojamas GNOME 2.22, vietoje jo naudojamas vidinis laiko konfigūravimo įrankis. Schema išsaugota dėl suderinamumo su senesnėmis versijomis."
 
 #: ../applets/clock/clock.schemas.in.h:43
-msgid ""
-"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-"timezones. The schema is retained for compatibility with older versions."
-msgstr ""
-"Šis raktas nebenaudojamas GNOME 2.28, vietoje jo naudojamos laiko zonos. "
-"Schema išsaugota dėl suderinamumo su senesnėmis versijomis."
+msgid "The use of this key was deprecated in GNOME 2.28 in favour of the use of timezones. The schema is retained for compatibility with older versions."
+msgstr "Šis raktas nebenaudojamas GNOME 2.28, vietoje jo naudojamos laiko zonos. Schema išsaugota dėl suderinamumo su senesnėmis versijomis."
 
 #: ../applets/clock/clock.schemas.in.h:44
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"Šis raktas nebenaudojamas GNOME 2.6, vietoje jo naudojamas „format“ raktas. "
-"Schema išsaugota dėl suderinamumo su senesnėmis versijomis."
+msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
+msgstr "Šis raktas nebenaudojamas GNOME 2.6, vietoje jo naudojamas „format“ raktas. Schema išsaugota dėl suderinamumo su senesnėmis versijomis."
 
 #: ../applets/clock/clock.schemas.in.h:45
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
-msgstr ""
-"Šis raktas nurodo laikrodžio įtaiso naudojamą formatą, kai formato raktas "
-"yra nustatytas į „custom“. Norėdami gauti konkretų formatą, galite naudoti "
-"strftime() suprantamus parametrus. Daugiau informacijos rasite strftime() "
-"žinyne."
+msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information."
+msgstr "Šis raktas nurodo laikrodžio įtaiso naudojamą formatą, kai formato raktas yra nustatytas į „custom“. Norėdami gauti konkretų formatą, galite naudoti strftime() suprantamus parametrus. Daugiau informacijos rasite strftime() žinyne."
 
 #: ../applets/clock/clock.schemas.in.h:46
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
-msgstr ""
-"Šis raktas nurodo, kokį valandų formatą rodo laikrodžio įtaisas. Galimos "
-"vertės yra: „12-hour“, „24-hour“, „internet“, „unix“ ir „custom“. Jeigu "
-"nustatyta „internet“, laikrodis rodys interneto laiką. Interneto laiko "
-"sistema padalina dieną į 1000 „.dūžių“. Šioje laiko sistemoje nėra laiko "
-"juostų, taigi laikas yra tas pats visame pasaulyje. Jei nustatyta „unix“, "
-"laikrodis rodys laiką sekundėmis nuo Epochos, t.y. 1970-01-01. Jeigu "
-"nustatyta „custom“, laikrodis rodys laiką pagal formatą, nurodytą "
-"custom_format rakte."
+msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display Internet time. The Internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
+msgstr "Šis raktas nurodo, kokį valandų formatą rodo laikrodžio įtaisas. Galimos vertės yra: „12-hour“, „24-hour“, „internet“, „unix“ ir „custom“. Jeigu nustatyta „internet“, laikrodis rodys interneto laiką. Interneto laiko sistema padalina dieną į 1000 „.dūžių“. Šioje laiko sistemoje nėra laiko juostų, taigi laikas yra tas pats visame pasaulyje. Jei nustatyta „unix“, laikrodis rodys laiką sekundėmis nuo Epochos, t.y. 1970-01-01. Jeigu nustatyta „custom“, laikrodis rodys laiką pagal formatą, nurodytą custom_format rakte."
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -653,15 +549,15 @@ msgstr "Naudoti UTC"
 msgid "Failed to set the system timezone"
 msgstr "Nepavyko nustatyti sistemos laiko juostos"
 
-#: ../applets/clock/clock-location-tile.c:244
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>Nustatyti...</small>"
 
-#: ../applets/clock/clock-location-tile.c:245
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>Nustatyti</small>"
 
-#: ../applets/clock/clock-location-tile.c:321
+#: ../applets/clock/clock-location-tile.c:308
 msgid "Set location as current location and use its timezone for this computer"
 msgstr "Nustatyti vietą kaip dabartinę ir naudoti jos laiko zoną"
 
@@ -671,7 +567,7 @@ msgstr "Nustatyti vietą kaip dabartinę ir naudoti jos laiko zoną"
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:444
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -680,7 +576,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:465
+#: ../applets/clock/clock-location-tile.c:452
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -688,45 +584,47 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:474
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:613
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:625
-#: ../applets/clock/clock-location-tile.c:634
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "Nežinoma"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:627
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, jaučiama kaip %s"
 
-#: ../applets/clock/clock-location-tile.c:650
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Saulėtekis: %s / saulėlydis: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:93 ../applets/wncklet/wncklet.c:123
+#: ../applets/clock/clock-utils.c:93
+#: ../applets/fish/fish.c:163
+#: ../applets/wncklet/wncklet.c:74
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Nepavyko parodyti žinyno dokumento „%s“"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
+#: ../applets/clock/clock-utils.c:122
+#: ../applets/fish/fish.c:189
+#: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "Klaida rodant žinyno dokumentą"
 
-#: ../applets/fish/fish.c:274
+#: ../applets/fish/fish.c:217
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -739,51 +637,27 @@ msgstr ""
 "Mes nuoširdžiai patariame nenaudoti %s niekam, kas galėtų\n"
 "padaryti įtaisą „praktišku“ ar naudingu."
 
-#: ../applets/fish/fish.c:471
-msgid "Images"
-msgstr "Paveikslėliai"
-
-#: ../applets/fish/fish.c:583 ../applets/fish/fish.c:649
-#: ../applets/fish/fish.c:765
+#: ../applets/fish/fish.c:365
+#: ../applets/fish/fish.c:481
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Žuvis %s"
 
-#: ../applets/fish/fish.c:584
-#, c-format
-msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. "
-"Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr ""
-"%s yra visai bevertė programa. Ji tik eikvoja disko vietą ir kompiliavimo "
-"laiką, be to, jei paleista, taip pat užima skydelyje vietą bei atmintį. Jei "
-"kas nors bus užtiktas benaudojantis šią programėlę, jis nedelsiant turi būti "
-"nusiųstas pasitikrinti pas psichiatrą."
-
-#: ../applets/fish/fish.c:608
-msgid "(with minor help from George)"
-msgstr "(su nedidele Džordžo pagalba)"
-
-#: ../applets/fish/fish.c:615
-msgid "Fish"
-msgstr "Žuvis"
-
-#: ../applets/fish/fish.c:650
+#: ../applets/fish/fish.c:366
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Žuvis %s, šiuolaikinis orakulas"
 
-#: ../applets/fish/fish.c:721
+#: ../applets/fish/fish.c:437
 msgid "Unable to locate the command to execute"
 msgstr "Nepavyko rasti vykdytinos komandos"
 
-#: ../applets/fish/fish.c:770
+#: ../applets/fish/fish.c:486
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Žuvis %s sako:"
 
-#: ../applets/fish/fish.c:839
+#: ../applets/fish/fish.c:555
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -794,16 +668,16 @@ msgstr ""
 "\n"
 "Detalės: %s"
 
-#: ../applets/fish/fish.c:905
+#: ../applets/fish/fish.c:632
 msgid "_Speak again"
 msgstr "_Kalbėti dar kartą"
 
-#: ../applets/fish/fish.c:989
+#: ../applets/fish/fish.c:714
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Sukonfigūruota komanda neveikia ir buvo pakeista į: %s"
 
-#: ../applets/fish/fish.c:1012
+#: ../applets/fish/fish.c:748
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -814,7 +688,7 @@ msgstr ""
 "\n"
 "Detaliai: %s"
 
-#: ../applets/fish/fish.c:1028
+#: ../applets/fish/fish.c:764
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -825,20 +699,21 @@ msgstr ""
 "\n"
 "Detalės: %s"
 
-#: ../applets/fish/fish.c:1679
+#: ../applets/fish/fish.c:1167
 msgid "The water needs changing"
 msgstr "Reikia pakeisti vandenį"
 
-#: ../applets/fish/fish.c:1681
+#: ../applets/fish/fish.c:1169
 msgid "Look at today's date!"
 msgstr "Pažiūrėk, kokia šiandien diena!"
 
-#: ../applets/fish/fish.c:1774
+#: ../applets/fish/fish.c:1262
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Žuvis %s, fortūnų pasakotoja"
 
-#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
+#: ../applets/fish/fish.ui.h:1
+#: ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "    "
 msgstr "    "
 
@@ -855,148 +730,49 @@ msgid "Fish Preferences"
 msgstr "Žuvies nustatymai"
 
 #: ../applets/fish/fish.ui.h:6
-msgid "Select an animation"
-msgstr "Pasirinkite animaciją"
-
-#: ../applets/fish/fish.ui.h:7
-msgid "_File:"
-msgstr "_Failas:"
-
-#: ../applets/fish/fish.ui.h:8
 msgid "_Name of fish:"
 msgstr "Žuvies _vardas:"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:7
 msgid "_Pause per frame:"
 msgstr "_Pauzė tarp kadrų:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:8
 msgid "_Rotate on vertical panels"
 msgstr "_Pasukti stačiuose skydeliuose"
 
-#: ../applets/fish/fish.ui.h:11
-msgid "_Total frames in animation:"
-msgstr "Kadrų _skaičius animacijoje:"
-
-#: ../applets/fish/fish.ui.h:12
-msgid "frames"
-msgstr "kadrai"
-
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:9
 msgid "seconds"
 msgstr "sekundžių"
 
-#: ../applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr "Žuvis be vardo - nuobodi žuvis. Pagyvink savo žuvį, ją pavadindamas"
-
-#: ../applets/fish/fish.schemas.in.h:2
-msgid "Command to execute on click"
-msgstr "Komanda, paleidžiama spragtelėjus "
-
-#: ../applets/fish/fish.schemas.in.h:3
-msgid "Frames in fish's animation"
-msgstr "Kadrų skaičius žuvies animacijoje"
-
-#: ../applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Jei tiesa, tai žuvies animacija vertikaliuose skydeliuose bus pasukta."
-
-#: ../applets/fish/fish.schemas.in.h:5
-msgid "Pause per frame"
-msgstr "Pauzė tarp kadrų"
-
-#: ../applets/fish/fish.schemas.in.h:6
-msgid "Rotate on vertical panels"
-msgstr "Pasukti stačiuose skydeliuose"
-
-#: ../applets/fish/fish.schemas.in.h:7
-msgid "The fish's animation pixmap"
-msgstr "Žuvies animacijos paveiksliukas"
-
-#: ../applets/fish/fish.schemas.in.h:8
-msgid "The fish's name"
-msgstr "Žuvies vardas"
-
-#: ../applets/fish/fish.schemas.in.h:9
-msgid ""
-"This key specifies the command that will be tried to execute when the fish "
-"is clicked."
-msgstr "Šis raktas nusako komandą, paleidžiamą spragtelėjus ant žuvies"
-
-#: ../applets/fish/fish.schemas.in.h:10
-msgid ""
-"This key specifies the filename of the pixmap which will be used for the "
-"animation displayed in the fish applet relative to the pixmap directory."
-msgstr ""
-"Šis raktas nurodo paveikslėlio, kuris bus naudojamas žuvies įtaiso "
-"animacijai, failo pavadinimą, santykinį paveikslėlio katalogui."
-
-#: ../applets/fish/fish.schemas.in.h:11
-msgid ""
-"This key specifies the number of frames that will be displayed in the fish's "
-"animation."
-msgstr "Šis raktas nusako kadrų skaičius žuvies animacijoje"
-
-#: ../applets/fish/fish.schemas.in.h:12
-msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Šis raktas nurodo, kiek sekundžių kiekvienas kadras bus rodomas."
-
-#: ../applets/notification_area/main.c:148
-msgid "Notification Area"
-msgstr "Pranešimų vieta"
-
-#: ../applets/notification_area/main.c:306
+#: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "Skydelio pranešimų vieta"
 
-#: ../applets/wncklet/showdesktop.c:182
+#: ../applets/wncklet/showdesktop.c:177
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nepavyko paleisti %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:183
+#: ../applets/wncklet/showdesktop.c:178
 msgid "Icon not found"
 msgstr "Piktograma nerasta"
 
-#: ../applets/wncklet/showdesktop.c:245
+#: ../applets/wncklet/showdesktop.c:231
 msgid "Click here to restore hidden windows."
 msgstr "Norėdami atstatyti paslėptus langus, spauskite čia."
 
-#: ../applets/wncklet/showdesktop.c:247
+#: ../applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Spauskite čia, jei norite paslėpti visus langus ir rodyti darbastalį."
 
-#: ../applets/wncklet/showdesktop.c:459 ../applets/wncklet/showdesktop.c:543
+#: ../applets/wncklet/showdesktop.c:441
 msgid "Show Desktop Button"
 msgstr "Darbastalio rodymo mygtukas"
 
-#: ../applets/wncklet/showdesktop.c:545
-msgid "This button lets you hide all windows and show the desktop."
-msgstr "Šis mygtukas leidžia jums paslėpti visus langus ir parodyti darbastalį"
-
-#: ../applets/wncklet/showdesktop.c:575
-msgid ""
-"Your window manager does not support the show desktop button, or you are not "
-"running a window manager."
-msgstr ""
-"Jūsų langų tvarkyklė nepalaiko darbastalo rodymo mygtuko, arba nenaudojate "
-"jokios langų tvarkyklės."
-
-#: ../applets/wncklet/window-list.c:612
-msgid "Window List"
-msgstr "Langų sąrašas"
-
-#: ../applets/wncklet/window-list.c:614
-msgid ""
-"The Window List shows a list of all windows in a set of buttons and lets you "
-"browse them."
-msgstr ""
-"Langų sąrašas rodo visų langų sąrašą mygtukų rinkinyje ir leidžia naršyti "
-"juos."
+#: ../applets/wncklet/showdesktop.c:509
+msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
+msgstr "Jūsų langų tvarkyklė nepalaiko darbastalo rodymo mygtuko, arba nenaudojate jokios langų tvarkyklės."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -1042,109 +818,20 @@ msgstr "_Visada grupuoti langus"
 msgid "_Never group windows"
 msgstr "_Niekada negrupuoti langų"
 
-#: ../applets/wncklet/window-list.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Nusprendžia, kada langų sąraše sugrupuoti tos pačios programos langus. "
-"Galimos reikšmės yra „never“, „auto“ and „always“."
-
-#: ../applets/wncklet/window-list.schemas.in.h:2
-msgid ""
-"If true, the window list will show windows from all workspaces. Otherwise it "
-"will only display windows from the current workspace."
-msgstr ""
-"Jei teigiama, langų saraše bus matomi visi langai iš visų darbalaukių. "
-"Priešingu atveju bus rodomi langai iš dabartinės darbalaukio."
-
-#: ../applets/wncklet/window-list.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, move it to the current workspace. "
-"Otherwise, switch to the workspace of the window."
-msgstr ""
-"Nustačius, išdidinant sumažintas langas bus perkeltas į esamą darbalaukį. "
-"Priešingu atveju esamas darbalaukis bus pakeistas į lango darbalaukį."
-
-#: ../applets/wncklet/window-list.schemas.in.h:4
-msgid "Maximum window list size"
-msgstr "Didžiausias langų sąrašo dydis"
-
-#: ../applets/wncklet/window-list.schemas.in.h:5
-msgid "Minimum window list size"
-msgstr "Mažiausias langų sąrašo dydis"
-
-#: ../applets/wncklet/window-list.schemas.in.h:6
-msgid "Move windows to current workspace when unminimized"
-msgstr "Padidinus langus perkelti į esamą darbalaukį"
-
-#: ../applets/wncklet/window-list.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Rodyti langus iš visų darbalaukių"
-
-#: ../applets/wncklet/window-list.schemas.in.h:8
-msgid ""
-"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
-"compatibility with older versions."
-msgstr ""
-"Šis raktas nuo GNOME 2.20 nebenaudojamas. Schema išsaugota tik dėl "
-"suderinamumo su senesnėmis versijomis."
-
-#: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "When to group windows"
-msgstr "Kada grupuoti langus"
-
-#: ../applets/wncklet/window-menu.c:80 ../applets/wncklet/window-menu.c:247
+#: ../applets/wncklet/window-menu.c:204
 msgid "Window Selector"
 msgstr "Langų parinkiklis"
 
-#: ../applets/wncklet/window-menu.c:84
-msgid ""
-"The Window Selector shows a list of all windows in a menu and lets you "
-"browse them."
-msgstr ""
-"Langų parinkiklis rodo visų langų sąrašą meniu ir leidžia naršyti juos."
-
-#: ../applets/wncklet/workspace-switcher.c:211
-#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:723
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "eilutės"
 
-#: ../applets/wncklet/workspace-switcher.c:211
-#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:723
 msgid "columns"
 msgstr "stulpeliai"
-
-#: ../applets/wncklet/workspace-switcher.c:492
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Klaida įkeliant num_rows reikšmę darbalaukių keitikliui: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:503
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Klaida įkeliant display_workspace_names reikšmę darbalaukių keitikliui: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:518
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Klaida įkeliant display_all_workspaces reikšmę darbo erdvių keitikliui: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:622
-msgid "Workspace Switcher"
-msgstr "Darbalaukių keitiklis"
-
-#: ../applets/wncklet/workspace-switcher.c:624
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Darbalaukių keitklis parodo sumažintą jūsų darbalaukių versiją, kuri leidžia "
-"jums tvarkyti savo langus."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
@@ -1182,203 +869,444 @@ msgstr "Darbalaukių va_rdai:"
 msgid "Workspaces"
 msgstr "Darbalaukių vardai"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
+msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgstr "Žuvis be vardo - nuobodi žuvis. Pagyvink savo žuvį, ją pavadindamas"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
+msgid "Command to execute on click"
+msgstr "Komanda, paleidžiama spragtelėjus "
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "Jei tiesa, tai žuvies animacija vertikaliuose skydeliuose bus pasukta."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
+msgid "Pause per frame"
+msgstr "Pauzė tarp kadrų"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+msgid "Rotate on vertical panels"
+msgstr "Pasukti stačiuose skydeliuose"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
+msgid "The fish's animation pixmap"
+msgstr "Žuvies animacijos paveiksliukas"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+msgid "The fish's name"
+msgstr "Žuvies vardas"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
+msgid "This key specifies the command that will be tried to execute when the fish is clicked."
+msgstr "Šis raktas nusako komandą, paleidžiamą spragtelėjus ant žuvies"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
+msgstr "Šis raktas nurodo paveikslėlio, kuris bus naudojamas žuvies įtaiso animacijai, failo pavadinimą, santykinį paveikslėlio katalogui."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Šis raktas nurodo, kiek sekundžių kiekvienas kadras bus rodomas."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
+msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
+msgstr "Nusprendžia, kada langų sąraše sugrupuoti tos pačios programos langus. Galimos reikšmės yra „never“, „auto“ and „always“."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:2
+msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
+msgstr "Jei teigiama, langų saraše bus matomi visi langai iš visų darbalaukių. Priešingu atveju bus rodomi langai iš dabartinės darbalaukio."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:3
+msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
+msgstr "Nustačius, išdidinant sumažintas langas bus perkeltas į esamą darbalaukį. Priešingu atveju esamas darbalaukis bus pakeistas į lango darbalaukį."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
+msgid "Move windows to current workspace when unminimized"
+msgstr "Padidinus langus perkelti į esamą darbalaukį"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
+msgid "Show windows from all workspaces"
+msgstr "Rodyti langus iš visų darbalaukių"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
+msgid "When to group windows"
+msgstr "Kada grupuoti langus"
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:1
 msgid "Display all workspaces"
 msgstr "Rodyti visus darbalaukius"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
 msgid "Display workspace names"
 msgstr "Rodyti darbalaukių vardus"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid ""
-"If true, the workspace switcher will show all workspaces. Otherwise it will "
-"only show the current workspace."
-msgstr ""
-"Jei teigiama, darbalaukių keitiklis rodys visus darbalaukius. Priešingu "
-"atveju bus rodomas tik esamas darbaulaukis"
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
+msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
+msgstr "Jei teigiama, darbalaukių keitiklis rodys visus darbalaukius. Priešingu atveju bus rodomas tik esamas darbaulaukis"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
-msgid ""
-"If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace. "
-"This setting only works when the window manager is Metacity."
-msgstr ""
-"Jei teigiama, darbalaukiai darbalaukių keitiklyje rodys darbalaukių vardus. "
-"Priešingu atveju, jie rodys darbalaukio langus. Šis parametras veikia tik "
-"tada, kai langų valdyklė yra Metacity."
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace. This setting only works when the window manager is Metacity."
+msgstr "Jei teigiama, darbalaukiai darbalaukių keitiklyje rodys darbalaukių vardus. Priešingu atveju, jie rodys darbalaukio langus. Šis parametras veikia tik tada, kai langų valdyklė yra Metacity."
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "Eilučių skaičius darbalaukių keitiklyje"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid ""
-"This key specifies how many rows (for horizontal layout) or columns (for "
-"vertical layout) the workspace switcher shows the workspaces in. This key is "
-"only relevant if the display_all_workspaces key is true."
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:6
+msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
+msgstr "Rodant visus darbalaukius, tai nustato keliose eilutėse (horizontaliame išdėstyme) ar stulpeliuose (vertikaliame išdėstyme) darbalaukių keitiklis rodys darbalaukius"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
+msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
+msgstr "Įtaisų, kuriuos skydelis ignoruos, IID sarašas. Tokiu būdu Jūs galite atjungti tam tikrus įtaisus nuo įkėlimo arba pasirodymo meniu. Pvz. tam, kad atjungti mini-commander įtaisą į sarašą įdėkit 'OAFIID:GNOME_MiniCommanderApplet'. Kad pakeitimas įsigalėtų skydelis turi būti perkrautas."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
+msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr "Skydelių ID sąrašas. Kiekvienas ID nusako individualų viršutinio lygmens skydelį. Kiekvieno skydelio nustatymai yra saugomi /apps/panel/toplevels/$(id)."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
+#, fuzzy
+msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. an applet, launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/objects/$(id)."
+msgstr "Skydelio objekų ID sąrašas. Kiekvienas ID nusako individualų skydelio objektą (pvz. leistuką, aktyvavimo arba meniu mygtuką, meniu juostą). Kiekvieno iš šių objektų nustatymai yra saugomi /apps/panel/objects/$(id)."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
+msgid "Applet IIDs to disable from loading"
+msgstr "Įtaisų IID, kurių nereikia įkelti"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Complete panel lockdown"
+msgstr "Visiškai prirakinti skydelį"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid "Confirm panel removal"
+msgstr "Patvirtinti skydelio pašalinimą"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+msgid "Disable Force Quit"
+msgstr "Uždrausti priverstinį išėjimą"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "Įjungti programų sąrašą „Paleisti programą“ dialoge"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Įjungti programų sąrašą „Paleisti programą“ dialoge"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+msgid "Enable tooltips"
+msgstr "Įjungti paaiškinimus"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Išskleisti programų sąrašą „Paleisti programą“ dialoge"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+msgid "History of \"Run Application\" dialog"
+msgstr "„Paleisti programą“ dialogo istorija"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
+msgstr "Jei pasirinkta, vartotojui norint pašalinti skydelį, prašoma patvirtinimo."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "Jeigu teigiama, „Paleisti programą“ dialoge įjungiamas automatinis pabaigimas."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
+msgstr "Jei tiesa, tai „Žinomos programos“ sąrašas „Paleisti programą“ dialoge yra išplečiamas paleidus šį dialogą. Šis raktas veikia tik tada, kai rakto enable_progam_list reikšmė yra true."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
+msgstr "Jei tiesa, tai „Žinomos programos“ sąrašas yra prieinamas „Paleisti programą“ dialoge. Ar sąrašas bus išplečiamas ar ne priklauso nuo show_program_list rakto."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
+msgstr "Jei reikšmė teigiama, skydelis neleis vartotojui priversti programą išeiti, pašalinant priėjimą prie priverstinio išėjimo mygtuko."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
+msgstr "Jei teigiama, skydelis neleis jokių pakeitimų skydelio konfigūracijoje. Individualius įtaisus gali reikti užrakinti atskirai. Kad įsigalėtų šis pakeitimas, skydelis turi būti perkrautas."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+msgid "If true, tooltips are shown for objects in panels. Tooltips can be disabled for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
-"Rodant visus darbalaukius, tai nustato keliose eilutėse (horizontaliame "
-"išdėstyme) ar stulpeliuose (vertikaliame išdėstyme) darbalaukių keitiklis "
-"rodys darbalaukius"
 
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
-msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "Paprastas įtaisas skirtas bandyti GNOME-2.0 skydelį"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+msgid "Panel ID list"
+msgstr "Skydelio ID sąrašas"
 
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-msgid "Test Bonobo Applet"
-msgstr "Test Bonobo Applet"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+msgid "Panel object ID list"
+msgstr "Skydelio objektų ID sąrašas"
 
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
-msgid "Test Bonobo Applet Factory"
-msgstr "Test Bonobo Applet Factory"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+#, fuzzy
+msgid "The list of commands used in the past in the \"Run Application\" dialog."
+msgstr "Įjungti programų sąrašą „Paleisti programą“ dialoge"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:34
-#: ../gnome-panel/panel-test-applets.c:36
-msgid "Specify an applet IID to load"
-msgstr "Specify an applet IID to load"
+#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
+msgid "Launcher location"
+msgstr "Leistuko vieta"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:35
-#: ../gnome-panel/panel-test-applets.c:37
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr "Nurodykite gconf vietą, kurioje turėtų būti saugomi įtaiso nustatymai"
+#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:2
+msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
+msgstr ".desktop failo, aprašančio leistuką, vieta. Šis raktas yra aktualus tik tada, kai object_type rakto reikšmė yra „launcher-object“."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:36
-#: ../gnome-panel/panel-test-applets.c:38
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Nurodykite pradinį įtaiso dydį (xx-small, medium, large etc.)"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
+msgid "Icon used for button"
+msgstr "Mygtuko piktograma"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:37
-#: ../gnome-panel/panel-test-applets.c:39
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Nurodykite pradinę skydelio orientaciją (top, bottom, left or right)"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+msgid "Menu content path"
+msgstr "Meniu turinio kelias"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:53
-#: ../gnome-panel/panel-properties-dialog.c:123
-#: ../gnome-panel/panel-test-applets.c:55
-msgctxt "Orientation"
-msgid "Top"
-msgstr "Viršus"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
+#, fuzzy
+msgid "The location of the image file used as the icon for the object's button. If empty, the default icon for the menu will be used."
+msgstr "Objekto mygtukui naudojamo piktogramos paveikslėlio failo vieta. Šis raktas aktualus tik tada, kai object_type rakto reikšmė yra „drawer-object“ arba menu-object“ ir raktas use_custom_icon yra teigiamas."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:54
-#: ../gnome-panel/panel-properties-dialog.c:124
-#: ../gnome-panel/panel-test-applets.c:56
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "Apačia"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
+#, fuzzy
+msgid "The path from which the menu contents is contructed. If empty, the menu will be the default applications menu."
+msgstr "Kelias iš kurio yra sukonstruojamas meniu turinys. Šis raktas yra svarbus tik tada, kai use_menu_path raktas yra teigiamas ir rakto object_type reikšmė yra „menu-object“."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:55
-#: ../gnome-panel/panel-properties-dialog.c:125
-#: ../gnome-panel/panel-test-applets.c:57
-msgctxt "Orientation"
-msgid "Left"
-msgstr "Kairė"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
+msgid "The text to display in a tooltip for this menu."
+msgstr ""
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:56
-#: ../gnome-panel/panel-properties-dialog.c:126
-#: ../gnome-panel/panel-test-applets.c:58
-msgctxt "Orientation"
-msgid "Right"
-msgstr "Dešinė"
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
+msgid "Tooltip displayed for menu"
+msgstr "Meniu rodomas paaiškinimas"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:61
-#: ../gnome-panel/panel-test-applets.c:63
-msgctxt "Size"
-msgid "XX Small"
-msgstr "Itin mažas"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
+#, fuzzy
+msgid "If set to 'end', the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
+msgstr "Jei teigiama, objekto padėtis yra nusakoma atskaitos tašku laikant dešinįjį skydelio kraštą (jei skydelis vertikalus - apatinį)"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:62
-#: ../gnome-panel/panel-test-applets.c:64
-msgctxt "Size"
-msgid "X Small"
-msgstr "Labai mažas"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Laikyti atskaitos tašku apatinįjį/dešinįjį kraštą"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:63
-#: ../gnome-panel/panel-test-applets.c:65
-msgctxt "Size"
-msgid "Small"
-msgstr "Mažas"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
+msgid "Object IID"
+msgstr "Objekto IID"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:64
-#: ../gnome-panel/panel-test-applets.c:66
-msgctxt "Size"
-msgid "Medium"
-msgstr "Vidutiniškas"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
+msgid "Object's position on the panel"
+msgstr "Objekto padėtis skydelyje"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:65
-#: ../gnome-panel/panel-test-applets.c:67
-msgctxt "Size"
-msgid "Large"
-msgstr "Didelis"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Skydelio, kuriame yra šis objektas, identifikatorius."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:66
-#: ../gnome-panel/panel-test-applets.c:68
-msgctxt "Size"
-msgid "X Large"
-msgstr "Labai didelis"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
+#, fuzzy
+msgid "The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet\"."
+msgstr "Įtaiso įgyvendinimo ID - pvz., „ClockAppletFactory::ClockApplet“. Šis raktas turi įtakos tik, kai object_type rakto reikšmė yra „bonobo-applet“."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:67
-#: ../gnome-panel/panel-test-applets.c:69
-msgctxt "Size"
-msgid "XX Large"
-msgstr "Itin didelis"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
+msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
+msgstr "Šio skydelio objekto padėtis. Padėtis nusakoma taškų skaičiumi nuo kairiojo skydelio krašto (viršutinio, jei skydelis vertikalus) "
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:129
-#: ../gnome-panel/panel-test-applets.c:127
-#, c-format
-msgid "Failed to load applet %s"
-msgstr "Nepavyko įkelti įtaiso %s"
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
+msgid "Toplevel panel containing object"
+msgstr "Skydelis, kuriame yra objektas"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:249
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "užklausa grąžino išimtį %s\n"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
+msgid "Animation speed"
+msgstr "Animacijų greitis"
 
-#. This is an utility to easily test various applets
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:2
-#: ../gnome-panel/panel-test-applets.ui.h:2
-msgid "Test applet utility"
-msgstr "Bandomojo įtaiso pagalbinė programa"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Slėpti skydelį į kampą"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:3
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "_Applet:"
-msgstr "Įt_aisas:"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
+msgid "Background color"
+msgstr "Fono spalva"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:4
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-#: ../gnome-panel/panel-test-applets.ui.h:4
-msgid "_Orientation:"
-msgstr "_Orientacija:"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
+msgid "Background image"
+msgstr "Fono paveikslas"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Prefs Dir:"
-msgstr "_Nustatymų aplankas:"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
+msgid "Background type"
+msgstr "Fono tipas"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:6
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Size:"
-msgstr "_Dydis:"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
+msgid "Center panel on x-axis"
+msgstr "Centruoti skydelį pagal x ašį"
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:1
-#: ../gnome-panel/applet.c:554 ../libpanel-applet/panel-applet.c:145
-msgid "Loc_k To Panel"
-msgstr "Prira_kinti prie skydelio"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+msgid "Center panel on y-axis"
+msgstr "Centruoti skydelį pagal y ašį"
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:2
-#: ../gnome-panel/applet.c:537 ../libpanel-applet/panel-applet.c:139
-msgid "_Move"
-msgstr "P_erkelti"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+msgid "Determines how the image set by image-uri is rendered. Possible values are \"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled to the panel dimensions and the aspect ratio of the image will not be maintained. With \"fit\", the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
+msgstr ""
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:3
-#: ../gnome-panel/applet.c:526 ../libpanel-applet/panel-applet.c:136
-msgid "_Remove From Panel"
-msgstr "_Pašalinti iš skydelio"
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+msgid "Enable arrows on hide buttons"
+msgstr "Rodyti rodykles ant slėpimo mygtukų"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+msgid "Enable hide buttons"
+msgstr "Rodyti slėpimo mygtukus"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+msgid "Expand to occupy entire screen width"
+msgstr "Išplėsti taip, kad būtų užimamas visas ekrano plotis"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
+msgstr "Jei reikšmė teigiama, ant paslėpimo mygtukų bus rodomos rodyklės. Šis raktas svarbus tik tuo atveju, jei raktas enable_buttons yra teigiamas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
+msgstr "Jei reikšmė teigiama, kiekvienoje skydelio pusėje bus rodomi mygtukai, kurie gali būti panaudojami perkelti skydelio kraštą už ekrano, paliekant matomą mygtuką."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+msgid "If true, the background image will be rotated when the panel is oriented vertically."
+msgstr "Jei reikšmė teigiama, esant vertikaliai skydelio orientacijai fono paveikslėlis bus pasuktas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
+msgstr "Jei reikšmė teigiama, žymekliui palikus skydelio zoną skydelis bus automatiškai paslėptas ekrano kampe. Nuvedus žymeklį atgal į tą kampą skydelis bus sugrąžintas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
+msgstr "Jei reikšmė teigiama, skydelis užims visą ekrano plotį (tuo atveju, kai skydelis yra vertikalus - plotį). Šiame režime skydelis gali būti patalpintas tik ekrano kampe. Jeigu reikšmė neigiama, skydelis tik bus pakankamai didelis sutalpinti skydelio įtaisams, leistukams ir mygtukams."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+msgid "If true, the x and x_right keys are ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x and x_right keys specify the location of the panel."
+msgstr "Jei reikšmė teigiama, raktų x ir x_right bus nepaisoma ir skydelis bus patalpintas ekrano x ašies centre. Jeigu skydelio dydis bus pakeistas jis vistiek liks toje pat pozicijoje, t.y. skydelis padidės į abi puses. Jeigu reikšmė neigiama, raktai x ir x_right nurodo skydelio vietą."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+msgid "If true, the y and y_bottom keys are ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y and y_bottom keys specify the location of the panel."
+msgstr "Jei reikšmė teigiama, raktų y ir y_bottom bus nepaisoma ir skydelis bus patalpintas ekrano y ašies centre. Jeigu skydelio dydis bus pakeistas jis vistiek liks toje pačioje pozicijoje, t.y. skydelis padidės į abi puses. Jeigu reikšmė neigiama, raktai y ir y_bottom nurodo skydelio vietą."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+msgid "Image options"
+msgstr "Paveikslėlio nustatymai"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
+msgstr "Xinerama sąrankoje galite turėti skydelius atskirai kiekvienam vaizduokliui. Šis raktas nurodo esamą vaizduoklį, kuriame rodomas skydelis."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+msgid "Name to identify panel"
+msgstr "Skydelio pavadinimas"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+msgid "Panel autohide delay"
+msgstr "Skydelio automatinio paslėpimo delsa"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+msgid "Panel autounhide delay"
+msgstr "Skydelio automatinio parodymo delsa"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+msgid "Panel orientation"
+msgstr "Skydelio orientacija"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+msgid "Panel size"
+msgstr "Skydelio dydis"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+msgid "Rotate image on vertical panels"
+msgstr "Pasukti paveikslėlį vertikaliuose skydeliuose"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Fono spalvos nurodymas #RGB formatu."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
+msgstr "Nurodo failą, naudojamą fono paveikslėliui. Jeigu paveikslėlis turi permatomumo kanalą, jis bus užpieštas ant darbastalio paveikslėlio."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
+msgstr "Nurodo laiko tarpą milisekundėmis po kurio, užvedus žymeklį ant skydelio zonos, skydelis automatiškai vėl parodomas. Šis raktas yra aktualus tik tada, kai raktas auto_hide yra teigiamas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
+msgstr "Nurodo laiko tarpą milisekundėmis po kurio, patraukus žymeklį nuo skydelio zonos, skydelis automatiškai paslepiamas. Šis raktas yra aktualus tik tada, kai raktas auto_hide yra teigiamas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr "Nurodo matomų pikselių kiekį, kai skydelis yra automatiškai paslepiamas kampe. Šis raktas yra aktualus tik tada, kai auto_hide raktas yra teigiamas."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
+msgstr "Skydelio aukštis (vertialaus skydelio plotis). Mažiausią skydelio dydį skydelis nustatys užkrovimo metu. Jis priklausys nuo šrifto dydžio bei kitų priežasčių. Didžiausias skydelis negali užimti daugiau nei ketvirtadalį ekrano aukščio (arba pločio)."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+msgid "The location of the panel along the x-axis, starting from the right of the screen. If set to -1, the value is ignored and the value of the x key is used. If the value is greater than 0, then the value of the x key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "Skydelio vieta x ašyje, pradedant nuo ekrano dešinės. Jeigu nustatyta į -1, reikšmė nepaisoma ir naudojama rakto x reikšmė. Jeigu reikšmė yra didesnė už 0, tada rakto x reikšmė nepaisoma. Šis raktas yra aktualus tik naudojant neišplėtimo veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna patalpinas orientacijos rakto nurodytame krašte."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "Skydelio vieta x ašyje. Šis raktas yra aktualus tik naudojant neišplėtimo  veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna patalpinamas orientacijos rakto nurodytame ekrano krašte nurodytame."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+msgid "The location of the panel along the y-axis, starting from the bottom of the screen. If set to -1, the value is ignored and the value of the y key is used. If the value is greater than 0, then the value of the y key is ignored. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "Skydelio vieta y ašyje, pradedant nuo ekrano apačios. Jeigu nustatyta į -1, reikšmė nepaisoma ir naudojama rakto y reikšmė. Jeigu reikšmė yra didesnė už 0, tada rakto y reikšmės nepaisoma. Šis raktas yra aktualus tik naudojant neišplėtimo veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna patalpinas orientacijos rakto nurodytame krašte."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
+msgstr "Skydelio vieta y ašyje. Šis raktas yra aktualus tik naudojant neišplėtimo  veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna patalpinamas orientacijos rakto nurodytame ekrano krašte nurodytame."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
+msgstr "Skydelio orientacija. Galimos reikšmės yra „top“, „bottom“, „left“, „right“. Esant išplėstam režimui šis raktas nurodo kuriame ekrano kampe yra skydelis. Esant neišplėstam režimui skirtumas tarp „top“ ir „bottom“ yra mažiau svarbus - abu nurodo, kad tai yra horizontalus skydelis - bet visgi suteikia naudingos informacijos kaip turėtų elgtis skydelio objektai. Pvz. esant „top“ skydeliui meniu mygtukas parodys savo meniu žemiau skydelio, kai tuo tarpu esant „bottom“ skydeliui meniu bus rodomas virš skydelio."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
+msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
+msgstr "Kaip greitai turėtų būti atliekamos skydelio animacijos. Galimos reikšmės yra „slow“, „medium“ ir „fast“. Šis raktas yra aktualus tik tada, kai rakto enable_animations reikšmė yra teigiama."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
+msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
+msgstr "Čia yra nurodytas skydelio pavadinimas, suprantamas žmonėms. Jo pagrindinis tikslas būti skydelio lango antrašte, kuri gali būti naudinga junginėjantis tarp skydelių."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
+msgid "Visible pixels when hidden"
+msgstr "Matomi taškai, kai paslėpta"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
+#, fuzzy
+msgid "Which type of background should be used for this panel. Possible values are \"none\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
+msgstr "Kokio tipo fonas turėtų būti naudojamas skydeliui. Galimos reikšmės yra „gtk“ - bus naudojamas įprastas GTK+ valdymo elementų fonas, „color“ - bus naudojama spalva nurodyta color rakte, „image“ - fonui bus naudojamas paveikslėlis nurodytas image rakte."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
+msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
+msgstr "Esant kelių ekranų sąrankai, Jūs galite turėti skydelius kiekvienam ekranui atskirai. Šis raktas identifikuoja dabartinį ekraną, kuriame rodomas skydelis."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
+msgid "X co-ordinate of panel"
+msgstr "Skydelio X koordinatė"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "Skydelio X koordinatė, pradedant nuo ekrano dešinės"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+msgid "X screen where the panel is displayed"
+msgstr "X ekranas, kuriame rodomas skydelis"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "Xinerama monitorius, kuriame rodomas skydelis"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+msgid "Y co-ordinate of panel"
+msgstr "Skydelio Y koordinatė"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Skydelio Y koordinatė, pradedant nuo ekrano apačios"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1390,27 +1318,27 @@ msgstr "Failas nėra taisyklingo .desktop formato"
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Neatpažinta darbastalio failo versija „%s“"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#: ../gnome-panel/libegg/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "Paleidžiama %s"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#: ../gnome-panel/libegg/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "Programa nepriima dokumentų komandinėje eilutėje"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#: ../gnome-panel/libegg/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Neatpažintas paleidimo parametras: %d"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#: ../gnome-panel/libegg/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Negalima perduoti dokumentų URI 'Type=Link' darbastalio elementas"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#: ../gnome-panel/libegg/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
 msgstr "Nepaleidžiamas objektas"
@@ -1448,13 +1376,13 @@ msgstr "Rodyti sesijos valdymo parinktis"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:82
-#: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/libpanel-util/panel-error.c:76
+#: ../gnome-panel/panel-applet-frame.c:769
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Klaida"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
 msgstr "Pasirinkite piktogramą"
 
@@ -1464,7 +1392,7 @@ msgid "Could not launch '%s'"
 msgstr "Nepavyko paleisti „%s“"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:48
-#: ../gnome-panel/launcher.c:161
+#: ../gnome-panel/launcher.c:175
 msgid "Could not launch application"
 msgstr "Nepavyko paleisti programos"
 
@@ -1477,28 +1405,19 @@ msgstr "Nepavyko atverti vietos „%s“"
 msgid "No application to handle search folders is installed."
 msgstr "Neįdiegta jokia programa paieškos aplankams apdoroti."
 
-#: ../gnome-panel/applet.c:447
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1351
-msgid "Cannot find an empty spot"
-msgstr "Nepavyko rasti laisvos vietos"
+#: ../gnome-panel/applet.c:504
+#: ../libpanel-applet/panel-applet.c:169
+msgid "_Move"
+msgstr "P_erkelti"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:174
-#: ../gnome-panel/panel-toplevel.c:1626
-msgid "Drawer"
-msgstr "Stalčius"
-
-#: ../gnome-panel/drawer.c:589
-msgid "_Add to Drawer..."
-msgstr "Į_dėti į stalčių..."
-
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
-#: ../gnome-panel/panel-action-button.c:141
-#: ../gnome-panel/panel-context-menu.c:216
-msgid "_Properties"
-msgstr "_Savybės"
+#: ../gnome-panel/applet.c:511
+#: ../libpanel-applet/panel-applet.c:166
+msgid "_Remove From Panel"
+msgstr "_Pašalinti iš skydelio"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1513,7 +1432,8 @@ msgid "- Edit .desktop files"
 msgstr "- Keisti .desktop failus"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:200
+#: ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "Sukurti leistuką"
 
@@ -1522,200 +1442,142 @@ msgstr "Sukurti leistuką"
 msgid "Directory Properties"
 msgstr "Aplanko savybės"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177
+#: ../gnome-panel/launcher.c:726
 msgid "Launcher Properties"
 msgstr "Leistuko savybės"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
-msgid ""
-"Launch other applications and provide various utilities to manage windows, "
-"show the time, etc."
-msgstr ""
-"Paleisti kitas programas ir suteikti įvairius reikmenis langų valdymui, "
-"laiko rodymui, ir t.t."
+msgid "Launch other applications and provide various utilities to manage windows, show the time, etc."
+msgstr "Paleisti kitas programas ir suteikti įvairius reikmenis langų valdymui, laiko rodymui, ir t.t."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:93
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+#: ../gnome-panel/main.c:87
 msgid "Panel"
 msgstr "Skydelis"
 
-#: ../gnome-panel/launcher.c:118
+#: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
 msgstr "Nepavyko parodyti šio URL"
 
-#: ../gnome-panel/launcher.c:119
+#: ../gnome-panel/launcher.c:137
 msgid "No URL was specified."
 msgstr "Nenurodytas URL."
 
-#: ../gnome-panel/launcher.c:227
+#: ../gnome-panel/launcher.c:219
 msgid "Could not use dropped item"
 msgstr "Nepavyko panaudoti numesto elemento"
 
-#: ../gnome-panel/launcher.c:423
+#: ../gnome-panel/launcher.c:415
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Skydelio leistuko desktop faile nėra nurodytas URI\n"
 
-#: ../gnome-panel/launcher.c:462
+#: ../gnome-panel/launcher.c:456
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
-"Nepavyko atverti darbastalio failo %s, skirto skydelio leistukui %s%s\n"
+msgstr "Nepavyko atverti darbastalio failo %s, skirto skydelio leistukui %s%s\n"
 
-#: ../gnome-panel/launcher.c:801
+#: ../gnome-panel/launcher.c:790
 msgid "_Launch"
 msgstr "_Paleisti"
 
-#: ../gnome-panel/launcher.c:840
-#, c-format
-msgid "Key %s is not set, cannot load launcher\n"
-msgstr "Nenustatytas raktas %s, nepavyko įkelti leistuko\n"
+#: ../gnome-panel/launcher.c:796
+#: ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:133
+msgid "_Properties"
+msgstr "_Savybės"
 
-#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1361
-#: ../gnome-panel/panel-ditem-editor.c:1395
-#: ../gnome-panel/panel-ditem-editor.c:1426
+#: ../gnome-panel/launcher.c:827
+#, c-format
+msgid "Launcher location is not set, cannot load launcher\n"
+msgstr "Paleidiklio vieta nenustatyta, nepavyko įkelti paleidiklio\n"
+
+#: ../gnome-panel/launcher.c:957
+#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Nepavyko išsaugoti leistuko"
 
-#: ../gnome-panel/main.c:45
+#: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
 msgstr "Pakeisti dabar veikiantį skydelį"
 
-#: ../gnome-panel/menu.c:916
-msgid "Add this launcher to _panel"
-msgstr "Įdėti šį leistuką į _skydelį"
-
-#: ../gnome-panel/menu.c:923
-msgid "Add this launcher to _desktop"
-msgstr "Padėti šį leistuką ant _darbastalio"
-
-#: ../gnome-panel/menu.c:935
-msgid "_Entire menu"
-msgstr "_Visą meniu"
-
-#: ../gnome-panel/menu.c:940
-msgid "Add this as _drawer to panel"
-msgstr "Įdėti jį į skydelį kaip _stalčių"
-
-#: ../gnome-panel/menu.c:947
-msgid "Add this as _menu to panel"
-msgstr "Įdėti jį į skydelį kaip _meniu"
-
-#: ../gnome-panel/nothing.cP:609
-#, c-format
-msgid "<b>GAME OVER</b> at level %d!"
-msgstr "<b>ŽAIDIMAS BAIGTAS</b> lygyje %d!"
-
-#. Translators: the first and third strings are similar to a
-#. * title, and the second string is a small information text.
-#. * The spaces are there only to separate all the strings, so
-#. try to keep them as is.
-#: ../gnome-panel/nothing.cP:616
-#, c-format
-msgid "%1$s   %2$s   %3$s"
-msgstr "%1$s   %2$s   %3$s"
-
-#: ../gnome-panel/nothing.cP:617
-msgid "Press 'q' to quit"
-msgstr "Norėdami išeiti spustelėkite „q“"
-
-#: ../gnome-panel/nothing.cP:622
-msgid "Paused"
-msgstr "Pauzė"
-
-#. Translators: the first string is a title and the second
-#. * string is a small information text.
-#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
-#, c-format
-msgid "%1$s\t%2$s"
-msgstr "%1$s\t%2$s"
-
-#: ../gnome-panel/nothing.cP:626
-msgid "Press 'p' to unpause"
-msgstr "Norėdami tęsti žaidimą, spustelėkite „p“"
-
-#: ../gnome-panel/nothing.cP:632
-#, c-format
-msgid "Level: %s,  Lives: %s"
-msgstr "Lygis: %s, Gyvybių: %s"
-
-#: ../gnome-panel/nothing.cP:637
-msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr "Kairėn/dešinėn – judėti, tarpas – šauti, „p“ – pauzė, „q“ – išeiti"
-
-#: ../gnome-panel/nothing.cP:1385
-msgid "Killer GEGLs from Outer Space"
-msgstr "Žudikai GEGLai iš tolimojo kosmoso"
-
-#: ../gnome-panel/panel-action-button.c:129
-msgid "_Activate Screensaver"
-msgstr "Į_jungti užsklandą"
-
-#: ../gnome-panel/panel-action-button.c:135
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "_Užrakinti ekraną"
 
-#: ../gnome-panel/panel-action-button.c:254
+#: ../gnome-panel/panel-action-button.c:133
+msgid "_Activate Screensaver"
+msgstr "Į_jungti užsklandą"
+
+#: ../gnome-panel/panel-action-button.c:239
+msgid "Connect to server"
+msgstr "Prisijungti prie serverio"
+
+#: ../gnome-panel/panel-action-button.c:263
 msgid "Could not connect to server"
 msgstr "Nepavyko prisijungti prie serverio"
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:293
 msgid "Lock Screen"
 msgstr "Užrakinti ekraną"
 
-#: ../gnome-panel/panel-action-button.c:286
+#: ../gnome-panel/panel-action-button.c:294
 msgid "Protect your computer from unauthorized use"
 msgstr "Apsaugoti kompiuterį nuo neteisėto panaudojimo"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:307
 msgid "Log Out..."
 msgstr "Atsijungti..."
 
-#: ../gnome-panel/panel-action-button.c:301
+#: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
 msgstr "Atsijungti nuo šios seanso, kad prisijungtumėte kaip kitas naudotojas"
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:316
 msgid "Run Application..."
 msgstr "Leisti programą..."
 
-#: ../gnome-panel/panel-action-button.c:311
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Paleisti programą įrašant komandą arba pasirenkant iš sąrašo"
 
-#: ../gnome-panel/panel-action-button.c:320
+#: ../gnome-panel/panel-action-button.c:325
 msgid "Search for Files..."
 msgstr "Ieškoti failų..."
 
-#: ../gnome-panel/panel-action-button.c:321
+#: ../gnome-panel/panel-action-button.c:326
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Ieškoti dokumentų ir aplankų šiame kompiuteryje pagal vardą ar turinį"
 
-#: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:229
+#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-force-quit.c:239
 msgid "Force Quit"
 msgstr "Priverstinai užverti"
 
-#: ../gnome-panel/panel-action-button.c:330
+#: ../gnome-panel/panel-action-button.c:334
 msgid "Force a misbehaving application to quit"
 msgstr "Priversti nekorektiškai veikiančią programą nutraukti darbą"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Connect to Server..."
 msgstr "Prisijungti prie serverio..."
 
-#: ../gnome-panel/panel-action-button.c:340
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Connect to a remote computer or shared disk"
 msgstr "Prisijungti prie serverio ar paviešinto disko"
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Shut Down..."
 msgstr "Išjungti..."
 
-#: ../gnome-panel/panel-action-button.c:349
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Shut down the computer"
 msgstr "Išjungti kompiuterį"
 
@@ -1735,7 +1597,8 @@ msgstr "Programų leistukas..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopijuoti leistuką iš programų meniu"
 
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:141
+#: ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "Pagrindinis meniu"
 
@@ -1759,114 +1622,80 @@ msgstr "Skirtukas"
 msgid "A separator to organize the panel items"
 msgstr "Skirtukas skydelio elementų tvarkymui"
 
-#: ../gnome-panel/panel-addto.c:175
-msgid "A pop out drawer to store other items in"
-msgstr "Iššokantis stalčiukas, kuriame saugomi leistukai"
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "Naudotojo meniu"
 
-#: ../gnome-panel/panel-addto.c:256
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr ""
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(tuščia)"
 
-#: ../gnome-panel/panel-addto.c:1026
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Raskite į „%s“ įdėtiną _elementą:"
 
-#: ../gnome-panel/panel-addto.c:1030
-#, c-format
-msgid "Add to Drawer"
-msgstr "Įdėti į stalčių"
-
-#: ../gnome-panel/panel-addto.c:1032
-msgid "Find an _item to add to the drawer:"
-msgstr "Raskite į stalčių įdėtiną _elementą:"
-
-#: ../gnome-panel/panel-addto.c:1034
-#, c-format
-msgid "Add to Panel"
-msgstr "Įdėti į skydelį"
-
-#: ../gnome-panel/panel-addto.c:1036
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "Raskite į skydelį įdėtiną _elementą:"
 
-#: ../gnome-panel/panel-applet-frame.c:714
+#: ../gnome-panel/panel-addto.c:1062
+msgid "Add to Panel"
+msgstr "Įdėti į skydelį"
+
+#: ../gnome-panel/panel-applet-frame.c:738
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "„%s“ netikėtai užsidarė"
 
-#: ../gnome-panel/panel-applet-frame.c:716
+#: ../gnome-panel/panel-applet-frame.c:740
 msgid "Panel object has quit unexpectedly"
 msgstr "Skydelio objektas netikėtai užsidarė"
 
-#: ../gnome-panel/panel-applet-frame.c:723
-msgid ""
-"If you reload a panel object, it will automatically be added back to the "
-"panel."
-msgstr ""
-"Jeigu skydelio objektą įkelsite iš naujo, jis bus automatiškai įdėtas atgal "
-"į skydelį."
+#: ../gnome-panel/panel-applet-frame.c:747
+msgid "If you reload a panel object, it will automatically be added back to the panel."
+msgstr "Jeigu skydelio objektą įkelsite iš naujo, jis bus automatiškai įdėtas atgal į skydelį."
 
-#: ../gnome-panel/panel-applet-frame.c:729
+#: ../gnome-panel/panel-applet-frame.c:753
 msgid "_Don't Reload"
 msgstr "_Neįkelti iš naujo"
 
-#: ../gnome-panel/panel-applet-frame.c:730
+#: ../gnome-panel/panel-applet-frame.c:754
 msgid "_Reload"
 msgstr "Į_kelti iš naujo"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Skydelis įkeldamas „%s“ susidūrė su problema."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ar norite pašalinti šį įtaisą iš Jūsų konfigūracijos?"
 
-#: ../gnome-panel/panel-context-menu.c:104
-msgid "And many, many others..."
-msgstr "Daug daug kitų..."
-
-#: ../gnome-panel/panel-context-menu.c:130
-msgid "The GNOME Panel"
-msgstr "GNOME skydelis"
-
-#: ../gnome-panel/panel-context-menu.c:133
-msgid ""
-"This program is responsible for launching other applications and provides "
-"useful utilities."
-msgstr ""
-"Ši programa suteikia naudingų reikmenų bei yra atsakinga už kitų programų "
-"paleidimą."
-
-#: ../gnome-panel/panel-context-menu.c:137
-msgid "About the GNOME Panel"
-msgstr "Apie GNOME skydelį"
-
-#: ../gnome-panel/panel-context-menu.c:171
+#: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
 msgstr "Nepavyko pašalinti šio skydelio"
 
-#: ../gnome-panel/panel-context-menu.c:172
+#: ../gnome-panel/panel-context-menu.c:64
 msgid "You must always have at least one panel."
 msgstr "Jūs visada turite turėti bent vieną skydelį."
 
-#: ../gnome-panel/panel-context-menu.c:205
+#: ../gnome-panel/panel-context-menu.c:122
 msgid "_Add to Panel..."
 msgstr "Į_dėti į skydelį..."
 
-#: ../gnome-panel/panel-context-menu.c:226
+#: ../gnome-panel/panel-context-menu.c:143
 msgid "_Delete This Panel"
 msgstr "_Pašalinti šį skydelį"
 
-#: ../gnome-panel/panel-context-menu.c:241
+#: ../gnome-panel/panel-context-menu.c:158
 msgid "_New Panel"
 msgstr "_Naujas skydelis"
-
-#: ../gnome-panel/panel-context-menu.c:293
-msgid "A_bout Panels"
-msgstr "A_pie skydelius"
 
 #: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
@@ -1881,629 +1710,240 @@ msgid "Location"
 msgstr "Vieta"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Tipas:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Pavadinimas:"
 
-#: ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:663
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Ko_mentaras:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1012
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Pasirinkite programą..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1016
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Pasirinkite failą..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1181
-#: ../gnome-panel/panel-ditem-editor.c:1190
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "Kom_anda:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1199
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Vieta:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1362
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Nenurodytas leistuko pavadinimas."
 
-#: ../gnome-panel/panel-ditem-editor.c:1366
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Nepavyko išsaugoti aplanko savybių"
 
-#: ../gnome-panel/panel-ditem-editor.c:1367
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Nenurodytas aplanko pavadinimas."
 
-#: ../gnome-panel/panel-ditem-editor.c:1383
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "Nenurodyta leistuko komanda."
 
-#: ../gnome-panel/panel-ditem-editor.c:1386
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Nenurodyta leistuko vieta."
 
-#: ../gnome-panel/panel-ditem-editor.c:1463
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Nepavyko parodyti žinyno dokumento"
 
 #: ../gnome-panel/panel-force-quit.c:77
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Paspaudę ant lango priversite programą baigti darbą. Norėdami atsisakyti "
-"spauskite <ESC>"
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "Paspaudę ant lango priversite programą baigti darbą. Norėdami atsisakyti spauskite <ESC>"
 
-#: ../gnome-panel/panel-force-quit.c:212
+#: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Priversti užverti šią programą?"
 
-#: ../gnome-panel/panel-force-quit.c:215
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Jeigu pasirinksite priverstinai užverti šią programą, neįrašyti pakeitimai "
-"atvertuose dokumentuose bus prarasti."
+#: ../gnome-panel/panel-force-quit.c:225
+msgid "If you choose to force an application to exit, unsaved changes in any open documents in it might get lost."
+msgstr "Jeigu pasirinksite priverstinai užverti šią programą, neįrašyti pakeitimai atvertuose dokumentuose bus prarasti."
 
-#: ../gnome-panel/panel-general.schemas.in.h:1
-msgid ""
-"A boolean flag to indicate whether the user's previous configuration in /"
-"apps/panel/profiles/default has been copied to the new location in /apps/"
-"panel."
-msgstr ""
-"Loginė reikšmė, nurodanti ar naudotojo ankstesni nustatymai, esantys /apps/"
-"panel/profiles/default, buvo nukopijuoti į naują vietą /apps/panel."
+#: ../gnome-panel/panel-layout.c:1097
+#: ../gnome-panel/panel-layout.c:1111
+#, fuzzy, c-format
+msgid "Cannot create initial panel layout.\n"
+msgstr "Nepavyko pašalinti šio skydelio"
 
-#: ../gnome-panel/panel-general.schemas.in.h:2
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"Skydelių ID sąrašas. Kiekvienas ID nusako individualų viršutinio lygmens "
-"skydelį. Kiekvieno skydelio nustatymai yra saugomi /apps/panel/toplevels/"
-"$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:3
-msgid ""
-"A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in /apps/panel/applets/"
-"$(id)."
-msgstr ""
-"Skydelio įtaisų ID sąrašas. Kiekvienas ID nusako individualų skydelio "
-"įtaisą. Kiekvieno įtaiso nustatymai yra saugomi /apps/panel/applets/$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:4
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"Skydelio objekų ID sąrašas. Kiekvienas ID nusako individualų skydelio "
-"objektą (pvz. leistuką, aktyvavimo arba meniu mygtuką, meniu juostą). "
-"Kiekvieno iš šių objektų nustatymai yra saugomi /apps/panel/objects/$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "Įjungti programų sąrašą „Paleisti programą“ dialoge"
-
-#: ../gnome-panel/panel-general.schemas.in.h:6
-msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Įjungti programų sąrašą „Paleisti programą“ dialoge"
-
-#: ../gnome-panel/panel-general.schemas.in.h:7
-msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Išskleisti programų sąrašą „Paleisti programą“ dialoge"
-
-#: ../gnome-panel/panel-general.schemas.in.h:8
-msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"Jeigu teigiama, „Paleisti programą“ dialoge įjungiamas automatinis "
-"pabaigimas."
-
-#: ../gnome-panel/panel-general.schemas.in.h:9
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
-msgstr ""
-"Jei tiesa, tai „Žinomos programos“ sąrašas „Paleisti programą“ dialoge yra "
-"išplečiamas paleidus šį dialogą. Šis raktas veikia tik tada, kai rakto "
-"enable_progam_list reikšmė yra true."
-
-#: ../gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is made available. Whether or not the listing is expanded when the "
-"dialog is shown is controlled by the show_program_list key."
-msgstr ""
-"Jei tiesa, tai „Žinomos programos“ sąrašas yra prieinamas „Paleisti "
-"programą“ dialoge. Ar sąrašas bus išplečiamas ar ne priklauso nuo "
-"show_program_list rakto."
-
-#: ../gnome-panel/panel-general.schemas.in.h:11
-msgid "Old profiles configuration migrated"
-msgstr "Senų profilių konfigūracija perkelta"
-
-#: ../gnome-panel/panel-general.schemas.in.h:12
-msgid "Panel ID list"
-msgstr "Skydelio ID sąrašas"
-
-#: ../gnome-panel/panel-general.schemas.in.h:13
-msgid "Panel applet ID list"
-msgstr "Skydelio įtaisų ID sąrašas"
-
-#: ../gnome-panel/panel-general.schemas.in.h:14
-msgid "Panel object ID list"
-msgstr "Skydelio objektų ID sąrašas"
-
-#: ../gnome-panel/panel-global.schemas.in.h:1
-msgid ""
-"A list of applet IIDs that the panel will ignore. This way you can disable "
-"certain applets from loading or showing up in the menu. For example to "
-"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
-"this list. The panel must be restarted for this to take effect."
-msgstr ""
-"Įtaisų, kuriuos skydelis ignoruos, IID sarašas. Tokiu būdu Jūs galite "
-"atjungti tam tikrus įtaisus nuo įkėlimo arba pasirodymo meniu. Pvz. tam, kad "
-"atjungti mini-commander įtaisą į sarašą įdėkit 'OAFIID:"
-"GNOME_MiniCommanderApplet'. Kad pakeitimas įsigalėtų skydelis turi būti "
-"perkrautas."
-
-#: ../gnome-panel/panel-global.schemas.in.h:2
-msgid "Applet IIDs to disable from loading"
-msgstr "Įtaisų IID, kurių nereikia įkelti"
-
-#: ../gnome-panel/panel-global.schemas.in.h:3
-msgid "Autoclose drawer"
-msgstr "Automatiškai uždaryti stalčių"
-
-#: ../gnome-panel/panel-global.schemas.in.h:4
-msgid "Complete panel lockdown"
-msgstr "Visiškai prirakinti skydelį"
-
-#: ../gnome-panel/panel-global.schemas.in.h:5
-msgid "Confirm panel removal"
-msgstr "Patvirtinti skydelio pašalinimą"
-
-#: ../gnome-panel/panel-global.schemas.in.h:6
-msgid "Deprecated"
-msgstr "Nebenaudojama"
-
-#: ../gnome-panel/panel-global.schemas.in.h:7
-msgid "Disable Force Quit"
-msgstr "Uždrausti priverstinį išėjimą"
-
-#: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Logging Out"
-msgstr "Atjungti atsijungimą iš Gnome"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
-#: ../gnome-panel/panel-toplevel.schemas.in.h:9
-msgid "Enable animations"
-msgstr "Įjungti animacijas"
-
-#: ../gnome-panel/panel-global.schemas.in.h:10
-msgid "Enable tooltips"
-msgstr "Įjungti paaiškinimus"
-
-#: ../gnome-panel/panel-global.schemas.in.h:11
-msgid "Highlight launchers on mouseover"
-msgstr "Paryškinti leistukus virš jų esant pelės žymekliui"
-
-#: ../gnome-panel/panel-global.schemas.in.h:12
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
-msgstr ""
-"Jei pasirinkta, vartotojui norint pašalinti skydelį, prašoma patvirtinimo."
-
-#: ../gnome-panel/panel-global.schemas.in.h:13
-msgid ""
-"If true, a drawer will automatically be closed when the user clicks a "
-"launcher in it."
-msgstr ""
-"Jei pasirinkta, stalčius automatiškai užsidarys, jei vartotojas paspaus jame "
-"esantį leistuką."
-
-#: ../gnome-panel/panel-global.schemas.in.h:14
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr ""
-"Jei tiesa, leistukas bus paryškintas, kai pelės žymeklis bus virš leistuko."
-
-#: ../gnome-panel/panel-global.schemas.in.h:15
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
-msgstr ""
-"Jei reikšmė teigiama, skydelis neleis vartotojui priversti programą išeiti, "
-"pašalinant priėjimą prie priverstinio išėjimo mygtuko."
-
-#: ../gnome-panel/panel-global.schemas.in.h:16
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
-msgstr ""
-"Jei reikšmė teigiama, skydelis neleis vartotojui atsijungti, pašalinant "
-"priėjimą prie atsijungimo meniu irašo."
-
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
-msgstr ""
-"Jei teigiama, skydelis neleis jokių pakeitimų skydelio konfigūracijoje. "
-"Individualius įtaisus gali reikti užrakinti atskirai. Kad įsigalėtų šis "
-"pakeitimas, skydelis turi būti perkrautas."
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
-msgid "If true, tooltips are shown for objects in panels."
-msgstr "Jei teigiama, skydelio objektams yra rodomos paaiškinamosios kortelės."
-
-#: ../gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"This key is deprecated as it cannot be used to implement proper lockdown. "
-"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
-msgstr ""
-"Šis raktas nebenaudojamas GNOME 2.22, nes juo negali būti realizuotas "
-"užrakinimas. Vietoje jo turėtų būti naudojamas raktas /desktop/gnome/"
-"lockdown/disable_lock_screen."
-
-#: ../gnome-panel/panel-menu-bar.c:106
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "Rasti ir paleisti įdiegtas programas"
 
-#: ../gnome-panel/panel-menu-bar.c:108
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "Prieiga prie dokumentų, aplankų bei vietų tinkle"
 
-#: ../gnome-panel/panel-menu-bar.c:110
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr ""
-"Darbo aplinkos išvaizdos ir veikimo keitimas, žinynas ir atsijungimo veiksmai"
-
-#: ../gnome-panel/panel-menu-bar.c:147
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Programos"
 
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:670
+#: ../gnome-panel/panel-menu-bar.c:243
+#: ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "_Keisti meniu"
 
-#: ../gnome-panel/panel-menu-items.c:472
+#: ../gnome-panel/panel-menu-bar.c:250
+msgid "_Help"
+msgstr "_Žinynas"
+
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "Keisti naudotoją"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "Žymelės"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
+#: ../gnome-panel/panel-menu-items.c:644
+#: ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "Atverti „%s“"
 
-#: ../gnome-panel/panel-menu-items.c:566
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Nepavyko peržvelgti %s dėl laikmenų pokyčių"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "Peržvelgti iš naujo %s"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nepavyko prijungti %s"
 
-#: ../gnome-panel/panel-menu-items.c:709
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "Prijungti %s"
 
-#: ../gnome-panel/panel-menu-items.c:917
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "Išimamos laikmenos"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "Tinklo vietos"
 
-#: ../gnome-panel/panel-menu-items.c:1043
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel-menu-items.c:1199
+#: ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "Atverti jūsų asmeninį aplanką"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Darbastalis"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "Atverti darbastalio turinį aplanke"
 
-#: ../gnome-panel/panel-menu-items.c:1454
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1235
+#: ../gnome-panel/panel.c:655
+msgid "Computer"
+msgstr "Kompiuteris"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1241
+#: ../gnome-panel/panel.c:656
+msgid "Browse all local and remote disks and folders accessible from this computer"
+msgstr "Naršyti vietinius ir nutolusius diskus ir aplankus, pasiekiamus iš šio kompiuterio"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1251
+#: ../gnome-panel/panel.c:663
+msgid "Network"
+msgstr "Tinklas"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1252
+#: ../gnome-panel/panel.c:664
+msgid "Browse bookmarked and local network locations"
+msgstr "Naršyti pažymėtas ir vietines tinklo vietas"
+
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "Esu"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "Užsiėmęs (-usi)"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "Mano paskyra"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "Vietos"
 
-#: ../gnome-panel/panel-menu-items.c:1483
-msgid "System"
-msgstr "Sistema"
+#: ../gnome-panel/panel-properties-dialog.c:81
+#: ../gnome-panel/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Viršus"
 
-#. Below this, we only have log out/shutdown items
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1564
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "-"
+#: ../gnome-panel/panel-properties-dialog.c:82
+#: ../gnome-panel/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Apačia"
 
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1576
-#, c-format
-msgid "Log Out %s..."
-msgstr "Atjungti %s..."
+#: ../gnome-panel/panel-properties-dialog.c:83
+#: ../gnome-panel/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Kairė"
 
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1580
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Atjungti %s nuo šio seanso, kad prisijungtumėte kaip kitas naudotojas"
+#: ../gnome-panel/panel-properties-dialog.c:84
+#: ../gnome-panel/panel-test-applets.c:58
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Dešinė"
 
-#: ../gnome-panel/panel-object.schemas.in.h:1
-msgid "Action button type"
-msgstr "Veiksmų mygtukų tipas"
-
-#: ../gnome-panel/panel-object.schemas.in.h:2
-msgid "Applet Bonobo IID"
-msgstr "Applet Bonobo IID"
-
-#: ../gnome-panel/panel-object.schemas.in.h:3
-msgid "Applet IID"
-msgstr "Įtaiso IID"
-
-#: ../gnome-panel/panel-object.schemas.in.h:4
-msgid "Icon used for object's button"
-msgstr "Objekto mygtukui naudojama piktograma"
-
-#: ../gnome-panel/panel-object.schemas.in.h:5
-msgid ""
-"If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr ""
-"Jei teigiama, custom_icon raktas yra naudojamas mygtuko kaip kita "
-"piktograma. Jeigu neigiama, custom_icon raktas yra ignoruojamas. Šis raktas "
-"turi įtakos tik jeigu raktas objekt_type yra su reikšmėmis „menu-object“ "
-"arba „drawer-object“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:6
-msgid ""
-"If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
-msgstr ""
-"Jei teigiama, menu_path raktas yra naudojamas kaip kelias iš kurio turėtų "
-"būti konstruojamas meniu turinys. Jeigu neigiama, menu_path raktas yra "
-"ignoruojamas. Šis raktas yra svarbus tik tuo atveju, kai object_type raktas "
-"yra su reikšme „menu-object“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:7
-msgid ""
-"If true, the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
-msgstr ""
-"Jei teigiama, objekto padėtis yra nusakoma atskaitos tašku laikant dešinįjį "
-"skydelio kraštą (jei skydelis vertikalus - apatinį)"
-
-#: ../gnome-panel/panel-object.schemas.in.h:8
-msgid ""
-"If true, the user may not move the applet without first unlocking the object "
-"using the \"Unlock\" menuitem."
-msgstr ""
-"Jei teigiama, naudotojas negali perkelti įtaiso pirma neatrakinęs jo "
-"naudodamasis „Atrakinti“ meniu punktu"
-
-#: ../gnome-panel/panel-object.schemas.in.h:9
-msgid "Interpret position relative to bottom/right edge"
-msgstr "Laikyti atskaitos tašku apatinįjį/dešinįjį kraštą"
-
-#: ../gnome-panel/panel-object.schemas.in.h:10
-msgid "Launcher location"
-msgstr "Leistuko vieta"
-
-#: ../gnome-panel/panel-object.schemas.in.h:11
-msgid "Lock the object to the panel"
-msgstr "Prirakinti objektą prie skydelio"
-
-#: ../gnome-panel/panel-object.schemas.in.h:12
-msgid "Menu content path"
-msgstr "Meniu turinio kelias"
-
-#: ../gnome-panel/panel-object.schemas.in.h:13
-msgid "Object's position on the panel"
-msgstr "Objekto padėtis skydelyje"
-
-#: ../gnome-panel/panel-object.schemas.in.h:14
-msgid "Panel attached to drawer"
-msgstr "Prie stalčiaus pridėtas skydelis"
-
-#: ../gnome-panel/panel-object.schemas.in.h:15
-msgid "Panel object type"
-msgstr "Skydelio objekto tipas"
-
-#: ../gnome-panel/panel-object.schemas.in.h:16
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
-msgstr ""
-"Šio mygtuko atstovaujamas veiksmo tipas. Galimos reikšmės yra „lock“, "
-"„logout“, „run“, „search“ ir „screenshot“. Šis raktas svarbus tik tada, kai "
-"rakto object_type reikšmė yra „action-applet“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:17
-msgid ""
-"The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
-msgstr ""
-"Skydelio prikabinto prie šio stalčiaus identifikatorius. Šis raktas svarbus "
-"tik tada, kai rakto object_type reikšmė yra „stalčiaus-objektas“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:18
-msgid "The identifier of the toplevel panel which contains this object."
-msgstr "Skydelio, kuriame yra šis objektas, identifikatorius."
-
-#: ../gnome-panel/panel-object.schemas.in.h:19
-msgid ""
-"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr ""
-"Įtaiso įgyvendinimo ID - pvz., „ClockAppletFactory::ClockApplet“. Šis raktas "
-"turi įtakos tik, kai object_type rakto reikšmė yra „bonobo-applet“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:20
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-".desktop failo, aprašančio leistuką, vieta. Šis raktas yra aktualus tik "
-"tada, kai object_type rakto reikšmė yra „launcher-object“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:21
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
-msgstr ""
-"Objekto mygtukui naudojamo piktogramos paveikslėlio failo vieta. Šis raktas "
-"aktualus tik tada, kai object_type rakto reikšmė yra „drawer-object“ arba "
-"menu-object“ ir raktas use_custom_icon yra teigiamas."
-
-#: ../gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
-msgstr ""
-"Kelias iš kurio yra sukonstruojamas meniu turinys. Šis raktas yra svarbus "
-"tik tada, kai use_menu_path raktas yra teigiamas ir rakto object_type "
-"reikšmė yra „menu-object“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:23
-msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
-msgstr ""
-"Šio skydelio objekto padėtis. Padėtis nusakoma taškų skaičiumi nuo kairiojo "
-"skydelio krašto (viršutinio, jei skydelis vertikalus) "
-
-#: ../gnome-panel/panel-object.schemas.in.h:24
-msgid ""
-"The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr ""
-"Tekstas rodomas šio stalčiaus ar meniu paaiškinime. Šis raktas yra svarbus "
-"tik, kai object_type rakto reikšmė yra „drawer-object“ arba „menu-object“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:25
-msgid ""
-"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
-msgstr ""
-"Šio skydelio objekto tipas. Galimos reikšmės yra „drawer-object“, „menu-"
-"object“, „launcher-object“, „bonobo-applet“, „action-applet“ ir „menu-bar“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:26
-msgid ""
-"This key is deprecated, following the migration to a new library for "
-"applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-"GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-"\"bonobo-applet\"."
-msgstr ""
-"Raktas nebenaudotinas, nes pereinama prie naujos įtaisų bibliotekos. Įtaiso "
-"Bonobo įgyvendinimo ID - pvz. „OAFIID:GNOME_ClockApplet“. Šis raktas turi "
-"įtakos tik, kai object_type rakto reikšmė yra „bonobo-applet“."
-
-#: ../gnome-panel/panel-object.schemas.in.h:27
-msgid "Tooltip displayed for drawer or menu"
-msgstr "Stalčiui arba meniu rodomas paaiškinimas"
-
-#: ../gnome-panel/panel-object.schemas.in.h:28
-msgid "Toplevel panel containing object"
-msgstr "Skydelis, kuriame yra objektas"
-
-#: ../gnome-panel/panel-object.schemas.in.h:29
-msgid "Use custom icon for object's button"
-msgstr "Objekto mygtukui naudoti pritaikytą piktogramą"
-
-#: ../gnome-panel/panel-object.schemas.in.h:30
-msgid "Use custom path for menu contents"
-msgstr "Meniu turiniui naudoti pritaikytą kelią"
-
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
-#, c-format
-msgid "Error reading GConf string value '%s': %s"
-msgstr "Klaida skaitant GConf simbolių eilutės reikšmę „%s“: %s"
-
-#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
-#, c-format
-msgid "Error reading GConf integer value '%s': %s"
-msgstr "Įvyko klaida skaitant GConf skaitinę reikšmę „%s“: %s"
-
-#: ../gnome-panel/panel-profile.c:1606
-#, c-format
-msgid ""
-"Panel '%s' is set to be displayed on screen %d which is not currently "
-"available. Not loading this panel."
-msgstr ""
-"Nurodyta, kad skydelis „%s“ turi būti rodomas ekrane %d. Šis ekranas šiuo "
-"metu nepasiekiamas, todėl šis skydelis nebus rodomas."
-
-#: ../gnome-panel/panel-profile.c:1684
-#, c-format
-msgid "Error reading GConf boolean value '%s': %s"
-msgstr "Įvyko Klaida skaitant GConf loginę reikšmę „%s“: %s"
-
-#: ../gnome-panel/panel-properties-dialog.c:866
-msgid "Drawer Properties"
-msgstr "Stalčiaus savybės"
-
-#: ../gnome-panel/panel-properties-dialog.c:981
-#: ../gnome-panel/panel-run-dialog.c:2022
+#: ../gnome-panel/panel-properties-dialog.c:821
+#: ../gnome-panel/panel-run-dialog.c:2009
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Nepavyko įkelti failo „%s“: %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:987
+#: ../gnome-panel/panel-properties-dialog.c:827
 msgid "Could not display properties dialog"
 msgstr "Nepavyko parodyti savybių dialogo"
 
@@ -2580,26 +2020,33 @@ msgid "_Autohide"
 msgstr "_Leisti slėptis pačiam"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "_Icon:"
-msgstr "P_iktograma:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "_None (use system theme)"
 msgstr "_Nėra (naudoti sistemos temą)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Orientacija:"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
 msgid "_Scale"
 msgstr "_Keisti dydį"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Dydis:"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
 msgid "_Tile"
 msgstr "L_ygiuoti"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "pixels"
 msgstr "taškai"
 
-#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:78
+#: ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Nepavyko atverti neseniai naudoto dokumento „%s“"
@@ -2620,8 +2067,7 @@ msgid ""
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Jeigu išvalysite paskutiniųjų dokumentų sąrašą, išvalysite:\n"
-"• Visus elementus, esančius meniu elemente Vietos → Paskutinieji "
-"dokumentai.\n"
+"• Visus elementus, esančius meniu elemente Vietos → Paskutinieji dokumentai.\n"
 "• Visus elementus, esančius visų programų paskutiniųjų dokumentų sąrašuose."
 
 #: ../gnome-panel/panel-recent.c:161
@@ -2640,55 +2086,46 @@ msgstr "Išvalyti paskutiniuosius dokumentus..."
 msgid "Clear all items from the recent documents list"
 msgstr "Išvalyti paskutiniųjų dokumentų sąrašą"
 
-#: ../gnome-panel/panel-run-dialog.c:391
+#: ../gnome-panel/panel-run-dialog.c:400
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Nepavyko paleisti komandos „%s“"
 
-#: ../gnome-panel/panel-run-dialog.c:444
+#: ../gnome-panel/panel-run-dialog.c:448
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nepavyko konvertuoti „%s“ iš UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1259
+#: ../gnome-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Pasirinkite failą, pridedamą prie komandos..."
 
-#: ../gnome-panel/panel-run-dialog.c:1637
+#: ../gnome-panel/panel-run-dialog.c:1618
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Norėdami pažiūrėti programos aprašymą, pasirinkite programą."
 
-#: ../gnome-panel/panel-run-dialog.c:1675
+#: ../gnome-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Bus vykdoma komanda: „%s“"
 
-#: ../gnome-panel/panel-run-dialog.c:1708
+#: ../gnome-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
-"URI sąrašas numestas ant paleidimo dialogo yra blogo formato (%d) arba ilgio "
-"(%d)\n"
+msgstr "URI sąrašas numestas ant paleidimo dialogo yra blogo formato (%d) arba ilgio (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2027
+#: ../gnome-panel/panel-run-dialog.c:2014
 msgid "Could not display run dialog"
 msgstr "Nepavyko parodyti paleidimo dialogo"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr ""
-"Norėdami gauti pridedamos prie komandos failo vardą spauskite šį mygtuką."
+msgid "Click this button to browse for a file whose name to append to the command string."
+msgstr "Norėdami gauti pridedamos prie komandos failo vardą spauskite šį mygtuką."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:2
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr ""
-"Norėdami paleisti pažymėtą programą arba komandą, komandų įvedimo eilutėje "
-"spauskite šį mygtuką."
+msgid "Click this button to run the selected application or the command in the command entry field."
+msgstr "Norėdami paleisti pažymėtą programą arba komandą, komandų įvedimo eilutėje spauskite šį mygtuką."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:3
 msgid "Command icon"
@@ -2712,9 +2149,7 @@ msgstr "Leisti su _failu..."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
-"Pažymėkite šią varnelę, jei norite, kad komanda būtų paleista terminalo "
-"lange."
+msgstr "Pažymėkite šią varnelę, jei norite, kad komanda būtų paleista terminalo lange."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
@@ -2725,497 +2160,181 @@ msgid "The icon of the command to be run."
 msgstr "Paleidžiamos komandos piktograma."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:12
-#: ../gnome-panel/panel-stock-icons.c:90
+#: ../gnome-panel/panel-stock-icons.c:83
 msgid "_Run"
 msgstr "Pa_leisti"
 
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-stock-icons.c:84
 msgid "_Force quit"
 msgstr "_Priversti baigti"
 
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:85
 msgid "C_lear"
 msgstr "Išva_lyti"
 
-#: ../gnome-panel/panel-stock-icons.c:93
+#: ../gnome-panel/panel-stock-icons.c:86
 msgid "D_on't Delete"
 msgstr "Ne_ištrinti"
 
-#: ../gnome-panel/panel-toplevel.c:1190
+#: ../gnome-panel/panel-test-applets.c:36
+msgid "Specify an applet IID to load"
+msgstr "Specify an applet IID to load"
+
+#: ../gnome-panel/panel-test-applets.c:37
+msgid "Specify a gconf location in which the applet preferences should be stored"
+msgstr "Nurodykite gconf vietą, kurioje turėtų būti saugomi įtaiso nustatymai"
+
+#: ../gnome-panel/panel-test-applets.c:38
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "Nurodykite pradinį įtaiso dydį (xx-small, medium, large etc.)"
+
+#: ../gnome-panel/panel-test-applets.c:39
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr "Nurodykite pradinę skydelio orientaciją (top, bottom, left or right)"
+
+#: ../gnome-panel/panel-test-applets.c:63
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Itin mažas"
+
+#: ../gnome-panel/panel-test-applets.c:64
+msgctxt "Size"
+msgid "X Small"
+msgstr "Labai mažas"
+
+#: ../gnome-panel/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Small"
+msgstr "Mažas"
+
+#: ../gnome-panel/panel-test-applets.c:66
+msgctxt "Size"
+msgid "Medium"
+msgstr "Vidutiniškas"
+
+#: ../gnome-panel/panel-test-applets.c:67
+msgctxt "Size"
+msgid "Large"
+msgstr "Didelis"
+
+#: ../gnome-panel/panel-test-applets.c:68
+msgctxt "Size"
+msgid "X Large"
+msgstr "Labai didelis"
+
+#: ../gnome-panel/panel-test-applets.c:69
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Itin didelis"
+
+#: ../gnome-panel/panel-test-applets.c:127
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "Nepavyko įkelti įtaiso %s"
+
+#. This is an utility to easily test various applets
+#: ../gnome-panel/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Bandomojo įtaiso pagalbinė programa"
+
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "Įt_aisas:"
+
+#: ../gnome-panel/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "_Nustatymų aplankas:"
+
+#: ../gnome-panel/panel-toplevel.c:1272
 msgid "Hide Panel"
 msgstr "Paslėpti skydelį"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1657
 msgid "Top Expanded Edge Panel"
 msgstr "Viršutinis išplėstas kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1658
 msgid "Top Centered Panel"
 msgstr "Viršutinis centruotas skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1659
 msgid "Top Floating Panel"
 msgstr "Viršutinis plaukiojantis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1660
 msgid "Top Edge Panel"
 msgstr "Viršutinis kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1664
 msgid "Bottom Expanded Edge Panel"
 msgstr "Apatinis išplėstas krašto skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1665
 msgid "Bottom Centered Panel"
 msgstr "Apatinis centruotas skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1666
 msgid "Bottom Floating Panel"
 msgstr "Apatinis plaukiojantis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1667
 msgid "Bottom Edge Panel"
 msgstr "Apatinis kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1671
 msgid "Left Expanded Edge Panel"
 msgstr "Kairės išplėstas kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1672
 msgid "Left Centered Panel"
 msgstr "Kairės centruotas skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1673
 msgid "Left Floating Panel"
 msgstr "Kairės plaukiojantis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1674
 msgid "Left Edge Panel"
 msgstr "Kairės kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1618
+#: ../gnome-panel/panel-toplevel.c:1678
 msgid "Right Expanded Edge Panel"
 msgstr "Dešinysis išplėstas krašto skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1679
 msgid "Right Centered Panel"
 msgstr "Dešinės centruotas skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1680
 msgid "Right Floating Panel"
 msgstr "Dešinės plaukiojantis skydelis"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1681
 msgid "Right Edge Panel"
 msgstr "Dešinės kraštinis skydelis"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "Animation speed"
-msgstr "Animacijų greitis"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:2
-msgid "Automatically hide panel into corner"
-msgstr "Slėpti skydelį į kampą"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Fono spalva"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:4
-msgid "Background color opacity"
-msgstr "Fono spalvos skaidrumas"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:5
-msgid "Background image"
-msgstr "Fono paveikslas"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:6
-msgid "Background type"
-msgstr "Fono tipas"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:7
-msgid "Center panel on x-axis"
-msgstr "Centruoti skydelį pagal x ašį"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:8
-msgid "Center panel on y-axis"
-msgstr "Centruoti skydelį pagal y ašį"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:10
-msgid "Enable arrows on hide buttons"
-msgstr "Rodyti rodykles ant slėpimo mygtukų"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:11
-msgid "Enable hide buttons"
-msgstr "Rodyti slėpimo mygtukus"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:12
-msgid "Expand to occupy entire screen width"
-msgstr "Išplėsti taip, kad būtų užimamas visas ekrano plotis"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:13
-msgid "Fit image to panel"
-msgstr "Pritaikyti paveikslą skydeliui"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
-msgstr ""
-"Jei reikšmė teigiama, ant paslėpimo mygtukų bus rodomos rodyklės. Šis raktas "
-"svarbus tik tuo atveju, jei raktas enable_buttons yra teigiamas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
-msgstr ""
-"Jei reikšmė teigiama, kiekvienoje skydelio pusėje bus rodomi mygtukai, kurie "
-"gali būti panaudojami perkelti skydelio kraštą už ekrano, paliekant matomą "
-"mygtuką."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid ""
-"If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantly."
-msgstr ""
-"Jei reikšmė teigiama, šio skydelio paslėpimas ir rodymas bus animuotas, o ne "
-"vykdomas akimirksniu."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr ""
-"Jei reikšmė teigiama, esant vertikaliai skydelio orientacijai fono "
-"paveikslėlis bus pasuktas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid ""
-"If true, the image will be scaled (retaining the aspect ratio of the image) "
-"to the panel height (if horizontal)."
-msgstr ""
-"Jei reikšmė teigiama, paveikslėlis bus ištemptas (išlaikant paveikslėlio "
-"proporcijas) iki skydelio aukščio (jei skydelis horizontalus)."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid ""
-"If true, the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
-msgstr ""
-"Jei reikšmė teigiama, paveikslėlis bus ištemptas iki skydelio išmatavimų. "
-"Paveikslėlio proporcijų nebus laikomasi."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
-msgstr ""
-"Jei reikšmė teigiama, žymekliui palikus skydelio zoną skydelis bus "
-"automatiškai paslėptas ekrano kampe. Nuvedus žymeklį atgal į tą kampą "
-"skydelis bus sugrąžintas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid ""
-"If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this mode the panel can only be placed at a screen edge. "
-"If false, the panel will only be large enough to accommodate the applets, "
-"launchers and buttons on the panel."
-msgstr ""
-"Jei reikšmė teigiama, skydelis užims visą ekrano plotį (tuo atveju, kai "
-"skydelis yra vertikalus - plotį). Šiame režime skydelis gali būti "
-"patalpintas tik ekrano kampe. Jeigu reikšmė neigiama, skydelis tik bus "
-"pakankamai didelis sutalpinti skydelio įtaisams, leistukams ir mygtukams."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Jei reikšmė teigiama, raktų x ir x_right bus nepaisoma ir skydelis bus "
-"patalpintas ekrano x ašies centre. Jeigu skydelio dydis bus pakeistas jis "
-"vistiek liks toje pat pozicijoje, t.y. skydelis padidės į abi puses. Jeigu "
-"reikšmė neigiama, raktai x ir x_right nurodo skydelio vietą."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Jei reikšmė teigiama, raktų y ir y_bottom bus nepaisoma ir skydelis bus "
-"patalpintas ekrano y ašies centre. Jeigu skydelio dydis bus pakeistas jis "
-"vistiek liks toje pačioje pozicijoje, t.y. skydelis padidės į abi puses. "
-"Jeigu reikšmė neigiama, raktai y ir y_bottom nurodo skydelio vietą."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
-msgstr ""
-"Xinerama sąrankoje galite turėti skydelius atskirai kiekvienam vaizduokliui. "
-"Šis raktas nurodo esamą vaizduoklį, kuriame rodomas skydelis."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:25
-msgid "Name to identify panel"
-msgstr "Skydelio pavadinimas"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:26
-msgid "Panel autohide delay"
-msgstr "Skydelio automatinio paslėpimo delsa"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:27
-msgid "Panel autounhide delay"
-msgstr "Skydelio automatinio parodymo delsa"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:28
-msgid "Panel orientation"
-msgstr "Skydelio orientacija"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:29
-msgid "Panel size"
-msgstr "Skydelio dydis"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:30
-msgid "Rotate image on vertical panels"
-msgstr "Pasukti paveikslėlį vertikaliuose skydeliuose"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:31
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "Fono spalvos nurodymas #RGB formatu."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
-msgstr ""
-"Nurodo failą, naudojamą fono paveikslėliui. Jeigu paveikslėlis turi "
-"permatomumo kanalą, jis bus užpieštas ant darbastalio paveikslėlio."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"Nurodo laiko tarpą milisekundėmis po kurio, užvedus žymeklį ant skydelio "
-"zonos, skydelis automatiškai vėl parodomas. Šis raktas yra aktualus tik "
-"tada, kai raktas auto_hide yra teigiamas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"Nurodo laiko tarpą milisekundėmis po kurio, patraukus žymeklį nuo skydelio "
-"zonos, skydelis automatiškai paslepiamas. Šis raktas yra aktualus tik tada, "
-"kai raktas auto_hide yra teigiamas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr ""
-"Nurodo matomų pikselių kiekį, kai skydelis yra automatiškai paslepiamas "
-"kampe. Šis raktas yra aktualus tik tada, kai auto_hide raktas yra teigiamas."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid ""
-"Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535), the color will be composited "
-"onto the desktop background image."
-msgstr ""
-"Nurodo fono spalvos permatomumą. Jeigu spalva yra nors šiek tiek permatoma "
-"(permatomumo reikšmė mažesnė nei 65535) , spalva bus įkomponuota į "
-"darbalaukio fono paveikslą."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:37
-msgid "Stretch image to panel"
-msgstr "Ištempti paveikslėlį skydelyje"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
-msgstr ""
-"Skydelio aukštis (vertialaus skydelio plotis). Mažiausią skydelio dydį "
-"skydelis nustatys užkrovimo metu. Jis priklausys nuo šrifto dydžio bei kitų "
-"priežasčių. Didžiausias skydelis negali užimti daugiau nei ketvirtadalį "
-"ekrano aukščio (arba pločio)."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Skydelio vieta x ašyje, pradedant nuo ekrano dešinės. Jeigu nustatyta į -1, "
-"reikšmė nepaisoma ir naudojama rakto x reikšmė. Jeigu reikšmė yra didesnė už "
-"0, tada rakto x reikšmė nepaisoma. Šis raktas yra aktualus tik naudojant "
-"neišplėtimo veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis "
-"būna patalpinas orientacijos rakto nurodytame krašte."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Skydelio vieta x ašyje. Šis raktas yra aktualus tik naudojant neišplėtimo  "
-"veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna "
-"patalpinamas orientacijos rakto nurodytame ekrano krašte nurodytame."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Skydelio vieta y ašyje, pradedant nuo ekrano apačios. Jeigu nustatyta į -1, "
-"reikšmė nepaisoma ir naudojama rakto y reikšmė. Jeigu reikšmė yra didesnė už "
-"0, tada rakto y reikšmės nepaisoma. Šis raktas yra aktualus tik naudojant "
-"neišplėtimo veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis "
-"būna patalpinas orientacijos rakto nurodytame krašte."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Skydelio vieta y ašyje. Šis raktas yra aktualus tik naudojant neišplėtimo  "
-"veikseną. Išplėtimo veiksenoje šio rakto nepaisoma ir skydelis būna "
-"patalpinamas orientacijos rakto nurodytame ekrano krašte nurodytame."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
-"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
-"panel."
-msgstr ""
-"Skydelio orientacija. Galimos reikšmės yra „top“, „bottom“, „left“, „right“. "
-"Esant išplėstam režimui šis raktas nurodo kuriame ekrano kampe yra skydelis. "
-"Esant neišplėstam režimui skirtumas tarp „top“ ir „bottom“ yra mažiau "
-"svarbus - abu nurodo, kad tai yra horizontalus skydelis - bet visgi suteikia "
-"naudingos informacijos kaip turėtų elgtis skydelio objektai. Pvz. esant "
-"„top“ skydeliui meniu mygtukas parodys savo meniu žemiau skydelio, kai tuo "
-"tarpu esant „bottom“ skydeliui meniu bus rodomas virš skydelio."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
-"enable_animations key is true."
-msgstr ""
-"Kaip greitai turėtų būti atliekamos skydelio animacijos. Galimos reikšmės "
-"yra „slow“, „medium“ ir „fast“. Šis raktas yra aktualus tik tada, kai rakto "
-"enable_animations reikšmė yra teigiama."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
-msgstr ""
-"Čia yra nurodytas skydelio pavadinimas, suprantamas žmonėms. Jo pagrindinis "
-"tikslas būti skydelio lango antrašte, kuri gali būti naudinga junginėjantis "
-"tarp skydelių."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
-msgid "Visible pixels when hidden"
-msgstr "Matomi taškai, kai paslėpta"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
-msgstr ""
-"Kokio tipo fonas turėtų būti naudojamas skydeliui. Galimos reikšmės yra "
-"„gtk“ - bus naudojamas įprastas GTK+ valdymo elementų fonas, „color“ - bus "
-"naudojama spalva nurodyta color rakte, „image“ - fonui bus naudojamas "
-"paveikslėlis nurodytas image rakte."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"Esant kelių ekranų sąrankai, Jūs galite turėti skydelius kiekvienam ekranui "
-"atskirai. Šis raktas identifikuoja dabartinį ekraną, kuriame rodomas "
-"skydelis."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
-msgid "X co-ordinate of panel"
-msgstr "Skydelio X koordinatė"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "Skydelio X koordinatė, pradedant nuo ekrano dešinės"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:51
-msgid "X screen where the panel is displayed"
-msgstr "X ekranas, kuriame rodomas skydelis"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:52
-msgid "Xinerama monitor where the panel is displayed"
-msgstr "Xinerama monitorius, kuriame rodomas skydelis"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:53
-msgid "Y co-ordinate of panel"
-msgstr "Skydelio Y koordinatė"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:54
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Skydelio Y koordinatė, pradedant nuo ekrano apačios"
-
-#: ../gnome-panel/panel-util.c:315
+#: ../gnome-panel/panel-util.c:314
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Piktograma „%s“ nerasta"
 
-#: ../gnome-panel/panel-util.c:418
-#, c-format
-msgid "Could not execute '%s'"
-msgstr "Nepavyko paleisti „%s“"
-
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:551
 msgid "file"
 msgstr "failas"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:728
 msgid "Home Folder"
 msgstr "Namų aplankas"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:740
 msgid "File System"
 msgstr "Failų sistema"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:913
 msgid "Search"
 msgstr "Paieška"
 
@@ -3224,33 +2343,21 @@ msgstr "Paieška"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:959
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "Atverti URL: %s"
 
-#: ../gnome-panel/panel.c:1323
-msgid "Delete this drawer?"
-msgstr "Pašalinti šį stalčių?"
-
-#: ../gnome-panel/panel.c:1324
-msgid ""
-"When a drawer is deleted, the drawer and its\n"
-"settings are lost."
-msgstr ""
-"Pašalinus stalčių, jis ir joparametrai\n"
-"prarandami."
-
-#: ../gnome-panel/panel.c:1327
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "Pašalinti šį skydelį?"
 
-#: ../gnome-panel/panel.c:1328
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3258,144 +2365,463 @@ msgstr ""
 "Pašalinus skydelį, jis ir jo parametrai\n"
 "prarandami."
 
-#: ../js/ui/statusMenu.js:137
-msgid "Available"
-msgstr "Esu"
-
-#: ../js/ui/statusMenu.js:142
-msgid "Busy"
-msgstr "Užsiėmęs (-usi)"
-
-#: ../js/ui/statusMenu.js:150
-msgid "My Account"
-msgstr "Mano paskyra"
-
-#: ../js/ui/statusMenu.js:165
-msgid "Switch User"
-msgstr "Keisti naudotoją"
-
+#~ msgid "Set System Time..."
+#~ msgstr "Nustatyti sistemos laiką..."
+#~ msgid "Set System Time"
+#~ msgstr "Nustatyti sistemos laiką"
+#~ msgid "_About"
+#~ msgstr "_Apie"
+#~ msgid "Clock"
+#~ msgstr "Laikrodis"
+#~ msgid "The Clock displays the current time and date"
+#~ msgstr "Laikrodis rodo dabartinį laiką ir datą"
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Vertėjai:\n"
+#~ "Žygimantas Beručka <zygis@gnome.org>\n"
+#~ "Gintautas Miliauskas <gintas@akl.lt>\n"
+#~ "Justina Klingaitė <justina.klingaite@gmail.com>\n"
+#~ "Vaidotas Zemlys <mpiktas@delfi.lt>\n"
+#~ "Gediminas Paulauskas <menesis@chatsubo.lt>"
+#~ msgid "Current Time:"
+#~ msgstr "Dabartinis laikas:"
+#~ msgid "Time & Date"
+#~ msgstr "Laikas ir data"
+#~ msgid "_Set System Time"
+#~ msgstr "Nustatyti _sistemos laiką"
+#~ msgid "_Time:"
+#~ msgstr "_Laikas:"
+#~ msgid ""
+#~ "%s has no use what-so-ever. It only takes up disk space and compilation "
+#~ "time, and if loaded it also takes up precious panel space and memory. "
+#~ "Anybody found using it should be promptly sent for a psychiatric "
+#~ "evaluation."
+#~ msgstr ""
+#~ "%s yra visai bevertė programa. Ji tik eikvoja disko vietą ir kompiliavimo "
+#~ "laiką, be to, jei paleista, taip pat užima skydelyje vietą bei atmintį. "
+#~ "Jei kas nors bus užtiktas benaudojantis šią programėlę, jis nedelsiant "
+#~ "turi būti nusiųstas pasitikrinti pas psichiatrą."
+#~ msgid "(with minor help from George)"
+#~ msgstr "(su nedidele Džordžo pagalba)"
+#~ msgid "Fish"
+#~ msgstr "Žuvis"
+#~ msgid "Select an animation"
+#~ msgstr "Pasirinkite animaciją"
+#~ msgid "_File:"
+#~ msgstr "_Failas:"
+#~ msgid "_Total frames in animation:"
+#~ msgstr "Kadrų _skaičius animacijoje:"
+#~ msgid "frames"
+#~ msgstr "kadrai"
+#~ msgid "Frames in fish's animation"
+#~ msgstr "Kadrų skaičius žuvies animacijoje"
+#~ msgid ""
+#~ "This key specifies the number of frames that will be displayed in the "
+#~ "fish's animation."
+#~ msgstr "Šis raktas nusako kadrų skaičius žuvies animacijoje"
+#~ msgid "Notification Area"
+#~ msgstr "Pranešimų vieta"
+#~ msgid "This button lets you hide all windows and show the desktop."
+#~ msgstr ""
+#~ "Šis mygtukas leidžia jums paslėpti visus langus ir parodyti darbastalį"
+#~ msgid "Window List"
+#~ msgstr "Langų sąrašas"
+#~ msgid ""
+#~ "The Window List shows a list of all windows in a set of buttons and lets "
+#~ "you browse them."
+#~ msgstr ""
+#~ "Langų sąrašas rodo visų langų sąrašą mygtukų rinkinyje ir leidžia naršyti "
+#~ "juos."
+#~ msgid "Maximum window list size"
+#~ msgstr "Didžiausias langų sąrašo dydis"
+#~ msgid "Minimum window list size"
+#~ msgstr "Mažiausias langų sąrašo dydis"
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.20. The schema is retained "
+#~ "for compatibility with older versions."
+#~ msgstr ""
+#~ "Šis raktas nuo GNOME 2.20 nebenaudojamas. Schema išsaugota tik dėl "
+#~ "suderinamumo su senesnėmis versijomis."
+#~ msgid ""
+#~ "The Window Selector shows a list of all windows in a menu and lets you "
+#~ "browse them."
+#~ msgstr ""
+#~ "Langų parinkiklis rodo visų langų sąrašą meniu ir leidžia naršyti juos."
+#~ msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+#~ msgstr "Klaida įkeliant num_rows reikšmę darbalaukių keitikliui: %s\n"
+#~ msgid ""
+#~ "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+#~ msgstr ""
+#~ "Klaida įkeliant display_workspace_names reikšmę darbalaukių keitikliui: "
+#~ "%s\n"
+#~ msgid ""
+#~ "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+#~ msgstr ""
+#~ "Klaida įkeliant display_all_workspaces reikšmę darbo erdvių keitikliui: "
+#~ "%s\n"
+#~ msgid "Workspace Switcher"
+#~ msgstr "Darbalaukių keitiklis"
+#~ msgid ""
+#~ "The Workspace Switcher shows you a small version of your workspaces that "
+#~ "lets you manage your windows."
+#~ msgstr ""
+#~ "Darbalaukių keitklis parodo sumažintą jūsų darbalaukių versiją, kuri "
+#~ "leidžia jums tvarkyti savo langus."
+#~ msgid "A simple applet for testing the GNOME-2.0 panel"
+#~ msgstr "Paprastas įtaisas skirtas bandyti GNOME-2.0 skydelį"
+#~ msgid "Test Bonobo Applet"
+#~ msgstr "Test Bonobo Applet"
+#~ msgid "Test Bonobo Applet Factory"
+#~ msgstr "Test Bonobo Applet Factory"
+#~ msgid "query returned exception %s\n"
+#~ msgstr "užklausa grąžino išimtį %s\n"
+#~ msgid "Loc_k To Panel"
+#~ msgstr "Prira_kinti prie skydelio"
+#~ msgid "Cannot find an empty spot"
+#~ msgstr "Nepavyko rasti laisvos vietos"
+#~ msgid "Drawer"
+#~ msgstr "Stalčius"
+#~ msgid "_Add to Drawer..."
+#~ msgstr "Į_dėti į stalčių..."
+#~ msgid "Add this launcher to _panel"
+#~ msgstr "Įdėti šį leistuką į _skydelį"
+#~ msgid "Add this launcher to _desktop"
+#~ msgstr "Padėti šį leistuką ant _darbastalio"
+#~ msgid "_Entire menu"
+#~ msgstr "_Visą meniu"
+#~ msgid "Add this as _drawer to panel"
+#~ msgstr "Įdėti jį į skydelį kaip _stalčių"
+#~ msgid "Add this as _menu to panel"
+#~ msgstr "Įdėti jį į skydelį kaip _meniu"
+#~ msgid "<b>GAME OVER</b> at level %d!"
+#~ msgstr "<b>ŽAIDIMAS BAIGTAS</b> lygyje %d!"
+#~ msgid "%1$s   %2$s   %3$s"
+#~ msgstr "%1$s   %2$s   %3$s"
+#~ msgid "Press 'q' to quit"
+#~ msgstr "Norėdami išeiti spustelėkite „q“"
+#~ msgid "Paused"
+#~ msgstr "Pauzė"
+#~ msgid "%1$s\t%2$s"
+#~ msgstr "%1$s\t%2$s"
+#~ msgid "Press 'p' to unpause"
+#~ msgstr "Norėdami tęsti žaidimą, spustelėkite „p“"
+#~ msgid "Level: %s,  Lives: %s"
+#~ msgstr "Lygis: %s, Gyvybių: %s"
+#~ msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+#~ msgstr "Kairėn/dešinėn – judėti, tarpas – šauti, „p“ – pauzė, „q“ – išeiti"
+#~ msgid "Killer GEGLs from Outer Space"
+#~ msgstr "Žudikai GEGLai iš tolimojo kosmoso"
+#~ msgid "A pop out drawer to store other items in"
+#~ msgstr "Iššokantis stalčiukas, kuriame saugomi leistukai"
+#~ msgid "Add to Drawer"
+#~ msgstr "Įdėti į stalčių"
+#~ msgid "Find an _item to add to the drawer:"
+#~ msgstr "Raskite į stalčių įdėtiną _elementą:"
+#~ msgid "And many, many others..."
+#~ msgstr "Daug daug kitų..."
+#~ msgid "The GNOME Panel"
+#~ msgstr "GNOME skydelis"
+#~ msgid ""
+#~ "This program is responsible for launching other applications and provides "
+#~ "useful utilities."
+#~ msgstr ""
+#~ "Ši programa suteikia naudingų reikmenų bei yra atsakinga už kitų programų "
+#~ "paleidimą."
+#~ msgid "About the GNOME Panel"
+#~ msgstr "Apie GNOME skydelį"
+#~ msgid "A_bout Panels"
+#~ msgstr "A_pie skydelius"
+#~ msgid ""
+#~ "A boolean flag to indicate whether the user's previous configuration in /"
+#~ "apps/panel/profiles/default has been copied to the new location in /apps/"
+#~ "panel."
+#~ msgstr ""
+#~ "Loginė reikšmė, nurodanti ar naudotojo ankstesni nustatymai, esantys /"
+#~ "apps/panel/profiles/default, buvo nukopijuoti į naują vietą /apps/panel."
+#~ msgid ""
+#~ "A list of panel applet IDs. Each ID identifies an individual panel "
+#~ "applet. The settings for each of these applets are stored in /apps/panel/"
+#~ "applets/$(id)."
+#~ msgstr ""
+#~ "Skydelio įtaisų ID sąrašas. Kiekvienas ID nusako individualų skydelio "
+#~ "įtaisą. Kiekvieno įtaiso nustatymai yra saugomi /apps/panel/applets/$(id)."
+#~ msgid "Old profiles configuration migrated"
+#~ msgstr "Senų profilių konfigūracija perkelta"
+#~ msgid "Panel applet ID list"
+#~ msgstr "Skydelio įtaisų ID sąrašas"
+#~ msgid "Autoclose drawer"
+#~ msgstr "Automatiškai uždaryti stalčių"
+#~ msgid "Deprecated"
+#~ msgstr "Nebenaudojama"
+#~ msgid "Disable Logging Out"
+#~ msgstr "Atjungti atsijungimą iš Gnome"
+#~ msgid "Enable animations"
+#~ msgstr "Įjungti animacijas"
+#~ msgid "Highlight launchers on mouseover"
+#~ msgstr "Paryškinti leistukus virš jų esant pelės žymekliui"
+#~ msgid ""
+#~ "If true, a drawer will automatically be closed when the user clicks a "
+#~ "launcher in it."
+#~ msgstr ""
+#~ "Jei pasirinkta, stalčius automatiškai užsidarys, jei vartotojas paspaus "
+#~ "jame esantį leistuką."
+#~ msgid ""
+#~ "If true, a launcher is highlighted when the user moves the pointer over "
+#~ "it."
+#~ msgstr ""
+#~ "Jei tiesa, leistukas bus paryškintas, kai pelės žymeklis bus virš "
+#~ "leistuko."
+#~ msgid ""
+#~ "If true, the panel will not allow a user to log out, by removing access "
+#~ "to the log out menu entries."
+#~ msgstr ""
+#~ "Jei reikšmė teigiama, skydelis neleis vartotojui atsijungti, pašalinant "
+#~ "priėjimą prie atsijungimo meniu irašo."
+#~ msgid "If true, tooltips are shown for objects in panels."
+#~ msgstr ""
+#~ "Jei teigiama, skydelio objektams yra rodomos paaiškinamosios kortelės."
+#~ msgid ""
+#~ "This key is deprecated as it cannot be used to implement proper lockdown. "
+#~ "The /desktop/gnome/lockdown/disable_lock_screen key should be used "
+#~ "instead."
+#~ msgstr ""
+#~ "Šis raktas nebenaudojamas GNOME 2.22, nes juo negali būti realizuotas "
+#~ "užrakinimas. Vietoje jo turėtų būti naudojamas raktas /desktop/gnome/"
+#~ "lockdown/disable_lock_screen."
+#~ msgid "Change desktop appearance and behavior, get help, or log out"
+#~ msgstr ""
+#~ "Darbo aplinkos išvaizdos ir veikimo keitimas, žinynas ir atsijungimo "
+#~ "veiksmai"
+#~ msgid "System"
+#~ msgstr "Sistema"
+#~ msgctxt "panel:showusername"
+#~ msgid "1"
+#~ msgstr "-"
+#~ msgid "Log Out %s..."
+#~ msgstr "Atjungti %s..."
+#~ msgid "Log out %s of this session to log in as a different user"
+#~ msgstr ""
+#~ "Atjungti %s nuo šio seanso, kad prisijungtumėte kaip kitas naudotojas"
+#~ msgid "Action button type"
+#~ msgstr "Veiksmų mygtukų tipas"
+#~ msgid "Applet Bonobo IID"
+#~ msgstr "Applet Bonobo IID"
+#~ msgid ""
+#~ "If true, the custom_icon key is used as a custom icon for the button. If "
+#~ "false, the custom_icon key is ignored. This key is only relevant if the "
+#~ "object_type key is \"menu-object\" or \"drawer-object\"."
+#~ msgstr ""
+#~ "Jei teigiama, custom_icon raktas yra naudojamas mygtuko kaip kita "
+#~ "piktograma. Jeigu neigiama, custom_icon raktas yra ignoruojamas. Šis "
+#~ "raktas turi įtakos tik jeigu raktas objekt_type yra su reikšmėmis „menu-"
+#~ "object“ arba „drawer-object“."
+#~ msgid ""
+#~ "If true, the menu_path key is used as the path from which the menu "
+#~ "contents should be constructed. If false, the menu_path key is ignored. "
+#~ "This key is only relevant if the object_type key is \"menu-object\"."
+#~ msgstr ""
+#~ "Jei teigiama, menu_path raktas yra naudojamas kaip kelias iš kurio turėtų "
+#~ "būti konstruojamas meniu turinys. Jeigu neigiama, menu_path raktas yra "
+#~ "ignoruojamas. Šis raktas yra svarbus tik tuo atveju, kai object_type "
+#~ "raktas yra su reikšme „menu-object“."
+#~ msgid ""
+#~ "If true, the user may not move the applet without first unlocking the "
+#~ "object using the \"Unlock\" menuitem."
+#~ msgstr ""
+#~ "Jei teigiama, naudotojas negali perkelti įtaiso pirma neatrakinęs jo "
+#~ "naudodamasis „Atrakinti“ meniu punktu"
+#~ msgid "Lock the object to the panel"
+#~ msgstr "Prirakinti objektą prie skydelio"
+#~ msgid "Panel attached to drawer"
+#~ msgstr "Prie stalčiaus pridėtas skydelis"
+#~ msgid "Panel object type"
+#~ msgstr "Skydelio objekto tipas"
+#~ msgid ""
+#~ "The action type this button represents. Possible values are \"lock\", "
+#~ "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+#~ "relevant if the object_type key is \"action-applet\"."
+#~ msgstr ""
+#~ "Šio mygtuko atstovaujamas veiksmo tipas. Galimos reikšmės yra „lock“, "
+#~ "„logout“, „run“, „search“ ir „screenshot“. Šis raktas svarbus tik tada, "
+#~ "kai rakto object_type reikšmė yra „action-applet“."
+#~ msgid ""
+#~ "The identifier of the panel attached to this drawer. This key is only "
+#~ "relevant if the object_type key is \"drawer-object\"."
+#~ msgstr ""
+#~ "Skydelio prikabinto prie šio stalčiaus identifikatorius. Šis raktas "
+#~ "svarbus tik tada, kai rakto object_type reikšmė yra „stalčiaus-objektas“."
+#~ msgid ""
+#~ "The text to display in a tooltip for this drawer or this menu. This key "
+#~ "is only relevant if the object_type key is \"drawer-object\" or \"menu-"
+#~ "object\"."
+#~ msgstr ""
+#~ "Tekstas rodomas šio stalčiaus ar meniu paaiškinime. Šis raktas yra "
+#~ "svarbus tik, kai object_type rakto reikšmė yra „drawer-object“ arba „menu-"
+#~ "object“."
+#~ msgid ""
+#~ "The type of this panel object. Possible values are \"drawer-object\", "
+#~ "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
+#~ "\" and \"menu-bar\"."
+#~ msgstr ""
+#~ "Šio skydelio objekto tipas. Galimos reikšmės yra „drawer-object“, „menu-"
+#~ "object“, „launcher-object“, „bonobo-applet“, „action-applet“ ir „menu-"
+#~ "bar“."
+#~ msgid ""
+#~ "This key is deprecated, following the migration to a new library for "
+#~ "applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
+#~ "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
+#~ "\"bonobo-applet\"."
+#~ msgstr ""
+#~ "Raktas nebenaudotinas, nes pereinama prie naujos įtaisų bibliotekos. "
+#~ "Įtaiso Bonobo įgyvendinimo ID - pvz. „OAFIID:GNOME_ClockApplet“. Šis "
+#~ "raktas turi įtakos tik, kai object_type rakto reikšmė yra „bonobo-applet“."
+#~ msgid "Use custom icon for object's button"
+#~ msgstr "Objekto mygtukui naudoti pritaikytą piktogramą"
+#~ msgid "Use custom path for menu contents"
+#~ msgstr "Meniu turiniui naudoti pritaikytą kelią"
+#~ msgid "Error reading GConf string value '%s': %s"
+#~ msgstr "Klaida skaitant GConf simbolių eilutės reikšmę „%s“: %s"
+#~ msgid "Error reading GConf integer value '%s': %s"
+#~ msgstr "Įvyko klaida skaitant GConf skaitinę reikšmę „%s“: %s"
+#~ msgid ""
+#~ "Panel '%s' is set to be displayed on screen %d which is not currently "
+#~ "available. Not loading this panel."
+#~ msgstr ""
+#~ "Nurodyta, kad skydelis „%s“ turi būti rodomas ekrane %d. Šis ekranas šiuo "
+#~ "metu nepasiekiamas, todėl šis skydelis nebus rodomas."
+#~ msgid "Error reading GConf boolean value '%s': %s"
+#~ msgstr "Įvyko Klaida skaitant GConf loginę reikšmę „%s“: %s"
+#~ msgid "Drawer Properties"
+#~ msgstr "Stalčiaus savybės"
+#~ msgid "_Icon:"
+#~ msgstr "P_iktograma:"
+#~ msgid "Background color opacity"
+#~ msgstr "Fono spalvos skaidrumas"
+#~ msgid "Fit image to panel"
+#~ msgstr "Pritaikyti paveikslą skydeliui"
+#~ msgid ""
+#~ "If true, hiding and un-hiding of this panel will be animated rather than "
+#~ "happening instantly."
+#~ msgstr ""
+#~ "Jei reikšmė teigiama, šio skydelio paslėpimas ir rodymas bus animuotas, o "
+#~ "ne vykdomas akimirksniu."
+#~ msgid ""
+#~ "If true, the image will be scaled (retaining the aspect ratio of the "
+#~ "image) to the panel height (if horizontal)."
+#~ msgstr ""
+#~ "Jei reikšmė teigiama, paveikslėlis bus ištemptas (išlaikant paveikslėlio "
+#~ "proporcijas) iki skydelio aukščio (jei skydelis horizontalus)."
+#~ msgid ""
+#~ "If true, the image will be scaled to the panel dimensions. The aspect "
+#~ "ratio of the image will not be maintained."
+#~ msgstr ""
+#~ "Jei reikšmė teigiama, paveikslėlis bus ištemptas iki skydelio išmatavimų. "
+#~ "Paveikslėlio proporcijų nebus laikomasi."
+#~ msgid ""
+#~ "Specifies the opacity of the background color format. If the color is not "
+#~ "completely opaque (a value of less than 65535), the color will be "
+#~ "composited onto the desktop background image."
+#~ msgstr ""
+#~ "Nurodo fono spalvos permatomumą. Jeigu spalva yra nors šiek tiek "
+#~ "permatoma (permatomumo reikšmė mažesnė nei 65535) , spalva bus "
+#~ "įkomponuota į darbalaukio fono paveikslą."
+#~ msgid "Stretch image to panel"
+#~ msgstr "Ištempti paveikslėlį skydelyje"
+#~ msgid "Could not execute '%s'"
+#~ msgstr "Nepavyko paleisti „%s“"
+#~ msgid "Delete this drawer?"
+#~ msgstr "Pašalinti šį stalčių?"
+#~ msgid ""
+#~ "When a drawer is deleted, the drawer and its\n"
+#~ "settings are lost."
+#~ msgstr ""
+#~ "Pašalinus stalčių, jis ir joparametrai\n"
+#~ "prarandami."
 #~ msgid "Clock Applet Factory"
 #~ msgstr "Laikrodžio įtaisų gamykla"
-
 #~ msgid "Factory for creating clock applets."
 #~ msgstr "Gamykla laikrodžio įtaisams kurti."
-
 #~ msgid "Get the current time and date"
 #~ msgstr "Gauti esamą laiką ir datą"
-
 #~ msgid "Change system time"
 #~ msgstr "Keisti sistemos laiką"
-
 #~ msgid "Change system time zone"
 #~ msgstr "Keisti sistemos laiko juostą"
-
 #~ msgid "Configure hardware clock"
 #~ msgstr "Konfigūruoti aparatinį laikrodį"
-
 #~ msgid "Privileges are required to change the system time zone."
 #~ msgstr "Norint pakeisti sistemos laiko juostą, reikalingos privilegijos"
-
 #~ msgid "Privileges are required to change the system time."
 #~ msgstr "Norint pakeisti sistemos laiką, reikalingos privilegijos"
-
 #~ msgid "Privileges are required to configure the hardware clock."
 #~ msgstr "Norint konfigūruoti aparatinį laikrodį, reikalingos privilegijos"
-
 #~ msgid "Display a swimming fish or another animated creature"
 #~ msgstr "Rodyti plaukiančią žuvį ar kitą animuotą būtybę"
-
 #~ msgid "From Whence That Stupid Fish Came"
 #~ msgstr "Iš kur atsirado ta kvaila žuvis"
-
 #~ msgid "Wanda Factory"
 #~ msgstr "Vandos gamykla"
-
 #~ msgid "Area where notification icons appear"
 #~ msgstr "Vieta, kurioje atsiranda pranešimų piktogramos"
-
 #~ msgid "Notification Area Factory"
 #~ msgstr "Pranešimų vietos Factory"
-
 #~ msgid "Factory for the window navigation related applets"
 #~ msgstr "Su langų navigacija susijusių įtaisų gamykla"
-
 #~ msgid "Hide application windows and show the desktop"
 #~ msgstr "Slėpti programų langus ir rodyti darbastalį"
-
 #~ msgid "Show Desktop"
 #~ msgstr "Rodyti darbastalį"
-
 #~ msgid "Switch between open windows using a menu"
 #~ msgstr "Persijunginėti tarp atvertų langų naudojant meniu"
-
 #~ msgid "Switch between open windows using buttons"
 #~ msgstr "Persijunginėti tarp atvertų langų naudojant mygtukus"
-
 #~ msgid "Switch between workspaces"
 #~ msgstr "Persijunginėti tarp darbo erdvių"
-
 #~ msgid "Window Navigation Applet Factory"
 #~ msgstr "Langų navigacijos įtaisų gamykla"
-
 #~ msgid "Exception from popup_menu '%s'\n"
 #~ msgstr "Išimtis iš popup_menu „%s“\n"
-
 #~ msgid "Unable to obtain AppletShell interface from control\n"
 #~ msgstr "Nepavyko iš valdymo gauti AppletShell sąsajos\n"
-
 #~ msgid "If true, display time in Universal Coordinated Time zone."
 #~ msgstr "Jei teigiama, rodyti UTC laiką."
-
 #~ msgid "Browse icons"
 #~ msgstr "Naršyti piktogramas"
-
 #~ msgid "Failed to launch time configuration tool: %s"
 #~ msgstr "Nepavyko paleisti laiko nustatymo įrankio: %s"
-
 #~ msgid ""
 #~ "Failed to locate a program for configuring the date and time. Perhaps "
 #~ "none is installed?"
 #~ msgstr ""
 #~ "Nepavyko rasti laiką ir datą konfigūruojančios programos. Gal ji "
 #~ "neįdiegta?"
-
 #~ msgid "<b>Clock Options</b>"
 #~ msgstr "<b>Laikrodžio parinktys</b>"
-
 #~ msgid "<b>Time Settings</b>"
 #~ msgstr "<b>Laiko parametrai</b>"
-
 #~ msgid "Time Settings"
 #~ msgstr "Laiko prarametrai"
-
 #~ msgid ""
 #~ "This key specifies the program to run in order to configure the time."
 #~ msgstr "Šis raktas nurodo programą, skirtą laiko nustatymui."
-
 #~ msgid "<b>Animation</b>"
 #~ msgstr "<b>Animacija</b>"
-
 #~ msgid "<b>General</b>"
 #~ msgstr "<b>Bendrai</b>"
-
 #~ msgid "<b>Workspaces</b>"
 #~ msgstr "<b>Darbalaukiai</b>"
-
 #~ msgid "_Command:"
 #~ msgstr "_Komanda:"
-
 #~ msgid "Disable Lock Screen"
 #~ msgstr "Uždrausti ekrano užrakinimą"
-
 #~ msgid ""
 #~ "If true, the panel will not allow a user to lock their screen, by "
 #~ "removing access to the lock screen menu entries."
 #~ msgstr ""
 #~ "Jei reikšmė teigiama, skydelis neleis vartotojams užrakinti jų ekranų, "
 #~ "pašalinant priėjimą prie ekrano užrakinimo meniu įrašo."
-
 #~ msgid "Command entry"
 #~ msgstr "Komandos įvedimo langelis"
-
 #~ msgid "Enter a command string here to run it."
 #~ msgstr "Norėdami paleisti komandą, įveskite ją čia."
+
