@@ -28,10 +28,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-15 21:39+0200\n"
-"PO-Revision-Date: 2010-09-14 22:54+0200\n"
+"POT-Creation-Date: 2011-04-02 19:36+0200\n"
+"PO-Revision-Date: 2011-04-02 13:51+0200\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -45,8 +46,8 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:303 ../applets/clock/clock.c:444
-#: ../applets/clock/clock-location-tile.c:520
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
+#: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M"
 
@@ -64,57 +65,57 @@ msgstr "%l:%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:308 ../applets/clock/clock.c:449
-#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:480
-#: ../applets/clock/clock-location-tile.c:527
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
+#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:314
+#: ../applets/clock/calendar-window.c:340
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:847
+#: ../applets/clock/calendar-window.c:840
 msgid "Tasks"
 msgstr "Opgaver"
 
-#: ../applets/clock/calendar-window.c:847
-#: ../applets/clock/calendar-window.c:1022
-#: ../applets/clock/calendar-window.c:1655
+#: ../applets/clock/calendar-window.c:840
+#: ../applets/clock/calendar-window.c:1023
+#: ../applets/clock/calendar-window.c:1629
 msgid "Edit"
 msgstr "Redigér"
 
-#: ../applets/clock/calendar-window.c:968
+#: ../applets/clock/calendar-window.c:963
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: ../applets/clock/calendar-window.c:1106
+#: ../applets/clock/calendar-window.c:1107
 msgid "Appointments"
 msgstr "Aftaler"
 
-#: ../applets/clock/calendar-window.c:1131
+#: ../applets/clock/calendar-window.c:1132
 msgid "Birthdays and Anniversaries"
 msgstr "Fødselsdage og årsdage"
 
-#: ../applets/clock/calendar-window.c:1156
+#: ../applets/clock/calendar-window.c:1157
 msgid "Weather Information"
 msgstr "Vejrinformation"
 
-#: ../applets/clock/calendar-window.c:1655 ../applets/clock/clock.ui.h:12
+#: ../applets/clock/calendar-window.c:1629 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "Steder"
 
-#: ../applets/clock/calendar-window.c:1937
+#: ../applets/clock/calendar-window.c:1927
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:444
+#: ../applets/clock/clock.c:443
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S"
 
@@ -125,7 +126,7 @@ msgstr "%l:%M:%S"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:449 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1585
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -134,7 +135,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:460
+#: ../applets/clock/clock.c:459
 msgid "%a %b %e"
 msgstr "%a %e. %b"
 
@@ -142,7 +143,7 @@ msgstr "%a %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:467
+#: ../applets/clock/clock.c:466
 #, c-format
 msgid ""
 "%1$s\n"
@@ -155,7 +156,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:475
+#: ../applets/clock/clock.c:474
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -165,23 +166,23 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:648
+#: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
 msgstr "%A den %d. %B (%%s)"
 
-#: ../applets/clock/clock.c:678
+#: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik for at skjule dine aftaler og opgaver"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:673
 msgid "Click to view your appointments and tasks"
 msgstr "Klik for at vise dine aftaler og opgaver"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:677
 msgid "Click to hide month calendar"
 msgstr "Klik for at skjule månedskalenderen"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:680
 msgid "Click to view month calendar"
 msgstr "Klik for at vise din månedskalender"
 
@@ -216,117 +217,63 @@ msgstr "%I:%M"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: ../applets/clock/clock.c:1655
-msgid "Set System Time..."
-msgstr "Indstil systemtid..."
+#: ../applets/clock/clock.c:1693
+msgid "Failed to open the time settings"
+msgstr "Kunne ikke åbne tidsindstillingerne"
 
-#: ../applets/clock/clock.c:1656
-msgid "Set System Time"
-msgstr "Indstil systemtid"
-
-#: ../applets/clock/clock.c:1671
-msgid "Failed to set the system time"
-msgstr "Kunne ikke indstille systemtid"
-
-#: ../applets/clock/clock.c:1869 ../applets/fish/fish.c:1836
-#: ../applets/wncklet/window-list.c:192
-#: ../applets/wncklet/workspace-switcher.c:339
+#: ../applets/clock/clock.c:1713 ../applets/fish/fish.c:1317
+#: ../applets/wncklet/window-list.c:159
+#: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Indstillinger"
 
-#: ../applets/clock/clock.c:1872 ../applets/fish/fish.c:1839
-#: ../applets/notification_area/main.c:171
-#: ../applets/wncklet/showdesktop.c:228 ../applets/wncklet/window-list.c:195
-#: ../applets/wncklet/window-menu.c:95
-#: ../applets/wncklet/workspace-switcher.c:342 ../gnome-panel/drawer.c:601
-#: ../gnome-panel/panel-action-button.c:710
-#: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:350
-#: ../gnome-panel/panel-menu-button.c:665
-msgid "_Help"
-msgstr "_Hjælp"
-
-#: ../applets/clock/clock.c:1875 ../applets/fish/fish.c:1842
-#: ../applets/notification_area/main.c:174
-#: ../applets/wncklet/showdesktop.c:231 ../applets/wncklet/window-list.c:198
-#: ../applets/wncklet/window-menu.c:98
-#: ../applets/wncklet/workspace-switcher.c:345
-msgid "_About"
-msgstr "_Om"
-
-#: ../applets/clock/clock.c:1878
+#: ../applets/clock/clock.c:1716
 msgid "Copy _Time"
 msgstr "Kopiér _tid"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1719
 msgid "Copy _Date"
 msgstr "Kopiér _dato"
 
-#: ../applets/clock/clock.c:1884
+#: ../applets/clock/clock.c:1722
 msgid "Ad_just Date & Time"
 msgstr "_Justér dato og tid"
 
-#: ../applets/clock/clock.c:2720
+#: ../applets/clock/clock.c:2559
 msgid "Custom format"
 msgstr "Brugerdefineret format"
 
-#: ../applets/clock/clock.c:3207
+#: ../applets/clock/clock.c:3046
 msgid "Choose Location"
 msgstr "Vælg sted"
 
-#: ../applets/clock/clock.c:3286
+#: ../applets/clock/clock.c:3125
 msgid "Edit Location"
 msgstr "Redigér sted"
 
-#: ../applets/clock/clock.c:3432
+#: ../applets/clock/clock.c:3272
 msgid "City Name"
 msgstr "Bynavn"
 
-#: ../applets/clock/clock.c:3436
+#: ../applets/clock/clock.c:3276
 msgid "City Time Zone"
 msgstr "Byens tidszone"
 
-#: ../applets/clock/clock.c:3621
+#: ../applets/clock/clock.c:3463
 msgid "24 hour"
 msgstr "24 timer"
 
-#: ../applets/clock/clock.c:3622
+#: ../applets/clock/clock.c:3464
 msgid "UNIX time"
 msgstr "Unix-tid"
 
-#: ../applets/clock/clock.c:3623
+#: ../applets/clock/clock.c:3465
 msgid "Internet time"
 msgstr "Internet-tid"
 
-#: ../applets/clock/clock.c:3631
+#: ../applets/clock/clock.c:3473
 msgid "Custom _format:"
 msgstr "Brugerdefineret _format:"
-
-#: ../applets/clock/clock.c:3721
-msgid "Clock"
-msgstr "Ur"
-
-#: ../applets/clock/clock.c:3724
-msgid "The Clock displays the current time and date"
-msgstr "Urpanelprogrammet viser tiden og datoen"
-
-#. Translator credits
-#: ../applets/clock/clock.c:3727 ../applets/fish/fish.c:621
-#: ../applets/notification_area/main.c:153
-#: ../applets/wncklet/showdesktop.c:540 ../applets/wncklet/window-list.c:609
-#: ../applets/wncklet/window-menu.c:77
-#: ../applets/wncklet/workspace-switcher.c:619
-#: ../gnome-panel/panel-context-menu.c:138
-msgid "translator-credits"
-msgstr ""
-"Birger Langkjer\n"
-"Keld Simonsen\n"
-"Kenneth Christiansen\n"
-"Martin Willemoes Hansen\n"
-"Ole Laursen\n"
-"Peter Bach\n"
-"\n"
-"Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
-"Mere info: http://www.dansk-gruppen.dk"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "<i>(optional)</i>"
@@ -350,111 +297,95 @@ msgid "Clock Preferences"
 msgstr "Indstillinger for ur"
 
 #: ../applets/clock/clock.ui.h:6
-msgid "Current Time:"
-msgstr "Tidspunkt nu:"
-
-#: ../applets/clock/clock.ui.h:7
 msgid "Display"
 msgstr "Visning"
 
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:7
 msgid "East"
 msgstr "Øst"
 
-#: ../applets/clock/clock.ui.h:9 ../applets/fish/fish.ui.h:5
+#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
 #: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "General"
 msgstr "Generelt"
 
-#: ../applets/clock/clock.ui.h:10
+#: ../applets/clock/clock.ui.h:9
 msgid "L_atitude:"
 msgstr "_Breddegrad:"
 
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:10
 msgid "L_ongitude:"
 msgstr "_Længdegrad:"
 
-#: ../applets/clock/clock.ui.h:13
+#: ../applets/clock/clock.ui.h:12
 msgid "North"
 msgstr "Nord"
 
-#: ../applets/clock/clock.ui.h:14
+#: ../applets/clock/clock.ui.h:13
 msgid "Panel Display"
 msgstr "Panelindikator"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:14
 msgid "Show _temperature"
 msgstr "Vis _temperatur"
 
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:15
 msgid "Show _weather"
 msgstr "Vis _vejr"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:16
 msgid "Show seco_nds"
 msgstr "Vis sek_under"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:17
 msgid "Show the _date"
 msgstr "Vis _dato"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:18
 msgid "South"
 msgstr "Syd"
 
-#: ../applets/clock/clock.ui.h:20
-msgid "Time & Date"
-msgstr "Dato & klokkeslet"
-
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:19
 msgid "Time _Settings"
 msgstr "Tids_indstillinger"
 
-#: ../applets/clock/clock.ui.h:22
+#: ../applets/clock/clock.ui.h:20
 msgid "Weather"
 msgstr "Vejr"
 
-#: ../applets/clock/clock.ui.h:23
+#: ../applets/clock/clock.ui.h:21
 msgid "West"
 msgstr "Vest"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:22
 msgid "_12 hour format"
 msgstr "_12-timersformat"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:23
 msgid "_24 hour format"
 msgstr "_24-timersformat"
 
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:24
 msgid "_Location Name:"
 msgstr "_Stednavn:"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:25
 msgid "_Pressure unit:"
 msgstr "_Trykenhed:"
 
-#: ../applets/clock/clock.ui.h:28
-msgid "_Set System Time"
-msgstr "_Indstil systemtid"
-
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:26
 msgid "_Temperature unit:"
 msgstr "_Temperaturenhed:"
 
-#: ../applets/clock/clock.ui.h:30
-msgid "_Time:"
-msgstr "_Tid:"
-
-#: ../applets/clock/clock.ui.h:31
+#: ../applets/clock/clock.ui.h:27
 msgid "_Timezone:"
 msgstr "_Tidszone:"
 
-#: ../applets/clock/clock.ui.h:32
+#: ../applets/clock/clock.ui.h:28
 msgid "_Visibility unit:"
 msgstr "_Synlighedsenhed:"
 
-#: ../applets/clock/clock.ui.h:33
+#: ../applets/clock/clock.ui.h:29
 msgid "_Wind speed unit:"
 msgstr "_Vindhastighedsenhed:"
 
@@ -670,15 +601,15 @@ msgstr "Benyt UTC"
 msgid "Failed to set the system timezone"
 msgstr "Kunne ikke ændre systemets tidszone"
 
-#: ../applets/clock/clock-location-tile.c:244
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>Indstil...</small>"
 
-#: ../applets/clock/clock-location-tile.c:245
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>Indstil</small>"
 
-#: ../applets/clock/clock-location-tile.c:321
+#: ../applets/clock/clock-location-tile.c:308
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Indstil lokalitet til nuværende lokalitet og brug dens tidszone for denne "
@@ -690,7 +621,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:444
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -699,7 +630,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:465
+#: ../applets/clock/clock-location-tile.c:452
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -707,45 +638,45 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:474
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:613
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:625
-#: ../applets/clock/clock-location-tile.c:634
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
 msgid "Unknown"
 msgstr "Ukendt"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:627
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, føles som %s"
 
-#: ../applets/clock/clock-location-tile.c:650
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Solopgang: %s / Solnedgang: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:93 ../applets/wncklet/wncklet.c:123
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
+#: ../applets/wncklet/wncklet.c:74
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Kunne ikke vise hjælpedokumentet \"%s\""
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:114 ../applets/wncklet/wncklet.c:152
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:189
+#: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "Fejl ved visning af hjælpedokument"
 
-#: ../applets/fish/fish.c:274
+#: ../applets/fish/fish.c:217
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -758,51 +689,26 @@ msgstr ""
 "Vi advarer på det kraftigste at anvende %s til noget\n"
 "som ville gøre panelprogrammet \"praktisk\" eller brugbart."
 
-#: ../applets/fish/fish.c:471
-msgid "Images"
-msgstr "Billeder"
-
-#: ../applets/fish/fish.c:583 ../applets/fish/fish.c:649
-#: ../applets/fish/fish.c:765
+#: ../applets/fish/fish.c:365 ../applets/fish/fish.c:481
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
 
-#: ../applets/fish/fish.c:584
-#, c-format
-msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. "
-"Anybody found using it should be promptly sent for a psychiatric evaluation."
-msgstr ""
-"%s er totalt ubrugelig. Programmet optager bare diskplads og "
-"oversættelsestid, og når den er i brug også dyrebar plads i panelet og "
-"hukommelsen. Hvis nogen bliver taget i at bruge dette program, burde "
-"vedkommende straks sendes til en psykiatrisk undersøgelse."
-
-#: ../applets/fish/fish.c:608
-msgid "(with minor help from George)"
-msgstr "(med en smule hjælp fra George)"
-
-#: ../applets/fish/fish.c:615
-msgid "Fish"
-msgstr "Fisk"
-
-#: ../applets/fish/fish.c:650
+#: ../applets/fish/fish.c:366
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Fisken %s, et nutidigt orakel"
 
-#: ../applets/fish/fish.c:721
+#: ../applets/fish/fish.c:437
 msgid "Unable to locate the command to execute"
 msgstr "Kan ikke lokalisere den kommando der skal udføres"
 
-#: ../applets/fish/fish.c:770
+#: ../applets/fish/fish.c:486
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Fisken %s siger:"
 
-#: ../applets/fish/fish.c:839
+#: ../applets/fish/fish.c:555
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -813,16 +719,16 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:905
+#: ../applets/fish/fish.c:632
 msgid "_Speak again"
 msgstr "_Tal igen"
 
-#: ../applets/fish/fish.c:989
+#: ../applets/fish/fish.c:714
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Den konfigurerede kommando virker ikke og er udskiftet med: %s"
 
-#: ../applets/fish/fish.c:1012
+#: ../applets/fish/fish.c:748
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -833,7 +739,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:1028
+#: ../applets/fish/fish.c:764
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -844,15 +750,15 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:1679
+#: ../applets/fish/fish.c:1167
 msgid "The water needs changing"
 msgstr "Vandet skal skiftes"
 
-#: ../applets/fish/fish.c:1681
+#: ../applets/fish/fish.c:1169
 msgid "Look at today's date!"
 msgstr "Se på dags dato!"
 
-#: ../applets/fish/fish.c:1774
+#: ../applets/fish/fish.c:1262
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, lykkespåersken"
@@ -874,150 +780,53 @@ msgid "Fish Preferences"
 msgstr "Indstillinger for fisk"
 
 #: ../applets/fish/fish.ui.h:6
-msgid "Select an animation"
-msgstr "Vælg en animation"
-
-#: ../applets/fish/fish.ui.h:7
-msgid "_File:"
-msgstr "_Fil:"
-
-#: ../applets/fish/fish.ui.h:8
 msgid "_Name of fish:"
 msgstr "_Navnet på fisken:"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:7
 msgid "_Pause per frame:"
 msgstr "_Pause pr. billede:"
 
-#: ../applets/fish/fish.ui.h:10
+#: ../applets/fish/fish.ui.h:8
 msgid "_Rotate on vertical panels"
 msgstr "_Vend om på lodrette paneler"
 
-#: ../applets/fish/fish.ui.h:11
-msgid "_Total frames in animation:"
-msgstr "_Antal billeder i animationen:"
-
-#: ../applets/fish/fish.ui.h:12
-msgid "frames"
-msgstr "billeder"
-
-#: ../applets/fish/fish.ui.h:13
+#: ../applets/fish/fish.ui.h:9
 msgid "seconds"
 msgstr "sekunder"
 
-#: ../applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr ""
-"En fisk uden navn er en ret kedelig fisk. Giv din fisk liv ved at navngive "
-"den."
-
-#: ../applets/fish/fish.schemas.in.h:2
-msgid "Command to execute on click"
-msgstr "Kommando som udføres ved klik"
-
-#: ../applets/fish/fish.schemas.in.h:3
-msgid "Frames in fish's animation"
-msgstr "Antallet af billeder i fiskens animation"
-
-#: ../applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Om fiskeanimationen skal roteres på lodrette paneler."
-
-#: ../applets/fish/fish.schemas.in.h:5
-msgid "Pause per frame"
-msgstr "Pause pr. billede"
-
-#: ../applets/fish/fish.schemas.in.h:6
-msgid "Rotate on vertical panels"
-msgstr "Vend om på lodrette paneler"
-
-#: ../applets/fish/fish.schemas.in.h:7
-msgid "The fish's animation pixmap"
-msgstr "Fiskens animeringsbillede"
-
-#: ../applets/fish/fish.schemas.in.h:8
-msgid "The fish's name"
-msgstr "Fiskens navn"
-
-#: ../applets/fish/fish.schemas.in.h:9
-msgid ""
-"This key specifies the command that will be tried to execute when the fish "
-"is clicked."
-msgstr "Kommando som forsøges udført når der klikkes på fisken."
-
-#: ../applets/fish/fish.schemas.in.h:10
-msgid ""
-"This key specifies the filename of the pixmap which will be used for the "
-"animation displayed in the fish applet relative to the pixmap directory."
-msgstr ""
-"Filnavnet for det billede som bruges til animationen i fiskepanelprogrammet, "
-"i forhold til pixmap-mappen."
-
-#: ../applets/fish/fish.schemas.in.h:11
-msgid ""
-"This key specifies the number of frames that will be displayed in the fish's "
-"animation."
-msgstr "Antallet af billeder som vil blive vist i fiskens animation."
-
-#: ../applets/fish/fish.schemas.in.h:12
-msgid "This key specifies the number of seconds each frame will be displayed."
-msgstr "Antallet af sekunder som hver billede vil blive vist."
-
-#: ../applets/notification_area/main.c:148
-msgid "Notification Area"
-msgstr "Statusfelt"
-
-#: ../applets/notification_area/main.c:306
+#: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "Panelstatusfelt"
 
-#: ../applets/wncklet/showdesktop.c:182
+#: ../applets/wncklet/showdesktop.c:177
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kunne ikke indlæse %s: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:183
+#: ../applets/wncklet/showdesktop.c:178
 msgid "Icon not found"
 msgstr "Ikon ikke fundet"
 
-#: ../applets/wncklet/showdesktop.c:245
+#: ../applets/wncklet/showdesktop.c:231
 msgid "Click here to restore hidden windows."
 msgstr "Klik her for at gendanne skjulte vinduer."
 
-#: ../applets/wncklet/showdesktop.c:247
+#: ../applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik her for at skjule alle vinduer og vise skrivebordet."
 
-#: ../applets/wncklet/showdesktop.c:459 ../applets/wncklet/showdesktop.c:543
+#: ../applets/wncklet/showdesktop.c:441
 msgid "Show Desktop Button"
 msgstr "Vis skrivebord-knap"
 
-#: ../applets/wncklet/showdesktop.c:545
-msgid "This button lets you hide all windows and show the desktop."
-msgstr "Denne knap lader dig skjule alle vinduerne og vise skrivebordet."
-
-#: ../applets/wncklet/showdesktop.c:575
+#: ../applets/wncklet/showdesktop.c:509
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 "Din vindueshåndtering understøtter ikke knappen til at vise skrivebordet, "
 "eller også kører du ikke en vindueshåndtering."
-
-#: ../applets/wncklet/window-list.c:612
-msgid "Window List"
-msgstr "Vinduesliste"
-
-#: ../applets/wncklet/window-list.c:614
-msgid ""
-"The Window List shows a list of all windows in a set of buttons and lets you "
-"browse them."
-msgstr ""
-"Vindueslisten viser en liste over alle vinduer i et sæt af knapper og lader "
-"dig gennemse dem."
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -1063,113 +872,20 @@ msgstr "Gruppér _altid vinduer"
 msgid "_Never group windows"
 msgstr "Gruppér al_drig vinduer"
 
-#: ../applets/wncklet/window-list.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Bestemmer hvornår vinduer fra det samme program skal grupperes i "
-"vindueslisten. Gyldige værdier er \"never\", \"auto\" og \"always\"."
-
-#: ../applets/wncklet/window-list.schemas.in.h:2
-msgid ""
-"If true, the window list will show windows from all workspaces. Otherwise it "
-"will only display windows from the current workspace."
-msgstr ""
-"Hvis sand, viser vindueslisten vinduer fra alle arbejdsområder, ellers vises "
-"kun vinduer fra det aktive arbejdsområde."
-
-#: ../applets/wncklet/window-list.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, move it to the current workspace. "
-"Otherwise, switch to the workspace of the window."
-msgstr ""
-"Hvis sand, bringes et vindue der bliver gendannet efter en minimering, til "
-"det aktive arbejdsområde. Ellers skiftes til arbejdsområdet for vinduet."
-
-#: ../applets/wncklet/window-list.schemas.in.h:4
-msgid "Maximum window list size"
-msgstr "Maksimal vindueslistestørrelse"
-
-#: ../applets/wncklet/window-list.schemas.in.h:5
-msgid "Minimum window list size"
-msgstr "Minimal vindueslistestørrelse"
-
-#: ../applets/wncklet/window-list.schemas.in.h:6
-msgid "Move windows to current workspace when unminimized"
-msgstr "Flyt vinduer til det aktive arbejdsområde ved gendannelse"
-
-#: ../applets/wncklet/window-list.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Vis vinduer fra alle arbejdsområder"
-
-#: ../applets/wncklet/window-list.schemas.in.h:8
-msgid ""
-"The use of this key was deprecated in GNOME 2.20. The schema is retained for "
-"compatibility with older versions."
-msgstr ""
-"Brugen af denne nøgle blev forældet i Gnome 2.20. Dette schema bevares af "
-"hensyn til kompatibilitet med ældre versioner."
-
-#: ../applets/wncklet/window-list.schemas.in.h:9
-msgid "When to group windows"
-msgstr "Hvornår vinduer skal grupperes"
-
-#: ../applets/wncklet/window-menu.c:80 ../applets/wncklet/window-menu.c:247
+#: ../applets/wncklet/window-menu.c:204
 msgid "Window Selector"
 msgstr "Vinduesvælger"
 
-#: ../applets/wncklet/window-menu.c:84
-msgid ""
-"The Window Selector shows a list of all windows in a menu and lets you "
-"browse them."
-msgstr ""
-"Vinduesvælgeren viser en liste over alle vinduer i en menu og lader dig "
-"gennemse dem."
-
-#: ../applets/wncklet/workspace-switcher.c:211
-#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:723
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "rækker"
 
-#: ../applets/wncklet/workspace-switcher.c:211
-#: ../applets/wncklet/workspace-switcher.c:974
+#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:723
 msgid "columns"
 msgstr "kolonner"
-
-#: ../applets/wncklet/workspace-switcher.c:492
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Fejl ved indlæsning af num_rows-værdien for arbejdsområdeomskifteren: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:503
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Fejl ved indlæsning af display_workspace_names-værdien for "
-"arbejdsområdeomskifteren: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:518
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Fejl ved indlæsning af display_all_workspaces-værdien for "
-"arbejdsområdeomskifteren: %s\n"
-
-#: ../applets/wncklet/workspace-switcher.c:622
-msgid "Workspace Switcher"
-msgstr "Arbejdsområdeskifter"
-
-#: ../applets/wncklet/workspace-switcher.c:624
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Arbejdsområdeskifteren viser en lille udgave af dine arbejdsområder og kan "
-"bruges til at håndtere vinduerne."
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
 msgid "Number of _workspaces:"
@@ -1207,15 +923,102 @@ msgstr "Arbejdsområdena_vne:"
 msgid "Workspaces"
 msgstr "Arbejdsområder"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:1
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"En fisk uden navn er en ret kedelig fisk. Giv din fisk liv ved at navngive "
+"den."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
+msgid "Command to execute on click"
+msgstr "Kommando som udføres ved klik"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "Om fiskeanimationen skal roteres på lodrette paneler."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
+msgid "Pause per frame"
+msgstr "Pause pr. billede"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+msgid "Rotate on vertical panels"
+msgstr "Vend om på lodrette paneler"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
+msgid "The fish's animation pixmap"
+msgstr "Fiskens animeringsbillede"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+msgid "The fish's name"
+msgstr "Fiskens navn"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Kommando som forsøges udført når der klikkes på fisken."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Filnavnet for det billede som bruges til animationen i fiskepanelprogrammet, "
+"i forhold til pixmap-mappen."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Antallet af sekunder som hver billede vil blive vist."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Bestemmer hvornår vinduer fra det samme program skal grupperes i "
+"vindueslisten. Gyldige værdier er \"never\", \"auto\" og \"always\"."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Hvis sand, viser vindueslisten vinduer fra alle arbejdsområder, ellers vises "
+"kun vinduer fra det aktive arbejdsområde."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Hvis sand, bringes et vindue der bliver gendannet efter en minimering, til "
+"det aktive arbejdsområde. Ellers skiftes til arbejdsområdet for vinduet."
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
+msgid "Move windows to current workspace when unminimized"
+msgstr "Flyt vinduer til det aktive arbejdsområde ved gendannelse"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
+msgid "Show windows from all workspaces"
+msgstr "Vis vinduer fra alle arbejdsområder"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
+msgid "When to group windows"
+msgstr "Hvornår vinduer skal grupperes"
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:1
 msgid "Display all workspaces"
 msgstr "Vis alle arbejdsområder"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:2
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
 msgid "Display workspace names"
 msgstr "Vis arbejdsområdenavne"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:3
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
@@ -1223,7 +1026,7 @@ msgstr ""
 "Hvis sand, vil arbejdsområdeskifteren vise alle arbejdsområder, ellers vises "
 "kun den aktive."
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:4
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
@@ -1233,11 +1036,11 @@ msgstr ""
 "navne. Ellers vises vinduerne på arbejdsområderne. Denne indstilling virker "
 "kun når vindueshåndteringen Metacity benyttes."
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:5
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
 msgid "Rows in workspace switcher"
 msgstr "Rækker i arbejdsområdeskifter"
 
-#: ../applets/wncklet/workspace-switcher.schemas.in.h:6
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:6
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
@@ -1248,165 +1051,584 @@ msgstr ""
 "arbejdsområderne i. Nøglen er kun relevant hvis display_all_workspaces er "
 "sand."
 
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
-msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "Et simpelt panelprogram til test af panelet til Gnome 2.0"
-
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-msgid "Test Bonobo Applet"
-msgstr "Bonobo-testpanelprogram"
-
-#: ../bonobo/libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
-msgid "Test Bonobo Applet Factory"
-msgstr "Fabrik til Bonobo-testpanelprogram"
-
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:34
-#: ../gnome-panel/panel-test-applets.c:36
-msgid "Specify an applet IID to load"
-msgstr "Angiv et panelprograms-IID som skal indlæses"
-
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:35
-#: ../gnome-panel/panel-test-applets.c:37
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
 msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr "Angiv en GConf-placering til indstillingerne for panelprogrammet"
-
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:36
-#: ../gnome-panel/panel-test-applets.c:38
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
 msgstr ""
-"Angiv startstørrelsen af panelprogrammet (xx-small, medium, large osv.)"
+"En liste af panelprogram-iid'er som panelet vil ignorere. På denne måde kan "
+"du deaktivere visse panelprogrammer således at de ikke bliver indlæst eller "
+"dukker op i menuen. For eksempel, for at deaktivere panelprogrammet mini-"
+"commander, skal \"OAFIID:GNOME_MiniCommanderApplet\" føjes til denne liste. "
+"Panelet skal genstartes før dette træder i kraft."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:37
-#: ../gnome-panel/panel-test-applets.c:39
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
 msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
-"Angiv startorienteringen af panelprogrammet (top, bottom, left eller right)"
+"En liste af panel-id'er. Hvert id identificerer et enkelt topniveau-panel. "
+"Opsætningen for hver af disse paneler er gemt i /apps/panel/toplevels/$(id)."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:53
-#: ../gnome-panel/panel-properties-dialog.c:123
-#: ../gnome-panel/panel-test-applets.c:55
-msgctxt "Orientation"
-msgid "Top"
-msgstr "Top"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. an applet, launcher, action button or menu button/bar). The settings for "
+"each of these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"En liste af panelobjekt-id'er. Hvert id identificerer et enkelt panelobjekt "
+"(f.eks. en genvej, en programstarter, en handlingsknap eller en menuknap/-"
+"linje). Opsætningen for hver af disse objekter er gemt i /apps/panel/objects/"
+"$(id)."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:54
-#: ../gnome-panel/panel-properties-dialog.c:124
-#: ../gnome-panel/panel-test-applets.c:56
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "Bund"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
+msgid "Applet IIDs to disable from loading"
+msgstr "Panelprogram-iid'er som ikke skal indlæses"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:55
-#: ../gnome-panel/panel-properties-dialog.c:125
-#: ../gnome-panel/panel-test-applets.c:57
-msgctxt "Orientation"
-msgid "Left"
-msgstr "Venstre"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Complete panel lockdown"
+msgstr "Lås panelet fuldstændigt"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:56
-#: ../gnome-panel/panel-properties-dialog.c:126
-#: ../gnome-panel/panel-test-applets.c:58
-msgctxt "Orientation"
-msgid "Right"
-msgstr "Højre"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid "Confirm panel removal"
+msgstr "Bekræft panelfjernelse"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:61
-#: ../gnome-panel/panel-test-applets.c:63
-msgctxt "Size"
-msgid "XX Small"
-msgstr "Mikroskopisk"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+msgid "Disable Force Quit"
+msgstr "Deaktiver gennemtving afslutning"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:62
-#: ../gnome-panel/panel-test-applets.c:64
-msgctxt "Size"
-msgid "X Small"
-msgstr "Meget lille"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "Aktivér autofuldførelse i \"Kør program\"-vinduet"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:63
-#: ../gnome-panel/panel-test-applets.c:65
-msgctxt "Size"
-msgid "Small"
-msgstr "Lille"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Aktivér programlisten i \"Kør program\"-vinduet"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:64
-#: ../gnome-panel/panel-test-applets.c:66
-msgctxt "Size"
-msgid "Medium"
-msgstr "Mellem"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+msgid "Enable tooltips"
+msgstr "Aktivér værktøjstip"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:65
-#: ../gnome-panel/panel-test-applets.c:67
-msgctxt "Size"
-msgid "Large"
-msgstr "Stor"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Udvid programlisten i \"Kør program\"-vinduet"
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:66
-#: ../gnome-panel/panel-test-applets.c:68
-msgctxt "Size"
-msgid "X Large"
-msgstr "Meget stor"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+msgid "History of \"Run Application\" dialog"
+msgstr "Historik for dialogvinduet \"Kør program\""
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:67
-#: ../gnome-panel/panel-test-applets.c:69
-msgctxt "Size"
-msgid "XX Large"
-msgstr "Enorm"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Om et vindue der spørger efter bekræftelse hvis brugeren ønsker at fjerne et "
+"panel, skal vises."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:129
-#: ../gnome-panel/panel-test-applets.c:127
-#, c-format
-msgid "Failed to load applet %s"
-msgstr "Kunne ikke indlæse panelprogrammet %s"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+"Hvis sand, vil autofuldførelse være tilgængelig i dialogen \"Kør program\"."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.c:249
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "forespørgsel returnerede undtagelsen %s\n"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Om listen over kendte program i \"Kør program\"-vinduet skal være udvidet "
+"når vinduet åbnes. Denne nøgle er kun relevant hvis nøglen "
+"enable_program_list er sand."
 
-#. This is an utility to easily test various applets
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:2
-#: ../gnome-panel/panel-test-applets.ui.h:2
-msgid "Test applet utility"
-msgstr "Testpanelprogramredskab"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Hvis sand, bliver listen over kendte programmer i \"Kør program\"-vinduet "
+"synlig. Om listen er udvidet når vinduet er vist, kontrolleres af "
+"\"show_program_list\"-nøglen."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:3
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "_Applet:"
-msgstr "_Panelprogram:"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Hvis sand vil panelet ikke tillade en bruger at gennemtvinge at et program "
+"afslutter (ved at fjerne tilgangen til knappen tving afslut)."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:4
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-#: ../gnome-panel/panel-test-applets.ui.h:4
-msgid "_Orientation:"
-msgstr "_Orientering:"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Hvis sand, vil panelet ikke tillade nogen ændringer i konfigurationen af "
+"panelet. Individuelle panelprogrammer skal dog muligvis låses ned separat. "
+"Panel skal genstartes før dette træder i kraft."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Prefs Dir:"
-msgstr "_Indstillingsmappe:"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+msgid ""
+"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
+"for the whole desktop with the gtk-enable-tooltips property in GTK+."
+msgstr ""
+"Hvis sand, vises værktøjstip for objekter i paneler. Værktøjstip kan slås "
+"fra for hele skrivebordet med egenskaben gtk-enable-tooltips i GTK+."
 
-#: ../bonobo/libpanel-applet/panel-test-applets-bonobo.ui.h:6
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Size:"
-msgstr "_Størrelse:"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+msgid "Panel ID list"
+msgstr "Panel-id-liste"
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:1
-#: ../gnome-panel/applet.c:554 ../libpanel-applet/panel-applet.c:145
-msgid "Loc_k To Panel"
-msgstr "_Lås til panel"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+msgid "Panel object ID list"
+msgstr "Panelobjekt-id-liste"
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:2
-#: ../gnome-panel/applet.c:537 ../libpanel-applet/panel-applet.c:139
-msgid "_Move"
-msgstr "_Flyt"
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+msgid ""
+"The list of commands used in the past in the \"Run Application\" dialog."
+msgstr ""
+"En liste af kommandoer, der tidligere er blevet brugt i dialogvinduet \"Kør "
+"program\"."
 
-#: ../bonobo/panel-module/GNOME_Panel_Popup.xml.h:3
-#: ../gnome-panel/applet.c:526 ../libpanel-applet/panel-applet.c:136
-msgid "_Remove From Panel"
-msgstr "F_jern fra panel"
+#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
+msgid "Launcher location"
+msgstr "Placering af genvej"
+
+#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:2
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Placeringen af .desktop-filen som beskriver genvejen. Denne nøgle er kun "
+"relevant hvis nøglen object_type er \"launcher-object\"."
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
+msgid "Icon used for button"
+msgstr "Ikon som benyttes til knappen"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+msgid "Menu content path"
+msgstr "Menuindholdssti"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Placeringen af billedfilen som skal bruges som ikon for objektets knap. Hvis "
+"tom, bruges menuens standardikon."
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
+msgid ""
+"The path from which the menu contents is contructed. If empty, the menu will "
+"be the default applications menu."
+msgstr ""
+"Den sti som menuindholdet konstrueres ud fra. Hvis tom, vil menuen være "
+"standardmenuen Programmer."
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
+msgid "The text to display in a tooltip for this menu."
+msgstr "Teksten, der skal vises i et værktøjstip for denne menu."
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
+msgid "Tooltip displayed for menu"
+msgstr "Værktøjstip som vises for menuen"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
+msgid ""
+"If set to 'end', the position of the object is interpreted relative to the "
+"right (or bottom if vertical) edge of the panel."
+msgstr ""
+"Hvis sat til \"end\", fortolkes objektets placering relativt til højre kant "
+"(eller nederste kant hvis lodret) af panelet."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Fortolk placering relativt til nederste/højre kant"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
+msgid "Object IID"
+msgstr "Objekt-IID"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
+msgid "Object's position on the panel"
+msgstr "Objektets placering på panelet"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Id'et for det topniveau-panel som indeholder dette objekt."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
+msgid ""
+"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+"\"."
+msgstr ""
+"Implementerings-id'et for objektet - f.eks. \"ClockAppletFactory::ClockApplet"
+"\"."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Placeringen af dette panelobjekt. Placeringen er angivet som antallet af "
+"punkter fra venstre panelkant (eller øverste hvis lodret)."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
+msgid "Toplevel panel containing object"
+msgstr "Topniveau panel som indeholder objekt"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
+msgid "Animation speed"
+msgstr "Animationsfart"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Skjul automatisk panelet i hjørne"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
+msgid "Background color"
+msgstr "Baggrundsfarve"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
+msgid "Background image"
+msgstr "Baggrundsbillede"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
+msgid "Background type"
+msgstr "Baggrundstype"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
+msgid "Center panel on x-axis"
+msgstr "Centrér panelet på x-aksen"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+msgid "Center panel on y-axis"
+msgstr "Centrér panelet på y-aksen"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+msgid ""
+"Determines how the image set by image-uri is rendered. Possible values are "
+"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
+"to the panel dimensions and the aspect ratio of the image will not be "
+"maintained. With \"fit\", the image will be scaled (retaining the aspect "
+"ratio of the image) to the panel height (if horizontal)."
+msgstr ""
+"Bestemmer hvordan billedet, der er angivet af image-uri, tegnes. Mulige "
+"værdier er \"none\", \"stretch\", \"fit\". Med \"stretch\" strækkes "
+"billedet, så det passer til panelets mål, uden at bevare højde-/"
+"breddeforholdet. Med \"fit\" skaleres billedet uniformt, så det passer til "
+"panelets højde (hvis vandret)."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+msgid "Enable arrows on hide buttons"
+msgstr "Aktivér pile på skjuleknapper"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+msgid "Enable hide buttons"
+msgstr "Aktivér skjuleknapper"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+msgid "Expand to occupy entire screen width"
+msgstr "Udvid for at udfylde hele skærmbredden"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Om pile skal placeres på skjuleknapperne. Denne nøgle er kun relevant hvis "
+"nøglen enable_buttons er sand."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr "Om knapper til at flytte panelet til kanten af skærmen skal vises."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "Om baggrundsbilledet skal roteres når panelet vender lodret."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Om panelet automatisk skal skjules i et hjørne af skærmen når markøren "
+"forlader panelområdet. Hvis markøren flyttes til det hjørne igen, dukker "
+"panelet op igen."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Om panelet skal optage hele skærmbredden (eller højden hvis det er et lodret "
+"panel). I denne tilstand kan panelet kun placeres ved en skærmkant. Ellers "
+"vil panelet kun være stort nok til at have plads til panelprogrammerne, "
+"genvejene og knapperne på panelet."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"Hvis sand, bliver nøglerne \"x\" og \"x_right\" ignoreret, og panelet "
+"anbringes i midten af x-aksen på skærmen. Hvis panelets størrelse ændres, "
+"forbliver det på den position - dvs. det gror til begge sider. Hvis falsk, "
+"angiver nøglerne \"x\" og \"x_right\" placeringen af panelet."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"Hvis sand, bliver nøglerne \"y\" og \"y_bottom\" ignoreret, og panelet "
+"anbringes i midten af x-aksen på skærmen. Hvis panelets størrelse ændres, "
+"forbliver det på den position - dvs. det gror til begge sider. Hvis falsk, "
+"angiver nøglerne \"y\" og \"y_bottom\" placeringen af panelet."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+msgid "Image options"
+msgstr "Billedindstillinger"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"I en Xinerama-opsætning kan du have paneler på hver enkelt skærm. Denne "
+"nøgle angiver den aktuelle skærm som panelet er placeret på."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+msgid "Name to identify panel"
+msgstr "Navn til identifikation af panel"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+msgid "Panel autohide delay"
+msgstr "Automatisk skjulningsventetid for panel"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+msgid "Panel autounhide delay"
+msgstr "Automatisk opdukningsventetid for panel"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+msgid "Panel orientation"
+msgstr "Panelorientering"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+msgid "Panel size"
+msgstr "Panelstørrelse"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+msgid "Rotate image on vertical panels"
+msgstr "Rotér billede på lodrette paneler"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Angiver baggrundsfarven for panelet i #RGB-format."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Angiver den fil som bruges til baggrundsbillede. Hvis billedet indeholder en "
+"alfakanal, bliver det sat sammen med skrivebordets baggrundsbillede."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Angiver antallet af millisekunderse ventetid efter markøren går ind i "
+"panelområdet før panelet vises automatisk igen. Denne nøgle er kun relevant "
+"hvis nøglen auto_hide er sand."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Angiver antallet af millisekunderse ventetid efter markøren forlader "
+"panelområdet før panelet bliver skjult automatisk. Denne nøgle er kun "
+"relevant hvis nøglen auto_hide er sand."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Angiver antallet af punkter der er synlige når panelet er skjult automatisk "
+"i et hjørne. Denne nøgle er kun relevant hvis nøglen auto_hide er sand."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Højden (bredden for et lodret panel) af panelet. Panelet vil afgøre på "
+"kørselstidspunktet en mindste størrelse baseret på skrifttypestørrelsen og "
+"andre ting. Den maksimale størrelse er fast på det kvarte af skærmhøjden "
+"(eller -bredden)."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Placeringen af panelet langs x-aksen, målt fra skærmens højre side. Hvis "
+"denne sættes til -1, vil værdien blive ignoreret, og værdien af nøglen \"x\" "
+"blive brugt. Hvis værdien er større end 0, så vil værdien af nøglen \"x\" "
+"blive ignoreret. Denne nøgle er kun relevant i ikke-udvidet tilstand. I "
+"udvidet tilstand ignoreres denne nøgle, og panelet placeres ved skærmens "
+"kant som angivet af nøglen \"orientation\"."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Placeringen af panelet langs x-aksen. Denne nøgle er kun relevant i ikke-"
+"udvidet tilstand. I udvidet tilstand er denne nøgle ignoreret og panelet "
+"placeres ved skærmkanten som angivet af nøglen orientation."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"Placeringen af panelet langs y-aksen, målt fra skærmens bund. Hvis denne "
+"sættes til -1, vil værdien blive ignoreret, og værdien af nøglen \"y\" blive "
+"brugt. Hvis værdien er større end 0, så vil værdien af nøglen \"y\" blive "
+"ignoreret. Denne nøgle er kun relevant i ikke-udvidet tilstand. I udvidet "
+"tilstand ignoreres denne nøgle, og panelet placeres ved skærmens kant som "
+"angivet af nøglen \"orientation\"."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Placeringen af panelet langs y-aksen. Denne nøgle er kun relevant i ikke-"
+"udvidet tilstand. I udvidet tilstand er denne nøgle ignoreret og panelet "
+"placeres ved skærmkanten som angivet af nøglen orientation."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Orienteringen af panelet. Mulige værdier er \"top\", \"bottom\", \"left\" og "
+"\"right\". I udvidet tilstand angiver nøglen hvilken skærmkant som panelet "
+"er på. I ikke-udvidet tilstand er forskellen mellem \"top\" og \"bottom\" "
+"mindre vigtig - begge indikerer at dette er et vandret panel - men giver "
+"alligevel et brugbart hint til hvordan visse panelobjekter skal opføre sig. "
+"F.eks. vil en menuknap vise sin menu under panelet på et \"top\"-panel, mens "
+"den vises over panelet på et \"bottom\"-panel."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Den fart som panelanimationer skal foregå med. Mulige værdier er \"slow\", "
+"\"medium\" og \"fast\". Denne nøgle er kun relevant hvis nøglen "
+"enable_animations er sand."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Dette er et menneskeligt læsbart navn som du kan bruge til at identificere "
+"et panel. Hovedformålet er at tjene til panelets vinduestitel ved navigering "
+"mellem paneler."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
+msgid "Visible pixels when hidden"
+msgstr "Synlige punkter når skjult"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"none\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Hvilken type baggrund der skal bruges til panelet. Mulige værdier er \"none"
+"\" for at bruge GTK+' standardkontrolbaggrund, \"color\" for at bruge "
+"baggrundsfarven angivet af nøglen \"color\", eller \"image\" for at bruge "
+"billedet angivet ved nøglen \"image\" som baggrund."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"I en Xinerama-opsætning kan du have paneler på hver enkelt skærm. Denne "
+"nøgle angiver den aktuelle skærm som panelet er placeret på."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
+msgid "X co-ordinate of panel"
+msgstr "Vandret koordinat for panel"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "Panelets x-koordinat, målt fra skærmens højre kant"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+msgid "X screen where the panel is displayed"
+msgstr "X-skærm som panel vises på"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "Xinerama-skærm som panel vises på"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+msgid "Y co-ordinate of panel"
+msgstr "Lodret koordinat for panel"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "Panelets y-koordinat, målt fra skærmens bund"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
@@ -1418,27 +1640,27 @@ msgstr "Filen er ikke en gyldig .desktop-fil"
 msgid "Unrecognized desktop file Version '%s'"
 msgstr "Skrivebordsfilversion \"%s\" ikke genkendt"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:958
+#: ../gnome-panel/libegg/eggdesktopfile.c:968
 #, c-format
 msgid "Starting %s"
 msgstr "Starter %s"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1100
+#: ../gnome-panel/libegg/eggdesktopfile.c:1110
 #, c-format
 msgid "Application does not accept documents on command line"
 msgstr "Programmet tager ikke dokumenter på kommandolinjen"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1168
+#: ../gnome-panel/libegg/eggdesktopfile.c:1178
 #, c-format
 msgid "Unrecognized launch option: %d"
 msgstr "Opstartstilvalg ikke genkendt: %d"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1373
+#: ../gnome-panel/libegg/eggdesktopfile.c:1383
 #, c-format
 msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
 msgstr "Kan ikke give dokument-URI'er til et \"Type=Link\"-skrivebordselement"
 
-#: ../gnome-panel/libegg/eggdesktopfile.c:1394
+#: ../gnome-panel/libegg/eggdesktopfile.c:1404
 #, c-format
 msgid "Not a launchable item"
 msgstr "Ikke et kørbart element"
@@ -1476,13 +1698,13 @@ msgstr "Vis tilvalg til sessionshåndtering"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:82
-#: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/libpanel-util/panel-error.c:76
+#: ../gnome-panel/panel-applet-frame.c:769
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Fejl"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:382
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:381
 msgid "Choose an icon"
 msgstr "Vælg et ikon"
 
@@ -1492,7 +1714,7 @@ msgid "Could not launch '%s'"
 msgstr "Kunne ikke starte \"%s\""
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:48
-#: ../gnome-panel/launcher.c:161
+#: ../gnome-panel/launcher.c:175
 msgid "Could not launch application"
 msgstr "Kunne ikke starte program"
 
@@ -1505,28 +1727,17 @@ msgstr "Kunne ikke vise stedet \"%s\""
 msgid "No application to handle search folders is installed."
 msgstr "Der er ikke installeret noget program til at håndtere søgemapper."
 
-#: ../gnome-panel/applet.c:447
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1351
-msgid "Cannot find an empty spot"
-msgstr "Kan ikke finde en tom plads"
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+msgid "_Move"
+msgstr "_Flyt"
 
-#: ../gnome-panel/drawer.c:350 ../gnome-panel/panel-addto.c:174
-#: ../gnome-panel/panel-toplevel.c:1626
-msgid "Drawer"
-msgstr "Skuffe"
-
-#: ../gnome-panel/drawer.c:589
-msgid "_Add to Drawer..."
-msgstr "_Tilføj til skuffe..."
-
-#: ../gnome-panel/drawer.c:595 ../gnome-panel/launcher.c:807
-#: ../gnome-panel/panel-action-button.c:141
-#: ../gnome-panel/panel-context-menu.c:216
-msgid "_Properties"
-msgstr "_Indstillinger"
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+msgid "_Remove From Panel"
+msgstr "F_jern fra panel"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1541,7 +1752,7 @@ msgid "- Edit .desktop files"
 msgstr "- Redigér .desktop-filer"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:897
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "Opret genvej"
 
@@ -1550,7 +1761,7 @@ msgstr "Opret genvej"
 msgid "Directory Properties"
 msgstr "Mappe-egenskaber"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:735
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:726
 msgid "Launcher Properties"
 msgstr "Egenskaber for genvej"
 
@@ -1562,189 +1773,132 @@ msgstr ""
 "Kør andre programmer og tilbyd forskellige værktøjer til vindueshåndtering, "
 "at vise hvad klokken er, osv."
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:93
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:87
 msgid "Panel"
 msgstr "Panel"
 
-#: ../gnome-panel/launcher.c:118
+#: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
 msgstr "Kunne ikke vise denne adresse"
 
-#: ../gnome-panel/launcher.c:119
+#: ../gnome-panel/launcher.c:137
 msgid "No URL was specified."
 msgstr "Der blev ikke angivet en adresse."
 
-#: ../gnome-panel/launcher.c:227
+#: ../gnome-panel/launcher.c:219
 msgid "Could not use dropped item"
 msgstr "Kunne ikke bruge sluppet element"
 
-#: ../gnome-panel/launcher.c:423
+#: ../gnome-panel/launcher.c:415
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI angivet for skrivebordsfil til panelgenvej\n"
 
-#: ../gnome-panel/launcher.c:462
+#: ../gnome-panel/launcher.c:456
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan ikke åbne skrivebordsfilen %s til panelgenveje%s%s\n"
 
-#: ../gnome-panel/launcher.c:801
+#: ../gnome-panel/launcher.c:790
 msgid "_Launch"
 msgstr "_Start"
 
-#: ../gnome-panel/launcher.c:840
-#, c-format
-msgid "Key %s is not set, cannot load launcher\n"
-msgstr "Nøglen %s er ikke angivet, kan ikke indlæse genvejj\n"
+#: ../gnome-panel/launcher.c:796 ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:133
+msgid "_Properties"
+msgstr "_Indstillinger"
 
-#: ../gnome-panel/launcher.c:966 ../gnome-panel/panel-ditem-editor.c:1361
-#: ../gnome-panel/panel-ditem-editor.c:1395
-#: ../gnome-panel/panel-ditem-editor.c:1426
+#: ../gnome-panel/launcher.c:827
+#, c-format
+msgid "Launcher location is not set, cannot load launcher\n"
+msgstr ""
+"Placeringen for programstarteren er ikke givet - kan ikke indlæse "
+"programstarter\n"
+
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
 msgstr "Kunne ikke gemme genvej"
 
-#: ../gnome-panel/main.c:45
+#: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
 msgstr "Erstat et nu kørende panel"
 
-#: ../gnome-panel/menu.c:916
-msgid "Add this launcher to _panel"
-msgstr "Tilføj denne genvej til _panelet"
-
-#: ../gnome-panel/menu.c:923
-msgid "Add this launcher to _desktop"
-msgstr "Tilføj denne genvej til _skrivebordet"
-
-#: ../gnome-panel/menu.c:935
-msgid "_Entire menu"
-msgstr "_Hele menuen"
-
-#: ../gnome-panel/menu.c:940
-msgid "Add this as _drawer to panel"
-msgstr "Tilføj som _skuffe på panelet"
-
-#: ../gnome-panel/menu.c:947
-msgid "Add this as _menu to panel"
-msgstr "Tilføj som _menu på panelet"
-
-#: ../gnome-panel/nothing.cP:609
-#, c-format
-msgid "<b>GAME OVER</b> at level %d!"
-msgstr "<b>SPILLET SLUT</b> på niveau %d!"
-
-#. Translators: the first and third strings are similar to a
-#. * title, and the second string is a small information text.
-#. * The spaces are there only to separate all the strings, so
-#. try to keep them as is.
-#: ../gnome-panel/nothing.cP:616
-#, c-format
-msgid "%1$s   %2$s   %3$s"
-msgstr "%1$s   %2$s   %3$s"
-
-#: ../gnome-panel/nothing.cP:617
-msgid "Press 'q' to quit"
-msgstr "Tryk \"q\" for at afslutte"
-
-#: ../gnome-panel/nothing.cP:622
-msgid "Paused"
-msgstr "Pause"
-
-#. Translators: the first string is a title and the second
-#. * string is a small information text.
-#: ../gnome-panel/nothing.cP:625 ../gnome-panel/nothing.cP:636
-#, c-format
-msgid "%1$s\t%2$s"
-msgstr "%1$s\t%2$s"
-
-#: ../gnome-panel/nothing.cP:626
-msgid "Press 'p' to unpause"
-msgstr "Tryk \"p\" for at fortsætte"
-
-#: ../gnome-panel/nothing.cP:632
-#, c-format
-msgid "Level: %s,  Lives: %s"
-msgstr "Niveau: %s,  Liv: %s"
-
-#: ../gnome-panel/nothing.cP:637
-msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-msgstr ""
-"Venstre/Højre for at bevæge sig, Mellemrum for at skyde, \"p\" for pause, \"q"
-"\" for at afslutte"
-
-#: ../gnome-panel/nothing.cP:1385
-msgid "Killer GEGLs from Outer Space"
-msgstr "Dræber-GEGLer fra det ydre rum"
-
-#: ../gnome-panel/panel-action-button.c:129
-msgid "_Activate Screensaver"
-msgstr "_Aktivér pauseskærm"
-
-#: ../gnome-panel/panel-action-button.c:135
+#: ../gnome-panel/panel-action-button.c:127
 msgid "_Lock Screen"
 msgstr "_Lås skærm"
 
-#: ../gnome-panel/panel-action-button.c:254
+#: ../gnome-panel/panel-action-button.c:133
+msgid "_Activate Screensaver"
+msgstr "_Aktivér pauseskærm"
+
+#: ../gnome-panel/panel-action-button.c:239
+msgid "Connect to server"
+msgstr "Tilslut server"
+
+#: ../gnome-panel/panel-action-button.c:263
 msgid "Could not connect to server"
 msgstr "Kunne ikke tilslutte til serveren"
 
-#: ../gnome-panel/panel-action-button.c:285
+#: ../gnome-panel/panel-action-button.c:293
 msgid "Lock Screen"
 msgstr "Lås skærm"
 
-#: ../gnome-panel/panel-action-button.c:286
+#: ../gnome-panel/panel-action-button.c:294
 msgid "Protect your computer from unauthorized use"
 msgstr "Beskyt computeren mod uautoriseret brug"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:300
+#: ../gnome-panel/panel-action-button.c:307
 msgid "Log Out..."
 msgstr "Log ud..."
 
-#: ../gnome-panel/panel-action-button.c:301
+#: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
 msgstr "Afslut denne session for at logge på som en anden bruger"
 
-#: ../gnome-panel/panel-action-button.c:310
+#: ../gnome-panel/panel-action-button.c:316
 msgid "Run Application..."
 msgstr "Kør program..."
 
-#: ../gnome-panel/panel-action-button.c:311
+#: ../gnome-panel/panel-action-button.c:317
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Kør et program ved at indtaste en kommando eller vælge fra en liste"
 
-#: ../gnome-panel/panel-action-button.c:320
+#: ../gnome-panel/panel-action-button.c:325
 msgid "Search for Files..."
 msgstr "Søg efter filer..."
 
-#: ../gnome-panel/panel-action-button.c:321
+#: ../gnome-panel/panel-action-button.c:326
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Find dokumenter og mapper på denne computer ved navn eller indhold"
 
-#: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:229
+#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-force-quit.c:239
 msgid "Force Quit"
 msgstr "Gennemtving afslutning"
 
-#: ../gnome-panel/panel-action-button.c:330
+#: ../gnome-panel/panel-action-button.c:334
 msgid "Force a misbehaving application to quit"
 msgstr "Tving et program der opfører sig forkert, til at slutte"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:339
+#: ../gnome-panel/panel-action-button.c:342
 msgid "Connect to Server..."
 msgstr "Tilslut server..."
 
-#: ../gnome-panel/panel-action-button.c:340
+#: ../gnome-panel/panel-action-button.c:343
 msgid "Connect to a remote computer or shared disk"
 msgstr "Forbind til en fjern computer eller delt disk"
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:350
 msgid "Shut Down..."
 msgstr "Sluk..."
 
-#: ../gnome-panel/panel-action-button.c:349
+#: ../gnome-panel/panel-action-button.c:351
 msgid "Shut down the computer"
 msgstr "Sluk maskinen"
 
@@ -1764,7 +1918,7 @@ msgstr "Programgenvej..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiér en genvej fra programmenuen"
 
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:1091
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "Hovedmenu"
 
@@ -1788,47 +1942,42 @@ msgstr "Adskiller"
 msgid "A separator to organize the panel items"
 msgstr "En adskiller til at organisere panel-elementerne"
 
-#: ../gnome-panel/panel-addto.c:175
-msgid "A pop out drawer to store other items in"
-msgstr "En pop-ud-skuffe til at gemme andre ting i"
+#: ../gnome-panel/panel-addto.c:174
+#, fuzzy
+msgid "User Menu"
+msgstr "Benyt menusti"
 
-#: ../gnome-panel/panel-addto.c:256
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr ""
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(tom)"
 
-#: ../gnome-panel/panel-addto.c:1026
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Find et _element at tilføje til \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1030
-#, c-format
-msgid "Add to Drawer"
-msgstr "Tilføj til skuffe"
-
-#: ../gnome-panel/panel-addto.c:1032
-msgid "Find an _item to add to the drawer:"
-msgstr "Find et _element at tilføje til skuffen:"
-
-#: ../gnome-panel/panel-addto.c:1034
-#, c-format
-msgid "Add to Panel"
-msgstr "Tilføj til panel"
-
-#: ../gnome-panel/panel-addto.c:1036
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "Find et _element at tilføje til panelet:"
 
-#: ../gnome-panel/panel-applet-frame.c:714
+#: ../gnome-panel/panel-addto.c:1062
+msgid "Add to Panel"
+msgstr "Tilføj til panel"
+
+#: ../gnome-panel/panel-applet-frame.c:738
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" afsluttede uventet"
 
-#: ../gnome-panel/panel-applet-frame.c:716
+#: ../gnome-panel/panel-applet-frame.c:740
 msgid "Panel object has quit unexpectedly"
 msgstr "Panelobjektet afsluttede uventet"
 
-#: ../gnome-panel/panel-applet-frame.c:723
+#: ../gnome-panel/panel-applet-frame.c:747
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1836,68 +1985,44 @@ msgstr ""
 "Hvis du genstarter et panelobjekt vil det automatisk blive tilføjet panelet "
 "igen."
 
-#: ../gnome-panel/panel-applet-frame.c:729
+#: ../gnome-panel/panel-applet-frame.c:753
 msgid "_Don't Reload"
 msgstr "Genindlæs i_kke"
 
-#: ../gnome-panel/panel-applet-frame.c:730
+#: ../gnome-panel/panel-applet-frame.c:754
 msgid "_Reload"
 msgstr "_Genindlæs"
 
 # knapperne siger "slet"/"slet ikke"
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelet stødte ind i et problem under indlæsning af \"%s\"."
 
 # knapperne siger "slet"/"slet ikke"
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du slette panelprogrammet fra din konfiguration?"
 
-#: ../gnome-panel/panel-context-menu.c:104
-msgid "And many, many others..."
-msgstr "Og mange, mange andre..."
-
-#: ../gnome-panel/panel-context-menu.c:130
-msgid "The GNOME Panel"
-msgstr "Gnome-panelet"
-
-#: ../gnome-panel/panel-context-menu.c:133
-msgid ""
-"This program is responsible for launching other applications and provides "
-"useful utilities."
-msgstr ""
-"Dette program er ansvarligt for at starte andre programmer og tilbyder "
-"nyttige værktøjer."
-
-#: ../gnome-panel/panel-context-menu.c:137
-msgid "About the GNOME Panel"
-msgstr "Om GNOME-panelet"
-
-#: ../gnome-panel/panel-context-menu.c:171
+#: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
 msgstr "Kan ikke fjerne dette panel"
 
-#: ../gnome-panel/panel-context-menu.c:172
+#: ../gnome-panel/panel-context-menu.c:64
 msgid "You must always have at least one panel."
 msgstr "Du skal altid mindst have ét panel."
 
-#: ../gnome-panel/panel-context-menu.c:205
+#: ../gnome-panel/panel-context-menu.c:122
 msgid "_Add to Panel..."
 msgstr "_Tilføj til panel..."
 
-#: ../gnome-panel/panel-context-menu.c:226
+#: ../gnome-panel/panel-context-menu.c:143
 msgid "_Delete This Panel"
 msgstr "_Fjern dette panel"
 
-#: ../gnome-panel/panel-context-menu.c:241
+#: ../gnome-panel/panel-context-menu.c:158
 msgid "_New Panel"
 msgstr "_Nyt panel"
-
-#: ../gnome-panel/panel-context-menu.c:293
-msgid "A_bout Panels"
-msgstr "_Om paneler"
 
 #: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
@@ -1912,62 +2037,62 @@ msgid "Location"
 msgstr "Sted"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "_Type:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:629
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "_Navn:"
 
-#: ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "_Gennemse..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:663
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1012
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "Vælg et program..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1016
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
 msgstr "Vælg en fil..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1181
-#: ../gnome-panel/panel-ditem-editor.c:1190
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "Komm_ando:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1199
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "_Sted:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1362
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "Navnet på genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1366
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "Kunne ikke gemme mappeegenskaber"
 
-#: ../gnome-panel/panel-ditem-editor.c:1367
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "Navnet på mappen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1383
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "Kommandoen for genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1386
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "Placeringen af genvejen er ikke angivet."
 
-#: ../gnome-panel/panel-ditem-editor.c:1463
+#: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
 msgstr "Kunne ikke vise hjælpedokument"
 
@@ -1978,11 +2103,11 @@ msgstr ""
 "Klik på et vindue for at tvinge programmet til at afslutte. Tryk <ESC> for "
 "at annullere."
 
-#: ../gnome-panel/panel-force-quit.c:212
+#: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
 msgstr "Tving dette program til at afslutte?"
 
-#: ../gnome-panel/panel-force-quit.c:215
+#: ../gnome-panel/panel-force-quit.c:225
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -1990,550 +2115,166 @@ msgstr ""
 "Tvinger du et program til at afslutte, så kan ugemte dokumenter i programmet "
 "gå tabt."
 
-#: ../gnome-panel/panel-general.schemas.in.h:1
-msgid ""
-"A boolean flag to indicate whether the user's previous configuration in /"
-"apps/panel/profiles/default has been copied to the new location in /apps/"
-"panel."
-msgstr ""
-"Et flag til at indikere om en brugers forrige opsætning i /apps/panel/"
-"profiles/default er blevet kopieret til det nye sted i /apps/panel."
+#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
+#, c-format
+msgid "Cannot create initial panel layout.\n"
+msgstr "Kan ikke oprette panelets startlayout.\n"
 
-#: ../gnome-panel/panel-general.schemas.in.h:2
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"En liste af panel-id'er. Hver id identificerer et enkelt topniveau-panel. "
-"Opsætningen for hver af disse paneler er gemt i /apps/panel/toplevels/$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:3
-msgid ""
-"A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in /apps/panel/applets/"
-"$(id)."
-msgstr ""
-"En liste af panelprogram-id'er. Hver id identificerer et enkelt "
-"panelprogram. Opsætningen for hver af disse programmer er gemt i /apps/panel/"
-"applets/$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:4
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"En liste af panelobjekt-id'er. Hver id identificerer et enkelt panelobjekt "
-"(f.eks. en genvej, en handlingsknap eller en menuknap/-linje). Opsætningen "
-"for hver af disse objekter er gemt i /apps/panel/ojbects/$(id)."
-
-#: ../gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "Aktivér autofuldførelse i \"Kør program\"-vinduet"
-
-#: ../gnome-panel/panel-general.schemas.in.h:6
-msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Aktivér programlisten i \"Kør program\"-vinduet"
-
-#: ../gnome-panel/panel-general.schemas.in.h:7
-msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Udvid programlisten i \"Kør program\"-vinduet"
-
-#: ../gnome-panel/panel-general.schemas.in.h:8
-msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"Hvis sand, vil autofuldførelse være tilgængelig i dialogen \"Kør program\"."
-
-#: ../gnome-panel/panel-general.schemas.in.h:9
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
-msgstr ""
-"Om listen over kendte program i \"Kør program\"-vinduet skal være udvidet "
-"når vinduet åbnes. Denne nøgle er kun relevant hvis nøglen "
-"enable_program_list er sand."
-
-#: ../gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is made available. Whether or not the listing is expanded when the "
-"dialog is shown is controlled by the show_program_list key."
-msgstr ""
-"Hvis sand, bliver listen over kendte programmer i \"Kør program\"-vinduet "
-"synlig. Om listen er udvidet når vinduet er vist, kontrolleres af "
-"\"show_program_list\"-nøglen."
-
-#: ../gnome-panel/panel-general.schemas.in.h:11
-msgid "Old profiles configuration migrated"
-msgstr "Gamle profilindstillinger migreret"
-
-#: ../gnome-panel/panel-general.schemas.in.h:12
-msgid "Panel ID list"
-msgstr "Panel-id-liste"
-
-#: ../gnome-panel/panel-general.schemas.in.h:13
-msgid "Panel applet ID list"
-msgstr "Panelprogram-id-liste"
-
-#: ../gnome-panel/panel-general.schemas.in.h:14
-msgid "Panel object ID list"
-msgstr "Panelobjekt-id-liste"
-
-#: ../gnome-panel/panel-global.schemas.in.h:1
-msgid ""
-"A list of applet IIDs that the panel will ignore. This way you can disable "
-"certain applets from loading or showing up in the menu. For example to "
-"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
-"this list. The panel must be restarted for this to take effect."
-msgstr ""
-"En liste af panelprogram-iid'er som panelet vil ignorere. På denne måde kan "
-"du deaktivere visse panelprogrammer således at de ikke bliver indlæst eller "
-"dukker op i menuen. For eksempel, for at deaktivere panelprogrammet mini-"
-"commander, skal \"OAFIID:GNOME_MiniCommanderApplet\" føjes til denne liste. "
-"Panelet skal genstartes før dette træder i kraft."
-
-#: ../gnome-panel/panel-global.schemas.in.h:2
-msgid "Applet IIDs to disable from loading"
-msgstr "Panelprogram-iid'er som ikke skal indlæses"
-
-#: ../gnome-panel/panel-global.schemas.in.h:3
-msgid "Autoclose drawer"
-msgstr "Luk automatisk skuffe"
-
-#: ../gnome-panel/panel-global.schemas.in.h:4
-msgid "Complete panel lockdown"
-msgstr "Lås panelet fuldstændigt"
-
-#: ../gnome-panel/panel-global.schemas.in.h:5
-msgid "Confirm panel removal"
-msgstr "Bekræft panelfjernelse"
-
-#: ../gnome-panel/panel-global.schemas.in.h:6
-msgid "Deprecated"
-msgstr "Forældet"
-
-#: ../gnome-panel/panel-global.schemas.in.h:7
-msgid "Disable Force Quit"
-msgstr "Deaktiver gennemtving afslutning"
-
-#: ../gnome-panel/panel-global.schemas.in.h:8
-msgid "Disable Logging Out"
-msgstr "Deaktiver log ud"
-
-#: ../gnome-panel/panel-global.schemas.in.h:9
-#: ../gnome-panel/panel-toplevel.schemas.in.h:9
-msgid "Enable animations"
-msgstr "Aktivér animationer"
-
-#: ../gnome-panel/panel-global.schemas.in.h:10
-msgid "Enable tooltips"
-msgstr "Aktivér værktøjstip"
-
-#: ../gnome-panel/panel-global.schemas.in.h:11
-msgid "Highlight launchers on mouseover"
-msgstr "Fremhæv genveje når mus over"
-
-#: ../gnome-panel/panel-global.schemas.in.h:12
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
-msgstr ""
-"Om et vindue der spørger efter bekræftelse hvis brugeren ønsker at fjerne et "
-"panel, skal vises."
-
-#: ../gnome-panel/panel-global.schemas.in.h:13
-msgid ""
-"If true, a drawer will automatically be closed when the user clicks a "
-"launcher in it."
-msgstr ""
-"Om en skuffe automatisk skal lukkes når brugeren klikker på en genvej i den."
-
-#: ../gnome-panel/panel-global.schemas.in.h:14
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
-msgstr ""
-"Om en genvej skal fremhæves når brugeren bevæger markøren hen over den."
-
-#: ../gnome-panel/panel-global.schemas.in.h:15
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
-msgstr ""
-"Hvis sand vil panelet ikke tillade en bruger at gennemtvinge at et program "
-"afslutter (ved at fjerne tilgangen til knappen tving afslut)."
-
-#: ../gnome-panel/panel-global.schemas.in.h:16
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
-msgstr ""
-"Hvis sand vil panelet ikke tillade en bruger at logge ud (ved at fjerne "
-"tilgangen til log ud-menupunkterne)."
-
-#: ../gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
-msgstr ""
-"Hvis sand, vil panelet ikke tillade nogen ændringer i konfigurationen af "
-"panelet. Individuelle panelprogrammer skal dog muligvis låses ned separat. "
-"Panel skal genstartes før dette træder i kraft."
-
-#: ../gnome-panel/panel-global.schemas.in.h:18
-msgid "If true, tooltips are shown for objects in panels."
-msgstr "Om værktøjstip vises for objekter i paneler."
-
-#: ../gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"This key is deprecated as it cannot be used to implement proper lockdown. "
-"The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
-msgstr ""
-"Denne nøgle er forældet og kan ikke bruges til at implementere nedlåsning "
-"korrekt. Brug i stedet nøglen /desktop/gnome/lockdown/disable_lock_screen."
-
-#: ../gnome-panel/panel-menu-bar.c:106
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "Gennemse og kør installerede programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:108
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "Tilgå dokumenter, mapper og steder på netværket"
 
-#: ../gnome-panel/panel-menu-bar.c:110
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Skift skrivebordets udseende og opførsel, få hjælp eller log ud"
-
-#: ../gnome-panel/panel-menu-bar.c:147
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:358 ../gnome-panel/panel-menu-button.c:670
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "_Redigér menuer"
 
-#: ../gnome-panel/panel-menu-items.c:472
+#: ../gnome-panel/panel-menu-bar.c:250
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: ../gnome-panel/panel-menu-items.c:489
+#, fuzzy
+msgid "Switch User"
+msgstr "Skifter"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "Bogmærker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:495 ../gnome-panel/panel.c:541
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "Åbn \"%s\""
 
-#: ../gnome-panel/panel-menu-items.c:566
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke skanne %s for medieændringer"
 
-#: ../gnome-panel/panel-menu-items.c:609
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "Omskan %s"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:709
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "Montér %s"
 
-#: ../gnome-panel/panel-menu-items.c:917
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "Flytbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "Netværkssteder"
 
-#: ../gnome-panel/panel-menu-items.c:1043
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "Åbn din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1062
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åben indholdet af dit skrivebord i en mappe"
 
-#: ../gnome-panel/panel-menu-items.c:1454
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+msgid "Computer"
+msgstr "Computer"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+"Gennemse alle lokale og fjerne diske og mapper, som kan tilgås fra denne "
+"computer"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+msgid "Network"
+msgstr "Netværk"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+msgid "Browse bookmarked and local network locations"
+msgstr "Gennemse bogmærkede og lokale netværkssteder"
+
+#: ../gnome-panel/panel-menu-items.c:1357
+#, fuzzy
+msgid "Available"
+msgstr "Aktiverbar"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr ""
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr ""
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-menu-items.c:1483
-msgid "System"
-msgstr "System"
+#: ../gnome-panel/panel-properties-dialog.c:81
+#: ../gnome-panel/panel-test-applets.c:55
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Top"
 
-# Hm, så vidt jeg kan se skal den stå på 1 for at den danske oversættelse nedenfor bliver brugt
-#. Below this, we only have log out/shutdown items
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1564
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "1"
+#: ../gnome-panel/panel-properties-dialog.c:82
+#: ../gnome-panel/panel-test-applets.c:56
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Bund"
 
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1576
-#, c-format
-msgid "Log Out %s..."
-msgstr "Log %s ud..."
+#: ../gnome-panel/panel-properties-dialog.c:83
+#: ../gnome-panel/panel-test-applets.c:57
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Venstre"
 
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1580
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Log %s ud af denne session for at logge på som en anden bruger"
+#: ../gnome-panel/panel-properties-dialog.c:84
+#: ../gnome-panel/panel-test-applets.c:58
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Højre"
 
-#: ../gnome-panel/panel-object.schemas.in.h:1
-msgid "Action button type"
-msgstr "Handlingsknaptype"
-
-#: ../gnome-panel/panel-object.schemas.in.h:2
-msgid "Applet Bonobo IID"
-msgstr "Panelprogram-Bonobo-id"
-
-#: ../gnome-panel/panel-object.schemas.in.h:3
-msgid "Applet IID"
-msgstr "Panelprogram-IID"
-
-#: ../gnome-panel/panel-object.schemas.in.h:4
-msgid "Icon used for object's button"
-msgstr "Ikon som benyttes til objektets knap"
-
-#: ../gnome-panel/panel-object.schemas.in.h:5
-msgid ""
-"If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr ""
-"Hvis sand bliver nøglen custom_icon brugt til et brugerdefineret ikon til "
-"knappen. Hvis falsk bliver nøglen custom_icon ignoreret. Denne nøgle er kun "
-"relevant hvis nøglen object_type er \"menu-object\" eller \"drawer-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:6
-msgid ""
-"If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
-msgstr ""
-"Hvis sand bliver nøglen menu_path brugt som den sti som menuindholdet skal "
-"konstrueres fra. Hvis falsk bliver nøglen menu_path ignoreret. Denne nøgle "
-"er kun relevant hvis nøglen object_type er \"menu-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:7
-msgid ""
-"If true, the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
-msgstr ""
-"Om placeringen af objektet skal fortolkes relativt til højre kant (eller "
-"nederste kant hvis lodret) af panelet."
-
-#: ../gnome-panel/panel-object.schemas.in.h:8
-msgid ""
-"If true, the user may not move the applet without first unlocking the object "
-"using the \"Unlock\" menuitem."
-msgstr ""
-"Om brugeren ikke kan flytte objektet uden først at låse det op med "
-"menupunktet \"Lås op\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:9
-msgid "Interpret position relative to bottom/right edge"
-msgstr "Fortolk placering relativt til nederste/højre kant"
-
-#: ../gnome-panel/panel-object.schemas.in.h:10
-msgid "Launcher location"
-msgstr "Placering af genvej"
-
-#: ../gnome-panel/panel-object.schemas.in.h:11
-msgid "Lock the object to the panel"
-msgstr "Lås objektet til panelet"
-
-#: ../gnome-panel/panel-object.schemas.in.h:12
-msgid "Menu content path"
-msgstr "Menuindholdssti"
-
-#: ../gnome-panel/panel-object.schemas.in.h:13
-msgid "Object's position on the panel"
-msgstr "Objektets placering på panelet"
-
-#: ../gnome-panel/panel-object.schemas.in.h:14
-msgid "Panel attached to drawer"
-msgstr "Panel som hænger sammen med skuffe"
-
-#: ../gnome-panel/panel-object.schemas.in.h:15
-msgid "Panel object type"
-msgstr "Panelobjekttype"
-
-#: ../gnome-panel/panel-object.schemas.in.h:16
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
-msgstr ""
-"Den handlingstype som denne knap repræsenterer. Mulige værdier er \"lock\", "
-"\"logout\", \"run\", \"search\" og \"screenshot\". Denne nøgle er kun "
-"relevant hvis nøglen object_type er \"action-applet\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:17
-msgid ""
-"The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
-msgstr ""
-"Id'en for det panel som denne skuffe hænger sammen med. Denne nøgle er kun "
-"relevant hvis nøglen object_type er \"drawer-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:18
-msgid "The identifier of the toplevel panel which contains this object."
-msgstr "Id'en for det topniveau-panel som indeholder dette objekt."
-
-#: ../gnome-panel/panel-object.schemas.in.h:19
-msgid ""
-"The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr ""
-"Implementerings-id'en for panelprogrammet - f.eks. \"ClockAppletFactory::"
-"ClockApplet\". Denne nøgle er kun relevant hvis nøglen object_type er "
-"\"bonobo-applet\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:20
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Placeringen af .desktop-filen som beskriver genvejen. Denne nøgle er kun "
-"relevant hvis nøglen object_type er \"launcher-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:21
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
-msgstr ""
-"Placeringen af billedfilen som skal bruges som ikon for objektets knap. "
-"Denne nøgle er kun relevant hvis nøglen object_type er \"drawer-object\" "
-"eller \"menu-object\" og nøglen use_custom_icon er sand."
-
-#: ../gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
-msgstr ""
-"Den sti som menuindholdet konstrueres ud fra. Denne nøgle er kun relevant "
-"hvis nøglen use_menu_path er sand og nøglen object_type er \"menu-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:23
-msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
-msgstr ""
-"Placeringen af dette panelobjekt. Placeringen er angivet som antallet af "
-"punkter fra venstre panelkant (eller øverste hvis lodret)."
-
-#: ../gnome-panel/panel-object.schemas.in.h:24
-msgid ""
-"The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr ""
-"Den tekst som skal vises i et værktøjstip for denne skuffe eller menu. Denne "
-"nøgle er kun relevant hvis nøglen object_type er \"drawer-object\" eller "
-"\"menu-object\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:25
-msgid ""
-"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
-msgstr ""
-"Typen af dette panelobjekt. Mulige værdier er \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" og "
-"\"menu-bar\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:26
-msgid ""
-"This key is deprecated, following the migration to a new library for "
-"applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-"GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-"\"bonobo-applet\"."
-msgstr ""
-"Denne nøgle er deprecieret efter flytningen til et nyt bibliotek for "
-"panelprogrammer. Bonobo-implementerings-id'en for panelprogrammet - f.eks. "
-"\"OAFIID:GNOME_ClockApplet\". Denne nøgle er kun relevant hvis nøglen "
-"object_type er \"bonobo-applet\"."
-
-#: ../gnome-panel/panel-object.schemas.in.h:27
-msgid "Tooltip displayed for drawer or menu"
-msgstr "Værktøjstip som vises for skuffe eller menu"
-
-#: ../gnome-panel/panel-object.schemas.in.h:28
-msgid "Toplevel panel containing object"
-msgstr "Topniveau panel som indeholder objekt"
-
-#: ../gnome-panel/panel-object.schemas.in.h:29
-msgid "Use custom icon for object's button"
-msgstr "Benyt brugerdefineret ikon til objektets knap"
-
-#: ../gnome-panel/panel-object.schemas.in.h:30
-msgid "Use custom path for menu contents"
-msgstr "Benyt brugerdefineret sti til menuindhold"
-
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
-#, c-format
-msgid "Error reading GConf string value '%s': %s"
-msgstr "Fejl ved læsning af GConf-strengværdi \"%s\": %s"
-
-#. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
-#, c-format
-msgid "Error reading GConf integer value '%s': %s"
-msgstr "Fejl ved læsning af GConf-heltalsværdi \"%s\": %s"
-
-#: ../gnome-panel/panel-profile.c:1606
-#, c-format
-msgid ""
-"Panel '%s' is set to be displayed on screen %d which is not currently "
-"available. Not loading this panel."
-msgstr ""
-"Panelet \"%s\" er sat til at blive vist på skærm %d som i øjeblikket ikke "
-"tilgængelig. Indlæser ikke dette panel."
-
-#: ../gnome-panel/panel-profile.c:1684
-#, c-format
-msgid "Error reading GConf boolean value '%s': %s"
-msgstr "Fejl ved læsning af boolesk GConf-værdi \"%s\": %s"
-
-#: ../gnome-panel/panel-properties-dialog.c:866
-msgid "Drawer Properties"
-msgstr "Skuffe-egenskaber"
-
-#: ../gnome-panel/panel-properties-dialog.c:981
-#: ../gnome-panel/panel-run-dialog.c:2022
+#: ../gnome-panel/panel-properties-dialog.c:821
+#: ../gnome-panel/panel-run-dialog.c:2009
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Kan ikke indlæse filen \"%s\": %s."
 
-#: ../gnome-panel/panel-properties-dialog.c:987
+#: ../gnome-panel/panel-properties-dialog.c:827
 msgid "Could not display properties dialog"
 msgstr "Kunne ikke vise indstillingerne for skærmen"
 
@@ -2610,22 +2351,28 @@ msgid "_Autohide"
 msgstr "Skjul _automatisk"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "_Icon:"
-msgstr "_Ikon:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "_None (use system theme)"
 msgstr "_Ingen (benyt systemtema)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "_Orientering:"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
 msgid "_Scale"
 msgstr "_Skalér"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "_Størrelse:"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
 msgid "_Tile"
 msgstr "_Fliselæg"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "pixels"
 msgstr "punkter"
 
@@ -2669,38 +2416,38 @@ msgstr "Ryd seneste dokumenter..."
 msgid "Clear all items from the recent documents list"
 msgstr "Ryd listen over seneste dokumenter"
 
-#: ../gnome-panel/panel-run-dialog.c:391
+#: ../gnome-panel/panel-run-dialog.c:400
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kunne ikke udføre kommandoen \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:444
+#: ../gnome-panel/panel-run-dialog.c:448
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunne ikke konvertere \"%s\" fra UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1259
+#: ../gnome-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "Vælg en fil af tilføje til kommandoen..."
 
-#: ../gnome-panel/panel-run-dialog.c:1637
+#: ../gnome-panel/panel-run-dialog.c:1618
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Vælg et program for et se dets beskrivelse."
 
-#: ../gnome-panel/panel-run-dialog.c:1675
+#: ../gnome-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Vil køre kommando: \"%s\""
 
-#: ../gnome-panel/panel-run-dialog.c:1708
+#: ../gnome-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI-listen som blev droppet på kør-vinduet havde ugyldigt format (%d) eller "
 "længde (%d)\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2027
+#: ../gnome-panel/panel-run-dialog.c:2014
 msgid "Could not display run dialog"
 msgstr "Kunne ikke vise \"Kør\"-vinduet"
 
@@ -2749,493 +2496,185 @@ msgid "The icon of the command to be run."
 msgstr "Ikonet for den kommando der skal køres."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:12
-#: ../gnome-panel/panel-stock-icons.c:90
+#: ../gnome-panel/panel-stock-icons.c:83
 msgid "_Run"
 msgstr "_Kør"
 
-#: ../gnome-panel/panel-stock-icons.c:91
+#: ../gnome-panel/panel-stock-icons.c:84
 msgid "_Force quit"
 msgstr "_Tving afslutning"
 
-#: ../gnome-panel/panel-stock-icons.c:92
+#: ../gnome-panel/panel-stock-icons.c:85
 msgid "C_lear"
 msgstr "_Ryd"
 
-#: ../gnome-panel/panel-stock-icons.c:93
+#: ../gnome-panel/panel-stock-icons.c:86
 msgid "D_on't Delete"
 msgstr "Slet _ikke"
 
-#: ../gnome-panel/panel-toplevel.c:1190
+#: ../gnome-panel/panel-test-applets.c:36
+msgid "Specify an applet IID to load"
+msgstr "Angiv et panelprograms-IID som skal indlæses"
+
+#: ../gnome-panel/panel-test-applets.c:37
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr "Angiv en GConf-placering til indstillingerne for panelprogrammet"
+
+#: ../gnome-panel/panel-test-applets.c:38
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr ""
+"Angiv startstørrelsen af panelprogrammet (xx-small, medium, large osv.)"
+
+#: ../gnome-panel/panel-test-applets.c:39
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr ""
+"Angiv startorienteringen af panelprogrammet (top, bottom, left eller right)"
+
+#: ../gnome-panel/panel-test-applets.c:63
+msgctxt "Size"
+msgid "XX Small"
+msgstr "Mikroskopisk"
+
+#: ../gnome-panel/panel-test-applets.c:64
+msgctxt "Size"
+msgid "X Small"
+msgstr "Meget lille"
+
+#: ../gnome-panel/panel-test-applets.c:65
+msgctxt "Size"
+msgid "Small"
+msgstr "Lille"
+
+#: ../gnome-panel/panel-test-applets.c:66
+msgctxt "Size"
+msgid "Medium"
+msgstr "Mellem"
+
+#: ../gnome-panel/panel-test-applets.c:67
+msgctxt "Size"
+msgid "Large"
+msgstr "Stor"
+
+#: ../gnome-panel/panel-test-applets.c:68
+msgctxt "Size"
+msgid "X Large"
+msgstr "Meget stor"
+
+#: ../gnome-panel/panel-test-applets.c:69
+msgctxt "Size"
+msgid "XX Large"
+msgstr "Enorm"
+
+#: ../gnome-panel/panel-test-applets.c:127
+#, c-format
+msgid "Failed to load applet %s"
+msgstr "Kunne ikke indlæse panelprogrammet %s"
+
+#. This is an utility to easily test various applets
+#: ../gnome-panel/panel-test-applets.ui.h:2
+msgid "Test applet utility"
+msgstr "Testpanelprogramredskab"
+
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "_Applet:"
+msgstr "_Panelprogram:"
+
+#: ../gnome-panel/panel-test-applets.ui.h:5
+msgid "_Prefs Dir:"
+msgstr "_Indstillingsmappe:"
+
+#: ../gnome-panel/panel-toplevel.c:1272
 msgid "Hide Panel"
 msgstr "Skjul panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1657
 msgid "Top Expanded Edge Panel"
 msgstr "Top-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1598
+#: ../gnome-panel/panel-toplevel.c:1658
 msgid "Top Centered Panel"
 msgstr "Top-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1599
+#: ../gnome-panel/panel-toplevel.c:1659
 msgid "Top Floating Panel"
 msgstr "Top-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1600
+#: ../gnome-panel/panel-toplevel.c:1660
 msgid "Top Edge Panel"
 msgstr "Top-kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1664
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bund-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1605
+#: ../gnome-panel/panel-toplevel.c:1665
 msgid "Bottom Centered Panel"
 msgstr "Bund-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1606
+#: ../gnome-panel/panel-toplevel.c:1666
 msgid "Bottom Floating Panel"
 msgstr "Bund-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1607
+#: ../gnome-panel/panel-toplevel.c:1667
 msgid "Bottom Edge Panel"
 msgstr "Bundkantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1671
 msgid "Left Expanded Edge Panel"
 msgstr "Venstre-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1612
+#: ../gnome-panel/panel-toplevel.c:1672
 msgid "Left Centered Panel"
 msgstr "Venstre-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1613
+#: ../gnome-panel/panel-toplevel.c:1673
 msgid "Left Floating Panel"
 msgstr "Venstre-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1614
+#: ../gnome-panel/panel-toplevel.c:1674
 msgid "Left Edge Panel"
 msgstr "Venstre kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1618
+#: ../gnome-panel/panel-toplevel.c:1678
 msgid "Right Expanded Edge Panel"
 msgstr "Højre-udvidet kantpanel"
 
-#: ../gnome-panel/panel-toplevel.c:1619
+#: ../gnome-panel/panel-toplevel.c:1679
 msgid "Right Centered Panel"
 msgstr "Højre-centreret panel"
 
-#: ../gnome-panel/panel-toplevel.c:1620
+#: ../gnome-panel/panel-toplevel.c:1680
 msgid "Right Floating Panel"
 msgstr "Højre-flydende panel"
 
-#: ../gnome-panel/panel-toplevel.c:1621
+#: ../gnome-panel/panel-toplevel.c:1681
 msgid "Right Edge Panel"
 msgstr "Højre kantpanel"
 
-#: ../gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "Animation speed"
-msgstr "Animationsfart"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:2
-msgid "Automatically hide panel into corner"
-msgstr "Skjul automatisk panelet i hjørne"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Baggrundsfarve"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:4
-msgid "Background color opacity"
-msgstr "Ugennemsigtigheden af baggrundsfarve"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:5
-msgid "Background image"
-msgstr "Baggrundsbillede"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:6
-msgid "Background type"
-msgstr "Baggrundstype"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:7
-msgid "Center panel on x-axis"
-msgstr "Centrér panelet på x-aksen"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:8
-msgid "Center panel on y-axis"
-msgstr "Centrér panelet på y-aksen"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:10
-msgid "Enable arrows on hide buttons"
-msgstr "Aktivér pile på skjuleknapper"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:11
-msgid "Enable hide buttons"
-msgstr "Aktivér skjuleknapper"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:12
-msgid "Expand to occupy entire screen width"
-msgstr "Udvid for at udfylde hele skærmbredden"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:13
-msgid "Fit image to panel"
-msgstr "Tilpas billede til panelet"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:14
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
-msgstr ""
-"Om pile skal placeres på skjuleknapperne. Denne nøgle er kun relevant hvis "
-"nøglen enable_buttons er sand."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:15
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
-msgstr "Om knapper til at flytte panelet til kanten af skærmen skal vises."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:16
-msgid ""
-"If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantly."
-msgstr ""
-"Om skjulning og genvisning af dette panel skal animeres i stedet for at ske "
-"med det samme."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:17
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr "Om baggrundsbilledet skal roteres når panelet vender lodret."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:18
-msgid ""
-"If true, the image will be scaled (retaining the aspect ratio of the image) "
-"to the panel height (if horizontal)."
-msgstr ""
-"Om billedet skal skaleres (med samme formatforhold) til panelets højde (hvis "
-"panelet er vandret)."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:19
-msgid ""
-"If true, the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
-msgstr ""
-"Om billedet skal skaleres til panelets størrelse. Formatforholdet for "
-"billedet bevares ikke."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:20
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
-msgstr ""
-"Om panelet automatisk skal skjules i et hjørne af skærmen når markøren "
-"forlader panelområdet. Hvis markøren flyttes til det hjørne igen, dukker "
-"panelet op igen."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:21
-msgid ""
-"If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this mode the panel can only be placed at a screen edge. "
-"If false, the panel will only be large enough to accommodate the applets, "
-"launchers and buttons on the panel."
-msgstr ""
-"Om panelet skal optage hele skærmbredden (eller højden hvis det er et lodret "
-"panel). I denne tilstand kan panelet kun placeres ved en skærmkant. Ellers "
-"vil panelet kun være stort nok til at have plads til panelprogrammerne, "
-"genvejene og knapperne på panelet."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Hvis sand, bliver nøglerne \"x\" og \"x_right\" ignoreret, og panelet "
-"anbringes i midten af x-aksen på skærmen. Hvis panelets størrelse ændres, "
-"forbliver det på den position - dvs. det gror til begge sider. Hvis falsk, "
-"angiver nøglerne \"x\" og \"x_right\" placeringen af panelet."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:23
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Hvis sand, bliver nøglerne \"y\" og \"y_bottom\" ignoreret, og panelet "
-"anbringes i midten af x-aksen på skærmen. Hvis panelets størrelse ændres, "
-"forbliver det på den position - dvs. det gror til begge sider. Hvis falsk, "
-"angiver nøglerne \"y\" og \"y_bottom\" placeringen af panelet."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:24
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
-msgstr ""
-"I en Xinerama-opsætning kan du have paneler på hver enkelt skærm. Denne "
-"nøgle angiver den aktuelle skærm som panelet er placeret på."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:25
-msgid "Name to identify panel"
-msgstr "Navn til identifikation af panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:26
-msgid "Panel autohide delay"
-msgstr "Automatisk skjulningsventetid for panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:27
-msgid "Panel autounhide delay"
-msgstr "Automatisk opdukningsventetid for panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:28
-msgid "Panel orientation"
-msgstr "Panelorientering"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:29
-msgid "Panel size"
-msgstr "Panelstørrelse"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:30
-msgid "Rotate image on vertical panels"
-msgstr "Rotér billede på lodrette paneler"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:31
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "Angiver baggrundsfarven for panelet i #RGB-format."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:32
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
-msgstr ""
-"Angiver den fil som bruges til baggrundsbillede. Hvis billedet indeholder en "
-"alfakanal, bliver det sat sammen med skrivebordets baggrundsbillede."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:33
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"Angiver antallet af millisekunderse ventetid efter markøren går ind i "
-"panelområdet før panelet vises automatisk igen. Denne nøgle er kun relevant "
-"hvis nøglen auto_hide er sand."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:34
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"Angiver antallet af millisekunderse ventetid efter markøren forlader "
-"panelområdet før panelet bliver skjult automatisk. Denne nøgle er kun "
-"relevant hvis nøglen auto_hide er sand."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:35
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr ""
-"Angiver antallet af punkter der er synlige når panelet er skjult automatisk "
-"i et hjørne. Denne nøgle er kun relevant hvis nøglen auto_hide er sand."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:36
-msgid ""
-"Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535), the color will be composited "
-"onto the desktop background image."
-msgstr ""
-"Angiver ugennemsigtigheden af baggrundsfarveformatet. Hvis farven ikke er "
-"fuldstændig ugennemsigtig (dvs. har en værdi mindre end 65535), vil farven "
-"blive sat sammen med skrivebordets baggrundsbillede."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:37
-msgid "Stretch image to panel"
-msgstr "Stræk billede til panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:38
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
-msgstr ""
-"Højden (bredden for et lodret panel) af panelet. Panelet vil afgøre på "
-"kørselstidspunktet en mindste størrelse baseret på skrifttypestørrelsen og "
-"andre ting. Den maksimale størrelse er fast på det kvarte af skærmhøjden "
-"(eller -bredden)."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:39
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Placeringen af panelet langs x-aksen, målt fra skærmens højre side. Hvis "
-"denne sættes til -1, vil værdien blive ignoreret, og værdien af nøglen \"x\" "
-"blive brugt. Hvis værdien er større end 0, så vil værdien af nøglen \"x\" "
-"blive ignoreret. Denne nøgle er kun relevant i ikke-udvidet tilstand. I "
-"udvidet tilstand ignoreres denne nøgle, og panelet placeres ved skærmens "
-"kant som angivet af nøglen \"orientation\"."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:40
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Placeringen af panelet langs x-aksen. Denne nøgle er kun relevant i ikke-"
-"udvidet tilstand. I udvidet tilstand er denne nøgle ignoreret og panelet "
-"placeres ved skærmkanten som angivet af nøglen orientation."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:41
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Placeringen af panelet langs y-aksen, målt fra skærmens bund. Hvis denne "
-"sættes til -1, vil værdien blive ignoreret, og værdien af nøglen \"y\" blive "
-"brugt. Hvis værdien er større end 0, så vil værdien af nøglen \"y\" blive "
-"ignoreret. Denne nøgle er kun relevant i ikke-udvidet tilstand. I udvidet "
-"tilstand ignoreres denne nøgle, og panelet placeres ved skærmens kant som "
-"angivet af nøglen \"orientation\"."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:42
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Placeringen af panelet langs y-aksen. Denne nøgle er kun relevant i ikke-"
-"udvidet tilstand. I udvidet tilstand er denne nøgle ignoreret og panelet "
-"placeres ved skærmkanten som angivet af nøglen orientation."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
-"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
-"panel."
-msgstr ""
-"Orienteringen af panelet. Mulige værdier er \"top\", \"bottom\", \"left\" og "
-"\"right\". I udvidet tilstand angiver nøglen hvilken skærmkant som panelet "
-"er på. I ikke-udvidet tilstand er forskellen mellem \"top\" og \"bottom\" "
-"mindre vigtig - begge indikerer at dette er et vandret panel - men giver "
-"alligevel et brugbart hint til hvordan visse panelobjekter skal opføre sig. "
-"F.eks. vil en menuknap vise sin menu under panelet på et \"top\"-panel, mens "
-"den vises over panelet på et \"bottom\"-panel."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:44
-msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
-"enable_animations key is true."
-msgstr ""
-"Den fart som panelanimationer skal foregå med. Mulige værdier er \"slow\", "
-"\"medium\" og \"fast\". Denne nøgle er kun relevant hvis nøglen "
-"enable_animations er sand."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:45
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
-msgstr ""
-"Dette er et menneskeligt læsbart navn som du kan bruge til at identificere "
-"et panel. Hovedformålet er at tjene til panelets vinduestitel ved navigering "
-"mellem paneler."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:46
-msgid "Visible pixels when hidden"
-msgstr "Synlige punkter når skjult"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:47
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
-msgstr ""
-"Hvilken type baggrund der skal bruges til panelet. Mulige værdier er \"gtk\" "
-"- standard-GTK+-kontrolbaggrunden benyttes, \"color\" - nøglen color vil "
-"blive brugt som baggrundsfarve eller \"image\" - det billede som er angivet "
-"af nøglen image vil blive brugt som baggrund."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"I en Xinerama-opsætning kan du have paneler på hver enkelt skærm. Denne "
-"nøgle angiver den aktuelle skærm som panelet er placeret på."
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:49
-msgid "X co-ordinate of panel"
-msgstr "Vandret koordinat for panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:50
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "Panelets x-koordinat, målt fra skærmens højre kant"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:51
-msgid "X screen where the panel is displayed"
-msgstr "X-skærm som panel vises på"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:52
-msgid "Xinerama monitor where the panel is displayed"
-msgstr "Xinerama-skærm som panel vises på"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:53
-msgid "Y co-ordinate of panel"
-msgstr "Lodret koordinat for panel"
-
-#: ../gnome-panel/panel-toplevel.schemas.in.h:54
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Panelets y-koordinat, målt fra skærmens bund"
-
-#: ../gnome-panel/panel-util.c:315
+#: ../gnome-panel/panel-util.c:314
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikonet \"%s\" ikke fundet"
 
-#: ../gnome-panel/panel-util.c:418
-#, c-format
-msgid "Could not execute '%s'"
-msgstr "Kunne ikke starte \"%s\""
-
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:551
 msgid "file"
 msgstr "fil"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:728
 msgid "Home Folder"
 msgstr "Hjemmemappe"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:740
 msgid "File System"
 msgstr "Filsystem"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:913
 msgid "Search"
 msgstr "Søg"
 
@@ -3244,33 +2683,21 @@ msgstr "Søg"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:959
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:474
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åbn adresse: %s"
 
-#: ../gnome-panel/panel.c:1323
-msgid "Delete this drawer?"
-msgstr "Fjern denne skuffe?"
-
-#: ../gnome-panel/panel.c:1324
-msgid ""
-"When a drawer is deleted, the drawer and its\n"
-"settings are lost."
-msgstr ""
-"Når en skuffe fjernes, mister du både skuffen\n"
-"og dens opsætning."
-
-#: ../gnome-panel/panel.c:1327
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "Fjern dette panel?"
 
-#: ../gnome-panel/panel.c:1328
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -3278,21 +2705,467 @@ msgstr ""
 "Når et panel fjernes, mister du både panelet\n"
 "og dets opsætning."
 
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "Tilgængelig"
+#~ msgid "Cannot find an empty spot"
+#~ msgstr "Kan ikke finde en tom plads"
 
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "Optaget"
+#~ msgid "Change desktop appearance and behavior, get help, or log out"
+#~ msgstr "Skift skrivebordets udseende og opførsel, få hjælp eller log ud"
 
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "Min konto"
+#~ msgid "System"
+#~ msgstr "System"
 
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "Skift bruger"
+# Hm, så vidt jeg kan se skal den stå på 1 for at den danske oversættelse nedenfor bliver brugt
+#~ msgctxt "panel:showusername"
+#~ msgid "1"
+#~ msgstr "1"
+
+#~ msgid "Log Out %s..."
+#~ msgstr "Log %s ud..."
+
+#~ msgid "Log out %s of this session to log in as a different user"
+#~ msgstr "Log %s ud af denne session for at logge på som en anden bruger"
+
+#~ msgid "Set System Time..."
+#~ msgstr "Indstil systemtid..."
+
+#~ msgid "Set System Time"
+#~ msgstr "Indstil systemtid"
+
+#~ msgid "_About"
+#~ msgstr "_Om"
+
+#~ msgid "Clock"
+#~ msgstr "Ur"
+
+#~ msgid "The Clock displays the current time and date"
+#~ msgstr "Urpanelprogrammet viser tiden og datoen"
+
+#~ msgid "translator-credits"
+#~ msgstr ""
+#~ "Birger Langkjer\n"
+#~ "Keld Simonsen\n"
+#~ "Kenneth Christiansen\n"
+#~ "Martin Willemoes Hansen\n"
+#~ "Ole Laursen\n"
+#~ "Peter Bach\n"
+#~ "\n"
+#~ "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+#~ "Mere info: http://www.dansk-gruppen.dk"
+
+#~ msgid "Current Time:"
+#~ msgstr "Tidspunkt nu:"
+
+#~ msgid "Time & Date"
+#~ msgstr "Dato & klokkeslet"
+
+#~ msgid "_Set System Time"
+#~ msgstr "_Indstil systemtid"
+
+#~ msgid "_Time:"
+#~ msgstr "_Tid:"
+
+#~ msgid ""
+#~ "%s has no use what-so-ever. It only takes up disk space and compilation "
+#~ "time, and if loaded it also takes up precious panel space and memory. "
+#~ "Anybody found using it should be promptly sent for a psychiatric "
+#~ "evaluation."
+#~ msgstr ""
+#~ "%s er totalt ubrugelig. Programmet optager bare diskplads og "
+#~ "oversættelsestid, og når den er i brug også dyrebar plads i panelet og "
+#~ "hukommelsen. Hvis nogen bliver taget i at bruge dette program, burde "
+#~ "vedkommende straks sendes til en psykiatrisk undersøgelse."
+
+#~ msgid "(with minor help from George)"
+#~ msgstr "(med en smule hjælp fra George)"
+
+#~ msgid "Fish"
+#~ msgstr "Fisk"
+
+#~ msgid "Select an animation"
+#~ msgstr "Vælg en animation"
+
+#~ msgid "_File:"
+#~ msgstr "_Fil:"
+
+#~ msgid "_Total frames in animation:"
+#~ msgstr "_Antal billeder i animationen:"
+
+#~ msgid "frames"
+#~ msgstr "billeder"
+
+#~ msgid "Frames in fish's animation"
+#~ msgstr "Antallet af billeder i fiskens animation"
+
+#~ msgid ""
+#~ "This key specifies the number of frames that will be displayed in the "
+#~ "fish's animation."
+#~ msgstr "Antallet af billeder som vil blive vist i fiskens animation."
+
+#~ msgid "Notification Area"
+#~ msgstr "Statusfelt"
+
+#~ msgid "This button lets you hide all windows and show the desktop."
+#~ msgstr "Denne knap lader dig skjule alle vinduerne og vise skrivebordet."
+
+#~ msgid "Window List"
+#~ msgstr "Vinduesliste"
+
+#~ msgid ""
+#~ "The Window List shows a list of all windows in a set of buttons and lets "
+#~ "you browse them."
+#~ msgstr ""
+#~ "Vindueslisten viser en liste over alle vinduer i et sæt af knapper og "
+#~ "lader dig gennemse dem."
+
+#~ msgid "Maximum window list size"
+#~ msgstr "Maksimal vindueslistestørrelse"
+
+#~ msgid "Minimum window list size"
+#~ msgstr "Minimal vindueslistestørrelse"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.20. The schema is retained "
+#~ "for compatibility with older versions."
+#~ msgstr ""
+#~ "Brugen af denne nøgle blev forældet i Gnome 2.20. Dette schema bevares af "
+#~ "hensyn til kompatibilitet med ældre versioner."
+
+#~ msgid ""
+#~ "The Window Selector shows a list of all windows in a menu and lets you "
+#~ "browse them."
+#~ msgstr ""
+#~ "Vinduesvælgeren viser en liste over alle vinduer i en menu og lader dig "
+#~ "gennemse dem."
+
+#~ msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+#~ msgstr ""
+#~ "Fejl ved indlæsning af num_rows-værdien for arbejdsområdeomskifteren: %s\n"
+
+#~ msgid ""
+#~ "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+#~ msgstr ""
+#~ "Fejl ved indlæsning af display_workspace_names-værdien for "
+#~ "arbejdsområdeomskifteren: %s\n"
+
+#~ msgid ""
+#~ "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+#~ msgstr ""
+#~ "Fejl ved indlæsning af display_all_workspaces-værdien for "
+#~ "arbejdsområdeomskifteren: %s\n"
+
+#~ msgid "Workspace Switcher"
+#~ msgstr "Arbejdsområdeskifter"
+
+#~ msgid ""
+#~ "The Workspace Switcher shows you a small version of your workspaces that "
+#~ "lets you manage your windows."
+#~ msgstr ""
+#~ "Arbejdsområdeskifteren viser en lille udgave af dine arbejdsområder og "
+#~ "kan bruges til at håndtere vinduerne."
+
+#~ msgid "A simple applet for testing the GNOME-2.0 panel"
+#~ msgstr "Et simpelt panelprogram til test af panelet til Gnome 2.0"
+
+#~ msgid "Test Bonobo Applet"
+#~ msgstr "Bonobo-testpanelprogram"
+
+#~ msgid "Test Bonobo Applet Factory"
+#~ msgstr "Fabrik til Bonobo-testpanelprogram"
+
+#~ msgid "query returned exception %s\n"
+#~ msgstr "forespørgsel returnerede undtagelsen %s\n"
+
+#~ msgid "Loc_k To Panel"
+#~ msgstr "_Lås til panel"
+
+#~ msgid "Drawer"
+#~ msgstr "Skuffe"
+
+#~ msgid "_Add to Drawer..."
+#~ msgstr "_Tilføj til skuffe..."
+
+#~ msgid "Add this launcher to _panel"
+#~ msgstr "Tilføj denne genvej til _panelet"
+
+#~ msgid "Add this launcher to _desktop"
+#~ msgstr "Tilføj denne genvej til _skrivebordet"
+
+#~ msgid "_Entire menu"
+#~ msgstr "_Hele menuen"
+
+#~ msgid "Add this as _drawer to panel"
+#~ msgstr "Tilføj som _skuffe på panelet"
+
+#~ msgid "Add this as _menu to panel"
+#~ msgstr "Tilføj som _menu på panelet"
+
+#~ msgid "<b>GAME OVER</b> at level %d!"
+#~ msgstr "<b>SPILLET SLUT</b> på niveau %d!"
+
+#~ msgid "%1$s   %2$s   %3$s"
+#~ msgstr "%1$s   %2$s   %3$s"
+
+#~ msgid "Press 'q' to quit"
+#~ msgstr "Tryk \"q\" for at afslutte"
+
+#~ msgid "Paused"
+#~ msgstr "Pause"
+
+#~ msgid "%1$s\t%2$s"
+#~ msgstr "%1$s\t%2$s"
+
+#~ msgid "Press 'p' to unpause"
+#~ msgstr "Tryk \"p\" for at fortsætte"
+
+#~ msgid "Level: %s,  Lives: %s"
+#~ msgstr "Niveau: %s,  Liv: %s"
+
+#~ msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
+#~ msgstr ""
+#~ "Venstre/Højre for at bevæge sig, Mellemrum for at skyde, \"p\" for pause, "
+#~ "\"q\" for at afslutte"
+
+#~ msgid "Killer GEGLs from Outer Space"
+#~ msgstr "Dræber-GEGLer fra det ydre rum"
+
+#~ msgid "A pop out drawer to store other items in"
+#~ msgstr "En pop-ud-skuffe til at gemme andre ting i"
+
+#~ msgid "Add to Drawer"
+#~ msgstr "Tilføj til skuffe"
+
+#~ msgid "Find an _item to add to the drawer:"
+#~ msgstr "Find et _element at tilføje til skuffen:"
+
+#~ msgid "And many, many others..."
+#~ msgstr "Og mange, mange andre..."
+
+#~ msgid "The GNOME Panel"
+#~ msgstr "Gnome-panelet"
+
+#~ msgid ""
+#~ "This program is responsible for launching other applications and provides "
+#~ "useful utilities."
+#~ msgstr ""
+#~ "Dette program er ansvarligt for at starte andre programmer og tilbyder "
+#~ "nyttige værktøjer."
+
+#~ msgid "About the GNOME Panel"
+#~ msgstr "Om GNOME-panelet"
+
+#~ msgid "A_bout Panels"
+#~ msgstr "_Om paneler"
+
+#~ msgid ""
+#~ "A boolean flag to indicate whether the user's previous configuration in /"
+#~ "apps/panel/profiles/default has been copied to the new location in /apps/"
+#~ "panel."
+#~ msgstr ""
+#~ "Et flag til at indikere om en brugers forrige opsætning i /apps/panel/"
+#~ "profiles/default er blevet kopieret til det nye sted i /apps/panel."
+
+#~ msgid "Old profiles configuration migrated"
+#~ msgstr "Gamle profilindstillinger migreret"
+
+#~ msgid "Panel applet ID list"
+#~ msgstr "Panelprogram-id-liste"
+
+#~ msgid "Autoclose drawer"
+#~ msgstr "Luk automatisk skuffe"
+
+#~ msgid "Deprecated"
+#~ msgstr "Forældet"
+
+#~ msgid "Disable Logging Out"
+#~ msgstr "Deaktiver log ud"
+
+#~ msgid "Enable animations"
+#~ msgstr "Aktivér animationer"
+
+#~ msgid "Highlight launchers on mouseover"
+#~ msgstr "Fremhæv genveje når mus over"
+
+#~ msgid ""
+#~ "If true, a drawer will automatically be closed when the user clicks a "
+#~ "launcher in it."
+#~ msgstr ""
+#~ "Om en skuffe automatisk skal lukkes når brugeren klikker på en genvej i "
+#~ "den."
+
+#~ msgid ""
+#~ "If true, a launcher is highlighted when the user moves the pointer over "
+#~ "it."
+#~ msgstr ""
+#~ "Om en genvej skal fremhæves når brugeren bevæger markøren hen over den."
+
+#~ msgid ""
+#~ "If true, the panel will not allow a user to log out, by removing access "
+#~ "to the log out menu entries."
+#~ msgstr ""
+#~ "Hvis sand vil panelet ikke tillade en bruger at logge ud (ved at fjerne "
+#~ "tilgangen til log ud-menupunkterne)."
+
+#~ msgid "If true, tooltips are shown for objects in panels."
+#~ msgstr "Om værktøjstip vises for objekter i paneler."
+
+#~ msgid ""
+#~ "This key is deprecated as it cannot be used to implement proper lockdown. "
+#~ "The /desktop/gnome/lockdown/disable_lock_screen key should be used "
+#~ "instead."
+#~ msgstr ""
+#~ "Denne nøgle er forældet og kan ikke bruges til at implementere nedlåsning "
+#~ "korrekt. Brug i stedet nøglen /desktop/gnome/lockdown/disable_lock_screen."
+
+#~ msgid "Action button type"
+#~ msgstr "Handlingsknaptype"
+
+#~ msgid "Applet Bonobo IID"
+#~ msgstr "Panelprogram-Bonobo-id"
+
+#~ msgid ""
+#~ "If true, the custom_icon key is used as a custom icon for the button. If "
+#~ "false, the custom_icon key is ignored. This key is only relevant if the "
+#~ "object_type key is \"menu-object\" or \"drawer-object\"."
+#~ msgstr ""
+#~ "Hvis sand bliver nøglen custom_icon brugt til et brugerdefineret ikon til "
+#~ "knappen. Hvis falsk bliver nøglen custom_icon ignoreret. Denne nøgle er "
+#~ "kun relevant hvis nøglen object_type er \"menu-object\" eller \"drawer-"
+#~ "object\"."
+
+#~ msgid ""
+#~ "If true, the menu_path key is used as the path from which the menu "
+#~ "contents should be constructed. If false, the menu_path key is ignored. "
+#~ "This key is only relevant if the object_type key is \"menu-object\"."
+#~ msgstr ""
+#~ "Hvis sand bliver nøglen menu_path brugt som den sti som menuindholdet "
+#~ "skal konstrueres fra. Hvis falsk bliver nøglen menu_path ignoreret. Denne "
+#~ "nøgle er kun relevant hvis nøglen object_type er \"menu-object\"."
+
+#~ msgid ""
+#~ "If true, the user may not move the applet without first unlocking the "
+#~ "object using the \"Unlock\" menuitem."
+#~ msgstr ""
+#~ "Om brugeren ikke kan flytte objektet uden først at låse det op med "
+#~ "menupunktet \"Lås op\"."
+
+#~ msgid "Lock the object to the panel"
+#~ msgstr "Lås objektet til panelet"
+
+#~ msgid "Panel attached to drawer"
+#~ msgstr "Panel som hænger sammen med skuffe"
+
+#~ msgid "Panel object type"
+#~ msgstr "Panelobjekttype"
+
+#~ msgid ""
+#~ "The action type this button represents. Possible values are \"lock\", "
+#~ "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+#~ "relevant if the object_type key is \"action-applet\"."
+#~ msgstr ""
+#~ "Den handlingstype som denne knap repræsenterer. Mulige værdier er \"lock"
+#~ "\", \"logout\", \"run\", \"search\" og \"screenshot\". Denne nøgle er kun "
+#~ "relevant hvis nøglen object_type er \"action-applet\"."
+
+#~ msgid ""
+#~ "The text to display in a tooltip for this drawer or this menu. This key "
+#~ "is only relevant if the object_type key is \"drawer-object\" or \"menu-"
+#~ "object\"."
+#~ msgstr ""
+#~ "Den tekst som skal vises i et værktøjstip for denne skuffe eller menu. "
+#~ "Denne nøgle er kun relevant hvis nøglen object_type er \"drawer-object\" "
+#~ "eller \"menu-object\"."
+
+#~ msgid ""
+#~ "The type of this panel object. Possible values are \"drawer-object\", "
+#~ "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
+#~ "\" and \"menu-bar\"."
+#~ msgstr ""
+#~ "Typen af dette panelobjekt. Mulige værdier er \"drawer-object\", \"menu-"
+#~ "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" og "
+#~ "\"menu-bar\"."
+
+#~ msgid "Tooltip displayed for drawer or menu"
+#~ msgstr "Værktøjstip som vises for skuffe eller menu"
+
+#~ msgid "Use custom icon for object's button"
+#~ msgstr "Benyt brugerdefineret ikon til objektets knap"
+
+#~ msgid "Use custom path for menu contents"
+#~ msgstr "Benyt brugerdefineret sti til menuindhold"
+
+#~ msgid "Error reading GConf string value '%s': %s"
+#~ msgstr "Fejl ved læsning af GConf-strengværdi \"%s\": %s"
+
+#~ msgid "Error reading GConf integer value '%s': %s"
+#~ msgstr "Fejl ved læsning af GConf-heltalsværdi \"%s\": %s"
+
+#~ msgid ""
+#~ "Panel '%s' is set to be displayed on screen %d which is not currently "
+#~ "available. Not loading this panel."
+#~ msgstr ""
+#~ "Panelet \"%s\" er sat til at blive vist på skærm %d som i øjeblikket ikke "
+#~ "tilgængelig. Indlæser ikke dette panel."
+
+#~ msgid "Error reading GConf boolean value '%s': %s"
+#~ msgstr "Fejl ved læsning af boolesk GConf-værdi \"%s\": %s"
+
+#~ msgid "Drawer Properties"
+#~ msgstr "Skuffe-egenskaber"
+
+#~ msgid "_Icon:"
+#~ msgstr "_Ikon:"
+
+#~ msgid "Background color opacity"
+#~ msgstr "Ugennemsigtigheden af baggrundsfarve"
+
+#~ msgid "Fit image to panel"
+#~ msgstr "Tilpas billede til panelet"
+
+#~ msgid ""
+#~ "If true, hiding and un-hiding of this panel will be animated rather than "
+#~ "happening instantly."
+#~ msgstr ""
+#~ "Om skjulning og genvisning af dette panel skal animeres i stedet for at "
+#~ "ske med det samme."
+
+#~ msgid ""
+#~ "If true, the image will be scaled (retaining the aspect ratio of the "
+#~ "image) to the panel height (if horizontal)."
+#~ msgstr ""
+#~ "Om billedet skal skaleres (med samme formatforhold) til panelets højde "
+#~ "(hvis panelet er vandret)."
+
+#~ msgid ""
+#~ "If true, the image will be scaled to the panel dimensions. The aspect "
+#~ "ratio of the image will not be maintained."
+#~ msgstr ""
+#~ "Om billedet skal skaleres til panelets størrelse. Formatforholdet for "
+#~ "billedet bevares ikke."
+
+#~ msgid ""
+#~ "Specifies the opacity of the background color format. If the color is not "
+#~ "completely opaque (a value of less than 65535), the color will be "
+#~ "composited onto the desktop background image."
+#~ msgstr ""
+#~ "Angiver ugennemsigtigheden af baggrundsfarveformatet. Hvis farven ikke er "
+#~ "fuldstændig ugennemsigtig (dvs. har en værdi mindre end 65535), vil "
+#~ "farven blive sat sammen med skrivebordets baggrundsbillede."
+
+#~ msgid "Stretch image to panel"
+#~ msgstr "Stræk billede til panel"
+
+#~ msgid "Could not execute '%s'"
+#~ msgstr "Kunne ikke starte \"%s\""
+
+#~ msgid "Delete this drawer?"
+#~ msgstr "Fjern denne skuffe?"
+
+#~ msgid ""
+#~ "When a drawer is deleted, the drawer and its\n"
+#~ "settings are lost."
+#~ msgstr ""
+#~ "Når en skuffe fjernes, mister du både skuffen\n"
+#~ "og dens opsætning."
 
 #~ msgid "Clock Applet Factory"
 #~ msgstr "Fabrik til ur-panelprogram"
@@ -3646,15 +3519,6 @@ msgstr "Skift bruger"
 #~ msgstr "Vis flere _tidszoner"
 
 #~ msgid ""
-#~ "A list of timezone IDs. Each ID identifies an individual timezone. The "
-#~ "settings of these timezones are stored in the $(id)_name and $(id)_zone "
-#~ "keys."
-#~ msgstr ""
-#~ "En liste af tidszone-id'er. Hver id identificerer et enkelt tidszone. "
-#~ "Opsætningen for hver af disse tidszoner er gemt i nøglerne \"$(id)_name\" "
-#~ "og \"$(id)_zone\"."
-
-#~ msgid ""
 #~ "If true, display the timezone button in the clock, in addition to time."
 #~ msgstr "Hvis sand, så vis tidszoneknappen ved uret, udover tiden."
 
@@ -3676,12 +3540,6 @@ msgstr "Skift bruger"
 
 #~ msgid "User-visible name of the timezone"
 #~ msgstr "Bruger-synligt navn på tidszonen"
-
-#~ msgid "Computer"
-#~ msgstr "Computer"
-
-#~ msgid "Network"
-#~ msgstr "Netværk"
 
 #~ msgid "Themes"
 #~ msgstr "Temaer"
@@ -3834,9 +3692,6 @@ msgstr "Skift bruger"
 
 #~ msgid "Cannot load entry"
 #~ msgstr "Kan ikke indlæse menupunkt"
-
-#~ msgid "Display \"Run Application\" dialog keybinding"
-#~ msgstr "Tastegenvej til \"Kør program\"-vinduet"
 
 #~ msgid "Enable keybindings"
 #~ msgstr "Aktivér genvejstaster"
@@ -4188,9 +4043,6 @@ msgstr "Skift bruger"
 #~ msgid "The currently monitored year"
 #~ msgstr "Det aktuelt overvågede år"
 
-#~ msgid "Activatable"
-#~ msgstr "Aktiverbar"
-
 #~ msgid "Whether the button is activatable"
 #~ msgstr "Om knappen kan aktiveres"
 
@@ -4253,12 +4105,6 @@ msgstr "Skift bruger"
 
 #~ msgid "Tooltip"
 #~ msgstr "Værktøjstip"
-
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "Værktøjstip som vises for menuen"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Benyt menusti"
 
 #~ msgid "Use the path specified by the menu-path property"
 #~ msgstr "Benyt den sti som er angivet af egenskaben menu-path"
