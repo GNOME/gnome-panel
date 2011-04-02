@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-31 21:33+0200\n"
-"PO-Revision-Date: 2011-03-31 22:14+0200\n"
+"POT-Creation-Date: 2011-04-02 08:27+0300\n"
+"PO-Revision-Date: 2011-04-02 08:29+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -148,7 +148,7 @@ msgstr "%1$s, %2$s"
 #. * it will be used to insert the timezone name later.
 #: ../applets/clock/clock.c:640
 msgid "%A %B %d (%%s)"
-msgstr "%A %B %d (%%s)"
+msgstr "%A ה־%d ב%B (%%s)"
 
 #: ../applets/clock/clock.c:670
 msgid "Click to hide your appointments and tasks"
@@ -195,7 +195,7 @@ msgstr "%I:%M %p"
 #. * copy and paste it elsewhere).
 #: ../applets/clock/clock.c:1624
 msgid "%A, %B %d %Y"
-msgstr "יום %A, ה־%d ב%B %Y"
+msgstr "%A, ה־%d ב%B %Y"
 
 #: ../applets/clock/clock.c:1693
 msgid "Failed to open the time settings"
@@ -1684,7 +1684,7 @@ msgstr "הצגת אפשרויות ניהול ההפעלה"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "שגיאה"
 
@@ -1711,21 +1711,17 @@ msgstr "לא ניתן לפתוח את המיקום '%s'"
 msgid "No application to handle search folders is installed."
 msgstr "לא מותקן יישום לטיפול בתיקיות חיפוש."
 
-#: ../gnome-panel/applet.c:362
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:503 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "ה_זז"
 
-#: ../gnome-panel/applet.c:510 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "_הסר מהלוח"
-
-#: ../gnome-panel/applet.c:1003
-msgid "Cannot find an empty spot"
-msgstr "לא ניתן למצוא מיקום פנוי"
 
 # console messages start
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
@@ -1742,7 +1738,7 @@ msgstr "- Edit .desktop files"
 
 # console messages end
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:882
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "צור משגר"
 
@@ -1801,7 +1797,7 @@ msgstr "_מאפיינים"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "מיקום המשגר לא הוגדר, לא ניתן לטעון את המשגר\n"
 
-#: ../gnome-panel/launcher.c:951 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1888,60 +1884,68 @@ msgstr "כיבוי..."
 msgid "Shut down the computer"
 msgstr "כבה את המחשב"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "משגר ישום מותאם אישית"
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "צור משגר חדש"
 
-#: ../gnome-panel/panel-addto.c:124
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "משגר ישום..."
 
-#: ../gnome-panel/panel-addto.c:125
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "העתק משגר מתפריט היישומים"
 
-#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:947
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "תפריט ראשי"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "התפריט הראשי של GNOME"
 
-#: ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "סרגל תפריט"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "סרגל תפריט מותאם אישית"
 
-#: ../gnome-panel/panel-addto.c:161
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "קו מפריד"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "קו מפריד לארגון הפריטים בלוח"
 
-#: ../gnome-panel/panel-addto.c:243
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "תפריט משתמש"
+
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr "תפריט לשינוי ההגדרות שלך ומצב חייך המקוונים"
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(ריק)"
 
-#: ../gnome-panel/panel-addto.c:1025
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "חפש _פריט להוסיף ל \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1029
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "חפש _פריט כדי להוסיף ללוח:"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "הוסף ללוח"
 
@@ -1968,12 +1972,12 @@ msgstr "_אל תטען מחדש"
 msgid "_Reload"
 msgstr "_רענן"
 
-#: ../gnome-panel/panel-applet-frame.c:905
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "הלוח נתקל בתקלה בזמן טעינת \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "האם אתה רוצה למחוק ישומון זה מהגדרותיך?"
 
@@ -2091,142 +2095,125 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "לא ניתן ליצור פריסת לוח ראשונית.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:119
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "עיין בין היישומים המותקנים והפעל אותם"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "גישה למסמכים, תיקיות ומקומות רשת"
 
-#: ../gnome-panel/panel-menu-bar.c:123
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "שנה את התנהגות או מראה שולחן העבודה, קבל עזרה או התנתק"
-
-#: ../gnome-panel/panel-menu-bar.c:174
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "יישומים"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "_ערוך תפריטים"
 
-#: ../gnome-panel/panel-menu-bar.c:419
+#: ../gnome-panel/panel-menu-bar.c:250
 msgid "_Help"
 msgstr "_עזרה"
 
-#: ../gnome-panel/panel-menu-items.c:469
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "החלפת משתמש"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "סימניות"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:493 ../gnome-panel/panel.c:589
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "פתח '%s'"
 
-#: ../gnome-panel/panel-menu-items.c:564
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "לא ניתן לסרוק את %s עבור שינויים במדיה"
 
-#: ../gnome-panel/panel-menu-items.c:606
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "רענן %s"
 
-#: ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "לא ניתן לעגון את %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "עגון את %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "מדיה ניתנת להסרה"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "מקומות ברשת"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1048 ../gnome-panel/panel.c:638
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "פתח את התיקייה האישית שלך"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1068
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "שולחן העבודה"
 
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "פתח את תוכן שולחן העבודה בתיקייה"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:647
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
 msgid "Computer"
 msgstr "מחשב"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1090 ../gnome-panel/panel.c:648
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "עיון בכל הכוננים והתיקיות המקומיים והמרוחקים הזמינים למחשב זה"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1100 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
 msgid "Network"
 msgstr "רשת"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1101 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
 msgid "Browse bookmarked and local network locations"
 msgstr "עיון במיקומי רשת מקומיים ומסומנים"
 
-#: ../gnome-panel/panel-menu-items.c:1418
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "זמין"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "עסוק"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "החשבון שלי"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "מקומות"
-
-#: ../gnome-panel/panel-menu-items.c:1445
-msgid "System"
-msgstr "מערכת"
-
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1536
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "0"
-
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1548
-#, c-format
-msgid "Log Out %s..."
-msgstr "Log Out %s..."
-
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1552
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Log out %s of this session to log in as a different user"
 
 #: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
@@ -2671,36 +2658,39 @@ msgstr "חיפוש"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:523
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "פתח כתובת: %s"
 
-#: ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "למחוק לוח זה?"
 
-#: ../gnome-panel/panel.c:1383
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "כאשר לוח נמחק, הלוח והגדרותיו נאבדים."
 
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "זמין"
+#~ msgid "Cannot find an empty spot"
+#~ msgstr "לא ניתן למצוא מיקום פנוי"
 
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "עסוק"
+#~ msgid "Change desktop appearance and behavior, get help, or log out"
+#~ msgstr "שנה את התנהגות או מראה שולחן העבודה, קבל עזרה או התנתק"
 
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "החשבון שלי"
+#~ msgid "System"
+#~ msgstr "מערכת"
 
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "החלפת משתמש"
+#~ msgctxt "panel:showusername"
+#~ msgid "1"
+#~ msgstr "0"
+
+#~ msgid "Log Out %s..."
+#~ msgstr "Log Out %s..."
+
+#~ msgid "Log out %s of this session to log in as a different user"
+#~ msgstr "Log out %s of this session to log in as a different user"
 
 #~ msgid "_About"
 #~ msgstr "_אודות"
