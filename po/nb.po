@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.31.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-01 09:42+0200\n"
-"PO-Revision-Date: 2011-04-01 09:40+0200\n"
+"POT-Creation-Date: 2011-04-03 16:45+0200\n"
+"PO-Revision-Date: 2011-04-03 16:46+0200\n"
 "Last-Translator: Torstein Adolf Winterseth <kvikende@fsfe.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -1685,7 +1685,7 @@ msgstr "Vis alternativer for økthåndtering"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Feil"
 
@@ -1712,21 +1712,17 @@ msgstr "Kan ikke åpne adresse «%s»"
 msgid "No application to handle search folders is installed."
 msgstr "Ingen programmer installert som kan håndtere søkemapper."
 
-#: ../gnome-panel/applet.c:362
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:503 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "_Flytt"
 
-#: ../gnome-panel/applet.c:510 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "Fje_rn fra panelet"
-
-#: ../gnome-panel/applet.c:1003
-msgid "Cannot find an empty spot"
-msgstr "Kunne ikke finne en tom plass"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1741,7 +1737,7 @@ msgid "- Edit .desktop files"
 msgstr "- Rediger .desktop-filer"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:882
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "Opprett oppstarter"
 
@@ -1802,7 +1798,7 @@ msgstr "_Egenskaper"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "Lokasjon for oppstarter er ikke satt. Kan ikke laste oppstarter\n"
 
-#: ../gnome-panel/launcher.c:951 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1890,60 +1886,68 @@ msgstr "Avslutt …"
 msgid "Shut down the computer"
 msgstr "Skru av datamaskinen"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "Egendefinert oppstarter"
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "Lag en ny oppstarter"
 
-#: ../gnome-panel/panel-addto.c:124
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "Oppstarter …"
 
-#: ../gnome-panel/panel-addto.c:125
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopier en oppstarter fra menyen programmer"
 
-#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:947
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "Hovedmeny"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "Hovedmenyen for GNOME"
 
-#: ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "Menylinje"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "En tilpasset menylinje"
 
-#: ../gnome-panel/panel-addto.c:161
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "Separator"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "En separator for organisering av panelområder"
 
-#: ../gnome-panel/panel-addto.c:243
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "Brukermeny"
+
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr "Meny for å endre dine innstillinger og tilkoblingsstatus"
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(tom)"
 
-#: ../gnome-panel/panel-addto.c:1025
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Velg en _oppføring som skal legges til på «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1029
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "Velg en _oppføring som skal legges til på panelet:"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "Legg til på panelet"
 
@@ -1972,12 +1976,12 @@ msgstr "I_kke start på nytt"
 msgid "_Reload"
 msgstr "Sta_rt på nytt"
 
-#: ../gnome-panel/panel-applet-frame.c:905
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det oppsto et problem i panelet ved lasting av «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du slette dette panelprogrammet fra din konfigurasjon?"
 
@@ -2097,95 +2101,95 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan ikke lage utforming for panelet.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:119
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "Se gjennom og kjør installerte programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "Aksesser dokumenter, mapper og nettverksadresser"
 
-#: ../gnome-panel/panel-menu-bar.c:123
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr "Endre utseende og oppførsel for skrivebord, finn hjelp eller logg ut"
-
-#: ../gnome-panel/panel-menu-bar.c:174
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "R_ediger menyer"
 
-#: ../gnome-panel/panel-menu-bar.c:419
+#: ../gnome-panel/panel-menu-bar.c:250
 msgid "_Help"
 msgstr "_Hjelp"
 
-#: ../gnome-panel/panel-menu-items.c:469
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "Bytt bruker"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:493 ../gnome-panel/panel.c:589
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "Åpne «%s»"
 
-#: ../gnome-panel/panel-menu-items.c:564
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke søke etter endringer for medie på %s"
 
-#: ../gnome-panel/panel-menu-items.c:606
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "Oppdater %s"
 
-#: ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "Avtagbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "Nettverksadresser"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1048 ../gnome-panel/panel.c:638
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "Åpne din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1068
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:647
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
 msgid "Computer"
 msgstr "Datamaskin"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1090 ../gnome-panel/panel.c:648
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2194,47 +2198,30 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1100 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
 msgid "Network"
 msgstr "Nettverk"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1101 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
 msgid "Browse bookmarked and local network locations"
 msgstr "Bla gjennom lokale nettverkslokasjoner og bokmerker"
 
-#: ../gnome-panel/panel-menu-items.c:1418
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "Tilgjengelig"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "Opptatt"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "Min konto"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "Steder"
-
-#: ../gnome-panel/panel-menu-items.c:1445
-msgid "System"
-msgstr "System"
-
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1536
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "1"
-
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1548
-#, c-format
-msgid "Log Out %s..."
-msgstr "Logg ut %s …"
-
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1552
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Logg ut %s fra denne økten for å logge inn som en annen bruker."
 
 #: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
@@ -2685,35 +2672,19 @@ msgstr "Søk"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:523
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åpne URL: %s"
 
-#: ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "Slett dette panelet?"
 
-#: ../gnome-panel/panel.c:1383
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Panelet og alle dets innstillinger vil\n"
 "gå tapt hvis du sletter det."
-
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "Tilgjengelig"
-
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "Opptatt"
-
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "Min konto"
-
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "Bytt bruker"
