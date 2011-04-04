@@ -656,7 +656,7 @@ panel_menu_button_is_main_menu (PanelMenuButton *button)
 {
 	g_return_val_if_fail (PANEL_IS_MENU_BUTTON (button), FALSE);
 
-	return !PANEL_GLIB_STR_EMPTY (button->priv->menu_path);
+	return PANEL_GLIB_STR_EMPTY (button->priv->menu_path);
 }
 
 void
