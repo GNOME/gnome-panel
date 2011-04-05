@@ -24,10 +24,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2010-09-30 18:51+0000\n"
-"PO-Revision-Date: 2010-10-06 09:55-0300\n"
-"Last-Translator: Daniel S. Koda <danielskoda@gmail.com>\n"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-03-17 13:41+0000\n"
+"PO-Revision-Date: 2011-03-02 18:38-0300\n"
+"Last-Translator: André Gondim <andregondim@ubuntu.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1510,7 +1510,7 @@ msgstr "Mostra as opções do gerenciamento de sessão"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
 #: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Erro"
 
@@ -1877,12 +1877,12 @@ msgstr "Nã_o recarregar"
 msgid "_Reload"
 msgstr "_Recarregar"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "O painel encontrou um problema ao carregar \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Você quer excluir o miniaplicativo da sua configuração?"
 
@@ -2453,11 +2453,12 @@ msgstr "O identificador do painel de alto nível que contém esse objeto."
 #: ../gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
 "O ID da implementação do miniaplicativo - ex. \"ClockAppletFactory::"
 "ClockApplet\". Essa configuração só é relevante se a chave object_type for "
-"\"bonobo-applet\"."
+"\"external-applet\" (ou a obsoleta \"bonobo-applet\")."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2507,12 +2508,12 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
 "O tipo desse objeto de painel. Valores possíveis são \"drawer-object\", "
-"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" e "
-"\"menu-bar\"."
+"\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
+"\", \"menu-bar\" e \"separator\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2542,20 +2543,20 @@ msgstr "Usa um ícone personalizado para o botão do objeto"
 msgid "Use custom path for menu contents"
 msgstr "Usa um caminho personalizado para o conteúdo do menu"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Erro ao ler valor string do GConf \"%s\": %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Erro ao ler valor inteiro do GConf \"%s\": %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2564,7 +2565,7 @@ msgstr ""
 "O Painel \"%s\" está configurado para ser mostrado na tela %d, que não está "
 "atualmente disponível. Não carregarei esse painel."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Erro ao ler valor booleano do GConf \"%s\": %s"
@@ -3278,21 +3279,21 @@ msgstr "Ícone \"%s\" não localizado"
 msgid "Could not execute '%s'"
 msgstr "Não foi possível executar \"%s\""
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "arquivo"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Pasta pessoal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistema de arquivos"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -3301,7 +3302,7 @@ msgstr "Pesquisar"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
