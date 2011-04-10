@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-31 06:59+0300\n"
-"PO-Revision-Date: 2011-03-31 06:59+0300\n"
+"POT-Creation-Date: 2011-04-10 08:48+0300\n"
+"PO-Revision-Date: 2011-04-10 08:48+0300\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "Language: bg\n"
@@ -1703,7 +1703,7 @@ msgstr "Показване на настройките за управление
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:76
 #: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Грешка"
 
@@ -1730,21 +1730,17 @@ msgstr "Местоположението „%s“ не може да бъде о
 msgid "No application to handle search folders is installed."
 msgstr "Не е инсталирана програма за обработката на папки за търсене."
 
-#: ../gnome-panel/applet.c:362
+#: ../gnome-panel/applet.c:363
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:503 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "П_реместване"
 
-#: ../gnome-panel/applet.c:510 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "_Премахване от панела"
-
-#: ../gnome-panel/applet.c:1003
-msgid "Cannot find an empty spot"
-msgstr "Неуспех при намирането на празно място"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:29
 msgid "Create new file in the given directory"
@@ -1759,7 +1755,7 @@ msgid "- Edit .desktop files"
 msgstr "— редактиране на файлове .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:882
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
 msgstr "Създаване на стартер"
 
@@ -1821,7 +1817,7 @@ msgstr "_Настройки"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "Пътят към стартера не е зададен, неуспешно зареждане на стартера\n"
 
-#: ../gnome-panel/launcher.c:951 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
@@ -1908,60 +1904,68 @@ msgstr "Изключване на компютъра…"
 msgid "Shut down the computer"
 msgstr "Изключване на компютъра"
 
-#: ../gnome-panel/panel-addto.c:113
+#: ../gnome-panel/panel-addto.c:115
 msgid "Custom Application Launcher"
 msgstr "Пускане на избрана програма"
 
-#: ../gnome-panel/panel-addto.c:114
+#: ../gnome-panel/panel-addto.c:116
 msgid "Create a new launcher"
 msgstr "Създаване на нов стартер"
 
-#: ../gnome-panel/panel-addto.c:124
+#: ../gnome-panel/panel-addto.c:126
 msgid "Application Launcher..."
 msgstr "Стартер за програма…"
 
-#: ../gnome-panel/panel-addto.c:125
+#: ../gnome-panel/panel-addto.c:127
 msgid "Copy a launcher from the applications menu"
 msgstr "Копиране на стартер от менюто „Програми“"
 
-#: ../gnome-panel/panel-addto.c:139 ../gnome-panel/panel-menu-button.c:947
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "Основно меню"
 
-#: ../gnome-panel/panel-addto.c:140
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "Основното меню на GNOME"
 
-#: ../gnome-panel/panel-addto.c:150
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "Меню"
 
-#: ../gnome-panel/panel-addto.c:151
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "Меню, създадено от потребителя"
 
-#: ../gnome-panel/panel-addto.c:161
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "Разделител"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "Разделител, с който да организирате обектите върху панела"
 
-#: ../gnome-panel/panel-addto.c:243
+#: ../gnome-panel/panel-addto.c:174
+msgid "User Menu"
+msgstr "Потребителско меню"
+
+#: ../gnome-panel/panel-addto.c:175
+msgid "Menu to change your settings and your online status"
+msgstr "Меню за промяната на настройките и състоянието ви"
+
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(празно)"
 
-#: ../gnome-panel/panel-addto.c:1025
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Избор на _обект за добавяне към „%s“:"
 
-#: ../gnome-panel/panel-addto.c:1029
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "Избор на _обект за добавяне към панела:"
 
-#: ../gnome-panel/panel-addto.c:1032
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "Добавяне към панела"
 
@@ -1989,12 +1993,12 @@ msgstr "Да _не се презарежда"
 msgid "_Reload"
 msgstr "_Презареждане"
 
-#: ../gnome-panel/panel-applet-frame.c:905
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Панелът срещна трудности при зареждането на „%s“."
 
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Искате ли да изтриете аплета от вашите настройки?"
 
@@ -2114,97 +2118,95 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "Първоначалната подредба на панели не може да бъде създадена.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:119
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "Преглед и стартиране на инсталираните програми"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "Достъп до документи, папки и мрежови ресурси"
 
-#: ../gnome-panel/panel-menu-bar.c:123
-msgid "Change desktop appearance and behavior, get help, or log out"
-msgstr ""
-"Промяна на изгледа и поведението на работната среда, помощ и изход от "
-"системата"
-
-#: ../gnome-panel/panel-menu-bar.c:174
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "Програми"
 
-#: ../gnome-panel/panel-menu-bar.c:412 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "_Редактиране на менютата"
 
-#: ../gnome-panel/panel-menu-bar.c:419
+#: ../gnome-panel/panel-menu-bar.c:250
 msgid "_Help"
 msgstr "Помо_щ"
 
-#: ../gnome-panel/panel-menu-items.c:469
+#: ../gnome-panel/panel-menu-items.c:489
+msgid "Switch User"
+msgstr "Смяна на потребител"
+
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "Отметки"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:493 ../gnome-panel/panel.c:589
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
 #, c-format
 msgid "Open '%s'"
 msgstr "Отваряне на „%s“"
 
-#: ../gnome-panel/panel-menu-items.c:564
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Неуспех при проверката на %s за промени в носителя"
 
-#: ../gnome-panel/panel-menu-items.c:606
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "Проверяване на %s"
 
-#: ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Неуспех при монтирането на %s"
 
-#: ../gnome-panel/panel-menu-items.c:705
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "Монтиране на %s"
 
-#: ../gnome-panel/panel-menu-items.c:913
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "Преносими носители"
 
-#: ../gnome-panel/panel-menu-items.c:1004
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "Мрежови места"
 
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1048 ../gnome-panel/panel.c:638
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
 msgid "Open your personal folder"
 msgstr "Отваряне на личната ви папка"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1068
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Папка на работното място"
 
-#: ../gnome-panel/panel-menu-items.c:1069
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "Отваряне на работния плот като папка"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1084 ../gnome-panel/panel.c:647
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
 msgid "Computer"
 msgstr "Компютър"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1090 ../gnome-panel/panel.c:648
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2213,47 +2215,30 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1100 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
 msgid "Network"
 msgstr "Мрежа"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1101 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
 msgid "Browse bookmarked and local network locations"
 msgstr "Разглеждане на отметнатите и локалните мрежови адреси"
 
-#: ../gnome-panel/panel-menu-items.c:1418
+#: ../gnome-panel/panel-menu-items.c:1357
+msgid "Available"
+msgstr "На линия"
+
+#: ../gnome-panel/panel-menu-items.c:1367
+msgid "Busy"
+msgstr "Правя нещо друго"
+
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "Моята регистрация"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "Места"
-
-#: ../gnome-panel/panel-menu-items.c:1445
-msgid "System"
-msgstr "Система"
-
-#. Translators: translate "1" (msgctxt: "panel:showusername") to anything
-#. * but "1" if "Log Out %s" doesn't make any sense in your
-#. * language (where %s is a username).
-#.
-#: ../gnome-panel/panel-menu-items.c:1536
-msgctxt "panel:showusername"
-msgid "1"
-msgstr "1"
-
-#. keep those strings in sync with the ones in
-#. * panel-action-button.c
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1548
-#, c-format
-msgid "Log Out %s..."
-msgstr "Изход на „%s“…"
-
-#. Translators: this string is used ONLY if you translated
-#. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1552
-#, c-format
-msgid "Log out %s of this session to log in as a different user"
-msgstr "Излизане от тази сесия на „%s“, за да влезете като различен потребител"
 
 #: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
@@ -2708,35 +2693,19 @@ msgstr "Търсене"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:523
+#: ../gnome-panel/panel.c:527
 #, c-format
 msgid "Open URL: %s"
 msgstr "Отваряне на адрес: %s"
 
-#: ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel.c:1396
 msgid "Delete this panel?"
 msgstr "Премахване на този панел?"
 
-#: ../gnome-panel/panel.c:1383
+#: ../gnome-panel/panel.c:1400
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Когато един панел бъде премахнат,\n"
 "настройките му се губят."
-
-#: ../js/ui/statusMenu.js:184
-msgid "Available"
-msgstr "На линия"
-
-#: ../js/ui/statusMenu.js:189
-msgid "Busy"
-msgstr "Правя нещо друго"
-
-#: ../js/ui/statusMenu.js:197
-msgid "My Account"
-msgstr "Моята регистрация"
-
-#: ../js/ui/statusMenu.js:213
-msgid "Switch User"
-msgstr "Смяна на потребител"
