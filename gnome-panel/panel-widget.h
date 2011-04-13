@@ -66,10 +66,6 @@ struct _AppletData
 	int		cells;
 	int             min_cells;
 
-	int		no_die; /* if >0 never send the about to die
-				   signal, an int and not a bool for
-				   nesting reasons */
-
 	/* Valid size ranges for expanded applets */
 	int *           size_hints; 
 	int             size_hints_len;

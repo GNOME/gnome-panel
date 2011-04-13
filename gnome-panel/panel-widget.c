@@ -2432,7 +2432,6 @@ panel_widget_add (PanelWidget         *panel,
 		ad->pack_type = pack_type;
 		ad->pack_index = pack_index;
 		ad->constrained = 0;
-		ad->no_die = 0;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
@@ -2493,8 +2492,6 @@ panel_widget_reparent (PanelWidget         *old_panel,
 	gtk_widget_queue_resize (GTK_WIDGET (new_panel));
 	gtk_widget_queue_resize (GTK_WIDGET (old_panel));
 
-	ad->no_die++;
-
 	panel_widget_reset_saved_focus (old_panel);
 	if (gtk_container_get_focus_child (GTK_CONTAINER (old_panel)) == applet)
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->toplevel));
@@ -2517,8 +2514,6 @@ panel_widget_reparent (PanelWidget         *old_panel,
  	gtk_window_present (GTK_WINDOW (new_panel->toplevel));
 
 	gdk_flush();
-
-	ad->no_die--;
 
 	emit_applet_moved (new_panel, ad);
 
