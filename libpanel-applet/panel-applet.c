@@ -1266,7 +1266,7 @@ panel_applet_button_press (GtkWidget      *widget,
 	if (event->button == 3) {
 		guint modifiers;
 
-		modifiers = event->state & GDK_MODIFIER_MASK;
+		modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 		if (modifiers == panel_applet_bindings_get_mouse_button_modifier_keymask ())
 			panel_applet_edit_menu_popup (applet, event->button, event->time);

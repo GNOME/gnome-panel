@@ -360,7 +360,7 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 	if (event->window != gtk_widget_get_window (widget))
 		return FALSE;
 
-	modifiers = event->state & GDK_MODIFIER_MASK;
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	switch (event->button) {
 	case 1:

@@ -297,10 +297,17 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 guint
 panel_bindings_get_mouse_button_modifier_keymask (void)
 {
+	guint mod;
+
 	g_assert (mouse_button_modifier_keymask != 0);
 
 	if (!initialised)
 		panel_bindings_initialise ();
 
-	return panel_get_real_modifier_mask (mouse_button_modifier_keymask);
+	mod = panel_get_real_modifier_mask (mouse_button_modifier_keymask);
+
+	if (mod & gtk_accelerator_get_default_mod_mask ())
+		return mod;
+	else
+		return panel_get_real_modifier_mask (DEFAULT_MOUSE_MODIFIER);
 }

@@ -363,7 +363,7 @@ panel_button_press_event (PanelToplevel  *toplevel,
 	if (event->button != 3)
 		return FALSE;
 
-	modifiers = event->state & GDK_MODIFIER_MASK;
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
 		return panel_popup_menu (toplevel, event->button, event->time);

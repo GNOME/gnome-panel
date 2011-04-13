@@ -685,7 +685,7 @@ applet_button_press (GtkWidget      *widget,
 	if (applet_must_skip_menu (info))
 		return FALSE;
 
-	modifiers = event->state & GDK_MODIFIER_MASK;
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
 		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, event);

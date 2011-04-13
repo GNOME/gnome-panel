@@ -237,10 +237,17 @@ panel_applet_bindings_init (GConfClient *client)
 guint
 panel_applet_bindings_get_mouse_button_modifier_keymask (void)
 {
+	guint mod;
+
 	g_assert (initialised != 0);
 	g_assert (mouse_button_modifier_keymask != 0);
 
-	return panel_applet_bindings_get_real_modifier_mask (mouse_button_modifier_keymask);
+	mod = panel_applet_bindings_get_real_modifier_mask (mouse_button_modifier_keymask);
+
+	if (mod & gtk_accelerator_get_default_mod_mask ())
+		return mod;
+	else
+		return panel_applet_bindings_get_real_modifier_mask (DEFAULT_MOUSE_MODIFIER);
 }
 
 /****************************\
@@ -258,8 +265,11 @@ panel_applet_bindings_key_event_is_binding (GdkEventKey *event,
 	GtkBindingEntry *binding_entry;
 	gboolean         popup = FALSE;
 	gboolean         popup_modifier = FALSE;
+	guint            modifiers;
 	char            *signal_dash;
 	char            *signal_underscore;
+
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	signal_dash = g_strdup (signal_name);
 	g_strdelimit (signal_dash, "_", '-');
@@ -281,8 +291,8 @@ panel_applet_bindings_key_event_is_binding (GdkEventKey *event,
 				if (binding_entry->keyval != event->keyval)
 					break;
 
-				popup = (event->state & GDK_MODIFIER_MASK) == binding_entry->modifiers;
-				popup_modifier = (event->state & GDK_MODIFIER_MASK) == (panel_applet_bindings_get_mouse_button_modifier_keymask ()|binding_entry->modifiers);
+				popup = modifiers == binding_entry->modifiers;
+				popup_modifier = modifiers == (panel_applet_bindings_get_mouse_button_modifier_keymask ()|binding_entry->modifiers);
 				break;
 			}
 		}

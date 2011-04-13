@@ -2138,7 +2138,7 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	modifiers = event->state & GDK_MODIFIER_MASK;
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	/* Begin drag if the middle mouse button and modifier are pressed,
 	 * unless the panel is locked down or a grab is active (meaning a menu

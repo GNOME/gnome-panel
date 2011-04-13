@@ -2942,6 +2942,7 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 				   GdkEventButton *event)
 {
 	PanelToplevel *toplevel;
+	guint          modifiers;
 	GtkWidget     *event_widget;
 
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
@@ -2954,11 +2955,13 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	if (toplevel->priv->animating)
 		return FALSE;
 
+	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
+
 	/* Get the mouse-button modifier from metacity so that only intentional
 	 * moves are considered. We don't this for non-expanded panels since we
 	 * only have the handles that the user can grab. */
 	if (toplevel->priv->expand &&
-	    (event->state & GDK_MODIFIER_MASK) != panel_bindings_get_mouse_button_modifier_keymask ())
+	    modifiers != panel_bindings_get_mouse_button_modifier_keymask ())
 		return FALSE;
 
 	gdk_window_get_user_data (event->window, (gpointer)&event_widget);
