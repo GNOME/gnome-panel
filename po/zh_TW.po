@@ -14,10 +14,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 3.0.0\n"
+"Project-Id-Version: gnome-panel 3.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-04 20:52+0800\n"
-"PO-Revision-Date: 2011-04-04 15:05+0800\n"
+"POT-Creation-Date: 2011-04-14 19:37+0800\n"
+"PO-Revision-Date: 2011-04-14 12:37+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Taiwan) <zh-l10n@lists.linux.org.tw>\n"
 "Language: \n"
@@ -658,6 +658,22 @@ msgstr "無法顯示「%s」的求助文件。"
 msgid "Error displaying help document"
 msgstr "顯示求助文件時發生錯誤"
 
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
+msgid "Clock"
+msgstr "時鐘"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "時鐘面板程式工廠"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
+msgid "Factory for clock applet"
+msgstr "時鐘面板程式工廠"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
+msgid "Get the current time and date"
+msgstr "取得目前的時刻及日期"
+
 #: ../applets/fish/fish.c:217
 #, c-format
 msgid ""
@@ -776,9 +792,82 @@ msgstr "使用垂直面板時會旋轉程式顯示(_R)"
 msgid "seconds"
 msgstr "秒"
 
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "顯示游泳中的魚兒或其它生物"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
+msgid "Fish"
+msgstr "小魚"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "那條蠢魚是從哪裡來的"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Wanda 工廠"
+
 #: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "面板程式狀態通知區"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "顯示程式狀態通知圖示的區域"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
+msgid "Factory for notification area"
+msgstr "通知區域工廠"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:3
+msgid "Notification Area"
+msgstr "程式狀態通知區"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
+msgid "Notification Area Factory"
+msgstr "「程式狀態通知區」工廠"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "用來產生和視窗瀏覽有關的面板程式的工廠"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "隱藏所有程式視窗並顯示桌面"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
+msgid "Show Desktop"
+msgstr "顯示桌面"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "使用選單來切換已開啟的視窗"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "使用按鈕來切換已開啟的視窗"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "切換工作區"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:7
+msgid "Window List"
+msgstr "視窗清單"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "視窗瀏覽面板程式工廠"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
+#: ../applets/wncklet/window-menu.c:204
+msgid "Window Selector"
+msgstr "視窗選擇程式"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
+msgid "Workspace Switcher"
+msgstr "工作區切換程式"
 
 #: ../applets/wncklet/showdesktop.c:177
 #, c-format
@@ -851,10 +940,6 @@ msgstr "總是合併同類的視窗(_A)"
 #: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "永不合併同類的視窗(_N)"
-
-#: ../applets/wncklet/window-menu.c:204
-msgid "Window Selector"
-msgstr "視窗選擇程式"
 
 #: ../applets/wncklet/workspace-switcher.c:194
 #: ../applets/wncklet/workspace-switcher.c:723
@@ -2617,6 +2702,22 @@ msgid ""
 "settings are lost."
 msgstr "當刪除面板後，面板及其設定都會消失。"
 
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
+msgid "A simple applet for testing the GNOME panel"
+msgstr "用來測試 GNOME 面板的簡單面板程式"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
+msgid "Factory for Test DBus Applet"
+msgstr "測試 DBus 面板程式的工廠"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
+msgid "Test DBus Applet"
+msgstr "測試 DBus 面板程式"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
+msgid "Test DBus Applet Factory"
+msgstr "測試 DBus 面板程式工廠"
+
 #~ msgid "Cannot find an empty spot"
 #~ msgstr "沒有空位"
 
@@ -2638,9 +2739,6 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 
 #~ msgid "_About"
 #~ msgstr "關於(_A)"
-
-#~ msgid "Clock"
-#~ msgstr "時鐘"
 
 #~ msgid "The Clock displays the current time and date"
 #~ msgstr "時鐘程式可顯示目前的時間及日期"
@@ -2670,9 +2768,6 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 #~ msgid "(with minor help from George)"
 #~ msgstr "（還有 George 的幫忙）"
 
-#~ msgid "Fish"
-#~ msgstr "小魚"
-
 #~ msgid "Select an animation"
 #~ msgstr "選擇動畫"
 
@@ -2693,14 +2788,8 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 #~ "fish's animation."
 #~ msgstr "本設定鍵指定了小魚的動畫格數"
 
-#~ msgid "Notification Area"
-#~ msgstr "程式狀態通知區"
-
 #~ msgid "This button lets you hide all windows and show the desktop."
 #~ msgstr "本按鈕可以隱藏所有視窗並顯示桌面。"
-
-#~ msgid "Window List"
-#~ msgstr "視窗清單"
 
 #~ msgid ""
 #~ "The Window List shows a list of all windows in a set of buttons and lets "
@@ -2735,9 +2824,6 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 #~ "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 #~ msgstr ""
 #~ "載入「工作區切換程式」中的 display_all_workspaces 數值時出現錯誤：%s\n"
-
-#~ msgid "Workspace Switcher"
-#~ msgstr "工作區切換程式"
 
 #~ msgid ""
 #~ "The Workspace Switcher shows you a small version of your workspaces that "
@@ -3067,26 +3153,8 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 #~ msgid "_Time:"
 #~ msgstr "時刻(_T):"
 
-#~ msgid "A simple applet for testing the GNOME-2.0 panel"
-#~ msgstr "用來測試 GNOME-2.0 面板的簡單面板程式"
-
-#~ msgid "Test Bonobo Applet"
-#~ msgstr "Bonobo 面板測試程式"
-
-#~ msgid "Test Bonobo Applet Factory"
-#~ msgstr "Bonobo 面板測試程式工廠"
-
 #~ msgid "query returned exception %s\n"
 #~ msgstr "詢問時回傳了例外情況 %s\n"
-
-#~ msgid "Clock Applet Factory"
-#~ msgstr "時鐘面板程式工廠"
-
-#~ msgid "Factory for creating clock applets."
-#~ msgstr "產生時鐘面板程式的工廠。"
-
-#~ msgid "Get the current time and date"
-#~ msgstr "取得目前的時刻及日期"
 
 #~ msgid "Change system time"
 #~ msgstr "改變系統時刻"
@@ -3105,42 +3173,6 @@ msgstr "當刪除面板後，面板及其設定都會消失。"
 
 #~ msgid "Privileges are required to configure the hardware clock."
 #~ msgstr "設定硬體時鐘需要有權限。"
-
-#~ msgid "Display a swimming fish or another animated creature"
-#~ msgstr "顯示游泳中的魚兒或其它生物"
-
-#~ msgid "From Whence That Stupid Fish Came"
-#~ msgstr "那條蠢魚是從哪裡來的"
-
-#~ msgid "Wanda Factory"
-#~ msgstr "Wanda 工廠"
-
-#~ msgid "Area where notification icons appear"
-#~ msgstr "顯示程式狀態通知圖示的區域"
-
-#~ msgid "Notification Area Factory"
-#~ msgstr "「程式狀態通知區」工廠"
-
-#~ msgid "Factory for the window navigation related applets"
-#~ msgstr "用來產生和視窗瀏覽有關的面板程式的工廠"
-
-#~ msgid "Hide application windows and show the desktop"
-#~ msgstr "隱藏所有程式視窗並顯示桌面"
-
-#~ msgid "Show Desktop"
-#~ msgstr "顯示桌面"
-
-#~ msgid "Switch between open windows using a menu"
-#~ msgstr "使用選單來切換已開啟的視窗"
-
-#~ msgid "Switch between open windows using buttons"
-#~ msgstr "使用按鈕來切換已開啟的視窗"
-
-#~ msgid "Switch between workspaces"
-#~ msgstr "切換工作區"
-
-#~ msgid "Window Navigation Applet Factory"
-#~ msgstr "視窗瀏覽面板程式工廠"
 
 #~ msgid "Exception from popup_menu '%s'\n"
 #~ msgstr "popup_menu‘%s’出現例外情況\n"
