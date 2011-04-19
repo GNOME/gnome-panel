@@ -868,14 +868,13 @@ move_applet (PanelWidget         *panel,
 
 	info = g_slist_nth_data (applet_list, applet_index);
 
-	if ( ! panel_applet_can_freely_move (info))
+	if (info == NULL || info->widget == NULL ||
+	    !panel_applet_can_freely_move (info))
 		return FALSE;
 
 	parent = gtk_widget_get_parent (info->widget);
 
-	if (info != NULL &&
-	    info->widget != NULL &&
-	    parent != NULL &&
+	if (parent != NULL &&
 	    PANEL_IS_WIDGET (parent)) {
 		panel_widget_reparent (PANEL_WIDGET (parent),
 				       panel,
