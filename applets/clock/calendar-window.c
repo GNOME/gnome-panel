@@ -1245,7 +1245,7 @@ calendar_day_activated (GtkCalendar    *calendar,
 
 	argument = g_strdup_printf ("calendar:///?startdate="
 				    "%.4d%.2d%.2d",
-				    year, month, day);
+				    year, month + 1, day);
 
 	clock_launch_calendar_app (calwin, argument);
 
