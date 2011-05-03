@@ -1,4 +1,4 @@
-/*
+/* -*- c-basic-offset: 8; indent-tabs-mode: t -*-
  * panel-run-dialog.c:
  *
  * Copyright (C) 2003 Frank Worsley <fworsley@shaw.ca>
@@ -791,8 +791,8 @@ static int
 compare_applications (GMenuTreeEntry *a,
 		      GMenuTreeEntry *b)
 {
-	return g_utf8_collate (gmenu_tree_entry_get_display_name (a),
-			       gmenu_tree_entry_get_display_name (b));
+	return g_utf8_collate (g_app_info_get_display_name ((GAppInfo*)(gmenu_tree_entry_get_app_info (a))),
+			       g_app_info_get_display_name ((GAppInfo*)(gmenu_tree_entry_get_app_info (b))));
 }
 
 static GSList *get_all_applications_from_dir (GMenuTreeDirectory *directory,
@@ -802,25 +802,22 @@ static GSList *
 get_all_applications_from_alias (GMenuTreeAlias *alias,
 				 GSList         *list)
 {
-	GMenuTreeItem *aliased_item;
-
-	aliased_item = gmenu_tree_alias_get_item (alias);
-
-	switch (gmenu_tree_item_get_type (aliased_item)) {
+	switch (gmenu_tree_alias_get_item_type (alias)) {
 	case GMENU_TREE_ITEM_ENTRY:
-		list = g_slist_append (list, gmenu_tree_item_ref (aliased_item));
+		/* pass on the reference */
+		list = g_slist_append (list, gmenu_tree_alias_get_aliased_entry (alias));
 		break;
 
-	case GMENU_TREE_ITEM_DIRECTORY:
-		list = get_all_applications_from_dir (GMENU_TREE_DIRECTORY (aliased_item),
-						      list);
+	case GMENU_TREE_ITEM_DIRECTORY: {
+		GMenuTreeDirectory *directory = gmenu_tree_alias_get_aliased_directory (alias);
+		list = get_all_applications_from_dir (directory, list);
+		gmenu_tree_item_unref (directory);
 		break;
+	}
 
 	default:
 		break;
 	}
-
-	gmenu_tree_item_unref (aliased_item);
 
 	return list;
 }
@@ -829,33 +826,37 @@ static GSList *
 get_all_applications_from_dir (GMenuTreeDirectory *directory,
 			       GSList             *list)
 {
-	GSList *items;
-	GSList *l;
+	GMenuTreeIter *iter;
+	GMenuTreeItemType next_type;
 
-	items = gmenu_tree_directory_get_contents (directory);
+	iter = gmenu_tree_directory_iter (directory);
 
-	for (l = items; l; l = l->next) {
-		switch (gmenu_tree_item_get_type (l->data)) {
+	while ((next_type = gmenu_tree_iter_next (iter)) != GMENU_TREE_ITEM_INVALID) {
+		switch (next_type) {
 		case GMENU_TREE_ITEM_ENTRY:
-			list = g_slist_append (list, gmenu_tree_item_ref (l->data));
+			list = g_slist_append (list, gmenu_tree_iter_get_entry (iter));
 			break;
 
-		case GMENU_TREE_ITEM_DIRECTORY:
-			list = get_all_applications_from_dir (l->data, list);
+		case GMENU_TREE_ITEM_DIRECTORY: {
+			GMenuTreeDirectory *dir = gmenu_tree_iter_get_directory (iter);
+			list = get_all_applications_from_dir (dir, list);
+			gmenu_tree_item_unref (dir);
 			break;
+		}
 
-		case GMENU_TREE_ITEM_ALIAS:
-			list = get_all_applications_from_alias (l->data, list);
+		case GMENU_TREE_ITEM_ALIAS: {
+			GMenuTreeAlias *alias = gmenu_tree_iter_get_alias (iter);
+			list = get_all_applications_from_alias (alias, list);
+			gmenu_tree_item_unref (alias);
 			break;
+		}
 
 		default:
 			break;
 		}
-
-		gmenu_tree_item_unref (l->data);
 	}
 
-	g_slist_free (items);
+	gmenu_tree_iter_unref (iter);
 
 	return list;
 }
@@ -867,15 +868,17 @@ get_all_applications (void)
 	GMenuTreeDirectory *root;
 	GSList             *retval;
 
-	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
-	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
+	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_NONE);
+
+	if (!gmenu_tree_load_sync (tree, NULL))
+		return NULL;
 
 	root = gmenu_tree_get_root_directory (tree);
 
 	retval = get_all_applications_from_dir (root, NULL);
 
 	gmenu_tree_item_unref (root);
-	gmenu_tree_unref (tree);
+	g_object_unref (tree);
 
 	retval = g_slist_sort (retval,
 			       (GCompareFunc) compare_applications);
@@ -911,10 +914,13 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	for (l = all_applications; l; l = next) {
 		GMenuTreeEntry *entry = l->data;
 		const char     *entry_name;
+		GDesktopAppInfo *app_info;
+
 
 		next = l->next;
+		app_info = gmenu_tree_entry_get_app_info (entry);
 
-		entry_name = gmenu_tree_entry_get_display_name (entry);
+		entry_name = g_app_info_get_display_name (G_APP_INFO (app_info));
 		if (prev_name && entry_name && strcmp (entry_name, prev_name) == 0) {
 			gmenu_tree_item_unref (entry);
 
@@ -928,14 +934,17 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 		GMenuTreeEntry *entry = l->data;
 		GtkTreeIter    iter;
 		GtkTreePath   *path;
+		GDesktopAppInfo *app_info;
+
+		app_info = gmenu_tree_entry_get_app_info (entry);
 
 		gtk_list_store_append (dialog->program_list_store, &iter);
 		gtk_list_store_set (dialog->program_list_store, &iter,
-				    COLUMN_ICON,      NULL,
-				    COLUMN_ICON_FILE, gmenu_tree_entry_get_icon (entry),
-				    COLUMN_NAME,      gmenu_tree_entry_get_display_name (entry),
-				    COLUMN_COMMENT,   gmenu_tree_entry_get_comment (entry),
-				    COLUMN_EXEC,      gmenu_tree_entry_get_exec (entry),
+				    COLUMN_ICON,      g_app_info_get_icon (G_APP_INFO (app_info)),
+				    COLUMN_ICON_FILE, NULL,
+				    COLUMN_NAME,      g_app_info_get_display_name (G_APP_INFO (app_info)),
+				    COLUMN_COMMENT,   g_app_info_get_description (G_APP_INFO (app_info)),
+				    COLUMN_EXEC,      g_app_info_get_executable (G_APP_INFO (app_info)),
 				    COLUMN_PATH,      gmenu_tree_entry_get_desktop_file_path (entry),
 				    COLUMN_VISIBLE,   TRUE,
 				    -1);

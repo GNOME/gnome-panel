@@ -1,4 +1,4 @@
-/*
+/* -*- c-basic-offset: 8; indent-tabs-mode: t -*-
  * panel-addto.c:
  *
  * Copyright (C) 2004 Vincent Untz
@@ -95,7 +95,7 @@ typedef struct {
 	PanelAddtoItemType     type;
 	char                  *name;
 	char                  *description;
-	char                  *icon;
+	GIcon                 *icon;
 	PanelActionButtonType  action_type;
 	char                  *launcher_path;
 	char                  *menu_filename;
@@ -108,80 +108,6 @@ typedef struct {
 	GSList             *children;
 	PanelAddtoItemInfo  item_info;
 } PanelAddtoAppList;
-
-static PanelAddtoItemInfo special_addto_items [] = {
-
-	{ PANEL_ADDTO_LAUNCHER_NEW,
-	  N_("Custom Application Launcher"),
-	  N_("Create a new launcher"),
-	  PANEL_ICON_LAUNCHER,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "LAUNCHER:ASK",
-	  TRUE },
-
-	{ PANEL_ADDTO_LAUNCHER_MENU,
-	  N_("Application Launcher..."),
-	  N_("Copy a launcher from the applications menu"),
-	  PANEL_ICON_LAUNCHER,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "LAUNCHER:MENU",
-	  TRUE }
-
-};
-
-static PanelAddtoItemInfo internal_addto_items [] = {
-
-	{ PANEL_ADDTO_MENU,
-	  N_("Main Menu"),
-	  N_("The main GNOME menu"),
-	  PANEL_ICON_MAIN_MENU,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "MENU:MAIN",
-	  TRUE },
-
-	{ PANEL_ADDTO_MENUBAR,
-	  N_("Menu Bar"),
-	  N_("A custom menu bar"),
-	  PANEL_ICON_MAIN_MENU,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "MENUBAR:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_SEPARATOR,
-	  N_("Separator"),
-	  N_("A separator to organize the panel items"),
-	  PANEL_ICON_SEPARATOR,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "SEPARATOR:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_USER_MENU,
-	  N_("User Menu"),
-	  N_("Menu to change your settings and your online status"),
-	  PANEL_ICON_USER_AVAILABLE,
-	  PANEL_ACTION_NONE,
-	  NULL,
-	  NULL,
-	  NULL,
-	  "USERMENU:NEW",
-	  TRUE }
-
-};
 
 enum {
 	COLUMN_ICON,
@@ -209,22 +135,73 @@ panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
 	return g_utf8_collate (a->name, b->name);
 }
 
+static PanelAddtoItemInfo *
+get_internal_applets (void)
+{
+	static PanelAddtoItemInfo *internals = NULL;
+	const int n_internals = 4;
+	int i;
+
+	if (internals != NULL)
+		return internals;
+
+
+	internals = g_new0 (PanelAddtoItemInfo, n_internals + 1);
+	i = 0;
+
+	internals[i].type = PANEL_ADDTO_MENU;
+	internals[i].name = _("Main Menu");
+	internals[i].description = _("The main GNOME menu");
+	internals[i].icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
+	internals[i].action_type = PANEL_ACTION_NONE;
+	internals[i].iid = "MENU:MAIN";
+	internals[i].static_data = TRUE;
+	
+	i++;
+	internals[i].type = PANEL_ADDTO_MENUBAR;
+	internals[i].name = _("Menu Bar");
+	internals[i].description = _("A custom menu bar");
+	internals[i].icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
+	internals[i].action_type = PANEL_ACTION_NONE;
+	internals[i].iid = "MENUBAR:NEW";
+	internals[i].static_data = TRUE;
+
+	i++;
+	internals[i].type = PANEL_ADDTO_SEPARATOR;
+	internals[i].name = _("Separator");
+	internals[i].description = _("A separator to organize the panel items");
+	internals[i].icon = g_themed_icon_new (PANEL_ICON_SEPARATOR);
+	internals[i].action_type = PANEL_ACTION_NONE;
+	internals[i].iid = "SEPARATOR:NEW";
+	internals[i].static_data = TRUE;
+
+	i++;
+	internals[i].type = PANEL_ADDTO_USER_MENU;
+	internals[i].name = _("User menu");
+	internals[i].description = _("Menu to change your settings and your online status");
+	internals[i].icon = g_themed_icon_new (PANEL_ICON_USER_AVAILABLE);
+	internals[i].action_type = PANEL_ACTION_NONE;
+	internals[i].iid = "USERMENU:NEW";
+	internals[i].static_data = TRUE;
+
+	i++;
+	g_assert (i == n_internals);
+	internals[i].name = NULL;
+
+	return internals;
+}
+
 static GSList *
 panel_addto_prepend_internal_applets (GSList *list)
 {
-	static gboolean translated = FALSE;
+	PanelAddtoItemInfo *internal;
 	int             i;
 
-	for (i = 0; i < G_N_ELEMENTS (internal_addto_items); i++) {
-		if (!translated) {
-			internal_addto_items [i].name        = _(internal_addto_items [i].name);
-			internal_addto_items [i].description = _(internal_addto_items [i].description);
-		}
+	internal = get_internal_applets ();
 
-                list = g_slist_prepend (list, &internal_addto_items [i]);
+	for (; internal->name; internal++) {
+                list = g_slist_prepend (list, internal);
         }
-
-	translated = TRUE;
 
 	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
 		PanelAddtoItemInfo *info;
@@ -237,7 +214,7 @@ panel_addto_prepend_internal_applets (GSList *list)
 		info->action_type = i;
 		info->name        = g_strdup (panel_action_get_text (i));
 		info->description = g_strdup (panel_action_get_tooltip (i));
-		info->icon        = g_strdup (panel_action_get_icon_name (i));
+		info->icon        = g_themed_icon_new (panel_action_get_icon_name (i));
 		info->iid         = g_strdup (panel_action_get_drag_id (i));
 		info->static_data = FALSE;
 
@@ -270,13 +247,19 @@ panel_addto_make_text (const char *name,
 #define ICON_SIZE 32
 
 static GdkPixbuf *
-panel_addto_make_pixbuf (const char *filename)
+panel_addto_make_pixbuf (GIcon *icon)
 {
+	GtkIconInfo *icon_info;
+	GdkPixbuf *pixbuf;
+
 	//FIXME: size shouldn't be fixed but should depend on the font size
-	return panel_load_icon (gtk_icon_theme_get_default (),
-				filename,
-				ICON_SIZE, ICON_SIZE, ICON_SIZE,
-				NULL);
+	icon_info = gtk_icon_theme_lookup_by_gicon (gtk_icon_theme_get_default (),
+						    icon, ICON_SIZE, 0);
+	if (!icon_info)
+		return NULL;
+	pixbuf = gtk_icon_info_load_icon (icon_info, NULL);
+	gtk_icon_info_free (icon_info);
+	return pixbuf;
 }
 
 static void  
@@ -411,7 +394,7 @@ panel_addto_query_applets (GSList *list)
 		applet->type = PANEL_ADDTO_APPLET;
 		applet->name = g_strdup (name);
 		applet->description = g_strdup (description);
-		applet->icon = g_strdup (icon);
+		applet->icon = g_themed_icon_new (icon);
 		applet->iid = g_strdup (iid);
 		applet->static_data = FALSE;
 
@@ -466,27 +449,55 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 	}
 }
 
+static PanelAddtoItemInfo *
+get_special_items (void)
+{
+	static PanelAddtoItemInfo *specials = NULL;
+
+	if (!specials) {
+		const int n_specials = 2;
+		int i = 0;
+
+		specials = g_new0 (PanelAddtoItemInfo, n_specials + 1);
+
+		specials[i].type = PANEL_ADDTO_LAUNCHER_NEW;
+		specials[i].name = _("Custom Application Launcher");
+		specials[i].description = _("Create a new launcher");
+		specials[i].icon = g_themed_icon_new (PANEL_ICON_LAUNCHER);
+		specials[i].action_type = PANEL_ACTION_NONE;
+		specials[i].iid = "LAUNCHER:ASK";
+		specials[i].static_data = TRUE;
+
+		i++;
+		specials[i].type = PANEL_ADDTO_LAUNCHER_MENU;
+		specials[i].name = _("Application Launcher...");
+		specials[i].description = _("Copy a launcher from the applications menu");
+		specials[i].iid = "LAUNCHER:MENU";
+		specials[i].static_data = TRUE;
+
+		i++;
+		g_assert (i == n_specials);
+		specials[i].name = NULL;
+	}
+
+	return specials;
+}
+
 static void
 panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 				    GtkListStore *model)
 {
-	static gboolean translated = FALSE;
-	int i;
-	
-	for (i = 0; i < G_N_ELEMENTS (special_addto_items); i++) {
-		if (!translated) {
-			special_addto_items [i].name = _(special_addto_items [i].name);
-			special_addto_items [i].description = _(special_addto_items [i].description);
-		}
+	PanelAddtoItemInfo *special;
 
-		if (special_addto_items [i].type == PANEL_ADDTO_LAUNCHER_NEW
+	special = get_special_items ();
+
+	for (; special->name; special++) {
+		if (special->type == PANEL_ADDTO_LAUNCHER_NEW
 		    && panel_lockdown_get_disable_command_line_s ())
 			continue;
 		
-		panel_addto_append_item (dialog, model, &special_addto_items [i]);
+		panel_addto_append_item (dialog, model, special);
 	}
-	
-	translated = TRUE;
 }
 
 static void
@@ -553,7 +564,7 @@ panel_addto_prepend_directory (GSList             **parent_list,
 	data->item_info.type          = PANEL_ADDTO_MENU;
 	data->item_info.name          = g_strdup (gmenu_tree_directory_get_name (directory));
 	data->item_info.description   = g_strdup (gmenu_tree_directory_get_comment (directory));
-	data->item_info.icon          = g_strdup (gmenu_tree_directory_get_icon (directory));
+	data->item_info.icon          = g_themed_icon_new (gmenu_tree_directory_get_icon (directory));
 	data->item_info.menu_filename = g_strdup (filename);
 	data->item_info.menu_path     = gmenu_tree_directory_make_path (directory, NULL);
 	data->item_info.static_data   = FALSE;
@@ -579,13 +590,16 @@ panel_addto_prepend_entry (GSList         **parent_list,
 			   const char      *filename)
 {
 	PanelAddtoAppList *data;
+	GDesktopAppInfo *app_info;
 
 	data = g_new0 (PanelAddtoAppList, 1);
 
+	app_info = gmenu_tree_entry_get_app_info (entry);
+
 	data->item_info.type          = PANEL_ADDTO_LAUNCHER;
-	data->item_info.name          = g_strdup (gmenu_tree_entry_get_display_name (entry));
-	data->item_info.description   = g_strdup (gmenu_tree_entry_get_comment (entry));
-	data->item_info.icon          = g_strdup (gmenu_tree_entry_get_icon (entry));
+	data->item_info.name          = g_strdup (g_app_info_get_display_name (G_APP_INFO (app_info)));
+	data->item_info.description   = g_strdup (g_app_info_get_description (G_APP_INFO (app_info)));
+	data->item_info.icon          = g_object_ref (g_app_info_get_icon (G_APP_INFO (app_info)));
 	data->item_info.launcher_path = g_strdup (gmenu_tree_entry_get_desktop_file_path (entry));
 	data->item_info.static_data   = FALSE;
 
@@ -597,28 +611,26 @@ panel_addto_prepend_alias (GSList         **parent_list,
 			   GMenuTreeAlias  *alias,
 			   const char      *filename)
 {
-	GMenuTreeItem *aliased_item;
-
-	aliased_item = gmenu_tree_alias_get_item (alias);
-
-	switch (gmenu_tree_item_get_type (aliased_item)) {
-	case GMENU_TREE_ITEM_DIRECTORY:
+	switch (gmenu_tree_alias_get_item_type (alias)) {
+	case GMENU_TREE_ITEM_DIRECTORY: {
+		GMenuTreeDirectory *directory = gmenu_tree_alias_get_aliased_directory (alias);
 		panel_addto_prepend_directory (parent_list,
-					       GMENU_TREE_DIRECTORY (aliased_item),
+					       directory,
 					       filename);
+		gmenu_tree_item_unref (directory);
 		break;
-
-	case GMENU_TREE_ITEM_ENTRY:
+	}
+	case GMENU_TREE_ITEM_ENTRY: {
+		GMenuTreeEntry *entry = gmenu_tree_alias_get_aliased_entry (alias);
 		panel_addto_prepend_entry (parent_list,
-					   GMENU_TREE_ENTRY (aliased_item),
+					   entry,
 					   filename);
+		gmenu_tree_item_unref (entry);
 		break;
-
+	}
 	default:
 		break;
 	}
-
-	gmenu_tree_item_unref (aliased_item);
 }
 
 static void
@@ -627,36 +639,42 @@ panel_addto_make_application_list (GSList                  **parent_list,
 				   const char               *filename,
 				   PanelAddtoMenuShowFlags   show_flags)
 {
-	GSList *items;
-	GSList *l;
+	GMenuTreeIter *iter;
+	GMenuTreeItemType next_type;
 
-	items = gmenu_tree_directory_get_contents (directory);
+	iter = gmenu_tree_directory_iter (directory);
 
-	for (l = items; l; l = l->next) {
-		switch (gmenu_tree_item_get_type (l->data)) {
+	while ((next_type = gmenu_tree_iter_next (iter)) != GMENU_TREE_ITEM_INVALID) {
+		switch (next_type) {
 		case GMENU_TREE_ITEM_DIRECTORY:
-			if (show_flags & PANEL_ADDTO_MENU_SHOW_DIRECTORIES)
-				panel_addto_prepend_directory (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_DIRECTORIES) {
+				GMenuTreeDirectory *dir = gmenu_tree_iter_get_directory (iter);
+				panel_addto_prepend_directory (parent_list, dir, filename);
+				gmenu_tree_item_unref (dir);
+			}
 			break;
 
 		case GMENU_TREE_ITEM_ENTRY:
-			if (show_flags & PANEL_ADDTO_MENU_SHOW_ENTRIES)
-				panel_addto_prepend_entry (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_ENTRIES) {
+				GMenuTreeEntry *entry = gmenu_tree_iter_get_entry (iter);
+				panel_addto_prepend_entry (parent_list, entry, filename);
+				gmenu_tree_item_unref (entry);
+			}
 			break;
 
 		case GMENU_TREE_ITEM_ALIAS:
-			if (show_flags & PANEL_ADDTO_MENU_SHOW_ALIAS)
-				panel_addto_prepend_alias (parent_list, l->data, filename);
+			if (show_flags & PANEL_ADDTO_MENU_SHOW_ALIAS) {
+				GMenuTreeAlias *alias = gmenu_tree_iter_get_alias (iter);
+				panel_addto_prepend_alias (parent_list, alias, filename);
+				gmenu_tree_item_unref (alias);
+			}
 			break;
 
 		default:
 			break;
 		}
-
-		gmenu_tree_item_unref (l->data);
 	}
-
-	g_slist_free (items);
+	gmenu_tree_iter_unref (iter);
 
 	*parent_list = g_slist_reverse (*parent_list);
 }
@@ -714,8 +732,12 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	tree = gmenu_tree_lookup ("applications.menu", GMENU_TREE_FLAGS_NONE);
-	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
+	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_NONE);
+
+	if (!gmenu_tree_load_sync (tree, NULL)) {
+		g_object_unref (tree);
+		return;
+	}
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
@@ -726,10 +748,14 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 		gmenu_tree_item_unref (root);
 	}
 
-	gmenu_tree_unref (tree);
+	g_object_unref (tree);
 
-	tree = gmenu_tree_lookup ("gnomecc.menu", GMENU_TREE_FLAGS_NONE);
-	gmenu_tree_set_sort_key (tree, GMENU_TREE_SORT_DISPLAY_NAME);
+	tree = gmenu_tree_new ("gnomecc.menu", GMENU_TREE_FLAGS_NONE);
+
+	if (!gmenu_tree_load_sync (tree, NULL)) {
+		g_object_unref (tree);
+		return;
+	}
 
 	if ((root = gmenu_tree_get_root_directory (tree))) {
 		GtkTreeIter iter;
@@ -753,7 +779,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 		gmenu_tree_item_unref (root);
 	}
 
-	gmenu_tree_unref (tree);
+	g_object_unref (tree);
 
 	dialog->application_model = GTK_TREE_MODEL (store);
 	dialog->filter_application_model = gtk_tree_model_filter_new (GTK_TREE_MODEL (dialog->application_model),
@@ -1036,7 +1062,7 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	dialog->application_model = NULL;
 
 	if (dialog->menu_tree)
-		gmenu_tree_unref (dialog->menu_tree);
+		g_object_unref (dialog->menu_tree);
 	dialog->menu_tree = NULL;
 
 	g_free (dialog);
