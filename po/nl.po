@@ -2,27 +2,29 @@
 #
 # This file is distributed under the same license as the gnome-panel package.
 #
-# Dirk-Jan C. Binnema <djcb@dds.nl>, 1998, 1999
-# Dennis Smit <synap@area101.penguin.nl>, 2000
-# Almer S. Tigelaar <almer1@dds.nl>, 2000
-# Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2001
-# Huib Kleinhout <huib@stack.nl>, 2002
-# Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002
-# Tino Meinen <a.t.meinen@chello.nl>, 2002. 2006, 2007
-# Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2006
-# Daniel van Eeden <gnomenl@myname.nl>, 2008
-# Wouter Bolsterlee <wbolster@gnome.org>, 2006–2011
 #
 # desktop - bureaublad
 # workspace - werkblad
+#
+# Dirk-Jan C. Binnema <djcb@dds.nl>, 1998, 1999.
+# Dennis Smit <synap@area101.penguin.nl>, 2000.
+# Almer S. Tigelaar <almer1@dds.nl>, 2000.
+# Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2001.
+# Huib Kleinhout <huib@stack.nl>, 2002.
+# Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002.
+# Tino Meinen <a.t.meinen@chello.nl>, 2002. 2006, 2007.
+# Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2006.
+# Daniel van Eeden <gnomenl@myname.nl>, 2008.
+# Wouter Bolsterlee <wbolster@gnome.org>, 2006–2011.
+# Rachid <rachidbm@ubuntu.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-02 17:43+0200\n"
-"PO-Revision-Date: 2011-04-02 17:43+0200\n"
-"Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
+"POT-Creation-Date: 2011-05-04 20:29+0200\n"
+"PO-Revision-Date: 2011-04-22 11:58+0200\n"
+"Last-Translator: Rachid <rachidbm@ubuntu.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -30,6 +32,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# Dit wordt gebruikt wanneer je 12-uursklok wilt weergeven. Dus moet hetzelfde blijven lijkt me.
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
@@ -41,7 +44,7 @@ msgstr ""
 #: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
-msgstr "%l:%M %P"
+msgstr "%l:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
@@ -109,7 +112,7 @@ msgstr "Kalender"
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #: ../applets/clock/clock.c:443
 msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %P"
+msgstr "%l:%M:%S %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
@@ -189,7 +192,7 @@ msgstr "Computerklok"
 #. * am/pm.
 #: ../applets/clock/clock.c:1570
 msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %P"
+msgstr "%H:%M:%S"
 
 #. Translators: This is a strftime format
 #. * string.
@@ -199,7 +202,7 @@ msgstr "%I:%M:%S %P"
 #. * am/pm.
 #: ../applets/clock/clock.c:1578
 msgid "%I:%M %p"
-msgstr "%I:%M %P"
+msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
@@ -684,6 +687,22 @@ msgstr "Kon hulpdocument ‘%s’ niet weergeven"
 msgid "Error displaying help document"
 msgstr "Kon hulpdocument niet weergeven"
 
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
+msgid "Clock"
+msgstr "Klok"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "Klok-appletfactory"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
+msgid "Factory for clock applet"
+msgstr "Factory voor klok-applets"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
+msgid "Get the current time and date"
+msgstr "Huidige tijd en datum"
+
 #: ../applets/fish/fish.c:217
 #, c-format
 msgid ""
@@ -804,9 +823,82 @@ msgstr "_Kantelen in verticale panelen"
 msgid "seconds"
 msgstr "seconden"
 
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "Een zwemmende vis of een ander bewegend beest weergeven"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
+msgid "Fish"
+msgstr "Vis"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "Waar Die Stomme Vis Vandaan Kwam"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Wanda-factory"
+
 #: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
-msgstr "Paneel-mededelingengebied"
+msgstr "Mededelingengebied in het paneel"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "Gebied waar mededelingspictogrammen verschijnen"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
+msgid "Factory for notification area"
+msgstr "Factory voor mededelingengebied"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:3
+msgid "Notification Area"
+msgstr "Mededelingengebied"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
+msgid "Notification Area Factory"
+msgstr "Factory voor mededelingengebied"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "Factory voor vensternavigatie-gerelateerde applets"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "Toepassingsvensters verbergen en het bureaublad tonen"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
+msgid "Show Desktop"
+msgstr "Bureaublad tonen"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "Wisselen tussen open vensters met behulp van een menu"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "Wisselen tussen open vensters met behulp van knoppen"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "Wisselen tussen werkbladen"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:7
+msgid "Window List"
+msgstr "Vensterlijst"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "Vensternavigatie-applet-factory"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
+#: ../applets/wncklet/window-menu.c:204
+msgid "Window Selector"
+msgstr "Vensterselectiemenu"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
+msgid "Workspace Switcher"
+msgstr "Werkbladwisselaar"
 
 #: ../applets/wncklet/showdesktop.c:177
 #, c-format
@@ -880,10 +972,6 @@ msgstr "Vensters _altijd groeperen"
 #: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "Vensters _nooit groeperen"
-
-#: ../applets/wncklet/window-menu.c:204
-msgid "Window Selector"
-msgstr "Vensterselectiemenu"
 
 #: ../applets/wncklet/workspace-switcher.c:194
 #: ../applets/wncklet/workspace-switcher.c:723
@@ -2749,17 +2837,33 @@ msgstr "%1$s, %2$s"
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: ../gnome-panel/panel.c:1396
+#: ../gnome-panel/panel.c:1395
 msgid "Delete this panel?"
 msgstr "Dit paneel verwijderen?"
 
-#: ../gnome-panel/panel.c:1400
+#: ../gnome-panel/panel.c:1399
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Wanneer een paneel verwijderd wordt, gaat het paneel\n"
 "en de instellingen ervan verloren."
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
+msgid "A simple applet for testing the GNOME panel"
+msgstr "Een simpele applet om het Gnome-2.0-paneel te testen"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
+msgid "Factory for Test DBus Applet"
+msgstr "Factory om DBus-applets te testen"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
+msgid "Test DBus Applet"
+msgstr "Test DBus-applet"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
+msgid "Test DBus Applet Factory"
+msgstr "Test DBus-applet-factory"
 
 #~ msgid "Cannot find an empty spot"
 #~ msgstr "Kan geen lege plaats vinden"
@@ -2786,9 +2890,6 @@ msgstr ""
 
 #~ msgid "_About"
 #~ msgstr "I_nfo"
-
-#~ msgid "Clock"
-#~ msgstr "Klok"
 
 #~ msgid "The Clock displays the current time and date"
 #~ msgstr "De klok toont de huidige tijd en datum"
@@ -2824,9 +2925,6 @@ msgstr ""
 #~ msgid "(with minor help from George)"
 #~ msgstr "(met enige hulp van George)"
 
-#~ msgid "Fish"
-#~ msgstr "Vis"
-
 #~ msgid "Select an animation"
 #~ msgstr "Selecteer een animatie"
 
@@ -2849,16 +2947,10 @@ msgstr ""
 #~ "Deze sleutel geeft het aantal beeldjes aan voor weergave van de "
 #~ "visanimatie."
 
-#~ msgid "Notification Area"
-#~ msgstr "Mededelingengebied"
-
 #~ msgid "This button lets you hide all windows and show the desktop."
 #~ msgstr ""
 #~ "Deze knop stelt u in staat alle vensters te verbergen en het bureaublad "
 #~ "te zien."
-
-#~ msgid "Window List"
-#~ msgstr "Vensterlijst"
 
 #~ msgid ""
 #~ "The Window List shows a list of all windows in a set of buttons and lets "
@@ -2903,9 +2995,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Er is een fout opgetreden bij het laden van de 'display_all_workspaces'-"
 #~ "waarde voor de werkbladwisselaar: %s\n"
-
-#~ msgid "Workspace Switcher"
-#~ msgstr "Werkbladwisselaar"
 
 #~ msgid ""
 #~ "The Workspace Switcher shows you a small version of your workspaces that "
@@ -3242,15 +3331,6 @@ msgstr ""
 #~ msgid "_Time:"
 #~ msgstr "_Tijd:"
 
-#~ msgid "A simple applet for testing the GNOME-2.0 panel"
-#~ msgstr "Een simpele applet om het Gnome-2.0 paneel te testen"
-
-#~ msgid "Test Bonobo Applet"
-#~ msgstr "Test Bonobo Applet"
-
-#~ msgid "Test Bonobo Applet Factory"
-#~ msgstr "Test Bonobo Applet Fabriek"
-
 #~ msgid "query returned exception %s\n"
 #~ msgstr "query resulteerde in uitzondering %s\n"
 
@@ -3283,15 +3363,6 @@ msgstr ""
 #~ msgid "Killer GEGLs from Outer Space"
 #~ msgstr "Dodelijke GEGL's uit de ruimte"
 
-#~ msgid "Clock Applet Factory"
-#~ msgstr "Klok-appletfabriek"
-
-#~ msgid "Factory for creating clock applets."
-#~ msgstr "Fabriek om klok-applets aan te maken."
-
-#~ msgid "Get the current time and date"
-#~ msgstr "Huidige tijd en datum"
-
 #~ msgid "Change system time"
 #~ msgstr "Systeemtijd aanpassen"
 
@@ -3310,42 +3381,6 @@ msgstr ""
 
 #~ msgid "Privileges are required to configure the hardware clock."
 #~ msgstr "Aanvullende rechten nodig voor het instellen van de hardwareklok."
-
-#~ msgid "Display a swimming fish or another animated creature"
-#~ msgstr "Een zwemmende vis of een ander bewegend beest weergeven"
-
-#~ msgid "From Whence That Stupid Fish Came"
-#~ msgstr "Waar Die Stomme Vis Vandaan Kwam"
-
-#~ msgid "Wanda Factory"
-#~ msgstr "Wanda-fabriek"
-
-#~ msgid "Area where notification icons appear"
-#~ msgstr "Gebied waar mededelingspictogrammen verschijnen"
-
-#~ msgid "Notification Area Factory"
-#~ msgstr "Fabriek voor mededelingengebieden"
-
-#~ msgid "Factory for the window navigation related applets"
-#~ msgstr "Fabriek voor vensternavigatie-gerelateerde applets"
-
-#~ msgid "Hide application windows and show the desktop"
-#~ msgstr "Toepassingsvensters verbergen en het bureaublad tonen"
-
-#~ msgid "Show Desktop"
-#~ msgstr "Bureaublad tonen"
-
-#~ msgid "Switch between open windows using a menu"
-#~ msgstr "Wisselen tussen open vensters met behulp van een menu"
-
-#~ msgid "Switch between open windows using buttons"
-#~ msgstr "Wisselen tussen open vensters met behulp van knoppen"
-
-#~ msgid "Switch between workspaces"
-#~ msgstr "Wisselen tussen werkbladen"
-
-#~ msgid "Window Navigation Applet Factory"
-#~ msgstr "Vensternavigatie-appletfabriek"
 
 #~ msgid "Exception from popup_menu '%s'\n"
 #~ msgstr "Uitzondering van popup_menu ‘%s’\n"
