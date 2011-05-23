@@ -539,7 +539,6 @@ clock_location_make_current (ClockLocation *loc,
                              GDestroyNotify destroy)
 {
         ClockLocationPrivate *priv = PRIVATE (loc);
-        gchar *filename;
 	MakeCurrentData *mcdata;
 
         if (loc == current_location) {
@@ -571,11 +570,9 @@ clock_location_make_current (ClockLocation *loc,
 	mcdata->data = data;
 	mcdata->destroy = destroy;
 
-        filename = g_build_filename (SYSTEM_ZONEINFODIR, priv->timezone, NULL);
-        set_system_timezone_async (filename,
+        set_system_timezone_async (priv->timezone,
                                    make_current_cb,
                                    mcdata);
-        g_free (filename);
 }
 
 static gchar *

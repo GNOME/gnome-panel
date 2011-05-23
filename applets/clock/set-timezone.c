@@ -79,7 +79,7 @@ can_set_call_finished (GObject      *source,
 
   if (reply != NULL)
     {
-      g_variant_get (reply, "(i)", cache->value);
+      g_variant_get (reply, "(i)", &cache->value);
       g_variant_unref (reply);
     }
 
@@ -119,7 +119,7 @@ can_set (Cache *cache, const gchar *method_name)
 gint
 can_set_system_timezone (void)
 {
-  return can_set (&can_set_timezone_cache, "CanSetTimeZone");
+  return can_set (&can_set_timezone_cache, "CanSetTimezone");
 }
 
 gint
@@ -177,7 +177,7 @@ set_system_timezone_async (const gchar         *filename,
 
   g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
                           MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
-                          "SetTimeZone", g_variant_new ("(s)", filename),
+                          "SetTimezone", g_variant_new ("(s)", filename),
                           NULL, G_DBUS_CALL_FLAGS_NONE, -1, NULL,
                           callback, user_data);
 }
