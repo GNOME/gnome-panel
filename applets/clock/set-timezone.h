@@ -27,7 +27,7 @@ gint     can_set_system_timezone (void);
 
 gint     can_set_system_time     (void);
 
-void     set_system_timezone_async   (const gchar          *filename,
+void     set_system_timezone_async   (const gchar          *tz,
                                       GAsyncReadyCallback   callback,
                                       gpointer              user_data);
 

@@ -154,7 +154,7 @@ set_system_timezone_finish (GAsyncResult  *result,
 }
 
 void
-set_system_timezone_async (const gchar         *filename,
+set_system_timezone_async (const gchar         *tz,
                            GAsyncReadyCallback  callback,
                            gpointer             user_data)
 {
@@ -177,7 +177,7 @@ set_system_timezone_async (const gchar         *filename,
 
   g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
                           MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
-                          "SetTimezone", g_variant_new ("(s)", filename),
+                          "SetTimezone", g_variant_new ("(s)", tz),
                           NULL, G_DBUS_CALL_FLAGS_NONE, -1, NULL,
                           callback, user_data);
 }
