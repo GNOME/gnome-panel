@@ -310,14 +310,20 @@ clock_set_timeout (ClockData *cd,
 		}
 	} else {
  		struct timeval tv;
+		struct tm *tm;
 
 		gettimeofday (&tv, NULL);
  		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+1;
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
-		    !cd->showseconds)
- 			timeouttime += 1000 * (59 - now % 60);
+		    !cd->showseconds) {
+			/* we use localtime() to handle leap seconds, see
+			 * https://bugzilla.gnome.org/show_bug.cgi?id=604317 */
+			tm = localtime (&now);
+			if (tm->tm_sec < 60)
+				timeouttime += 1000 * (59 - tm->tm_sec);
+		}
  	}
 
 	cd->timeout = g_timeout_add (timeouttime,
