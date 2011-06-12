@@ -1,28 +1,28 @@
 # Serbian translation of gnome-panel
 # Courtesy of Prevod.org team (http://prevod.org/) -- 2003, 2004, 2005, 2006, 2007, 2008, 2009.
-#
 # This file is distributed under the same license as the gnome-panel package.
-#
 # Maintainer: Danilo Šegan <danilo@gnome.org>
 # Reviewed on 2004-02-25 by: Danilo Šegan <danilo@gnome.org> and Bojan Suzic <bojans@teol.net>
 # Reviewed on 2005-03-02 by: Danilo Šegan <danilo@gnome.org>
 # Reviewed on 2005-07-29 by: Slobodan D. Sredojević <slobo@akrep.be>
 # Miloš Popović <gpopac@gmail.com>, 2010.
-#
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&component=general\n"
-"POT-Creation-Date: 2010-08-18 15:34+0000\n"
-"PO-Revision-Date: 2010-08-23 21:32+0200\n"
-"Last-Translator: Miloš Popović <gpopac@gmail.com>\n"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-04-05 17:39+0000\n"
+"PO-Revision-Date: 2011-05-30 21:40+0200\n"
+"Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: Serbian (sr)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.5.2\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1471,7 +1471,7 @@ msgstr "Prikaži opcije upravnika sesijama"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
 #: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Greška"
 
@@ -1502,7 +1502,7 @@ msgstr "Nema instaliranih programa za pretragu direktorijuma."
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "Ne mogu da nađem prazno mesto"
 
@@ -1717,7 +1717,7 @@ msgid "Locate documents and folders on this computer by name or content"
 msgstr "Pronalazi dokumente i fascikle po imenu ili sadržaju"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Primoraj zatvaranje"
 
@@ -1837,12 +1837,12 @@ msgstr "_Ne učitavaj"
 msgid "_Reload"
 msgstr "_Učitaj"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Ovaj panel je naišao na nepriliku pri učitavanju „%s“."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Da li želite da uklonite ovo programče iz vaših podešavanja?"
 
@@ -1969,11 +1969,11 @@ msgstr ""
 "Kliknite na prozor da primorate program da izađe. Da otkažete, pritisnite "
 "<ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Primoraj ovaj program na zatvaranje?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2312,7 +2312,6 @@ msgid "Applet Bonobo IID"
 msgstr "Bonobo IID programčeta"
 
 #: ../gnome-panel/panel-object.schemas.in.h:3
-#| msgid "Applet Bonobo IID"
 msgid "Applet IID"
 msgstr "IB programčeta"
 
@@ -2408,17 +2407,14 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Identifikator panela prvog nivoa koji sadrži ovaj objekat."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
-#| msgid ""
-#| "The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-#| "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-#| "\"bonobo-applet\"."
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
-"IB implementacije za programče — npr. „ClockAppletFactory::ClockApplet“. "
-"Ovaj ključ je značajno ako je ključ „object_type“ (vrsta objekta) postavljen na "
-"„bonobo-applet“."
+"IB sprovođenja za programče — npr. „ClockAppletFactory::ClockApplet“. Ovaj "
+"ključ je značajan samo ako je ključ „object_type“ (vrsta objekta) postavljen na "
+"„external-applet“ (ili na zastareli „bonobo-applet“)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2467,18 +2463,14 @@ msgstr ""
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
-"Vrsta ovog objekta na panelu. Postoji više dozvoljenih vrednosti — „drawer-"
-"object“, „menu-object“, „launcher-object“, „bonobo-applet“, „action-applet“ "
-"i „menu-bar“."
+"Vrsta ovog objekta panela. Dozvoljene vrednosti su: „drawer-object“, „menu-"
+"object“, „launcher-object“, „external-applet“, „action-applet“, „menu-bar“ i "
+"„separator“."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
-#| msgid ""
-#| "The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-#| "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-#| "\"bonobo-applet\"."
 msgid ""
 "This key is deprecated, following the migration to a new library for "
 "applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
@@ -2506,20 +2498,20 @@ msgstr "Koristi ikonu po izboru za dugme objekta"
 msgid "Use custom path for menu contents"
 msgstr "Koristi putanju po izboru za sadržaj menija"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Greška pri čitanju Gkonf niske „%s“: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Greška pri čitanju Gkonf celog broja „%s“: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2528,7 +2520,7 @@ msgstr ""
 "Panel „%s“ je podešen da se prikazuje na ekranu %d koji trenutno nije "
 "dostupan. Ne učitavam ovaj panel."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Greška pri čitanju Gkonf istinitosne vrednosti „%s“: %s"
@@ -3238,21 +3230,21 @@ msgstr "Ikona „%s“ nije nađena"
 msgid "Could not execute '%s'"
 msgstr "Ne mogu da izvršim „%s“"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "datoteka"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Lična fascikla"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistem datoteka"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Traži"
 
@@ -3261,7 +3253,7 @@ msgstr "Traži"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
