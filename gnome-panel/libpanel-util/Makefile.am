@@ -17,7 +17,7 @@ BUILT_SOURCES =			\
 	panel-util-types.c	\
 	panel-util-types.h
 
-panel-util-types.c: @REBUILD@ $(panel_util_enum_headers)
+panel-util-types.c: $(panel_util_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-util-types.h\"\n\n" \
@@ -33,7 +33,7 @@ panel-util-types.c: @REBUILD@ $(panel_util_enum_headers)
 			--vtail "  return type;\n}\n\n" \
 		$(panel_util_enum_headers) > $@
 
-panel-util-types.h: @REBUILD@ $(panel_util_enum_headers)
+panel-util-types.h: $(panel_util_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __PANEL_UTIL_TYPES_H__\n" \
 			--fhead "#define __PANEL_UTIL_TYPES_H__ 1\n\n" \

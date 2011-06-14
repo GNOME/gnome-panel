@@ -196,7 +196,7 @@ panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)echo "#include \"panel-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=panel_marshal >> $@
 
-panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
+panel-typebuiltins.c: $(panel_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
@@ -212,7 +212,7 @@ panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
 			--vtail "  return type;\n}\n\n" \
 		$(panel_enum_headers) > $@
 
-panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
+panel-typebuiltins.h: $(panel_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \

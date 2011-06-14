@@ -49,7 +49,7 @@ panel-applet-marshal.c: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 
 panel_applet_enum_headers = $(top_srcdir)/libpanel-applet/panel-applet.h
 
-panel-applet-enums.c: @REBUILD@ $(panel_applet_enum_headers)
+panel-applet-enums.c: $(panel_applet_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-applet-enums.h\"\n\n" \
@@ -65,7 +65,7 @@ panel-applet-enums.c: @REBUILD@ $(panel_applet_enum_headers)
 			--vtail "  return type;\n}\n\n" \
 		$(panel_applet_enum_headers) > $@
 
-panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
+panel-applet-enums.h: $(panel_applet_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __PANEL_APPLET_ENUMS_H__\n" \
 			--fhead "#define __PANEL_APPLET_ENUMS_H__\n\n" \
