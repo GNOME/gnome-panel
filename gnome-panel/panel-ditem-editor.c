@@ -1773,7 +1773,7 @@ panel_ditem_editor_get_revert_key_file (PanelDItemEditor *dialog)
 	return dialog->priv->revert_key_file;
 }
 
-G_CONST_RETURN char *
+const char *
 panel_ditem_editor_get_uri (PanelDItemEditor *dialog)
 {
 	g_return_val_if_fail (PANEL_IS_DITEM_EDITOR (dialog), NULL);

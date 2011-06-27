@@ -387,7 +387,7 @@ panel_action_get_invoke (PanelActionButtonType type)
 	return G_CALLBACK (actions[type].invoke);
 }
 
-G_CONST_RETURN char*
+const char*
 panel_action_get_icon_name (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
@@ -395,7 +395,7 @@ panel_action_get_icon_name (PanelActionButtonType type)
 	return actions[type].icon_name;
 }
 
-G_CONST_RETURN char*
+const char*
 panel_action_get_text (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
@@ -403,7 +403,7 @@ panel_action_get_text (PanelActionButtonType type)
 	return _(actions[type].text);
 }
 
-G_CONST_RETURN char*
+const char*
 panel_action_get_tooltip (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
@@ -411,7 +411,7 @@ panel_action_get_tooltip (PanelActionButtonType type)
 	return _(actions[type].tooltip);
 }
 
-G_CONST_RETURN char*
+const char*
 panel_action_get_drag_id (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);

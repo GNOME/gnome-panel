@@ -792,7 +792,7 @@ panel_applet_destroy (GtkWidget  *widget,
 	g_free (info);
 }
 
-static G_CONST_RETURN char *
+static const char *
 panel_applet_get_toplevel_id (AppletInfo *applet)
 {
 	PanelWidget *panel_widget;

@@ -4593,7 +4593,7 @@ panel_toplevel_set_toplevel_id (PanelToplevel *toplevel,
 	toplevel->priv->toplevel_id = g_strdup (toplevel_id);
 }
 
-G_CONST_RETURN char *
+const char *
 panel_toplevel_get_id (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
@@ -4668,7 +4668,7 @@ panel_toplevel_set_name (PanelToplevel *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "name");
 }
 
-G_CONST_RETURN char *
+const char *
 panel_toplevel_get_name (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
@@ -4676,7 +4676,7 @@ panel_toplevel_get_name (PanelToplevel *toplevel)
 	return toplevel->priv->name;
 }
 
-G_CONST_RETURN char *
+const char *
 panel_toplevel_get_description (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);

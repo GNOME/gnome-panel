@@ -100,7 +100,7 @@ GKeyFile *panel_ditem_editor_get_revert_key_file (PanelDItemEditor *dialog);
 void panel_ditem_editor_set_uri (PanelDItemEditor *dialog,
 				 const char       *uri);
 
-G_CONST_RETURN char *panel_ditem_editor_get_uri (PanelDItemEditor *dialog);
+const char *panel_ditem_editor_get_uri (PanelDItemEditor *dialog);
 
 void panel_ditem_register_save_uri_func (PanelDItemEditor  *dialog,
 					 PanelDitemSaveUri  save_uri,

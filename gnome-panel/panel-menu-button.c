@@ -938,7 +938,7 @@ panel_menu_button_accessible_ref_child (AtkObject *obj,
 	return g_object_ref (gtk_widget_get_accessible (menu));
 }
 
-static G_CONST_RETURN gchar *
+static const gchar *
 panel_menu_button_accessible_get_name (AtkObject *obj)
 {
 	const char *name;
