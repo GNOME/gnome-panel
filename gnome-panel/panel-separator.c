@@ -47,7 +47,6 @@ panel_separator_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
         PanelSeparator  *separator = PANEL_SEPARATOR (widget);
-        GdkWindow       *window;
         GtkStyleContext *context;
         GtkStateFlags    state;
         GtkBorder        padding;
@@ -56,7 +55,6 @@ panel_separator_draw (GtkWidget *widget,
         if (GTK_WIDGET_CLASS (panel_separator_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_separator_parent_class)->draw (widget, cr);
 
-	window = gtk_widget_get_window (widget);
         state = gtk_widget_get_state_flags (widget);
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_height (widget);

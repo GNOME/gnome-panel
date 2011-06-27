@@ -460,12 +460,9 @@ panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
 				    gpointer       user_data)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (user_data);
-	PanelWidget      *panel_widget;
 	gboolean          locked_down;
 	gboolean          movable;
 	gboolean          removable;
-
-	panel_widget = PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame)));
 
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_layout_is_writable ();

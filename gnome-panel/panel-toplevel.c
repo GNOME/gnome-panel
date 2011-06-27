@@ -2846,7 +2846,6 @@ panel_toplevel_draw (GtkWidget *widget,
 	PanelToplevel   *toplevel = (PanelToplevel *) widget;
 	PanelFrameEdge   edges;
 	gboolean         retval = FALSE;
-	GdkWindow       *window;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
@@ -2863,7 +2862,6 @@ panel_toplevel_draw (GtkWidget *widget,
 	    toplevel->priv->buttons_enabled)
 		return retval;
 
-	window = gtk_widget_get_window (widget);
 	state = gtk_widget_get_state_flags (widget);
         awidth = gtk_widget_get_allocated_width (widget);
         aheight = gtk_widget_get_allocated_height (widget);
@@ -3085,7 +3083,6 @@ panel_toplevel_get_animation_time (PanelToplevel *toplevel)
 static void
 panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
 	int        monitor_width, monitor_height;
 
 	toplevel->priv->animation_end_x      = toplevel->priv->x;
@@ -3093,7 +3090,7 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 	toplevel->priv->animation_end_width  = -1;
 	toplevel->priv->animation_end_height = -1;
 
-	screen = panel_toplevel_get_monitor_geometry (
+	panel_toplevel_get_monitor_geometry (
 				toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
 	if (!toplevel->priv->expand) {

@@ -613,7 +613,6 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 			   const char          *uri)
 {
 	gboolean    success;
-	const char *id;
 	const char *basename;
 
 	if (g_ascii_strncasecmp (uri, "x-nautilus-desktop:///",
@@ -621,7 +620,6 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 			return FALSE;
 
 	success = TRUE;
-	id = panel_toplevel_get_id (panel->toplevel);
 	basename = uri + strlen ("x-nautilus-desktop:///");
 
 	if (strncmp (basename, "trash", strlen ("trash")) == 0)

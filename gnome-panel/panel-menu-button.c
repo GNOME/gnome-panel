@@ -749,6 +749,17 @@ panel_menu_button_load (PanelWidget *panel,
 	root = panel_menu_scheme_to_path_root (scheme);
 	g_free (scheme);
 
+	if (root == LAST_MENU) {
+		g_printerr ("Unknown menu scheme, cannot load menu button\n");
+
+		g_free (menu_path);
+		g_free (custom_icon);
+		g_free (tooltip);
+		g_object_unref (settings_instance);
+
+		return;
+	}
+
 	panel_menu_button_load_helper (menu_path,
 				       custom_icon,
 				       tooltip,

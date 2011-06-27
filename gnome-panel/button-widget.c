@@ -381,16 +381,15 @@ button_widget_draw (GtkWidget *widget,
         context = gtk_widget_get_style_context (widget);
 
 	if (button_widget->priv->arrow) {
-		GtkArrowType arrow_type;
                 gdouble angle, size;
 
                 gtk_style_context_save (context);
                 gtk_style_context_set_state (context, state_flags);
 
-		arrow_type = calc_arrow (button_widget->priv->orientation,
-					 width, height,
-					 &x, &y,
-                                         &angle, &size);
+		calc_arrow (button_widget->priv->orientation,
+			    width, height,
+			    &x, &y,
+			    &angle, &size);
 
                 cairo_save (cr);
 		gtk_render_arrow (context, cr, angle, x, y, size);

@@ -889,7 +889,6 @@ panel_layout_changed_object (void)
 {
         char       **ids;
         GSList      *to_remove;
-        gboolean     loading;
         gboolean     found;
         const char  *id;
         GSList      *l;
@@ -924,8 +923,6 @@ panel_layout_changed_object (void)
 
         /* Add what appeared in the layout */
 
-        loading = FALSE;
-
         for (i = 0; ids[i] != NULL; i++) {
                 found = FALSE;
 
@@ -940,17 +937,15 @@ panel_layout_changed_object (void)
                         }
                 }
 
-                if (!found) {
+                if (!found)
                         panel_layout_load_object (ids[i]);
-                        loading = TRUE;
-                }
         }
 
         g_strfreev (ids);
 
-        /* Always do this, even if loading is FALSE: if a panel has been
-         * created, we want a do_load() to unhide it, even if there is no
-         * object to load */
+        /* Always do this, even if there is no object that got loaded: if a
+         * panel has been created, we want a do_load() to unhide it, even if
+         * there is no object to load */
         panel_object_loader_do_load (FALSE);
 }
 

@@ -167,11 +167,7 @@ static void
 applet_callback_callback (GtkWidget      *widget,
 			  AppletUserMenu *menu)
 {
-	GdkScreen *screen;
-
 	g_return_if_fail (menu->info != NULL);
-
-	screen = applet_user_menu_get_screen (menu);
 
 	switch (menu->info->type) {
 	case PANEL_OBJECT_LAUNCHER:
@@ -484,7 +480,6 @@ panel_applet_get_edit_menu (AppletInfo *info)
 {
 	GtkWidget   *menu;
 	GtkWidget   *menuitem;
-	PanelWidget *panel_widget;
 	GtkWidget   *image;
 	gboolean     movable;
 	gboolean     removable;
@@ -496,7 +491,6 @@ panel_applet_get_edit_menu (AppletInfo *info)
 		return NULL;
 
 	menu = panel_applet_create_bare_menu (info);
-	panel_widget = panel_applet_get_panel_widget (info);
 
 	movable = panel_applet_can_freely_move (info);
 	removable = panel_layout_is_writable ();
@@ -831,7 +825,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 			    const char *id,
 			    gboolean    immediate)
 {
-	PanelWidget *panel_widget;
 	const char  *toplevel_id;
 	AppletData  *applet_data;
 
@@ -854,8 +847,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	if (!(toplevel_id = panel_applet_get_toplevel_id (applet_info)))
 		return;
-
-	panel_widget = panel_applet_get_panel_widget (applet_info);
 
 	applet_data = g_object_get_data (G_OBJECT (applet_info->widget),
 					 PANEL_APPLET_DATA);
