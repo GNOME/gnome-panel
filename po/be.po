@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-26 01:52+0300\n"
-"PO-Revision-Date: 2009-09-02 16:28+0300\n"
+"POT-Creation-Date: 2011-07-13 23:39+0300\n"
+"PO-Revision-Date: 2011-07-13 23:37+0300\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -1515,8 +1515,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
-"Вызначае файл фонавай выявы. Калі выява ўтрымлівае альфа-канал, яна "
-"зліваецца ў адно з фонавай выявай стала."
+"Вызначае файл фонавай выявы. Калі выява змяшчае альфа-канал, яна зліваецца ў "
+"адно з фонавай выявай стала."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
 msgid ""
@@ -1766,8 +1766,8 @@ msgstr "Паказаць опцыі кіравання сеансам"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:80
-#: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:941
+#: ../gnome-panel/panel-applet-frame.c:766
+#: ../gnome-panel/panel-applet-frame.c:938
 msgid "Error"
 msgstr "Памылка"
 
@@ -1794,15 +1794,15 @@ msgstr "Не ўдалося адчыніць адрас \"%s\""
 msgid "No application to handle search folders is installed."
 msgstr "Праграма для працы з папкамі пошуку не ўсталяваная."
 
-#: ../gnome-panel/applet.c:363
+#: ../gnome-panel/applet.c:359
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "_Перамясціць"
 
-#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "_Выдаліць з панэлі"
 
@@ -1983,7 +1983,7 @@ msgstr "Стартар праграмы..."
 msgid "Copy a launcher from the applications menu"
 msgstr "Скапіраваць стартар з меню праграм"
 
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:959
 msgid "Main Menu"
 msgstr "Галоўнае меню"
 
@@ -2032,36 +2032,36 @@ msgstr "Знайсці _элемент, які трэба дадаць да па
 msgid "Add to Panel"
 msgstr "Дадаць да панэлі"
 
-#: ../gnome-panel/panel-applet-frame.c:738
+#: ../gnome-panel/panel-applet-frame.c:735
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" нечакана скончыў працу"
 
-#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:737
 msgid "Panel object has quit unexpectedly"
 msgstr "Аб'ект панэлі нечакана скончыў працу"
 
-#: ../gnome-panel/panel-applet-frame.c:747
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 "Калі вы перазагрузіце аб'ект панэлі, ён аўтаматычна вернецца на панэль."
 
-#: ../gnome-panel/panel-applet-frame.c:753
+#: ../gnome-panel/panel-applet-frame.c:750
 msgid "_Don't Reload"
 msgstr "_Не перазагружаць"
 
-#: ../gnome-panel/panel-applet-frame.c:754
+#: ../gnome-panel/panel-applet-frame.c:751
 msgid "_Reload"
 msgstr "_Перазагрузіць"
 
-#: ../gnome-panel/panel-applet-frame.c:904
+#: ../gnome-panel/panel-applet-frame.c:901
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Падчас загрузкі \"%s\" узнікла праблема."
 
-#: ../gnome-panel/panel-applet-frame.c:920
+#: ../gnome-panel/panel-applet-frame.c:917
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ці хочаце выдаліць аплет з вашай канфігурацыі?"
 
@@ -2176,7 +2176,7 @@ msgstr ""
 "Калі вы змусіце праграму скончыць працу, усе незахаваныя змены да адчыненых "
 "дакументаў будуць страчаны."
 
-#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
+#: ../gnome-panel/panel-layout.c:1092 ../gnome-panel/panel-layout.c:1106
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Не ўдалося стварыць пачатковае размяшчэнне панэляў.\n"
@@ -2246,7 +2246,7 @@ msgstr "Сеткавыя адрасы"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:644
 msgid "Open your personal folder"
 msgstr "Адчыніць сваю асабістую папку"
 
@@ -2264,12 +2264,12 @@ msgstr "Адчыніць папку, якая змяшчае элементы с
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:653
 msgid "Computer"
 msgstr "Камп'ютар"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:654
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2278,12 +2278,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:661
 msgid "Network"
 msgstr "Сетка"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:662
 msgid "Browse bookmarked and local network locations"
 msgstr "Аглядаць мясцовыя сеткавыя адрасы і адрасы з закладкамі"
 
@@ -2754,11 +2754,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "Адчыніць адрас: %s"
 
-#: ../gnome-panel/panel.c:1395
+#: ../gnome-panel/panel.c:1393
 msgid "Delete this panel?"
 msgstr "Ці выдаліць гэтую панэль?"
 
-#: ../gnome-panel/panel.c:1399
+#: ../gnome-panel/panel.c:1397
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
