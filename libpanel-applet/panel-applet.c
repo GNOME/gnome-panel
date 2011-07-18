@@ -2021,7 +2021,7 @@ panel_applet_constructed (GObject *object)
 		g_assert_not_reached ();
 	}
 
-	return panel_applet_register_object (applet);
+	panel_applet_register_object (applet);
 }
 
 static void
