@@ -1180,6 +1180,7 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 {
 	guint idle_id;
 	GList *list, *l;
+	GError *error = NULL;
 
 	/* Remove existing items */
 	list = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -1190,6 +1191,11 @@ handle_gmenu_tree_changed (GMenuTree *tree,
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
 				NULL, NULL);
+
+	if (!gmenu_tree_load_sync (tree, &error)) {
+		g_warning ("Failed to load applications: %s", error->message);
+		g_clear_error (&error);
+	}
 
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
