@@ -660,7 +660,7 @@ panel_util_get_gfile_root (GFile *file)
 	return parent_old;
 }
 
-static char *
+char *
 panel_util_get_icon_name_from_g_icon (GIcon *gicon)
 {
 	const char * const *names;

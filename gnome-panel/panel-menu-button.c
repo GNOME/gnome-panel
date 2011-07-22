@@ -574,16 +574,16 @@ panel_menu_button_load_helper (const char  *menu_path,
 			  button);
 }
 
-static char *
+static GIcon *
 panel_menu_button_get_icon (PanelMenuButton *button)
 {
 	GMenuTreeDirectory *directory;
-        char               *retval;
+        GIcon              *retval;
 
 	retval = NULL;
 
 	if (!PANEL_GLIB_STR_EMPTY (button->priv->custom_icon))
-		retval = g_strdup (button->priv->custom_icon);
+		retval = g_themed_icon_new (button->priv->custom_icon);
 
 	if (!retval                                         &&
 	    !PANEL_GLIB_STR_EMPTY (button->priv->menu_path) &&
@@ -606,11 +606,11 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 		}
 
 		if (directory)
-			retval = g_strdup (gmenu_tree_directory_get_icon (directory));
+			retval = g_object_ref (gmenu_tree_directory_get_icon (directory));
 	}
 
 	if (!retval)
-		retval = g_strdup (PANEL_ICON_MAIN_MENU);
+		retval = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
 
 	return retval;
 }
@@ -618,12 +618,16 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 static void
 panel_menu_button_set_icon (PanelMenuButton *button)
 {
-	char *icon_path;
+	GIcon *gicon;
+	char  *icon;
 
-	icon_path = panel_menu_button_get_icon (button);
-	button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
+	gicon = panel_menu_button_get_icon (button);
+	icon = panel_util_get_icon_name_from_g_icon (gicon);
 
-	g_free (icon_path);
+	button_widget_set_icon_name (BUTTON_WIDGET (button), icon);
+
+	g_free (icon);
+	g_object_unref (gicon);
 }
 
 static const char *
@@ -874,7 +878,7 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 		static GtkTargetEntry dnd_targets [] = {
 			{ "application/x-panel-applet-internal", 0, 0 }
 		};
-		char *icon;
+		GIcon *icon;
 
 		gtk_widget_set_has_window (GTK_WIDGET (button), TRUE);
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
@@ -883,9 +887,9 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 
 		icon = panel_menu_button_get_icon (button);
 		if (icon != NULL) {
-			gtk_drag_source_set_icon_name (GTK_WIDGET (button),
-						       icon);
-			g_free (icon);
+			gtk_drag_source_set_icon_gicon (GTK_WIDGET (button),
+							icon);
+			g_object_unref (icon);
 		}
 
 		gtk_widget_set_has_window (GTK_WIDGET (button), FALSE);

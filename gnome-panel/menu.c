@@ -1008,8 +1008,9 @@ create_submenu_entry (GtkWidget          *menu,
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
-					NULL, NULL,
+					NULL,
 					gmenu_tree_directory_get_icon (directory),
+					NULL,
 					PANEL_ICON_FOLDER);
 
 	setup_menuitem (menuitem,
@@ -1077,8 +1078,9 @@ create_menuitem (GtkWidget          *menu,
 	if (alias_directory)
 		panel_load_menu_image_deferred (menuitem,
 						panel_menu_icon_get_size (),
-						NULL, NULL,
+						NULL,
 						gmenu_tree_directory_get_icon (alias_directory),
+						NULL,
 						NULL);
 	else
 		panel_load_menu_image_deferred (menuitem,
@@ -1121,9 +1123,8 @@ create_menuitem (GtkWidget          *menu,
 				     GDK_ACTION_COPY);
 
 		icon = g_app_info_get_icon (G_APP_INFO (gmenu_tree_entry_get_app_info (entry)));
-		if (icon != NULL) {
+		if (icon != NULL)
 			gtk_drag_source_set_icon_gicon (menuitem, icon);
-		}
 
 		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
 				  G_CALLBACK (drag_begin_menu_cb), NULL);
@@ -1146,7 +1147,8 @@ create_menuitem_from_alias (GtkWidget      *menu,
 			    GMenuTreeAlias *alias)
 {
 	GMenuTreeDirectory *src = gmenu_tree_alias_get_directory (alias);
-	switch (gmenu_tree_alias_get_item_type (alias)) {
+
+	switch (gmenu_tree_alias_get_aliased_item_type (alias)) {
 	case GMENU_TREE_ITEM_DIRECTORY: {
 		GMenuTreeDirectory *directory = gmenu_tree_alias_get_aliased_directory (alias);
 		create_submenu (menu,
@@ -1229,7 +1231,7 @@ create_applications_menu (const char *menu_file,
 				   "panel-menu-force-icon-for-categories",
 				   GINT_TO_POINTER (TRUE));
 
-	tree = gmenu_tree_new (menu_file, GMENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_new (menu_file, GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, &error)) {
 		g_warning ("Failed to load applications: %s", error->message);

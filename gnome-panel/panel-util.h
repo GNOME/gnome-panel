@@ -46,6 +46,7 @@ GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
 					       int            width,
 					       int            height);
 
+char *panel_util_get_icon_name_from_g_icon (GIcon *gicon);
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 			    GKeyFile     *key_file);
 

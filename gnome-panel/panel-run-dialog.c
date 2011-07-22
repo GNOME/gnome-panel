@@ -49,6 +49,7 @@
 #include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-show.h>
+#include <libpanel-util/panel-xdg.h>
 
 #include "nothing.h"
 #include "panel-util.h"
@@ -88,20 +89,18 @@ typedef struct {
 	GCompletion      *completion;
 	
 	GSList           *add_icon_paths;
-	int	          add_icons_idle_id;
 	int	          add_items_idle_id;
 	int		  find_command_idle_id;
 	gboolean	  use_program_list;
 	gboolean	  completion_started;
 	
-	char		 *icon_path;
+	GIcon		 *gicon;
 	char             *desktop_path;
 	char		 *item_name;	
 } PanelRunDialog;
 
 enum {
 	COLUMN_ICON,
-	COLUMN_ICON_FILE,
 	COLUMN_NAME,
 	COLUMN_COMMENT,
 	COLUMN_PATH,
@@ -111,8 +110,6 @@ enum {
 };
 
 static PanelRunDialog *static_dialog = NULL;
-
-static void panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog);
 
 #define PANEL_RUN_MAX_HISTORY 20
 
@@ -187,16 +184,14 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	g_slist_free (dialog->add_icon_paths);
 	dialog->add_icon_paths = NULL;
 
-	g_free (dialog->icon_path);
-	dialog->icon_path = NULL;
+	if (dialog->gicon)
+		g_object_unref (dialog->gicon);
+	dialog->gicon = NULL;
+
 	g_free (dialog->desktop_path);
 	dialog->desktop_path = NULL;
 	g_free (dialog->item_name);
 	dialog->item_name = NULL;
-
-	if (dialog->add_icons_idle_id)
-		g_source_remove (dialog->add_icons_idle_id);
-	dialog->add_icons_idle_id = 0;
 
 	if (dialog->add_items_idle_id)
 		g_source_remove (dialog->add_items_idle_id);
@@ -223,8 +218,6 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	if (dialog->completion)
 		g_completion_free (dialog->completion);
 	dialog->completion = NULL;
-
-	panel_run_dialog_disconnect_pixmap (dialog);
 
 	if (dialog->run_settings)
 		g_object_unref (dialog->run_settings);
@@ -260,51 +253,23 @@ panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 
 static void
 panel_run_dialog_set_icon (PanelRunDialog *dialog,
-			   const char     *icon_path,
+			   GIcon          *gicon,
 			   gboolean        force)
 {
-	GdkPixbuf *pixbuf = NULL;
-
-	if (!force && icon_path && dialog->icon_path &&
-	    !strcmp (icon_path, dialog->icon_path))
+	if (!force && gicon && dialog->gicon &&
+	    gicon == dialog->gicon)
 		return;
 
-	g_free (dialog->icon_path);
-	dialog->icon_path = NULL;
+	if (dialog->gicon)
+		g_object_unref (dialog->gicon);
+	dialog->gicon = NULL;
 		
-	if (icon_path) {
-		GdkScreen   *screen;
-		GtkSettings *settings;
-		int          size;
-
-		screen = gtk_widget_get_screen (GTK_WIDGET (dialog->pixmap));
-		settings = gtk_settings_get_for_screen (screen);
-		gtk_icon_size_lookup_for_settings (settings,
-						   GTK_ICON_SIZE_DIALOG,
-						   &size, NULL);
-
-		pixbuf = panel_load_icon (gtk_icon_theme_get_default (),
-					  icon_path,
-					  size,
-					  size,
-					  size,
-					  NULL);
-	}
-	
-	if (pixbuf) {
-		dialog->icon_path = g_strdup (icon_path);
-
-		/* Don't bother scaling the image if it's too small.
-		 * Scaled looks worse than a smaller image.
-		 */
-		gtk_image_set_from_pixbuf (GTK_IMAGE (dialog->pixmap), pixbuf);
-
-		//FIXME: it'd be better to set an icon of the correct size,
-		//(ditto for the drag icon?)
-		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
-		
-		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);
-		g_object_unref (pixbuf);
+	if (gicon) {
+		dialog->gicon = g_object_ref (gicon);
+		gtk_image_set_from_gicon (GTK_IMAGE (dialog->pixmap),
+					  gicon, GTK_ICON_SIZE_DIALOG);
+		//gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), gicon);
+		gtk_drag_source_set_icon_gicon (dialog->run_dialog, gicon);
 	} else {
 		panel_run_dialog_set_default_icon (dialog, TRUE);
 	}
@@ -649,7 +614,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	GtkTreeModel *model;
 	GtkTreePath  *path;
 	char         *text;
-	char         *found_icon;
+	GIcon        *found_icon;
 	char         *found_name;
 	gboolean      fuzzy;
 	
@@ -673,23 +638,24 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 
 	do {
 		char *exec = NULL;
-		char *icon = NULL;
 		char *name = NULL;
 		char *comment = NULL;
+		GIcon *icon = NULL;
 
 		gtk_tree_model_get (model, &iter,
-				    COLUMN_EXEC,      &exec,
-				    COLUMN_ICON_FILE, &icon,
-				    COLUMN_NAME,      &name,
-				    COLUMN_COMMENT,   &comment,
+				    COLUMN_EXEC,    &exec,
+				    COLUMN_ICON,    &icon,
+				    COLUMN_NAME,    &name,
+				    COLUMN_COMMENT, &comment,
 				    -1);
 
 		if (!fuzzy && exec && icon &&
 		    fuzzy_command_match (text, exec, &fuzzy)) {
-			g_free (found_icon);
+			if (found_icon)
+				g_object_unref (found_icon);
 			g_free (found_name);
 			
-			found_icon = g_strdup (icon);
+			found_icon = g_object_ref (icon);
 			found_name = g_strdup (name);
 			
 			gtk_list_store_set (dialog->program_list_store,
@@ -711,7 +677,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		}
 
 		g_free (exec);
-		g_free (icon);
+		g_object_unref (icon);
 		g_free (name);
 		g_free (comment);
 	
@@ -727,7 +693,8 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	panel_run_dialog_set_icon (dialog, found_icon, FALSE);
 	//FIXME update dialog->program_label
 
-	g_free (found_icon);
+	if (found_icon)
+		g_object_unref (found_icon);
 	g_free (text);
 	
 	g_free (dialog->item_name);
@@ -735,56 +702,6 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 	
 	dialog->find_command_idle_id = 0;
 	return FALSE;
-}
-
-static gboolean
-panel_run_dialog_add_icon_idle (PanelRunDialog *dialog)
-{
-	GtkTreeIter  iter;
-	GtkTreePath *path;
-	GdkPixbuf   *pixbuf;
-	char        *file;
-	int          icon_height;
-	gboolean     long_operation = FALSE;
-	
-	do {
-		if (!dialog->add_icon_paths) {
-			dialog->add_icons_idle_id = 0;
-			return FALSE;
-		}
-
-		path = dialog->add_icon_paths->data;
-		dialog->add_icon_paths->data = NULL;
-		dialog->add_icon_paths = g_slist_delete_link (dialog->add_icon_paths,
-						              dialog->add_icon_paths);
-
-		if (!gtk_tree_model_get_iter (GTK_TREE_MODEL (dialog->program_list_store),
-					      &iter,
-					      path)) {
-			gtk_tree_path_free (path);
-			continue;
-		}
-		
-		gtk_tree_path_free (path);
-
-		gtk_tree_model_get (GTK_TREE_MODEL (dialog->program_list_store), &iter,
-				    COLUMN_ICON_FILE, &file, -1);
-
-		if (!gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height)) {
-			icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
-		}
-
-		pixbuf = panel_make_menu_icon (gtk_icon_theme_get_default (), file, NULL, icon_height, &long_operation);
-		if (pixbuf) {
-			gtk_list_store_set (dialog->program_list_store, &iter, COLUMN_ICON, pixbuf, -1);
-			g_object_unref (pixbuf);
-		}
-		g_free (file);
-		
-	/* don't go back into the main loop if this wasn't very hard to do */
-	} while (!long_operation);
-
-	return TRUE;
 }
 
 static int
@@ -802,7 +719,7 @@ static GSList *
 get_all_applications_from_alias (GMenuTreeAlias *alias,
 				 GSList         *list)
 {
-	switch (gmenu_tree_alias_get_item_type (alias)) {
+	switch (gmenu_tree_alias_get_aliased_item_type (alias)) {
 	case GMENU_TREE_ITEM_ENTRY:
 		/* pass on the reference */
 		list = g_slist_append (list, gmenu_tree_alias_get_aliased_entry (alias));
@@ -868,7 +785,7 @@ get_all_applications (void)
 	GMenuTreeDirectory *root;
 	GSList             *retval;
 
-	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_NONE);
+	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, NULL))
 		return NULL;
@@ -899,8 +816,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 	/* create list store */
 	dialog->program_list_store = gtk_list_store_new (NUM_COLUMNS,
-							 GDK_TYPE_PIXBUF,
-							 G_TYPE_STRING,
+							 G_TYPE_ICON,
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
 							 G_TYPE_STRING,
@@ -912,8 +828,8 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	/* Strip duplicates */
 	prev_name = NULL;
 	for (l = all_applications; l; l = next) {
-		GMenuTreeEntry *entry = l->data;
-		const char     *entry_name;
+		GMenuTreeEntry  *entry = l->data;
+		const char      *entry_name;
 		GDesktopAppInfo *app_info;
 
 
@@ -932,21 +848,20 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 
 	for (l = all_applications; l; l = l->next) {
 		GMenuTreeEntry *entry = l->data;
-		GtkTreeIter    iter;
-		GtkTreePath   *path;
-		GDesktopAppInfo *app_info;
+		GtkTreeIter     iter;
+		GtkTreePath    *path;
+		GAppInfo       *app_info;
 
-		app_info = gmenu_tree_entry_get_app_info (entry);
+		app_info = G_APP_INFO (gmenu_tree_entry_get_app_info (entry));
 
 		gtk_list_store_append (dialog->program_list_store, &iter);
 		gtk_list_store_set (dialog->program_list_store, &iter,
-				    COLUMN_ICON,      g_app_info_get_icon (G_APP_INFO (app_info)),
-				    COLUMN_ICON_FILE, NULL,
-				    COLUMN_NAME,      g_app_info_get_display_name (G_APP_INFO (app_info)),
-				    COLUMN_COMMENT,   g_app_info_get_description (G_APP_INFO (app_info)),
-				    COLUMN_EXEC,      g_app_info_get_executable (G_APP_INFO (app_info)),
-				    COLUMN_PATH,      gmenu_tree_entry_get_desktop_file_path (entry),
-				    COLUMN_VISIBLE,   TRUE,
+				    COLUMN_ICON,    g_app_info_get_icon (app_info),
+				    COLUMN_NAME,    g_app_info_get_display_name (app_info),
+				    COLUMN_COMMENT, g_app_info_get_description (app_info),
+				    COLUMN_EXEC,    g_app_info_get_executable (app_info),
+				    COLUMN_PATH,    gmenu_tree_entry_get_desktop_file_path (entry),
+				    COLUMN_VISIBLE, TRUE,
 				    -1);
 
 		path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->program_list_store), &iter);
@@ -972,7 +887,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	column = gtk_tree_view_column_new ();
 	gtk_tree_view_column_pack_start (column, renderer, FALSE);
 	gtk_tree_view_column_set_attributes (column, renderer,
-                                             "pixbuf", COLUMN_ICON,
+                                             "gicon", COLUMN_ICON,
                                              NULL);
         
 	renderer = gtk_cell_renderer_text_new ();
@@ -984,11 +899,6 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->program_list), column);
 
 	dialog->add_icon_paths = g_slist_reverse (dialog->add_icon_paths);
-
-	if (!dialog->add_icons_idle_id)
-		dialog->add_icons_idle_id =
-			g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) panel_run_dialog_add_icon_idle,
-					 dialog, NULL);
 
 	dialog->add_items_idle_id = 0;					 
 	return FALSE;
@@ -1097,7 +1007,17 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	g_free (temp);
 
 	temp = panel_key_file_get_locale_string (key_file, "Icon");
-	panel_run_dialog_set_icon (dialog, temp, FALSE);
+	if (!PANEL_GLIB_STR_EMPTY (temp)) {
+		GIcon *gicon;
+
+		stripped = panel_xdg_icon_remove_extension (temp);
+		gicon = g_themed_icon_new (stripped);
+		panel_run_dialog_set_icon (dialog, gicon, FALSE);
+		g_object_unref (gicon);
+		g_free (stripped);
+	} else {
+		panel_run_dialog_set_icon (dialog, NULL, FALSE);
+	}
 	g_free (temp);
 	
 	temp = panel_key_file_get_locale_string (key_file, "Comment");
@@ -1778,6 +1698,7 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	gboolean  exec = FALSE;
 	char     *text;
 	char     *name;
+	char     *icon;
 	char     *disk;
 	char     *scheme;
 	char     *save_uri;
@@ -1824,10 +1745,14 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	panel_key_file_set_boolean (key_file, "Terminal",
 				    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)));
 
-	if (dialog->icon_path)
+	icon = NULL;
+	if (dialog->gicon)
+		icon = panel_util_get_icon_name_from_g_icon (dialog->gicon);
+	if (icon != NULL) {
 		panel_key_file_set_locale_string (key_file, "Icon",
-						  dialog->icon_path);
-	else
+						  icon);
+		g_free (icon);
+	} else
 		panel_key_file_set_locale_string (key_file, "Icon",
 						  PANEL_ICON_LAUNCHER);
 
@@ -1871,45 +1796,11 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 }
 
 static void
-panel_run_dialog_style_updated (GtkWidget      *widget,
-                                PanelRunDialog *dialog)
-{
-  if (dialog->icon_path) {
-	  char *icon_path;
-
-	  icon_path = g_strdup (dialog->icon_path);
-	  panel_run_dialog_set_icon (dialog, icon_path, TRUE);
-	  g_free (icon_path);
-  }
-}
-
-static void
-panel_run_dialog_screen_changed (GtkWidget      *widget,
-				 GdkScreen      *prev_screen,
-				 PanelRunDialog *dialog)
-{
-  if (dialog->icon_path) {
-	  char *icon_path;
-
-	  icon_path = g_strdup (dialog->icon_path);
-	  panel_run_dialog_set_icon (dialog, icon_path, TRUE);
-	  g_free (icon_path);
-  }
-}
-
-static void
 panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 			       GtkBuilder     *gui)
 {
 	dialog->pixmap = PANEL_GTK_BUILDER_GET (gui, "icon_pixmap");
 	
-	g_signal_connect (dialog->pixmap, "style-updated",
-			  G_CALLBACK (panel_run_dialog_style_updated),
-			  dialog);
-	g_signal_connect (dialog->pixmap, "screen-changed",
-			  G_CALLBACK (panel_run_dialog_screen_changed),
-			  dialog);
-
 	g_signal_connect (dialog->run_dialog, "drag_data_get",
 			  G_CALLBACK (pixmap_drag_data_get),
 			  dialog);
@@ -1966,17 +1857,6 @@ panel_run_dialog_new (GdkScreen  *screen,
 	gtk_widget_show (dialog->run_dialog);
 	
 	return dialog;
-}
-
-static void
-panel_run_dialog_disconnect_pixmap (PanelRunDialog *dialog)
-{
-	g_signal_handlers_disconnect_by_func (dialog->pixmap,
-			                      G_CALLBACK (panel_run_dialog_style_updated),
-			                      dialog);
-	g_signal_handlers_disconnect_by_func (dialog->pixmap,
-			                      G_CALLBACK (panel_run_dialog_screen_changed),
-			                      dialog);
 }
 
 static void
