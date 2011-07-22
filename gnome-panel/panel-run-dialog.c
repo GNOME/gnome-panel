@@ -243,9 +243,6 @@ panel_run_dialog_set_default_icon (PanelRunDialog *dialog, gboolean set_drag)
 				      PANEL_ICON_RUN,
 				      GTK_ICON_SIZE_DIALOG);
 	
-	gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
-				  PANEL_ICON_RUN);
-
 	if (set_drag)
 		gtk_drag_source_set_icon_name (dialog->run_dialog,
 					       PANEL_ICON_LAUNCHER);
@@ -268,7 +265,6 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		dialog->gicon = g_object_ref (gicon);
 		gtk_image_set_from_gicon (GTK_IMAGE (dialog->pixmap),
 					  gicon, GTK_ICON_SIZE_DIALOG);
-		//gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), gicon);
 		gtk_drag_source_set_icon_gicon (dialog->run_dialog, gicon);
 	} else {
 		panel_run_dialog_set_default_icon (dialog, TRUE);
@@ -1834,7 +1830,9 @@ panel_run_dialog_new (GdkScreen  *screen,
 	panel_run_dialog_setup_program_list  (dialog, gui);
 	panel_run_dialog_setup_list_expander (dialog, gui);
 
-	panel_run_dialog_set_default_icon    (dialog, FALSE);
+	gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
+				  PANEL_ICON_RUN);
+	panel_run_dialog_set_default_icon (dialog, FALSE);
 
 	g_signal_connect (dialog->run_settings, "changed::"PANEL_RUN_ENABLE_LIST_KEY,
 			  G_CALLBACK (panel_run_dialog_update_program_list), dialog);
