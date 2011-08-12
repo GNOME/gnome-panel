@@ -313,7 +313,10 @@ clock_set_timeout (ClockData *cd,
 		struct tm *tm;
 
 		gettimeofday (&tv, NULL);
- 		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+1;
+		/* We can't expect the timer resolution to be < 10ms, so add
+		 * 15ms to make sure we're fine; see
+		 * https://bugzilla.gnome.org/show_bug.cgi?id=585668 */
+		timeouttime = (G_USEC_PER_SEC - tv.tv_usec)/1000+15;
 
 		/* timeout of one minute if we don't care about the seconds */
  		if (cd->format != CLOCK_FORMAT_UNIX &&
