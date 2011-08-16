@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-13 22:58+0200\n"
-"PO-Revision-Date: 2011-04-13 23:02+0200\n"
+"POT-Creation-Date: 2011-08-16 19:33+0200\n"
+"PO-Revision-Date: 2011-08-16 19:33+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -38,7 +38,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:452
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
@@ -57,8 +57,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -107,7 +107,7 @@ msgstr "Calendario"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -118,7 +118,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock.c:457 ../applets/clock/clock.c:1594
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -127,7 +127,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:459
+#: ../applets/clock/clock.c:468
 msgid "%a %b %e"
 msgstr "%a %e de %b"
 
@@ -135,7 +135,7 @@ msgstr "%a %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:466
+#: ../applets/clock/clock.c:475
 #, c-format
 msgid ""
 "%1$s\n"
@@ -148,7 +148,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:474
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -157,27 +157,27 @@ msgstr "%1$s, %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "Prema para agochar as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "Prema para ver as súas citas e tarefas"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "Prema para agochar o calendario do mes"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "Prema para ver o calendario do mes"
 
-#: ../applets/clock/clock.c:1423
+#: ../applets/clock/clock.c:1432
 msgid "Computer Clock"
 msgstr "Reloxo do computador"
 
@@ -188,7 +188,7 @@ msgstr "Reloxo do computador"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1570
+#: ../applets/clock/clock.c:1579
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
@@ -198,72 +198,72 @@ msgstr "%H:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1578
+#: ../applets/clock/clock.c:1587
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1633
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1702
 msgid "Failed to open the time settings"
 msgstr "Produciuse un fallo ao abrir as configuracións de hora"
 
-#: ../applets/clock/clock.c:1713 ../applets/fish/fish.c:1317
+#: ../applets/clock/clock.c:1722 ../applets/fish/fish.c:1317
 #: ../applets/wncklet/window-list.c:159
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: ../applets/clock/clock.c:1716
+#: ../applets/clock/clock.c:1725
 msgid "Copy _Time"
 msgstr "Copiar a _hora"
 
-#: ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:1728
 msgid "Copy _Date"
 msgstr "Copiar a _data"
 
-#: ../applets/clock/clock.c:1722
+#: ../applets/clock/clock.c:1731
 msgid "Ad_just Date & Time"
 msgstr "A_xustar a data e hora"
 
-#: ../applets/clock/clock.c:2559
+#: ../applets/clock/clock.c:2568
 msgid "Custom format"
 msgstr "Formato personalizado"
 
-#: ../applets/clock/clock.c:3046
+#: ../applets/clock/clock.c:3055
 msgid "Choose Location"
 msgstr "Escoller a localización"
 
-#: ../applets/clock/clock.c:3125
+#: ../applets/clock/clock.c:3134
 msgid "Edit Location"
 msgstr "Editar a localización"
 
-#: ../applets/clock/clock.c:3272
+#: ../applets/clock/clock.c:3281
 msgid "City Name"
 msgstr "Nome da cidade"
 
-#: ../applets/clock/clock.c:3276
+#: ../applets/clock/clock.c:3285
 msgid "City Time Zone"
 msgstr "Fuso horario da cidade"
 
-#: ../applets/clock/clock.c:3463
+#: ../applets/clock/clock.c:3472
 msgid "24 hour"
 msgstr "24 horas"
 
-#: ../applets/clock/clock.c:3464
+#: ../applets/clock/clock.c:3473
 msgid "UNIX time"
 msgstr "Hora Unix"
 
-#: ../applets/clock/clock.c:3465
+#: ../applets/clock/clock.c:3474
 msgid "Internet time"
 msgstr "Hora da Internet"
 
-#: ../applets/clock/clock.c:3473
+#: ../applets/clock/clock.c:3482
 msgid "Custom _format:"
 msgstr "_Formato personalizado:"
 
@@ -663,7 +663,7 @@ msgstr "Amencer: %s / Solpor: %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
 #: ../applets/wncklet/wncklet.c:74
-#: ../gnome-panel/libpanel-util/panel-show.c:235
+#: ../gnome-panel/libpanel-util/panel-show.c:239
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Non foi posíbel mostrar o documento de axuda «%s»"
@@ -1799,45 +1799,45 @@ msgstr "Mostrar as opcións de xestión de sesión"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:76
-#: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:941
+#: ../gnome-panel/libpanel-util/panel-error.c:80
+#: ../gnome-panel/panel-applet-frame.c:766
+#: ../gnome-panel/panel-applet-frame.c:938
 msgid "Error"
 msgstr "Erro"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
 msgid "Choose an icon"
 msgstr "Seleccione unha icona"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:45
+#: ../gnome-panel/libpanel-util/panel-launch.c:49
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Non foi posíbel iniciar «%s»"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
 #: ../gnome-panel/launcher.c:175
 msgid "Could not launch application"
 msgstr "Non foi posíbel iniciar o aplicativo"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:44
+#: ../gnome-panel/libpanel-util/panel-show.c:48
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Non foi posíbel abrir a localización «%s»"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:162
+#: ../gnome-panel/libpanel-util/panel-show.c:166
 msgid "No application to handle search folders is installed."
 msgstr ""
 "Non hai ningún aplicativo instalado para manexar a busca en cartafoles."
 
-#: ../gnome-panel/applet.c:363
+#: ../gnome-panel/applet.c:359
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "_Mover"
 
-#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "E_liminar do panel"
 
@@ -2007,81 +2007,81 @@ msgstr "Apagar…"
 msgid "Shut down the computer"
 msgstr "Apagar o computador"
 
-#: ../gnome-panel/panel-addto.c:115
-msgid "Custom Application Launcher"
-msgstr "Iniciador de aplicativo personalizado"
-
-#: ../gnome-panel/panel-addto.c:116
-msgid "Create a new launcher"
-msgstr "Crear un novo iniciador"
-
-#: ../gnome-panel/panel-addto.c:126
-msgid "Application Launcher..."
-msgstr "Iniciador de aplicativo…"
-
-#: ../gnome-panel/panel-addto.c:127
-msgid "Copy a launcher from the applications menu"
-msgstr "Copia un iniciador do menú de aplicativos"
-
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
+#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:963
 msgid "Main Menu"
 msgstr "Menú principal"
 
-#: ../gnome-panel/panel-addto.c:142
+#: ../gnome-panel/panel-addto.c:146
 msgid "The main GNOME menu"
 msgstr "O menú principal do GNOME"
 
-#: ../gnome-panel/panel-addto.c:152
+#: ../gnome-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "Barra de menú"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "Unha barra de menú personalizada"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto.c:165
 msgid "Separator"
 msgstr "Separador"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto.c:166
 msgid "A separator to organize the panel items"
 msgstr "Un separador para organizar os elementos do panel"
 
-#: ../gnome-panel/panel-addto.c:174
-msgid "User Menu"
+#: ../gnome-panel/panel-addto.c:175
+msgid "User menu"
 msgstr "Menú do usuario"
 
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-addto.c:176
 msgid "Menu to change your settings and your online status"
 msgstr "Menú para cambiar as súas configuracións e o seu estado en liña"
 
-#: ../gnome-panel/panel-addto.c:257
+#: ../gnome-panel/panel-addto.c:222
 msgid "(empty)"
 msgstr "(baleiro)"
 
-#: ../gnome-panel/panel-addto.c:1055
+#: ../gnome-panel/panel-addto.c:422
+msgid "Custom Application Launcher"
+msgstr "Iniciador de aplicativo personalizado"
+
+#: ../gnome-panel/panel-addto.c:423
+msgid "Create a new launcher"
+msgstr "Crear un novo iniciador"
+
+#: ../gnome-panel/panel-addto.c:433
+msgid "Application Launcher..."
+msgstr "Iniciador de aplicativo…"
+
+#: ../gnome-panel/panel-addto.c:434
+msgid "Copy a launcher from the applications menu"
+msgstr "Copia un iniciador do menú de aplicativos"
+
+#: ../gnome-panel/panel-addto.c:1019
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Buscar un _elemento para engadir a «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1059
+#: ../gnome-panel/panel-addto.c:1023
 msgid "Find an _item to add to the panel:"
 msgstr "Buscar un _elemento para engadir ao panel:"
 
-#: ../gnome-panel/panel-addto.c:1062
+#: ../gnome-panel/panel-addto.c:1026
 msgid "Add to Panel"
 msgstr "Engadir ao panel"
 
-#: ../gnome-panel/panel-applet-frame.c:738
+#: ../gnome-panel/panel-applet-frame.c:735
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» saíu de forma inesperada"
 
-#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:737
 msgid "Panel object has quit unexpectedly"
 msgstr "O obxecto do panel saíu de forma inesperada"
 
-#: ../gnome-panel/panel-applet-frame.c:747
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2089,20 +2089,20 @@ msgstr ""
 "Se recarga un obxecto do panel, engadirase automaticamente outra vez ao "
 "panel."
 
-#: ../gnome-panel/panel-applet-frame.c:753
+#: ../gnome-panel/panel-applet-frame.c:750
 msgid "_Don't Reload"
 msgstr "_Non recargar"
 
-#: ../gnome-panel/panel-applet-frame.c:754
+#: ../gnome-panel/panel-applet-frame.c:751
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: ../gnome-panel/panel-applet-frame.c:904
+#: ../gnome-panel/panel-applet-frame.c:901
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "O panel atopou un problema ao cargar «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:920
+#: ../gnome-panel/panel-applet-frame.c:917
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Quere eliminar o miniaplicativo da súa configuración?"
 
@@ -2218,7 +2218,7 @@ msgstr ""
 "Se escolle forzar a saída deste aplicativo poderían perderse os cambios en "
 "calquera documento que estea aberto."
 
-#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
+#: ../gnome-panel/panel-layout.c:1092 ../gnome-panel/panel-layout.c:1106
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Non é posíbel crear a disposición inicial do panel.\n"
@@ -2288,7 +2288,7 @@ msgstr "Lugares de rede"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:644
 msgid "Open your personal folder"
 msgstr "Abrir o seu cartafol persoal"
 
@@ -2306,12 +2306,12 @@ msgstr "Abrir os contidos do seu escritorio nun cartafol"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:653
 msgid "Computer"
 msgstr "Computador"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:654
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2320,12 +2320,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:661
 msgid "Network"
 msgstr "Rede"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:662
 msgid "Browse bookmarked and local network locations"
 msgstr "Explorar as redes locais e localizacións marcadas"
 
@@ -2370,7 +2370,7 @@ msgid "Right"
 msgstr "Dereita"
 
 #: ../gnome-panel/panel-properties-dialog.c:821
-#: ../gnome-panel/panel-run-dialog.c:2009
+#: ../gnome-panel/panel-run-dialog.c:1896
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "Non é posíbel cargar o ficheiro «%s»: %s."
@@ -2517,38 +2517,38 @@ msgstr "Limpar os documentos recentes…"
 msgid "Clear all items from the recent documents list"
 msgstr "Limpar todos os elementos da lista de documentos recentes"
 
-#: ../gnome-panel/panel-run-dialog.c:400
+#: ../gnome-panel/panel-run-dialog.c:361
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Non foi posíbel executar a orde «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:448
+#: ../gnome-panel/panel-run-dialog.c:409
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Non foi posíbel converter «%s» desde UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1235
+#: ../gnome-panel/panel-run-dialog.c:1160
 msgid "Choose a file to append to the command..."
 msgstr "Escoller un ficheiro para engadirlle á orde…"
 
-#: ../gnome-panel/panel-run-dialog.c:1618
+#: ../gnome-panel/panel-run-dialog.c:1543
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "Seleccionar un aplicativo para ver a súa descrición."
 
-#: ../gnome-panel/panel-run-dialog.c:1656
+#: ../gnome-panel/panel-run-dialog.c:1581
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Executarase a orde: «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1689
+#: ../gnome-panel/panel-run-dialog.c:1614
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "A lista dos URI que se soltou no diálogo de execución ten un formato (%d) ou "
 "unha lonxitude (%d) incorrectos\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2014
+#: ../gnome-panel/panel-run-dialog.c:1901
 msgid "Could not display run dialog"
 msgstr "Non foi posíbel mostrar o diálogo de execución"
 
@@ -2801,11 +2801,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "Abrir o URL: %s"
 
-#: ../gnome-panel/panel.c:1396
+#: ../gnome-panel/panel.c:1393
 msgid "Delete this panel?"
 msgstr "Quere eliminar este panel?"
 
-#: ../gnome-panel/panel.c:1400
+#: ../gnome-panel/panel.c:1397
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
