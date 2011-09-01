@@ -31,7 +31,7 @@ panel-util-types.c: $(panel_util_enum_headers)
 			--vtail "  if (!type)\n" \
 			--vtail "    type = g_enum_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
 			--vtail "  return type;\n}\n\n" \
-		$(panel_util_enum_headers) > $@
+		$(addprefix $(srcdir)/,$(panel_util_enum_headers)) > $@.tmp && mv $@.tmp $@
 
 panel-util-types.h: $(panel_util_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
@@ -43,7 +43,7 @@ panel-util-types.h: $(panel_util_enum_headers)
 			--fprod "\n/* --- @filename@ --- */" \
 			--eprod "#define PANEL_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(panel_util_enum_headers) > $@
+		$(addprefix $(srcdir)/,$(panel_util_enum_headers)) > $@.tmp && mv $@.tmp $@
 
 libpanel_util_la_SOURCES =		\
 	$(BUILT_SOURCES)		\
