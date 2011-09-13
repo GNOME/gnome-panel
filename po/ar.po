@@ -6,21 +6,25 @@
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2009, 2010, 2011.
 # Anas Husseini <linux.anas@gmail.com>, 2007.
 # Djihed Afifi <djihed@gmail.com>, 2006, 2009.
+# Anass Ahmed <anass.1430@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-01 14:11+0200\n"
-"PO-Revision-Date: 2011-04-01 14:11+0300\n"
-"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
-"Language-Team: Arabic <doc@arabeyes.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-09-05 07:07+0000\n"
+"PO-Revision-Date: 2011-09-05 14:11+0200\n"
+"Last-Translator: Anass Ahmed <anass.1430@gmail.com>\n"
+"Language-Team: Arabeyes\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Virtaal 0.6.1\n"
+"X-Generator: Virtaal 0.7.0\n"
+"&& n%100<=10 ? 3: n%100>=11 ? 4 : 5;\n"
+"X-Project-Style: gnome\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -30,7 +34,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:452
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
@@ -49,8 +53,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -99,7 +103,7 @@ msgstr "التقويم"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
@@ -110,7 +114,7 @@ msgstr "%l:%M:%S %p"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock.c:457 ../applets/clock/clock.c:1594
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -119,7 +123,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:459
+#: ../applets/clock/clock.c:468
 msgid "%a %b %e"
 msgstr "%A %e %B"
 
@@ -127,7 +131,7 @@ msgstr "%A %e %B"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:466
+#: ../applets/clock/clock.c:475
 #, c-format
 msgid ""
 "%1$s\n"
@@ -140,7 +144,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:474
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s، %2$s"
@@ -149,27 +153,27 @@ msgstr "%1$s، %2$s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%A %d %B (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "انقر لإخفاء مواعيدك و مهماتك"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "انقر لعرض مواعيدك و مهماتك"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "انقر لإخفاء تقويم الشهر"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "انقر لعرض تقويم الشهر"
 
-#: ../applets/clock/clock.c:1423
+#: ../applets/clock/clock.c:1432
 msgid "Computer Clock"
 msgstr "ساعة الحاسوب"
 
@@ -179,7 +183,7 @@ msgstr "ساعة الحاسوب"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1570
+#: ../applets/clock/clock.c:1579
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -189,72 +193,72 @@ msgstr "%I:%M:%S %p"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1578
+#: ../applets/clock/clock.c:1587
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1633
 msgid "%A, %B %d %Y"
 msgstr "%A، %e %B %Y"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1702
 msgid "Failed to open the time settings"
 msgstr "فشل فتح إعدادات الوقت"
 
-#: ../applets/clock/clock.c:1713 ../applets/fish/fish.c:1317
+#: ../applets/clock/clock.c:1722 ../applets/fish/fish.c:1317
 #: ../applets/wncklet/window-list.c:159
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "ال_تّفضيلات"
 
-#: ../applets/clock/clock.c:1716
+#: ../applets/clock/clock.c:1725
 msgid "Copy _Time"
 msgstr "انسخ ال_وقت"
 
-#: ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:1728
 msgid "Copy _Date"
 msgstr "انسخ ال_تاريخ"
 
-#: ../applets/clock/clock.c:1722
+#: ../applets/clock/clock.c:1731
 msgid "Ad_just Date & Time"
 msgstr "ا_ضبط التّاريخ و الوقت"
 
-#: ../applets/clock/clock.c:2559
+#: ../applets/clock/clock.c:2568
 msgid "Custom format"
 msgstr "تهيئة خاصة"
 
-#: ../applets/clock/clock.c:3046
+#: ../applets/clock/clock.c:3055
 msgid "Choose Location"
 msgstr "اختر مكانًا"
 
-#: ../applets/clock/clock.c:3125
+#: ../applets/clock/clock.c:3134
 msgid "Edit Location"
 msgstr "حرّر المكان"
 
-#: ../applets/clock/clock.c:3272
+#: ../applets/clock/clock.c:3281
 msgid "City Name"
 msgstr "اسم المدينة"
 
-#: ../applets/clock/clock.c:3276
+#: ../applets/clock/clock.c:3285
 msgid "City Time Zone"
 msgstr "المنطقة الزمنية للمدينة"
 
-#: ../applets/clock/clock.c:3463
+#: ../applets/clock/clock.c:3472
 msgid "24 hour"
 msgstr "24 ساعة"
 
-#: ../applets/clock/clock.c:3464
+#: ../applets/clock/clock.c:3473
 msgid "UNIX time"
 msgstr "وقت يونكس"
 
-#: ../applets/clock/clock.c:3465
+#: ../applets/clock/clock.c:3474
 msgid "Internet time"
 msgstr "وقت الإنترنت"
 
-#: ../applets/clock/clock.c:3473
+#: ../applets/clock/clock.c:3482
 msgid "Custom _format:"
 msgstr "ت_هيئة خاصة:"
 
@@ -645,7 +649,7 @@ msgstr "الشروق : %s / الغروب : %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
 #: ../applets/wncklet/wncklet.c:74
-#: ../gnome-panel/libpanel-util/panel-show.c:235
+#: ../gnome-panel/libpanel-util/panel-show.c:239
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "لا يمكن فتح مستند المساعدة '%s'"
@@ -654,6 +658,22 @@ msgstr "لا يمكن فتح مستند المساعدة '%s'"
 #: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "خطأ أثناء فتح مستند المساعدة"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
+msgid "Clock"
+msgstr "ساعة"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "مصنع بريمج الساعة"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
+msgid "Factory for clock applet"
+msgstr "المصنع لبريمج الساعة"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
+msgid "Get the current time and date"
+msgstr "تجلب الوقت والتاريخ الحالي"
 
 #: ../applets/fish/fish.c:217
 #, c-format
@@ -774,9 +794,82 @@ msgstr "ت_دوير على الشرائط العمودية"
 msgid "seconds"
 msgstr "ثواني"
 
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "اعرض سمكة سابحة أو مخلوقا متحركا آخر"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
+msgid "Fish"
+msgstr "سمكة"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "من أين أتت تلك السمكة الغبية"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
+msgid "Wanda Factory"
+msgstr "معاين واندا"
+
 #: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "مساحة التبليغ في الشريط"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "مساحة حيث ستظهر أيقونات الإبلاغ"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
+msgid "Factory for notification area"
+msgstr "مصنع لمساحة التبليغ"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:3
+msgid "Notification Area"
+msgstr "مساحة التبليغ"
+
+#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
+msgid "Notification Area Factory"
+msgstr "مصنع مساحة التبليغ"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "مصنع لبريمجات مرتبطة بتصفح النوافذ"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "اخفي نوافذ التطبيقات و اظهر سطح المكتب"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
+msgid "Show Desktop"
+msgstr "اظهر سطح المكتب"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
+msgid "Switch between open windows using a menu"
+msgstr "تحول بين النوافذ المفتوحة باستعمال قائمة"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
+msgid "Switch between open windows using buttons"
+msgstr "تحول بين النوافذ المفتوحة باستعمال أزرار"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
+msgid "Switch between workspaces"
+msgstr "تحول بين مساحات العمل"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:7
+msgid "Window List"
+msgstr "قائمة النوافذ"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
+msgid "Window Navigation Applet Factory"
+msgstr "مصنع بريمج تصفح النوافذ"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
+#: ../applets/wncklet/window-menu.c:204
+msgid "Window Selector"
+msgstr "منتقي النوافذ"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
+msgid "Workspace Switcher"
+msgstr "مبدّل مساحات العمل"
 
 #: ../applets/wncklet/showdesktop.c:177
 #, c-format
@@ -848,10 +941,6 @@ msgstr "جمّع النوافذ _دائما"
 #: ../applets/wncklet/window-list.ui.h:11
 msgid "_Never group windows"
 msgstr "لا تجمّع النوافذ أ_بدا"
-
-#: ../applets/wncklet/window-menu.c:204
-msgid "Window Selector"
-msgstr "منتقي النوافذ"
 
 #: ../applets/wncklet/workspace-switcher.c:194
 #: ../applets/wncklet/workspace-switcher.c:723
@@ -1047,15 +1136,14 @@ msgstr ""
 "مخزونة في /apps/panel/toplevels/$(id)."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"قائمة لهويات أجسام الشرائط. كل هوية تعرف جسم شريط واحد(مثلا مطلق أو زر عمل "
-"أو زر/عمود قائمة). إعدادات كل من هذه الأجسام مخزونة في /apps/panel/objects/"
-"$(id)."
+"قائمة لهويات كائنات الشرائط. كل هوية تعرف كائن شريط واحد(مثلا بريمج أو مطلق "
+"أو زر عمل أو زر/عمود قائمة). إعدادات كل من هذه الكائنات مخزونة في /apps/"
+"panel/objects/$(id)."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
 msgid "Applet IIDs to disable from loading"
@@ -1090,9 +1178,8 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "ابسط قائمة البرامج في حوار \"شغّل تطبيقا\""
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
-#, fuzzy
 msgid "History of \"Run Application\" dialog"
-msgstr "فعّل قائمة البرامج في حوار \"شغّل تطبيقا\""
+msgstr "تاريخ مربع الحوار \"شغّل تطبيقًا\""
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid ""
@@ -1153,13 +1240,12 @@ msgstr "قائمة هويات الشرائط"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
 msgid "Panel object ID list"
-msgstr "قائمة هويات أجسام الشرائط"
+msgstr "قائمة هويات كائنات الشرائط"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
-#, fuzzy
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
-msgstr "فعّل الإكمال التلقائي في حوار \"شغّل تطبيقا\""
+msgstr "قائمة الأوامر المستخدمة في الماضي في مربع حوار \"شغّل تطبيقًا\"."
 
 #: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
 msgid "Launcher location"
@@ -1174,49 +1260,43 @@ msgstr ""
 "object_type كـ \"launcher-object\"."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
-#, fuzzy
 msgid "Icon used for button"
-msgstr "الأيقونة المستعملة لزر العنصر"
+msgstr "الأيقونة المستعملة للزر"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
 msgid "Menu content path"
 msgstr "مسار محتوى القائمة"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
-#, fuzzy
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
 msgstr ""
-"موقع ملف الصورة المستخدم كأيقونة لزر الجسم. ليس لهذا المفتاح معنى إلا عند "
-"ضبط مفتاح object_type كـ \"drawer-object\" أو \"menu-object\" و ضبط مفتاح "
-"use_custom_icon لـ true."
+"موقع ملف الصورة المستخدم كأيقونة لزر الكائن. إذا كان فارغًا، ستستخدم الأيقونة "
+"الإفتراضية للقائمة."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
-#, fuzzy
 msgid ""
 "The path from which the menu contents is contructed. If empty, the menu will "
 "be the default applications menu."
 msgstr ""
-"المسار الذي منه ستركب محتويات القائمة. ليس لهذا المفتاح معنى إلا عند ضبط "
-"مفتاح use_menu_path لـ true و مفتاح object_type لـ \"menu-object\"."
+"المسار الذي منه ستركب محتويات القائمة. إذا كان فارغًا، ستُستخدم القائمة "
+"الإفتراضية للتطبيقات."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
 msgid "The text to display in a tooltip for this menu."
 msgstr ""
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
-#, fuzzy
 msgid "Tooltip displayed for menu"
-msgstr "تلميحة الأداة المعروضة للدرج أو القائمة"
+msgstr "تلميحة الأداة المعروضة للقائمة"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
-#, fuzzy
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 msgstr ""
-"إذا كان \"صحيح\"، فسيترجم موقع الجسم نسبة للحافة اليمنى للشريط  (أو السفلى "
+"إذا ضبط على 'end'، فسيترجم موقع الكائن نسبة للحافة اليمنى للشريط  (أو السفلى "
 "للشرائط العمودية)."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
@@ -1224,17 +1304,16 @@ msgid "Interpret position relative to bottom/right edge"
 msgstr "فسّر الموقع نسبة إلى الحافة السفلى/العليا"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
-#, fuzzy
 msgid "Object IID"
-msgstr "معرف الريمج"
+msgstr "كائن IID"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
 msgid "Object's position on the panel"
-msgstr "موقع الجسم على الشريط"
+msgstr "موقع الكائن على الشريط"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr "محدد هويّة شريط المستوى الأعلى الحاوي لهذا الجسم."
+msgstr "محدد هويّة شريط المستوى الأعلى الحاوي لهذا الكائن."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
 msgid ""
@@ -1247,12 +1326,12 @@ msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"موقع جسم الشريط هذا. الموقع محدّد بعدد البكسلات من حافة الشريط اليسرى (أو "
+"موقع كائن الشريط هذا. الموقع محدّد بعدد البكسلات من حافة الشريط اليسرى (أو "
 "العليا إذا كان الشريط عموديّا)."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
 msgid "Toplevel panel containing object"
-msgstr "شريط مستوى أعلى محتوية على الجسم"
+msgstr "شريط مستوى أعلى محتوية على الكائن"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
 msgid "Animation speed"
@@ -1516,9 +1595,9 @@ msgstr ""
 "إتجاه الشريط. القيم الممكنة هي \"top\" و \"bottom\" و \"left\" و \"right\". "
 "في نسق التمديد يحدد المفتاح أي حافة شاشة سيكون عليها الشريط. في نسق اللا "
 "تمديد يكون الفرق بين الأعلى و الأسفل أقل أ هميّة. - كلاهما يؤشر على أن هذا "
-"الشريط أفقي -  لكنهما يعطيان تلميحة مفيدة لكيفية تصرف يعض أجسام الشريط، مثلا "
-"سيبثق زر قائمة قائمته تحت الشريط في شرائط \"top\"، أم في شرائط \"bottom\" "
-"ستبثق القائمة فوق الشريط."
+"الشريط أفقي -  لكنهما يعطيان تلميحة مفيدة لكيفية تصرف يعض كائنات الشريط، "
+"مثلا سيبثق زر قائمة قائمته تحت الشريط في شرائط \"top\"، أم في شرائط \"bottom"
+"\" ستبثق القائمة فوق الشريط."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
 msgid ""
@@ -1654,44 +1733,44 @@ msgstr "اعرض خيارات إدارة الجلسات"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:76
-#: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:941
+#: ../gnome-panel/libpanel-util/panel-error.c:80
+#: ../gnome-panel/panel-applet-frame.c:766
+#: ../gnome-panel/panel-applet-frame.c:938
 msgid "Error"
 msgstr "خطأ"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
 msgid "Choose an icon"
 msgstr "اختر أيقونة"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:45
+#: ../gnome-panel/libpanel-util/panel-launch.c:49
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "لا يمكن بدء '%s'"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
 #: ../gnome-panel/launcher.c:175
 msgid "Could not launch application"
 msgstr "تعذّر تشغيل التّطبيق"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:44
+#: ../gnome-panel/libpanel-util/panel-show.c:48
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "لم يمكن فتح المكان '%s'"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:162
+#: ../gnome-panel/libpanel-util/panel-show.c:166
 msgid "No application to handle search folders is installed."
 msgstr "لا يوجد برنامج للتحكم في مجلّدات البحث."
 
-#: ../gnome-panel/applet.c:363
+#: ../gnome-panel/applet.c:359
 msgid "???"
 msgstr "؟؟؟"
 
-#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "ا_نقل"
 
-#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "ا_حذف من الشريط"
 
@@ -1854,100 +1933,100 @@ msgstr "أطفئ..."
 msgid "Shut down the computer"
 msgstr "أطفئ الحاسوب"
 
-#: ../gnome-panel/panel-addto.c:115
-msgid "Custom Application Launcher"
-msgstr "مطلق تطبيق مخصّص"
-
-#: ../gnome-panel/panel-addto.c:116
-msgid "Create a new launcher"
-msgstr "أنشئ مطلقا جديدا"
-
-#: ../gnome-panel/panel-addto.c:126
-msgid "Application Launcher..."
-msgstr "مطلق تطبيق..."
-
-#: ../gnome-panel/panel-addto.c:127
-msgid "Copy a launcher from the applications menu"
-msgstr "انسخ مُطلِقا من قائمة التطبيقات"
-
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
+#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:963
 msgid "Main Menu"
 msgstr "القائمة الرئيسية"
 
-#: ../gnome-panel/panel-addto.c:142
+#: ../gnome-panel/panel-addto.c:146
 msgid "The main GNOME menu"
 msgstr "قائمة جنوم الرّئيسيّة"
 
-#: ../gnome-panel/panel-addto.c:152
+#: ../gnome-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "شريط القوائم"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "شريط قوائم مخصّص"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto.c:165
 msgid "Separator"
 msgstr "فاصل"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto.c:166
 msgid "A separator to organize the panel items"
 msgstr "فاصل لتنظيم عناصر الشريط"
 
-#: ../gnome-panel/panel-addto.c:174
-msgid "User Menu"
+#: ../gnome-panel/panel-addto.c:175
+msgid "User menu"
 msgstr "قائمة المستخدم"
 
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-addto.c:176
 msgid "Menu to change your settings and your online status"
 msgstr "قائمة لتغيير الإعدادات وحالة تواجدك"
 
-#: ../gnome-panel/panel-addto.c:257
+#: ../gnome-panel/panel-addto.c:222
 msgid "(empty)"
 msgstr "(فارغ)"
 
-#: ../gnome-panel/panel-addto.c:1055
+#: ../gnome-panel/panel-addto.c:422
+msgid "Custom Application Launcher"
+msgstr "مطلق تطبيق مخصّص"
+
+#: ../gnome-panel/panel-addto.c:423
+msgid "Create a new launcher"
+msgstr "أنشئ مطلقا جديدا"
+
+#: ../gnome-panel/panel-addto.c:433
+msgid "Application Launcher..."
+msgstr "مطلق تطبيق..."
+
+#: ../gnome-panel/panel-addto.c:434
+msgid "Copy a launcher from the applications menu"
+msgstr "انسخ مُطلِقا من قائمة التطبيقات"
+
+#: ../gnome-panel/panel-addto.c:1019
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "اختر _عنصرًا للإضافة ل \"%s\":"
 
-#: ../gnome-panel/panel-addto.c:1059
+#: ../gnome-panel/panel-addto.c:1023
 msgid "Find an _item to add to the panel:"
 msgstr "اختر _عنصرًا ليضاف إلى الشّريط:"
 
-#: ../gnome-panel/panel-addto.c:1062
+#: ../gnome-panel/panel-addto.c:1026
 msgid "Add to Panel"
 msgstr "أضِف إلى الشّريط"
 
-#: ../gnome-panel/panel-applet-frame.c:738
+#: ../gnome-panel/panel-applet-frame.c:735
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "توقف \"%s\" بصورة غير متوقعة"
 
-#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:737
 msgid "Panel object has quit unexpectedly"
-msgstr "توقف جسم الشريط بصورة غير متوقعة"
+msgstr "توقف كائن الشريط بصورة غير متوقعة"
 
-#: ../gnome-panel/panel-applet-frame.c:747
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "إذا أعدت تحميل عنصر في الشريط فسيعاد إضافته تلقائيا."
 
-#: ../gnome-panel/panel-applet-frame.c:753
+#: ../gnome-panel/panel-applet-frame.c:750
 msgid "_Don't Reload"
 msgstr "_لا تعِد التحميل"
 
-#: ../gnome-panel/panel-applet-frame.c:754
+#: ../gnome-panel/panel-applet-frame.c:751
 msgid "_Reload"
 msgstr "أ_عد التحميل"
 
-#: ../gnome-panel/panel-applet-frame.c:904
+#: ../gnome-panel/panel-applet-frame.c:901
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "واجه الشريط مشكلة أثناء تحميل \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:920
+#: ../gnome-panel/panel-applet-frame.c:917
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "هل تريد حذف البريمج من إعداداتك؟"
 
@@ -2060,7 +2139,7 @@ msgstr ""
 "إذا اخترت إجبار هذا التطبيق على الانتهاء، ستضيع جميع التغييرات غير المحفوظة "
 "على المستندات المفتوحة."
 
-#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
+#: ../gnome-panel/panel-layout.c:1092 ../gnome-panel/panel-layout.c:1106
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "تعذّر إنشاء النسق الأولي للشريط.\n"
@@ -2130,7 +2209,7 @@ msgstr "أماكن الشبكة"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:644
 msgid "Open your personal folder"
 msgstr "افتح مجلدك الشخصي"
 
@@ -2148,24 +2227,24 @@ msgstr "افتح محتويات سطح المكتب في مجلد"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:653
 msgid "Computer"
 msgstr "الحاسوب"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:654
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "تصفّح كل الأقراص والمجلّدات المحلّية والبعيدة المتاحة لهذا الحاسوب"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:661
 msgid "Network"
 msgstr "الشبكة"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:662
 msgid "Browse bookmarked and local network locations"
 msgstr "تصفح مواقع الشبكة والمحلّية المعلّمة"
 
@@ -2210,7 +2289,7 @@ msgid "Right"
 msgstr "يمين"
 
 #: ../gnome-panel/panel-properties-dialog.c:821
-#: ../gnome-panel/panel-run-dialog.c:2009
+#: ../gnome-panel/panel-run-dialog.c:1896
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "تعذّر تحميل الملف '%s':‏ %s."
@@ -2357,36 +2436,36 @@ msgstr "امسح المستندات الحديثة..."
 msgid "Clear all items from the recent documents list"
 msgstr "امسح كل العناصر من قائمة المستندات الحديثة"
 
-#: ../gnome-panel/panel-run-dialog.c:400
+#: ../gnome-panel/panel-run-dialog.c:361
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "تعذّر تشغيل الأمر '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:448
+#: ../gnome-panel/panel-run-dialog.c:409
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "لم يمكن تحويل '%s' من UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1235
+#: ../gnome-panel/panel-run-dialog.c:1160
 msgid "Choose a file to append to the command..."
 msgstr "اختر ملف لإلحاقه بالأمر..."
 
-#: ../gnome-panel/panel-run-dialog.c:1618
+#: ../gnome-panel/panel-run-dialog.c:1543
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "اختر تطبيقا لعرض وصفه."
 
-#: ../gnome-panel/panel-run-dialog.c:1656
+#: ../gnome-panel/panel-run-dialog.c:1581
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "سينفذ الأمر: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1689
+#: ../gnome-panel/panel-run-dialog.c:1614
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "قائمة العناوين من حوار التشغيل لها نسق (%Id) أو طول (%Id) خاطئ \n"
 
-#: ../gnome-panel/panel-run-dialog.c:2014
+#: ../gnome-panel/panel-run-dialog.c:1901
 msgid "Could not display run dialog"
 msgstr "لم يمكن عرض حوار التشغيل"
 
@@ -2632,17 +2711,33 @@ msgstr "‏%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "افتح العنوان: %s"
 
-#: ../gnome-panel/panel.c:1396
+#: ../gnome-panel/panel.c:1393
 msgid "Delete this panel?"
 msgstr "هل تريد حذف هذا الشريط؟"
 
-#: ../gnome-panel/panel.c:1400
+#: ../gnome-panel/panel.c:1397
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "عند حذف الشريط، يحذف الشريط مع\n"
 "خصائصه."
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
+msgid "A simple applet for testing the GNOME panel"
+msgstr "بريمج بسيط لاختبار شريط جنوم"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
+msgid "Factory for Test DBus Applet"
+msgstr "مصنع لاختبار بريمج DBus"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
+msgid "Test DBus Applet"
+msgstr "اختبار بريمج DBus"
+
+#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
+msgid "Test DBus Applet Factory"
+msgstr "مصنع بريمج الاختبار DBus"
 
 #~ msgid "Cannot find an empty spot"
 #~ msgstr "لم يمكن العثور على بقعة فارغة"
@@ -2797,7 +2892,7 @@ msgstr ""
 #~ "خانات قائمة تسجيل الخروج."
 
 #~ msgid "If true, tooltips are shown for objects in panels."
-#~ msgstr "إذا كان \"صحيح\"، ستعرض تلميحات الأدوات للأجسام في الشريط."
+#~ msgstr "إذا كان \"صحيح\"، ستعرض تلميحات الأدوات للكائنات في الشريط."
 
 #~ msgid ""
 #~ "This key is deprecated as it cannot be used to implement proper lockdown. "
@@ -2839,13 +2934,13 @@ msgstr ""
 #~ "بإستعمال عنصر القائمة \"Unlock\"."
 
 #~ msgid "Lock the object to the panel"
-#~ msgstr "أقفل الجسم على الشريط"
+#~ msgstr "أقفل الكائن على الشريط"
 
 #~ msgid "Panel attached to drawer"
 #~ msgstr "الشريط المنسوب إلى الدرج"
 
 #~ msgid "Panel object type"
-#~ msgstr "نوع جسم الشريط"
+#~ msgstr "نوع كائن الشريط"
 
 #~ msgid ""
 #~ "The action type this button represents. Possible values are \"lock\", "
@@ -2885,8 +2980,8 @@ msgstr ""
 #~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet"
 #~ "\", \"menu-bar\" and \"separator\"."
 #~ msgstr ""
-#~ "نوع جسم الشريط. القيم الممكنة هي \"drawer-object\" (جسم درج) و \"menu-"
-#~ "object\" (جسم قائمة) و \"launcher-object\" (جسم مطلق) و \"action-applet"
+#~ "نوع كائن الشريط. القيم الممكنة هي \"drawer-object\" (كائن درج) و \"menu-"
+#~ "object\" (كائن قائمة) و \"launcher-object\" (كائن مطلق) و \"action-applet"
 #~ "\" (بريمج بونوبو) و \"action-applet\" (بريمج حدث) و \"menu-bar\" (عمود "
 #~ "قائمة)"
 
@@ -2980,12 +3075,6 @@ msgstr ""
 #~ msgid "_About"
 #~ msgstr "_عنْ"
 
-#~ msgid "Clock"
-#~ msgstr "ساعة"
-
-#~ msgid "The Clock displays the current time and date"
-#~ msgstr "تعرض الساعة الوقت و اليوم الحاليين"
-
 #~ msgid "translator-credits"
 #~ msgstr ""
 #~ "فريق عربآيز للترجمة http://www.arabeyes.org :\n"
@@ -3006,17 +3095,8 @@ msgstr ""
 #~ msgid "(with minor help from George)"
 #~ msgstr "(بمساعدة بسيطة من جورج)"
 
-#~ msgid "Fish"
-#~ msgstr "سمكة"
-
-#~ msgid "Notification Area"
-#~ msgstr "مساحة التبليغ"
-
 #~ msgid "This button lets you hide all windows and show the desktop."
 #~ msgstr "يمكنّك هذا الزر من إخفاء جميع النوافذ و إظهار المكتب."
-
-#~ msgid "Window List"
-#~ msgstr "قائمة النوافذ"
 
 #~ msgid ""
 #~ "The Window List shows a list of all windows in a set of buttons and lets "
@@ -3027,9 +3107,6 @@ msgstr ""
 #~ "The Window Selector shows a list of all windows in a menu and lets you "
 #~ "browse them."
 #~ msgstr "يعرض منتقي النوافذ قائمة لكل النوافذ و يمكنك من تصفحها."
-
-#~ msgid "Workspace Switcher"
-#~ msgstr "مبدّل مساحات العمل"
 
 #~ msgid ""
 #~ "The Workspace Switcher shows you a small version of your workspaces that "
