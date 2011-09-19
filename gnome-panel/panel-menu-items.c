@@ -1376,8 +1376,8 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 		add_menu_separator (desktop_menu);
 #endif
 
-	item = panel_menu_item_desktop_new ("gnome-user-accounts-panel.desktop",
-					    _("My Account"), FALSE);
+	item = panel_menu_item_desktop_new ("gnome-online-accounts-panel.desktop",
+					    NULL, FALSE);
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
 
