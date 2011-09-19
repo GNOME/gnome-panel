@@ -65,8 +65,8 @@
 #  define KEY_TASKS_EXPANDED        "expand_tasks"
 #  define KEY_WEATHER_EXPANDED      "expand_weather"
 
-#  define KEY_CALENDAR_APP          "/desktop/gnome/applications/calendar"
-#  define KEY_TASKS_APP             "/desktop/gnome/applications/tasks"
+#  define SCHEMA_CALENDAR_APP       "org.gnome.desktop.default-applications.office.calendar"
+#  define SCHEMA_TASKS_APP          "org.gnome.desktop.default-applications.office.tasks"
 #else
 #  define N_CALENDAR_WINDOW_GCONF_PREFS 1
 #endif
@@ -158,12 +158,12 @@ set_environment (gpointer display)
 
 static void
 clock_launch_calendar_tasks_app (CalendarWindow *calwin,
-				 const char     *key_program,
+				 const char     *schema_program,
 				 const char     *argument)
 {
+	GSettings  *settings;
 	char      **argv;
 	int         argc;
-	char       *key;
 	char       *program;
 	gboolean    terminal;
 	char       *command_line;
@@ -172,15 +172,10 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	gboolean    result;
 	char       *display;
 
-	key = g_strdup_printf ("%s%s", key_program, "/exec");
-	program = gconf_client_get_string (calwin->priv->gconfclient,
-					   key, NULL);
-	g_free (key);
-
-	key = g_strdup_printf ("%s%s", key_program, "/needs_term");
-	terminal = gconf_client_get_bool (calwin->priv->gconfclient,
-					  key, NULL);
-	g_free (key);
+	settings = g_settings_new (schema_program);
+	program = g_settings_get_string (settings, "exec");
+	terminal = g_settings_get_boolean (settings, "needs-term");
+	g_object_unref (settings);
 
 	if (program == NULL) {
 		g_printerr ("Cannot launch calendar/tasks application: key not set\n");
@@ -237,14 +232,14 @@ static void
 clock_launch_calendar_app (CalendarWindow *calwin,
 			   const char     *argument)
 {
-	clock_launch_calendar_tasks_app (calwin, KEY_CALENDAR_APP, argument);
+	clock_launch_calendar_tasks_app (calwin, SCHEMA_CALENDAR_APP, argument);
 }
 
 static void
 clock_launch_tasks_app (CalendarWindow *calwin,
 			const char     *argument)
 {
-	clock_launch_calendar_tasks_app (calwin, KEY_TASKS_APP, argument);
+	clock_launch_calendar_tasks_app (calwin, SCHEMA_TASKS_APP, argument);
 }
 
 static void
