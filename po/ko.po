@@ -7,15 +7,13 @@
 # jhsim <jhsim@haansoft.com>, 2010.
 # Changwoo Ryu <cwryu@debian.org>, 1998, 2002-2006, 2007, 2008, 2009, 2010, 2011.
 #
-# 새로 번역하시는 분은 아래 "translator-credits"에 추가하세요.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-04-13 06:54+0000\n"
-"PO-Revision-Date: 2011-04-15 04:05+0900\n"
+"POT-Creation-Date: 2011-09-19 15:18+0000\n"
+"PO-Revision-Date: 2011-09-23 03:17+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +30,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:443
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:452
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
@@ -51,8 +49,8 @@ msgstr "%p %l:%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:448
-#: ../applets/clock/clock.c:1591 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:457
+#: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -101,7 +99,7 @@ msgstr "달력"
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:443
+#: ../applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
@@ -112,7 +110,7 @@ msgstr "%p %l:%M:%S"
 #. * string.
 #. * It is used to display the time in 24-hours
 #. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:448 ../applets/clock/clock.c:1585
+#: ../applets/clock/clock.c:457 ../applets/clock/clock.c:1594
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -121,7 +119,7 @@ msgstr "%H:%M:%S"
 #. * the day of the month as a decimal number is a single digit,
 #. * it should begin with a 0 in your locale (e.g. "May 01"
 #. * instead of "May  1").
-#: ../applets/clock/clock.c:459
+#: ../applets/clock/clock.c:468
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
@@ -129,7 +127,7 @@ msgstr "%b %e일 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:466
+#: ../applets/clock/clock.c:475
 #, c-format
 msgid ""
 "%1$s\n"
@@ -142,7 +140,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:474
+#: ../applets/clock/clock.c:483
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
@@ -151,27 +149,27 @@ msgstr "%s %s"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:640
+#: ../applets/clock/clock.c:649
 msgid "%A %B %d (%%s)"
 msgstr "%B %d일 %A (%%s)"
 
-#: ../applets/clock/clock.c:670
+#: ../applets/clock/clock.c:679
 msgid "Click to hide your appointments and tasks"
 msgstr "약속과 작업을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:673
+#: ../applets/clock/clock.c:682
 msgid "Click to view your appointments and tasks"
 msgstr "약속과 작업을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:677
+#: ../applets/clock/clock.c:686
 msgid "Click to hide month calendar"
 msgstr "달력을 감추려면 누르십시오"
 
-#: ../applets/clock/clock.c:680
+#: ../applets/clock/clock.c:689
 msgid "Click to view month calendar"
 msgstr "달력을 보려면 누르십시오"
 
-#: ../applets/clock/clock.c:1423
+#: ../applets/clock/clock.c:1432
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
@@ -181,7 +179,7 @@ msgstr "컴퓨터 시계"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1570
+#: ../applets/clock/clock.c:1579
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
@@ -191,72 +189,72 @@ msgstr "%p %I:%M:%S"
 #. * format with a leading 0 if needed (eg, like
 #. * in the US: 08:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock.c:1578
+#: ../applets/clock/clock.c:1587
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date in the full format (so that people can
 #. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1624
+#: ../applets/clock/clock.c:1633
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %B %d일 %A"
 
-#: ../applets/clock/clock.c:1693
+#: ../applets/clock/clock.c:1702
 msgid "Failed to open the time settings"
 msgstr "시간을 설정하는 데 실패했습니다"
 
-#: ../applets/clock/clock.c:1713 ../applets/fish/fish.c:1317
+#: ../applets/clock/clock.c:1722 ../applets/fish/fish.c:1317
 #: ../applets/wncklet/window-list.c:159
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
-#: ../applets/clock/clock.c:1716
+#: ../applets/clock/clock.c:1725
 msgid "Copy _Time"
 msgstr "시각 복사(_T)"
 
-#: ../applets/clock/clock.c:1719
+#: ../applets/clock/clock.c:1728
 msgid "Copy _Date"
 msgstr "날짜 복사(_D)"
 
-#: ../applets/clock/clock.c:1722
+#: ../applets/clock/clock.c:1731
 msgid "Ad_just Date & Time"
 msgstr "날짜 및 시간 조정(_J)"
 
-#: ../applets/clock/clock.c:2559
+#: ../applets/clock/clock.c:2568
 msgid "Custom format"
 msgstr "사용자 지정 형식"
 
-#: ../applets/clock/clock.c:3046
+#: ../applets/clock/clock.c:3055
 msgid "Choose Location"
 msgstr "위치 선택"
 
-#: ../applets/clock/clock.c:3125
+#: ../applets/clock/clock.c:3134
 msgid "Edit Location"
 msgstr "위치 편집"
 
-#: ../applets/clock/clock.c:3272
+#: ../applets/clock/clock.c:3281
 msgid "City Name"
 msgstr "도시 이름"
 
-#: ../applets/clock/clock.c:3276
+#: ../applets/clock/clock.c:3285
 msgid "City Time Zone"
 msgstr "도시 시간대"
 
-#: ../applets/clock/clock.c:3463
+#: ../applets/clock/clock.c:3472
 msgid "24 hour"
 msgstr "24시간"
 
-#: ../applets/clock/clock.c:3464
+#: ../applets/clock/clock.c:3473
 msgid "UNIX time"
 msgstr "유닉스 시각"
 
-#: ../applets/clock/clock.c:3465
+#: ../applets/clock/clock.c:3474
 msgid "Internet time"
 msgstr "인터넷 시각"
 
-#: ../applets/clock/clock.c:3473
+#: ../applets/clock/clock.c:3482
 msgid "Custom _format:"
 msgstr "사용자 지정 형식(_F):"
 
@@ -651,7 +649,7 @@ msgstr "일출: %s / 일몰: %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
 #: ../applets/wncklet/wncklet.c:74
-#: ../gnome-panel/libpanel-util/panel-show.c:235
+#: ../gnome-panel/libpanel-util/panel-show.c:239
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' 도움말 문서를 표시할 수 없습니다"
@@ -1749,44 +1747,44 @@ msgstr "세션 관리 옵션을 표시합니다"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:76
-#: ../gnome-panel/panel-applet-frame.c:769
-#: ../gnome-panel/panel-applet-frame.c:941
+#: ../gnome-panel/libpanel-util/panel-error.c:80
+#: ../gnome-panel/panel-applet-frame.c:766
+#: ../gnome-panel/panel-applet-frame.c:938
 msgid "Error"
 msgstr "오류"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
 msgid "Choose an icon"
 msgstr "아이콘 선택"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:45
+#: ../gnome-panel/libpanel-util/panel-launch.c:49
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "'%s' 명령을 실행할 수 없습니다"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:48
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
 #: ../gnome-panel/launcher.c:175
 msgid "Could not launch application"
 msgstr "실행 아이콘을 실행할 수 없습니다"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:44
+#: ../gnome-panel/libpanel-util/panel-show.c:48
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "'%s' 위치를 열 수 없습니다"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:162
+#: ../gnome-panel/libpanel-util/panel-show.c:166
 msgid "No application to handle search folders is installed."
 msgstr "검색 폴더를 처리하는 프로그램을 설치하지 않았습니다."
 
-#: ../gnome-panel/applet.c:363
+#: ../gnome-panel/applet.c:359
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
 msgid "_Move"
 msgstr "옮기기(_M)"
 
-#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
 msgid "_Remove From Panel"
 msgstr "패널에서 제거(_R)"
 
@@ -1952,100 +1950,100 @@ msgstr "시스템 끄기..."
 msgid "Shut down the computer"
 msgstr "시스템을 종료합니다."
 
-#: ../gnome-panel/panel-addto.c:115
-msgid "Custom Application Launcher"
-msgstr "사용자 지정 프로그램 실행 아이콘"
-
-#: ../gnome-panel/panel-addto.c:116
-msgid "Create a new launcher"
-msgstr "새 실행 아이콘 만들기"
-
-#: ../gnome-panel/panel-addto.c:126
-msgid "Application Launcher..."
-msgstr "프로그램 실행 아이콘..."
-
-#: ../gnome-panel/panel-addto.c:127
-msgid "Copy a launcher from the applications menu"
-msgstr "프로그램 메뉴에서 실행 아이콘을 복사합니다"
-
-#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
+#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:966
 msgid "Main Menu"
 msgstr "메인 메뉴"
 
-#: ../gnome-panel/panel-addto.c:142
+#: ../gnome-panel/panel-addto.c:146
 msgid "The main GNOME menu"
 msgstr "그놈 주메뉴"
 
-#: ../gnome-panel/panel-addto.c:152
+#: ../gnome-panel/panel-addto.c:155
 msgid "Menu Bar"
 msgstr "메뉴 모음"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto.c:156
 msgid "A custom menu bar"
 msgstr "사용자 지정 메뉴 모음"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto.c:165
 msgid "Separator"
 msgstr "구분선"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto.c:166
 msgid "A separator to organize the panel items"
 msgstr "패널 항목을 정렬하는 구분선"
 
-#: ../gnome-panel/panel-addto.c:174
-msgid "User Menu"
+#: ../gnome-panel/panel-addto.c:175
+msgid "User menu"
 msgstr "사용자 메뉴"
 
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-addto.c:176
 msgid "Menu to change your settings and your online status"
 msgstr "설정 및 온라인 상태를 바꾸는 메뉴"
 
-#: ../gnome-panel/panel-addto.c:257
+#: ../gnome-panel/panel-addto.c:222
 msgid "(empty)"
 msgstr "(비었음)"
 
-#: ../gnome-panel/panel-addto.c:1055
+#: ../gnome-panel/panel-addto.c:422
+msgid "Custom Application Launcher"
+msgstr "사용자 지정 프로그램 실행 아이콘"
+
+#: ../gnome-panel/panel-addto.c:423
+msgid "Create a new launcher"
+msgstr "새 실행 아이콘 만들기"
+
+#: ../gnome-panel/panel-addto.c:433
+msgid "Application Launcher..."
+msgstr "프로그램 실행 아이콘..."
+
+#: ../gnome-panel/panel-addto.c:434
+msgid "Copy a launcher from the applications menu"
+msgstr "프로그램 메뉴에서 실행 아이콘을 복사합니다"
+
+#: ../gnome-panel/panel-addto.c:1019
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\"에 추가할 항목 찾기(_I):"
 
-#: ../gnome-panel/panel-addto.c:1059
+#: ../gnome-panel/panel-addto.c:1023
 msgid "Find an _item to add to the panel:"
 msgstr "패널에 추가할 항목 찾기(_I):"
 
-#: ../gnome-panel/panel-addto.c:1062
+#: ../gnome-panel/panel-addto.c:1026
 msgid "Add to Panel"
 msgstr "패널에 추가"
 
-#: ../gnome-panel/panel-applet-frame.c:738
+#: ../gnome-panel/panel-applet-frame.c:735
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" 애플릿이 갑자기 종료되었습니다."
 
-#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:737
 msgid "Panel object has quit unexpectedly"
 msgstr "패널 오브젝트가 갑자기 끝났습니다"
 
-#: ../gnome-panel/panel-applet-frame.c:747
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "패널 오브젝트를 다시 읽어들이면, 원래대로 다시 패널에 붙습니다."
 
-#: ../gnome-panel/panel-applet-frame.c:753
+#: ../gnome-panel/panel-applet-frame.c:750
 msgid "_Don't Reload"
 msgstr "읽어들이지 않기(_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:754
+#: ../gnome-panel/panel-applet-frame.c:751
 msgid "_Reload"
 msgstr "다시 읽기(_R)"
 
-#: ../gnome-panel/panel-applet-frame.c:904
+#: ../gnome-panel/panel-applet-frame.c:901
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "패널에서 '%s'(을)를 읽어들이는 데 문제가 발생했습니다."
 
-#: ../gnome-panel/panel-applet-frame.c:920
+#: ../gnome-panel/panel-applet-frame.c:917
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "설정에서 이 애플릿을 삭제하시겠습니까?"
 
@@ -2160,7 +2158,7 @@ msgstr ""
 "프로그램을 강제로 끝내면, 그 프로그램에서 연 문서에 저장하지 않은 내용이 있으"
 "면 잃어버릴 수 있습니다."
 
-#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
+#: ../gnome-panel/panel-layout.c:1092 ../gnome-panel/panel-layout.c:1106
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "최초 패널 레이아웃을 만들 수 없습니다.\n"
@@ -2230,7 +2228,7 @@ msgstr "네트워크 위치"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:644
 msgid "Open your personal folder"
 msgstr "개인 폴더를 엽니다"
 
@@ -2248,12 +2246,12 @@ msgstr "바탕 화면 폴더를 엽니다"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:653
 msgid "Computer"
 msgstr "컴퓨터"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:654
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -2261,12 +2259,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:661
 msgid "Network"
 msgstr "네트워크"
 
 #. name
-#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:662
 msgid "Browse bookmarked and local network locations"
 msgstr "책갈피에 저장한 위치 및 로컬 네트워크 위치를 찾아 봅니다"
 
@@ -2277,10 +2275,6 @@ msgstr "대화 가능"
 #: ../gnome-panel/panel-menu-items.c:1367
 msgid "Busy"
 msgstr "다른 용무 중"
-
-#: ../gnome-panel/panel-menu-items.c:1380
-msgid "My Account"
-msgstr "내 계정"
 
 #: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
@@ -2311,7 +2305,7 @@ msgid "Right"
 msgstr "오른쪽"
 
 #: ../gnome-panel/panel-properties-dialog.c:821
-#: ../gnome-panel/panel-run-dialog.c:2009
+#: ../gnome-panel/panel-run-dialog.c:1896
 #, c-format
 msgid "Unable to load file '%s': %s."
 msgstr "'%s' 파일을 불러올 수 없습니다: %s."
@@ -2459,37 +2453,37 @@ msgstr "최근 문서 지우기..."
 msgid "Clear all items from the recent documents list"
 msgstr "최근 문서 목록의 모든 항목을 지우시겠습니까?"
 
-#: ../gnome-panel/panel-run-dialog.c:400
+#: ../gnome-panel/panel-run-dialog.c:361
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' 명령을 실행할 수 없습니다"
 
-#: ../gnome-panel/panel-run-dialog.c:448
+#: ../gnome-panel/panel-run-dialog.c:409
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s'을(를) UTF-8에서 변환할 수 없습니다"
 
-#: ../gnome-panel/panel-run-dialog.c:1235
+#: ../gnome-panel/panel-run-dialog.c:1160
 msgid "Choose a file to append to the command..."
 msgstr "명령어에 덧붙일 파일을 선택하십시오..."
 
-#: ../gnome-panel/panel-run-dialog.c:1618
+#: ../gnome-panel/panel-run-dialog.c:1543
 #: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "설명을 볼 프로그램을 선택하십시오."
 
-#: ../gnome-panel/panel-run-dialog.c:1656
+#: ../gnome-panel/panel-run-dialog.c:1581
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "다음 명령을 실행합니다: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1689
+#: ../gnome-panel/panel-run-dialog.c:1614
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "실행 대화 상자에 지정된 URI 목록의 형식(%d)이나 길이(%d)가 틀렸습니다\n"
 
-#: ../gnome-panel/panel-run-dialog.c:2014
+#: ../gnome-panel/panel-run-dialog.c:1901
 msgid "Could not display run dialog"
 msgstr "실행 대화상자를 보여줄 수 없습니다"
 
@@ -2734,11 +2728,11 @@ msgstr "%1$s: %2$s"
 msgid "Open URL: %s"
 msgstr "URL 열기: %s"
 
-#: ../gnome-panel/panel.c:1396
+#: ../gnome-panel/panel.c:1393
 msgid "Delete this panel?"
 msgstr "이 패널을 삭제하시겠습니까?"
 
-#: ../gnome-panel/panel.c:1400
+#: ../gnome-panel/panel.c:1397
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2761,6 +2755,9 @@ msgstr "테스트 D버스 애플릿"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "Test DBus Applet Factory"
 msgstr "테스트 D버스 애플릿 팩토리"
+
+#~ msgid "My Account"
+#~ msgstr "내 계정"
 
 #~ msgid "Select an animation"
 #~ msgstr "애니메이션 선택"
