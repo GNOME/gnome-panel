@@ -14,14 +14,15 @@
 # Kiyotaka NISHIBORI <ml.nishibori.kiyotaka@gmail.com>, 2010.
 # IWAI, Masaharu <iwaim.sub@gmail.com>, 2010.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2011.
+# Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-09-10 22:46+0000\n"
-"PO-Revision-Date: 2011-09-11 07:40+0900\n"
+"POT-Creation-Date: 2011-09-21 01:10+0000\n"
+"PO-Revision-Date: 2011-09-21 17:55+0900\n"
 "Last-Translator: Jiro Matsuzawa <jmatsuzawa@src.gnome.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +39,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:452
+#: ../applets/clock/calendar-window.c:324 ../applets/clock/clock.c:452
 #: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%p%l:%M"
@@ -57,7 +58,7 @@ msgstr "%p%l:%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:457
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:457
 #: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
 #: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
@@ -66,41 +67,41 @@ msgstr "%k:%M"
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:340
+#: ../applets/clock/calendar-window.c:335
 msgid "%b %d"
 msgstr "%b%e日"
 
-#: ../applets/clock/calendar-window.c:840
+#: ../applets/clock/calendar-window.c:835
 msgid "Tasks"
 msgstr "タスク"
 
-#: ../applets/clock/calendar-window.c:840
-#: ../applets/clock/calendar-window.c:1023
-#: ../applets/clock/calendar-window.c:1629
+#: ../applets/clock/calendar-window.c:835
+#: ../applets/clock/calendar-window.c:1018
+#: ../applets/clock/calendar-window.c:1624
 msgid "Edit"
 msgstr "編集"
 
-#: ../applets/clock/calendar-window.c:963
+#: ../applets/clock/calendar-window.c:958
 msgid "All Day"
 msgstr "全日"
 
-#: ../applets/clock/calendar-window.c:1107
+#: ../applets/clock/calendar-window.c:1102
 msgid "Appointments"
 msgstr "予定"
 
-#: ../applets/clock/calendar-window.c:1132
+#: ../applets/clock/calendar-window.c:1127
 msgid "Birthdays and Anniversaries"
 msgstr "誕生日と記念日"
 
-#: ../applets/clock/calendar-window.c:1157
+#: ../applets/clock/calendar-window.c:1152
 msgid "Weather Information"
 msgstr "天気の情報"
 
-#: ../applets/clock/calendar-window.c:1629 ../applets/clock/clock.ui.h:11
+#: ../applets/clock/calendar-window.c:1624 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "場所"
 
-#: ../applets/clock/calendar-window.c:1927
+#: ../applets/clock/calendar-window.c:1922
 msgid "Calendar"
 msgstr "カレンダー"
 
@@ -396,7 +397,7 @@ msgstr "24-hour"
 
 #: ../applets/clock/clock.schemas.in.h:12
 msgid "A list of locations to display in the calendar window."
-msgstr "カレンダー・ウィンドウに表示する場所のリストです。"
+msgstr "カレンダーウィンドウに表示する場所のリストです。"
 
 #: ../applets/clock/clock.schemas.in.h:13
 msgid "Custom format of the clock"
@@ -440,16 +441,16 @@ msgstr "TRUE にすると、時刻に秒を追加して表示します。"
 
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, expand the list of appointments in the calendar window."
-msgstr "TRUE にすると、カレンダー・ウィンドウの中に予定の一覧を表示します。"
+msgstr "TRUE にすると、カレンダーウィンドウの中に予定の一覧を表示します。"
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "TRUE にすると、カレンダー・ウィンドウの中に誕生日の一覧を表示します。"
+msgstr "TRUE にすると、カレンダーウィンドウの中に誕生日の一覧を表示します。"
 
 #: ../applets/clock/clock.schemas.in.h:25
 msgid "If true, expand the list of locations in the calendar window."
 msgstr ""
-"TRUE にすると、カレンダー・ウィンドウの中に場所の一覧を展開して表示します。"
+"TRUE にすると、カレンダーウィンドウの中に場所の一覧を展開して表示します。"
 
 #: ../applets/clock/clock.schemas.in.h:26
 msgid "If true, expand the list of tasks in the calendar window."
@@ -462,8 +463,8 @@ msgstr "TRUE にすると、カレンダーの中に天気の情報を表示し�
 #: ../applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"TRUE にすると、マウス・カーソルが時計の上にのった際にツールチップで日付を表示"
-"します"
+"TRUE にすると、マウスカーソルが時計の上にのった際にツールチップで日付を表示し"
+"ます"
 
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show the temperature next to the weather icon."
@@ -677,10 +678,8 @@ msgid "Clock Applet Factory"
 msgstr "時計アプレットのファクトリ"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
-#, fuzzy
-#| msgid "Factory for creating clock applets."
 msgid "Factory for clock applet"
-msgstr "時計アプレットを生成するためのファクトリです。"
+msgstr "時計アプレットのファクトリ"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
 msgid "Get the current time and date"
@@ -830,10 +829,8 @@ msgid "Area where notification icons appear"
 msgstr "通知アイコンを表示するスペースです"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
-#, fuzzy
-#| msgid "Panel Notification Area"
 msgid "Factory for notification area"
-msgstr "パネル通知領域"
+msgstr "通知領域のファクトリ"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:3
 msgid "Notification Area"
@@ -845,7 +842,7 @@ msgstr "通知領域ファクトリ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
 msgid "Factory for the window navigation related applets"
-msgstr "アプレットに関連したウィンドウ・ナビゲーションのファクトリです"
+msgstr "アプレットに関連したウィンドウナビゲーションのファクトリです"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
 msgid "Hide application windows and show the desktop"
@@ -873,12 +870,12 @@ msgstr "ウィンドウの一覧"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
 msgid "Window Navigation Applet Factory"
-msgstr "ウィンドウ・ナビゲーション・アプレットのファクトリ"
+msgstr "ウィンドウナビゲーションアプレットのファクトリ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
 #: ../applets/wncklet/window-menu.c:204
 msgid "Window Selector"
-msgstr "ウィンドウ・セレクター"
+msgstr "ウィンドウセレクター"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
 msgid "Workspace Switcher"
@@ -912,8 +909,8 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"お使いのウィンドウ・マネージャーはデスクトップ表示ボタンをサポートしていない"
-"か、ウィンドウ・マネージャーを起動していないようです。"
+"お使いのウィンドウマネージャーはデスクトップ表示ボタンをサポートしていない"
+"か、ウィンドウマネージャーを起動していないようです。"
 
 #: ../applets/wncklet/window-list.ui.h:1
 msgid "Group windows when _space is limited"
@@ -1119,7 +1116,7 @@ msgid ""
 msgstr ""
 "TRUE にすると、ワークスペース切り替え器の中にあるワークスペースの名前を表示し"
 "ます。それ以外は、ワークスペースの内容 (ウィンドウ) を表示します。この設定"
-"は、使用しているウィンドウ・マネージャーが Metacity の場合にのみ有効です。"
+"は、使用しているウィンドウマネージャーが Metacity の場合にのみ有効です。"
 
 #: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
 msgid "Rows in workspace switcher"
@@ -1152,8 +1149,8 @@ msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
-"パネル ID の並びです。各 ID は個々のトップレベル・パネルを示します。これらの"
-"パネルの設定はそれぞれ /apps/panel/toplevels/$(id) に格納されます。"
+"パネル ID の並びです。各 ID は個々のトップレベルパネルを示します。これらのパ"
+"ネルの設定はそれぞれ /apps/panel/toplevels/$(id) に格納されます。"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
 msgid ""
@@ -1161,10 +1158,10 @@ msgid ""
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"パネル・オブジェクト ID の並びです。各 ID は個々のパネル・オブジェクト (例: "
-"アプレット、ランチャ、アクション・ボタンやメニューボタン、メニューバー) を表"
-"します。これらのオブジェクトの設定はそれぞれ /apps/panel/objects/$(id) に格納"
-"されます。"
+"パネルオブジェクト ID の並びです。各 ID は個々のパネルオブジェクト (例: アプ"
+"レット、ランチャー、アクションボタンやメニューボタン、メニューバー) を表しま"
+"す。これらのオブジェクトの設定はそれぞれ /apps/panel/objects/$(id) に格納され"
+"ます。"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
 msgid "Applet IIDs to disable from loading"
@@ -1270,7 +1267,7 @@ msgstr "パネル ID のリスト"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
 msgid "Panel object ID list"
-msgstr "パネル・オブジェクト ID のリスト"
+msgstr "パネルオブジェクト ID のリスト"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
 msgid ""
@@ -1279,14 +1276,14 @@ msgstr "\"プログラムの実行\" ダイアログで過去に使われたコ�
 
 #: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
 msgid "Launcher location"
-msgstr "ランチャの配置"
+msgstr "ランチャーの配置"
 
 #: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:2
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"ランチャの詳細を記述した .desktop ファイルの格納場所です。このキーは、"
+"ランチャーの詳細を記述した .desktop ファイルの格納場所です。このキーは、"
 "object_type キーが \"launcher-object\" の場合にのみ有効になります。"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
@@ -1311,7 +1308,7 @@ msgid ""
 "be the default applications menu."
 msgstr ""
 "メニューを構成するものを格納する場所 (パス名) です。空ならば、デフォルトのア"
-"プリケーション・メニューになります。"
+"プリケーションメニューになります。"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
 msgid "The text to display in a tooltip for this menu."
@@ -1343,7 +1340,7 @@ msgstr "パネル上のオブジェクトの位置"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr "このオブジェクトを格納するトップレベル・パネルの識別子です。"
+msgstr "このオブジェクトを格納するトップレベルパネルの識別子です。"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
 msgid ""
@@ -1358,12 +1355,12 @@ msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"このパネル・オブジェクトを配置する位置です。配置する位置はパネルの左端 (また"
-"は縦向きの場合は上端) からのピクセル数で指定します。"
+"このパネルオブジェクトを配置する位置です。配置する位置はパネルの左端 (または"
+"縦向きの場合は上端) からのピクセル数で指定します。"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
 msgid "Toplevel panel containing object"
-msgstr "トップレベル・パネルが格納するオブジェクト"
+msgstr "トップレベルパネルが格納するオブジェクト"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
 msgid "Animation speed"
@@ -1447,9 +1444,8 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"TRUE にすると、マウス・カーソルがパネルから離れた際に、パネルが自動的にスク"
-"リーンの端に隠れます。マウス・カーソルを端に移動すると、パネルが再び表示され"
-"ます。"
+"TRUE にすると、マウスカーソルがパネルから離れた際に、パネルが自動的にスクリー"
+"ンの端に隠れます。マウスカーソルを端に移動すると、パネルが再び表示されます。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
 msgid ""
@@ -1460,8 +1456,8 @@ msgid ""
 msgstr ""
 "TRUE にすると、パネルがスクリーンの幅 (パネルが縦向きの場合は高さ) 一杯に延び"
 "ます。このモードでは、パネルはスクリーンの端にしか配置することができません。"
-"False にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせ"
-"た大きさになります。"
+"False にすると、パネルはその上にあるアプレット、ランチャー、ボタンの数に合わ"
+"せた大きさになります。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
 msgid ""
@@ -1542,9 +1538,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"マウス・カーソルがパネルの領域に入ったあとに、自動的にパネルが再表示されるま"
-"での遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にの"
-"み有効になります。"
+"マウスカーソルがパネルの領域に入ったあとに、自動的にパネルが再表示されるまで"
+"の遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ"
+"有効になります。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
 msgid ""
@@ -1552,9 +1548,9 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"マウス・カーソルがパネルの領域から離れたあと、自動的にパネルが隠れるまでの遅"
-"延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ有効"
-"になります。"
+"マウスカーソルがパネルの領域から離れたあと、自動的にパネルが隠れるまでの遅延"
+"時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ有効に"
+"なります。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
 msgid ""
@@ -1660,8 +1656,8 @@ msgid ""
 "navigating between panels."
 msgstr ""
 "これはパネルを識別するのに使用する可読な名前です。その主な目的は、複数のパネ"
-"ルの間でナビゲートする際に便利なパネル・ウィンドウのタイトルとして保持するこ"
-"とにあります。"
+"ルの間でナビゲートする際に便利なパネルウィンドウのタイトルとして保持すること"
+"にあります。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
 msgid "Visible pixels when hidden"
@@ -1683,8 +1679,8 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"マルチ・スクリーン設定で、別々のスクリーンにパネルを配置することが可能です。"
-"このキーはパネルが表示されている現在のスクリーンを示します。"
+"マルチスクリーン設定で、別々のスクリーンにパネルを配置することが可能です。こ"
+"のキーはパネルが表示されている現在のスクリーンを示します。"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
 msgid "X co-ordinate of panel"
@@ -1834,7 +1830,7 @@ msgstr "- .desktop を編集する"
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
 #: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
 msgid "Create Launcher"
-msgstr "ランチャの作成"
+msgstr "ランチャーの作成"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:171
 #: ../gnome-panel/gnome-desktop-item-edit.c:194
@@ -1843,7 +1839,7 @@ msgstr "フォルダーのプロパティ"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:726
 msgid "Launcher Properties"
-msgstr "ランチャのプロパティ"
+msgstr "ランチャーのプロパティ"
 
 #: ../gnome-panel/gnome-panel.desktop.in.in.h:1
 msgid ""
@@ -1872,12 +1868,12 @@ msgstr "ドロップしたアイテムを利用できませんでした"
 #: ../gnome-panel/launcher.c:415
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
+msgstr "パネルランチャーのデスクトップファイルに URI がありません\n"
 
 #: ../gnome-panel/launcher.c:456
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) を開けません\n"
+msgstr "デスクトップファイル %s (パネルランチャー %s%s) を開けません\n"
 
 #: ../gnome-panel/launcher.c:790
 msgid "_Launch"
@@ -1891,13 +1887,13 @@ msgstr "プロパティ(_P)"
 #: ../gnome-panel/launcher.c:827
 #, c-format
 msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "ランチャの場所が設定されていないので、ランチャを読み込めません\n"
+msgstr "ランチャーの場所が設定されていないので、ランチャーを読み込めません\n"
 
 #: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
 #: ../gnome-panel/panel-ditem-editor.c:1391
 #: ../gnome-panel/panel-ditem-editor.c:1422
 msgid "Could not save launcher"
-msgstr "ランチャを保存できませんでした"
+msgstr "ランチャーを保存できませんでした"
 
 #: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
@@ -1981,21 +1977,21 @@ msgstr "シャットダウン..."
 msgid "Shut down the computer"
 msgstr "コンピューターをシャットダウンします"
 
-#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:963
+#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:966
 msgid "Main Menu"
-msgstr "メイン・メニュー"
+msgstr "メインメニュー"
 
 #: ../gnome-panel/panel-addto.c:146
 msgid "The main GNOME menu"
-msgstr "GNOME メイン・メニューです"
+msgstr "GNOME メインメニューです"
 
 #: ../gnome-panel/panel-addto.c:155
 msgid "Menu Bar"
-msgstr "メニュー・バー"
+msgstr "メニューバー"
 
 #: ../gnome-panel/panel-addto.c:156
 msgid "A custom menu bar"
-msgstr "カスタム・メニュー・バーです"
+msgstr "カスタムメニューバーです"
 
 #: ../gnome-panel/panel-addto.c:165
 msgid "Separator"
@@ -2006,14 +2002,12 @@ msgid "A separator to organize the panel items"
 msgstr "パネルのアイテムを整理するための区切りです"
 
 #: ../gnome-panel/panel-addto.c:175
-#, fuzzy
-#| msgid "User Menu"
 msgid "User menu"
-msgstr "ユーザー・メニュー"
+msgstr "ユーザーメニュー"
 
 #: ../gnome-panel/panel-addto.c:176
 msgid "Menu to change your settings and your online status"
-msgstr "設定やオンライン・ステータスを変更するメニュー"
+msgstr "設定やオンラインステータスを変更するメニュー"
 
 #: ../gnome-panel/panel-addto.c:222
 msgid "(empty)"
@@ -2021,19 +2015,19 @@ msgstr "(空)"
 
 #: ../gnome-panel/panel-addto.c:422
 msgid "Custom Application Launcher"
-msgstr "カスタム・アプリケーションのランチャ"
+msgstr "カスタムアプリケーションのランチャー"
 
 #: ../gnome-panel/panel-addto.c:423
 msgid "Create a new launcher"
-msgstr "新しい独自のランチャを生成します"
+msgstr "新しい独自のランチャーを生成します"
 
 #: ../gnome-panel/panel-addto.c:433
 msgid "Application Launcher..."
-msgstr "アプリケーションのランチャ..."
+msgstr "アプリケーションのランチャー..."
 
 #: ../gnome-panel/panel-addto.c:434
 msgid "Copy a launcher from the applications menu"
-msgstr "アプリケーション・メニューからランチャをコピーします"
+msgstr "アプリケーションメニューからランチャーをコピーします"
 
 #: ../gnome-panel/panel-addto.c:1019
 #, c-format
@@ -2055,15 +2049,15 @@ msgstr "\"%s\" が突然終了しました"
 
 #: ../gnome-panel/panel-applet-frame.c:737
 msgid "Panel object has quit unexpectedly"
-msgstr "パネル・オブジェクトが突然終了しました"
+msgstr "パネルオブジェクトが突然終了しました"
 
 #: ../gnome-panel/panel-applet-frame.c:744
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
-"パネル・オブジェクトを再読み込みすると、自動的にオブジェクトをパネルの後ろに"
-"追加します。"
+"パネルオブジェクトを再読み込みすると、自動的にオブジェクトをパネルの後ろに追"
+"加します。"
 
 #: ../gnome-panel/panel-applet-frame.c:750
 msgid "_Don't Reload"
@@ -2152,7 +2146,7 @@ msgstr "場所(_L):"
 
 #: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
-msgstr "ランチャの名前を入力してください。"
+msgstr "ランチャーの名前を入力してください。"
 
 #: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
@@ -2164,11 +2158,11 @@ msgstr "フォルダーの名前を入力してください。"
 
 #: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
-msgstr "ランチャのコマンドを入力してください。"
+msgstr "ランチャーのコマンドを入力してください。"
 
 #: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
-msgstr "ランチャの場所を入力してください。"
+msgstr "ランチャーの場所を入力してください。"
 
 #: ../gnome-panel/panel-ditem-editor.c:1459
 msgid "Could not display help document"
@@ -2254,7 +2248,7 @@ msgstr "%s のマウント"
 
 #: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
-msgstr "リムーバブル・メディア"
+msgstr "リムーバブルメディア"
 
 #: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
@@ -2310,11 +2304,7 @@ msgstr "在席中"
 
 #: ../gnome-panel/panel-menu-items.c:1367
 msgid "Busy"
-msgstr "離席中"
-
-#: ../gnome-panel/panel-menu-items.c:1380
-msgid "My Account"
-msgstr "アカウント"
+msgstr "取り込み中"
 
 #: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
@@ -2352,7 +2342,7 @@ msgstr "ファイル '%s'  を読み込めません: %s"
 
 #: ../gnome-panel/panel-properties-dialog.c:827
 msgid "Could not display properties dialog"
-msgstr "プロパティ・ダイアログを表示できませんでした"
+msgstr "プロパティダイアログを表示できませんでした"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "<small>Opaque</small>"
@@ -2604,7 +2594,7 @@ msgstr "GConf のアプレット設定の格納場所を指定します"
 #: ../gnome-panel/panel-test-applets.c:38
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
-"アプレットのデフォルト・サイズ (xx-small, medium, large など) を指定します"
+"アプレットのデフォルトサイズ (xx-small, medium, large など) を指定します"
 
 #: ../gnome-panel/panel-test-applets.c:39
 msgid ""
@@ -2672,7 +2662,7 @@ msgstr "パネルを隠す"
 #. * popup when you pass the focus to a panel
 #: ../gnome-panel/panel-toplevel.c:1657
 msgid "Top Expanded Edge Panel"
-msgstr "上側展開エッジ・パネル"
+msgstr "上側展開エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1658
 msgid "Top Centered Panel"
@@ -2680,15 +2670,15 @@ msgstr "上側中央パネル"
 
 #: ../gnome-panel/panel-toplevel.c:1659
 msgid "Top Floating Panel"
-msgstr "上側フロート・パネル"
+msgstr "上側フロートパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1660
 msgid "Top Edge Panel"
-msgstr "上側エッジ・パネル"
+msgstr "上側エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1664
 msgid "Bottom Expanded Edge Panel"
-msgstr "下側展開エッジ・パネル"
+msgstr "下側展開エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1665
 msgid "Bottom Centered Panel"
@@ -2696,15 +2686,15 @@ msgstr "下側中央パネル"
 
 #: ../gnome-panel/panel-toplevel.c:1666
 msgid "Bottom Floating Panel"
-msgstr "下側フロート・パネル"
+msgstr "下側フロートパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1667
 msgid "Bottom Edge Panel"
-msgstr "下側エッジ・パネル"
+msgstr "下側エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1671
 msgid "Left Expanded Edge Panel"
-msgstr "左側展開エッジ・パネル"
+msgstr "左側展開エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1672
 msgid "Left Centered Panel"
@@ -2712,15 +2702,15 @@ msgstr "左側中央パネル"
 
 #: ../gnome-panel/panel-toplevel.c:1673
 msgid "Left Floating Panel"
-msgstr "左側フロート・パネル"
+msgstr "左側フロートパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1674
 msgid "Left Edge Panel"
-msgstr "左側エッジ・パネル"
+msgstr "左側エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1678
 msgid "Right Expanded Edge Panel"
-msgstr "右側展開エッジ・パネル"
+msgstr "右側展開エッジパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1679
 msgid "Right Centered Panel"
@@ -2728,11 +2718,11 @@ msgstr "右側中央パネル"
 
 #: ../gnome-panel/panel-toplevel.c:1680
 msgid "Right Floating Panel"
-msgstr "右側フロート・パネル"
+msgstr "右側フロートパネル"
 
 #: ../gnome-panel/panel-toplevel.c:1681
 msgid "Right Edge Panel"
-msgstr "右側エッジ・パネル"
+msgstr "右側エッジパネル"
 
 #: ../gnome-panel/panel-util.c:314
 #, c-format
@@ -2745,13 +2735,13 @@ msgstr "ファイル"
 
 #: ../gnome-panel/panel-util.c:728
 msgid "Home Folder"
-msgstr "ホーム・フォルダー"
+msgstr "ホームフォルダー"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #: ../gnome-panel/panel-util.c:740
 msgid "File System"
-msgstr "ファイル・システム"
+msgstr "ファイルシステム"
 
 #: ../gnome-panel/panel-util.c:913
 msgid "Search"
@@ -2785,28 +2775,23 @@ msgstr ""
 "パネルとその設定が失われてしまいます。"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-#, fuzzy
-#| msgid "A simple applet for testing the GNOME-2.0 panel"
 msgid "A simple applet for testing the GNOME panel"
-msgstr "GNOME-2.0 パネルの単純なアプレット (テスト用)"
+msgstr "GNOME パネルの単純なアプレット (テスト用)"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
-#, fuzzy
-#| msgid "Factory for creating clock applets."
 msgid "Factory for Test DBus Applet"
-msgstr "時計アプレットを生成するためのファクトリです。"
+msgstr "DBus アプレット (テスト用) のファクトリ"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
-#, fuzzy
-#| msgid "Test Bonobo Applet"
 msgid "Test DBus Applet"
-msgstr "Bonobo アプレット (テスト用)"
+msgstr "DBus アプレット (テスト用)"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-#, fuzzy
-#| msgid "Test Bonobo Applet Factory"
 msgid "Test DBus Applet Factory"
-msgstr "Bonobo アプレット・ファクトリ (テスト用)"
+msgstr "DBus アプレット (テスト用) のファクトリ"
+
+#~ msgid "My Account"
+#~ msgstr "アカウント"
 
 #~ msgid "Set System Time..."
 #~ msgstr "システム時刻の設定..."
