@@ -36,6 +36,22 @@ panel_dconf_client_get (void)
 }
 
 gboolean
+panel_dconf_write_sync (const gchar  *key,
+                        GVariant     *value,
+                        GError      **error)
+{
+        gboolean     ret;
+        DConfClient *client = panel_dconf_client_get ();
+
+        ret = dconf_client_write (client, key, value,
+                                  NULL, NULL, error);
+
+        g_object_unref (client);
+
+        return ret;
+}
+
+gboolean
 panel_dconf_recursive_reset (const gchar  *dir,
                              GError      **error)
 {

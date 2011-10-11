@@ -29,6 +29,10 @@
 
 G_BEGIN_DECLS
 
+gboolean panel_dconf_write_sync (const gchar  *key,
+                                 GVariant     *value,
+                                 GError      **error);
+
 gboolean panel_dconf_recursive_reset (const gchar  *dir,
                                       GError     **error);
 
