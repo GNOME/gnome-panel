@@ -30,6 +30,8 @@ GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 int            desired_height,
 					 char         **error_msg);
 
+char       *panel_util_get_from_personal_path  (const char *file);
+
 GFile      *panel_launcher_get_gfile           (const char *location);
 char       *panel_launcher_get_uri             (const char *location);
 char       *panel_launcher_get_filename        (const char *location);

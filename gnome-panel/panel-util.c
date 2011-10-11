@@ -333,11 +333,17 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
+char *
+panel_util_get_from_personal_path (const char *file)
+{
+	return g_build_filename (g_get_user_config_dir (),
+				 "gnome-panel", file, NULL);
+}
+
 static char *
 panel_launcher_get_personal_path (void)
 {
-	return g_build_filename (g_get_user_config_dir (),
-				 "gnome-panel", "launchers", NULL);
+	return panel_util_get_from_personal_path ("launchers");
 }
 
 gboolean
