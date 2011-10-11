@@ -406,6 +406,8 @@ static Launcher *
 create_launcher (const char *location)
 {
 	GKeyFile *key_file;
+	char     *scheme;
+	gboolean  is_uri;
 	gboolean  loaded;
 	Launcher *launcher;
 	GError   *error = NULL;
@@ -419,7 +421,11 @@ create_launcher (const char *location)
 	new_location = NULL;
 	key_file = g_key_file_new ();
 
-	if (!strchr (location, G_DIR_SEPARATOR)) {
+	scheme = g_uri_parse_scheme (location);
+	is_uri = scheme != NULL;
+	g_free (scheme);
+
+	if (!is_uri && !g_path_is_absolute (location)) {
 		/* try to first load a file in our config directory, and if it
 		 * doesn't exist there, try to find it in the xdg data dirs */
 		char *path;
