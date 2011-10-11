@@ -48,6 +48,7 @@ static GSettings *layout_settings = NULL;
 
 #define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
 #define PANEL_LAYOUT_OBJECT_GCONF_PATH_TEMPLATE "/apps/panel3-applets/%s"
+#define PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH "@instance-config/"
 
 static void panel_layout_load_toplevel    (const char *toplevel_id);
 static void panel_layout_load_object      (const char *object_id);
@@ -277,6 +278,81 @@ panel_layout_find_free_id (const char *id_list_key,
 }
 
 static gboolean
+panel_layout_maybe_append_object_instance_config (GKeyFile    *keyfile,
+                                                  const char  *group,
+                                                  const char  *key,
+                                                  const char  *path_prefix,
+                                                  const char  *unique_id,
+                                                  gboolean     dry_run,
+                                                  gboolean    *key_handled,
+                                                  GError     **error)
+{
+        char       *value_str;
+        const char *keyname;
+        GVariant   *variant;
+
+        *key_handled = FALSE;
+
+        if (!g_str_has_prefix(key, PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH))
+                return TRUE;
+
+        *key_handled = TRUE;
+
+        value_str = g_key_file_get_string (
+                                keyfile,
+                                group, key,
+                                error);
+        if (!value_str)
+                return FALSE;
+
+        variant = g_variant_parse (NULL, value_str,
+                                   NULL, NULL, error);
+
+        if (!variant) {
+                g_free (value_str);
+                return FALSE;
+        }
+
+        keyname = key + strlen (PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH);
+
+        if (dry_run) {
+                /* the key can actually be in a subdirectory
+                 * like instance-config/foo/key, so we split
+                 * the tokens to validate all of them */
+                char **tokens;
+                char **token;
+
+                tokens = g_strsplit (keyname, "/", -1);
+
+                for (token = tokens; *token; token++) {
+                        if (!panel_gsettings_is_valid_keyname (*token,
+                                                               error)) {
+                                g_strfreev (tokens);
+                                g_variant_unref (variant);
+                                g_free (value_str);
+                                return FALSE;
+                        }
+                }
+
+                g_strfreev (tokens);
+        } else {
+                char *key;
+
+                key = g_strdup_printf ("%s%s/%s%s",
+                                       path_prefix, unique_id,
+                                       PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX,
+                                       keyname);
+                panel_dconf_write_sync (key, variant, NULL);
+                g_free (key);
+        }
+
+        g_variant_unref (variant);
+        g_free (value_str);
+
+        return TRUE;
+}
+
+static gboolean
 panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   const char                *group,
                                   int                        set_screen_to,
@@ -292,6 +368,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   const char                *type_for_error_message)
 {
         gboolean    retval = FALSE;
+        gboolean    appending_object;
         const char *id;
         char       *unique_id = NULL;
         char       *path = NULL;
@@ -303,6 +380,8 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         int         i, j;
 
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+        appending_object = (g_strcmp0 (schema, PANEL_OBJECT_SCHEMA) == 0);
 
         /* Try to extract an id from the group, by stripping the prefix,
          * and create a unique id out of that */
@@ -338,6 +417,25 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         /* Now do the real work: we validate/add keys from the keyfile */
         for (i = 0; keyfile_keys[i] != NULL; i++) {
                 gboolean found = FALSE;
+
+                /* special case keys of the instance config of an object */
+                if (appending_object) {
+                        gboolean handled;
+
+                        if (!panel_layout_maybe_append_object_instance_config (
+                                                        keyfile,
+                                                        group,
+                                                        keyfile_keys[i],
+                                                        path_prefix,
+                                                        unique_id,
+                                                        dry_run,
+                                                        &handled,
+                                                        error))
+                                goto out;
+
+                        if (handled)
+                                continue;
+                }
 
                 for (j = 0; j < key_definitions_len; j++) {
                         if (g_strcmp0 (keyfile_keys[i],
