@@ -41,12 +41,15 @@
 #include "panel-object-loader.h"
 #include "panel-schemas.h"
 #include "panel-toplevel.h"
+#include "panel-util.h"
 
 #include "panel-layout.h"
 
 static GSettings *layout_settings = NULL;
 
 #define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
+
+#define PANEL_LAYOUT_DEFAULT_LAYOUT_FILE "panel-default-layout.layout"
 #define PANEL_LAYOUT_OBJECT_GCONF_PATH_TEMPLATE "/apps/panel3-applets/%s"
 #define PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH "@instance-config/"
 
@@ -1114,8 +1117,17 @@ panel_layout_load_object (const char *object_id)
 static char *
 panel_layout_get_default_layout_file (void)
 {
+        char *user_file;
+
+        user_file = panel_util_get_from_personal_path (PANEL_LAYOUT_DEFAULT_LAYOUT_FILE);
+
+        if (g_file_test (user_file, G_FILE_TEST_IS_REGULAR))
+                return user_file;
+
+        g_free (user_file);
+
         return g_build_filename (PANELDATADIR,
-                                 "panel-default-layout.layout",
+                                 PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
                                  NULL);
 }
 
