@@ -32,8 +32,7 @@
 
 G_BEGIN_DECLS
 
-void panel_layout_append_from_file (const char *layout_file,
-                                    gboolean    error_fatal);
+void panel_layout_append_from_file (const char *layout_file);
 
 gboolean panel_layout_load         (void);
 

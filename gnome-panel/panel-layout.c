@@ -473,8 +473,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
 
 static void
 panel_layout_append_from_file_real (const char *layout_file,
-                                    int         screen_for_toplevels,
-                                    gboolean    error_fatal)
+                                    int         screen_for_toplevels)
 {
         GError    *error = NULL;
         GKeyFile  *keyfile = NULL;
@@ -522,9 +521,6 @@ out:
                 g_printerr ("Error while parsing default layout from '%s': %s\n",
                             layout_file, error->message);
                 g_error_free (error);
-
-                if (error_fatal)
-                        g_assert_not_reached ();
         }
 
         if (groups)
@@ -540,14 +536,13 @@ panel_layout_append_from_file_for_screen (const char *layout_file,
 {
         int screen_n = gdk_screen_get_number (screen);
 
-        panel_layout_append_from_file_real (layout_file, screen_n, FALSE);
+        panel_layout_append_from_file_real (layout_file, screen_n);
 }
 
 void
-panel_layout_append_from_file (const char *layout_file,
-                               gboolean    error_fatal)
+panel_layout_append_from_file (const char *layout_file)
 {
-        panel_layout_append_from_file_real (layout_file, -1, error_fatal);
+        panel_layout_append_from_file_real (layout_file, -1);
 }
 
 
@@ -1095,7 +1090,7 @@ panel_layout_load (void)
                 }
 
                 default_layout_file = panel_layout_get_default_layout_file ();
-                panel_layout_append_from_file (default_layout_file, TRUE);
+                panel_layout_append_from_file (default_layout_file);
                 g_free (default_layout_file);
 
                 toplevels = g_settings_get_strv (layout_settings,
