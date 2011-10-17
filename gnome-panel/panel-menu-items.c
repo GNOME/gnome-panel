@@ -48,6 +48,7 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-menu-item.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
@@ -1693,10 +1694,12 @@ panel_desktop_menu_item_on_presence_changed (PanelSessionManager             *ma
 
 GtkWidget *
 panel_desktop_menu_item_new (gboolean use_image,
+			     gboolean in_menubar,
 			     gboolean append_lock_logout)
 {
 	PanelDesktopMenuItem *menuitem;
 	char                 *name;
+	const char           *icon_name;
 #ifdef HAVE_TELEPATHY_GLIB
 	PanelSessionManager  *manager;
 #endif
@@ -1704,27 +1707,40 @@ panel_desktop_menu_item_new (gboolean use_image,
 	menuitem = g_object_new (PANEL_TYPE_DESKTOP_MENU_ITEM, NULL);
 
 	name = panel_util_get_user_name ();
-
-	if (use_image) {
 #ifdef HAVE_TELEPATHY_GLIB
-		setup_menu_item_with_icon (GTK_WIDGET (menuitem),
-					   panel_menu_icon_get_size (),
-					   PANEL_ICON_USER_AVAILABLE,
-					   NULL, NULL,
-					   name);
+	icon_name = PANEL_ICON_USER_AVAILABLE;
+#else
+	icon_name = PANEL_ICON_COMPUTER;
+#endif
+
+	/* if we're in a menubar, we don't want to use setup_* as it changes
+	 * the size requests and can make the panels bigger than we'd like */
+	if (in_menubar) {
+		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
+		if (use_image) {
+			GtkWidget *image;
+			image = gtk_image_new_from_icon_name (icon_name,
+							      panel_menu_icon_get_size ());
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+						       image);
+		}
+	} else {
+		if (use_image)
+			setup_menu_item_with_icon (GTK_WIDGET (menuitem),
+						   panel_menu_icon_get_size (),
+						   icon_name, NULL, NULL,
+						   name);
+		else
+			setup_menuitem (GTK_WIDGET (menuitem),
+					GTK_ICON_SIZE_INVALID, NULL,
+					name);
+	}
+
+#ifdef HAVE_TELEPATHY_GLIB
+	if (use_image)
 		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
 							   TRUE);
-#else
-		setup_menu_item_with_icon (GTK_WIDGET (menuitem),
-					   panel_menu_icon_get_size (),
-					   PANEL_ICON_COMPUTER,
-					   NULL, NULL,
-					   name);
 #endif
-	} else
-		setup_menuitem (GTK_WIDGET (menuitem),
-				GTK_ICON_SIZE_INVALID, NULL,
-				name);
 
 	g_free (name);
 

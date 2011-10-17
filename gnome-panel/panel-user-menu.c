@@ -51,7 +51,7 @@ panel_user_menu_init (PanelUserMenu *usermenu)
 
 	usermenu->priv->info = NULL;
 
-	usermenu->priv->desktop_item = panel_desktop_menu_item_new (TRUE, TRUE);
+	usermenu->priv->desktop_item = panel_desktop_menu_item_new (TRUE, TRUE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (usermenu),
 			       usermenu->priv->desktop_item);
 	gtk_widget_show (usermenu->priv->desktop_item);
