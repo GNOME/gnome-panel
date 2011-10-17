@@ -1383,7 +1383,7 @@ main_menu_append (GtkWidget *main_menu,
 	if (add_separator)
 		add_menu_separator (main_menu);
 
-	item = panel_place_menu_item_new (TRUE);
+	item = panel_place_menu_item_new (TRUE, FALSE);
 	panel_place_menu_item_set_panel (item, panel);
 	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
 	gtk_widget_show (item);

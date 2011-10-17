@@ -1615,23 +1615,38 @@ panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 }
 
 GtkWidget *
-panel_place_menu_item_new (gboolean use_image)
+panel_place_menu_item_new (gboolean use_image,
+			   gboolean in_menubar)
 {
 	PanelPlaceMenuItem *menuitem;
-	GtkWidget          *image;
+	const char          *name;
+	const char          *icon_name;
 
 	menuitem = g_object_new (PANEL_TYPE_PLACE_MENU_ITEM, NULL);
 
-	if (use_image)
-		image = gtk_image_new_from_icon_name (PANEL_ICON_FOLDER,
-						      panel_menu_icon_get_size ());
-	else
-		image = NULL;
+	name = _("Places");
+	icon_name = PANEL_ICON_FOLDER;
 
-	setup_menuitem (GTK_WIDGET (menuitem),
-			image ? panel_menu_icon_get_size () : GTK_ICON_SIZE_INVALID,
-			image,
-			_("Places"));
+	if (in_menubar) {
+		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
+		if (use_image) {
+			GtkWidget *image;
+			image = gtk_image_new_from_icon_name (icon_name,
+							      panel_menu_icon_get_size ());
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
+						       image);
+		}
+	} else {
+		if (use_image)
+			setup_menu_item_with_icon (GTK_WIDGET (menuitem),
+						   panel_menu_icon_get_size (),
+						   icon_name, NULL, NULL,
+						   name);
+		else
+			setup_menuitem (GTK_WIDGET (menuitem),
+					GTK_ICON_SIZE_INVALID, NULL,
+					name);
+	}
 
 	menuitem->priv->menu = panel_place_menu_item_create_menu (menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),

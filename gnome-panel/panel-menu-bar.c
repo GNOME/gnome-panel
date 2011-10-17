@@ -143,7 +143,7 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 			       menubar->priv->applications_item);
 	gtk_widget_show (menubar->priv->applications_item);
 
-	menubar->priv->places_item = panel_place_menu_item_new (FALSE);
+	menubar->priv->places_item = panel_place_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
 	gtk_widget_show (menubar->priv->places_item);
