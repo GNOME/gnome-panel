@@ -48,7 +48,6 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-launch.h>
-#include <libpanel-util/panel-menu-item.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
