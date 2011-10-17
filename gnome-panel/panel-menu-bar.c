@@ -58,18 +58,6 @@ struct _PanelMenuBarPrivate {
 	GtkWidget   *places_item;
 };
 
-/* themeable size - "panel-foobar" -- This is only used for the icon of the
- * Applications item in the menu bar */
-#define PANEL_DEFAULT_MENU_BAR_ICON_SIZE       24
-
-static GtkIconSize panel_menu_bar_icon_size = 0;
-
-static GtkIconSize
-panel_menu_bar_icon_get_size (void)
-{
-	return panel_menu_bar_icon_size;
-}
-
 static gboolean
 panel_menu_bar_reinit_tooltip (GtkWidget    *widget,
 			       PanelMenuBar *menubar)
@@ -135,7 +123,7 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
 				 _("Applications"));
 	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
-							     panel_menu_bar_icon_get_size ());
+							     panel_menu_bar_object_icon_get_size ());
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
 				   menubar->priv->applications_menu);
@@ -207,11 +195,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 				      "Whether the menubar icon is visible",
 				      FALSE,
 				      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
-
-	if (panel_menu_bar_icon_size == 0)
-		panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar",
-								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE,
-								   PANEL_DEFAULT_MENU_BAR_ICON_SIZE);
 }
 
 void

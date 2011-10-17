@@ -49,6 +49,19 @@ enum {
 static void panel_menu_bar_object_update_text_gravity (PanelMenuBarObject *menubar);
 static void panel_menu_bar_object_update_orientation (PanelMenuBarObject *menubar);
 
+/* themeable size - "panel-menu-bar" -- This is only used for the icon of the
+ * Applications item in the menu bar. To set it, use this in gtk+'s
+ * settings.ini: "gtk-icon-sizes = panel-menu-bar=16,16" */
+#define PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE       16
+
+static GtkIconSize panel_menu_bar_object_icon_size = 0;
+
+GtkIconSize
+panel_menu_bar_object_icon_get_size (void)
+{
+	return panel_menu_bar_object_icon_size;
+}
+
 static void
 panel_menu_bar_object_init (PanelMenuBarObject *menubar)
 {
@@ -172,6 +185,11 @@ panel_menu_bar_object_class_init (PanelMenuBarObjectClass *klass)
 				   PANEL_TYPE_ORIENTATION,
 				   PANEL_ORIENTATION_TOP,
 				   G_PARAM_READWRITE));
+
+	if (panel_menu_bar_object_icon_size == 0)
+		panel_menu_bar_object_icon_size = gtk_icon_size_register ("panel-menu-bar",
+								   PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE,
+								   PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE);
 }
 
 static gboolean

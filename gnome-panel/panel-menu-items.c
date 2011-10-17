@@ -58,6 +58,7 @@
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
+#include "panel-menu-bar-object.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
@@ -100,6 +101,7 @@ struct _PanelPlaceMenuItemPrivate {
 struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
+	GtkIconSize  icon_size;
 
 #ifdef HAVE_TELEPATHY_GLIB
 	GList            *presence_items;
@@ -1632,7 +1634,7 @@ panel_place_menu_item_new (gboolean use_image,
 		if (use_image) {
 			GtkWidget *image;
 			image = gtk_image_new_from_icon_name (icon_name,
-							      panel_menu_icon_get_size ());
+							      panel_menu_bar_object_icon_get_size ());
 			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 						       image);
 		}
@@ -1686,7 +1688,7 @@ panel_desktop_menu_item_on_presence_changed (PanelSessionManager             *ma
 	 * menu */
 	if (image) {
 		gtk_image_set_from_icon_name (GTK_IMAGE (image),
-					      icon, panel_menu_icon_get_size ());
+					      icon, desktop_item->priv->icon_size);
 	}
 
 	for (l = desktop_item->priv->presence_items; l != NULL; l = l->next) {
@@ -1732,17 +1734,21 @@ panel_desktop_menu_item_new (gboolean use_image,
 	 * the size requests and can make the panels bigger than we'd like */
 	if (in_menubar) {
 		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
+		menuitem->priv->icon_size = panel_menu_bar_object_icon_get_size ();
+
 		if (use_image) {
 			GtkWidget *image;
 			image = gtk_image_new_from_icon_name (icon_name,
-							      panel_menu_icon_get_size ());
+							      menuitem->priv->icon_size);
 			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
 						       image);
 		}
 	} else {
+		menuitem->priv->icon_size = panel_menu_icon_get_size ();
+
 		if (use_image)
 			setup_menu_item_with_icon (GTK_WIDGET (menuitem),
-						   panel_menu_icon_get_size (),
+						   menuitem->priv->icon_size,
 						   icon_name, NULL, NULL,
 						   name);
 		else
