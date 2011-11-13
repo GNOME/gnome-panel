@@ -210,7 +210,7 @@ static const GDBusInterfaceVTable interface_vtable = {
 static GDBusNodeInfo *introspection_data = NULL;
 
 static void
-on_name_acquired (GDBusConnection    *connection,
+on_bus_acquired (GDBusConnection    *connection,
 		  const gchar        *name,
 		  PanelAppletFactory *factory)
 {
@@ -251,8 +251,8 @@ panel_applet_factory_register_service (PanelAppletFactory *factory)
 	g_bus_own_name (G_BUS_TYPE_SESSION,
 			service_name,
 			G_BUS_NAME_OWNER_FLAGS_NONE,
+			(GBusAcquiredCallback) on_bus_acquired,
 			NULL,
-			(GBusNameAcquiredCallback) on_name_acquired,
 			(GBusNameLostCallback) on_name_lost,
 			factory, NULL);
 	g_free (service_name);
