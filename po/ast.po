@@ -2,27 +2,32 @@
 # Asturian translation for gnome-panel
 # Copyright (c) (c) 2006 Canonical Ltd, and Rosetta Contributors 2006
 # This file is distributed under the same license as the gnome-panel package.
-#
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
-# Xose S. Puente <xspuente@gmail.com>, 2007.
+# I.Varela <ivarela@softastur.org>, 2007.
+# Xandru Armesto <xandru@softastur.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel-2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-10 09:46+0100\n"
-"PO-Revision-Date: 2009-01-25 19:54+0000\n"
-"Last-Translator: Astur <malditoastur@gmail.com>\n"
-"Language-Team: Asturian <xspuente@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&component=general\n"
+"POT-Creation-Date: 2010-09-15 08:45+0000\n"
+"PO-Revision-Date: 2011-12-18 17:43+0200\n"
+"Last-Translator: Xandru Armesto <xandru@softastur.org>\n"
+"Language-Team: Softastur alministradores@softastur.org\n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2009-02-10 00:00+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.7.0\n"
+"X-Launchpad-Export-Date: 2011-10-24 15:24+0000\n"
+"X-Project-Style: gnome\n"
+"X-Poedit-Language: Asturianu\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
-msgstr "A_xustar Fecha y Hora"
+msgstr "A_xustar Data y Hora"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -53,7 +58,7 @@ msgstr "Tocante _a"
 #: ../gnome-panel/panel-context-menu.c:285 ../gnome-panel/panel-menu-bar.c:343
 #: ../gnome-panel/panel-menu-button.c:663
 msgid "_Help"
-msgstr "_Aida"
+msgstr "_Ayuda"
 
 #: ../applets/clock/GNOME_ClockApplet.xml.h:6
 #: ../applets/fish/GNOME_FishApplet.xml.h:3
@@ -63,7 +68,7 @@ msgid "_Preferences"
 msgstr "_Preferencies"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: ../applets/clock/clock.c:3780
+#: ../applets/clock/clock.c:3800
 msgid "Clock"
 msgstr "Reló"
 
@@ -73,13 +78,13 @@ msgstr "Fábrica d'Aplicaciones de Relós"
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr "Fábrica pa crear aplicaciones de relós."
+msgstr ""
 
 #: ../applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
-msgstr "Obtener la hora y data autual"
+msgstr "Obtener la hora y data actual"
 
-#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:432
+#: ../applets/clock/calendar-window.c:242 ../applets/clock/clock.c:452
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -88,8 +93,8 @@ msgstr "%l:%M %p"
 #. * for 24-hour format.
 #. * There should be little need to translate this string.
 #.
-#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:434
-#: ../applets/clock/clock.c:1554 ../applets/clock/clock-location-tile.c:480
+#: ../applets/clock/calendar-window.c:244 ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:1574 ../applets/clock/clock-location-tile.c:480
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -134,11 +139,11 @@ msgstr "Llugares"
 msgid "Calendar"
 msgstr "Calendariu"
 
-#: ../applets/clock/clock.c:432
+#: ../applets/clock/clock.c:452
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: ../applets/clock/clock.c:434 ../applets/clock/clock.c:1552
+#: ../applets/clock/clock.c:454 ../applets/clock/clock.c:1572
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
@@ -147,15 +152,15 @@ msgstr "%H:%M:%S"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:474
 msgid "%a %b %e"
-msgstr "%a %b %e"
+msgstr "%a, %e de %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:461
+#: ../applets/clock/clock.c:481
 #, c-format
 msgid ""
 "%1$s\n"
@@ -168,7 +173,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: ../applets/clock/clock.c:469
+#: ../applets/clock/clock.c:489
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
@@ -176,102 +181,100 @@ msgstr "%1$s, %2$s"
 #. Show date in tooltip.  Translators: please leave the "%%s" as it is; we
 #. * use it to put in the timezone name later.
 #.
-#: ../applets/clock/clock.c:651
+#: ../applets/clock/clock.c:671
 msgid "%A %B %d (%%s)"
 msgstr "%A %d de %B (%%s)"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:701
 msgid "Click to hide your appointments and tasks"
-msgstr "Calque p'anubrir les sos cites y xeres"
+msgstr "Calca p'anubrir les tos cites y xeres"
 
-#: ../applets/clock/clock.c:684
+#: ../applets/clock/clock.c:704
 msgid "Click to view your appointments and tasks"
-msgstr "Calque pa ver les sos cites y xeres"
+msgstr "Calca pa ver les tos cites y xeres"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:708
 msgid "Click to hide month calendar"
-msgstr "Calque p'anubrir el calendariu del mes"
+msgstr "Calca p'anubrir el calendariu del mes"
 
-#: ../applets/clock/clock.c:691
+#: ../applets/clock/clock.c:711
 msgid "Click to view month calendar"
-msgstr "Calque pa ver un calendariu mensual"
+msgstr "Calca pa ver un calendariu mensual"
 
-#: ../applets/clock/clock.c:1407
+#: ../applets/clock/clock.c:1427
 msgid "Computer Clock"
 msgstr "Reló del Ordenador"
 
-#: ../applets/clock/clock.c:1547
+#: ../applets/clock/clock.c:1567
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: ../applets/clock/clock.c:1549
+#: ../applets/clock/clock.c:1569
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: ../applets/clock/clock.c:1591
+#: ../applets/clock/clock.c:1611
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: ../applets/clock/clock.c:1668
+#: ../applets/clock/clock.c:1688
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Falló'l llanzamientu de la ferramienta de configuración d'hora: %s"
+msgstr ""
 
-#: ../applets/clock/clock.c:1699
+#: ../applets/clock/clock.c:1719
 msgid "Set System Time..."
 msgstr "Afitar la hora del sistema…"
 
-#: ../applets/clock/clock.c:1700 ../applets/clock/clock.glade.h:19
+#: ../applets/clock/clock.c:1720 ../applets/clock/clock.glade.h:19
 msgid "Set System Time"
 msgstr "Afitar la hora del sistema"
 
-#: ../applets/clock/clock.c:1715
+#: ../applets/clock/clock.c:1735
 msgid "Failed to set the system time"
 msgstr "Falló al afitar la hora del sistema"
 
-#: ../applets/clock/clock.c:1909
+#: ../applets/clock/clock.c:1929
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
-"Falló la busca d'un programa pa configurar la data y hora. ¿Seique nun heba "
-"dengún instaláu?"
 
-#: ../applets/clock/clock.c:2841
+#: ../applets/clock/clock.c:2861
 msgid "Custom format"
 msgstr "Formatu personalizáu"
 
-#: ../applets/clock/clock.c:3502
+#: ../applets/clock/clock.c:3522
 msgid "City Name"
 msgstr "Nome de la ciudá"
 
-#: ../applets/clock/clock.c:3506
+#: ../applets/clock/clock.c:3526
 msgid "City Time Zone"
 msgstr "Estaya horaria de la ciudá"
 
-#: ../applets/clock/clock.c:3676
+#: ../applets/clock/clock.c:3696
 msgid "24 hour"
 msgstr "24 hores"
 
-#: ../applets/clock/clock.c:3677
+#: ../applets/clock/clock.c:3697
 msgid "UNIX time"
 msgstr "Tiempu UNIX"
 
-#: ../applets/clock/clock.c:3678
+#: ../applets/clock/clock.c:3698
 msgid "Internet time"
 msgstr "Hora d'Internet"
 
-#: ../applets/clock/clock.c:3686
+#: ../applets/clock/clock.c:3706
 msgid "Custom _format:"
 msgstr "_Formatu personalizáu:"
 
-#: ../applets/clock/clock.c:3783
+#: ../applets/clock/clock.c:3803
 msgid "The Clock displays the current time and date"
-msgstr "El Reló amuesa la hora y data autual"
+msgstr "El Reló amuesa la hora y data actual"
 
 #. Translator credits
-#: ../applets/clock/clock.c:3786 ../applets/fish/fish.c:613
-#: ../applets/notification_area/main.c:156
+#: ../applets/clock/clock.c:3806 ../applets/fish/fish.c:613
+#: ../applets/notification_area/main.c:155
 #: ../applets/wncklet/showdesktop.c:531 ../applets/wncklet/window-list.c:607
 #: ../applets/wncklet/window-menu.c:79
 #: ../applets/wncklet/workspace-switcher.c:622
@@ -279,31 +282,26 @@ msgstr "El Reló amuesa la hora y data autual"
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Astur https://launchpad.net/~malditoastur\n"
+"  Costales https://launchpad.net/~costales\n"
 "  Esbardu https://launchpad.net/~esguil\n"
-"  xa https://launchpad.net/~xspuente\n"
-"\n"
-"Launchpad Contributions:\n"
-"  Astur https://launchpad.net/~malditoastur\n"
-"  Esbardu https://launchpad.net/~esguil\n"
-"  Xuacu https://launchpad.net/~xuacusk8\n"
-"  xa https://launchpad.net/~xspuente"
+"  Iñigo Varela https://launchpad.net/~ivarela\n"
+"  Xuacu Saturio https://launchpad.net/~xuacusk8"
 
 #: ../applets/clock/clock.glade.h:1
 msgid "<b>Clock Options</b>"
-msgstr "<b>Opciones del reló</b>"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:2
 msgid "<b>Display</b>"
-msgstr "<b>Amosar</b>"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:3
 msgid "<b>Panel Display</b>"
-msgstr "<b>Amosar el panel</b>"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:4
 msgid "<b>Time Settings</b>"
-msgstr "<b>Axustes horarios</b>"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:5
 msgid "<i>(optional)</i>"
@@ -315,8 +313,8 @@ msgid ""
 "<small><i>Type a city, region, or country name and then select a match from "
 "the pop-up.</i></small>"
 msgstr ""
-"<small><i>Escribe una ciudá, comunidá autónoma, o nome de país y llueu "
-"seleiciona el que concasa nel menú.</i></small>"
+"<small><i>Escribi una ciudá, comunidá autónoma, o nome de país y llueu "
+"seleiciona'l que concasa nel menú.</i></small>"
 
 #: ../applets/clock/clock.glade.h:8
 msgid "Clock Preferences"
@@ -324,15 +322,13 @@ msgstr "Preferencies del Reló"
 
 #: ../applets/clock/clock.glade.h:9
 msgid "Current Time:"
-msgstr "Hora autual:"
+msgstr "Hora actual:"
 
 #: ../applets/clock/clock.glade.h:10
 msgid ""
 "East\n"
 "West"
 msgstr ""
-"Este\n"
-"Oeste"
 
 #: ../applets/clock/clock.glade.h:12
 #: ../gnome-panel/panel-properties-dialog.glade.h:9
@@ -341,23 +337,21 @@ msgstr "Xeneral"
 
 #: ../applets/clock/clock.glade.h:13
 msgid "Latitude:"
-msgstr "Llatitú:"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:14
 msgid "Location Name:"
-msgstr "Nome de la ubicación:"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:16
 msgid "Longitude:"
-msgstr "Llonxitú:"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:17
 msgid ""
 "North\n"
 "South"
 msgstr ""
-"Norte\n"
-"Sur"
 
 #: ../applets/clock/clock.glade.h:20
 msgid "Show _temperature"
@@ -365,7 +359,7 @@ msgstr "Amosar _temperatura"
 
 #: ../applets/clock/clock.glade.h:21
 msgid "Show _weather"
-msgstr "Amoar el _clima"
+msgstr "Amosar el _clima"
 
 #: ../applets/clock/clock.glade.h:22
 msgid "Show seco_nds"
@@ -377,7 +371,7 @@ msgstr "Amosar la _data"
 
 #: ../applets/clock/clock.glade.h:24
 msgid "Time Settings"
-msgstr "Axustes horarios"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:25
 msgid "Time _Settings"
@@ -385,11 +379,11 @@ msgstr "Axuste_s de la hora"
 
 #: ../applets/clock/clock.glade.h:26
 msgid "Time:"
-msgstr "Hora:"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:27
 msgid "Timezone:"
-msgstr "Estaya horaria:"
+msgstr ""
 
 #: ../applets/clock/clock.glade.h:28
 msgid "Weather"
@@ -443,23 +437,23 @@ msgstr "Formatu personalizáu del reló"
 
 #: ../applets/clock/clock.schemas.in.h:14
 msgid "Expand list of appointments"
-msgstr "Espandir la llista de cites"
+msgstr "Espander la llista de cites"
 
 #: ../applets/clock/clock.schemas.in.h:15
 msgid "Expand list of birthdays"
-msgstr "Espandir la llista de cumpleaños"
+msgstr "Espander la llista de cumpleaños"
 
 #: ../applets/clock/clock.schemas.in.h:16
 msgid "Expand list of locations"
-msgstr "Espandir la llista d'ubicaciones"
+msgstr "Espander la llista d'ubicaciones"
 
 #: ../applets/clock/clock.schemas.in.h:17
 msgid "Expand list of tasks"
-msgstr "Espandir la llista de xeres"
+msgstr "Espander la llista de xeres"
 
 #: ../applets/clock/clock.schemas.in.h:18
 msgid "Expand list of weather information"
-msgstr "Espandir la llista de la información meteorolóxica"
+msgstr "Espander la llista de la información meteorolóxica"
 
 #: ../applets/clock/clock.schemas.in.h:19
 msgid "Hour format"
@@ -480,7 +474,6 @@ msgstr "Si ye verdaderu, amuesa los segundos na hora."
 #: ../applets/clock/clock.schemas.in.h:23
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
-"Si ye verdaderu, amuesa la hora na estaya Horaria Coordenada Universal."
 
 #: ../applets/clock/clock.schemas.in.h:24
 msgid "If true, expand the list of appointments in the calendar window."
@@ -509,7 +502,7 @@ msgstr ""
 #: ../applets/clock/clock.schemas.in.h:29
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Si ye verdaderu, amuesa la fecha nun cuadrín en cuantes el punteru ta per "
+"Si ye verdaderu, amuesa la data nun conseyu en cuantes el punteru ta per "
 "encima del reló."
 
 #: ../applets/clock/clock.schemas.in.h:30
@@ -526,11 +519,11 @@ msgstr "Llista d'ubicaciones"
 
 #: ../applets/clock/clock.schemas.in.h:33
 msgid "Show date in clock"
-msgstr "Amosar la fecha nel reló"
+msgstr "Amosar la data nel reló"
 
 #: ../applets/clock/clock.schemas.in.h:34
 msgid "Show date in tooltip"
-msgstr "Amosar la fecha nel cuadrín"
+msgstr "Amosar la data nel conseyu"
 
 #: ../applets/clock/clock.schemas.in.h:35
 msgid "Show temperature in clock"
@@ -570,7 +563,7 @@ msgid ""
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 "L'usu d'esta clave acabó en GNOME 2.6 a favor de la clave «format». La "
-"estructura caltiense por compatibilidá con versiones vieyes."
+"estructura caltiénse por compatibilidá con versiones vieyes."
 
 #: ../applets/clock/clock.schemas.in.h:44
 msgid ""
@@ -606,7 +599,7 @@ msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:46
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "Esta clave especifica'l programa a executar pa configurar la hora."
+msgstr ""
 
 #: ../applets/clock/clock.schemas.in.h:47
 msgid "Time configuration tool"
@@ -639,7 +632,7 @@ msgstr "<small>Configurar</small>"
 #: ../applets/clock/clock-location-tile.c:317
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
-"Define la ubicación como la so ubicacion autual y usa la so estaya horaria "
+"Define la ubicación como la to ubicacion actual y usa la to estaya horaria "
 "pa esti equipu"
 
 #. translators: This is a strftime format string that is used for formatting
@@ -693,40 +686,40 @@ msgid "Sunrise: %s / Sunset: %s"
 msgstr "Alborecer: %s / Aséu: %s"
 
 #: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:169
-#: ../applets/notification_area/main.c:95 ../applets/wncklet/wncklet.c:123
+#: ../applets/notification_area/main.c:94 ../applets/wncklet/wncklet.c:123
 #: ../gnome-panel/libpanel-util/panel-show.c:235
 #, c-format
 msgid "Could not display help document '%s'"
-msgstr "Nun se pudo amosar el documentu d'aida '%s'"
+msgstr "Nun pudo amosase'l documentu d'ayuda '%s'"
 
 #: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:195
-#: ../applets/notification_area/main.c:116 ../applets/wncklet/wncklet.c:152
+#: ../applets/notification_area/main.c:115 ../applets/wncklet/wncklet.c:152
 msgid "Error displaying help document"
-msgstr "Fallu al amosar el documentu d'aida"
+msgstr "Fallu al amosar el documentu d'ayuda"
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:1
 msgid "Change system time"
-msgstr "Camudar la hora del sistema"
+msgstr ""
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:2
 msgid "Change system time zone"
-msgstr "Camudar la estaya horaria del sistema"
+msgstr ""
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:3
 msgid "Configure hardware clock"
-msgstr "Camudar el reló hardware"
+msgstr ""
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:4
 msgid "Privileges are required to change the system time zone."
-msgstr "Necesítense privilexos pa camudar la estaya horaria del sistema."
+msgstr ""
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:5
 msgid "Privileges are required to change the system time."
-msgstr "Necesítense privilexos pa camudar la hora del sistema."
+msgstr ""
 
 #: ../applets/clock/org.gnome.clockapplet.mechanism.policy.in.h:6
 msgid "Privileges are required to configure the hardware clock."
-msgstr "Necesítense privilexos pa camudar el reló hardware."
+msgstr ""
 
 #: ../applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Display a swimming fish or another animated creature"
@@ -777,8 +770,8 @@ msgid ""
 msgstr ""
 "%s nun sirve nin un res. Namái ocupa espaciu nel discu y tiempu demientres "
 "la compilación, y si se carga tamién ocupa una parte del preciosu espaciu "
-"del panel y de la memoria. Cualesquiera que lu use tendría de ser unviáu de "
-"sópitu a que-y faigan un esamen psiquiátricu."
+"del panel y de la memoria. Cualesquiera que lu use tendría que dir a que-y "
+"faigan un esame psiquiátricu."
 
 #: ../applets/fish/fish.c:600
 msgid "(with minor help from George)"
@@ -816,7 +809,7 @@ msgstr "_Falar otra vez"
 #: ../applets/fish/fish.c:979
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr "El comandu configuráu nun ta furrulando y reemplazose por: %s"
+msgstr "El comandu configuráu nun ta furrulando y trocóse por: %s"
 
 #: ../applets/fish/fish.c:1002
 #, c-format
@@ -846,7 +839,7 @@ msgstr "Necesítase cambiar l'agua"
 
 #: ../applets/fish/fish.c:1645
 msgid "Look at today's date!"
-msgstr "¡Mire la data de güei!"
+msgstr "¡Mira la data de güei!"
 
 #: ../applets/fish/fish.c:1738
 #, c-format
@@ -860,11 +853,11 @@ msgstr "    "
 
 #: ../applets/fish/fish.glade.h:2
 msgid "<b>Animation</b>"
-msgstr "<b>Animación</b>"
+msgstr ""
 
 #: ../applets/fish/fish.glade.h:3
 msgid "<b>General</b>"
-msgstr "<b>Xeneral</b>"
+msgstr ""
 
 #: ../applets/fish/fish.glade.h:4
 msgid "Co_mmand to run when clicked:"
@@ -876,7 +869,7 @@ msgstr "Preferencies del Pexe"
 
 #: ../applets/fish/fish.glade.h:6
 msgid "Select an animation"
-msgstr "Escueya una animación"
+msgstr "Escueyi una animación"
 
 #: ../applets/fish/fish.glade.h:7
 msgid "_File:"
@@ -911,8 +904,7 @@ msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"Un pexe ensin nome ye un pexe persosu. Deai-y vida al so pexe dando-y un "
-"nome."
+"Un pexe ensin nome ye un pexe persosu. Da-y vida al to pexe dándo-y un nome."
 
 #: ../applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -949,7 +941,7 @@ msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr ""
-"Esta clave especifica'l comandu qu'intentará executase encalcando'l pexe."
+"Esta clave especifica'l comandu qu'intentará executase en calcando nel pexe."
 
 #: ../applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -957,7 +949,8 @@ msgid ""
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 "Esta clave especifica'l nome de ficheru del pixmap que s'usará pa la "
-"animación que s'amuesa na aplicación del pexe rellativu al direutoriu pixmap."
+"animación que s'amuesa na aplicación del pexe rellativu al direutoriu "
+"pixmap."
 
 #: ../applets/fish/fish.schemas.in.h:11
 msgid ""
@@ -970,14 +963,14 @@ msgstr ""
 #: ../applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
-"Esta clave especifica'l númberu de segundos que ca fotograma s'amosará."
+"Esta clave especifica'l númberu de segundos que va amosase cada fotograma."
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr "Área au apaecen los iconos de notificación"
 
 #: ../applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: ../applets/notification_area/main.c:151
+#: ../applets/notification_area/main.c:150
 msgid "Notification Area"
 msgstr "Área de Notificación"
 
@@ -985,7 +978,7 @@ msgstr "Área de Notificación"
 msgid "Notification Area Factory"
 msgstr "Factoría d'Área de Notificación"
 
-#: ../applets/notification_area/main.c:240
+#: ../applets/notification_area/main.c:239
 msgid "Panel Notification Area"
 msgstr "Área de Notificación del Panel"
 
@@ -995,7 +988,7 @@ msgstr "Fábrica pa les miniaplicaciones de ñavegación de ventanes"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Esconder les ventanes de programes y amosar l'escritoriu"
+msgstr "Anubrir les ventanes de programes y amosar l'escritoriu"
 
 #: ../applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
@@ -1043,11 +1036,11 @@ msgstr "Nun s'atopó iconu"
 
 #: ../applets/wncklet/showdesktop.c:241
 msgid "Click here to restore hidden windows."
-msgstr "Calque equí pa restaurar les ventanes escondíes."
+msgstr "Calca equí pa restaurar les ventanes anubríes."
 
 #: ../applets/wncklet/showdesktop.c:243
 msgid "Click here to hide all windows and show the desktop."
-msgstr "Calque equí pa esconder toles ventanes y amosar l'escritoriu."
+msgstr "Calca equí p'anubrir toles ventanes y amosar l'escritoriu."
 
 #: ../applets/wncklet/showdesktop.c:453 ../applets/wncklet/showdesktop.c:534
 msgid "Show Desktop Button"
@@ -1055,35 +1048,35 @@ msgstr "Amosar Botón d'Escritoriu"
 
 #: ../applets/wncklet/showdesktop.c:536
 msgid "This button lets you hide all windows and show the desktop."
-msgstr "Esti botón dexa-y esconder toles ventanes y amosar l'escritoriu."
+msgstr "Esti botón déxate anubrir toles ventanes y amosar l'escritoriu."
 
 #: ../applets/wncklet/showdesktop.c:566
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"El so alministrador de ventanes nun soporta'l botón d'amosar escritoriu, o "
-"usté nun ta corriendo un alministrador de ventanes."
+"L'alministrador de ventanes nun soporta'l botón d'amosar escritoriu, o nun "
+"tas executando un alministrador de ventanes."
 
 #: ../applets/wncklet/window-list.c:612
 msgid ""
 "The Window List shows a list of all windows in a set of buttons and lets you "
 "browse them."
 msgstr ""
-"La «Llista de ventanes» amuesa una llista de toles ventanes nún conxuntu de "
+"La «Llista de ventanes» amuesa una llista de toles ventanes nun conxuntu de "
 "botones y permíte-y desaminales."
 
 #: ../applets/wncklet/window-list.glade.h:1
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "<b>Restaurando Ventanes Minimizaes</b>"
+msgstr ""
 
 #: ../applets/wncklet/window-list.glade.h:2
 msgid "<b>Window Grouping</b>"
-msgstr "<b>Agrupamientu de Ventanes</b>"
+msgstr ""
 
 #: ../applets/wncklet/window-list.glade.h:3
 msgid "<b>Window List Content</b>"
-msgstr "<b>Conteníu de la Llista de Ventanes</b>"
+msgstr ""
 
 #: ../applets/wncklet/window-list.glade.h:4
 msgid "Group windows when _space is limited"
@@ -1091,7 +1084,7 @@ msgstr "Agrupar ventanes cuando heba pocu e_spaciu"
 
 #: ../applets/wncklet/window-list.glade.h:5
 msgid "Restore to current _workspace"
-msgstr "Restaurar al espaciu de traba_yu autual"
+msgstr "Restaurar al espaciu de traba_yu actual"
 
 #: ../applets/wncklet/window-list.glade.h:6
 msgid "Restore to na_tive workspace"
@@ -1099,7 +1092,7 @@ msgstr "Restaurar al espaciu de trabayu na_tivu"
 
 #: ../applets/wncklet/window-list.glade.h:7
 msgid "Sh_ow windows from current workspace"
-msgstr "Am_osar ventanes del espaciu de trabayu autual"
+msgstr "Am_osar ventanes del espaciu de trabayu actual"
 
 #: ../applets/wncklet/window-list.glade.h:8
 msgid "Show windows from a_ll workspaces"
@@ -1131,15 +1124,15 @@ msgid ""
 "will only display windows from the current workspace."
 msgstr ""
 "Si ye «true», la llista de ventanes amosará les ventanes de toles arees de "
-"trabayu, n'otru casu, amosará ventanes namái pal área de trabayu autual."
+"trabayu, n'otru casu, amosará ventanes namái pal área de trabayu actual."
 
 #: ../applets/wncklet/window-list.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"Si es «true», al restaurar una ventana, la mueve al área de trabajo actual. "
-"En otro caso, cambia al área de trabajo de la ventana."
+"Si ye «true», al restaurar una ventana, muévela al área de trabayu actual. "
+"N'otru casu, cambia al área de trabayu de la ventana."
 
 #: ../applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
@@ -1151,7 +1144,7 @@ msgstr "Tamañu mínimu de la llista de ventanes"
 
 #: ../applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
-msgstr "Mover ventanes al espaciu de trabayu autual cuando nun tean minimizaes"
+msgstr "Mover ventanes al espaciu de trabayu actual cuando nun tean minimizaes"
 
 #: ../applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
@@ -1162,8 +1155,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.20. The schema is retained for "
 "compatibility with older versions."
 msgstr ""
-"L'usu d'esta clave foi declaráu obsoletu en GNOME 2.20. L'esquema caltiénse "
-"por compatibilidá con versiones antigües."
+"L'usu d'esta clave declaróse obsoletu en GNOME 2.20. L'esquema caltiénse por "
+"compatibilidá con versiones antigües."
 
 #: ../applets/wncklet/window-list.schemas.in.h:9
 msgid "When to group windows"
@@ -1174,8 +1167,8 @@ msgid ""
 "The Window Selector shows a list of all windows in a menu and lets you "
 "browse them."
 msgstr ""
-"La Escoyeta de Ventanes amuesa una llista de toles ventanes d'un menú y déxa-"
-"y agüeyales."
+"La Escoyeta de Ventanes amuesa una llista de toles ventanes d'un menú y "
+"déxate agüeyales."
 
 #: ../applets/wncklet/workspace-switcher.c:215
 #: ../applets/wncklet/workspace-switcher.c:977
@@ -1191,22 +1184,19 @@ msgstr "columnes"
 #: ../applets/wncklet/workspace-switcher.c:489
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al cargar el valor num_rows del Cambiador d'Espacios de Trabayu: %s\n"
+msgstr "Error al cargar el valor num_rows del Cambiador d'Espacios de Trabayu: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:500
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al cargar el valor display_workspace_names del Cambiador d'Espacios de "
+msgstr "Error al cargar el valor display_workspace_names del Cambiador d'Espacios de "
 "Trabayu: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:515
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al cargar el valor display_all_workspaces del Cambiador d'Espacios de "
+msgstr "Error al cargar el valor display_all_workspaces del Cambiador d'Espacios de "
 "Trabayu: %s\n"
 
 #: ../applets/wncklet/workspace-switcher.c:627
@@ -1214,12 +1204,12 @@ msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"El «Seleutor de árees de trabayu» amuesa una pequeña versión de les sos arees "
-"de trabayu que-y permite xestionar les sos ventanes."
+"«L'intercambiador d'espacios de trabayu» amuesa una pequeña versión de les "
+"tos estayes de trabayu, que te permite xestionar les ventanes."
 
 #: ../applets/wncklet/workspace-switcher.glade.h:1
 msgid "<b>Switcher</b>"
-msgstr "<b>Cambiador</b>"
+msgstr ""
 
 #: ../applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Workspaces</b>"
@@ -1235,7 +1225,7 @@ msgstr "Amosar _tolos espacios de trabayu en:"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _only the current workspace"
-msgstr "Sól_o amosar l'espaciu de trabayu actual"
+msgstr "Namá_i amosar l'espaciu de trabayu actual"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show workspace _names in switcher"
@@ -1247,7 +1237,7 @@ msgstr "Nomes d'Espacios de Trabayu"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "Preferencies del Cambiados d'Espacios de Trabayu"
+msgstr "Preferencies del Cambiador d'Espacios de Trabayu"
 
 #: ../applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace na_mes:"
@@ -1266,8 +1256,8 @@ msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Si ye «true», el cambiador de árees de trabayu amosará toles árees de "
-"trabayu. En caso contrariu namái s'amosará l'área de trabayu autual."
+"Si ye «true», el cambiador d'árees de trabayu amosará toles árees de "
+"trabayu. En caso contrariu namái s'amosará l'área de trabayu actual."
 
 #: ../applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
@@ -1319,7 +1309,7 @@ msgstr "Nun pudo llanzar aplicación"
 #: ../gnome-panel/libpanel-util/panel-show.c:44
 #, c-format
 msgid "Could not open location '%s'"
-msgstr "Nun pudo abri les señes '%s'"
+msgstr "Nun pudo abrir les señes '%s'"
 
 #: ../gnome-panel/libpanel-util/panel-show.c:162
 msgid "No application to handle search folders is installed."
@@ -1370,7 +1360,7 @@ msgstr "[FICHERU…]"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:110
 msgid "- Edit .desktop files"
-msgstr "– Edita archivos .desktop"
+msgstr "- Edita ficheros .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:149
 #: ../gnome-panel/gnome-desktop-item-edit.c:203 ../gnome-panel/launcher.c:897
@@ -1418,8 +1408,7 @@ msgstr "Nun se dio URI pal ficheru d'escritoriu del llanzador del panel\n"
 #: ../gnome-panel/launcher.c:462
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
-"Incapaz d'abrir el ficheru d'escritoriu %s pal llanzador del panel %s%s\n"
+msgstr "Incapaz d'abrir el ficheru d'escritoriu %s pal llanzador del panel %s%s\n"
 
 #: ../gnome-panel/launcher.c:801
 msgid "_Launch"
@@ -1438,25 +1427,25 @@ msgstr "Nun se pudo guardar el llanzador"
 
 #: ../gnome-panel/main.c:43
 msgid "Replace a currently running panel"
-msgstr "Reemplaza un panel n'usu actualmente"
+msgstr "Trocar un panel n'usu actualmente"
 
-#: ../gnome-panel/menu.c:1005
+#: ../gnome-panel/menu.c:971
 msgid "Add this launcher to _panel"
 msgstr "Amestar esti llanzador al _panel"
 
-#: ../gnome-panel/menu.c:1012
+#: ../gnome-panel/menu.c:978
 msgid "Add this launcher to _desktop"
 msgstr "Amestar esti llanzador al _escritoriu"
 
-#: ../gnome-panel/menu.c:1024
+#: ../gnome-panel/menu.c:990
 msgid "_Entire menu"
 msgstr "Menú compl_etu"
 
-#: ../gnome-panel/menu.c:1029
+#: ../gnome-panel/menu.c:995
 msgid "Add this as _drawer to panel"
 msgstr "Amestar esti _caxón al panel"
 
-#: ../gnome-panel/menu.c:1036
+#: ../gnome-panel/menu.c:1002
 msgid "Add this as _menu to panel"
 msgstr "Amestar esto al panel como _menú"
 
@@ -1476,7 +1465,7 @@ msgstr "%1$s   %2$s   %3$s"
 
 #: ../gnome-panel/nothing.cP:609
 msgid "Press 'q' to quit"
-msgstr "Calque «q» pa salir"
+msgstr "Calca «q» pa colar"
 
 #: ../gnome-panel/nothing.cP:614
 msgid "Paused"
@@ -1491,7 +1480,7 @@ msgstr "%1$s\t%2$s"
 
 #: ../gnome-panel/nothing.cP:618
 msgid "Press 'p' to unpause"
-msgstr "Calque «p» pa reanudar"
+msgstr "Calca «p» pa reanudar"
 
 #: ../gnome-panel/nothing.cP:624
 #, c-format
@@ -1509,7 +1498,7 @@ msgstr "GEGLs asesinos del espaciu exterior"
 
 #: ../gnome-panel/panel-action-button.c:129
 msgid "_Activate Screensaver"
-msgstr "_Activar Salvapantalles"
+msgstr "_Activar Curiapantalles"
 
 #: ../gnome-panel/panel-action-button.c:135
 msgid "_Lock Screen"
@@ -1517,7 +1506,7 @@ msgstr "B_loquiar Pantalla"
 
 #: ../gnome-panel/panel-action-button.c:254
 msgid "Could not connect to server"
-msgstr "Nun pudo coneutase al servidor"
+msgstr "Nun pudo coneutase al sirvidor"
 
 #: ../gnome-panel/panel-action-button.c:285
 msgid "Lock Screen"
@@ -1525,7 +1514,7 @@ msgstr "Bloquiar Pantalla"
 
 #: ../gnome-panel/panel-action-button.c:286
 msgid "Protect your computer from unauthorized use"
-msgstr "Protexer el so ordenador d'usu nun autorizáu"
+msgstr "Protexer l'equipu d'usu non autorizáu"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
@@ -1553,21 +1542,21 @@ msgstr "Restolar Ficheros..."
 
 #: ../gnome-panel/panel-action-button.c:321
 msgid "Locate documents and folders on this computer by name or content"
-msgstr "Llocalice documentos y carpetes pol nome o conteníu nesti equipu"
+msgstr "Llocaliza documentos y carpetes pol nome o conteníu nesti equipu"
 
 #: ../gnome-panel/panel-action-button.c:329
 #: ../gnome-panel/panel-force-quit.c:221
 msgid "Force Quit"
-msgstr "Forzar Colar"
+msgstr "Forciar Colar"
 
 #: ../gnome-panel/panel-action-button.c:330
 msgid "Force a misbehaving application to quit"
-msgstr "Fozar qu'una aplicación que nun furrula cuele"
+msgstr "Forciar qu'una aplicación que nun furrula se zarre"
 
 #. FIXME icon
 #: ../gnome-panel/panel-action-button.c:339
 msgid "Connect to Server..."
-msgstr "Coneutar a Servidor..."
+msgstr "Coneutar a Sirvidor..."
 
 #: ../gnome-panel/panel-action-button.c:340
 msgid "Connect to a remote computer or shared disk"
@@ -1579,7 +1568,7 @@ msgstr "Apagar..."
 
 #: ../gnome-panel/panel-action-button.c:349
 msgid "Shut down the computer"
-msgstr "Apagar l'ordenador"
+msgstr "Apagar l'equipu"
 
 #: ../gnome-panel/panel-addto.c:116
 msgid "Custom Application Launcher"
@@ -1619,7 +1608,7 @@ msgstr "Separtador"
 
 #: ../gnome-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
-msgstr "Un separtador pa organizar los artículso del panel"
+msgstr "Un separtador pa organizar los artículos del panel"
 
 #: ../gnome-panel/panel-addto.c:176
 msgid "A pop out drawer to store other items in"
@@ -1661,23 +1650,22 @@ msgstr "Guetar un _elementu p'amestalu al panel:"
 #: ../gnome-panel/panel-applet-frame.c:844
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "Esceición del popup_menu '%s'\n"
+msgstr ""
 
 #: ../gnome-panel/panel-applet-frame.c:969
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr "\"%s\" colara inesperadamente"
+msgstr "\"%s\" finó inesperadamente"
 
 #: ../gnome-panel/panel-applet-frame.c:971
 msgid "Panel object has quit unexpectedly"
-msgstr "L'oxetu del panel colara inesperandamente"
+msgstr "L'oxetu del panel finó inesperandamente"
 
 #: ../gnome-panel/panel-applet-frame.c:978
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr ""
-"Si usté recarga un oxetu del panel, amestaráse automáticamente al panel."
+msgstr "Si recargues un oxetu del panel, amestaráse al panel automáticamente."
 
 #: ../gnome-panel/panel-applet-frame.c:984
 msgid "_Don't Reload"
@@ -1690,15 +1678,15 @@ msgstr "_Recargar"
 #: ../gnome-panel/panel-applet-frame.c:1051
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr "El panel atopose con un problema al cargar \"%s\"."
+msgstr "El panel atopóse con un problema al cargar \"%s\"."
 
 #: ../gnome-panel/panel-applet-frame.c:1067
 msgid "Do you want to delete the applet from your configuration?"
-msgstr "¿Prestaría-y esborrar l'aplicación de la so configuración?"
+msgstr "¿Quies desaniciar l'aplicación de la to configuración?"
 
 #: ../gnome-panel/panel-applet-frame.c:1141
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr "Nun se pue obtener l'interface AppletShell del control\n"
+msgstr ""
 
 #: ../gnome-panel/panel-context-menu.c:104
 msgid "And many, many others..."
@@ -1726,7 +1714,7 @@ msgstr "Nun pue esborrar esti panel"
 
 #: ../gnome-panel/panel-context-menu.c:172
 msgid "You must always have at least one panel."
-msgstr "Usté tien de tener siempre al menos un panel."
+msgstr "Has tener siempre un panel polo menos."
 
 #: ../gnome-panel/panel-context-menu.c:205
 msgid "_Add to Panel..."
@@ -1734,15 +1722,15 @@ msgstr "_Amestar al Panel..."
 
 #: ../gnome-panel/panel-context-menu.c:226
 msgid "_Delete This Panel"
-msgstr "_Esborrar Esti Panel"
+msgstr "_Desaniciar Esti Panel"
 
 #: ../gnome-panel/panel-context-menu.c:241
 msgid "_New Panel"
-msgstr "_Nuevu Panel"
+msgstr "Panel _Nuevu"
 
 #: ../gnome-panel/panel-context-menu.c:293
 msgid "A_bout Panels"
-msgstr "_Al rodiu de Panels"
+msgstr "_Tocante a Panels"
 
 #: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application"
@@ -1768,7 +1756,7 @@ msgstr "_Nome:"
 
 #: ../gnome-panel/panel-ditem-editor.c:637
 msgid "Browse icons"
-msgstr "Esplorar iconos"
+msgstr ""
 
 #: ../gnome-panel/panel-ditem-editor.c:655
 msgid "_Browse..."
@@ -1785,7 +1773,7 @@ msgstr "Escoyer una aplicación..."
 
 #: ../gnome-panel/panel-ditem-editor.c:1028
 msgid "Choose a file..."
-msgstr "Escueya un ficheru…"
+msgstr "Escueyi un ficheru…"
 
 #: ../gnome-panel/panel-ditem-editor.c:1153
 msgid "Comm_and:"
@@ -1793,7 +1781,7 @@ msgstr "Co_mandu:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1162
 msgid "_Command:"
-msgstr "_Comandu:"
+msgstr ""
 
 #: ../gnome-panel/panel-ditem-editor.c:1171
 msgid "_Location:"
@@ -1801,7 +1789,7 @@ msgstr "_Llugar:"
 
 #: ../gnome-panel/panel-ditem-editor.c:1351
 msgid "The name of the launcher is not set."
-msgstr "Nun s'afitó el nome del llanzador."
+msgstr "Nun s'afitó'l nome del llanzador."
 
 #: ../gnome-panel/panel-ditem-editor.c:1355
 msgid "Could not save directory properties"
@@ -1809,7 +1797,7 @@ msgstr "Nun se guardaron les propiedaes de la carpeta"
 
 #: ../gnome-panel/panel-ditem-editor.c:1356
 msgid "The name of the directory is not set."
-msgstr "Nun s'afitó el nome de la carpeta."
+msgstr "Nun s'afitó'l nome de la carpeta."
 
 #: ../gnome-panel/panel-ditem-editor.c:1372
 msgid "The command of the launcher is not set."
@@ -1821,14 +1809,14 @@ msgstr "Nun s'afitó'l llugar del llanzador."
 
 #: ../gnome-panel/panel-ditem-editor.c:1452
 msgid "Could not display help document"
-msgstr "Nun pudo amosase la documentación d'aida"
+msgstr "Nun pudo amosase la documentación d'ayuda"
 
 #: ../gnome-panel/panel-force-quit.c:76
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
-"Calque nuna ventana pa forciar la terminación d'una aplicación. Pa encaboxar "
-"calque <ESC>."
+"Calca nuna ventana pa forciar la terminación d'una aplicación. Pa encaboxar "
+"calca <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:204
 msgid "Force this application to exit?"
@@ -1839,8 +1827,6 @@ msgid ""
 "If you choose to force an application to exit, any open documents in it will "
 "be lost."
 msgstr ""
-"Si escueye forciar una aplicación a finar, perderáse cualesquier documentu "
-"abiertu nella."
 
 #: ../gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1848,8 +1834,8 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
-"Una señal booleana pa conseñar si la configuración anterior del usuariu en /"
-"apps/panel/profiles/default se copió al llugar nuevu en /apps/panel."
+"Una señal booleana pa conseñar si la configuración anterior del usuariu en "
+"/apps/panel/profiles/default se copió al llugar nuevu en /apps/panel."
 
 #: ../gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1857,8 +1843,8 @@ msgid ""
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 "Una llista d'ID de paneles. Cada ID identifica un panel individual de nivel "
-"superior. Los valores pa cada ún d'estos paneles atróxense en /apps/panel/"
-"toplevels/$(id)."
+"superior. Los valores pa cada ún d'estos paneles atróxense en "
+"/apps/panel/toplevels/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:3
 msgid ""
@@ -1878,8 +1864,8 @@ msgid ""
 msgstr ""
 "Una llista d'ID d'oxetos de panel. Cada ID identifica un oxetu de panel "
 "individual (por exemplu, un llanzador, un botón d'aición o una barra/botón "
-"de menú). Los valores pa cada ún d'estos oxetos atróxense en /apps/panel/"
-"objects/$(id)."
+"de menú). Los valores pa cada ún d'estos oxetos atróxense en "
+"/apps/panel/objects/$(id)."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable autocompletion in \"Run Application\" dialog"
@@ -1917,9 +1903,9 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Si ye «true», fadráse disponible la llista «Aplicaciones conocíes» nel diálogu "
-"«Executar una aplicación». La clave «show_program_list» remana si la llista "
-"s'alcuentra extenderexada o non cuando s'amuesa'l diálogu."
+"Si ye «true», fadráse disponible la llista «Aplicaciones conocíes» nel "
+"diálogu «Executar una aplicación». La clave «show_program_list» remana si la "
+"llista s'alcuentra extenderexada o non cuando s'amuesa'l diálogu."
 
 #: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
@@ -1944,11 +1930,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"Una llista d'IID de miniaplicaciones que'l panel inorará. D'esta miente pue "
+"Una llista d'IID de miniaplicaciones que'l panel inorará. D'esta miente pues "
 "desactivar la carga de dalgunes miniaplicaciones o que s'amuesen nel menú. "
-"Por exemplu pa desactivar la miniaplicación mini-commander amiesta 'OAFIID:"
-"GNOME_MiniCommanderApplet' a esta llista. El panel tien de reaniciase pa que "
-"faiga efeutu."
+"Por exemplu pa desactivar la miniaplicación mini-commander amiesta "
+"'OAFIID:GNOME_MiniCommanderApplet' a esta llista. El panel tien de "
+"reaniciase pa que faiga efeutu."
 
 #: ../gnome-panel/panel-global.schemas.in.h:2
 msgid "Applet IIDs to disable from loading"
@@ -1972,11 +1958,11 @@ msgstr "Depreciáu"
 
 #: ../gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
-msgstr "Deshabilitar Forzar Colar"
+msgstr "Deshabilitar Forciar Colar"
 
 #: ../gnome-panel/panel-global.schemas.in.h:8
 msgid "Disable Lock Screen"
-msgstr "Deshabilitar Bloquiar Pantalla"
+msgstr ""
 
 #: ../gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
@@ -1989,7 +1975,7 @@ msgstr "Habilitar animaciones"
 
 #: ../gnome-panel/panel-global.schemas.in.h:11
 msgid "Enable tooltips"
-msgstr "Habilitar cuadrinos"
+msgstr "Habilitar conseyos"
 
 #: ../gnome-panel/panel-global.schemas.in.h:12
 msgid "Highlight launchers on mouseover"
@@ -2000,22 +1986,22 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Si ye «true», amuésase un diálogu solicitando una confirmación si l'usuario "
-"quier esaniciar un panel."
+"Si ye «true», amuésase un diálogu solicitando una confirmación si l'usuariu "
+"quier desaniciar un panel."
 
 #: ../gnome-panel/panel-global.schemas.in.h:14
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"Si ye «true», el caxón pesllarase automáticamente cuando l'usuariu calque "
-"sobro un llanzador d'ésti."
+"Si ye «true», el caxón pesllaráse automáticamente cuando l'usuariu calque "
+"sobre un llanzador d'ésti."
 
 #: ../gnome-panel/panel-global.schemas.in.h:15
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Si ye «true», rellumará un llanzador cuando l'usuario mueva'l punteru sobro "
+"Si ye «true», rellumará un llanzador cuando l'usuariu mueva'l punteru sobre "
 "ésti."
 
 #: ../gnome-panel/panel-global.schemas.in.h:16
@@ -2031,8 +2017,6 @@ msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Si ye cierto, el panel nun dexará qu'un usuariu cande la pantalla, "
-"eliminando l'accesu a les entraes de menú del candáu de pantalla."
 
 #: ../gnome-panel/panel-global.schemas.in.h:18
 msgid ""
@@ -2049,7 +2033,7 @@ msgid ""
 "panel must be restarted for this to take effect."
 msgstr ""
 "Si ye «true», el panel nun permitirá dengún cambéu na so configuración. "
-"Dalgunas miniaplicaciones individuales seique necesiten bloquiase de miente "
+"Dalgunes miniaplicaciones individuales seique necesiten bloquiase de miente "
 "independiente. El panel tien de reaniciase pa qu'esto tenga efeutu."
 
 #: ../gnome-panel/panel-global.schemas.in.h:20
@@ -2058,16 +2042,16 @@ msgstr "Si ye cierto, amuésense les suxerencies pa los oxetos de los paneles."
 
 #: ../gnome-panel/panel-menu-bar.c:106
 msgid "Browse and run installed applications"
-msgstr "Navegar y executar programes instalaos"
+msgstr "Ver y executar programes instalaos"
 
 #: ../gnome-panel/panel-menu-bar.c:108
 msgid "Access documents, folders and network places"
-msgstr "Acceda a documentos, carpetes y sitios de rede"
+msgstr "Accesu a documentos, carpetes y sitios de rede"
 
 #: ../gnome-panel/panel-menu-bar.c:110
 msgid "Change desktop appearance and behavior, get help, or log out"
 msgstr ""
-"Cambiar l'apariencia y comportamientu del escritoriu, garrar aida, o "
+"Camudar l'aspeutu y comportamientu del escritoriu, algamar ayuda, o "
 "desconeutase"
 
 #: ../gnome-panel/panel-menu-bar.c:145
@@ -2096,7 +2080,7 @@ msgstr "Nun se pudo inspeccionar %s pa guetar cambeos nel soporte"
 #: ../gnome-panel/panel-menu-items.c:565
 #, c-format
 msgid "Rescan %s"
-msgstr "Tornar a inspeccionar %s"
+msgstr "Tornar a inspeicionar %s"
 
 #: ../gnome-panel/panel-menu-items.c:602
 #, c-format
@@ -2108,35 +2092,35 @@ msgstr "Nun se pudo montar %s"
 msgid "Mount %s"
 msgstr "Montar %s"
 
-#: ../gnome-panel/panel-menu-items.c:868
+#: ../gnome-panel/panel-menu-items.c:873
 msgid "Removable Media"
-msgstr "Medios Estraíbles"
+msgstr "Medios Estrayibles"
 
-#: ../gnome-panel/panel-menu-items.c:949
+#: ../gnome-panel/panel-menu-items.c:960
 msgid "Network Places"
 msgstr "Sitios de Rede"
 
-#: ../gnome-panel/panel-menu-items.c:988
+#: ../gnome-panel/panel-menu-items.c:999
 msgid "Open your personal folder"
-msgstr "Abrir la so carpeta personal"
+msgstr "Abrir la to carpeta personal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1007
+#: ../gnome-panel/panel-menu-items.c:1018
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Escritoriu"
 
-#: ../gnome-panel/panel-menu-items.c:1008
+#: ../gnome-panel/panel-menu-items.c:1019
 msgid "Open the contents of your desktop in a folder"
-msgstr "Abrir el conteníu del to escritoriu nuna carpeta"
+msgstr "Abrir el conteníu del escritoriu nuna carpeta"
 
-#: ../gnome-panel/panel-menu-items.c:1396
+#: ../gnome-panel/panel-menu-items.c:1407
 msgid "Places"
 msgstr "Llugares"
 
-#: ../gnome-panel/panel-menu-items.c:1425
+#: ../gnome-panel/panel-menu-items.c:1436
 msgid "System"
 msgstr "Sistema"
 
@@ -2145,7 +2129,7 @@ msgstr "Sistema"
 #. * but "1" if "Log Out %s" doesn't make any sense in your
 #. * language (where %s is a username).
 #.
-#: ../gnome-panel/panel-menu-items.c:1506
+#: ../gnome-panel/panel-menu-items.c:1517
 msgctxt "panel:showusername"
 msgid "1"
 msgstr "1"
@@ -2154,14 +2138,14 @@ msgstr "1"
 #. * panel-action-button.c
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1518
+#: ../gnome-panel/panel-menu-items.c:1529
 #, c-format
 msgid "Log Out %s..."
 msgstr "Desconeutar %s..."
 
 #. Translators: this string is used ONLY if you translated
 #. * "1" (msgctxt: "panel:showusername") to "1"
-#: ../gnome-panel/panel-menu-items.c:1522
+#: ../gnome-panel/panel-menu-items.c:1533
 #, c-format
 msgid "Log out %s of this session to log in as a different user"
 msgstr "Desconeutar %s d'esta sesión pa coneutase como un usuariu estremáu"
@@ -2185,8 +2169,9 @@ msgid ""
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 "Si ye «true», la clave «custom_icon» úsase como un iconu personalizáu pal "
-"botón. Si ye «false» (falsu), la clave «custom_icon» inórase. Esta clave namái "
-"ye relevante si la clave «object_type» contién «menu-object» o «drawer-object»."
+"botón. Si ye «false» (falsu), la clave «custom_icon» inórase. Esta clave "
+"namái ye relevante si la clave «object_type» contién «menu-object» o "
+"«drawer-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -2195,8 +2180,9 @@ msgid ""
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 "Si ye «true», la clave «menu_path» úsase como'l camín dende'l que'l conteníu "
-"del mentú tendría de construyise. Si ye «false» la clave «menu_path» inórase. "
-"Esta clave namái ye relevante si la clave «object_type» contién «menu-object»."
+"del mentú tendría de construyise. Si ye «false» la clave «menu_path» "
+"inórase. Esta clave namái ye relevante si la clave «object_type» contién "
+"«menu-object»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:6
 msgid ""
@@ -2247,9 +2233,6 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
-"El ID de la implementación de la miniaplicación Bonobo - ej. «OAFIID:"
-"GNOME_ClockApplet». Esta clave namái ye relevante si'l valor de la clave "
-"«object_type» ye «bonobo-applet»."
 
 #: ../gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2326,8 +2309,8 @@ msgid ""
 "\"menu-bar\"."
 msgstr ""
 "La triba d'esti oxetu del panel. Los valores dables son \"drawer-object\", "
-"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" y "
-"\"menu-bar\"."
+"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" y \"menu-"
+"bar\"."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -2376,19 +2359,19 @@ msgstr "Fallu al lleer el valor booleanu GConf «%s»: %s"
 #: ../libpanel-applet/panel-test-applets.c:54
 msgctxt "Orientation"
 msgid "Top"
-msgstr "Cimero"
+msgstr "Cimeru"
 
 #: ../gnome-panel/panel-properties-dialog.c:129
 #: ../libpanel-applet/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Bottom"
-msgstr "Cabero"
+msgstr "Abaxo"
 
 #: ../gnome-panel/panel-properties-dialog.c:130
 #: ../libpanel-applet/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Left"
-msgstr "Izquierda"
+msgstr "Esquierda"
 
 #: ../gnome-panel/panel-properties-dialog.c:131
 #: ../libpanel-applet/panel-test-applets.c:57
@@ -2404,7 +2387,7 @@ msgstr "Propiedaes del caxón"
 #: ../gnome-panel/panel-run-dialog.c:1928
 #, c-format
 msgid "Unable to load file '%s'."
-msgstr "Nun ye dable cargar el ficheru «%s»"
+msgstr ""
 
 #: ../gnome-panel/panel-properties-dialog.c:1062
 msgid "Could not display properties dialog"
@@ -2420,7 +2403,7 @@ msgstr "<small>Tresparente</small>"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:4
 msgid "Arro_ws on hide buttons"
-msgstr "_Fleches nos botones de soveramientu"
+msgstr "_Fleches nos botones d'anubrir"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:5
 msgid "Background"
@@ -2436,11 +2419,11 @@ msgstr "Co_lor:"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:8
 msgid "E_xpand"
-msgstr "E_spandir"
+msgstr "E_spander"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Image Background Details"
-msgstr "Detáis na imaxe de fondu"
+msgstr "Detalles na imaxe de fondu"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:11
 msgid "Panel Properties"
@@ -2448,7 +2431,7 @@ msgstr "Propiedades del Panel"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Pick a color"
-msgstr "Escueya un color"
+msgstr "Escueyi un color"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:13
 msgid "Rotate image when panel is _vertical"
@@ -2464,7 +2447,7 @@ msgstr "Escoyeta de Fondu"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Show hide _buttons"
-msgstr "Amosar _botones de soveramientu"
+msgstr "Amosar _botones d'anubrir"
 
 #: ../gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Solid c_olor"
@@ -2532,9 +2515,10 @@ msgid ""
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"Si vacía la llista de documentos recientes, vaciará lo siguiente:\n"
+"Si vacíes la llista de documentos recientes, vaciarás lo siguiente:\n"
 "• Tolos elementos del menú Llugares → Documentos recientes.\n"
-"• Tolos elementos de la llista de documentos recientes en toles aplicaciones."
+"• Tolos elementos de la llista de documentos recientes en toles "
+"aplicaciones."
 
 #: ../gnome-panel/panel-recent.c:161 ../gnome-panel/panel-recent.c:235
 msgid "Clear Recent Documents"
@@ -2551,7 +2535,7 @@ msgstr "Llimpiar tolos artículos de la llista de documentos recientes"
 #: ../gnome-panel/panel-run-dialog.c:325
 #, c-format
 msgid "Could not run command '%s'"
-msgstr "Nun pudo executar comandu '%s'"
+msgstr "Nun pudo executase'l comandu '%s'"
 
 #: ../gnome-panel/panel-run-dialog.c:378
 #, c-format
@@ -2560,12 +2544,12 @@ msgstr "Nun pudo convertir '%s' de UTF-8"
 
 #: ../gnome-panel/panel-run-dialog.c:1186
 msgid "Choose a file to append to the command..."
-msgstr "Escueya un ficheru p'asociar al comandu..."
+msgstr "Escueyi un ficheru p'asociar al comandu..."
 
 #: ../gnome-panel/panel-run-dialog.c:1562
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
-msgstr "Escueya una aplicación pa ver la so descripción."
+msgstr "Escueyi una aplicación pa ver la so descripción."
 
 #: ../gnome-panel/panel-run-dialog.c:1600
 #, c-format
@@ -2575,8 +2559,7 @@ msgstr "Executará'l comandu: '%s'"
 #: ../gnome-panel/panel-run-dialog.c:1631
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
-"La llista URI que s'arrastró al diálogu d'executar tien un formatu (%d) o "
+msgstr "La llista URI que s'arrastró al diálogu d'executar tien un formatu (%d) o "
 "llargu (%d) erróneu\n"
 
 #: ../gnome-panel/panel-run-dialog.c:1932
@@ -2588,7 +2571,7 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"Calque nesti botón pa guetar un ficheru cuyu nome s'amestará a la cadena del "
+"Calca nesti botón pa guetar un ficheru cuyu nome s'amestará a la cadena del "
 "comandu."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:2
@@ -2596,12 +2579,12 @@ msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Calque nesti botón pa executar l'aplicación o'l comandu nel campu d'entrada "
+"Calca nesti botón pa executar l'aplicación o'l comandu nel campu d'entrada "
 "de comandos."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:3
 msgid "Command entry"
-msgstr "Entrada de comandu"
+msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
@@ -2609,11 +2592,11 @@ msgstr "Iconu de comandu"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
-msgstr "Meta equí una orde de comandu pa executala."
+msgstr ""
 
 #: ../gnome-panel/panel-run-dialog.glade.h:6
 msgid "List of known applications"
-msgstr "llista d'aplicaciones conocíes"
+msgstr "Llista d'aplicaciones conocíes"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
@@ -2621,16 +2604,16 @@ msgstr "Executar Aplicación"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
-msgstr "Executar na _teminal"
+msgstr "Executar nun _terminal"
 
 #: ../gnome-panel/panel-run-dialog.glade.h:9
 msgid "Run with _file..."
-msgstr "Escecutar con _ficheru..."
+msgstr "Executar con _ficheru..."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
 msgstr ""
-"Escueya esta casiella pa executar el comandu nuna ventana de la terminal."
+"Escueyi esta caxella pa executar el comandu nuna ventana de la terminal."
 
 #: ../gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
@@ -2647,7 +2630,7 @@ msgstr "Executa_r"
 
 #: ../gnome-panel/panel-stock-icons.c:91
 msgid "_Force quit"
-msgstr "_Forzar colar"
+msgstr "_Forciar colar"
 
 #: ../gnome-panel/panel-stock-icons.c:92
 msgid "C_lear"
@@ -2655,11 +2638,11 @@ msgstr "L_limpiar"
 
 #: ../gnome-panel/panel-stock-icons.c:93
 msgid "D_on't Delete"
-msgstr "Nun Esb_orrar"
+msgstr "Nun Desa_niciar"
 
 #: ../gnome-panel/panel-toplevel.c:1178
 msgid "Hide Panel"
-msgstr "Esconder Panel"
+msgstr "Anubrir Panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2697,7 +2680,7 @@ msgstr "Panel na Llende d'Abaxo"
 
 #: ../gnome-panel/panel-toplevel.c:1602
 msgid "Left Expanded Edge Panel"
-msgstr "Panel Espandíu a la Llende Izquierda"
+msgstr "Panel Espandíu a la Llende Esquierda"
 
 #: ../gnome-panel/panel-toplevel.c:1603
 msgid "Left Centered Panel"
@@ -2709,7 +2692,7 @@ msgstr "Panel Flotante a Manzorga"
 
 #: ../gnome-panel/panel-toplevel.c:1605
 msgid "Left Edge Panel"
-msgstr "Panel na Llende Izquierda"
+msgstr "Panel na Llende Esquierda"
 
 #: ../gnome-panel/panel-toplevel.c:1609
 msgid "Right Expanded Edge Panel"
@@ -2733,7 +2716,7 @@ msgstr "Velocidá d'animación"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
-msgstr "Esconder panel na esquina automáticamente"
+msgstr "Anubrir panel na esquina automáticamente"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:3
 msgid "Background color"
@@ -2753,11 +2736,11 @@ msgstr "Tipu de fondu"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr "Centrar panel nel axe x"
+msgstr "Centrar panel na exa x"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr "Centrar panel nel axe y"
+msgstr "Centrar panel na exa y"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Enable arrows on hide buttons"
@@ -2765,11 +2748,11 @@ msgstr "Habilitar fleches nos botones escondíos"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Enable hide buttons"
-msgstr "Habilitar botones d'esconder"
+msgstr "Habilitar botones d'anubrir"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr "Espandir pa ocupar dafechu l'anchu de la pantalla"
+msgstr "Espander pa ocupar dafechu l'anchu de la pantalla"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
@@ -2780,7 +2763,7 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Si ye «true», allugaránse fleches nos botones ocultos. Esta clave namái ye "
+"Si ye «true», allugaránse fleches nos botones anubríos. Esta clave namái ye "
 "relevante si'l valor de la clave «enable_buttons» ye «true»."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:15
@@ -2788,16 +2771,16 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Si ye «true», allugaránse botones a cada llau del panel, y ésto puen usase pa "
-"mover el panel al berbesu de la pantalla, dexando namái un botón visible."
+"Si ye «true», allugaránse botones a cada llau del panel, y estos puen usase "
+"pa mover el panel al berbesu de la pantalla, dexando namái un botón visible."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
 msgstr ""
-"Si ye «true», la ocultación y el descubrimientu d'esti panel sedrá animada "
-"n'arroú d'asoceder de sópitu."
+"Si ye «true», la ocultación y el descubrimientu d'esti panel animaráse en "
+"cuenta d'asoceder de sópitu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2829,9 +2812,9 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Si ye «true», el panel anubriráse automáticamente nuna esquina de la pantalla "
-"cuando'l punteru dexa l'área del panel. Al mover el punteru haza esa esquina "
-"el panel reapaecerá."
+"Si ye «true», el panel anubriráse automáticamente nuna esquina de la "
+"pantalla cuando'l punteru dexa l'área del panel. Al mover el punteru haza "
+"esa esquina el panel reapaecerá."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2840,10 +2823,11 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Si ye «true», el panel ocupará l'anchor de tola pantalla (l'altor si se trata "
-"d'un panel vertical). Nesti mou, el panel namái pue allugase nel berbesu de "
-"la pantalla. Si ye «false» el panel namái sedrá lo suficientemente grande "
-"p'acomodar les miniaplicaciones, llanzadores y botones nel panel."
+"Si ye «true», el panel ocupará l'anchor de tola pantalla (l'altor si se "
+"trata d'un panel vertical). Nesti mou, el panel namái pue allugase nel "
+"berbesu de la pantalla. Si ye «false» el panel namái sedrá lo "
+"suficientemente grande p'acomodar les miniaplicaciones, llanzadores y "
+"botones nel panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2852,10 +2836,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Si ye «true», les claves «x» y «x_right» inoraránse y el panel allugaráse nel "
-"centru del exe-x de la pantalla. Si'l panel se redimensiona permanecerá nesa "
-"posición, polo que'l panel medrará haza dambos llaos. Si ye «false» les "
-"claves «x» y «x_right» especifiquen la posición del panel."
+"Si ye «true», les claves «x» y «x_right» inoraránse y el panel allugaráse "
+"nel centru de la exa - x de la pantalla. Si'l panel se redimensiona "
+"permanecerá nesa posición, polo que'l panel medrará haza dambos llaos. Si ye "
+"«false» les claves «x» y «x_right» especifiquen la posición del panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2865,8 +2849,8 @@ msgid ""
 "and y_bottom keys specify the location of the panel."
 msgstr ""
 "Si ye «true», les claves «y» e «y_bottom» inórense, y el panel allúgase nel "
-"centru del exe-y de la pantalla. Si'l panel se redimensiona permanecerá nesa "
-"posición, polo que'l panel medrará haza dambos llaos. Si ye «false» les "
+"centru de la exa - y de la pantalla. Si'l panel se redimensiona permanecerá "
+"nesa posición, polo que'l panel medrará haza dambos llaos. Si ye «false» les "
 "claves «y» e «y_bottom» especifiquen la posición del panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:24
@@ -2883,11 +2867,11 @@ msgstr "Nome pa identificar panel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
-msgstr "Retrasu p'autoesconder panel"
+msgstr "Retrasu d'auto-anubrir panel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr "Retrasu p'autodesesconder panel"
+msgstr "Retrasu d'auto-desanubrir panel"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
@@ -3035,12 +3019,12 @@ msgid ""
 "panel."
 msgstr ""
 "La orientación del panel. Los valores dables son «top», «bottom», «left», "
-"«right». Nel mou expandíu, la clave especifica en qué berbesu de la pantalla "
-"ta'l panel. Nel mou non expandíu, la diferencia ente «top» y «bottom» ye menos "
-"importante, dambos conseñen que ye un panel horizontal, pero entá da una "
-"indicación útil sobro cómo tendríen de comportase dalgunos oxetos de los "
-"paneles. Por exemplu, nún panel «top» (superior) un botón de menú amosará'l "
-"so menú per debaxo del panel, mentantu que nún panel «bottom» (inferior) el "
+"«right». Nel mou espandíu, la clave especifica en qué berbesu de la pantalla "
+"ta'l panel. Nel mou non espandíu, la diferencia ente «top» y «bottom» ye "
+"menos importante, dambos conseñen que ye un panel horizontal, pero entá da "
+"una indicación útil sobre cómo tendríen de comportase dalgunos oxetos de los "
+"paneles. Por exemplu, nun panel «top» (superior) un botón de menú amosará'l "
+"so menú per debaxo del panel, mentantu que nun panel «bottom» (inferior) el "
 "menú amosaráse per enriba del panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:44
@@ -3060,12 +3044,12 @@ msgid ""
 "navigating between panels."
 msgstr ""
 "Esto ye un nome entendible por persones que se pue utilizar pa identificar "
-"un panel. El so envís principal ye servir como'l títulu de la ventana del "
-"panel, lo que pue resultar útil pa ñavegar ente paneles."
+"un panel. El so envís principal ye sirvir como'l títulu de la ventana del "
+"panel, lo que pue resultar útil pa navegar ente paneles."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:46
 msgid "Visible pixels when hidden"
-msgstr "Pixel visibles cuando tea escondíu"
+msgstr "Pixel visibles cuando tea anubríu"
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
@@ -3075,9 +3059,9 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Qué tipu de fondu tendría d'usase pa esti panel. Los valores dables son "
-"«gtk»; usaráse'l fondu predetermináu del widget GTK+; «color» usaráse la clave "
-"«color» como color de fondu o «image» usaráse la imaxe especificada pola clave "
-"«image» como fondu."
+"«gtk»; usaráse'l fondu predetermináu del widget GTK+; «color» usaráse la "
+"clave «color» como color de fondu o «image» usaráse la imaxe especificada "
+"pola clave «image» como fondu."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
@@ -3085,7 +3069,8 @@ msgid ""
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
 "Con una configuración multi-pantalla, pue tener paneles pa ca pantalla "
-"individual. Esta clave identifica la pantalla actual na que s'amuesa'l panel."
+"individual. Esta clave identifica la pantalla actual na que s'amuesa'l "
+"panel."
 
 #: ../gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "X co-ordinate of panel"
@@ -3126,17 +3111,17 @@ msgstr "Nun pudo executar '%s'"
 msgid "file"
 msgstr "ficheru"
 
-#: ../gnome-panel/panel-util.c:879
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
-msgstr "Carpeta Home"
+msgstr "Carpeta personal"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:891
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Sistema de Ficheros"
 
-#: ../gnome-panel/panel-util.c:1038
+#: ../gnome-panel/panel-util.c:998
 msgid "Search"
 msgstr "Guetar"
 
@@ -3145,7 +3130,7 @@ msgstr "Guetar"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1084
+#: ../gnome-panel/panel-util.c:1044
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -3157,49 +3142,49 @@ msgstr "Abrir URL: %s"
 
 #: ../gnome-panel/panel.c:1302
 msgid "Delete this drawer?"
-msgstr "¿Esborrar esti caxón?"
+msgstr "¿Desaniciar esti caxón?"
 
 #: ../gnome-panel/panel.c:1303
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"Cuando s'esanicia un caxón, el caxón y les\n"
+"Cuando se desanicia un caxón, el caxón y les\n"
 "sos preferencies piérdense."
 
 #: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
-msgstr "¿Esborrar esti panel?"
+msgstr "¿Desaniciar esti panel?"
 
 #: ../gnome-panel/panel.c:1307
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
-"Cuando s'esanicia un panel, el panel y los \n"
+"Cuando se desanicia un panel, el panel y los \n"
 "valores de les sos preferencies piérdense."
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "Una miniaplicación cenciella pa prebar el panel de GNOME-2.0"
+msgstr "Una miniaplicación cenciella pa probar el panel de GNOME-2.0"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
 msgid "Test Bonobo Applet"
-msgstr "Miniaplicación de preba de Bonobo"
+msgstr "Miniaplicación de prueba de Bonobo"
 
 #: ../libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
-msgstr "Fábrica de miniaplicaciones de preba de Bonobo"
+msgstr "Fábrica de miniaplicaciones de prueba de Bonobo"
 
 #: ../libpanel-applet/panel-test-applets.c:35
 msgid "Specify an applet IID to load"
-msgstr "Especifique un IID de miniaplicación pa cargar"
+msgstr "Especifica un IID de miniaplicación pa cargar"
 
 #: ../libpanel-applet/panel-test-applets.c:36
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
-"Especifique una ubicación gconf na que tienen d'atroxase les preferencies de "
+"Especifica una ubicación gconf na que tienen d'atroxase les preferencies de "
 "la miniaplicación"
 
 #: ../libpanel-applet/panel-test-applets.c:37
@@ -3268,171 +3253,377 @@ msgstr "_Aplicación:"
 msgid "_Prefs Dir:"
 msgstr "_Prefs Carpeta:"
 
-#~ msgid "No logout button found"
-#~ msgstr "Nun s'atopó nengún botón de salida de sesión"
+#~ msgid "Choose Location"
+#~ msgstr "Escueyi ubicación"
+
+#~ msgid "Edit Location"
+#~ msgstr "Editar ubicación"
+
+#~ msgid "Clock Format"
+#~ msgstr "Formatu Reló"
+
+#~ msgid "Display"
+#~ msgstr "Amosar"
+
+#~ msgid "East"
+#~ msgstr "Este"
+
+#~ msgid "L_atitude:"
+#~ msgstr "L_latitú:"
+
+#~ msgid "L_ongitude:"
+#~ msgstr "Ll_onxitú:"
+
+#~ msgid "North"
+#~ msgstr "Norte"
+
+#~ msgid "Panel Display"
+#~ msgstr "Amosar Panel"
+
+#~ msgid "South"
+#~ msgstr "Sur"
+
+#~ msgid "Time & Date"
+#~ msgstr "Hora y Data"
+
+#~ msgid "West"
+#~ msgstr "Oeste"
+
+#~ msgid "_Location Name:"
+#~ msgstr "Nome _Ubicación:"
+
+#~ msgid "_Set System Time"
+#~ msgstr "A_fitar Hora Sistema"
+
+#~ msgid "_Time:"
+#~ msgstr "_Hora:"
+
+#~ msgid "_Timezone:"
+#~ msgstr "_Estaya horaria:"
 
 #~ msgid ""
-#~ "The logout button can not be found or it is not in the standard location. "
-#~ "Please update the panel configuration manually."
+#~ "The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+#~ "time configuration tool. The schema is retained for compatibility with older "
+#~ "versions."
 #~ msgstr ""
-#~ "Nun se pue atopar el botón de salida o nun ta nel allugamientu estándar. "
-#~ "Por favor actualiza manualmente la configuración del panel."
+#~ "L'usu d'esta contraseña declaróse obsoletu en GNOME 2.22 col usu d'una "
+#~ "ferramienta de configuración de la hora interna. L'esquema caltiénse por "
+#~ "compatibilidá con versiones antigües."
 
-#~ msgid "No fast-user-switching applet found"
-#~ msgstr "Nun s'atopó la miniaplicación de cambéu rápidu d'usuariu"
+#~ msgid "Animation"
+#~ msgstr "Animación"
+
+#~ msgid "Restoring Minimized Windows"
+#~ msgstr "Restaurar ventanes minimizaes"
+
+#~ msgid "Window Grouping"
+#~ msgstr "Agrupación de ventanes"
+
+#~ msgid "Window List Content"
+#~ msgstr "Conteníu de la llista de ventanes"
+
+#~ msgid "Switcher"
+#~ msgstr "Seleutor"
+
+#~ msgid "Workspaces"
+#~ msgstr "Árees de trabayu"
 
 #~ msgid ""
-#~ "The fusa applet can not be found or it is not in the standard location. "
-#~ "Please update the panel configuration manually."
+#~ "If you choose to force an application to exit, unsaved changes in any open "
+#~ "documents in it might get lost."
 #~ msgstr ""
-#~ "L'applet fusa nun pudo alcontrase o nun ta nel allugamientu estándar. "
-#~ "Tendrás que actualizar la configuración del panel manualmente."
-
-#~ msgid "Configuration updated"
-#~ msgstr "Configuración actualizada"
+#~ "Si escueyes forciar una aplicación a finar, perderáse cualisquier cambéu "
+#~ "ensin guardar en cualesquier documentu abiertu nella."
 
 #~ msgid ""
-#~ "Your panel configuration is updated. Please logout to complete the update."
+#~ "This key is deprecated as it cannot be used to implement proper lockdown. "
+#~ "The /desktop/gnome/lockdown/disable_lock_screen key should be used instead."
 #~ msgstr ""
-#~ "La configuración del to panel ta actualizada. Por favor sal de la sesión "
-#~ "pa completar l'actualización."
+#~ "Esta clave ta obsoleta ya que nun puede usase pa implementar un bloquéu "
+#~ "apropiáu. Debe usase la clave /desktop/gnome/lockdown/disable_lock_screen "
+#~ "nel so llugar."
 
-#~ msgid "Co_lumns:"
-#~ msgstr "Co_lumnes:"
+#, c-format
+#~ msgid "Unable to load file '%s': %s."
+#~ msgstr "Nun pudo cargase'l ficheru «%s»: «%s»."
+
+#~ msgid "Clear Recent Documents..."
+#~ msgstr "Llimpiar documentos recientes…"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+#~ "timezones. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "L'usu d'esta clave declaróse obsoletu en GNOME 2.28 en favor del usu "
+#~ "d'estayes horaries. L'esquema caltiénse por compatibilidá con versiones "
+#~ "antigües."
+
+#, c-format
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "El ficheru nun ye un ficheru .desktop válidu"
+
+#, c-format
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "La versión «%s» del ficheru desktop nun se reconoz"
+
+#, c-format
+#~ msgid "Starting %s"
+#~ msgstr "Aniciando %s"
+
+#, c-format
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "L'aplicación nun aceuta documentos na llinia d'ordes"
+
+#, c-format
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Opción de llanzamientu non reconocida: %d"
+
+#, c-format
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr ""
+#~ "Nun pueden pasase URIs de documentos a una entrada d'escritoriu «Type=Link»"
+
+#, c-format
+#~ msgid "Not a launchable item"
+#~ msgstr "Nun ye un elementu llanzable"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Desactivar la conexón al xestor de sesiones"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Especifique'l ficheru que contién la configuración atroxada"
+
+#~ msgid "FILE"
+#~ msgstr "FICHERU"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "Especificar la ID de xestión de sesión"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Session management options:"
+#~ msgstr "Opciones de xestión de sesión:"
+
+#~ msgid "Show session management options"
+#~ msgstr "Amosar les opciones de xestión de sesión"
+
+#~ msgid "Choose an icon"
+#~ msgstr "Esbillar un iconu"
+
+#~ msgid "Applet IID"
+#~ msgstr "IID de la miniaplicación"
+
+#~ msgid ""
+#~ "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
+#~ "\". This key is only relevant if the object_type key is \"external-applet"
+#~ "\" (or the deprecated \"bonobo-applet\")."
+#~ msgstr ""
+#~ "El ID de la implementación de la miniaplicación; ex. "
+#~ "«ClockAppletFactory::ClockApplet». Esta clave namái ye relevante si'l valor "
+#~ "de la clave ye «external-applet» (o l'obsoletu «bonobo-applet»)."
+
+#~ msgid ""
+#~ "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+#~ "object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+#~ "\"menu-bar\" and \"separator\"."
+#~ msgstr ""
+#~ "La triba d'esti oxetu del panel. Los valores dables son \"drawer-object\", "
+#~ "\"menu-object\", \"launcher-object\", \"external-applet\", \"action-applet\", \"menu-"
+#~ "bar\" y \"separator\"."
+
+#~ msgid ""
+#~ "This key is deprecated, following the migration to a new library for "
+#~ "applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
+#~ "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
+#~ "\"bonobo-applet\"."
+#~ msgstr ""
+#~ "Esta clave ta obsoleta darréu de la migración a una nueva biblioteca pa les "
+#~ "miniaplicaciones. El ID de la implementación de la miniaplicación Bonobo; "
+#~ "ex. «OAFIID:GNOME_ClockApplet». Esta clave namái ye relevante si'l valor de "
+#~ "la clave «object_type» ye «bonobo-applet»."
+
+#~ msgid "Failed to open the time settings"
+#~ msgstr "Falló al abrir la configuración de la hora"
+
+#~ msgid "Factory for clock applet"
+#~ msgstr "Fábrica pa miniaplicación de reló"
+
+#~ msgid "Factory for notification area"
+#~ msgstr "Fábrica pa estaya de notificación"
+
+#~ msgid ""
+#~ "A list of panel object IDs. Each ID identifies an individual panel object (e."
+#~ "g. an applet, launcher, action button or menu button/bar). The settings for "
+#~ "each of these objects are stored in /apps/panel/objects/$(id)."
+#~ msgstr ""
+#~ "Una llista de ID d'oxetos de panel. Cada ID identifica un oxetu de panel "
+#~ "individual (por exemplu, un llanzador, un botón d'aición o una barra/botón "
+#~ "de menú). La configuración pa caún d'estos oxetos almacénase en "
+#~ "/apps/panel/objects/$(id)."
+
+#~ msgid "History of \"Run Application\" dialog"
+#~ msgstr "Históricu del diálogu «Executar una aplicación»"
+
+#~ msgid ""
+#~ "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
+#~ "for the whole desktop with the gtk-enable-tooltips property in GTK+."
+#~ msgstr ""
+#~ "Si ta activada, amuésense les suxerencies nos oxetos de los paneles. Los "
+#~ "conseyos puen desactivase en tol escritoriu cola propiedá «gtk-enable-"
+#~ "tooltips» de GTK+."
+
+#~ msgid ""
+#~ "The list of commands used in the past in the \"Run Application\" dialog."
+#~ msgstr ""
+#~ "La llista de comandos usaos nel pasáu col diálogu «Executar una aplicación»."
+
+#~ msgid "Icon used for button"
+#~ msgstr "Iconu usáu pal botón"
+
+#~ msgid ""
+#~ "The location of the image file used as the icon for the object's button. If "
+#~ "empty, the default icon for the menu will be used."
+#~ msgstr ""
+#~ "L'allugamientu del ficheru imaxe usáu como l'iconu pal botón del oxetu. Va "
+#~ "usase l'iconu predetermináu pal menú si ta baleru."
+
+#~ msgid ""
+#~ "The path from which the menu contents is contructed. If empty, the menu will "
+#~ "be the default applications menu."
+#~ msgstr ""
+#~ "La ruta dende la que se constrúi'l conteníu del menú. Va usase'l menú "
+#~ "predetermináu d'aplicaciones si ta balera."
+
+#~ msgid "The text to display in a tooltip for this menu."
+#~ msgstr "El testu a amosar nuna suxerencia pa esti menú."
+
+#~ msgid "Tooltip displayed for menu"
+#~ msgstr "Suxerencia amosada pal menú"
+
+#~ msgid ""
+#~ "If set to 'end', the position of the object is interpreted relative to the "
+#~ "right (or bottom if vertical) edge of the panel."
+#~ msgstr ""
+#~ "Si ta afitada a «end», la posición del oxetu interprétase como rellativa al "
+#~ "borde derechu (o inferior si ye vertical) del panel."
+
+#~ msgid "Object IID"
+#~ msgstr "IID del oxetu"
+
+#~ msgid ""
+#~ "The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+#~ "\"."
+#~ msgstr ""
+#~ "La implementación del ID del oxetu; ex. «ClockAppletFactory::ClockApplet»."
+
+#~ msgid ""
+#~ "Determines how the image set by image-uri is rendered. Possible values are "
+#~ "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
+#~ "to the panel dimensions and the aspect ratio of the image will not be "
+#~ "maintained. With \"fit\", the image will be scaled (retaining the aspect "
+#~ "ratio of the image) to the panel height (if horizontal)."
+#~ msgstr ""
+#~ "Determina cómo se renderiza la imaxe afitada por «image-url». Los valores "
+#~ "dables son «none», «stretch» y «fit». «stretch» escalará la imaxe a les "
+#~ "dimensiones del panel y nun se caltendrá la proporción del aspeutu. «fit» "
+#~ "escalará la imaxe (calteniendo la proporción del aspeutu) a l'altor del "
+#~ "panel (si ye horizontal)."
+
+#~ msgid "Image options"
+#~ msgstr "Opciones de la imaxe"
+
+#~ msgid ""
+#~ "Which type of background should be used for this panel. Possible values are "
+#~ "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
+#~ "color key will be used as background color or \"image\" - the image "
+#~ "specified by the image key will be used as background."
+#~ msgstr ""
+#~ "Qué tipu de fondu tendría d'usase pa esti panel. Los valores dables son "
+#~ "«none»; va usase'l fondu predetermináu del widget GTK+; «color» va usase la "
+#~ "clave «color» como color de fondu o «image» va usase la imaxe especificada "
+#~ "pola clave «image» como fondu."
+
+#, c-format
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr "L'allugamientu del llanzador nun ta definíu, nun pue cargase'l llanzador\n"
+
+#~ msgid "Connect to server"
+#~ msgstr "Coneutar col sirvidor"
+
+#~ msgid "User Menu"
+#~ msgstr "Menú del Usuariu"
+
+#~ msgid "Menu to change your settings and your online status"
+#~ msgstr "Menú pa camudar la configuración y l'estáu en llinia"
+
+#, c-format
+#~ msgid "Cannot create initial panel layout.\n"
+#~ msgstr "Nun pue crease la distribución inicial del panel.\n"
+
+#~ msgid "Switch User"
+#~ msgstr "Camudar d'usuariu"
+
+#~ msgid "Computer"
+#~ msgstr "Equipu"
+
+#~ msgid ""
+#~ "Browse all local and remote disks and folders accessible from this computer"
+#~ msgstr "Desaminar tolos discos remotos y carpetes accesibles dende esti equipu"
+
+#~ msgid "Network"
+#~ msgstr "Rede"
+
+#~ msgid "Browse bookmarked and local network locations"
+#~ msgstr "Agüeya los llugares llocales y remotos conseñaos"
+
+#~ msgid "Available"
+#~ msgstr "Disponible"
+
+#~ msgid "Busy"
+#~ msgstr "Ocupáu"
+
+#~ msgid "My Account"
+#~ msgstr "La mio cuenta"
+
+#~ msgid "A simple applet for testing the GNOME panel"
+#~ msgstr "Una miniaplicación cenciella pa probar el panel de GNOME"
+
+#~ msgid "Factory for Test DBus Applet"
+#~ msgstr "Fábrica pa miniaplicación de prueba DBus"
+
+#~ msgid "Test DBus Applet"
+#~ msgstr "Miniaplicación pa probar DBus"
+
+#~ msgid "Test DBus Applet Factory"
+#~ msgstr "Prueba de fábrica de miniaplicación DBus"
+
+#~ msgid "User menu"
+#~ msgstr "Menú del usuariu"
+
+#~ msgid "About Ubuntu"
+#~ msgstr "Tocante a Ubuntu"
+
+#~ msgid "Learn more about Ubuntu"
+#~ msgstr "Deprender más tocante a Ubuntu"
 
 #~ msgid "_Rows:"
 #~ msgstr "_Fileres:"
 
+#~ msgid "Co_lumns:"
+#~ msgstr "Co_lumnes:"
+
+#~ msgid "Change system appearance and behavior, or get help"
+#~ msgstr "Camudar l'aspeutu y comportamientu del sistema, o ver l'ayuda"
+
 #~ msgid "Help and Support"
-#~ msgstr "Aida y sofitu"
-
-#~ msgid "About Ubuntu"
-#~ msgstr "Al rodiu d'Ubuntu"
-
-#~ msgid "Learn more about Ubuntu"
-#~ msgstr "Deprender más al rodiu d'Ubuntu"
-
-#~ msgid "The Applet's flags"
-#~ msgstr "Les señales de la miniaplicación"
-
-#~ msgid "Ranges that hint what sizes are acceptable for the applet"
-#~ msgstr "Rangos que suxeren los tamaños aceutables pa la miniaplicación"
-
-#~ msgid "There was an error displaying help: %s"
-#~ msgstr "Hebo un fallu al amosar l'aida: %s"
-
-#~ msgid "GNOME Panel Shell"
-#~ msgstr "Shell del Panel GNOME"
-
-#~ msgid "Error watching gconf key '%s': %s"
-#~ msgstr "Error viendo la clave gconf '%s': %s"
-
-#~ msgid "Error loading gconf directory '%s': %s"
-#~ msgstr "Error al cargar la carpeta gconf '%s': %s"
-
-#~ msgid "Error getting value for '%s': %s"
-#~ msgstr "Error al garrar valor pa '%s': %s"
-
-#~ msgid "_Lock Panel Position"
-#~ msgstr "_Candar l'allugamientu del panel"
-
-#~ msgid "A_llow Panel to be Moved"
-#~ msgstr "_Permitir mover el Panel"
-
-#~ msgid "Allow Panel to be Moved"
-#~ msgstr "Permitir mover el Panel"
+#~ msgstr "Ayuda y sofitu"
 
 #~ msgid ""
-#~ "Disable support for moving a panel with a mouse drag. It has been know to "
-#~ "cause problems for users that accidentally move or resize their panels."
+#~ "The implementation ID of the applet - e.g. \"ClockAppletFactory::"
+#~ "ClockApplet\". This key is only relevant if the object_type key is "
+#~ "\"bonobo-applet\"."
 #~ msgstr ""
-#~ "Deshabilita la opción de mover paneles arrastrándolos col mur. Esa "
-#~ "función fexo problemes a los usuarios que movieron o camudaron el tamañu "
-#~ "de los sos paneles accidentalmente."
-
-#~ msgid "Lock Panel Position"
-#~ msgstr "Candar l'allugamientu del panel"
-
-#~ msgid "Desktop Folder|Desktop"
-#~ msgstr "Escritoriu"
-
-#~ msgid "panel:showusername|1"
-#~ msgstr "1"
-
-#~ msgid "Could not launch menu item"
-#~ msgstr "Nun pudo llanzar l'artículu del menú"
-
-#~ msgid "Orientation|Top"
-#~ msgstr "Superior"
-
-#~ msgid "Orientation|Bottom"
-#~ msgstr "Inferior"
-
-#~ msgid "Orientation|Left"
-#~ msgstr "Esquierda"
-
-#~ msgid "Orientation|Right"
-#~ msgstr "Drecha"
-
-#~ msgid ""
-#~ "The panel could not register with the bonobo-activation server (error "
-#~ "code: %d) and will exit.\n"
-#~ "It may be automatically restarted."
-#~ msgstr ""
-#~ "Hebo un problema al rexistrar el panel col servidor bonobo-activation y "
-#~ "terminaráse (códigu de fallu: %d).\n"
-#~ "Reaniciaráse automáticamente."
-
-#~ msgid "The panel has encountered a fatal error"
-#~ msgstr "El panel alcontró un fallu fatal"
-
-#~ msgid "Force the panel to not be automatically restarted"
-#~ msgstr "Forciar el panel pa que nun se reanicie automáticamente"
-
-#~ msgid "Lock the panel position"
-#~ msgstr "Candar l'allugamientu del panel"
-
-#~ msgid "Incomplete '%s' background type received"
-#~ msgstr "Recibióse un tipu de fondu '%s' incompletu"
-
-#~ msgid "Incomplete '%s' background type received: %s"
-#~ msgstr "Recibióse un tipu de fondu '%s' incompletu: %s"
-
-#~ msgid "Failed to get pixmap %s"
-#~ msgstr "Falló al garrar pixmap %s"
-
-#~ msgid "Unknown background type received"
-#~ msgstr "Recibióse un tipu de fondu desconocíu"
-
-#~ msgid "The Applet's containing Panel's orientation"
-#~ msgstr "La orientación del panel que contién la miniaplicación"
-
-#~ msgid "The Applet's containing Panel's size in pixels"
-#~ msgstr "El tamañu en píxeles del panel que contién la miniaplicación"
-
-#~ msgid "The Applet's containing Panel's background color or pixmap"
-#~ msgstr "El color de fondu del panel que contién la miniaplicación"
-
-#~ msgid "The Applet's containing Panel is locked down"
-#~ msgstr "El panel contenedor de la miniaplicación ta bloquiáu"
-
-#~ msgid "Size|XX Small"
-#~ msgstr "XX Pequeña"
-
-#~ msgid "Size|X Small"
-#~ msgstr "X Pequeña"
-
-#~ msgid "Size|Small"
-#~ msgstr "Pequeña"
-
-#~ msgid "Size|Medium"
-#~ msgstr "Mediana"
-
-#~ msgid "Size|Large"
-#~ msgstr "Grande"
-
-#~ msgid "Size|X Large"
-#~ msgstr "X Grande"
-
-#~ msgid "Size|XX Large"
-#~ msgstr "XX Grande"
+#~ "El ID de la implementación de la miniaplicación; ex. «ClockAppletFactory::"
+#~ "ClockApplet». Esta clave namái ye relevante si'l valor de la clave "
+#~ "«object_type» ye «bonobo-applet»."
