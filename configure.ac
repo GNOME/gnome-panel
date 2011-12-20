@@ -1,7 +1,7 @@
 AC_INIT([gnome-panel], [3.3.4],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE([1.9 no-dist-gzip dist-bzip2 tar-ustar -Wno-portability])
+AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_CONFIG_MACRO_DIR([m4])
