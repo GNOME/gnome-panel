@@ -1127,7 +1127,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 	*x = menu_x;
 	*y = menu_y;
-	*push_in = TRUE;
+	*push_in = FALSE;
 }
 
 static void
