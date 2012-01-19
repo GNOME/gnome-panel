@@ -442,9 +442,17 @@ button_widget_get_preferred_width (GtkWidget *widget,
 
 	parent = gtk_widget_get_parent (widget);
 
-	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
-		size = gtk_widget_get_allocated_height (parent);
-	else
+	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		GtkStyleContext *context;
+		GtkStateFlags    state;
+		GtkBorder        padding;
+
+		state = gtk_widget_get_state_flags (widget);
+		context = gtk_widget_get_style_context (widget);
+		gtk_style_context_get_padding (context, state, &padding);
+
+		size = gtk_widget_get_allocated_height (parent) + padding.left + padding.right;
+	} else
 		size = gtk_widget_get_allocated_width (parent);
 
 	*minimal_width = *natural_width = size;
@@ -463,8 +471,18 @@ button_widget_get_preferred_height (GtkWidget *widget,
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
 		size = gtk_widget_get_allocated_height (parent);
-	else
-		size = gtk_widget_get_allocated_width (parent);
+	else {
+		GtkStyleContext *context;
+		GtkStateFlags    state;
+		GtkBorder        padding;
+
+		state = gtk_widget_get_state_flags (widget);
+		context = gtk_widget_get_style_context (widget);
+		gtk_style_context_get_padding (context, state, &padding);
+
+		size = gtk_widget_get_allocated_width (parent) + padding.top + padding.bottom;
+	}
+
 
 	*minimal_height = *natural_height = size;
 }
@@ -580,6 +598,8 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 static void
 button_widget_init (ButtonWidget *button)
 {
+	GtkStyleContext *context;
+
 	button->priv = BUTTON_WIDGET_GET_PRIVATE (button);
 
 	button->priv->icon_theme = NULL;
@@ -589,6 +609,8 @@ button_widget_init (ButtonWidget *button)
 	button->priv->filename   = NULL;
 	
 	button->priv->orientation = PANEL_ORIENTATION_TOP;
+	context = gtk_widget_get_style_context (GTK_WIDGET (button));
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
 	button->priv->size = 0;
 	
@@ -685,7 +707,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      "Whether to highlight the button on mouse over",
 					      TRUE,
 					      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
-
 }
 
 GtkWidget *
@@ -762,12 +783,24 @@ void
 button_widget_set_orientation (ButtonWidget     *button,
 			       PanelOrientation  orientation)
 {
+	GtkStyleContext *context;
+
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
 	if (button->priv->orientation == orientation)
 		return;
 
 	button->priv->orientation = orientation;
+
+	/* Use css class "horizontal"/"vertical" for theming */
+	context = gtk_widget_get_style_context (GTK_WIDGET (button));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	} else {
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+	}
 
 	/* Force a re-scale */
 	button->priv->size = -1;
