@@ -93,6 +93,9 @@ panel_applet_frame_draw (GtkWidget *widget,
 {
         PanelAppletFrame *frame = PANEL_APPLET_FRAME (widget);
 	GtkStyleContext *context;
+	GtkStateFlags     state;
+	cairo_pattern_t  *bg_pattern;
+	PanelBackground  *background;
 
         if (GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw (widget, cr);
@@ -101,20 +104,39 @@ panel_applet_frame_draw (GtkWidget *widget,
 		return FALSE;
 
 	context = gtk_widget_get_style_context (widget);
+	state = gtk_widget_get_state_flags (widget);
 	gtk_style_context_save (context);
-	gtk_style_context_set_state (context, gtk_widget_get_state_flags (widget));
+	gtk_style_context_set_state (context, state);
 
 	cairo_save (cr);
-	cairo_rectangle (cr,
-			 frame->priv->handle_rect.x,
-			 frame->priv->handle_rect.y,
-			 frame->priv->handle_rect.width,
-			 frame->priv->handle_rect.height);
-	cairo_clip (cr);
+
+	/* Set the pattern transform so as to correctly render a patterned
+	 * background with the handle */
+	gtk_style_context_get (context, state,
+			       "background-image", &bg_pattern,
+			       NULL);
+	background = &frame->priv->panel->background;
+
+	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
+	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
+		cairo_matrix_t ptm;
+
+		cairo_matrix_init_translate (&ptm,
+					     frame->priv->handle_rect.x,
+					     frame->priv->handle_rect.y);
+		cairo_matrix_scale (&ptm,
+				    frame->priv->handle_rect.width,
+				    frame->priv->handle_rect.height);
+		cairo_pattern_set_matrix (bg_pattern, &ptm);
+		cairo_pattern_destroy (bg_pattern);
+	}
+
 	gtk_render_handle (context, cr,
-			   0, 0,
-			   gtk_widget_get_allocated_width (widget),
-			   gtk_widget_get_allocated_height (widget));
+			   frame->priv->handle_rect.x,
+			   frame->priv->handle_rect.y,
+			   frame->priv->handle_rect.width,
+			   frame->priv->handle_rect.height);
+
 	cairo_restore (cr);
 
 	gtk_style_context_restore (context);
