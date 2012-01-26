@@ -22,6 +22,11 @@ AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 GNOME_MAINTAINER_MODE_DEFINES
 
+AC_ARG_ENABLE([documentation],
+	AS_HELP_STRING([--enable-documentation], [enable man pages and HTML]),
+	[], [enable_documentation=yes])
+AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
+
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen disable-static])
 
