@@ -44,7 +44,6 @@ typedef struct {
   guint64  stamp;
 } Cache;
 
-static Cache can_set_time_cache;
 static Cache can_set_timezone_cache;
 
 static GDBusConnection *
@@ -120,12 +119,6 @@ gint
 can_set_system_timezone (void)
 {
   return can_set (&can_set_timezone_cache, "CanSetTimezone");
-}
-
-gint
-can_set_system_time (void)
-{
-  return can_set (&can_set_time_cache, "CanSetTime");
 }
 
 gboolean

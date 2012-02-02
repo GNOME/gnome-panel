@@ -1646,26 +1646,22 @@ copy_date (GtkAction *action,
 }
 
 static void
+ensure_datetime_appinfo (ClockData *cd)
+{
+	if (!cd->datetime_appinfo)
+		cd->datetime_appinfo = (GAppInfo *) g_desktop_app_info_new ("gnome-datetime-panel.desktop");
+}
+
+static void
 update_set_time_button (ClockData *cd)
 {
-	gint can_set;
-
 	if (!cd->time_settings_button)
 		return;
 
-	if (!cd->datetime_appinfo)
-		cd->datetime_appinfo = (GAppInfo *) g_desktop_app_info_new ("gnome-datetime-panel.desktop");
+	ensure_datetime_appinfo (cd);
 
-	if (!cd->datetime_appinfo) {
-		gtk_widget_set_sensitive (cd->time_settings_button, FALSE);
-		return;
-	}
-
-	/* this returns more than just a boolean; check the documentation of
-	 * the dbus method for more information */
-	can_set = can_set_system_time ();
-
-	gtk_widget_set_sensitive (cd->time_settings_button, can_set);
+	gtk_widget_set_sensitive (cd->time_settings_button,
+				  cd->datetime_appinfo != NULL);
 }
 
 static void
@@ -1677,6 +1673,7 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 	GError              *error;
 
 	update_set_time_button (cd);
+	ensure_datetime_appinfo (cd);
 
 	if (!cd->datetime_appinfo)
 		return;
@@ -2497,8 +2494,6 @@ fill_clock_applet (PanelApplet *applet)
 	g_signal_connect (cd->systz, "changed",
 			  G_CALLBACK (clock_timezone_changed), cd);
 
-        action = gtk_action_group_get_action (action_group, "ClockConfig");
-        gtk_action_set_visible (action, can_set_system_time ());
         g_object_unref (action_group);
 
 	return TRUE;
