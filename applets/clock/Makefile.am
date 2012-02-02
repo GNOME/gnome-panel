@@ -52,9 +52,6 @@ CLOCK_CPPFLAGS =						\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DCLOCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
@@ -133,6 +130,8 @@ clock-typebuiltins.h: $(clock_enum_headers)
 BUILT_SOURCES =					\
 	clock-marshallers.c			\
 	clock-marshallers.h			\
+	clock-resources.c			\
+	clock-resources.h			\
 	clock-typebuiltins.c			\
 	clock-typebuiltins.h
 
@@ -160,11 +159,15 @@ org.gnome.panel.applet.ClockAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-uidir		= $(datadir)/gnome-panel/ui
-ui_DATA		= clock.ui
+ui_FILES =		\
+	clock.ui	\
+	clock-menu.xml
 
-xmluidir 	= $(datadir)/gnome-panel/ui
-xmlui_DATA	= clock-menu.xml
+clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $(srcdir)/$<
+
+clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $(srcdir)/$<
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = clock.schemas.in
@@ -188,8 +191,7 @@ endif
 EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(schemas_in_files)				\
-	$(xmlui_DATA)					\
-	$(ui_DATA)					\
+	$(ui_FILES)					\
 	clock-marshallers.list				\
 	$(service_in_files)
 

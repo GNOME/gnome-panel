@@ -48,6 +48,10 @@ void clock_utils_display_help (GtkWidget  *widget,
 			       const char *doc_id,
 			       const char *link_id);
 
+GdkPixbuf *clock_utils_pixbuf_from_svg_resource_at_size (const char *resource,
+							 int         width,
+							 int         height);
+
 G_END_DECLS
 
 #endif /* __CLOCK_UTILS_H__ */

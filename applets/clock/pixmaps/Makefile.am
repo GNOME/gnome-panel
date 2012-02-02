@@ -1,5 +1,4 @@
-icondir = $(datadir)/gnome-panel/pixmaps
-icon_DATA =				\
+icon_FILES =				\
 	clock-calendar-icon.png		\
 	clock-face-large.svg		\
 	clock-face-small.svg		\
@@ -14,7 +13,7 @@ icon_DATA =				\
 
 EXTRA_DIST = 		\
 	clock-map.svg	\
-	$(icon_DATA)
+	$(icon_FILES)
 
 MAINTAINERCLEANFILES = Makefile.in
 
