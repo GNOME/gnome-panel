@@ -63,7 +63,7 @@ org.gnome.panel.applet.FishAppletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-fishbitmapsdir = $(datadir)/gnome-panel/pixmaps
+fishbitmapsdir = $(datadir)/gnome-panel/fish
 fishbitmaps_DATA = 	\
 	wanda.fish	\
 	wanda.png	\
