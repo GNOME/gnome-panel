@@ -640,7 +640,7 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	/* Command */
 	priv->command_label = label_new_with_mnemonic ("");
 
-	priv->command_hbox = gtk_hbox_new (FALSE, 12);
+	priv->command_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
 	gtk_widget_show (priv->command_hbox);
 
 	priv->command_entry = gtk_entry_new ();
