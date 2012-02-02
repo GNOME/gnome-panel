@@ -30,6 +30,8 @@
 #include <gtk/gtk.h>
 #include <panel-applet.h>
 
+#define WNCKLET_RESOURCE_PATH "/org/gnome/panel/applet/wncklet/"
+
 G_BEGIN_DECLS
 
 void        wncklet_display_help        (GtkWidget  *widget,

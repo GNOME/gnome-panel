@@ -307,7 +307,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	PagerData *pager;
         GtkActionGroup *action_group;
 	GtkAction *action;
-        gchar *ui_path;
 	gboolean display_names;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/workspace_switcher_applet/prefs", NULL);
@@ -384,10 +383,9 @@ workspace_switcher_applet_fill (PanelApplet *applet)
                                       pager_menu_actions,
                                       G_N_ELEMENTS (pager_menu_actions),
                                       pager);
-        ui_path = g_build_filename (WNCK_MENU_UI_DIR, "workspace-switcher-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
-					   ui_path, action_group);
-        g_free (ui_path);
+	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
+					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.xml",
+					       action_group);
 
 	action = gtk_action_group_get_action (action_group, "PagerPreferences");
 	g_object_bind_property (pager->applet, "locked-down",
@@ -787,18 +785,10 @@ display_properties_dialog (GtkAction *action,
 {
 	if (pager->properties_dialog == NULL) {
 		GtkBuilder *builder;
-		GError     *error;
 
 		builder = gtk_builder_new ();
 		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-
-		error = NULL;
-		gtk_builder_add_from_file (builder, PAGER_BUILDERDIR "/workspace-switcher.ui", &error);
-		if (error) {
-			g_warning ("Error loading preferences: %s", error->message);
-			g_error_free (error);
-			return;
-		}
+		gtk_builder_add_from_resource (builder, WNCKLET_RESOURCE_PATH "workspace-switcher.ui", NULL);
 
 		pager->properties_dialog = WID ("pager_properties_dialog");
 

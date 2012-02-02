@@ -6,9 +6,6 @@ AM_CPPFLAGS =							\
 	-I$(top_srcdir)/libpanel-applet				\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DPAGER_BUILDERDIR=\""$(uidir)"\"			\
-	-DTASKLIST_BUILDERDIR=\""$(uidir)"\"			\
-	-DWNCK_MENU_UI_DIR=\""$(xmluidir)"\"			\
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE				\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
@@ -24,7 +21,8 @@ WNCKLET_SOURCES = \
 	workspace-switcher.c \
 	workspace-switcher.h \
 	showdesktop.c \
-	showdesktop.h
+	showdesktop.h \
+	$(BUILT_SOURCES)
 
 WNCKLET_LDADD =						\
 	../../libpanel-applet/libpanel-applet-4.la	\
@@ -75,20 +73,28 @@ org.gnome.panel.applet.WnckletFactory.service: $(service_in_files)
 		$< > $@
 endif
 
-uidir   = $(datadir)/gnome-panel/ui
-ui_DATA = workspace-switcher.ui window-list.ui
+ui_FILES = 				\
+	window-list-menu.xml		\
+	window-list.ui			\
+	workspace-switcher-menu.xml 	\
+	workspace-switcher.ui
 
-xmluidir    = $(datadir)/gnome-panel/ui
-xmlui_DATA  = \
-	workspace-switcher-menu.xml \
-	window-list-menu.xml
+
+wncklet-resources.c: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies wncklet.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name wncklet $(srcdir)/$<
+
+wncklet-resources.h: wncklet.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies wncklet.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name wncklet $(srcdir)/$<
+
+BUILT_SOURCES = 		\
+	wncklet-resources.c	\
+	wncklet-resources.h
 
 EXTRA_DIST = \
 	org.gnome.panel.Wncklet.panel-applet.in.in \
 	$(service_in_files) \
-	$(xmlui_DATA) \
-	$(ui_DATA)
+	$(ui_FILES)
 
-CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)
+CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 -include $(top_srcdir)/git.mk

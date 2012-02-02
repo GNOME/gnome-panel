@@ -358,7 +358,6 @@ window_list_applet_fill (PanelApplet *applet)
 	TasklistData *tasklist;
 	GtkActionGroup *action_group;
 	GtkAction *action;
-	gchar *ui_path;
 
 	tasklist = g_new0 (TasklistData, 1);
 
@@ -434,10 +433,9 @@ window_list_applet_fill (PanelApplet *applet)
 				      tasklist_menu_actions,
 				      G_N_ELEMENTS (tasklist_menu_actions),
 				      tasklist);
-	ui_path = g_build_filename (WNCK_MENU_UI_DIR, "window-list-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
-					   ui_path, action_group);
-	g_free (ui_path);
+	panel_applet_setup_menu_from_resource (PANEL_APPLET (tasklist->applet),
+					       WNCKLET_RESOURCE_PATH "window-list-menu.xml",
+					       action_group);
 
 	action = gtk_action_group_get_action (action_group, "TasklistPreferences");
 	g_object_bind_property (tasklist->applet, "locked-down",
@@ -589,18 +587,10 @@ display_properties_dialog (GtkAction    *action,
 {
 	if (tasklist->properties_dialog == NULL) {
 		GtkBuilder *builder;
-		GError     *error;
 
 		builder = gtk_builder_new ();
 		gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-
-		error = NULL;
-		gtk_builder_add_from_file (builder, TASKLIST_BUILDERDIR "/window-list.ui", &error);
-		if (error) {
-			g_warning ("Error loading preferences: %s", error->message);
-			g_error_free (error);
-			return;
-		}
+		gtk_builder_add_from_resource (builder, WNCKLET_RESOURCE_PATH "window-list.ui", NULL);
 
 		tasklist->properties_dialog = WID ("tasklist_properties_dialog");
 
