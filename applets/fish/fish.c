@@ -1070,15 +1070,12 @@ fish_applet_draw (GtkWidget  *widget,
 		  cairo_t    *cr,
 		  FishApplet *fish)
 {
-	GdkWindow *window;
 	int width, height;
 	int src_x, src_y;
 
 	g_return_val_if_fail (fish->surface != NULL, FALSE);
 
 	g_assert (fish->n_frames > 0);
-
-	window = gtk_widget_get_window (widget);
 
 	width = cairo_xlib_surface_get_width (fish->surface);
 	height = cairo_xlib_surface_get_height (fish->surface);
