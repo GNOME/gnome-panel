@@ -234,15 +234,15 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	GtkAllocation     old_allocation;
 	GtkAllocation     widget_allocation;
 
+	frame = PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
 	gtk_widget_get_allocation (widget, &widget_allocation);
 
 	old_allocation.x      = widget_allocation.x;
 	old_allocation.y      = widget_allocation.y;
 	old_allocation.width  = widget_allocation.width;
 	old_allocation.height = widget_allocation.height;
-
-	frame = PANEL_APPLET_FRAME (widget);
-	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
@@ -253,8 +253,6 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		return;
 	}
 
-	window = gtk_widget_get_window (widget);
-	child = gtk_bin_get_child (bin);
 	gtk_widget_set_allocation (widget, allocation);
 
 	frame->priv->handle_rect.x = 0;
@@ -297,6 +295,8 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	new_allocation.width  = MAX (1, new_allocation.width);
 	new_allocation.height = MAX (1, new_allocation.height);
 
+	window = gtk_widget_get_window (widget);
+
 	/* If the child allocation changed, that means that the frame is drawn
 	 * in a new place, so we must redraw the entire widget.
 	 */
@@ -318,6 +318,7 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 			MAX (allocation->height - border_width * 2, 0));
 	}
 
+	child = gtk_bin_get_child (bin);
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &new_allocation);
   
