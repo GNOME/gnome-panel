@@ -23,23 +23,17 @@
 #endif
 
 #include <gio/gio.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
+#include <polkit/polkit.h>
 
 #include "set-timezone.h"
 
 #define CACHE_VALIDITY_SEC 2
 
-#define MECHANISM_BUS_NAME    "org.gnome.SettingsDaemon.DateTimeMechanism"
-#define MECHANISM_OBJECT_PATH "/"
-#define MECHANISM_INTERFACE   "org.gnome.SettingsDaemon.DateTimeMechanism"
+#define MECHANISM_BUS_NAME    "org.freedesktop.timedate1"
+#define MECHANISM_OBJECT_PATH "/org/freedesktop/timedate1"
+#define MECHANISM_INTERFACE   "org.freedesktop.timedate1"
 
 typedef struct {
-  gboolean in_progress;
   gint     value;
   guint64  stamp;
 } Cache;
@@ -65,27 +59,6 @@ get_system_bus (GError **error)
   return system;
 }
 
-static void
-can_set_call_finished (GObject      *source,
-                       GAsyncResult *result,
-                       gpointer      user_data)
-{
-  Cache *cache = user_data;
-  GVariant *reply;
-
-  reply = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source),
-                                         result, NULL);
-
-  if (reply != NULL)
-    {
-      g_variant_get (reply, "(i)", &cache->value);
-      g_variant_unref (reply);
-    }
-
-  cache->stamp = g_get_monotonic_time ();
-  cache->in_progress = FALSE;
-}
-
 static int
 can_set (Cache *cache, const gchar *method_name)
 {
@@ -93,23 +66,39 @@ can_set (Cache *cache, const gchar *method_name)
 
   if (now - cache->stamp > (CACHE_VALIDITY_SEC * 1000000))
     {
-      if (!cache->in_progress)
-        {
-          GDBusConnection *system_bus = get_system_bus (NULL);
+      PolkitAuthority *authority;
+      PolkitSubject   *subject;
+      PolkitAuthorizationResult *res;
 
-          if (system_bus != NULL)
-            g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
-                                    MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
-                                    method_name, NULL, G_VARIANT_TYPE ("(i)"),
-                                    G_DBUS_CALL_FLAGS_NONE, -1, NULL,
-                                    can_set_call_finished, cache);
+      authority = polkit_authority_get_sync (NULL, NULL);
+      subject = polkit_unix_session_new_for_process_sync (getpid (), NULL, NULL);
 
-          /* Even if the system bus was NULL, we want to set this in
-           * order to effectively wedge ourselves from ever trying
-           * again.
-           */
-          cache->in_progress = TRUE;
-        }
+      res = polkit_authority_check_authorization_sync (authority,
+                                                       subject,
+                                                       "org.freedesktop.timedate1.set-timezone",
+                                                       NULL,
+                                                       POLKIT_CHECK_AUTHORIZATION_FLAGS_NONE,
+                                                       NULL,
+                                                       NULL);
+
+	cache->stamp = g_get_monotonic_time ();
+
+        if (res == NULL)
+          cache->value = 0;
+        else
+          {
+            if (polkit_authorization_result_get_is_authorized (res))
+              cache->value = 2;
+            else if (polkit_authorization_result_get_is_challenge (res))
+              cache->value = 1;
+            else
+              cache->value = 0;
+
+            g_object_unref (res);
+          }
+
+        g_object_unref (authority);
+        g_object_unref (subject);
     }
 
   return cache->value;
@@ -170,7 +159,7 @@ set_system_timezone_async (const gchar         *tz,
 
   g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
                           MECHANISM_OBJECT_PATH, MECHANISM_INTERFACE,
-                          "SetTimezone", g_variant_new ("(s)", tz),
+                          "SetTimezone", g_variant_new ("(sb)", tz, TRUE),
                           NULL, G_DBUS_CALL_FLAGS_NONE, -1, NULL,
                           callback, user_data);
 }

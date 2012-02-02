@@ -68,7 +68,6 @@
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
-#include "set-timezone.h"
 #include "system-timezone.h"
 
 #define INTERNETSECOND (864)
