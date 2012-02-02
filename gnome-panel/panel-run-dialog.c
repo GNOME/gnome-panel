@@ -1869,7 +1869,6 @@ panel_run_dialog_present (GdkScreen *screen,
 			  guint32    activate_time)
 {
 	GtkBuilder *gui;
-	GError     *error;
 
 	if (panel_lockdown_get_disable_command_line_s ())
 		return;
@@ -1884,28 +1883,9 @@ panel_run_dialog_present (GdkScreen *screen,
 
 	gui = gtk_builder_new ();
 	gtk_builder_set_translation_domain (gui, GETTEXT_PACKAGE);
-
-	error = NULL;
-	gtk_builder_add_from_file (gui,
-				   BUILDERDIR "/panel-run-dialog.ui",
-				   &error);
-
-        if (error) {
-		char *secondary;
-
-		secondary = g_strdup_printf (_("Unable to load file '%s': %s."),
-					     BUILDERDIR"/panel-run-dialog.ui",
-					     error->message);
-		panel_error_dialog (NULL, screen, "cannot_display_run_dialog",
-				    TRUE,
-				    _("Could not display run dialog"),
-				      secondary);
-		g_free (secondary);
-		g_error_free (error);
-		g_object_unref (gui);
-
-		return;
-	}
+	gtk_builder_add_from_resource (gui,
+				       PANEL_RESOURCE_PATH "panel-run-dialog.ui",
+				       NULL);
 
 	static_dialog = panel_run_dialog_new (screen, gui, activate_time);
 

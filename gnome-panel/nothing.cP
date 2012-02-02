@@ -166,10 +166,24 @@ out:
         gtk_main_do_event (event);
 }
 
-static char *
-get_phsh_file (void)
+static GdkPixbuf *
+get_phsh_pixbuf (void)
 {
-        return g_strdup_printf ("%s/%cand%c.png", ICONDIR, 'w', 'a');
+        char *resource;
+        GdkPixbuf *pixbuf;
+        GInputStream *stream;
+
+        resource = g_strdup_printf ("%s%cand%c.png", "/org/gnome/panel/anim/", 'w', 'a');
+        stream = g_resources_open_stream (resource, 0, NULL);
+        g_free (resource);
+
+        if (!stream)
+                return NULL;
+
+        pixbuf = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
+        g_object_unref (stream);
+
+        return pixbuf;
 }
 
 static void
@@ -284,21 +298,32 @@ static void
 check_screen (void)
 {
         GdkWindowAttr attributes;
-        char *phsh_file;
+        GdkPixbuf *phsh_pixbuf;
+        int width, height;
         cairo_surface_t *surface;
+        cairo_t *cr;
         int orient;
         int i;
 
         if (phsh.win != NULL)
                 return;
 
-        phsh_file = get_phsh_file ();
+        phsh_pixbuf = get_phsh_pixbuf ();
 
-        if (phsh_file == NULL)
+        if (phsh_pixbuf == NULL)
                 return;
 
-        surface = cairo_image_surface_create_from_png (phsh_file);
-        g_free (phsh_file);
+        width = gdk_pixbuf_get_width (phsh_pixbuf);
+        height = gdk_pixbuf_get_height (phsh_pixbuf);
+
+        surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+        cr = cairo_create (surface);
+        gdk_cairo_set_source_pixbuf (cr, phsh_pixbuf, 0, 0);
+        cairo_rectangle (cr, 0, 0, width, height);
+        cairo_fill (cr);
+        cairo_destroy (cr);
+
+        g_object_unref (phsh_pixbuf);
 
         if (cairo_surface_status(surface) != CAIRO_STATUS_SUCCESS) {
                 cairo_surface_destroy (surface);

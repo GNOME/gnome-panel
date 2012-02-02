@@ -14,17 +14,12 @@ AM_CPPFLAGS =							\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DBUILDERDIR=\""$(uidir)"\"				\
-	-DICONDIR=\""$(datadir)/gnome-panel/pixmaps"\"		\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
 panel_sources =			\
-	panel-typebuiltins.c	\
-	panel-typebuiltins.h	\
-	panel-marshal.c		\
-	panel-marshal.h		\
+	$(gnome_panel_BUILT_SOURCES) \
 	main.c			\
 	panel-widget.c		\
 	button-widget.c		\
@@ -158,11 +153,11 @@ gnome_desktop_item_edit_LDADD = 	\
 	$(PANEL_LIBS)							\
 	$(X_LIBS)
 
-panel_test_applets_SOURCES =		\
-	panel-modules.c			\
-	panel-applet-info.c		\
-	panel-applets-manager.c		\
-	panel-marshal.c			\
+panel_test_applets_SOURCES =			\
+	$(panel_test_applets_BUILT_SOURCES)	\
+	panel-modules.c				\
+	panel-applet-info.c			\
+	panel-applets-manager.c			\
 	panel-test-applets.c
 
 panel_test_applets_CPPFLAGS =			\
@@ -224,17 +219,41 @@ panel-typebuiltins.h: $(panel_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) > $@
 
-BUILT_SOURCES = \
+gnome_panel_BUILT_SOURCES = \
 	panel-typebuiltins.c		\
 	panel-typebuiltins.h		\
+	panel-resources.c		\
+	panel-resources.h		\
 	panel-marshal.c			\
 	panel-marshal.h
 
-uidir = $(datadir)/gnome-panel/ui
-ui_DATA =					\
+panel_test_applets_BUILT_SOURCES = 	\
+	panel-test-applets-resources.c	\
+	panel-test-applets-resources.h	\
+	panel-marshal.c			\
+	panel-marshal.h
+
+BUILT_SOURCES = 				\
+	$(gnome_panel_BUILT_SOURCES)		\
+	$(panel_test_applets_BUILT_SOURCES)
+
+ui_FILES =					\
 	panel-properties-dialog.ui		\
-	panel-run-dialog.ui			\
-	panel-test-applets.ui
+	panel-run-dialog.ui
+
+panel-resources.c: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies panel.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $(srcdir)/$<
+
+panel-resources.h: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies panel.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $(srcdir)/$<
+
+uitest_FILES = panel-test-applets.ui
+
+panel-test-applets-resources.c: panel-test-applets.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies panel-test-applets.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $(srcdir)/$<
+
+panel-test-applets-resources.h: panel-test-applets.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies panel-test-applets.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $(srcdir)/$<
 
 desktopdir = $(datadir)/applications
 desktop_in_files = gnome-panel.desktop.in
@@ -243,7 +262,8 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =					\
-	$(ui_DATA)				\
+	$(ui_FILES)				\
+	$(uitest_FILES)				\
 	nothing.cP				\
 	nothing.h				\
 	panel-marshal.list			\
