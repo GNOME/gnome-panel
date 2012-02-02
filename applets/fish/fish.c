@@ -47,6 +47,7 @@
 			   FISH_TYPE_APPLET))
 
 #define FISH_ICON "gnome-panel-fish"
+#define FISH_RESOURCE_PATH "/org/gnome/panel/applet/fish/"
 
 #define FISH_SCHEMA      "org.gnome.gnome-panel.applet.fish"
 #define FISH_NAME_KEY    "name"
@@ -264,7 +265,6 @@ display_preferences_dialog (GtkAction  *action,
 			    FishApplet *fish)
 {
 	GtkBuilder *builder;
-	GError     *error;
 	GtkWidget  *box;
 	GtkWidget  *name_entry;
 	GtkWidget  *command_entry;
@@ -281,14 +281,7 @@ display_preferences_dialog (GtkAction  *action,
 
 	builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-
-	error = NULL;
-	gtk_builder_add_from_file (builder, FISH_BUILDERDIR "/fish.ui", &error);
-	if (error) {
-		g_warning ("Error loading preferences: %s", error->message);
-		g_error_free (error);
-		return;
-	}
+	gtk_builder_add_from_resource (builder, FISH_RESOURCE_PATH "fish.ui", NULL);
 
 	fish->preferences_dialog = GTK_WIDGET (gtk_builder_get_object (builder, "fish_preferences_dialog"));
 
@@ -1442,7 +1435,6 @@ fish_applet_fill (FishApplet *fish)
 	PanelApplet    *applet = (PanelApplet *) fish;
 	GtkActionGroup *action_group;
 	GtkAction      *action;
-	gchar          *ui_path;
 
 	fish->orientation = panel_applet_get_orient (applet);
 
@@ -1460,9 +1452,9 @@ fish_applet_fill (FishApplet *fish)
 				      fish_menu_verbs,
 				      G_N_ELEMENTS (fish_menu_verbs),
 				      fish);
-	ui_path = g_build_filename (FISH_MENU_UI_DIR, "fish-menu.xml", NULL);
-	panel_applet_setup_menu_from_file (applet, ui_path, action_group);
-	g_free (ui_path);
+	panel_applet_setup_menu_from_resource (applet,
+					       FISH_RESOURCE_PATH "fish-menu.xml",
+					       action_group);
 
 	action = gtk_action_group_get_action (action_group, "FishPreferences");
 	g_object_bind_property (applet, "locked-down",

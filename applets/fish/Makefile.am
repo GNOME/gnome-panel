@@ -6,13 +6,13 @@ AM_CPPFLAGS =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\"			\
-	-DFISH_BUILDERDIR=\""$(uidir)"\"			\
-	-DFISH_MENU_UI_DIR=\""$(xmluidir)"\" 			\
 	$(DISABLE_DEPRECATED_CFLAGS)
 
 AM_CFLAGS = $(WARN_CFLAGS)
 
-FISH_SOURCES = fish.c
+FISH_SOURCES = 		\
+	fish.c		\
+	$(BUILT_SOURCES)
 
 FISH_LDADD =						\
 	../../libpanel-applet/libpanel-applet-4.la	\
@@ -76,20 +76,27 @@ fishbitmaps_DATA = 	\
 	monkey.fish	\
 	monkey.png
 
-uidir		= $(datadir)/gnome-panel/ui
-ui_DATA		= fish.ui
+ui_FILES = 		\
+	fish.ui		\
+	fish-menu.xml
 
-xmluidir 	= $(datadir)/gnome-panel/ui
-xmlui_DATA	= fish-menu.xml
+fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $(srcdir)/$<
+
+fish-resources.h: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $(srcdir)/$<
+
+BUILT_SOURCES = 		\
+	fish-resources.c	\
+	fish-resources.h
 
 EXTRA_DIST =						\
 	wanda.svg					\
 	$(fishbitmaps_DATA)				\
 	org.gnome.panel.FishApplet.panel-applet.in.in	\
 	$(service_in_files)				\
-	$(ui_DATA)					\
-	$(xmlui_DATA)
+	$(ui_FILES)
 
-CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA)
+CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 
 -include $(top_srcdir)/git.mk
