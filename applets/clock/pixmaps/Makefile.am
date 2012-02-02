@@ -1,5 +1,4 @@
 icon_FILES =				\
-	clock-calendar-icon.png		\
 	clock-face-large.svg		\
 	clock-face-small.svg		\
 	clock-face-small-morning.svg	\
