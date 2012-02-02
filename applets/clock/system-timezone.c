@@ -63,9 +63,6 @@
 #define ETC_CONF_D_CLOCK    "/etc/conf.d/clock"
 #define ETC_LOCALTIME       "/etc/localtime"
 
-/* The first 4 characters in a timezone file, from tzfile.h */
-#define TZ_MAGIC "TZif"
-
 static char *files_to_check[CHECK_NB] = {
         ETC_TIMEZONE,
         ETC_TIMEZONE_MAJ,
@@ -346,35 +343,6 @@ system_timezone_read_etc_timezone (void)
         return NULL;
 }
 
-static gboolean
-system_timezone_write_etc_timezone (const char  *tz,
-                                    GError     **error)
-{
-        char     *content;
-        GError   *our_error;
-        gboolean  retval;
-
-        if (!g_file_test (ETC_TIMEZONE, G_FILE_TEST_IS_REGULAR))
-                return TRUE;
-
-        content = g_strdup_printf ("%s\n", tz);
-
-        our_error = NULL;
-        retval = g_file_set_contents (ETC_TIMEZONE, content, -1, &our_error);
-        g_free (content);
-
-        if (!retval) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_GENERAL,
-                             ETC_TIMEZONE" cannot be overwritten: %s",
-                             our_error->message);
-                g_error_free (our_error);
-        }
-
-        return retval;
-}
-
-
 /* Read a file that looks like a key-file (but there's no need for groups)
  * and get the last value for a specific key */
 static char *
@@ -434,101 +402,12 @@ system_timezone_read_key_file (const char *filename,
         return retval;
 }
 
-static gboolean
-system_timezone_write_key_file (const char  *filename,
-                                const char  *key,
-                                const char  *value,
-                                GError     **error)
-{
-        GError    *our_error;
-        char      *content;
-        gsize      len;
-        char      *key_eq;
-        char     **lines;
-        gboolean   replaced;
-        gboolean   retval;
-        int        n;
-        
-        if (!g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-                return TRUE;
-
-        our_error = NULL;
-
-        if (!g_file_get_contents (filename, &content, &len, &our_error)) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_GENERAL,
-                             "%s cannot be read: %s",
-                             filename, our_error->message);
-                g_error_free (our_error);
-                return FALSE;
-        }
-
-        lines = g_strsplit (content, "\n", 0);
-        g_free (content);
-
-        key_eq = g_strdup_printf ("%s=", key);
-        replaced = FALSE;
-
-        for (n = 0; lines[n] != NULL; n++) {
-                if (g_str_has_prefix (lines[n], key_eq)) {
-                        char     *old_value;
-                        gboolean  use_quotes;
-
-                        old_value = lines[n] + strlen (key_eq);
-                        g_strstrip (old_value);
-                        use_quotes = old_value[0] == '\"';
-
-                        g_free (lines[n]);
-
-                        if (use_quotes)
-                                lines[n] = g_strdup_printf ("%s\"%s\"",
-                                                            key_eq, value);
-                        else
-                                lines[n] = g_strdup_printf ("%s%s",
-                                                            key_eq, value);
-
-                        replaced = TRUE;
-                }
-        }
-
-        g_free (key_eq);
-
-        if (!replaced) {
-                g_strfreev (lines);
-                return TRUE;
-        }
-
-        content = g_strjoinv ("\n", lines);
-        g_strfreev (lines);
-
-        retval = g_file_set_contents (filename, content, -1, &our_error);
-        g_free (content);
-
-        if (!retval) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_GENERAL,
-                             "%s cannot be overwritten: %s",
-                             filename, our_error->message);
-                g_error_free (our_error);
-        }
-
-        return retval;
-}
-
 /* This works for Solaris/OpenSolaris */
 static char *
 system_timezone_read_etc_TIMEZONE (void)
 {
         return system_timezone_read_key_file (ETC_TIMEZONE_MAJ,
                                               "TZ");
-}
-
-static gboolean
-system_timezone_write_etc_TIMEZONE (const char  *tz,
-                                    GError     **error)
-{
-        return system_timezone_write_key_file (ETC_TIMEZONE_MAJ,
-                                               "TZ", tz, error);
 }
 
 /* This works for Fedora and Mandriva */
@@ -539,28 +418,12 @@ system_timezone_read_etc_sysconfig_clock (void)
                                               "ZONE");
 }
 
-static gboolean
-system_timezone_write_etc_sysconfig_clock (const char  *tz,
-                                           GError     **error)
-{
-        return system_timezone_write_key_file (ETC_SYSCONFIG_CLOCK,
-                                               "ZONE", tz, error);
-}
-
 /* This works for openSUSE */
 static char *
 system_timezone_read_etc_sysconfig_clock_alt (void)
 {
         return system_timezone_read_key_file (ETC_SYSCONFIG_CLOCK,
                                               "TIMEZONE");
-}
-
-static gboolean
-system_timezone_write_etc_sysconfig_clock_alt (const char  *tz,
-                                               GError     **error)
-{
-        return system_timezone_write_key_file (ETC_SYSCONFIG_CLOCK,
-                                               "TIMEZONE", tz, error);
 }
 
 /* This works for old Gentoo */
@@ -571,28 +434,12 @@ system_timezone_read_etc_conf_d_clock (void)
                                               "TIMEZONE");
 }
 
-static gboolean
-system_timezone_write_etc_conf_d_clock (const char  *tz,
-                                        GError     **error)
-{
-        return system_timezone_write_key_file (ETC_CONF_D_CLOCK,
-                                               "TIMEZONE", tz, error);
-}
-
 /* This works for Arch Linux */
 static char *
 system_timezone_read_etc_rc_conf (void)
 {
         return system_timezone_read_key_file (ETC_RC_CONF,
                                               "TIMEZONE");
-}
-
-static gboolean
-system_timezone_write_etc_rc_conf (const char  *tz,
-                                   GError     **error)
-{
-        return system_timezone_write_key_file (ETC_RC_CONF,
-                                               "TIMEZONE", tz, error);
 }
 
 /*
@@ -847,202 +694,4 @@ system_timezone_find (void)
         }
 
         return g_strdup ("UTC");
-}
-
-/*
- *
- * Now, setting the timezone.
- *
- */
-
-static gboolean
-system_timezone_is_zone_file_valid (const char  *zone_file,
-                                    GError     **error)
-{
-        GError     *our_error;
-        GIOChannel *channel;
-        GIOStatus   status;
-        char        buffer[strlen (TZ_MAGIC)];
-        gsize       read;
-
-        /* First, check the zone_file is properly rooted */
-        if (!g_str_has_prefix (zone_file, SYSTEM_ZONEINFODIR"/")) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
-                             "Timezone file needs to be under "SYSTEM_ZONEINFODIR);
-                return FALSE;
-        }
-
-        /* Second, check it's a regular file that exists */
-        if (!g_file_test (zone_file, G_FILE_TEST_IS_REGULAR)) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
-                             "No such timezone file %s", zone_file);
-                return FALSE;
-        }
-
-        /* Third, check that it's a tzfile (see tzfile(5)). The file has a 4
-         * bytes header which is TZ_MAGIC.
-         *
-         * TODO: is there glibc API for this? */
-        our_error = NULL;
-        channel = g_io_channel_new_file (zone_file, "r", &our_error);
-        if (!our_error)
-                status = g_io_channel_read_chars (channel,
-                                                  buffer, strlen (TZ_MAGIC),
-                                                  &read, &our_error);
-        if (channel)
-                g_io_channel_unref (channel);
-
-        if (our_error) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
-                             "Timezone file %s cannot be read: %s",
-                             zone_file, our_error->message);
-                g_error_free (our_error);
-                return FALSE;
-        }
-
-        if (read != strlen (TZ_MAGIC) || strncmp (buffer, TZ_MAGIC, strlen (TZ_MAGIC)) != 0) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_INVALID_TIMEZONE_FILE,
-                             "%s is not a timezone file",
-                             zone_file);
-                return FALSE;
-        }
-
-        return TRUE;
-}
-
-static gboolean
-system_timezone_set_etc_timezone (const char  *zone_file,
-                                  GError     **error)
-{
-        GError *our_error;
-        char   *content;
-        gsize   len;
-
-        if (!system_timezone_is_zone_file_valid (zone_file, error))
-                return FALSE;
-
-        /* If /etc/localtime is a symlink, write a symlink */
-        if (g_file_test (ETC_LOCALTIME, G_FILE_TEST_IS_SYMLINK)) {
-                if (g_unlink (ETC_LOCALTIME) == 0 &&
-                    symlink (zone_file, ETC_LOCALTIME) == 0)
-                        return TRUE;
-
-                /* If we couldn't symlink the file, we'll just fallback on
-                 * copying it */
-        }
-
-        /* Else copy the file to /etc/localtime. We explicitly avoid doing
-         * hard links since they break with different partitions */
-        our_error = NULL;
-        if (!g_file_get_contents (zone_file, &content, &len, &our_error)) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_GENERAL,
-                             "Timezone file %s cannot be read: %s",
-                             zone_file, our_error->message);
-                g_error_free (our_error);
-                return FALSE;
-        }
-
-        if (!g_file_set_contents (ETC_LOCALTIME, content, len, &our_error)) {
-                g_set_error (error, SYSTEM_TIMEZONE_ERROR,
-                             SYSTEM_TIMEZONE_ERROR_GENERAL,
-                             ETC_LOCALTIME" cannot be overwritten: %s",
-                             our_error->message);
-                g_error_free (our_error);
-                g_free (content);
-                return FALSE;
-        }
-
-        g_free (content);
-
-        return TRUE;
-}
-
-typedef gboolean (*SetSystemTimezone) (const char  *tz,
-                                       GError     **error);
-/* The order here does not matter too much: we'll try to change all files
- * that already have a timezone configured. It matters in case of error,
- * since the process will be stopped and the last methods won't be called.
- * So we use the same order as in get_system_timezone_methods */
-static SetSystemTimezone set_system_timezone_methods[] = {
-        /* writing various config files if they exist and have the
-         * setting already present */
-        system_timezone_write_etc_timezone,
-        system_timezone_write_etc_sysconfig_clock,
-        system_timezone_write_etc_sysconfig_clock_alt,
-        system_timezone_write_etc_TIMEZONE,
-        system_timezone_write_etc_rc_conf,
-        /* writing deprecated config files if they exist and have the
-         * setting already present */
-        system_timezone_write_etc_conf_d_clock,
-        NULL
-};
-
-static gboolean
-system_timezone_update_config (const char  *tz,
-                               GError     **error)
-{
-        int i;
-
-        for (i = 0; set_system_timezone_methods[i] != NULL; i++) {
-                if (!set_system_timezone_methods[i] (tz, error))
-                        return FALSE;
-                /* FIXME: maybe continue to change all config files if
-                 * possible? */
-        }
-
-        return TRUE;
-}
-
-gboolean
-system_timezone_set_from_file (const char  *zone_file,
-                               GError     **error)
-{
-        const char *tz;
-
-        g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-        tz = zone_file + strlen (SYSTEM_ZONEINFODIR"/");
-
-        /* FIXME: is it right to return FALSE even when /etc/localtime was
-         * changed but not the config files? */
-        return (system_timezone_set_etc_timezone (zone_file, error) &&
-                system_timezone_update_config (tz, error));
-}
-
-gboolean
-system_timezone_set (const char  *tz,
-                     GError     **error)
-{
-        char     *zone_file;
-        gboolean  retval;
-
-        g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-        zone_file = g_build_filename (SYSTEM_ZONEINFODIR, tz, NULL);
-
-        /* FIXME: is it right to return FALSE even when /etc/localtime was
-         * changed but not the config files? */
-        retval = system_timezone_set_etc_timezone (zone_file, error) &&
-                 system_timezone_update_config (tz, error);
-
-        g_free (zone_file);
-
-        return retval;
-}
-
-GQuark
-system_timezone_error_quark (void)
-{
-        static GQuark ret = 0;
-
-        if (ret == 0) {
-                ret = g_quark_from_static_string ("system-timezone-error");
-        }
-
-        return ret;
 }

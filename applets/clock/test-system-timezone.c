@@ -32,21 +32,6 @@ timezone_print (void)
 	g_object_unref (systz);
 }
 
-static int
-timezone_set (const char *new_tz)
-{
-        GError *error;
-
-        error = NULL;
-        if (!system_timezone_set (new_tz, &error)) {
-                g_printerr ("%s\n", error->message);
-                g_error_free (error);
-                return 1;
-        }
-
-	return 0;
-}
-
 static void
 timezone_changed (SystemTimezone *systz,
 		  const char     *new_tz,
@@ -78,15 +63,11 @@ main (int    argc,
 {
 	int      retval;
 
-	gboolean  get = FALSE;
 	gboolean  monitor = FALSE;
-	char     *tz_set = NULL;
 
 	GError         *error;
 	GOptionContext *context;
         GOptionEntry options[] = {
-                { "get", 'g', 0, G_OPTION_ARG_NONE, &get, "Get the current timezone", NULL },
-                { "set", 's', 0, G_OPTION_ARG_STRING, &tz_set, "Set the timezone to TIMEZONE", "TIMEZONE" },
                 { "monitor", 'm', 0, G_OPTION_ARG_NONE, &monitor, "Monitor timezone changes", NULL },
                 { NULL, 0, 0, 0, NULL, NULL, NULL }
         };
@@ -109,14 +90,9 @@ main (int    argc,
 
 	g_option_context_free (context);
 
-	if (get || (!tz_set && !monitor))
-		timezone_print ();
-	else if (tz_set)
-		retval = timezone_set (tz_set);
-	else if (monitor)
+	timezone_print ();
+	if (monitor)
 		timezone_monitor ();
-	else
-		g_assert_not_reached ();
 
         return retval;
 }
