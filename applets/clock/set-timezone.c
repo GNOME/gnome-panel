@@ -27,7 +27,7 @@
 
 #include "set-timezone.h"
 
-#define CACHE_VALIDITY_SEC 2
+#define CACHE_VALIDITY_SEC 20
 
 #define MECHANISM_BUS_NAME    "org.freedesktop.timedate1"
 #define MECHANISM_OBJECT_PATH "/org/freedesktop/timedate1"
