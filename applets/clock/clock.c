@@ -981,7 +981,7 @@ create_clock_window (ClockData *cd)
         locations_box = calendar_window_get_locations_box (CALENDAR_WINDOW (cd->calendar_popup));
         gtk_widget_show (locations_box);
 
-	cd->clock_vbox = gtk_vbox_new (FALSE, 6);
+	cd->clock_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
 	gtk_container_add (GTK_CONTAINER (locations_box), cd->clock_vbox);
 
 	cd->clock_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -1129,7 +1129,7 @@ create_cities_section (ClockData *cd)
         g_list_free (cd->location_tiles);
         cd->location_tiles = NULL;
 
-        cd->cities_section = gtk_vbox_new (FALSE, 6);
+        cd->cities_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
         gtk_container_set_border_width (GTK_CONTAINER (cd->cities_section), 0);
 
 	cities = cd->locations;

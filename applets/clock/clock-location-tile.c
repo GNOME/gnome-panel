@@ -275,8 +275,8 @@ clock_location_tile_fill (ClockLocationTile *this)
         alignment = gtk_alignment_new (0, 0, 1, 0);
         gtk_alignment_set_padding (GTK_ALIGNMENT (alignment), 3, 3, 3, 0);
 
-        tile = gtk_hbox_new (FALSE, 6);
-        head_section = gtk_vbox_new (FALSE, 0);
+        tile = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+        head_section = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
         priv->city_label = gtk_label_new (NULL);
         gtk_misc_set_alignment (GTK_MISC (priv->city_label), 0, 0);
@@ -293,7 +293,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         align = gtk_alignment_new (0, 0, 0, 0);
         gtk_container_add (GTK_CONTAINER (align), priv->weather_icon);
 
-        box = gtk_hbox_new (FALSE, 0);
+        box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_box_pack_start (GTK_BOX (head_section), box, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), align, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->time_label, FALSE, FALSE, 0);
