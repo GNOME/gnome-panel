@@ -980,6 +980,46 @@ panel_applet_setup_menu_from_file (PanelApplet    *applet,
 	g_free (xml);
 }
 
+/**
+ * panel_applet_setup_menu_from_resource:
+ * @applet: a #PanelApplet.
+ * @resource_path: a resource path
+ * @action_group: a #GtkActionGroup.
+ *
+ * Sets up the context menu of @applet. @filename is a resource path to a menu
+ * XML file, containing a #GtkUIManager UI definition that describes how to
+ * display the menu items. @action_group contains the various #GtkAction that
+ * are referenced in @xml.
+ *
+ * See also the <link linkend="getting-started.context-menu">Context
+ * Menu</link> section.
+ *
+ * Since: 3.4
+ **/
+void
+panel_applet_setup_menu_from_resource (PanelApplet    *applet,
+				       const gchar    *resource_path,
+				       GtkActionGroup *action_group)
+{
+	GBytes *bytes;
+	GError *error = NULL;
+
+	bytes = g_resources_lookup_data (resource_path,
+					 G_RESOURCE_LOOKUP_FLAGS_NONE,
+					 &error);
+
+	if (bytes) {
+		panel_applet_setup_menu (applet,
+					 g_bytes_get_data (bytes, NULL),
+					 action_group);
+	} else {
+		g_warning ("%s", error->message);
+		g_error_free (error);
+	}
+
+	g_bytes_unref (bytes);
+}
+
 static void
 panel_applet_finalize (GObject *object)
 {

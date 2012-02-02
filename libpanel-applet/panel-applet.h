@@ -170,6 +170,9 @@ void               panel_applet_setup_menu           (PanelApplet        *applet
 void               panel_applet_setup_menu_from_file (PanelApplet        *applet,
 						      const gchar        *filename,
 						      GtkActionGroup     *action_group);
+void               panel_applet_setup_menu_from_resource (PanelApplet    *applet,
+						          const gchar    *resource_path,
+							  GtkActionGroup *action_group);
 
 int                panel_applet_factory_main          (const gchar		  *factory_id,
 						       GType                       applet_type,
