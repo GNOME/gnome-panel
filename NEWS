@@ -1,4 +1,51 @@
 =============
+Version 3.3.5
+=============
+
+Note: the port to org.freedesktop.timedate1 is not tested due to some issues on
+my system. Feedback welcome!
+
+  Panel
+
+	* Don't ask for menus to be pushed in (Matthias Clasen)
+	* Use horizontal/vertical padding for button widgets (Peter Hurley)
+	* Use GResource for data files (Vincent)
+	* Stop using deprecated gtk_[hv]box_new() (Vincent)
+
+  libpanel-applet
+
+	* Don't ask for menus to be pushed in (Matthias Clasen)
+	* Add panel_applet_setup_menu_from_resource() API (Vincent)
+
+  All Applets
+
+	* Use GResource for data files (Vincent)
+
+  Clock Applet
+
+	* Stop using deprecated gtk_[hv]box_new() (Vincent)
+	* Always show actions to set time (Vincent)
+	* Port to org.freedesktop.timedate1 to set timezones (Vincent)
+
+  Fish Applet
+
+	* Move fish animations data files in fish-specific directory (Vincent)
+
+  Misc
+
+	* New dependency on polkit-gobject-1 (Vincent)
+
+  Docs Translators
+
+	* OKANO Takayoshi (ja)
+	* Gil Forcada (ca)
+
+  Translators
+
+	* Jovan Naumovski (mk)
+	* Kjartan Maraas (nb)
+
+=============
 Version 3.3.3
 =============
 
