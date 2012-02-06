@@ -93,7 +93,8 @@ BUILT_SOURCES = 		\
 EXTRA_DIST = \
 	org.gnome.panel.Wncklet.panel-applet.in.in \
 	$(service_in_files) \
-	$(ui_FILES)
+	$(ui_FILES) \
+	wncklet.gresource.xml
 
 CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 

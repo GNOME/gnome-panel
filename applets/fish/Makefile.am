@@ -95,7 +95,8 @@ EXTRA_DIST =						\
 	$(fishbitmaps_DATA)				\
 	org.gnome.panel.FishApplet.panel-applet.in.in	\
 	$(service_in_files)				\
-	$(ui_FILES)
+	$(ui_FILES)					\
+	fish.gresource.xml
 
 CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in $(service_DATA)
 

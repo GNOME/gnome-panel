@@ -192,6 +192,7 @@ EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(schemas_in_files)				\
 	$(ui_FILES)					\
+	clock.gresource.xml				\
 	clock-marshallers.list				\
 	$(service_in_files)
 
