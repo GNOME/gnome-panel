@@ -171,17 +171,10 @@ get_phsh_pixbuf (void)
 {
         char *resource;
         GdkPixbuf *pixbuf;
-        GInputStream *stream;
 
         resource = g_strdup_printf ("%s%cand%c.png", "/org/gnome/panel/anim/", 'w', 'a');
-        stream = g_resources_open_stream (resource, 0, NULL);
+        pixbuf = gdk_pixbuf_new_from_resource (resource, NULL);
         g_free (resource);
-
-        if (!stream)
-                return NULL;
-
-        pixbuf = gdk_pixbuf_new_from_stream (stream, NULL, NULL);
-        g_object_unref (stream);
 
         return pixbuf;
 }
