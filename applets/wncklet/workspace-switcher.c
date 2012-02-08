@@ -575,12 +575,7 @@ response_cb (GtkWidget *widget,
 	     int        id,
 	     PagerData *pager)
 {
-	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help (widget, "user-guide",
-				      "overview-workspaces",
-				      WORKSPACE_SWITCHER_ICON);
-	else
-		gtk_widget_destroy (widget);
+	gtk_widget_destroy (widget);
 }
 
 static void

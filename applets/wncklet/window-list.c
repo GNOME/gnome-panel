@@ -79,11 +79,7 @@ response_cb (GtkWidget    *widget,
 	     int           id,
 	     TasklistData *tasklist)
 {
-	if (id == GTK_RESPONSE_HELP)
-		wncklet_display_help (widget, "user-guide",
-				      "windowlist-prefs", WINDOW_LIST_ICON);
-	else
-		gtk_widget_hide (widget);
+	gtk_widget_hide (widget);
 }
 
 static void
