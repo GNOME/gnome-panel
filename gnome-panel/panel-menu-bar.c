@@ -227,12 +227,6 @@ panel_menu_bar_load (PanelWidget *panel,
 					   panel_lockdown_get_not_panels_locked_down_s);
 	}
 
-	panel_applet_add_callback (menubar->priv->info,
-				   "help",
-				   GTK_STOCK_HELP,
-				   _("_Help"),
-				   NULL);
-
 	panel_menu_bar_object_object_load_finish (PANEL_MENU_BAR_OBJECT (menubar),
 						  panel);
 }
@@ -258,10 +252,7 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
-	if (!strcmp (callback_name, "help")) {
-		panel_show_help (screen, "user-guide", "menubar", NULL);
-
-	} else if (!strcmp (callback_name, "edit")) {
+	if (!strcmp (callback_name, "edit")) {
 		GError *error = NULL;
 
 		panel_launch_desktop_file_with_fallback ("alacarte.desktop",

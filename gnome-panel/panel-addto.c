@@ -800,11 +800,6 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 	GtkTreeIter       filter_iter;
 
 	switch (response_id) {
-	case GTK_RESPONSE_HELP:
-		panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog->addto_dialog)),
-				 "user-guide", "gospanel-15", NULL);
-		break;
-
 	case PANEL_ADDTO_RESPONSE_ADD:
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
 		if (gtk_tree_selection_get_selected (selection, &filter_model,
@@ -1243,8 +1238,6 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 				  dialog);
 
 	dialog->addto_dialog = gtk_dialog_new ();
-	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       GTK_STOCK_HELP, GTK_RESPONSE_HELP);
 	dialog->back_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_GO_BACK,
 						     PANEL_ADDTO_RESPONSE_BACK);
