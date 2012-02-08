@@ -40,11 +40,6 @@ gboolean panel_show_uri_force_mime_type (GdkScreen    *screen,
 					 guint32       timestamp,
 					 GError      **error);
 
-gboolean panel_show_help (GdkScreen    *screen,
-			  const gchar  *doc,
-			  const gchar  *link,
-			  GError      **error);
-
 G_END_DECLS
 
 #endif /* PANEL_SHOW_H */

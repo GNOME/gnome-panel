@@ -30,7 +30,6 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-icon-chooser.h>
-#include <libpanel-util/panel-show.h>
 
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
@@ -689,10 +688,6 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 	switch (response) {
 	case GTK_RESPONSE_CLOSE:
 		gtk_widget_destroy (properties_dialog);
-		break;
-	case GTK_RESPONSE_HELP:
-		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "user-guide", "gospanel-28", NULL);
 		break;
 	default:
 		break;

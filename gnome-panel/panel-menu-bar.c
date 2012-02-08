@@ -33,7 +33,6 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-launch.h>
-#include <libpanel-util/panel-show.h>
 
 #include "applet.h"
 #include "menu.h"

@@ -30,7 +30,6 @@
 #include <gmenu-tree.h>
 
 #include <libpanel-util/panel-glib.h>
-#include <libpanel-util/panel-show.h>
 
 #include "launcher.h"
 #include "panel.h"

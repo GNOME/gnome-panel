@@ -32,7 +32,6 @@
 
 #include <libpanel-util/panel-icon-chooser.h>
 #include <libpanel-util/panel-keyfile.h>
-#include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
 
 #include "panel-ditem-editor.h"
@@ -76,7 +75,6 @@ struct _PanelDItemEditorPrivate
 	GtkWidget *comment_entry;
 	GtkWidget *icon_chooser;
 
-	GtkWidget *help_button;
 	GtkWidget *revert_button;
 	GtkWidget *close_button;
 	GtkWidget *cancel_button;
@@ -662,9 +660,6 @@ panel_ditem_editor_make_ui (PanelDItemEditor *dialog)
 	gtk_label_set_mnemonic_widget (GTK_LABEL (priv->comment_label),
 				       priv->comment_entry);
 
-	priv->help_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-						   GTK_STOCK_HELP,
-						   GTK_RESPONSE_HELP);
 	priv->revert_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
 						     GTK_STOCK_REVERT_TO_SAVED,
 						     REVERT_BUTTON);
@@ -1448,19 +1443,7 @@ static void
 response_cb (GtkDialog *dialog,
 	     gint       response_id)
 {
-	GError *error = NULL;
-
 	switch (response_id) {
-	case GTK_RESPONSE_HELP:
-		if (!panel_show_help (gtk_window_get_screen (GTK_WINDOW (dialog)),
-				      "user-guide", "gospanel-52", &error)) {
-			g_signal_emit (G_OBJECT (dialog),
-				       ditem_edit_signals[ERROR_REPORTED], 0,
-				       _("Could not display help document"),
-				       error->message);
-			g_error_free (error);
-		}
-		break;
 	case REVERT_BUTTON:
 		panel_ditem_editor_revert (PANEL_DITEM_EDITOR (dialog));
 		gtk_dialog_set_response_sensitive (dialog,
