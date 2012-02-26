@@ -80,11 +80,11 @@ ui_FILES = 		\
 	fish.ui		\
 	fish-menu.xml
 
-fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies fish.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $(srcdir)/$<
+fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
 
-fish-resources.h: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies fish.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $(srcdir)/$<
+fish-resources.h: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
 
 BUILT_SOURCES = 		\
 	fish-resources.c	\

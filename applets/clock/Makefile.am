@@ -163,11 +163,11 @@ ui_FILES =		\
 	clock.ui	\
 	clock-menu.xml
 
-clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies clock.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $(srcdir)/$<
+clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
-clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies clock.gresource.xml)
-	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $(srcdir)/$<
+clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
+	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = clock.schemas.in
