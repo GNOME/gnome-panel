@@ -56,10 +56,23 @@ panel_background_prepare (PanelBackground *background)
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
-                if (background->default_pattern)
+                if (background->default_pattern) {
+			/* the theme background-image pattern must be scaled by
+			 * the width & height of the panel so that when the
+			 * backing region is cleared
+			 * (gdk_window_clear_backing_region), the correctly
+			 * scaled pattern is used */
+			cairo_matrix_t m;
+
+			cairo_matrix_init_translate (&m, 0, 0);
+			cairo_matrix_scale (&m,
+					    1.0 / background->region.width,
+					    1.0 / background->region.height);
+			cairo_pattern_set_matrix (background->default_pattern, &m);
+
                         gdk_window_set_background_pattern (background->window,
                                                           background->default_pattern);
-		else
+		} else
 			gdk_window_set_background_rgba (
 				background->window, &background->default_color);
 		break;
