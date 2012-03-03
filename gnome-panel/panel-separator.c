@@ -84,15 +84,9 @@ panel_separator_size_allocate (GtkWidget     *widget,
 			       GtkAllocation *allocation)
 {
 	GtkAllocation    old_allocation;
-	GtkAllocation    widget_allocation;
 	PanelBackground *background;
 
-	gtk_widget_get_allocation (widget, &widget_allocation);
-
-	old_allocation.x      = widget_allocation.x;
-	old_allocation.y      = widget_allocation.y;
-	old_allocation.width  = widget_allocation.width;
-	old_allocation.height = widget_allocation.height;
+	gtk_widget_get_allocation (widget, &old_allocation);
 
 	GTK_WIDGET_CLASS (panel_separator_parent_class)->size_allocate (widget, allocation);
 
