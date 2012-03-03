@@ -29,8 +29,6 @@
 
 #include "panel-separator.h"
 
-#define SEPARATOR_SIZE 10
-
 #define PANEL_SEPARATOR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_SEPARATOR, PanelSeparatorPrivate))
 
 struct _PanelSeparatorPrivate {
@@ -57,8 +55,34 @@ panel_separator_get_preferred_width (GtkWidget *widget,
 
 	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
 		*minimal_width = *natural_width = size;
-	else
-		*minimal_width = *natural_width = SEPARATOR_SIZE;
+	else {
+		/* set width based on css styling & width of GtkSeparator */
+		GtkStyleContext *context;
+		GtkStateFlags    state;
+		GtkWidget       *child;
+		GtkBorder        padding;
+		GtkBorder        border;
+		gint             width;
+
+		context = gtk_widget_get_style_context (widget);
+		state = gtk_widget_get_state_flags (widget);
+
+		child = gtk_bin_get_child (GTK_BIN (widget));
+
+		if (child && gtk_widget_get_visible (child))
+			gtk_widget_get_preferred_width (child,
+							minimal_width,
+							natural_width);
+		else
+			*minimal_width = *natural_width = 0;
+
+		gtk_style_context_get_border (context, state, &border);
+		gtk_style_context_get_padding (context, state, &padding);
+
+		width = border.left + border.right + padding.left + padding.right;
+		*minimal_width += width;
+		*natural_width += width;
+	}
 }
 
 static void
@@ -73,9 +97,34 @@ panel_separator_get_preferred_height (GtkWidget *widget,
 
 	size = panel_toplevel_get_size (separator->priv->panel->toplevel);
 
-	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL)
-		*minimal_height = *natural_height = SEPARATOR_SIZE;
-	else
+	if (separator->priv->orientation == GTK_ORIENTATION_VERTICAL) {
+		/* set height based on css styling & height of GtkSeparator */
+		GtkStyleContext *context;
+		GtkStateFlags    state;
+		GtkWidget       *child;
+		GtkBorder        padding;
+		GtkBorder        border;
+		gint             height;
+
+		context = gtk_widget_get_style_context (widget);
+		state = gtk_widget_get_state_flags (widget);
+
+		child = gtk_bin_get_child (GTK_BIN (widget));
+
+		if (child && gtk_widget_get_visible (child))
+			gtk_widget_get_preferred_height (child,
+							 minimal_height,
+							 natural_height);
+		else
+			*minimal_height = *natural_height = 0;
+
+		gtk_style_context_get_border (context, state, &border);
+		gtk_style_context_get_padding (context, state, &padding);
+
+		height = border.top + border.bottom + padding.top + padding.bottom;
+		*minimal_height += height;
+		*natural_height += height;
+	} else
 		*minimal_height = *natural_height = size;
 }
 
@@ -84,11 +133,44 @@ panel_separator_size_allocate (GtkWidget     *widget,
 			       GtkAllocation *allocation)
 {
 	GtkAllocation    old_allocation;
+	GtkStyleContext *context;
+	GtkStateFlags    state;
+	GtkBorder        padding;
+	GtkBorder        border;
+	GtkAllocation    new_allocation;
+	GtkWidget       *child;
 	PanelBackground *background;
 
 	gtk_widget_get_allocation (widget, &old_allocation);
 
 	GTK_WIDGET_CLASS (panel_separator_parent_class)->size_allocate (widget, allocation);
+
+	/* We cannot return early here if allocation == old_allocation because
+	 * the event_box base class just sized the child and we need to
+	 * recalculate and resize the child (the actual GtkSeparator).
+	 *
+	 * Preferably, the event_box base class would offer a method of moving
+	 * the private event window, in which case, calling its size_allocate
+	 * would not be necessary. But, alas, no. */
+
+	context = gtk_widget_get_style_context (widget);
+	state = gtk_widget_get_state_flags (widget);
+
+	gtk_style_context_get_border (context, state, &border);
+	gtk_style_context_get_padding (context, state, &padding);
+
+	new_allocation.x = border.left + padding.left;
+	new_allocation.y = border.top + padding.top;
+	new_allocation.width = allocation->width -
+		(border.left + border.right + padding.left + padding.right);
+	new_allocation.height = allocation->height -
+		(border.top + border.bottom + padding.top + padding.bottom);
+	new_allocation.width = MAX (1, new_allocation.width);
+	new_allocation.height = MAX (1, new_allocation.height);
+
+	child = gtk_bin_get_child (GTK_BIN (widget));
+	if (child && gtk_widget_get_visible (child))
+		gtk_widget_size_allocate (child, &new_allocation);
 
 	if (old_allocation.x      == allocation->x &&
 	    old_allocation.y      == allocation->y &&
