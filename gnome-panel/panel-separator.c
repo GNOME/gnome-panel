@@ -37,6 +37,8 @@ struct _PanelSeparatorPrivate {
 
 	GtkOrientation  orientation;
 	GtkWidget      *separator;
+
+	unsigned char   force_background_redraw: 1;
 };
 
 G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
@@ -132,6 +134,7 @@ static void
 panel_separator_size_allocate (GtkWidget     *widget,
 			       GtkAllocation *allocation)
 {
+	PanelSeparator  *separator = PANEL_SEPARATOR (widget);
 	GtkAllocation    old_allocation;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
@@ -172,19 +175,22 @@ panel_separator_size_allocate (GtkWidget     *widget,
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &new_allocation);
 
-	if (old_allocation.x      == allocation->x &&
-	    old_allocation.y      == allocation->y &&
-	    old_allocation.width  == allocation->width &&
-	    old_allocation.height == allocation->height)
+	if (!separator->priv->force_background_redraw &&
+	    (old_allocation.x      == allocation->x &&
+	     old_allocation.y      == allocation->y &&
+	     old_allocation.width  == allocation->width &&
+	     old_allocation.height == allocation->height))
 		return;
 
-	background = &PANEL_SEPARATOR (widget)->priv->panel->background;
+	separator->priv->force_background_redraw = FALSE;
+
+	background = &separator->priv->panel->background;
 
 	if (background->type == PANEL_BACK_NONE ||
 	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
 		return;
 
-	panel_separator_change_background (PANEL_SEPARATOR (widget));
+	panel_separator_change_background (separator);
 }
 
 static void
@@ -226,6 +232,7 @@ panel_separator_init (PanelSeparator *separator)
 	separator->priv->panel = NULL;
 	separator->priv->orientation = GTK_ORIENTATION_HORIZONTAL;
 	separator->priv->separator = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+	separator->priv->force_background_redraw = FALSE;
 
 	gtk_container_add (GTK_CONTAINER (separator),
 			   separator->priv->separator);
@@ -275,7 +282,8 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (separator->priv->separator),
 					orient_separator);
 
-	gtk_widget_queue_draw (GTK_WIDGET (separator));
+	separator->priv->force_background_redraw = TRUE;
+	gtk_widget_queue_resize (GTK_WIDGET (separator));
 }
 
 void
