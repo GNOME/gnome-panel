@@ -218,6 +218,8 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 static void
 panel_separator_init (PanelSeparator *separator)
 {
+	GtkStyleContext *context;
+
 	separator->priv = PANEL_SEPARATOR_GET_PRIVATE (separator);
 
 	separator->priv->info  = NULL;
@@ -228,6 +230,9 @@ panel_separator_init (PanelSeparator *separator)
 	gtk_container_add (GTK_CONTAINER (separator),
 			   separator->priv->separator);
 	gtk_widget_show (separator->priv->separator);
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (separator));
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 }
 
 void
@@ -236,6 +241,7 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 {
 	GtkOrientation orient = GTK_ORIENTATION_HORIZONTAL;
 	GtkOrientation orient_separator = GTK_ORIENTATION_VERTICAL;
+	GtkStyleContext *context;
 
 	g_return_if_fail (PANEL_IS_SEPARATOR (separator));
 
@@ -254,6 +260,16 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 
 	if (orient == separator->priv->orientation)
 		return;
+
+	/* Use css class "horizontal"/"vertical" for theming */
+	context = gtk_widget_get_style_context (GTK_WIDGET (separator));
+	if (orient == GTK_ORIENTATION_HORIZONTAL) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
 
 	separator->priv->orientation = orient;
 	gtk_orientable_set_orientation (GTK_ORIENTABLE (separator->priv->separator),
