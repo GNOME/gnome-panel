@@ -38,59 +38,10 @@ struct _PanelSeparatorPrivate {
 	PanelWidget    *panel;
 
 	GtkOrientation  orientation;
+	GtkWidget      *separator;
 };
 
 G_DEFINE_TYPE (PanelSeparator, panel_separator, GTK_TYPE_EVENT_BOX)
-
-static gboolean
-panel_separator_draw (GtkWidget *widget,
-                      cairo_t   *cr)
-{
-        PanelSeparator  *separator = PANEL_SEPARATOR (widget);
-        GtkStyleContext *context;
-        GtkStateFlags    state;
-        GtkBorder        padding;
-        int              width, height;
-
-        if (GTK_WIDGET_CLASS (panel_separator_parent_class)->draw)
-                GTK_WIDGET_CLASS (panel_separator_parent_class)->draw (widget, cr);
-
-        state = gtk_widget_get_state_flags (widget);
-        width = gtk_widget_get_allocated_width (widget);
-        height = gtk_widget_get_allocated_height (widget);
-
-        context = gtk_widget_get_style_context (widget);
-        gtk_style_context_get_padding (context, state, &padding);
-
-        gtk_style_context_save (context);
-        gtk_style_context_set_state (context, state);
-
-        cairo_save (cr);
-	if (separator->priv->orientation == GTK_ORIENTATION_HORIZONTAL) {
-                int x;
-
-                x= (width - padding.left - padding.right) / 2 + padding.left;
-                x = MIN (x, width - padding.right);
-
-                gtk_render_line (context, cr,
-                                 x, padding.top,
-                                 x, height - padding.bottom);
-	} else {
-                int y;
-
-                y = (height - padding.top - padding.bottom) / 2 + padding.top;
-                y = MIN (y, height - padding.bottom);
-
-                gtk_render_line (context, cr,
-                                 padding.left, y,
-                                 width - padding.right, y);
-	}
-        cairo_restore (cr);
-
-        gtk_style_context_restore (context);
-
-	return FALSE;
-}
 
 static void
 panel_separator_get_preferred_width (GtkWidget *widget,
@@ -180,7 +131,6 @@ panel_separator_class_init (PanelSeparatorClass *klass)
 {
 	GtkWidgetClass *widget_class  = GTK_WIDGET_CLASS (klass);
 
-	widget_class->draw                 = panel_separator_draw;
 	widget_class->get_preferred_width  = panel_separator_get_preferred_width;
 	widget_class->get_preferred_height = panel_separator_get_preferred_height;
 	widget_class->size_allocate        = panel_separator_size_allocate;
@@ -197,6 +147,11 @@ panel_separator_init (PanelSeparator *separator)
 	separator->priv->info  = NULL;
 	separator->priv->panel = NULL;
 	separator->priv->orientation = GTK_ORIENTATION_HORIZONTAL;
+	separator->priv->separator = gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+
+	gtk_container_add (GTK_CONTAINER (separator),
+			   separator->priv->separator);
+	gtk_widget_show (separator->priv->separator);
 }
 
 void
@@ -204,6 +159,7 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 				 PanelOrientation  orientation)
 {
 	GtkOrientation orient = GTK_ORIENTATION_HORIZONTAL;
+	GtkOrientation orient_separator = GTK_ORIENTATION_VERTICAL;
 
 	g_return_if_fail (PANEL_IS_SEPARATOR (separator));
 
@@ -211,10 +167,12 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 	case PANEL_ORIENTATION_TOP:
 	case PANEL_ORIENTATION_BOTTOM:
 		orient = GTK_ORIENTATION_HORIZONTAL;
+		orient_separator = GTK_ORIENTATION_VERTICAL;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 	case PANEL_ORIENTATION_LEFT:
 		orient = GTK_ORIENTATION_VERTICAL;
+		orient_separator = GTK_ORIENTATION_HORIZONTAL;
 		break;
 	}
 
@@ -222,6 +180,8 @@ panel_separator_set_orientation (PanelSeparator   *separator,
 		return;
 
 	separator->priv->orientation = orient;
+	gtk_orientable_set_orientation (GTK_ORIENTABLE (separator->priv->separator),
+					orient_separator);
 
 	gtk_widget_queue_draw (GTK_WIDGET (separator));
 }
