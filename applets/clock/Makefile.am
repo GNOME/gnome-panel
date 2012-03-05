@@ -169,28 +169,8 @@ clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
-schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
-schemas_in_files = clock.schemas.in
-schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
-
-@INTLTOOL_SCHEMAS_RULE@
-
-if GCONF_SCHEMAS_INSTALL
-install-data-local:
-	if test -z "$(DESTDIR)" ; then \
-		for p in $(schemas_DATA) ; do \
-			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/clock/$$p ; \
-		done \
-	fi
-uninstall-local:
-	for p in $(schema_DATA) ; do \
-		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-uninstall-rule $(top_builddir)/applets/clock/$$p ; \
-	done
-endif
-
 EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
-	$(schemas_in_files)				\
 	$(ui_FILES)					\
 	clock.gresource.xml				\
 	clock-marshallers.list				\
@@ -201,7 +181,6 @@ CLEANFILES =			\
 	$(applet_DATA) 		\
 	$(applet_DATA).in	\
 	$(service_DATA)		\
-	$(schemas_DATA)		\
 	$(polkit_DATA)		\
 	$(dbus_services_DATA)
 

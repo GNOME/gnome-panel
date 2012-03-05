@@ -54,11 +54,12 @@ clock_locale_supports_am_pm (void)
 #endif
 }
 
-ClockFormat
+GDesktopClockFormat
 clock_locale_format (void)
 {
 	return clock_locale_supports_am_pm () ?
-		CLOCK_FORMAT_12 : CLOCK_FORMAT_24;
+		G_DESKTOP_CLOCK_FORMAT_12H :
+		G_DESKTOP_CLOCK_FORMAT_24H;
 }
 
 void

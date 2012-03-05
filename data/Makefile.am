@@ -3,7 +3,8 @@ SUBDIRS = 16x16 22x22 24x24 32x32 48x48 scalable
 gsettings_applets_schemas_in_in =						\
 	org.gnome.gnome-panel.applet.fish.gschema.xml.in.in			\
 	org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in		\
-	org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in
+	org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in 	\
+	org.gnome.gnome-panel.applet.clock.gschema.xml.in.in
 
 gsettings_panel_schemas_in_in =					\
 	org.gnome.gnome-panel.gschema.xml.in.in			\

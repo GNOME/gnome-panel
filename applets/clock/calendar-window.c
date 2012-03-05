@@ -40,7 +40,7 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
-#include <gconf/gconf-client.h>
+#include <gio/gio.h>
 
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include <libgnome-desktop/gnome-desktop-utils.h>
@@ -56,19 +56,15 @@
 
 #define CALENDAR_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_WINDOW, CalendarWindowPrivate))
 
-#define KEY_LOCATIONS_EXPANDED      "expand_locations"
+#define KEY_LOCATIONS_EXPANDED      "expand-locations"
 #ifdef HAVE_LIBECAL
-/* For the following value, take into account the KEY_* that are not inside this #ifdef! */
-#  define N_CALENDAR_WINDOW_GCONF_PREFS 5
-#  define KEY_APPOINTMENTS_EXPANDED "expand_appointments"
-#  define KEY_BIRTHDAYS_EXPANDED    "expand_birthdays"
-#  define KEY_TASKS_EXPANDED        "expand_tasks"
-#  define KEY_WEATHER_EXPANDED      "expand_weather"
+#  define KEY_APPOINTMENTS_EXPANDED "expand-appointments"
+#  define KEY_BIRTHDAYS_EXPANDED    "expand-birthdays"
+#  define KEY_TASKS_EXPANDED        "expand-tasks"
+#  define KEY_WEATHER_EXPANDED      "expand-weather"
 
 #  define SCHEMA_CALENDAR_APP       "org.gnome.desktop.default-applications.office.calendar"
 #  define SCHEMA_TASKS_APP          "org.gnome.desktop.default-applications.office.tasks"
-#else
-#  define N_CALENDAR_WINDOW_GCONF_PREFS 1
 #endif
 
 enum {
@@ -81,18 +77,17 @@ static guint signals[LAST_SIGNAL];
 struct _CalendarWindowPrivate {
 	GtkWidget  *calendar;
 
-	char       *prefs_dir;
+	GSettings  *settings;
 
 	gboolean     invert_order;
 	gboolean     show_weeks;
-	time_t      *current_time;
 
 	gboolean     locked_down;
 
 	GtkWidget *locations_list;
 
 #ifdef HAVE_LIBECAL
-	ClockFormat  time_format;
+	GDesktopClockFormat time_format;
 
         CalendarClient *client;
 
@@ -110,8 +105,6 @@ struct _CalendarWindowPrivate {
         GtkTreeModelFilter *birthdays_filter;
         GtkTreeModelFilter *tasks_filter;
         GtkTreeModelFilter *weather_filter;
-
-	GConfClient *gconfclient;
 #endif /* HAVE_LIBECAL */
 };
 
@@ -121,20 +114,13 @@ enum {
 	PROP_0,
 	PROP_INVERTORDER,
 	PROP_SHOWWEEKS,
-#ifdef HAVE_LIBECAL
-	PROP_TIMEFORMAT,
-#endif
-	PROP_CURRENTTIMEP,
-	PROP_PREFSDIR,
+	PROP_SETTINGS,
 	PROP_LOCKEDDOWN
 };
 
-static time_t *calendar_window_get_current_time_p (CalendarWindow *calwin);
-static void    calendar_window_set_current_time_p (CalendarWindow *calwin,
-						   time_t         *current_time);
-static const char *calendar_window_get_prefs_dir  (CalendarWindow *calwin);
-static void    calendar_window_set_prefs_dir      (CalendarWindow *calwin,
-						   const char     *prefs_dir);
+static GSettings *calendar_window_get_settings   (CalendarWindow *calwin);
+static void    calendar_window_set_settings      (CalendarWindow *calwin,
+						  GSettings      *settings);
 static gboolean calendar_window_get_locked_down   (CalendarWindow *calwin);
 static void    calendar_window_set_locked_down    (CalendarWindow *calwin,
 						   gboolean        locked_down);
@@ -296,7 +282,7 @@ enum {
 };
 
 static char *
-format_time (ClockFormat format,
+format_time (GDesktopClockFormat format,
              time_t      t,
              guint       year,
              guint       month,
@@ -316,7 +302,7 @@ format_time (ClockFormat format,
         if (year  == (tm->tm_year + 1900) &&
             month == tm->tm_mon &&
             day   == tm->tm_mday) {
-                if (format == CLOCK_FORMAT_12)
+                if (format == G_DESKTOP_CLOCK_FORMAT_12H)
 			/* Translators: This is a strftime format string.
 			 * It is used to display the time in 12-hours format
 			 * (eg, like in the US: 8:10 am). The %p expands to
@@ -479,23 +465,30 @@ filter_out_tasks (GtkTreeModel   *model,
 {
         gint64   start_time64;
         gint64   completed_time64;
-        time_t   start_time;
-        time_t   completed_time;
-        time_t   one_day_ago;
+	GDateTime *start_time;
+	GDateTime *completed_time;
+	GDateTime *one_day_ago;
+	GDateTime *current_time;
         gboolean visible;
 
         gtk_tree_model_get (model, iter,
                             TASK_COLUMN_START_TIME,     &start_time64,
                             TASK_COLUMN_COMPLETED_TIME, &completed_time64,
                             -1);
-        start_time = start_time64;
-        completed_time = completed_time64;
 
-        one_day_ago = *(calwin->priv->current_time) - (24 * 60 * 60);
+	current_time = g_date_time_new_now_local ();
+        start_time = g_date_time_new_from_unix_local (start_time64);
+        completed_time = g_date_time_new_from_unix_local (completed_time64);
+        one_day_ago = g_date_time_add_days (completed_time, -1);
 
-        visible = !start_time || start_time <= *(calwin->priv->current_time);
+        visible = g_date_time_compare (start_time, current_time) <= 0;
         if (visible)
-                visible = !completed_time || completed_time >= one_day_ago;
+		visible = g_date_time_compare (completed_time, one_day_ago) >= 0;
+
+	g_date_time_unref (start_time);
+	g_date_time_unref (completed_time);
+	g_date_time_unref (one_day_ago);
+	g_date_time_unref (current_time);
 
         return visible;
 }
@@ -509,6 +502,7 @@ modify_task_text_attributes (GtkTreeModel   *model,
 {
         gint64          due_time64;
         time_t          due_time;
+	time_t          current_time;
         PangoAttrList  *attr_list;
         PangoAttribute *attr;
         GtkTreeIter     child_iter;
@@ -530,7 +524,8 @@ modify_task_text_attributes (GtkTreeModel   *model,
                             -1);
         due_time = due_time64;
 
-        if (due_time && due_time > *(calwin->priv->current_time))
+	current_time = time(NULL);
+        if (due_time && due_time > current_time)
                 return;
 
         attr_list = pango_attr_list_new ();
@@ -1305,78 +1300,6 @@ setup_list_size_constraint (GtkWidget *widget,
 	gtk_widget_set_size_request (widget, req.width, req_height);
 }
 
-static void
-expander_activated (GtkExpander    *expander,
-		    CalendarWindow *calwin)
-{
-	const char *key;
-
-	key = (const gchar*)g_object_get_data (G_OBJECT (expander), "gconf-key");
-
-	if (gconf_client_key_is_writable (calwin->priv->gconfclient,
-					  key, NULL)) {
-		gconf_client_set_bool (calwin->priv->gconfclient, key,
-				       gtk_expander_get_expanded (expander),
-				       NULL);
-	}
-}
-
-static void
-expanded_changed (GConfClient  *client,
-		  guint         cnxn_id,
-		  GConfEntry   *entry,
-		  GtkExpander  *expander)
-{
-	gboolean value;
-
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-
-	value = gconf_value_get_bool (entry->value);
-
-	gtk_expander_set_expanded (expander, value);
-}
-
-static void
-remove_listener (gpointer data)
-{
-	GConfClient *client;
-
-	client = gconf_client_get_default ();
-	gconf_client_notify_remove (client, GPOINTER_TO_UINT (data));
-	g_object_unref (client);
-}
-
-static void
-connect_expander_with_gconf (CalendarWindow *calwin,
-			     GtkWidget      *expander,
-			     const char     *relative_key)
-{
-	char     *key;
-	gboolean  expanded;
-	guint      listener;
-
-	key = g_strdup_printf ("%s/%s",
-			       calwin->priv->prefs_dir, relative_key);
-
-	g_object_set_data_full (G_OBJECT (expander), "gconf-key", (gpointer)key, g_free);
-
-	expanded = gconf_client_get_bool (calwin->priv->gconfclient, key,
-					  NULL);
-	gtk_expander_set_expanded (GTK_EXPANDER (expander), expanded);
-
-	g_signal_connect_after (expander, "activate",
-				G_CALLBACK (expander_activated),
-				calwin);
-
-	listener = gconf_client_notify_add (
-				calwin->priv->gconfclient, key,
-				(GConfClientNotifyFunc) expanded_changed,
-				expander, NULL, NULL);
-
-        g_object_set_data_full (G_OBJECT (expander), "listener-id",
-                                GUINT_TO_POINTER (listener), remove_listener);
-}
 #endif /* HAVE_LIBECAL */
 
 static void
@@ -1490,7 +1413,7 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 {
 	GtkWidget                 *calendar;
 	GtkCalendarDisplayOptions  options;
-        struct tm                 *tm;
+	GDateTime                 *now;
 
 	calendar = gtk_calendar_new ();
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (calendar));
@@ -1500,12 +1423,15 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 		options &= ~(GTK_CALENDAR_SHOW_WEEK_NUMBERS);
 	gtk_calendar_set_display_options (GTK_CALENDAR (calendar), options);
 
-	tm = localtime (calwin->priv->current_time);
+	now = g_date_time_new_now_local ();
 
         gtk_calendar_select_month (GTK_CALENDAR (calendar),
-                                   tm->tm_mon,
-                                   tm->tm_year + 1900);
-        gtk_calendar_select_day (GTK_CALENDAR (calendar), tm->tm_mday);
+                                   g_date_time_get_month (now),
+                                   g_date_time_get_year (now));
+        gtk_calendar_select_day (GTK_CALENDAR (calendar),
+				 g_date_time_get_day_of_month (now));
+
+	g_date_time_unref (now);
 
 	return calendar;
 }
@@ -1605,7 +1531,8 @@ create_hig_frame (CalendarWindow *calwin,
         }
 
 #ifdef HAVE_LIBECAL
-	connect_expander_with_gconf (calwin, expander, key);
+	g_settings_bind (calwin->priv->settings, key, expander, "expanded",
+			 G_SETTINGS_BIND_DEFAULT);
 #endif
 
         return vbox;
@@ -1687,8 +1614,7 @@ calendar_window_constructor (GType                  type,
 
 	calwin = CALENDAR_WINDOW (obj);
 
-	g_assert (calwin->priv->current_time != NULL);
-	g_assert (calwin->priv->prefs_dir != NULL);
+	g_assert (calwin->priv->settings != NULL);
 
 	calendar_window_fill (calwin);
 
@@ -1716,19 +1642,9 @@ calendar_window_get_property (GObject    *object,
 		g_value_set_boolean (value,
 				     calendar_window_get_show_weeks (calwin));
 		break;
-#ifdef HAVE_LIBECAL
-	case PROP_TIMEFORMAT:
-		g_value_set_enum (value,
-				  calendar_window_get_time_format (calwin));
-		break;
-#endif
-	case PROP_CURRENTTIMEP:
-		g_value_set_pointer (value,
-				     calendar_window_get_current_time_p (calwin));
-		break;
-	case PROP_PREFSDIR:
-		g_value_set_string (value,
-				    calendar_window_get_prefs_dir (calwin));
+	case PROP_SETTINGS:
+		g_value_set_object (value,
+				    calendar_window_get_settings (calwin));
 		break;
 	case PROP_LOCKEDDOWN:
 		g_value_set_boolean (value,
@@ -1761,19 +1677,9 @@ calendar_window_set_property (GObject       *object,
 		calendar_window_set_show_weeks (calwin,
 						g_value_get_boolean (value));
 		break;
-#ifdef HAVE_LIBECAL
-	case PROP_TIMEFORMAT:
-		calendar_window_set_time_format (calwin,
-						 g_value_get_enum (value));
-		break;
-#endif
-	case PROP_CURRENTTIMEP:
-		calendar_window_set_current_time_p (calwin,
-						    g_value_get_pointer (value));
-		break;
-	case PROP_PREFSDIR:
-		calendar_window_set_prefs_dir (calwin,
-					       g_value_get_string (value));
+	case PROP_SETTINGS:
+		calendar_window_set_settings (calwin,
+					      g_value_get_object (value));
 		break;
 	case PROP_LOCKEDDOWN:
 		calendar_window_set_locked_down (calwin,
@@ -1821,9 +1727,7 @@ calendar_window_dispose (GObject *object)
                 g_object_unref (calwin->priv->weather_filter);
         calwin->priv->weather_filter = NULL;
 
-	if (calwin->priv->gconfclient)
-		g_object_unref (calwin->priv->gconfclient);
-	calwin->priv->gconfclient = NULL;
+	g_clear_object (&calwin->priv->settings);
 #endif /* HAVE_LIBECAL */
 
 	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
@@ -1868,33 +1772,13 @@ calendar_window_class_init (CalendarWindowClass *klass)
 				      FALSE,
 				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
-#ifdef HAVE_LIBECAL
 	g_object_class_install_property (
 		gobject_class,
-		PROP_TIMEFORMAT,
-		g_param_spec_enum ("time-format",
-				   "Time Format",
-				   "Time format used to display time",
-				   CLOCK_TYPE_FORMAT,
-				   clock_locale_format (),
-				   G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-#endif
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_CURRENTTIMEP,
-		g_param_spec_pointer ("current-time",
-				      "Current Time",
-				      "Pointer to a variable containing the current time",
-				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_PREFSDIR,
-		g_param_spec_string ("prefs-dir",
-				     "Preferences Directory",
-				     "Preferences directory in GConf",
-				     NULL,
+		PROP_SETTINGS,
+		g_param_spec_object ("settings",
+				     "Applet settings",
+				     "",
+				     G_TYPE_SETTINGS,
 				     G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 
 	g_object_class_install_property (
@@ -1924,22 +1808,19 @@ calendar_window_init (CalendarWindow *calwin)
 
 #ifdef HAVE_LIBECAL
 	calwin->priv->previous_selection = NULL;
-	calwin->priv->gconfclient = gconf_client_get_default ();
 #endif
 }
 
 GtkWidget *
-calendar_window_new (time_t     *static_current_time,
-		     const char *prefs_dir,
+calendar_window_new (GSettings  *applet_settings,
 		     gboolean    invert_order)
 {
 	CalendarWindow *calwin;
 
 	calwin = g_object_new (CALENDAR_TYPE_WINDOW,
 			       "type", GTK_WINDOW_TOPLEVEL,
-			       "current-time", static_current_time,
 			       "invert-order", invert_order,
-			       "prefs-dir", prefs_dir,
+			       "settings", applet_settings,
 			       NULL);
 
 	return GTK_WIDGET (calwin);
@@ -2021,27 +1902,28 @@ calendar_window_set_show_weeks (CalendarWindow *calwin,
 	g_object_notify (G_OBJECT (calwin), "show-weeks");
 }
 
-ClockFormat
+GDesktopClockFormat
 calendar_window_get_time_format (CalendarWindow *calwin)
 {
 	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin),
-			      CLOCK_FORMAT_INVALID);
+			      G_DESKTOP_CLOCK_FORMAT_24H);
 
 #ifdef HAVE_LIBECAL
 	return calwin->priv->time_format;
 #else
-	return CLOCK_FORMAT_INVALID;
+	return G_DESKTOP_CLOCK_FORMAT_24H;
 #endif
 }
 
 void
-calendar_window_set_time_format (CalendarWindow *calwin,
-				 ClockFormat     time_format)
+calendar_window_set_time_format (CalendarWindow      *calwin,
+				 GDesktopClockFormat  time_format)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
 #ifdef HAVE_LIBECAL
-	if (time_format != CLOCK_FORMAT_12 && time_format != CLOCK_FORMAT_24)
+	if (time_format != G_DESKTOP_CLOCK_FORMAT_12H &&
+	    time_format != G_DESKTOP_CLOCK_FORMAT_24H)
 		time_format = clock_locale_format ();
 
 	if (time_format == calwin->priv->time_format)
@@ -2051,62 +1933,26 @@ calendar_window_set_time_format (CalendarWindow *calwin,
 	/* Time to display for appointments has changed */
 	if (calwin->priv->appointments_model)
 		handle_appointments_changed (calwin);
-
-	g_object_notify (G_OBJECT (calwin), "time-format");
 #endif
 }
 
-static time_t *
-calendar_window_get_current_time_p (CalendarWindow *calwin)
+static GSettings *
+calendar_window_get_settings (CalendarWindow *calwin)
 {
 	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin), NULL);
 
-	return calwin->priv->current_time;
+	return calwin->priv->settings;
 }
 
 static void
-calendar_window_set_current_time_p (CalendarWindow *calwin,
-				    time_t         *current_time)
+calendar_window_set_settings (CalendarWindow *calwin,
+			      GSettings      *settings)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
-	if (current_time == calwin->priv->current_time)
-		return;
-
-	calwin->priv->current_time = current_time;
-
-	g_object_notify (G_OBJECT (calwin), "current-time");
-}
-
-static const char *
-calendar_window_get_prefs_dir (CalendarWindow *calwin)
-{
-	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin), NULL);
-
-	return calwin->priv->prefs_dir;
-}
-
-static void
-calendar_window_set_prefs_dir (CalendarWindow *calwin,
-			       const char     *prefs_dir)
-{
-	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
-
-	if (!calwin->priv->prefs_dir && (!prefs_dir || !prefs_dir [0]))
-		return;
-
-	if (calwin->priv->prefs_dir && prefs_dir && prefs_dir [0] &&
-	    !strcmp (calwin->priv->prefs_dir, prefs_dir))
-		return;
-
-	if (calwin->priv->prefs_dir)
-		g_free (calwin->priv->prefs_dir);
-	calwin->priv->prefs_dir = NULL;
-
-	if (prefs_dir && prefs_dir [0])
-		calwin->priv->prefs_dir = g_strdup (prefs_dir);
-
-	g_object_notify (G_OBJECT (calwin), "prefs-dir");
+	/* This only ever called once, so we can ignore the previous
+	   value. */
+	calwin->priv->settings = g_object_ref (settings);
 }
 
 static gboolean

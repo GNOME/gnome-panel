@@ -28,21 +28,12 @@
 #define __CLOCK_UTILS_H__
 
 #include <gtk/gtk.h>
+#include <gdesktop-enums.h>
 
 G_BEGIN_DECLS
 
-/* Needs to match the indices in the combo of the prefs dialog */
-typedef enum {
-	CLOCK_FORMAT_INVALID = 0,
-	CLOCK_FORMAT_12,
-	CLOCK_FORMAT_24,
-	CLOCK_FORMAT_UNIX,
-	CLOCK_FORMAT_INTERNET,
-	CLOCK_FORMAT_CUSTOM
-} ClockFormat;
-
 gboolean clock_locale_supports_am_pm (void);
-ClockFormat clock_locale_format (void);
+GDesktopClockFormat clock_locale_format (void);
 
 void clock_utils_display_help (GtkWidget  *widget,
 			       const char *doc_id,

@@ -1,25 +1,5 @@
 <schemalist gettext-domain="@GETTEXT_PACKAGE@">
   <schema id="org.gnome.gnome-panel.applet.clock">
-    <key name="format" type="s">
-      <default l10n="messages" context="format">''</default>
-      <_summary>Hour format</_summary>
-      <_description>This key specifies the hour format used by the clock applet. Possible values are "12-hour", "24-hour", "internet", "unix" and "custom". If set to "internet", the clock will display Internet time. The Internet time system divides the day into 1000 ".beats". There are no time zones in this system, so time is the same all over the world. If set to "unix", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "custom", the clock will display time according to the format specified in the custom_format key.</_description>
-    </key>
-    <key name="custom-format" type="s">
-      <default>''</default>
-      <_summary>Custom format of the clock</_summary>
-      <_description>This key specifies the format used by the clock applet when the format key is set to "custom". You can use conversion specifiers understood by strftime() to obtain a specific format. See the strftime() manual for more information.</_description>
-    </key>
-    <key name="show-seconds" type="b">
-      <default>false</default>
-      <_summary>Show time with seconds</_summary>
-      <_description>If true, display seconds in time.</_description>
-    </key>
-    <key name="show-date" type="b">
-      <default>true</default>
-      <_summary>Show date in clock</_summary>
-      <_description>If true, display date in the clock, in addition to time.</_description>
-    </key>
     <key name="show-tooltip" type="b">
       <default>true</default>
       <_summary>Show date in tooltip</_summary>
@@ -35,7 +15,7 @@
       <_summary>Show temperature in clock</_summary>
       <_description>If true, show the temperature next to the weather icon.</_description>
     </key>
-    <key name="show-week-numbers" type="b">
+    <key name="show-weeks" type="b">
       <default>true</default>
       <_summary>Show week numbers in calendar</_summary>
       <_description>If true, show week numbers in the calendar.</_description>
@@ -65,20 +45,13 @@
       <_summary>Expand list of locations</_summary>
       <_description>If true, expand the list of locations in the calendar window.</_description>
     </key>
-    <key name="cities" type="as">
+    <key name="cities" type="a(ssm(dd))">
       <default>[]</default>
       <_summary>List of locations</_summary>
-      <_description>A list of locations to display in the calendar window.</_description>
-    </key>
-    <key name="temperature-unit" type="s">
-      <default>'Default'</default>
-      <_summary>Temperature unit</_summary>
-      <_description>The unit to use when showing temperatures.</_description>
-    </key>
-    <key name="speed-unit" type="s">
-      <default>'Default'</default>
-      <_summary>Speed unit</_summary>
-      <_description>The unit to use when showing wind speed.</_description>
+      <_description>
+	  A list of locations to display in the calendar window. Each location is a tuple of
+	  display name, METAR code and coordinates.
+      </_description>
     </key>
   </schema>
 </schemalist>

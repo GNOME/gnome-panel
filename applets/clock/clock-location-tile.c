@@ -30,7 +30,7 @@ static guint signals[LAST_SIGNAL];
 typedef struct {
         ClockLocation *location;
 
-        struct tm last_refresh;
+        GDateTime *last_refresh;
 	long last_offset;
 
         ClockFaceSize size;
@@ -57,7 +57,7 @@ static void clock_location_tile_finalize (GObject *);
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TILE_TYPE, ClockLocationTilePrivate))
 
 static void clock_location_tile_fill (ClockLocationTile *this);
-static void update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data);
+static void update_weather_icon (ClockLocation *loc, GWeatherInfo *info, gpointer data);
 static gboolean weather_tooltip (GtkWidget *widget,
                                  gint x, gint y,
 		                 gboolean    keyboard_mode,
@@ -124,7 +124,7 @@ clock_location_tile_init (ClockLocationTile *this)
 
         priv->location = NULL;
 
-        memset (&(priv->last_refresh), 0, sizeof (struct tm));
+	priv->last_refresh = NULL;
 	priv->last_offset = 0;
 
         priv->size = CLOCK_FACE_SMALL;
@@ -138,6 +138,11 @@ static void
 clock_location_tile_finalize (GObject *g_obj)
 {
         ClockLocationTilePrivate *priv = PRIVATE (g_obj);
+
+	if (priv->last_refresh) {
+		g_date_time_unref (priv->last_refresh);
+		priv->last_refresh = NULL;
+	}
 
         if (priv->location) {
 		g_signal_handler_disconnect (priv->location, priv->location_weather_updated_id);
@@ -361,80 +366,74 @@ static gboolean
 clock_needs_face_refresh (ClockLocationTile *this)
 {
         ClockLocationTilePrivate *priv = PRIVATE (this);
-        struct tm now;
+        GDateTime *now;
+	gboolean retval;
 
-        clock_location_localtime (priv->location, &now);
+	if (!priv->last_refresh)
+		return TRUE;
 
-        if (now.tm_year > priv->last_refresh.tm_year
-            || now.tm_mon > priv->last_refresh.tm_mon
-            || now.tm_mday > priv->last_refresh.tm_mday
-            || now.tm_hour > priv->last_refresh.tm_hour
-            || now.tm_min > priv->last_refresh.tm_min) {
-                return TRUE;
+        now = clock_location_localtime (priv->location);
+
+	retval = FALSE;
+        if (g_date_time_get_year (now) > g_date_time_get_year (priv->last_refresh)
+            || g_date_time_get_month (now) > g_date_time_get_month (priv->last_refresh)
+            || g_date_time_get_day_of_month (now) > g_date_time_get_day_of_month (priv->last_refresh)
+            || g_date_time_get_hour (now) > g_date_time_get_hour (priv->last_refresh)
+            || g_date_time_get_minute (now) > g_date_time_get_minute (priv->last_refresh)) {
+		retval = TRUE;
         }
 
         if ((priv->size == CLOCK_FACE_LARGE)
-            && now.tm_sec > priv->last_refresh.tm_sec) {
-                return TRUE;
+            && g_date_time_get_second (now) > g_date_time_get_second (priv->last_refresh)) {
+                retval = TRUE;
         }
 
-        return FALSE;
+	g_date_time_unref (now);
+	return retval;
 }
 
 static gboolean
 clock_needs_label_refresh (ClockLocationTile *this)
 {
         ClockLocationTilePrivate *priv = PRIVATE (this);
-        struct tm now;
+	GDateTime *now;
 	long offset;
+	gboolean retval;
 
-        clock_location_localtime (priv->location, &now);
+        now = clock_location_localtime (priv->location);
 	offset = clock_location_get_offset (priv->location);
 
-        if (now.tm_year > priv->last_refresh.tm_year
-            || now.tm_mon > priv->last_refresh.tm_mon
-            || now.tm_mday > priv->last_refresh.tm_mday
-            || now.tm_hour > priv->last_refresh.tm_hour
-            || now.tm_min > priv->last_refresh.tm_min
+	retval = FALSE;
+        if (g_date_time_get_year (now) > g_date_time_get_year (priv->last_refresh)
+            || g_date_time_get_month (now) > g_date_time_get_month (priv->last_refresh)
+            || g_date_time_get_day_of_month (now) > g_date_time_get_day_of_month (priv->last_refresh)
+            || g_date_time_get_hour (now) > g_date_time_get_hour (priv->last_refresh)
+            || g_date_time_get_minute (now) > g_date_time_get_minute (priv->last_refresh)
 	    || offset != priv->last_offset) {
-                return TRUE;
+		retval = TRUE;
         }
 
-        return FALSE;
-}
-
-static void
-copy_tm (struct tm *from, struct tm *to)
-{
-        to->tm_sec = from->tm_sec;
-        to->tm_min = from->tm_min;
-        to->tm_hour = from->tm_hour;
-        to->tm_mday = from->tm_mday;
-        to->tm_mon = from->tm_mon;
-        to->tm_year = from->tm_year;
-        to->tm_wday = from->tm_wday;
-        to->tm_yday = from->tm_yday;
+	g_date_time_unref (now);
+        return retval;
 }
 
 static char *
-format_time (struct tm   *now, 
-             char        *tzname,
-             ClockFormat  clock_format,
+format_time (GDateTime   *now, 
+             const char  *tzname,
+             GDesktopClockFormat  clock_format,
 	     long         offset)
 {
-	char buf[256];
-	char *format;
-	time_t local_t;
-	struct tm local_now;
-	char *utf8;	
+	const char *format;
+	GDateTime *local_now;
+	char *buf;	
 	char *tmp;	
 	long hours, minutes;
 
-	time (&local_t);
-	localtime_r (&local_t, &local_now);
+	local_now = g_date_time_new_now_local ();
 
-	if (local_now.tm_wday != now->tm_wday) {
-		if (clock_format == CLOCK_FORMAT_12) {
+	if (g_date_time_get_day_of_week (local_now) !=
+	    g_date_time_get_day_of_week (now)) {
+		if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
 			/* Translators: This is a strftime format string.
 			 * It is used to display the time in 12-hours format
 			 * (eg, like in the US: 8:10 am), when the local
@@ -453,7 +452,7 @@ format_time (struct tm   *now,
 		}
 	}
 	else {
-		if (clock_format == CLOCK_FORMAT_12) {
+		if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
 			/* Translators: This is a strftime format string.
 			 * It is used to display the time in 12-hours format
 			 * (eg, like in the US: 8:10 am). The %p expands to
@@ -468,10 +467,9 @@ format_time (struct tm   *now,
 		}
 	}
 
-	if (strftime (buf, sizeof (buf), format, now) <= 0) {
-		strcpy (buf, "???");
-	}
+        g_date_time_unref (local_now);
 
+        buf = g_date_time_format (now, format);
         hours = offset / 3600;
         minutes = labs (offset % 3600) / 60;
 
@@ -485,21 +483,19 @@ format_time (struct tm   *now,
 		tmp = g_strdup_printf ("%s <small>%s</small>", buf, tzname);
 	}
 
-	utf8 = g_locale_to_utf8 (tmp, -1, NULL, NULL, NULL);
-
-	g_free (tmp);
-
-	return utf8;
+	g_free (buf);
+	return tmp;
 }
 
 static char *
-convert_time_to_str (time_t now, ClockFormat clock_format)
+convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *timezone)
 {
 	const gchar *format;
-	struct tm *tm;
-	gchar buf[128];
+	GTimeZone *tz;
+	GDateTime *utc, *local;
+	char *ret;
 
-	if (clock_format == CLOCK_FORMAT_12) {
+	if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
                 /* Translators: This is a strftime format string.
                  * It is used to display the time in 12-hours format (eg, like
                  * in the US: 8:10 am). The %p expands to am/pm.
@@ -514,18 +510,27 @@ convert_time_to_str (time_t now, ClockFormat clock_format)
 		format = _("%H:%M");
 	}
 
-	tm = localtime (&now);
-	strftime (buf, sizeof (buf) - 1, format, tm);
+	tz = g_time_zone_new (timezone);
 
-	return g_locale_to_utf8 (buf, -1, NULL, NULL, NULL);
+	utc = g_date_time_new_from_unix_utc (now);
+	local = g_date_time_to_timezone (utc, tz);
+
+	ret = g_date_time_format (local, format);
+
+	g_date_time_unref (utc);
+	g_date_time_unref (local);
+	g_time_zone_unref (tz);
+
+	return ret;
 }
 
 void
 clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 {
         ClockLocationTilePrivate *priv = PRIVATE (this);
-        gchar *tmp, *tzname;
-        struct tm now;
+        gchar *tmp;
+	const char *tzname;
+	GDateTime *now;
 	long offset;
 	int format;
 
@@ -552,14 +557,16 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
                 return;
         }
 
-        clock_location_localtime (priv->location, &now);
+        now = clock_location_localtime (priv->location);
         tzname = clock_location_get_tzname (priv->location);
 
-        copy_tm (&now, &(priv->last_refresh));
+	if (priv->last_refresh)
+		g_date_time_unref (priv->last_refresh);
+	priv->last_refresh = g_date_time_ref (now);
 	priv->last_offset = clock_location_get_offset (priv->location);
 
         tmp = g_strdup_printf ("<big><b>%s</b></big>",
-                               clock_location_get_display_name (priv->location));
+                               clock_location_get_name (priv->location));
         gtk_label_set_markup (GTK_LABEL (priv->city_label), tmp);
         g_free (tmp);
 
@@ -567,7 +574,7 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 
 	offset = - priv->last_offset;
 
-	tmp = format_time (&now, tzname, format, offset);
+	tmp = format_time (now, tzname, format, offset);
 
         gtk_label_set_markup (GTK_LABEL (priv->time_label), tmp);
 
@@ -575,41 +582,43 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 }
 
 void
-weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkTooltip *tooltip,
-			    ClockFormat clock_format)
+weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTooltip *tooltip,
+			    GDesktopClockFormat clock_format)
 {
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
-	const gchar *conditions, *wind;
+	gchar *conditions, *sky, *wind;
 	gchar *temp, *apparent;
 	gchar *line1, *line2, *line3, *line4, *tip;
 	const gchar *icon_name;
-	const gchar *sys_timezone;
 	time_t sunrise_time, sunset_time;
 	gchar *sunrise_str, *sunset_str;
+	const char *timezone;
+	gdouble unused;
+	GWeatherWindDirection unused2;
 
-       	icon_name = weather_info_get_icon_name (info);
+       	icon_name = gweather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
         pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48,
                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
         if (pixbuf)
                 gtk_tooltip_set_icon (tooltip, pixbuf);
 
-	conditions = weather_info_get_conditions (info);
-	if (strcmp (conditions, "-") != 0)
+	conditions = gweather_info_get_conditions (info);
+	sky = gweather_info_get_sky (info);
+	if (strcmp (conditions, "-") != 0) {
 		line1 = g_strdup_printf (_("%s, %s"),
-					 conditions,
-					 weather_info_get_sky (info));
-	else
-		line1 = g_strdup (weather_info_get_sky (info));
+					 conditions, sky);
+		g_free (sky);
+	} else {
+		line1 = sky;
+	}
+	g_free (conditions);
 
-	/* we need to g_strdup() since both functions return the same address
-	 * of a static buffer */
-	temp = g_strdup (weather_info_get_temp (info));
-	apparent = g_strdup (weather_info_get_apparent (info));
+	temp = gweather_info_get_temp (info);
+	apparent = gweather_info_get_apparent (info);
 	if (strcmp (apparent, temp) != 0 &&
-	    /* FMQ: it's broken to read from another module's translations; add some API to libgweather. */
-            strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
+	    gweather_info_get_value_apparent (info, GWEATHER_TEMP_UNIT_DEFAULT, &unused))
 		/* Translators: The two strings are temperatures. */
 		line2 = g_strdup_printf (_("%s, feels like %s"), temp, apparent);
 	else
@@ -617,33 +626,25 @@ weather_info_setup_tooltip (WeatherInfo *info, ClockLocation *location, GtkToolt
 	g_free (temp);
 	g_free (apparent);
 
-	wind = weather_info_get_wind (info);
-        if (strcmp (apparent, dgettext ("gnome-applets-2.0", "Unknown")) != 0)
+	wind = gweather_info_get_wind (info);
+        if (gweather_info_get_value_wind (info, GWEATHER_SPEED_UNIT_DEFAULT, &unused, &unused2))
 		line3 = g_strdup_printf ("%s\n", wind);
 	else
 		line3 = g_strdup ("");
 
-	sys_timezone = getenv ("TZ");
-	setenv ("TZ", clock_location_get_timezone (location), 1);
-	tzset ();
-	if (weather_info_get_value_sunrise (info, &sunrise_time))
-		sunrise_str = convert_time_to_str (sunrise_time, clock_format);
+	timezone = clock_location_get_timezone (location);
+	if (gweather_info_get_value_sunrise (info, &sunrise_time))
+		sunrise_str = convert_time_to_str (sunrise_time, clock_format, timezone);
 	else
 		sunrise_str = g_strdup ("???");
-	if (weather_info_get_value_sunset (info, &sunset_time))
-		sunset_str = convert_time_to_str (sunset_time, clock_format);
+	if (gweather_info_get_value_sunset (info, &sunset_time))
+		sunset_str = convert_time_to_str (sunset_time, clock_format, timezone);
 	else
 		sunset_str = g_strdup ("???");
 	line4 = g_strdup_printf (_("Sunrise: %s / Sunset: %s"),
 				 sunrise_str, sunset_str);
 	g_free (sunrise_str);
 	g_free (sunset_str);
-
-	if (sys_timezone)
-		setenv ("TZ", sys_timezone, 1);
-	else
-		unsetenv ("TZ");
-	tzset ();
 
 	tip = g_strdup_printf ("<b>%s</b>\n%s\n%s%s", line1, line2, line3, line4);
 	gtk_tooltip_set_markup (tooltip, tip);
@@ -664,12 +665,12 @@ weather_tooltip (GtkWidget  *widget,
 {
         ClockLocationTile *tile = data;
         ClockLocationTilePrivate *priv = PRIVATE (tile);
-	WeatherInfo *info;
+	GWeatherInfo *info;
 	int clock_format;
 
 	info = clock_location_get_weather_info (priv->location);
 
-	if (!info || !weather_info_is_valid (info))
+	if (!info || !gweather_info_is_valid (info))
 		return FALSE;
 
 	g_signal_emit (tile, signals[NEED_CLOCK_FORMAT], 0, &clock_format);
@@ -680,7 +681,7 @@ weather_tooltip (GtkWidget  *widget,
 }
 
 static void
-update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
+update_weather_icon (ClockLocation *loc, GWeatherInfo *info, gpointer data)
 {
         ClockLocationTile *tile = data;
         ClockLocationTilePrivate *priv = PRIVATE (tile);
@@ -688,10 +689,10 @@ update_weather_icon (ClockLocation *loc, WeatherInfo *info, gpointer data)
         GtkIconTheme *theme = NULL;
         const gchar *icon_name;
 
-        if (!info || !weather_info_is_valid (info))
+        if (!info || !gweather_info_is_valid (info))
                 return;
 
-        icon_name = weather_info_get_icon_name (info);
+        icon_name = gweather_info_get_icon_name (info);
         theme = gtk_icon_theme_get_default ();
         pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
                                            GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);

@@ -51,7 +51,7 @@ typedef enum {
 
 struct _ClockFacePrivate
 {
-        struct tm time; /* the time on the clock face */
+	GDateTime *time; /* the time on the clock face */
         int minute_offset; /* the offset of the minutes hand */
 
         ClockFaceSize size;
@@ -137,9 +137,9 @@ clock_face_draw (GtkWidget *this, cairo_t *cr)
         }
 
         /* clock hands */
-        hours = priv->time.tm_hour;
-        minutes = priv->time.tm_min + priv->minute_offset;
-        seconds = priv->time.tm_sec;
+        hours = g_date_time_get_hour (priv->time);
+        minutes = g_date_time_get_minute (priv->time) + priv->minute_offset;
+        seconds = g_date_time_get_seconds (priv->time);
 
         cairo_set_line_width (cr, 1);
 
@@ -280,17 +280,17 @@ update_time_and_face (ClockFace *this,
 {
         ClockFacePrivate *priv;
 	ClockFaceTimeOfDay timeofday;
+	int hour;
 
         priv = this->priv;
 
+	if (priv->time)
+		g_date_time_unref (priv->time);
         /* update the time */
-        if (priv->location) {
-                clock_location_localtime (priv->location, &priv->time);
-        } else {
-                time_t timet;
-                time (&timet);
-                localtime_r (&timet, &priv->time);
-        }
+        if (priv->location)
+                priv->time = clock_location_localtime (priv->location);
+	else
+		priv->time = g_date_time_new_now_local ();
 
 	/* FIXME  this should be a gconf setting
          * Or we could use some code from clock-sun.c?
@@ -300,13 +300,14 @@ update_time_and_face (ClockFace *this,
          * evening 17-22
          * night 22-7
          */
-	if (priv->time.tm_hour < 7)
+	hour = g_date_time_get_hour (priv->time);
+	if (hour < 7)
 		timeofday = CLOCK_FACE_NIGHT;
-	else if (priv->time.tm_hour < 9)
+	else if (hour < 9)
 		timeofday = CLOCK_FACE_MORNING;
-	else if (priv->time.tm_hour < 17)
+	else if (hour < 17)
 		timeofday = CLOCK_FACE_DAY;
-	else if (priv->time.tm_hour < 22)
+	else if (hour < 22)
 		timeofday = CLOCK_FACE_EVENING;
 	else
 		timeofday = CLOCK_FACE_NIGHT;

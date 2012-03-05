@@ -29,6 +29,9 @@
 #define CALENDAR_WINDOW_H
 
 #include <gtk/gtk.h>
+#include <gio/gio.h>
+#include <gdesktop-enums.h>
+
 #include "clock-utils.h"
 
 G_BEGIN_DECLS
@@ -57,8 +60,7 @@ struct _CalendarWindowClass {
 };
 
 GType      calendar_window_get_type (void) G_GNUC_CONST;
-GtkWidget *calendar_window_new      (time_t     *static_current_time,
-				     const char *prefs_dir,
+GtkWidget *calendar_window_new      (GSettings  *applet_settings,
 				     gboolean    invert_order);
 
 void       calendar_window_refresh  (CalendarWindow *calwin);
@@ -71,9 +73,9 @@ void       calendar_window_set_invert_order (CalendarWindow *calwin,
 gboolean   calendar_window_get_show_weeks   (CalendarWindow *calwin);
 void       calendar_window_set_show_weeks   (CalendarWindow *calwin,
 					     gboolean        show_weeks);
-ClockFormat calendar_window_get_time_format (CalendarWindow *calwin);
-void       calendar_window_set_time_format  (CalendarWindow *calwin,
-					     ClockFormat     time_format);
+GDesktopClockFormat calendar_window_get_time_format (CalendarWindow      *calwin);
+void                calendar_window_set_time_format (CalendarWindow      *calwin,
+						     GDesktopClockFormat  time_format);
 
 G_END_DECLS
 

@@ -417,7 +417,7 @@ clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
 static gboolean
 clock_map_place_location (ClockMap *this, ClockLocation *loc, gboolean hilight)
 {
-        gfloat latitude, longitude;
+        gdouble latitude, longitude;
 	gint marker;
 
         clock_location_get_coords (loc, &latitude, &longitude);
