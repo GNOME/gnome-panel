@@ -464,12 +464,17 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass)
 static void
 panel_applet_frame_init (PanelAppletFrame *frame)
 {
+	GtkStyleContext *context;
+
 	frame->priv = PANEL_APPLET_FRAME_GET_PRIVATE (frame);
 
 	frame->priv->panel       = NULL;
 	frame->priv->orientation = PANEL_ORIENTATION_TOP;
 	frame->priv->applet_info = NULL;
 	frame->priv->has_handle  = FALSE;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (frame));
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 }
 
 static void
@@ -498,10 +503,23 @@ void
 panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 				       PanelOrientation  orientation)
 {
+	GtkStyleContext *context;
+
 	if (orientation == frame->priv->orientation)
 		return;
 
 	frame->priv->orientation = orientation;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (frame));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	gtk_widget_reset_style (GTK_WIDGET (frame));
+
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_orientation (frame, orientation);
 }
 
