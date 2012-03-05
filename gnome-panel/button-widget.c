@@ -440,7 +440,11 @@ button_widget_get_preferred_width (GtkWidget *widget,
 	GtkWidget *parent;
 	int size;
 
+	*minimal_width = *natural_width = 0;
+
 	parent = gtk_widget_get_parent (widget);
+	g_return_if_fail (PANEL_IS_WIDGET (parent));
+	size = panel_toplevel_get_size (PANEL_WIDGET (parent)->toplevel);
 
 	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		GtkStyleContext *context;
@@ -451,9 +455,8 @@ button_widget_get_preferred_width (GtkWidget *widget,
 		context = gtk_widget_get_style_context (widget);
 		gtk_style_context_get_padding (context, state, &padding);
 
-		size = gtk_widget_get_allocated_height (parent) + padding.left + padding.right;
-	} else
-		size = gtk_widget_get_allocated_width (parent);
+		size += padding.left + padding.right;
+	}
 
 	*minimal_width = *natural_width = size;
 }
@@ -467,11 +470,13 @@ button_widget_get_preferred_height (GtkWidget *widget,
 	GtkWidget *parent;
 	int size;
 
-	parent = gtk_widget_get_parent (widget);
+	*minimal_height = *natural_height = 0;
 
-	if (button_widget->priv->orientation & PANEL_HORIZONTAL_MASK)
-		size = gtk_widget_get_allocated_height (parent);
-	else {
+	parent = gtk_widget_get_parent (widget);
+	g_return_if_fail (PANEL_IS_WIDGET (parent));
+	size = panel_toplevel_get_size (PANEL_WIDGET (parent)->toplevel);
+
+	if (button_widget->priv->orientation & PANEL_VERTICAL_MASK) {
 		GtkStyleContext *context;
 		GtkStateFlags    state;
 		GtkBorder        padding;
@@ -480,9 +485,8 @@ button_widget_get_preferred_height (GtkWidget *widget,
 		context = gtk_widget_get_style_context (widget);
 		gtk_style_context_get_padding (context, state, &padding);
 
-		size = gtk_widget_get_allocated_width (parent) + padding.top + padding.bottom;
+		size += padding.top + padding.bottom;
 	}
-
 
 	*minimal_height = *natural_height = size;
 }
