@@ -1692,6 +1692,7 @@ panel_widget_dispose (GObject *obj)
 static void
 panel_widget_init (PanelWidget *panel)
 {
+	GtkStyleContext *context;
 	GtkWidget *widget = (GtkWidget *) panel;
 
 	gtk_widget_set_events (
@@ -1709,6 +1710,9 @@ panel_widget_init (PanelWidget *panel)
 	panel->nb_applets_size_hints = 0;
 	panel->applets_hints = NULL;
 	panel->applets_using_hint = NULL;
+
+	context = gtk_widget_get_style_context (widget);
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
 	panel_background_init (&panel->background,
 			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
@@ -2533,7 +2537,19 @@ void
 panel_widget_set_orientation (PanelWidget    *panel_widget,
 			      GtkOrientation  orientation)
 {
+	GtkStyleContext *context;
+
 	panel_widget->orient = orientation;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (panel_widget));
+	if (orientation == GTK_ORIENTATION_HORIZONTAL) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	panel_widget_style_updated (GTK_WIDGET (panel_widget));
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
