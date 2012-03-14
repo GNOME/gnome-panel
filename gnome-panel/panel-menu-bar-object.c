@@ -83,6 +83,11 @@ panel_menu_bar_object_init (PanelMenuBarObject *menubar)
         g_object_unref (provider);
 	gtk_style_context_add_class (context, "gnome-panel-menu-bar");
 
+	if (menubar->priv->orientation & PANEL_HORIZONTAL_MASK)
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	else
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+
 	menubar->priv->panel = NULL;
 }
 
@@ -346,12 +351,24 @@ void
 panel_menu_bar_object_set_orientation (PanelMenuBarObject *menubar,
 				       PanelOrientation    orientation)
 {
+	GtkStyleContext *context;
+
         g_return_if_fail (PANEL_IS_MENU_BAR_OBJECT (menubar));
 
         if (menubar->priv->orientation == orientation)
                 return;
 
         menubar->priv->orientation = orientation;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (menubar));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	gtk_widget_reset_style (GTK_WIDGET (menubar));
 
         panel_menu_bar_object_update_orientation (menubar);
 
