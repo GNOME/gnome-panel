@@ -4252,6 +4252,8 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
+	GtkStyleContext *context;
+
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
 	toplevel->priv->toplevel_id      = NULL;
@@ -4353,6 +4355,9 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
         /* We don't want a resize grip on the panel */
         gtk_window_set_has_resize_grip (GTK_WINDOW (toplevel), FALSE);
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 }
 
 PanelWidget *
@@ -4745,6 +4750,7 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	gboolean   rotate;
 	int        monitor_width;
 	int        monitor_height;
+	GtkStyleContext *context;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -4812,6 +4818,16 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	}
 
 	toplevel->priv->orientation = orientation;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+	if (orientation & PANEL_HORIZONTAL_MASK) {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	} else {
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	}
+	gtk_widget_reset_style (GTK_WIDGET (toplevel));
 
 	panel_toplevel_update_hide_buttons (toplevel);
 
