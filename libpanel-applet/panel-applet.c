@@ -651,12 +651,33 @@ static void
 panel_applet_set_orient (PanelApplet      *applet,
 			 PanelAppletOrient orient)
 {
+	GtkStyleContext *context;
+
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	if (applet->priv->orient == orient)
 		return;
 
 	applet->priv->orient = orient;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+	switch (orient) {
+	case PANEL_APPLET_ORIENT_UP:
+	case PANEL_APPLET_ORIENT_DOWN:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+		break;
+	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		break;
+	default:
+		g_assert_not_reached();
+		break;
+	}
+	gtk_widget_reset_style (GTK_WIDGET (applet));
+
 	g_signal_emit (G_OBJECT (applet),
 		       panel_applet_signals [CHANGE_ORIENT],
 		       0, orient);
@@ -2014,6 +2035,8 @@ panel_applet_setup (PanelApplet *applet)
 static void
 panel_applet_init (PanelApplet *applet)
 {
+	GtkStyleContext *context;
+
 	applet->priv = PANEL_APPLET_GET_PRIVATE (applet);
 
 	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;
@@ -2047,6 +2070,9 @@ panel_applet_init (PanelApplet *applet)
 	gtk_widget_set_events (GTK_WIDGET (applet),
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK);
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
 }
