@@ -243,7 +243,12 @@ panel_applet_container_plug_removed (PanelAppletContainer *container)
 	g_object_unref (container->priv->applet_proxy);
 	container->priv->applet_proxy = NULL;
 
-	g_signal_emit (container, signals[APPLET_BROKEN], 0);
+	/* The "plug-removed" signal is also emitted when the socket is being
+	 * unrealized (eg., when PanelAppletContainer is torn down during
+	 * cleanup on exit). Only emit "applet-broken" if the socket is
+	 * still realized. */
+	if (gtk_widget_get_realized (container->priv->socket))
+		g_signal_emit (container, signals[APPLET_BROKEN], 0);
 
 	/* Continue destroying, in case of reloading
 	 * a new frame widget is created
