@@ -961,9 +961,9 @@ handle_appointments_changed (CalendarWindow *calwin)
                                                   appointment->start_time,
                                                   year, month, day);
 
-                if (g_ascii_strcasecmp (appointment->uri, "weather") == 0)
+                if (g_ascii_strcasecmp (appointment->backend_name, "weather") == 0)
                         type = APPOINTMENT_TYPE_WEATHER;
-                else if (g_ascii_strcasecmp (appointment->uri, "contacts") == 0)
+                else if (g_ascii_strcasecmp (appointment->backend_name, "contacts") == 0)
                         type = APPOINTMENT_TYPE_BIRTHDAY;
                 else
                         type = APPOINTMENT_TYPE_APPOINTMENT;

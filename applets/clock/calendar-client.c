@@ -30,17 +30,12 @@
 #include <libintl.h>
 #include <string.h>
 #define HANDLE_LIBICAL_MEMORY
-#include <libecal/e-cal.h>
-#include <libecal/e-cal-time-util.h>
-#include <libecal/e-cal-recur.h>
+#include <libecal/libecal.h>
 
 #include "calendar-sources.h"
 
 #undef CALENDAR_ENABLE_DEBUG
 #include "calendar-debug.h"
-
-#define CALENDAR_CONFIG_PREFIX   "/apps/evolution/calendar"
-#define CALENDAR_CONFIG_TIMEZONE CALENDAR_CONFIG_PREFIX "/display/timezone"
 
 #ifndef _
 #define _(x) gettext(x)
@@ -85,7 +80,7 @@ struct _CalendarClientPrivate
   icaltimezone        *zone;
 
   guint                zone_listener;
-  GConfClient         *gconf_client;
+  GSettings           *calendar_settings;
 
   guint                day;
   guint                month;
@@ -106,7 +101,7 @@ static void calendar_client_get_property (GObject             *object,
 
 static GSList *calendar_client_update_sources_list         (CalendarClient       *client,
 							    GSList               *sources,
-							    GSList               *esources,
+							    GList                *esources,
 							    guint                 changed_signal_id);
 static void    calendar_client_appointment_sources_changed (CalendarClient       *client);
 static void    calendar_client_task_sources_changed        (CalendarClient       *client);
@@ -236,24 +231,18 @@ calendar_client_class_init (CalendarClientClass *klass)
 /* The current timezone, e.g. "Europe/London". It may be NULL, in which case
    you should assume UTC. */
 static gchar *
-calendar_client_config_get_timezone (GConfClient *gconf_client)
+calendar_client_config_get_timezone (GSettings *calendar_settings)
 {
-  char *location;
-
-  location = gconf_client_get_string (gconf_client,
-                                      CALENDAR_CONFIG_TIMEZONE,
-                                      NULL);
-
-  return location;
+  return g_settings_get_string (calendar_settings, "timezone");
 }
 
 static icaltimezone *
-calendar_client_config_get_icaltimezone (GConfClient *gconf_client)
+calendar_client_config_get_icaltimezone (GSettings *calendar_settings)
 {
   char         *location;
   icaltimezone *zone = NULL;
 	
-  location = calendar_client_config_get_timezone (gconf_client);
+  location = calendar_client_config_get_timezone (calendar_settings);
   if (!location)
     return icaltimezone_get_utc_timezone ();
 
@@ -266,23 +255,23 @@ calendar_client_config_get_icaltimezone (GConfClient *gconf_client)
 static void
 calendar_client_set_timezone (CalendarClient *client) 
 {
-  GSList *l;
-  GSList *esources;
+  GList *list, *link;
 
-  client->priv->zone = calendar_client_config_get_icaltimezone (client->priv->gconf_client);
+  client->priv->zone = calendar_client_config_get_icaltimezone (client->priv->calendar_settings);
 
-  esources = calendar_sources_get_appointment_sources (client->priv->calendar_sources);
-  for (l = esources; l; l = l->next) {
-    ECal *source = l->data;
-			
-    e_cal_set_default_timezone (source, client->priv->zone, NULL);
-  }
+  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
+  for (link = list; link != NULL; link = g_list_next (link))
+    {
+      ECal *cal = E_CAL (link->data);
+
+      e_cal_set_default_timezone (cal, client->priv->zone, NULL);
+    }
+  g_list_free (list);
 }
 
 static void
-calendar_client_timezone_changed_cb (GConfClient    *gconf_client,
-                                     guint           id,
-                                     GConfEntry     *entry,
+calendar_client_timezone_changed_cb (GSettings      *calendar_settings,
+                                     const gchar    *key,
                                      CalendarClient *client)
 {
   calendar_client_set_timezone (client);
@@ -365,20 +354,22 @@ load_calendars (CalendarClient    *client,
 static void
 calendar_client_init (CalendarClient *client)
 {
-  GSList *esources;
+  GList *list;
 
   client->priv = CALENDAR_CLIENT_GET_PRIVATE (client);
 
   client->priv->calendar_sources = calendar_sources_get ();
-  client->priv->gconf_client = gconf_client_get_default ();
+  client->priv->calendar_settings = g_settings_new ("org.gnome.evolution.calendar");
 
-  esources = calendar_sources_get_appointment_sources (client->priv->calendar_sources);
+  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
   client->priv->appointment_sources =
-    calendar_client_update_sources_list (client, NULL, esources, signals [APPOINTMENTS_CHANGED]);
+    calendar_client_update_sources_list (client, NULL, list, signals [APPOINTMENTS_CHANGED]);
+  g_list_free (list);
 
-  esources = calendar_sources_get_task_sources (client->priv->calendar_sources);
+  list = calendar_sources_get_task_clients (client->priv->calendar_sources);
   client->priv->task_sources =
-    calendar_client_update_sources_list (client, NULL, esources, signals [TASKS_CHANGED]);
+    calendar_client_update_sources_list (client, NULL, list, signals [TASKS_CHANGED]);
+  g_list_free (list);
  
   /* set the timezone before loading the clients */ 
   calendar_client_set_timezone (client);
@@ -394,15 +385,10 @@ calendar_client_init (CalendarClient *client)
 			    G_CALLBACK (calendar_client_task_sources_changed),
 			    client);
 
-  gconf_client_add_dir (client->priv->gconf_client,
-			CALENDAR_CONFIG_PREFIX,
-			GCONF_CLIENT_PRELOAD_NONE,
-			NULL);
-
-  client->priv->zone_listener = gconf_client_notify_add (client->priv->gconf_client,
-                                                         CALENDAR_CONFIG_TIMEZONE,
-                                                         (GConfClientNotifyFunc) calendar_client_timezone_changed_cb,
-                                                         client, NULL, NULL);
+  client->priv->zone_listener = g_signal_connect (client->priv->calendar_settings,
+                                                  "changed::timezone",
+                                                  G_CALLBACK (calendar_client_timezone_changed_cb),
+                                                  client);
 
   client->priv->day   = -1;
   client->priv->month = -1;
@@ -417,18 +403,14 @@ calendar_client_finalize (GObject *object)
 
   if (client->priv->zone_listener)
     {
-      gconf_client_notify_remove (client->priv->gconf_client,
-                                  client->priv->zone_listener);
+      g_signal_handler_disconnect (client->priv->calendar_settings,
+                                   client->priv->zone_listener);
       client->priv->zone_listener = 0;
     }
 
-  gconf_client_remove_dir (client->priv->gconf_client,
-                           CALENDAR_CONFIG_PREFIX,
-                           NULL);
-
-  if (client->priv->gconf_client)
-    g_object_unref (client->priv->gconf_client);
-  client->priv->gconf_client = NULL;
+  if (client->priv->calendar_settings)
+    g_object_unref (client->priv->calendar_settings);
+  client->priv->calendar_settings = NULL;
 
   for (l = client->priv->appointment_sources; l; l = l->next)
     {
@@ -737,37 +719,60 @@ static char *
 get_source_color (ECal *esource)
 {
   ESource *source;
+  ECalSourceType source_type;
+  ESourceSelectable *extension;
+  const gchar *extension_name;
 
   g_return_val_if_fail (E_IS_CAL (esource), NULL);
 
   source = e_cal_get_source (esource);
+  source_type = e_cal_get_source_type (esource);
 
-  return g_strdup (e_source_peek_color_spec (source));
+  switch (source_type)
+    {
+      case E_CAL_SOURCE_TYPE_EVENT:
+        extension_name = E_SOURCE_EXTENSION_CALENDAR;
+        break;
+      case E_CAL_SOURCE_TYPE_TODO:
+        extension_name = E_SOURCE_EXTENSION_TASK_LIST;
+        break;
+      default:
+        g_return_val_if_reached (NULL);
+    }
+
+  extension = e_source_get_extension (source, extension_name);
+
+  return e_source_selectable_dup_color (extension);
 }
 
 static gchar *
-get_source_uri (ECal *esource)
+get_source_backend_name (ECal *esource)
 {
-    ESource *source;
-    gchar   *string;
-    gchar  **list;
+  ESource *source;
+  ECalSourceType source_type;
+  ESourceBackend *extension;
+  const gchar *extension_name;
 
-    g_return_val_if_fail (E_IS_CAL (esource), NULL);
+  g_return_val_if_fail (E_IS_CAL (esource), NULL);
 
-    source = e_cal_get_source (esource);
-    string = g_strdup (e_source_get_uri (source));
-    if (string) {
-        list = g_strsplit (string, ":", 2);
-        g_free (string);
+  source = e_cal_get_source (esource);
+  source_type = e_cal_get_source_type (esource);
 
-        if (list[0]) {
-            string = g_strdup (list[0]);
-            g_strfreev (list);
-            return string;
-        }
-	g_strfreev (list);
+  switch (source_type)
+    {
+      case E_CAL_SOURCE_TYPE_EVENT:
+        extension_name = E_SOURCE_EXTENSION_CALENDAR;
+        break;
+      case E_CAL_SOURCE_TYPE_TODO:
+        extension_name = E_SOURCE_EXTENSION_TASK_LIST;
+        break;
+      default:
+        g_return_val_if_reached (NULL);
     }
-    return NULL;
+
+  extension = e_source_get_extension (source, extension_name);
+
+  return e_source_backend_dup_backend_name (extension);
 }
 
 static inline int
@@ -798,7 +803,7 @@ calendar_appointment_equal (CalendarAppointment *a,
 
   return
     null_safe_strcmp (a->uid,          b->uid)          == 0 &&
-    null_safe_strcmp (a->uri,          b->uri)          == 0 &&
+    null_safe_strcmp (a->backend_name, b->backend_name) == 0 &&
     null_safe_strcmp (a->summary,      b->summary)      == 0 &&
     null_safe_strcmp (a->description,  b->description)  == 0 &&
     null_safe_strcmp (a->color_string, b->color_string) == 0 &&
@@ -830,7 +835,7 @@ calendar_appointment_copy (CalendarAppointment *appointment,
     }
 
   appointment_copy->uid          = g_strdup (appointment->uid);
-  appointment_copy->uri          = g_strdup (appointment->uri);
+  appointment_copy->backend_name = g_strdup (appointment->backend_name);
   appointment_copy->summary      = g_strdup (appointment->summary);
   appointment_copy->description  = g_strdup (appointment->description);
   appointment_copy->color_string = g_strdup (appointment->color_string);
@@ -855,8 +860,8 @@ calendar_appointment_finalize (CalendarAppointment *appointment)
   g_free (appointment->rid);
   appointment->rid = NULL;
 
-  g_free (appointment->uri);
-  appointment->uri = NULL;
+  g_free (appointment->backend_name);
+  appointment->backend_name = NULL;
 
   g_free (appointment->summary);
   appointment->summary = NULL;
@@ -879,7 +884,7 @@ calendar_appointment_init (CalendarAppointment  *appointment,
 {
   appointment->uid          = get_ical_uid (ical);
   appointment->rid          = get_ical_rid (ical);
-  appointment->uri          = get_source_uri (source->source);
+  appointment->backend_name = get_source_backend_name (source->source);
   appointment->summary      = get_ical_summary (ical);
   appointment->description  = get_ical_description (ical);
   appointment->color_string = get_source_color (source->source);
@@ -1686,19 +1691,20 @@ compare_calendar_sources (CalendarClientSource *s1,
 static GSList *
 calendar_client_update_sources_list (CalendarClient *client,
 				     GSList         *sources,
-				     GSList         *esources,
+				     GList          *esources,
 				     guint           changed_signal_id)
 {
+  GList *link;
   GSList *retval, *l;
 
   retval = NULL;
 
-  for (l = esources; l; l = l->next)
+  for (link = esources; link != NULL; link = g_list_next (link->next))
     {
       CalendarClientSource  dummy_source;
       CalendarClientSource *new_source;
       GSList               *s;
-      ECal                 *esource = l->data;
+      ECal                 *esource = link->data;
 
       dummy_source.source = esource;
 
@@ -1743,39 +1749,43 @@ calendar_client_update_sources_list (CalendarClient *client,
 static void
 calendar_client_appointment_sources_changed (CalendarClient  *client)
 {
-  GSList *esources;
+  GList *list;
 
   dprintf ("appointment_sources_changed: updating ...\n");
 
-  esources = calendar_sources_get_appointment_sources (client->priv->calendar_sources);
+  list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
 
   client->priv->appointment_sources = 
     calendar_client_update_sources_list (client,
 					 client->priv->appointment_sources,
-					 esources,
+					 list,
 					 signals [APPOINTMENTS_CHANGED]);
 
   load_calendars (client, CALENDAR_EVENT_APPOINTMENT);
   calendar_client_update_appointments (client);
+
+  g_list_free (list);
 }
 
 static void
 calendar_client_task_sources_changed (CalendarClient  *client)
 {
-  GSList *esources;
+  GList *list;
 
   dprintf ("task_sources_changed: updating ...\n");
 
-  esources = calendar_sources_get_task_sources (client->priv->calendar_sources);
+  list = calendar_sources_get_task_clients (client->priv->calendar_sources);
 
   client->priv->task_sources = 
     calendar_client_update_sources_list (client,
 					 client->priv->task_sources,
-					 esources,
+					 list,
 					 signals [TASKS_CHANGED]);
 
   load_calendars (client, CALENDAR_EVENT_TASK);
   calendar_client_update_tasks (client);
+
+  g_list_free (list);
 }
 
 void
