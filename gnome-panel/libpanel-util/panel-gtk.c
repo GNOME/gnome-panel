@@ -85,7 +85,7 @@ panel_gtk_file_chooser_add_image_preview (GtkFileChooser *chooser)
 char *
 panel_gtk_get_bookmark_file (void)
 {
-	if (gtk_check_version (3, 5, 1))
+	if (gtk_check_version (3, 5, 1) == NULL)
 		return g_build_filename (g_get_user_config_dir (),
 					 "gtk-3.0", "bookmarks", NULL);
 	else
