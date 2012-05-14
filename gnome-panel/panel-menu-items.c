@@ -46,6 +46,7 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
+#include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-session-manager.h>
@@ -62,7 +63,6 @@
 #include "panel-stock-icons.h"
 #include "panel-util.h"
 
-#define BOOKMARKS_FILENAME      ".gtk-bookmarks"
 #define DESKTOP_IS_HOME_DIR_DIR "/apps/nautilus/preferences"
 #define DESKTOP_IS_HOME_DIR_KEY "/apps/nautilus/preferences/desktop_is_home_dir"
 #define NAMES_DIR               "/apps/nautilus/desktop"
@@ -516,8 +516,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	GSList      *add_bookmarks, *l;
 	PanelBookmark *bookmark;
 
-	filename = g_build_filename (g_get_home_dir (),
-				     BOOKMARKS_FILENAME, NULL);
+	filename = panel_gtk_get_bookmark_file ();
 
 	io_channel = g_io_channel_new_file (filename, "r", NULL);
 	g_free (filename);
@@ -1518,8 +1517,7 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
-	bookmarks_filename = g_build_filename (g_get_home_dir (),
-					       BOOKMARKS_FILENAME, NULL);
+	bookmarks_filename = panel_gtk_get_bookmark_file ();
 	bookmark = g_file_new_for_path (bookmarks_filename);
 
 	error = NULL;
