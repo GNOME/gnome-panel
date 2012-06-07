@@ -83,7 +83,7 @@ dnl pkg-config dependency checks
 
 PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-3.0)
 
-PKG_CHECK_MODULES(PANEL, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED cairo-xlib glib-2.0 >= $GLIB_REQUIRED gmodule-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED dconf)
+PKG_CHECK_MODULES(PANEL, gmodule-2.0 >= $GLIB_REQUIRED gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED cairo-xlib glib-2.0 >= $GLIB_REQUIRED gmodule-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED gconf-2.0 >= $GCONF_REQUIRED libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED dconf)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
