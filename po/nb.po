@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-25 14:58+0100\n"
-"PO-Revision-Date: 2012-01-25 14:59+0100\n"
+"POT-Creation-Date: 2012-07-09 15:15+0200\n"
+"PO-Revision-Date: 2012-07-09 15:17+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -26,233 +26,216 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:324 ../applets/clock/clock.c:452
-#: ../applets/clock/clock-location-tile.c:507
+#: ../applets/clock/calendar-window.c:310
+#: ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10).
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:457
-#: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
-#: ../applets/clock/clock-location-tile.c:514
+#: ../applets/clock/calendar-window.c:315
+#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:335
+#: ../applets/clock/calendar-window.c:321
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:835
+#: ../applets/clock/calendar-window.c:830
 msgid "Tasks"
 msgstr "Oppgaver"
 
-#: ../applets/clock/calendar-window.c:835
-#: ../applets/clock/calendar-window.c:1018
-#: ../applets/clock/calendar-window.c:1624
+#: ../applets/clock/calendar-window.c:830
+#: ../applets/clock/calendar-window.c:1013
+#: ../applets/clock/calendar-window.c:1551
 msgid "Edit"
 msgstr "Rediger"
 
-#: ../applets/clock/calendar-window.c:958
+#: ../applets/clock/calendar-window.c:953
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: ../applets/clock/calendar-window.c:1102
+#: ../applets/clock/calendar-window.c:1097
 msgid "Appointments"
 msgstr "Avtaler"
 
-#: ../applets/clock/calendar-window.c:1127
+#: ../applets/clock/calendar-window.c:1122
 msgid "Birthdays and Anniversaries"
 msgstr "Fødsels- og bryllupsdager"
 
-#: ../applets/clock/calendar-window.c:1152
+#: ../applets/clock/calendar-window.c:1147
 msgid "Weather Information"
 msgstr "Informasjon om vær"
 
-#: ../applets/clock/calendar-window.c:1624 ../applets/clock/clock.ui.h:22
+#: ../applets/clock/calendar-window.c:1551 ../applets/clock/clock.ui.h:22
 msgid "Locations"
 msgstr "Steder"
 
-#: ../applets/clock/calendar-window.c:1922
+#: ../applets/clock/calendar-window.c:1806
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format (eg, like
-#. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:452
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format (eg, like
-#. * in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:457 ../applets/clock/clock.c:1594
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the date. Replace %e with %d if, when
-#. * the day of the month as a decimal number is a single digit,
-#. * it should begin with a 0 in your locale (e.g. "May 01"
-#. * instead of "May  1").
-#: ../applets/clock/clock.c:468
-msgid "%a %b %e"
-msgstr "%a %e %b"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:475
-#, c-format
-msgid ""
-"%1$s\n"
-"%2$s"
-msgstr ""
-"%1$s\n"
-"%2$s"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:483
-#, c-format
-msgid "%1$s, %2$s"
-msgstr "%1$s, %2$s"
-
-#. Show date in tooltip.
-#. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:649
+#: ../applets/clock/clock.c:310
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:322
 msgid "Click to hide your appointments and tasks"
 msgstr "Klikk for å skjule dine avtaler og oppgaver"
 
-#: ../applets/clock/clock.c:682
+#: ../applets/clock/clock.c:325
 msgid "Click to view your appointments and tasks"
 msgstr "Klikk for å vise dine avtaler og oppgaver"
 
-#: ../applets/clock/clock.c:686
+#: ../applets/clock/clock.c:329
 msgid "Click to hide month calendar"
 msgstr "Klikk for å skjule månedskalender"
 
-#: ../applets/clock/clock.c:689
+#: ../applets/clock/clock.c:332
 msgid "Click to view month calendar"
 msgstr "Klikk for å vise månedskalender"
 
-#: ../applets/clock/clock.c:1432
+#: ../applets/clock/clock.c:992
 msgid "Computer Clock"
 msgstr "Datamaskinklokke"
 
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1579
-msgid "%I:%M:%S %p"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1587
-msgid "%I:%M %p"
-msgstr "%H:%M"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display a date in the full format (so that people can
-#. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1633
-msgid "%A, %B %d %Y"
-msgstr "%A, %B %d %Y"
-
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1171
 msgid "Failed to open the time settings"
 msgstr "Klarte ikke å åpne innstillinger for klokken"
 
-#: ../applets/clock/clock.c:1722 ../applets/fish/fish.c:1317
-#: ../applets/wncklet/window-list.c:159
+#: ../applets/clock/clock.c:1191 ../applets/fish/fish.c:1307
+#: ../applets/wncklet/window-list.c:155
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Brukervalg"
 
-#: ../applets/clock/clock.c:1725
-msgid "Copy _Time"
-msgstr "Kopier _tid"
+#: ../applets/clock/clock.c:1194
+msgid "Copy Date and _Time"
+msgstr "Kopier dato og _tid"
 
-#: ../applets/clock/clock.c:1728
-msgid "Copy _Date"
-msgstr "Kopier _dato"
-
-#: ../applets/clock/clock.c:1731
+#: ../applets/clock/clock.c:1197
 msgid "Ad_just Date & Time"
 msgstr "_Juster dato og klokkeslett"
 
-#: ../applets/clock/clock.c:2568
-msgid "Custom format"
-msgstr "Tilpasset format"
-
-#: ../applets/clock/clock.c:3055
+#: ../applets/clock/clock.c:1768
 msgid "Choose Location"
 msgstr "Velg stede"
 
-#: ../applets/clock/clock.c:3134
+#: ../applets/clock/clock.c:1847
 msgid "Edit Location"
 msgstr "Rediger sted"
 
-#: ../applets/clock/clock.c:3281
+#: ../applets/clock/clock.c:1881
+msgid "Kelvin"
+msgstr "Kelvin"
+
+#: ../applets/clock/clock.c:1882
+msgid "Celsius"
+msgstr "Celsius"
+
+#: ../applets/clock/clock.c:1883
+msgid "Fahrenheit"
+msgstr "Fahrenheit"
+
+#: ../applets/clock/clock.c:1888
+msgid "Meters per second (m/s)"
+msgstr "Meter per sekund (m/s)"
+
+#: ../applets/clock/clock.c:1889
+msgid "Kilometers per hour (kph)"
+msgstr "Kilometer i timen (km/t)"
+
+#: ../applets/clock/clock.c:1890
+msgid "Miles per hour (mph)"
+msgstr "Mil i timen (mpt)"
+
+#: ../applets/clock/clock.c:1891
+msgid "Knots"
+msgstr "Knop"
+
+#: ../applets/clock/clock.c:1892
+msgid "Beaufort scale"
+msgstr "Beaufortskala"
+
+#: ../applets/clock/clock.c:1945
 msgid "City Name"
 msgstr "Navn på by"
 
-#: ../applets/clock/clock.c:3285
+#: ../applets/clock/clock.c:1949
 msgid "City Time Zone"
 msgstr "Tidssone for by"
 
-#: ../applets/clock/clock.c:3472
-msgid "24 hour"
-msgstr "24 timer"
+#: ../applets/clock/clock-location-tile.c:188
+msgid "Failed to set the system timezone"
+msgstr "Klarte ikke å sette tidssone for systemet"
 
-#: ../applets/clock/clock.c:3473
-msgid "UNIX time"
-msgstr "UNIX-tid"
+#: ../applets/clock/clock-location-tile.c:236
+msgid "<small>Set...</small>"
+msgstr "<small>Sett …</small>"
 
-#: ../applets/clock/clock.c:3474
-msgid "Internet time"
-msgstr "Internett-tid"
+#: ../applets/clock/clock-location-tile.c:237
+msgid "<small>Set</small>"
+msgstr "<small>Sett</small>"
 
-#: ../applets/clock/clock.c:3482
-msgid "Custom _format:"
-msgstr "Tilpasset _format:"
+#: ../applets/clock/clock-location-tile.c:313
+msgid "Set location as current location and use its timezone for this computer"
+msgstr "Sett sted som aktivt sted og bruk tidssonen for denne datamaskinen"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:443
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:451
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:460
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:610
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, føles som %s"
+
+#: ../applets/clock/clock-location-tile.c:644
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Soloppgang: %s / Solnedgang: %s"
 
 #. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
 #: ../applets/clock/clock.ui.h:2
@@ -368,291 +351,12 @@ msgstr "Vær"
 msgid "Time _Settings"
 msgstr "Tidsinn_stillinger"
 
-#. Translators:
-#. This controls whether the GNOME panel clock should display time in 24 hour mode
-#. or 12 hour mode by default. The only valid values for this are "24-hour" and
-#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
-#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
-#.
-#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
-#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
-#. "12-hour", things will not work.
-#.
-#: ../applets/clock/clock.schemas.in.h:11
-msgid "24-hour"
-msgstr "24-hour"
-
-#: ../applets/clock/clock.schemas.in.h:12
-msgid "Hour format"
-msgstr "Timeformat"
-
-#: ../applets/clock/clock.schemas.in.h:13
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
-msgstr ""
-"Denne nøkkelen spesifiserer timeformatet som brukes av panelklokken. Mulige "
-"verdier er «12-hour», «24-hour», «internet», «unix» og «custom». Hvis den "
-"settes til «internet» vil klokken vise Internett-tid. Internett-tidsystemet "
-"deler dagen inn i 1000 pulser. Det er ingen tidssoner i dette systemet så "
-"tiden er den samme over hele verden. Hvis den settes til «unix» vil klokken "
-"vise tiden i sekunder siden Epoch, altså 1. januar 1970. Hvis den settes til "
-"«custom» vil den vise tiden i henhold til formatet som oppgis i nøkkelen "
-"«custom_key»."
-
-#: ../applets/clock/clock.schemas.in.h:14
-msgid "Custom format of the clock"
-msgstr "Tilpasset format for klokken"
-
-#: ../applets/clock/clock.schemas.in.h:15
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
-msgstr ""
-"Denne nøkkelen spesifiserer formatet som brukes av panelklokken når "
-"formatnøkkelen er satt til «custom». Du kan bruke "
-"konverteringsspesifikasjonene som er gyldige i strftime() for å tilpasse "
-"formatet. Se manualsiden for strftime()."
-
-#: ../applets/clock/clock.schemas.in.h:16
-msgid "Show time with seconds"
-msgstr "Vis tid med csekunder"
-
-#: ../applets/clock/clock.schemas.in.h:17
-msgid "If true, display seconds in time."
-msgstr "Vis sekunder i tid hvis satt til «true»."
-
-#: ../applets/clock/clock.schemas.in.h:18
-msgid "Show date in clock"
-msgstr "Vis dato i klokken"
-
-#: ../applets/clock/clock.schemas.in.h:19
-msgid "If true, display date in the clock, in addition to time."
-msgstr "Vis dato i klokken, i tillegg til tid hvis satt til «true»."
-
-#: ../applets/clock/clock.schemas.in.h:20
-msgid "Show date in tooltip"
-msgstr "Vis dato i verktøytipset"
-
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"Vis dato i verktøytipset når muspekeren holdes over klokken hvis satt til "
-"«true»."
-
-#: ../applets/clock/clock.schemas.in.h:22
-msgid "Show weather in clock"
-msgstr "Vis været i klokken"
-
-#: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display a weather icon."
-msgstr "Vis værikon hvis denne er satt til «true»."
-
-#: ../applets/clock/clock.schemas.in.h:24
-msgid "Show temperature in clock"
-msgstr "Vis temperaturen i klokken"
-
-#: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, show the temperature next to the weather icon."
-msgstr "Vis temperatur ved siden av værikonet hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:26
-msgid "Use UTC"
-msgstr "Bruk UTC"
-
-#: ../applets/clock/clock.schemas.in.h:27
-msgid ""
-"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-"timezones. The schema is retained for compatibility with older versions."
-msgstr ""
-"Bruk av denne nøkkelen gikk ut i GNOME 2.28 til fordel for bruk av "
-"tidssoner. Denne bevares for kompatibilitet med eldre versjoner."
-
-#: ../applets/clock/clock.schemas.in.h:28
-msgid "Time configuration tool"
-msgstr "Verktøy for konfigurering av tid"
-
-#: ../applets/clock/clock.schemas.in.h:29
-msgid ""
-"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
-"time configuration tool. The schema is retained for compatibility with older "
-"versions."
-msgstr ""
-"Bruk av denne nøkkelen gikk ut i GNOME 2.22 til fordel for et internt "
-"verktøy for å stille klokken. Denne bevares for kompatibilitet med eldre "
-"versjoner."
-
-#: ../applets/clock/clock.schemas.in.h:30
-msgid "Show week numbers in calendar"
-msgstr "Vis ukenummer i kalenderen"
-
-#: ../applets/clock/clock.schemas.in.h:31
-msgid "If true, show week numbers in the calendar."
-msgstr "Vis ukenummer i kalenderen hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Expand list of appointments"
-msgstr "Utvid liste med avtaler"
-
-#: ../applets/clock/clock.schemas.in.h:33
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Avtalelisten i kalendervinduet utvides hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:34
-msgid "Expand list of birthdays"
-msgstr "Utvid liste med fødselsdager"
-
-#: ../applets/clock/clock.schemas.in.h:35
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "Fødselsdagslisten i kalendervinduet utvides hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:36
-msgid "Expand list of tasks"
-msgstr "Utvid liste med oppgaver"
-
-#: ../applets/clock/clock.schemas.in.h:37
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "Utvid listen med oppgaver i kalendervinduet hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:38
-msgid "Expand list of weather information"
-msgstr "Utvid liste med informasjon om vær"
-
-#: ../applets/clock/clock.schemas.in.h:39
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Utvid listen med værinformasjon i kalendervinduet hvis sann."
-
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "Expand list of locations"
-msgstr "Utvid liste med steder"
-
-#: ../applets/clock/clock.schemas.in.h:41
-msgid "If true, expand the list of locations in the calendar window."
-msgstr ""
-"Utvid listen med steder i kalendervinduet hvis denne er satt til «true»."
-
-#: ../applets/clock/clock.schemas.in.h:42
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"Bruk av denne nøkkelen gikk ut i GNOME 2.6 til fordel for «format»-nøkkelen. "
-"Denne bevares for kompatibilitet med eldre versjoner."
-
-#: ../applets/clock/clock.schemas.in.h:43
-msgid "Use UNIX time"
-msgstr "Bruk UNIX tid"
-
-#: ../applets/clock/clock.schemas.in.h:44
-msgid "Use Internet time"
-msgstr "Bruk Internett-tid"
-
-#: ../applets/clock/clock.schemas.in.h:45
-msgid "List of locations"
-msgstr "Liste med steder"
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "A list of locations to display in the calendar window."
-msgstr "En liste med steder som vises i kalendervinduet."
-
-#: ../applets/clock/clock.schemas.in.h:47
-msgid "Temperature unit"
-msgstr "Enhet for temperatur"
-
-#: ../applets/clock/clock.schemas.in.h:48
-msgid "The unit to use when showing temperatures."
-msgstr "Enhet som skal brukes ved visning av temperaturer."
-
-#: ../applets/clock/clock.schemas.in.h:49
-msgid "Speed unit"
-msgstr "Enhet for hastighet"
-
-#: ../applets/clock/clock.schemas.in.h:50
-msgid "The unit to use when showing wind speed."
-msgstr "Enhet som skal brukes for vindhastighet."
-
-#: ../applets/clock/clock-location-tile.c:183
-msgid "Failed to set the system timezone"
-msgstr "Klarte ikke å sette tidssone for systemet"
-
-#: ../applets/clock/clock-location-tile.c:231
-msgid "<small>Set...</small>"
-msgstr "<small>Sett …</small>"
-
-#: ../applets/clock/clock-location-tile.c:232
-msgid "<small>Set</small>"
-msgstr "<small>Sett</small>"
-
-#: ../applets/clock/clock-location-tile.c:308
-msgid "Set location as current location and use its timezone for this computer"
-msgstr "Sett sted som aktivt sted og bruk tidssonen for denne datamaskinen"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:444
-msgid "%l:%M <small>%p (%A)</small>"
-msgstr "%l:%M <small>%p (%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:452
-msgid "%H:%M <small>(%A)</small>"
-msgstr "%H:%M <small>(%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:461
-msgid "%l:%M <small>%p</small>"
-msgstr "%l:%M <small>%p</small>"
-
-#: ../applets/clock/clock-location-tile.c:600
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
-msgid "Unknown"
-msgstr "Ukjent"
-
-#. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
-#, c-format
-msgid "%s, feels like %s"
-msgstr "%s, føles som %s"
-
-#: ../applets/clock/clock-location-tile.c:637
-#, c-format
-msgid "Sunrise: %s / Sunset: %s"
-msgstr "Soloppgang: %s / Solnedgang: %s"
-
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
-#: ../applets/wncklet/wncklet.c:74
-#: ../gnome-panel/libpanel-util/panel-show.c:239
+#: ../applets/clock/clock-utils.c:97 ../applets/fish/fish.c:164
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Kunne ikke vise hjelpdokument «%s»"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:189
-#: ../applets/wncklet/wncklet.c:103
+#: ../applets/clock/clock-utils.c:126 ../applets/fish/fish.c:190
 msgid "Error displaying help document"
 msgstr "Feil ved visning av hjelpdokument"
 
@@ -672,7 +376,7 @@ msgstr "Klokke"
 msgid "Get the current time and date"
 msgstr "Hent tid og dato"
 
-#: ../applets/fish/fish.c:217
+#: ../applets/fish/fish.c:218
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -685,26 +389,26 @@ msgstr ""
 "Vi vil på det sterkeste advare mot enhver bruk av %s som\n"
 "medfører at programmet gjør nytte for seg."
 
-#: ../applets/fish/fish.c:365 ../applets/fish/fish.c:481
+#: ../applets/fish/fish.c:358 ../applets/fish/fish.c:474
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
 
-#: ../applets/fish/fish.c:366
+#: ../applets/fish/fish.c:359
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Fisken %s, et samtidens orakel"
 
-#: ../applets/fish/fish.c:437
+#: ../applets/fish/fish.c:430
 msgid "Unable to locate the command to execute"
 msgstr "Kan ikke finne kommandoen som skal kjøres"
 
-#: ../applets/fish/fish.c:486
+#: ../applets/fish/fish.c:479
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Fisken %s sier:"
 
-#: ../applets/fish/fish.c:555
+#: ../applets/fish/fish.c:548
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -715,16 +419,16 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:632
+#: ../applets/fish/fish.c:625
 msgid "_Speak again"
 msgstr "_Si det igjen"
 
-#: ../applets/fish/fish.c:714
+#: ../applets/fish/fish.c:707
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Konfigurert kommando fungerer ikke og er erstattet av: %s"
 
-#: ../applets/fish/fish.c:748
+#: ../applets/fish/fish.c:741
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -735,7 +439,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:757
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -746,15 +450,15 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: ../applets/fish/fish.c:1167
+#: ../applets/fish/fish.c:1157
 msgid "The water needs changing"
 msgstr "Vannet må skiftes"
 
-#: ../applets/fish/fish.c:1169
+#: ../applets/fish/fish.c:1159
 msgid "Look at today's date!"
 msgstr "Se på datoen i dag!"
 
-#: ../applets/fish/fish.c:1262
+#: ../applets/fish/fish.c:1252
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, en historieforteller"
@@ -942,13 +646,13 @@ msgid "Restore to na_tive workspace"
 msgstr "Gjenoppre_tt til opprinnelig arbeidsområde"
 
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:723
+#: ../applets/wncklet/workspace-switcher.c:716
 #: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "rader"
 
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:723
+#: ../applets/wncklet/workspace-switcher.c:716
 msgid "columns"
 msgstr "kolonner"
 
@@ -987,6 +691,91 @@ msgstr "Vis arbeidsområde_navn i bytteren"
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspaces"
 msgstr "Arbeidsområder"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
+msgid "Show date in tooltip"
+msgstr "Vis dato i verktøytipset"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"Vis dato i verktøytipset når muspekeren holdes over klokken hvis satt til "
+"«true»."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
+msgid "Show weather in clock"
+msgstr "Vis været i klokken"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:4
+msgid "If true, display a weather icon."
+msgstr "Vis værikon hvis denne er satt til «true»."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:5
+msgid "Show temperature in clock"
+msgstr "Vis temperaturen i klokken"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:6
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Vis temperatur ved siden av værikonet hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:7
+msgid "Show week numbers in calendar"
+msgstr "Vis ukenummer i kalenderen"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:8
+msgid "If true, show week numbers in the calendar."
+msgstr "Vis ukenummer i kalenderen hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:9
+msgid "Expand list of appointments"
+msgstr "Utvid liste med avtaler"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:10
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Avtalelisten i kalendervinduet utvides hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:11
+msgid "Expand list of birthdays"
+msgstr "Utvid liste med fødselsdager"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:12
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "Fødselsdagslisten i kalendervinduet utvides hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:13
+msgid "Expand list of tasks"
+msgstr "Utvid liste med oppgaver"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:14
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "Utvid listen med oppgaver i kalendervinduet hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:15
+msgid "Expand list of weather information"
+msgstr "Utvid liste med informasjon om vær"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Utvid listen med værinformasjon i kalendervinduet hvis sann."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
+msgid "Expand list of locations"
+msgstr "Utvid liste med steder"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:18
+msgid "If true, expand the list of locations in the calendar window."
+msgstr ""
+"Utvid listen med steder i kalendervinduet hvis denne er satt til «true»."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:19
+msgid "List of locations"
+msgstr "Liste med steder"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
+msgid ""
+"A list of locations to display in the calendar window. Each location is a "
+"tuple of display name, METAR code and coordinates."
+msgstr "En liste med steder som vises i kalendervinduet. Hver lokasjon er en tuple av visningsnavnet, METAR-koden og koordinatene."
 
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
@@ -1698,6 +1487,103 @@ msgstr ""
 "bildet bli skalert til panelets høyde hvis det har vertikal orientering, og "
 "høyde-/breddeforhold for bildet blir bevart."
 
+#: ../gnome-panel/applet.c:359
+msgid "???"
+msgstr "???"
+
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
+msgid "_Move"
+msgstr "_Flytt"
+
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
+msgid "_Remove From Panel"
+msgstr "Fje_rn fra panelet"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "Opprett ny fil i oppgit katalog"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[FIL …]"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "- Rediger .desktop-filer"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:892
+msgid "Create Launcher"
+msgstr "Opprett oppstarter"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "Egenskaper for katalog"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:732
+msgid "Launcher Properties"
+msgstr "Egenskaper for oppstarter"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
+msgid "Panel"
+msgstr "Panel"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Start andre programmer og bruk forskjellige verktøy for å håndtere vinduer, "
+"vis klokken etc."
+
+#: ../gnome-panel/launcher.c:136
+msgid "Could not show this URL"
+msgstr "Kunne ikke vise denne URLen"
+
+#: ../gnome-panel/launcher.c:137
+msgid "No URL was specified."
+msgstr "Ingen URL ble oppgitt."
+
+#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
+msgid "Could not launch application"
+msgstr "Kan ikke starte programmet"
+
+#: ../gnome-panel/launcher.c:219
+msgid "Could not use dropped item"
+msgstr "Kunne ikke bruke sluppet oppføring"
+
+#: ../gnome-panel/launcher.c:417
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
+
+#: ../gnome-panel/launcher.c:462
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Kan ikke åpne .desktop-fil %s for oppstarter %s%s\n"
+
+#: ../gnome-panel/launcher.c:796
+msgid "_Launch"
+msgstr "S_tart"
+
+#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:133
+msgid "_Properties"
+msgstr "_Egenskaper"
+
+#: ../gnome-panel/launcher.c:833
+#, c-format
+msgid "Launcher location is not set, cannot load launcher\n"
+msgstr "Lokasjon for oppstarter er ikke satt. Kan ikke laste oppstarter\n"
+
+#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1386
+#: ../gnome-panel/panel-ditem-editor.c:1417
+msgid "Could not save launcher"
+msgstr "Kunne ikke lagre oppstarter"
+
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
@@ -1768,8 +1654,8 @@ msgstr "Vis alternativer for økthåndtering"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:80
-#: ../gnome-panel/panel-applet-frame.c:766
-#: ../gnome-panel/panel-applet-frame.c:938
+#: ../gnome-panel/panel-applet-frame.c:807
+#: ../gnome-panel/panel-applet-frame.c:979
 msgid "Error"
 msgstr "Feil"
 
@@ -1782,11 +1668,6 @@ msgstr "Velg et ikon"
 msgid "Could not launch '%s'"
 msgstr "Kunne ikke starte «%s»"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:52
-#: ../gnome-panel/launcher.c:175
-msgid "Could not launch application"
-msgstr "Kan ikke starte programmet"
-
 #: ../gnome-panel/libpanel-util/panel-show.c:48
 #, c-format
 msgid "Could not open location '%s'"
@@ -1795,98 +1676,6 @@ msgstr "Kan ikke åpne adresse «%s»"
 #: ../gnome-panel/libpanel-util/panel-show.c:166
 msgid "No application to handle search folders is installed."
 msgstr "Ingen programmer installert som kan håndtere søkemapper."
-
-#: ../gnome-panel/applet.c:359
-msgid "???"
-msgstr "???"
-
-#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
-msgid "_Move"
-msgstr "_Flytt"
-
-#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
-msgid "_Remove From Panel"
-msgstr "Fje_rn fra panelet"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:29
-msgid "Create new file in the given directory"
-msgstr "Opprett ny fil i oppgit katalog"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:30
-msgid "[FILE...]"
-msgstr "[FIL …]"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:108
-msgid "- Edit .desktop files"
-msgstr "- Rediger .desktop-filer"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:892
-msgid "Create Launcher"
-msgstr "Opprett oppstarter"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:171
-#: ../gnome-panel/gnome-desktop-item-edit.c:194
-msgid "Directory Properties"
-msgstr "Egenskaper for katalog"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:732
-msgid "Launcher Properties"
-msgstr "Egenskaper for oppstarter"
-
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
-msgid "Panel"
-msgstr "Panel"
-
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-msgid ""
-"Launch other applications and provide various utilities to manage windows, "
-"show the time, etc."
-msgstr ""
-"Start andre programmer og bruk forskjellige verktøy for å håndtere vinduer, "
-"vis klokken etc."
-
-#: ../gnome-panel/launcher.c:136
-msgid "Could not show this URL"
-msgstr "Kunne ikke vise denne URLen"
-
-#: ../gnome-panel/launcher.c:137
-msgid "No URL was specified."
-msgstr "Ingen URL ble oppgitt."
-
-#: ../gnome-panel/launcher.c:219
-msgid "Could not use dropped item"
-msgstr "Kunne ikke bruke sluppet oppføring"
-
-#: ../gnome-panel/launcher.c:417
-#, c-format
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
-
-#: ../gnome-panel/launcher.c:462
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Kan ikke åpne .desktop-fil %s for oppstarter %s%s\n"
-
-#: ../gnome-panel/launcher.c:796
-msgid "_Launch"
-msgstr "S_tart"
-
-#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:139
-#: ../gnome-panel/panel-context-menu.c:133
-msgid "_Properties"
-msgstr "_Egenskaper"
-
-#: ../gnome-panel/launcher.c:833
-#, c-format
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Lokasjon for oppstarter er ikke satt. Kan ikke laste oppstarter\n"
-
-#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1357
-#: ../gnome-panel/panel-ditem-editor.c:1391
-#: ../gnome-panel/panel-ditem-editor.c:1422
-msgid "Could not save launcher"
-msgstr "Kunne ikke lagre oppstarter"
 
 #: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
@@ -1970,81 +1759,81 @@ msgstr "Avslutt …"
 msgid "Shut down the computer"
 msgstr "Skru av datamaskinen"
 
-#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:966
+#: ../gnome-panel/panel-addto.c:144 ../gnome-panel/panel-menu-button.c:962
 msgid "Main Menu"
 msgstr "Hovedmeny"
 
-#: ../gnome-panel/panel-addto.c:146
+#: ../gnome-panel/panel-addto.c:145
 msgid "The main GNOME menu"
 msgstr "Hovedmenyen for GNOME"
 
-#: ../gnome-panel/panel-addto.c:155
+#: ../gnome-panel/panel-addto.c:154
 msgid "Menu Bar"
 msgstr "Menylinje"
 
-#: ../gnome-panel/panel-addto.c:156
+#: ../gnome-panel/panel-addto.c:155
 msgid "A custom menu bar"
 msgstr "En tilpasset menylinje"
 
-#: ../gnome-panel/panel-addto.c:165
+#: ../gnome-panel/panel-addto.c:164
 msgid "Separator"
 msgstr "Separator"
 
-#: ../gnome-panel/panel-addto.c:166
+#: ../gnome-panel/panel-addto.c:165
 msgid "A separator to organize the panel items"
 msgstr "En separator for organisering av panelområder"
 
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-addto.c:174
 msgid "User menu"
 msgstr "Brukermeny"
 
-#: ../gnome-panel/panel-addto.c:176
+#: ../gnome-panel/panel-addto.c:175
 msgid "Menu to change your settings and your online status"
 msgstr "Meny for å endre dine innstillinger og tilkoblingsstatus"
 
-#: ../gnome-panel/panel-addto.c:222
+#: ../gnome-panel/panel-addto.c:221
 msgid "(empty)"
 msgstr "(tom)"
 
-#: ../gnome-panel/panel-addto.c:422
+#: ../gnome-panel/panel-addto.c:421
 msgid "Custom Application Launcher"
 msgstr "Egendefinert oppstarter"
 
-#: ../gnome-panel/panel-addto.c:423
+#: ../gnome-panel/panel-addto.c:422
 msgid "Create a new launcher"
 msgstr "Lag en ny oppstarter"
 
-#: ../gnome-panel/panel-addto.c:433
+#: ../gnome-panel/panel-addto.c:432
 msgid "Application Launcher..."
 msgstr "Oppstarter …"
 
-#: ../gnome-panel/panel-addto.c:434
+#: ../gnome-panel/panel-addto.c:433
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopier en oppstarter fra menyen programmer"
 
-#: ../gnome-panel/panel-addto.c:1019
+#: ../gnome-panel/panel-addto.c:1013
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Velg en _oppføring som skal legges til på «%s»:"
 
-#: ../gnome-panel/panel-addto.c:1023
+#: ../gnome-panel/panel-addto.c:1017
 msgid "Find an _item to add to the panel:"
 msgstr "Velg en _oppføring som skal legges til på panelet:"
 
-#: ../gnome-panel/panel-addto.c:1026
+#: ../gnome-panel/panel-addto.c:1020
 msgid "Add to Panel"
 msgstr "Legg til på panelet"
 
-#: ../gnome-panel/panel-applet-frame.c:735
+#: ../gnome-panel/panel-applet-frame.c:776
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» har avsluttet uventet"
 
-#: ../gnome-panel/panel-applet-frame.c:737
+#: ../gnome-panel/panel-applet-frame.c:778
 msgid "Panel object has quit unexpectedly"
 msgstr "Panelobjektet har avsluttet utventet"
 
-#: ../gnome-panel/panel-applet-frame.c:744
+#: ../gnome-panel/panel-applet-frame.c:785
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -2052,22 +1841,77 @@ msgstr ""
 "Hvis du laster et panelobjekt på nytt vil det automatisk legges til på "
 "panelet."
 
-#: ../gnome-panel/panel-applet-frame.c:750
+#: ../gnome-panel/panel-applet-frame.c:791
 msgid "_Don't Reload"
 msgstr "I_kke start på nytt"
 
-#: ../gnome-panel/panel-applet-frame.c:751
+#: ../gnome-panel/panel-applet-frame.c:792
 msgid "_Reload"
 msgstr "Sta_rt på nytt"
 
-#: ../gnome-panel/panel-applet-frame.c:901
+#: ../gnome-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det oppsto et problem i panelet ved lasting av «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:917
+#: ../gnome-panel/panel-applet-frame.c:958
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du slette dette panelprogrammet fra din konfigurasjon?"
+
+#: ../gnome-panel/panel.c:527
+#, c-format
+msgid "Open URL: %s"
+msgstr "Åpne URL: %s"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:645
+#, c-format
+msgid "Open '%s'"
+msgstr "Åpne «%s»"
+
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1200
+msgid "Open your personal folder"
+msgstr "Åpne din personlige mappe"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1236
+msgid "Computer"
+msgstr "Datamaskin"
+
+#. name
+#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1242
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+"Bla gjennom alle lokale og eksterne disker og mapper som er tilgjengelige "
+"fra denne datamaskinen"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1252
+msgid "Network"
+msgstr "Nettverk"
+
+#. name
+#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1253
+msgid "Browse bookmarked and local network locations"
+msgstr "Bla gjennom lokale nettverkslokasjoner og bokmerker"
+
+#: ../gnome-panel/panel.c:1393
+msgid "Delete this panel?"
+msgstr "Slett dette panelet?"
+
+#: ../gnome-panel/panel.c:1397
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Panelet og alle dets innstillinger vil\n"
+"gå tapt hvis du sletter det."
 
 #: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
@@ -2089,77 +1933,73 @@ msgstr "_Slett dette panelet"
 msgid "_New Panel"
 msgstr "_Nytt panel"
 
-#: ../gnome-panel/panel-ditem-editor.c:114
+#: ../gnome-panel/panel-ditem-editor.c:112
 msgid "Application"
 msgstr "Program"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application in Terminal"
 msgstr "Program i terminal"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Location"
 msgstr "Adresse"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:618
+#: ../gnome-panel/panel-ditem-editor.c:616
 msgid "_Type:"
 msgstr "_Type:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:623
 msgid "_Name:"
 msgstr "_Navn:"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:650
 msgid "_Browse..."
 msgstr "_Bla gjennom …"
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:657
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1008
+#: ../gnome-panel/panel-ditem-editor.c:1003
 msgid "Choose an application..."
 msgstr "Velg et program …"
 
-#: ../gnome-panel/panel-ditem-editor.c:1012
+#: ../gnome-panel/panel-ditem-editor.c:1007
 msgid "Choose a file..."
 msgstr "Velg en fil …"
 
-#: ../gnome-panel/panel-ditem-editor.c:1177
-#: ../gnome-panel/panel-ditem-editor.c:1186
+#: ../gnome-panel/panel-ditem-editor.c:1172
+#: ../gnome-panel/panel-ditem-editor.c:1181
 msgid "Comm_and:"
 msgstr "Komm_ando:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1195
+#: ../gnome-panel/panel-ditem-editor.c:1190
 msgid "_Location:"
 msgstr "_Adresse:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1358
+#: ../gnome-panel/panel-ditem-editor.c:1353
 msgid "The name of the launcher is not set."
 msgstr "Navnet på oppstarteren er ikke satt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1362
+#: ../gnome-panel/panel-ditem-editor.c:1357
 msgid "Could not save directory properties"
 msgstr "Kunne ikke lagre egenskaper for katalog"
 
-#: ../gnome-panel/panel-ditem-editor.c:1363
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the directory is not set."
 msgstr "Navnet på katalogen er ikke satt."
 
-#: ../gnome-panel/panel-ditem-editor.c:1379
+#: ../gnome-panel/panel-ditem-editor.c:1374
 msgid "The command of the launcher is not set."
 msgstr "Kommando for oppstarteren er ikke satt.."
 
-#: ../gnome-panel/panel-ditem-editor.c:1382
+#: ../gnome-panel/panel-ditem-editor.c:1377
 msgid "The location of the launcher is not set."
 msgstr "Adresse for oppstarteren er ikke satt."
-
-#: ../gnome-panel/panel-ditem-editor.c:1459
-msgid "Could not display help document"
-msgstr "Kunne ikke vise hjelpdokument"
 
 #: ../gnome-panel/panel-force-quit.c:77
 msgid ""
@@ -2185,157 +2025,105 @@ msgstr ""
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan ikke lage utforming for panelet.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:91
+#: ../gnome-panel/panel-menu-bar.c:90
 msgid "Browse and run installed applications"
 msgstr "Se gjennom og kjør installerte programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:93
+#: ../gnome-panel/panel-menu-bar.c:92
 msgid "Access documents, folders and network places"
 msgstr "Aksesser dokumenter, mapper og nettverksadresser"
 
-#: ../gnome-panel/panel-menu-bar.c:124
+#: ../gnome-panel/panel-menu-bar.c:123
 msgid "Applications"
 msgstr "Programmer"
 
-#: ../gnome-panel/panel-menu-bar.c:226 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:225 ../gnome-panel/panel-menu-button.c:561
 msgid "_Edit Menus"
 msgstr "R_ediger menyer"
-
-#: ../gnome-panel/panel-menu-bar.c:233
-msgid "_Help"
-msgstr "_Hjelp"
 
 #: ../gnome-panel/panel-menu-items.c:491
 msgid "Switch User"
 msgstr "Bytt bruker"
 
-#: ../gnome-panel/panel-menu-items.c:622
+#: ../gnome-panel/panel-menu-items.c:621
 msgid "Bookmarks"
 msgstr "Bokmerker"
 
-#. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:646 ../gnome-panel/panel.c:596
-#, c-format
-msgid "Open '%s'"
-msgstr "Åpne «%s»"
-
-#: ../gnome-panel/panel-menu-items.c:717
+#: ../gnome-panel/panel-menu-items.c:716
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kan ikke søke etter endringer for medie på %s"
 
-#: ../gnome-panel/panel-menu-items.c:759
+#: ../gnome-panel/panel-menu-items.c:758
 #, c-format
 msgid "Rescan %s"
 msgstr "Oppdater %s"
 
-#: ../gnome-panel/panel-menu-items.c:796
+#: ../gnome-panel/panel-menu-items.c:795
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kan ikke montere %s"
 
-#: ../gnome-panel/panel-menu-items.c:858
+#: ../gnome-panel/panel-menu-items.c:857
 #, c-format
 msgid "Mount %s"
 msgstr "Monter %s"
 
-#: ../gnome-panel/panel-menu-items.c:1066
+#: ../gnome-panel/panel-menu-items.c:1065
 msgid "Removable Media"
 msgstr "Avtagbart medie"
 
-#: ../gnome-panel/panel-menu-items.c:1157
+#: ../gnome-panel/panel-menu-items.c:1156
 msgid "Network Places"
 msgstr "Nettverksadresser"
-
-#. is_exec?
-#. exec
-#. name
-#: ../gnome-panel/panel-menu-items.c:1201 ../gnome-panel/panel.c:644
-msgid "Open your personal folder"
-msgstr "Åpne din personlige mappe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1221
+#: ../gnome-panel/panel-menu-items.c:1220
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivebord"
 
-#: ../gnome-panel/panel-menu-items.c:1222
+#: ../gnome-panel/panel-menu-items.c:1221
 msgid "Open the contents of your desktop in a folder"
 msgstr "Åpne skrivebordet som en mappe"
 
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1237 ../gnome-panel/panel.c:653
-msgid "Computer"
-msgstr "Datamaskin"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1243 ../gnome-panel/panel.c:654
-msgid ""
-"Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
-"Bla gjennom alle lokale og eksterne disker og mapper som er tilgjengelige "
-"fra denne datamaskinen"
-
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1253 ../gnome-panel/panel.c:661
-msgid "Network"
-msgstr "Nettverk"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1254 ../gnome-panel/panel.c:662
-msgid "Browse bookmarked and local network locations"
-msgstr "Bla gjennom lokale nettverkslokasjoner og bokmerker"
-
-#: ../gnome-panel/panel-menu-items.c:1359
+#: ../gnome-panel/panel-menu-items.c:1358
 msgid "Available"
 msgstr "Tilgjengelig"
 
-#: ../gnome-panel/panel-menu-items.c:1369
+#: ../gnome-panel/panel-menu-items.c:1368
 msgid "Busy"
 msgstr "Opptatt"
 
-#: ../gnome-panel/panel-menu-items.c:1628
+#: ../gnome-panel/panel-menu-items.c:1626
 msgid "Places"
 msgstr "Steder"
 
-#: ../gnome-panel/panel-properties-dialog.c:81
+#: ../gnome-panel/panel-properties-dialog.c:79
 #: ../gnome-panel/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Topp"
 
-#: ../gnome-panel/panel-properties-dialog.c:82
+#: ../gnome-panel/panel-properties-dialog.c:80
 #: ../gnome-panel/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Bunn"
 
-#: ../gnome-panel/panel-properties-dialog.c:83
+#: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:57
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Venstre"
 
-#: ../gnome-panel/panel-properties-dialog.c:84
+#: ../gnome-panel/panel-properties-dialog.c:82
 #: ../gnome-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Høyre"
-
-#: ../gnome-panel/panel-properties-dialog.c:821
-#: ../gnome-panel/panel-run-dialog.c:1896
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "Kunne ikke laste fil «%s»: %s."
-
-#: ../gnome-panel/panel-properties-dialog.c:827
-msgid "Could not display properties dialog"
-msgstr "Kan ikke vise dialog for egenskaper"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
@@ -2486,30 +2274,26 @@ msgstr "Kunne ikke kjøre kommando «%s»"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunne ikke konvertere «%s» fra UTF-8"
 
-#: ../gnome-panel/panel-run-dialog.c:1160
+#: ../gnome-panel/panel-run-dialog.c:1156
 msgid "Choose a file to append to the command..."
 msgstr "Velg en fil som skal legges til kommandoen …"
 
-#: ../gnome-panel/panel-run-dialog.c:1543
+#: ../gnome-panel/panel-run-dialog.c:1539
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Velg et program for å vise beskrivelsen."
 
-#: ../gnome-panel/panel-run-dialog.c:1581
+#: ../gnome-panel/panel-run-dialog.c:1577
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kjører kommando «%s»"
 
-#: ../gnome-panel/panel-run-dialog.c:1614
+#: ../gnome-panel/panel-run-dialog.c:1610
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI-listen som ble sluppet på kjøringsdialogen hadde feil format (%d) eller "
 "lengde (%d)\n"
-
-#: ../gnome-panel/panel-run-dialog.c:1901
-msgid "Could not display run dialog"
-msgstr "Kunne ikke vise dialog for kjøring av programmer"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
 msgid "Run Application"
@@ -2751,23 +2535,6 @@ msgstr "Søk"
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
-
-#: ../gnome-panel/panel.c:527
-#, c-format
-msgid "Open URL: %s"
-msgstr "Åpne URL: %s"
-
-#: ../gnome-panel/panel.c:1393
-msgid "Delete this panel?"
-msgstr "Slett dette panelet?"
-
-#: ../gnome-panel/panel.c:1397
-msgid ""
-"When a panel is deleted, the panel and its\n"
-"settings are lost."
-msgstr ""
-"Panelet og alle dets innstillinger vil\n"
-"gå tapt hvis du sletter det."
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
 msgid "Test DBus Applet Factory"
