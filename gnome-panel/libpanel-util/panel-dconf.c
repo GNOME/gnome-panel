@@ -24,15 +24,14 @@
 
 #include <string.h>
 
-#include <dconf-client.h>
-#include <dconf-paths.h>
+#include <dconf.h>
 
 #include "panel-dconf.h"
 
 static DConfClient *
 panel_dconf_client_get (void)
 {
-        return dconf_client_new (NULL, NULL, NULL, NULL);
+        return dconf_client_new ();
 }
 
 gboolean
@@ -43,8 +42,7 @@ panel_dconf_write_sync (const gchar  *key,
         gboolean     ret;
         DConfClient *client = panel_dconf_client_get ();
 
-        ret = dconf_client_write (client, key, value,
-                                  NULL, NULL, error);
+        ret = dconf_client_write_sync (client, key, value, NULL, NULL, error);
 
         g_object_unref (client);
 
@@ -58,8 +56,7 @@ panel_dconf_recursive_reset (const gchar  *dir,
         gboolean     ret;
         DConfClient *client = panel_dconf_client_get ();
 
-        ret = dconf_client_write (client, dir, NULL,
-                                  NULL, NULL, error);
+        ret = dconf_client_write_sync (client, dir, NULL, NULL, NULL, error);
 
         g_object_unref (client);
 
