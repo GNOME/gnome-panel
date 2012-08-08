@@ -8,10 +8,11 @@ msgstr ""
 "Project-Id-Version: gu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=gnome-panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-21 17:50+0000\n"
-"PO-Revision-Date: 2012-08-07 15:08+0530\n"
+"POT-Creation-Date: 2012-08-07 09:39+0000\n"
+"PO-Revision-Date: 2012-08-08 16:20+0530\n"
 "Last-Translator: \n"
 "Language-Team: gu_IN <kde-i18n-doc@kde.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -125,7 +126,6 @@ msgid "_Preferences"
 msgstr "પસંદગીઓ (_P)"
 
 #: ../applets/clock/clock.c:1194
-#| msgid "Copy _Time"
 msgid "Copy Date and _Time"
 msgstr "તારીખ અને સમયની નકલ કરો (_T)"
 
@@ -240,14 +240,13 @@ msgstr "%s, %s ના જેવુ અનુભવે છે"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "સૂર્યોદય: %s / સૂર્યાસ્ત: %s"
 
-#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr ""
-"<small><i>શહેર, વિસ્તાર, અને દેશ નામ લખો અને પછી પોપ-અપમાંથી જોડણી પસંદ કરો.</i></"
-"small>"
+#| msgid ""
+#| "<small><i>Type a city, region, or country name and then select a match "
+#| "from the pop-up.</i></small>"
+msgid "Type a city, region, or country name and then select a match from the pop-up."
+msgstr "શહેર, વિસ્તાર, અને દેશ નામ લખો અને પછી પોપ-અપમાંથી જોડણી પસંદ કરો."
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -258,8 +257,9 @@ msgid "_Location Name:"
 msgstr "સ્થાન નામ (_L):"
 
 #: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(વૈકલ્પિક)</i>"
+#| msgid "<i>(optional)</i>"
+msgid "(optional)"
+msgstr "(વૈકલ્પિક)"
 
 #: ../applets/clock/clock.ui.h:6
 msgid "L_ongitude:"
@@ -773,13 +773,12 @@ msgid "List of locations"
 msgstr "સ્થાનોની યાદી"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
-#| msgid "A list of locations to display in the calendar window."
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
 msgstr ""
-"કૅલેન્ડર વિન્ડોમાં દર્શાવવા માટે સ્થાનોની યાદી. દરેક સ્થાન દર્શાવ નામ, METAR કોડ અને તેની સાથે "
-"સંકળાયેલનું ટપલ છે."
+"કૅલેન્ડર વિન્ડોમાં દર્શાવવા માટે સ્થાનોની યાદી. દરેક સ્થાન દર્શાવ નામ, METAR કોડ અને તેની "
+"સાથે સંકળાયેલનું ટપલ છે."
 
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
@@ -2152,12 +2151,12 @@ msgid "Co_lor:"
 msgstr "રંગ (_l):"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "<small>Transparent</small>"
-msgstr "<small>પારદર્શક</small>"
+msgid "Transparent"
+msgstr "પારદર્શક"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "<small>Opaque</small>"
-msgstr "<small>અપારદર્શક</small>"
+msgid "Opaque"
+msgstr "અપારદર્શક"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "Background _image:"
@@ -2512,6 +2511,12 @@ msgstr "ચકાસણી DBus એપ્લેટ"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "GNOME પેનલને ચકાસવા માટે સાદી એપ્લેટ"
+
+#~ msgid "<small>Transparent</small>"
+#~ msgstr "<small>પારદર્શક</small>"
+
+#~ msgid "<small>Opaque</small>"
+#~ msgstr "<small>અપારદર્શક</small>"
 
 #~ msgid "%l:%M:%S %p"
 #~ msgstr "%l:%M:%S %p"
