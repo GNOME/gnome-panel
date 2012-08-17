@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-21 17:50+0000\n"
-"PO-Revision-Date: 2012-08-06 00:22+0200\n"
+"POT-Creation-Date: 2012-08-06 12:23+0000\n"
+"PO-Revision-Date: 2012-08-17 12:28+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -239,14 +239,16 @@ msgstr "%s, izgleda kao da je %s"
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sunce je izašlo u %s, zalazi u %s"
 
-#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
+#| msgid ""
+#| "<small><i>Type a city, region, or country name and then select a match "
+#| "from the pop-up.</i></small>"
 msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
+"Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
-"<small><i>Unesite naziv grada, oblasti ili države i pojaviće se prozor za "
-"izbor tog mesta.</i></small>"
+"Unesite naziv grada, oblasti ili države i pojaviće se prozor za izbor tog "
+"mesta."
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -257,8 +259,9 @@ msgid "_Location Name:"
 msgstr "_Naziv mesta:"
 
 #: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<i>(dodatno)</i>"
+#| msgid "<i>(optional)</i>"
+msgid "(optional)"
+msgstr "(neobavezno)"
 
 #: ../applets/clock/clock.ui.h:6
 msgid "L_ongitude:"
@@ -707,8 +710,7 @@ msgstr "Prikaz datuma u oblačiću"
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Ukoliko je postavljeno, prikazuje oblačić kada se mišem pređe preko "
-"časovnika."
+"Ukoliko je postavljeno, prikazuje oblačić kada se mišem pređe preko časovnika."
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
 msgid "Show weather in clock"
@@ -764,7 +766,8 @@ msgstr "Širi spisak vremenskih prilika"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
 msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Ukoliko je postavljeno, proširuje spisak vremenskih prilika u kalendaru."
+msgstr ""
+"Ukoliko je postavljeno, proširuje spisak vremenskih prilika u kalendaru."
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
 msgid "Expand list of locations"
@@ -860,8 +863,8 @@ msgid ""
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Određuje kada će biti grupisani prozori istog programa u spisku prozora. "
-"Dozvoljene vrednosti su „never“ (nikad), „auto“ (automatski) i „always“ "
-"(uvek)."
+"Dozvoljene vrednosti su „never“ (nikad), „auto“ (automatski) i "
+"„always“ (uvek)."
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -913,8 +916,8 @@ msgid ""
 msgstr ""
 "Ovaj ključ određuje u koliko redova (za vodoravno pružanje) ili kolona (za "
 "uspravno pružanje) će prebacivač prikazivati radne prostore. Ovaj ključ ima "
-"značaja jedino ako je postavljen ključ „display_all_workspaces“ "
-"(prikaži_sve_radne_prostore)."
+"značaja jedino ako je postavljen ključ "
+"„display_all_workspaces“ (prikaži_sve_radne_prostore)."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
 msgid "Enable tooltips"
@@ -926,8 +929,8 @@ msgid ""
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
 "Ako je izabrano, oblačići saveta se prikazuju za objekte u panelima. Saveti "
-"mogu biti isključeni za celu radnu površ svojstvom „gtk-enable-tooltips“ "
-"(gtk-uključi-savete) u GTK+."
+"mogu biti isključeni za celu radnu površ svojstvom „gtk-enable-tooltips“ (gtk-"
+"uključi-savete) u GTK+."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
 msgid "Confirm panel removal"
@@ -994,9 +997,9 @@ msgid ""
 msgstr ""
 "Spisak IIB-ova programčića koje će panel zanemarivati. Na ovaj način možete "
 "da sprečite učitavanje ili prikazivanje u izborniku nekih programčića. Na "
-"primer, da isključite programče mali-narednik, dodajte "
-"„OAFIID:GNOME_MiniCommanderApplet“ u ovaj spisak. Panel mora biti ponovo "
-"pokrenut da bi ovo stupilo na snagu."
+"primer, da isključite programče mali-narednik, dodajte „OAFIID:"
+"GNOME_MiniCommanderApplet“ u ovaj spisak. Panel mora biti ponovo pokrenut da "
+"bi ovo stupilo na snagu."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid "Disable Force Quit"
@@ -1216,9 +1219,9 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Usmerenje panela. Postoje četiri dozvoljene vrednosti: „top“ (gore), „bottom“ "
-"(dole), „left“ (levo) i „right“ (desno). Pri raširenom prikazivanju, ova "
-"vrednost označava uz koju ivicu se postavlja panel. Pri neraširenom "
+"Usmerenje panela. Postoje četiri dozvoljene vrednosti: „top“ (gore), "
+"„bottom“ (dole), „left“ (levo) i „right“ (desno). Pri raširenom prikazivanju, "
+"ova vrednost označava uz koju ivicu se postavlja panel. Pri neraširenom "
 "prikazivanju, razlika između „top“ i „bottom“ je manje značajna — oba "
 "označavaju da se radi o vodoravnom panelu — ali ipak daje i nagoveštaj kako "
 "neki objekti na panelu treba da se ponašaju. Na primer, na gornjem panelu će "
@@ -1364,8 +1367,7 @@ msgid ""
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
 "Ukoliko je postavljeno, sa svake strane panela će se prikazati dugmići kojima "
-"se panel može pomeriti na ivicu ekrana, tako da samo dugme ostane "
-"prikazano."
+"se panel može pomeriti na ivicu ekrana, tako da samo dugme ostane prikazano."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
 msgid "Enable arrows on hide buttons"
@@ -1377,8 +1379,8 @@ msgid ""
 "relevant if the enable_buttons key is true."
 msgstr ""
 "Ukoliko je postavljeno, strelice će se smestiti na dugmiće za skrivanje. Ova "
-"postavka je značajna jedino ako je postavljen ključ „enable_buttons“ "
-"(uključi_dugmiće)."
+"postavka je značajna jedino ako je postavljen ključ "
+"„enable_buttons“ (uključi_dugmiće)."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
 msgid "Panel autohide delay"
@@ -1430,9 +1432,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Brzina kojom se odvijaju animacije. Postoje tri moguće vrednosti: „slow“ "
-"(sporo), „medium“ (srednje) i „fast“ (brzo). Ova postavka je značajna jedino "
-"kada je postavljen ključ „enable_animations“ (uključi_animacije)."
+"Brzina kojom se odvijaju animacije. Postoje tri moguće vrednosti: "
+"„slow“ (sporo), „medium“ (srednje) i „fast“ (brzo). Ova postavka je značajna "
+"jedino kada je postavljen ključ „enable_animations“ (uključi_animacije)."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background type"
@@ -2199,12 +2201,12 @@ msgid "Co_lor:"
 msgstr "_Boja:"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "<small>Transparent</small>"
-msgstr "<small>Providan</small>"
+msgid "Transparent"
+msgstr "Providan"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "<small>Opaque</small>"
-msgstr "<small>Neprovidan</small>"
+msgid "Opaque"
+msgstr "Neprovidan"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "Background _image:"
@@ -2306,7 +2308,8 @@ msgstr "Izvršiću naredbu: „%s“"
 #: ../gnome-panel/panel-run-dialog.c:1610
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Spisak adresa pušten na prozorče za pokretanje je bio neispravnog oblika (%d) "
+msgstr ""
+"Spisak adresa pušten na prozorče za pokretanje je bio neispravnog oblika (%d) "
 "ili dužine (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
@@ -2565,3 +2568,9 @@ msgstr "Isprobaj programče Dsabirnice"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Jednostavno programče za isprobavanje Gnomovog panela"
+
+#~ msgid "<small>Transparent</small>"
+#~ msgstr "<small>Providan</small>"
+
+#~ msgid "<small>Opaque</small>"
+#~ msgstr "<small>Neprovidan</small>"
