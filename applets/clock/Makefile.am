@@ -14,7 +14,7 @@ libsystem_timezone_la_SOURCES = \
 	system-timezone.h
 libsystem_timezone_la_LIBADD = $(TZ_LIBS)
 
-if HAVE_LIBECAL
+if ENABLE_EDS
 CALENDAR_SOURCES =		\
 	calendar-client.c	\
 	calendar-client.h	\
@@ -49,6 +49,7 @@ CLOCK_CPPFLAGS =						\
 	$(AM_CPPFLAGS)						\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(CLOCK_CFLAGS)						\
+	$(CLOCK_EDS_CFLAGS)					\
 	-I$(srcdir)/../../libpanel-applet			\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
@@ -58,6 +59,7 @@ CLOCK_CPPFLAGS =						\
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-4.la	\
 	$(CLOCK_LIBS)					\
+	$(CLOCK_EDS_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
 	libsystem-timezone.la				\
 	-lm

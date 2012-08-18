@@ -127,42 +127,40 @@ AC_SUBST(WNCKLET_LIBS)
 AC_CHECK_HEADERS(langinfo.h)
 AC_CHECK_FUNCS(nl_langinfo)
 
-AC_ARG_ENABLE(eds,
-	AC_HELP_STRING([--enable-eds],
-		[Enable evolution-data-server dependencies @<:@default=auto@:>@]
-	),,enable_eds=auto)
-LIBECAL_REQUIREMENT=
-HAVE_EDS=no
-if test "x$enable_eds" = "xyes"; then
-  LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-  CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
-else
-  if test "x$enable_eds" != "xno"; then
-    AC_MSG_CHECKING(for evolution-data-server)
-    if $PKG_CONFIG --exists libecal-1.2 evolution-data-server-1.2; then
-       AC_MSG_RESULT(yes)
-       LIBECAL_REQUIREMENT="libecal-1.2 >= $LIBECAL_REQUIRED libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED"
-       CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
-       HAVE_EDS=yes
-    else
-       AC_MSG_RESULT(no)
-    fi
-  fi
-fi
-if test -n "$LIBECAL_REQUIREMENT"; then
-  AC_DEFINE([HAVE_LIBECAL], 1,
-            [Defined when evolution-data-server and libecal-1.2 are detected])
-fi
-AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
-AC_SUBST(CLOCK_EDS_ICONDIR)
-
 PKG_CHECK_MODULES(TZ, gio-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(TZ_CFLAGS)
 AC_SUBST(TZ_LIBS)
 
-PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED $LIBECAL_REQUIREMENT librsvg-2.0 gweather-3.0 >= $GWEATHER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED polkit-gobject-1)
+PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED librsvg-2.0 gweather-3.0 >= $GWEATHER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED polkit-gobject-1)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
+
+# Check whether to enable e-d-s support for clock applet
+AC_MSG_CHECKING([whether to enable evolution-data-server support])
+AC_ARG_ENABLE([eds],
+    AS_HELP_STRING([--enable-eds], [Whether to enable evolution-data-server support @<:@default=auto@:>@]),
+    [], [enable_eds=auto])
+AC_MSG_RESULT([$enable_eds])
+CLOCK_EDS_ICONDIR=
+if test "$enable_eds" != "no"; then
+    PKG_CHECK_MODULES(CLOCK_EDS,[
+        libecal-1.2 >= $LIBECAL_REQUIRED
+        libedataserver-1.2 >= $LIBEDATASERVER_REQUIRED
+     ], [have_eds=yes], [have_eds=no])
+
+    if test "$enable_eds" = "yes" -a "$have_eds" = "no"; then
+        AC_MSG_ERROR([evolution-data-server support was requested but required dependencies were not found: $CLOCK_EDS_PKG_ERRORS])
+    elif test "$have_eds" = "yes"; then
+        enable_eds=yes
+        AC_DEFINE([HAVE_EDS], 1, [Define to enable evolution-data-server support])
+        CLOCK_EDS_ICONDIR=`$PKG_CONFIG --variable=datadir evolution-data-server-1.2`/pixmaps/evolution-data-server
+    else
+        enable_eds=no
+    fi
+fi
+
+AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
+AC_SUBST(CLOCK_EDS_ICONDIR)
 
 DBUS_REQUIRED=1.1.2
 NETWORK_MANAGER_REQUIRED=0.6
@@ -374,7 +372,7 @@ echo "
 
         Bonobo applets support:        ${HAVE_BONOBO}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
-        Evolution-Data-Server support: ${HAVE_EDS}
+        Evolution-Data-Server support: ${enable_eds}
         Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
         NetworkManager support:        ${HAVE_NETWORK_MANAGER}
         XRandr support:                ${have_randr}
