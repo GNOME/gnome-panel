@@ -16,11 +16,7 @@ EXTRA_DIST = \
 	COPYING-DOCS		\
 	HACKING			\
 	MAINTAINERS		\
-	ChangeLog.pre-git	\
-	gnome-doc-utils.make
-
-DISTCLEANFILES =		\
-	gnome-doc-utils.make
+	ChangeLog.pre-git
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \
@@ -37,7 +33,6 @@ MAINTAINERCLEANFILES = \
 	`find "$(srcdir)" -type f -name Makefile.in -print` \
 	$(srcdir)/configure \
 	$(srcdir)/gtk-doc.make \
-	$(srcdir)/m4/gnome-doc-utils.m4 \
 	$(srcdir)/m4/gtk-doc.m4 \
 	$(srcdir)/m4/intltool.m4 \
 	$(srcdir)/m4/libtool.m4 \

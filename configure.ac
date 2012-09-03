@@ -289,9 +289,9 @@ dnl gtk-doc stuff
 
 GTK_DOC_CHECK([1.0])
 
-dnl gnome-doc-utils stuff
+dnl yelp-tools stuff
 
-GNOME_DOC_INIT
+YELP_HELP_INIT
 
 AM_GCONF_SOURCE_2
 
