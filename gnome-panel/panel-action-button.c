@@ -304,7 +304,7 @@ static PanelAction actions [] = {
 		/* when changing one of those two strings, don't forget to
 		 * update the ones in panel-menu-items.c (look for
 		 * "1" (msgctxt: "panel:showusername")) */
-		N_("Log Out..."),
+		N_("Log Out"),
 		N_("Log out of this session to log in as a different user"),
 		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,
@@ -347,8 +347,8 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_SHUTDOWN,
 		PANEL_ICON_SHUTDOWN,
-		N_("Shut Down..."),
-		N_("Shut down the computer"),
+		N_("Power Off"),
+		N_("Power off the computer"),
 		"ACTION:shutdown:NEW",
 		panel_action_shutdown, NULL, NULL,
 		panel_action_shutdown_reboot_is_disabled
