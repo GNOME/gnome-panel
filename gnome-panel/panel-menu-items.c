@@ -1848,17 +1848,6 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	panel_menu_items_lock_logout_separator_notified (panel_lockdown_get (),
 							 item);
 
-	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOCK,
-							 NULL, NULL, TRUE);
-	if (item != NULL) {
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_object_bind_property (panel_lockdown_get (),
-					"disable-lock-screen",
-					item,
-					"visible",
-					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
-	}
-
 	item = panel_menu_items_create_switch_user (FALSE);
 
 	if (item != NULL) {
@@ -1877,6 +1866,17 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		g_object_bind_property (panel_lockdown_get (),
 					"disable-log-out",
+					item,
+					"visible",
+					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
+	}
+
+	item = panel_menu_items_create_action_item_full (PANEL_ACTION_LOCK,
+							 NULL, NULL, TRUE);
+	if (item != NULL) {
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_object_bind_property (panel_lockdown_get (),
+					"disable-lock-screen",
 					item,
 					"visible",
 					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
