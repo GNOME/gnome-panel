@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-06 12:23+0000\n"
+"POT-Creation-Date: 2012-09-14 15:12+0000\n"
 "PO-Revision-Date: 2012-08-07 20:20+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -257,9 +257,6 @@ msgstr "Amanecer: %s / Ocaso: %s"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
-#| msgid ""
-#| "<small><i>Type a city, region, or country name and then select a match "
-#| "from the pop-up.</i></small>"
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
@@ -275,7 +272,6 @@ msgid "_Location Name:"
 msgstr "Nombre de la _ubicación:"
 
 #: ../applets/clock/clock.ui.h:5
-#| msgid "<i>(optional)</i>"
 msgid "(optional)"
 msgstr "(opcional)"
 
@@ -1772,8 +1768,10 @@ msgstr "Proteja su equipo del uso no autorizado"
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-msgid "Log Out..."
-msgstr "Salir…"
+#, fuzzy
+#| msgid "_Log Out"
+msgid "Log Out"
+msgstr "_Salir"
 
 #: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
@@ -1815,11 +1813,13 @@ msgid "Connect to a remote computer or shared disk"
 msgstr "Conectar con un equipo remoto o un disco compartido"
 
 #: ../gnome-panel/panel-action-button.c:350
-msgid "Shut Down..."
-msgstr "Apagar…"
+msgid "Power Off"
+msgstr ""
 
 #: ../gnome-panel/panel-action-button.c:351
-msgid "Shut down the computer"
+#, fuzzy
+#| msgid "Shut down the computer"
+msgid "Power off the computer"
 msgstr "Apagar el equipo"
 
 #: ../gnome-panel/panel-addto.c:144 ../gnome-panel/panel-menu-button.c:962
@@ -1918,7 +1918,7 @@ msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
 #: ../gnome-panel/panel-applet-frame.c:958
 msgid "Do you want to delete the applet from your configuration?"
-msgstr "¿Desea borrar la miniaplicación de su configuración?"
+msgstr "¿Quiere eliminar la miniaplicación de su configuración?"
 
 #: ../gnome-panel/panel.c:527
 #, c-format
@@ -1962,21 +1962,21 @@ msgstr "Red"
 msgid "Browse bookmarked and local network locations"
 msgstr "Examinar los lugares locales y remotos marcados"
 
-#: ../gnome-panel/panel.c:1393
+#: ../gnome-panel/panel.c:1394
 msgid "Delete this panel?"
-msgstr "¿Desea borrar este panel?"
+msgstr "¿Quiere este panel?"
 
-#: ../gnome-panel/panel.c:1397
+#: ../gnome-panel/panel.c:1398
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
-"Cuando se borra un panel, el panel y los valores de sus\n"
+"Cuando se elimina un panel, el panel y los valores de sus\n"
 "preferencias se pierden."
 
 #: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
-msgstr "No se puede borrar este panel"
+msgstr "No se puede eliminar este panel"
 
 #: ../gnome-panel/panel-context-menu.c:64
 msgid "You must always have at least one panel."
@@ -1988,7 +1988,7 @@ msgstr "_Añadir al panel…"
 
 #: ../gnome-panel/panel-context-menu.c:143
 msgid "_Delete This Panel"
-msgstr "_Borrar este panel"
+msgstr "_Eliminar este panel"
 
 #: ../gnome-panel/panel-context-menu.c:158
 msgid "_New Panel"
@@ -2159,7 +2159,7 @@ msgstr "Disponible"
 msgid "Busy"
 msgstr "Ocupado"
 
-#: ../gnome-panel/panel-menu-items.c:1626
+#: ../gnome-panel/panel-menu-items.c:1621
 msgid "Places"
 msgstr "Lugares"
 
@@ -2297,7 +2297,7 @@ msgstr "Ocurrió un error desconocido al intentar abrir «%s»."
 
 #: ../gnome-panel/panel-recent.c:147
 msgid "Clear the Recent Documents list?"
-msgstr "¿Desea vaciar la lista de documentos recientes?"
+msgstr "¿Quiere vaciar la lista de documentos recientes?"
 
 #: ../gnome-panel/panel-recent.c:149
 msgid ""
@@ -2421,7 +2421,7 @@ msgstr "_Vaciar"
 
 #: ../gnome-panel/panel-stock-icons.c:86
 msgid "D_on't Delete"
-msgstr "_No borrar"
+msgstr "_No eliminar"
 
 #: ../gnome-panel/panel-test-applets.c:36
 msgid "Specify an applet IID to load"
@@ -2619,6 +2619,12 @@ msgstr "Miniaplicación de prueba de DBus"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Una miniaplicación simple para probar el panel de GNOME"
+
+#~ msgid "Log Out..."
+#~ msgstr "Salir…"
+
+#~ msgid "Shut Down..."
+#~ msgstr "Apagar…"
 
 #~ msgid "<small>Transparent</small>"
 #~ msgstr "<small>Transparente</small>"
@@ -3482,9 +3488,6 @@ msgstr "Una miniaplicación simple para probar el panel de GNOME"
 
 #~ msgid "Log out of this system now?"
 #~ msgstr "¿Desea salir de este sistema ahora?"
-
-#~ msgid "_Log Out"
-#~ msgstr "_Salir"
 
 #~ msgid "Shut down this system now?"
 #~ msgstr "¿Desea apagar este sistema ahora?"
