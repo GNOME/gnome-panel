@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-06 12:23+0000\n"
-"PO-Revision-Date: 2012-09-07 17:24+0700\n"
+"POT-Creation-Date: 2012-09-14 15:12+0000\n"
+"PO-Revision-Date: 2012-09-16 16:52+0700\n"
 "Last-Translator: Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -1663,8 +1663,8 @@ msgstr "ป้องกันคอมพิวเตอร์ของคุณ
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-msgid "Log Out..."
-msgstr "ออกจากระบบ..."
+msgid "Log Out"
+msgstr "ออกจากระบบ"
 
 #: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
@@ -1705,11 +1705,11 @@ msgid "Connect to a remote computer or shared disk"
 msgstr "เชื่อมต่อไปยังเซิร์ฟเวอร์ในเครือข่ายหรือดิสก์ที่เปิดใช้ร่วม"
 
 #: ../gnome-panel/panel-action-button.c:350
-msgid "Shut Down..."
-msgstr "ปิดเครื่อง..."
+msgid "Power Off"
+msgstr "ปิดเครื่อง"
 
 #: ../gnome-panel/panel-action-button.c:351
-msgid "Shut down the computer"
+msgid "Power off the computer"
 msgstr "ปิดเครื่องคอมพิวเตอร์"
 
 #: ../gnome-panel/panel-addto.c:144 ../gnome-panel/panel-menu-button.c:962
@@ -1850,11 +1850,11 @@ msgstr "เครือข่าย"
 msgid "Browse bookmarked and local network locations"
 msgstr "ท่องดูตำแหน่งต่างๆ ในเครือข่ายเฉพาะที่และที่ได้คั่นหน้าไว้"
 
-#: ../gnome-panel/panel.c:1393
+#: ../gnome-panel/panel.c:1394
 msgid "Delete this panel?"
 msgstr "ยืนยันการลบพาเนลนี้หรือไม่?"
 
-#: ../gnome-panel/panel.c:1397
+#: ../gnome-panel/panel.c:1398
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2042,7 +2042,7 @@ msgstr "อยู่"
 msgid "Busy"
 msgstr "ไม่ว่าง"
 
-#: ../gnome-panel/panel-menu-items.c:1626
+#: ../gnome-panel/panel-menu-items.c:1621
 msgid "Places"
 msgstr "ที่หลักๆ"
 
@@ -2989,24 +2989,6 @@ msgstr "แอพเพล็ตอย่างง่ายสำหรับใ
 #~ "ข้อความที่จะแสดงในคำแนะนำเครื่องมือสำหรับลิ้นชักนี้ ค่านี้ใช้ได้ก็ต่อเมื่อค่า object_type เป็น "
 #~ "\"drawer-object\" หรือ \"menu-object\""
 
-#~ msgid ""
-#~ "The type of this panel object. Possible values are \"drawer-object\", "
-#~ "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
-#~ "\" and \"menu-bar\"."
-#~ msgstr ""
-#~ "ชนิดของวัตถุพาเนลนี้ ค่าที่เป็นไปได้คือ \"drawer-object\", \"menu-object\", "
-#~ "\"launcher-object\", \"bonobo-applet\", \"action-applet\" และ \"menu-bar\""
-
-#~ msgid ""
-#~ "This key is deprecated, following the migration to a new library for "
-#~ "applets. The Bonobo implementation ID of the applet - e.g. \"OAFIID:"
-#~ "GNOME_ClockApplet\". This key is only relevant if the object_type key is "
-#~ "\"bonobo-applet\"."
-#~ msgstr ""
-#~ "คีย์นี้ไม่แนะนำให้ใช้แล้ว หลังจากการย้ายระบบไปยังไลบรารีตัวใหม่สำหรับแอพเพล็ต "
-#~ "คีย์นี้เป็นชื่อเรียกการ implement ของแอพเพล็ต - เช่น \"OAFIID:GNOME_ClockApplet\" "
-#~ "จะมีผลก็ต่อเมื่อคีย์ object_type เป็น \"bonobo-applet\" เท่านั้น"
-
 #~ msgid "Use custom icon for object's button"
 #~ msgstr "ใช้ไอคอนที่กำหนดเองสำหรับปุ่มของวัตถุ"
 
@@ -3282,9 +3264,6 @@ msgstr "แอพเพล็ตอย่างง่ายสำหรับใ
 #~ msgid "Log out of this system now?"
 #~ msgstr "จะออกจากระบบหรือไม่?"
 
-#~ msgid "_Log Out"
-#~ msgstr "_ออกจากระบบ"
-
 #~ msgid "Shut down this system now?"
 #~ msgstr "จะปิดเครื่องหรือไม่?"
 
@@ -3299,9 +3278,6 @@ msgstr "แอพเพล็ตอย่างง่ายสำหรับใ
 
 #~ msgid "_Shut Down"
 #~ msgstr "_ปิดเครื่อง"
-
-#~ msgid "%1$s on %2$s"
-#~ msgstr "%1$s ที่ %2$s"
 
 #~ msgid "Themes"
 #~ msgstr "ชุดตกแต่ง"
