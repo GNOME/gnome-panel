@@ -5,15 +5,15 @@
 #
 # Prajasakti Localisation Team <localisation@prajasakti.com>, 2005.
 # Krishna Babu K <kkrothap@redhat.com>, 2007, 2008, 2009, 2010.
-# Praveen Illa <mail2ipn@gmail.com>, 2011, 2012.
+# Praveen Illa <mail2ipn@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: te\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-19 15:59+0000\n"
-"PO-Revision-Date: 2012-09-19 23:50+0530\n"
+"POT-Creation-Date: 2011-11-14 21:31+0000\n"
+"PO-Revision-Date: 2011-12-04 17:24+0530\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "Language: te\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -31,11 +31,18 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:310
-#: ../applets/clock/clock-location-tile.c:503
+#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:449
+#: ../applets/clock/clock-location-tile.c:507
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
@@ -43,159 +50,546 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:315
-#: ../applets/clock/clock-location-tile.c:466
-#: ../applets/clock/clock-location-tile.c:510
+#: ../applets/clock/calendar-window.c:334 ../applets/clock/clock.c:454
+#: ../applets/clock/clock.c:1597 ../applets/clock/clock-location-tile.c:467
+#: ../applets/clock/clock-location-tile.c:514
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:321
+#: ../applets/clock/calendar-window.c:340
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:830
+#: ../applets/clock/calendar-window.c:840
 msgid "Tasks"
 msgstr "కర్తవ్యాలు"
 
-#: ../applets/clock/calendar-window.c:830
-#: ../applets/clock/calendar-window.c:1013
-#: ../applets/clock/calendar-window.c:1551
+#: ../applets/clock/calendar-window.c:840
+#: ../applets/clock/calendar-window.c:1023
+#: ../applets/clock/calendar-window.c:1629
 msgid "Edit"
 msgstr "సవరించు"
 
-#: ../applets/clock/calendar-window.c:953
+#: ../applets/clock/calendar-window.c:963
 msgid "All Day"
 msgstr "రోజంతా"
 
-#: ../applets/clock/calendar-window.c:1097
+#: ../applets/clock/calendar-window.c:1107
 msgid "Appointments"
 msgstr "నియామకాలు"
 
-#: ../applets/clock/calendar-window.c:1122
+#: ../applets/clock/calendar-window.c:1132
 msgid "Birthdays and Anniversaries"
 msgstr "జన్మదినములు మరియు వార్షికోత్సవములు"
 
-#: ../applets/clock/calendar-window.c:1147
+#: ../applets/clock/calendar-window.c:1157
 msgid "Weather Information"
 msgstr "వాతావరణ సమాచారం"
 
-#: ../applets/clock/calendar-window.c:1551 ../applets/clock/clock.ui.h:22
+#: ../applets/clock/calendar-window.c:1629 ../applets/clock/clock.ui.h:11
 msgid "Locations"
 msgstr "స్థానములు"
 
-#: ../applets/clock/calendar-window.c:1806
+#: ../applets/clock/calendar-window.c:1927
 msgid "Calendar"
 msgstr "క్యాలెండర్"
 
 #. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#: ../applets/clock/clock.c:449
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 24-hours
+#. * format (eg, like in France: 20:10).
+#: ../applets/clock/clock.c:454 ../applets/clock/clock.c:1591
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the date. Replace %e with %d if, when
+#. * the day of the month as a decimal number is a single digit,
+#. * it should begin with a 0 in your locale (e.g. "May 01"
+#. * instead of "May  1").
+#: ../applets/clock/clock.c:465
+msgid "%a %b %e"
+msgstr "%a %b %e"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:472
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: ../applets/clock/clock.c:480
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. Show date in tooltip.
+#. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:310
+#: ../applets/clock/clock.c:646
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:676
 msgid "Click to hide your appointments and tasks"
 msgstr "మీ నియామకాలను మరియు కర్తవ్యాలను దాయుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:325
+#: ../applets/clock/clock.c:679
 msgid "Click to view your appointments and tasks"
 msgstr "మీ నియామకాలను మరియు కర్తవ్యాలను వీక్షించుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:683
 msgid "Click to hide month calendar"
 msgstr "మాస క్యాలెండర్‌ను దాయుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:332
+#: ../applets/clock/clock.c:686
 msgid "Click to view month calendar"
 msgstr "మాస క్యాలండర్ ను వీక్షించుటకు నొక్కండి"
 
-#: ../applets/clock/clock.c:992
+#: ../applets/clock/clock.c:1429
 msgid "Computer Clock"
 msgstr "కంప్యూటర్ గడియారం"
 
-#: ../applets/clock/clock.c:1171
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1576
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#. Translators: This is a strftime format
+#. * string.
+#. * It is used to display the time in 12-hours
+#. * format with a leading 0 if needed (eg, like
+#. * in the US: 08:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock.c:1584
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display a date in the full format (so that people can
+#. * copy and paste it elsewhere).
+#: ../applets/clock/clock.c:1630
+msgid "%A, %B %d %Y"
+msgstr "%A, %B %d %Y"
+
+#: ../applets/clock/clock.c:1699
 msgid "Failed to open the time settings"
 msgstr "సమయ అమరికలను తెరుచుటలో విఫలమైంది"
 
-#: ../applets/clock/clock.c:1191 ../applets/fish/fish.c:1307
-#: ../applets/wncklet/window-list.c:155
+#: ../applets/clock/clock.c:1719 ../applets/fish/fish.c:1317
+#: ../applets/wncklet/window-list.c:159
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "ప్రాధాన్యతలు (_P)"
 
-#: ../applets/clock/clock.c:1194
-msgid "Copy Date and _Time"
-msgstr "తేదీ మరియు సమయం నకలించు (_T)"
+#: ../applets/clock/clock.c:1722
+msgid "Copy _Time"
+msgstr "సమయం నకలు (_T)"
 
-#: ../applets/clock/clock.c:1197
+#: ../applets/clock/clock.c:1725
+msgid "Copy _Date"
+msgstr "తారీఖు నకలు (_D)"
+
+#: ../applets/clock/clock.c:1728
 msgid "Ad_just Date & Time"
 msgstr "తేదీ మరియు సమయాన్ని సవరించు (_j)"
 
-#: ../applets/clock/clock.c:1768
+#: ../applets/clock/clock.c:2565
+msgid "Custom format"
+msgstr "అనురూపిత ఫార్మేటు"
+
+#: ../applets/clock/clock.c:3052
 msgid "Choose Location"
 msgstr "స్థానమును ఎంచుకొను"
 
-#: ../applets/clock/clock.c:1847
+#: ../applets/clock/clock.c:3131
 msgid "Edit Location"
 msgstr "స్థానమును సవరించు"
 
-#: ../applets/clock/clock.c:1881
-msgid "Kelvin"
-msgstr "కెల్విన్"
-
-#: ../applets/clock/clock.c:1882
-msgid "Celsius"
-msgstr "సెల్సియస్"
-
-#: ../applets/clock/clock.c:1883
-msgid "Fahrenheit"
-msgstr "ఫారెన్‌హీట్"
-
-#: ../applets/clock/clock.c:1888
-msgid "Meters per second (m/s)"
-msgstr "సెకనుకు మీటర్లు (m/s)"
-
-#: ../applets/clock/clock.c:1889
-msgid "Kilometers per hour (kph)"
-msgstr "గంటకు కిలోమీటర్లు (kph)"
-
-#: ../applets/clock/clock.c:1890
-msgid "Miles per hour (mph)"
-msgstr "గంటకు మైళ్ళు (mph)"
-
-#: ../applets/clock/clock.c:1891
-msgid "Knots"
-msgstr "నాట్లు"
-
-#: ../applets/clock/clock.c:1892
-msgid "Beaufort scale"
-msgstr "బ్యూఫోర్ట్ కొలత"
-
-#: ../applets/clock/clock.c:1945
+#: ../applets/clock/clock.c:3278
 msgid "City Name"
 msgstr "పట్టణం పేరు"
 
-#: ../applets/clock/clock.c:1949
+#: ../applets/clock/clock.c:3282
 msgid "City Time Zone"
 msgstr "పట్టణ సమయక్షేత్రం"
 
-#: ../applets/clock/clock-location-tile.c:188
+#: ../applets/clock/clock.c:3469
+msgid "24 hour"
+msgstr "24 గంటలు"
+
+#: ../applets/clock/clock.c:3470
+msgid "UNIX time"
+msgstr "UNIX సమయం"
+
+#: ../applets/clock/clock.c:3471
+msgid "Internet time"
+msgstr "అంతర్జాల సమయం"
+
+#: ../applets/clock/clock.c:3479
+msgid "Custom _format:"
+msgstr "అనురూపిత ఫార్మేట్ (_f):"
+
+#: ../applets/clock/clock.ui.h:1
+msgid "<i>(optional)</i>"
+msgstr "<i> (ఐచ్ఛికం)</i>"
+
+#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#: ../applets/clock/clock.ui.h:3
+msgid ""
+"<small><i>Type a city, region, or country name and then select a match from "
+"the pop-up.</i></small>"
+msgstr ""
+"<small><i>పట్టణము, ప్రాంతము, లేదా దేశము పేరును టైపుచేయండి, అప్పుడు పాప్-అప్ నుండి సరిపోలిన "
+"ప్రాంతాన్ని ఎంపికచేయండి.</i></small>"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "Clock Format"
+msgstr "గడియారం ఫార్మాట్"
+
+#: ../applets/clock/clock.ui.h:5
+msgid "Clock Preferences"
+msgstr "గడియారం ప్రాధాన్యతలు"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "Display"
+msgstr "ప్రదర్శన"
+
+#: ../applets/clock/clock.ui.h:7
+msgid "East"
+msgstr "తూర్పు"
+
+#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
+msgid "General"
+msgstr "సాధారణ"
+
+#: ../applets/clock/clock.ui.h:9
+msgid "L_atitude:"
+msgstr "అక్షాంశం (_a):"
+
+#: ../applets/clock/clock.ui.h:10
+msgid "L_ongitude:"
+msgstr "రేఖాంశం (_o):"
+
+#: ../applets/clock/clock.ui.h:12
+msgid "North"
+msgstr "ఉత్తరం"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Panel Display"
+msgstr "ప్యానల్ ప్రదర్శన"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Show _temperature"
+msgstr "ఉష్ణోగ్రతను చూపించు (_t)"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "Show _weather"
+msgstr "వాతావరణం చూపించు (_w)"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "Show seco_nds"
+msgstr "సెకన్లను చూపించు (_n)"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Show the _date"
+msgstr "తేదీని చూపించు (_d)"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "South"
+msgstr "దక్షిణం"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "Time _Settings"
+msgstr "సమయం అమరికలు (_S)"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Weather"
+msgstr "వాతావరణం"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "West"
+msgstr "పశ్చిమ"
+
+#: ../applets/clock/clock.ui.h:22
+msgid "_12 hour format"
+msgstr "_12 గంటల విధము"
+
+#: ../applets/clock/clock.ui.h:23
+msgid "_24 hour format"
+msgstr "_24 గంటల విధము"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "_Location Name:"
+msgstr "స్థానం పేరు (_L):"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Pressure unit:"
+msgstr "పీడన ప్రమాణం (_P):"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Temperature unit:"
+msgstr "ఉష్ణోగ్రత ప్రమాణం (_T):"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Timezone:"
+msgstr "సమయక్షేత్రం (_T):"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Visibility unit:"
+msgstr "దృశ్య ప్రమాణం (_V):"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Wind speed unit:"
+msgstr "గాలి వేగం ప్రమాణం (_W):"
+
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: ../applets/clock/clock.schemas.in.h:11
+msgid "24-hour"
+msgstr "24-గంటలు"
+
+#: ../applets/clock/clock.schemas.in.h:12
+msgid "A list of locations to display in the calendar window."
+msgstr "క్యాలెండర్ విండో నందు చూపించుటకు స్థానముల జాబితా."
+
+#: ../applets/clock/clock.schemas.in.h:13
+msgid "Custom format of the clock"
+msgstr "గడియారం యొక్క అనురూపించిన ఫార్మేటు"
+
+#: ../applets/clock/clock.schemas.in.h:14
+msgid "Expand list of appointments"
+msgstr "నియామకాల జాబితాను విస్తరించు"
+
+#: ../applets/clock/clock.schemas.in.h:15
+msgid "Expand list of birthdays"
+msgstr "జన్మదినముల జాబితాను విస్తరించు"
+
+#: ../applets/clock/clock.schemas.in.h:16
+msgid "Expand list of locations"
+msgstr "స్థానముల జాబితాను విస్తరించు"
+
+#: ../applets/clock/clock.schemas.in.h:17
+msgid "Expand list of tasks"
+msgstr "కర్తవ్యాల జాబితాను విస్తరించు"
+
+#: ../applets/clock/clock.schemas.in.h:18
+msgid "Expand list of weather information"
+msgstr "వాతావరణ సమాచార జాబితాను విస్తరించు"
+
+#: ../applets/clock/clock.schemas.in.h:19
+msgid "Hour format"
+msgstr "గంటల ఫార్మేటు"
+
+#: ../applets/clock/clock.schemas.in.h:20
+msgid "If true, display a weather icon."
+msgstr "వాస్తవమైతే, వాతావరణ ప్రతీకను ప్రదర్శించు."
+
+#: ../applets/clock/clock.schemas.in.h:21
+msgid "If true, display date in the clock, in addition to time."
+msgstr "వాస్తవమైతే, సమయమేగాకుండా, గడియారంలో తారీఖును కూడా ప్రదర్శించు."
+
+#: ../applets/clock/clock.schemas.in.h:22
+msgid "If true, display seconds in time."
+msgstr "వాస్తవమైతే, సమయంలో సెకన్లను కూడా ప్రదర్శించు."
+
+#: ../applets/clock/clock.schemas.in.h:23
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "వాస్తవమైతే, క్యాలెండర్ విండోలోని నియామకాల జాబితాను విస్తరించు."
+
+#: ../applets/clock/clock.schemas.in.h:24
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "వాస్తవమైతే, జన్మదినముల జాబితాను క్యాలెండర్ విండోలో విస్తరించు."
+
+#: ../applets/clock/clock.schemas.in.h:25
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "వాస్తవమైతే, స్థానముల జాబితాను క్యాలెండర్ విండోలో విస్తరించు."
+
+#: ../applets/clock/clock.schemas.in.h:26
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "వాస్తవమైతే, కర్తవ్యాల జాబితాను క్యాలెండర్ విండోలో విస్తరించు."
+
+#: ../applets/clock/clock.schemas.in.h:27
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "వాస్తవమైతే, వాతావరణ సమాచార జాబితాను క్యాలెండర్ విండోలో విస్తరించు."
+
+#: ../applets/clock/clock.schemas.in.h:28
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "వాస్తవమైతే, పాయింటరుని గడియారం పైన ఉన్నప్పుడు తేదీని సాధనచిట్కాలో చూపించు."
+
+#: ../applets/clock/clock.schemas.in.h:29
+msgid "If true, show the temperature next to the weather icon."
+msgstr "వాస్తవమైతే, ఉష్ణోగ్రతను వాతావరణ ప్రతీక తరువాత చూపించు."
+
+#: ../applets/clock/clock.schemas.in.h:30
+msgid "If true, show week numbers in the calendar."
+msgstr "వాస్తవమైతే, వారపు సంఖ్యలను క్యాలెండర్ నందు చూపించు."
+
+#: ../applets/clock/clock.schemas.in.h:31
+msgid "List of locations"
+msgstr "స్థానముల జాబితా"
+
+#: ../applets/clock/clock.schemas.in.h:32
+msgid "Show date in clock"
+msgstr "గడియారంలో తేదీని చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:33
+msgid "Show date in tooltip"
+msgstr "సాధనచిట్కాలో తేదీని చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:34
+msgid "Show temperature in clock"
+msgstr "గడియారంలో ఉష్ణోగ్రతను చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:35
+msgid "Show time with seconds"
+msgstr "సమయాన్ని సెకనులతో చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:36
+msgid "Show weather in clock"
+msgstr "గడియారంలో వాతావరణాన్ని చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:37
+msgid "Show week numbers in calendar"
+msgstr "క్యాలెండర్‌లో వారపు సంఖ్యలను చూపించు"
+
+#: ../applets/clock/clock.schemas.in.h:38
+msgid "Speed unit"
+msgstr "వేగం ప్రమాణం"
+
+#: ../applets/clock/clock.schemas.in.h:39
+msgid "Temperature unit"
+msgstr "ఉష్ణోగ్రత ప్రమాణం"
+
+#: ../applets/clock/clock.schemas.in.h:40
+msgid "The unit to use when showing temperatures."
+msgstr "ఉష్ణోగ్రతలను చూపించునపుడు ఉపయోగించవలిసిన ప్రమాణం."
+
+#: ../applets/clock/clock.schemas.in.h:41
+msgid "The unit to use when showing wind speed."
+msgstr "గాలి వేగం ను చూపించునపుడు ఉపయోగించవలిసిన ప్రమాణం."
+
+#: ../applets/clock/clock.schemas.in.h:42
+msgid ""
+"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
+"time configuration tool. The schema is retained for compatibility with older "
+"versions."
+msgstr ""
+"ఈ కీ యొక్క ఉపయోగం GNOME 2.22 నందు తీసివేయబడింది అంతర్గత సమయ స్వరూపణ సాధనము యొక్క ఉపయోగంతో. "
+"పాత రూపాంతరములతో సారూప్యత కొరకు స్కీమా అలాగేవుంది."
+
+#: ../applets/clock/clock.schemas.in.h:43
+msgid ""
+"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+"timezones. The schema is retained for compatibility with older versions."
+msgstr ""
+"సమయక్షేత్రముల ఉపయోగం కొరకు GNOME 2.28 నందు ఈ కీ యొక్క ఉపయోగం తీసివేయబడినది.  పాత రూపాంతరలకు "
+"సారూప్యంగా వుండుట కొరకు ఆ స్కీమా అలాగే ఉంచబడింది."
+
+#: ../applets/clock/clock.schemas.in.h:44
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"ఈ కీ యొక్క ఉపయోగం GNOME 2.6 నందు 'ఫార్మేట్' కనుగుణంగా తగ్గించబడింది. పాత రూపాంతరాలకు సారూప్యంగా "
+"ఉండుట కొరకు ఆ స్కీమా అలాగే ఉంచబడింది."
+
+#: ../applets/clock/clock.schemas.in.h:45
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format. See the strftime() manual for more "
+"information."
+msgstr ""
+"ఫార్మాట్ కీ ని\"custom\" కు అమర్చినప్పుడు గడియారం ఆప్లెట్ ఉపయోగించే విధానాన్ని ఈ కీ తెలియజేస్తుంది.మీరు "
+"ప్రత్యేకమైన విధానాన్ని పొందుటకు మీరు strftime() ద్వారా అర్ధంచేసుకోబడే మార్పు పద్దతులను మీరు "
+"ఉపయోగించుకోవచ్చు. ఎక్కువ సమాచారం కొరకు strftime() మాన్యువల్ ను చూడుము."
+
+#: ../applets/clock/clock.schemas.in.h:46
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"ఈ కీ గడియారం ఆప్లెట్ ఉపయోగించే గంటల విధానాన్ని తెలియజేస్తుంది.సాద్యమగు విలువలు \"12-hour\", \"24-"
+"hour\", \"internet\", \"unix\" మరియు \"custom\".\"internet\" కు అనుసందానిస్తే "
+"గడియారం ఇంటర్నెట్ సమయం చూపిస్తుంది.ఇంటర్నెట్ సమయం రోజు ను 1000 \".beats\" గా విభజిస్తుంది. ఈ "
+"సిస్టమ్ నందు ఏ సమయక్షేత్రాలు లేవు, కనుక సమయం ప్రపంచం అంతటికి ఒకే విధంగా ఉంటుంది.\"unix\" కి "
+"అమర్చినట్లైతే, గడియారం సమయాన్ని Epoch, అంటే 1970-01-01 నుండి సెకన్లలో ప్రదర్శిస్తుంది.\"custom\" "
+"కి అమర్చినట్లైతే,గడియారం సమయాన్ని custom_format కీ లో తెలిపిన విధానాన్ని అనుసరించి ప్రదర్శిస్తుంది."
+
+#: ../applets/clock/clock.schemas.in.h:47
+msgid "Time configuration tool"
+msgstr "సమయ స్వరూపణ సాధనం"
+
+#: ../applets/clock/clock.schemas.in.h:48
+msgid "Use Internet time"
+msgstr "అంతర్జాల సమయాన్ని వాడు"
+
+#: ../applets/clock/clock.schemas.in.h:49
+msgid "Use UNIX time"
+msgstr "UNIX సమయాన్ని వాడు"
+
+#: ../applets/clock/clock.schemas.in.h:50
+msgid "Use UTC"
+msgstr "UTC వాడు"
+
+#: ../applets/clock/clock-location-tile.c:183
 msgid "Failed to set the system timezone"
 msgstr "వ్యవస్థ సమయక్షేత్రం అమర్చుటలో విఫలమైంది"
 
-#: ../applets/clock/clock-location-tile.c:236
+#: ../applets/clock/clock-location-tile.c:231
 msgid "<small>Set...</small>"
 msgstr "<small>అమర్చు...</small>"
 
-#: ../applets/clock/clock-location-tile.c:237
+#: ../applets/clock/clock-location-tile.c:232
 msgid "<small>Set</small>"
 msgstr "<small>అమర్చు</small>"
 
-#: ../applets/clock/clock-location-tile.c:313
+#: ../applets/clock/clock-location-tile.c:308
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "ఒక స్థానమును ప్రస్తుత స్థానముగా అమర్చు మరియు దాని సమయక్షేత్రమును ఈ కంప్యూటరుకు ఉపయోగించు"
@@ -206,7 +600,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:443
+#: ../applets/clock/clock-location-tile.c:444
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -215,7 +609,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:451
+#: ../applets/clock/clock-location-tile.c:452
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -223,164 +617,61 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:460
+#: ../applets/clock/clock-location-tile.c:461
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:610
+#: ../applets/clock/clock-location-tile.c:600
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
+#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
+#: ../applets/clock/clock-location-tile.c:612
+#: ../applets/clock/clock-location-tile.c:621
+msgid "Unknown"
+msgstr "తెలియదు"
+
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:623
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %sలా ఉంది"
 
-#: ../applets/clock/clock-location-tile.c:644
+#: ../applets/clock/clock-location-tile.c:637
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "సూర్యోదయం: %s / సూర్యాస్తమయం: %s"
 
-#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: ../applets/clock/clock.ui.h:2
-msgid ""
-"Type a city, region, or country name and then select a match from the pop-up."
-msgstr ""
-"పట్టణము, ప్రాంతము, లేదా దేశము పేరును టైపుచేయండి, అప్పుడు పాప్-అప్ నుండి సరిపోలిన దాన్ని ఎంచుకోండి."
-
-#: ../applets/clock/clock.ui.h:3
-msgid "_Timezone:"
-msgstr "సమయక్షేత్రం (_T):"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "_Location Name:"
-msgstr "స్థానం పేరు (_L):"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "(optional)"
-msgstr "(ఐచ్ఛికం)"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "L_ongitude:"
-msgstr "రేఖాంశం (_o):"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "L_atitude:"
-msgstr "అక్షాంశం (_a):"
-
-#: ../applets/clock/clock.ui.h:8
-msgid "East"
-msgstr "తూర్పు"
-
-#: ../applets/clock/clock.ui.h:9
-msgid "West"
-msgstr "పశ్చిమ"
-
-#: ../applets/clock/clock.ui.h:10
-msgid "North"
-msgstr "ఉత్తరం"
-
-#: ../applets/clock/clock.ui.h:11
-msgid "South"
-msgstr "దక్షిణం"
-
-#: ../applets/clock/clock.ui.h:12
-msgid "Clock Preferences"
-msgstr "గడియారం ప్రాధాన్యతలు"
-
-#: ../applets/clock/clock.ui.h:13
-msgid "Clock Format"
-msgstr "గడియారం ఫార్మాట్"
-
-#: ../applets/clock/clock.ui.h:14
-msgid "_12 hour format"
-msgstr "_12 గంటల విధము"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "_24 hour format"
-msgstr "_24 గంటల విధము"
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Panel Display"
-msgstr "ప్యానల్ ప్రదర్శన"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Show the _date"
-msgstr "తేదీని చూపించు (_d)"
-
-#: ../applets/clock/clock.ui.h:18
-msgid "Show seco_nds"
-msgstr "సెకన్లను చూపించు (_n)"
-
-#: ../applets/clock/clock.ui.h:19
-msgid "Show _weather"
-msgstr "వాతావరణం చూపించు (_w)"
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Show _temperature"
-msgstr "ఉష్ణోగ్రతను చూపించు (_t)"
-
-#: ../applets/clock/clock.ui.h:21 ../applets/fish/fish.ui.h:2
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
-msgid "General"
-msgstr "సాధారణ"
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Display"
-msgstr "ప్రదర్శన"
-
-#: ../applets/clock/clock.ui.h:24
-msgid "_Visibility unit:"
-msgstr "దృశ్య ప్రమాణం (_V):"
-
-#: ../applets/clock/clock.ui.h:25
-msgid "_Pressure unit:"
-msgstr "పీడన ప్రమాణం (_P):"
-
-#: ../applets/clock/clock.ui.h:26
-msgid "_Wind speed unit:"
-msgstr "గాలి వేగం ప్రమాణం (_W):"
-
-#: ../applets/clock/clock.ui.h:27
-msgid "_Temperature unit:"
-msgstr "ఉష్ణోగ్రత ప్రమాణం (_T):"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "Weather"
-msgstr "వాతావరణం"
-
-#: ../applets/clock/clock.ui.h:29
-msgid "Time _Settings"
-msgstr "సమయం అమరికలు (_S)"
-
-#: ../applets/clock/clock-utils.c:97 ../applets/fish/fish.c:164
+#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
+#: ../applets/wncklet/wncklet.c:74
+#: ../gnome-panel/libpanel-util/panel-show.c:239
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "'%s' సహాయ పత్రమును ప్రదర్శించలేకపోయింది"
 
-#: ../applets/clock/clock-utils.c:126 ../applets/fish/fish.c:190
+#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:189
+#: ../applets/wncklet/wncklet.c:103
 msgid "Error displaying help document"
 msgstr "సహాయ పత్రమును ప్రదర్శించుటలో దోషము"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
+msgid "Clock"
+msgstr "గడియారం"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
 msgid "Clock Applet Factory"
 msgstr "క్లాక్ ఆప్లెట్ ఫ్యాక్టరి"
 
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
 msgid "Factory for clock applet"
 msgstr "గడియారం ఆప్లెట్ కొరకు ఫ్యాక్టరీ"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
-msgid "Clock"
-msgstr "గడియారం"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
 msgid "Get the current time and date"
 msgstr "ప్రస్తుత సమయం మరియు తేదీను పొందు"
 
-#: ../applets/fish/fish.c:218
+#: ../applets/fish/fish.c:217
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -393,26 +684,26 @@ msgstr ""
 "వాడదలచుకొని వుండరు.\n"
 "యాప్లెట్ ను పనికొచ్చేవిధంగా లేదా \"ఆచరణాత్మకంగా\" చేసే %sను మీరు దేనికీ వాడరాదని మా సలహా."
 
-#: ../applets/fish/fish.c:358 ../applets/fish/fish.c:474
+#: ../applets/fish/fish.c:365 ../applets/fish/fish.c:481
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s చేప"
 
-#: ../applets/fish/fish.c:359
+#: ../applets/fish/fish.c:366
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s చేప, సమకాలీన మార్గనిర్థేశి"
 
-#: ../applets/fish/fish.c:430
+#: ../applets/fish/fish.c:437
 msgid "Unable to locate the command to execute"
 msgstr "అమలుపరవలన ఆదేశం దొరుకుటలేదు"
 
-#: ../applets/fish/fish.c:479
+#: ../applets/fish/fish.c:486
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s చేప ఇలా అంటుంది:"
 
-#: ../applets/fish/fish.c:548
+#: ../applets/fish/fish.c:555
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -423,16 +714,16 @@ msgstr ""
 "\n"
 "వివరాలు: %s"
 
-#: ../applets/fish/fish.c:625
+#: ../applets/fish/fish.c:632
 msgid "_Speak again"
 msgstr "మరలా మాట్లాడు (_S)"
 
-#: ../applets/fish/fish.c:707
+#: ../applets/fish/fish.c:714
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "స్వరూపించబడినటువంటి ఆదేశం పనిచేయట్లేదు మరియు దీని చేత పునఃస్థాపించబడింది: %s"
 
-#: ../applets/fish/fish.c:741
+#: ../applets/fish/fish.c:748
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -443,7 +734,7 @@ msgstr ""
 "\n"
 "వివరాలు: %s"
 
-#: ../applets/fish/fish.c:757
+#: ../applets/fish/fish.c:764
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -454,74 +745,74 @@ msgstr ""
 "\n"
 "వివరాలు: %s"
 
-#: ../applets/fish/fish.c:1157
+#: ../applets/fish/fish.c:1167
 msgid "The water needs changing"
 msgstr "నీరు మార్చవలసివుంది"
 
-#: ../applets/fish/fish.c:1159
+#: ../applets/fish/fish.c:1169
 msgid "Look at today's date!"
 msgstr "ఈ రోజు తేదీ ని చూడు!"
 
-#: ../applets/fish/fish.c:1252
+#: ../applets/fish/fish.c:1262
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s చేప, ఇదో భవిష్యవాణి"
 
-#: ../applets/fish/fish.ui.h:1
-msgid "Fish Preferences"
-msgstr "చేప ప్రాధాన్యతలు"
+#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
+msgid "    "
+msgstr "    "
 
-#: ../applets/fish/fish.ui.h:3
-msgid "_Name of fish:"
-msgstr "చేప పేరు (_N):"
-
-#: ../applets/fish/fish.ui.h:4
-msgid "Co_mmand to run when clicked:"
-msgstr "నొక్కిన వెంటనే నడుపు ఆదేశం (_m):"
-
-#: ../applets/fish/fish.ui.h:5
+#: ../applets/fish/fish.ui.h:2
 msgid "Animation"
 msgstr "యానిమేషన్"
 
-#: ../applets/fish/fish.ui.h:6 ../gnome-panel/panel-properties-dialog.ui.h:13
-msgid "    "
-msgstr "    "
+#: ../applets/fish/fish.ui.h:3
+msgid "Co_mmand to run when clicked:"
+msgstr "నొక్కిన వెంటనే నడుపు ఆదేశం (_m):"
+
+#: ../applets/fish/fish.ui.h:4
+msgid "Fish Preferences"
+msgstr "చేప ప్రాధాన్యతలు"
+
+#: ../applets/fish/fish.ui.h:6
+msgid "_Name of fish:"
+msgstr "చేప పేరు (_N):"
 
 #: ../applets/fish/fish.ui.h:7
 msgid "_Pause per frame:"
 msgstr "ప్రతి చట్రానికి నిలిపివేయి (_P):"
 
 #: ../applets/fish/fish.ui.h:8
-msgid "seconds"
-msgstr "సెకనులు"
-
-#: ../applets/fish/fish.ui.h:9
 msgid "_Rotate on vertical panels"
 msgstr "నిలువు ప్యానల్ పై పరిభ్రమణం (_R)"
 
+#: ../applets/fish/fish.ui.h:9
+msgid "seconds"
+msgstr "సెకనులు"
+
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
-msgid "Wanda Factory"
-msgstr "వాండా ఫాక్టరీ"
+msgid "Display a swimming fish or another animated creature"
+msgstr "ఈదుచున్న చేపను లేదా ఏదైనా ఇతర యానిమేటెడ్ జీవిని ప్రదర్శించు"
 
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
-msgid "From Whence That Stupid Fish Came"
-msgstr "ఆ చెత్త చేప ఎక్కడి నుండి వచ్చినది"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
 msgid "Fish"
 msgstr "చేప"
 
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "ఆ చెత్త చేప ఎక్కడి నుండి వచ్చినది"
+
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
-msgid "Display a swimming fish or another animated creature"
-msgstr "ఈదుచున్న చేపను లేదా ఏదైనా ఇతర యానిమేటెడ్ జీవిని ప్రదర్శించు"
+msgid "Wanda Factory"
+msgstr "వాండా ఫాక్టరీ"
 
 #: ../applets/notification_area/main.c:242
 msgid "Panel Notification Area"
 msgstr "ప్యానల్ ప్రకటన ప్రాంతం"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
-msgid "Notification Area Factory"
-msgstr "ప్రకటిత ప్రదేశం ఫ్యాక్టరి"
+msgid "Area where notification icons appear"
+msgstr "ప్రకటన ప్రతీకలు కనిపించు ప్రాంతము"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
 msgid "Factory for notification area"
@@ -532,29 +823,28 @@ msgid "Notification Area"
 msgstr "ప్రకటన ప్రదేశం"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
-msgid "Area where notification icons appear"
-msgstr "ప్రకటన ప్రతీకలు కనిపించు ప్రాంతము"
+msgid "Notification Area Factory"
+msgstr "ప్రకటిత ప్రదేశం ఫ్యాక్టరి"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
-msgid "Window Navigation Applet Factory"
-msgstr "కిటికీ నావిగేషన్ ఆప్లెట్ ఫ్యాక్టరి"
+msgid "Factory for the window navigation related applets"
+msgstr "విండో నావిగేషన్ సంభందిత ఆప్లెట్ల కొరకు ఫ్యాక్టరీ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
-msgid "Factory for the window navigation related applets"
-msgstr "కిటికీ నావిగేషన్ సంభందిత ఆప్లెట్ల కొరకు ఫ్యాక్టరీ"
+msgid "Hide application windows and show the desktop"
+msgstr "అనువర్తన విండోలను దాచి డిస్క్‍టాప్‌ను చూపించు"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:204
-msgid "Window Selector"
-msgstr "కిటికీ ఎంపికరి"
+msgid "Show Desktop"
+msgstr "డెస్క్‍టాప్‌ను చూపించు"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
-msgstr "మెనూను ఉపయోగించి తెరిచిన కిటికీల మధ్య మారు"
+msgstr "మెనూను ఉపయోగించి తెరిచిన విండోల మధ్య మారు"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
-msgid "Workspace Switcher"
-msgstr "కార్యక్షేత్రాల మార్పరి"
+msgid "Switch between open windows using buttons"
+msgstr "బటన్లను ఉపయోగించి తెరిచిన విండోల మధ్యన మారు"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
 msgid "Switch between workspaces"
@@ -562,19 +852,20 @@ msgstr "కార్యక్షేత్రముల మధ్యన మార�
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:7
 msgid "Window List"
-msgstr "కిటికీ జాబితా"
+msgstr "విండో జాబితా"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
-msgid "Switch between open windows using buttons"
-msgstr "బటన్లను ఉపయోగించి తెరిచిన కిటికీల మధ్యన మారు"
+msgid "Window Navigation Applet Factory"
+msgstr "విండో నావిగేషన్ ఆప్లెట్ ఫ్యాక్టరి"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
-msgid "Show Desktop"
-msgstr "డెస్క్‍టాప్‌ను చూపించు"
+#: ../applets/wncklet/window-menu.c:204
+msgid "Window Selector"
+msgstr "విండో ఎంపికరి"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
-msgid "Hide application windows and show the desktop"
-msgstr "అనువర్తన కిటికీలను దాచి డిస్క్‍టాప్‌ను చూపించు"
+msgid "Workspace Switcher"
+msgstr "కార్యక్షేత్రాల మార్పరి"
 
 #: ../applets/wncklet/showdesktop.c:177
 #, c-format
@@ -587,11 +878,11 @@ msgstr "ప్రతీక కనబడలేదు"
 
 #: ../applets/wncklet/showdesktop.c:231
 msgid "Click here to restore hidden windows."
-msgstr "దాగి ఉన్న కిటికీలను పునరుద్ధరించుటకు ఇక్కడ నొక్కండి."
+msgstr "దాగి ఉన్న విండోలను పునరుద్ధరించుటకు ఇక్కడ నొక్కండి."
 
 #: ../applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
-msgstr "అన్ని కిటికీలను దాచి డెస్క్‍టాప్‌ని చూపించుటకు ఇక్కడ నొక్కండి."
+msgstr "అన్ని విండోలను దాచి డెస్క్‍టాప్‌ని చూపించుటకు ఇక్కడ నొక్కండి."
 
 #: ../applets/wncklet/showdesktop.c:441
 msgid "Show Desktop Button"
@@ -602,293 +893,209 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"మీ కిటికీ నిర్వాహకం డెస్క్‍టాప్‌ను చూపించు బటన్‌కు సహకరించుటలేదు, లేదా మీరు కిటికీ నిర్వాహకాన్ని "
+"మీ విండో నిర్వాహకం డెస్క్‍టాప్‌ను చూపించు బటన్‌కు సహకరించుటలేదు, లేదా మీరు విండో నిర్వాహకాన్ని "
 "వాడుతున్నట్లులేరు."
 
 #: ../applets/wncklet/window-list.ui.h:1
-msgid "Window List Preferences"
-msgstr "కిటికీ జాబితా ప్రాధాన్యతలు"
+msgid "Group windows when _space is limited"
+msgstr "స్థలము పరిమితంగా ఉన్నప్పడు విండోలను సమూహకరించు (_s)"
 
 #: ../applets/wncklet/window-list.ui.h:2
-msgid "Window List Content"
-msgstr "కిటికీ జాబితా విషయసూచిక"
-
-#: ../applets/wncklet/window-list.ui.h:3
-msgid "Sh_ow windows from current workspace"
-msgstr "ప్రస్తుత కార్యక్షేత్రము నుండి కిటికీలను చూపించు (_o)"
-
-#: ../applets/wncklet/window-list.ui.h:4
-msgid "Show windows from a_ll workspaces"
-msgstr "అన్ని కార్యక్షేత్రముల నుండి కిటికీలను చూపించు (_l)"
-
-#: ../applets/wncklet/window-list.ui.h:5
-msgid "Window Grouping"
-msgstr "కిటికీ సమూహీకరణ"
-
-#: ../applets/wncklet/window-list.ui.h:6
-msgid "_Never group windows"
-msgstr "కిటికీలను ఎప్పుడూ సమూహీకరించవద్దు (_N)"
-
-#: ../applets/wncklet/window-list.ui.h:7
-msgid "Group windows when _space is limited"
-msgstr "స్థలము పరిమితంగా ఉన్నప్పడు కిటికీలను సమూహకరించు (_s)"
-
-#: ../applets/wncklet/window-list.ui.h:8
-msgid "_Always group windows"
-msgstr "కిటికీలను ఎల్లప్పుడూ సమూహీకరించు (_A)"
-
-#: ../applets/wncklet/window-list.ui.h:9
-msgid "Restoring Minimized Windows"
-msgstr "కనిష్టీకరించబడిన కిటికీలను పునరుద్ధరిస్తున్నది"
-
-#: ../applets/wncklet/window-list.ui.h:10
 msgid "Restore to current _workspace"
 msgstr "ప్రస్తుత కార్యక్షేత్రమునకు పునరుద్ధరించు (_w)"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:3
 msgid "Restore to na_tive workspace"
 msgstr "స్వంత కార్యక్షేత్రముకు పునరుద్ధరించు (_t)"
 
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Restoring Minimized Windows"
+msgstr "కనిష్టీకరించబడిన విండోలను పునరుద్ధరిస్తున్నది"
+
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Sh_ow windows from current workspace"
+msgstr "ప్రస్తుత కార్యక్షేత్రము నుండి విండోలను చూపించు (_o)"
+
+#: ../applets/wncklet/window-list.ui.h:6
+msgid "Show windows from a_ll workspaces"
+msgstr "అన్ని కార్యక్షేత్రముల నుండి విండోలను చూపించు (_l)"
+
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Window Grouping"
+msgstr "విండో సమూహీకరణ"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "Window List Content"
+msgstr "విండో జాబితా విషయసూచిక"
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Window List Preferences"
+msgstr "విండో జాబితా ప్రాధాన్యతలు"
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "_Always group windows"
+msgstr "విండోలను ఎల్లప్పుడూ సమూహీకరించు (_A)"
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "_Never group windows"
+msgstr "విండోలను ఎప్పుడూ సమూహీకరించవద్దు (_N)"
+
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:716
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:723
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "rows"
 msgstr "అడ్డవరుసలు"
 
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:716
+#: ../applets/wncklet/workspace-switcher.c:723
 msgid "columns"
 msgstr "నిలువువరుసలు"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
-msgid "Workspace Switcher Preferences"
-msgstr "కార్యక్షేత్ర మార్పరి ప్రాధాన్యతలు"
+msgid "Number of _workspaces:"
+msgstr "కార్యక్షేత్రముల సంఖ్య (_w):"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:2
+msgid "Show _all workspaces in:"
+msgstr "అన్ని కార్యక్షేత్రములను దీనిలో చూపించు (_a):"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "ప్రస్తుత కార్యక్షేత్రమును మాత్రమే చూపించు (_o)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
-msgid "Show _all workspaces in:"
-msgstr "అన్ని కార్యక్షేత్రములను దీనిలో చూపించు (_a):"
+#: ../applets/wncklet/workspace-switcher.ui.h:4
+msgid "Show workspace _names in switcher"
+msgstr "కార్యక్షేత్ర పేర్ల మార్పరిని చూపించు (_n)"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Switcher"
 msgstr "మార్పరి"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:6
-msgid "Number of _workspaces:"
-msgstr "కార్యక్షేత్రముల సంఖ్య (_w):"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:7
-msgid "Workspace na_mes:"
-msgstr "కార్యక్షేత్రం పేర్లు (_m):"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Workspace Names"
 msgstr "కార్యక్షేత్రం పేర్లు"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
-msgid "Show workspace _names in switcher"
-msgstr "కార్యక్షేత్ర పేర్ల మార్పరిని చూపించు (_n)"
+#: ../applets/wncklet/workspace-switcher.ui.h:7
+msgid "Workspace Switcher Preferences"
+msgstr "కార్యక్షేత్ర మార్పరి ప్రాధాన్యతలు"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace na_mes:"
+msgstr "కార్యక్షేత్రం పేర్లు (_m):"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspaces"
 msgstr "కార్యక్షేత్రాలు"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
-msgid "Show date in tooltip"
-msgstr "సాధనచిట్కాలో తేదీని చూపించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "వాస్తవమైతే, పాయింటరుని గడియారం పైన ఉన్నప్పుడు తేదీని సాధనచిట్కాలో చూపించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
-msgid "Show weather in clock"
-msgstr "గడియారంలో వాతావరణాన్ని చూపించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:4
-msgid "If true, display a weather icon."
-msgstr "వాస్తవమైతే, వాతావరణ ప్రతీకను ప్రదర్శించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:5
-msgid "Show temperature in clock"
-msgstr "గడియారంలో ఉష్ణోగ్రతను చూపించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:6
-msgid "If true, show the temperature next to the weather icon."
-msgstr "వాస్తవమైతే, ఉష్ణోగ్రతను వాతావరణ ప్రతీక తరువాత చూపించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:7
-msgid "Show week numbers in calendar"
-msgstr "క్యాలెండర్‌లో వారపు సంఖ్యలను చూపించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:8
-msgid "If true, show week numbers in the calendar."
-msgstr "వాస్తవమైతే, వారపు సంఖ్యలను క్యాలెండర్ నందు చూపించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:9
-msgid "Expand list of appointments"
-msgstr "నియామకాల జాబితాను విస్తరించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:10
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "వాస్తవమైతే, క్యాలెండర్ కిటికీలోని నియామకాల జాబితాను విస్తరించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:11
-msgid "Expand list of birthdays"
-msgstr "జన్మదినముల జాబితాను విస్తరించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:12
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "వాస్తవమైతే, జన్మదినముల జాబితాను క్యాలెండర్ కిటికీలో విస్తరించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:13
-msgid "Expand list of tasks"
-msgstr "కర్తవ్యాల జాబితాను విస్తరించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:14
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "వాస్తవమైతే, కర్తవ్యాల జాబితాను క్యాలెండర్ కిటికీలో విస్తరించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:15
-msgid "Expand list of weather information"
-msgstr "వాతావరణ సమాచార జాబితాను విస్తరించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "వాస్తవమైతే, వాతావరణ సమాచార జాబితాను క్యాలెండర్ కిటికీలో విస్తరించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
-msgid "Expand list of locations"
-msgstr "స్థానముల జాబితాను విస్తరించు"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:18
-msgid "If true, expand the list of locations in the calendar window."
-msgstr "వాస్తవమైతే, స్థానముల జాబితాను క్యాలెండర్ కిటికీలో విస్తరించు."
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:19
-msgid "List of locations"
-msgstr "స్థానముల జాబితా"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
-msgid ""
-"A list of locations to display in the calendar window. Each location is a "
-"tuple of display name, METAR code and coordinates."
-msgstr ""
-"క్యాలెండర్ కిటికీ నందు చూపించుటకు స్థానముల జాబితా. ప్రతీ స్థానానికి ఒక నగరం పేరు, METAR కోడు మరియు "
-"నిరూపకాలు ఉంటాయి."
-
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
-msgid "The fish's name"
-msgstr "చేప యొక్క పేరు"
-
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "పేరులేని లేని చేప బాగా దీనముగా ఉంది. పేరు పెట్టుట ద్వారా మీ చేపకు జీవితాన్ని ఇవ్వండి."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
-msgid "The fish's animation pixmap"
-msgstr "చేప యొక్క యానిమేషన్ పిక్స్ మాప్"
-
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
-msgid ""
-"This key specifies the filename of the pixmap which will be used for the "
-"animation displayed in the fish applet relative to the pixmap directory."
-msgstr ""
-"పిక్సమాప్ సంచయానికి సంబంధించిన చేప ఆప్లెట్‌లోని యానిమేషన్ ప్రదర్శనకు ఉపయోగపడు పిక్స్ మాప్ యొక్క దస్త్రం "
-"పేరును ఈ కీ తెలియజేస్తుంది."
-
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
 msgid "Command to execute on click"
 msgstr "నొక్కుట ద్వారా అమలుచేయవలసిన ఆదేశం"
 
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "నిజమైతే, చేప యొక్క యానిమేషన్ నిటారుగా ఉన్న ప్యానళ్ళ పై తిరుగుతూ ప్రదర్శితమవుతుంది."
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
+msgid "Pause per frame"
+msgstr "చట్రానికి నిలిపివేయుట"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+msgid "Rotate on vertical panels"
+msgstr "నిలువుగా ఉన్న ప్యానళ్ళ పై తిరుగు"
+
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
+msgid "The fish's animation pixmap"
+msgstr "చేప యొక్క యానిమేషన్ పిక్స్ మాప్"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+msgid "The fish's name"
+msgstr "చేప యొక్క పేరు"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr "చేప నొక్కబడినప్పుడు అమలుపరుచుటకు ప్రయత్నించే ఆదేశాన్ని ఈ కీ తెలియజేస్తుంది."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
-msgid "Pause per frame"
-msgstr "చట్రానికి నిలిపివేయుట"
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"పిక్సమాప్ సంచయానికి సంబంధించిన చేప ఆప్లెట్‌లోని యానిమేషన్ ప్రదర్శనకు ఉపయోగపడు పిక్స్ మాప్ యొక్క ఫైల్ పేరును ఈ "
+"కీ తెలియజేస్తుంది."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "ఒక్కో చట్రము ఎన్ని సెకన్లు ప్రదర్శితమవ్వాలో ఈ కీ తెలియజేస్తుంది."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
-msgid "Rotate on vertical panels"
-msgstr "నిలువుగా ఉన్న ప్యానళ్ళ పై తిరుగు"
-
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "నిజమైతే, చేప యొక్క యానిమేషన్ నిటారుగా ఉన్న ప్యానళ్ళ పై తిరుగుతూ ప్రదర్శితమవుతుంది."
-
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
-msgid "Show windows from all workspaces"
-msgstr "అన్ని కార్యక్షేత్రములలోని కిటికీలను చూపించు"
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"విండోజాబితాలో ఒకే రకమైన అనువర్తనం నుండి వచ్చిన విండోలను ఎప్పుడు సమూహకరించాలో నిర్ణయిస్తుంది. సాధ్యమైన "
+"విలువలు \"ఎప్పటికివద్దు\", \"స్వయం\" మరియు \"ఎల్లప్పుడు\"."
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"నిజమైతే,కిటికీ జాబితా అన్ని కార్యక్షేత్రాల నుండి కిటికీలను చూపిస్తుంది. లేదంటే అది ప్రస్తుతకార్యక్షేత్రం నుండి "
-"మాత్రమే కిటికీలను చూపిస్తుంది."
+"నిజమైతే,విండో జాబితా అన్ని కార్యక్షేత్రాల నుండి విండోలను చూపిస్తుంది. లేదంటే అది ప్రస్తుతకార్యక్షేత్రం నుండి "
+"మాత్రమే విండోలను చూపిస్తుంది."
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:3
-msgid "When to group windows"
-msgstr "కిటికీలను ఎప్పుడు సమూహకరించాలి"
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
-msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"కిటికీజాబితాలో ఒకే రకమైన అనువర్తనం నుండి వచ్చిన కిటికీలను ఎప్పుడు సమూహకరించాలో నిర్ణయిస్తుంది. సాధ్యమైన "
-"విలువలు \"ఎప్పటికివద్దు\", \"స్వయం\" మరియు \"ఎల్లప్పుడు\"."
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
-msgid "Move windows to current workspace when unminimized"
-msgstr "ఎప్పుడైతే కిటికీలు చిన్నవిగా ఉండవో వాటిని ప్రస్తుత కార్యక్షేత్రమునకు కదుపు"
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"నిజమైతే, ఎప్పుడైతే కిటికీను చిన్నది చేయవో అప్పుడు దానిని, ప్రస్తుత కార్యక్షేత్రానికి కదుపు. లేదంటే, ఆ కిటికీ "
+"నిజమైతే, ఎప్పుడైతే విండోను చిన్నది చేయవో అప్పుడు దానిని, ప్రస్తుత కార్యక్షేత్రానికి కదుపు. లేదంటే, ఆ విండో "
 "కార్యక్షేత్రానికి మారు."
 
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
+msgid "Move windows to current workspace when unminimized"
+msgstr "ఎప్పుడైతే విండోలు చిన్నవిగా ఉండవో వాటిని ప్రస్తుత కార్యక్షేత్రమునకు కదుపు"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
+msgid "Show windows from all workspaces"
+msgstr "అన్ని కార్యక్షేత్రములలోని విండోలను చూపించు"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
+msgid "When to group windows"
+msgstr "విండోలను ఎప్పుడు సమూహకరించాలి"
+
 #: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:1
-msgid "Display workspace names"
-msgstr "కార్యక్షేత్ర పేర్లను ప్రదర్శించు"
-
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
-msgid ""
-"If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace. "
-"This setting only works when the window manager is Metacity."
-msgstr ""
-"నిజమైతే, కార్యక్షేత్రం మార్పరిలో గల కార్యక్షేత్రాలు కార్యక్షేత్రల యొక్క పేర్లను ప్రదర్శిస్తాయి. లేదంటే అవి "
-"కార్యక్షేత్రంలోని కిటికీలను ప్రదర్శిస్తాయి.ఈ అమరిక కిటికీ నిర్వాహిక మెటాసిటి అయితే మాత్రమే పనిచేస్తుంది."
-
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
 msgid "Display all workspaces"
 msgstr "అన్ని కార్యక్షేత్రాలను ప్రదర్శించు"
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
+msgid "Display workspace names"
+msgstr "కార్యక్షేత్ర పేర్లను ప్రదర్శించు"
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
 "నిజమైతే, ఆ కార్యక్షేత్రం మార్పరి కార్యక్షేత్రాలన్నిటినీ చూపిస్తుంది. లేదంటే అది ప్రస్తుత కార్యక్షేత్రం మాత్రమే "
 "చూపుతుంది."
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace. "
+"This setting only works when the window manager is Metacity."
+msgstr ""
+"నిజమైతే, కార్యక్షేత్రం మార్పరిలో గల కార్యక్షేత్రాలు కార్యక్షేత్రల యొక్క పేర్లను ప్రదర్శిస్తాయి. లేదంటే అవి "
+"కార్యక్షేత్రంలోని విండోలను ప్రదర్శిస్తాయి.ఈ అమరిక విండో నిర్వాహిక మెటాసిటి అయితే మాత్రమే పనిచేస్తుంది."
 
 #: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
 msgid "Rows in workspace switcher"
@@ -905,71 +1112,6 @@ msgstr ""
 "మాత్రమే సంభందితంగా ఉంటుంది."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
-msgid "Enable tooltips"
-msgstr "సాధనచిట్కాలను చేతనపరుచు"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
-msgid ""
-"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
-"for the whole desktop with the gtk-enable-tooltips property in GTK+."
-msgstr ""
-"ఒకవేళ నిజమైతే, సాధనచిట్కాలు ఆబ్జెక్టుల కోసం చూపించబడతాయి. జిటికెప్లస్‌లో చేతనపరిచివున్న జిటికె-సాధనచిట్కాలను "
-"మొత్తం డెస్క్‍టాపుకు అచేతనపరుచవచ్చు."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
-msgid "Confirm panel removal"
-msgstr "ప్యానల్ తొలగింపును నిర్ధారించు"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
-msgstr "నిజమైతే, వాడుకరి ప్యానల్ తొలగించాలని కొరుకుంటున్నాడో లేదో నిర్ధారించుటకు ఒక డైలాగ్ చూపబడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
-msgid "Panel ID list"
-msgstr "ప్యానల్ ID జాబితా"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"ప్యానల్ ID ల యొక్క జాబితా.ప్రతి ID ఒక స్వతంత్ర గరిష్ఠస్థాయి ప్యానల్ ను గుర్తిస్తుంది.ఈ పానల్ లోని ప్రతి "
-"దానికి గల అమరికలు /apps/panel/toplevels/$(id) నందు నిల్వఉంచబడతాయి."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
-msgid "Panel object ID list"
-msgstr "ప్యానల్ ఆబ్జెక్టు ఐడీ జాబితా"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. an applet, launcher, action button or menu button/bar). The settings for "
-"each of these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"ప్యానల్ ఆబ్జక్టు ఐడీల జాబితా.ప్రతి ఐడీ ఒక స్వతంత్ర ప్యానల్ ఆబ్జక్టు (ఉదా. ఒక ప్రారంభకం, చర్యా బటన్ లేదా "
-"మెనూబటన్/బార్)ను గుర్తిస్తుంది. ఈ ఆబ్జక్టుల యొక్క అమరికలు /apps/panel/objects/$(id) నందు "
-"నిల్వ ఉంచబడతాయి."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
-msgid "Complete panel lockdown"
-msgstr "పూర్తి ప్యానల్‌ను తాళంవేయి"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
-msgstr ""
-"నిజమైతే, ప్యానల్ ఆకృతీకరణకు ఏ మార్పులను కూడా ప్యానల్ అనుమతించదు. ఏమైనప్పటికి ఒంటరి ఆప్లెట్లు "
-"ప్రత్యేకంగా లాక్ డౌన్ చేయవలసిరావచ్చు. ఇది ప్రభావితం కావటానికి ప్యానల్‌ను పునఃప్రారంభించ వలసిరావచ్చు."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
-msgid "Applet IIDs to disable from loading"
-msgstr "లోడింగ్ నుండి అచేతనం చేయుటకు ఆప్లెట్ IIDs"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -981,32 +1123,81 @@ msgstr ""
 "GNOME_MinicommanderApplet' ను ఈ జాబితా కు కలుపండి.ఇది ప్రభావితం అగుటకు పానల్ తప్పనిసరిగా "
 "పునఃప్రారంభించాలి."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"ప్యానల్ ID ల యొక్క జాబితా.ప్రతి ID ఒక స్వతంత్ర గరిష్ఠస్థాయి ప్యానల్ ను గుర్తిస్తుంది.ఈ పానల్ లోని ప్రతి "
+"దానికి గల అమరికలు /apps/panel/toplevels/$(id) నందు నిల్వఉంచబడతాయి."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. an applet, launcher, action button or menu button/bar). The settings for "
+"each of these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"ప్యానల్ ఆబ్జక్టు ఐడీల జాబితా.ప్రతి ఐడీ ఒక స్వతంత్ర ప్యానల్ ఆబ్జక్టు (ఉదా. ఒక ప్రారంభకం, చర్యా బటన్ లేదా "
+"మెనూబటన్/బార్)ను గుర్తిస్తుంది. ఈ ఆబ్జక్టుల యొక్క అమరికలు /apps/panel/objects/$(id) నందు "
+"నిల్వ ఉంచబడతాయి."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
+msgid "Applet IIDs to disable from loading"
+msgstr "లోడింగ్ నుండి అచేతనం చేయుటకు ఆప్లెట్ IIDs"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Complete panel lockdown"
+msgstr "పూర్తి ప్యానల్‌ను తాళంవేయి"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid "Confirm panel removal"
+msgstr "ప్యానల్ తొలగింపును నిర్ధారించు"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
 msgid "Disable Force Quit"
 msgstr "బలవంతపు నిష్క్రమణను అచేతనపరుచు"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
-msgstr ""
-"నిజమైతే, ప్యానల్ బలవంతపు నిష్క్రమణ బటన్ కు ప్రవేశం తీసివేయుట ద్వారా వాడుకరిని ఒక అనువర్తనమును "
-"బలవంతంగా నిష్క్రమింపచేయుటకు అనుమతినివ్వదు."
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "స్వయంచాలకముగింపును \"అనువర్తనం నడుపు\" డైలాగులో చేతనపరుచు"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
-msgid "History of \"Run Application\" dialog"
-msgstr "\"అనువర్తనము నడుపు\" డైలాగు యొక్క చరిత్ర"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
-msgid ""
-"The list of commands used in the past in the \"Run Application\" dialog."
-msgstr "\" అనువర్తనము నడుపు\" డైలాగులో ఇదివరకు వాడిన ఆదేశాల యొక్క జాబితా."
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "ప్రోగ్రామ్ జాబితాను \"అనువర్తనము నడుపు\" డైలాగులో చేతనపరుచు"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+msgid "Enable tooltips"
+msgstr "సాధనచిట్కాలను చేతనపరుచు"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "ప్రోగ్రామ్ జాబితాను \"అనువర్తనము నడుపు\" డైలాగులో విస్తరించు"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+msgid "History of \"Run Application\" dialog"
+msgstr "\"అనువర్తనము నడుపు\" డైలాగు యొక్క చరిత్ర"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr "నిజమైతే, వాడుకరి ప్యానల్ తొలగించాలని కొరుకుంటున్నాడో లేదో నిర్ధారించుటకు ఒక డైలాగ్ చూపబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "నిజమైతే, స్వయంచాలకముగింపును\"అనువర్తనం నడుపు\" డైలాగ్ నందు అందుబాటులో ఉంచు."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"నిజమైతే, \"తెలిసిన అనువర్తనములు\" ఏవైతే\"అనువర్తనము నడుపు\" డైలాగ్ లో జాబితాచేయబడినవో అవి డైలాగ్ "
+"తెరవగానే విస్తరింపబడతాయి.ఈ కీ enable_program_list కీ నిజమైతే మాత్రమే సంభందితంగా ఉంటుంది."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1016,27 +1207,43 @@ msgstr ""
 "ఉంచు. డైలాగ్ తెరిచినప్పుడు జాబితా విస్తరించబడినా లేదా విస్తరించబడకపోయినా show_program_list కీ చేత "
 "నియంత్రించ బడుతుంది. "
 
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"నిజమైతే, ప్యానల్ బలవంతపు నిష్క్రమణ బటన్ కు ప్రవేశం తీసివేయుట ద్వారా వాడుకరిని ఒక అనువర్తనమును "
+"బలవంతంగా నిష్క్రమింపచేయుటకు అనుమతినివ్వదు."
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"నిజమైతే, ప్యానల్ ఆకృతీకరణకు ఏ మార్పులను కూడా ప్యానల్ అనుమతించదు. ఏమైనప్పటికి ఒంటరి ఆప్లెట్లు "
+"ప్రత్యేకంగా లాక్ డౌన్ చేయవలసిరావచ్చు. ఇది ప్రభావితం కావటానికి ప్యానల్‌ను పునఃప్రారంభించ వలసిరావచ్చు."
+
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
-msgid "Expand program list in \"Run Application\" dialog"
-msgstr "ప్రోగ్రామ్ జాబితాను \"అనువర్తనము నడుపు\" డైలాగులో విస్తరించు"
+msgid ""
+"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
+"for the whole desktop with the gtk-enable-tooltips property in GTK+."
+msgstr ""
+"ఒకవేళ నిజమైతే, సాధనచిట్కాలు ఆబ్జెక్టుల కోసం చూపించబడతాయి. జిటికెప్లస్‌లో చేతనపరిచివున్న జిటికె-సాధనచిట్కాలను "
+"మొత్తం డెస్క్‍టాపుకు అచేతనపరుచవచ్చు."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
-msgstr ""
-"నిజమైతే, \"తెలిసిన అనువర్తనములు\" ఏవైతే\"అనువర్తనము నడుపు\" డైలాగ్ లో జాబితాచేయబడినవో అవి డైలాగ్ "
-"తెరవగానే విస్తరింపబడతాయి.ఈ కీ enable_program_list కీ నిజమైతే మాత్రమే సంభందితంగా ఉంటుంది."
+msgid "Panel ID list"
+msgstr "ప్యానల్ ID జాబితా"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
-msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "స్వయంచాలకముగింపును \"అనువర్తనం నడుపు\" డైలాగులో చేతనపరుచు"
+msgid "Panel object ID list"
+msgstr "ప్యానల్ ఆబ్జెక్టు ఐడీ జాబితా"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
 msgid ""
-"If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr "నిజమైతే, స్వయంచాలకముగింపును\"అనువర్తనం నడుపు\" డైలాగ్ నందు అందుబాటులో ఉంచు."
+"The list of commands used in the past in the \"Run Application\" dialog."
+msgstr "\" అనువర్తనము నడుపు\" డైలాగులో ఇదివరకు వాడిన ఆదేశాల యొక్క జాబితా."
 
 #: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
 msgid "Launcher location"
@@ -1051,59 +1258,37 @@ msgstr ""
 "అయితే మాత్రమే ఈ కీ సారుప్యంగా ఉంటుంది."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
-msgid "Tooltip displayed for menu"
-msgstr "మెనూ కొరకు ప్రదర్శితమయ్యే సాధనచిట్కా"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
-msgid "The text to display in a tooltip for this menu."
-msgstr "ఈ మెను కొరకు సాధనచిట్కా నందు ప్రదర్శించాల్సిన పాఠ్యం"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
 msgid "Icon used for button"
 msgstr "బటన్‌కు ఉపయోగించే ప్రతీక"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+msgid "Menu content path"
+msgstr "మెనూ విషయసంగ్రహం పథం"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
 msgstr ""
-"ఆబ్జక్టు యొక్క బటన్‌కు ప్రతీకగా ఉపయోగించిన బొమ్మ దస్త్రం యొక్క స్థానము. ఒకవేళ ఖాళీగావుంటే, అప్రమేయ "
-"ప్రతీకను మెను కొరకు వాడబడుతుంది."
+"ఆబ్జక్టు యొక్క బటన్‌కు ప్రతీకగా ఉపయోగించిన బొమ్మ ఫైలు యొక్క స్థానము. ఒకవేళ ఖాళీగావుంటే, అప్రమేయ ప్రతీకను "
+"మెను కొరకు వాడబడుతుంది."
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
-msgid "Menu content path"
-msgstr "మెనూ విషయసంగ్రహం పథం"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
 msgid ""
 "The path from which the menu contents is contructed. If empty, the menu will "
 "be the default applications menu."
 msgstr ""
 "మెనూ అంశాలను నిర్మించినటువంటి పథం. ఒకవేళ ఖాళీగావుంటే, ఆ మెనూ అప్రమేయ అనువర్తనాల మెను అవుతుంది."
 
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
+msgid "The text to display in a tooltip for this menu."
+msgstr "ఈ మెను కొరకు సాధనచిట్కా నందు ప్రదర్శించాల్సిన పాఠ్యం"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
+msgid "Tooltip displayed for menu"
+msgstr "మెనూ కొరకు ప్రదర్శితమయ్యే సాధనచిట్కా"
+
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
-msgid "Object IID"
-msgstr "ఆబ్జెక్టు ఐఐడి"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
-msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
-msgstr "ఆబ్జెక్టు యొక్క అమలుపరుచు ID - ఉదా. \"ClockAppletFactory::ClockApplet\"."
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
-msgid "Toplevel panel containing object"
-msgstr "ఉన్నతస్థాయి ప్యానల్ కలిగివుండే ఆబ్జక్టు"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
-msgid "The identifier of the toplevel panel which contains this object."
-msgstr "ఈ ఆబ్జక్టును కలిగివున్న అత్యున్నత స్థాయి ప్యానల్‌ను గుర్తించునది."
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
-msgid "Interpret position relative to bottom/right edge"
-msgstr "స్థానంను క్రింది/కుడి అంచుకి సారూప్యంగా స్థానాంతరము చేయుము"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
@@ -1111,11 +1296,29 @@ msgstr ""
 "ఒకవేళ నిజమని అమర్చితే, ఆబ్జక్టు యోక్క స్థానము ప్యానల్ యొక్క కుడి(లేదా నిలువుగా అయితే క్రింది) అంచుకి "
 "సారూప్యంగా స్థానాంతరము చేయబడుతుంది."
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+msgid "Interpret position relative to bottom/right edge"
+msgstr "స్థానంను క్రింది/కుడి అంచుకి సారూప్యంగా స్థానాంతరము చేయుము"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
+msgid "Object IID"
+msgstr "ఆబ్జెక్టు ఐఐడి"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
 msgid "Object's position on the panel"
 msgstr "ప్యానల్ పైన ఆబ్జక్టు యొక్క స్థానము"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "ఈ ఆబ్జక్టును కలిగివున్న అత్యున్నత స్థాయి ప్యానల్‌ను గుర్తించునది."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
+msgid ""
+"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+"\"."
+msgstr "ఆబ్జెక్టు యొక్క అమలుపరుచు ID - ఉదా. \"ClockAppletFactory::ClockApplet\"."
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -1123,48 +1326,94 @@ msgstr ""
 "ఈ ప్యానల్ ఆబ్జక్టు యొక్క స్థానము.ఆ స్థానము ప్యానల్ ఎడమ (లేదా నిలువుగానైతే పైన) అంచు నుండి గల "
 "పిగ్జెల్సు సంఖ్య ద్వారా తెలుపబడుతుంది."
 
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
+msgid "Toplevel panel containing object"
+msgstr "ఉన్నతస్థాయి ప్యానల్ కలిగివుండే ఆబ్జక్టు"
+
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
-msgid "Name to identify panel"
-msgstr "ప్యానల్‌ను గుర్తించుటకు పేరు"
+msgid "Animation speed"
+msgstr "యానిమేషన్ వేగం"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:2
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
-msgstr ""
-"మానవుడు చదవగల ఈ నామాన్ని మీరు పానల్ ను గుర్తించుటకు ఉపయోగించగలరు.దీని ప్రధాన ఉపయోగార్ధం పానల్ "
-"కిటికీకి శీర్షికగా ఉండుట ద్వారా పానల్సు మద్య మారుతూ ఉన్నప్పడు ఉపయోగపడుట."
+msgid "Automatically hide panel into corner"
+msgstr "స్వయంచాలకంగా మూలలో దాగు ప్యానల్"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
-msgid "X screen where the panel is displayed"
-msgstr "ఎక్కడైతే ప్యానల్ ప్రదర్శింతమౌతుందో ఆ X తెర"
+msgid "Background color"
+msgstr "నేపథ్య వర్ణము"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"బహుళ-తెర అమరిక ద్వారా, మీరు ప్రతి విడి తెరపైన పానల్సు ను కలిగిఉండవచ్చు. ఈ కీ పానల్ "
-"ప్రదర్శితమువుతున్న ప్రస్తుత తెరను గుర్తిస్తుంది."
+msgid "Background image"
+msgstr "నేపథ్యం బొమ్మ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
-msgid "Xinerama monitor where the panel is displayed"
-msgstr "ఎక్కడైతే ప్యానల్ ప్రదర్శింతమౌతుందో ఆ Xinerama మానిటర్"
+msgid "Background type"
+msgstr "నేపథ్యం రకం"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
-msgstr ""
-"xinerama అమర్పులో, మీరు ప్రతి విడి మానిటర్ నందు పానల్ కలిగిఉండొచ్చు.ఈ కీ పానల్ ప్రదర్శింపబడుతున్న "
-"ప్రస్తుత మానిటర్ ను గుర్తిస్తుంది."
+msgid "Center panel on x-axis"
+msgstr "x-యాక్సిస్ పై గల మధ్య ప్యానల్"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+msgid "Center panel on y-axis"
+msgstr "y-యాక్సిస్ పై గల మధ్య ప్యానల్"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+msgid ""
+"Determines how the image set by image-uri is rendered. Possible values are "
+"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
+"to the panel dimensions and the aspect ratio of the image will not be "
+"maintained. With \"fit\", the image will be scaled (retaining the aspect "
+"ratio of the image) to the panel height (if horizontal)."
+msgstr ""
+"బొమ్మ ఎలా అమర్చబడాలో బొమ్మ యుఆర్ఐ ఎలా రెండరవడం నిర్ణయిస్తుంది. సాధ్యమగు విలువలు \"ఏదీకాదు\", "
+"\"నొక్కు\", \"అమర్చు\", \"సాగదీయి\", బొమ్మ కొలతలకు అనుగుణంగా అమర్చబడుతుంది కానీ అసలు "
+"నాణ్యతను మాత్రం ఉండదు. \"అమర్చు\" తో, అన్నిటికీ సరిపోయేట్టు అమర్చుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+msgid "Enable arrows on hide buttons"
+msgstr "మరుగునవున్న బటన్లపై బాణాలను చేతనపరుచు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+msgid "Enable hide buttons"
+msgstr "దాగు బటన్లను చేతనపరుచు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
 msgid "Expand to occupy entire screen width"
 msgstr "మొత్తం తెర వెడల్పును ఆక్రమించుకొనుటకు విస్తరింపుము"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"నిజమైతే, మరుగునఉన్న బటన్ల పై బాణాలు ఉంచబడతాయి.ఈ కీ enable_buttons కీ నిజమైతే మాత్రమే సారూప్యతతో "
+"ఉంటుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"నిజమైతే, పానల్ యొక్క రెండు పక్కల పానల్ ను తెరఅంచు చివరివరకు కదుపుటకు ఉపయోగపడగల బటన్లు, ఒక "
+"బటన్ మాత్రమే కనబడునట్లుగా ఉంచబడతాయి,"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "నిజమైతే, పానల్ నిలువుగా సర్దుబాటు చేసినప్పడు మాత్రమే బ్యాక్‌గ్రౌండ్ చిత్రం భ్రమణం చేయబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"నిజమైతే, సూచిక పానల్ వదిలివేళ్ళగానే పానల్ స్వయంచాలకంగా స్క్రీన్ యొక్క మూలన దాగిఉంచబడుతుంది.సూచిక ను "
+"మూలకు తీసుకుపోవుట ద్వారా పానల్ ను తిరిగిఉంచుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -1175,11 +1424,162 @@ msgstr ""
 "అంచు వద్ద మాత్రమే ఉంచబడుతుంది. నిజంకానిచో, పానల్ దాని పై ఆప్లెట్లను, లాంచర్లను మరియు బటన్లను "
 "ఉంచగలిగే అంత పెద్దదిగా మాత్రమే ఉంటుంది."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"నిజమైతే, x మరియు x_right కీలు వదిలివేయబడతాయి మరియు పానల్ x-యాక్సిస్ మద్యన ఉంచబడుతుంది.ఒక వేళ పానల్ "
+"పరిమాణం మార్చనా దాని స్థానం అలాగే ఉంటుంది -i.e పానల్ రెండువైపులా పెరుగుతుంది.నిజంకానిచో,x మరియు "
+"x_right కీలు పానల్ స్థానాన్ని తెలుపుతాయి."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"నిజమైతే, y మరియు y_bottom కీలు కలుపబడతాయి మరియు పానల్ తెరయొక్క y-యాక్సిస్ కు మద్య ఉంచబడుతుంది."
+"పానల్ పరిమాణంమర్చినా దాని స్థానం అలాగే ఉంటుంది - i.e పానల్ రెడు వైపులా పెరుగుతుంది. నిజంకానిచో, y "
+"మరియు y_bottom కీలు పానల్ స్థానాన్ని తెలియజేస్తాయి."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+msgid "Image options"
+msgstr "బొమ్మ ఐచ్ఛికాలు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"xinerama అమర్పులో, మీరు ప్రతి విడి మానిటర్ నందు పానల్ కలిగిఉండొచ్చు.ఈ కీ పానల్ ప్రదర్శింపబడుతున్న "
+"ప్రస్తుత మానిటర్ ను గుర్తిస్తుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+msgid "Name to identify panel"
+msgstr "ప్యానల్‌ను గుర్తించుటకు పేరు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+msgid "Panel autohide delay"
+msgstr "ప్యానల్ స్వయంగా దాగుటకు ఆలస్యం"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+msgid "Panel autounhide delay"
+msgstr "ప్యానల్ స్వయంగా దాగి ఉండుటకి ఆలస్యం"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
 msgid "Panel orientation"
 msgstr "ప్యానల్ సర్దుబాటు"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+msgid "Panel size"
+msgstr "ప్యానల్ పరిమాణం"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+msgid "Rotate image on vertical panels"
+msgstr "బొమ్మను నిలువు ప్యానళ్ళ పైన తిప్పు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "ఫ్యానల్ కొరకు నేపథ్య వర్ణమును #RGB విధానంలో తెలుపుతుంది"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"నేపథ్యచిత్రం కొరకు ఉపయోగించబడు ఫైలును తెలియజేస్తుంది.చిత్రం ఆల్ఫా ఛానల్‌ను కలిగివుంటే అది డెస్క్‍టాప్ "
+"నేపథ్యచిత్రం పైకి వర్ణరంజితం చేయబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"ప్యానల్ స్వయంచాలకంగా తిరిగి-చూపించబడక ముందు సూచిక పానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని "
+"మిల్లీసెంకన్లలో తెలుపుతుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"ప్యానల్ స్వయంచాలకంగా మరుగుపరచక మునుపు సూచిక ప్యానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని "
+"మిల్లీసెకన్లలో తెలియజెస్తుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"ప్యానల్ స్వయంచాలకంగా మూలన మరుగుపరిచినప్పుడు కనబడే పిక్సెల్సు సంఖ్యను తెలియజేస్తుంది.ఈ కీ "
+"auto_hide కీ నిజమైతే మాత్రమే సారూప్యతతో ఉంటుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"ప్యానల్ యొక్క ఎత్తు (నిలువు ప్యానల్‌కైతే వెడల్పు). ఫాంట్ పరిమాణం మరియు ఇతర సూచికలను ఆధారంగా తీసుకుని "
+"రన్‌టైమ్ నందు ప్యానల్ నిర్ధారించబడుతుంది.గరిష్ఠ పరిమాణం తెరయొక్క ఎత్తు(లేదా వెడల్పు) కు ఒక పావుభాగం "
+"వద్ద నిర్దేశించ బడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"x-యాక్సిస్ తో కూడి పానల్ యొక్క స్థానము, తెర యొక్క కుడి నుండి ప్రారంభించబడుతుంది. -1 కి అమర్చినట్లైతే, ఆ "
+"విలువ వదిలివేయబడుతుంది మరియు x కీ యొక్క విలువ ఉపయోగించబడుతుంది. విలవ 0 కన్నా పెద్దదైతే, x కీ విలువ "
+"వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి నందు ఈ కీ "
+"వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచున ఉంచబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"x-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి "
+"నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచు వద్ద ఉంచబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"y-యాక్సిస్ తో కూడిన పానల్ స్థానము, తెర క్రింది నుండి ప్రారంభించబడినది.ఒకవేళ -1 అమర్చినట్లైతే, ఆ విలువ "
+"వదిలివేయబడుతుంది మరియు y కీ యొక్క విలువ ఉపయోగించబడుతుంది.ఒకవేళ విలువ 0 కన్నా ఎక్కువైతే, అప్పుడు "
+"y కీ విలువ వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి "
+"నందు ఈ కీ వదిలివేయబడుతుంది మరియు సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరు అంచువద్ద ఉంచబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"y-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఆ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది. విస్తరణ "
+"రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరఅంచు వద్ద "
+"ఉంచబడుతుంది."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -1196,193 +1596,6 @@ msgstr ""
 "పానల్ ఆబ్జక్టులు ఎలా ప్రవర్తించాలో చెప్పే ఉపయోగకరమైన మెళుకువ ఇస్తుంది. ఉదాహరణకు, \"పైన\" పానల్ మెనూ "
 "బటన్ మెనూను పానల్ క్రిందికి ఉంచుతుంది, అదే \"క్రింది\" పానల్ అయితే ఆ మెనూ పానల్ పైకి ఉంచబడుతుంది."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
-msgid "Panel size"
-msgstr "ప్యానల్ పరిమాణం"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
-msgstr ""
-"ప్యానల్ యొక్క ఎత్తు (నిలువు ప్యానల్‌కైతే వెడల్పు). ఫాంట్ పరిమాణం మరియు ఇతర సూచికలను ఆధారంగా తీసుకుని "
-"రన్‌టైమ్ నందు ప్యానల్ నిర్ధారించబడుతుంది.గరిష్ఠ పరిమాణం తెరయొక్క ఎత్తు(లేదా వెడల్పు) కు ఒక పావుభాగం "
-"వద్ద నిర్దేశించ బడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
-msgid "X co-ordinate of panel"
-msgstr "ప్యానల్ యొక్క X కో-ఆర్డినేట్"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"x-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి "
-"నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచు వద్ద ఉంచబడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
-msgid "Y co-ordinate of panel"
-msgstr "పానల్ యొక్క Y కో-ఆర్డినేట్"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"y-యాక్సిస్ తో కూడిన పానల్ స్థానము.ఆ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది. విస్తరణ "
-"రీతి నందు ఈ కీ వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరఅంచు వద్ద "
-"ఉంచబడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "ప్యానల్ యొక్క X కొ-ఆర్డినేట్, తెర యొక్క కుడివైపు నుండి ప్రారంభమౌతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"x-యాక్సిస్ తో కూడి పానల్ యొక్క స్థానము, తెర యొక్క కుడి నుండి ప్రారంభించబడుతుంది. -1 కి అమర్చినట్లైతే, ఆ "
-"విలువ వదిలివేయబడుతుంది మరియు x కీ యొక్క విలువ ఉపయోగించబడుతుంది. విలవ 0 కన్నా పెద్దదైతే, x కీ విలువ "
-"వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి నందు ఈ కీ "
-"వదిలివేయబడుతుంది మరియు పానల్ సర్దుబాటు కీ ద్వారా తెలుపబడిన తెర అంచున ఉంచబడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "పానల్ యోక్క Y కో-ఆర్డినేట్, తెర యొక్క క్రిందిభాగం నుండి ప్రారంభించబడుతుంది"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"y-యాక్సిస్ తో కూడిన పానల్ స్థానము, తెర క్రింది నుండి ప్రారంభించబడినది.ఒకవేళ -1 అమర్చినట్లైతే, ఆ విలువ "
-"వదిలివేయబడుతుంది మరియు y కీ యొక్క విలువ ఉపయోగించబడుతుంది.ఒకవేళ విలువ 0 కన్నా ఎక్కువైతే, అప్పుడు "
-"y కీ విలువ వదిలివేయబడుతుంది.ఈ కీ un-expanded రీతి నందు మాత్రమే సారూప్యతతో ఉంటుంది.విస్తరణ రీతి "
-"నందు ఈ కీ వదిలివేయబడుతుంది మరియు సర్దుబాటు కీ ద్వారా తెలుపబడిన తెరు అంచువద్ద ఉంచబడుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
-msgid "Center panel on x-axis"
-msgstr "x-యాక్సిస్ పై గల మధ్య ప్యానల్"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"నిజమైతే, x మరియు x_right కీలు వదిలివేయబడతాయి మరియు పానల్ x-యాక్సిస్ మద్యన ఉంచబడుతుంది.ఒక వేళ పానల్ "
-"పరిమాణం మార్చనా దాని స్థానం అలాగే ఉంటుంది -i.e పానల్ రెండువైపులా పెరుగుతుంది.నిజంకానిచో,x మరియు "
-"x_right కీలు పానల్ స్థానాన్ని తెలుపుతాయి."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
-msgid "Center panel on y-axis"
-msgstr "y-యాక్సిస్ పై గల మధ్య ప్యానల్"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"నిజమైతే, y మరియు y_bottom కీలు కలుపబడతాయి మరియు పానల్ తెరయొక్క y-యాక్సిస్ కు మద్య ఉంచబడుతుంది."
-"పానల్ పరిమాణంమర్చినా దాని స్థానం అలాగే ఉంటుంది - i.e పానల్ రెడు వైపులా పెరుగుతుంది. నిజంకానిచో, y "
-"మరియు y_bottom కీలు పానల్ స్థానాన్ని తెలియజేస్తాయి."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
-msgid "Automatically hide panel into corner"
-msgstr "స్వయంచాలకంగా మూలలో దాగు ప్యానల్"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
-msgstr ""
-"నిజమైతే, సూచిక పానల్ వదిలివేళ్ళగానే పానల్ స్వయంచాలకంగా స్క్రీన్ యొక్క మూలన దాగిఉంచబడుతుంది.సూచిక ను "
-"మూలకు తీసుకుపోవుట ద్వారా పానల్ ను తిరిగిఉంచుతుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
-msgid "Enable hide buttons"
-msgstr "దాగు బటన్లను చేతనపరుచు"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
-msgstr ""
-"నిజమైతే, పానల్ యొక్క రెండు పక్కల పానల్ ను తెరఅంచు చివరివరకు కదుపుటకు ఉపయోగపడగల బటన్లు, ఒక "
-"బటన్ మాత్రమే కనబడునట్లుగా ఉంచబడతాయి,"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
-msgid "Enable arrows on hide buttons"
-msgstr "మరుగునవున్న బటన్లపై బాణాలను చేతనపరుచు"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
-msgstr ""
-"నిజమైతే, మరుగునఉన్న బటన్ల పై బాణాలు ఉంచబడతాయి.ఈ కీ enable_buttons కీ నిజమైతే మాత్రమే సారూప్యతతో "
-"ఉంటుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
-msgid "Panel autohide delay"
-msgstr "ప్యానల్ స్వయంగా దాగుటకు ఆలస్యం"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"ప్యానల్ స్వయంచాలకంగా మరుగుపరచక మునుపు సూచిక ప్యానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని "
-"మిల్లీసెకన్లలో తెలియజెస్తుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
-msgid "Panel autounhide delay"
-msgstr "ప్యానల్ స్వయంగా దాగి ఉండుటకి ఆలస్యం"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"ప్యానల్ స్వయంచాలకంగా తిరిగి-చూపించబడక ముందు సూచిక పానల్ ప్రదేశంలో ప్రవేశించిన తర్వాత జరిగిన ఆలస్యాన్ని "
-"మిల్లీసెంకన్లలో తెలుపుతుంది.ఈ కీ auto_hide కీ నిజమైతేనే సారూప్యతతో ఉంటుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
-msgid "Visible pixels when hidden"
-msgstr "దాగిఉన్నప్పుడు కనిపించు పిగ్జెల్సు"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr ""
-"ప్యానల్ స్వయంచాలకంగా మూలన మరుగుపరిచినప్పుడు కనబడే పిక్సెల్సు సంఖ్యను తెలియజేస్తుంది.ఈ కీ "
-"auto_hide కీ నిజమైతే మాత్రమే సారూప్యతతో ఉంటుంది."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
-msgid "Animation speed"
-msgstr "యానిమేషన్ వేగం"
-
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
@@ -1393,10 +1606,19 @@ msgstr ""
 "ఈ కీ enable_animations కీ నిజమైనప్పుడు మాత్రమే సారూప్యతతో ఉంటుంది."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
-msgid "Background type"
-msgstr "నేపథ్యం రకం"
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"మానవుడు చదవగల ఈ నామాన్ని మీరు పానల్ ను గుర్తించుటకు ఉపయోగించగలరు.దీని ప్రధాన ఉపయోగార్ధం పానల్ "
+"విండోకి శీర్షికగా ఉండుట ద్వారా పానల్సు మద్య మారుతూ ఉన్నప్పడు ఉపయోగపడుట."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
+msgid "Visible pixels when hidden"
+msgstr "దాగిఉన్నప్పుడు కనిపించు పిగ్జెల్సు"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -1407,159 +1629,47 @@ msgstr ""
 "నేపథ్యం ఉపయోగపడుతుంది, \"వర్ణము\" - వర్ణపు కీ నేపథ్య వర్ణముగా ఉపయోగపడుతుంది లేదా \"బొమ్మ\" - "
 "బొమ్మ కీ ద్వారా తెలుపబడిన బొమ్మ నేపథ్యముగా ఉపయోగపడుతుంది."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
-msgid "Background color"
-msgstr "నేపథ్య వర్ణము"
-
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "ఫ్యానల్ కొరకు నేపథ్య వర్ణమును #RGB విధానంలో తెలుపుతుంది"
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"బహుళ-తెర అమరిక ద్వారా, మీరు ప్రతి విడి తెరపైన పానల్సు ను కలిగిఉండవచ్చు. ఈ కీ పానల్ "
+"ప్రదర్శితమువుతున్న ప్రస్తుత తెరను గుర్తిస్తుంది."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
-msgid "Background image"
-msgstr "నేపథ్యం బొమ్మ"
+msgid "X co-ordinate of panel"
+msgstr "ప్యానల్ యొక్క X కో-ఆర్డినేట్"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
-msgstr ""
-"నేపథ్యచిత్రం కొరకు ఉపయోగించబడు దస్త్రాన్ని తెలియజేస్తుంది.చిత్రం ఆల్ఫా ఛానల్‌ను కలిగివుంటే అది డెస్క్‍టాప్ "
-"నేపథ్యచిత్రం పైకి వర్ణరంజితం చేయబడుతుంది."
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "ప్యానల్ యొక్క X కొ-ఆర్డినేట్, తెర యొక్క కుడివైపు నుండి ప్రారంభమౌతుంది."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
-msgid "Rotate image on vertical panels"
-msgstr "బొమ్మను నిలువు ప్యానళ్ళ పైన తిప్పు"
+msgid "X screen where the panel is displayed"
+msgstr "ఎక్కడైతే ప్యానల్ ప్రదర్శింతమౌతుందో ఆ X తెర"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr "నిజమైతే, పానల్ నిలువుగా సర్దుబాటు చేసినప్పడు మాత్రమే బ్యాక్‌గ్రౌండ్ చిత్రం భ్రమణం చేయబడుతుంది."
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "ఎక్కడైతే ప్యానల్ ప్రదర్శింతమౌతుందో ఆ Xinerama మానిటర్"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
-msgid "Image options"
-msgstr "బొమ్మ ఐచ్ఛికాలు"
+msgid "Y co-ordinate of panel"
+msgstr "పానల్ యొక్క Y కో-ఆర్డినేట్"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
-msgid ""
-"Determines how the image set by image-uri is rendered. Possible values are "
-"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
-"to the panel dimensions and the aspect ratio of the image will not be "
-"maintained. With \"fit\", the image will be scaled (retaining the aspect "
-"ratio of the image) to the panel height (if horizontal)."
-msgstr ""
-"బొమ్మ ఎలా అమర్చబడాలో బొమ్మ యుఆర్ఐ ఎలా రెండరవడం నిర్ణయిస్తుంది. సాధ్యమగు విలువలు \"ఏదీకాదు\", "
-"\"నొక్కు\", \"అమర్చు\", \"సాగదీయి\", బొమ్మ కొలతలకు అనుగుణంగా అమర్చబడుతుంది కానీ అసలు "
-"నాణ్యతను మాత్రం ఉండదు. \"అమర్చు\" తో, అన్నిటికీ సరిపోయేట్టు అమర్చుతుంది."
-
-#: ../gnome-panel/applet.c:359
-msgid "???"
-msgstr "???"
-
-#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
-msgid "_Move"
-msgstr "జరుపు (_M)"
-
-#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
-msgid "_Remove From Panel"
-msgstr "ప్యానల్ నుండి తీసివేయి (_R)"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:29
-msgid "Create new file in the given directory"
-msgstr "ప్రస్తుత డైరెక్టరీలో కొత్త దస్త్రాన్ని సృష్టించు"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:30
-msgid "[FILE...]"
-msgstr "[FILE...]"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:108
-msgid "- Edit .desktop files"
-msgstr "- సవరించు .డెస్క్‍టాప్ దస్త్రాలు"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:892
-msgid "Create Launcher"
-msgstr "ప్రారంభకాన్ని సృష్టించు"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:171
-#: ../gnome-panel/gnome-desktop-item-edit.c:194
-msgid "Directory Properties"
-msgstr "సంచయం లక్షణాలు"
-
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:732
-msgid "Launcher Properties"
-msgstr "ప్రారంభకము లక్షణాలు"
-
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
-msgid "Panel"
-msgstr "ప్యానల్"
-
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
-msgid ""
-"Launch other applications and provide various utilities to manage windows, "
-"show the time, etc."
-msgstr ""
-"ఇతర అనువర్తనములను ఆరంభించుము మరియు కిటికీలను నిర్వహించుటకు వివిధ సౌలభ్యాలను అందించుము, "
-"సమయాన్ని చూపుము, మొదలగునవి."
-
-#: ../gnome-panel/launcher.c:136
-msgid "Could not show this URL"
-msgstr "ఈ URL ను చూపలేము"
-
-#: ../gnome-panel/launcher.c:137
-msgid "No URL was specified."
-msgstr "ఏ URL తెలుపబడి లేదు."
-
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:52
-msgid "Could not launch application"
-msgstr "అనువర్తనమును ప్రారంభించలేకపోయింది"
-
-#: ../gnome-panel/launcher.c:219
-msgid "Could not use dropped item"
-msgstr "వదిలివేయుఅంశం ఉపయోగించలేకపోయింది."
-
-#: ../gnome-panel/launcher.c:417
-#, c-format
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "ప్యానెల్ ప్రారంభకము డెస్క్‍టాప్ దస్త్రానికి యుఆర్ఎల్ పేర్కొనబడిలేదు\n"
-
-#: ../gnome-panel/launcher.c:462
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr " %s ప్యానెల్ ప్రయోగవేదికకు అవసరమయ్యే రంగస్థల దస్త్రము తెరవబడుటలేదు%s%s\n"
-
-#: ../gnome-panel/launcher.c:796
-msgid "_Launch"
-msgstr "ప్రారంభించు (_L)"
-
-#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:139
-#: ../gnome-panel/panel-context-menu.c:133
-msgid "_Properties"
-msgstr "లక్షణాలు (_P)"
-
-#: ../gnome-panel/launcher.c:833
-#, c-format
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "ప్రారంభకం స్థానము అమర్చబడలేదు, ప్రారంభకాన్ని లోడుచేయలేము\n"
-
-#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1352
-#: ../gnome-panel/panel-ditem-editor.c:1386
-#: ../gnome-panel/panel-ditem-editor.c:1417
-msgid "Could not save launcher"
-msgstr "ప్రారంభకాన్ని భద్రపరచలేకపోయింది"
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "పానల్ యోక్క Y కో-ఆర్డినేట్, తెర యొక్క క్రిందిభాగం నుండి ప్రారంభించబడుతుంది"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:165
 #, c-format
 msgid "File is not a valid .desktop file"
-msgstr "దస్త్రం చెల్లునటువంటి .desktop దస్త్రం కాదు"
+msgstr "ఫైల్లు చెల్లునటువంటి .desktop ఫైలు కాదు"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:188
 #, c-format
 msgid "Unrecognized desktop file Version '%s'"
-msgstr "గుర్తించబడని డెస్క్‍టాప్ దస్త్ర వర్షన్ '%s'"
+msgstr "గుర్తించబడని డెస్క్‍టాప్ ఫైల్ వర్షన్ '%s'"
 
 #: ../gnome-panel/libegg/eggdesktopfile.c:968
 #, c-format
@@ -1592,7 +1702,7 @@ msgstr "సెషన్ నిర్వాహికకు అనుసంధా�
 
 #: ../gnome-panel/libegg/eggsmclient.c:229
 msgid "Specify file containing saved configuration"
-msgstr "దాచిన ఆకృతీకరణను కలిగివున్న దస్త్రాన్ని తెలుపుము"
+msgstr "దాచిన ఆకృతీకరణను కలిగివున్న ఫైలును తెలుపుము"
 
 #: ../gnome-panel/libegg/eggsmclient.c:229
 msgid "FILE"
@@ -1620,8 +1730,8 @@ msgstr "సెషన్ నిర్వహణ ఐచ్చికములను 
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:80
-#: ../gnome-panel/panel-applet-frame.c:807
-#: ../gnome-panel/panel-applet-frame.c:979
+#: ../gnome-panel/panel-applet-frame.c:769
+#: ../gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "దోషం"
 
@@ -1634,6 +1744,11 @@ msgstr "ఒక ప్రతీకను ఎంచుకొను"
 msgid "Could not launch '%s'"
 msgstr "'%s' ను ప్రారంభించలేకపోయింది"
 
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
+#: ../gnome-panel/launcher.c:175
+msgid "Could not launch application"
+msgstr "అనువర్తనమును ప్రారంభించలేకపోయింది"
+
 #: ../gnome-panel/libpanel-util/panel-show.c:48
 #, c-format
 msgid "Could not open location '%s'"
@@ -1642,6 +1757,98 @@ msgstr "'%s' స్థానమును తెరుచుట వీలుక�
 #: ../gnome-panel/libpanel-util/panel-show.c:166
 msgid "No application to handle search folders is installed."
 msgstr "శోధన సంచయాలను సంభాలించుటకు ఏ అనువర్తనము స్థాపించబడలేదు."
+
+#: ../gnome-panel/applet.c:363
+msgid "???"
+msgstr "???"
+
+#: ../gnome-panel/applet.c:504 ../libpanel-applet/panel-applet.c:169
+msgid "_Move"
+msgstr "జరుపు (_M)"
+
+#: ../gnome-panel/applet.c:511 ../libpanel-applet/panel-applet.c:166
+msgid "_Remove From Panel"
+msgstr "ప్యానల్ నుండి తీసివేయి (_R)"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:29
+msgid "Create new file in the given directory"
+msgstr "ప్రస్తుత డైరెక్టరీలో కొత్త ఫైలును సృష్టించు"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:30
+msgid "[FILE...]"
+msgstr "[FILE...]"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:108
+msgid "- Edit .desktop files"
+msgstr "- సవరించు .డెస్క్‍టాప్ ఫైళ్ళు"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:146
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:886
+msgid "Create Launcher"
+msgstr "ప్రారంభకాన్ని సృష్టించు"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:171
+#: ../gnome-panel/gnome-desktop-item-edit.c:194
+msgid "Directory Properties"
+msgstr "సంచయం లక్షణాలు"
+
+#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:726
+msgid "Launcher Properties"
+msgstr "ప్రారంభకము లక్షణాలు"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"ఇతర అనువర్తనములను ఆరంభించుము మరియు విండోలను నిర్వహించుటకు వివిధ సౌలభ్యాలను అందించుము, "
+"సమయాన్ని చూపుము, మొదలగునవి."
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:87
+msgid "Panel"
+msgstr "ప్యానల్"
+
+#: ../gnome-panel/launcher.c:136
+msgid "Could not show this URL"
+msgstr "ఈ URL ను చూపలేము"
+
+#: ../gnome-panel/launcher.c:137
+msgid "No URL was specified."
+msgstr "ఏ URL తెలుపబడి లేదు."
+
+#: ../gnome-panel/launcher.c:219
+msgid "Could not use dropped item"
+msgstr "వదిలివేయుఅంశం ఉపయోగించలేకపోయింది."
+
+#: ../gnome-panel/launcher.c:415
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "ప్యానెల్ ప్రారంభకము డెస్క్‍టాప్ ఫైలుకు యుఆర్ఎల్ పేర్కొనబడిలేదు\n"
+
+#: ../gnome-panel/launcher.c:456
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr " %s ప్యానెల్ ప్రయోగవేదికకు అవసరమయ్యే రంగస్థల దస్త్రము తెరవబడుటలేదు%s%s\n"
+
+#: ../gnome-panel/launcher.c:790
+msgid "_Launch"
+msgstr "ప్రారంభించు (_L)"
+
+#: ../gnome-panel/launcher.c:796 ../gnome-panel/panel-action-button.c:139
+#: ../gnome-panel/panel-context-menu.c:133
+msgid "_Properties"
+msgstr "లక్షణాలు (_P)"
+
+#: ../gnome-panel/launcher.c:827
+#, c-format
+msgid "Launcher location is not set, cannot load launcher\n"
+msgstr "ప్రారంభకం స్థానము అమర్చబడలేదు, ప్రారంభకాన్ని లోడుచేయలేము\n"
+
+#: ../gnome-panel/launcher.c:957 ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1391
+#: ../gnome-panel/panel-ditem-editor.c:1422
+msgid "Could not save launcher"
+msgstr "ప్రారంభకాన్ని భద్రపరచలేకపోయింది"
 
 #: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
@@ -1675,8 +1882,8 @@ msgstr "మీ కంప్యూటర్‌ను దుర్వినియ�
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-msgid "Log Out"
-msgstr "నిష్క్రమించు"
+msgid "Log Out..."
+msgstr "నిష్క్రమించు..."
 
 #: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
@@ -1692,7 +1899,7 @@ msgstr "ఒక ఆదేశాన్ని టైపుచేయడం ద్వ
 
 #: ../gnome-panel/panel-action-button.c:325
 msgid "Search for Files..."
-msgstr "దస్త్రాలను శోధించు..."
+msgstr "ఫైళ్ళను శోధించు..."
 
 #: ../gnome-panel/panel-action-button.c:326
 msgid "Locate documents and folders on this computer by name or content"
@@ -1717,162 +1924,109 @@ msgid "Connect to a remote computer or shared disk"
 msgstr "దూరస్థ కంప్యూటర్ కు గాని లేదా భాగస్వామ్య డిస్కుకు గాని అనుసంధానించండి"
 
 #: ../gnome-panel/panel-action-button.c:350
-msgid "Power Off"
-msgstr "విద్యుత్ ఆపు"
+msgid "Shut Down..."
+msgstr "మూసి వేయి..."
 
 #: ../gnome-panel/panel-action-button.c:351
-msgid "Power off the computer"
-msgstr "కంప్యూటర్‌ ఆపివేయి"
+msgid "Shut down the computer"
+msgstr "కంప్యూటర్‌ను మూసివేయి"
 
-#: ../gnome-panel/panel-addto.c:144 ../gnome-panel/panel-menu-button.c:962
+#: ../gnome-panel/panel-addto.c:115
+msgid "Custom Application Launcher"
+msgstr "అనురూపిత అనువర్తన ప్రారంభకము"
+
+#: ../gnome-panel/panel-addto.c:116
+msgid "Create a new launcher"
+msgstr "ఒక కొత్త ప్రారంభకాన్ని సృష్టించు"
+
+#: ../gnome-panel/panel-addto.c:126
+msgid "Application Launcher..."
+msgstr "అనువర్తన ప్రారంభకం..."
+
+#: ../gnome-panel/panel-addto.c:127
+msgid "Copy a launcher from the applications menu"
+msgstr "అనువర్తన మెనూ నుంచి ప్రారంభకాన్ని నకలుచేయి"
+
+#: ../gnome-panel/panel-addto.c:141 ../gnome-panel/panel-menu-button.c:948
 msgid "Main Menu"
 msgstr "ప్రధాన మెను"
 
-#: ../gnome-panel/panel-addto.c:145
+#: ../gnome-panel/panel-addto.c:142
 msgid "The main GNOME menu"
 msgstr "ప్రధాన గ్నోమ్ మెను"
 
-#: ../gnome-panel/panel-addto.c:154
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "మెనూ పట్టీ"
 
-#: ../gnome-panel/panel-addto.c:155
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "అనురూపిత మెను పట్టీ"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "విచ్చేదకం"
 
-#: ../gnome-panel/panel-addto.c:165
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "ప్యానల్ అంశాలను నిర్వహించుటకు ఒక విచ్చేదకం"
 
 #: ../gnome-panel/panel-addto.c:174
-msgid "User menu"
+msgid "User Menu"
 msgstr "వాడుకరి మెను"
 
 #: ../gnome-panel/panel-addto.c:175
 msgid "Menu to change your settings and your online status"
 msgstr "మీ అమరికలను మరియు ఆన్‌లైన్ స్థితిని మార్చు మెను"
 
-#: ../gnome-panel/panel-addto.c:221
+#: ../gnome-panel/panel-addto.c:257
 msgid "(empty)"
 msgstr "(ఖాళీ)"
 
-#: ../gnome-panel/panel-addto.c:421
-msgid "Custom Application Launcher"
-msgstr "అనురూపిత అనువర్తన ప్రారంభకము"
-
-#: ../gnome-panel/panel-addto.c:422
-msgid "Create a new launcher"
-msgstr "ఒక కొత్త ప్రారంభకాన్ని సృష్టించు"
-
-#: ../gnome-panel/panel-addto.c:432
-msgid "Application Launcher..."
-msgstr "అనువర్తన ప్రారంభకం..."
-
-#: ../gnome-panel/panel-addto.c:433
-msgid "Copy a launcher from the applications menu"
-msgstr "అనువర్తన మెనూ నుంచి ప్రారంభకాన్ని నకలుచేయి"
-
-#: ../gnome-panel/panel-addto.c:1013
+#: ../gnome-panel/panel-addto.c:1055
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" కు కలుపుటకు ఒక అంశాన్ని కనుగొనండి (_i):"
 
-#: ../gnome-panel/panel-addto.c:1017
+#: ../gnome-panel/panel-addto.c:1059
 msgid "Find an _item to add to the panel:"
 msgstr "ప్యానల్‌కు కలుపుటకు ఒక అంశాన్ని కనుగొనండి (_i):"
 
-#: ../gnome-panel/panel-addto.c:1020
+#: ../gnome-panel/panel-addto.c:1062
 msgid "Add to Panel"
 msgstr "ప్యానల్‌కు జతచేయి"
 
-#: ../gnome-panel/panel-applet-frame.c:776
+#: ../gnome-panel/panel-applet-frame.c:738
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" అనుకోకుండా నిష్క్రమించింది"
 
-#: ../gnome-panel/panel-applet-frame.c:778
+#: ../gnome-panel/panel-applet-frame.c:740
 msgid "Panel object has quit unexpectedly"
 msgstr "ప్యానల్ ఆబ్జక్టు అనుకోకుండా నిష్క్రమించింది"
 
-#: ../gnome-panel/panel-applet-frame.c:785
+#: ../gnome-panel/panel-applet-frame.c:747
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "మీరు ప్యానల్ ఆబ్జక్టును తిరిగిలోడు చేసినట్లయితే, అది స్వయంచాలకంగా ప్యానల్‌కు తిరిగి కలుపబడుతుంది."
 
-#: ../gnome-panel/panel-applet-frame.c:791
+#: ../gnome-panel/panel-applet-frame.c:753
 msgid "_Don't Reload"
 msgstr "తిరిగిలోడుచేయవద్దు (_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:792
+#: ../gnome-panel/panel-applet-frame.c:754
 msgid "_Reload"
 msgstr "మరలాఎక్కించు (_R)"
 
-#: ../gnome-panel/panel-applet-frame.c:942
+#: ../gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" ఎక్కించుటలో ప్యానల్ సమస్యలు ఎదుర్కొన్నది."
 
-#: ../gnome-panel/panel-applet-frame.c:958
+#: ../gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "ఈ ఆప్లెట్‌ను స్వరూపణం నుండి తొలగించాలనుకుంటున్నారా?"
-
-#: ../gnome-panel/panel.c:527
-#, c-format
-msgid "Open URL: %s"
-msgstr " URL తెరువు: %s"
-
-#. Translators: %s is a URI
-#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:645
-#, c-format
-msgid "Open '%s'"
-msgstr "'%s' తెరువు"
-
-#. is_exec?
-#. exec
-#. name
-#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1200
-msgid "Open your personal folder"
-msgstr "మీ వ్యక్తిగత సంచయాన్ని తెరువు"
-
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1236
-msgid "Computer"
-msgstr "కంప్యూటర్"
-
-#. name
-#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1242
-msgid ""
-"Browse all local and remote disks and folders accessible from this computer"
-msgstr "ఈ కంప్యూటరు నుండి వాడుకోగల అన్ని స్థానిక మరియు సుదూర డిస్కులు మరియు సంచయాలను విహరించు"
-
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1252
-msgid "Network"
-msgstr "నెట్‌వర్క్"
-
-#. name
-#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1253
-msgid "Browse bookmarked and local network locations"
-msgstr "ఇష్టాంశాలను మరియు స్థానిక నెట్‌వర్క్ స్థానములను విహరించు"
-
-#: ../gnome-panel/panel.c:1394
-msgid "Delete this panel?"
-msgstr "ఈ ప్యానల్‌ను తొలగించాలా?"
-
-#: ../gnome-panel/panel.c:1398
-msgid ""
-"When a panel is deleted, the panel and its\n"
-"settings are lost."
-msgstr ""
-"ప్యానల్‌ను తొలగించినట్టయితే, ప్యానల్ మరియు దాని\n"
-"అమరికలను కోల్పోతారు."
 
 #: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
@@ -1894,78 +2048,82 @@ msgstr "ఈ ప్యానల్‌ను తొలగించు (_D)"
 msgid "_New Panel"
 msgstr "కొత్త ప్యానల్ (_N)"
 
-#: ../gnome-panel/panel-ditem-editor.c:112
+#: ../gnome-panel/panel-ditem-editor.c:114
 msgid "Application"
 msgstr "అనువర్తనం"
 
-#: ../gnome-panel/panel-ditem-editor.c:114
+#: ../gnome-panel/panel-ditem-editor.c:116
 msgid "Application in Terminal"
 msgstr "టెర్మినల్లో అనువర్తనము"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:118
 msgid "Location"
 msgstr "స్థానము"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:616
+#: ../gnome-panel/panel-ditem-editor.c:618
 msgid "_Type:"
 msgstr "రకం (_T):"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:623
+#: ../gnome-panel/panel-ditem-editor.c:625
 msgid "_Name:"
 msgstr "పేరు (_N):"
 
-#: ../gnome-panel/panel-ditem-editor.c:650
+#: ../gnome-panel/panel-ditem-editor.c:652
 msgid "_Browse..."
 msgstr "విహరించు...(_B)"
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:657
+#: ../gnome-panel/panel-ditem-editor.c:659
 msgid "Co_mment:"
 msgstr "వ్యాఖ్య (_m):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1003
+#: ../gnome-panel/panel-ditem-editor.c:1008
 msgid "Choose an application..."
 msgstr "ఒక అనువర్తనమును ఎంచుకొను..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1007
+#: ../gnome-panel/panel-ditem-editor.c:1012
 msgid "Choose a file..."
-msgstr "ఒక దస్త్రాన్ని ఎంచుకొను..."
+msgstr "ఒక ఫైలుని ఎంచుకొను..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1172
-#: ../gnome-panel/panel-ditem-editor.c:1181
+#: ../gnome-panel/panel-ditem-editor.c:1177
+#: ../gnome-panel/panel-ditem-editor.c:1186
 msgid "Comm_and:"
 msgstr "ఆదేశం (_a):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1190
+#: ../gnome-panel/panel-ditem-editor.c:1195
 msgid "_Location:"
 msgstr "స్థానము (_L):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1353
+#: ../gnome-panel/panel-ditem-editor.c:1358
 msgid "The name of the launcher is not set."
 msgstr "ప్రారంభకం యొక్క పేరు పెట్టలేదు."
 
-#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1362
 msgid "Could not save directory properties"
 msgstr "సంచయం లక్షణాలను భద్రపరచలేకపోయింది"
 
-#: ../gnome-panel/panel-ditem-editor.c:1358
+#: ../gnome-panel/panel-ditem-editor.c:1363
 msgid "The name of the directory is not set."
 msgstr "సంచయం యొక్క పేరు పెట్టలేదు"
 
-#: ../gnome-panel/panel-ditem-editor.c:1374
+#: ../gnome-panel/panel-ditem-editor.c:1379
 msgid "The command of the launcher is not set."
 msgstr "ప్రారంభకం యొక్క ఆదేశం అమర్చబడిలేదు."
 
-#: ../gnome-panel/panel-ditem-editor.c:1377
+#: ../gnome-panel/panel-ditem-editor.c:1382
 msgid "The location of the launcher is not set."
 msgstr "ప్రారంభకము యొక్క స్థానము అమర్చలేదు."
+
+#: ../gnome-panel/panel-ditem-editor.c:1459
+msgid "Could not display help document"
+msgstr "సహాయ పత్రమును ప్రదర్శించలేకపోయింది"
 
 #: ../gnome-panel/panel-force-quit.c:77
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "ఈ అనువర్తనమును బలవంతంగా త్యజించాలంటే కిటికీ మీద నొక్కండి. రద్దుచేయాలంటే <ESC>ను నొక్కండి."
+msgstr "ఈ అనువర్తనమును బలవంతంగా త్యజించాలంటే విండో మీద నొక్కండి. రద్దుచేయాలంటే <ESC>ను నొక్కండి."
 
 #: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
@@ -1979,208 +2137,262 @@ msgstr ""
 "ఒకవేళ మీరు అనువర్తనం నుండి బలవంతముగా నిష్క్రమణను ఎంచుకుంటే, తెరచివున్న పత్రాలలోని భద్రపరుచని "
 "మార్పులను కోల్పోవచ్చు."
 
-#: ../gnome-panel/panel-layout.c:1197 ../gnome-panel/panel-layout.c:1211
+#: ../gnome-panel/panel-layout.c:1097 ../gnome-panel/panel-layout.c:1111
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "ప్రాథమిక ప్యానల్ నమూనాను సృష్టించలేము.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:90
+#: ../gnome-panel/panel-menu-bar.c:103
 msgid "Browse and run installed applications"
 msgstr "స్థాపించిన అనువర్తనములను విహరించు మరియు నడుపు"
 
-#: ../gnome-panel/panel-menu-bar.c:92
+#: ../gnome-panel/panel-menu-bar.c:105
 msgid "Access documents, folders and network places"
 msgstr "పత్రములను, సంచయాలను మరియు నెట్‌వర్కు స్థానాలను వాడుకొను"
 
-#: ../gnome-panel/panel-menu-bar.c:123
+#: ../gnome-panel/panel-menu-bar.c:136
 msgid "Applications"
 msgstr "అనువర్తనాలు"
 
-#: ../gnome-panel/panel-menu-bar.c:225 ../gnome-panel/panel-menu-button.c:561
+#: ../gnome-panel/panel-menu-bar.c:243 ../gnome-panel/panel-menu-button.c:562
 msgid "_Edit Menus"
 msgstr "మెనూలను సవరించు (_E)"
 
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-bar.c:250
+msgid "_Help"
+msgstr "సహాయం (_H)"
+
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Switch User"
 msgstr "వాడుకరిని మార్చు"
 
-#: ../gnome-panel/panel-menu-items.c:621
+#: ../gnome-panel/panel-menu-items.c:620
 msgid "Bookmarks"
 msgstr "ఇష్టాంశాలు"
 
-#: ../gnome-panel/panel-menu-items.c:716
+#. Translators: %s is a URI
+#: ../gnome-panel/panel-menu-items.c:644 ../gnome-panel/panel.c:596
+#, c-format
+msgid "Open '%s'"
+msgstr "'%s' తెరువు"
+
+#: ../gnome-panel/panel-menu-items.c:715
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "మాధ్యమం మార్పుల కొరకు %s ను తనిఖీ చేయలేకపోయింది"
 
-#: ../gnome-panel/panel-menu-items.c:758
+#: ../gnome-panel/panel-menu-items.c:757
 #, c-format
 msgid "Rescan %s"
 msgstr "%s మరలాతనిఖీచేయి"
 
-#: ../gnome-panel/panel-menu-items.c:795
+#: ../gnome-panel/panel-menu-items.c:794
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s మౌంటు చేయలేకపోతుంది"
 
-#: ../gnome-panel/panel-menu-items.c:857
+#: ../gnome-panel/panel-menu-items.c:856
 #, c-format
 msgid "Mount %s"
 msgstr "%s మౌంట్ చేయి"
 
-#: ../gnome-panel/panel-menu-items.c:1065
+#: ../gnome-panel/panel-menu-items.c:1064
 msgid "Removable Media"
 msgstr "తీసివేయదగిన మాధ్యమం"
 
-#: ../gnome-panel/panel-menu-items.c:1156
+#: ../gnome-panel/panel-menu-items.c:1155
 msgid "Network Places"
 msgstr "నెట్‌వర్కు స్థలములు"
+
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel-menu-items.c:1199 ../gnome-panel/panel.c:646
+msgid "Open your personal folder"
+msgstr "మీ వ్యక్తిగత సంచయాన్ని తెరువు"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1220
+#: ../gnome-panel/panel-menu-items.c:1219
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "డెస్క్‍టాప్"
 
-#: ../gnome-panel/panel-menu-items.c:1221
+#: ../gnome-panel/panel-menu-items.c:1220
 msgid "Open the contents of your desktop in a folder"
 msgstr "మీ డెస్క్‍టాప్ విషయాలను ఒక సంచయంలో తెరువు"
 
-#: ../gnome-panel/panel-menu-items.c:1358
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1235 ../gnome-panel/panel.c:655
+msgid "Computer"
+msgstr "కంప్యూటర్"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1241 ../gnome-panel/panel.c:656
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr "ఈ కంప్యూటరు నుండి వాడుకోగల అన్ని స్థానిక మరియు సుదూర డిస్కులు మరియు సంచయాలను విహరించు"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel-menu-items.c:1251 ../gnome-panel/panel.c:663
+msgid "Network"
+msgstr "నెట్‌వర్క్"
+
+#. name
+#: ../gnome-panel/panel-menu-items.c:1252 ../gnome-panel/panel.c:664
+msgid "Browse bookmarked and local network locations"
+msgstr "ఇష్టాంశాలను మరియు స్థానిక నెట్‌వర్క్ స్థానములను విహరించు"
+
+#: ../gnome-panel/panel-menu-items.c:1357
 msgid "Available"
 msgstr "లభ్యం"
 
-#: ../gnome-panel/panel-menu-items.c:1368
+#: ../gnome-panel/panel-menu-items.c:1367
 msgid "Busy"
 msgstr "తీరికలేదు"
 
-#: ../gnome-panel/panel-menu-items.c:1621
+#: ../gnome-panel/panel-menu-items.c:1380
+msgid "My Account"
+msgstr "నా ఖాతా"
+
+#: ../gnome-panel/panel-menu-items.c:1633
 msgid "Places"
 msgstr "స్థలములు"
 
-#: ../gnome-panel/panel-properties-dialog.c:79
+#: ../gnome-panel/panel-properties-dialog.c:81
 #: ../gnome-panel/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Top"
 msgstr "పైన"
 
-#: ../gnome-panel/panel-properties-dialog.c:80
+#: ../gnome-panel/panel-properties-dialog.c:82
 #: ../gnome-panel/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "క్రింద"
 
-#: ../gnome-panel/panel-properties-dialog.c:81
+#: ../gnome-panel/panel-properties-dialog.c:83
 #: ../gnome-panel/panel-test-applets.c:57
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ఎడమ"
 
-#: ../gnome-panel/panel-properties-dialog.c:82
+#: ../gnome-panel/panel-properties-dialog.c:84
 #: ../gnome-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Right"
 msgstr "కుడి"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
-msgid "Panel Properties"
-msgstr "ప్యానల్ లక్షణాలు"
+#: ../gnome-panel/panel-properties-dialog.c:821
+#: ../gnome-panel/panel-run-dialog.c:2009
+#, c-format
+msgid "Unable to load file '%s': %s."
+msgstr "'%s' ఫైలును లోడు చేయలేకపోతుంది: %s."
+
+#: ../gnome-panel/panel-properties-dialog.c:827
+msgid "Could not display properties dialog"
+msgstr "లక్షణాల డైలాగును ప్రదర్శించలేకపోతుంది"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:2
-msgid "Some of these properties are locked down"
-msgstr "ఈ లక్షణాలలో కొన్ని తాళం వేయబడినవి"
+msgid "<small>Opaque</small>"
+msgstr "<small>అపారదర్శకత</small>"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:3
-msgid "pixels"
-msgstr "పిక్సెళ్ళు"
+msgid "<small>Transparent</small>"
+msgstr "<small>పారదర్శకత</small>"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:4
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "_Size:"
-msgstr "పరిమాణం (_S):"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Orientation:"
-msgstr "సర్దుబాటు (_O):"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
-msgid "E_xpand"
-msgstr "విస్తరించు (_x)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
-msgid "_Autohide"
-msgstr "స్వయంగా దాగు (_A)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
-msgid "Show hide _buttons"
-msgstr "దాయు బటన్లను చూపించు"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "Arro_ws on hide buttons"
 msgstr "దాచుబటన్ల పై బాణాలు (_w)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
-msgid "_None (use system theme)"
-msgstr "ఏదీకాదు (వ్యవస్థ థీముని వాడు) (_N)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
-msgid "Solid c_olor"
-msgstr "ముదురు వర్ణం (_o)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
-msgid "Pick a color"
-msgstr "ఒక వర్ణమును ఎంచుకోండి"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
-msgid "S_tyle:"
-msgstr "శైలి (_t):"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Co_lor:"
-msgstr "వర్ణం (_i):"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Transparent"
-msgstr "పారదర్శకత"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "Opaque"
-msgstr "అపారదర్శకత"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "Background _image:"
-msgstr "నేపథ్య చిత్రం (_i):"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
-msgid "Select background"
-msgstr "నేపథ్యాన్ని ఎంచుకోండి"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
 msgid "Background"
 msgstr "నేపథ్యం"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
+msgid "Background _image:"
+msgstr "నేపథ్య చిత్రం (_i):"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
+msgid "Co_lor:"
+msgstr "వర్ణం (_i):"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
+msgid "E_xpand"
+msgstr "విస్తరించు (_x)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
 msgid "Image Background Details"
 msgstr "బొమ్మ నేపథ్యం వివరాలు"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-msgid "_Tile"
-msgstr "పలక (_T)"
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
+msgid "Panel Properties"
+msgstr "ప్యానల్ లక్షణాలు"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
-msgid "_Scale"
-msgstr "కొలత (_S)"
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
+msgid "Pick a color"
+msgstr "ఒక వర్ణమును ఎంచుకోండి"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../gnome-panel/panel-properties-dialog.ui.h:13
+msgid "Rotate image when panel is _vertical"
+msgstr "ప్యానల్ నిలువుగా ఉన్నప్పుడు బొమ్మని తిప్పు (_v)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
+msgid "S_tyle:"
+msgstr "శైలి (_t):"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
+msgid "Select background"
+msgstr "నేపథ్యాన్ని ఎంచుకోండి"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
+msgid "Show hide _buttons"
+msgstr "దాయు బటన్లను చూపించు"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
+msgid "Solid c_olor"
+msgstr "ముదురు వర్ణం (_o)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
+msgid "Some of these properties are locked down"
+msgstr "ఈ లక్షణాలలో కొన్ని తాళం వేయబడినవి"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "St_retch"
 msgstr "సాగదీయి (_r)"
 
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
+msgid "_Autohide"
+msgstr "స్వయంగా దాగు (_A)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
+msgid "_None (use system theme)"
+msgstr "ఏదీకాదు (వ్యవస్థ థీముని వాడు) (_N)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "_Orientation:"
+msgstr "సర్దుబాటు (_O):"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+msgid "_Scale"
+msgstr "కొలత (_S)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Size:"
+msgstr "పరిమాణం (_S):"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+msgid "_Tile"
+msgstr "పలక (_T)"
+
 #: ../gnome-panel/panel-properties-dialog.ui.h:26
-msgid "Rotate image when panel is _vertical"
-msgstr "ప్యానల్ నిలువుగా ఉన్నప్పుడు బొమ్మని తిప్పు (_v)"
+msgid "pixels"
+msgstr "పిక్సెళ్ళు"
 
 #: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
 #, c-format
@@ -2222,84 +2434,88 @@ msgstr "ఇటీవలి పత్రములను శుభ్రముచ�
 msgid "Clear all items from the recent documents list"
 msgstr "ఇటీవలి పత్రముల జాబితా నుండి అన్ని అంశాలను తీసివేయుము"
 
-#: ../gnome-panel/panel-run-dialog.c:361
+#: ../gnome-panel/panel-run-dialog.c:400
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' ఆదేశాన్ని నడుపలేకపోయింది"
 
-#: ../gnome-panel/panel-run-dialog.c:409
+#: ../gnome-panel/panel-run-dialog.c:448
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ను UTF-8 నుండి మార్చలేము"
 
-#: ../gnome-panel/panel-run-dialog.c:1156
+#: ../gnome-panel/panel-run-dialog.c:1235
 msgid "Choose a file to append to the command..."
 msgstr "ఈ ఆదేశమును జతచేయుటకు దస్త్రమును ఎంపికచేయండి..."
 
-#: ../gnome-panel/panel-run-dialog.c:1539
-#: ../gnome-panel/panel-run-dialog.ui.h:9
+#: ../gnome-panel/panel-run-dialog.c:1618
+#: ../gnome-panel/panel-run-dialog.ui.h:8
 msgid "Select an application to view its description."
 msgstr "వివరణ చూడుటకు ఒక అనువర్తనమును ఎంచుకొనుము."
 
-#: ../gnome-panel/panel-run-dialog.c:1577
+#: ../gnome-panel/panel-run-dialog.c:1656
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ఆదేశాన్ని నడుపుతుంది: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1610
+#: ../gnome-panel/panel-run-dialog.c:1689
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "రన్ డైలాగ్ పైన వదిలిన URI జాబితా తప్పు విధానాన్ని (%d) లేదా పొడవును (%d) ను కలిగిఉంది\n"
 
+#: ../gnome-panel/panel-run-dialog.c:2014
+msgid "Could not display run dialog"
+msgstr "రన్ డైలాగ్ ను ప్రదర్శించలేకపోయింది"
+
 #: ../gnome-panel/panel-run-dialog.ui.h:1
-msgid "Run Application"
-msgstr "అనువర్తనాన్ని నడుపు"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:2
-msgid "Command icon"
-msgstr "ఆదేశం ప్రతీక"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:3
-msgid "The icon of the command to be run."
-msgstr "నడుపవలిసిన ఆదేశం యొక్క ప్రతీక."
-
-#: ../gnome-panel/panel-run-dialog.ui.h:4
-msgid "Run in _terminal"
-msgstr "టెర్మినల్ నందు నడుపు (_t)"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:5
-msgid "Select this box to run the command in a terminal window."
-msgstr "టెర్మినల్ కిటికీనందు ఆదేశాన్ని నడుపుటకు ఈ పెట్టెను ఎంచుకోండి."
-
-#: ../gnome-panel/panel-run-dialog.ui.h:6
-msgid "Run with _file..."
-msgstr "దస్త్రముతో నడుపు...(_f)"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:7
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr "ఆదేశ స్ట్రింగ్ కు కూర్చవలిసిన నామము కొరకు అన్వేషించుటకు ఈ బటన్ ను నొక్కండి."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:8
+#: ../gnome-panel/panel-run-dialog.ui.h:2
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"ఎంపికచేసిన అనువర్తనమును లేదా ఆదేశ ప్రవేశ క్షేత్రంలోని ఆదేశాన్ని ను నడుపుటకు ఈ బటన్ ను నొక్కండి."
+
+#: ../gnome-panel/panel-run-dialog.ui.h:3
+msgid "Command icon"
+msgstr "ఆదేశం ప్రతీక"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "List of known applications"
 msgstr "తెలిసిన అనువర్తనాల యొక్క జాబితా"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:5
+msgid "Run Application"
+msgstr "అనువర్తనాన్ని నడుపు"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:6
+msgid "Run in _terminal"
+msgstr "టెర్మినల్ నందు నడుపు (_t)"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:7
+msgid "Run with _file..."
+msgstr "ఫైలుతో నడుపు...(_f)"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:9
+msgid "Select this box to run the command in a terminal window."
+msgstr "టెర్మినల్ విండోనందు ఆదేశాన్ని నడుపుటకు ఈ పెట్టెను ఎంచుకోండి."
 
 #: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
 msgstr "తెలిసిన అనువర్తనాల యొక్క జాబితాను చూపించు (_a)"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:11
+msgid "The icon of the command to be run."
+msgstr "నడుపవలిసిన ఆదేశం యొక్క ప్రతీక."
+
+#: ../gnome-panel/panel-run-dialog.ui.h:12
 #: ../gnome-panel/panel-stock-icons.c:83
 msgid "_Run"
 msgstr "నడుపు (_R)"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:12
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr ""
-"ఎంపికచేసిన అనువర్తనమును లేదా ఆదేశ ప్రవేశ క్షేత్రంలోని ఆదేశాన్ని ను నడుపుటకు ఈ బటన్ ను నొక్కండి."
 
 #: ../gnome-panel/panel-stock-icons.c:84
 msgid "_Force quit"
@@ -2376,11 +2592,11 @@ msgstr "%s ఆప్లెట్‌ను లోడుచేయుటలో వ�
 msgid "Test applet utility"
 msgstr "పరిశీలన ఆప్లెట్ సాధనం"
 
-#: ../gnome-panel/panel-test-applets.ui.h:4
+#: ../gnome-panel/panel-test-applets.ui.h:3
 msgid "_Applet:"
 msgstr "ఆప్లెట్ (_A):"
 
-#: ../gnome-panel/panel-test-applets.ui.h:6
+#: ../gnome-panel/panel-test-applets.ui.h:5
 msgid "_Prefs Dir:"
 msgstr "ప్రాధాన్య డైరెక్టరీ (_P):"
 
@@ -2459,21 +2675,21 @@ msgstr "కుడివైపు అంచు ప్యానల్"
 msgid "Icon '%s' not found"
 msgstr "'%s' ప్రతీక కనబడలేదు"
 
-#: ../gnome-panel/panel-util.c:557
+#: ../gnome-panel/panel-util.c:551
 msgid "file"
-msgstr "దస్త్రం"
+msgstr "ఫైల్"
 
-#: ../gnome-panel/panel-util.c:734
+#: ../gnome-panel/panel-util.c:728
 msgid "Home Folder"
 msgstr "నివాస సంచయం"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:746
+#: ../gnome-panel/panel-util.c:740
 msgid "File System"
-msgstr "దస్త్ర వ్యవస్థ"
+msgstr "ఫైల్ వ్యవస్థ"
 
-#: ../gnome-panel/panel-util.c:919
+#: ../gnome-panel/panel-util.c:913
 msgid "Search"
 msgstr "శోధించు"
 
@@ -2482,14 +2698,31 @@ msgstr "శోధించు"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:965
+#: ../gnome-panel/panel-util.c:959
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
+#: ../gnome-panel/panel.c:527
+#, c-format
+msgid "Open URL: %s"
+msgstr " URL తెరువు: %s"
+
+#: ../gnome-panel/panel.c:1395
+msgid "Delete this panel?"
+msgstr "ఈ ప్యానల్‌ను తొలగించాలా?"
+
+#: ../gnome-panel/panel.c:1399
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"ప్యానల్‌ను తొలగించినట్టయితే, ప్యానల్ మరియు దాని\n"
+"అమరికలను కోల్పోతారు."
+
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-msgid "Test DBus Applet Factory"
-msgstr "డిబస్ ఆప్లెట్ ఫాక్టరీని పరీక్షించు"
+msgid "A simple applet for testing the GNOME panel"
+msgstr "గ్నోమ్ ప్యానల్‌ను పరీక్షించుటకు ఒక సరళమైన ఆప్లెట్"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
 msgid "Factory for Test DBus Applet"
@@ -2500,176 +2733,5 @@ msgid "Test DBus Applet"
 msgstr "డిబస్ ఆప్లెట్‌ను పరీక్షించు"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-msgid "A simple applet for testing the GNOME panel"
-msgstr "గ్నోమ్ ప్యానల్‌ను పరీక్షించుటకు ఒక సరళమైన ఆప్లెట్"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
-
-#~ msgid "%H:%M:%S"
-#~ msgstr "%H:%M:%S"
-
-#~ msgid "%a %b %e"
-#~ msgstr "%a %b %e"
-
-#~ msgid ""
-#~ "%1$s\n"
-#~ "%2$s"
-#~ msgstr ""
-#~ "%1$s\n"
-#~ "%2$s"
-
-#~ msgid "%1$s, %2$s"
-#~ msgstr "%1$s, %2$s"
-
-#~ msgid "%I:%M:%S %p"
-#~ msgstr "%I:%M:%S %p"
-
-#~ msgid "%I:%M %p"
-#~ msgstr "%I:%M %p"
-
-#~ msgid "%A, %B %d %Y"
-#~ msgstr "%A, %B %d %Y"
-
-#~ msgid "Copy _Date"
-#~ msgstr "తారీఖు నకలు (_D)"
-
-#~ msgid "Custom format"
-#~ msgstr "అనురూపిత ఫార్మేటు"
-
-#~ msgid "24 hour"
-#~ msgstr "24 గంటలు"
-
-#~ msgid "UNIX time"
-#~ msgstr "UNIX సమయం"
-
-#~ msgid "Internet time"
-#~ msgstr "అంతర్జాల సమయం"
-
-#~ msgid "Custom _format:"
-#~ msgstr "అనురూపిత ఫార్మేట్ (_f):"
-
-#~ msgid "24-hour"
-#~ msgstr "24-గంటలు"
-
-#~ msgid "Custom format of the clock"
-#~ msgstr "గడియారం యొక్క అనురూపించిన ఫార్మేటు"
-
-#~ msgid "Hour format"
-#~ msgstr "గంటల ఫార్మేటు"
-
-#~ msgid "If true, display date in the clock, in addition to time."
-#~ msgstr "వాస్తవమైతే, సమయమేగాకుండా, గడియారంలో తారీఖును కూడా ప్రదర్శించు."
-
-#~ msgid "If true, display seconds in time."
-#~ msgstr "వాస్తవమైతే, సమయంలో సెకన్లను కూడా ప్రదర్శించు."
-
-#~ msgid "Show date in clock"
-#~ msgstr "గడియారంలో తేదీని చూపించు"
-
-#~ msgid "Show time with seconds"
-#~ msgstr "సమయాన్ని సెకనులతో చూపించు"
-
-#~ msgid "Speed unit"
-#~ msgstr "వేగం ప్రమాణం"
-
-#~ msgid "Temperature unit"
-#~ msgstr "ఉష్ణోగ్రత ప్రమాణం"
-
-#~ msgid "The unit to use when showing temperatures."
-#~ msgstr "ఉష్ణోగ్రతలను చూపించునపుడు ఉపయోగించవలిసిన ప్రమాణం."
-
-#~ msgid "The unit to use when showing wind speed."
-#~ msgstr "గాలి వేగం ను చూపించునపుడు ఉపయోగించవలిసిన ప్రమాణం."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.22 with the use of an "
-#~ "internal time configuration tool. The schema is retained for "
-#~ "compatibility with older versions."
-#~ msgstr ""
-#~ "ఈ కీ యొక్క ఉపయోగం GNOME 2.22 నందు తీసివేయబడింది అంతర్గత సమయ స్వరూపణ సాధనము యొక్క "
-#~ "ఉపయోగంతో. పాత రూపాంతరములతో సారూప్యత కొరకు స్కీమా అలాగేవుంది."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-#~ "timezones. The schema is retained for compatibility with older versions."
-#~ msgstr ""
-#~ "సమయక్షేత్రముల ఉపయోగం కొరకు GNOME 2.28 నందు ఈ కీ యొక్క ఉపయోగం తీసివేయబడినది.  పాత "
-#~ "రూపాంతరలకు సారూప్యంగా వుండుట కొరకు ఆ స్కీమా అలాగే ఉంచబడింది."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-#~ "key. The schema is retained for compatibility with older versions."
-#~ msgstr ""
-#~ "ఈ కీ యొక్క ఉపయోగం GNOME 2.6 నందు 'ఫార్మేట్' కనుగుణంగా తగ్గించబడింది. పాత రూపాంతరాలకు "
-#~ "సారూప్యంగా ఉండుట కొరకు ఆ స్కీమా అలాగే ఉంచబడింది."
-
-#~ msgid ""
-#~ "This key specifies the format used by the clock applet when the format "
-#~ "key is set to \"custom\". You can use conversion specifiers understood by "
-#~ "strftime() to obtain a specific format. See the strftime() manual for "
-#~ "more information."
-#~ msgstr ""
-#~ "ఫార్మాట్ కీ ని\"custom\" కు అమర్చినప్పుడు గడియారం ఆప్లెట్ ఉపయోగించే విధానాన్ని ఈ కీ తెలియజేస్తుంది."
-#~ "మీరు ప్రత్యేకమైన విధానాన్ని పొందుటకు మీరు strftime() ద్వారా అర్ధంచేసుకోబడే మార్పు పద్దతులను మీరు "
-#~ "ఉపయోగించుకోవచ్చు. ఎక్కువ సమాచారం కొరకు strftime() మాన్యువల్ ను చూడుము."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
-#~ "1970-01-01. If set to \"custom\", the clock will display time according "
-#~ "to the format specified in the custom_format key."
-#~ msgstr ""
-#~ "ఈ కీ గడియారం ఆప్లెట్ ఉపయోగించే గంటల విధానాన్ని తెలియజేస్తుంది.సాద్యమగు విలువలు \"12-hour\", "
-#~ "\"24-hour\", \"internet\", \"unix\" మరియు \"custom\".\"internet\" కు "
-#~ "అనుసందానిస్తే గడియారం ఇంటర్నెట్ సమయం చూపిస్తుంది.ఇంటర్నెట్ సమయం రోజు ను 1000 \".beats\" గా "
-#~ "విభజిస్తుంది. ఈ సిస్టమ్ నందు ఏ సమయక్షేత్రాలు లేవు, కనుక సమయం ప్రపంచం అంతటికి ఒకే విధంగా "
-#~ "ఉంటుంది.\"unix\" కి అమర్చినట్లైతే, గడియారం సమయాన్ని Epoch, అంటే 1970-01-01 నుండి సెకన్లలో "
-#~ "ప్రదర్శిస్తుంది.\"custom\" కి అమర్చినట్లైతే,గడియారం సమయాన్ని custom_format కీ లో తెలిపిన విధానాన్ని "
-#~ "అనుసరించి ప్రదర్శిస్తుంది."
-
-#~ msgid "Time configuration tool"
-#~ msgstr "సమయ స్వరూపణ సాధనం"
-
-#~ msgid "Use Internet time"
-#~ msgstr "అంతర్జాల సమయాన్ని వాడు"
-
-#~ msgid "Use UNIX time"
-#~ msgstr "UNIX సమయాన్ని వాడు"
-
-#~ msgid "Use UTC"
-#~ msgstr "UTC వాడు"
-
-#~ msgid "Unknown"
-#~ msgstr "తెలియదు"
-
-#~ msgid "Shut Down..."
-#~ msgstr "మూసి వేయి..."
-
-#~ msgid "Could not display help document"
-#~ msgstr "సహాయ పత్రమును ప్రదర్శించలేకపోయింది"
-
-#~ msgid "_Help"
-#~ msgstr "సహాయం (_H)"
-
-#~ msgid "My Account"
-#~ msgstr "నా ఖాతా"
-
-#~ msgid "Unable to load file '%s': %s."
-#~ msgstr "'%s' ఫైలును లోడు చేయలేకపోతుంది: %s."
-
-#~ msgid "Could not display properties dialog"
-#~ msgstr "లక్షణాల డైలాగును ప్రదర్శించలేకపోతుంది"
-
-#~ msgid "<small>Opaque</small>"
-#~ msgstr "<small>అపారదర్శకత</small>"
-
-#~ msgid "<small>Transparent</small>"
-#~ msgstr "<small>పారదర్శకత</small>"
-
-#~ msgid "Could not display run dialog"
-#~ msgstr "రన్ డైలాగ్ ను ప్రదర్శించలేకపోయింది"
+msgid "Test DBus Applet Factory"
+msgstr "డిబస్ ఆప్లెట్ ఫాక్టరీని పరీక్షించు"
