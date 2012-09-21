@@ -8,22 +8,23 @@
 # Rajesh Ranjan <rranjan@redhat.com>, 2005, 2006, 2008, 2009, 2010, 2011.
 # Rajesh Ranjan <rajesh672@gmail.com>, 2009.
 # rajesh <rajeshkajha@yahoo.com>, 2012.
+# chandankumar <chandankumar.093047@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: hi\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-14 15:12+0000\n"
-"PO-Revision-Date: 2012-09-20 16:34+0530\n"
-"Last-Translator: rajesh <rajeshkajha@yahoo.com>\n"
-"Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
+"POT-Creation-Date: 2012-09-20 11:07+0000\n"
+"PO-Revision-Date: 2012-09-21 15:42+0530\n"
+"Last-Translator: chandankumar <chandankumar.093047@gmail.com>\n"
+"Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-DamnedLies-Scope: partial\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 1.4\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -133,7 +134,6 @@ msgid "_Preferences"
 msgstr "वरीयताएँ (_P)"
 
 #: ../applets/clock/clock.c:1194
-#| msgid "Copy _Time"
 msgid "Copy Date and _Time"
 msgstr "समय और तिथि  की नक़ल करें ( _T)"
 
@@ -255,9 +255,6 @@ msgstr "सूर्योदय: %s / सूर्यास्त: %s"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
-#| msgid ""
-#| "<small><i>Type a city, region, or country name and then select a match "
-#| "from the pop-up.</i></small>"
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr "एक शहर, क्षेत्र, या देश का नाम टाइप करें और पॉप-अप से मिलान चुनें."
@@ -271,7 +268,6 @@ msgid "_Location Name:"
 msgstr "स्थान नाम (_L):"
 
 #: ../applets/clock/clock.ui.h:5
-#| msgid "<i>(optional)</i>"
 msgid "(optional)"
 msgstr "(वैकल्पिक)"
 
@@ -382,7 +378,6 @@ msgid "Clock Applet Factory"
 msgstr "क्लॉक एप्लेट फैक्टरी"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
-#| msgid "Factory for creating clock applets."
 msgid "Factory for clock applet"
 msgstr "क्लॉक एप्लेट बनाने के लिए फैक्टरी"
 
@@ -538,7 +533,6 @@ msgid "Notification Area Factory"
 msgstr "अधिसूचना क्षेत्र फैक्टरी"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
-#| msgid "Panel Notification Area"
 msgid "Factory for notification area"
 msgstr "नोटिफिकेशन क्षेत्र के लिए फैक्टरी"
 
@@ -791,13 +785,13 @@ msgid "List of locations"
 msgstr "स्थानों की सूची"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
-#| msgid "A list of locations to display in the calendar window."
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
 msgstr ""
 "पंचांग विंडो में स्थानों को दिखाने के लिए सूची. हर स्थान प्रदर्शन नाम है, "
-"मेटार कोड और निर्देशांक."
+"मेटार कोड और "
+"निर्देशांक."
 
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
@@ -941,6 +935,15 @@ msgstr ""
 msgid "Enable tooltips"
 msgstr "उपकरण-युक्तियाँ सक्षम करें"
 
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
+msgid ""
+"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
+"for the whole desktop with the gtk-enable-tooltips property in GTK+."
+msgstr ""
+"यदि सत्य है, टूलटिप फ़लक में वस्तुओं के लिए दिखाए जाते हैं . टूलटिप GTK+ में  "
+"gtk-enable-tooltips गुण "
+"के साथ पूरे डेस्कटॉप के लिए निष्क्रिय किया जा सकता है."
+
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
 msgid "Confirm panel removal"
 msgstr "फ़लक मिटाने की पुष्टि करें"
@@ -972,18 +975,14 @@ msgid "Panel object ID list"
 msgstr "फ़लक वस्तु आईडी सूची"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
-#| msgid ""
-#| "A list of panel object IDs. Each ID identifies an individual panel object "
-#| "(e.g. a launcher, action button or menu button/bar). The settings for "
-#| "each of these objects are stored in /apps/panel/objects/$(id)."
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "पैनल वस्तु IDs की सूची. हर ID एक निजी टॉपलेबल पैनल को पहचानती है (उदा. एक "
-"एप्लेट, एक लॉन्चर,"
-"एक्सश बटन, या मेन्यू बटन/पट्टी). इनमें से हर पैनल में जमावट "
+"एप्लेट, एक "
+"लॉन्चर,एक्सश बटन, या मेन्यू बटन/पट्टी). इनमें से हर पैनल में जमावट "
 "/apps/panel/objects/"
 "$(id) में जमा होती है."
 
@@ -997,8 +996,8 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"अगर सही है, पैनल पैनल के विन्यास में किसी प्रकार का बदलाव का अनुमति नहीं देगा."
-" निजी "
+"अगर सही है, पैनल पैनल के विन्यास में किसी प्रकार का बदलाव का अनुमति नहीं "
+"देगा. निजी "
 "एप्प्लेट को अलग से लॉक करने की जरूरत है. पैनल को फिर से शुरू करने की जरूरत है "
 "इसे प्रभावी "
 "होने के लिये"
@@ -1036,12 +1035,10 @@ msgstr ""
 "अभिगम को हटाये बिना"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
-#| msgid "Enable program list in \"Run Application\" dialog"
 msgid "History of \"Run Application\" dialog"
 msgstr "\"अनुप्रयोग चलाएँ\"  संवाद का इतिहास"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
-#| msgid "Enable autocompletion in \"Run Application\" dialog"
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "\"अनुप्रयोग चलाएँ\" संवाद में बीते प्रयुक्त कमांड की सूची."
@@ -1102,36 +1099,31 @@ msgstr ""
 "object_type कुंजी \"launcher-object\" है."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
-#| msgid "Tooltip displayed for drawer or menu"
 msgid "Tooltip displayed for menu"
 msgstr "मेनू हेतु प्रदर्शित उपकरणयुक्ति"
 
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+msgid "The text to display in a tooltip for this menu."
+msgstr "इस मेनू के लिए एक टूलटिप में प्रदर्शित करने के लिए पाठ."
+
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
-#| msgid "Icon used for object's button"
 msgid "Icon used for button"
 msgstr "बटन हेतु उपयोग में चिह्न"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
-#| msgid ""
-#| "The location of the image file used as the icon for the object's button. "
-#| "This key is only relevant if the object_type key is \"drawer-object\" or "
-#| "\"menu-object\" and the use_custom_icon key is true."
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
 msgstr ""
 "वस्तु बटन के लिये प्रतीक के रूप में प्रयुक्त विंब फाइल की अवस्थिति. यदि खाली "
-"है तो मेन्यू के लिए तयशुदा प्रतीक प्रयोग किया जाएगा."
+"है तो मेन्यू के "
+"लिए तयशुदा प्रतीक प्रयोग किया जाएगा."
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
 msgid "Menu content path"
 msgstr "मेनू विषय-वस्तु पथ"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
-#| msgid ""
-#| "The path from which the menu contents is contructed. This key is only "
-#| "relevant if the use_menu_path key is true and the object_type key is "
-#| "\"menu-object\"."
 msgid ""
 "The path from which the menu contents is contructed. If empty, the menu will "
 "be the default applications menu."
@@ -1140,9 +1132,16 @@ msgstr ""
 "अनुप्रयोग मेन्यू होगा. "
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
-#| msgid "Applet IID"
 msgid "Object IID"
 msgstr "वस्तु IID"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+msgid ""
+"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+"\"."
+msgstr ""
+"वस्तु के कार्यान्वयन आईडी - उदाहरणार्थ \"ClockAppletFactory::ClockApplet"
+"\"."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
 msgid "Toplevel panel containing object"
@@ -1157,15 +1156,13 @@ msgid "Interpret position relative to bottom/right edge"
 msgstr "तल/दायाँ किनारा के सापेक्ष स्थिति व्याख्या करें"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
-#| msgid ""
-#| "If true, the position of the object is interpreted relative to the right "
-#| "(or bottom if vertical) edge of the panel."
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 msgstr ""
 "अगर अंत पर सेट किया जाता है, वस्तु की स्थिति को पैनल के दायें किनारे के "
-"सापेक्ष (या तल अगर लंबवत है) विश्लेषित किया जाता है."
+"सापेक्ष (या तल अगर "
+"लंबवत है) विश्लेषित किया जाता है."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
 msgid "Object's position on the panel"
@@ -1294,8 +1291,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"x-axis के साथ पैनल की अवस्थिति. यह कुंजी गैर विस्तारित मोड में संदर्भ रखती है."
-" विस्तारित "
+"x-axis के साथ पैनल की अवस्थिति. यह कुंजी गैर विस्तारित मोड में संदर्भ रखती "
+"है. विस्तारित "
 "मोड में यह कुंजी अनदेखा किया जाता हैऔर पैनल को स्क्रीन किनारे पर रखा जाता है "
 "अभिमुखन कुंजी "
 "के द्वारा."
@@ -1310,8 +1307,8 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"y-axis के साथ पैनल की अवस्थिति. यह कुंजी गैर विस्तारित मोड में संदर्भ रखती है."
-" विस्तारित "
+"y-axis के साथ पैनल की अवस्थिति. यह कुंजी गैर विस्तारित मोड में संदर्भ रखती "
+"है. विस्तारित "
 "मोड में यह कुंजी अनदेखा किया जाता हैऔर पैनल को स्क्रीन किनारे पर रखा जाता है "
 "अभिमुखन कुंजी "
 "के द्वारा."
@@ -1393,8 +1390,8 @@ msgid ""
 msgstr ""
 "अगर सही है, y कुंजी और y_bottom कुंजी अनदेखा किया जाता है और पैनल को y-अक्ष "
 "पर स्क्रीन "
-"के रखा जाता है. अगर पैनल को फिर आकार दिया जाता है तो यह पोजीशन पर रहेगा- यानी."
-" "
+"के रखा जाता है. अगर पैनल को फिर आकार दिया जाता है तो यह पोजीशन पर रहेगा- "
+"यानी. "
 "पैनल दोनों ओर बढेगा. अगर गलत है, y कुंजी और y_bottom कुंजी पैनल की अवस्थिति "
 "को दिखाता "
 "है ."
@@ -1499,11 +1496,6 @@ msgid "Background type"
 msgstr "पृष्ठभूमि प्रकार"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
-#| msgid ""
-#| "Which type of background should be used for this panel. Possible values "
-#| "are \"gtk\" - the default GTK+ widget background will be used, \"color\" "
-#| "- the color key will be used as background color or \"image\" - the image "
-#| "specified by the image key will be used as background."
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -1511,9 +1503,12 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "इस पैनल के लिये किस प्रकार की पृष्ठभूमि को प्रयोग किया जायेगा. संबावित मान "
-"हैं \"कोई नहीं\" - मूलभूत GTK+ widget पृष्ठभूमि प्रयुक्त होगा, \"color\" - "
-"रंग कुंजी को पृष्ठभूमि रंग के रूप में प्रयोग किया जायेगा या \"image\" - विवंब "
-"कुंजी द्वारा निर्दिष्ट को पृष्ठभूमि के रूप में प्रयोग किया जायेगा."
+"हैं \"कोई नहीं"
+"\" - मूलभूत GTK+ widget पृष्ठभूमि प्रयुक्त होगा, \"color\" - रंग कुंजी को "
+"पृष्ठभूमि रंग के "
+"रूप में प्रयोग किया जायेगा या \"image\" - विवंब कुंजी द्वारा निर्दिष्ट को "
+"पृष्ठभूमि के रूप में "
+"प्रयोग किया जायेगा."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid "Background color"
@@ -1548,9 +1543,22 @@ msgid ""
 msgstr "यदि सत्य है, पृष्ठभूमि छवि घुमाई जाएगी जब फ़लक की दिशा खड़े में होगी."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
-#| msgid "Images"
 msgid "Image options"
 msgstr "छवि विकल्प"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
+msgid ""
+"Determines how the image set by image-uri is rendered. Possible values are "
+"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
+"to the panel dimensions and the aspect ratio of the image will not be "
+"maintained. With \"fit\", the image will be scaled (retaining the aspect "
+"ratio of the image) to the panel height (if horizontal)."
+msgstr ""
+"निर्धारित करता है कि किस प्रकार छवि छवि uri द्वारा निर्धारित प्रदान की गई है. "
+"संभावित मान \"कोई नहीं\", \"खिंचाव\", \"फिट\" हैं. \"खिंचाव\" के साथ, छवि को "
+"पैनल आयाम में बढ़ाया जाएगा और छवि के पहलू अनुपात को बनाए रखा नहीं जाएगा. "
+"'फिट' के साथ, छवि पैनल ऊंचाई (छवि के पहलू अनुपात को बनाए रखने के लिए ) बढ़ाया "
+"जाएगा (अगर क्षैतिज होता हैं तो)."
 
 #: ../gnome-panel/applet.c:359
 msgid "???"
@@ -1640,7 +1648,6 @@ msgstr "गुण (_P)"
 
 #: ../gnome-panel/launcher.c:833
 #, c-format
-#| msgid "Key %s is not set, cannot load launcher\n"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "लॉन्टर स्थान नियत नहीं है, अतः लांचर लोड नहीं कर सकता\n"
 
@@ -1780,7 +1787,6 @@ msgstr "अपने कम्प्यूटर को अनाधिकृत
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-#| msgid "Log Out..."
 msgid "Log Out"
 msgstr "लॉग आउट"
 
@@ -1827,7 +1833,6 @@ msgid "Power Off"
 msgstr "बिजली बंद"
 
 #: ../gnome-panel/panel-action-button.c:351
-#| msgid "Shut down the computer"
 msgid "Power off the computer"
 msgstr "कंप्यूटर की बिजली बंद करें"
 
@@ -2094,7 +2099,6 @@ msgstr ""
 
 #: ../gnome-panel/panel-layout.c:1197 ../gnome-panel/panel-layout.c:1211
 #, c-format
-#| msgid "Cannot delete this panel"
 msgid "Cannot create initial panel layout.\n"
 msgstr "आरंभिक पैनल लेआउट नहीं बना सकता.\n"
 
@@ -2615,22 +2619,18 @@ msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-#| msgid "Test Bonobo Applet Factory"
 msgid "Test DBus Applet Factory"
 msgstr "DBus एप्लेट फैक्टरी जाँचें"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
-#| msgid "Factory for creating clock applets."
 msgid "Factory for Test DBus Applet"
 msgstr "DBus एप्लेट जाँच के लिए फैक्टरी"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
-#| msgid "Test Bonobo Applet"
 msgid "Test DBus Applet"
 msgstr "डीबस एप्लेट जाँचें"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-#| msgid "A simple applet for testing the GNOME-2.0 panel"
 msgid "A simple applet for testing the GNOME panel"
 msgstr "गनोम पटल को जाँचने का सरल एप्लेट"
 
