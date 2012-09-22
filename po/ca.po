@@ -4,7 +4,7 @@
 # Softcatalà <info@softcatala.org>, 2000.
 # Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004, 2005, 2006.
 # Josep Puigdemont i Casamajó <josep.puigdemont@gmail.com>, 2006, 2007.
-# Gil Forcada <gilforcada@guifi.net>, 2008, 2009.
+# Gil Forcada <gilforcada@guifi.net>, 2008, 2009, 2012.
 # David Planella <david.planella@gmail.com>, 2010, 2011.
 # Jordi Serratosa <jordis@softcatala.cat>, 2012.
 #
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.11.92\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-08 08:33+0000\n"
-"PO-Revision-Date: 2011-09-16 23:21+0200\n"
-"Last-Translator: David Planella <david.planella@gmail.com>\n"
+"POT-Creation-Date: 2012-09-16 20:28+0000\n"
+"PO-Revision-Date: 2012-09-17 00:45+0200\n"
+"Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: ca\n"
+"Content-Transfer-Encoding: 8bits\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #. Translators: This is a strftime format string.
@@ -31,243 +31,227 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:324 ../applets/clock/clock.c:451
-#: ../applets/clock/clock-location-tile.c:507
+#: ../applets/clock/calendar-window.c:310
+#: ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10).
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:456
-#: ../applets/clock/clock.c:1599 ../applets/clock/clock-location-tile.c:467
-#: ../applets/clock/clock-location-tile.c:514
+#: ../applets/clock/calendar-window.c:315
+#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%k:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:335
+#: ../applets/clock/calendar-window.c:321
 msgid "%b %d"
 msgstr "%d %b"
 
-#: ../applets/clock/calendar-window.c:835
+#: ../applets/clock/calendar-window.c:830
 msgid "Tasks"
 msgstr "Tasques"
 
-#: ../applets/clock/calendar-window.c:835
-#: ../applets/clock/calendar-window.c:1018
-#: ../applets/clock/calendar-window.c:1624
+#: ../applets/clock/calendar-window.c:830
+#: ../applets/clock/calendar-window.c:1013
+#: ../applets/clock/calendar-window.c:1551
 msgid "Edit"
 msgstr "Edita"
 
-#: ../applets/clock/calendar-window.c:958
+#: ../applets/clock/calendar-window.c:953
 msgid "All Day"
 msgstr "Tot el dia"
 
-#: ../applets/clock/calendar-window.c:1102
+#: ../applets/clock/calendar-window.c:1097
 msgid "Appointments"
 msgstr "Cites"
 
-#: ../applets/clock/calendar-window.c:1127
+#: ../applets/clock/calendar-window.c:1122
 msgid "Birthdays and Anniversaries"
 msgstr "Aniversaris i commemoracions"
 
-#: ../applets/clock/calendar-window.c:1152
+#: ../applets/clock/calendar-window.c:1147
 msgid "Weather Information"
 msgstr "Informació meteorològica"
 
-#: ../applets/clock/calendar-window.c:1624 ../applets/clock/clock.ui.h:22
+#: ../applets/clock/calendar-window.c:1551 ../applets/clock/clock.ui.h:22
 msgid "Locations"
 msgstr "Ubicacions"
 
-#: ../applets/clock/calendar-window.c:1922
+#: ../applets/clock/calendar-window.c:1806
 msgid "Calendar"
 msgstr "Calendari"
 
 #. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format (eg, like
-#. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:451
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format (eg, like
-#. * in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:456 ../applets/clock/clock.c:1593
-msgid "%H:%M:%S"
-msgstr "%k:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the date. Replace %e with %d if, when
-#. * the day of the month as a decimal number is a single digit,
-#. * it should begin with a 0 in your locale (e.g. "May 01"
-#. * instead of "May  1").
-#: ../applets/clock/clock.c:467
-msgid "%a %b %e"
-msgstr "%a, %e de %b"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:474
-#, c-format
-msgid ""
-"%1$s\n"
-"%2$s"
-msgstr ""
-"%1$s\n"
-"%2$s"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:482
-#, c-format
-msgid "%1$s, %2$s"
-msgstr "%1$s, %2$s"
-
-#. Show date in tooltip.
-#. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:648
+#: ../applets/clock/clock.c:310
 msgid "%A %B %d (%%s)"
 msgstr "%A, %e de %B (%%s)"
 
-#: ../applets/clock/clock.c:678
+#: ../applets/clock/clock.c:322
 msgid "Click to hide your appointments and tasks"
 msgstr "Feu clic per ocultar les vostres cites i tasques"
 
-#: ../applets/clock/clock.c:681
+#: ../applets/clock/clock.c:325
 msgid "Click to view your appointments and tasks"
 msgstr "Feu clic per veure les vostres cites i tasques"
 
-#: ../applets/clock/clock.c:685
+#: ../applets/clock/clock.c:329
 msgid "Click to hide month calendar"
 msgstr "Feu clic per ocultar el calendari del mes"
 
-#: ../applets/clock/clock.c:688
+#: ../applets/clock/clock.c:332
 msgid "Click to view month calendar"
 msgstr "Feu clic per veure el calendari del mes"
 
-#: ../applets/clock/clock.c:1431
+#: ../applets/clock/clock.c:992
 msgid "Computer Clock"
 msgstr "Rellotge del sistema"
 
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1578
-msgid "%I:%M:%S %p"
-msgstr "%l:%M:%S"
-
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1586
-msgid "%I:%M %p"
-msgstr "%l:%M"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display a date in the full format (so that people can
-#. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1632
-msgid "%A, %B %d %Y"
-msgstr "%A, %e de %B de %Y"
-
-#: ../applets/clock/clock.c:1698
+#: ../applets/clock/clock.c:1171
 msgid "Failed to open the time settings"
 msgstr "No s'han pogut obrir els paràmetres de la data i l'hora"
 
-#: ../applets/clock/clock.c:1718 ../applets/fish/fish.c:1307
+#: ../applets/clock/clock.c:1191 ../applets/fish/fish.c:1307
 #: ../applets/wncklet/window-list.c:155
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Preferències"
 
-#: ../applets/clock/clock.c:1721
-msgid "Copy _Time"
-msgstr "Copia l'_hora"
+#: ../applets/clock/clock.c:1194
+msgid "Copy Date and _Time"
+msgstr "Copia la data i l'_hora"
 
-#: ../applets/clock/clock.c:1724
-msgid "Copy _Date"
-msgstr "Copia la _data"
-
-#: ../applets/clock/clock.c:1727
+#: ../applets/clock/clock.c:1197
 msgid "Ad_just Date & Time"
 msgstr "A_justa la data i l'hora"
 
-#: ../applets/clock/clock.c:2548
-msgid "Custom format"
-msgstr "Format personalitzat"
-
-#: ../applets/clock/clock.c:3035
+#: ../applets/clock/clock.c:1768
 msgid "Choose Location"
 msgstr "Seleccioneu la ubicació"
 
-#: ../applets/clock/clock.c:3114
+#: ../applets/clock/clock.c:1847
 msgid "Edit Location"
 msgstr "Edita la ubicació"
 
-#: ../applets/clock/clock.c:3261
+#: ../applets/clock/clock.c:1881
+msgid "Kelvin"
+msgstr "Kelvin"
+
+#: ../applets/clock/clock.c:1882
+msgid "Celsius"
+msgstr "Celsius"
+
+#: ../applets/clock/clock.c:1883
+msgid "Fahrenheit"
+msgstr "Fahrenheit"
+
+#: ../applets/clock/clock.c:1888
+msgid "Meters per second (m/s)"
+msgstr "Metres per segon (m/s)"
+
+#: ../applets/clock/clock.c:1889
+msgid "Kilometers per hour (kph)"
+msgstr "Quilòmetres per hora (km/h)"
+
+#: ../applets/clock/clock.c:1890
+msgid "Miles per hour (mph)"
+msgstr "Milles per hora (m/h)"
+
+#: ../applets/clock/clock.c:1891
+msgid "Knots"
+msgstr "Nusos"
+
+#: ../applets/clock/clock.c:1892
+msgid "Beaufort scale"
+msgstr "Escala de Beaufort"
+
+#: ../applets/clock/clock.c:1945
 msgid "City Name"
 msgstr "Nom de la ciutat"
 
-#: ../applets/clock/clock.c:3265
+#: ../applets/clock/clock.c:1949
 msgid "City Time Zone"
 msgstr "Fus horari de la ciutat"
 
-#: ../applets/clock/clock.c:3452
-msgid "24 hour"
-msgstr "24 hores"
+#: ../applets/clock/clock-location-tile.c:188
+msgid "Failed to set the system timezone"
+msgstr "No s'ha pogut establir el fus horari del sistema"
 
-# La u de «Unix» és semiconsonant, no? iv
-#: ../applets/clock/clock.c:3453
-msgid "UNIX time"
-msgstr "Hora de UNIX"
+#: ../applets/clock/clock-location-tile.c:236
+msgid "<small>Set...</small>"
+msgstr "<small>Estableix...</small>"
 
-#: ../applets/clock/clock.c:3454
-msgid "Internet time"
-msgstr "Hora d'Internet"
+#: ../applets/clock/clock-location-tile.c:237
+msgid "<small>Set</small>"
+msgstr "<small>Estableix</small>"
 
-#: ../applets/clock/clock.c:3462
-msgid "Custom _format:"
-msgstr "_Format personalitzat:"
+#: ../applets/clock/clock-location-tile.c:313
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"Estableix la ubicació com a actual i utilitza el seu fus horari per aquest "
+"ordinador"
 
-#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:443
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: ../applets/clock/clock-location-tile.c:451
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: ../applets/clock/clock-location-tile.c:460
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: ../applets/clock/clock-location-tile.c:610
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+# FIXME
+#. Translators: The two strings are temperatures.
+#: ../applets/clock/clock-location-tile.c:623
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, sembla igual a %s"
+
+#: ../applets/clock/clock-location-tile.c:644
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Sortida del Sol: %s / Posta del Sol: %s"
+
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
 msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
+"Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
-"<small><i>Teclegeu el nom d'una ciutat, una regió o un país i seleccioneu "
-"una de les coincidències en el desplegable.</i></small>"
+"Teclegeu el nom d'una ciutat, una regió o un país i seleccioneu una de les "
+"coincidències en el desplegable."
 
 #: ../applets/clock/clock.ui.h:3
 msgid "_Timezone:"
@@ -278,8 +262,8 @@ msgid "_Location Name:"
 msgstr "Nom de la _ubicació:"
 
 #: ../applets/clock/clock.ui.h:5
-msgid "<i>(optional)</i>"
-msgstr "<b>(opcional)</b>"
+msgid "(optional)"
+msgstr "(opcional)"
 
 #: ../applets/clock/clock.ui.h:6
 msgid "L_ongitude:"
@@ -374,298 +358,12 @@ msgstr "El temps"
 msgid "Time _Settings"
 msgstr "_Propietats de l'hora"
 
-#. Translators:
-#. This controls whether the GNOME panel clock should display time in 24 hour mode
-#. or 12 hour mode by default. The only valid values for this are "24-hour" and
-#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
-#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
-#.
-#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
-#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
-#. "12-hour", things will not work.
-#.
-#: ../applets/clock/clock.schemas.in.h:11
-msgid "24-hour"
-msgstr "24-hour"
-
-#: ../applets/clock/clock.schemas.in.h:12
-msgid "Hour format"
-msgstr "Format de l'hora"
-
-#: ../applets/clock/clock.schemas.in.h:13
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
-msgstr ""
-"Aquesta clau especifica el format de l'hora emprat per la miniaplicació del "
-"rellotge. Els valors possibles són «12-hour», «24-hour», «internet», «unix» i "
-"«custom». Si s'estableix a «internet», el rellotge mostrarà l'hora d'Internet. "
-"L'hora d'Internet divideix el dia en 1000 «.batecs». No hi ha cap fus horari "
-"en aquest sistema, així doncs l'hora és la mateixa a tot el món. Si "
-"s'estableix a «unix», el rellotge mostrarà l'hora en segons des de l'Època, "
-"és a dir, 01/01/1970. Si s'estableix a «custom», el rellotge mostrarà l'hora "
-"d'acord amb el format especificat en la clau «custom_format»."
-
-#: ../applets/clock/clock.schemas.in.h:14
-msgid "Custom format of the clock"
-msgstr "Format personalitzat del rellotge"
-
-#: ../applets/clock/clock.schemas.in.h:15
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
-msgstr ""
-"Aquesta clau especifica el format que utilitzarà la miniaplicació del "
-"rellotge quan la clau «format» estigui establerta a «custom». Podeu emprar els "
-"especificadors de conversió de la funció strftime() per obtenir un format "
-"específic. Consulteu el manual de la funció strftime() per a més informació."
-
-#: ../applets/clock/clock.schemas.in.h:16
-msgid "Show time with seconds"
-msgstr "Mostra l'hora amb segons"
-
-#: ../applets/clock/clock.schemas.in.h:17
-msgid "If true, display seconds in time."
-msgstr "Si és cert, mostra els segons en l'hora."
-
-#: ../applets/clock/clock.schemas.in.h:18
-msgid "Show date in clock"
-msgstr "Mostra la data al rellotge"
-
-#: ../applets/clock/clock.schemas.in.h:19
-msgid "If true, display date in the clock, in addition to time."
-msgstr "Si és cert, mostra la data al rellotge, a més de l'hora."
-
-#: ../applets/clock/clock.schemas.in.h:20
-msgid "Show date in tooltip"
-msgstr "Mostra la data en l'indicador de funció"
-
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"Si és cert, mostra la data en un indicador de funció quan el punter passa "
-"per damunt de la miniaplicació."
-
-#: ../applets/clock/clock.schemas.in.h:22
-msgid "Show weather in clock"
-msgstr "Mostra la informació meteorològica al rellotge"
-
-#: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, display a weather icon."
-msgstr "Si és cert, mostra la icona de la informació meteorològica."
-
-#: ../applets/clock/clock.schemas.in.h:24
-msgid "Show temperature in clock"
-msgstr "Mostra la temperatura al rellotge"
-
-#: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, show the temperature next to the weather icon."
-msgstr ""
-"Si és cert, mostra la temperatura al costat de la icona de la meteorologia."
-
-#: ../applets/clock/clock.schemas.in.h:26
-msgid "Use UTC"
-msgstr "Utilitza UTC"
-
-#: ../applets/clock/clock.schemas.in.h:27
-msgid ""
-"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-"timezones. The schema is retained for compatibility with older versions."
-msgstr ""
-"L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.28 a favor de "
-"la utilització de fusos horaris. Es manté l'esquema per compatibilitat amb "
-"versions anteriors."
-
-#: ../applets/clock/clock.schemas.in.h:28
-msgid "Time configuration tool"
-msgstr "Eina de configuració de l'hora"
-
-#: ../applets/clock/clock.schemas.in.h:29
-msgid ""
-"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
-"time configuration tool. The schema is retained for compatibility with older "
-"versions."
-msgstr ""
-"L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.22 ja que "
-"s'utilitza una eina de configuració de l'hora interna. L'esquema es manté "
-"per compatibilitat amb versions anteriors."
-
-#: ../applets/clock/clock.schemas.in.h:30
-msgid "Show week numbers in calendar"
-msgstr "Mostra els números de la setmana al calendari"
-
-#: ../applets/clock/clock.schemas.in.h:31
-msgid "If true, show week numbers in the calendar."
-msgstr "Si és cert, mostra els números de la setmana al calendari."
-
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Expand list of appointments"
-msgstr "Expandeix la llista de cites"
-
-#: ../applets/clock/clock.schemas.in.h:33
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Si és cert, expandeix la llista de cites a la finestra del calendari."
-
-#: ../applets/clock/clock.schemas.in.h:34
-msgid "Expand list of birthdays"
-msgstr "Expandeix la llista d'aniversaris"
-
-#: ../applets/clock/clock.schemas.in.h:35
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr ""
-"Si és cert, expandeix la llista d'aniversaris a la finestra del calendari."
-
-#: ../applets/clock/clock.schemas.in.h:36
-msgid "Expand list of tasks"
-msgstr "Expandeix la llista de tasques"
-
-#: ../applets/clock/clock.schemas.in.h:37
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr ""
-"Si és cert, expandeix la llista de tasques a la finestra del calendari."
-
-#: ../applets/clock/clock.schemas.in.h:38
-msgid "Expand list of weather information"
-msgstr "Expandeix la llista de la informació meteorològica"
-
-#: ../applets/clock/clock.schemas.in.h:39
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr ""
-"Si és cert, expandeix la llista de la informació del temps a la finestra del "
-"calendari."
-
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "Expand list of locations"
-msgstr "Expandeix la llista d'ubicacions"
-
-#: ../applets/clock/clock.schemas.in.h:41
-msgid "If true, expand the list of locations in the calendar window."
-msgstr ""
-"Si és cert, expandeix la llista d'ubicacions a la finestra del calendari."
-
-#: ../applets/clock/clock.schemas.in.h:42
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.6 en favor a la "
-"clau «format». L'esquema es reté per compatibilitat amb versions anteriors."
-
-# La u de «Unix» és semiconsonant, no? iv
-#: ../applets/clock/clock.schemas.in.h:43
-msgid "Use UNIX time"
-msgstr "Utilitza l'hora de Unix"
-
-#: ../applets/clock/clock.schemas.in.h:44
-msgid "Use Internet time"
-msgstr "Utilitza l'hora d'Internet"
-
-#: ../applets/clock/clock.schemas.in.h:45
-msgid "List of locations"
-msgstr "Llista d'ubicacions"
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid "A list of locations to display in the calendar window."
-msgstr "Una llista d'ubicacions a visualitzar a la finestra del calendari."
-
-#: ../applets/clock/clock.schemas.in.h:47
-msgid "Temperature unit"
-msgstr "Unitat de temperatura"
-
-#: ../applets/clock/clock.schemas.in.h:48
-msgid "The unit to use when showing temperatures."
-msgstr "La unitat a utilitzar per mostrar les temperatures."
-
-#: ../applets/clock/clock.schemas.in.h:49
-msgid "Speed unit"
-msgstr "Unitat de velocitat"
-
-#: ../applets/clock/clock.schemas.in.h:50
-msgid "The unit to use when showing wind speed."
-msgstr "La unitat a utilitzar per mostrar la velocitat del vent."
-
-#: ../applets/clock/clock-location-tile.c:183
-msgid "Failed to set the system timezone"
-msgstr "No s'ha pogut establir el fus horari del sistema"
-
-#: ../applets/clock/clock-location-tile.c:231
-msgid "<small>Set...</small>"
-msgstr "<small>Estableix...</small>"
-
-#: ../applets/clock/clock-location-tile.c:232
-msgid "<small>Set</small>"
-msgstr "<small>Estableix</small>"
-
-#: ../applets/clock/clock-location-tile.c:308
-msgid "Set location as current location and use its timezone for this computer"
-msgstr ""
-"Estableix la ubicació com a actual i utilitza el seu fus horari per aquest "
-"ordinador"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:444
-msgid "%l:%M <small>%p (%A)</small>"
-msgstr "%l:%M <small>%p (%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:452
-msgid "%H:%M <small>(%A)</small>"
-msgstr "%H:%M <small>(%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:461
-msgid "%l:%M <small>%p</small>"
-msgstr "%l:%M <small>%p</small>"
-
-#: ../applets/clock/clock-location-tile.c:600
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
-msgid "Unknown"
-msgstr "Desconegut"
-
-# FIXME
-#. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
-#, c-format
-msgid "%s, feels like %s"
-msgstr "%s, sembla igual a %s"
-
-#: ../applets/clock/clock-location-tile.c:637
-#, c-format
-msgid "Sunrise: %s / Sunset: %s"
-msgstr "Sortida del Sol: %s / Posta del Sol: %s"
-
-#: ../applets/clock/clock-utils.c:96 ../applets/fish/fish.c:164
+#: ../applets/clock/clock-utils.c:97 ../applets/fish/fish.c:164
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "No s'ha pogut mostrar el document d'ajuda «%s»"
 
-#: ../applets/clock/clock-utils.c:125 ../applets/fish/fish.c:190
+#: ../applets/clock/clock-utils.c:126 ../applets/fish/fish.c:190
 msgid "Error displaying help document"
 msgstr "S'ha produït un error en mostrar el document d'ajuda"
 
@@ -1002,6 +700,98 @@ msgstr "Mostra els _noms dels espais de treball al canviador"
 msgid "Workspaces"
 msgstr "Espais de treball"
 
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
+msgid "Show date in tooltip"
+msgstr "Mostra la data en l'indicador de funció"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"Si és cert, mostra la data en un indicador de funció quan el punter passa "
+"per damunt de la miniaplicació."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
+msgid "Show weather in clock"
+msgstr "Mostra la informació meteorològica al rellotge"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:4
+msgid "If true, display a weather icon."
+msgstr "Si és cert, mostra la icona de la informació meteorològica."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:5
+msgid "Show temperature in clock"
+msgstr "Mostra la temperatura al rellotge"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:6
+msgid "If true, show the temperature next to the weather icon."
+msgstr ""
+"Si és cert, mostra la temperatura al costat de la icona de la meteorologia."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:7
+msgid "Show week numbers in calendar"
+msgstr "Mostra els números de la setmana al calendari"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:8
+msgid "If true, show week numbers in the calendar."
+msgstr "Si és cert, mostra els números de la setmana al calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:9
+msgid "Expand list of appointments"
+msgstr "Expandeix la llista de cites"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:10
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Si és cert, expandeix la llista de cites a la finestra del calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:11
+msgid "Expand list of birthdays"
+msgstr "Expandeix la llista d'aniversaris"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:12
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr ""
+"Si és cert, expandeix la llista d'aniversaris a la finestra del calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:13
+msgid "Expand list of tasks"
+msgstr "Expandeix la llista de tasques"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:14
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr ""
+"Si és cert, expandeix la llista de tasques a la finestra del calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:15
+msgid "Expand list of weather information"
+msgstr "Expandeix la llista de la informació meteorològica"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr ""
+"Si és cert, expandeix la llista de la informació del temps a la finestra del "
+"calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
+msgid "Expand list of locations"
+msgstr "Expandeix la llista d'ubicacions"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:18
+msgid "If true, expand the list of locations in the calendar window."
+msgstr ""
+"Si és cert, expandeix la llista d'ubicacions a la finestra del calendari."
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:19
+msgid "List of locations"
+msgstr "Llista d'ubicacions"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
+msgid ""
+"A list of locations to display in the calendar window. Each location is a "
+"tuple of display name, METAR code and coordinates."
+msgstr ""
+"Una llista d'ubicacions a visualitzar a la finestra del calendari. Cada "
+"ubicació està formada per un nom visible, un codi METAR i les coordenades."
+
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
 msgstr "El nom del peix"
@@ -1147,7 +937,7 @@ msgid ""
 msgstr ""
 "Si és cert, els indicadors de funció es mostraran pels objectes dels "
 "quadres. Els indicadors de funció es poden desactivar per tot l'escriptori "
-"amb la propietat «gtk-enable-tooltips» en el GTK+."
+"amb la propietat «gtk-enable-tooltips» en la GTK+."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
 msgid "Confirm panel removal"
@@ -1217,8 +1007,8 @@ msgstr ""
 "Una llista d'ID de miniaplicacions que el quadre ignorarà. D'aquesta manera "
 "podeu inhabilitar que certes miniaplicacions es carreguin o es mostrin al "
 "menú. Per exemple, per inhabilitar la miniaplicació miniordinador afegiu "
-"«OAFIID:GNOME_MiniCommanderApplet» a aquesta llista. S'ha de tornar a iniciar "
-"el quadre per tal que tingui efecte."
+"«OAFIID:GNOME_MiniCommanderApplet» a aquesta llista. S'ha de tornar a "
+"iniciar el quadre per tal que tingui efecte."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid "Disable Force Quit"
@@ -1356,8 +1146,8 @@ msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 msgstr ""
-"Si s'estableix a «end» (final), la posició de l'objecte s'interpreta relativa "
-"al costat dret (o inferior, si és vertical) del quadre."
+"Si s'estableix a «end» (final), la posició de l'objecte s'interpreta "
+"relativa al costat dret (o inferior, si és vertical) del quadre."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
 msgid "Object's position on the panel"
@@ -1381,9 +1171,9 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
-"Aquest és un nom intel·ligible que podeu utilitzar per identificar un "
-"quadre. La seva tasca principal és servir de títol de la finestra del "
-"quadre, cosa útil quan es navega entre quadres."
+"Aquest és un nom inteŀligible que podeu utilitzar per identificar un quadre. "
+"La seva tasca principal és servir de títol de la finestra del quadre, cosa "
+"útil quan es navega entre quadres."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
 msgid "X screen where the panel is displayed"
@@ -1620,7 +1410,7 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"Especifica el nombre de mil·lisegons de retard entre que el punter surt de "
+"Especifica el nombre de miŀlisegons de retard entre que el punter surt de "
 "l'àrea del quadre i el quadre s'oculta. Aquesta configuració només té efecte "
 "si la clau auto_hide és certa."
 
@@ -1634,9 +1424,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"Especifica el nombre de mil·lisegons de retard entre que el punter entra "
-"dins de l'àrea del quadre i el quadre es torna a mostrar. Aquesta "
-"configuració només té efecte si la clau auto_hide és certa."
+"Especifica el nombre de miŀlisegons de retard entre que el punter entra dins "
+"de l'àrea del quadre i el quadre es torna a mostrar. Aquesta configuració "
+"només té efecte si la clau auto_hide és certa."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
 msgid "Visible pixels when hidden"
@@ -1661,8 +1451,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"La velocitat de les animacions. Hi ha tres valors possibles; «slow», «medium» "
-"i «fast». Aquesta clau només té efecte si la clau enable_animations és certa."
+"La velocitat de les animacions. Hi ha tres valors possibles; «slow», "
+"«medium» i «fast». Aquesta clau només té efecte si la clau enable_animations "
+"és certa."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background type"
@@ -1676,10 +1467,10 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Quin tipus de fons s'ha d'utilitzar per a aquest quadre. Els valors "
-"possibles són «none» - s'utilitzarà el giny de fons predeterminat de GTK+, "
-"«color» - s'utilitzarà la configuració de color com el color de fons, o "
-"«image» - s'utilitzarà la imatge especificada en la configuració d'imatge com "
-"a fons."
+"possibles són «none» - s'utilitzarà el giny de fons predeterminat de la GTK"
+"+, «color» - s'utilitzarà la configuració de color com el color de fons, o "
+"«image» - s'utilitzarà la imatge especificada en la configuració d'imatge "
+"com a fons."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid "Background color"
@@ -1726,109 +1517,10 @@ msgid ""
 "ratio of the image) to the panel height (if horizontal)."
 msgstr ""
 "Determina com es renderitza la imatge establerta a l'URI. Els valors "
-"possibles són «none» (cap), «stretch» (escala) i «fit» (omple). Amb «strech», la "
-"imatge s'escalarà a les dimensions del quadre i no es mantindrà la relació "
-"de l'aspecte. Amb «fit», la imatge s'escalarà (mantenint la relació d'aspecte "
-"de la imatge) a l'alçada del quadre (si és horitzontal)."
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "El fitxer no és un fitxer .desktop vàlid"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "No es reconeix la versió «%s» del fitxer d'escriptori"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:968
-#, c-format
-msgid "Starting %s"
-msgstr "S'està iniciant %s"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1110
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "L'aplicació no admet documents a la línia d'ordres"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1178
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "No es reconeix l'opció de llançament: %d"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1383
-#, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"No es poden especificar URI de document a una entrada d'escriptori «Type=Link»"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1404
-#, c-format
-msgid "Not a launchable item"
-msgstr "No és un element que es pugui llançar"
-
-#: ../gnome-panel/libegg/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "Inhabilita la connexió amb el gestor de sessions"
-
-#: ../gnome-panel/libegg/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "Especifiqueu el fitxer que conté la configuració desada"
-
-#: ../gnome-panel/libegg/eggsmclient.c:229
-msgid "FILE"
-msgstr "FITXER"
-
-#: ../gnome-panel/libegg/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "Especifiqueu l'identificador de la gestió de sessions"
-
-#: ../gnome-panel/libegg/eggsmclient.c:232
-msgid "ID"
-msgstr "Identificador"
-
-#: ../gnome-panel/libegg/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "Opcions de la gestió de sessions:"
-
-#: ../gnome-panel/libegg/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "Mostra les opcions de la gestió de sessions"
-
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:80
-#: ../gnome-panel/panel-applet-frame.c:767
-#: ../gnome-panel/panel-applet-frame.c:939
-msgid "Error"
-msgstr "Error"
-
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
-msgid "Choose an icon"
-msgstr "Seleccioneu una icona"
-
-#: ../gnome-panel/libpanel-util/panel-launch.c:49
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "No s'ha pogut executar «%s»"
-
-#: ../gnome-panel/libpanel-util/panel-launch.c:52
-#: ../gnome-panel/launcher.c:175
-msgid "Could not launch application"
-msgstr "No s'ha pogut llançar l'aplicació"
-
-#: ../gnome-panel/libpanel-util/panel-show.c:48
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "No s'ha pogut obrir la ubicació «%s»"
-
-#: ../gnome-panel/libpanel-util/panel-show.c:166
-msgid "No application to handle search folders is installed."
-msgstr ""
-"No hi ha instal·lada cap aplicació per gestionar les carpetes de cerca."
+"possibles són «none» (cap), «stretch» (escala) i «fit» (omple). Amb "
+"«strech», la imatge s'escalarà a les dimensions del quadre i no es mantindrà "
+"la relació de l'aspecte. Amb «fit», la imatge s'escalarà (mantenint la "
+"relació d'aspecte de la imatge) a l'alçada del quadre (si és horitzontal)."
 
 #: ../gnome-panel/applet.c:359
 msgid "???"
@@ -1888,6 +1580,11 @@ msgstr "No s'ha pogut mostrar aquest URL"
 msgid "No URL was specified."
 msgstr "No s'ha especificat cap URL."
 
+#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/libpanel-util/panel-launch.c:52
+msgid "Could not launch application"
+msgstr "No s'ha pogut llançar l'aplicació"
+
 #: ../gnome-panel/launcher.c:219
 msgid "Could not use dropped item"
 msgstr "No s'ha pogut utilitzar l'element deixat anar"
@@ -1903,8 +1600,8 @@ msgstr ""
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
-"No s'ha pogut obrir el fitxer d'escriptori %s per al llançador del quadre%s%"
-"s\n"
+"No s'ha pogut obrir el fitxer d'escriptori %s per al llançador del quadre%s"
+"%s\n"
 
 #: ../gnome-panel/launcher.c:796
 msgid "_Launch"
@@ -1927,6 +1624,100 @@ msgstr ""
 #: ../gnome-panel/panel-ditem-editor.c:1417
 msgid "Could not save launcher"
 msgstr "No s'ha pogut desar el llançador"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:165
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "El fitxer no és un fitxer .desktop vàlid"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:188
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "No es reconeix la versió «%s» del fitxer d'escriptori"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:968
+#, c-format
+msgid "Starting %s"
+msgstr "S'està iniciant %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1110
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "L'aplicació no admet documents a la línia d'ordres"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1178
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "No es reconeix l'opció de llançament: %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1383
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr ""
+"No es poden especificar URI de document a una entrada d'escriptori "
+"«Type=Link»"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1404
+#, c-format
+msgid "Not a launchable item"
+msgstr "No és un element que es pugui llançar"
+
+#: ../gnome-panel/libegg/eggsmclient.c:226
+msgid "Disable connection to session manager"
+msgstr "Inhabilita la connexió amb el gestor de sessions"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "Specify file containing saved configuration"
+msgstr "Especifiqueu el fitxer que conté la configuració desada"
+
+#: ../gnome-panel/libegg/eggsmclient.c:229
+msgid "FILE"
+msgstr "FITXER"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "Specify session management ID"
+msgstr "Especifiqueu l'identificador de la gestió de sessions"
+
+#: ../gnome-panel/libegg/eggsmclient.c:232
+msgid "ID"
+msgstr "Identificador"
+
+#: ../gnome-panel/libegg/eggsmclient.c:253
+msgid "Session management options:"
+msgstr "Opcions de la gestió de sessions:"
+
+#: ../gnome-panel/libegg/eggsmclient.c:254
+msgid "Show session management options"
+msgstr "Mostra les opcions de la gestió de sessions"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:80
+#: ../gnome-panel/panel-applet-frame.c:807
+#: ../gnome-panel/panel-applet-frame.c:979
+msgid "Error"
+msgstr "Error"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
+msgid "Choose an icon"
+msgstr "Seleccioneu una icona"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:49
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "No s'ha pogut executar «%s»"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:48
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "No s'ha pogut obrir la ubicació «%s»"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:166
+msgid "No application to handle search folders is installed."
+msgstr "No hi ha instaŀlada cap aplicació per gestionar les carpetes de cerca."
 
 #: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
@@ -1960,8 +1751,8 @@ msgstr "Protegiu el vostre ordinador d'usos no autoritzats"
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-msgid "Log Out..."
-msgstr "Surt..."
+msgid "Log Out"
+msgstr "Surt"
 
 #: ../gnome-panel/panel-action-button.c:308
 msgid "Log out of this session to log in as a different user"
@@ -2004,12 +1795,12 @@ msgid "Connect to a remote computer or shared disk"
 msgstr "Connecta't a un servidor remot o a un disc compartit"
 
 #: ../gnome-panel/panel-action-button.c:350
-msgid "Shut Down..."
-msgstr "Atura..."
+msgid "Power Off"
+msgstr "Apaga"
 
 #: ../gnome-panel/panel-action-button.c:351
-msgid "Shut down the computer"
-msgstr "Atura l'ordinador"
+msgid "Power off the computer"
+msgstr "Apaga l'ordinador"
 
 #: ../gnome-panel/panel-addto.c:144 ../gnome-panel/panel-menu-button.c:962
 msgid "Main Menu"
@@ -2078,38 +1869,93 @@ msgstr "Cerca un _element a afegir al quadre:"
 msgid "Add to Panel"
 msgstr "Afegeix al quadre"
 
-#: ../gnome-panel/panel-applet-frame.c:736
+#: ../gnome-panel/panel-applet-frame.c:776
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» ha sortit inesperadament"
 
-#: ../gnome-panel/panel-applet-frame.c:738
+#: ../gnome-panel/panel-applet-frame.c:778
 msgid "Panel object has quit unexpectedly"
 msgstr "L'objecte del quadre ha sortit inesperadament"
 
-#: ../gnome-panel/panel-applet-frame.c:745
+#: ../gnome-panel/panel-applet-frame.c:785
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 "Si torneu a carregar un objecte del quadre, s'hi afegirà automàticament."
 
-#: ../gnome-panel/panel-applet-frame.c:751
+#: ../gnome-panel/panel-applet-frame.c:791
 msgid "_Don't Reload"
 msgstr "_No el tornis a carregar"
 
-#: ../gnome-panel/panel-applet-frame.c:752
+#: ../gnome-panel/panel-applet-frame.c:792
 msgid "_Reload"
 msgstr "_Torna'l a carregar"
 
-#: ../gnome-panel/panel-applet-frame.c:902
+#: ../gnome-panel/panel-applet-frame.c:942
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "El quadre ha trobat un problema en carregar «%s»."
 
-#: ../gnome-panel/panel-applet-frame.c:918
+#: ../gnome-panel/panel-applet-frame.c:958
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Voleu eliminar la miniaplicació de la vostra configuració?"
+
+#: ../gnome-panel/panel.c:527
+#, c-format
+msgid "Open URL: %s"
+msgstr "Obre URL: %s"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:645
+#, c-format
+msgid "Open '%s'"
+msgstr "Obre «%s»"
+
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1200
+msgid "Open your personal folder"
+msgstr "Obre la vostra carpeta personal"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1236
+msgid "Computer"
+msgstr "Ordinador"
+
+#. name
+#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1242
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+"Navega per totes les carpetes i discos locals i remots als quals es pugui "
+"accedir des d'aquest ordinador"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1252
+msgid "Network"
+msgstr "Xarxa"
+
+#. name
+#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1253
+msgid "Browse bookmarked and local network locations"
+msgstr "Navega per les ubicacions de xarxa locals i d'interès"
+
+#: ../gnome-panel/panel.c:1394
+msgid "Delete this panel?"
+msgstr "Voleu suprimir aquest quadre?"
+
+#: ../gnome-panel/panel.c:1398
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Quan se suprimeix un quadre, el quadre i la seva\n"
+"configuració es perden."
 
 #: ../gnome-panel/panel-context-menu.c:63
 msgid "Cannot delete this panel"
@@ -2203,8 +2049,8 @@ msgstr "El llançador no té cap ubicació establerta."
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
-"Feu clic a una finestra per forçar la sortida de l'aplicació. Per "
-"cancel·lar, premeu <ESC>."
+"Feu clic a una finestra per forçar la sortida de l'aplicació. Per canceŀlar, "
+"premeu <ESC>."
 
 #: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
@@ -2225,7 +2071,7 @@ msgstr "No es pot crear la disposició del quadre.\n"
 
 #: ../gnome-panel/panel-menu-bar.c:90
 msgid "Browse and run installed applications"
-msgstr "Navegueu i executeu aplicacions instal·lades"
+msgstr "Navegueu i executeu aplicacions instaŀlades"
 
 #: ../gnome-panel/panel-menu-bar.c:92
 msgid "Access documents, folders and network places"
@@ -2243,98 +2089,60 @@ msgstr "_Edita els menús"
 msgid "Switch User"
 msgstr "Canvia d'usuari"
 
-#: ../gnome-panel/panel-menu-items.c:622
+#: ../gnome-panel/panel-menu-items.c:621
 msgid "Bookmarks"
 msgstr "Adreces d'interès"
 
-#. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:646 ../gnome-panel/panel.c:596
-#, c-format
-msgid "Open '%s'"
-msgstr "Obre «%s»"
-
-#: ../gnome-panel/panel-menu-items.c:717
+#: ../gnome-panel/panel-menu-items.c:716
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "No s'ha pogut analitzar %s per a canvis en el suport"
 
-#: ../gnome-panel/panel-menu-items.c:759
+#: ../gnome-panel/panel-menu-items.c:758
 #, c-format
 msgid "Rescan %s"
 msgstr "Torna a analitzar %s"
 
-#: ../gnome-panel/panel-menu-items.c:796
+#: ../gnome-panel/panel-menu-items.c:795
 #, c-format
 msgid "Unable to mount %s"
 msgstr "No s'ha pogut muntar %s"
 
 # FIXME
-#: ../gnome-panel/panel-menu-items.c:858
+#: ../gnome-panel/panel-menu-items.c:857
 #, c-format
 msgid "Mount %s"
 msgstr "Muntatge %s"
 
-#: ../gnome-panel/panel-menu-items.c:1066
+#: ../gnome-panel/panel-menu-items.c:1065
 msgid "Removable Media"
 msgstr "Medis extraïbles"
 
-#: ../gnome-panel/panel-menu-items.c:1157
+#: ../gnome-panel/panel-menu-items.c:1156
 msgid "Network Places"
 msgstr "Llocs de xarxa"
-
-#. is_exec?
-#. exec
-#. name
-#: ../gnome-panel/panel-menu-items.c:1201 ../gnome-panel/panel.c:644
-msgid "Open your personal folder"
-msgstr "Obre la vostra carpeta personal"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1221
+#: ../gnome-panel/panel-menu-items.c:1220
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Escriptori"
 
-#: ../gnome-panel/panel-menu-items.c:1222
+#: ../gnome-panel/panel-menu-items.c:1221
 msgid "Open the contents of your desktop in a folder"
 msgstr "Obriu el contingut del vostre escriptori en una carpeta"
 
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1237 ../gnome-panel/panel.c:653
-msgid "Computer"
-msgstr "Ordinador"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1243 ../gnome-panel/panel.c:654
-msgid ""
-"Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
-"Navega per totes les carpetes i discos locals i remots als quals es pugui "
-"accedir des d'aquest ordinador"
-
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1253 ../gnome-panel/panel.c:661
-msgid "Network"
-msgstr "Xarxa"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1254 ../gnome-panel/panel.c:662
-msgid "Browse bookmarked and local network locations"
-msgstr "Navega per les ubicacions de xarxa locals i d'interès"
-
-#: ../gnome-panel/panel-menu-items.c:1359
+#: ../gnome-panel/panel-menu-items.c:1358
 msgid "Available"
 msgstr "Disponible"
 
-#: ../gnome-panel/panel-menu-items.c:1369
+#: ../gnome-panel/panel-menu-items.c:1368
 msgid "Busy"
 msgstr "Ocupat"
 
-#: ../gnome-panel/panel-menu-items.c:1628
+#: ../gnome-panel/panel-menu-items.c:1621
 msgid "Places"
 msgstr "Llocs"
 
@@ -2421,12 +2229,12 @@ msgid "Co_lor:"
 msgstr "Co_lor:"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "<small>Transparent</small>"
-msgstr "<small>Transparent</small>"
+msgid "Transparent"
+msgstr "Transparent"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "<small>Opaque</small>"
-msgstr "<small>Opac</small>"
+msgid "Opaque"
+msgstr "Opac"
 
 #: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "Background _image:"
@@ -2778,23 +2586,6 @@ msgstr "Cerca"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:527
-#, c-format
-msgid "Open URL: %s"
-msgstr "Obre URL: %s"
-
-#: ../gnome-panel/panel.c:1393
-msgid "Delete this panel?"
-msgstr "Voleu suprimir aquest quadre?"
-
-#: ../gnome-panel/panel.c:1397
-msgid ""
-"When a panel is deleted, the panel and its\n"
-"settings are lost."
-msgstr ""
-"Quan se suprimeix un quadre, el quadre i la seva\n"
-"configuració es perden."
-
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
 msgid "Test DBus Applet Factory"
 msgstr "Factoria de la miniaplicació de prova per DBus"
@@ -2810,6 +2601,171 @@ msgstr "Miniaplicació de prova per DBus"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Una simple miniaplicació per provar el quadre del GNOME"
+
+#~ msgid "%l:%M:%S %p"
+#~ msgstr "%l:%M:%S"
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%k:%M:%S"
+
+#~ msgid "%a %b %e"
+#~ msgstr "%a, %e de %b"
+
+#~ msgid ""
+#~ "%1$s\n"
+#~ "%2$s"
+#~ msgstr ""
+#~ "%1$s\n"
+#~ "%2$s"
+
+#~ msgid "%1$s, %2$s"
+#~ msgstr "%1$s, %2$s"
+
+#~ msgid "%I:%M:%S %p"
+#~ msgstr "%l:%M:%S"
+
+#~ msgid "%I:%M %p"
+#~ msgstr "%l:%M"
+
+#~ msgid "%A, %B %d %Y"
+#~ msgstr "%A, %e de %B de %Y"
+
+#~ msgid "Copy _Date"
+#~ msgstr "Copia la _data"
+
+#~ msgid "Custom format"
+#~ msgstr "Format personalitzat"
+
+#~ msgid "24 hour"
+#~ msgstr "24 hores"
+
+# La u de «Unix» és semiconsonant, no? iv
+#~ msgid "UNIX time"
+#~ msgstr "Hora de UNIX"
+
+#~ msgid "Internet time"
+#~ msgstr "Hora d'Internet"
+
+#~ msgid "Custom _format:"
+#~ msgstr "_Format personalitzat:"
+
+#~ msgid "24-hour"
+#~ msgstr "24-hour"
+
+#~ msgid "Hour format"
+#~ msgstr "Format de l'hora"
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
+#~ "\". If set to \"internet\", the clock will display Internet time. The "
+#~ "Internet time system divides the day into 1000 \".beats\". There are no "
+#~ "time zones in this system, so time is the same all over the world. If set "
+#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "1970-01-01. If set to \"custom\", the clock will display time according "
+#~ "to the format specified in the custom_format key."
+#~ msgstr ""
+#~ "Aquesta clau especifica el format de l'hora emprat per la miniaplicació "
+#~ "del rellotge. Els valors possibles són «12-hour», «24-hour», «internet», "
+#~ "«unix» i «custom». Si s'estableix a «internet», el rellotge mostrarà "
+#~ "l'hora d'Internet. L'hora d'Internet divideix el dia en 1000 «.batecs». "
+#~ "No hi ha cap fus horari en aquest sistema, així doncs l'hora és la "
+#~ "mateixa a tot el món. Si s'estableix a «unix», el rellotge mostrarà "
+#~ "l'hora en segons des de l'Època, és a dir, 01/01/1970. Si s'estableix a "
+#~ "«custom», el rellotge mostrarà l'hora d'acord amb el format especificat "
+#~ "en la clau «custom_format»."
+
+#~ msgid "Custom format of the clock"
+#~ msgstr "Format personalitzat del rellotge"
+
+#~ msgid ""
+#~ "This key specifies the format used by the clock applet when the format "
+#~ "key is set to \"custom\". You can use conversion specifiers understood by "
+#~ "strftime() to obtain a specific format. See the strftime() manual for "
+#~ "more information."
+#~ msgstr ""
+#~ "Aquesta clau especifica el format que utilitzarà la miniaplicació del "
+#~ "rellotge quan la clau «format» estigui establerta a «custom». Podeu "
+#~ "emprar els especificadors de conversió de la funció strftime() per "
+#~ "obtenir un format específic. Consulteu el manual de la funció strftime() "
+#~ "per a més informació."
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Mostra l'hora amb segons"
+
+#~ msgid "If true, display seconds in time."
+#~ msgstr "Si és cert, mostra els segons en l'hora."
+
+#~ msgid "Show date in clock"
+#~ msgstr "Mostra la data al rellotge"
+
+#~ msgid "If true, display date in the clock, in addition to time."
+#~ msgstr "Si és cert, mostra la data al rellotge, a més de l'hora."
+
+#~ msgid "Use UTC"
+#~ msgstr "Utilitza UTC"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+#~ "timezones. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.28 a favor "
+#~ "de la utilització de fusos horaris. Es manté l'esquema per compatibilitat "
+#~ "amb versions anteriors."
+
+#~ msgid "Time configuration tool"
+#~ msgstr "Eina de configuració de l'hora"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.22 with the use of an "
+#~ "internal time configuration tool. The schema is retained for "
+#~ "compatibility with older versions."
+#~ msgstr ""
+#~ "L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.22 ja que "
+#~ "s'utilitza una eina de configuració de l'hora interna. L'esquema es manté "
+#~ "per compatibilitat amb versions anteriors."
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#~ "key. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "L'ús d'aquesta clau es va desaconsellar a partir del GNOME 2.6 en favor a "
+#~ "la clau «format». L'esquema es reté per compatibilitat amb versions "
+#~ "anteriors."
+
+# La u de «Unix» és semiconsonant, no? iv
+#~ msgid "Use UNIX time"
+#~ msgstr "Utilitza l'hora de Unix"
+
+#~ msgid "Use Internet time"
+#~ msgstr "Utilitza l'hora d'Internet"
+
+#~ msgid "Temperature unit"
+#~ msgstr "Unitat de temperatura"
+
+#~ msgid "The unit to use when showing temperatures."
+#~ msgstr "La unitat a utilitzar per mostrar les temperatures."
+
+#~ msgid "Speed unit"
+#~ msgstr "Unitat de velocitat"
+
+#~ msgid "The unit to use when showing wind speed."
+#~ msgstr "La unitat a utilitzar per mostrar la velocitat del vent."
+
+#~ msgid "Unknown"
+#~ msgstr "Desconegut"
+
+#~ msgid "Log Out..."
+#~ msgstr "Surt..."
+
+#~ msgid "Shut Down..."
+#~ msgstr "Atura..."
+
+#~ msgid "<small>Transparent</small>"
+#~ msgstr "<small>Transparent</small>"
+
+#~ msgid "<small>Opaque</small>"
+#~ msgstr "<small>Opac</small>"
 
 #~ msgid "Could not display help document"
 #~ msgstr "No s'ha pogut mostrar el document d'ajuda"
@@ -2943,9 +2899,9 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "apps/panel/profiles/default has been copied to the new location in /apps/"
 #~ "panel."
 #~ msgstr ""
-#~ "Un senyalador booleà per indicar si s'ha copiat la configuració "
-#~ "anterior de l'usuari a /apps/panel/profiles/default a la nova ubicació a /"
-#~ "apps/panel."
+#~ "Un senyalador booleà per indicar si s'ha copiat la configuració anterior "
+#~ "de l'usuari a /apps/panel/profiles/default a la nova ubicació a /apps/"
+#~ "panel."
 
 #~ msgid ""
 #~ "A list of panel applet IDs. Each ID identifies an individual panel "
@@ -3059,8 +3015,8 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "relevant if the object_type key is \"action-applet\"."
 #~ msgstr ""
 #~ "El tipus d'acció que representa aquest botó. Els valors possibles són "
-#~ "«lock», «logout», «run», «search» i «screenshot». Aquesta clau només té efecte "
-#~ "si la clau object_type és «action-applet»."
+#~ "«lock», «logout», «run», «search» i «screenshot». Aquesta clau només té "
+#~ "efecte si la clau object_type és «action-applet»."
 
 #~ msgid ""
 #~ "The identifier of the panel attached to this drawer. This key is only "
@@ -3075,8 +3031,8 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "\"external-applet\" (or the deprecated \"bonobo-applet\")."
 #~ msgstr ""
 #~ "L'ID d'implementació de la miniaplicació - per exemple "
-#~ "«ClockAppletFactory::ClockApplet». Aquesta clau només té efecte si la clau "
-#~ "object_type és «external-applet» (o l'obsolet «bonobo-applet»)."
+#~ "«ClockAppletFactory::ClockApplet». Aquesta clau només té efecte si la "
+#~ "clau object_type és «external-applet» (o l'obsolet «bonobo-applet»)."
 
 #~ msgid ""
 #~ "The text to display in a tooltip for this drawer or this menu. This key "
@@ -3104,8 +3060,8 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgstr ""
 #~ "No s'aconsella la utilització d'aquesta clau degut a la migració cap a "
 #~ "una biblioteca nova de miniaplicacions. L'ID d'implementació Bonobo de la "
-#~ "miniaplicació - per exemple «OAFIID:GNOME_ClockApplet». Aquesta clau només "
-#~ "té efecte si la clau object_type és «bonobo-applet»."
+#~ "miniaplicació - per exemple «OAFIID:GNOME_ClockApplet». Aquesta clau "
+#~ "només té efecte si la clau object_type és «bonobo-applet»."
 
 #~ msgid "Tooltip displayed for drawer or menu"
 #~ msgstr "El rètol indicador mostrat per a aquest calaix o menú"
@@ -3288,8 +3244,8 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 
 #~ msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 #~ msgstr ""
-#~ "Dreta/esquerra per moure, espai per a disparar, «p» per a fer una pausa, i "
-#~ "«q» per sortir"
+#~ "Dreta/esquerra per moure, espai per a disparar, «p» per a fer una pausa, "
+#~ "i «q» per sortir"
 
 # FIXME
 #~ msgid "Killer GEGLs from Outer Space"
@@ -3353,7 +3309,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "none is installed?"
 #~ msgstr ""
 #~ "No s'ha trobat cap programa per a configurar la data i l'hora. Potser no "
-#~ "n'hi ha cap d'instal·lat?"
+#~ "n'hi ha cap d'instaŀlat?"
 
 #~ msgid "<b>Clock Options</b>"
 #~ msgstr "<b>Opcions del rellotge</b>"
@@ -3582,9 +3538,6 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 
 #~ msgid "Log out of this system now?"
 #~ msgstr "Voleu sortir d'aquest ordindor?"
-
-#~ msgid "_Log Out"
-#~ msgstr "S_urt"
 
 #~ msgid "Shut down this system now?"
 #~ msgstr "Voleu aturar aquest ordinador?"
@@ -3850,7 +3803,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "\n"
 #~ "Please refer to fish properties dialog."
 #~ msgstr ""
-#~ "No teniu fortune instal·lat o no heu especificat un programa per a "
+#~ "No teniu fortune instaŀlat o no heu especificat un programa per a "
 #~ "executar.\n"
 #~ "\n"
 #~ "Aneu al diàleg de les propietats del peix."
@@ -3965,7 +3918,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "Please check your installation of gnome-panel"
 #~ msgstr ""
 #~ "El fitxer glade per al programa de captures de pantalla no existeix.\n"
-#~ "Comproveu la vostra instal·lació de gnome-panel"
+#~ "Comproveu la vostra instaŀlació de gnome-panel"
 
 #~ msgid "Unable to take a screenshot of the current desktop."
 #~ msgstr "No s'ha pogut fer la captura de pantalla de l'escriptori actual."
@@ -4277,13 +4230,13 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgstr "Retard de l'ocultació"
 
 #~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "El nombre de mil·lisegons a retardar abans d'ocultar automàticament"
+#~ msgstr "El nombre de miŀlisegons a retardar abans d'ocultar automàticament"
 
 #~ msgid "Un-hide delay"
 #~ msgstr "Retard de tornar a mostrar"
 
 #~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr "El nombre de mil·lisegons a retardar abans de tornar a mostrar"
+#~ msgstr "El nombre de miŀlisegons a retardar abans de tornar a mostrar"
 
 #~ msgid "Auto-hide size"
 #~ msgstr "Mida de l'ocultació automàtica"
@@ -4805,14 +4758,14 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgstr "Executa el newmail-command"
 
 #~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Cada quant (en mil·lisegons) comprovem el correu"
+#~ msgstr "Cada quant (en miŀlisegons) comprovem el correu"
 
 #~ msgid "If mail should be checked automatically"
 #~ msgstr "Comprovar el correu automàticament"
 
 #~ msgid "If this is set mail will be checked every update-freq milliseconds"
 #~ msgstr ""
-#~ "Si s'habilita açò, es comprovarà el correu cada update-freq mil·lisegons"
+#~ "Si s'habilita açò, es comprovarà el correu cada update-freq miŀlisegons"
 
 #~ msgid "If this is set, we should run the exec-command"
 #~ msgstr "Si s'habilita açò, s'executarà l'exec-command"
@@ -5042,7 +4995,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "menú."
 
 #~ msgid "Miscellaneous:"
-#~ msgstr "Miscel·lània:"
+#~ msgstr "Misceŀlània:"
 
 #~ msgid "Indicates the panel position and orientation on screen"
 #~ msgstr "Indica la posició i orientació del quadre en la pantalla"
@@ -5070,9 +5023,6 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 
 #~ msgid "Color"
 #~ msgstr "Color"
-
-#~ msgid "Transparent"
-#~ msgstr "Transparent"
 
 #~ msgid "Image:"
 #~ msgstr "Imatge:"
@@ -5421,7 +5371,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "It is in the gnome-pim package."
 #~ msgstr ""
 #~ "No puc executar el calendari de gnome\n"
-#~ "potser no el teniu instal·lat.\n"
+#~ "potser no el teniu instaŀlat.\n"
 #~ "Està en el paquet gnome-pim."
 
 #~ msgid "menu wasn't created"
@@ -5822,17 +5772,17 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 
 #~ msgid "Millisecond period spent waiting for clients to register (0=forever)"
 #~ msgstr ""
-#~ "Temps d'espera perquè els clients s'enregistrin en mil·lisegons "
+#~ "Temps d'espera perquè els clients s'enregistrin en miŀlisegons "
 #~ "(0=indefinidament)"
 
 #~ msgid "Millisecond period spent waiting for clients to respond (0=forever)"
 #~ msgstr ""
-#~ "Temps d'espera perquè els clients responguin en mil·lisegons "
+#~ "Temps d'espera perquè els clients responguin en miŀlisegons "
 #~ "(0=indefinidament)"
 
 #~ msgid "Millisecond period spent waiting for clients to die (0=forever)"
 #~ msgstr ""
-#~ "Temps d'espera perquè els clients morin en mil·lisegons (0=indefinidament)"
+#~ "Temps d'espera perquè els clients morin en miŀlisegons (0=indefinidament)"
 
 #~ msgid "Wait abandoned due to conflict."
 #~ msgstr "He abandonat l'espera a causa d'un conflicte."
@@ -5874,7 +5824,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgstr "D'acord"
 
 #~ msgid "Cancel"
-#~ msgstr "Cancel·la"
+#~ msgstr "Canceŀla"
 
 #~ msgid "Session"
 #~ msgstr "Sessió"
@@ -5886,7 +5836,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgstr "Inicia la sessió"
 
 #~ msgid "Cancel Login"
-#~ msgstr "Cancel·la l'entrada"
+#~ msgstr "Canceŀla l'entrada"
 
 #~ msgid "Initialize session settings"
 #~ msgstr "Inicialitza els paràmetres de la sessió."
@@ -5956,7 +5906,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "perhaps gmc is not installed"
 #~ msgstr ""
 #~ "No puc executar el programa gmc-client\n"
-#~ "potser no teniu instal·lat gmc"
+#~ "potser no teniu instaŀlat gmc"
 
 #~ msgid "News (www)"
 #~ msgstr "Notícies (www)"
@@ -6313,7 +6263,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "Editor de Menús de GNOME."
 
 #~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "No puc accedir al directori d'instal·lació de GNOME\n"
+#~ msgstr "No puc accedir al directori d'instaŀlació de GNOME\n"
 
 #~ msgid "unable to remove .order file: %s\n"
 #~ msgstr "no puc eliminar el fitxer .order: %s\n"
@@ -6431,7 +6381,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "totes les aplicacions, eines i comandes GNOME. "
 
 #~ msgid "You do not have fortune installed."
-#~ msgstr "No teniu fortune instal·lat."
+#~ msgstr "No teniu fortune instaŀlat."
 
 #~ msgid "Message of The Day"
 #~ msgstr "Missatge del dia"
@@ -6512,7 +6462,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgid "History file"
 #~ msgstr "Fitxer de l'historial"
 
-# I cache es pronuncia «caix» (monosíl·laba) iv
+# I cache es pronuncia «caix» (monosíŀlaba) iv
 #~ msgid "Cache size"
 #~ msgstr "Mida de la memòria cau"
 
@@ -6716,7 +6666,7 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "%s\n"
 #~ "\n"
 #~ "Probablement no teniu aquesta\n"
-#~ "documentació instal·lada\n"
+#~ "documentació instaŀlada\n"
 #~ "al vostre sistema."
 
 #~ msgid "Whoops! for some reason we can't add to the panel"
@@ -6812,9 +6762,9 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "No help is available/installed for these settings. Please make sure you\n"
 #~ "have the GNOME User's Guide installed on your system."
 #~ msgstr ""
-#~ "No hi ha ajuda disponible/instal·lada per aquests paràmetres. Si us plau, "
+#~ "No hi ha ajuda disponible/instaŀlada per aquests paràmetres. Si us plau, "
 #~ "assegureu-vos\n"
-#~ "que teniu la Guia d'Usuari de GNOME instal·lada en el sistema."
+#~ "que teniu la Guia d'Usuari de GNOME instaŀlada en el sistema."
 
 #~ msgid "Cannot start CORBA"
 #~ msgstr "No puc inicar CORBA"
@@ -7213,9 +7163,6 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ msgid "Disconnect command:"
 #~ msgstr "Comanda de desconnexió:"
 
-#~ msgid "Updates per second"
-#~ msgstr "Actualitzacions per segon"
-
 #~ msgid "Modem Lights Settings"
 #~ msgstr "Configuració dels llums del mòdem"
 
@@ -7350,9 +7297,9 @@ msgstr "Una simple miniaplicació per provar el quadre del GNOME"
 #~ "modificables i un rellotge incorporat opcional.\n"
 #~ "\n"
 #~ "Aquest és programari lliure; podeu redistribuir-lo i/o modificar-lo sota "
-#~ "els termes de la Llicència Pública General GNU tal com són publicats "
-#~ "per la Free Software Foundation; o bé en la versió 2 de la llicència, o "
-#~ "(si ho preferiu) una de posterior."
+#~ "els termes de la Llicència Pública General GNU tal com són publicats per "
+#~ "la Free Software Foundation; o bé en la versió 2 de la llicència, o (si "
+#~ "ho preferiu) una de posterior."
 
 #~ msgid "Mini-Commander Applet"
 #~ msgstr "Applet Mini-Commander"
