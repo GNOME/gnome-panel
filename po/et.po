@@ -17,14 +17,14 @@ msgstr ""
 "Project-Id-Version: gnome-panel MASTER\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-29 18:57+0000\n"
-"PO-Revision-Date: 2012-03-02 13:25+0200\n"
+"POT-Creation-Date: 2012-09-22 22:27+0000\n"
+"PO-Revision-Date: 2012-09-23 09:46+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. Translators: This is a strftime format string.
@@ -38,13 +38,6 @@ msgstr ""
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
@@ -86,51 +79,6 @@ msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format (eg, like
-#. * in the US: 8:10 am). The %p expands to am/pm.
-msgid "%l:%M:%S %p"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format (eg, like
-#. * in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the date. Replace %e with %d if, when
-#. * the day of the month as a decimal number is a single digit,
-#. * it should begin with a 0 in your locale (e.g. "May 01"
-#. * instead of "May  1").
-msgid "%a %b %e"
-msgstr "%A, %e. %b"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#, c-format
-msgid ""
-"%1$s\n"
-"%2$s"
-msgstr ""
-"%2$s\n"
-"%1$s"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#, c-format
-msgid "%1$s, %2$s"
-msgstr "%2$s, %1$s"
-
-#. Show date in tooltip.
-#. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
 msgid "%A %B %d (%%s)"
@@ -151,47 +99,17 @@ msgstr "Kalendri kuuvaate vaatamiseks klõpsa siia"
 msgid "Computer Clock"
 msgstr "Arvuti kell"
 
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-msgid "%I:%M:%S %p"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-msgid "%I:%M %p"
-msgstr "%H:%M"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display a date in the full format (so that people can
-#. * copy and paste it elsewhere).
-msgid "%A, %B %d %Y"
-msgstr "%A, %d. %B %Y"
-
 msgid "Failed to open the time settings"
 msgstr "Tõrge ajasätete avamisel"
 
 msgid "_Preferences"
 msgstr "_Eelistused"
 
-msgid "Copy _Time"
-msgstr "Kopeeri k_ellaaeg"
-
-msgid "Copy _Date"
-msgstr "Kopeeri _kuupäev"
+msgid "Copy Date and _Time"
+msgstr "Kopeeri kuupäev ja k_ellaaeg"
 
 msgid "Ad_just Date & Time"
-msgstr "_Säti kuupäeva ja aega"
-
-msgid "Custom format"
-msgstr "Kohandatud vorming"
+msgstr "_Muuda kuupäeva ja aega"
 
 msgid "Choose Location"
 msgstr "Asukoha valimine"
@@ -199,31 +117,91 @@ msgstr "Asukoha valimine"
 msgid "Edit Location"
 msgstr "Asukoha muutmine"
 
+msgid "Kelvin"
+msgstr "Kelvin"
+
+msgid "Celsius"
+msgstr "Celsius"
+
+msgid "Fahrenheit"
+msgstr "Fahrenheit"
+
+msgid "Meters per second (m/s)"
+msgstr "Meetrit sekundis (m/s)"
+
+msgid "Kilometers per hour (kph)"
+msgstr "Kilomeetrit tunnis (km/h)"
+
+msgid "Miles per hour (mph)"
+msgstr "Miili tunnis (mi/h)"
+
+msgid "Knots"
+msgstr "Sõlmed"
+
+msgid "Beaufort scale"
+msgstr "Beauforti skaala"
+
 msgid "City Name"
 msgstr "Linna nimi"
 
 msgid "City Time Zone"
 msgstr "Linna ajavöönd"
 
-msgid "24 hour"
-msgstr "24 tunnine"
+msgid "Failed to set the system timezone"
+msgstr "Tõrge süsteemi ajavööndi seadmisel"
 
-msgid "UNIX time"
-msgstr "UNIXi aeg"
+msgid "<small>Set...</small>"
+msgstr "<small>Muuda...</small>"
 
-msgid "Internet time"
-msgstr "Interneti aeg"
+msgid "<small>Set</small>"
+msgstr "<small>Muuda</small>"
 
-msgid "Custom _format:"
-msgstr "Kohandatud _vorming:"
-
-#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
+msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
-"<small><i>Sisesta linna, maakonna või riigi nimi ning vali vaste "
-"hüpikmenüüst.</i></small>"
+"Asukoha ja selle juurde kuuluva ajavööndi määramine selle arvuti vaikimisi "
+"asukohaks ja ajavööndiks"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. Translators: The two strings are temperatures.
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, tundub kui %s"
+
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Päikesetõus: %s / Loojang: %s"
+
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
+msgid ""
+"Type a city, region, or country name and then select a match from the pop-up."
+msgstr "Sisesta linna, maakonna või riigi nimi ning vali vaste hüpikmenüüst."
 
 msgid "_Timezone:"
 msgstr "_Ajavöönd:"
@@ -231,8 +209,8 @@ msgstr "_Ajavöönd:"
 msgid "_Location Name:"
 msgstr "_Asukoha nimetus:"
 
-msgid "<i>(optional)</i>"
-msgstr "<i>(valikuline)</i>"
+msgid "(optional)"
+msgstr "(valikuline)"
 
 msgid "L_ongitude:"
 msgstr "P_ikkuskraad:"
@@ -302,237 +280,6 @@ msgstr "Ilm"
 
 msgid "Time _Settings"
 msgstr "Aja _sätted"
-
-#. Translators:
-#. This controls whether the GNOME panel clock should display time in 24 hour mode
-#. or 12 hour mode by default. The only valid values for this are "24-hour" and
-#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
-#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
-#.
-#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
-#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
-#. "12-hour", things will not work.
-#.
-msgid "24-hour"
-msgstr "24-hour"
-
-msgid "Hour format"
-msgstr "Tunnivorming"
-
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
-msgstr ""
-"Selle võtmega määratakse kellarakendi tunnivorming. Võimalikud väärtused on "
-"\"12-hour\" (12-tunnine), \"24-hour\" (24-tunnine), \"internet\", \"unix\" "
-"ja \"custom\". Kui väärtuseks on \"internet\", siis kuvab kell Interneti "
-"aega. Interneti ajasüsteem jagab päeva tuhandeks \"löögiks\". Selles "
-"süsteemis pole ajavööndeid ja aeg on üle kogu maailma ühtne. Väärtuse \"unix"
-"\" korral kuvab kell sekundeid alates epohhi (1970-01-01) algusest. Väärtuse "
-"\"custom\" korral kuvatakse kohandatud aega custom_format võtmega määratud "
-"vormingus."
-
-msgid "Custom format of the clock"
-msgstr "Kohandatud kellavorming"
-
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
-msgstr ""
-"Selle võtmega määratakse kellarakendi poolt kasutatav vorming juhul, kui "
-"vorminguvõtme väärtuseks on määratud \"custom\". See vorming on sarnane "
-"strftime() funktsiooni vormingule. Lähemat teavet saab vaadata käsiraamatu "
-"strftime() lehelt."
-
-msgid "Show time with seconds"
-msgstr "Aja näitamine koos sekunditega"
-
-msgid "If true, display seconds in time."
-msgstr "Kui märgitud, siis näitatakse kellaaja juures sekundeid."
-
-msgid "Show date in clock"
-msgstr "Kellarakendis kuupäeva näitamine"
-
-msgid "If true, display date in the clock, in addition to time."
-msgstr "Kui märgitud, siis lisaks kellaajale näidatakse ka kuupäeva."
-
-msgid "Show date in tooltip"
-msgstr "Vihjel kuupäeva näitamine"
-
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"Kui märgitud, siis näitatakse kuupäeva vihjel, kui hiir on kellarakendi "
-"kohal."
-
-msgid "Show weather in clock"
-msgstr "Kellarakendis näidatakse ilmaandmeid"
-
-msgid "If true, display a weather icon."
-msgstr "Kui märgitud, siis näitatakse ilmaikooni."
-
-msgid "Show temperature in clock"
-msgstr "Kellarakendis näidatakse temperatuuri"
-
-msgid "If true, show the temperature next to the weather icon."
-msgstr "Kui märgitud, siis näidatakse ilmaikooni kõrval temperatuuri."
-
-msgid "Use UTC"
-msgstr "UTC aeg"
-
-msgid ""
-"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-"timezones. The schema is retained for compatibility with older versions."
-msgstr ""
-"Selle võtme kasutamine on tänu ajavööndite kasutamisele alates GNOME "
-"versioonist 2.28 aegunud. See skeem on alles jäetud vanemate versioonidega "
-"ühildumise eesmärgil."
-
-msgid "Time configuration tool"
-msgstr "Aja seadistusprogramm"
-
-msgid ""
-"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
-"time configuration tool. The schema is retained for compatibility with older "
-"versions."
-msgstr ""
-"Selle võtme kasutamine on tänu sisemise ajasätete vahendile alates GNOME "
-"versioonist 2.22 aegunud. See skeem on alles jäetud vanemate versioonidega "
-"ühildumise eesmärgil."
-
-msgid "Show week numbers in calendar"
-msgstr "Nädalanumbrite näitamine kalendris"
-
-msgid "If true, show week numbers in the calendar."
-msgstr "Kui märgitud, siis kuvatakse kalendris nädalate numbreid."
-
-msgid "Expand list of appointments"
-msgstr "Sündmuste nimekirja laiendamine"
-
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "Märkimise korral on kalendri aknas olev sündmuste nimekiri laiendatud."
-
-msgid "Expand list of birthdays"
-msgstr "Sünnipäevade nimekirja laiendamine"
-
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr ""
-"Märkimise korral on kalendri aknas olev sünnipäevade nimekiri laiendatud."
-
-msgid "Expand list of tasks"
-msgstr "Ülesannete nimekirja laiendamine"
-
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr ""
-"Märkimise korral on kalendri aknas olev ülesannete nimekiri laiendatud."
-
-msgid "Expand list of weather information"
-msgstr "Ilmateate nimekirja laiendamine"
-
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr "Märkimise korral on kalendri aknas olev ilmateate nimekiri laiendatud."
-
-msgid "Expand list of locations"
-msgstr "Asukohtade nimekirja laiendamine"
-
-msgid "If true, expand the list of locations in the calendar window."
-msgstr ""
-"Kui märgitud, siis kalendri aknas on olev ülesannete nimekiri laiendatud "
-"kujul."
-
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"Selle võtme kasutamine on tänu 'format' võtmele alates GNOME versioonist 2.6 "
-"aegunud. See skeem on alles jäetud vanemate versioonidega ühildumise "
-"eesmärgil."
-
-msgid "Use UNIX time"
-msgstr "UNIXi aeg"
-
-msgid "Use Internet time"
-msgstr "Internetiaja kasutamine"
-
-msgid "List of locations"
-msgstr "Asukohtade loetelu"
-
-msgid "A list of locations to display in the calendar window."
-msgstr "Kalendriaknas kuvatavate asukohtade nimekiri."
-
-msgid "Temperature unit"
-msgstr "Temperatuuriühik"
-
-msgid "The unit to use when showing temperatures."
-msgstr "Temperatuuride näitamiseks kasutatav ühik."
-
-msgid "Speed unit"
-msgstr "Kiirusühik"
-
-msgid "The unit to use when showing wind speed."
-msgstr "Tuule kiiruse näitamiseks kasutatav ühik."
-
-msgid "Failed to set the system timezone"
-msgstr "Tõrge süsteemse ajavööndi seadmisel"
-
-msgid "<small>Set...</small>"
-msgstr "<small>Muuda...</small>"
-
-msgid "<small>Set</small>"
-msgstr "<small>Muuda</small>"
-
-msgid "Set location as current location and use its timezone for this computer"
-msgstr ""
-"Asukoha ja selle juurde kuuluva ajavööndi määramine selle arvuti vaikimisi "
-"asukohaks ja ajavööndiks"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday). The %p expands to
-#. * am/pm.
-msgid "%l:%M <small>%p (%A)</small>"
-msgstr "%l:%M <small>%p (%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday).
-msgid "%H:%M <small>(%A)</small>"
-msgstr "%H:%M <small>(%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am). The %p expands to
-#. * am/pm.
-msgid "%l:%M <small>%p</small>"
-msgstr "%l:%M <small>%p</small>"
-
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-msgid "Unknown"
-msgstr "Tundmatu"
-
-#. Translators: The two strings are temperatures.
-#, c-format
-msgid "%s, feels like %s"
-msgstr "%s, tundub kui %s"
-
-#, c-format
-msgid "Sunrise: %s / Sunset: %s"
-msgstr "Päikesetõus: %s / Loojang: %s"
 
 #, c-format
 msgid "Could not display help document '%s'"
@@ -796,6 +543,76 @@ msgstr "Halduris näidatakse tööalade _nimesid"
 
 msgid "Workspaces"
 msgstr "Tööalad"
+
+msgid "Show date in tooltip"
+msgstr "Vihjel kuupäeva näitamine"
+
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"Kui märgitud, siis näitatakse kuupäeva vihjel, kui hiir on kellarakendi "
+"kohal."
+
+msgid "Show weather in clock"
+msgstr "Kellarakendis näidatakse ilmaandmeid"
+
+msgid "If true, display a weather icon."
+msgstr "Kui märgitud, siis näitatakse ilmaikooni."
+
+msgid "Show temperature in clock"
+msgstr "Kellarakendis näidatakse temperatuuri"
+
+msgid "If true, show the temperature next to the weather icon."
+msgstr "Kui märgitud, siis näidatakse ilmaikooni kõrval temperatuuri."
+
+msgid "Show week numbers in calendar"
+msgstr "Nädalanumbrite näitamine kalendris"
+
+msgid "If true, show week numbers in the calendar."
+msgstr "Kui märgitud, siis kuvatakse kalendris nädalate numbreid."
+
+msgid "Expand list of appointments"
+msgstr "Sündmuste nimekirja laiendamine"
+
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "Märkimise korral on kalendri aknas olev sündmuste nimekiri laiendatud."
+
+msgid "Expand list of birthdays"
+msgstr "Sünnipäevade nimekirja laiendamine"
+
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr ""
+"Märkimise korral on kalendri aknas olev sünnipäevade nimekiri laiendatud."
+
+msgid "Expand list of tasks"
+msgstr "Ülesannete nimekirja laiendamine"
+
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr ""
+"Märkimise korral on kalendri aknas olev ülesannete nimekiri laiendatud."
+
+msgid "Expand list of weather information"
+msgstr "Ilmateate nimekirja laiendamine"
+
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "Märkimise korral on kalendri aknas olev ilmateate nimekiri laiendatud."
+
+msgid "Expand list of locations"
+msgstr "Asukohtade nimekirja laiendamine"
+
+msgid "If true, expand the list of locations in the calendar window."
+msgstr ""
+"Kui märgitud, siis kalendri aknas on olev ülesannete nimekiri laiendatud "
+"kujul."
+
+msgid "List of locations"
+msgstr "Asukohtade loetelu"
+
+msgid ""
+"A list of locations to display in the calendar window. Each location is a "
+"tuple of display name, METAR code and coordinates."
+msgstr ""
+"Kalendriaknas kuvatavate asukohtade nimekiri. Iga asukoht on tuple "
+"kuvatavast nimest, METAR-i koodist ja koordinaatidest."
 
 msgid "The fish's name"
 msgstr "Kala nimi"
@@ -1398,6 +1215,76 @@ msgstr ""
 "\"fit\" korral pilti suurendatakse (pildi külgede suhet säilitades) kuni "
 "paneeli kõrguseni (horisontaalse paneeli korral)."
 
+msgid "???"
+msgstr "???"
+
+msgid "_Move"
+msgstr "Lii_guta"
+
+msgid "_Remove From Panel"
+msgstr "_Eemalda paneelilt"
+
+msgid "Create new file in the given directory"
+msgstr "Loo antud kataloogi uus fail"
+
+msgid "[FILE...]"
+msgstr "[FAIL...]"
+
+msgid "- Edit .desktop files"
+msgstr "- .desktop-failide redigeerimine"
+
+msgid "Create Launcher"
+msgstr "Loo käivitaja"
+
+msgid "Directory Properties"
+msgstr "Kataloogi omadused"
+
+msgid "Launcher Properties"
+msgstr "Käivitaja eelistused"
+
+msgid "Panel"
+msgstr "Paneel"
+
+msgid ""
+"Launch other applications and provide various utilities to manage windows, "
+"show the time, etc."
+msgstr ""
+"Teiste rakenduste käivitamine, lisaks veel mitmed tarvikud akende "
+"haldamiseks, kellaaja näitamiseks jms."
+
+msgid "Could not show this URL"
+msgstr "Seda URL-i pole võimalik näidata"
+
+msgid "No URL was specified."
+msgstr "URL on määramata."
+
+msgid "Could not launch application"
+msgstr "Rakendust pole võimalik käivitada"
+
+msgid "Could not use dropped item"
+msgstr "Minemavisatud kirjet pole võimalik kasutada"
+
+#, c-format
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
+
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Töölauafaili %s pole paneeli käivitajale %s%s võimalik avada\n"
+
+msgid "_Launch"
+msgstr "_Käivita"
+
+msgid "_Properties"
+msgstr "_Omadused"
+
+#, c-format
+msgid "Launcher location is not set, cannot load launcher\n"
+msgstr "Käivitaja asukoht pole määratud, käivitajat pole võimalik laadida\n"
+
+msgid "Could not save launcher"
+msgstr "Käivitajat pole võimalik salvestada"
+
 #, c-format
 msgid "File is not a valid .desktop file"
 msgstr "Fail pole korrektne .desktop-fail"
@@ -1463,82 +1350,12 @@ msgstr "Ikooni valimine"
 msgid "Could not launch '%s'"
 msgstr "Käsku '%s' pole võimalik käivitada"
 
-msgid "Could not launch application"
-msgstr "Rakendust pole võimalik käivitada"
-
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Asukohta '%s' pole võimalik avada"
 
 msgid "No application to handle search folders is installed."
 msgstr "Kataloogidest otsimise rakendust pole paigaldatud."
-
-msgid "???"
-msgstr "???"
-
-msgid "_Move"
-msgstr "Lii_guta"
-
-msgid "_Remove From Panel"
-msgstr "_Eemalda paneelilt"
-
-msgid "Create new file in the given directory"
-msgstr "Loo antud kataloogi uus fail"
-
-msgid "[FILE...]"
-msgstr "[FAIL...]"
-
-msgid "- Edit .desktop files"
-msgstr "- .desktop-failide redigeerimine"
-
-msgid "Create Launcher"
-msgstr "Loo käivitaja"
-
-msgid "Directory Properties"
-msgstr "Kataloogi omadused"
-
-msgid "Launcher Properties"
-msgstr "Käivitaja eelistused"
-
-msgid "Panel"
-msgstr "Paneel"
-
-msgid ""
-"Launch other applications and provide various utilities to manage windows, "
-"show the time, etc."
-msgstr ""
-"Teiste rakenduste käivitamine, lisaks veel mitmed tarvikud akende "
-"haldamiseks, kellaaja näitamiseks jms."
-
-msgid "Could not show this URL"
-msgstr "Seda URL-i pole võimalik näidata"
-
-msgid "No URL was specified."
-msgstr "URL on määramata."
-
-msgid "Could not use dropped item"
-msgstr "Minemavisatud kirjet pole võimalik kasutada"
-
-#, c-format
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
-
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Töölauafaili %s pole paneeli käivitajale %s%s võimalik avada\n"
-
-msgid "_Launch"
-msgstr "_Käivita"
-
-msgid "_Properties"
-msgstr "_Omadused"
-
-#, c-format
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Käivitaja asukoht pole määratud, käivitajat pole võimalik laadida\n"
-
-msgid "Could not save launcher"
-msgstr "Käivitajat pole võimalik salvestada"
 
 msgid "Replace a currently running panel"
 msgstr "Hetkel töötava paneeli asendamine"
@@ -1564,8 +1381,8 @@ msgstr "Sinu arvuti kaitsmine volitamata kasutamise eest"
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-msgid "Log Out..."
-msgstr "Väljalogimine..."
+msgid "Log Out"
+msgstr "Logi välja"
 
 msgid "Log out of this session to log in as a different user"
 msgstr ""
@@ -1597,11 +1414,11 @@ msgstr "Serveriga ühendumine..."
 msgid "Connect to a remote computer or shared disk"
 msgstr "Ühendumine võrguarvutiga või jagatud kettaga"
 
-msgid "Shut Down..."
-msgstr "Väljalülitamine..."
+msgid "Power Off"
+msgstr "Lülita välja"
 
-msgid "Shut down the computer"
-msgstr "Arvuti töö lõpetamine"
+msgid "Power off the computer"
+msgstr "Arvuti väljalülitamine"
 
 msgid "Main Menu"
 msgstr "Peamenüü"
@@ -1677,6 +1494,52 @@ msgstr "Paneel tuvastas \"%s\" laadimisel probleemi."
 
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Kas sa soovid rakendi oma sätetest kustutada?"
+
+#, c-format
+msgid "Open URL: %s"
+msgstr "Ava URL: %s"
+
+#. Translators: %s is a URI
+#, c-format
+msgid "Open '%s'"
+msgstr "Ava '%s'"
+
+#. is_exec?
+#. exec
+#. name
+msgid "Open your personal folder"
+msgstr "Sinu isikliku kataloogi avamine"
+
+#. is_exec?
+#. exec
+msgid "Computer"
+msgstr "Arvuti"
+
+#. name
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr ""
+"Kõigi selle arvuti jaoks kättesaadavate kohalike ja võrgus asuvate ketaste "
+"ning kataloogide sirvimine"
+
+#. is_exec?
+#. exec
+msgid "Network"
+msgstr "Võrk"
+
+#. name
+msgid "Browse bookmarked and local network locations"
+msgstr "Kohalike ja järjehoidjates olevate võrgukohtade sirvimine"
+
+msgid "Delete this panel?"
+msgstr "Kas kustutada see paneel?"
+
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"Kui paneel eemaldada, läheb see kaduma koos\n"
+"sätetega."
 
 msgid "Cannot delete this panel"
 msgstr "Seda paneeli pole võimalik kustutada"
@@ -1781,11 +1644,6 @@ msgstr "Kasutaja vahetamine"
 msgid "Bookmarks"
 msgstr "Järjehoidjad"
 
-#. Translators: %s is a URI
-#, c-format
-msgid "Open '%s'"
-msgstr "Ava '%s'"
-
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s meediumivahetuse skannimine pole võimalik"
@@ -1808,12 +1666,6 @@ msgstr "Eemaldatav meedium"
 msgid "Network Places"
 msgstr "Võrgukohad"
 
-#. is_exec?
-#. exec
-#. name
-msgid "Open your personal folder"
-msgstr "Sinu isikliku kataloogi avamine"
-
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
@@ -1823,27 +1675,6 @@ msgstr "Töölaud"
 
 msgid "Open the contents of your desktop in a folder"
 msgstr "Töölaua avamine kaustana"
-
-#. is_exec?
-#. exec
-msgid "Computer"
-msgstr "Arvuti"
-
-#. name
-msgid ""
-"Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
-"Kõigi selle arvuti jaoks kättesaadavate kohalike ja võrgus asuvate ketaste "
-"ning kataloogide sirvimine"
-
-#. is_exec?
-#. exec
-msgid "Network"
-msgstr "Võrk"
-
-#. name
-msgid "Browse bookmarked and local network locations"
-msgstr "Kohalike ja järjehoidjates olevate võrgukohtade sirvimine"
 
 msgid "Available"
 msgstr "Saadaval"
@@ -1912,11 +1743,11 @@ msgstr "_Laad:"
 msgid "Co_lor:"
 msgstr "_Värvus:"
 
-msgid "<small>Transparent</small>"
-msgstr "<small>Läbipaistev</small>"
+msgid "Transparent"
+msgstr "Läbipaistev"
 
-msgid "<small>Opaque</small>"
-msgstr "<small>Läbipaistmatu</small>"
+msgid "Opaque"
+msgstr "Läbipaistmatu"
 
 msgid "Background _image:"
 msgstr "Tausta_pilt:"
@@ -2183,20 +2014,6 @@ msgstr "Otsing"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#, c-format
-msgid "Open URL: %s"
-msgstr "Ava URL: %s"
-
-msgid "Delete this panel?"
-msgstr "Kas kustutada see paneel?"
-
-msgid ""
-"When a panel is deleted, the panel and its\n"
-"settings are lost."
-msgstr ""
-"Kui paneel eemaldada, läheb see kaduma koos\n"
-"sätetega."
-
 msgid "Test DBus Applet Factory"
 msgstr "DBus'i testrakendi factory"
 
@@ -2208,3 +2025,161 @@ msgstr "DBus'i testrakend"
 
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Lihtne rakend GNOME paneeli testimiseks"
+
+#~ msgid "%l:%M:%S %p"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%a %b %e"
+#~ msgstr "%A, %e. %b"
+
+#~ msgid ""
+#~ "%1$s\n"
+#~ "%2$s"
+#~ msgstr ""
+#~ "%2$s\n"
+#~ "%1$s"
+
+#~ msgid "%1$s, %2$s"
+#~ msgstr "%2$s, %1$s"
+
+#~ msgid "%I:%M:%S %p"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%I:%M %p"
+#~ msgstr "%H:%M"
+
+#~ msgid "%A, %B %d %Y"
+#~ msgstr "%A, %d. %B %Y"
+
+#~ msgid "Copy _Date"
+#~ msgstr "Kopeeri _kuupäev"
+
+#~ msgid "Custom format"
+#~ msgstr "Kohandatud vorming"
+
+#~ msgid "24 hour"
+#~ msgstr "24 tunnine"
+
+#~ msgid "UNIX time"
+#~ msgstr "UNIXi aeg"
+
+#~ msgid "Internet time"
+#~ msgstr "Interneti aeg"
+
+#~ msgid "Custom _format:"
+#~ msgstr "Kohandatud _vorming:"
+
+#~ msgid "24-hour"
+#~ msgstr "24-hour"
+
+#~ msgid "Hour format"
+#~ msgstr "Tunnivorming"
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
+#~ "\". If set to \"internet\", the clock will display Internet time. The "
+#~ "Internet time system divides the day into 1000 \".beats\". There are no "
+#~ "time zones in this system, so time is the same all over the world. If set "
+#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "1970-01-01. If set to \"custom\", the clock will display time according "
+#~ "to the format specified in the custom_format key."
+#~ msgstr ""
+#~ "Selle võtmega määratakse kellarakendi tunnivorming. Võimalikud väärtused "
+#~ "on \"12-hour\" (12-tunnine), \"24-hour\" (24-tunnine), \"internet\", "
+#~ "\"unix\" ja \"custom\". Kui väärtuseks on \"internet\", siis kuvab kell "
+#~ "Interneti aega. Interneti ajasüsteem jagab päeva tuhandeks \"löögiks\". "
+#~ "Selles süsteemis pole ajavööndeid ja aeg on üle kogu maailma ühtne. "
+#~ "Väärtuse \"unix\" korral kuvab kell sekundeid alates epohhi (1970-01-01) "
+#~ "algusest. Väärtuse \"custom\" korral kuvatakse kohandatud aega "
+#~ "custom_format võtmega määratud vormingus."
+
+#~ msgid "Custom format of the clock"
+#~ msgstr "Kohandatud kellavorming"
+
+#~ msgid ""
+#~ "This key specifies the format used by the clock applet when the format "
+#~ "key is set to \"custom\". You can use conversion specifiers understood by "
+#~ "strftime() to obtain a specific format. See the strftime() manual for "
+#~ "more information."
+#~ msgstr ""
+#~ "Selle võtmega määratakse kellarakendi poolt kasutatav vorming juhul, kui "
+#~ "vorminguvõtme väärtuseks on määratud \"custom\". See vorming on sarnane "
+#~ "strftime() funktsiooni vormingule. Lähemat teavet saab vaadata "
+#~ "käsiraamatu strftime() lehelt."
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Aja näitamine koos sekunditega"
+
+#~ msgid "If true, display seconds in time."
+#~ msgstr "Kui märgitud, siis näitatakse kellaaja juures sekundeid."
+
+#~ msgid "Show date in clock"
+#~ msgstr "Kellarakendis kuupäeva näitamine"
+
+#~ msgid "If true, display date in the clock, in addition to time."
+#~ msgstr "Kui märgitud, siis lisaks kellaajale näidatakse ka kuupäeva."
+
+#~ msgid "Use UTC"
+#~ msgstr "UTC aeg"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+#~ "timezones. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "Selle võtme kasutamine on tänu ajavööndite kasutamisele alates GNOME "
+#~ "versioonist 2.28 aegunud. See skeem on alles jäetud vanemate "
+#~ "versioonidega ühildumise eesmärgil."
+
+#~ msgid "Time configuration tool"
+#~ msgstr "Aja seadistusprogramm"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.22 with the use of an "
+#~ "internal time configuration tool. The schema is retained for "
+#~ "compatibility with older versions."
+#~ msgstr ""
+#~ "Selle võtme kasutamine on tänu sisemise ajasätete vahendile alates GNOME "
+#~ "versioonist 2.22 aegunud. See skeem on alles jäetud vanemate "
+#~ "versioonidega ühildumise eesmärgil."
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#~ "key. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "Selle võtme kasutamine on tänu 'format' võtmele alates GNOME versioonist "
+#~ "2.6 aegunud. See skeem on alles jäetud vanemate versioonidega ühildumise "
+#~ "eesmärgil."
+
+#~ msgid "Use UNIX time"
+#~ msgstr "UNIXi aeg"
+
+#~ msgid "Use Internet time"
+#~ msgstr "Internetiaja kasutamine"
+
+#~ msgid "Temperature unit"
+#~ msgstr "Temperatuuriühik"
+
+#~ msgid "The unit to use when showing temperatures."
+#~ msgstr "Temperatuuride näitamiseks kasutatav ühik."
+
+#~ msgid "Speed unit"
+#~ msgstr "Kiirusühik"
+
+#~ msgid "The unit to use when showing wind speed."
+#~ msgstr "Tuule kiiruse näitamiseks kasutatav ühik."
+
+#~ msgid "Unknown"
+#~ msgstr "Tundmatu"
+
+#~ msgid "Shut Down..."
+#~ msgstr "Väljalülitamine..."
+
+#~ msgid "<small>Transparent</small>"
+#~ msgstr "<small>Läbipaistev</small>"
+
+#~ msgid "<small>Opaque</small>"
+#~ msgstr "<small>Läbipaistmatu</small>"
