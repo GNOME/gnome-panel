@@ -1426,7 +1426,7 @@ calendar_window_create_calendar (CalendarWindow *calwin)
 	now = g_date_time_new_now_local ();
 
         gtk_calendar_select_month (GTK_CALENDAR (calendar),
-                                   g_date_time_get_month (now),
+                                   g_date_time_get_month (now) - 1,
                                    g_date_time_get_year (now));
         gtk_calendar_select_day (GTK_CALENDAR (calendar),
 				 g_date_time_get_day_of_month (now));
