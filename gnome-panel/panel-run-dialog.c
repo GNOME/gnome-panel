@@ -324,6 +324,17 @@ set_environment (gpointer display)
   g_setenv ("DISPLAY", display, TRUE);
 }
 
+static void
+dummy_child_watch (GPid         pid,
+		   gint         status,
+		   gpointer user_data)
+{
+	/* Nothing, this is just to ensure we don't double fork
+	 * and break pkexec:
+	 * https://bugzilla.gnome.org/show_bug.cgi?id=675789
+	 */
+}
+
 static gboolean
 panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
@@ -334,7 +345,8 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	GError     *error = NULL;
 	char      **argv;
 	int         argc;
-	char    *display;
+	char       *display;
+	GPid        pid;
 
 	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
@@ -349,10 +361,10 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	result = g_spawn_async (NULL, /* working directory */
 				argv,
 				NULL, /* envp */
-				G_SPAWN_SEARCH_PATH,
+				G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
 				set_environment,
 				display,
-				NULL,
+				&pid,
 				&error);
 
 	if (!result) {
@@ -366,6 +378,8 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 		g_free (primary);
 
 		g_error_free (error);
+	} else {
+		g_child_watch_add (pid, dummy_child_watch, NULL);
 	}
 
 	g_free (display);

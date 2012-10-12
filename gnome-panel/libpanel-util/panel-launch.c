@@ -82,6 +82,25 @@ _panel_launch_handle_error (const gchar  *name,
 	return FALSE;
 }
 
+static void
+dummy_child_watch (GPid     pid,
+		   gint     status,
+		   gpointer user_data)
+{
+  /* Nothing, this is just to ensure we don't double fork
+   * and break pkexec:
+   * https://bugzilla.gnome.org/show_bug.cgi?id=675789
+   */
+}
+
+static void
+gather_pid_callback (GDesktopAppInfo   *gapp,
+		     GPid               pid,
+		     gpointer           data)
+{
+  g_child_watch_add (pid, dummy_child_watch, NULL);
+}
+
 gboolean
 panel_app_info_launch_uris (GAppInfo   *appinfo,
 			    GList      *uris,
@@ -93,7 +112,7 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 	GError              *local_error;
 	GdkDisplay          *display;
 
-	g_return_val_if_fail (G_IS_APP_INFO (appinfo), FALSE);
+	g_return_val_if_fail (G_IS_DESKTOP_APP_INFO (appinfo), FALSE);
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -103,13 +122,15 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 	gdk_app_launch_context_set_timestamp (context, timestamp);
 
 	local_error = NULL;
-	g_app_info_launch_uris (appinfo, uris,
-				(GAppLaunchContext *) context,
-				&local_error);
+	g_desktop_app_info_launch_uris_as_manager ((GDesktopAppInfo*)appinfo, uris,
+						   (GAppLaunchContext *) context,
+						   G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
+						   NULL, NULL, gather_pid_callback, appinfo,
+						   &local_error);
 
 	g_object_unref (context);
 
-	return _panel_launch_handle_error (g_app_info_get_name (appinfo),
+	return _panel_launch_handle_error (g_app_info_get_name ((GAppInfo*) appinfo),
 					   screen, local_error, error);
 }
 
@@ -222,7 +243,8 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 {
 	char     *argv[2] = { (char *) fallback_exec, NULL };
 	GError   *local_error;
-	char    *display;
+	char     *display;
+	GPid      pid;
 
 	g_return_val_if_fail (desktop_file != NULL, FALSE);
 	g_return_val_if_fail (fallback_exec != NULL, FALSE);
@@ -244,11 +266,14 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 	g_spawn_async (NULL, /* working directory */
 		       argv,
 		       NULL, /* envp */
-		       G_SPAWN_SEARCH_PATH,
+		       G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
 		       set_environment,
 		       display,
-		       NULL,
+		       &pid,
 		       &local_error);
+	if (local_error == NULL) {
+		g_child_watch_add (pid, dummy_child_watch, NULL);
+	}
 
 	g_free (display);
 
