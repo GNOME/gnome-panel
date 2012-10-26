@@ -109,10 +109,15 @@ panel_object_loader_stop_loading (const char *id)
 {
         PanelObjectToLoad *object;
         GSList *l;
+        char *tmp_id;
+
+        /* because the 'id' can come from object->id, and
+           free_object_to_load() frees it, which makes 'id' invalid */
+        tmp_id = g_strdup (id);
 
         for (l = panel_objects_loading; l; l = l->next) {
                 object = l->data;
-                if (g_strcmp0 (object->id, id) == 0)
+                if (g_strcmp0 (object->id, tmp_id) == 0)
                         break;
         }
         if (l != NULL) {
@@ -122,13 +127,15 @@ panel_object_loader_stop_loading (const char *id)
 
         for (l = panel_objects_to_load; l; l = l->next) {
                 object = l->data;
-                if (g_strcmp0 (object->id, id) == 0)
+                if (g_strcmp0 (object->id, tmp_id) == 0)
                         break;
         }
         if (l != NULL) {
                 panel_objects_to_load = g_slist_delete_link (panel_objects_to_load, l);
                 free_object_to_load (object);
         }
+
+        g_free (tmp_id);
 
         if (panel_objects_loading == NULL && panel_objects_to_load == NULL)
                 panel_object_loader_queue_initial_unhide_toplevels (NULL);
