@@ -326,12 +326,13 @@ zoom_draw (GtkWidget *widget,
 			g_source_remove (zoom->timeout_id);
 		zoom->timeout_id = 0;
 
+		gtk_widget_hide (widget);
+		g_idle_add (idle_destroy, widget);
+
 		g_object_unref (zoom->pixbuf);
 		zoom->pixbuf = NULL;
 
 		g_slice_free (CompositedZoomData, zoom);
-
-		g_idle_add (idle_destroy, widget);
 	} else {
 		GdkPixbuf *scaled;
 		int width, height;
