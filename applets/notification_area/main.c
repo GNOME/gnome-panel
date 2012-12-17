@@ -36,6 +36,8 @@
 
 #define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
 
+static void na_tray_applet_style_updated (GtkWidget *widget);
+
 struct _NaTrayAppletPrivate
 {
   NaTray *tray;
@@ -78,6 +80,7 @@ na_tray_applet_realize (GtkWidget *widget)
                                                get_gtk_orientation_from_applet_orient (orient));
 
   gtk_container_add (GTK_CONTAINER (widget), GTK_WIDGET (applet->priv->tray));
+  na_tray_applet_style_updated (widget);
   gtk_widget_show (GTK_WIDGET (applet->priv->tray));
 }
 
