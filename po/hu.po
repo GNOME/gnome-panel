@@ -11,19 +11,22 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
+# Balázs Úr <urbalazs at gmail dot com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-29 12:03+0200\n"
-"PO-Revision-Date: 2010-08-29 12:02+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-12-18 16:49+0000\n"
+"PO-Revision-Date: 2012-12-27 21:04+0100\n"
+"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.2\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Language: hu\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1477,7 +1480,7 @@ msgstr "Munkamenet-kezelési kapcsolók megjelenítése"
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:82
 #: ../gnome-panel/panel-applet-frame.c:745
-#: ../gnome-panel/panel-applet-frame.c:915
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Hiba"
 
@@ -1508,7 +1511,7 @@ msgstr "Nincs alkalmazás telepítve a keresőmappák kezelésére."
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:1346
+#: ../gnome-panel/applet.c:1351
 msgid "Cannot find an empty spot"
 msgstr "Nem található üres hely"
 
@@ -1721,7 +1724,7 @@ msgstr ""
 "Dokumentumok és mappák keresése a számítógépen név vagy tartalom szerint"
 
 #: ../gnome-panel/panel-action-button.c:329
-#: ../gnome-panel/panel-force-quit.c:224
+#: ../gnome-panel/panel-force-quit.c:229
 msgid "Force Quit"
 msgstr "Erőltetett kilépés"
 
@@ -1842,12 +1845,12 @@ msgstr "Ne _töltse újra"
 msgid "_Reload"
 msgstr "Új_ratöltés"
 
-#: ../gnome-panel/panel-applet-frame.c:878
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "A(z) „%s” betöltése közben a panel hibát érzékelt."
 
-#: ../gnome-panel/panel-applet-frame.c:894
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Törli ezt a kisalkalmazást a beállításaiból?"
 
@@ -1974,11 +1977,11 @@ msgstr ""
 "Kattintson az ablakra, hogy az alkalmazás bezáródjon. A művelet az <ESC> "
 "billentyűvel szakítható meg."
 
-#: ../gnome-panel/panel-force-quit.c:207
+#: ../gnome-panel/panel-force-quit.c:212
 msgid "Force this application to exit?"
 msgstr "Kilépésre kényszeríti ezt az alkalmazást?"
 
-#: ../gnome-panel/panel-force-quit.c:210
+#: ../gnome-panel/panel-force-quit.c:215
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2414,13 +2417,18 @@ msgstr ""
 "Azon felsőszintű panel azonosítója, amely tartalmazza ezt az objektumot."
 
 #: ../gnome-panel/panel-object.schemas.in.h:19
+#| msgid ""
+#| "The implementation ID of the applet - e.g. \"ClockAppletFactory::"
+#| "ClockApplet\". This key is only relevant if the object_type key is "
+#| "\"bonobo-applet\"."
 msgid ""
 "The implementation ID of the applet - e.g. \"ClockAppletFactory::ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"external-applet"
+"\" (or the deprecated \"bonobo-applet\")."
 msgstr ""
-"A kisalkalmazás implementációs azonosítója (IID) például: "
+"A kisalkalmazás implementációs azonosítója (ID) például: "
 "„ClockAppletFactory::ClockApplet”. Ez a kulcs csak akkor lényeges, ha az "
-"object_type kulcs értéke „bonobo-applet”."
+"object_type kulcs értéke „external-applet” (vagy az elavult „bonobo-applet”)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2467,14 +2475,19 @@ msgstr ""
 "akkor lényeges, ha az object_type key is „drawer-object” vagy „menu-object”."
 
 #: ../gnome-panel/panel-object.schemas.in.h:25
+#| msgid ""
+#| "The type of this panel object. Possible values are \"drawer-object\", "
+#| "\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
+#| "\" and \"menu-bar\"."
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+"object\", \"launcher-object\", \"external-applet\", \"action-applet\", "
+"\"menu-bar\" and \"separator\"."
 msgstr ""
-"Ezen panelobjektum típusa. Lehetséges értékek: „drawer-object” (fiók), „menu-"
-"object” (menü), „launcher-object” (alkalmazásindító), „bonobo-"
-"applet” (kisalkalmazás), „action-applet” (művelet) és „menu-bar” (menüsáv)."
+"Ezen panelobjektum típusa. Lehetséges értékek: „drawer-object” (fiók), "
+"„menu-object” (menü), „launcher-object” (alkalmazásindító), „external-applet” "
+"(kisalkalmazás), „action-applet” (művelet), „menu-bar” (menüsáv) és "
+"„separator” (elválasztó)."
 
 #: ../gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2504,20 +2517,20 @@ msgstr "Egyedi ikon használata az objektum gombjához"
 msgid "Use custom path for menu contents"
 msgstr "Egyéni útvonal használata a menü elemeihez"
 
-#: ../gnome-panel/panel-profile.c:772 ../gnome-panel/panel-profile.c:799
-#: ../gnome-panel/panel-profile.c:835 ../gnome-panel/panel-profile.c:1700
+#: ../gnome-panel/panel-profile.c:774 ../gnome-panel/panel-profile.c:801
+#: ../gnome-panel/panel-profile.c:837 ../gnome-panel/panel-profile.c:1702
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Hiba a(z) „%s” Gconf karakterlánc beolvasásakor: %s"
 
 #. we need to do this since the key was added in 2.19 and   			 * the default value returned when the key is not set       			 * (for people coming from older versions) is 0, which      			 * is not what we want.
-#: ../gnome-panel/panel-profile.c:814 ../gnome-panel/panel-profile.c:1596
-#: ../gnome-panel/panel-profile.c:1669 ../gnome-panel/panel-profile.c:1751
+#: ../gnome-panel/panel-profile.c:816 ../gnome-panel/panel-profile.c:1598
+#: ../gnome-panel/panel-profile.c:1671 ../gnome-panel/panel-profile.c:1753
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Hiba a(z) „%s” Gconf egész érték beolvasásakor: %s"
 
-#: ../gnome-panel/panel-profile.c:1606
+#: ../gnome-panel/panel-profile.c:1608
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2526,7 +2539,7 @@ msgstr ""
 "A(z) „%s” panel a(z) %d számú képernyőn való megjelenésre van beállítva, ami "
 "most nem érhető el. A panel nem lesz betöltve."
 
-#: ../gnome-panel/panel-profile.c:1684
+#: ../gnome-panel/panel-profile.c:1686
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Hiba a(z) „%s” Gconf logikai érték beolvasásakor: %s"
@@ -3239,21 +3252,21 @@ msgstr "A(z) „%s” ikon nem található"
 msgid "Could not execute '%s'"
 msgstr "A(z) „%s” nem hajtható végre"
 
-#: ../gnome-panel/panel-util.c:654
+#: ../gnome-panel/panel-util.c:662
 msgid "file"
 msgstr "fájl"
 
-#: ../gnome-panel/panel-util.c:831
+#: ../gnome-panel/panel-util.c:839
 msgid "Home Folder"
 msgstr "Saját mappa"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:843
+#: ../gnome-panel/panel-util.c:851
 msgid "File System"
 msgstr "Fájlrendszer"
 
-#: ../gnome-panel/panel-util.c:1016
+#: ../gnome-panel/panel-util.c:1024
 msgid "Search"
 msgstr "Keresés"
 
@@ -3262,7 +3275,7 @@ msgstr "Keresés"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:1062
+#: ../gnome-panel/panel-util.c:1070
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s, %2$s"
@@ -3291,3 +3304,4 @@ msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "A panel törlésekor a panel és annak beállításai elvesznek."
+
