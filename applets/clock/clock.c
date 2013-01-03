@@ -54,7 +54,6 @@
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include <libgnome-desktop/gnome-wall-clock.h>
 
-#include <libgweather/gweather-xml.h>
 #include <libgweather/location-entry.h>
 #include <libgweather/timezone-menu.h>
 #include <libgweather/gweather-enum-types.h>
