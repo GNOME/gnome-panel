@@ -17,8 +17,6 @@ AM_CFLAGS = $(WARN_CFLAGS)
 libtray_la_SOURCES =		\
 	fixedtip.h		\
 	fixedtip.c		\
-	na-marshal.c		\
-	na-marshal.h		\
 	na-tray.c		\
 	na-tray.h		\
 	na-tray-child.c		\
@@ -61,15 +59,6 @@ notification_area_applet_LDADD = $(NOTIFICATION_AREA_LDADD)
 notification_area_applet_CFLAGS = $(AM_CFLAGS)
 endif
 
-na-marshal.h: na-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=_na_marshal > $@
-
-na-marshal.c: na-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)echo "#include \"na-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=_na_marshal >> $@
-
-BUILT_SOURCES = na-marshal.c na-marshal.h
-
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
 applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
@@ -97,8 +86,7 @@ endif
 EXTRA_DIST =								\
 	org.gnome.panel.NotificationAreaApplet.panel-applet.in.in	\
 	$(ui_DATA)							\
-	$(service_in_files)						\
-	na-marshal.list
+	$(service_in_files)
 
 CLEANFILES =			\
 	$(applet_DATA) 		\

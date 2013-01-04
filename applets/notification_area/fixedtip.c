@@ -91,8 +91,7 @@ na_fixed_tip_class_init (NaFixedTipClass *class)
 		  G_OBJECT_CLASS_TYPE (class),
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (NaFixedTipClass, clicked),
-		  NULL, NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  NULL, NULL, NULL,
 		  G_TYPE_NONE, 0);
 
   g_type_class_add_private (class, sizeof (NaFixedTipPrivate));
