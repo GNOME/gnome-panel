@@ -30,17 +30,33 @@ gsettings_SCHEMAS = $(gsettings_schemas_in:.xml.in=.xml)
 
 @GSETTINGS_RULES@
 
+sessiondir = $(datadir)/gnome-session/sessions
+session_in_files = gnome-flashback.session.desktop.in
+session_DATA = $(session_in_files:.session.desktop.in=.session)
+
+xsessiondir = $(datadir)/xsessions
+xsession_in_files = gnome-flashback.desktop.in
+xsession_DATA = $(xsession_in_files:.desktop.in=.desktop)
+
+%.session: %.session.desktop.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< $@
+
+@INTLTOOL_DESKTOP_RULE@
+
 default_layoutdir   = $(datadir)/gnome-panel
 default_layout_DATA = panel-default-layout.layout
 
 EXTRA_DIST =				\
 	$(gsettings_schemas_in_in)	\
+	$(session_in_files)		\
+	$(xsession_in_files)		\
 	$(default_layout_DATA)
 
 CLEANFILES =			\
 	$(gsettings__enum_file)	\
 	$(gsettings_SCHEMAS_in)	\
 	$(gsettings_SCHEMAS)	\
-	*.gschema.valid
+	*.gschema.valid		\
+	$(session_DATA)		\
+	$(xsession_DATA)
 
 -include $(top_srcdir)/git.mk
