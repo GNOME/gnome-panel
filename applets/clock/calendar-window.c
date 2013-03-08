@@ -42,9 +42,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#define GNOME_DESKTOP_USE_UNSTABLE_API
-#include <libgnome-desktop/gnome-desktop-utils.h>
-
 #include "calendar-window.h"
 
 #include "clock.h"
@@ -168,6 +165,13 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 		return;
 	}
 
+	/* FIXME: reintroduce terminal support if a proper GAppInfo port of gnome-panel is ever done */
+	if (terminal) {
+		g_printerr ("Terminal-based calendar/tasks applications are no longer supported, sorry. "
+		            "Please configure a different application.\n");
+		return;
+	}
+
 	command_line = g_find_program_in_path (program);
 	if (command_line == NULL) {
 		g_printerr ("Cannot launch calendar/tasks application: %s in path\n", program);
@@ -188,9 +192,6 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 
 	screen = gtk_widget_get_screen (calwin->priv->calendar);
 	error = NULL;
-
-	if (terminal)
-		gnome_desktop_prepend_terminal_to_vector (&argc, &argv);
 
 	display = gdk_screen_make_display_name (screen);
 
