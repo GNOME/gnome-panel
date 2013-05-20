@@ -632,7 +632,7 @@ weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTool
 	else
 		line3 = g_strdup ("");
 
-	timezone = clock_location_get_timezone (location);
+	timezone = clock_location_get_tzname (location);
 	if (gweather_info_get_value_sunrise (info, &sunrise_time))
 		sunrise_str = convert_time_to_str (sunrise_time, clock_format, timezone);
 	else
