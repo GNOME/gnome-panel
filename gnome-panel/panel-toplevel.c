@@ -4455,7 +4455,7 @@ panel_toplevel_settings_bind_set_screen (const GValue       *value,
 {
 	GdkScreen *screen = g_value_get_object (value);
 
-	if (!screen || GDK_IS_SCREEN (screen))
+	if (!screen || !GDK_IS_SCREEN (screen))
 		screen = gdk_screen_get_default ();
 
 	return g_variant_new ("i", gdk_screen_get_number (screen));
