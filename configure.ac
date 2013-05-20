@@ -1,6 +1,6 @@
 AC_INIT([gnome-panel], [3.7.0],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
