@@ -35,7 +35,7 @@ session_in_files = gnome-flashback.session.desktop.in
 session_DATA = $(session_in_files:.session.desktop.in=.session)
 
 xsessiondir = $(datadir)/xsessions
-xsession_in_files = gnome-flashback.desktop.in
+xsession_in_files = gnome-fallback.desktop.in
 xsession_DATA = $(xsession_in_files:.desktop.in=.desktop)
 
 %.session: %.session.desktop.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< $@
