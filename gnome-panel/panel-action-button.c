@@ -684,7 +684,7 @@ panel_action_button_load (PanelWidget *panel,
 	}
 
 	if (type == PANEL_ACTION_NONE) {
-		g_warning ("Unkown action type '%s", detail_for_type);
+		g_warning ("Unknown action type '%s", detail_for_type);
 		return;
 	}
 
