@@ -1573,8 +1573,8 @@ panel_widget_set_background_default_style (GtkWidget *widget)
 static void
 panel_widget_style_updated (GtkWidget *widget)
 {
-        panel_widget_set_background_default_style (widget);
         GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
+        panel_widget_set_background_default_style (widget);
 }
 
 static void
