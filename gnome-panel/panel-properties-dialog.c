@@ -429,7 +429,7 @@ panel_properties_dialog_background_color_update_from_rgba (PanelPropertiesDialog
 		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale),
 				     color->alpha * 100.);
 	if (dialog->color_button)
-		gtk_color_button_set_rgba (GTK_COLOR_BUTTON (dialog->color_button),
+		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 					   color);
 }
 
@@ -459,13 +459,13 @@ panel_properties_dialog_background_color_update (PanelPropertiesDialog *dialog)
 
 static void
 panel_properties_dialog_color_button_changed (PanelPropertiesDialog *dialog,
-					      GtkColorButton        *color_button)
+					      GtkColorChooser        *color_button)
 {
 	GdkRGBA old_color;
 	GdkRGBA new_color;
 
 	panel_properties_dialog_background_color_get_rgba (dialog, &old_color);
-	gtk_color_button_get_rgba (color_button, &new_color);
+	gtk_color_chooser_get_rgba (color_button, &new_color);
 	new_color.alpha = old_color.alpha;
 	panel_properties_dialog_background_color_set_from_rgba (dialog, &new_color);
 }
