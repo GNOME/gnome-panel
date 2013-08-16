@@ -1515,10 +1515,11 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 gboolean
 panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
-	GtkWidget     *widget;
-	GtkAllocation allocation;
-	int           x,y;
-	int           w,h;
+	GtkWidget       *widget;
+	GtkAllocation   allocation;
+	GdkModifierType modifier_mask;
+	int             x,y;
+	int             w,h;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
 
@@ -1529,7 +1530,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
 
-	gtk_widget_get_pointer(widget, &x, &y);
+	gdk_window_get_device_position(gtk_widget_get_window (widget), gtk_get_current_event_device (), &x, &y, &modifier_mask);
 
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
@@ -1900,12 +1901,13 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 int
 panel_widget_get_cursorloc (PanelWidget *panel)
 {
-	int x, y;
-	gboolean rtl;
+	int             x, y;
+	gboolean        rtl;
+	GdkModifierType modifier_mask;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
-	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET (panel)), gtk_get_current_event_device (), &x, &y, &modifier_mask);
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2078,14 +2080,15 @@ move_timeout_handler(gpointer data)
 	been_moved = FALSE;
 
 	if(panel->currently_dragged_applet && repeat_if_outside) {
-		GtkWidget     *widget;
-		GtkAllocation  allocation;
-		int            x,y;
-		int            w,h;
+		GtkWidget       *widget;
+		GtkAllocation   allocation;
+		GdkModifierType modifier_mask;
+		int             x,y;
+		int             w,h;
 
 		widget = panel->currently_dragged_applet->applet;
 
-		gtk_widget_get_pointer(widget, &x, &y);
+		gdk_window_get_device_position(gtk_widget_get_window (widget), gtk_get_current_event_device (), &x, &y, &modifier_mask);
 
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;

@@ -425,7 +425,7 @@ _panel_icon_chooser_clicked (GtkButton *button)
 
 			if (info) {
 				path = g_strdup (gtk_icon_info_get_filename (info));
-				gtk_icon_info_free (info);
+				g_object_unref (info);
 			}
 		}
 
