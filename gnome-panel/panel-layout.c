@@ -210,13 +210,7 @@ panel_layout_find_free_id (const char *id_list_key,
         /* If a specific id is specified, try to use it; it might be
          * free */
         if (try_id) {
-                if (screen_for_toplevels != -1 &&
-                    g_strcmp0 (schema, PANEL_TOPLEVEL_SCHEMA) == 0)
-                        unique_id = g_strdup_printf ("%s-screen%d",
-                                                     try_id,
-                                                     screen_for_toplevels);
-                else
-                        unique_id = g_strdup (try_id);
+                unique_id = g_strdup_printf ("%s-%d", try_id, screen_for_toplevels==-1?0:screen_for_toplevels);
 
                 existing = FALSE;
 
@@ -247,14 +241,7 @@ panel_layout_find_free_id (const char *id_list_key,
         /* Append an index at the end of the id to find a unique
          * id, not used yet */
         while (existing) {
-                if (screen_for_toplevels != -1 &&
-                    g_strcmp0 (schema, PANEL_TOPLEVEL_SCHEMA) == 0)
-                        unique_id = g_strdup_printf ("%s-screen%d-%d",
-                                                     try_id,
-                                                     screen_for_toplevels,
-                                                     index);
-                else
-                        unique_id = g_strdup_printf ("%s-%d", try_id, index);
+                unique_id = g_strdup_printf ("%s-%d-%d", try_id, screen_for_toplevels==-1?0:screen_for_toplevels, index);
 
                 existing = FALSE;
 
@@ -462,6 +449,11 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                                         keyfile,
                                                         group, keyfile_keys[i],
                                                         error);
+
+                                if (strcmp(keyfile_keys[i], "toplevel-id") == 0) {
+                                  value_str = g_strdup_printf ("%s-%d", value_str, set_screen_to==-1?0:set_screen_to);
+                                }
+
                                 if (!value_str)
                                         goto out;
 
@@ -556,7 +548,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
                  g_str_has_prefix (group, "Object "))
                 return panel_layout_append_group_helper (
                                         keyfile, group,
-                                        -1,
+                                        screen_for_toplevels,
                                         "Object",
                                         PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                         PANEL_OBJECT_SCHEMA,
