@@ -126,7 +126,7 @@ panel_layout_append_self_check (GSettings                 *settings,
                                 GError                   **error)
 {
         char **settings_keys = NULL;
-        int    i, j;
+        int    i, j=0;
 
         /* Don't do those checks twice; we use a static array with a boolean
          * for each set of key definitions we might want to check, and mark the
