@@ -1,4 +1,80 @@
 =============
+Version 3.8.0
+=============
+
+  Flashback Session
+
+	* Ship a session descriptor and wrapper script for the "Gnome Flashback"
+	  session (Jeremy Bicha, Philipp Kaluza)
+	* This is similar to the standalone fallback session previously shipped
+	  in Debian / Ubuntu. As integration with the rest of the Gnome stack
+          has suffered somewhat, this is mainly aimed at distributions that
+          still want to support a metacity / gnome-panel based desktop (e.g.
+          for LTSP installations). Some integration work may be necessary - for
+	  example, nautilus 3.8 no longer draws the X root window background.
+
+  Panel
+
+	* New Maintainer team (Jonathan Carter, Josselin Mouette, Philipp
+	  Kaluza)
+	* A big thank you to Vincent Untz for your years of service !
+
+	* Fix launcher icon animation ending with black artifact
+	  (Yannick Gicquel)
+	* Drop support for commandline-based calendar/tasks applications
+          (Philipp Kaluza)
+	* Ship our own version of gnome_desktop_prepend_terminal_to_vector
+	  (Philipp Kaluza)
+	* Move clock back between notification area and user menu (Jeremy Bicha)
+	* Fix autoconf (Balló György)
+	* Fix some background and multi-screen issues (Alberts Muktupāvels)
+
+  Clock Applet
+
+	* No longer depend on deprecated GWeatherXML (Philipp Kaluza)
+	* Display sunrise/sunset times in local time not UTC (Jeremy Bicha)
+
+  Force-Quit applet
+
+	* Enable XInput2 support (Sébastien Villemot)
+
+  Notification Area applet
+
+	* Apply style after realize - fix all-black notification icons
+	  (Daniel Drake)
+	* Use the generic marshaller (Jasper St. Pierre)
+
+  Translators
+
+	* Andika Triwidada
+	* Ani Peter
+	* Aurimas Černius
+	* Balázs Úr
+	* Breno Santana
+	* Christian Kirbach
+	* Daniel Mustieles
+	* Enrico Nicoletto
+	* Fran Diéguez
+	* Joe Hansen
+	* Kjartan Maraas
+	* Krishnababu Krothapalli
+	* ManojKumar Giri
+	* Marek Černocký
+	* Martin Srebotnjak
+	* Matej Urbančič
+	* Nilamdyuti Goswami
+	* Piotr Drąg
+	* Rafael Ferreira
+	* Rajesh Ranjan
+	* Sandeep Sheshrao Shedmake
+	* Shankar Prasad
+	* Shantha kumar
+	* Sweta Kothari
+	* Theppitak Karoonboonyanan
+	* Yuri Myasoedov
+	* Мирослав Николић
+
+=============
 Version 3.6.2
 =============
 
