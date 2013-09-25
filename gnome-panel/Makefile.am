@@ -279,7 +279,8 @@ EXTRA_DIST =					\
 	nothing.h				\
 	panel-marshal.list			\
 	$(desktop_in_files)			\
-	gnome-panel-add.in
+	gnome-panel-add.in			\
+	gnome-session-flashback.in
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
