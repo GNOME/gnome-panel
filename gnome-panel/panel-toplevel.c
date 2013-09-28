@@ -925,13 +925,14 @@ panel_toplevel_warp_pointer_increment (PanelToplevel *toplevel,
 {
 	GdkScreen 	*screen;
 	GdkWindow 	*root_window;
-	GdkModifierType	 modifier_mask;
+	GdkDevice 	*device;
 	int        	 new_x, new_y;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
 
-	gdk_window_get_device_position(root_window, gtk_get_current_event_device (), &new_x, &new_y, &modifier_mask);
+	device = gdk_device_manager_get_client_pointer(gdk_display_get_device_manager(gtk_widget_get_display(GTK_WIDGET(toplevel))));
+	gdk_window_get_device_position(root_window, device, &new_x, &new_y, NULL);
 
 	switch (keyval) {
 	case GDK_KEY_Up:

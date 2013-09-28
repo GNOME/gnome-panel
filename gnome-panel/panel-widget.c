@@ -1517,7 +1517,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	GtkWidget       *widget;
 	GtkAllocation   allocation;
-	GdkModifierType modifier_mask;
+	GdkDevice       *device;
 	int             x,y;
 	int             w,h;
 
@@ -1530,7 +1530,8 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
 
-	gdk_window_get_device_position(gtk_widget_get_window (widget), gtk_get_current_event_device (), &x, &y, &modifier_mask);
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
 
 	gtk_widget_get_allocation (widget, &allocation);
 	w = allocation.width;
@@ -1903,11 +1904,12 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 {
 	int             x, y;
 	gboolean        rtl;
-	GdkModifierType modifier_mask;
+	GdkDevice      *device;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
-	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET (panel)), gtk_get_current_event_device (), &x, &y, &modifier_mask);
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET (panel))));
+	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET (panel)), device, &x, &y, NULL);
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -2082,13 +2084,14 @@ move_timeout_handler(gpointer data)
 	if(panel->currently_dragged_applet && repeat_if_outside) {
 		GtkWidget       *widget;
 		GtkAllocation   allocation;
-		GdkModifierType modifier_mask;
+		GdkDevice       *device;
 		int             x,y;
 		int             w,h;
 
 		widget = panel->currently_dragged_applet->applet;
 
-		gdk_window_get_device_position(gtk_widget_get_window (widget), gtk_get_current_event_device (), &x, &y, &modifier_mask);
+		device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+		gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
 
 		gtk_widget_get_allocation (widget, &allocation);
 		w = allocation.width;

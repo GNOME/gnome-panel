@@ -557,7 +557,7 @@ panel_applet_position_menu (GtkMenu   *menu,
 {
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
-	GdkModifierType modifier_mask;
+	GdkDevice      *device;
 	GdkScreen      *screen;
 	GtkWidget      *parent;
 	int             menu_x = 0;
@@ -574,7 +574,8 @@ panel_applet_position_menu (GtkMenu   *menu,
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
-	gdk_window_get_device_position(gtk_widget_get_window (applet), gtk_get_current_event_device (), &pointer_x, &pointer_y, &modifier_mask);
+	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (applet)));
+	gdk_window_get_device_position(gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
 
 	gtk_widget_get_allocation (applet, &allocation);
 
