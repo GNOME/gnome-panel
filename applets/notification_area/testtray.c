@@ -150,14 +150,14 @@ create_tray_on_screen (GdkScreen *screen,
   data->window = window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_object_weak_ref (G_OBJECT (window), (GWeakNotify) maybe_quit, NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (window), vbox);
 
   button = gtk_button_new_with_mnemonic ("_Add another tray");
   g_signal_connect (button, "clicked", G_CALLBACK (add_tray_cb), data);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
-  hbox = gtk_hbox_new (FALSE, 12);
+  hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic ("_Orientation:");
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
