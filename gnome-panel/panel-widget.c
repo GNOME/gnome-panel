@@ -1286,14 +1286,6 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		}
 	}
 
-
-	if (!panel->packed) {
-		if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
-			requisition->width = panel->size;
-		else
-			requisition->height = panel->size;
-	}
-
 	dont_fill = panel->packed && panel->nb_applets_size_hints != 0;
 
 	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
