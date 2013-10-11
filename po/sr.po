@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-08 18:02+0000\n"
-"PO-Revision-Date: 2013-04-02 08:50+0200\n"
+"POT-Creation-Date: 2013-09-27 22:11+0000\n"
+"PO-Revision-Date: 2013-10-11 10:49+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -698,6 +698,15 @@ msgstr "Прикажи _називе радних простора у преба
 #: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspaces"
 msgstr "Радни простори"
+
+#: ../data/gnome-fallback.desktop.in.in.h:1
+#: ../data/gnome-flashback.session.desktop.in.h:1
+msgid "GNOME Flashback"
+msgstr "Стари Гном"
+
+#: ../data/gnome-fallback.desktop.in.in.h:2
+msgid "This session logs you into GNOME with the traditional panel"
+msgstr "Ова сесија вас пријављује у Гном са традиционалним панелом"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
 msgid "Show date in tooltip"
@@ -1746,7 +1755,7 @@ msgstr ""
 "Пронађите документе и фасцикле на овом рачунару према називу или садржају"
 
 #: ../gnome-panel/panel-action-button.c:333
-#: ../gnome-panel/panel-force-quit.c:239
+#: ../gnome-panel/panel-force-quit.c:241
 msgid "Force Quit"
 msgstr "Приморај затварање"
 
@@ -2012,18 +2021,18 @@ msgstr "Наредба коју овај покретач извршава ни�
 msgid "The location of the launcher is not set."
 msgstr "Место у коме се покретач извршава није постављено."
 
-#: ../gnome-panel/panel-force-quit.c:77
+#: ../gnome-panel/panel-force-quit.c:79
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Кликните на прозор да приморате програм да изађе. Да откажете, притисните "
 "<ESC>."
 
-#: ../gnome-panel/panel-force-quit.c:222
+#: ../gnome-panel/panel-force-quit.c:224
 msgid "Force this application to exit?"
 msgstr "Да приморам овај програм на затварање?"
 
-#: ../gnome-panel/panel-force-quit.c:225
+#: ../gnome-panel/panel-force-quit.c:227
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2031,7 +2040,7 @@ msgstr ""
 "Ако одлучите да приморате затварање овог програма, можете изгубити "
 "несачуване документе."
 
-#: ../gnome-panel/panel-layout.c:1197 ../gnome-panel/panel-layout.c:1211
+#: ../gnome-panel/panel-layout.c:1189 ../gnome-panel/panel-layout.c:1203
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Не могу да направим почетни распоред панела.\n"
@@ -2450,73 +2459,73 @@ msgstr "_Програмче:"
 msgid "_Prefs Dir:"
 msgstr "_Поставке:"
 
-#: ../gnome-panel/panel-toplevel.c:1272
+#: ../gnome-panel/panel-toplevel.c:1273
 msgid "Hide Panel"
 msgstr "Сакриј панел"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1657
+#: ../gnome-panel/panel-toplevel.c:1658
 msgid "Top Expanded Edge Panel"
 msgstr "Горњи раширени ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1658
+#: ../gnome-panel/panel-toplevel.c:1659
 msgid "Top Centered Panel"
 msgstr "Горњи панел по средини"
 
-#: ../gnome-panel/panel-toplevel.c:1659
+#: ../gnome-panel/panel-toplevel.c:1660
 msgid "Top Floating Panel"
 msgstr "Горњи плутајући панел"
 
-#: ../gnome-panel/panel-toplevel.c:1660
+#: ../gnome-panel/panel-toplevel.c:1661
 msgid "Top Edge Panel"
 msgstr "Горњи ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1664
+#: ../gnome-panel/panel-toplevel.c:1665
 msgid "Bottom Expanded Edge Panel"
 msgstr "Доњи раширени ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1665
+#: ../gnome-panel/panel-toplevel.c:1666
 msgid "Bottom Centered Panel"
 msgstr "Доњи панел по средини"
 
-#: ../gnome-panel/panel-toplevel.c:1666
+#: ../gnome-panel/panel-toplevel.c:1667
 msgid "Bottom Floating Panel"
 msgstr "Доњи плутајући панел"
 
-#: ../gnome-panel/panel-toplevel.c:1667
+#: ../gnome-panel/panel-toplevel.c:1668
 msgid "Bottom Edge Panel"
 msgstr "Доњи ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1671
+#: ../gnome-panel/panel-toplevel.c:1672
 msgid "Left Expanded Edge Panel"
 msgstr "Леви раширени ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1672
+#: ../gnome-panel/panel-toplevel.c:1673
 msgid "Left Centered Panel"
 msgstr "Леви панел по средини"
 
-#: ../gnome-panel/panel-toplevel.c:1673
+#: ../gnome-panel/panel-toplevel.c:1674
 msgid "Left Floating Panel"
 msgstr "Леви плутајући панел"
 
-#: ../gnome-panel/panel-toplevel.c:1674
+#: ../gnome-panel/panel-toplevel.c:1675
 msgid "Left Edge Panel"
 msgstr "Леви ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1678
+#: ../gnome-panel/panel-toplevel.c:1679
 msgid "Right Expanded Edge Panel"
 msgstr "Десни раширени ивични панел"
 
-#: ../gnome-panel/panel-toplevel.c:1679
+#: ../gnome-panel/panel-toplevel.c:1680
 msgid "Right Centered Panel"
 msgstr "Десни панел по средини"
 
-#: ../gnome-panel/panel-toplevel.c:1680
+#: ../gnome-panel/panel-toplevel.c:1681
 msgid "Right Floating Panel"
 msgstr "Десни плутајући панел"
 
-#: ../gnome-panel/panel-toplevel.c:1681
+#: ../gnome-panel/panel-toplevel.c:1682
 msgid "Right Edge Panel"
 msgstr "десни ивични панел"
 
