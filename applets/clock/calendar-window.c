@@ -1531,10 +1531,8 @@ create_hig_frame (CalendarWindow *calwin,
 						G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
         }
 
-#ifdef HAVE_LIBECAL
 	g_settings_bind (calwin->priv->settings, key, expander, "expanded",
 			 G_SETTINGS_BIND_DEFAULT);
-#endif
 
         return vbox;
 }
