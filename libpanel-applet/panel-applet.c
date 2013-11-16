@@ -1237,6 +1237,7 @@ panel_applet_edit_menu_popup (PanelApplet *applet,
 
 	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
 					  "/PanelAppletEditPopup");
+	gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (GTK_WIDGET (applet)));
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
 			NULL,
