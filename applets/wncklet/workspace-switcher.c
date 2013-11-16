@@ -287,7 +287,7 @@ all_workspaces_changed (GSettings   *settings,
 }
 
 static void
-setup_gconf (PagerData *pager)
+setup_gsettings (PagerData *pager)
 {
 	pager->settings =
 	  panel_applet_settings_new (PANEL_APPLET (pager->applet),
@@ -308,16 +308,14 @@ workspace_switcher_applet_fill (PanelApplet *applet)
         GtkActionGroup *action_group;
 	GtkAction *action;
 	gboolean display_names;
-	
-	panel_applet_add_preferences (applet, "/schemas/apps/workspace_switcher_applet/prefs", NULL);
-	
+
 	pager = g_new0 (PagerData, 1);
 
 	pager->applet = GTK_WIDGET (applet);
 
 	panel_applet_set_flags (PANEL_APPLET (pager->applet), PANEL_APPLET_EXPAND_MINOR);
 
-	setup_gconf (pager);
+	setup_gsettings (pager);
 	
 	pager->n_rows = g_settings_get_int (pager->settings, "num-rows");
 

@@ -267,7 +267,7 @@ move_unminimized_windows_changed (GSettings    *settings,
 }
 
 static void
-setup_gconf (TasklistData *tasklist)
+setup_gsettings (TasklistData *tasklist)
 {
         tasklist->settings =
           panel_applet_settings_new (PANEL_APPLET (tasklist->applet),
@@ -364,9 +364,7 @@ window_list_applet_fill (PanelApplet *applet)
 				PANEL_APPLET_EXPAND_MINOR |
 				PANEL_APPLET_HAS_HANDLE);
 
-	panel_applet_add_preferences (applet, "/schemas/apps/window_list_applet/prefs", NULL);
-
-	setup_gconf (tasklist);
+	setup_gsettings (tasklist);
 
 	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
 	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
