@@ -8,7 +8,7 @@ AM_CPPFLAGS =							\
 	-I$(srcdir)						\
 	-I$(top_srcdir)/gnome-panel				\
 	-I$(top_builddir)/gnome-panel				\
-	-I$(top_builddir)/gnome-panel/libpanel-applets-private	\
+	-I$(top_builddir)/gnome-panel/libpanel-applet-private	\
 	-I$(top_builddir)/gnome-panel/libpanel-util		\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"			\
