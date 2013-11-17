@@ -730,6 +730,8 @@ launcher_properties (Launcher  *launcher)
 							launcher->key_file,
 							launcher->location,
 							_("Launcher Properties"));
+	gtk_window_set_screen (GTK_WINDOW (launcher->prop_dialog),
+				       gtk_widget_get_screen (launcher->button));
 
 	panel_widget_register_open_dialog (PANEL_WIDGET 
 					   (gtk_widget_get_parent (launcher->info->widget)),
