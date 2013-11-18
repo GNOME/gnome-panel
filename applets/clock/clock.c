@@ -131,13 +131,9 @@ struct _ClockData {
         time_t             current_time;
         GnomeWallClock    *wall_clock;
 	PanelAppletOrient  orient;
-	int                size;
 	GtkAllocation      old_allocation;
 
 	SystemTimezone *systz;
-
-	int fixed_width;
-	int fixed_height;
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
@@ -197,14 +193,6 @@ _clock_get_widget (ClockData  *cd,
 		   const char *name)
 {
 	return GTK_WIDGET (gtk_builder_get_object (cd->builder, name));
-}
-
-static void
-unfix_size (ClockData *cd)
-{
-	cd->fixed_width = -1;
-	cd->fixed_height = -1;
-	gtk_widget_queue_resize (cd->panel_button);
 }
 
 static int
@@ -820,23 +808,6 @@ do_not_eat_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
-/* Don't request smaller size then the last one we did, this avoids
-   jumping when proportional fonts are used.  We must take care to
-   call "unfix_size" whenever options are changed or such where
-   we'd want to forget the fixed size */
-static void
-clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
-{
-	ClockData *cd = data;
-
-	if (req->width > cd->fixed_width)
-		cd->fixed_width = req->width;
-	if (req->height > cd->fixed_height)
-		cd->fixed_height = req->height;
-	req->width = cd->fixed_width;
-	req->height = cd->fixed_height;
-}
-
 static void
 clock_update_text_gravity (GtkWidget *label)
 {
@@ -892,12 +863,6 @@ create_main_clock_label (ClockData *cd)
         GtkWidget *label;
 
         label = gtk_label_new (NULL);
-	g_signal_connect (label, "size_request",
-			  G_CALLBACK (clock_size_request),
-			  cd);
-	g_signal_connect_swapped (label, "style_set",
-				  G_CALLBACK (unfix_size),
-				  cd);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
 	clock_update_text_gravity (label);
 	g_signal_connect (label, "screen-changed",
@@ -995,7 +960,6 @@ create_clock_widget (ClockData *cd)
 
 	cd->props = NULL;
 	cd->orient = -1;
-	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
 
 	update_panel_weather (cd);
 
@@ -1030,7 +994,6 @@ update_orient (ClockData *cd)
 
 	angle = gtk_label_get_angle (GTK_LABEL (cd->clockw));
 	if (angle != new_angle) {
-		unfix_size (cd);
 		gtk_label_set_angle (GTK_LABEL (cd->clockw), new_angle);
                 gtk_label_set_angle (GTK_LABEL (cd->panel_temperature_label), new_angle);
 	}
@@ -1070,7 +1033,6 @@ applet_change_orient (PanelApplet       *applet,
         gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->main_obox), o);
         gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->weather_obox), o);
 
-        unfix_size (cd);
         update_clock (NULL, NULL, cd);
         update_calendar_popup (cd);
 }
@@ -1081,24 +1043,12 @@ panel_button_change_pixel_size (GtkWidget     *widget,
                                 GtkAllocation *allocation,
                                 ClockData	*cd)
 {
-	int new_size;
-
 	if (cd->old_allocation.width  == allocation->width &&
 	    cd->old_allocation.height == allocation->height)
 		return;
 
-	cd->old_allocation.width  = allocation->width;
-	cd->old_allocation.height = allocation->height;
+	cd->old_allocation = *allocation;
 
-	if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-	    cd->orient == PANEL_APPLET_ORIENT_RIGHT)
-		new_size = allocation->width;
-	else
-		new_size = allocation->height;
-
-	cd->size = new_size;
-
-        unfix_size (cd);
 	update_clock (NULL, NULL, cd);
 }
 
@@ -1374,9 +1324,6 @@ fill_clock_applet (PanelApplet *applet)
                           G_CALLBACK (show_week_changed), cd);
         g_signal_connect (cd->applet_settings, "changed::cities",
                           G_CALLBACK (locations_changed), cd);
-
-	cd->fixed_width = -1;
-	cd->fixed_height = -1;
 
 	cd->applet = GTK_WIDGET (applet);
 
