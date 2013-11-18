@@ -37,7 +37,6 @@
 #include "applet.h"
 #include "xstuff.h"
 #include "panel-bindings.h"
-#include "panel-gconf.h"
 #include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
@@ -714,7 +713,6 @@ panel_util_get_file_display_name_if_mount (GFile *file)
 	return ret;
 }
 
-#define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
 static char *
 panel_util_get_file_display_for_common_files (GFile *file)
 {
@@ -722,18 +720,17 @@ panel_util_get_file_display_for_common_files (GFile *file)
 
 	compare = g_file_new_for_path (g_get_home_dir ());
 	if (g_file_equal (file, compare)) {
-		char *gconf_name;
+		GSettings *settings = g_settings_new (GNOME_NAUTILUS_DESKTOP_SCHEMA);
+		char *home_foler_name = g_settings_get_string (settings, GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY);
 
 		g_object_unref (compare);
+		g_object_unref (settings);
 
-		gconf_name = gconf_client_get_string (panel_gconf_get_client (),
-						      HOME_NAME_KEY,
-						      NULL);
-		if (PANEL_GLIB_STR_EMPTY (gconf_name)) {
-			g_free (gconf_name);
+		if (PANEL_GLIB_STR_EMPTY (home_foler_name)) {
+			g_free (home_foler_name);
 			return g_strdup (_("Home Folder"));
 		} else {
-			return gconf_name;
+			return home_foler_name;
 		}
 	}
 	g_object_unref (compare);

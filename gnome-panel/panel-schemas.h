@@ -75,4 +75,7 @@
 #define PANEL_MENU_BUTTON_CUSTOM_ICON_KEY "custom-icon"
 #define PANEL_MENU_BUTTON_MENU_PATH_KEY   "menu-path"
 
+#define GNOME_NAUTILUS_DESKTOP_SCHEMA             "org.gnome.nautilus.desktop"
+#define GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY "home-icon-name"
+
 #endif /* __PANEL_SCHEMAS_H__ */
