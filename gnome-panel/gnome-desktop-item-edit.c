@@ -14,8 +14,6 @@
 /* FIXME Symbols needed by panel-util.c - sucky */
 #include "applet.h"
 GSList *panel_applet_list_applets (void) { return NULL; }
-#include "panel-gconf.h"
-GConfClient *panel_gconf_get_client (void) { return NULL; }
 #include "panel-bindings.h"
 guint panel_bindings_get_mouse_button_modifier_keymask (void) { return 0; }
 #include "panel-toplevel.h"
