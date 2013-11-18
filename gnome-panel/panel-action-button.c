@@ -38,7 +38,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "applet.h"
-#include "panel-gconf.h"
 #include "panel-typebuiltins.h"
 #include "panel-force-quit.h"
 #include "panel-util.h"
@@ -67,7 +66,12 @@ struct _PanelActionButtonPrivate {
 	guint                  dnd_enabled : 1;
 };
 
-static GConfEnumStringPair panel_action_type_map [] = {
+typedef struct {
+	gint enum_value;
+	const gchar* str;
+} PanelEnumStringPair;
+
+static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
 	{ PANEL_ACTION_LOCK,           "lock"           },
 	{ PANEL_ACTION_LOGOUT,         "logout"         },
@@ -78,6 +82,35 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
 	{ 0,                           NULL             },
 };
+
+static gboolean
+panel_string_to_enum (const gchar *str, gint *enum_value_retloc)
+{
+	int i = 0;
+	while (panel_action_type_map[i].str != NULL)
+	{
+		if (g_ascii_strcasecmp (panel_action_type_map[i].str, str) == 0)
+		{
+			*enum_value_retloc = panel_action_type_map[i].enum_value;
+			return TRUE;
+		}
+		++i;
+	}
+	return FALSE;
+}
+
+static const gchar*
+panel_enum_to_string (gint enum_value)
+{
+	int i = 0;
+	while (panel_action_type_map[i].str != NULL)
+	{
+		if (panel_action_type_map[i].enum_value == enum_value)
+			return panel_action_type_map[i].str;
+		++i;
+	}
+	return NULL;
+}
 
 /* Lock Screen
  */
@@ -506,7 +539,7 @@ panel_action_button_drag_data_get (GtkWidget          *widget,
 	button = PANEL_ACTION_BUTTON (widget);
 
 	drag_data = g_strdup_printf ("ACTION:%s:%d", 
-				     gconf_enum_to_string (panel_action_type_map, button->priv->type),
+				     panel_enum_to_string (button->priv->type),
 				     panel_find_applet_index (widget));
 
 	gtk_selection_data_set (
@@ -654,12 +687,8 @@ panel_action_button_create (PanelToplevel         *toplevel,
 			    int                    pack_index,
 			    PanelActionButtonType  type)
 {
-	const char *detail;
-
-	detail = gconf_enum_to_string (panel_action_type_map, type);
-
 	panel_layout_object_create (PANEL_OBJECT_ACTION,
-				    detail,
+				    panel_enum_to_string (type),
 				    panel_toplevel_get_id (toplevel),
 				    pack_type, pack_index);
 }
@@ -725,7 +754,7 @@ panel_action_button_load_from_drag (PanelToplevel       *toplevel,
 		return retval;
 	}
 
-	if (!gconf_string_to_enum (panel_action_type_map, elements [1], (gpointer) &type)) {
+	if (!panel_string_to_enum (elements [1], (gpointer) &type)) {
 		g_strfreev (elements);
 		return retval;
 	}
