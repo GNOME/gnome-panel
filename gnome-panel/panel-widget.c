@@ -1689,7 +1689,7 @@ panel_widget_init (PanelWidget *panel)
 	
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
-	panel->size          = G_MAXINT;
+	panel->size          = 0;
 	panel->applet_list   = NULL;
 	panel->drop_widget   = widget;
 	panel->open_dialogs  = NULL;
@@ -1718,21 +1718,18 @@ panel_widget_new (PanelToplevel  *toplevel,
 
 	panel = g_object_new (PANEL_TYPE_WIDGET, NULL);
 
-        gtk_widget_set_has_window (GTK_WIDGET (panel), TRUE);
-        gtk_widget_set_can_focus (GTK_WIDGET (panel), TRUE);
+	gtk_widget_set_has_window (GTK_WIDGET (panel), TRUE);
+	gtk_widget_set_can_focus (GTK_WIDGET (panel), TRUE);
 
 	panel->orient = orient;
 	panel->sz = sz;
 
 	panel->packed = packed;
-	if (packed)
-		panel->size = 0;
-	else
-		panel->size = G_MAXINT;
+	panel->size = 0;
 
 	panel->toplevel    = toplevel;
 	panel->drop_widget = GTK_WIDGET (toplevel);
-	
+
 	return GTK_WIDGET (panel);
 }
 
