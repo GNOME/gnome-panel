@@ -52,7 +52,6 @@
 
 #include "menu.h"
 #include "panel-action-button.h"
-#include "panel-gconf.h"
 #include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
@@ -60,12 +59,8 @@
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
+#include "panel-schemas.h"
 
-#define DESKTOP_IS_HOME_DIR_DIR "/apps/nautilus/preferences"
-#define DESKTOP_IS_HOME_DIR_KEY "/apps/nautilus/preferences/desktop_is_home_dir"
-#define NAMES_DIR               "/apps/nautilus/desktop"
-#define HOME_NAME_KEY           "/apps/nautilus/desktop/home_icon_name"
-#define COMPUTER_NAME_KEY       "/apps/nautilus/desktop/computer_icon_name"
 #define MAX_ITEMS_OR_SUBMENU    8
 #define MAX_BOOKMARK_ITEMS      100
 
@@ -1181,7 +1176,6 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 {
 	GtkWidget *places_menu;
 	GtkWidget *item;
-	char      *gconf_name;
 	char      *name;
 	char      *uri;
 	GFile     *file;
@@ -1202,45 +1196,32 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 	g_free (name);
 	g_free (uri);
 
-	if (!gconf_client_get_bool (panel_gconf_get_client (),
-				    DESKTOP_IS_HOME_DIR_KEY,
-				    NULL)) {
-		file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
-		uri = g_file_get_uri (file);
-		g_object_unref (file);
-		
-		item = panel_menu_item_uri_new (
-				/* FIXME: if the dir changes, we'd need to update the drag data since the uri is not the same */
-				uri, PANEL_ICON_DESKTOP, NULL,
-				/* Translators: Desktop is used here as in
-				 * "Desktop Folder" (this is not the Desktop
-				 * environment). */
-				C_("Desktop Folder", "Desktop"),
-				_("Open the contents of your desktop in a folder"),
-				G_CALLBACK (activate_desktop_uri));
-		gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
+	file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
+	uri = g_file_get_uri (file);
+	g_object_unref (file);
 
-		g_free (uri);
-	}
+	item = panel_menu_item_uri_new (
+			/* FIXME: if the dir changes, we'd need to update the drag data since the uri is not the same */
+			uri, PANEL_ICON_DESKTOP, NULL,
+			/* Translators: Desktop is used here as in
+			 * "Desktop Folder" (this is not the Desktop
+			 * environment). */
+			C_("Desktop Folder", "Desktop"),
+			_("Open the contents of your desktop in a folder"),
+			G_CALLBACK (activate_desktop_uri));
+	gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
+
+	g_free (uri);
 
 	panel_place_menu_item_append_gtk_bookmarks (places_menu);
 	add_menu_separator (places_menu);
 
-	gconf_name = gconf_client_get_string (panel_gconf_get_client (),
-					      COMPUTER_NAME_KEY,
-					      NULL);
-
-	if (gconf_name == NULL) {
-		gconf_name = g_strdup (_("Computer"));
-	}
-
 	item = panel_menu_item_uri_new ("computer://",
 					PANEL_ICON_COMPUTER, NULL,
-					gconf_name,
+					_("Computer"),
 					_("Browse all local and remote disks and folders accessible from this computer"),
 					G_CALLBACK (activate_uri));
 	gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
-	g_free (gconf_name);
 
 	panel_place_menu_item_append_local_gio (place_item, places_menu);
 	add_menu_separator (places_menu);
@@ -1294,10 +1275,7 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 }
 
 static void
-panel_place_menu_item_key_changed (GConfClient *client,
-				   guint        cnxn_id,
-				   GConfEntry  *entry,
-				   GtkWidget   *place_item)
+panel_place_menu_item_key_changed (GSettings *settings, const gchar *key, GtkWidget *place_item)
 {
 	panel_place_menu_item_recreate_menu (place_item);
 }
@@ -1393,13 +1371,6 @@ panel_place_menu_item_finalize (GObject *object)
 {
 	PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
 
-	gconf_client_remove_dir (panel_gconf_get_client (),
-				 DESKTOP_IS_HOME_DIR_DIR,
-				 NULL);
-	gconf_client_remove_dir (panel_gconf_get_client (),
-				 NAMES_DIR,
-				 NULL);
-
 	if (menuitem->priv->bookmarks_monitor != NULL) {
 		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
 		g_object_unref (menuitem->priv->bookmarks_monitor);
@@ -1486,27 +1457,13 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	GFile *bookmark;
 	char  *bookmarks_filename;
 	GError *error;
+	GSettings *settings;
 
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
 
-	gconf_client_add_dir (panel_gconf_get_client (),
-			      DESKTOP_IS_HOME_DIR_DIR,
-			      GCONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-	gconf_client_add_dir (panel_gconf_get_client (),
-			      NAMES_DIR,
-			      GCONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-
-	panel_gconf_notify_add_while_alive (HOME_NAME_KEY,
-					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
-	panel_gconf_notify_add_while_alive (DESKTOP_IS_HOME_DIR_KEY,
-					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
-	panel_gconf_notify_add_while_alive (COMPUTER_NAME_KEY,
-					    (GConfClientNotifyFunc) panel_place_menu_item_key_changed,
-					    G_OBJECT (menuitem));
+	settings = g_settings_new (GNOME_NAUTILUS_DESKTOP_SCHEMA);
+	g_signal_connect (settings, "changed::" GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY,
+	                  G_CALLBACK (panel_place_menu_item_key_changed), menuitem);
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
