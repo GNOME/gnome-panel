@@ -31,15 +31,16 @@ gsettings_SCHEMAS = $(gsettings_schemas_in:.xml.in=.xml)
 @GSETTINGS_RULES@
 
 sessiondir = $(datadir)/gnome-session/sessions
-session_in_files = gnome-flashback.session.desktop.in
-session_DATA = $(session_in_files:.session.desktop.in=.session)
+session_in_files = gnome-flashback.session.desktop.in gnome-flashback-compiz.session.desktop.in
+session_DATA = gnome-flashback.session
 
 xsessiondir = $(datadir)/xsessions
-xsession_in_in_files = gnome-fallback.desktop.in.in
-xsession_in_files = gnome-fallback.desktop.in
+xsession_in_in_files = gnome-fallback.desktop.in.in gnome-flashback-compiz.desktop.in.in
+xsession_in_files = gnome-fallback.desktop.in gnome-flashback-compiz.desktop.in
 xsession_DATA = $(xsession_in_files:.desktop.in=.desktop)
 
-%.session: %.session.desktop.in   $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< $@
+%.session: %.session.desktop.in
+	$(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< $@
 
 %.desktop.in: %.desktop.in.in
 	$(AM_V_GEN)sed -e 's,[@]libexecdir[@],$(libexecdir),g' <$< >$@
