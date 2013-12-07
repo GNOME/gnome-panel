@@ -744,6 +744,36 @@ panel_layout_get_instance_settings (GSettings  *settings_object,
         return settings_instance;
 }
 
+static char *
+panel_layout_object_generate_id (const char *iid)
+{
+        GString    *generated_id;
+        const char *applet;
+        char        old;
+
+        applet = g_strrstr (iid, "::");
+
+        if (applet == NULL)
+                return NULL;
+
+        generated_id = g_string_new ("");
+        applet += 2;
+        old = applet[0];
+
+        while (applet[0] != '\0') {
+                if (g_ascii_isupper (applet[0]) && old != ':' && g_ascii_islower (applet[1]) && generated_id->len != 0) {
+                        g_string_append_printf (generated_id, "-%c", g_ascii_tolower (applet[0]));
+                } else {
+                        g_string_append_c (generated_id, applet[0] != ':' ? g_ascii_tolower (applet[0]) : '-');
+                }
+
+                old = applet[0];
+                applet += 1;
+        }
+
+        return g_string_free (generated_id, FALSE);
+}
+
 char *
 panel_layout_object_create_start (PanelObjectType       type,
                                   const char           *type_detail,
@@ -756,6 +786,7 @@ panel_layout_object_create_start (PanelObjectType       type,
         char      *path;
         GSettings *settings_object;
         char      *iid;
+        char      *try_id;
 
         if (settings)
                 *settings = NULL;
@@ -764,10 +795,11 @@ panel_layout_object_create_start (PanelObjectType       type,
         if (!iid)
                 return NULL;
 
+        try_id = panel_layout_object_generate_id (iid);
         unique_id = panel_layout_find_free_id (PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                                PANEL_OBJECT_SCHEMA,
                                                PANEL_LAYOUT_OBJECT_PATH,
-                                               NULL, -1);
+                                               try_id, -1);
 
         path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_OBJECT_PATH, unique_id);
         settings_object = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
@@ -786,6 +818,7 @@ panel_layout_object_create_start (PanelObjectType       type,
                             PANEL_OBJECT_PACK_INDEX_KEY,
                             pack_index);
 
+        g_free (try_id);
         g_free (iid);
 
         if (settings)
