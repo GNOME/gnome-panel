@@ -1495,12 +1495,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		}
 	}
 
-
-	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
-		panel->thick = allocation->height;
-	else
-		panel->thick = allocation->width;
-
 	panel_widget_set_background_region (panel);
 }
 
@@ -1695,7 +1689,6 @@ panel_widget_init (PanelWidget *panel)
 	
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
-	panel->thick         = PANEL_MINIMUM_WIDTH;
 	panel->size          = G_MAXINT;
 	panel->applet_list   = NULL;
 	panel->drop_widget   = widget;
