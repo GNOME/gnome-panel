@@ -124,12 +124,13 @@ panel_applet_bindings_get_real_modifier_mask (guint mask)
  * adapted from panel-bindings.c *
 \*********************************/
 
-#define MOUSE_MODIFIER_DIR "/apps/metacity/general"
-#define MOUSE_MODIFIER_KEY "/apps/metacity/general/mouse_button_modifier"
+#define GNOME_DESKTOP_WM_PREFERENCES_SCHEMA                    "org.gnome.desktop.wm.preferences"
+#define GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY "mouse-button-modifier"
+
 #define DEFAULT_MOUSE_MODIFIER GDK_MOD1_MASK
 
-static guint initialised = 0;
-static guint notify_id = 0;
+static gboolean initialised = FALSE;
+static GSettings *preferences = NULL;
 
 static guint mouse_button_modifier_keymask = DEFAULT_MOUSE_MODIFIER;
 
@@ -153,83 +154,31 @@ panel_bindings_mouse_modifier_set_from_string (const char *str)
 }
 
 static void
-panel_bindings_mouse_modifier_changed (GConfClient  *client,
-				       guint         cnxn_id,
-				       GConfEntry   *entry,
-				       gpointer      user_data)
+panel_bindings_mouse_modifier_changed (GSettings *settings, const gchar *key)
 {
-	GConfValue *value;
-	const char *str;
-
-	value = gconf_entry_get_value (entry);
-
-	if (!value || value->type != GCONF_VALUE_STRING)
-		return;
-
-	str = gconf_value_get_string (value);
-	panel_bindings_mouse_modifier_set_from_string (str);
+	panel_bindings_mouse_modifier_set_from_string (g_settings_get_string (settings, key));
 }
 
-void
-panel_applet_bindings_clean (GConfClient *client)
+static void
+panel_applet_bindings_init (void)
 {
-	if (initialised == 0)
+	char *str;
+
+	if (initialised)
 		return;
 
-	initialised--;
-
-	if (initialised > 0)
-		return;
-
-	gconf_client_remove_dir (client, MOUSE_MODIFIER_DIR, NULL);
-	if (notify_id > 0)
-		gconf_client_notify_remove (client, notify_id);
-	notify_id = 0;
-}
-
-void
-panel_applet_bindings_init (GConfClient *client)
-{
-	GError *error;
-	char   *str;
-
-	if (initialised > 0) {
-		initialised++;
-		return;
-	}
+	preferences = g_settings_new (GNOME_DESKTOP_WM_PREFERENCES_SCHEMA);
 
 	/* mouse button modifier */
-	error = NULL;
-	gconf_client_add_dir (client, MOUSE_MODIFIER_DIR,
-			      GCONF_CLIENT_PRELOAD_NONE, &error);
-	if (error) {
-		g_warning ("Error loading gconf directory '%s': %s",
-			   MOUSE_MODIFIER_DIR, error->message),
-		g_error_free (error);
-	}
+	g_signal_connect (preferences, "changed::" GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY,
+	                  G_CALLBACK (panel_bindings_mouse_modifier_changed),
+	                  NULL);
 
-	error = NULL;
-	notify_id = gconf_client_notify_add (client, MOUSE_MODIFIER_KEY,
-				 panel_bindings_mouse_modifier_changed,
-				 NULL, NULL, &error);
-	if (error) {
-		g_warning ("Error watching gconf key '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	}
+	str = g_settings_get_string (preferences, GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY);
+	panel_bindings_mouse_modifier_set_from_string (str);
+	g_free (str);
 
-	error = NULL;
-	str = gconf_client_get_string (client, MOUSE_MODIFIER_KEY, &error);
-	if (error) {
-		g_warning ("Error getting value for '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	} else {
-		panel_bindings_mouse_modifier_set_from_string (str);
-		g_free (str);
-	}
-
-	initialised = 1;
+	initialised = TRUE;
 }
 
 guint
@@ -237,8 +186,10 @@ panel_applet_bindings_get_mouse_button_modifier_keymask (void)
 {
 	guint mod;
 
-	g_assert (initialised != 0);
 	g_assert (mouse_button_modifier_keymask != 0);
+
+	if (!initialised)
+		panel_applet_bindings_init ();
 
 	mod = panel_applet_bindings_get_real_modifier_mask (mouse_button_modifier_keymask);
 

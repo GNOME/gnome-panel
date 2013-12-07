@@ -25,12 +25,8 @@
 
 #include <glib.h>
 #include <gdk/gdk.h>
-#include <gconf/gconf-client.h>
 
 G_BEGIN_DECLS
-
-void  panel_applet_bindings_init  (GConfClient *client);
-void  panel_applet_bindings_clean (GConfClient *client);
 
 guint panel_applet_bindings_get_mouse_button_modifier_keymask (void);
 

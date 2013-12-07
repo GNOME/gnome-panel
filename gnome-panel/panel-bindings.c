@@ -27,53 +27,63 @@
 #include <string.h>
 #include <glib/gi18n.h>
 
-#include "panel-gconf.h"
+#include "panel-schemas.h"
 #include "panel-toplevel.h"
 #include "panel-xutils.h"
 
-#define BINDINGS_PREFIX    "/apps/metacity/window_keybindings"
-#define MOUSE_MODIFIER_DIR "/apps/metacity/general"
-#define MOUSE_MODIFIER_KEY "/apps/metacity/general/mouse_button_modifier"
 #define DEFAULT_MOUSE_MODIFIER GDK_MOD1_MASK
+
+typedef struct {
+	guint            keyval;
+	GdkModifierType  modifiers;
+} KeyBinding;
 
 typedef struct {
 	char            *key;
 	char            *signal;
-	guint            keyval;
-	GdkModifierType  modifiers;
+	GSList          *list;
 } PanelBinding;
 
 static gboolean initialised = FALSE;
+static GSettings *preferences = NULL;
+static GSettings *keybindings = NULL;
 
 static PanelBinding bindings [] = {
-	{ "activate_window_menu", "popup-panel-menu", 0, 0 },
-	{ "toggle_maximized",     "toggle-expand",    0, 0 },
-	{ "maximize",             "expand",           0, 0 },
-	{ "unmaximize",           "unexpand",         0, 0 },
-	{ "toggle_shaded",        "toggle-hidden",    0, 0 },
-	{ "begin_move",           "begin-move",       0, 0 },
-	{ "begin_resize",         "begin-resize",     0, 0 },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_ACTIVATE_WINDOW_MENU_KEY, "popup-panel-menu", NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_MAXIMIZED_KEY,     "toggle-expand",    NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_MAXIMIZE_KEY,             "expand",           NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_UNMAXIMIZE_KEY,           "unexpand",         NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_SHADED_KEY,        "toggle-hidden",    NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_MOVE_KEY,           "begin-move",       NULL },
+	{ GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_RESIZE_KEY,         "begin-resize",     NULL },
 };
 
 static guint mouse_button_modifier_keymask = DEFAULT_MOUSE_MODIFIER;
 
 static void
-panel_binding_set_from_string (PanelBinding *binding,
-			       const char   *str)
+panel_binding_set_from_string (PanelBinding *binding, const char *str)
 {
-	g_assert (binding->keyval == 0);
-	g_assert (binding->modifiers == 0);
+	KeyBinding *tmp;
 
 	if (!str || !str [0] || !strcmp (str, "disabled")) {
-		binding->keyval = 0;
-		binding->modifiers = 0;
+		g_slist_foreach (binding->list, (GFunc)g_free, NULL);
+		g_slist_free (binding->list);
+		binding->list = NULL;
 		return;
 	}
 
-	gtk_accelerator_parse (str, &binding->keyval, &binding->modifiers);
-	if (binding->keyval == 0 && binding->modifiers == 0) {
+	tmp = g_new(KeyBinding, 1);
+	tmp->keyval = 0;
+	tmp->modifiers = 0;
+
+	gtk_accelerator_parse (str, &tmp->keyval, &tmp->modifiers);
+
+	if (tmp->keyval == 0 && tmp->modifiers == 0) {
+		g_free (tmp);
 		g_warning ("Unable to parse binding '%s'\n", str);
 		return;
+	} else {
+		binding->list = g_slist_append (binding->list, tmp);
 	}
 }
 
@@ -96,68 +106,68 @@ get_binding_set (GtkBindingSet *binding_set)
 }
 
 static void
-panel_binding_clear_entry (PanelBinding  *binding,
-			   GtkBindingSet *binding_set)
+panel_binding_clear_entry (PanelBinding *binding, GtkBindingSet *binding_set)
 {
+	KeyBinding *b;
+	GSList     *l;
+
 	binding_set = get_binding_set (binding_set);
 
-        gtk_binding_entry_remove (binding_set, binding->keyval, binding->modifiers);
+	for (l = binding->list; l != NULL; l = l->next) {
+		b = l->data;
+		gtk_binding_entry_remove (binding_set, b->keyval, b->modifiers);
+	}
+
+	g_slist_foreach (binding->list, (GFunc)g_free, NULL);
+	g_slist_free (binding->list);
+	binding->list = NULL;
 }
 
 static void
-panel_binding_set_entry (PanelBinding  *binding,
-			 GtkBindingSet *binding_set)
+panel_binding_set_entry (PanelBinding *binding, GtkBindingSet *binding_set)
 {
+	KeyBinding *b;
+	GSList     *l;
+
 	binding_set = get_binding_set (binding_set);
 
-        gtk_binding_entry_add_signal (binding_set,	
-				      binding->keyval,
-				      binding->modifiers,
-				      binding->signal,
-				      0);
+	for (l = binding->list; l != NULL; l = l->next) {
+		b = l->data;
+		gtk_binding_entry_add_signal (binding_set, b->keyval, b->modifiers, binding->signal, 0);
+	}
 }
 
 static void
-panel_binding_changed (GConfClient  *client,
-		       guint         cnxn_id,
-		       GConfEntry   *entry,
-		       PanelBinding *binding)
+panel_binding_changed (GSettings *settings, const gchar *key, PanelBinding *binding)
 {
-	GConfValue *value;
+	gchar **array;
+	gint    i;
 
-	if (binding->keyval)
+	if (binding->list != NULL)
 		panel_binding_clear_entry (binding, NULL);
 
-	binding->keyval    = 0;
-	binding->modifiers = 0;
+	array = g_settings_get_strv (settings, key);
 
-	value = gconf_entry_get_value (entry);
+	if (array) {
+		for (i = 0; array[i] != NULL; i++) {
+			panel_binding_set_from_string (binding, array[i]);
+		}
 
-	if (!value || value->type != GCONF_VALUE_STRING)
-		return;
+		g_strfreev (array);
+	}
 
-	panel_binding_set_from_string (binding, gconf_value_get_string (value));
-
-	if (!binding->keyval)
+	if (!binding->list)
 		return;
 
 	panel_binding_set_entry (binding, NULL);
 }
 
 static void
-panel_binding_watch (PanelBinding *binding,
-		     const char   *key)
+panel_binding_watch (PanelBinding *binding, const char *key)
 {
-	GError *error = NULL;
-
-	gconf_client_notify_add (panel_gconf_get_client (), key,
-				(GConfClientNotifyFunc) panel_binding_changed,
-				binding, NULL, &error);
-	if (error) {
-		g_warning ("Error watching gconf key '%s': %s",
-			   key, error->message);
-		g_error_free (error);
-	}
+	gchar *signal_name = g_strdup_printf ("changed::%s", key);
+	g_signal_connect (keybindings, signal_name, G_CALLBACK (panel_binding_changed), binding);
+	g_free (signal_name);
 }
 
 /*
@@ -183,95 +193,47 @@ panel_bindings_mouse_modifier_set_from_string (const char *str)
 }
 
 static void
-panel_bindings_mouse_modifier_changed (GConfClient  *client,
-				       guint         cnxn_id,
-				       GConfEntry   *entry,
-				       gpointer      user_data)
+panel_bindings_mouse_modifier_changed (GSettings *settings, const gchar *key)
 {
-	GConfValue *value;
-	const char *str;
-
-	value = gconf_entry_get_value (entry);
-
-	if (!value || value->type != GCONF_VALUE_STRING)
-		return;
-
-	str = gconf_value_get_string (value);
-	panel_bindings_mouse_modifier_set_from_string (str);
+	panel_bindings_mouse_modifier_set_from_string (g_settings_get_string (settings, key));
 }
 
 static void
 panel_bindings_initialise (void)
 {
-	GConfClient *client;
-	GError      *error;
 	int          i;
+	int          j;
 	char        *str;
+	gchar      **array;
 
 	if (initialised)
 		return;
 
-	client = panel_gconf_get_client ();
-
-	error = NULL;
-	gconf_client_add_dir (client, BINDINGS_PREFIX,
-			      GCONF_CLIENT_PRELOAD_ONELEVEL, &error);
-	if (error) {
-		g_warning ("Error loading gconf directory '%s': %s",
-			   BINDINGS_PREFIX, error->message),
-		g_error_free (error);
-	}
+	preferences = g_settings_new (GNOME_DESKTOP_WM_PREFERENCES_SCHEMA);
+	keybindings = g_settings_new (GNOME_DESKTOP_WM_KEYBINDINGS_SCHEMA);
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
-		const char *key;
+		array = g_settings_get_strv (keybindings, bindings [i].key);
 
-		key = panel_gconf_sprintf ("%s/%s", BINDINGS_PREFIX, bindings [i].key);
+		if (array) {
+			for (j = 0; array[j] != NULL; j++) {
+				panel_binding_set_from_string (&bindings [i], array[j]);
+			}
 
-		error = NULL;
-		str = gconf_client_get_string (client, key, &error);
-		if (error) {
-			g_warning ("Error getting value for '%s': %s",
-				   key, error->message);
-			g_error_free (error);
-			continue;
+			g_strfreev (array);
 		}
 
-		panel_binding_set_from_string (&bindings [i], str);
-		panel_binding_watch (&bindings [i], key);
-
-		g_free (str);
+		panel_binding_watch (&bindings [i], bindings [i].key);
 	}
 
 	/* mouse button modifier */
-	error = NULL;
-	gconf_client_add_dir (client, MOUSE_MODIFIER_DIR,
-			      GCONF_CLIENT_PRELOAD_NONE, &error);
-	if (error) {
-		g_warning ("Error loading gconf directory '%s': %s",
-			   MOUSE_MODIFIER_DIR, error->message),
-		g_error_free (error);
-	}
+	g_signal_connect (preferences, "changed::" GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY,
+	                  G_CALLBACK (panel_bindings_mouse_modifier_changed),
+	                  NULL);
 
-	error = NULL;
-	gconf_client_notify_add (client, MOUSE_MODIFIER_KEY,
-				 panel_bindings_mouse_modifier_changed,
-				 NULL, NULL, &error);
-	if (error) {
-		g_warning ("Error watching gconf key '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	}
-
-	error = NULL;
-	str = gconf_client_get_string (client, MOUSE_MODIFIER_KEY, &error);
-	if (error) {
-		g_warning ("Error getting value for '%s': %s",
-			   MOUSE_MODIFIER_KEY, error->message);
-		g_error_free (error);
-	} else {
-		panel_bindings_mouse_modifier_set_from_string (str);
-		g_free (str);
-	}
+	str = g_settings_get_string (preferences, GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY);
+	panel_bindings_mouse_modifier_set_from_string (str);
+	g_free (str);
 
 	initialised = TRUE;
 }
@@ -285,7 +247,7 @@ panel_bindings_set_entries (GtkBindingSet *binding_set)
 		panel_bindings_initialise ();
 
 	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
-		if (!bindings [i].keyval)
+		if (!bindings [i].list)
 			continue;
 
 		panel_binding_set_entry (&bindings [i], binding_set);

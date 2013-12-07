@@ -78,4 +78,16 @@
 #define GNOME_NAUTILUS_DESKTOP_SCHEMA             "org.gnome.nautilus.desktop"
 #define GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY "home-icon-name"
 
+#define GNOME_DESKTOP_WM_KEYBINDINGS_SCHEMA                    "org.gnome.desktop.wm.keybindings"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_ACTIVATE_WINDOW_MENU_KEY  "activate-window-menu"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_MAXIMIZED_KEY      "toggle-maximized"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_MAXIMIZE_KEY              "maximize"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_UNMAXIMIZE_KEY            "unmaximize"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_SHADED_KEY         "toggle-shaded"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_MOVE_KEY            "begin-move"
+#define GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_RESIZE_KEY          "begin-resize"
+
+#define GNOME_DESKTOP_WM_PREFERENCES_SCHEMA                    "org.gnome.desktop.wm.preferences"
+#define GNOME_DESKTOP_WM_PREFERENCES_MOUSE_BUTTON_MODIFIER_KEY "mouse-button-modifier"
+
 #endif /* __PANEL_SCHEMAS_H__ */

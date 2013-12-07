@@ -1060,8 +1060,6 @@ panel_applet_finalize (GObject *object)
 
 	panel_applet_set_preferences_key (applet, NULL);
 
-	panel_applet_bindings_clean (applet->priv->client);
-
 	if (applet->priv->client)
 		g_object_unref (applet->priv->client);
 	applet->priv->client = NULL;
@@ -2060,10 +2058,6 @@ panel_applet_init (PanelApplet *applet)
 					    applet->priv->panel_action_group, 1);
 	gtk_ui_manager_add_ui_from_string (applet->priv->ui_manager,
 					   panel_menu_ui, -1, NULL);
-
-
-	panel_applet_bindings_init (applet->priv->client);
-
 
 	applet->priv->plug = gtk_plug_new (0);
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
