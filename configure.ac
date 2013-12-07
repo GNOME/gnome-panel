@@ -135,6 +135,11 @@ PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
+PKG_CHECK_MODULES(GWEATHER, gweather-3.0 >= 3.9.2, HAVE_GWEATHER_3_9_2_OR_NEWER=yes, HAVE_GWEATHER_3_9_2_OR_NEWER=no)
+if test "x$HAVE_GWEATHER_3_9_2_OR_NEWER" = "xyes" ; then
+    AC_DEFINE(HAVE_GWEATHER_3_9_2_OR_NEWER, 1, [Defined if Gweather version is 3.9.2 or newer])
+fi
+
 # Check whether to enable e-d-s support for clock applet
 AC_MSG_CHECKING([whether to enable evolution-data-server support])
 AC_ARG_ENABLE([eds],
