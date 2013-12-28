@@ -375,7 +375,6 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
 
-        Bonobo applets support:        ${HAVE_BONOBO}
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Evolution-Data-Server support: ${enable_eds}
         Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
