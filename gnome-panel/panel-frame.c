@@ -21,9 +21,9 @@
  */
 
 #include <config.h>
+#include <libpanel-util/panel-color.h>
 
 #include "panel-frame.h"
-
 #include "panel-typebuiltins.h"
 
 G_DEFINE_TYPE (PanelFrame, panel_frame, GTK_TYPE_BIN)
@@ -163,45 +163,35 @@ panel_frame_draw (GtkWidget     *widget,
                   PanelFrameEdge edges)
 {
         PanelFrame       *frame = (PanelFrame *) widget;
-	GtkStyleContext  *context;
-	GtkStateFlags     state;
+        GtkStyleContext  *context;
+        GtkStateFlags     state;
         GdkRGBA           bg, dark, light;
-        GtkSymbolicColor *c1, *c2;
-	int               x, y, width, height;
+        int               x, y, width, height;
         GtkBorder         padding;
 
-	if (edges == PANEL_EDGE_NONE)
-		return;
+        if (edges == PANEL_EDGE_NONE)
+                return;
 
-	context = gtk_widget_get_style_context (widget);
-	state = gtk_widget_get_state_flags (widget);
+        context = gtk_widget_get_style_context (widget);
+        state = gtk_widget_get_state_flags (widget);
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_height (widget);
 
         gtk_style_context_get_background_color (context, state, &bg);
 
-        c1 = gtk_symbolic_color_new_literal (&bg);
-
-        c2 = gtk_symbolic_color_new_shade (c1, 0.7);
-        gtk_symbolic_color_resolve (c2, NULL, &dark);
-        gtk_symbolic_color_unref (c2);
-
-        c2 = gtk_symbolic_color_new_shade (c1, 1.3);
-        gtk_symbolic_color_resolve (c2, NULL, &light);
-        gtk_symbolic_color_unref (c2);
-
-        gtk_symbolic_color_unref (c1);
+        gtk_style_shade (&bg, &dark, 0.7);
+        gtk_style_shade (&bg, &light, 1.3);
 
         gtk_style_context_get_padding (context, state, &padding);
 
-	/* Copied from gtk_default_draw_shadow() */
+        /* Copied from gtk_default_draw_shadow() */
 
         x = y = 0;
 
         cairo_set_line_width (cr, 1);
 
-	if (frame->edges & PANEL_EDGE_BOTTOM && padding.bottom > 0) {
-		if (padding.bottom > 1) {
+        if (frame->edges & PANEL_EDGE_BOTTOM && padding.bottom > 0) {
+                if (padding.bottom > 1) {
                         gdk_cairo_set_source_rgba (cr, &dark);
                         cairo_move_to (cr, x + .5, y + height - 2 + .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + height - 2 + .5);
@@ -211,16 +201,16 @@ panel_frame_draw (GtkWidget     *widget,
                         cairo_move_to (cr, x + .5, y + height - 1 - .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
                         cairo_stroke (cr);
-		} else {
-			gdk_cairo_set_source_rgba (cr, &dark);
+                } else {
+                        gdk_cairo_set_source_rgba (cr, &dark);
                         cairo_move_to (cr, x + .5, y + height - 1 - .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
                         cairo_stroke (cr);
                 }
-	}
+        }
 
-	if (frame->edges & PANEL_EDGE_RIGHT && padding.right > 0) {
-		if (padding.right > 1) {
+        if (frame->edges & PANEL_EDGE_RIGHT && padding.right > 0) {
+                if (padding.right > 1) {
                         gdk_cairo_set_source_rgba (cr, &dark);
                         cairo_move_to (cr, x + width - 2 - .5, y + .5);
                         cairo_line_to (cr, x + width - 2 - .5, y + height - 1 - .5);
@@ -236,35 +226,35 @@ panel_frame_draw (GtkWidget     *widget,
                         cairo_line_to (cr, x + width - 1 - .5, y + height - 1 - .5);
                         cairo_stroke (cr);
                 }
-	}
+        }
 
-	if (frame->edges & PANEL_EDGE_TOP && padding.top > 0) {
+        if (frame->edges & PANEL_EDGE_TOP && padding.top > 0) {
                 gdk_cairo_set_source_rgba (cr, &light);
                 cairo_move_to (cr, x + .5, y + .5);
                 cairo_line_to (cr, x + width - 1 - .5, y + .5);
                 cairo_stroke (cr);
 
-		if (padding.right > 1) {
+                if (padding.right > 1) {
                         gdk_cairo_set_source_rgba (cr, &bg);
                         cairo_move_to (cr, x + .5, y + 1 + .5);
                         cairo_line_to (cr, x + width - 1 - .5, y + 1 + .5);
                         cairo_stroke (cr);
                 }
-	}
+        }
 
-	if (frame->edges & PANEL_EDGE_LEFT && padding.left > 0) {
+        if (frame->edges & PANEL_EDGE_LEFT && padding.left > 0) {
                 gdk_cairo_set_source_rgba (cr, &light);
                 cairo_move_to (cr, x + .5, y + .5);
                 cairo_line_to (cr, x + .5, y + height - 1 - .5);
                 cairo_stroke (cr);
 
-		if (padding.left > 1) {
+                if (padding.left > 1) {
                       gdk_cairo_set_source_rgba (cr, &bg);
                       cairo_move_to (cr, x + 1 + .5, y + .5);
                       cairo_line_to (cr, x + 1 + .5, y + height - 1 - .5);
                       cairo_stroke (cr);
                 }
-	}
+        }
 }
 
 static gboolean

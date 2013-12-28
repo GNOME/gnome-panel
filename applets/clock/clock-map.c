@@ -8,6 +8,8 @@
 #include <gtk/gtk.h>
 #include <math.h>
 
+#include <gnome-panel/libpanel-util/panel-color.h>
+
 #include "clock.h"
 #include "clock-map.h"
 #include "clock-sunpos.h"
@@ -227,24 +229,19 @@ static gboolean
 clock_map_draw (GtkWidget *this, cairo_t *cr)
 {
         ClockMapPrivate *priv = PRIVATE (this);
-	GtkStyleContext *context;
-	GdkRGBA  color;
-        GtkSymbolicColor *symbolic, *lighter_symbolic;
+        GtkStyleContext *context;
+        GdkRGBA  color;
         int width, height;
 
         context = gtk_widget_get_style_context (this);
         gtk_style_context_get_color (context, GTK_STATE_FLAG_ACTIVE, &color);
 
         /* Color for the outline. We want a light version of the active color */
-        symbolic = gtk_symbolic_color_new_literal (&color);
-        lighter_symbolic = gtk_symbolic_color_new_shade (symbolic, 3);
-        gtk_symbolic_color_resolve (lighter_symbolic, NULL, &color);
-        gtk_symbolic_color_unref (symbolic);
-        gtk_symbolic_color_unref (lighter_symbolic);
+        gtk_style_shade (&color, &color, 3);
 
-	if (!priv->shadow_map_pixbuf) {
+        if (!priv->shadow_map_pixbuf) {
                 g_warning ("Needed to refresh the map in draw event.");
-		clock_map_refresh (CLOCK_MAP (this));
+                clock_map_refresh (CLOCK_MAP (this));
         }
 
         width = gdk_pixbuf_get_width (priv->shadow_map_pixbuf);
@@ -260,7 +257,7 @@ clock_map_draw (GtkWidget *this, cairo_t *cr)
         cairo_set_line_width (cr, 1.0);
         cairo_stroke (cr);
 
-	return FALSE;
+        return FALSE;
 }
 
 static void

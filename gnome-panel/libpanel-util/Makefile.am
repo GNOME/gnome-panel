@@ -51,6 +51,8 @@ libpanel_util_la_SOURCES =		\
 	panel-cleanup.h			\
 	panel-dconf.c			\
 	panel-dconf.h			\
+	panel-color.c			\
+	panel-color.h			\
 	panel-error.c			\
 	panel-error.h			\
 	panel-glib.c			\

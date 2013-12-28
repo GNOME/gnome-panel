@@ -58,6 +58,7 @@ CLOCK_CPPFLAGS =						\
 
 CLOCK_LDADD =						\
 	../../libpanel-applet/libpanel-applet-4.la	\
+	../../gnome-panel/libpanel-util/libpanel-util.la	\
 	$(CLOCK_LIBS)					\
 	$(CLOCK_EDS_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
