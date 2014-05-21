@@ -1,30 +1,39 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
 <interface>
-  <requires lib="gtk+" version="2.16"/>
-  <!-- interface-naming-policy toplevel-contextual -->
+  <requires lib="gtk+" version="3.0"/>
+  <object class="GtkImage" id="run_button_image">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-execute</property>
+  </object>
   <object class="GtkDialog" id="panel_run_dialog">
+    <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Run Application</property>
-    <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox1">
+      <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkVBox" id="main_box">
+          <object class="GtkBox" id="main_box">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="border_width">5</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
-              <object class="GtkHBox" id="entry_box">
+              <object class="GtkBox" id="entry_box">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <object class="GtkAlignment" id="alignment1">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
                     <property name="xscale">0</property>
@@ -32,6 +41,7 @@
                     <child>
                       <object class="GtkImage" id="icon_pixmap">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="xalign">0</property>
                         <property name="yalign">0</property>
                         <property name="stock">gtk-missing-image</property>
@@ -52,22 +62,32 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVBox" id="vbox2">
+                  <object class="GtkBox" id="vbox2">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkComboBoxText" id="comboboxentry">
                         <property name="visible">True</property>
-                        <property name="has-entry">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="has_entry">True</property>
+                        <child internal-child="entry">
+                          <object class="GtkEntry" id="comboboxtext-entry1">
+                            <property name="can_focus">True</property>
+                          </object>
+                        </child>
                       </object>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkHBox" id="hbox2">
+                      <object class="GtkBox" id="hbox2">
                         <property name="visible">True</property>
+                        <property name="can_focus">False</property>
                         <property name="spacing">12</property>
                         <child>
                           <object class="GtkCheckButton" id="terminal_checkbox">
@@ -76,6 +96,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
+                            <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <child internal-child="accessible">
                               <object class="AtkObject" id="terminal_checkbox-atkobject">
@@ -84,6 +105,8 @@
                             </child>
                           </object>
                           <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">0</property>
                           </packing>
                         </child>
@@ -108,17 +131,22 @@
                         </child>
                       </object>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -128,22 +156,26 @@
                 <property name="can_focus">True</property>
                 <property name="expanded">True</property>
                 <child>
-                  <object class="GtkVBox" id="program_list_box">
+                  <object class="GtkBox" id="program_list_box">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="vexpand">True</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <property name="vscrollbar_policy">automatic</property>
                         <property name="shadow_type">in</property>
                         <child>
                           <object class="GtkTreeView" id="program_list">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="vexpand">True</property>
                             <property name="headers_visible">False</property>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection" id="treeview-selection1"/>
+                            </child>
                             <child internal-child="accessible">
                               <object class="AtkObject" id="program_list-atkobject">
                                 <property name="AtkObject::accessible-name" translatable="yes">List of known applications</property>
@@ -153,13 +185,15 @@
                         </child>
                       </object>
                       <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel" id="program_label">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="xalign">0</property>
                         <property name="yalign">0</property>
                         <property name="label" translatable="yes">Select an application to view its description.</property>
@@ -177,6 +211,7 @@
                 <child type="label">
                   <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
                     <property name="label" translatable="yes">Show list of known _applications</property>
@@ -185,17 +220,22 @@
                 </child>
               </object>
               <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="position">1</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area1">
+          <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <child>
               <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
@@ -236,8 +276,8 @@
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>
@@ -246,9 +286,5 @@
       <action-widget response="-6">cancel_button</action-widget>
       <action-widget response="-5">run_button</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkImage" id="run_button_image">
-    <property name="visible">True</property>
-    <property name="stock">gtk-execute</property>
   </object>
 </interface>
