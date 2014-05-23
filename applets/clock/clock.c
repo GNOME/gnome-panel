@@ -1423,6 +1423,8 @@ save_cities_store (ClockData *cd)
 
         g_settings_set_value (cd->applet_settings, "cities",
                               g_variant_builder_end (&builder));
+
+        create_cities_store (cd);
 }
 
 static void
