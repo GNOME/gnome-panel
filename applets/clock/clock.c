@@ -1440,7 +1440,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         const gchar *timezone, *weather_code;
         gchar *city, *name;
 
-        GWeatherLocation *gloc;
+        GWeatherLocation *gloc, *station_loc;
         gfloat lat = 0;
         gfloat lon = 0;
 
@@ -1465,7 +1465,13 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                 return;
         }
 
-        weather_code = gweather_location_get_code (gloc);
+        station_loc = gloc;
+        while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
+                station_loc = gweather_location_get_children (station_loc)[0];
+                g_assert (station_loc != NULL);
+        }
+
+        weather_code = gweather_location_get_code (station_loc);
         if (gweather_location_entry_has_custom_text (cd->location_entry)) {
                 name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
         }
