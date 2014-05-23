@@ -113,6 +113,8 @@ applet_change_orient (PanelApplet       *applet,
   
 	tasklist->orientation = new_orient;
 
+	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
+
 	tasklist_update (tasklist);
 }
 
@@ -385,11 +387,10 @@ window_list_applet_fill (PanelApplet *applet)
 
 	tasklist->tasklist = wnck_tasklist_new ();
 
-        wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
-                                       icon_loader_func,
-                                       tasklist,
-                                       NULL);
-        
+	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
+	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
+	                               icon_loader_func, tasklist, NULL);
+
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
