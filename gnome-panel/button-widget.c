@@ -171,11 +171,11 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 					 button->priv->orientation & PANEL_HORIZONTAL_MASK ? button->priv->size : -1,
 					 &error);
 		if (error) {
-			//FIXME: this is not rendered at button->priv->size
-			button->priv->pixbuf =
-				gtk_widget_render_icon_pixbuf (GTK_WIDGET (button),
-                                                               GTK_STOCK_MISSING_IMAGE,
-                                                               (GtkIconSize) -1);
+			button->priv->pixbuf = gtk_icon_theme_load_icon (button->priv->icon_theme,
+			                                                 "image-missing",
+			                                                 button->priv->size,
+			                                                 0, NULL);
+
 			g_free (error);
 		}
 
