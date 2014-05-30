@@ -9,14 +9,15 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Tommi Vainikainen <thv@iki.fi>, 2009-2011.
 # Jiri Grönroos <jiri.gronroos@iki.fi>, 2012.
+# Lasse Liehu <lasse.liehu@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-14 15:12+0000\n"
-"PO-Revision-Date: 2012-09-14 18:40+0300\n"
-"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"POT-Creation-Date: 2014-05-03 07:08+0000\n"
+"PO-Revision-Date: 2014-05-04 02:09+0300\n"
+"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +34,7 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:310
+#: ../applets/clock/calendar-window.c:311
 #: ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%I.%M %p"
@@ -45,7 +46,7 @@ msgstr "%I.%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:315
+#: ../applets/clock/calendar-window.c:316
 #: ../applets/clock/clock-location-tile.c:466
 #: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
@@ -54,135 +55,134 @@ msgstr "%H.%M"
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:321
+#: ../applets/clock/calendar-window.c:322
 msgid "%b %d"
 msgstr "%d.%m."
 
-#: ../applets/clock/calendar-window.c:830
+#: ../applets/clock/calendar-window.c:831
 msgid "Tasks"
 msgstr "Tehtävät"
 
-#: ../applets/clock/calendar-window.c:830
-#: ../applets/clock/calendar-window.c:1013
-#: ../applets/clock/calendar-window.c:1551
+#: ../applets/clock/calendar-window.c:831
+#: ../applets/clock/calendar-window.c:1014
+#: ../applets/clock/calendar-window.c:1550
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: ../applets/clock/calendar-window.c:953
+#: ../applets/clock/calendar-window.c:954
 msgid "All Day"
 msgstr "Koko päivä"
 
-#: ../applets/clock/calendar-window.c:1097
+#: ../applets/clock/calendar-window.c:1098
 msgid "Appointments"
 msgstr "Tapaamiset"
 
-#: ../applets/clock/calendar-window.c:1122
+#: ../applets/clock/calendar-window.c:1123
 msgid "Birthdays and Anniversaries"
 msgstr "Syntymä- ja vuosipäivät"
 
-#: ../applets/clock/calendar-window.c:1147
+#: ../applets/clock/calendar-window.c:1148
 msgid "Weather Information"
 msgstr "Säätiedot"
 
-#: ../applets/clock/calendar-window.c:1551 ../applets/clock/clock.ui.h:22
+#: ../applets/clock/calendar-window.c:1550 ../applets/clock/clock.ui.h:22
 msgid "Locations"
 msgstr "Sijainnit"
 
-#: ../applets/clock/calendar-window.c:1806
+#: ../applets/clock/calendar-window.c:1805
 msgid "Calendar"
 msgstr "Kalenteri"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:310
+#: ../applets/clock/clock.c:309
 msgid "%A %B %d (%%s)"
 msgstr "%A %e. %Bta %Y (%%s)"
 
-#: ../applets/clock/clock.c:322
+#: ../applets/clock/clock.c:321
 msgid "Click to hide your appointments and tasks"
 msgstr "Piilota tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:325
+#: ../applets/clock/clock.c:324
 msgid "Click to view your appointments and tasks"
 msgstr "Näytä tapaamisesi ja tehtäväsi napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:329
+#: ../applets/clock/clock.c:328
 msgid "Click to hide month calendar"
 msgstr "Piilota kuukauden kalenteri napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:332
+#: ../applets/clock/clock.c:331
 msgid "Click to view month calendar"
 msgstr "Näytä kuukauden kalenteri napsauttamalla tästä"
 
-#: ../applets/clock/clock.c:992
+#: ../applets/clock/clock.c:991
 msgid "Computer Clock"
 msgstr "Tietokoneen kello"
 
-#: ../applets/clock/clock.c:1171
+#: ../applets/clock/clock.c:1170
 msgid "Failed to open the time settings"
 msgstr "Ajan asetusten avaaminen epäonnistui"
 
-#: ../applets/clock/clock.c:1191 ../applets/fish/fish.c:1307
+#: ../applets/clock/clock.c:1190 ../applets/fish/fish.c:1307
 #: ../applets/wncklet/window-list.c:155
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "_Asetukset"
 
-#: ../applets/clock/clock.c:1194
-#| msgid "Copy _Time"
+#: ../applets/clock/clock.c:1193
 msgid "Copy Date and _Time"
 msgstr "Kopioi päivä ja _aika"
 
-#: ../applets/clock/clock.c:1197
+#: ../applets/clock/clock.c:1196
 msgid "Ad_just Date & Time"
 msgstr "_Aseta päiväys ja aika"
 
-#: ../applets/clock/clock.c:1768
+#: ../applets/clock/clock.c:1767
 msgid "Choose Location"
 msgstr "Valitse sijainti"
 
-#: ../applets/clock/clock.c:1847
+#: ../applets/clock/clock.c:1846
 msgid "Edit Location"
 msgstr "Muokkaa sijaintia"
 
-#: ../applets/clock/clock.c:1881
+#: ../applets/clock/clock.c:1880
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: ../applets/clock/clock.c:1882
+#: ../applets/clock/clock.c:1881
 msgid "Celsius"
 msgstr "Celsius"
 
-#: ../applets/clock/clock.c:1883
+#: ../applets/clock/clock.c:1882
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: ../applets/clock/clock.c:1888
+#: ../applets/clock/clock.c:1887
 msgid "Meters per second (m/s)"
 msgstr "Metriä sekunnissa (m/s)"
 
-#: ../applets/clock/clock.c:1889
+#: ../applets/clock/clock.c:1888
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometriä tunnissa (km/h)"
 
-#: ../applets/clock/clock.c:1890
+#: ../applets/clock/clock.c:1889
 msgid "Miles per hour (mph)"
 msgstr "Mailia tunnissa (mph)"
 
-#: ../applets/clock/clock.c:1891
+#: ../applets/clock/clock.c:1890
 msgid "Knots"
 msgstr "Solmut"
 
-#: ../applets/clock/clock.c:1892
+#: ../applets/clock/clock.c:1891
 msgid "Beaufort scale"
 msgstr "Beaufortin asteikko"
 
-#: ../applets/clock/clock.c:1945
+#: ../applets/clock/clock.c:1944
 msgid "City Name"
 msgstr "Kaupungin nimi"
 
-#: ../applets/clock/clock.c:1949
+#: ../applets/clock/clock.c:1948
 msgid "City Time Zone"
 msgstr "Kaupungin aikavyöhyke"
 
@@ -249,9 +249,6 @@ msgstr "Aurinko nousee: %s / laskee: %s"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
 #: ../applets/clock/clock.ui.h:2
-#| msgid ""
-#| "<small><i>Type a city, region, or country name and then select a match "
-#| "from the pop-up.</i></small>"
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
@@ -267,7 +264,6 @@ msgid "_Location Name:"
 msgstr "_Sijainnin nimi:"
 
 #: ../applets/clock/clock.ui.h:5
-#| msgid "<i>(optional)</i>"
 msgid "(optional)"
 msgstr "(valinnainen)"
 
@@ -524,7 +520,7 @@ msgstr "Kala"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Näytä uiva kala tai jokin muu liikkuva eliö"
 
-#: ../applets/notification_area/main.c:242
+#: ../applets/notification_area/main.c:245
 msgid "Panel Notification Area"
 msgstr "Paneelin ilmoitusalue"
 
@@ -703,6 +699,15 @@ msgstr "Näytä _työtilojen nimet vaihtimessa"
 msgid "Workspaces"
 msgstr "Työtilat"
 
+#: ../data/gnome-fallback.desktop.in.in.h:1
+#: ../data/gnome-flashback.session.desktop.in.h:1
+msgid "GNOME Flashback"
+msgstr ""
+
+#: ../data/gnome-fallback.desktop.in.in.h:2
+msgid "This session logs you into GNOME with the traditional panel"
+msgstr ""
+
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
 msgid "Show date in tooltip"
 msgstr "Näytä päiväys vinkissä"
@@ -780,14 +785,12 @@ msgid "List of locations"
 msgstr "Luettelo sijainneista"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
-#| msgid "A list of locations to display in the calendar window."
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
 msgstr ""
-"Luettelo sijainneista, jotka näytetään kalenteri-ikkunassa. Jokainen sijainti "
-"on "
-"monikko näyttönimestä, METAR-koodista ja koordinaateista."
+"Luettelo sijainneista, jotka näytetään kalenteri-ikkunassa. Jokainen "
+"sijainti on monikko näyttönimestä, METAR-koodista ja koordinaateista."
 
 #: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
@@ -861,8 +864,8 @@ msgid ""
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Määrittelee, milloin saman sovelluksen ikkunat ryhmittyvät "
-"ikkunaluettelossa. Käypiä arvoja ovat ”never” (ei koskaan), "
-"”auto” (automaattisesti) ja ”always” (aina)."
+"ikkunaluettelossa. Käypiä arvoja ovat ”never” (ei koskaan), ”auto” "
+"(automaattisesti) ja ”always” (aina)."
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
 msgid "Move windows to current workspace when unminimized"
@@ -993,9 +996,9 @@ msgid ""
 msgstr ""
 "Luettelo sovelmien IID:istä, jotka paneeli jättää huomiotta. Tällä tavoin "
 "voit estää tiettyjen sovelmien latautumisen tai valikoissa näkymisen. Jos "
-"esimerkiksi haluat poistaa sovelman ”mini-commander” käytöstä, lisää ”OAFIID:"
-"GNOME_MiniCommanderApplet” tähän luetteloon. Paneeli täytyy käynnistää "
-"uudelleen, jotta tämä tulee voimaan."
+"esimerkiksi haluat poistaa sovelman ”mini-commander” käytöstä, lisää "
+"”OAFIID:GNOME_MiniCommanderApplet” tähän luetteloon. Paneeli täytyy "
+"käynnistää uudelleen, jotta tämä tulee voimaan."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid "Disable Force Quit"
@@ -1106,8 +1109,8 @@ msgstr "Olio-IID"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
 msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
+"The implementation ID of the object - e.g. "
+"\"ClockAppletFactory::ClockApplet\"."
 msgstr "Olion toteutustunniste - esim. ”ClockAppletFactory::ClockApplet”."
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
@@ -1201,18 +1204,18 @@ msgstr "Paneelin suunta"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
 msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
+"The orientation of the panel. Possible values are \"top\", \"bottom\", "
+"\"left\", \"right\". In expanded mode the key specifies which screen edge "
+"the panel is on. In un-expanded mode the difference between \"top\" and "
+"\"bottom\" is less important - both indicate that this is a horizontal panel "
+"- but still give a useful hint as to how some panel objects should behave. "
+"For example, on a \"top\" panel a menu button will pop up its menu below the "
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Paneelin suunta. Mahdollisia arvoja ovat ”top” (yläreuna), "
-"”bottom” (alareuna), ”left” (vasen reuna) ja ”right” (oikea reuna). "
-"Laajennetussa tilassa tämä määrittelee millä ruudun reunalla paneeli on. "
+"Paneelin suunta. Mahdollisia arvoja ovat ”top” (yläreuna), ”bottom” "
+"(alareuna), ”left” (vasen reuna) ja ”right” (oikea reuna). Laajennetussa "
+"tilassa tämä määrittelee millä ruudun reunalla paneeli on. "
 "Laajentamattomassa tilassa ero arvojen ”top” ja ”bottom” välillä on vähemmän "
 "tärkeä, molemmat tarkoittavat, että paneeli on vaakasuuntainen, mutta "
 "antavat silti vihjeen eräille paneeliesineille miten niiden pitäisi toimia. "
@@ -1231,7 +1234,7 @@ msgid ""
 "(or width)."
 msgstr ""
 "Paneelin korkeus (tai pystypaneelin leveys). Paneelin minimikoko määrittyy "
-"ajonaikaisesti kirjasinkoon ja muiden merkkien perusteella. Maksimikoko on "
+"ajonaikaisesti fonttikoon ja muiden merkkien perusteella. Maksimikoko on "
 "kiinteä yksi neljäsosa ruudun korkeudesta (tai leveydestä)."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
@@ -1275,8 +1278,8 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
-"Paneelin sijainti x-akselilla, alkaen näytön oikeasta laidasta. Jos arvo on "
-"-1, arvoa ei käytetä ja käytetään arvoa avaimesta x. Jos arvo on suurempi "
+"Paneelin sijainti x-akselilla, alkaen näytön oikeasta laidasta. Jos arvo on -"
+"1, arvoa ei käytetä ja käytetään arvoa avaimesta x. Jos arvo on suurempi "
 "kuin 0, jätetään avaimen x arvo huomioimatta. Tällä arvolla on merkitystä "
 "vain laajentamattomassa tilassa. Laajennetussa tilassa tätä avainta ei "
 "huomioida, ja paneeli asetetaan orientation-avaimen määräämän sijainnin "
@@ -1418,13 +1421,13 @@ msgstr "Animaationopeus"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
 msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
+"The speed in which panel animations should occur. Possible values are "
+"\"slow\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Nopeus, jolla paneelianimaatiot näkyvät. Mahdollisia arvoja ovat "
-"”slow” (hidas), ”medium” (keskinopea) ja ”fast” (nopea). Tällä on merkitystä "
-"vain jos avaimen ”enable_animations” arvo on tosi."
+"Nopeus, jolla paneelianimaatiot näkyvät. Mahdollisia arvoja ovat ”slow” "
+"(hidas), ”medium” (keskinopea) ja ”fast” (nopea). Tällä on merkitystä vain "
+"jos avaimen ”enable_animations” arvo on tosi."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background type"
@@ -1547,8 +1550,7 @@ msgstr "Tätä URLia ei voi näyttää"
 msgid "No URL was specified."
 msgstr "URLia ei ole määritelty."
 
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:52
+#: ../gnome-panel/launcher.c:175 ../gnome-panel/libpanel-util/panel-launch.c:52
 msgid "Could not launch application"
 msgstr "Ohjelmaa ei voi käynnistää"
 
@@ -1711,7 +1713,6 @@ msgstr "Lukitse tietokoneen näyttö ja estä luvaton käyttö"
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: ../gnome-panel/panel-action-button.c:307
-#| msgid "_Log Out"
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
@@ -1737,7 +1738,7 @@ msgstr ""
 "Etsi asiakirjoja ja kansioita tietokoneelta nimen tai sisällön perusteella"
 
 #: ../gnome-panel/panel-action-button.c:333
-#: ../gnome-panel/panel-force-quit.c:239
+#: ../gnome-panel/panel-force-quit.c:241
 msgid "Force Quit"
 msgstr "Sulje väkisin"
 
@@ -1759,7 +1760,6 @@ msgid "Power Off"
 msgstr "Sammuta"
 
 #: ../gnome-panel/panel-action-button.c:351
-#| msgid "Shut down the computer"
 msgid "Power off the computer"
 msgstr "Sammuta tietokone"
 
@@ -2004,17 +2004,17 @@ msgstr "Käynnistimestä suoritettavaa komentoa ei ole asetettu."
 msgid "The location of the launcher is not set."
 msgstr "Käynnistimen sijaintia ei ole asetettu."
 
-#: ../gnome-panel/panel-force-quit.c:77
+#: ../gnome-panel/panel-force-quit.c:79
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Pakota sovellus sulkeutumaan napsauttamalla ikkunaa. Peru painamalla Escape."
 
-#: ../gnome-panel/panel-force-quit.c:222
+#: ../gnome-panel/panel-force-quit.c:224
 msgid "Force this application to exit?"
 msgstr "Suljetaanko tämä sovellus väkisin?"
 
-#: ../gnome-panel/panel-force-quit.c:225
+#: ../gnome-panel/panel-force-quit.c:227
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2022,7 +2022,7 @@ msgstr ""
 "Jos suljet sovelluksen väkisin, saatetaan avoimissa asiakirjoissa olevat "
 "tallentamattomat muutokset menettää."
 
-#: ../gnome-panel/panel-layout.c:1197 ../gnome-panel/panel-layout.c:1211
+#: ../gnome-panel/panel-layout.c:1189 ../gnome-panel/panel-layout.c:1203
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Ei voitu luoda alustavaa paneeliasettelua.\n"
@@ -2265,31 +2265,35 @@ msgstr "Unohda viimeisimmät asiakirjat…"
 msgid "Clear all items from the recent documents list"
 msgstr "Unohdetaanko viimeisimmät asiakirjat?"
 
-#: ../gnome-panel/panel-run-dialog.c:361
+#: ../gnome-panel/panel-run-dialog.c:434
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+
+#: ../gnome-panel/panel-run-dialog.c:498
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Komentoa ”%s” ei voi suorittaa"
 
-#: ../gnome-panel/panel-run-dialog.c:409
+#: ../gnome-panel/panel-run-dialog.c:548
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Tekstiä ”%s” ei voi muuntaa UTF-8:sta"
 
-#: ../gnome-panel/panel-run-dialog.c:1156
+#: ../gnome-panel/panel-run-dialog.c:1295
 msgid "Choose a file to append to the command..."
 msgstr "Valitse komennon perään liitettävä tiedosto…"
 
-#: ../gnome-panel/panel-run-dialog.c:1539
+#: ../gnome-panel/panel-run-dialog.c:1678
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Katsele sovelluksen kuvausta valitsemalla se."
 
-#: ../gnome-panel/panel-run-dialog.c:1577
+#: ../gnome-panel/panel-run-dialog.c:1716
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Suorittaa komennon ”%s”"
 
-#: ../gnome-panel/panel-run-dialog.c:1610
+#: ../gnome-panel/panel-run-dialog.c:1749
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2432,73 +2436,73 @@ msgstr "_Sovelma:"
 msgid "_Prefs Dir:"
 msgstr "_Asetuskansio:"
 
-#: ../gnome-panel/panel-toplevel.c:1272
+#: ../gnome-panel/panel-toplevel.c:1274
 msgid "Hide Panel"
 msgstr "Piilota paneeli"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1657
+#: ../gnome-panel/panel-toplevel.c:1659
 msgid "Top Expanded Edge Panel"
 msgstr "Laajennettu yläreunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1658
+#: ../gnome-panel/panel-toplevel.c:1660
 msgid "Top Centered Panel"
 msgstr "Keskitetty yläpaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1659
+#: ../gnome-panel/panel-toplevel.c:1661
 msgid "Top Floating Panel"
 msgstr "Irrallinen yläpaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1660
+#: ../gnome-panel/panel-toplevel.c:1662
 msgid "Top Edge Panel"
 msgstr "Yläreunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1664
+#: ../gnome-panel/panel-toplevel.c:1666
 msgid "Bottom Expanded Edge Panel"
 msgstr "Laajennettu alareunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1665
+#: ../gnome-panel/panel-toplevel.c:1667
 msgid "Bottom Centered Panel"
 msgstr "Keskitetty alapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1666
+#: ../gnome-panel/panel-toplevel.c:1668
 msgid "Bottom Floating Panel"
 msgstr "Irrallinen alapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1667
+#: ../gnome-panel/panel-toplevel.c:1669
 msgid "Bottom Edge Panel"
 msgstr "Alareunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1671
+#: ../gnome-panel/panel-toplevel.c:1673
 msgid "Left Expanded Edge Panel"
 msgstr "Laajennettu vasen reunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1672
+#: ../gnome-panel/panel-toplevel.c:1674
 msgid "Left Centered Panel"
 msgstr "Keskitetty vasen reunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1673
+#: ../gnome-panel/panel-toplevel.c:1675
 msgid "Left Floating Panel"
 msgstr "Irrallinen vasen paneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1674
+#: ../gnome-panel/panel-toplevel.c:1676
 msgid "Left Edge Panel"
 msgstr "Vasen reunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1678
+#: ../gnome-panel/panel-toplevel.c:1680
 msgid "Right Expanded Edge Panel"
 msgstr "Laajennettu oikea reunapaneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1679
+#: ../gnome-panel/panel-toplevel.c:1681
 msgid "Right Centered Panel"
 msgstr "Keskitetty oikea paneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1680
+#: ../gnome-panel/panel-toplevel.c:1682
 msgid "Right Floating Panel"
 msgstr "Irrallinen oikea paneeli"
 
-#: ../gnome-panel/panel-toplevel.c:1681
+#: ../gnome-panel/panel-toplevel.c:1683
 msgid "Right Edge Panel"
 msgstr "Oikea reunapaneeli"
 
@@ -2550,788 +2554,3 @@ msgstr "DBus-testisovelma"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Yksinkertainen GNOME-paneelin testisovelma"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%I.%M.%S %p"
-
-#~ msgid "%H:%M:%S"
-#~ msgstr "%H.%M.%S"
-
-#~ msgid "%a %b %e"
-#~ msgstr "%a %e. %Bta"
-
-#~ msgid ""
-#~ "%1$s\n"
-#~ "%2$s"
-#~ msgstr ""
-#~ "%1$s\n"
-#~ "%2$s"
-
-#~ msgid "%1$s, %2$s"
-#~ msgstr "%1$s, %2$s"
-
-#~ msgid "%I:%M:%S %p"
-#~ msgstr "%I.%M.%S %p"
-
-#~ msgid "%I:%M %p"
-#~ msgstr "%I.%M %p"
-
-#~ msgid "%A, %B %d %Y"
-#~ msgstr "%A %e. %Bta %Y"
-
-#~ msgid "Copy _Date"
-#~ msgstr "Kopioi _päiväys"
-
-#~ msgid "Custom format"
-#~ msgstr "Muu muoto"
-
-#~ msgid "24 hour"
-#~ msgstr "24-tuntinen"
-
-#~ msgid "UNIX time"
-#~ msgstr "Unix-aika"
-
-#~ msgid "Internet time"
-#~ msgstr "Internet-aika"
-
-#~ msgid "Custom _format:"
-#~ msgstr "Muu _muoto:"
-
-#~ msgid "24-hour"
-#~ msgstr "24-hour"
-
-#~ msgid "Custom format of the clock"
-#~ msgstr "Mukautettu ajan näyttömuoto"
-
-#~ msgid "Hour format"
-#~ msgstr "Tuntimuoto"
-
-#~ msgid "If true, display date in the clock, in addition to time."
-#~ msgstr "Jos tosi, päiväys näkyy kellossa ajan lisäksi."
-
-#~ msgid "If true, display seconds in time."
-#~ msgstr "Jos tosi, sekunnit näkyvät ajassa."
-
-#~ msgid "Show date in clock"
-#~ msgstr "Näytä päiväys kellossa"
-
-#~ msgid "Show time with seconds"
-#~ msgstr "Näytä sekunnit"
-
-#~ msgid "Speed unit"
-#~ msgstr "Nopeusyksikkö"
-
-#~ msgid "Temperature unit"
-#~ msgstr "Lämpötilayksikkö"
-
-#~ msgid "The unit to use when showing temperatures."
-#~ msgstr "Lämpötiloja näytettäessä käytettävä yksikkö."
-
-#~ msgid "The unit to use when showing wind speed."
-#~ msgstr "Tuulen nopeutta näytettäessä käytettävä yksikkö."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.22 with the use of an "
-#~ "internal time configuration tool. The schema is retained for "
-#~ "compatibility with older versions."
-#~ msgstr ""
-#~ "Tämän avain poistettiin käytöstä GNOME 2.22 -versiossa sisäisen aika-"
-#~ "asettelun lisäyksen ansiosta. Tämä kaavain on säilytetty vanhojen "
-#~ "versioiden yhteensopivuuden vuoksi."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-#~ "timezones. The schema is retained for compatibility with older versions."
-#~ msgstr ""
-#~ "Tämän avaimen käyttö ei ole suositeltua GNOME 2.28:ssa. Käytä mieluummin "
-#~ "aikavyöhykkeitä. Kaavain on olemassa yhteensopivuuden vuoksi."
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-#~ "key. The schema is retained for compatibility with older versions."
-#~ msgstr ""
-#~ "Tämän avaimen käyttö ei ole suositeltua GNOME 2.6:ssa. Käytä mieluummin "
-#~ "”format”-avainta. Kaavain on olemassa yhteensopivuuden vuoksi."
-
-#~ msgid ""
-#~ "This key specifies the format used by the clock applet when the format "
-#~ "key is set to \"custom\". You can use conversion specifiers understood by "
-#~ "strftime() to obtain a specific format. See the strftime() manual for "
-#~ "more information."
-#~ msgstr ""
-#~ "Tämä avain määrittelee kellosovelman näyttämän ajan muodon, kun avaimen "
-#~ "”format” arvo on ”custom”. Voit käyttää kaikkia strftime()-kutsun "
-#~ "ymmärtämiä aikamääreitä. Lue strftime-ohjesivulta lisätietoja."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
-#~ "\". If set to \"internet\", the clock will display Internet time. The "
-#~ "Internet time system divides the day into 1000 \".beats\". There are no "
-#~ "time zones in this system, so time is the same all over the world. If set "
-#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
-#~ "1970-01-01. If set to \"custom\", the clock will display time according "
-#~ "to the format specified in the custom_format key."
-#~ msgstr ""
-#~ "Tämä avain määrittelee kellosovelman näyttämän ajan muodon. Mahdollisia "
-#~ "arvoja ovat ”12-hour” (12-tuntinen), ”24-hour” (24-tuntinen), ”internet”, "
-#~ "”unix” ja ”custom” (mukautettu). Jos arvo on ”internet”, kello näyttää "
-#~ "”Internet-aikaa”, jossa päivä on jaettu tuhanteen ”.sykäykseen”. "
-#~ "Aikavyöhykkeitä tässä järjestelmässä ei ole, joten aika on sama "
-#~ "kaikkialla. Jos arvo on ”unix”, kello laskee sekunteja alkukohdasta "
-#~ "(1.1.1970) alkaen. Jos arvo on ”custom”, kello näyttää ajan käyttäjän "
-#~ "avaimessa ”custom_format” määrittelemässä muodossa."
-
-#~ msgid "Time configuration tool"
-#~ msgstr "Ajan asetustyökalu"
-
-#~ msgid "Use Internet time"
-#~ msgstr "Näytä Internet-aikaa"
-
-#~ msgid "Use UNIX time"
-#~ msgstr "Näytä Unix-aikaa"
-
-#~ msgid "Use UTC"
-#~ msgstr "Näytä UTC-aikaa"
-
-#~ msgid "Unknown"
-#~ msgstr "Tuntematon"
-
-#~ msgid "Log Out..."
-#~ msgstr "Kirjaudu ulos…"
-
-#~ msgid "Shut Down..."
-#~ msgstr "Sammuta…"
-
-#~ msgid "Could not display help document"
-#~ msgstr "Ohjetiedostoa ei voi näyttää"
-
-#~ msgid "_Help"
-#~ msgstr "O_hje"
-
-#~ msgid "Unable to load file '%s': %s."
-#~ msgstr "Tiedostoa ”%s” ei voi ladata: %s."
-
-#~ msgid "Could not display properties dialog"
-#~ msgstr "Ominaisuusikkunaa ei voi näyttää"
-
-#~ msgid "<small>Opaque</small>"
-#~ msgstr "<small>Peittävä</small>"
-
-#~ msgid "<small>Transparent</small>"
-#~ msgstr "<small>Läpinäkyvä</small>"
-
-#~ msgid "Could not display run dialog"
-#~ msgstr "Suoritusikkunaa ei voi näyttää"
-
-#~ msgid "My Account"
-#~ msgstr "Oma tili"
-
-#~ msgid "Set System Time..."
-#~ msgstr "Aseta tietokoneen aika…"
-
-#~ msgid "Set System Time"
-#~ msgstr "Aseta tietokoneen aika"
-
-#~ msgid "The Clock displays the current time and date"
-#~ msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
-
-#~ msgid "Current Time:"
-#~ msgstr "Nykyinen aika:"
-
-#~ msgid "Time & Date"
-#~ msgstr "Päiväys ja aika"
-
-#~ msgid "_Set System Time"
-#~ msgstr "_Aseta tietokoneen aika"
-
-#~ msgid "_Time:"
-#~ msgstr "_Aika:"
-
-#~ msgid "Change system time"
-#~ msgstr "Muuta tietokoneen aikaa"
-
-#~ msgid "Change system time zone"
-#~ msgstr "Vaihda tietokoneen aikavyöhykettä"
-
-#~ msgid "Configure hardware clock"
-#~ msgstr "Aseta tietokoneen laitekello"
-
-#~ msgid "Privileges are required to change the system time zone."
-#~ msgstr ""
-#~ "Ylläpitäjän oikeudet vaaditaan järjestelmän aikavyöhykkeen vaihtamiseksi."
-
-#~ msgid "Privileges are required to change the system time."
-#~ msgstr "Ylläpitäjän oikeudet vaaditaan järjestelmän ajan vaihtamiseksi."
-
-#~ msgid "Privileges are required to configure the hardware clock."
-#~ msgstr "Ylläpitäjän oikeudet vaaditaan järjestelmäkellon muuttamiseksi."
-
-#~ msgid ""
-#~ "%s has no use what-so-ever. It only takes up disk space and compilation "
-#~ "time, and if loaded it also takes up precious panel space and memory. "
-#~ "Anybody found using it should be promptly sent for a psychiatric "
-#~ "evaluation."
-#~ msgstr ""
-#~ "%s ei sovi mihinkään käyttöön. Se ainoastaan vie tilaa kiintolevyltä ja "
-#~ "pidentää käännösaikaa. Jos se ladataan paneeliin, se voi myös viedä "
-#~ "arvokasta muistia sekä paneelitilaa. Jos joku tavataan käyttämästä tätä "
-#~ "sovelmaa, hänet pitäisi pikaisesti lähettää asiantuntevaan hoitoon."
-
-#~ msgid "(with minor help from George)"
-#~ msgstr "(Georgen pienoisella avustuksella)"
-
-#~ msgid "Select an animation"
-#~ msgstr "Valitse animaatio"
-
-#~ msgid "_File:"
-#~ msgstr "_Tiedosto:"
-
-#~ msgid "_Total frames in animation:"
-#~ msgstr "_Ruutuja animaatiossa yhteensä:"
-
-#~ msgid "frames"
-#~ msgstr "ruutua"
-
-#~ msgid "Frames in fish's animation"
-#~ msgstr "Kalan animaation ruutujen määrä"
-
-#~ msgid ""
-#~ "This key specifies the number of frames that will be displayed in the "
-#~ "fish's animation."
-#~ msgstr "Kalan animaation ruutujen määrä."
-
-#~ msgid "This button lets you hide all windows and show the desktop."
-#~ msgstr "Tämä painike piilottaa kaikki ikkunat ja näyttää työpöydän."
-
-#~ msgid ""
-#~ "The Window List shows a list of all windows in a set of buttons and lets "
-#~ "you browse them."
-#~ msgstr ""
-#~ "Ikkunaluettelo näyttää kaikki ikkunat joukkona painikkeita joiden avulla "
-#~ "ikkunoita voi vaihtaa."
-
-#~ msgid "Maximum window list size"
-#~ msgstr "Suurin ikkunalistan koko"
-
-#~ msgid "Minimum window list size"
-#~ msgstr "Pienin ikkunalistan koko"
-
-#~ msgid ""
-#~ "The use of this key was deprecated in GNOME 2.20. The schema is retained "
-#~ "for compatibility with older versions."
-#~ msgstr ""
-#~ "Tämä avain on vanhentunut Gnome 2.20-julkaisussa. Kaavain on olemassa "
-#~ "yhteensopivuuden vuoksi."
-
-#~ msgid ""
-#~ "The Window Selector shows a list of all windows in a menu and lets you "
-#~ "browse them."
-#~ msgstr ""
-#~ "Ikkunavalitsin näyttää kaikki ikkunat valikkona josta ikkunoita voi "
-#~ "vaihtaa."
-
-#~ msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-#~ msgstr "Virhe num_rows-arvon latautuessa työtilanvaihdinta varten: %s\n"
-
-#~ msgid ""
-#~ "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-#~ msgstr ""
-#~ "Virhe display_workspace_names-arvon latautuessa työtilanvaihdinta varten: "
-#~ "%s\n"
-
-#~ msgid ""
-#~ "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-#~ msgstr ""
-#~ "Virhe display_all_workspaces-arvon latautuessa työtilanvaihdinta varten: "
-#~ "%s\n"
-
-#~ msgid ""
-#~ "The Workspace Switcher shows you a small version of your workspaces that "
-#~ "lets you manage your windows."
-#~ msgstr ""
-#~ "Työtilanvaihdin näyttää työtilasi pienennettyinä ja helpottaa ikkunoiden "
-#~ "hallintaa."
-
-#~ msgid "Loc_k To Panel"
-#~ msgstr "_Lukitse paneeliin"
-
-#~ msgid "Cannot find an empty spot"
-#~ msgstr "Tyhjää paikkaa ei löydy"
-
-#~ msgid "Drawer"
-#~ msgstr "Vetolaatikko"
-
-#~ msgid "_Add to Drawer..."
-#~ msgstr "_Lisää laatikkoon…"
-
-#~ msgid "Add this launcher to _panel"
-#~ msgstr "Lisää tämä käynnistin _paneeliin"
-
-#~ msgid "Add this launcher to _desktop"
-#~ msgstr "Lisää tämä käynnistin _työpöydälle"
-
-#~ msgid "_Entire menu"
-#~ msgstr "_Koko valikko"
-
-#~ msgid "Add this as _drawer to panel"
-#~ msgstr "Lisää tämä _vetolaatikkona paneeliin"
-
-#~ msgid "Add this as _menu to panel"
-#~ msgstr "Lisää tämä _valikkona paneeliin"
-
-#~ msgid "<b>GAME OVER</b> at level %d!"
-#~ msgstr "<b>PELI PÄÄTTYI</b> tasolle %d!"
-
-#~ msgid "%1$s   %2$s   %3$s"
-#~ msgstr "%1$s - %2$s - %3$s"
-
-#~ msgid "Press 'q' to quit"
-#~ msgstr "Lopeta painamalla 'q'"
-
-#~ msgid "Paused"
-#~ msgstr "Pysäytetty"
-
-#~ msgid "Press 'p' to unpause"
-#~ msgstr "Jatka painamalla p"
-
-#~ msgid "Level: %s,  Lives: %s"
-#~ msgstr "Taso: %s, Elämiä: %s"
-
-#~ msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
-#~ msgstr ""
-#~ "Siirtyminen vasen ja oikea, tulitus välilyönti, tauko ”p” ja lopetus ”q”"
-
-#~ msgid "Killer GEGLs from Outer Space"
-#~ msgstr "Tappajageglit ulkoavaruudesta"
-
-#~ msgid "A pop out drawer to store other items in"
-#~ msgstr "Ulos ponnahtava laatikko, johon voi siirtää esineitä"
-
-#~ msgid "query returned exception %s\n"
-#~ msgstr "kysely palautti poikkeuksen %s\n"
-
-#~ msgid "Add to Drawer"
-#~ msgstr "Lisää laatikkoon"
-
-#~ msgid "Find an _item to add to the drawer:"
-#~ msgstr "Valitse laatikkoon lisättävä _esine:"
-
-#~ msgid "Exception from popup_menu '%s'\n"
-#~ msgstr "Poikkeus popup_menusta ”%s”\n"
-
-#~ msgid "Unable to obtain AppletShell interface from control\n"
-#~ msgstr "AppletShell-rajapinnan saaminen säätimeltä ei onnistu\n"
-
-#~ msgid "And many, many others..."
-#~ msgstr "Ja monet, monet muut…"
-
-#~ msgid "The GNOME Panel"
-#~ msgstr "Gnomen paneeli"
-
-#~ msgid ""
-#~ "This program is responsible for launching other applications and provides "
-#~ "useful utilities."
-#~ msgstr ""
-#~ "Tämä ohjelma käynnistää muita ohjelmia ja tarjoaa hyödyllisiä apuohjelmia."
-
-#~ msgid "About the GNOME Panel"
-#~ msgstr "Tietoja Gnomen paneelista"
-
-#~ msgid "A_bout Panels"
-#~ msgstr "_Tietoja paneeleista"
-
-#~ msgid ""
-#~ "A boolean flag to indicate whether the user's previous configuration in /"
-#~ "apps/panel/profiles/default has been copied to the new location in /apps/"
-#~ "panel."
-#~ msgstr ""
-#~ "Totuusarvo, joka ilmaisee onko käyttäjän vanhat asetukset sijainnista /"
-#~ "apps/panel/profiles/default kopioitu uuteen paikkaan sijainnissa apps/"
-#~ "panel."
-
-#~ msgid ""
-#~ "A list of panel applet IDs. Each ID identifies an individual panel "
-#~ "applet. The settings for each of these applets are stored in /apps/panel/"
-#~ "applets/$(id)."
-#~ msgstr ""
-#~ "Luettelo paneelisovelmien ID:istä. Jokainen ID kuvaa yksittäistä "
-#~ "paneelisovelmaa. Näiden paneelisovelmien asetukset ovat sijainnissa /apps/"
-#~ "panel/applets/$(id)."
-
-#~ msgid "Old profiles configuration migrated"
-#~ msgstr "Vanhat profiiliasetukset kopioitu nykyiseen paikkaan"
-
-#~ msgid "Panel applet ID list"
-#~ msgstr "Paneelisovelmien ID-luettelo"
-
-#~ msgid "Autoclose drawer"
-#~ msgstr "Sulje laatikko itsestään"
-
-#~ msgid "Deprecated"
-#~ msgstr "Vanhentunut"
-
-#~ msgid "Disable Logging Out"
-#~ msgstr "Poista ulos kirjautuminen käytöstä"
-
-#~ msgid "Enable animations"
-#~ msgstr "Käytä animaatioita"
-
-#~ msgid "Highlight launchers on mouseover"
-#~ msgstr "Korosta käynnistimet kun hiiri on niiden päällä"
-
-#~ msgid ""
-#~ "If true, a drawer will automatically be closed when the user clicks a "
-#~ "launcher in it."
-#~ msgstr ""
-#~ "Jos tosi, laatikko sulkeutuu itsestään kun käyttäjä napsauttaa siinä "
-#~ "olevaa käynnistintä."
-
-#~ msgid ""
-#~ "If true, a launcher is highlighted when the user moves the pointer over "
-#~ "it."
-#~ msgstr "Jos tosi, käynnistin korostuu kun käyttäjä siirtää hiiren sen ylle."
-
-#~ msgid ""
-#~ "If true, the panel will not allow a user to log out, by removing access "
-#~ "to the log out menu entries."
-#~ msgstr ""
-#~ "Jos tosi, paneeli ei salli käyttäjän kirjautua ulos, eli "
-#~ "uloskirjautumisvalinnat poistuvat valikoista."
-
-#~ msgid "If true, tooltips are shown for objects in panels."
-#~ msgstr "Jos tosi, paneelien esineiden vinkit näkyvät."
-
-#~ msgid ""
-#~ "This key is deprecated as it cannot be used to implement proper lockdown. "
-#~ "The /desktop/gnome/lockdown/disable_lock_screen key should be used "
-#~ "instead."
-#~ msgstr ""
-#~ "Tämä avain on vanhentunut eikä sitä voida käyttää toteuttamaan lukitusta "
-#~ "kunnolla. Avainta /desktop/gnome/lockdown/disable_lock_screen tulisi "
-#~ "käyttää tämän sijaa."
-
-#~ msgid "Change desktop appearance and behavior, get help, or log out"
-#~ msgstr "Muuta työpöydän ulkoasua ja toimintaa, etsi apua tai kirjaudu ulos"
-
-#~ msgid "System"
-#~ msgstr "Järjestelmä"
-
-#~ msgid "Log Out %s..."
-#~ msgstr "Kirjaa ulos käyttäjä %s…"
-
-#~ msgid "Log out %s of this session to log in as a different user"
-#~ msgstr ""
-#~ "Kirjaa ulos käyttäjä %s, jos haluat kirjautua sisään toisena käyttäjänä"
-
-#~ msgid "Action button type"
-#~ msgstr "Toimintopainikkeen tyyppi"
-
-#~ msgid ""
-#~ "If true, the custom_icon key is used as a custom icon for the button. If "
-#~ "false, the custom_icon key is ignored. This key is only relevant if the "
-#~ "object_type key is \"menu-object\" or \"drawer-object\"."
-#~ msgstr ""
-#~ "Jos tosi, avain ”custom_icon” määrittelee painikkeen mukautetun "
-#~ "kuvakkeen. Jos epätosi, avain ”custom_icon” jää huomiotta. Tällä on "
-#~ "merkitystä vain jos avaimen ”object_type” arvo on ”menu-object” tai "
-#~ "”drawer-object”."
-
-#~ msgid ""
-#~ "If true, the menu_path key is used as the path from which the menu "
-#~ "contents should be constructed. If false, the menu_path key is ignored. "
-#~ "This key is only relevant if the object_type key is \"menu-object\"."
-#~ msgstr ""
-#~ "Jos tosi, avain ”menu_path” määrittelee polun, josta valikon sisältö "
-#~ "rakentuu. Jos epätosi, ”menu_path” jää huomiotta. Tällä on merkitystä "
-#~ "vain jos avaimen ”object_type” arvo on ”menu-object”."
-
-#~ msgid ""
-#~ "If true, the user may not move the applet without first unlocking the "
-#~ "object using the \"Unlock\" menuitem."
-#~ msgstr ""
-#~ "Jos tosi, käyttäjä ei voi siirtää sovelmaa avaamatta esineen lukitusta "
-#~ "valitsemalla valikosta ”Avaa lukitus”."
-
-#~ msgid "Lock the object to the panel"
-#~ msgstr "Lukitse esine paneeliin"
-
-#~ msgid "Panel attached to drawer"
-#~ msgstr "Laatikkoon liittyvä paneeli"
-
-#~ msgid "Panel object type"
-#~ msgstr "Paneeliesineen tyyppi"
-
-#~ msgid ""
-#~ "The action type this button represents. Possible values are \"lock\", "
-#~ "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-#~ "relevant if the object_type key is \"action-applet\"."
-#~ msgstr ""
-#~ "Toimintotyyppi, jota tämä painike vastaa. Mahdollisia arvoja ovat "
-#~ "”lock” (lukitse), ”logout” (kirjaudu ulos), ”search” (etsi) ja "
-#~ "”screenshot” (ota kuvakaappaus). Tällä on merkitystä vain jos avaimen "
-#~ "”object_type” arvo on ”action-applet”."
-
-#~ msgid ""
-#~ "The identifier of the panel attached to this drawer. This key is only "
-#~ "relevant if the object_type key is \"drawer-object\"."
-#~ msgstr ""
-#~ "Tähän laatikkoon liittyvän paneelin tunniste. Tällä on merkitystä vain "
-#~ "jos avaimen ”object_type” arvo on ”drawer-object”."
-
-#~ msgid ""
-#~ "The text to display in a tooltip for this drawer or this menu. This key "
-#~ "is only relevant if the object_type key is \"drawer-object\" or \"menu-"
-#~ "object\"."
-#~ msgstr ""
-#~ "Tämän laatikon tai valikon vinkissä näkyvä teksti. Tällä on merkitystä "
-#~ "vain jos avaimen ”object_type” arvo on ”drawer-object” tai ”menu-object”."
-
-#~ msgid "Use custom icon for object's button"
-#~ msgstr "Käytä mukautettua kuvaketta esineen painikkeessa"
-
-#~ msgid "Use custom path for menu contents"
-#~ msgstr "Käytä mukautettua polkua valikon sisällölle"
-
-#~ msgid "Error reading GConf string value '%s': %s"
-#~ msgstr "Virhe GConf-merkkijonoarvon ”%s” lukemisessa: %s"
-
-#~ msgid "Error reading GConf integer value '%s': %s"
-#~ msgstr "Virhe GConf-kokonaislukuarvon ”%s” lukemisessa: %s"
-
-#~ msgid ""
-#~ "Panel '%s' is set to be displayed on screen %d which is not currently "
-#~ "available. Not loading this panel."
-#~ msgstr ""
-#~ "Paneeli ”%s” on määritelty ruudulla %d näkyväksi, mutta ruutu ei ole nyt "
-#~ "käytössä. Paneeli ei lataudu."
-
-#~ msgid "Error reading GConf boolean value '%s': %s"
-#~ msgstr "Virhe GConf-totuusarvon ”%s” lukemisessa: %s"
-
-#~ msgid "Drawer Properties"
-#~ msgstr "Vetimen ominaisuudet"
-
-#~ msgid "_Icon:"
-#~ msgstr "K_uvake:"
-
-#~ msgid "Background color opacity"
-#~ msgstr "Taustavärin peittävyys"
-
-#~ msgid "Fit image to panel"
-#~ msgstr "Sovita kuva paneeliin"
-
-#~ msgid ""
-#~ "If true, hiding and un-hiding of this panel will be animated rather than "
-#~ "happening instantly."
-#~ msgstr ""
-#~ "Jos tosi, tämän paneelin piilottaminen ja ilmestyminen näkyvät "
-#~ "animoituina sen sijaan että tapahtuisivat välittömästi."
-
-#~ msgid ""
-#~ "If true, the image will be scaled (retaining the aspect ratio of the "
-#~ "image) to the panel height (if horizontal)."
-#~ msgstr ""
-#~ "Jos tosi, kuva skaalautuu (säilyttäen sivusuhteensa) paneelin korkeuteen "
-#~ "(jos vaakasuunnassa)."
-
-#~ msgid ""
-#~ "If true, the image will be scaled to the panel dimensions. The aspect "
-#~ "ratio of the image will not be maintained."
-#~ msgstr ""
-#~ "Jos tosi, kuva skaalautuu paneelin mittojen mukaan. Kuvan sivusuhde ei "
-#~ "tällöin säily."
-
-#~ msgid ""
-#~ "Specifies the opacity of the background color format. If the color is not "
-#~ "completely opaque (a value of less than 65535), the color will be "
-#~ "composited onto the desktop background image."
-#~ msgstr ""
-#~ "Määrittelee taustavärimuodon peittävyyden. Jos väri ei ole täysin "
-#~ "peittävä (arvo on pienempi kuin 65535), väri piirtyy työpöydän "
-#~ "taustakuvan päälle."
-
-#~ msgid "Stretch image to panel"
-#~ msgstr "Venytä kuva paneeliin sopivaksi"
-
-#~ msgid "Could not execute '%s'"
-#~ msgstr "Komennon ”%s” suorittaminen epäonnistui"
-
-#~ msgid "Delete this drawer?"
-#~ msgstr "Poistetaanko tämä laatikko?"
-
-#~ msgid ""
-#~ "When a drawer is deleted, the drawer and its\n"
-#~ "settings are lost."
-#~ msgstr ""
-#~ "Kun laatikko poistetaan, se ja siihen liittyvät\n"
-#~ "asetukset häviävät."
-
-#~ msgid "If true, display time in Universal Coordinated Time zone."
-#~ msgstr "Jos tosi, näytä yleismaailmallista aikaa (UTC)"
-
-#~ msgid "Browse icons"
-#~ msgstr "Selaa kuvakkeita"
-
-#~ msgid "<b>Clock Options</b>"
-#~ msgstr "<b>Kellon valinnat</b>"
-
-#~ msgid "<b>Animation</b>"
-#~ msgstr "<b>Animaatio</b>"
-
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>Yleistä</b>"
-
-#~ msgid "Disable Lock Screen"
-#~ msgstr "Poista ruudun lukitseminen käytöstä"
-
-#~ msgid ""
-#~ "If true, the panel will not allow a user to lock their screen, by "
-#~ "removing access to the lock screen menu entries."
-#~ msgstr ""
-#~ "Jos tosi, paneeli ei salli käyttäjän lukita näyttöruutua, eli "
-#~ "näyttöruudun lukitsemisvalinnat poistuvat valikoista."
-
-#~ msgid "Command entry"
-#~ msgstr "Komentolaatikko"
-
-#~ msgid "Enter a command string here to run it."
-#~ msgstr "Suorita komento kirjoittamalla se tähän."
-
-#~ msgid "Failed to launch time configuration tool: %s"
-#~ msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
-
-#~ msgid ""
-#~ "Failed to locate a program for configuring the date and time. Perhaps "
-#~ "none is installed?"
-#~ msgstr ""
-#~ "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
-#~ "sitä ei ole asennettu?"
-
-#~ msgid "Time Settings"
-#~ msgstr "Aika-asetukset"
-
-#~ msgid ""
-#~ "This key specifies the program to run in order to configure the time."
-#~ msgstr "Ohjelma, joka käynnistetään, kun aika-asetuksia halutaan muuttaa."
-
-#~ msgid "_Command:"
-#~ msgstr "_Komento:"
-
-#~ msgid "There was an error displaying help: %s"
-#~ msgstr "Ohjeen näyttämisessä tapahtui virhe: %s"
-
-#~ msgid "GNOME Panel Shell"
-#~ msgstr "Gnomen paneelikuori"
-
-#~ msgid "Desktop Folder|Desktop"
-#~ msgstr "Työpöytä"
-
-#~ msgid "Orientation|Top"
-#~ msgstr "Ylhäällä"
-
-#~ msgid "Orientation|Bottom"
-#~ msgstr "Alhaalla"
-
-#~ msgid "Orientation|Left"
-#~ msgstr "Vasemmalla"
-
-#~ msgid "Orientation|Right"
-#~ msgstr "Oikealla"
-
-#~ msgid "The panel has encountered a fatal error"
-#~ msgstr "Paneelissa tapahtui kriittinen virhe"
-
-#~ msgid "Force the panel to not be automatically restarted"
-#~ msgstr "Estä paneelin automaattinen uudelleenkäynnistys"
-
-#~ msgid "Failed to get pixmap %s"
-#~ msgstr "Kuvan %s saaminen ei onnistunut"
-
-#~ msgid "Unknown background type received"
-#~ msgstr "Tuntematon taustatyyppi vastaanotettu"
-
-#~ msgid "The Applet's containing Panel's size in pixels"
-#~ msgstr "Sovelman sisältävän paneelin koko kuvapisteinä"
-
-#~ msgid "The Applet's containing Panel's background color or pixmap"
-#~ msgstr "Sovelman sisältävän paneelin taustan väri tai kuva"
-
-#~ msgid "The Applet's flags"
-#~ msgstr "Sovelman liput"
-
-#~ msgid "Ranges that hint what sizes are acceptable for the applet"
-#~ msgstr "Välit, jotka vihjaavat, mitkä ovat sopivia kokoja sovelmalle"
-
-#~ msgid "The Applet's containing Panel is locked down"
-#~ msgstr "Sovelman sisältävä paneeli on lukittu"
-
-#~ msgid "Find _Next"
-#~ msgstr "Etsi _seuraava"
-
-#~ msgid "_Find:"
-#~ msgstr "_Etsi:"
-
-#~ msgid "Enter Password"
-#~ msgstr "Syötä salasana"
-
-#~ msgid "Could not find a suitable application."
-#~ msgstr "Sopivaa sovellusta ei löydy."
-
-#~ msgid "Unknown Location"
-#~ msgstr "Tuntematon sijainti"
-
-#~ msgid "<b>Active timezones</b>"
-#~ msgstr "<b>Aktiiviset aikavyöhykkeet</b>"
-
-#~ msgid "<b>Add timezone</b>"
-#~ msgstr "<b>Lisää aikavyöhyke</b>"
-
-#~ msgid "<small><b>Location:</b></small>"
-#~ msgstr "<small><b>Sijainti:</b></small>"
-
-#~ msgid ""
-#~ "<small><i>Click on the map to zoom and select the timezone of a city, or "
-#~ "right click to zoom out.</i></small>"
-#~ msgstr ""
-#~ "<small><i>Lähennä napsauttamalla karttaa ja valitse kaupungin "
-#~ "aikavyöhyke. Voit loitontaa oikeasta napista.</i></small>"
-
-#~ msgid "Edit Timezones"
-#~ msgstr "Muokkaa aikavyöhykkeitä"
-
-#~ msgid "move the mouse on the map"
-#~ msgstr "siirrä hiirtä kartalla"
-
-#~ msgid "Name"
-#~ msgstr "Nimi"
-
-#~ msgid "Timezone"
-#~ msgstr "Aikavyöhyke"
-
-#~ msgid "%s with daylight saving (UTC %s%.2ld:%.2ld)"
-#~ msgstr "%s kesäajassa (UTC %s%.2ld:%.2ld)"
-
-#~ msgid "%s (UTC %s%.2ld:%.2ld)"
-#~ msgstr "%s (UTC %s%.2ld:%.2ld)"
-
-#~ msgid "Timezones"
-#~ msgstr "Aikavyöhykkeet"
-
-#~ msgid "Log out of this system now?"
-#~ msgstr "Haluatko kirjautua heti ulos?"
-
-#~ msgid "Shut down this system now?"
-#~ msgstr "Haluatko sammuttaa tietokoneen heti?"
-
-#~ msgid "S_uspend"
-#~ msgstr "_Keskeytystila"
-
-#~ msgid "_Hibernate"
-#~ msgstr "_Lepotila"
-
-#~ msgid "_Restart"
-#~ msgstr "_Käynnistä uudelleen"
-
-#~ msgid "_Shut Down"
-#~ msgstr "_Sammuta"
