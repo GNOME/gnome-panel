@@ -1399,7 +1399,7 @@ create_main_menu (PanelWidget *panel)
 {
 	GtkWidget *main_menu;
 
-	main_menu = create_applications_menu ("applications.menu", NULL, TRUE);
+	main_menu = create_applications_menu ("gnome-applications.menu", NULL, TRUE);
 
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 	/* FIXME need to update the panel on parent_set */

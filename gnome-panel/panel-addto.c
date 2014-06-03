@@ -663,7 +663,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+	tree = gmenu_tree_new ("gnome-applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, NULL)) {
 		g_object_unref (tree);
@@ -672,7 +672,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	if (tree != NULL && (root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
-						   root, "applications.menu",
+						   root, "gnome-applications.menu",
 						   PANEL_ADDTO_MENU_SHOW_ALL);
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 

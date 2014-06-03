@@ -914,7 +914,7 @@ get_all_applications (void)
 	GMenuTreeDirectory *root;
 	GSList             *retval;
 
-	tree = gmenu_tree_new ("applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+	tree = gmenu_tree_new ("gnome-applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, NULL))
 		return NULL;

@@ -71,7 +71,7 @@ typedef struct {
 } MenuPathRootItem;
 
 static MenuPathRootItem root_items [] = {
-	{ APPLICATIONS_MENU, "applications", "applications.menu" },
+	{ APPLICATIONS_MENU, "applications", "gnome-applications.menu" },
 	{ GNOMECC_MENU,      "gnomecc",      "gnomecc.menu"      }
 };
 
