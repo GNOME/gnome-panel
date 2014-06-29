@@ -1266,34 +1266,55 @@ calendar_month_selected (GtkCalendar    *calendar,
         handle_tasks_changed (calwin);
 }
 
-static void
-setup_list_size_constraint (GtkWidget *widget,
-                            GtkWidget *calendar,
-                            GtkWidget *tree)
+typedef struct
 {
-	GtkRequisition   req;
+        GtkWidget *calendar;
+        GtkWidget *tree;
+} ConstraintData;
+
+static void
+constrain_list_size (GtkWidget      *widget,
+                     GtkRequisition *requisition,
+                     ConstraintData *constraint)
+{
+        GtkRequisition   req;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
-	int              screen_h;
-	int              max_height;
-	int              req_height;
+        int              screen_h;
+        int              max_height;
 
-	/* constrain width to the calendar width */
-	gtk_widget_get_preferred_size (calendar, &req, NULL);
+        /* constrain width to the calendar width */
+        gtk_widget_get_preferred_size (constraint->calendar, &req, NULL);
+        requisition->width = MIN (requisition->width, req.width);
 
 	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
         /* constrain height to be the tree height up to a max */
-	max_height = (screen_h - req.height) / 3;
-	gtk_widget_get_preferred_size (tree, &req, NULL);
+        max_height = (screen_h - req.height) / 3;
+        gtk_widget_get_preferred_size (constraint->tree, &req, NULL);
 
 	state = gtk_widget_get_state_flags (widget);
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (context, state, &padding);
 
-	req_height = MIN (req.height, max_height);
-	req_height += padding.top + padding.bottom;
-	gtk_widget_set_size_request (widget, req.width, req_height);
+        requisition->height = MIN (req.height, max_height);
+        requisition->height += padding.top + padding.bottom;
+}
+
+static void
+setup_list_size_constraint (GtkWidget *widget,
+                            GtkWidget *calendar,
+                            GtkWidget *tree)
+{
+        ConstraintData *constraint;
+
+        constraint           = g_new0 (ConstraintData, 1);
+        constraint->calendar = calendar;
+        constraint->tree     = tree;
+
+        g_signal_connect_data (widget, "size-request",
+                               G_CALLBACK (constrain_list_size), constraint,
+                               (GClosureNotify) g_free, 0);
 }
 
 #endif /* HAVE_EDS */
