@@ -1274,7 +1274,7 @@ typedef struct
 
 static void
 constrain_list_size (GtkWidget      *widget,
-                     GtkRequisition *requisition,
+                     GtkAllocation  *allocation,
                      ConstraintData *constraint)
 {
         GtkRequisition   req;
@@ -1282,11 +1282,13 @@ constrain_list_size (GtkWidget      *widget,
 	GtkStateFlags    state;
 	GtkBorder        padding;
         int              screen_h;
+        int              width;
+        int              height;
         int              max_height;
 
         /* constrain width to the calendar width */
         gtk_widget_get_preferred_size (constraint->calendar, &req, NULL);
-        requisition->width = MIN (requisition->width, req.width);
+        width = MIN (allocation->width, req.width);
 
 	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
         /* constrain height to be the tree height up to a max */
@@ -1297,8 +1299,12 @@ constrain_list_size (GtkWidget      *widget,
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_get_padding (context, state, &padding);
 
-        requisition->height = MIN (req.height, max_height);
-        requisition->height += padding.top + padding.bottom;
+        height = MIN (req.height, max_height);
+        height += padding.top + padding.bottom;
+        /* top & bottom border */
+        height += 2;
+
+        gtk_widget_set_size_request (widget, width, height);
 }
 
 static void
@@ -1312,7 +1318,7 @@ setup_list_size_constraint (GtkWidget *widget,
         constraint->calendar = calendar;
         constraint->tree     = tree;
 
-        g_signal_connect_data (widget, "size-request",
+        g_signal_connect_data (widget, "size-allocate",
                                G_CALLBACK (constrain_list_size), constraint,
                                (GClosureNotify) g_free, 0);
 }
