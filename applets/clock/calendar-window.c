@@ -45,14 +45,14 @@
 #include "clock.h"
 #include "clock-utils.h"
 #include "clock-typebuiltins.h"
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 #include "calendar-client.h"
 #endif
 
 #define CALENDAR_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_WINDOW, CalendarWindowPrivate))
 
 #define KEY_LOCATIONS_EXPANDED      "expand-locations"
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 #  define KEY_APPOINTMENTS_EXPANDED "expand-appointments"
 #  define KEY_BIRTHDAYS_EXPANDED    "expand-birthdays"
 #  define KEY_TASKS_EXPANDED        "expand-tasks"
@@ -81,7 +81,7 @@ struct _CalendarWindowPrivate {
 
 	GtkWidget *locations_list;
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	GDesktopClockFormat time_format;
 
         CalendarClient *client;
@@ -100,7 +100,7 @@ struct _CalendarWindowPrivate {
         GtkTreeModelFilter *birthdays_filter;
         GtkTreeModelFilter *tasks_filter;
         GtkTreeModelFilter *weather_filter;
-#endif /* HAVE_LIBECAL */
+#endif /* HAVE_EDS */
 };
 
 G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
@@ -126,7 +126,7 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 						   GCallback   callback,
 						   gboolean    bind_to_locked_down);
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 
 /*
  * Set the DISPLAY variable, to be use by g_spawn_async.
@@ -1299,13 +1299,13 @@ setup_list_size_constraint (GtkWidget *widget,
 	gtk_widget_set_size_request (widget, req.width, req_height);
 }
 
-#endif /* HAVE_LIBECAL */
+#endif /* HAVE_EDS */
 
 static void
 calendar_window_pack_pim (CalendarWindow *calwin,
 			  GtkWidget      *vbox)
 {
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	GtkWidget *list;
         GtkWidget *tree_view;
         GtkWidget *scrolled_window;
@@ -1404,7 +1404,7 @@ calendar_window_pack_pim (CalendarWindow *calwin,
 			  "month-changed",
 			  G_CALLBACK (calendar_month_selected),
 			  calwin);
-#endif /* HAVE_LIBECAL */
+#endif /* HAVE_EDS */
 }
 
 static GtkWidget *
@@ -1691,7 +1691,7 @@ calendar_window_set_property (GObject       *object,
 static void
 calendar_window_dispose (GObject *object)
 {
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	CalendarWindow *calwin;
 
 	calwin = CALENDAR_WINDOW (object);
@@ -1725,7 +1725,7 @@ calendar_window_dispose (GObject *object)
         calwin->priv->weather_filter = NULL;
 
 	g_clear_object (&calwin->priv->settings);
-#endif /* HAVE_LIBECAL */
+#endif /* HAVE_EDS */
 
 	G_OBJECT_CLASS (calendar_window_parent_class)->dispose (object);
 }
@@ -1803,7 +1803,7 @@ calendar_window_init (CalendarWindow *calwin)
 	gtk_window_set_title (window, _("Calendar"));
 	gtk_window_set_icon_name (window, CLOCK_ICON);
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	calwin->priv->previous_selection = NULL;
 #endif
 }
@@ -1828,7 +1828,7 @@ calendar_window_refresh (CalendarWindow *calwin)
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	if (calwin->priv->appointments_filter && calwin->priv->appointment_list)
 		gtk_tree_model_filter_refilter (calwin->priv->appointments_filter);
 	if (calwin->priv->birthdays_filter && calwin->priv->birthday_list)
@@ -1905,7 +1905,7 @@ calendar_window_get_time_format (CalendarWindow *calwin)
 	g_return_val_if_fail (CALENDAR_IS_WINDOW (calwin),
 			      G_DESKTOP_CLOCK_FORMAT_24H);
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	return calwin->priv->time_format;
 #else
 	return G_DESKTOP_CLOCK_FORMAT_24H;
@@ -1918,7 +1918,7 @@ calendar_window_set_time_format (CalendarWindow      *calwin,
 {
 	g_return_if_fail (CALENDAR_IS_WINDOW (calwin));
 
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 	if (time_format != G_DESKTOP_CLOCK_FORMAT_12H &&
 	    time_format != G_DESKTOP_CLOCK_FORMAT_24H)
 		time_format = clock_locale_format ();

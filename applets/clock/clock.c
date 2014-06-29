@@ -302,7 +302,7 @@ update_tooltip (ClockData * cd)
                 g_free (format);
                 g_free (tip);
         } else {
-#ifdef HAVE_LIBECAL
+#ifdef HAVE_EDS
 		if (cd->calendar_popup)
 			gtk_widget_set_tooltip_text (cd->panel_button,
 						     _("Click to hide your appointments and tasks"));
