@@ -52,8 +52,9 @@ typedef struct {
         GSettings *settings;
 } TasklistData;
 
-static void display_properties_dialog (GtkAction    *action,
-				       TasklistData *tasklist);
+static void display_properties_dialog (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer       user_data);
 
 static void
 tasklist_update (TasklistData *tasklist)
@@ -153,10 +154,8 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
         g_free (tasklist);
 }
 
-static const GtkActionEntry tasklist_menu_actions [] = {
-	{ "TasklistPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-	  NULL, NULL,
-	  G_CALLBACK (display_properties_dialog) }
+static const GActionEntry tasklist_menu_actions [] = {
+        { "preferences", display_properties_dialog, NULL, NULL, NULL },
 };
 
 static void
@@ -354,8 +353,8 @@ gboolean
 window_list_applet_fill (PanelApplet *applet)
 {
 	TasklistData *tasklist;
-	GtkActionGroup *action_group;
-	GtkAction *action;
+	GSimpleActionGroup *action_group;
+	GAction *action;
 
 	tasklist = g_new0 (TasklistData, 1);
 
@@ -422,19 +421,22 @@ window_list_applet_fill (PanelApplet *applet)
 	panel_applet_set_background_widget (PANEL_APPLET (tasklist->applet),
 					    GTK_WIDGET (tasklist->applet));
 
-	action_group = gtk_action_group_new ("Tasklist Applet Actions");
-	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (action_group,
-				      tasklist_menu_actions,
-				      G_N_ELEMENTS (tasklist_menu_actions),
-				      tasklist);
+	action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 tasklist_menu_actions,
+	                                 G_N_ELEMENTS (tasklist_menu_actions),
+	                                 tasklist);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (tasklist->applet),
 					       WNCKLET_RESOURCE_PATH "window-list-menu.xml",
-					       action_group);
+					       action_group,
+					       GETTEXT_PACKAGE);
 
-	action = gtk_action_group_get_action (action_group, "TasklistPreferences");
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "tasklist",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
 	g_object_bind_property (tasklist->applet, "locked-down",
-				action, "visible",
+				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
 	g_object_unref (action_group);
@@ -577,9 +579,12 @@ setup_dialog (GtkBuilder   *builder,
 
 
 static void 
-display_properties_dialog (GtkAction    *action,
-			   TasklistData *tasklist)
+display_properties_dialog (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
+	TasklistData *tasklist = (TasklistData *) user_data;
+
 	if (tasklist->properties_dialog == NULL) {
 		GtkBuilder *builder;
 

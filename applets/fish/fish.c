@@ -259,9 +259,11 @@ handle_response (GtkWidget  *widget,
 }
 
 static void 
-display_preferences_dialog (GtkAction  *action,
-			    FishApplet *fish)
+display_preferences_dialog (GSimpleAction *action,
+                            GVariant      *parameter,
+                            gpointer       user_data)
 {
+	FishApplet *fish = FISH_APPLET (user_data);
 	GtkBuilder *builder;
 	GtkWidget  *box;
 	GtkWidget  *name_entry;
@@ -1301,10 +1303,8 @@ setup_fish_widget (FishApplet *fish)
 	gtk_widget_show_all (widget);
 }
 
-static const GtkActionEntry fish_menu_verbs [] = {
-	{ "FishPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-	  NULL, NULL,
-	  G_CALLBACK (display_preferences_dialog) }
+static const GActionEntry fish_menu_actions [] = {
+	{ "preferences", display_preferences_dialog, NULL, NULL, NULL }
 };
 
 static void
@@ -1427,9 +1427,9 @@ fish_applet_settings_changed (GSettings  *settings,
 static gboolean
 fish_applet_fill (FishApplet *fish)
 {
-	PanelApplet    *applet = (PanelApplet *) fish;
-	GtkActionGroup *action_group;
-	GtkAction      *action;
+	PanelApplet        *applet = PANEL_APPLET (fish);
+	GSimpleActionGroup *action_group;
+	GAction            *action;
 
 	fish->orientation = panel_applet_get_orient (applet);
 
@@ -1441,19 +1441,22 @@ fish_applet_fill (FishApplet *fish)
 	/* NULL means we will update for all settings */
 	fish_applet_settings_changed (fish->settings, NULL, fish);
 
-	action_group = gtk_action_group_new ("Fish Applet Actions");
-	gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (action_group,
-				      fish_menu_verbs,
-				      G_N_ELEMENTS (fish_menu_verbs),
-				      fish);
+	action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 fish_menu_actions,
+	                                 G_N_ELEMENTS (fish_menu_actions),
+	                                 fish);
 	panel_applet_setup_menu_from_resource (applet,
 					       FISH_RESOURCE_PATH "fish-menu.xml",
-					       action_group);
+					       action_group,
+					       GETTEXT_PACKAGE);
 
-	action = gtk_action_group_get_action (action_group, "FishPreferences");
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "fish",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
 	g_object_bind_property (applet, "locked-down",
-				action, "visible",
+				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
 	g_object_unref (action_group);

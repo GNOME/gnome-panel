@@ -164,13 +164,16 @@ void               panel_applet_request_focus        (PanelApplet  *applet,
 
 void               panel_applet_setup_menu           (PanelApplet        *applet,
 						      const gchar        *xml,
-						      GtkActionGroup     *action_group);
+						      GSimpleActionGroup *action_group,
+						      const gchar        *translation_domain);
 void               panel_applet_setup_menu_from_file (PanelApplet        *applet,
 						      const gchar        *filename,
-						      GtkActionGroup     *action_group);
+						      GSimpleActionGroup *action_group,
+						      const gchar        *translation_domain);
 void               panel_applet_setup_menu_from_resource (PanelApplet    *applet,
 						          const gchar    *resource_path,
-							  GtkActionGroup *action_group);
+							  GSimpleActionGroup *action_group,
+							  const gchar        *translation_domain);
 
 int                panel_applet_factory_main          (const gchar		  *factory_id,
 						       GType                       applet_type,

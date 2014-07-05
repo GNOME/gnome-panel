@@ -150,8 +150,9 @@ static void  update_panel_weather (ClockData *cd);
 static void set_atk_name_description (GtkWidget *widget,
                                       const char *name,
                                       const char *desc);
-static void verb_display_properties_dialog (GtkAction  *action,
-                                            ClockData  *cd);
+static void verb_display_properties_dialog (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer       user_data);
 
 static void display_properties_dialog (ClockData  *cd,
                                        gboolean    start_in_locations_page);
@@ -1051,9 +1052,11 @@ panel_button_change_pixel_size (GtkWidget     *widget,
 }
 
 static void
-copy_time (GtkAction *action,
-	   ClockData *cd)
+copy_time (GSimpleAction *action,
+           GVariant      *parameter,
+	   gpointer       user_data)
 {
+        ClockData *cd = (ClockData *) user_data;
 	const char *time;
 
         time = gnome_wall_clock_get_clock (cd->wall_clock);
@@ -1127,23 +1130,18 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 }
 
 static void
-config_date (GtkAction *action,
-             ClockData *cd)
+config_date (GSimpleAction *action,
+             GVariant      *parameter,
+             gpointer       user_data)
 {
+        ClockData *cd = (ClockData *) user_data;
 	run_time_settings (NULL, cd);
 }
 
-/* current timestamp */
-static const GtkActionEntry clock_menu_actions [] = {
-        { "ClockPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-          NULL, NULL,
-          G_CALLBACK (verb_display_properties_dialog) },
-        { "ClockCopyTime", GTK_STOCK_COPY, N_("Copy Date and _Time"),
-          NULL, NULL,
-          G_CALLBACK (copy_time) },
-        { "ClockConfig", GTK_STOCK_PREFERENCES, N_("Ad_just Date & Time"),
-          NULL, NULL,
-          G_CALLBACK (config_date) }
+static const GActionEntry clock_menu_actions [] = {
+        { "preferences", verb_display_properties_dialog, NULL, NULL, NULL },
+        { "copy-time",   copy_time,                      NULL, NULL, NULL },
+        { "config",      config_date,                    NULL, NULL, NULL }
 };
 
 static void
@@ -1304,9 +1302,9 @@ load_cities (ClockData *cd)
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
-	ClockData      *cd;
-        GtkActionGroup *action_group;
-        GtkAction      *action;
+	ClockData          *cd;
+        GSimpleActionGroup *action_group;
+        GAction            *action;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -1357,24 +1355,27 @@ fill_clock_applet (PanelApplet *applet)
 	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),
 					    GTK_WIDGET (cd->applet));
 
-        action_group = gtk_action_group_new ("ClockApplet Menu Actions");
-        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-        gtk_action_group_add_actions (action_group,
-                                      clock_menu_actions,
-                                      G_N_ELEMENTS (clock_menu_actions),
-                                      cd);
+        action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 clock_menu_actions,
+	                                 G_N_ELEMENTS (clock_menu_actions),
+	                                 cd);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (cd->applet),
 					       CLOCK_RESOURCE_PATH "clock-menu.xml",
-					       action_group);
+					       action_group,
+					       GETTEXT_PACKAGE);
 
-	action = gtk_action_group_get_action (action_group, "ClockPreferences");
+        gtk_widget_insert_action_group (GTK_WIDGET (applet), "clock",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
 	g_object_bind_property (cd->applet, "locked-down",
-				action, "visible",
+				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
-	action = gtk_action_group_get_action (action_group, "ClockConfig");
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "config");
 	g_object_bind_property (cd->applet, "locked-down",
-				action, "visible",
+				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
         g_object_unref (action_group);
 
@@ -2078,9 +2079,11 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 }
 
 static void
-verb_display_properties_dialog (GtkAction *action,
-                                ClockData *cd)
+verb_display_properties_dialog (GSimpleAction *action,
+                                GVariant      *parameter,
+                                gpointer       user_data)
 {
+        ClockData *cd = (ClockData *) user_data;
         display_properties_dialog (cd, FALSE);
 }
 

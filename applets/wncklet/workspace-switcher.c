@@ -66,8 +66,9 @@ typedef struct {
         GSettings *settings;
 } PagerData;
 
-static void display_properties_dialog (GtkAction *action,
-				       PagerData *pager);
+static void display_properties_dialog (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer       user_data);
 
 static void
 pager_update (PagerData *pager)
@@ -214,10 +215,8 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 	g_free (pager);
 }
 
-static const GtkActionEntry pager_menu_actions [] = {
-        { "PagerPreferences", GTK_STOCK_PROPERTIES, N_("_Preferences"),
-          NULL, NULL,
-          G_CALLBACK (display_properties_dialog) }
+static const GActionEntry pager_menu_actions [] = {
+        { "preferences", display_properties_dialog, NULL, NULL, NULL },
 };
 
 static void
@@ -305,8 +304,8 @@ gboolean
 workspace_switcher_applet_fill (PanelApplet *applet)
 {
 	PagerData *pager;
-        GtkActionGroup *action_group;
-	GtkAction *action;
+        GSimpleActionGroup *action_group;
+	GAction *action;
 	gboolean display_names;
 
 	pager = g_new0 (PagerData, 1);
@@ -375,19 +374,22 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
 					    GTK_WIDGET (pager->applet));
 
-        action_group = gtk_action_group_new ("WorkspaceSwitcher Applet Actions");
-        gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
-        gtk_action_group_add_actions (action_group,
-                                      pager_menu_actions,
-                                      G_N_ELEMENTS (pager_menu_actions),
-                                      pager);
+        action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 pager_menu_actions,
+	                                 G_N_ELEMENTS (pager_menu_actions),
+	                                 pager);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
 					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.xml",
-					       action_group);
+					       action_group,
+					       GETTEXT_PACKAGE);
 
-	action = gtk_action_group_get_action (action_group, "PagerPreferences");
+        gtk_widget_insert_action_group (GTK_WIDGET (applet), "ws",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
 	g_object_bind_property (pager->applet, "locked-down",
-				action, "visible",
+				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
         g_object_unref (action_group);
@@ -773,9 +775,12 @@ setup_dialog (GtkBuilder *builder,
 }
 
 static void 
-display_properties_dialog (GtkAction *action,
-			   PagerData *pager)
+display_properties_dialog (GSimpleAction *action,
+                           GVariant      *parameter,
+                           gpointer       user_data)
 {
+        PagerData *pager = (PagerData *) user_data;
+
 	if (pager->properties_dialog == NULL) {
 		GtkBuilder *builder;
 

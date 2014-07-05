@@ -4,28 +4,34 @@
 #include "panel-applet.h"
 
 static void
-test_applet_on_do (GtkAction *action,
-		   gpointer   user_data)
+test_applet_on_do (GSimpleAction *action,
+                   GVariant      *parameter,
+                   gpointer       user_data)
 {
-        g_message ("%s called\n", gtk_action_get_name (action));
+	g_message ("%s called\n", g_action_get_name (G_ACTION (action)));
 }
 
-static const GtkActionEntry test_applet_menu_actions[] = {
-	{ "TestAppletDo1", NULL, "TestAppletDo1",
-	  NULL, NULL,
-	  G_CALLBACK (test_applet_on_do) },
-	{ "TestAppletDo2", NULL, "TestAppletDo2",
-	  NULL, NULL,
-	  G_CALLBACK (test_applet_on_do) },
-	{ "TestAppletDo3", NULL, "TestAppletDo3",
-	  NULL, NULL,
-	  G_CALLBACK (test_applet_on_do) }
+static const GActionEntry test_applet_menu_actions [] = {
+	{ "test-applet-do-1", test_applet_on_do, NULL, NULL, NULL },
+	{ "test-applet-do-2", test_applet_on_do, NULL, NULL, NULL },
+	{ "test-applet-do-3", test_applet_on_do, NULL, NULL, NULL }
 };
 
-static const char test_applet_menu_xml[] =
-	"<menuitem name=\"Test Item 1\" action=\"TestAppletDo1\" />\n"
-	"<menuitem name=\"Test Item 2\" action=\"TestAppletDo2\" />\n"
-	"<menuitem name=\"Test Item 3\" action=\"TestAppletDo3\" />\n";
+static const gchar test_applet_menu_xml[] =
+	"<section>"
+	"  <item>"
+	"    <attribute name=\"label\" translatable=\"yes\">Test Item 1</attribute>"
+	"    <attribute name=\"action\">test.test-applet-do-1</attribute>"
+	"  </item>"
+	"  <item>"
+	"     <attribute name=\"label\" translatable=\"yes\">Test Item 2</attribute>"
+	"     <attribute name=\"action\">test.test-applet-do-2</attribute>"
+	"  </item>"
+	"  <item>"
+	"     <attribute name=\"label\" translatable=\"yes\">Test Item 3</attribute>"
+	"     <attribute name=\"action\">test.test-applet-do-3</attribute>"
+	"  </item>"
+	"</section>";
 
 typedef struct _TestApplet      TestApplet;
 typedef struct _TestAppletClass TestAppletClass;
@@ -122,7 +128,7 @@ test_applet_handle_background_change (TestApplet                *applet,
 static gboolean
 test_applet_fill (TestApplet *applet)
 {
-	GtkActionGroup *action_group;
+	GSimpleActionGroup *action_group;
 
 	applet->label = gtk_label_new (NULL);
 
@@ -137,15 +143,19 @@ test_applet_fill (TestApplet *applet)
 					  panel_applet_get_orient (PANEL_APPLET (applet)),
 					  NULL);
 
-	action_group = gtk_action_group_new ("TestAppletActions");
-	gtk_action_group_add_actions (action_group,
-				      test_applet_menu_actions,
-				      G_N_ELEMENTS (test_applet_menu_actions),
-				      applet);
+	action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 test_applet_menu_actions,
+	                                 G_N_ELEMENTS (test_applet_menu_actions),
+	                                 applet);
+
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "test",
+	                                G_ACTION_GROUP (action_group));
 
 	panel_applet_setup_menu (PANEL_APPLET (applet),
 				 test_applet_menu_xml,
-				 action_group);
+				 action_group,
+				 GETTEXT_PACKAGE);
 	g_object_unref (action_group);
 
 	gtk_widget_set_tooltip_text (GTK_WIDGET (applet), "Hello Tip");

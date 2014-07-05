@@ -90,9 +90,9 @@ struct _PanelAppletPrivate {
 	char              *settings_path;
 	char              *prefs_key;
 
-	GtkUIManager      *ui_manager;
-	GtkActionGroup    *applet_action_group;
-	GtkActionGroup    *panel_action_group;
+	GtkBuilder         *builder;
+	GSimpleActionGroup *applet_action_group;
+	GSimpleActionGroup *panel_action_group;
 
 	PanelAppletFlags   flags;
 	PanelAppletOrient  orient;
@@ -137,36 +137,38 @@ enum {
 };
 
 static void       panel_applet_handle_background   (PanelApplet       *applet);
-static GtkAction *panel_applet_menu_get_action     (PanelApplet       *applet,
+static GAction   *panel_applet_menu_get_action     (PanelApplet       *applet,
 						    const gchar       *action);
 static void       panel_applet_menu_update_actions (PanelApplet       *applet);
-static void       panel_applet_menu_cmd_remove     (GtkAction         *action,
-						    PanelApplet       *applet);
-static void       panel_applet_menu_cmd_move       (GtkAction         *action,
-						    PanelApplet       *applet);
+static void       panel_applet_menu_cmd_remove     (GSimpleAction     *action,
+						    GVariant      *parameter,
+						    gpointer       user_data);
+static void       panel_applet_menu_cmd_move       (GSimpleAction     *action,
+						    GVariant      *parameter,
+						    gpointer       user_data);
 static void       panel_applet_register_object     (PanelApplet       *applet);
 
 static const gchar panel_menu_ui[] =
-	"<ui>\n"
-	"  <popup name=\"PanelAppletPopup\" action=\"PopupAction\">\n"
-	"    <placeholder name=\"AppletItems\"/>\n"
-	"  </popup>\n"
-	"  <popup name=\"PanelAppletEditPopup\" action=\"PopupEditAction\">\n"
-	"    <menuitem name=\"MoveItem\" action=\"Move\"/>\n"
-	"    <menuitem name=\"RemoveItem\" action=\"Remove\"/>\n"
-	"  </popup>\n"
-	"</ui>\n";
+	"<interface>\n"
+	" <menu id=\"panel-applet-popup\">"
+	" </menu>"
+	" <menu id=\"panel-applet-edit-popup\">"
+	"   <section>"
+	"     <item>"
+	"       <attribute name=\"label\" translatable=\"no\">%s</attribute>"
+	"       <attribute name=\"action\">libpanel-applet.remove</attribute>"
+	"     </item>"
+	"     <item>"
+	"       <attribute name=\"label\" translatable=\"no\">%s</attribute>"
+	"       <attribute name=\"action\">libpanel-applet.move</attribute>"
+	"     </item>"
+	"   </section>"
+	" </menu>"
+	"</interface>\n";
 
-static const GtkActionEntry menu_entries[] = {
-	{ "PopupAction", NULL, "Popup Action",
-	  NULL, NULL,
-	  NULL },
-	{ "Remove", GTK_STOCK_REMOVE, N_("_Remove From Panel"),
-	  NULL, NULL,
-	  G_CALLBACK (panel_applet_menu_cmd_remove) },
-	{ "Move", NULL, N_("_Move"),
-	  NULL, NULL,
-	  G_CALLBACK (panel_applet_menu_cmd_move) }
+static const GActionEntry menu_entries[] = {
+	{ "remove", panel_applet_menu_cmd_remove, NULL, NULL, NULL },
+	{ "move",   panel_applet_menu_cmd_move,   NULL, NULL, NULL }
 };
 
 G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
@@ -860,11 +862,12 @@ panel_applet_request_focus (PanelApplet	 *applet,
 		    &xev);
 }
 
-static GtkAction *
+static GAction *
 panel_applet_menu_get_action (PanelApplet *applet,
 			      const gchar *action)
 {
-	return gtk_action_group_get_action (applet->priv->panel_action_group, action);
+	return g_action_map_lookup_action (G_ACTION_MAP (applet->priv->panel_action_group),
+	                                   action);
 }
 
 static void
@@ -873,17 +876,19 @@ panel_applet_menu_update_actions (PanelApplet *applet)
 	gboolean locked_down = applet->priv->locked_down;
 
 	g_object_set (panel_applet_menu_get_action (applet, "Move"),
-		      "visible", !locked_down,
+		      "enabled", !locked_down,
 		      NULL);
 	g_object_set (panel_applet_menu_get_action (applet, "Remove"),
-		      "visible", !locked_down,
+		      "enabled", !locked_down,
 		      NULL);
 }
 
 static void
-panel_applet_menu_cmd_remove (GtkAction   *action,
-			      PanelApplet *applet)
+panel_applet_menu_cmd_remove (GSimpleAction *action,
+			      GVariant      *parameter,
+			      gpointer       user_data)
 {
+	PanelApplet *applet = PANEL_APPLET (user_data);
 	GError *error = NULL;
 
 	if (!applet->priv->connection)
@@ -903,9 +908,11 @@ panel_applet_menu_cmd_remove (GtkAction   *action,
 }
 
 static void
-panel_applet_menu_cmd_move (GtkAction   *action,
-			    PanelApplet *applet)
+panel_applet_menu_cmd_move (GSimpleAction *action,
+			    GVariant      *parameter,
+			    gpointer       user_data)
 {
+	PanelApplet *applet = PANEL_APPLET (user_data);
 	GError *error = NULL;
 
 	if (!applet->priv->connection)
@@ -940,7 +947,8 @@ panel_applet_menu_cmd_move (GtkAction   *action,
 void
 panel_applet_setup_menu (PanelApplet    *applet,
 			 const gchar    *xml,
-			 GtkActionGroup *action_group)
+			 GSimpleActionGroup *action_group,
+			 const gchar        *translation_domain)
 {
 	gchar  *new_xml;
 	GError *error = NULL;
@@ -951,16 +959,14 @@ panel_applet_setup_menu (PanelApplet    *applet,
 	if (applet->priv->applet_action_group)
 		return;
 
-	applet->priv->applet_action_group = g_object_ref (action_group);
-	gtk_ui_manager_insert_action_group (applet->priv->ui_manager,
-					    action_group, 0);
+	gtk_builder_set_translation_domain (applet->priv->builder, translation_domain);
 
-	new_xml = g_strdup_printf ("<ui><popup name=\"PanelAppletPopup\" action=\"AppletItems\">"
-				   "<placeholder name=\"AppletItems\">%s\n</placeholder>\n"
-				   "</popup></ui>\n", xml);
-	gtk_ui_manager_add_ui_from_string (applet->priv->ui_manager, new_xml, -1, &error);
+	applet->priv->applet_action_group = g_object_ref (action_group);
+
+	new_xml = g_strdup_printf ("<interface><menu id=\"panel-applet-popup\">%s</menu></interface>\n", xml);
+	gtk_builder_add_from_string (applet->priv->builder, new_xml, -1, &error);
 	g_free (new_xml);
-	gtk_ui_manager_ensure_update (applet->priv->ui_manager);
+
 	if (error) {
 		g_warning ("Error merging menus: %s\n", error->message);
 		g_error_free (error);
@@ -984,13 +990,14 @@ panel_applet_setup_menu (PanelApplet    *applet,
 void
 panel_applet_setup_menu_from_file (PanelApplet    *applet,
 				   const gchar    *filename,
-				   GtkActionGroup *action_group)
+				   GSimpleActionGroup *action_group,
+				   const gchar        *translation_domain)
 {
 	gchar  *xml = NULL;
 	GError *error = NULL;
 
 	if (g_file_get_contents (filename, &xml, NULL, &error)) {
-		panel_applet_setup_menu (applet, xml, action_group);
+		panel_applet_setup_menu (applet, xml, action_group, translation_domain);
 	} else {
 		g_warning ("%s", error->message);
 		g_error_free (error);
@@ -1018,7 +1025,8 @@ panel_applet_setup_menu_from_file (PanelApplet    *applet,
 void
 panel_applet_setup_menu_from_resource (PanelApplet    *applet,
 				       const gchar    *resource_path,
-				       GtkActionGroup *action_group)
+				       GSimpleActionGroup *action_group,
+				       const gchar        *translation_domain)
 {
 	GBytes *bytes;
 	GError *error = NULL;
@@ -1030,7 +1038,8 @@ panel_applet_setup_menu_from_resource (PanelApplet    *applet,
 	if (bytes) {
 		panel_applet_setup_menu (applet,
 					 g_bytes_get_data (bytes, NULL),
-					 action_group);
+					 action_group,
+					 translation_domain);
 	} else {
 		g_warning ("%s", error->message);
 		g_error_free (error);
@@ -1074,9 +1083,9 @@ panel_applet_finalize (GObject *object)
 		applet->priv->panel_action_group = NULL;
 	}
 
-	if (applet->priv->ui_manager) {
-		g_object_unref (applet->priv->ui_manager);
-		applet->priv->ui_manager = NULL;
+	if (applet->priv->builder) {
+		g_object_unref (applet->priv->builder);
+		applet->priv->builder = NULL;
 	}
 
 	g_free (applet->priv->size_hints);
@@ -1197,11 +1206,14 @@ panel_applet_menu_popup (PanelApplet *applet,
 			 guint32      time)
 {
 	GtkWidget *menu;
+	GMenu     *gmenu;
 	GList     *children, *l;
 	gboolean   visible = FALSE;
 
-	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
-					  "/PanelAppletPopup");
+	gmenu = G_MENU (gtk_builder_get_object (applet->priv->builder, "panel-applet-popup"));
+	menu = gtk_menu_new_from_model (G_MENU_MODEL (gmenu));
+
+	gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (applet), NULL);
 
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 	for (l = children; l != NULL; l = l->next) {
@@ -1227,12 +1239,16 @@ panel_applet_edit_menu_popup (PanelApplet *applet,
 			      guint32      time)
 {
 	GtkWidget *menu;
+	GMenu     *gmenu;
 
 	if (applet->priv->locked_down)
 		return;
 
-	menu = gtk_ui_manager_get_widget (applet->priv->ui_manager,
-					  "/PanelAppletEditPopup");
+	gmenu = G_MENU (gtk_builder_get_object (applet->priv->builder, "panel-applet-edit-popup"));
+	menu = gtk_menu_new_from_model (G_MENU_MODEL (gmenu));
+
+	gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (applet), NULL);
+
 	gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (GTK_WIDGET (applet)));
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL, NULL,
@@ -2046,18 +2062,20 @@ panel_applet_init (PanelApplet *applet)
 
 	applet->priv->client = gconf_client_get_default ();
 
-	applet->priv->panel_action_group = gtk_action_group_new ("PanelActions");
-	gtk_action_group_set_translation_domain (applet->priv->panel_action_group, GETTEXT_PACKAGE);
-	gtk_action_group_add_actions (applet->priv->panel_action_group,
-				      menu_entries,
-				      G_N_ELEMENTS (menu_entries),
-				      applet);
+	applet->priv->panel_action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (applet->priv->panel_action_group),
+	                                 menu_entries,
+	                                 G_N_ELEMENTS (menu_entries),
+	                                 applet);
 
-	applet->priv->ui_manager = gtk_ui_manager_new ();
-	gtk_ui_manager_insert_action_group (applet->priv->ui_manager,
-					    applet->priv->panel_action_group, 1);
-	gtk_ui_manager_add_ui_from_string (applet->priv->ui_manager,
-					   panel_menu_ui, -1, NULL);
+	applet->priv->builder = gtk_builder_new ();
+
+	gchar *xml = g_strdup_printf (panel_menu_ui, N_("_Remove From Panel"), N_("_Move"));
+	gtk_builder_add_from_string (applet->priv->builder, xml, -1, NULL);
+	g_free (xml);
+
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "libpanel-applet",
+	                                G_ACTION_GROUP (applet->priv->panel_action_group));
 
 	applet->priv->plug = gtk_plug_new (0);
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
