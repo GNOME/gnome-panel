@@ -1323,7 +1323,7 @@ fill_clock_applet (PanelApplet *applet)
 
 	cd->applet = GTK_WIDGET (applet);
 
-        cd->world = gweather_location_new_world (FALSE);
+        cd->world = gweather_location_get_world ();
         load_cities (cd);
         locations_changed (NULL, NULL, cd);
 
