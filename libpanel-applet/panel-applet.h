@@ -142,12 +142,6 @@ void               panel_applet_set_background_widget (PanelApplet *applet,
 GSettings         *panel_applet_settings_new         (PanelApplet *applet,
 						      const char  *schema);
 
-gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
-
-void               panel_applet_add_preferences      (PanelApplet  *applet,
-						      const gchar  *schema_dir,
-						      GError      **error);
-
 PanelAppletFlags   panel_applet_get_flags            (PanelApplet      *applet);
 void      	   panel_applet_set_flags            (PanelApplet      *applet,
 						      PanelAppletFlags  flags);

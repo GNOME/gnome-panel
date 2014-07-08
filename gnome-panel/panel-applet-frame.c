@@ -891,12 +891,6 @@ panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *fra
 	return path_instance;
 }
 
-gchar *
-panel_applet_frame_activating_get_conf_path (PanelAppletFrameActivating *frame_act)
-{
-	return panel_layout_object_get_gconf_path (frame_act->id);
-}
-
 static void
 panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 					    guint      response,

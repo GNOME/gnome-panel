@@ -108,7 +108,6 @@ PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFram
 guint32           panel_applet_frame_activating_get_size        (PanelAppletFrameActivating *frame_act);
 gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act);
-gchar            *panel_applet_frame_activating_get_conf_path   (PanelAppletFrameActivating *frame_act);
 
 void  _panel_applet_frame_set_iid               (PanelAppletFrame           *frame,
 						 const gchar                *iid);

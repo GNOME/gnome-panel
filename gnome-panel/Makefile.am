@@ -30,7 +30,6 @@ panel_sources =			\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
-	panel-gconf.c		\
 	panel-properties-dialog.c	\
 	panel-run-dialog.c	\
 	menu.c			\
@@ -79,7 +78,6 @@ panel_headers =			\
 	applet.h		\
 	panel-util.h		\
 	panel-properties-dialog.h	\
-	panel-gconf.h		\
 	panel-run-dialog.h	\
 	menu.h			\
 	panel-context-menu.h	\

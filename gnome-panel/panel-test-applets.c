@@ -10,7 +10,6 @@
 #include <config.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gconf/gconf.h>
 
 #include <libpanel-util/panel-cleanup.h>
 
@@ -301,7 +300,7 @@ setup_options (void)
 	setup_combo (orient_combo, orient_items, "Orientation",
 		     G_N_ELEMENTS (orient_items));
 
-	unique_key = gconf_unique_key ();
+	unique_key = g_strdup ("unused");
 	prefs_dir = g_strdup_printf ("/tmp/%s", unique_key);
 	g_free (unique_key);
 	gtk_entry_set_text (GTK_ENTRY (prefs_dir_entry), prefs_dir);

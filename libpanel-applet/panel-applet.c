@@ -36,8 +36,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
-#include <gconf/gconf.h>
-#include <gconf/gconf-client.h>
 #include <X11/Xatom.h>
 #include <cairo-xlib.h>
 
@@ -80,7 +78,6 @@
 struct _PanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
-	GConfClient       *client;
 	GDBusConnection   *connection;
 
 	char              *id;
@@ -88,7 +85,6 @@ struct _PanelAppletPrivate {
 	char              *object_path;
 	guint              object_id;
 	char              *settings_path;
-	char              *prefs_key;
 
 	GtkBuilder         *builder;
 	GSimpleActionGroup *applet_action_group;
@@ -127,7 +123,6 @@ enum {
 	PROP_CLOSURE,
 	PROP_CONNECTION,
 	PROP_SETTINGS_PATH,
-	PROP_PREFS_KEY,
 	PROP_ORIENT,
 	PROP_SIZE,
 	PROP_BACKGROUND,
@@ -175,204 +170,6 @@ G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
 
 #define PANEL_APPLET_INTERFACE   "org.gnome.panel.applet.Applet"
 #define PANEL_APPLET_OBJECT_PATH "/org/gnome/panel/applet/%s/%d"
-
-static void
-panel_applet_associate_schemas_in_dir (GConfClient  *client,
-				       const gchar  *prefs_key,
-				       const gchar  *schema_dir,
-				       GError      **error)
-{
-	GSList *list, *l;
-
-	g_assert (error != NULL);
-
-	list = gconf_client_all_entries (client, schema_dir, error);
-
-	if (*error != NULL)
-		return;
-
-	for (l = list; l; l = l->next) {
-		GConfEntry  *entry = l->data;
-		const gchar *schema_key;
-		GConfEntry  *applet_entry;
-		const gchar *applet_schema_key;
-		gchar       *key;
-		gchar       *tmp;
-
-		schema_key = gconf_entry_get_key (entry);
-		tmp = g_path_get_basename (schema_key);
-
-		if (strchr (tmp, '-'))
-			g_warning ("Applet key '%s' contains a hyphen. Please "
-				   "use underscores in gconf keys\n", tmp);
-
-		key = g_strdup_printf ("%s/%s", prefs_key, tmp);
-		g_free (tmp);
-
-		/* Associating a schema is potentially expensive, so let's try
-		 * to avoid this by doing it only when needed. So we check if
-		 * the key is already correctly associated. */
-
-		applet_entry = gconf_client_get_entry (client, key,
-						       NULL, TRUE, NULL);
-		if (applet_entry)
-			applet_schema_key = gconf_entry_get_schema_name (applet_entry);
-		else
-			applet_schema_key = NULL;
-
-		if (g_strcmp0 (schema_key, applet_schema_key) != 0) {
-			gconf_engine_associate_schema (client->engine,
-						       key, schema_key, error);
-
-			if (applet_entry == NULL ||
-			    gconf_entry_get_value (applet_entry) == NULL ||
-			    gconf_entry_get_is_default (applet_entry)) {
-				/* unset the key: gconf_client_get_entry()
-				 * brought an invalid entry in the client
-				 * cache, and we want to fix this */
-				gconf_client_unset (client, key, NULL);
-			}
-		}
-
-		g_free (key);
-
-		if (applet_entry)
-			gconf_entry_unref (applet_entry);
-		gconf_entry_unref (entry);
-
-		if (*error) {
-			g_slist_free (list);
-			return;
-		}
-	}
-
-	g_slist_free (list);
-
-	list = gconf_client_all_dirs (client, schema_dir, error);
-
-	for (l = list; l; l = l->next) {
-		gchar *subdir = l->data;
-		gchar *prefs_subdir;
-		gchar *schema_subdir;
-		gchar *tmp;
-
-		tmp = g_path_get_basename (subdir);
-
-		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, tmp);
-		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, tmp);
-
-		panel_applet_associate_schemas_in_dir (client,
-						       prefs_subdir,
-						       schema_subdir,
-						       error);
-
-		g_free (prefs_subdir);
-		g_free (schema_subdir);
-		g_free (subdir);
-		g_free (tmp);
-
-		if (*error) {
-			g_slist_free (list);
-			return;
-		}
-	}
-
-	g_slist_free (list);
-}
-
-/**
- * panel_applet_add_preferences:
- * @applet: a #PanelApplet.
- * @schema_dir: a GConf path of a schema directory.
- * @error: a #GError, or %NULL.
- *
- * Associates the per-instance GConf directory of @applet to the schemas
- * defined in @schema_dir. This must be called if the applet will save
- * per-instance settings, to ensure that each key in the per-instance GConf
- * directory has a defined type, sane default and documentation.
- *
- * Deprecated: 3.0: Use #GSettings to store per-instance settings.
- **/
-void
-panel_applet_add_preferences (PanelApplet  *applet,
-			      const gchar  *schema_dir,
-			      GError      **error)
-{
-	GError **_error = NULL;
-	GError  *our_error = NULL;
-
-	g_return_if_fail (PANEL_IS_APPLET (applet));
-	g_return_if_fail (schema_dir != NULL);
-
-	if (!applet->priv->prefs_key)
-		return;
-
-	/* panel_applet_associate_schemas_in_dir() requires a non-NULL error */
-	if (error)
-		_error = error;
-	else
-		_error = &our_error;
-
-	panel_applet_associate_schemas_in_dir (applet->priv->client,
-					       applet->priv->prefs_key,
-					       schema_dir,
-					       _error);
-
-	if (!error && our_error)
-		g_error_free (our_error);
-}
-
-/**
- * panel_applet_get_preferences_key:
- * @applet: a #PanelApplet.
- *
- * Gets the GConf path to the per-instance settings of @applet.
- *
- * Returns: a copy of the GConf path to the per-instance settings of @applet.
- *
- * Deprecated: 3.0: Use #GSettings to store per-instance settings.
- **/
-char *
-panel_applet_get_preferences_key (PanelApplet *applet)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (!applet->priv->prefs_key)
-		return NULL;
-
-	return g_strdup (applet->priv->prefs_key);
-}
-
-static void
-panel_applet_set_preferences_key (PanelApplet *applet,
-				  const char  *prefs_key)
-{
-	if (applet->priv->prefs_key == prefs_key)
-		return;
-
-	if (g_strcmp0 (applet->priv->prefs_key, prefs_key) == 0)
-		return;
-
-	if (applet->priv->prefs_key) {
-		gconf_client_remove_dir (applet->priv->client,
-					 applet->priv->prefs_key,
-					 NULL);
-
-		g_free (applet->priv->prefs_key);
-		applet->priv->prefs_key = NULL;
-	}
-
-	if (prefs_key) {
-		applet->priv->prefs_key = g_strdup (prefs_key);
-
-		gconf_client_add_dir (applet->priv->client,
-				      applet->priv->prefs_key,
-				      GCONF_CLIENT_PRELOAD_RECURSIVE,
-				      NULL);
-	}
-
-	g_object_notify (G_OBJECT (applet), "prefs-key");
-}
 
 /**
  * panel_applet_settings_new:
@@ -1067,12 +864,6 @@ panel_applet_finalize (GObject *object)
 		applet->priv->object_path = NULL;
 	}
 
-	panel_applet_set_preferences_key (applet, NULL);
-
-	if (applet->priv->client)
-		g_object_unref (applet->priv->client);
-	applet->priv->client = NULL;
-
 	if (applet->priv->applet_action_group) {
 		g_object_unref (applet->priv->applet_action_group);
 		applet->priv->applet_action_group = NULL;
@@ -1089,7 +880,6 @@ panel_applet_finalize (GObject *object)
 	}
 
 	g_free (applet->priv->size_hints);
-	g_free (applet->priv->prefs_key);
 	g_free (applet->priv->settings_path);
 	g_free (applet->priv->background);
 	g_free (applet->priv->id);
@@ -1896,9 +1686,6 @@ panel_applet_get_property (GObject    *object,
 	case PROP_SETTINGS_PATH:
 		g_value_set_string (value, applet->priv->settings_path);
 		break;
-	case PROP_PREFS_KEY:
-		g_value_set_string (value, applet->priv->prefs_key);
-		break;
 	case PROP_ORIENT:
 		g_value_set_uint (value, applet->priv->orient);
 		break;
@@ -1959,9 +1746,6 @@ panel_applet_set_property (GObject      *object,
 		break;
 	case PROP_SETTINGS_PATH:
 		panel_applet_set_settings_path (applet, g_value_get_string (value));
-		break;
-	case PROP_PREFS_KEY:
-		panel_applet_set_preferences_key (applet, g_value_get_string (value));
 		break;
 	case PROP_ORIENT:
 		panel_applet_set_orient (applet, g_value_get_uint (value));
@@ -2059,8 +1843,6 @@ panel_applet_init (PanelApplet *applet)
 	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;
 	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
 	applet->priv->size   = 24;
-
-	applet->priv->client = gconf_client_get_default ();
 
 	applet->priv->panel_action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (applet->priv->panel_action_group),
@@ -2182,22 +1964,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 					 g_param_spec_string ("settings-path",
 							      "SettingsPath",
 							      "GSettings path to per-instance settings",
-							      NULL,
-							      G_PARAM_READWRITE));
-	/**
-	 * PanelApplet:prefs-key:
-	 *
-	 * The GConf path to the per-instance settings of the applet.
-	 *
-	 * This property gets set when the applet gets embedded.
-	 *
-	 * Deprecated: 3.0: Use #GSettings to store per-instance settings.
-	 **/
-	g_object_class_install_property (gobject_class,
-					 PROP_PREFS_KEY,
-					 g_param_spec_string ("prefs-key",
-							      "PrefsKey",
-							      "GConf Preferences Key",
 							      NULL,
 							      G_PARAM_READWRITE));
 	/**
@@ -2419,9 +2185,6 @@ get_property_cb (GDBusConnection *connection,
 	if (g_strcmp0 (property_name, "SettingsPath") == 0) {
 		retval = g_variant_new_string (applet->priv->settings_path ?
 					       applet->priv->settings_path : "");
-	} else if (g_strcmp0 (property_name, "PrefsKey") == 0) {
-		retval = g_variant_new_string (applet->priv->prefs_key ?
-					       applet->priv->prefs_key : "");
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		retval = g_variant_new_uint32 (applet->priv->orient);
 	} else if (g_strcmp0 (property_name, "Size") == 0) {
@@ -2462,8 +2225,6 @@ set_property_cb (GDBusConnection *connection,
 
 	if (g_strcmp0 (property_name, "SettingsPath") == 0) {
 		panel_applet_set_settings_path (applet, g_variant_get_string (value, NULL));
-	} else if (g_strcmp0 (property_name, "PrefsKey") == 0) {
-		panel_applet_set_preferences_key (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		panel_applet_set_orient (applet, g_variant_get_uint32 (value));
 	} else if (g_strcmp0 (property_name, "Size") == 0) {
@@ -2497,7 +2258,6 @@ static const gchar introspection_xml[] =
 	      "<arg name='time' type='u' direction='in'/>"
 	    "</method>"
 	    "<property name='SettingsPath' type='s' access='readwrite'/>"
-	    "<property name='PrefsKey' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
 	    "<property name='Size' type='u' access='readwrite'/>"
 	    "<property name='Background' type='s' access='readwrite'/>"

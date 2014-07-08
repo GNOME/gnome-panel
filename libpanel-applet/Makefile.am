@@ -12,7 +12,6 @@ AM_CFLAGS = $(WARN_CFLAGS)
 libpanel_appletincludedir = $(includedir)/gnome-panel-4.0/libpanel-applet
 libpanel_appletinclude_HEADERS =	\
 	panel-applet.h			\
-	panel-applet-gconf.h		\
 	panel-applet-enums.h
 
 libpanel_applet_4_la_SOURCES =		\
@@ -22,9 +21,7 @@ libpanel_applet_4_la_SOURCES =		\
 	panel-applet-factory.h		\
 	panel-applet-factory.c		\
 	panel-applet-bindings.h		\
-	panel-applet-bindings.c		\
-	panel-applet-gconf.c		\
-	panel-applet-gconf.h
+	panel-applet-bindings.c
 
 libpanel_applet_4_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \
@@ -111,15 +108,13 @@ INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
 if HAVE_INTROSPECTION
 introspection_sources = 	\
 	panel-applet.c		\
-	panel-applet.h		\
-	panel-applet-gconf.c	\
-	panel-applet-gconf.h
+	panel-applet.h
 built_introspection_sources =	\
 	panel-applet-enums.c	\
 	panel-applet-enums.h
 
 PanelApplet-4.0.gir: libpanel-applet-4.la
-PanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-3.0 GConf-2.0
+PanelApplet_4_0_gir_INCLUDES = GObject-2.0 Gtk-3.0
 PanelApplet_4_0_gir_CFLAGS = $(AM_CPPFLAGS)
 PanelApplet_4_0_gir_LIBS = libpanel-applet-4.la
 PanelApplet_4_0_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
