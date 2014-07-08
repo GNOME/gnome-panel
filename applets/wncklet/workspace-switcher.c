@@ -120,8 +120,11 @@ update_properties_for_wm (PagerData *pager)
 		g_assert_not_reached ();
 	}
 
-	if (pager->properties_dialog)
-		gtk_window_reshow_with_initial_size (GTK_WINDOW (pager->properties_dialog));
+	if (pager->properties_dialog) {
+	        gtk_widget_hide (pager->properties_dialog);
+	        gtk_widget_unrealize (pager->properties_dialog);
+	        gtk_widget_show (pager->properties_dialog);
+	}
 }
 
 static void
