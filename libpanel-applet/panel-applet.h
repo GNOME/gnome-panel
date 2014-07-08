@@ -120,10 +120,6 @@ struct _PanelAppletClass {
 
 	void (*change_orient) (PanelApplet       *applet,
 			       PanelAppletOrient  orient);
-
-	void (*change_size)   (PanelApplet       *applet,
-			       guint              size);
-
 	void (*change_background) (PanelApplet     *applet,
 				   cairo_pattern_t *pattern);
 	void (*move_focus_out_of_applet) (PanelApplet        *frame,
@@ -133,7 +129,6 @@ struct _PanelAppletClass {
 GType              panel_applet_get_type             (void) G_GNUC_CONST;
  
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
-guint              panel_applet_get_size             (PanelApplet *applet);
 cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);
 
 void               panel_applet_set_background_widget (PanelApplet *applet,

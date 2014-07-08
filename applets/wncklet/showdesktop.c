@@ -413,8 +413,6 @@ show_desktop_applet_fill (PanelApplet *applet)
                 break;
         }
 
-        sdd->size = panel_applet_get_size (PANEL_APPLET (sdd->applet));
-
 	g_signal_connect (G_OBJECT (sdd->applet), "realize",
 			  G_CALLBACK (show_desktop_applet_realized), sdd);
 

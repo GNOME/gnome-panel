@@ -114,7 +114,7 @@ applet_change_orient (PanelApplet       *applet,
   
 	tasklist->orientation = new_orient;
 
-	wnck_tasklist_set_orientation (tasklist->tasklist, new_orient);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), new_orient);
 
 	tasklist_update (tasklist);
 }
@@ -127,19 +127,6 @@ applet_change_background (PanelApplet     *applet,
         wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
                                          pattern != NULL ? GTK_RELIEF_NONE
                                                          : GTK_RELIEF_NORMAL);
-}
-
-static void
-applet_change_pixel_size (PanelApplet  *applet,
-			  gint          size,
-			  TasklistData *tasklist)
-{
-	if (tasklist->size == size)
-		return;
-
-	tasklist->size = size;
-	
-	tasklist_update (tasklist);
 }
 
 static void
@@ -289,14 +276,28 @@ applet_size_allocate (GtkWidget      *widget,
                       GtkAllocation  *allocation,
                       TasklistData   *tasklist)
 {
-	int len;
+	gint len, size;
 	const int *size_hints;
+	PanelAppletOrient orient = panel_applet_get_orient (PANEL_APPLET (tasklist->applet));
 
 	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist), &len);
 	g_assert (len % 2 == 0);
 
         panel_applet_set_size_hints (PANEL_APPLET (tasklist->applet),
 		                     size_hints, len, 0);
+
+	if (orient == PANEL_APPLET_ORIENT_UP || orient == PANEL_APPLET_ORIENT_DOWN) {
+		size = allocation->height;
+	} else {
+		size = allocation->width;
+	}
+
+	if (tasklist->size == size)
+		return;
+
+	tasklist->size = size;
+
+	tasklist_update (tasklist);
 }
 
 static GdkPixbuf*
@@ -371,7 +372,6 @@ window_list_applet_fill (PanelApplet *applet)
 	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
 	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
 
-	tasklist->size = panel_applet_get_size (applet);
 	switch (panel_applet_get_orient (applet)) {
 	case PANEL_APPLET_ORIENT_LEFT:
 	case PANEL_APPLET_ORIENT_RIGHT:
@@ -386,7 +386,7 @@ window_list_applet_fill (PanelApplet *applet)
 
 	tasklist->tasklist = wnck_tasklist_new ();
 
-	wnck_tasklist_set_orientation (tasklist->tasklist, tasklist->orientation);
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
 	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
 	                               icon_loader_func, tasklist, NULL);
 
@@ -408,10 +408,6 @@ window_list_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "change_size",
-			  G_CALLBACK (applet_change_pixel_size),
 			  tasklist);
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_background",

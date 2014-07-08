@@ -202,7 +202,6 @@ window_menu_applet_fill (PanelApplet *applet)
 	gtk_widget_set_tooltip_text (window_menu->applet, _("Window Selector"));
  
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
-	window_menu->size = panel_applet_get_size (applet);
 	window_menu->orient = panel_applet_get_orient (applet);
 
 	g_signal_connect (window_menu->applet, "destroy",

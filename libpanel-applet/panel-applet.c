@@ -92,7 +92,6 @@ struct _PanelAppletPrivate {
 
 	PanelAppletFlags   flags;
 	PanelAppletOrient  orient;
-	guint              size;
 	char              *background;
 	GtkWidget         *background_widget;
 
@@ -109,7 +108,6 @@ struct _PanelAppletPrivate {
 
 enum {
         CHANGE_ORIENT,
-        CHANGE_SIZE,
         CHANGE_BACKGROUND,
 	MOVE_FOCUS_OUT_OF_APPLET,
         LAST_SIGNAL
@@ -124,7 +122,6 @@ enum {
 	PROP_CONNECTION,
 	PROP_SETTINGS_PATH,
 	PROP_ORIENT,
-	PROP_SIZE,
 	PROP_BACKGROUND,
 	PROP_FLAGS,
 	PROP_SIZE_HINTS,
@@ -387,44 +384,6 @@ panel_applet_set_size_hints (PanelApplet *applet,
 			g_error_free (error);
 		}
 	}
-}
-
-/**
- * panel_applet_get_size:
- * @applet: a #PanelApplet.
- *
- * Gets the size of the panel @applet is on. For a horizontal panel, the
- * size if the height of the panel; for a vertical panel, the size is the width
- * of the panel.
- *
- * Returns: the size of the panel @applet is on.
- *
- * Deprecated: 3.0: Use the allocation of @applet instead.
- **/
-guint
-panel_applet_get_size (PanelApplet *applet)
-{
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0);
-
-	return applet->priv->size;
-}
-
-/* Applets cannot set their size, so API is not public. */
-static void
-panel_applet_set_size (PanelApplet *applet,
-		       guint        size)
-{
-	g_return_if_fail (PANEL_IS_APPLET (applet));
-
-	if (applet->priv->size == size)
-		return;
-
-	applet->priv->size = size;
-	g_signal_emit (G_OBJECT (applet),
-		       panel_applet_signals [CHANGE_SIZE],
-		       0, size);
-
-	g_object_notify (G_OBJECT (applet), "size");
 }
 
 /**
@@ -1689,9 +1648,6 @@ panel_applet_get_property (GObject    *object,
 	case PROP_ORIENT:
 		g_value_set_uint (value, applet->priv->orient);
 		break;
-	case PROP_SIZE:
-		g_value_set_uint (value, applet->priv->size);
-		break;
 	case PROP_BACKGROUND:
 		g_value_set_string (value, applet->priv->background);
 		break;
@@ -1749,9 +1705,6 @@ panel_applet_set_property (GObject      *object,
 		break;
 	case PROP_ORIENT:
 		panel_applet_set_orient (applet, g_value_get_uint (value));
-		break;
-	case PROP_SIZE:
-		panel_applet_set_size (applet, g_value_get_uint (value));
 		break;
 	case PROP_BACKGROUND:
 		panel_applet_set_background_string (applet, g_value_get_string (value));
@@ -1842,7 +1795,6 @@ panel_applet_init (PanelApplet *applet)
 
 	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;
 	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
-	applet->priv->size   = 24;
 
 	applet->priv->panel_action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (applet->priv->panel_action_group),
@@ -1984,25 +1936,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 							    PANEL_APPLET_ORIENT_UP,
 							    G_PARAM_READWRITE));
 	/**
-	 * PanelApplet:size:
-	 *
-	 * The size of the panel the applet is on. For a horizontal panel, the
-	 * size if the height of the panel; for a vertical panel, the size is
-	 * the width of the panel.
-	 *
-	 * This property gets set when the applet gets embedded, and can change
-	 * when the panel size changes.
-         *
-	 * Deprecated: 3.0: Use the allocation of @applet instead.
-	 **/
-	g_object_class_install_property (gobject_class,
-					 PROP_SIZE,
-					 g_param_spec_uint ("size",
-							    "Size",
-							    "Panel Applet Size",
-							    0, G_MAXUINT, 0,
-							    G_PARAM_READWRITE));
-	/**
 	 * PanelApplet:background: (skip)
 	 *
 	 * Implementation detail.
@@ -2071,27 +2004,6 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_UINT);
-
-        /**
-         * PanelApplet::change-size:
-         * @applet: the #PanelApplet which emitted the signal.
-         * @size: the new size of the panel @applet is on.
-         *
-         * Emitted when the size of the panel @applet is on has changed.
-	 *
-	 * Deprecated: 3.0: Use the #GtkWidget::size-allocate signal instead.
-         **/
-	panel_applet_signals [CHANGE_SIZE] =
-                g_signal_new ("change_size",
-                              G_TYPE_FROM_CLASS (klass),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelAppletClass, change_size),
-                              NULL,
-			      NULL,
-                              g_cclosure_marshal_VOID__INT,
-                              G_TYPE_NONE,
-			      1,
-			      G_TYPE_INT);
 
         /**
          * PanelApplet::change-background:
@@ -2187,8 +2099,6 @@ get_property_cb (GDBusConnection *connection,
 					       applet->priv->settings_path : "");
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		retval = g_variant_new_uint32 (applet->priv->orient);
-	} else if (g_strcmp0 (property_name, "Size") == 0) {
-		retval = g_variant_new_uint32 (applet->priv->size);
 	} else if (g_strcmp0 (property_name, "Background") == 0) {
 		retval = g_variant_new_string (applet->priv->background ?
 					       applet->priv->background : "");
@@ -2227,8 +2137,6 @@ set_property_cb (GDBusConnection *connection,
 		panel_applet_set_settings_path (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		panel_applet_set_orient (applet, g_variant_get_uint32 (value));
-	} else if (g_strcmp0 (property_name, "Size") == 0) {
-		panel_applet_set_size (applet, g_variant_get_uint32 (value));
 	} else if (g_strcmp0 (property_name, "Background") == 0) {
 		panel_applet_set_background_string (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Flags") == 0) {
@@ -2259,7 +2167,6 @@ static const gchar introspection_xml[] =
 	    "</method>"
 	    "<property name='SettingsPath' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
-	    "<property name='Size' type='u' access='readwrite'/>"
 	    "<property name='Background' type='s' access='readwrite'/>"
 	    "<property name='Flags' type='u' access='readwrite'/>"
 	    "<property name='SizeHints' type='ai' access='readwrite'/>"

@@ -522,13 +522,6 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 }
 
 void
-panel_applet_frame_change_size (PanelAppletFrame *frame,
-				guint             size)
-{
-	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_size (frame, size);
-}
-
-void
 panel_applet_frame_change_background (PanelAppletFrame    *frame,
 				      PanelBackgroundType  type)
 {
@@ -863,12 +856,6 @@ PanelOrientation
 panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act)
 {
 	return panel_widget_get_applet_orientation (frame_act->panel);
-}
-
-guint32
-panel_applet_frame_activating_get_size (PanelAppletFrameActivating *frame_act)
-{
-	return frame_act->panel->sz;
 }
 
 gboolean

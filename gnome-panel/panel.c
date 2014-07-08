@@ -108,35 +108,6 @@ panel_orient_change (GtkWidget *widget, gpointer data)
 			      widget);
 }
 
-/*we call this recursively*/
-static void size_change_foreach(GtkWidget *w, gpointer data);
-
-void
-size_change (AppletInfo  *info,
-	     PanelWidget *panel)
-{
-	if (info->type == PANEL_OBJECT_APPLET)
-		panel_applet_frame_change_size (
-			PANEL_APPLET_FRAME (info->widget), panel->sz);
-}
-
-static void
-size_change_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
-	PanelWidget *panel = data;
-	
-	size_change(info,panel);
-}
-
-
-static void
-panel_size_change (GtkWidget *widget, gpointer data)
-{
-	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,
-			      widget);
-}
-
 void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
@@ -190,7 +161,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	info = g_object_get_data (G_OBJECT (applet), "applet_info");
 
 	orientation_change(info,PANEL_WIDGET(widget));
-	size_change(info,PANEL_WIDGET(widget));
 	back_change(info,PANEL_WIDGET(widget));
 }
 
@@ -1290,10 +1260,6 @@ panel_widget_setup(PanelWidget *panel)
 	g_signal_connect (G_OBJECT (panel),
 			  "back_change",
 			  G_CALLBACK (panel_back_change),
-			  NULL);
-	g_signal_connect (G_OBJECT (panel),
-			  "size_change",
-			  G_CALLBACK (panel_size_change),
 			  NULL);
 }
 

@@ -221,17 +221,6 @@ panel_applet_frame_dbus_change_orientation (PanelAppletFrame *frame,
 }
 
 static void
-panel_applet_frame_dbus_change_size (PanelAppletFrame *frame,
-				     guint             size)
-{
-	PanelAppletFrameDBus *dbus_frame = PANEL_APPLET_FRAME_DBUS (frame);
-
-	panel_applet_container_child_set (dbus_frame->priv->container,
-					  "size", g_variant_new_uint32 (size),
-					  NULL, NULL, NULL);
-}
-
-static void
 container_child_background_set (GObject      *source_object,
 				GAsyncResult *res,
 				gpointer      user_data)
@@ -376,7 +365,6 @@ panel_applet_frame_dbus_class_init (PanelAppletFrameDBusClass *class)
 	frame_class->popup_menu = panel_applet_frame_dbus_popup_menu;
 	frame_class->popup_edit_menu = panel_applet_frame_dbus_popup_edit_menu;
 	frame_class->change_orientation = panel_applet_frame_dbus_change_orientation;
-	frame_class->change_size = panel_applet_frame_dbus_change_size;
 	frame_class->change_background = panel_applet_frame_dbus_change_background;
 
 	g_type_class_add_private (class, sizeof (PanelAppletFrameDBusPrivate));
@@ -435,9 +423,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 	g_variant_builder_add (&builder, "{sv}",
 			       "orient",
 			       g_variant_new_uint32 (orient));
-	g_variant_builder_add (&builder, "{sv}",
-			       "size",
-			       g_variant_new_uint32 (panel_applet_frame_activating_get_size (frame_act)));
 	g_variant_builder_add (&builder, "{sv}",
 			       "locked-down",
 			       g_variant_new_boolean (panel_applet_frame_activating_get_locked_down (frame_act)));

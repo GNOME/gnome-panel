@@ -53,7 +53,6 @@ typedef struct {
 static const AppletPropertyInfo applet_properties [] = {
 	{ "settings-path", "SettingsPath" },
 	{ "orient",        "Orient" },
-	{ "size",          "Size" },
 	{ "size-hints",    "SizeHints" },
 	{ "background",    "Background" },
 	{ "flags",         "Flags" },

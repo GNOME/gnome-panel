@@ -76,10 +76,20 @@ test_applet_handle_orient_change (TestApplet       *applet,
 }
 
 static void
-test_applet_handle_size_change (TestApplet *applet,
-				gint        size,
-				gpointer    dummy)
+test_applet_handle_size_allocate (GtkWidget     *widget,
+                                  GtkAllocation *allocation,
+                                  TestApplet    *applet)
 {
+	PanelApplet *panel_applet = PANEL_APPLET (widget);
+	PanelAppletOrient orient = panel_applet_get_orient (panel_applet);
+	guint size;
+
+	if (orient == PANEL_APPLET_ORIENT_UP || orient == PANEL_APPLET_ORIENT_DOWN) {
+		size = allocation->height;
+	} else {
+		size = allocation->width;
+	}
+
 	switch (size) {
 	case 12:
 		gtk_label_set_markup (
@@ -136,9 +146,6 @@ test_applet_fill (TestApplet *applet)
 
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
-	test_applet_handle_size_change (applet,
-					panel_applet_get_size (PANEL_APPLET (applet)),
-					NULL);
 	test_applet_handle_orient_change (applet,
 					  panel_applet_get_orient (PANEL_APPLET (applet)),
 					  NULL);
@@ -168,9 +175,9 @@ test_applet_fill (TestApplet *applet)
 			  NULL);
 
 	g_signal_connect (G_OBJECT (applet),
-			  "change_size",
-			  G_CALLBACK (test_applet_handle_size_change),
-			  NULL);
+			  "size-allocate",
+			  G_CALLBACK (test_applet_handle_size_allocate),
+			  applet);
 
 	g_signal_connect (G_OBJECT (applet),
 			  "change_background",
