@@ -34,7 +34,6 @@
 
 #define PANEL_TOPLEVEL_SCHEMA               "org.gnome.gnome-panel.toplevel"
 #define PANEL_TOPLEVEL_NAME_KEY             "name"
-#define PANEL_TOPLEVEL_SCREEN_KEY           "screen"
 #define PANEL_TOPLEVEL_MONITOR_KEY          "monitor"
 #define PANEL_TOPLEVEL_EXPAND_KEY           "expand"
 #define PANEL_TOPLEVEL_ORIENTATION_KEY      "orientation"

@@ -88,7 +88,6 @@ typedef struct {
 
 static PanelLayoutKeyDefinition panel_layout_toplevel_keys[] = {
         { PANEL_TOPLEVEL_NAME_KEY,            G_TYPE_STRING   },
-        { PANEL_TOPLEVEL_SCREEN_KEY,          G_TYPE_INT      },
         { PANEL_TOPLEVEL_MONITOR_KEY,         G_TYPE_INT      },
         { PANEL_TOPLEVEL_EXPAND_KEY,          G_TYPE_BOOLEAN  },
         { PANEL_TOPLEVEL_ORIENTATION_KEY,     G_TYPE_STRING   },
@@ -186,8 +185,7 @@ static char *
 panel_layout_find_free_id (const char *id_list_key,
                            const char *schema,
                            const char *path_prefix,
-                           const char *try_id,
-                           int         screen_for_toplevels)
+                           const char *try_id)
 {
         char      *unique_id;
         char     **existing_ids;
@@ -206,7 +204,7 @@ panel_layout_find_free_id (const char *id_list_key,
         /* If a specific id is specified, try to use it; it might be
          * free */
         if (try_id) {
-                unique_id = g_strdup_printf ("%s-%d", try_id, screen_for_toplevels==-1?0:screen_for_toplevels);
+                unique_id = g_strdup (try_id);
 
                 existing = FALSE;
 
@@ -237,7 +235,7 @@ panel_layout_find_free_id (const char *id_list_key,
         /* Append an index at the end of the id to find a unique
          * id, not used yet */
         while (existing) {
-                unique_id = g_strdup_printf ("%s-%d-%d", try_id, screen_for_toplevels==-1?0:screen_for_toplevels, index);
+                unique_id = g_strdup_printf ("%s-%d", try_id, index);
 
                 existing = FALSE;
 
@@ -341,7 +339,6 @@ panel_layout_maybe_append_object_instance_config (GKeyFile    *keyfile,
 static gboolean
 panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                   const char                *group,
-                                  int                        set_screen_to,
                                   const char                *group_prefix,
                                   const char                *id_list_key,
                                   const char                *schema,
@@ -380,8 +377,7 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         if (id && !panel_gsettings_is_valid_keyname (id, error))
                 return FALSE;
 
-        unique_id = panel_layout_find_free_id (id_list_key, schema, path_prefix,
-                                               id, set_screen_to);
+        unique_id = panel_layout_find_free_id (id_list_key, schema, path_prefix, id);
 
         path = g_strdup_printf ("%s%s/", path_prefix, unique_id);
         settings = g_settings_new_with_path (schema, path);
@@ -445,10 +441,6 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                                         group, keyfile_keys[i],
                                                         error);
 
-                                if (strcmp(keyfile_keys[i], "toplevel-id") == 0) {
-                                  value_str = g_strdup_printf ("%s-%d", value_str, set_screen_to==-1?0:set_screen_to);
-                                }
-
                                 if (!value_str)
                                         goto out;
 
@@ -493,12 +485,6 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
         }
 
         if (!dry_run) {
-                if (set_screen_to != -1 &&
-                    g_strcmp0 (schema, PANEL_TOPLEVEL_SCHEMA) == 0)
-                        g_settings_set_int (settings,
-                                            PANEL_TOPLEVEL_SCREEN_KEY,
-                                            set_screen_to);
-
                 panel_gsettings_append_strv (layout_settings,
                                              id_list_key,
                                              unique_id);
@@ -520,7 +506,6 @@ out:
 static gboolean
 panel_layout_append_group (GKeyFile    *keyfile,
                            const char  *group,
-                           int          screen_for_toplevels,
                            gboolean     dry_run,
                            GError     **error)
 {
@@ -530,7 +515,6 @@ panel_layout_append_group (GKeyFile    *keyfile,
             g_str_has_prefix (group, "Toplevel "))
                 return panel_layout_append_group_helper (
                                         keyfile, group,
-                                        screen_for_toplevels,
                                         "Toplevel",
                                         PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                         PANEL_TOPLEVEL_SCHEMA,
@@ -542,7 +526,6 @@ panel_layout_append_group (GKeyFile    *keyfile,
                  g_str_has_prefix (group, "Object "))
                 return panel_layout_append_group_helper (
                                         keyfile, group,
-                                        screen_for_toplevels,
                                         "Object",
                                         PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                         PANEL_OBJECT_SCHEMA,
@@ -557,9 +540,8 @@ panel_layout_append_group (GKeyFile    *keyfile,
         return FALSE;
 }
 
-static void
-panel_layout_append_from_file_real (const char *layout_file,
-                                    int         screen_for_toplevels)
+void
+panel_layout_append_from_file (const char *layout_file)
 {
         GError    *error = NULL;
         GKeyFile  *keyfile = NULL;
@@ -582,7 +564,6 @@ panel_layout_append_from_file_real (const char *layout_file,
          * layout; the whole layout has to be valid */
         for (i = 0; groups[i] != NULL; i++) {
                 if (!panel_layout_append_group (keyfile, groups[i],
-                                                screen_for_toplevels,
                                                 TRUE, &error))
                         goto out;
                 else
@@ -599,7 +580,6 @@ panel_layout_append_from_file_real (const char *layout_file,
          * since the first pass worked. */
         for (i = 0; groups[i] != NULL; i++)
                 panel_layout_append_group (keyfile, groups[i],
-                                           screen_for_toplevels,
                                            FALSE, NULL);
 
 out:
@@ -614,21 +594,6 @@ out:
 
         if (keyfile)
                 g_key_file_free (keyfile);
-}
-
-static void
-panel_layout_append_from_file_for_screen (const char *layout_file,
-                                          GdkScreen  *screen)
-{
-        int screen_n = gdk_screen_get_number (screen);
-
-        panel_layout_append_from_file_real (layout_file, screen_n);
-}
-
-void
-panel_layout_append_from_file (const char *layout_file)
-{
-        panel_layout_append_from_file_real (layout_file, -1);
 }
 
 
@@ -649,15 +614,11 @@ panel_layout_toplevel_create (GdkScreen *screen)
         unique_id = panel_layout_find_free_id (PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY,
                                                PANEL_TOPLEVEL_SCHEMA,
                                                PANEL_LAYOUT_TOPLEVEL_PATH,
-                                               NULL, -1);
+                                               NULL);
 
         path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_TOPLEVEL_PATH, unique_id);
         settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
         g_free (path);
-
-        g_settings_set_int (settings,
-                            PANEL_TOPLEVEL_SCREEN_KEY,
-                            gdk_screen_get_number (screen));
 
         if (panel_toplevel_find_empty_spot (screen, &orientation, &monitor)) {
                 g_settings_set_enum (settings,
@@ -774,7 +735,7 @@ panel_layout_object_create_start (PanelObjectType       type,
         unique_id = panel_layout_find_free_id (PANEL_LAYOUT_OBJECT_ID_LIST_KEY,
                                                PANEL_OBJECT_SCHEMA,
                                                PANEL_LAYOUT_OBJECT_PATH,
-                                               try_id, -1);
+                                               try_id);
 
         path = g_strdup_printf ("%s%s/", PANEL_LAYOUT_OBJECT_PATH, unique_id);
         settings_object = g_settings_new_with_path (PANEL_OBJECT_SCHEMA, path);
@@ -1062,24 +1023,12 @@ panel_layout_load_toplevel (const char *toplevel_id)
 {
         PanelToplevel *toplevel;
         char          *path;
-        GSettings     *settings;
-        int            screen;
 
         if (PANEL_GLIB_STR_EMPTY (toplevel_id))
                 return;
 
         path = g_strdup_printf ("%s%s/",
                                 PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
-
-        /* Check that the screen is valid */
-        settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA, path);
-        screen = g_settings_get_int (settings, PANEL_TOPLEVEL_SCREEN_KEY);
-        g_object_unref (settings);
-
-        if (screen < 0 || screen >= panel_multiscreen_screens ()) {
-                g_free (path);
-                return;
-        }
 
         toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
                                  "toplevel-id", toplevel_id,
@@ -1125,48 +1074,6 @@ panel_layout_get_default_layout_file (void)
         return g_build_filename (PANELDATADIR,
                                  PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
                                  NULL);
-}
-
-static void
-panel_layout_ensure_toplevel_per_screen (void)
-{
-        GSList     *toplevels;
-        GSList     *empty_screens = NULL;
-        GSList     *l;
-        GdkDisplay *display;
-        int         n_screens, i;
-        char       *default_layout_file;
-
-        toplevels = panel_toplevel_list_toplevels ();
-
-        display = gdk_display_get_default ();
-
-        n_screens = gdk_display_get_n_screens (display);
-        for (i = 0; i < n_screens; i++) {
-                GdkScreen *screen;
-
-                screen = gdk_display_get_screen (display, i);
-
-                for (l = toplevels; l; l = l->next)
-                        if (gtk_window_get_screen (l->data) == screen)
-                                break;
-
-                if (!l)
-                        empty_screens = g_slist_prepend (empty_screens, screen);
-        }
-
-        if (empty_screens == NULL)
-                return;
-
-        default_layout_file = panel_layout_get_default_layout_file ();
-
-        for (l = empty_screens; l; l = l->next)
-                panel_layout_append_from_file_for_screen (default_layout_file,
-                                                          l->data);
-
-        g_free (default_layout_file);
-
-        g_slist_free (empty_screens);
 }
 
 gboolean
@@ -1225,12 +1132,6 @@ panel_layout_load (void)
 
         g_signal_connect (layout_settings, "changed",
                           G_CALLBACK (panel_layout_changed), NULL);
-
-        /* This needs to happen after we've loaded the current toplevels (to
-         * know if we have toplevels on all screens), and after we've connected
-         * to the settings changed notifications (to automatically load created
-         * toplevels) */
-        panel_layout_ensure_toplevel_per_screen ();
 
         panel_object_loader_do_load (TRUE);
 

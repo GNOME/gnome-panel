@@ -4345,8 +4345,6 @@ panel_toplevel_position_is_writable (PanelToplevel *toplevel)
 {
 	if (panel_lockdown_get_panels_locked_down_s () ||
 	    !(g_settings_is_writable (toplevel->priv->settings,
-				      PANEL_TOPLEVEL_SCREEN_KEY) &&
-	      g_settings_is_writable (toplevel->priv->settings,
 				      PANEL_TOPLEVEL_MONITOR_KEY) &&
 	      g_settings_is_writable (toplevel->priv->settings,
 				      PANEL_TOPLEVEL_ORIENTATION_KEY)))
@@ -4389,48 +4387,6 @@ panel_toplevel_apply_delayed_settings_queue (PanelToplevel *toplevel)
 	toplevel->priv->apply_delayed_id = g_timeout_add (500,
 							  (GSourceFunc) panel_toplevel_apply_delayed_settings,
 							  toplevel);
-}
-
-static gboolean
-panel_toplevel_settings_bind_get_screen (GValue   *value,
-					 GVariant *variant,
-					 gpointer  user_data)
-{
-	PanelToplevel *toplevel = PANEL_TOPLEVEL (user_data);
-	GdkDisplay    *display;
-	GdkScreen     *screen;
-	int            screen_n;
-
-	display = gdk_display_get_default ();
-	screen_n = g_variant_get_int32 (variant);
-
-	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
-		/* Trigger an event so that the gsettings key gets updated, to
-		 * to set the key back to an actual available screen so it will
-		 * get loaded on next startup. */
-		g_object_notify (G_OBJECT (toplevel), "screen");
-		return FALSE;
-	}
-
-	screen = gdk_display_get_screen (display, screen_n);
-
-	if (screen != NULL)
-		g_value_set_object (value, screen);
-
-	return (screen != NULL);
-}
-
-static GVariant *
-panel_toplevel_settings_bind_set_screen (const GValue       *value,
-					 const GVariantType *expected_type,
-					 gpointer            user_data)
-{
-	GdkScreen *screen = g_value_get_object (value);
-
-	if (!screen || !GDK_IS_SCREEN (screen))
-		screen = gdk_screen_get_default ();
-
-	return g_variant_new ("i", gdk_screen_get_number (screen));
 }
 
 static void
@@ -4493,15 +4449,6 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	/* Normal settings */
-
-	g_settings_bind_with_mapping (toplevel->priv->settings,
-				      PANEL_TOPLEVEL_SCREEN_KEY,
-				      toplevel,
-				      "screen",
-				      G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY,
-				      panel_toplevel_settings_bind_get_screen,
-				      panel_toplevel_settings_bind_set_screen,
-				      toplevel, NULL);
 
 	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_NAME_KEY,
