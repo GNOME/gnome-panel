@@ -4,8 +4,7 @@ bin_PROGRAMS = \
 	gnome-panel 			\
 	gnome-desktop-item-edit		\
 	panel-test-applets
-libexec_SCRIPTS = gnome-panel-add				\
-		  gnome-session-flashback
+libexec_SCRIPTS = gnome-panel-add
 
 AM_CPPFLAGS =							\
 	$(PANEL_CFLAGS)						\
@@ -178,14 +177,6 @@ gnome-panel-add: gnome-panel-add.in Makefile
 		< $< > $@
 	$(AM_V_at)chmod a+x $@
 
-gnome-session-flashback: gnome-session-flashback.in Makefile
-	$(AM_V_GEN)sed 						\
-		-e 's![@]PACKAGE[@]!$(PACKAGE)!g'		\
-		-e 's![@]VERSION[@]!$(VERSION)!g'		\
-		-e 's![@]LIBEXECDIR[@]!$(libexecdir)!g'		\
-		< $< > $@
-	$(AM_V_at)chmod a+x $@
-
 panel_enum_headers =						\
 	$(top_srcdir)/gnome-panel/panel-enums.h			\
 	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
@@ -277,15 +268,13 @@ EXTRA_DIST =					\
 	nothing.h				\
 	panel-marshal.list			\
 	$(desktop_in_files)			\
-	gnome-panel-add.in			\
-	gnome-session-flashback.in
+	gnome-panel-add.in
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
 	$(desktop_DATA) \
-	gnome-panel-add	\
-	gnome-session-flashback
+	gnome-panel-add
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
