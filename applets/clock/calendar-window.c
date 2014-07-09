@@ -144,7 +144,6 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 {
 	GSettings  *settings;
 	char      **argv;
-	int         argc;
 	char       *program;
 	gboolean    terminal;
 	char       *command_line;
@@ -179,11 +178,9 @@ clock_launch_calendar_tasks_app (CalendarWindow *calwin,
 	g_free (command_line);
 
 	if (argument) {
-		argc = 2;
 		argv = g_new0 (char *, 3);
 		argv[1] = g_strdup (argument);
 	} else {
-		argc = 1;
 		argv = g_new0 (char *, 2);
 	}
 	argv[0] = program; /* no strdup, and it will get freed for free */
