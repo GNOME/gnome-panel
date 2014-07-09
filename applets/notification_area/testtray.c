@@ -198,20 +198,16 @@ main (int argc, char *argv[])
 {
   GdkDisplay *display;
   GdkScreen *screen;
-  int n_screens, i;
 
   gtk_init (&argc, &argv);
 
   gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
 
   display = gdk_display_get_default ();
-  n_screens =  gdk_display_get_n_screens (display);
-  for (i = 0; i < n_screens; ++i) {
-    screen = gdk_display_get_screen (display, i);
+  screen = gdk_display_get_default_screen (display);
 
-    create_tray_on_screen (screen, FALSE);
-  }
-  
+  create_tray_on_screen (screen, FALSE);
+
   gtk_main ();
 
   return 0;

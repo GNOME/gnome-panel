@@ -582,12 +582,7 @@ na_tray_constructor (GType type,
 
   if (!initialized)
     {
-      GdkDisplay *display;
-      int n_screens;
-
-      display = gdk_display_get_default ();
-      n_screens = gdk_display_get_n_screens (display);
-      trays_screens = g_new0 (TraysScreen, n_screens);
+      trays_screens = g_new0 (TraysScreen, 1);
       initialized = TRUE;
     }
 
