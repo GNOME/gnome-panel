@@ -623,7 +623,7 @@ display_fortune_dialog (FishApplet *fish)
 			gtk_dialog_new_with_buttons (
 				"", NULL, 0,
 				_("_Speak again"), FISH_RESPONSE_SPEAK,
-				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+				_("_Close"), GTK_RESPONSE_CLOSE,
 				NULL);
 
 		gtk_window_set_icon_name (GTK_WINDOW (fish->fortune_dialog),
