@@ -3143,7 +3143,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	deltax = toplevel->priv->animation_end_x - cur_x;
 	deltay = toplevel->priv->animation_end_y - cur_y;
 
-	gtk_widget_get_requisition (GTK_WIDGET (toplevel), &requisition);
+	gtk_widget_get_preferred_size (GTK_WIDGET (toplevel), &requisition, NULL);
 
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = toplevel->priv->animation_end_width - requisition.width;
