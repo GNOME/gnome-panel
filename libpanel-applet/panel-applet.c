@@ -176,7 +176,7 @@ G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
  * Creates a new #GSettings object for the per-instance settings of @applet,
  * with a given schema.
  *
- * Returns: a new #GSettings object for the per-instance settings of @applet.
+ * Returns: (transfer full): a new #GSettings object for the per-instance settings of @applet.
  **/
 GSettings *
 panel_applet_settings_new (PanelApplet *applet,
