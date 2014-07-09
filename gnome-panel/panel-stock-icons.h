@@ -31,9 +31,6 @@ G_BEGIN_DECLS
 /* themeable size - "panel-menu" -- This is used for the icons in the menus */
 #define PANEL_DEFAULT_MENU_ICON_SIZE 		24
 
-/* stock icons */
-#define PANEL_STOCK_FORCE_QUIT          "gnome-panel-force-quit"
-
 /* stock items  - no point in theme the icons one these,
  * they use stock gtk icons and just modify the text
  * for the stock item.

@@ -33,7 +33,6 @@
 #include <X11/extensions/XInput2.h>
 
 #include "panel-icon-names.h"
-#include "panel-stock-icons.h"
 
 static GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
 				     GdkEvent  *event,
@@ -227,9 +226,9 @@ kill_window_question (gpointer window)
 						  "in it might get lost."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				GTK_STOCK_CANCEL,
+				_("_Cancel"),
 				GTK_RESPONSE_CANCEL,
-				PANEL_STOCK_FORCE_QUIT,
+				_("_Force quit"),
 				GTK_RESPONSE_ACCEPT,
 				NULL);
  

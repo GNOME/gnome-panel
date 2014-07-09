@@ -39,47 +39,12 @@ panel_menu_icon_get_size (void)
 
 typedef struct {
 	char *stock_id;
-	char *icon;
-} PanelStockIcon;
-
-static PanelStockIcon stock_icons [] = {
-	{ PANEL_STOCK_FORCE_QUIT, PANEL_ICON_FORCE_QUIT }
-};
-
-static void
-panel_init_stock_icons (GtkIconFactory *factory)
-{
-	GtkIconSource *source;
-	int            i;
-
-
-	source = gtk_icon_source_new ();
-
-	for (i = 0; i < G_N_ELEMENTS (stock_icons); i++) {
-		GtkIconSet *set;
-
-		gtk_icon_source_set_icon_name (source, stock_icons [i].icon);
-
-		set = gtk_icon_set_new ();
-		gtk_icon_set_add_source (set, source);
-
-		gtk_icon_factory_add (factory, stock_icons [i].stock_id, set);
-		gtk_icon_set_unref (set);
-	}
-
-	gtk_icon_source_free (source);
-
-}
-
-typedef struct {
-	char *stock_id;
 	char *stock_icon_id;
 	char *label;
 } PanelStockItem;
 
 static PanelStockItem stock_items [] = {
 	{ PANEL_STOCK_EXECUTE,     GTK_STOCK_EXECUTE,       N_("_Run") },
-	{ PANEL_STOCK_FORCE_QUIT,  PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
 	{ PANEL_STOCK_CLEAR,       GTK_STOCK_CLEAR,         N_("C_lear") },
 	{ PANEL_STOCK_DONT_DELETE, GTK_STOCK_CANCEL,        N_("D_on't Delete") }
 };
@@ -121,7 +86,6 @@ panel_init_stock_icons_and_items (void)
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);
 
-	panel_init_stock_icons (factory);
 	panel_init_stock_items (factory);
 
 	g_object_unref (factory);
