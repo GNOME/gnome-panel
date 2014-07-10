@@ -73,7 +73,7 @@ struct _PanelBackgroundMonitor {
 
 G_DEFINE_TYPE (PanelBackgroundMonitor, panel_background_monitor, G_TYPE_OBJECT)
 
-static PanelBackgroundMonitor **global_background_monitors = NULL;
+static PanelBackgroundMonitor *global_background_monitor = NULL;
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
@@ -174,30 +174,16 @@ panel_background_monitor_new (GdkScreen *screen)
 PanelBackgroundMonitor *
 panel_background_monitor_get_for_screen (GdkScreen *screen)
 {
-	int screen_number;
+	if (!global_background_monitor) {
+		global_background_monitor = panel_background_monitor_new (screen);
 
-	screen_number = gdk_screen_get_number (screen);
+		g_object_add_weak_pointer (G_OBJECT (global_background_monitor),
+		                           (void **) &global_background_monitor);
 
-	if (!global_background_monitors) {
-		int n_screens;
-
-		n_screens = gdk_display_get_n_screens (gdk_display_get_default ());
-
-		global_background_monitors = g_new0 (PanelBackgroundMonitor *, n_screens);
+		return global_background_monitor;
 	}
 
-	if (!global_background_monitors [screen_number]) {
-		global_background_monitors [screen_number] =
-				panel_background_monitor_new (screen);
-
-		g_object_add_weak_pointer (
-			G_OBJECT (global_background_monitors [screen_number]),
-			(void **) &global_background_monitors [screen_number]);
-
-		return global_background_monitors [screen_number];
-	}
-
-	return g_object_ref (global_background_monitors [screen_number]);
+	return g_object_ref (global_background_monitor);
 }
 
 static void
