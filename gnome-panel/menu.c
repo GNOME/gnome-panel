@@ -45,7 +45,6 @@
 
 typedef struct {
 	GtkWidget    *pixmap;
-	const char   *stock_id;
 	GIcon        *gicon;
 	char         *image;
 	char         *fallback_image;
@@ -55,7 +54,6 @@ typedef struct {
 
 typedef struct {
 	GtkWidget   *image;
-	const char  *stock_id;
 	GIcon       *gicon;
 	GdkPixbuf   *pixbuf;
 	GtkIconSize  icon_size;
@@ -73,7 +71,6 @@ static GtkWidget *populate_menu_from_directory (GtkWidget          *menu,
 
 static void panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 					    GtkIconSize  icon_size,
-					    const char  *stock_id,
 					    GIcon       *gicon,
 					    const char  *image_filename,
 					    const char  *fallback_image_filename);
@@ -268,7 +265,6 @@ icon_to_load_copy (IconToLoad *icon)
 		retval->gicon  = NULL;
 	retval->image          = g_strdup (icon->image);
 	retval->fallback_image = g_strdup (icon->fallback_image);
-	retval->stock_id       = icon->stock_id;
 	retval->icon_size      = icon->icon_size;
 
 	return retval;
@@ -444,12 +440,7 @@ do_icons_to_add (void)
 
 		icons_to_add = g_list_delete_link (icons_to_add, icons_to_add);
 
-		if (icon_to_add->stock_id) {
-			gtk_image_set_from_stock (
-				GTK_IMAGE (icon_to_add->image),
-				icon_to_add->stock_id,
-				icon_to_add->icon_size);
-		} else if (icon_to_add->gicon) {
+		if (icon_to_add->gicon) {
 			gtk_image_set_from_gicon (
 				GTK_IMAGE (icon_to_add->image),
 				icon_to_add->gicon,
@@ -503,12 +494,11 @@ load_icons_handler_again:
 		goto load_icons_handler_again;
 	}
 
-	if (icon->stock_id || icon->gicon) {
+	if (icon->gicon) {
 		IconToAdd *icon_to_add;
 
 		icon_to_add            = g_new (IconToAdd, 1);
 		icon_to_add->image     = g_object_ref (icon->pixmap);
-		icon_to_add->stock_id  = icon->stock_id;
 		icon_to_add->pixbuf    = NULL;
 		icon_to_add->icon_size = icon->icon_size;
 		if (icon->gicon)
@@ -543,7 +533,6 @@ load_icons_handler_again:
 
 		icon_to_add            = g_new (IconToAdd, 1);
 		icon_to_add->image     = g_object_ref (icon->pixmap);
-		icon_to_add->stock_id  = NULL;
 		icon_to_add->gicon     = NULL;
 		icon_to_add->pixbuf    = pb;
 		icon_to_add->icon_size = icon->icon_size;
@@ -1006,7 +995,6 @@ create_submenu_entry (GtkWidget          *menu,
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
-					NULL,
 					gmenu_tree_directory_get_icon (directory),
 					NULL,
 					PANEL_ICON_FOLDER);
@@ -1076,14 +1064,13 @@ create_menuitem (GtkWidget          *menu,
 	if (alias_directory)
 		panel_load_menu_image_deferred (menuitem,
 						panel_menu_icon_get_size (),
-						NULL,
 						gmenu_tree_directory_get_icon (alias_directory),
 						NULL,
 						NULL);
 	else
 		panel_load_menu_image_deferred (menuitem,
 						panel_menu_icon_get_size (),
-						NULL, g_app_info_get_icon (G_APP_INFO (gmenu_tree_entry_get_app_info (entry))),
+						g_app_info_get_icon (G_APP_INFO (gmenu_tree_entry_get_app_info (entry))),
 						NULL, NULL);
 
 	setup_menuitem (menuitem,
@@ -1346,14 +1333,12 @@ void
 setup_menu_item_with_icon (GtkWidget   *item,
 			   GtkIconSize  icon_size,
 			   const char  *icon_name,
-			   const char  *stock_id,
 			   GIcon       *gicon,
 			   const char  *title)
 {
-	if (icon_name || gicon || stock_id)
+	if (icon_name || gicon)
 		panel_load_menu_image_deferred (item, icon_size,
-						stock_id, gicon,
-						icon_name, NULL);
+						gicon, icon_name, NULL);
 
 	setup_menuitem (item, icon_size, NULL, title);
 }
@@ -1456,7 +1441,6 @@ image_menu_destroy (GtkWidget *image, gpointer data)
 static void
 panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				GtkIconSize  icon_size,
-				const char  *stock_id,
 				GIcon       *gicon,
 				const char  *image_filename,
 				const char  *fallback_image_filename)
@@ -1475,7 +1459,6 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 	/* this takes over the floating ref */
 	icon->pixmap = g_object_ref_sink (G_OBJECT (image));
 
-	icon->stock_id       = stock_id;
 	if (gicon)
 		icon->gicon  = g_object_ref (gicon);
 	else

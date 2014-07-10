@@ -118,7 +118,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	GtkWidget *image;
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Add to Panel..."));
-	image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -129,7 +129,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Properties"));
-	image = gtk_image_new_from_stock (GTK_STOCK_PROPERTIES,
+	image = gtk_image_new_from_icon_name ("document-properties",
 					  GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
@@ -139,7 +139,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  panel_widget->toplevel);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_Delete This Panel"));
-	image = gtk_image_new_from_stock (GTK_STOCK_DELETE,
+	image = gtk_image_new_from_icon_name ("gtk-delete",
 					  GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
@@ -154,7 +154,7 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	add_menu_separator (menu);
 
 	menuitem = gtk_image_menu_item_new_with_mnemonic (_("_New Panel"));
-	image = gtk_image_new_from_stock (GTK_STOCK_NEW, GTK_ICON_SIZE_MENU);
+	image = gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), image);
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);

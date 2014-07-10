@@ -149,8 +149,8 @@ recent_documents_clear_cb (GtkMenuItem      *menuitem,
 						    "\342\200\242 All items from the recent documents list in all applications."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (clear_recent_dialog),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				PANEL_STOCK_CLEAR, GTK_RESPONSE_ACCEPT,
+				_("_Cancel"), GTK_RESPONSE_CANCEL,
+				_("C_lear"), GTK_RESPONSE_ACCEPT,
 				NULL);
 
 	gtk_container_set_border_width (GTK_CONTAINER (clear_recent_dialog), 6);
@@ -190,7 +190,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	setup_menu_item_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
 				   PANEL_ICON_RECENT,
-				   NULL, NULL,
+				   NULL,
 				   _("Recent Documents"));
 	recent_menu = gtk_recent_chooser_menu_new_for_manager (manager);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), recent_menu);
@@ -228,8 +228,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
-				   NULL,
-				   GTK_STOCK_CLEAR, NULL,
+				   "edit-clear", NULL,
 				   _("Clear Recent Documents..."));
 	panel_util_set_tooltip_text (menu_item,
 				     _("Clear all items from the recent documents list"));
