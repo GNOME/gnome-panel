@@ -22,7 +22,7 @@
 #ifndef __PANEL_MENU_ITEMS_H__
 #define __PANEL_MENU_ITEMS_H__
 
-#include <gtk/gtk.h>
+#include "panel-image-menu-item.h"
 #include "panel-widget.h"
 
 G_BEGIN_DECLS
@@ -39,13 +39,12 @@ typedef struct _PanelPlaceMenuItemClass   PanelPlaceMenuItemClass;
 typedef struct _PanelPlaceMenuItemPrivate PanelPlaceMenuItemPrivate;
 
 struct _PanelPlaceMenuItem {
-	GtkImageMenuItem            menuitem;
-
-	PanelPlaceMenuItemPrivate  *priv;
+	PanelImageMenuItem         parent;
+	PanelPlaceMenuItemPrivate *priv;
 };
 
 struct _PanelPlaceMenuItemClass {
-	GtkImageMenuItemClass       menuitem_class;
+	PanelImageMenuItemClass parent_class;
 };
 
 GType panel_place_menu_item_get_type (void) G_GNUC_CONST;
@@ -64,13 +63,12 @@ typedef struct _PanelDesktopMenuItemClass   PanelDesktopMenuItemClass;
 typedef struct _PanelDesktopMenuItemPrivate PanelDesktopMenuItemPrivate;
 
 struct _PanelDesktopMenuItem{
-	GtkImageMenuItem            menuitem;
-
-	PanelDesktopMenuItemPrivate  *priv;
+	PanelImageMenuItem           parent;
+	PanelDesktopMenuItemPrivate *priv;
 };
 
 struct _PanelDesktopMenuItemClass {
-	GtkImageMenuItemClass       menuitem_class;
+	PanelImageMenuItemClass parent_class;
 };
 
 GType panel_desktop_menu_item_get_type (void) G_GNUC_CONST;

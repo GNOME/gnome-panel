@@ -64,8 +64,8 @@
 #define MAX_ITEMS_OR_SUBMENU    8
 #define MAX_BOOKMARK_ITEMS      100
 
-G_DEFINE_TYPE (PanelPlaceMenuItem, panel_place_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
-G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE (PanelPlaceMenuItem, panel_place_menu_item, PANEL_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, PANEL_TYPE_IMAGE_MENU_ITEM)
 
 #define PANEL_PLACE_MENU_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_PLACE_MENU_ITEM, PanelPlaceMenuItemPrivate))
 #define PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_DESKTOP_MENU_ITEM, PanelDesktopMenuItemPrivate))
@@ -326,7 +326,7 @@ panel_menu_item_desktop_new (char      *path,
 	if (use_icon) {
 		item = panel_image_menu_item_new2 ();
         } else {
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 	}
 
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
@@ -405,7 +405,7 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 	if (!create_even_if_disabled && panel_action_get_is_disabled (action_type))
 		return NULL;
 
-	item = gtk_image_menu_item_new ();
+	item = panel_image_menu_item_new ();
         setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
@@ -477,7 +477,7 @@ panel_menu_items_create_switch_user (gboolean use_icon)
 	if (use_icon) {
 		item = panel_image_menu_item_new2 ();
         } else {
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 	}
 
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
@@ -608,7 +608,7 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	} else {
 		GtkWidget *item;
 
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_BOOKMARKS, NULL,
 					   _("Bookmarks"));
@@ -1051,7 +1051,7 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *item;
 
-		item = gtk_image_menu_item_new ();
+		item = panel_image_menu_item_new ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_REMOVABLE_MEDIA,
 					   NULL,
@@ -1582,8 +1582,7 @@ panel_place_menu_item_new (gboolean use_image,
 			GtkWidget *image;
 			image = gtk_image_new_from_icon_name (icon_name,
 							      panel_menu_bar_object_icon_get_size ());
-			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-						       image);
+			panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menuitem), image);
 		}
 	} else {
 		if (use_image)
@@ -1630,7 +1629,7 @@ panel_desktop_menu_item_on_presence_changed (PanelSessionManager             *ma
 		break;
 	}
 
-	image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (desktop_item));
+	image = panel_image_menu_item_get_image (PANEL_IMAGE_MENU_ITEM (desktop_item));
 	/* we only have an image if we are specifically using an icon for this
 	 * menu */
 	if (image) {
@@ -1687,8 +1686,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 			GtkWidget *image;
 			image = gtk_image_new_from_icon_name (icon_name,
 							      menuitem->priv->icon_size);
-			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-						       image);
+			panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menuitem), image);
 		}
 	} else {
 		menuitem->priv->icon_size = panel_menu_icon_get_size ();
@@ -1706,8 +1704,7 @@ panel_desktop_menu_item_new (gboolean use_image,
 
 #ifdef HAVE_TELEPATHY_GLIB
 	if (use_image)
-		gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
-							   TRUE);
+		panel_image_menu_item_set_always_show_image (PANEL_IMAGE_MENU_ITEM (menuitem), TRUE);
 #endif
 
 	g_free (name);

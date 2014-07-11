@@ -168,11 +168,9 @@ panel_menu_bar_style_updated (GtkWidget *widget)
 	gtk_widget_style_get (widget, "icon-visible", &visible, NULL);
 
 	if (visible)
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
-					       menubar->priv->image);
+		panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menubar->priv->applications_item), menubar->priv->image);
 	else
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menubar->priv->applications_item),
-					       NULL);
+		panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menubar->priv->applications_item), NULL);
 }
 
 static void

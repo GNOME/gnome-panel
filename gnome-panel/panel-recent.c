@@ -37,6 +37,7 @@
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
 #include "panel-icon-names.h"
+#include "panel-image-menu-item.h"
 
 static gboolean
 show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
@@ -186,7 +187,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 	GtkWidget      *menu_item;
 	int             size;
 
-	menu_item = gtk_image_menu_item_new ();
+	menu_item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
 				   PANEL_ICON_RECENT,
@@ -225,7 +226,7 @@ panel_recent_append_documents_menu (GtkWidget        *top_menu,
 
 	add_menu_separator (recent_menu);
 
-	menu_item = gtk_image_menu_item_new ();
+	menu_item = panel_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
 				   panel_menu_icon_get_size (),
 				   "edit-clear", NULL,

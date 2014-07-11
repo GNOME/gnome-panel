@@ -782,8 +782,7 @@ setup_menuitem (GtkWidget   *menuitem,
 					g_object_ref (image),
 					(GDestroyNotify) g_object_unref);
 		gtk_widget_show (image);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem),
-					       image);
+		panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menuitem), image);
 	} else if (icon_size != GTK_ICON_SIZE_INVALID)
                 image_menuitem_set_size_request (menuitem, icon_size);
 
@@ -969,9 +968,8 @@ panel_image_menu_item_new2 (void)
 	GtkWidget *menuitem;
 	GtkStyleContext *context;
 
-	menuitem = gtk_image_menu_item_new ();
-	gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (menuitem),
-						   TRUE);
+	menuitem = panel_image_menu_item_new ();
+	panel_image_menu_item_set_always_show_image (PANEL_IMAGE_MENU_ITEM (menuitem), TRUE);
 	context = gtk_widget_get_style_context (menuitem);
 	gtk_style_context_add_class (context, "gnome-panel-menu-item");
 
@@ -991,7 +989,7 @@ create_submenu_entry (GtkWidget          *menu,
 	if (force_categories_icon)
 		menuitem = panel_image_menu_item_new2 ();
 	else
-		menuitem = gtk_image_menu_item_new ();
+		menuitem = panel_image_menu_item_new ();
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
@@ -1474,8 +1472,7 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 				g_object_ref (image),
 				(GDestroyNotify) g_object_unref);
 
-	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item),
-				       image);
+	panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (image_menu_item), image);
 
 	g_signal_connect_data (image, "map",
 			       G_CALLBACK (image_menu_shown), icon,
