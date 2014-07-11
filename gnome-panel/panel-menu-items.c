@@ -324,7 +324,7 @@ panel_menu_item_desktop_new (char      *path,
 		name = g_strdup (force_name);
 
 	if (use_icon) {
-		item = panel_image_menu_item_new ();
+		item = panel_image_menu_item_new2 ();
         } else {
 		item = gtk_image_menu_item_new ();
 	}
@@ -374,7 +374,7 @@ panel_menu_item_uri_new (const char *uri,
 	GtkWidget *item;
 	char      *user_data;
 
-	item = panel_image_menu_item_new ();
+	item = panel_image_menu_item_new2 ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   icon_name, gicon,
@@ -475,7 +475,7 @@ panel_menu_items_create_switch_user (gboolean use_icon)
 	GtkWidget *item;
 
 	if (use_icon) {
-		item = panel_image_menu_item_new ();
+		item = panel_image_menu_item_new2 ();
         } else {
 		item = gtk_image_menu_item_new ();
 	}
@@ -741,7 +741,7 @@ panel_menu_item_drive_new (GDrive *drive)
 	icon = g_drive_get_icon (drive);
 	title = g_drive_get_name (drive);
 
-	item = panel_image_menu_item_new ();
+	item = panel_image_menu_item_new2 ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   NULL, icon,
@@ -840,7 +840,7 @@ panel_menu_item_volume_new (GVolume *volume)
 	icon = g_volume_get_icon (volume);
 	title = g_volume_get_name (volume);
 
-	item = panel_image_menu_item_new ();
+	item = panel_image_menu_item_new2 ();
 	setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   NULL, icon,
@@ -1142,7 +1142,7 @@ panel_place_menu_item_append_remote_gio (PanelPlaceMenuItem *place_item,
 	} else {
 		GtkWidget  *item;
 
-		item = panel_image_menu_item_new ();
+		item = panel_image_menu_item_new2 ();
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   PANEL_ICON_NETWORK_SERVER,
 					   NULL,

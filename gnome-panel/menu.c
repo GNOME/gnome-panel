@@ -964,7 +964,7 @@ create_fake_menu (GMenuTreeDirectory *directory)
 }
 
 GtkWidget *
-panel_image_menu_item_new (void)
+panel_image_menu_item_new2 (void)
 {
 	GtkWidget *menuitem;
 	GtkStyleContext *context;
@@ -989,7 +989,7 @@ create_submenu_entry (GtkWidget          *menu,
 						   "panel-menu-force-icon-for-categories") != NULL;
 
 	if (force_categories_icon)
-		menuitem = panel_image_menu_item_new ();
+		menuitem = panel_image_menu_item_new2 ();
 	else
 		menuitem = gtk_image_menu_item_new ();
 
@@ -1059,7 +1059,7 @@ create_menuitem (GtkWidget          *menu,
 {
 	GtkWidget  *menuitem;
 	
-	menuitem = panel_image_menu_item_new ();
+	menuitem = panel_image_menu_item_new2 ();
 
 	if (alias_directory)
 		panel_load_menu_image_deferred (menuitem,

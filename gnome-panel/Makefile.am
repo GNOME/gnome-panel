@@ -41,6 +41,7 @@ panel_sources =			\
 	panel-background-monitor.c	\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
+	panel-image-menu-item.c \
 	panel-menu-bar.c	\
 	panel-menu-bar-object.c	\
 	panel-menu-button.c	\
@@ -88,6 +89,7 @@ panel_headers =			\
 	panel-background-monitor.h	\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
+	panel-image-menu-item.h \
 	panel-menu-bar.h	\
 	panel-menu-bar-object.h	\
 	panel-menu-button.h	\

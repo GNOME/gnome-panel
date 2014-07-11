@@ -116,7 +116,7 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 
 	menubar->priv->applications_menu = create_applications_menu ("gnome-applications.menu", NULL, TRUE);
 
-	menubar->priv->applications_item = panel_image_menu_item_new ();
+	menubar->priv->applications_item = panel_image_menu_item_new2 ();
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
 				 _("Applications"));
 	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
