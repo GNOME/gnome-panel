@@ -7,6 +7,13 @@
     <child name="run-dialog" schema="org.gnome.gnome-panel.run-dialog"/>
   </schema>
 
+  <enum id='org.gnome.gnome-panel.icon-size'>
+    <value nick='16px' value='1'/>
+    <value nick='24px' value='3'/>
+    <value nick='32px' value='5'/>
+    <value nick='48px' value='6'/>
+  </enum>
+
   <schema id="org.gnome.gnome-panel.general" path="/org/gnome/gnome-panel/general/">
     <key name="enable-tooltips" type="b">
       <default>true</default>
@@ -17,6 +24,14 @@
       <default>true</default>
       <_summary>Confirm panel removal</_summary>
       <_description>If true, a dialog is shown asking for confirmation if the user wants to remove a panel.</_description>
+    </key>
+    <key name="panel-menu" enum="org.gnome.gnome-panel.icon-size">
+      <default>'24px'</default>
+      <_summary>Icon size in the menus</_summary>
+    </key>
+    <key name="panel-menu-bar" enum="org.gnome.gnome-panel.icon-size">
+      <default>'16px'</default>
+      <_summary>Icon size for only Applications item in the Menu Bar applet</_summary>
     </key>
   </schema>
 

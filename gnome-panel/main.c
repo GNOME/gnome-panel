@@ -95,7 +95,6 @@ main (int argc, char **argv)
 
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
-	panel_init_stock_icons_and_items ();
 
 	if (!panel_layout_load ()) {
 		panel_cleanup_do ();

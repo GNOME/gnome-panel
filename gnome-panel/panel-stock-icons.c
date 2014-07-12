@@ -34,13 +34,11 @@ static GtkIconSize panel_menu_icon_size = 0;
 GtkIconSize
 panel_menu_icon_get_size (void)
 {
-	return panel_menu_icon_size;
-}
+	if (panel_menu_icon_size == 0) {
+		GSettings *settings = g_settings_new ("org.gnome.gnome-panel.general");
+		panel_menu_icon_size = (GtkIconSize) g_settings_get_enum (settings, "panel-menu");
+		g_object_unref (settings);
+	}
 
-void
-panel_init_stock_icons_and_items (void)
-{
-	panel_menu_icon_size = gtk_icon_size_register ("panel-menu",
-						       PANEL_DEFAULT_MENU_ICON_SIZE,
-						       PANEL_DEFAULT_MENU_ICON_SIZE);
+	return panel_menu_icon_size;
 }

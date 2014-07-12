@@ -57,6 +57,12 @@ static GtkIconSize panel_menu_bar_object_icon_size = 0;
 GtkIconSize
 panel_menu_bar_object_icon_get_size (void)
 {
+	if (panel_menu_bar_object_icon_size == 0) {
+		GSettings *settings = g_settings_new ("org.gnome.gnome-panel.general");
+		panel_menu_bar_object_icon_size = (GtkIconSize) g_settings_get_enum (settings, "panel-menu-bar");
+		g_object_unref (settings);
+	}
+
 	return panel_menu_bar_object_icon_size;
 }
 
@@ -188,11 +194,6 @@ panel_menu_bar_object_class_init (PanelMenuBarObjectClass *klass)
 				   PANEL_TYPE_ORIENTATION,
 				   PANEL_ORIENTATION_TOP,
 				   G_PARAM_READWRITE));
-
-	if (panel_menu_bar_object_icon_size == 0)
-		panel_menu_bar_object_icon_size = gtk_icon_size_register ("panel-menu-bar",
-								   PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE,
-								   PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE);
 }
 
 static gboolean

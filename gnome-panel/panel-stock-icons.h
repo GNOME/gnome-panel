@@ -31,7 +31,6 @@ G_BEGIN_DECLS
 /* themeable size - "panel-menu" -- This is used for the icons in the menus */
 #define PANEL_DEFAULT_MENU_ICON_SIZE 		24
 
-void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);
 
 G_END_DECLS
