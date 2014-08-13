@@ -4,7 +4,6 @@ bin_PROGRAMS = \
 	gnome-panel 			\
 	gnome-desktop-item-edit		\
 	panel-test-applets
-libexec_SCRIPTS = gnome-panel-add
 
 AM_CPPFLAGS =							\
 	$(PANEL_CFLAGS)						\
@@ -172,13 +171,6 @@ panel_test_applets_LDADD = 		\
 
 panel_test_applets_LDFLAGS = -export-dynamic
 
-gnome-panel-add: gnome-panel-add.in Makefile
-	$(AM_V_GEN)sed 						\
-		-e s!\@PYTHON\@!@PYTHON@! 			\
-		-e s!\@PANEL_APPLETS_DIR\@!$(appletsdir)! 	\
-		< $< > $@
-	$(AM_V_at)chmod a+x $@
-
 panel_enum_headers =						\
 	$(top_srcdir)/gnome-panel/panel-enums.h			\
 	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
@@ -269,14 +261,12 @@ EXTRA_DIST =					\
 	nothing.cP				\
 	nothing.h				\
 	panel-marshal.list			\
-	$(desktop_in_files)			\
-	gnome-panel-add.in
+	$(desktop_in_files)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
-	$(desktop_DATA) \
-	gnome-panel-add
+	$(desktop_DATA)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
