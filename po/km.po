@@ -6,11 +6,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-12 22:59+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"panel&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-08-22 16:52+0200\n"
 "PO-Revision-Date: 2012-03-01 13:59+0700\n"
 "Last-Translator: Seng Sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <supprot@khmeros.info>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,580 +28,174 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:324 ../applets/clock/clock.c:452
-#: ../applets/clock/clock-location-tile.c:507
+#: ../applets/clock/calendar-window.c:309
+#: ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
 #. * (eg, like in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10).
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:329 ../applets/clock/clock.c:457
-#: ../applets/clock/clock.c:1600 ../applets/clock/clock-location-tile.c:467
-#: ../applets/clock/clock-location-tile.c:514
+#: ../applets/clock/calendar-window.c:314
+#: ../applets/clock/clock-location-tile.c:466
+#: ../applets/clock/clock-location-tile.c:510
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:335
+#: ../applets/clock/calendar-window.c:320
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:835
+#: ../applets/clock/calendar-window.c:829
 msgid "Tasks"
 msgstr "ភារកិច្ច"
 
-#: ../applets/clock/calendar-window.c:835
-#: ../applets/clock/calendar-window.c:1018
-#: ../applets/clock/calendar-window.c:1624
+#: ../applets/clock/calendar-window.c:829
+#: ../applets/clock/calendar-window.c:1012
+#: ../applets/clock/calendar-window.c:1548
 msgid "Edit"
 msgstr "កែសម្រួល"
 
-#: ../applets/clock/calendar-window.c:958
+#: ../applets/clock/calendar-window.c:952
 msgid "All Day"
 msgstr "គ្រប់​ថ្ងៃ​ទាំងអស់"
 
-#: ../applets/clock/calendar-window.c:1102
+#: ../applets/clock/calendar-window.c:1096
 msgid "Appointments"
 msgstr "ការណាត់ជួប"
 
-#: ../applets/clock/calendar-window.c:1127
+#: ../applets/clock/calendar-window.c:1121
 msgid "Birthdays and Anniversaries"
 msgstr "ថ្ងៃ​កំណើត និង​​ថ្ងៃ​ខួប"
 
-#: ../applets/clock/calendar-window.c:1152
+#: ../applets/clock/calendar-window.c:1146
 msgid "Weather Information"
 msgstr "ព័ត៌មាន​អំពី​ធាតុអាកាស"
 
-#: ../applets/clock/calendar-window.c:1624 ../applets/clock/clock.ui.h:11
+#: ../applets/clock/calendar-window.c:1548 ../applets/clock/clock.ui.h:23
 msgid "Locations"
 msgstr "ទីតាំង"
 
-#: ../applets/clock/calendar-window.c:1922
+#: ../applets/clock/calendar-window.c:1803
 msgid "Calendar"
 msgstr "ប្រតិទិន"
 
 #. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format (eg, like
-#. * in the US: 8:10 am). The %p expands to am/pm.
-#: ../applets/clock/clock.c:452
-msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format (eg, like
-#. * in France: 20:10).
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 24-hours
-#. * format (eg, like in France: 20:10).
-#: ../applets/clock/clock.c:457 ../applets/clock/clock.c:1594
-msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the date. Replace %e with %d if, when
-#. * the day of the month as a decimal number is a single digit,
-#. * it should begin with a 0 in your locale (e.g. "May 01"
-#. * instead of "May  1").
-#: ../applets/clock/clock.c:468
-msgid "%a %b %e"
-msgstr "%a %b %e"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:475
-#, c-format
-msgid ""
-"%1$s\n"
-"%2$s"
-msgstr "%1$s\n%2$s"
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: ../applets/clock/clock.c:483
-#, c-format
-msgid "%1$s, %2$s"
-msgstr "%1$s, %2$s"
-
-#. Show date in tooltip.
-#. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:649
+#: ../applets/clock/clock.c:295
 msgid "%A %B %d (%%s)"
 msgstr "%A %B %d (%%s)"
 
-#: ../applets/clock/clock.c:679
+#: ../applets/clock/clock.c:307
 msgid "Click to hide your appointments and tasks"
 msgstr "ចុច​ដើម្បី​លាក់​​​ភារកិច្ច និង​ការណាត់ជួប​​របស់​អ្នក"
 
-#: ../applets/clock/clock.c:682
+#: ../applets/clock/clock.c:310
 msgid "Click to view your appointments and tasks"
 msgstr "ចុច​ដើម្បី​មើល​​ភារកិច្ច និង​​ការណាត់ជួប​របស់​​អ្នក"
 
-#: ../applets/clock/clock.c:686
+#: ../applets/clock/clock.c:314
 msgid "Click to hide month calendar"
 msgstr "ចុច​ដើម្បី​លាក់​ប្រតិទិន​ខែ"
 
-#: ../applets/clock/clock.c:689
+#: ../applets/clock/clock.c:317
 msgid "Click to view month calendar"
 msgstr "ចុច​ដើម្បី​​មើល​ប្រតិទិន​ខែ"
 
-#: ../applets/clock/clock.c:1432
+#: ../applets/clock/clock.c:954
 msgid "Computer Clock"
 msgstr "នាឡិកា​​កុំព្យូទ័រ"
 
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1579
-msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
-
-#. Translators: This is a strftime format
-#. * string.
-#. * It is used to display the time in 12-hours
-#. * format with a leading 0 if needed (eg, like
-#. * in the US: 08:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock.c:1587
-msgid "%I:%M %p"
-msgstr "%I:%M %p"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display a date in the full format (so that people can
-#. * copy and paste it elsewhere).
-#: ../applets/clock/clock.c:1633
-msgid "%A, %B %d %Y"
-msgstr "%A, %B %d %Y"
-
-#: ../applets/clock/clock.c:1702
+#: ../applets/clock/clock.c:1118
 msgid "Failed to open the time settings"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ការ​កំណត់​ពេលវេលា"
 
-#: ../applets/clock/clock.c:1722 ../applets/fish/fish.c:1317
-#: ../applets/wncklet/window-list.c:159
+#: ../applets/clock/clock.c:1138 ../applets/fish/fish.c:1305
+#: ../applets/wncklet/window-list.c:155
 #: ../applets/wncklet/workspace-switcher.c:218
 msgid "_Preferences"
 msgstr "ចំណូល​ចិត្ត"
 
-#: ../applets/clock/clock.c:1725
-msgid "Copy _Time"
+#: ../applets/clock/clock.c:1141
+#, fuzzy
+msgid "Copy Date and _Time"
 msgstr "ចម្លង​ពេលវេលា"
 
-#: ../applets/clock/clock.c:1728
-msgid "Copy _Date"
-msgstr "ចម្លង​កាលបរិច្ឆេទ"
-
-#: ../applets/clock/clock.c:1731
+#: ../applets/clock/clock.c:1144
 msgid "Ad_just Date & Time"
 msgstr "កែតម្រូវ​ពេលវេលា និង​កាលបរិច្ឆេទ"
 
-#: ../applets/clock/clock.c:2568
-msgid "Custom format"
-msgstr "ទ្រង់ទ្រាយ​ផ្ទាល់ខ្លួន​"
-
-#: ../applets/clock/clock.c:3055
+#: ../applets/clock/clock.c:1721
 msgid "Choose Location"
 msgstr "ជ្រើស​ទីតាំង"
 
-#: ../applets/clock/clock.c:3134
+#: ../applets/clock/clock.c:1800
 msgid "Edit Location"
 msgstr "កែ​សម្រួល​ទីតាំង"
 
-#: ../applets/clock/clock.c:3281
+#: ../applets/clock/clock.c:1834
+msgid "Kelvin"
+msgstr ""
+
+#: ../applets/clock/clock.c:1835
+msgid "Celsius"
+msgstr ""
+
+#: ../applets/clock/clock.c:1836
+msgid "Fahrenheit"
+msgstr ""
+
+#: ../applets/clock/clock.c:1841
+msgid "Meters per second (m/s)"
+msgstr ""
+
+#: ../applets/clock/clock.c:1842
+msgid "Kilometers per hour (kph)"
+msgstr ""
+
+#: ../applets/clock/clock.c:1843
+msgid "Miles per hour (mph)"
+msgstr ""
+
+#: ../applets/clock/clock.c:1844
+msgid "Knots"
+msgstr ""
+
+#: ../applets/clock/clock.c:1845
+msgid "Beaufort scale"
+msgstr ""
+
+#: ../applets/clock/clock.c:1898
 msgid "City Name"
 msgstr "ឈ្មោះ​ប្រទេស"
 
-#: ../applets/clock/clock.c:3285
+#: ../applets/clock/clock.c:1902
 msgid "City Time Zone"
 msgstr "តំបន់​ពេលវេលា​ទីក្រុង"
 
-#: ../applets/clock/clock.c:3472
-msgid "24 hour"
-msgstr "២៤ ម៉ោង"
-
-#: ../applets/clock/clock.c:3473
-msgid "UNIX time"
-msgstr "ពេលវេលា​យូនីក"
-
-#: ../applets/clock/clock.c:3474
-msgid "Internet time"
-msgstr "ពេលវេលា​អ៊ីនធឺណិត"
-
-#: ../applets/clock/clock.c:3482
-msgid "Custom _format:"
-msgstr "ពេលវេលា​ផ្ទាល់ខ្លួន ៖"
-
-#: ../applets/clock/clock.ui.h:1
-msgid "<i>(optional)</i>"
-msgstr "<i>(ជា​ជម្រើស)</i>"
-
-#. Languages that have a single word that translates as either "state" or "province" should use that instead of "region".
-#: ../applets/clock/clock.ui.h:3
-msgid ""
-"<small><i>Type a city, region, or country name and then select a match from "
-"the pop-up.</i></small>"
-msgstr ""
-"<small><i>ប្រភេទ​ទីក្រុង តំបន់ ឬ​ឈ្មោះ​ប្រទេស "
-"ហើយ​ជ្រើស​ការ​​ផ្គូផ្គង​ពី​ការ​លេចឡើង ។</i></small>"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "Clock Format"
-msgstr "ទ្រង់ទ្រាយ​នាឡិកា"
-
-#: ../applets/clock/clock.ui.h:5
-msgid "Clock Preferences"
-msgstr "ចំណូលចិត្ត​នាឡិកា"
-
-#: ../applets/clock/clock.ui.h:6
-msgid "Display"
-msgstr "បង្ហាញ"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "East"
-msgstr "ខាង​កើត"
-
-#: ../applets/clock/clock.ui.h:8 ../applets/fish/fish.ui.h:5
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
-msgid "General"
-msgstr "ទូទៅ"
-
-#: ../applets/clock/clock.ui.h:9
-msgid "L_atitude:"
-msgstr "រយៈ​ទទឹង ៖"
-
-#: ../applets/clock/clock.ui.h:10
-msgid "L_ongitude:"
-msgstr "រយៈ​បណ្ដោយ ៖"
-
-#: ../applets/clock/clock.ui.h:12
-msgid "North"
-msgstr "ខាង​ជើង"
-
-#: ../applets/clock/clock.ui.h:13
-msgid "Panel Display"
-msgstr "បង្ហាញ​បន្ទះ"
-
-#: ../applets/clock/clock.ui.h:14
-msgid "Show _temperature"
-msgstr "បង្ហាញ​សីតុណ្ហភាព"
-
-#: ../applets/clock/clock.ui.h:15
-msgid "Show _weather"
-msgstr "បង្ហាញ​អាកាសធាតុ"
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Show seco_nds"
-msgstr "បង្ហាញ​វិនាទី"
-
-#: ../applets/clock/clock.ui.h:17
-msgid "Show the _date"
-msgstr "បង្ហាញ​កាលបរិច្ឆេទ"
-
-#: ../applets/clock/clock.ui.h:18
-msgid "South"
-msgstr "ខាង​ត្បូង"
-
-#: ../applets/clock/clock.ui.h:19
-msgid "Time _Settings"
-msgstr "ការ​កំណត់​ពេលវេលា"
-
-#: ../applets/clock/clock.ui.h:20
-msgid "Weather"
-msgstr "អាកាសធាតុ"
-
-#: ../applets/clock/clock.ui.h:21
-msgid "West"
-msgstr "ខាង​លិច"
-
-#: ../applets/clock/clock.ui.h:22
-msgid "_12 hour format"
-msgstr "ទ្រង់ទ្រាយ ១២ ម៉ោង"
-
-#: ../applets/clock/clock.ui.h:23
-msgid "_24 hour format"
-msgstr "ទ្រង់ទ្រាយ ២៤ ម៉ោង"
-
-#: ../applets/clock/clock.ui.h:24
-msgid "_Location Name:"
-msgstr "ឈ្មោះ​ទីតាំង ៖"
-
-#: ../applets/clock/clock.ui.h:25
-msgid "_Pressure unit:"
-msgstr "ឯកតា​ទម្ងន់ ៖"
-
-#: ../applets/clock/clock.ui.h:26
-msgid "_Temperature unit:"
-msgstr "ឯកតា​សីតុណ្ហភាព ៖"
-
-#: ../applets/clock/clock.ui.h:27
-msgid "_Timezone:"
-msgstr "តំបន់​ពេលវេលា ៖"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "_Visibility unit:"
-msgstr "ឯកតា​ភាព​ដែល​អាច​មើល​ឃើញ ៖"
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Wind speed unit:"
-msgstr "ឯកតា​ល្បឿន​ខ្យល់ ៖"
-
-#. Translators:
-#. This controls whether the GNOME panel clock should display time in 24 hour mode
-#. or 12 hour mode by default. The only valid values for this are "24-hour" and
-#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
-#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
-#.
-#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
-#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
-#. "12-hour", things will not work.
-#.
-#: ../applets/clock/clock.schemas.in.h:11
-msgid "24-hour"
-msgstr "២៤ ម៉ោង"
-
-#: ../applets/clock/clock.schemas.in.h:12
-msgid "A list of locations to display in the calendar window."
-msgstr "រាយ​បញ្ជី​ទីតាំង​ត្រូវ​បង្ហាញ​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:13
-msgid "Custom format of the clock"
-msgstr "ទ្រង់ទ្រាយ​នាឡិកា​ផ្ទាល់ខ្លួន"
-
-#: ../applets/clock/clock.schemas.in.h:14
-msgid "Expand list of appointments"
-msgstr "ពង្រីក​បញ្ជី​នៃ​ការ​ណាត់ជួប"
-
-#: ../applets/clock/clock.schemas.in.h:15
-msgid "Expand list of birthdays"
-msgstr "ពង្រីក​បញ្ជី​​ថ្ងៃ​កំណើត"
-
-#: ../applets/clock/clock.schemas.in.h:16
-msgid "Expand list of locations"
-msgstr "ពង្រីក​បញ្ជី​ទីតាំង"
-
-#: ../applets/clock/clock.schemas.in.h:17
-msgid "Expand list of tasks"
-msgstr "ពង្រីក​បញ្ជី​ភារកិច្ច"
-
-#: ../applets/clock/clock.schemas.in.h:18
-msgid "Expand list of weather information"
-msgstr "ពង្រីក​បញ្ជី​ព័ត៌មាន​អាកាសធាតុ"
-
-#: ../applets/clock/clock.schemas.in.h:19
-msgid "Hour format"
-msgstr "ទ្រង់ទ្រាយ​ម៉ោង"
-
-#: ../applets/clock/clock.schemas.in.h:20
-msgid "If true, display a weather icon."
-msgstr "ប្រសិនបើ​ពិត បង្ហាញ​រូបតំណាង​អាកាសធាតុ ។"
-
-#: ../applets/clock/clock.schemas.in.h:21
-msgid "If true, display date in the clock, in addition to time."
-msgstr ""
-"ប្រសិនបើ​ពិត បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​នាឡិកា ថែមលើនេះទៀត​ទៅកាន់​ពេលវេលា ។"
-
-#: ../applets/clock/clock.schemas.in.h:22
-msgid "If true, display seconds in time."
-msgstr "ប្រសិនបើ​ពិត បង្ហាញ​​ពេលវេលា​ជា​វិនាទី ។"
-
-#: ../applets/clock/clock.schemas.in.h:23
-msgid "If true, expand the list of appointments in the calendar window."
-msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ក្នុង​ការណាត់ជួប​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:24
-msgid "If true, expand the list of birthdays in the calendar window."
-msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ថ្ងៃ​កំណើត​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:25
-msgid "If true, expand the list of locations in the calendar window."
-msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ទីតាំង​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:26
-msgid "If true, expand the list of tasks in the calendar window."
-msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ភារកិច្ច​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:27
-msgid "If true, expand the list of weather information in the calendar window."
-msgstr ""
-"ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ព័ត៌មាន​អំពី​អាកាសធាតុ​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
-
-#: ../applets/clock/clock.schemas.in.h:28
-msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr ""
-"ប្រសិនបើ​ពិត បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ "
-"នៅ​ពេល​ទ្រនិច​នៅ​លើ​នាឡិកា ។"
-
-#: ../applets/clock/clock.schemas.in.h:29
-msgid "If true, show the temperature next to the weather icon."
-msgstr "ប្រសិនបើ​ពិត បង្ហាញ​សីតុណ្ហភាព​នៅ​ជិត​រូបតំណាង​អាកាសធាតុ ។"
-
-#: ../applets/clock/clock.schemas.in.h:30
-msgid "If true, show week numbers in the calendar."
-msgstr "ប្រសិនបើ​ពិត បង្ហាញ​ចំនួន​សប្ដាហ៍​​នៅ​ក្នុង​ប្រតិទិន ។​​"
-
-#: ../applets/clock/clock.schemas.in.h:31
-msgid "List of locations"
-msgstr "រាយ​បញ្ជី​ទីតាំង"
-
-#: ../applets/clock/clock.schemas.in.h:32
-msgid "Show date in clock"
-msgstr "បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​នាឡិកា"
-
-#: ../applets/clock/clock.schemas.in.h:33
-msgid "Show date in tooltip"
-msgstr "បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ"
-
-#: ../applets/clock/clock.schemas.in.h:34
-msgid "Show temperature in clock"
-msgstr "បង្ហាញ​សីតុណ្ហភាព​នៅ​ក្នុង​នាឡិកា"
-
-#: ../applets/clock/clock.schemas.in.h:35
-msgid "Show time with seconds"
-msgstr "បង្ហាញ​ពេលវេលា​ជា​វិនាទី"
-
-#: ../applets/clock/clock.schemas.in.h:36
-msgid "Show weather in clock"
-msgstr "បង្ហាញ​អាកាសធាតុ​នៅ​ក្នុង​នាឡិកា"
-
-#: ../applets/clock/clock.schemas.in.h:37
-msgid "Show week numbers in calendar"
-msgstr "បង្ហាញ​ចំនួន​សប្ដាហ៍​នៅ​ក្នុង​ប្រតិទិន"
-
-#: ../applets/clock/clock.schemas.in.h:38
-msgid "Speed unit"
-msgstr "ឯកតា​ល្បឿន"
-
-#: ../applets/clock/clock.schemas.in.h:39
-msgid "Temperature unit"
-msgstr "ឯកតា​សីតុណ្ហភាព"
-
-#: ../applets/clock/clock.schemas.in.h:40
-msgid "The unit to use when showing temperatures."
-msgstr "ឯកតា​ត្រូវ​ប្រើ នៅ​ពេល​បង្ហាញ​សីតុណ្ហភាព ។"
-
-#: ../applets/clock/clock.schemas.in.h:41
-msgid "The unit to use when showing wind speed."
-msgstr "ឯកតា​ត្រូវ​ប្រើ នៅ​ពេល​បង្ហាញ​ល្បឿន​ខ្យល់ ។"
-
-#: ../applets/clock/clock.schemas.in.h:42
-msgid ""
-"The use of this key was deprecated in GNOME 2.22 with the use of an internal "
-"time configuration tool. The schema is retained for compatibility with older "
-"versions."
-msgstr ""
-"ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង GNOME ២.២២ "
-"ដោយ​ប្រើ​​ឧបករណ៍​ការ​កំណត់​រចនាសម្ព័ន្ធ​ពេលវេលា​ខាងក្នុង ។ "
-"ឌីយ៉ាក្រាម​​ត្រូវ​បាន​​ទុក​សម្រាប់​ភាព​ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
-
-#: ../applets/clock/clock.schemas.in.h:43
-msgid ""
-"The use of this key was deprecated in GNOME 2.28 in favour of the use of "
-"timezones. The schema is retained for compatibility with older versions."
-msgstr ""
-"ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង​ GNOME ២.២៨  "
-"ក្នុង​ការ​ប្រើ​តំបន់​ពេលវេលា ។ "
-"ឌីយ៉ាក្រាម​ត្រូវ​បាន​ទុក​សម្រាប់​ភាព​ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
-
-#: ../applets/clock/clock.schemas.in.h:44
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង GNOME ២.៦ សោ 'ទ្រង់ទ្រាយ' ។ "
-"ឌីយ៉ាក្រាម​​ត្រូវ​បាន​ទុក​សម្រាប់​ភាព​ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
-
-#: ../applets/clock/clock.schemas.in.h:45
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format. See the strftime() manual for more "
-"information."
-msgstr ""
-"បញ្ជាក់​ទ្រង់ទ្រាយ​សោ​នេះ​ដែល​បាន​ប្រើ​ដោយ​អាប់ភ្លេត​នាឡិកា "
-"​នៅ​ពេល​សោ​ទ្រង់ទ្រាយ​ត្រូវ​បាន​កំណត់​ \"ផ្ទាល់ខ្លួន\" ។ "
-"អ្នក​អាច​ប្រើ​កម្មវិធី​បញ្ជាក់​ការ​បម្លែង​ដោយ strftime() "
-"ដើម្បី​បាន​បញ្ជាក់​ទ្រង់ទ្រាយ ។ មើល​សៀវភៅ​ដៃ strftime() "
-"សម្រាប់​ព័ត៌មាន​បន្ថែម ។"
-
-#: ../applets/clock/clock.schemas.in.h:46
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display Internet time. The Internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
-msgstr ""
-"ការ​បញ្ជាក់​សោ​នេះ ទ្រង់ទ្រាយ​ម៉ោង​បាន​ប្រើ​ដោយ​អាប់ភ្លេត​នាឡិកា ។ "
-"តម្លៃ​​ដែល​អាច​គឺ \"១២ ម៉ោង\", \"២៤ ម៉ោង\"  \"អ៊ីនធឺណិត\" \"យូនីក\" និង "
-"\"ផ្ទាល់ខ្លួន\" ។ ប្រសិនបើ​កំណត់ \"អ៊ីនធឺណិត\" "
-"នាឡិកា​នឹង​បង្ហាញ​ពេលវេលា​អ៊ីនធឺណិត ។ "
-"ការ​បែងចែក​ប្រព័ន្ធ​ពេលវេលា​អ៊ីនធឺណិត​ថ្ងៃ​ទៅ​​ជា 1000 \".beats\". "
-"គ្មាន​តំបន់​ពេលវេលា​នៅ​ក្នុង​ប្រព័ន្ធ​នេះ​ឡើយ "
-"ដូច្នេះ​ពេលវេលា​គឺ​ដូច​គ្នា​ទាំងអស់​នៅ​លើ​ពិភពលោក ។ ប្រសិនបើ​កំណត់ \"យូនីក\" "
-"នាឡិកា​នឹង​​បង្ហាញ​ពេលវេលា​ជា​វិនាទី​ចាប់តាំង Epoch, ឧ. 1970-01-01 ។ "
-"ប្រសិនបើ​កំណត់ \"ផ្ទាល់ខ្លួន\" "
-"នាឡិកា​នឹង​បង្ហាញ​ពេលវេលា​ទៅ​តាម​ទ្រង់ទ្រាយ​ដែល​​បាន​​បញ្ជាក់​នៅ​ក្នុង "
-"custom_format key ។"
-
-#: ../applets/clock/clock.schemas.in.h:47
-msgid "Time configuration tool"
-msgstr "ឧបករណ៍​ការ​កំណត់​រចនាសម្ព័ន្ធ​ពេលវេលា"
-
-#: ../applets/clock/clock.schemas.in.h:48
-msgid "Use Internet time"
-msgstr "ប្រើ​ពេលវេលា​អ៊ីនធឺណិត"
-
-#: ../applets/clock/clock.schemas.in.h:49
-msgid "Use UNIX time"
-msgstr "ប្រើ​ពេលវេលា​យូនីក"
-
-#: ../applets/clock/clock.schemas.in.h:50
-msgid "Use UTC"
-msgstr "ប្រើ UTC"
-
-#: ../applets/clock/clock-location-tile.c:183
+#: ../applets/clock/clock-location-tile.c:188
 msgid "Failed to set the system timezone"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​កំណត់​តំបន់​ពេលវេលា​ប្រព័ន្ធ"
 
-#: ../applets/clock/clock-location-tile.c:231
+#: ../applets/clock/clock-location-tile.c:236
 msgid "<small>Set...</small>"
 msgstr "<small>កំណត់...</small>"
 
-#: ../applets/clock/clock-location-tile.c:232
+#: ../applets/clock/clock-location-tile.c:237
 msgid "<small>Set</small>"
 msgstr "<small>កំណត់</small>"
 
-#: ../applets/clock/clock-location-tile.c:308
+#: ../applets/clock/clock-location-tile.c:313
 msgid "Set location as current location and use its timezone for this computer"
-msgstr ""
-"កំណត់​ទីតាំង​ជា​ទីតាំង​បច្ចុប្បន្ន​ "
-"ហើយ​ប្រើ​តំបន់​ពេលវេលា​របស់​វា​សម្រាប់​កុំព្យូទ័រ​នេះ"
+msgstr "កំណត់​ទីតាំង​ជា​ទីតាំង​បច្ចុប្បន្ន​ ហើយ​ប្រើ​តំបន់​ពេលវេលា​របស់​វា​សម្រាប់​កុំព្យូទ័រ​នេះ"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -607,7 +203,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:444
+#: ../applets/clock/clock-location-tile.c:443
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -616,7 +212,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:452
+#: ../applets/clock/clock-location-tile.c:451
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -624,61 +220,166 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:461
+#: ../applets/clock/clock-location-tile.c:460
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:600
+#: ../applets/clock/clock-location-tile.c:610
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#. FMQ: it's broken to read from another module's translations; add some API to libgweather.
-#: ../applets/clock/clock-location-tile.c:612
-#: ../applets/clock/clock-location-tile.c:621
-msgid "Unknown"
-msgstr "មិន​ស្គាល់"
-
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
+#: ../applets/clock/clock-location-tile.c:623
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s ការ​ស្គាល់​ដូច​ជា %s"
 
-#: ../applets/clock/clock-location-tile.c:637
+#: ../applets/clock/clock-location-tile.c:644
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sunrise: %s / Sunset: %s"
 
-#: ../applets/clock/clock-utils.c:93 ../applets/fish/fish.c:163
-#: ../applets/wncklet/wncklet.c:74
-#: ../gnome-panel/libpanel-util/panel-show.c:239
+#: ../applets/clock/clock.ui.h:1
+msgid "East"
+msgstr "ខាង​កើត"
+
+#: ../applets/clock/clock.ui.h:2
+msgid "West"
+msgstr "ខាង​លិច"
+
+#: ../applets/clock/clock.ui.h:3
+msgid "North"
+msgstr "ខាង​ជើង"
+
+#: ../applets/clock/clock.ui.h:4
+msgid "South"
+msgstr "ខាង​ត្បូង"
+
+#: ../applets/clock/clock.ui.h:5
+#, fuzzy
+msgid "(optional)"
+msgstr "<i>(ជា​ជម្រើស)</i>"
+
+#: ../applets/clock/clock.ui.h:6
+msgid "_Location Name:"
+msgstr "ឈ្មោះ​ទីតាំង ៖"
+
+#: ../applets/clock/clock.ui.h:7
+msgid "L_atitude:"
+msgstr "រយៈ​ទទឹង ៖"
+
+#: ../applets/clock/clock.ui.h:8
+msgid "L_ongitude:"
+msgstr "រយៈ​បណ្ដោយ ៖"
+
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
+#: ../applets/clock/clock.ui.h:10
+#, fuzzy
+msgid ""
+"Type a city, region, or country name and then select a match from the pop-up."
+msgstr ""
+"<small><i>ប្រភេទ​ទីក្រុង តំបន់ ឬ​ឈ្មោះ​ប្រទេស ហើយ​ជ្រើស​ការ​​ផ្គូផ្គង​ពី​ការ​លេចឡើង ។</i></small>"
+
+#: ../applets/clock/clock.ui.h:11
+msgid "_Timezone:"
+msgstr "តំបន់​ពេលវេលា ៖"
+
+#: ../applets/clock/clock.ui.h:12
+msgid "Clock Preferences"
+msgstr "ចំណូលចិត្ត​នាឡិកា"
+
+#: ../applets/clock/clock.ui.h:13
+msgid "Time _Settings"
+msgstr "ការ​កំណត់​ពេលវេលា"
+
+#: ../applets/clock/clock.ui.h:14
+msgid "Clock Format"
+msgstr "ទ្រង់ទ្រាយ​នាឡិកា"
+
+#: ../applets/clock/clock.ui.h:15
+msgid "_12 hour format"
+msgstr "ទ្រង់ទ្រាយ ១២ ម៉ោង"
+
+#: ../applets/clock/clock.ui.h:16
+msgid "_24 hour format"
+msgstr "ទ្រង់ទ្រាយ ២៤ ម៉ោង"
+
+#: ../applets/clock/clock.ui.h:17
+msgid "Panel Display"
+msgstr "បង្ហាញ​បន្ទះ"
+
+#: ../applets/clock/clock.ui.h:18
+msgid "Show the _date"
+msgstr "បង្ហាញ​កាលបរិច្ឆេទ"
+
+#: ../applets/clock/clock.ui.h:19
+msgid "Show seco_nds"
+msgstr "បង្ហាញ​វិនាទី"
+
+#: ../applets/clock/clock.ui.h:20
+msgid "Show _weather"
+msgstr "បង្ហាញ​អាកាសធាតុ"
+
+#: ../applets/clock/clock.ui.h:21
+msgid "Show _temperature"
+msgstr "បង្ហាញ​សីតុណ្ហភាព"
+
+#: ../applets/clock/clock.ui.h:22 ../applets/fish/fish.ui.h:2
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
+msgid "General"
+msgstr "ទូទៅ"
+
+#: ../applets/clock/clock.ui.h:24
+msgid "Display"
+msgstr "បង្ហាញ"
+
+#: ../applets/clock/clock.ui.h:25
+msgid "_Visibility unit:"
+msgstr "ឯកតា​ភាព​ដែល​អាច​មើល​ឃើញ ៖"
+
+#: ../applets/clock/clock.ui.h:26
+msgid "_Pressure unit:"
+msgstr "ឯកតា​ទម្ងន់ ៖"
+
+#: ../applets/clock/clock.ui.h:27
+msgid "_Temperature unit:"
+msgstr "ឯកតា​សីតុណ្ហភាព ៖"
+
+#: ../applets/clock/clock.ui.h:28
+msgid "_Wind speed unit:"
+msgstr "ឯកតា​ល្បឿន​ខ្យល់ ៖"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "Weather"
+msgstr "អាកាសធាតុ"
+
+#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:162
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "មិន​អាច​បង្ហាញ​ឯកសារ​ជំនួយ​បាន​ទេ '%s'"
 
-#: ../applets/clock/clock-utils.c:122 ../applets/fish/fish.c:189
-#: ../applets/wncklet/wncklet.c:103
+#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:188
 msgid "Error displaying help document"
 msgstr "កំហុស​ក្នុង​ការ​បង្ហាញ​ឯកសារ​ជំនួយ"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
-msgid "Clock"
-msgstr "នាឡិកា"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
 msgid "Clock Applet Factory"
 msgstr "រោងចក្រ​អាប់ភ្លេត​នាឡិកា"
 
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
 msgid "Factory for clock applet"
 msgstr "រោងចក្រ​សម្រាប់​អាប់ភ្លេត​នាឡិកា"
+
+#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
+msgid "Clock"
+msgstr "នាឡិកា"
 
 #: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
 msgid "Get the current time and date"
 msgstr "យក​​កាលបរិច្ឆេទ និង​ពេលវេលា​បច្ចុប្បន្ន"
 
-#: ../applets/fish/fish.c:217
+#: ../applets/fish/fish.c:216
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -686,134 +387,140 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"ការ​ព្រមាន ៖ ការ​លេចឡើង​ពាក្យ​បញ្ជា​ជា​ប្រយោជន៍​ "
-"។\nពីព្រោះ​ថា​​បើ​វា​គ្មាន​អាប់ភ្លេត អ្នក​មិន​​អាច​ធ្វើ​វា​បាន​ទេ "
-"។\nអ្នក​គួរតែ​​រារាំង​ក្នុង​ការ​ប្រើ %s "
-"សម្រាប់​​អ្វី​មួយ​ចំនួន\nដែល​អ្នក​ចង់​បង្កើត​អាប់ភ្លេត \"ពិត​ប្រាកដ\" "
-"ឬ​ឲ្យ​មាន​ប្រយោជន៍ ។"
+"ការ​ព្រមាន ៖ ការ​លេចឡើង​ពាក្យ​បញ្ជា​ជា​ប្រយោជន៍​ ។\n"
+"ពីព្រោះ​ថា​​បើ​វា​គ្មាន​អាប់ភ្លេត អ្នក​មិន​​អាច​ធ្វើ​វា​បាន​ទេ ។\n"
+"អ្នក​គួរតែ​​រារាំង​ក្នុង​ការ​ប្រើ %s សម្រាប់​​អ្វី​មួយ​ចំនួន\n"
+"ដែល​អ្នក​ចង់​បង្កើត​អាប់ភ្លេត \"ពិត​ប្រាកដ\" ឬ​ឲ្យ​មាន​ប្រយោជន៍ ។"
 
-#: ../applets/fish/fish.c:365 ../applets/fish/fish.c:481
+#: ../applets/fish/fish.c:356 ../applets/fish/fish.c:472
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s Fish"
 
-#: ../applets/fish/fish.c:366
+#: ../applets/fish/fish.c:357
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s the Fish  ការ​ព្យាករណ៍​តាម​ហ​សម័យ​"
 
-#: ../applets/fish/fish.c:437
+#: ../applets/fish/fish.c:428
 msgid "Unable to locate the command to execute"
 msgstr "មិន​អាច​រក​ទីតាំង​ពាក្យ​បញ្ជា​​ដើម្បី​ប្រតិបត្តិ​បាន​ទេ"
 
-#: ../applets/fish/fish.c:486
+#: ../applets/fish/fish.c:477
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s ការ​និយាយ​អំពី Fish ៖"
 
-#: ../applets/fish/fish.c:555
+#: ../applets/fish/fish.c:546
 #, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
-msgstr "មិន​អាច​អាន​លទ្ធផល​ពី​សេចក្ដី​លម្អិត​​ពាក្យ​បញ្ជា​បាន​ទេ\n\n ។ %s"
+msgstr ""
+"មិន​អាច​អាន​លទ្ធផល​ពី​សេចក្ដី​លម្អិត​​ពាក្យ​បញ្ជា​បាន​ទេ\n"
+"\n"
+" ។ %s"
 
-#: ../applets/fish/fish.c:632
+#: ../applets/fish/fish.c:623
 msgid "_Speak again"
 msgstr "និយាយ​ម្ដងទៀត"
 
-#: ../applets/fish/fish.c:714
+#: ../applets/fish/fish.c:705
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
-"ពាក្យ​បញ្ជា​ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​គឺ​មិន​ដំណើរការ​ឡើយ "
-"ហើយ​ត្រូវ​បាន​ជំនួស​ដោយ ៖ %s"
+msgstr "ពាក្យ​បញ្ជា​ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​គឺ​មិន​ដំណើរការ​ឡើយ ហើយ​ត្រូវ​បាន​ជំនួស​ដោយ ៖ %s"
 
-#: ../applets/fish/fish.c:748
+#: ../applets/fish/fish.c:739
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
-msgstr "មិន​អាច​ប្រតិបត្តិ '%s'\n\nលម្អិត​បាន​ទេ ៖ %s"
+msgstr ""
+"មិន​អាច​ប្រតិបត្តិ '%s'\n"
+"\n"
+"លម្អិត​បាន​ទេ ៖ %s"
 
-#: ../applets/fish/fish.c:764
+#: ../applets/fish/fish.c:755
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
-msgstr "មិន​អាច​អាន​ពី '%s'\n\nសេចក្ដី​លម្អិត​បាន​ទេ ៖ %s"
+msgstr ""
+"មិន​អាច​អាន​ពី '%s'\n"
+"\n"
+"សេចក្ដី​លម្អិត​បាន​ទេ ៖ %s"
 
-#: ../applets/fish/fish.c:1167
+#: ../applets/fish/fish.c:1155
 msgid "The water needs changing"
 msgstr "ការ​ចាំបាច់​​ការ​ផ្លាស់ប្ដូរ​ទឹក "
 
-#: ../applets/fish/fish.c:1169
+#: ../applets/fish/fish.c:1157
 msgid "Look at today's date!"
 msgstr "មើល​កាលបរិច្ឆេទ​ថ្ងៃ​នេះ !"
 
-#: ../applets/fish/fish.c:1262
+#: ../applets/fish/fish.c:1250
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s  ត្រី អ្នក​ប្រាប់​រាសី"
 
-#: ../applets/fish/fish.ui.h:1 ../gnome-panel/panel-properties-dialog.ui.h:1
-msgid "    "
-msgstr "    "
-
-#: ../applets/fish/fish.ui.h:2
-msgid "Animation"
-msgstr "ចលនា"
-
-#: ../applets/fish/fish.ui.h:3
-msgid "Co_mmand to run when clicked:"
-msgstr "ពាក្យ​បញ្ជា​ត្រូវ​ដំណើរការ​ នៅ​ពេល​បាន​ចុច ៖"
-
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:1
 msgid "Fish Preferences"
 msgstr "ចំណូលចិត្ត​របស់​ត្រី"
 
-#: ../applets/fish/fish.ui.h:6
+#: ../applets/fish/fish.ui.h:3
 msgid "_Name of fish:"
 msgstr "ឈ្មោះ​របស់​ត្រី ៖"
+
+#: ../applets/fish/fish.ui.h:4
+msgid "Co_mmand to run when clicked:"
+msgstr "ពាក្យ​បញ្ជា​ត្រូវ​ដំណើរការ​ នៅ​ពេល​បាន​ចុច ៖"
+
+#: ../applets/fish/fish.ui.h:5
+msgid "Animation"
+msgstr "ចលនា"
+
+#: ../applets/fish/fish.ui.h:6 ../gnome-panel/panel-properties-dialog.ui.h:13
+msgid "    "
+msgstr "    "
 
 #: ../applets/fish/fish.ui.h:7
 msgid "_Pause per frame:"
 msgstr "ផ្អាក​លើ​ស៊ុម ៖"
 
 #: ../applets/fish/fish.ui.h:8
-msgid "_Rotate on vertical panels"
-msgstr "បង្វិល​នៅ​លើ​បន្ទះ​បញ្ឈរ"
-
-#: ../applets/fish/fish.ui.h:9
 msgid "seconds"
 msgstr "វិនាទី"
 
+#: ../applets/fish/fish.ui.h:9
+msgid "_Rotate on vertical panels"
+msgstr "បង្វិល​នៅ​លើ​បន្ទះ​បញ្ឈរ"
+
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
-msgid "Display a swimming fish or another animated creature"
-msgstr "បង្ហាញ​ត្រី​ហែ​ទឹក ឬ​សត្វ​ដែល​​មាន​ចលនា​ផ្សេង​ទៀត"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
-msgid "Fish"
-msgstr "ត្រី"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
-msgid "From Whence That Stupid Fish Came"
-msgstr "ពី​កន្លែង​ដែល​ត្រី​ល្ងង់​បាន​មក"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
 msgid "Wanda Factory"
 msgstr "រោងចក្រ​របស់ Wanda"
 
-#: ../applets/notification_area/main.c:242
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
+msgid "From Whence That Stupid Fish Came"
+msgstr "ពី​កន្លែង​ដែល​ត្រី​ល្ងង់​បាន​មក"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
+msgid "Fish"
+msgstr "ត្រី"
+
+#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
+msgid "Display a swimming fish or another animated creature"
+msgstr "បង្ហាញ​ត្រី​ហែ​ទឹក ឬ​សត្វ​ដែល​​មាន​ចលនា​ផ្សេង​ទៀត"
+
+#: ../applets/notification_area/main.c:243
 msgid "Panel Notification Area"
 msgstr "តំបន់​ការ​ជូនដំណឹង​បន្ទះ"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
-msgid "Area where notification icons appear"
-msgstr "តំបន់​ដែល​លេចឡើង​រូបតំណាង​ការ​ជូនដំណឹង"
+msgid "Notification Area Factory"
+msgstr "រោងចក្រ​តំបន់​ការ​ជូនដំណឹង"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
 msgid "Factory for notification area"
@@ -824,28 +531,29 @@ msgid "Notification Area"
 msgstr "តំបន់​ជូនដំណឹង"
 
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
-msgid "Notification Area Factory"
-msgstr "រោងចក្រ​តំបន់​ការ​ជូនដំណឹង"
+msgid "Area where notification icons appear"
+msgstr "តំបន់​ដែល​លេចឡើង​រូបតំណាង​ការ​ជូនដំណឹង"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
+msgid "Window Navigation Applet Factory"
+msgstr "រោងចក្រ​អាប់ភ្លេត​ការ​រុករក​បង្អួច"
+
+#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
 msgid "Factory for the window navigation related applets"
 msgstr "រោងចក្រ​សម្រាប់​ការរុករក​បង្អួច​ដែល​ទាក់ទង​អាប់ភ្លេត"
 
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
-msgid "Hide application windows and show the desktop"
-msgstr "លាក់​វីនដូ​កម្មវិធី និង​បង្ហាញ​ផ្ទៃតុ"
-
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
-msgid "Show Desktop"
-msgstr "បង្ហាញ​ផ្ទៃតុ"
+#: ../applets/wncklet/window-menu.c:202
+msgid "Window Selector"
+msgstr "កម្មវិធី​ជ្រើស​បង្អួច"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
 msgid "Switch between open windows using a menu"
 msgstr "ប្ដូរ​ចន្លោះ​វីនដូ​បើក​ដោយ​បម្រើ​ម៉ឺនុយ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
-msgid "Switch between open windows using buttons"
-msgstr "ប្ដូរ​ចន្លោះ​វីនដូ​បើក​ដោយ​ប្រើ​ប៊ូតុង"
+msgid "Workspace Switcher"
+msgstr "កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
 msgid "Switch between workspaces"
@@ -856,258 +564,352 @@ msgid "Window List"
 msgstr "បញ្ជី​បង្អួច"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
-msgid "Window Navigation Applet Factory"
-msgstr "រោងចក្រ​អាប់ភ្លេត​ការ​រុករក​បង្អួច"
+msgid "Switch between open windows using buttons"
+msgstr "ប្ដូរ​ចន្លោះ​វីនដូ​បើក​ដោយ​ប្រើ​ប៊ូតុង"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
-#: ../applets/wncklet/window-menu.c:204
-msgid "Window Selector"
-msgstr "កម្មវិធី​ជ្រើស​បង្អួច"
+msgid "Show Desktop"
+msgstr "បង្ហាញ​ផ្ទៃតុ"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
-msgid "Workspace Switcher"
-msgstr "កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ"
+msgid "Hide application windows and show the desktop"
+msgstr "លាក់​វីនដូ​កម្មវិធី និង​បង្ហាញ​ផ្ទៃតុ"
 
-#: ../applets/wncklet/showdesktop.c:177
+#: ../applets/wncklet/showdesktop.c:175
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទុក %s ៖ %s\n"
 
-#: ../applets/wncklet/showdesktop.c:178
+#: ../applets/wncklet/showdesktop.c:176
 msgid "Icon not found"
 msgstr "រក​មិន​ឃើញ​រូបតំណាង​ឡើយ"
 
-#: ../applets/wncklet/showdesktop.c:231
+#: ../applets/wncklet/showdesktop.c:227
 msgid "Click here to restore hidden windows."
 msgstr "ចុច​ទីនេះ ដើម្បី​ស្ដារ​វីនដូ​ដែល​បាន​លាក់ ។"
 
-#: ../applets/wncklet/showdesktop.c:233
+#: ../applets/wncklet/showdesktop.c:229
 msgid "Click here to hide all windows and show the desktop."
 msgstr "ចុច​ទី​នេះ ដើម្បី​លាក់​វីនដូ​ទាំងអស់ និង​បង្ហាញ​ផ្ទៃតុ ។"
 
-#: ../applets/wncklet/showdesktop.c:441
+#: ../applets/wncklet/showdesktop.c:437
 msgid "Show Desktop Button"
 msgstr "បង្ហាញ​ប៊ូតុង​ផ្ទៃតុ"
 
-#: ../applets/wncklet/showdesktop.c:509
+#: ../applets/wncklet/showdesktop.c:505
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
-"កម្មវិធី​គ្រប់គ្រង​បង្អួច​របស់​អ្នក​​មិន​គាំទ្រ​ការ​បង្ហាញ​ប៊ូតុង​ផ្ទៃតុ "
-"ឬ​អ្នក​មិន​កំពុង​តែ​ដំណើរការ​កម្មវិធី​គ្រប់គ្រង​បង្អួច​​ឡើយ ។"
+"កម្មវិធី​គ្រប់គ្រង​បង្អួច​របស់​អ្នក​​មិន​គាំទ្រ​ការ​បង្ហាញ​ប៊ូតុង​ផ្ទៃតុ ឬ​អ្នក​មិន​កំពុង​តែ​ដំណើរការ​កម្មវិធី​គ្រប់គ្រង​បង្អួច​​"
+"ឡើយ ។"
 
 #: ../applets/wncklet/window-list.ui.h:1
-msgid "Group windows when _space is limited"
-msgstr "ដាក់​វីនដូ​ជា​ក្រុម នៅ​ពេល​កំណត់​ទំហំ"
-
-#: ../applets/wncklet/window-list.ui.h:2
-msgid "Restore to current _workspace"
-msgstr "ស្ដារ​​ទៅកាន់​តំបន់​ធ្វើ​ការ​បច្ចុប្បន្ន"
-
-#: ../applets/wncklet/window-list.ui.h:3
-msgid "Restore to na_tive workspace"
-msgstr "ស្ដារ​ទៅកាន់​តំបន់​ធ្វើការ​ដើម"
-
-#: ../applets/wncklet/window-list.ui.h:4
-msgid "Restoring Minimized Windows"
-msgstr "ស្ដារ​វីនដូ​​ដែល​បាន​បង្រួម​អប្បបរមា"
-
-#: ../applets/wncklet/window-list.ui.h:5
-msgid "Sh_ow windows from current workspace"
-msgstr "បង្ហាញ​វីនដូ​​ពី​​តំបន់​ធ្វើការ​បច្ចុប្បន្ន"
-
-#: ../applets/wncklet/window-list.ui.h:6
-msgid "Show windows from a_ll workspaces"
-msgstr "បង្ហាញ​វីនដូ​ពី​តំបន់​ធ្វើការ​ទាំងអស់"
-
-#: ../applets/wncklet/window-list.ui.h:7
-msgid "Window Grouping"
-msgstr "បង្អួច​ដែល​ដាក់​ជា​ក្រុម"
-
-#: ../applets/wncklet/window-list.ui.h:8
-msgid "Window List Content"
-msgstr "មាតិកា​បញ្ជី​បង្អួច"
-
-#: ../applets/wncklet/window-list.ui.h:9
 msgid "Window List Preferences"
 msgstr "ចំណូល​ចិត្ត​បញ្ជី​បង្អួច"
 
-#: ../applets/wncklet/window-list.ui.h:10
-msgid "_Always group windows"
-msgstr "ដាក់​វីនដូ​ជា​ក្រុម​ជានិច្ច"
+#: ../applets/wncklet/window-list.ui.h:2
+msgid "Window List Content"
+msgstr "មាតិកា​បញ្ជី​បង្អួច"
 
-#: ../applets/wncklet/window-list.ui.h:11
+#: ../applets/wncklet/window-list.ui.h:3
+msgid "Sh_ow windows from current workspace"
+msgstr "បង្ហាញ​វីនដូ​​ពី​​តំបន់​ធ្វើការ​បច្ចុប្បន្ន"
+
+#: ../applets/wncklet/window-list.ui.h:4
+msgid "Show windows from a_ll workspaces"
+msgstr "បង្ហាញ​វីនដូ​ពី​តំបន់​ធ្វើការ​ទាំងអស់"
+
+#: ../applets/wncklet/window-list.ui.h:5
+msgid "Window Grouping"
+msgstr "បង្អួច​ដែល​ដាក់​ជា​ក្រុម"
+
+#: ../applets/wncklet/window-list.ui.h:6
 msgid "_Never group windows"
 msgstr "កុំ​ដាក់​វីនដូ​ជាក្រុម"
 
+#: ../applets/wncklet/window-list.ui.h:7
+msgid "Group windows when _space is limited"
+msgstr "ដាក់​វីនដូ​ជា​ក្រុម នៅ​ពេល​កំណត់​ទំហំ"
+
+#: ../applets/wncklet/window-list.ui.h:8
+msgid "_Always group windows"
+msgstr "ដាក់​វីនដូ​ជា​ក្រុម​ជានិច្ច"
+
+#: ../applets/wncklet/window-list.ui.h:9
+msgid "Restoring Minimized Windows"
+msgstr "ស្ដារ​វីនដូ​​ដែល​បាន​បង្រួម​អប្បបរមា"
+
+#: ../applets/wncklet/window-list.ui.h:10
+msgid "Restore to current _workspace"
+msgstr "ស្ដារ​​ទៅកាន់​តំបន់​ធ្វើ​ការ​បច្ចុប្បន្ន"
+
+#: ../applets/wncklet/window-list.ui.h:11
+msgid "Restore to na_tive workspace"
+msgstr "ស្ដារ​ទៅកាន់​តំបន់​ធ្វើការ​ដើម"
+
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:723
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.c:716
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "rows"
 msgstr "ជួរដេក"
 
 #: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:723
+#: ../applets/wncklet/workspace-switcher.c:716
 msgid "columns"
 msgstr "ជួរឈរ"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:1
-msgid "Number of _workspaces:"
-msgstr "ចំនួន​តំបន់​ធ្វើការ ៖"
+msgid "Workspace Switcher Preferences"
+msgstr "ចំណូល​ចិត្ត​​កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:2
-msgid "Show _all workspaces in:"
-msgstr "បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់​នៅ​ក្នុង ៖"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "បង្ហាញ​តែ​តំបន់​ធ្វើការ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:4
-msgid "Show workspace _names in switcher"
-msgstr "បង្ហាញ​ឈ្មោះ​តំបន់​ធ្វើការ​នៅ​ក្នុង​កម្មវិធី​ប្ដូរ"
+#: ../applets/wncklet/workspace-switcher.ui.h:3
+msgid "Show _all workspaces in:"
+msgstr "បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់​នៅ​ក្នុង ៖"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
 msgid "Switcher"
 msgstr "កម្មវិធី​ប្ដូរ"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:6
-msgid "Workspace Names"
-msgstr "ឈ្មោះ​តំបន់​ធ្វើការ"
+msgid "Number of _workspaces:"
+msgstr "ចំនួន​តំបន់​ធ្វើការ ៖"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:7
-msgid "Workspace Switcher Preferences"
-msgstr "ចំណូល​ចិត្ត​​កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Workspace na_mes:"
 msgstr "ឈ្មោះ​តំបន់​ធ្វើការ ៖"
 
+#: ../applets/wncklet/workspace-switcher.ui.h:8
+msgid "Workspace Names"
+msgstr "ឈ្មោះ​តំបន់​ធ្វើការ"
+
 #: ../applets/wncklet/workspace-switcher.ui.h:9
+msgid "Show workspace _names in switcher"
+msgstr "បង្ហាញ​ឈ្មោះ​តំបន់​ធ្វើការ​នៅ​ក្នុង​កម្មវិធី​ប្ដូរ"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspaces"
 msgstr "តំបន់​ធ្វើការ​"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
+#: ../data/gnome-fallback.desktop.in.in.h:1
+#: ../data/gnome-flashback.session.desktop.in.h:1
+msgid "GNOME Flashback"
+msgstr ""
+
+#: ../data/gnome-fallback.desktop.in.in.h:2
+msgid "This session logs you into GNOME with the traditional panel"
+msgstr ""
+
+#: ../data/gnome-flashback-compiz.desktop.in.in.h:1
+#: ../data/gnome-flashback-compiz.session.desktop.in.h:1
+msgid "GNOME Flashback (Compiz)"
+msgstr ""
+
+#: ../data/gnome-flashback-compiz.desktop.in.in.h:2
 msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
+"This session logs you into GNOME with Compiz window-manager and the "
+"traditional panel"
 msgstr ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
-msgid "Command to execute on click"
-msgstr "ពាក្យ​បញ្ជា​ត្រូវ​ប្រតិបត្តិ​នៅ​ពេល​ចុច"
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
+msgid "Show date in tooltip"
+msgstr "បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr ""
-"ប្រសិនបើ​ពិត "
-"ចលនា​របស់​ត្រី​នឹង​ត្រូវ​បាន​បង្ហាញ​នៅ​លើ​បន្ទះ​បញ្ឈរ​ដែល​បាន​បង្វិល ។"
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "ប្រសិនបើ​ពិត បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ នៅ​ពេល​ទ្រនិច​នៅ​លើ​នាឡិកា ។"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
-msgid "Pause per frame"
-msgstr "​ផ្អាក​ស៊ុម"
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
+msgid "Show weather in clock"
+msgstr "បង្ហាញ​អាកាសធាតុ​នៅ​ក្នុង​នាឡិកា"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
-msgid "Rotate on vertical panels"
-msgstr "បង្វិល​នៅ​លើ​បន្ទះ​បញ្ឈរ"
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:4
+msgid "If true, display a weather icon."
+msgstr "ប្រសិនបើ​ពិត បង្ហាញ​រូបតំណាង​អាកាសធាតុ ។"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
-msgid "The fish's animation pixmap"
-msgstr "pixmap ចលនា​របស់​ត្រី"
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:5
+msgid "Show temperature in clock"
+msgstr "បង្ហាញ​សីតុណ្ហភាព​នៅ​ក្នុង​នាឡិកា"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:6
+msgid "If true, show the temperature next to the weather icon."
+msgstr "ប្រសិនបើ​ពិត បង្ហាញ​សីតុណ្ហភាព​នៅ​ជិត​រូបតំណាង​អាកាសធាតុ ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:7
+msgid "Show week numbers in calendar"
+msgstr "បង្ហាញ​ចំនួន​សប្ដាហ៍​នៅ​ក្នុង​ប្រតិទិន"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:8
+msgid "If true, show week numbers in the calendar."
+msgstr "ប្រសិនបើ​ពិត បង្ហាញ​ចំនួន​សប្ដាហ៍​​នៅ​ក្នុង​ប្រតិទិន ។​​"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:9
+msgid "Expand list of appointments"
+msgstr "ពង្រីក​បញ្ជី​នៃ​ការ​ណាត់ជួប"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:10
+msgid "If true, expand the list of appointments in the calendar window."
+msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ក្នុង​ការណាត់ជួប​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:11
+msgid "Expand list of birthdays"
+msgstr "ពង្រីក​បញ្ជី​​ថ្ងៃ​កំណើត"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:12
+msgid "If true, expand the list of birthdays in the calendar window."
+msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ថ្ងៃ​កំណើត​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:13
+msgid "Expand list of tasks"
+msgstr "ពង្រីក​បញ្ជី​ភារកិច្ច"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:14
+msgid "If true, expand the list of tasks in the calendar window."
+msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ភារកិច្ច​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:15
+msgid "Expand list of weather information"
+msgstr "ពង្រីក​បញ្ជី​ព័ត៌មាន​អាកាសធាតុ"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
+msgid "If true, expand the list of weather information in the calendar window."
+msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ព័ត៌មាន​អំពី​អាកាសធាតុ​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
+msgid "Expand list of locations"
+msgstr "ពង្រីក​បញ្ជី​ទីតាំង"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:18
+msgid "If true, expand the list of locations in the calendar window."
+msgstr "ប្រសិនបើ​ពិត ពង្រីក​បញ្ជី​ទីតាំង​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:19
+msgid "List of locations"
+msgstr "រាយ​បញ្ជី​ទីតាំង"
+
+#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
+#, fuzzy
+msgid ""
+"A list of locations to display in the calendar window. Each location is a "
+"tuple of display name, METAR code and coordinates."
+msgstr "រាយ​បញ្ជី​ទីតាំង​ត្រូវ​បង្ហាញ​នៅ​ក្នុង​បង្អួច​ប្រតិទិន ។"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
 msgid "The fish's name"
 msgstr "ឈ្មោះ​របស់​ត្រី"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
 msgid ""
-"This key specifies the command that will be tried to execute when the fish "
-"is clicked."
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 msgstr ""
-"ពាក្យ​​នេះ​បញ្ជាក់ ពាក្យ​បញ្ជា​ដែល​នឹង​ត្រូវ​បាន​សាកល្បង​ប្រតិបត្តិ "
-"នៅ​ពេល​ត្រី​ត្រូវ​បាន​ចុច ។"
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
+msgid "The fish's animation pixmap"
+msgstr "pixmap ចលនា​របស់​ត្រី"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
-"ពាក្យ​នេះ​បញ្ជាក់ ឈ្មោះ​ឯកសារ​របស់ pixmap ដែល​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​ចលន"
-"ា​ដែល​បង្ហាញ​នៅ​ក្នុង​អាប់ភ្លេត​របស់​ត្រី​ទាក់ទង​នឹង​ថត​របស់ pixmap ។"
+"ពាក្យ​នេះ​បញ្ជាក់ ឈ្មោះ​ឯកសារ​របស់ pixmap ដែល​នឹង​ត្រូវ​បាន​ប្រើ​សម្រាប់​ចលនា​ដែល​បង្ហាញ​នៅ​ក្នុង​អាប់ភ្លេត​"
+"របស់​ត្រី​ទាក់ទង​នឹង​ថត​របស់ pixmap ។"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+msgid "Command to execute on click"
+msgstr "ពាក្យ​បញ្ជា​ត្រូវ​ប្រតិបត្តិ​នៅ​ពេល​ចុច"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "ពាក្យ​​នេះ​បញ្ជាក់ ពាក្យ​បញ្ជា​ដែល​នឹង​ត្រូវ​បាន​សាកល្បង​ប្រតិបត្តិ នៅ​ពេល​ត្រី​ត្រូវ​បាន​ចុច ។"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+msgid "Pause per frame"
+msgstr "​ផ្អាក​ស៊ុម"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "ពាក្យ​​នេះ​បញ្ជាក់ ចំនួន​វិនាទី​ស៊ុម​នីមួយៗ​ដែល​នឹង​ត្រូវ​បាន​បង្ហាញ ។"
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+msgid "Rotate on vertical panels"
+msgstr "បង្វិល​នៅ​លើ​បន្ទះ​បញ្ឈរ"
+
+#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
 msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"នៅ​ពេល​ដាក់​បង្អួច​ជា​ក្រុម​ពី​កម្មវិធី​ដូច​គ្នា​នៅ​លើ​បញ្ជី​របស់​បង្អួច ។ "
-"តម្លៃ​ដែល​អាច​គឺ \"មិន​ដែល\" \"ស្វ័យប្រវត្ត\" និង \"ជានិច្ច\" ។"
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "ប្រសិនបើ​ពិត ចលនា​របស់​ត្រី​នឹង​ត្រូវ​បាន​បង្ហាញ​នៅ​លើ​បន្ទះ​បញ្ឈរ​ដែល​បាន​បង្វិល ។"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
+msgid "Show windows from all workspaces"
+msgstr "បង្ហាញ​វីនដូ ពី​តំបន់​ធ្វើការ​​ទាំងអស់"
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:2
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"ប្រសិនបើ​ពិត "
-"បញ្ជី​​របស់​បង្អួច​នឹង​ត្រូវ​បាន​បង្ហាញ​វីនដូ​ពី​តំបន់​ធ្វើ​ការ​ទាំងអស់ ។ "
-"ម្យ៉ាងវិញទៀត​ទៀត  "
-"វា​នឹង​បង្ហាញ​តែ​វីនដូ​ពី​តំបន់​ធ្វើ​ការ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ ។"
+"ប្រសិនបើ​ពិត បញ្ជី​​របស់​បង្អួច​នឹង​ត្រូវ​បាន​បង្ហាញ​វីនដូ​ពី​តំបន់​ធ្វើ​ការ​ទាំងអស់ ។ ម្យ៉ាងវិញទៀត​ទៀត  វា​នឹង​បង្ហាញ​"
+"តែ​វីនដូ​ពី​តំបន់​ធ្វើ​ការ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:3
+msgid "When to group windows"
+msgstr "នៅ​ពេល​ដាក់​វីនដូ​​ជា​ក្រុម"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"នៅ​ពេល​ដាក់​បង្អួច​ជា​ក្រុម​ពី​កម្មវិធី​ដូច​គ្នា​នៅ​លើ​បញ្ជី​របស់​បង្អួច ។ តម្លៃ​ដែល​អាច​គឺ \"មិន​ដែល\" \"ស្វ័យប្រវត្ត"
+"\" និង \"ជានិច្ច\" ។"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
+msgid "Move windows to current workspace when unminimized"
+msgstr "ផ្លាស់ទី​វីនដូ​ទៅកាន់​តំបន់​ធ្វើការ​បច្ចុប្បន្ន នៅ​ពេល​បង្រួម​បង្អួច​"
+
+#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"ប្រសិនបើ​ពិត នៅ​ពេល​​បង្រួម​​បង្អួច​អប្បបរមា "
-"ផ្លាស់ទី​​វា​ទៅ​កាន់​តំបន់​ធ្វើការ​បច្ចុប្បន្ន ។ ម្យ៉ាងវិញទៀត "
-"ប្ដូរ​​ទៅកាន់​តំបន់​ធ្វើការ​របស់​បង្អួច ។"
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
-msgid "Move windows to current workspace when unminimized"
-msgstr "ផ្លាស់ទី​វីនដូ​ទៅកាន់​តំបន់​ធ្វើការ​បច្ចុប្បន្ន នៅ​ពេល​បង្រួម​បង្អួច​"
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
-msgid "Show windows from all workspaces"
-msgstr "បង្ហាញ​វីនដូ ពី​តំបន់​ធ្វើការ​​ទាំងអស់"
-
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
-msgid "When to group windows"
-msgstr "នៅ​ពេល​ដាក់​វីនដូ​​ជា​ក្រុម"
+"ប្រសិនបើ​ពិត នៅ​ពេល​​បង្រួម​​បង្អួច​អប្បបរមា ផ្លាស់ទី​​វា​ទៅ​កាន់​តំបន់​ធ្វើការ​បច្ចុប្បន្ន ។ ម្យ៉ាងវិញទៀត ប្ដូរ​​"
+"ទៅកាន់​តំបន់​ធ្វើការ​របស់​បង្អួច ។"
 
 #: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:1
-msgid "Display all workspaces"
-msgstr "បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់"
-
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
 msgid "Display workspace names"
 msgstr "បង្ហាញ​ឈ្មោះ​របស់​តំបន់​ធ្វើការ"
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
-msgid ""
-"If true, the workspace switcher will show all workspaces. Otherwise it will "
-"only show the current workspace."
-msgstr ""
-"ប្រសិនបើ​ពិត "
-"កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​នឹង​ត្រូវ​បាន​បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់ ។ "
-"ម្យ៉ាងវិញទៀត វា​នឹង​បង្ហាញ​តែ​តំបន់​ធ្វើការ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
 "This setting only works when the window manager is Metacity."
 msgstr ""
-"ប្រសិនបើ​ពិត តំបន់​ធ្វើការ​នៅ​ក្នុង​​កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​នឹង​ត្រូវ​"
-"បាន​បង្ហាញ​ឈ្មោះ​របស់​តំបន់​ធ្វើការ ។ ម្យ៉ាងវិញទៀត "
-"​វា​នឹង​បង្ហាញ​វីនដូ​នៅ​លើ​តំបន់​ធ្វើការ ។ ​កំណត់​តែ​កិច្ចការ​​នេះ​ប៉ុណ្ណោះ "
-"នៅ​ពេល​កម្មវិធី​គ្រប់គ្រង​បង្អួច​ជា Metacity ។"
+"ប្រសិនបើ​ពិត តំបន់​ធ្វើការ​នៅ​ក្នុង​​កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​នឹង​ត្រូវ​បាន​បង្ហាញ​ឈ្មោះ​របស់​តំបន់​ធ្វើការ ។ "
+"ម្យ៉ាងវិញទៀត ​វា​នឹង​បង្ហាញ​វីនដូ​នៅ​លើ​តំបន់​ធ្វើការ ។ ​កំណត់​តែ​កិច្ចការ​​នេះ​ប៉ុណ្ណោះ នៅ​ពេល​កម្មវិធី​គ្រប់គ្រង​"
+"បង្អួច​ជា Metacity ។"
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
+msgid "Display all workspaces"
+msgstr "បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់"
+
+#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"ប្រសិនបើ​ពិត កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​នឹង​ត្រូវ​បាន​បង្ហាញ​តំបន់​ធ្វើការ​ទាំងអស់ ។ ម្យ៉ាងវិញទៀត វា​នឹង​បង្ហាញ​តែ​"
+"តំបន់​ធ្វើការ​បច្ចុប្បន្ន​ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
 msgid "Rows in workspace switcher"
@@ -1119,157 +921,143 @@ msgid ""
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
-"ពាក្យ​​នេះ​បញ្ជាក់ ចំនួន​ជួរដេក (សម្រាប់​ប្លង់​ផ្ដេក) ឬ​ជួរឈរ "
-"(សម្រាប់​ប្លង់​បញ្ឈរ) "
-"កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​បង្ហាញ​តំបន់​ធ្វើការ​នៅ​ក្នុង ។ "
-"សោ​នេះ​ទាក់ទង​តែ​ ប្រសិនបើ​ display_all_workspaces key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
+"ពាក្យ​​នេះ​បញ្ជាក់ ចំនួន​ជួរដេក (សម្រាប់​ប្លង់​ផ្ដេក) ឬ​ជួរឈរ (សម្រាប់​ប្លង់​បញ្ឈរ) កម្មវិធី​ប្ដូរ​តំបន់​ធ្វើការ​"
+"បង្ហាញ​តំបន់​ធ្វើការ​នៅ​ក្នុង ។ សោ​នេះ​ទាក់ទង​តែ​ ប្រសិនបើ​ display_all_workspaces key ​គឺ​ពិត​"
+"ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
+msgid "Enable tooltips"
+msgstr "បើក​ព័ត៌មាន​ជំនួយ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
+msgid ""
+"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
+"for the whole desktop with the gtk-enable-tooltips property in GTK+."
+msgstr ""
+"ប្រសិនបើ​ពិត ព័ត៌មាន​ជំនួយ​ត្រូវ​បាន​បង្ហាញ​សម្រាប់​វត្ថុ​នៅ​ក្នុង​បន្ទះ ។ កម្មវិធី​ជំនួយ​អាច​ត្រូវ​បាន​បើក​សម្រាប់​ផ្ទៃតុ​"
+"ទាំងមូល​ជាមួយ​​លក្ខណសម្បត្តិ​កម្មវិធី gtk ដែល​អាច​បើក​បាន​នៅ​ក្នុង GTK+ ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
+msgid "Confirm panel removal"
+msgstr "អះអាង​​​ការ​យក​បន្ទះ​ចេញ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr "ប្រសិនបើ​ពិត ប្រអប់​ត្រូវ​បាន​បង្ហាញ ដោយ​សួរ​អំពី​​ការ​អះអាង​ ប្រសិនបើ​អ្នក​ប្រើ​ចង់​យក​បន្ទះ​ចេញ ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Panel ID list"
+msgstr "បញ្ជី​លេខ​សម្គាល់​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
+msgstr ""
+"រាយ​បញ្ជី​លេខ​សម្គាល់​បន្ទះ ។ លេខ​សម្គាល់​នីមួយ​ជា​បន្ទះ​របស់ toplevel ។ ការ​កំណត់​សម្រាប់​បន្ទះ​នីមួយ​នេះ​ត្រូវ​"
+"បាន​ទុក​នៅ​ក្នុង /apps/panel/toplevels/$(id) ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+msgid "Panel object ID list"
+msgstr "បញ្ជី​លេខ​សម្គាល់​វត្ថុ​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. an applet, launcher, action button or menu button/bar). The settings for "
+"each of these objects are stored in /apps/panel/objects/$(id)."
+msgstr ""
+"រាយ​បញ្ជី​លេខ​សម្គាល់​វត្ថុ​បន្ទះ ។ លេខ​សម្គាល់​នីមួយ​ជា​វត្ថុ​បន្ទះ​នីមួយ (ឧ. អាប់ភ្លេត ឧបករណ៍​ចាប់ផ្ដើម​ ប៊ូតុង​"
+"សកម្មភាព ឬ​របារ/​ប៊ូតុង​ម៉ឺនុយ) ។ ការ​កំណត់​សម្រាប់​វត្ថុ​ទាំងអស់​នេះ​ត្រូវ​បាន​ទុក​នៅ​ក្នុង /apps/panel/"
+"objects/$(id) ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+msgid "Complete panel lockdown"
+msgstr "បញ្ចប់ lockdown របស់​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"ប្រសិនបើ​ពិត បន្ទះ​នឹង​មិន​អនុញ្ញាត​ឲ្យ​មានការ​ផ្លាស់ប្ដូរ​មួយ​ចំនួន​ឡើយ ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ​បន្ទះ ។ បន្ទះ​​"
+"នីមួយ​ៗ​អាច​ត្រូវ​បាន​ជាប់​សោ យ៉ាងណាក៏ដោយ​អាច​​ដោះ​សោ​បាន ។ បន្ទះ​ត្រូវ​តែ​ចាប់ផ្ដើម​សម្រាប់​​ឲ្យ​មាន​ប្រសិន​ភាព ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+msgid "Applet IIDs to disable from loading"
+msgstr "លេខ​សម្គាល់​អាប់ភ្លេត​ត្រូវ​បិទ​ពី​ការ​ផ្ទុក"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"រាយ​បញ្ជី​អាប់ភ្លេត IIDs ដែល​​បន្ទះ​នឹង​មិន​អើពើ ។ "
-"មធ្យោបាយ​នេះ​អ្នក​អាច​បិទ​អាប់ភ្លេត​​​ដែល​មាន​ពី​ការ​ផ្ទុក "
-"ឬ​ការ​បង្ហាញ​លើ​ម៉ឺនុយ ។ ឧទាហរណ៍ បិទ​អាប់ភ្លេត mini-commander បន្ថែម "
-"'OAFIID:GNOME_MiniCommanderApplet' ទៅកាន់​បញ្ជី​នេះ ។ "
-"បន្ទះ​ត្រូវ​បាន​ចាប់ផ្ដើម​សម្រាប់​ឲ្យ​វា​មាន​ប្រសិទ្ធភាព ។"
+"រាយ​បញ្ជី​អាប់ភ្លេត IIDs ដែល​​បន្ទះ​នឹង​មិន​អើពើ ។ មធ្យោបាយ​នេះ​អ្នក​អាច​បិទ​អាប់ភ្លេត​​​ដែល​មាន​ពី​ការ​ផ្ទុក ឬ​"
+"ការ​បង្ហាញ​លើ​ម៉ឺនុយ ។ ឧទាហរណ៍ បិទ​អាប់ភ្លេត mini-commander បន្ថែម 'OAFIID:"
+"GNOME_MiniCommanderApplet' ទៅកាន់​បញ្ជី​នេះ ។ បន្ទះ​ត្រូវ​បាន​ចាប់ផ្ដើម​សម្រាប់​ឲ្យ​វា​មាន​"
+"ប្រសិទ្ធភាព ។"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"រាយ​បញ្ជី​លេខ​សម្គាល់​បន្ទះ ។ លេខ​សម្គាល់​នីមួយ​ជា​បន្ទះ​របស់ toplevel ។ "
-"ការ​កំណត់​សម្រាប់​បន្ទះ​នីមួយ​នេះ​ត្រូវ​បាន​ទុក​នៅ​ក្នុង "
-"/apps/panel/toplevels/$(id) ។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. an applet, launcher, action button or menu button/bar). The settings for "
-"each of these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"រាយ​បញ្ជី​លេខ​សម្គាល់​វត្ថុ​បន្ទះ ។ លេខ​សម្គាល់​នីមួយ​ជា​វត្ថុ​បន្ទះ​នីមួយ "
-"(ឧ. អាប់ភ្លេត ឧបករណ៍​ចាប់ផ្ដើម​ ប៊ូតុង​សកម្មភាព ឬ​របារ/​ប៊ូតុង​ម៉ឺនុយ) ។ "
-"ការ​កំណត់​សម្រាប់​វត្ថុ​ទាំងអស់​នេះ​ត្រូវ​បាន​ទុក​នៅ​ក្នុង "
-"/apps/panel/objects/$(id) ។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
-msgid "Applet IIDs to disable from loading"
-msgstr "លេខ​សម្គាល់​អាប់ភ្លេត​ត្រូវ​បិទ​ពី​ការ​ផ្ទុក"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
-msgid "Complete panel lockdown"
-msgstr "បញ្ចប់ lockdown របស់​បន្ទះ"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
-msgid "Confirm panel removal"
-msgstr "អះអាង​​​ការ​យក​បន្ទះ​ចេញ"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid "Disable Force Quit"
 msgstr "បិទ​ការ​បោះបង់​បង្ខំ"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
-msgid "Enable autocompletion in \"Run Application\" dialog"
-msgstr "បើក​ការ​បំពេញ​ស្វ័យ​ប្រវត្តិ​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run \""
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"ប្រសិនបើ​ពិត បន្ទះ​នឹង​មិន​អនុញ្ញាត​ឲ្យ​អ្នក​ប្រើ​បង្ខំ​កម្មវិធី ដើម្បី​បោះបង់​ដោយ​​​ការ​យក​ដំណើរការ​ចេញ​ ដើម្បី​បង្ខំ​"
+"ប៊ូតុង​បោះបង់​បាន​​ឡើយ ។"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
-msgid "Enable program list in \"Run Application\" dialog"
-msgstr "បើក​​បញ្ជី​របស់​កម្មវិធី​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run\""
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
-msgid "Enable tooltips"
-msgstr "បើក​ព័ត៌មាន​ជំនួយ"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
-msgid "Expand program list in \"Run Application\" dialog"
-msgstr "ពង្រីក​បញ្ជី​របស់​កម្មវិធី​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run\""
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
 msgid "History of \"Run Application\" dialog"
 msgstr "ប្រវត្តិ​របស់​ប្រអប់ \"​កម្មវិធី Run\""
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
-msgstr ""
-"ប្រសិនបើ​ពិត ប្រអប់​ត្រូវ​បាន​បង្ហាញ ដោយ​សួរ​អំពី​​ការ​អះអាង​ "
-"ប្រសិនបើ​អ្នក​ប្រើ​ចង់​យក​បន្ទះ​ចេញ ។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
-msgid "If true, autocompletion in the \"Run Application\" dialog is made available."
-msgstr ""
-"ប្រសិនបើ​​ពិត  ការ​បំពេញ​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run \" "
-"គឺ​អាច​ធ្វើ​ទៅ​បាន ។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
-msgstr ""
-"ប្រសិនបើ​ពិត ​ការ​រាយ​បញ្ជី \"កម្មវិធី​ដែល​បាន​ស្គាល់\" នៅ​ក្នុង​​ប្រអប់ "
-"\"កម្មវិធី Run \" ​ត្រូវ​បាន​ពង្រីក នៅ​ពេល​ប្រអប់​ត្រូវ​បាន​បើក ។ "
-"សោ​នេះ​​ទាក់ទង​តែ ប្រសិន​បើ​​ enable_program_list key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
-
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+msgid ""
+"The list of commands used in the past in the \"Run Application\" dialog."
+msgstr "រាយ​បញ្ជី​ពាក្យ​បញ្ជា​ដែល​បាន​ប្រើ​នៅ​ក្នុង​ប្រអប់​ \"កម្មវិធី Run\" កន្លង​ទៅ ។"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "បើក​​បញ្ជី​របស់​កម្មវិធី​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run\""
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"ប្រសិនបើ​ពិត ការ​រាយ​បញ្ជី \"កម្មវិធី​ដែល​បាន​ស្គាល់\" នៅ​ក្នុង​ប្រអប់​ "
-"\"កម្មវិធី Run\" គឺ​អាច​ធ្វើ​ទៅ​បាន ។ ទោះ​ជា​ការ​រាយ​បញ្ជី​ត្រូវ​បាន​ពង្រីក "
-"ឬ​មិន​បាន​ពង្រីក នៅ​ពេល​ប្រអប់​ត្រូវ​បាន​បង្ហាញ "
-"ឬ​ត្រូវ​បាន​​ត្រួតពិនិត្យ​ដោយ show_program_list key ។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
-msgstr ""
-"ប្រសិនបើ​ពិត បន្ទះ​នឹង​មិន​អនុញ្ញាត​ឲ្យ​អ្នក​ប្រើ​បង្ខំ​កម្មវិធី "
-"ដើម្បី​បោះបង់​ដោយ​​​ការ​យក​ដំណើរការ​ចេញ​ ដើម្បី​បង្ខំ​ប៊ូតុង​បោះបង់​បាន​​ឡើយ "
-"។"
-
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
-msgstr ""
-"ប្រសិនបើ​ពិត បន្ទះ​នឹង​មិន​អនុញ្ញាត​ឲ្យ​មានការ​ផ្លាស់ប្ដូរ​មួយ​ចំនួន​ឡើយ "
-"ក្នុង​ការ​កំណត់​រចនាសម្ព័ន្ធ​បន្ទះ ។ បន្ទះ​​នីមួយ​ៗ​អាច​ត្រូវ​បាន​ជាប់​សោ "
-"យ៉ាងណាក៏ដោយ​អាច​​ដោះ​សោ​បាន ។ "
-"បន្ទះ​ត្រូវ​តែ​ចាប់ផ្ដើម​សម្រាប់​​ឲ្យ​មាន​ប្រសិន​ភាព ។"
+"ប្រសិនបើ​ពិត ការ​រាយ​បញ្ជី \"កម្មវិធី​ដែល​បាន​ស្គាល់\" នៅ​ក្នុង​ប្រអប់​ \"កម្មវិធី Run\" គឺ​អាច​ធ្វើ​ទៅ​បាន "
+"។ ទោះ​ជា​ការ​រាយ​បញ្ជី​ត្រូវ​បាន​ពង្រីក ឬ​មិន​បាន​ពង្រីក នៅ​ពេល​ប្រអប់​ត្រូវ​បាន​បង្ហាញ ឬ​ត្រូវ​បាន​​ត្រួតពិនិត្យ​ដោយ "
+"show_program_list key ។"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
-msgid ""
-"If true, tooltips are shown for objects in panels. Tooltips can be disabled "
-"for the whole desktop with the gtk-enable-tooltips property in GTK+."
-msgstr ""
-"ប្រសិនបើ​ពិត ព័ត៌មាន​ជំនួយ​ត្រូវ​បាន​បង្ហាញ​សម្រាប់​វត្ថុ​នៅ​ក្នុង​បន្ទះ ។ ក"
-"ម្មវិធី​ជំនួយ​អាច​ត្រូវ​បាន​បើក​សម្រាប់​ផ្ទៃតុ​ទាំងមូល​ជាមួយ​​លក្ខណសម្បត្តិ​"
-"កម្មវិធី gtk ដែល​អាច​បើក​បាន​នៅ​ក្នុង GTK+ ។"
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "ពង្រីក​បញ្ជី​របស់​កម្មវិធី​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run\""
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
-msgid "Panel ID list"
-msgstr "បញ្ជី​លេខ​សម្គាល់​បន្ទះ"
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"ប្រសិនបើ​ពិត ​ការ​រាយ​បញ្ជី \"កម្មវិធី​ដែល​បាន​ស្គាល់\" នៅ​ក្នុង​​ប្រអប់ \"កម្មវិធី Run \" ​ត្រូវ​បាន​ពង្រីក នៅ​"
+"ពេល​ប្រអប់​ត្រូវ​បាន​បើក ។ សោ​នេះ​​ទាក់ទង​តែ ប្រសិន​បើ​​ enable_program_list key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
-msgid "Panel object ID list"
-msgstr "បញ្ជី​លេខ​សម្គាល់​វត្ថុ​បន្ទះ"
+msgid "Enable autocompletion in \"Run Application\" dialog"
+msgstr "បើក​ការ​បំពេញ​ស្វ័យ​ប្រវត្តិ​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run \""
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
-msgid "The list of commands used in the past in the \"Run Application\" dialog."
-msgstr ""
-"រាយ​បញ្ជី​ពាក្យ​បញ្ជា​ដែល​បាន​ប្រើ​នៅ​ក្នុង​ប្រអប់​ \"កម្មវិធី Run\" កន្លង​ទៅ "
-"។"
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr "ប្រសិនបើ​​ពិត  ការ​បំពេញ​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ​ក្នុង​ប្រអប់ \"កម្មវិធី Run \" គឺ​អាច​ធ្វើ​ទៅ​បាន ។"
 
 #: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
 msgid "Launcher location"
@@ -1280,365 +1068,138 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"ទីតាំង​របស់​ឯកសារ .desktop ដែល​ពិពណ៌នា​ឧបករណ៍​ចាប់ផ្ដើម​ ។ សោ​នេះ​ទាក់ទង​តែ​ "
-" ប្រសិនបើ ​object_type key គឺ \"វត្ថុ​ឧបករណ៍​ចាប់ផ្ដើម​\" ប៉ុណ្ណោះ ។"
+"ទីតាំង​របស់​ឯកសារ .desktop ដែល​ពិពណ៌នា​ឧបករណ៍​ចាប់ផ្ដើម​ ។ សោ​នេះ​ទាក់ទង​តែ​  ប្រសិនបើ ​"
+"object_type key គឺ \"វត្ថុ​ឧបករណ៍​ចាប់ផ្ដើម​\" ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
+msgid "Tooltip displayed for menu"
+msgstr "ព័ត៌មាន​ជំនួស​ដែល​​បាន​បង្ហាញ​សម្រាប់​ម៉ឺនុយ"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+msgid "The text to display in a tooltip for this menu."
+msgstr "អត្ថបទ​ត្រូវ​បង្ហាញ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ​សម្រាប់​ម៉ឺនុយ​នេះ ។"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
 msgid "Icon used for button"
 msgstr "រូបតំណាង​ដែល​បាន​ប្រើ​សម្រាប់​ប៊ូតុង"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
-msgid "Menu content path"
-msgstr "ផ្លូវ​មាតិកា​ម៉ឺនុយ"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
 msgstr ""
-"ទីតាំង​របស់​ឯកសារ​រូបភាព​បាន​ប្រើ​ជា​រូបតំណាង​សម្រាប់​ប៊ូតុង​របស់​វត្ថុ ។ "
-"ប្រសិនបើ​ទទេ រូបតំណាង​លំនាំដើម​សម្រាប់​ម៉ឺនុយ​នឹង​ត្រូវ​បាន​ប្រើ ។"
+"ទីតាំង​របស់​ឯកសារ​រូបភាព​បាន​ប្រើ​ជា​រូបតំណាង​សម្រាប់​ប៊ូតុង​របស់​វត្ថុ ។ ប្រសិនបើ​ទទេ រូបតំណាង​លំនាំដើម​សម្រាប់​"
+"ម៉ឺនុយ​នឹង​ត្រូវ​បាន​ប្រើ ។"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
+msgid "Menu content path"
+msgstr "ផ្លូវ​មាតិកា​ម៉ឺនុយ"
+
+#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
 msgid ""
 "The path from which the menu contents is contructed. If empty, the menu will "
 "be the default applications menu."
-msgstr ""
-"ផ្លូវ​ពី​មាតិកា​ម៉ឺនុយ ។ ប្រសិនបើ​ទទេ "
-"ម៉ឺនុយ​នឹង​ជា​​ម៉ឺនុយ​កម្មវិធី​លំនាំដើម ។"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
-msgid "The text to display in a tooltip for this menu."
-msgstr "អត្ថបទ​ត្រូវ​បង្ហាញ​នៅ​ក្នុង​ព័ត៌មាន​ជំនួយ​សម្រាប់​ម៉ឺនុយ​នេះ ។"
-
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
-msgid "Tooltip displayed for menu"
-msgstr "ព័ត៌មាន​ជំនួស​ដែល​​បាន​បង្ហាញ​សម្រាប់​ម៉ឺនុយ"
+msgstr "ផ្លូវ​ពី​មាតិកា​ម៉ឺនុយ ។ ប្រសិនបើ​ទទេ ម៉ឺនុយ​នឹង​ជា​​ម៉ឺនុយ​កម្មវិធី​លំនាំដើម ។"
 
 #: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
+msgid "Object IID"
+msgstr "IID របស់​វត្ថុ"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+msgid ""
+"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
+"\"."
+msgstr "លេខ​សម្គាល់​ការ​ប្រតិបត្តិ​របស់​វត្ថុ - ឧ. \"ClockAppletFactory::ClockApplet\" ។"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
+msgid "Toplevel panel containing object"
+msgstr "វត្ថុ​ដែល​មាន​បន្ទះ Toplevel"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "ឧបករណ៍​សម្គាល់​របស់​បន្ទះ toplevel ដែល​មាន​វត្ថុ​នេះ ។"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
+msgid "Interpret position relative to bottom/right edge"
+msgstr "បកប្រែ​ទីតាំង​ដែល​ទាក់ទង​នឹង​គែម ប៊ូតុង/សិទ្ធ​"
+
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 msgstr ""
-"ប្រសិនបើ​កំណត់​ទៅកាន់ 'ចុង' "
-"ទីតាំង​របស់​វត្ថុ​ត្រូវ​បាន​បកប្រែ​​ទាក់ទង​នឹង​សិទ្ធ (ឬ​ប៊ូតុង "
-"ប្រសិនបើ​បញ្ឈរ) គែម​របស់​បន្ទះ ។"
+"ប្រសិនបើ​កំណត់​ទៅកាន់ 'ចុង' ទីតាំង​របស់​វត្ថុ​ត្រូវ​បាន​បកប្រែ​​ទាក់ទង​នឹង​សិទ្ធ (ឬ​ប៊ូតុង ប្រសិនបើ​បញ្ឈរ) គែម​របស់​"
+"បន្ទះ ។"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
-msgid "Interpret position relative to bottom/right edge"
-msgstr "បកប្រែ​ទីតាំង​ដែល​ទាក់ទង​នឹង​គែម ប៊ូតុង/សិទ្ធ​"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
-msgid "Object IID"
-msgstr "IID របស់​វត្ថុ"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
 msgid "Object's position on the panel"
 msgstr "ទីតាំង​របស់​វត្ថុ​នៅ​លើ​បន្ទះ"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
-msgid "The identifier of the toplevel panel which contains this object."
-msgstr "ឧបករណ៍​សម្គាល់​របស់​បន្ទះ toplevel ដែល​មាន​វត្ថុ​នេះ ។"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
-msgid ""
-"The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
-"\"."
-msgstr ""
-"លេខ​សម្គាល់​ការ​ប្រតិបត្តិ​របស់​វត្ថុ - ឧ. \"ClockAppletFactory::ClockApplet\" "
-"។"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"ទីតាំង​របស់​វត្ថុ​បន្ទះ​នេះ ។ "
-"ទីតាំង​ត្រូវ​បាន​បញ្ជាក់​ដោយ​ចំនួន​ភីកសែល​ពី​​គែម​បន្ទះ​ខាង​ឆ្វេង "
-"(ឬ​ខាង​​លើ​ប្រសិនបើ​បញ្ឈរ) ។"
-
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
-msgid "Toplevel panel containing object"
-msgstr "វត្ថុ​ដែល​មាន​បន្ទះ Toplevel"
+"ទីតាំង​របស់​វត្ថុ​បន្ទះ​នេះ ។ ទីតាំង​ត្រូវ​បាន​បញ្ជាក់​ដោយ​ចំនួន​ភីកសែល​ពី​​គែម​បន្ទះ​ខាង​ឆ្វេង (ឬ​ខាង​​លើ​ប្រសិនបើ​"
+"បញ្ឈរ) ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
-msgid "Animation speed"
-msgstr "ល្បឿន​ចលនា"
+msgid "Name to identify panel"
+msgstr "ឈ្មោះ​ត្រូវ​សម្គាល់​បន្ទះ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:2
-msgid "Automatically hide panel into corner"
-msgstr "លាក់​បន្ទះ​ដោយ​ស្វ័យ​ប្រវត្តិ​ទៅកាន់​ជ្រុង"
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"នេះ​ជា​ឈ្មោះ​មនុស្ស​ដែល​អាច​អាន​បាន អ្នក​អាច​ប្រើ​ដើម្បី​បញ្ជាក់​បន្ទះ ។ គោលបំណង​សំខាន់​របស់​វា ដើម្បី​​​ផ្ដល់​​ចំណង​"
+"ជើង​បង្អួច​របស់​បន្ទះ នៅ​ពេល​រុករក​​ចន្លោះ​បន្ទះ​ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
-msgid "Background color"
-msgstr "ពណ៌​ផ្ទៃ​ខាងក្រោយ"
+msgid "X screen where the panel is displayed"
+msgstr "អេក្រង់ X ដែល​បន្ទះ​ត្រូវ​បាន​បង្ហាញ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
-msgid "Background image"
-msgstr "រូបភាព​ផ្ទៃខាងក្រោយ"
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"ជាមួយ​ការ​រៀបចំ​ពហុ​អេក្រង់ អ្នក​អាច​មាន​បន្ទះ​នៅ​លើ​អេក្រង់​នីមួយៗ ។ សោ​នេះ​កំណត់​អេក្រង់​បច្ចុប្បន្ន បន្ទះ​ដែល​"
+"ត្រូវ​បាន​បង្ហាញ​នៅ​លើ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
-msgid "Background type"
-msgstr "ប្រភេទ​ផ្ទៃខាងក្រោយ"
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "កម្មវិធី​ត្រួតពិនិត្យ Xinerama ដែល​បន្ទះ​ត្រូវ​បាន​បង្ហាញ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
-msgid "Center panel on x-axis"
-msgstr "បន្ទះ​កណ្ដាល​នៅ​លើ​អ័ក្ស x"
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"ក្នុង​ការ​រៀបចំ Xinerama  អ្នក​មាន​បន្ទះ​នៅ​លើ​កម្មវិធី​ត្រួតពិនិត្យ​នីមួយៗ ។ ​សោ​នេះ​សម្គាល់​កម្មវិធី​​ត្រួត​ពិនិត្យ​"
+"បច្ចុប្បន្ន បន្ទះ​​ត្រូវ​បាន​បង្ហាញ​នៅ​លើ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
-msgid "Center panel on y-axis"
-msgstr "បន្ទះ​កណ្ដាល​នៅ​លើ​អ័ក្ស y"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
-msgid ""
-"Determines how the image set by image-uri is rendered. Possible values are "
-"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
-"to the panel dimensions and the aspect ratio of the image will not be "
-"maintained. With \"fit\", the image will be scaled (retaining the aspect "
-"ratio of the image) to the panel height (if horizontal)."
-msgstr ""
-"កំណត់​របៀប​​សំណុំ​រូបភាព​ដោយ image-uri ។ តម្លៃ​ដែល​អាច​គឺ \"គ្មាន\" "
-"\"ទាញ​ឲ្យ​វែង\" \"សម\" ។ ជាមួយ \"ទាញ​ឲ្យ​វែង\" "
-"រូបភាព​នឹង​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន​ទៅកាន់​វិមាត្រ​បន្ទះ "
-"និង​សមាមាត្រ​របស់​រូបភាព​នឹង​មិន​ត្រូវ​បាន​រក្សាទុក​ឡើយ ។ \"សម\" "
-"រូបភាព​នឹង​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន (ការ​រក្សាទុក​សមាមាត្រ​របស់​រូបភាព) "
-"ទៅកាន់​កម្ពស់​បន្ទះ (ប្រសិនបើ​ផ្ដេក) ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
-msgid "Enable arrows on hide buttons"
-msgstr "បើក​ព្រួញ​នៅ​លើ​ព្រួញ​ដែល​​លាក់"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
-msgid "Enable hide buttons"
-msgstr "បើក​ប៊ូតុង​ដែល​លាក់"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
 msgid "Expand to occupy entire screen width"
 msgstr "ពង្រីក​នៅ​ទទឹង​អេក្រង់​ទាំងមូល"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
-msgstr ""
-"ប្រសិនបើ​ពិត ព្រួញ​នឹង​ត្រូវ​បាន​ដាក់​នៅ​លើ​ប៊ូតុង​ដែល​លាក់ ។ "
-"សោ​នេះ​ទាក់ទង​តែ ប្រសិនបើ​object_type key គឺ​ពិត​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
-msgstr ""
-"ប្រសិនបើ​ពិត ប៊ូតុង​នឹង​ត្រូវ​បាន​ដាក់​នៅ​លើង​ផ្នែក​នីមួយ​នៃ​បន្ទះ "
-"ដែល​អាច​ត្រូវ​បាន​ប្រើ ដើម្បី​ផ្លាស់ទី​បន្ទះ​ទៅកាន់​គែម​របស់​អេក្រង់ "
-"ទុក​តែ​ប៊ូតុង​ដែល​បង្ហាញ​នេះ​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr ""
-"ប្រសិនបើ​​ពិត រូបភាព​ផ្ទៃ​ខាងក្រោយ​នឹង​ត្រូវ​​បាន​បង្វិល "
-"នៅ​ពេល​​បន្ទះ​ត្រូវ​បាន​​កំណត់​ទិស​បញ្ឈរ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
-msgstr ""
-"ប្រសិនបើ​ពិត បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ជ្រុង​របស់​អេក្រង់ "
-"នៅ​ពេល​ទ្រនិច​ចេញ​ពី​ផ្ទៃ​បន្ទះ ។ "
-"ផ្លាស់ទី​ទ្រនិច​ទៅកាន់​ជ្រុង​នេះ​ម្ដងទៀត​នឹង​ធ្វើ​បន្ទះ​លេចឡើង​ឡើងវិញ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"ប្រសិនបើ​ពិត បន្ទះ​នឹង​នៅ​ទទឹង​អេក្រង់​ទាំងមូល (កម្ពស់ "
-"ប្រសិនបើ​វា​ជា​បន្ទះ​បញ្ឈរ) ។ "
-"នៅ​ក្នុង​របៀប​នេះ​បន្ទះ​អាច​ត្រូវ​បាន​ដាក់​នៅ​តែ​គែម​អេក្រង់​ប៉ុណ្ណោះ ។ "
-"ប្រសិនបើ​មិន​ពិត បន្ទះ​នឹង​​ធំ​ល្មម​ ដើម្បី​​បង្កើត​​បាន​អាប់ភ្លេត "
+"ប្រសិនបើ​ពិត បន្ទះ​នឹង​នៅ​ទទឹង​អេក្រង់​ទាំងមូល (កម្ពស់ ប្រសិនបើ​វា​ជា​បន្ទះ​បញ្ឈរ) ។ នៅ​ក្នុង​របៀប​នេះ​បន្ទះ​"
+"អាច​ត្រូវ​បាន​ដាក់​នៅ​តែ​គែម​អេក្រង់​ប៉ុណ្ណោះ ។ ប្រសិនបើ​មិន​ពិត បន្ទះ​នឹង​​ធំ​ល្មម​ ដើម្បី​​បង្កើត​​បាន​អាប់ភ្លេត "
 "ឧបករណ៍​ចាប់ផ្ដើម​​ និង​ប៊ូតុង​នៅ​លើ​បន្ទះ ។"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"ប្រសិនបើ​ពិត​សោ​ x និង x_right ត្រូវ​បាន​មិន​អើពើ "
-"​ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​ជ្រុង​របស់​អ័ក្ស x របស់​អេក្រង់ ។ "
-"ប្រសិនបើ​បន្ទះ​ត្រូវ​បាន​ប្ដូរ​ទំហំ​វា​នឹង​នៅ​លើ​ទីតាំង​នេះ - ឧ. "
-"បន្ទះ​នឹង​មាន​នៅ​លើ​ផ្នែក​ទាំងពីរ ។ ប្រសិនបើ​​មិន​ពិត​សោ  x និង x_right "
-"បញ្ជាក់​ទីតាំង​របស់​បន្ទះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"ប្រសិនបើ​ពិត សោ y និង y_bottom ត្រូវ​បាន​មិន​អើពើ "
-"ហើយ​បន្ទះ​នឹង​ត្រូវ​បាន​ដាក់​នៅ​​ចំកណ្ដាល​នៃ​អ័ក្ស y របស់​អេក្រង់ ។ "
-"ប្រសិនបើ​បន្ទះ​ត្រូវ​បាន​ប្ដូរ​ទំហំ​វា​នឹង​នៅ​ទីតាំង​នេះ - ឧ. "
-"បន្ទះ​នឹង​មាន​នៅ​ផ្នែក​ទាំងពីរ ។ ប្រសិនបើ​មិន​ពិត សោ y និង y_bottom "
-"បញ្ជាក់​ទីតាំង​របស់​បន្ទះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
-msgid "Image options"
-msgstr "ជម្រើស​រូបភាព"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
-msgstr ""
-"ក្នុង​ការ​រៀបចំ Xinerama  អ្នក​មាន​បន្ទះ​នៅ​លើ​កម្មវិធី​ត្រួតពិនិត្យ​នីមួយៗ "
-"។ ​សោ​នេះ​សម្គាល់​កម្មវិធី​​ត្រួត​ពិនិត្យ​បច្ចុប្បន្ន "
-"បន្ទះ​​ត្រូវ​បាន​បង្ហាញ​នៅ​លើ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
-msgid "Name to identify panel"
-msgstr "ឈ្មោះ​ត្រូវ​សម្គាល់​បន្ទះ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
-msgid "Panel autohide delay"
-msgstr "ការ​ពន្យារពេល​លាក់​បន្ទះ​ស្វ័យប្រវត្តិ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
-msgid "Panel autounhide delay"
-msgstr "ការ​ពន្យារពេល​លាក់​បន្ទះ​ស្វ័យប្រវត្តិ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
 msgid "Panel orientation"
 msgstr "ទិស​បន្ទះ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
-msgid "Panel size"
-msgstr "ទំហំ​បន្ទះ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
-msgid "Rotate image on vertical panels"
-msgstr "បង្វិល​រូបភាព​នៅ​លើ​បន្ទះ​បញ្ឈរ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "បញ្ជាក់​ពណ៌​ផ្ទៃខាងក្រោយ​សម្រាប់​បន្ទះ​ជា​ទ្រង់ទ្រាយ #RGB ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
-msgstr ""
-"បញ្ជាក់​ឯកសារ​​ត្រូវ​ប្រើ​សម្រាប់​រូបភាព​ផ្ទៃ​ខាងក្រោយ ។ "
-"ប្រសិនបើ​រូបភាព​មាន​ឆានែល​អាល់ហ្វា "
-"វា​នឹង​ត្រូវ​​លាយ​ទៅកាន់​​រូបភាព​​ផ្ទៃខាងក្រោយ​​ផ្ទៃតុ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"បញ្ជាក់​ចំនួន​​នៃ​ការ​ពន្យារពេល​​មិល្លី​វិនាទី "
-"បន្ទាប់​ពី​ដាក់​​ទ្រនិច​នៅ​លើ​ផ្ទៃ​បន្ទះ "
-"មុន​ពេល​បន្ទះ​​ត្រូវ​បាន​បង្ហាញ​ឡើងវិញ​ដោយ​ស្វ័យ​ប្រវត្តិ ។ សោ​នេះ​ទាក់ទង​តែ "
-"ប្រសិនបើ​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
-msgstr ""
-"បញ្ជាក់​ចំនួន​នៃ​ការ​​ពន្យារពេល​មិល្លី​វិនាទី "
-"បន្ទាប់​ពី​ដាក់​ទ្រនិច​នៅ​លើ​​ផ្ទៃ​បន្ទះ "
-"មុន​ពេល​បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​ស្វ័យ​ប្រវត្តិ ។ សោ​នេះ​ទាក់ទង​តែ​ "
-"ប្រសិនបើ​​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr ""
-"បញ្ជាក់​ចំនួន​របស់​ភីកសែល​ដែល​អាច​មើល​ឃើញ "
-"នៅ​ពេល​បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ជ្រុង ។ សោ​នេះ​ទាក់ទង​តែ "
-"ប្រសិនបើ​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
-msgstr ""
-"កម្ពស់ (ទទឹង​សម្រាប់​បន្ទះ​បញ្ឈរ) របស់​បន្ទះ ។ បន្ទះ​នឹង​ត្រូវ​បាន​កំណត់​នៅ​"
-"ពេល​​ដំណើរការ​ទំហំ​អប្បបរមា​អាស្រ័យ​ទៅតាម​ទំហំ​ពុម្ពអក្សរ "
-"និង​ទ្រនិច​បង្ហាញ​​ផ្សេងៗ ។ "
-"ទំហំ​​ថេរ​អតិបរមា​នៅ​មួយ​ភាគ​បួន​នៃ​កម្ពស់​របស់​អេក្រង់ (ឬ​ទទឹង) ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស x ចាប់​ពី​ខាង​ស្ដាំ​អេក្រង់ ។ ប្រសិនបើ​កំណត់​ "
-"-1 តម្លៃ​មិន​ត្រូវ​បាន​អើពើ ហើយ​តម្លៃ​របស់​សោ x ​ត្រូវ​បាន​ប្រើ ។ "
-"ប្រសិនបើ​តម្លៃ​ធំជាង ០ បន្ទាប់​តម្លៃ​របស់​សោ x មិន​ត្រូវ​បាន​អើពើ ។ "
-"សោ​នេះ​​ទាក់ទង​​នឹង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ "
-"នៅ​ក្នុង​របៀប​ដែល​បាន​បង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ "
-"ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស x ។ "
-"សោ​នេះ​ទាក់ទង​នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ "
-"នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​​អើពើ "
-"ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស y ចាប់ពី​បាត​របស់​អេក្រង់ ។ ប្រសិនបើ​កំណត់ -1 "
-"តម្លៃ​មិន​ត្រូវ​បាន​អើពើ ហើយ​តម្លៃ​របស់​សោ y ត្រូវ​បាន​ប្រើ ។ "
-"ប្រសិនបើ​តម្លៃ​ធំ​ជាង ០ បន្ទាប់ តម្លៃ​សោ​របស់ y មិន​ត្រូវ​បាន​អើពើ ។ "
-"សោ​នេះ​ទាក់ទង​តែ​នៅ​ក្នុង​របៀប​​ដែល​មិន​បាន​ពង្រីក ។ "
-"នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​បង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ "
-"ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស y ។ "
-"សោ​នេះ​ទាក់ទង​​តែ​​នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ "
-"នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​បង្រីក​​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ "
-"ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -1649,14 +1210,196 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"ទិស​របស់​បន្ទះ ។ តម្លៃ​ដែល​អាន \"កំពូល\" \"បាត\" \"ឆ្វេង\" \"ស្ដាំ\" ។ "
-"នៅ​ក្នុង​របៀប​ដែល​បាន​ពង្រីក​ការ​បញ្ជាក់​សោ​គែម​អេក្រង់ បន្ទះ​នៅ​លើ ។ "
-"នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ភាព​ខុស​គ្នា​រវាង​ចន្លោះ \"កំពូល\" និង \"បាត\" "
-"គឺ​គ្មាន​សារសំខាន់ - ការ​បង្ហាញ​ទាំង​ពីរ​​ដែល​វា​ជា​បន្ទះ​ផ្ដេក - "
-"ប៉ុន្តែ​ផ្ដល់​ការ​ណែនាំ​ជា​របៀប​វត្ថុ​បន្ទះ​មួយ​ចំនួន​គួរ​មាន ។ ឧទាហរណ៍ "
-"នៅ​​​ \"កំពូល\" បន្ទះ​ប៊ូតុង​ម៉ឺនុយ​នឹង​លេច​ឡើង​ "
-"ម៉ឺនុយ​របស់​វា​ខាង​ក្រោម​បន្ទះ ដោយ​ហេតុតែ​នៅ​លើ \"បាត\" បន្ទះ "
-"ម៉ឺនុយ​នឹង​ត្រូវ​បាន​លេចឡើង​​នៅ​បន្ទះ​ខាងលើ ។"
+"ទិស​របស់​បន្ទះ ។ តម្លៃ​ដែល​អាន \"កំពូល\" \"បាត\" \"ឆ្វេង\" \"ស្ដាំ\" ។ នៅ​ក្នុង​របៀប​ដែល​បាន​ពង្រីក​"
+"ការ​បញ្ជាក់​សោ​គែម​អេក្រង់ បន្ទះ​នៅ​លើ ។ នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ភាព​ខុស​គ្នា​រវាង​ចន្លោះ \"កំពូល"
+"\" និង \"បាត\" គឺ​គ្មាន​សារសំខាន់ - ការ​បង្ហាញ​ទាំង​ពីរ​​ដែល​វា​ជា​បន្ទះ​ផ្ដេក - ប៉ុន្តែ​ផ្ដល់​ការ​ណែនាំ​ជា​"
+"របៀប​វត្ថុ​បន្ទះ​មួយ​ចំនួន​គួរ​មាន ។ ឧទាហរណ៍ នៅ​​​ \"កំពូល\" បន្ទះ​ប៊ូតុង​ម៉ឺនុយ​នឹង​លេច​ឡើង​ ម៉ឺនុយ​របស់​វា​ខាង​ក្រោម​"
+"បន្ទះ ដោយ​ហេតុតែ​នៅ​លើ \"បាត\" បន្ទះ ម៉ឺនុយ​នឹង​ត្រូវ​បាន​លេចឡើង​​នៅ​បន្ទះ​ខាងលើ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+msgid "Panel size"
+msgstr "ទំហំ​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"កម្ពស់ (ទទឹង​សម្រាប់​បន្ទះ​បញ្ឈរ) របស់​បន្ទះ ។ បន្ទះ​នឹង​ត្រូវ​បាន​កំណត់​នៅ​ពេល​​ដំណើរការ​ទំហំ​អប្បបរមា​អាស្រ័យ​"
+"ទៅតាម​ទំហំ​ពុម្ពអក្សរ និង​ទ្រនិច​បង្ហាញ​​ផ្សេងៗ ។ ទំហំ​​ថេរ​អតិបរមា​នៅ​មួយ​ភាគ​បួន​នៃ​កម្ពស់​របស់​អេក្រង់ (ឬ​ទទឹង) ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+msgid "X co-ordinate of panel"
+msgstr "កូអរដោនេ X ​របស់​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស x ។ សោ​នេះ​ទាក់ទង​នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​"
+"ពង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​​អើពើ ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+msgid "Y co-ordinate of panel"
+msgstr "កូអរដោនេ Y ​របស់​បន្ទះ"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស y ។ សោ​នេះ​ទាក់ទង​​តែ​​នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​"
+"បង្រីក​​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+msgid "X co-ordinate of panel, starting from the right of the screen"
+msgstr "កូអរដោនេ X ​របស់​បន្ទះ ចាប់ពី​ខាងស្ដាំ​របស់​អេក្រង់"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+msgid ""
+"The location of the panel along the x-axis, starting from the right of the "
+"screen. If set to -1, the value is ignored and the value of the x key is "
+"used. If the value is greater than 0, then the value of the x key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស x ចាប់​ពី​ខាង​ស្ដាំ​អេក្រង់ ។ ប្រសិនបើ​កំណត់​ -1 តម្លៃ​មិន​ត្រូវ​បាន​អើពើ ហើយ​តម្លៃ​"
+"របស់​សោ x ​ត្រូវ​បាន​ប្រើ ។ ប្រសិនបើ​តម្លៃ​ធំជាង ០ បន្ទាប់​តម្លៃ​របស់​សោ x មិន​ត្រូវ​បាន​អើពើ ។ សោ​នេះ​​"
+"ទាក់ទង​​នឹង​របៀប​ដែល​មិន​បាន​ពង្រីក ។ នៅ​ក្នុង​របៀប​ដែល​បាន​បង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ ហើយ​បន្ទះ​ត្រូវ​បាន​"
+"ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+msgstr "កូអរដោនេ Y របស់​បន្ទះ ចាប់ពី​​បាត​របស់​អេក្រង់"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+msgid ""
+"The location of the panel along the y-axis, starting from the bottom of the "
+"screen. If set to -1, the value is ignored and the value of the y key is "
+"used. If the value is greater than 0, then the value of the y key is "
+"ignored. This key is only relevant in un-expanded mode. In expanded mode "
+"this key is ignored and the panel is placed at the screen edge specified by "
+"the orientation key."
+msgstr ""
+"ទីតាំង​របស់​បន្ទះ​បណ្ដោយ​អ័ក្ស y ចាប់ពី​បាត​របស់​អេក្រង់ ។ ប្រសិនបើ​កំណត់ -1 តម្លៃ​មិន​ត្រូវ​បាន​អើពើ ហើយ​តម្លៃ​"
+"របស់​សោ y ត្រូវ​បាន​ប្រើ ។ ប្រសិនបើ​តម្លៃ​ធំ​ជាង ០ បន្ទាប់ តម្លៃ​សោ​របស់ y មិន​ត្រូវ​បាន​អើពើ ។ សោ​នេះ​"
+"ទាក់ទង​តែ​នៅ​ក្នុង​របៀប​​ដែល​មិន​បាន​ពង្រីក ។ នៅ​ក្នុង​របៀប​ដែល​មិន​បាន​បង្រីក​សោ​នេះ​មិន​ត្រូវ​បាន​អើពើ ហើយ​បន្ទះ​"
+"ត្រូវ​បាន​ដាក់​នៅ​គែម​អេក្រង់​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​ទិស ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+msgid "Center panel on x-axis"
+msgstr "បន្ទះ​កណ្ដាល​នៅ​លើ​អ័ក្ស x"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+msgid ""
+"If true, the x and x_right keys are ignored and the panel is placed at the "
+"center of the x-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the x "
+"and x_right keys specify the location of the panel."
+msgstr ""
+"ប្រសិនបើ​ពិត​សោ​ x និង x_right ត្រូវ​បាន​មិន​អើពើ ​ហើយ​បន្ទះ​ត្រូវ​បាន​ដាក់​នៅ​ជ្រុង​របស់​អ័ក្ស x របស់​អេក្រង់ "
+"។ ប្រសិនបើ​បន្ទះ​ត្រូវ​បាន​ប្ដូរ​ទំហំ​វា​នឹង​នៅ​លើ​ទីតាំង​នេះ - ឧ. បន្ទះ​នឹង​មាន​នៅ​លើ​ផ្នែក​ទាំងពីរ ។ ប្រសិនបើ​​មិន​"
+"ពិត​សោ  x និង x_right បញ្ជាក់​ទីតាំង​របស់​បន្ទះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+msgid "Center panel on y-axis"
+msgstr "បន្ទះ​កណ្ដាល​នៅ​លើ​អ័ក្ស y"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+msgid ""
+"If true, the y and y_bottom keys are ignored and the panel is placed at the "
+"center of the y-axis of the screen. If the panel is resized it will remain "
+"at that position - i.e. the panel will grow on both sides. If false, the y "
+"and y_bottom keys specify the location of the panel."
+msgstr ""
+"ប្រសិនបើ​ពិត សោ y និង y_bottom ត្រូវ​បាន​មិន​អើពើ ហើយ​បន្ទះ​នឹង​ត្រូវ​បាន​ដាក់​នៅ​​ចំកណ្ដាល​នៃ​អ័ក្ស y របស់​"
+"អេក្រង់ ។ ប្រសិនបើ​បន្ទះ​ត្រូវ​បាន​ប្ដូរ​ទំហំ​វា​នឹង​នៅ​ទីតាំង​នេះ - ឧ. បន្ទះ​នឹង​មាន​នៅ​ផ្នែក​ទាំងពីរ ។ ប្រសិនបើ​"
+"មិន​ពិត សោ y និង y_bottom បញ្ជាក់​ទីតាំង​របស់​បន្ទះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+msgid "Automatically hide panel into corner"
+msgstr "លាក់​បន្ទះ​ដោយ​ស្វ័យ​ប្រវត្តិ​ទៅកាន់​ជ្រុង"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"ប្រសិនបើ​ពិត បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ជ្រុង​របស់​អេក្រង់ នៅ​ពេល​ទ្រនិច​ចេញ​ពី​ផ្ទៃ​បន្ទះ ។ ផ្លាស់ទី​"
+"ទ្រនិច​ទៅកាន់​ជ្រុង​នេះ​ម្ដងទៀត​នឹង​ធ្វើ​បន្ទះ​លេចឡើង​ឡើងវិញ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+msgid "Enable hide buttons"
+msgstr "បើក​ប៊ូតុង​ដែល​លាក់"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"ប្រសិនបើ​ពិត ប៊ូតុង​នឹង​ត្រូវ​បាន​ដាក់​នៅ​លើង​ផ្នែក​នីមួយ​នៃ​បន្ទះ ដែល​អាច​ត្រូវ​បាន​ប្រើ ដើម្បី​ផ្លាស់ទី​បន្ទះ​ទៅកាន់​"
+"គែម​របស់​អេក្រង់ ទុក​តែ​ប៊ូតុង​ដែល​បង្ហាញ​នេះ​ប៉ុណ្ណោះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+msgid "Enable arrows on hide buttons"
+msgstr "បើក​ព្រួញ​នៅ​លើ​ព្រួញ​ដែល​​លាក់"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"ប្រសិនបើ​ពិត ព្រួញ​នឹង​ត្រូវ​បាន​ដាក់​នៅ​លើ​ប៊ូតុង​ដែល​លាក់ ។ សោ​នេះ​ទាក់ទង​តែ ប្រសិនបើ​object_type key គឺ​ពិត​"
+"ប៉ុណ្ណោះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+msgid "Panel autohide delay"
+msgstr "ការ​ពន្យារពេល​លាក់​បន្ទះ​ស្វ័យប្រវត្តិ"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"បញ្ជាក់​ចំនួន​នៃ​ការ​​ពន្យារពេល​មិល្លី​វិនាទី បន្ទាប់​ពី​ដាក់​ទ្រនិច​នៅ​លើ​​ផ្ទៃ​បន្ទះ មុន​ពេល​បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​"
+"ស្វ័យ​ប្រវត្តិ ។ សោ​នេះ​ទាក់ទង​តែ​ ប្រសិនបើ​​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+msgid "Panel autounhide delay"
+msgstr "ការ​ពន្យារពេល​លាក់​បន្ទះ​ស្វ័យប្រវត្តិ"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"បញ្ជាក់​ចំនួន​​នៃ​ការ​ពន្យារពេល​​មិល្លី​វិនាទី បន្ទាប់​ពី​ដាក់​​ទ្រនិច​នៅ​លើ​ផ្ទៃ​បន្ទះ មុន​ពេល​បន្ទះ​​ត្រូវ​បាន​បង្ហាញ​"
+"ឡើងវិញ​ដោយ​ស្វ័យ​ប្រវត្តិ ។ សោ​នេះ​ទាក់ទង​តែ ប្រសិនបើ​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+msgid "Visible pixels when hidden"
+msgstr "បន្ទះ​ដែល​អាច​មើល​ឃើញ នៅ​ពេល​លាក់"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"បញ្ជាក់​ចំនួន​របស់​ភីកសែល​ដែល​អាច​មើល​ឃើញ នៅ​ពេល​បន្ទះ​ត្រូវ​បាន​លាក់​ដោយ​ស្វ័យប្រវត្តិ​នៅ​ជ្រុង ។ សោ​នេះ​ទាក់ទង​"
+"តែ ប្រសិនបើ​ auto_hide key ​គឺ​ពិត​ប៉ុណ្ណោះ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+msgid "Animation speed"
+msgstr "ល្បឿន​ចលនា"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
 msgid ""
@@ -1664,174 +1407,81 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"ល្បឿន​ចលនា​បន្ទះ​គួរ​តែ​កើតឡើង ។ តម្លៃ​ដែល​អាច \"យឺត\" \"មធ្យម\" និង \"លឿន\" ។ "
-"សោ​នេះ​ទាក់ទង​តែ ប្រសិនបើ​បើក​សោ​ចលនា​គឺ​ពិត​ប៉ុណ្ណោះ ។"
+"ល្បឿន​ចលនា​បន្ទះ​គួរ​តែ​កើតឡើង ។ តម្លៃ​ដែល​អាច \"យឺត\" \"មធ្យម\" និង \"លឿន\" ។ សោ​នេះ​ទាក់ទង​"
+"តែ ប្រសិនបើ​បើក​សោ​ចលនា​គឺ​ពិត​ប៉ុណ្ណោះ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
-msgstr ""
-"នេះ​ជា​ឈ្មោះ​មនុស្ស​ដែល​អាច​អាន​បាន អ្នក​អាច​ប្រើ​ដើម្បី​បញ្ជាក់​បន្ទះ ។ "
-"គោលបំណង​សំខាន់​របស់​វា ដើម្បី​​​ផ្ដល់​​ចំណង​ជើង​បង្អួច​របស់​បន្ទះ "
-"នៅ​ពេល​រុករក​​ចន្លោះ​បន្ទះ​ ។"
+msgid "Background type"
+msgstr "ប្រភេទ​ផ្ទៃខាងក្រោយ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
-msgid "Visible pixels when hidden"
-msgstr "បន្ទះ​ដែល​អាច​មើល​ឃើញ នៅ​ពេល​លាក់"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"ប្រភេទ​ផ្ទៃ​ខាងក្រោយ​​គួរតែ​ត្រូវ​បាន​ប្រើ​សម្រាប់​បន្ទះ​នេះ ។ "
-"តម្លៃ​ដែល​អាច​គឺ \"គ្មាន\" - លំនាំដើម GTK+ "
-"ផ្ទៃ​ខាងក្រោយ​ធាតុ​ក្រាហ្វិក​នឹង​ត្រូវ​បាន​ប្រើ \"ពណ៌\" "
-"សោ​ពណ៌​នឹង​ត្រូវ​បាន​ប្រើ​​ជា​ពណ៌​ផ្ទៃ​ខាងក្រោយ ឬ \"រូបភាព\" "
-"រូបភាព​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​រូបភាព​នឹង​ត្រូវ​បាន​ប្រើ​​ជា​ផ្ទៃ​ខាងក្រោយ ។"
+"ប្រភេទ​ផ្ទៃ​ខាងក្រោយ​​គួរតែ​ត្រូវ​បាន​ប្រើ​សម្រាប់​បន្ទះ​នេះ ។ តម្លៃ​ដែល​អាច​គឺ \"គ្មាន\" - លំនាំដើម GTK"
+"+ ផ្ទៃ​ខាងក្រោយ​ធាតុ​ក្រាហ្វិក​នឹង​ត្រូវ​បាន​ប្រើ \"ពណ៌\" សោ​ពណ៌​នឹង​ត្រូវ​បាន​ប្រើ​​ជា​ពណ៌​ផ្ទៃ​ខាងក្រោយ ឬ "
+"\"រូបភាព\" រូបភាព​ដែល​បាន​បញ្ជាក់​ដោយ​សោ​រូបភាព​នឹង​ត្រូវ​បាន​ប្រើ​​ជា​ផ្ទៃ​ខាងក្រោយ ។"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
+msgid "Background color"
+msgstr "ពណ៌​ផ្ទៃ​ខាងក្រោយ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"ជាមួយ​ការ​រៀបចំ​ពហុ​អេក្រង់ អ្នក​អាច​មាន​បន្ទះ​នៅ​លើ​អេក្រង់​នីមួយៗ ។ "
-"សោ​នេះ​កំណត់​អេក្រង់​បច្ចុប្បន្ន បន្ទះ​ដែល​ត្រូវ​បាន​បង្ហាញ​នៅ​លើ ។"
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "បញ្ជាក់​ពណ៌​ផ្ទៃខាងក្រោយ​សម្រាប់​បន្ទះ​ជា​ទ្រង់ទ្រាយ #RGB ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
-msgid "X co-ordinate of panel"
-msgstr "កូអរដោនេ X ​របស់​បន្ទះ"
+msgid "Background image"
+msgstr "រូបភាព​ផ្ទៃខាងក្រោយ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "កូអរដោនេ X ​របស់​បន្ទះ ចាប់ពី​ខាងស្ដាំ​របស់​អេក្រង់"
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"បញ្ជាក់​ឯកសារ​​ត្រូវ​ប្រើ​សម្រាប់​រូបភាព​ផ្ទៃ​ខាងក្រោយ ។ ប្រសិនបើ​រូបភាព​មាន​ឆានែល​អាល់ហ្វា វា​នឹង​ត្រូវ​​លាយ​"
+"ទៅកាន់​​រូបភាព​​ផ្ទៃខាងក្រោយ​​ផ្ទៃតុ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
-msgid "X screen where the panel is displayed"
-msgstr "អេក្រង់ X ដែល​បន្ទះ​ត្រូវ​បាន​បង្ហាញ"
+msgid "Rotate image on vertical panels"
+msgstr "បង្វិល​រូបភាព​នៅ​លើ​បន្ទះ​បញ្ឈរ"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
-msgid "Xinerama monitor where the panel is displayed"
-msgstr "កម្មវិធី​ត្រួតពិនិត្យ Xinerama ដែល​បន្ទះ​ត្រូវ​បាន​បង្ហាញ"
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr "ប្រសិនបើ​​ពិត រូបភាព​ផ្ទៃ​ខាងក្រោយ​នឹង​ត្រូវ​​បាន​បង្វិល នៅ​ពេល​​បន្ទះ​ត្រូវ​បាន​​កំណត់​ទិស​បញ្ឈរ ។"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
-msgid "Y co-ordinate of panel"
-msgstr "កូអរដោនេ Y ​របស់​បន្ទះ"
+msgid "Image options"
+msgstr "ជម្រើស​រូបភាព"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "កូអរដោនេ Y របស់​បន្ទះ ចាប់ពី​​បាត​របស់​អេក្រង់"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:165
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "ឯកសារ​មិនមែន​ជា​ឯកសារ .desktop ត្រឹមត្រូវ​ឡើយ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:188
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "កំណែ​ឯកសារ​ផ្ទៃតុ​ដែល​មិន​ទទួល​ស្គាល់ '%s'"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:968
-#, c-format
-msgid "Starting %s"
-msgstr "ចាប់ផ្ដើម %s"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1110
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "កម្មវិធី​មិន​ព្រម​ទទួល​យក​​ឯកសារ​នៅ​លើ​បន្ទាត់​ពាក្យ​បញ្ជា​ឡើយ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1178
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "ជម្រើស​បើក​ដំណើរការ​កម្មវិធី​ដែល​​មិន​ទទួល​ស្គាល់ ៖ %d"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1383
-#, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "មិន​អាច​ហុច​ឯកសារ URIs ទៅកាន់​ធាតុ​ផ្ទៃតុ 'Type=Link'"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1404
-#, c-format
-msgid "Not a launchable item"
-msgstr "គ្មាន​ធាតុ​ដែល​អាច​បើក​ដំណើរការ​បាន​ឡើយ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:226
-msgid "Disable connection to session manager"
-msgstr "បិទ​ការ​តភ្ជាប់​ទៅកាន់​កម្មវិធី​គ្រប់គ្រង​សម័យ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:229
-msgid "Specify file containing saved configuration"
-msgstr "បញ្ជាក់​ឯកសារ​ដែល​មាន​ការ​កំណត់​រចនាសម្ព័ន្ធ​ដែល​បាន​រក្សាទុក"
-
-#: ../gnome-panel/libegg/eggsmclient.c:229
-msgid "FILE"
-msgstr "ឯកសារ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:232
-msgid "Specify session management ID"
-msgstr "បញ្ជាក់​លេខ​សម្គាល់​ការ​គ្រប់គ្រង​សម័យ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:232
-msgid "ID"
-msgstr "លេខ​សម្គាល់"
-
-#: ../gnome-panel/libegg/eggsmclient.c:253
-msgid "Session management options:"
-msgstr "ជម្រើស​ការ​គ្រប់គ្រង​សម័យ ៖"
-
-#: ../gnome-panel/libegg/eggsmclient.c:254
-msgid "Show session management options"
-msgstr "បង្ហាញ​ជម្រើស​ការ​គ្រប់គ្រង​សម័យ"
-
-#. FIXME: We need a title in this case, but we don't know what
-#. * the format should be. Let's put something simple until
-#. * the following bug gets fixed:
-#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:80
-#: ../gnome-panel/panel-applet-frame.c:766
-#: ../gnome-panel/panel-applet-frame.c:938
-msgid "Error"
-msgstr "កំហុស"
-
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:385
-msgid "Choose an icon"
-msgstr "ជ្រើស​រូបតំណាង"
-
-#: ../gnome-panel/libpanel-util/panel-launch.c:49
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "មិន​អាច​​បើក​ដំណើរការ '%s'"
-
-#: ../gnome-panel/libpanel-util/panel-launch.c:52
-#: ../gnome-panel/launcher.c:175
-msgid "Could not launch application"
-msgstr "មិន​អាច​បើក​ដំណើរការ​កម្មវិធី​បាន​ទេ"
-
-#: ../gnome-panel/libpanel-util/panel-show.c:48
-#, c-format
-msgid "Could not open location '%s'"
-msgstr "មិន​អាច​បើក​ទីតាំង '%s'"
-
-#: ../gnome-panel/libpanel-util/panel-show.c:166
-msgid "No application to handle search folders is installed."
-msgstr "គ្មាន​កម្មវិធី​ត្រូវ​ដោះស្រាយ​ថត​ស្វែងរក​​ត្រូវ​បាន​ដំឡើង​ឡើយ ។"
+msgid ""
+"Determines how the image set by image-uri is rendered. Possible values are "
+"\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
+"to the panel dimensions and the aspect ratio of the image will not be "
+"maintained. With \"fit\", the image will be scaled (retaining the aspect "
+"ratio of the image) to the panel height (if horizontal)."
+msgstr ""
+"កំណត់​របៀប​​សំណុំ​រូបភាព​ដោយ image-uri ។ តម្លៃ​ដែល​អាច​គឺ \"គ្មាន\" \"ទាញ​ឲ្យ​វែង\" \"សម\" ។ "
+"ជាមួយ \"ទាញ​ឲ្យ​វែង\" រូបភាព​នឹង​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន​ទៅកាន់​វិមាត្រ​បន្ទះ និង​សមាមាត្រ​របស់​រូបភាព​នឹង​"
+"មិន​ត្រូវ​បាន​រក្សាទុក​ឡើយ ។ \"សម\" រូបភាព​នឹង​ត្រូវ​បាន​ធ្វើ​មាត្រដ្ឋាន (ការ​រក្សាទុក​សមាមាត្រ​របស់​"
+"រូបភាព) ទៅកាន់​កម្ពស់​បន្ទះ (ប្រសិនបើ​ផ្ដេក) ។"
 
 #: ../gnome-panel/applet.c:359
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:169
+#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:167
 msgid "_Move"
 msgstr "ផ្លាស់ទី"
 
-#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:166
+#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:164
 msgid "_Remove From Panel"
 msgstr "យកចេញ​ពី​បន្ទះ"
 
@@ -1848,7 +1498,7 @@ msgid "- Edit .desktop files"
 msgstr "កែសម្រួល​ឯកសារ .desktop"
 
 #: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:892
+#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:894
 msgid "Create Launcher"
 msgstr "បង្កើត​​ឧបករណ៍​ចាប់ផ្ដើម​"
 
@@ -1861,17 +1511,16 @@ msgstr "លក្ខណៈសម្បត្តិ​ថត"
 msgid "Launcher Properties"
 msgstr "លក្ខណៈ​សម្បត្តិ​ឧបករណ៍​ចាប់ផ្ដើម"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
+msgid "Panel"
+msgstr "បន្ទះ"
+
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
 msgstr ""
-"បើក​ដំណើរការ​កម្មវិធី​ផ្សេងៗ​ ហើយ​ផ្ដល់​នូវ​​ប្រយោជន៍​ផ្សេងៗ​ "
-"ដើម្បី​គ្រប់គ្រង​បង្អួច បង្ហាញ​ពេលវេលា​ ។ល។"
-
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2 ../gnome-panel/main.c:87
-msgid "Panel"
-msgstr "បន្ទះ"
+"បើក​ដំណើរការ​កម្មវិធី​ផ្សេងៗ​ ហើយ​ផ្ដល់​នូវ​​ប្រយោជន៍​ផ្សេងៗ​ ដើម្បី​គ្រប់គ្រង​បង្អួច បង្ហាញ​ពេលវេលា​ ។ល។"
 
 #: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
@@ -1881,6 +1530,11 @@ msgstr "មិន​អាច​បង្ហាញ URL នេះ​បាន​�
 msgid "No URL was specified."
 msgstr "គ្មាន URL ត្រូវ​បាន​បញ្ជាក់​ឡើយ ។"
 
+#: ../gnome-panel/launcher.c:175
+#: ../gnome-panel/libpanel-util/panel-launch.c:50
+msgid "Could not launch application"
+msgstr "មិន​អាច​បើក​ដំណើរការ​កម្មវិធី​បាន​ទេ"
+
 #: ../gnome-panel/launcher.c:219
 msgid "Could not use dropped item"
 msgstr "មិន​អាច​ប្រើ​ធាតុ​ដែល​បាន​ទម្លាក់​ឡើយ"
@@ -1888,315 +1542,450 @@ msgstr "មិន​អាច​ប្រើ​ធាតុ​ដែល​បា
 #: ../gnome-panel/launcher.c:417
 #, c-format
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr ""
-"គ្មាន URI ដែល​បាន​ផ្ដល់​សម្រាប់​ឯកសារ​ផ្ទៃតុ​ឧបករណ៍​ចាប់ផ្ដើម​​​បន្ទះ​ឡើយ\n"
+msgstr "គ្មាន URI ដែល​បាន​ផ្ដល់​សម្រាប់​ឯកសារ​ផ្ទៃតុ​ឧបករណ៍​ចាប់ផ្ដើម​​​បន្ទះ​ឡើយ\n"
 
 #: ../gnome-panel/launcher.c:462
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "មិន​អាច​បើក​ឯកសារ​ផ្ទៃតុ %s សម្រាប់​ឧបករណ៍​ចាប់ផ្ដើម​​បន្ទះ%s%s\n"
 
-#: ../gnome-panel/launcher.c:796
+#: ../gnome-panel/launcher.c:798
 msgid "_Launch"
 msgstr "បើក​ដំណើរការ"
 
-#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:139
-#: ../gnome-panel/panel-context-menu.c:133
+#: ../gnome-panel/launcher.c:804 ../gnome-panel/panel-action-button.c:137
+#: ../gnome-panel/panel-context-menu.c:131
 msgid "_Properties"
 msgstr "លក្ខណ​សម្បត្តិ"
 
-#: ../gnome-panel/launcher.c:833
+#: ../gnome-panel/launcher.c:835
 #, c-format
 msgid "Launcher location is not set, cannot load launcher\n"
-msgstr ""
-"ទីតាំង​ឧបករណ៍​ចាប់ផ្ដើម​​មិន​ត្រូវ​បាន​កំណត់​ឡើយ "
-"មិន​អាច​ផ្ទុក​ឧបករណ៍​ចាប់ផ្ដើម​​បាន​ឡើយ\n"
+msgstr "ទីតាំង​ឧបករណ៍​ចាប់ផ្ដើម​​មិន​ត្រូវ​បាន​កំណត់​ឡើយ មិន​អាច​ផ្ទុក​ឧបករណ៍​ចាប់ផ្ដើម​​បាន​ឡើយ\n"
 
-#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1357
-#: ../gnome-panel/panel-ditem-editor.c:1391
-#: ../gnome-panel/panel-ditem-editor.c:1422
+#: ../gnome-panel/launcher.c:965 ../gnome-panel/panel-ditem-editor.c:1351
+#: ../gnome-panel/panel-ditem-editor.c:1385
+#: ../gnome-panel/panel-ditem-editor.c:1416
 msgid "Could not save launcher"
 msgstr "មិន​អាច​រក្សាទុក​ឧបករណ៍​ចាប់ផ្ដើម​"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:164
+#, c-format
+msgid "File is not a valid .desktop file"
+msgstr "ឯកសារ​មិនមែន​ជា​ឯកសារ .desktop ត្រឹមត្រូវ​ឡើយ"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:187
+#, c-format
+msgid "Unrecognized desktop file Version '%s'"
+msgstr "កំណែ​ឯកសារ​ផ្ទៃតុ​ដែល​មិន​ទទួល​ស្គាល់ '%s'"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:967
+#, c-format
+msgid "Starting %s"
+msgstr "ចាប់ផ្ដើម %s"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1109
+#, c-format
+msgid "Application does not accept documents on command line"
+msgstr "កម្មវិធី​មិន​ព្រម​ទទួល​យក​​ឯកសារ​នៅ​លើ​បន្ទាត់​ពាក្យ​បញ្ជា​ឡើយ"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1177
+#, c-format
+msgid "Unrecognized launch option: %d"
+msgstr "ជម្រើស​បើក​ដំណើរការ​កម្មវិធី​ដែល​​មិន​ទទួល​ស្គាល់ ៖ %d"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1382
+#, c-format
+msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+msgstr "មិន​អាច​ហុច​ឯកសារ URIs ទៅកាន់​ធាតុ​ផ្ទៃតុ 'Type=Link'"
+
+#: ../gnome-panel/libegg/eggdesktopfile.c:1403
+#, c-format
+msgid "Not a launchable item"
+msgstr "គ្មាន​ធាតុ​ដែល​អាច​បើក​ដំណើរការ​បាន​ឡើយ"
+
+#: ../gnome-panel/libegg/eggsmclient.c:224
+msgid "Disable connection to session manager"
+msgstr "បិទ​ការ​តភ្ជាប់​ទៅកាន់​កម្មវិធី​គ្រប់គ្រង​សម័យ"
+
+#: ../gnome-panel/libegg/eggsmclient.c:227
+msgid "Specify file containing saved configuration"
+msgstr "បញ្ជាក់​ឯកសារ​ដែល​មាន​ការ​កំណត់​រចនាសម្ព័ន្ធ​ដែល​បាន​រក្សាទុក"
+
+#: ../gnome-panel/libegg/eggsmclient.c:227
+msgid "FILE"
+msgstr "ឯកសារ"
+
+#: ../gnome-panel/libegg/eggsmclient.c:230
+msgid "Specify session management ID"
+msgstr "បញ្ជាក់​លេខ​សម្គាល់​ការ​គ្រប់គ្រង​សម័យ"
+
+#: ../gnome-panel/libegg/eggsmclient.c:230
+msgid "ID"
+msgstr "លេខ​សម្គាល់"
+
+#: ../gnome-panel/libegg/eggsmclient.c:251
+msgid "Session management options:"
+msgstr "ជម្រើស​ការ​គ្រប់គ្រង​សម័យ ៖"
+
+#: ../gnome-panel/libegg/eggsmclient.c:252
+msgid "Show session management options"
+msgstr "បង្ហាញ​ជម្រើស​ការ​គ្រប់គ្រង​សម័យ"
+
+#. FIXME: We need a title in this case, but we don't know what
+#. * the format should be. Let's put something simple until
+#. * the following bug gets fixed:
+#. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
+#: ../gnome-panel/libpanel-util/panel-error.c:78
+#: ../gnome-panel/panel-applet-frame.c:805
+#: ../gnome-panel/panel-applet-frame.c:977
+msgid "Error"
+msgstr "កំហុស"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:383
+msgid "Choose an icon"
+msgstr "ជ្រើស​រូបតំណាង"
+
+#: ../gnome-panel/libpanel-util/panel-launch.c:47
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "មិន​អាច​​បើក​ដំណើរការ '%s'"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:46
+#, c-format
+msgid "Could not open location '%s'"
+msgstr "មិន​អាច​បើក​ទីតាំង '%s'"
+
+#: ../gnome-panel/libpanel-util/panel-show.c:164
+msgid "No application to handle search folders is installed."
+msgstr "គ្មាន​កម្មវិធី​ត្រូវ​ដោះស្រាយ​ថត​ស្វែងរក​​ត្រូវ​បាន​ដំឡើង​ឡើយ ។"
 
 #: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
 msgstr "ជំនួស​បន្ទះ​ដែល​ដំណើរការ​បច្ចុប្បន្ន"
 
-#: ../gnome-panel/panel-action-button.c:127
+#: ../gnome-panel/panel-action-button.c:125
 msgid "_Lock Screen"
 msgstr "ចាក់សោ​អេក្រង់"
 
-#: ../gnome-panel/panel-action-button.c:133
+#: ../gnome-panel/panel-action-button.c:131
 msgid "_Activate Screensaver"
 msgstr "ធ្វើ​ឲ្យ​ធាតុ​រក្សា​អេក្រង់​សកម្ម"
 
-#: ../gnome-panel/panel-action-button.c:239
+#: ../gnome-panel/panel-action-button.c:237
 msgid "Connect to server"
 msgstr "តភ្ជាប់​ទៅកាន់​ម៉ាស៊ីន​បម្រើ"
 
-#: ../gnome-panel/panel-action-button.c:263
+#: ../gnome-panel/panel-action-button.c:261
 msgid "Could not connect to server"
 msgstr "មិន​អាច​តភ្ជាប់​ទៅកាន់​ម៉ាស៊ីន​បម្រើ​បាន​ទេ"
 
-#: ../gnome-panel/panel-action-button.c:293
+#: ../gnome-panel/panel-action-button.c:291
 msgid "Lock Screen"
 msgstr "ចាក់សោ​អេក្រង់"
 
-#: ../gnome-panel/panel-action-button.c:294
+#: ../gnome-panel/panel-action-button.c:292
 msgid "Protect your computer from unauthorized use"
 msgstr "ការពារ​កុំព្យូទ័រ​របស់​អ្នក​ពី​ការ​ចូល​ប្រើ​ដោយ​គ្មាន​ការអនុញ្ញាត"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:307
-msgid "Log Out..."
+#: ../gnome-panel/panel-action-button.c:305
+#, fuzzy
+msgid "Log Out"
 msgstr "ចេញ..."
 
-#: ../gnome-panel/panel-action-button.c:308
+#: ../gnome-panel/panel-action-button.c:306
 msgid "Log out of this session to log in as a different user"
 msgstr "ចេញ​ពី​សម័យ​នេះ ដើម្បី​ចូល​ជា​អ្នកប្រើ​ផ្សេង​ទៀត"
 
-#: ../gnome-panel/panel-action-button.c:316
+#: ../gnome-panel/panel-action-button.c:314
 msgid "Run Application..."
 msgstr "ដំណើរការ​កម្មវិធី..."
 
-#: ../gnome-panel/panel-action-button.c:317
+#: ../gnome-panel/panel-action-button.c:315
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "ដំណើរការ​កម្មវិធី​ដោយ​វាយ​ពាក្យ​បញ្ជា ឬ​ជ្រើស​ពី​បញ្ជី"
 
-#: ../gnome-panel/panel-action-button.c:325
+#: ../gnome-panel/panel-action-button.c:323
 msgid "Search for Files..."
 msgstr "ស្វែងរក​ឯកសារ..."
 
-#: ../gnome-panel/panel-action-button.c:326
+#: ../gnome-panel/panel-action-button.c:324
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "រក​ឯកសារ និង​ថត​នៅ​​កុំព្យូទ័រ​នេះ​តាម​ឈ្មោះ ឬ​មាតិកា"
 
-#: ../gnome-panel/panel-action-button.c:333
+#: ../gnome-panel/panel-action-button.c:331
 #: ../gnome-panel/panel-force-quit.c:239
 msgid "Force Quit"
 msgstr "បង្ខំ​ការ​បោះបង់"
 
-#: ../gnome-panel/panel-action-button.c:334
+#: ../gnome-panel/panel-action-button.c:332
 msgid "Force a misbehaving application to quit"
 msgstr "បង្ខំ​កម្មវិធី​ក្នុង​ការ​បោះបង់"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:342
+#: ../gnome-panel/panel-action-button.c:340
 msgid "Connect to Server..."
 msgstr "ការ​តភ្ជាប់​ទៅកាន់​ម៉ាស៊ីន​បម្រើ..."
 
-#: ../gnome-panel/panel-action-button.c:343
+#: ../gnome-panel/panel-action-button.c:341
 msgid "Connect to a remote computer or shared disk"
 msgstr "ការ​តភ្ជាប់​ទៅកាន់​កុំព្យូទ័រ​ពី​ចម្ងាយ ឬ​ថាស​ដែល​បាន​ចែករំលែក"
 
-#: ../gnome-panel/panel-action-button.c:350
-msgid "Shut Down..."
-msgstr "បិទ​..."
+#: ../gnome-panel/panel-action-button.c:348
+msgid "Power Off"
+msgstr ""
 
-#: ../gnome-panel/panel-action-button.c:351
-msgid "Shut down the computer"
+#: ../gnome-panel/panel-action-button.c:349
+#, fuzzy
+msgid "Power off the computer"
 msgstr "បិទ​កុំព្យូទ័រ"
 
-#: ../gnome-panel/panel-addto.c:145 ../gnome-panel/panel-menu-button.c:966
+#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:960
 msgid "Main Menu"
 msgstr "ម៉ឺនុយ​មេ"
 
-#: ../gnome-panel/panel-addto.c:146
+#: ../gnome-panel/panel-addto.c:143
 msgid "The main GNOME menu"
 msgstr "ម៉ឺនុយ GNOME មេ"
 
-#: ../gnome-panel/panel-addto.c:155
+#: ../gnome-panel/panel-addto.c:152
 msgid "Menu Bar"
 msgstr "របារ​ម៉ឺនុយ"
 
-#: ../gnome-panel/panel-addto.c:156
+#: ../gnome-panel/panel-addto.c:153
 msgid "A custom menu bar"
 msgstr "របារ​ម៉ឺនុយ​ផ្ទាល់ខ្លួន"
 
-#: ../gnome-panel/panel-addto.c:165
+#: ../gnome-panel/panel-addto.c:162
 msgid "Separator"
 msgstr "សញ្ញា​បំបែក"
 
-#: ../gnome-panel/panel-addto.c:166
+#: ../gnome-panel/panel-addto.c:163
 msgid "A separator to organize the panel items"
 msgstr "សញ្ញា​បំបែក​ក្នុង​ការ​រៀបចំ​ធាតុ​បន្ទះ"
 
-#: ../gnome-panel/panel-addto.c:175
+#: ../gnome-panel/panel-addto.c:172
 msgid "User menu"
 msgstr "ម៉ឺនុយ​អ្នក​ប្រើ"
 
-#: ../gnome-panel/panel-addto.c:176
+#: ../gnome-panel/panel-addto.c:173
 msgid "Menu to change your settings and your online status"
-msgstr ""
-"ម៉ឺនុយ​ត្រូវ​ផ្លាស់ប្ដូរ​ការ​កំណត់​របស់​អ្នក "
-"និង​ស្ថានភាព​លើ​បណ្ដាញ​របស់​អ្នក"
+msgstr "ម៉ឺនុយ​ត្រូវ​ផ្លាស់ប្ដូរ​ការ​កំណត់​របស់​អ្នក និង​ស្ថានភាព​លើ​បណ្ដាញ​របស់​អ្នក"
 
-#: ../gnome-panel/panel-addto.c:222
+#: ../gnome-panel/panel-addto.c:219
 msgid "(empty)"
 msgstr "(ទទេ)"
 
-#: ../gnome-panel/panel-addto.c:422
+#: ../gnome-panel/panel-addto.c:419
 msgid "Custom Application Launcher"
 msgstr "ឧបករណ៍​ចាប់ផ្ដើម​​កម្មវិធី​ផ្ទាល់ខ្លួន"
 
-#: ../gnome-panel/panel-addto.c:423
+#: ../gnome-panel/panel-addto.c:420
 msgid "Create a new launcher"
 msgstr "បង្កើត​ឧបករណ៍​ចាប់ផ្ដើម​​ថ្មី"
 
-#: ../gnome-panel/panel-addto.c:433
+#: ../gnome-panel/panel-addto.c:430
 msgid "Application Launcher..."
 msgstr "ឧបករណ៍​ចាប់ផ្ដើម​​កម្មវិធី..."
 
-#: ../gnome-panel/panel-addto.c:434
+#: ../gnome-panel/panel-addto.c:431
 msgid "Copy a launcher from the applications menu"
 msgstr "ចម្លង​ឧបករណ៍​ចាប់ផ្ដើម​​ពី​ម៉ឺនុយ​កម្មវិធី"
 
-#: ../gnome-panel/panel-addto.c:1019
+#: ../gnome-panel/panel-addto.c:1011
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "រក​ធាតុ​ ដើម្បី​បន្ថែម​ទៅកាន់ \"%s\" ៖"
 
-#: ../gnome-panel/panel-addto.c:1023
+#: ../gnome-panel/panel-addto.c:1015
 msgid "Find an _item to add to the panel:"
 msgstr "រក​ធាតុ​ត្រូវ​បន្ថែម​ទៅកាន់​បន្ទះ ៖"
 
-#: ../gnome-panel/panel-addto.c:1026
+#: ../gnome-panel/panel-addto.c:1018
 msgid "Add to Panel"
 msgstr "បន្ថែម​ទៅ​បន្ទះ"
 
-#: ../gnome-panel/panel-applet-frame.c:735
+#: ../gnome-panel/panel-applet-frame.c:774
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" មាន​ការ​បោះបង់​ដែល​មិន​បាន​រំពឹង"
 
-#: ../gnome-panel/panel-applet-frame.c:737
+#: ../gnome-panel/panel-applet-frame.c:776
 msgid "Panel object has quit unexpectedly"
 msgstr "វត្ថុ​បន្ទះ​មាន​ការ​បោះបង់​ដែល​មិន​បាន​រំពឹង"
 
-#: ../gnome-panel/panel-applet-frame.c:744
+#: ../gnome-panel/panel-applet-frame.c:783
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr ""
-"ប្រសិនបើ​ផ្ទុក​វត្ថុ​បន្ទះ​ឡើងវិញ​ "
-"វា​នឹង​ត្រូវ​បាន​បន្ថែម​ខាងក្រោយ​ដោយ​ស្វ័យ​ប្រវត្តិ​ទៅកាន់​បន្ទះ ។"
+msgstr "ប្រសិនបើ​ផ្ទុក​វត្ថុ​បន្ទះ​ឡើងវិញ​ វា​នឹង​ត្រូវ​បាន​បន្ថែម​ខាងក្រោយ​ដោយ​ស្វ័យ​ប្រវត្តិ​ទៅកាន់​បន្ទះ ។"
 
-#: ../gnome-panel/panel-applet-frame.c:750
+#: ../gnome-panel/panel-applet-frame.c:789
 msgid "_Don't Reload"
 msgstr "កុំ​ផ្ទុក​ឡើងវិញ"
 
-#: ../gnome-panel/panel-applet-frame.c:751
+#: ../gnome-panel/panel-applet-frame.c:790
 msgid "_Reload"
 msgstr "ផ្ទុក​ឡើងវិញ"
 
-#: ../gnome-panel/panel-applet-frame.c:901
+#: ../gnome-panel/panel-applet-frame.c:940
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "បន្ទះ​បាន​ជួប​ប្រទះ​បញ្ហា​ខណៈ​ពេល​ផ្ទុក \"%s\" ។"
 
-#: ../gnome-panel/panel-applet-frame.c:917
+#: ../gnome-panel/panel-applet-frame.c:956
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "តើ​អ្នក​ចង់​លុប​អាប់ភ្លេត​ពី​ការ​កំណត់​រចនាសម្ព័ន្ធ​របស់​អ្នក​ឬ ?"
 
-#: ../gnome-panel/panel-context-menu.c:63
+#: ../gnome-panel/panel.c:527
+#, c-format
+msgid "Open URL: %s"
+msgstr "បើក URL ៖ %s"
+
+#. Translators: %s is a URI
+#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:643
+#, c-format
+msgid "Open '%s'"
+msgstr "បើក '%s'"
+
+#. is_exec?
+#. exec
+#. name
+#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1198
+msgid "Open your personal folder"
+msgstr "បើក​​ថត​ផ្ទាល់ខ្លួន​របស់​អ្នក"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1234
+msgid "Computer"
+msgstr "កុំព្យូទ័រ"
+
+#. name
+#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1240
+msgid ""
+"Browse all local and remote disks and folders accessible from this computer"
+msgstr "រក​មើល​មូលដ្ឋាន​ទាំងអស់ ថាស​ពី​ចម្ងាយ និង​ថត​ដែល​អាច​ចូល​ដំណើរការ​បាន​ពី​កុំព្យូទ័រ​នេះ"
+
+#. is_exec?
+#. exec
+#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1250
+msgid "Network"
+msgstr "បណ្ដាញ"
+
+#. name
+#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1251
+msgid "Browse bookmarked and local network locations"
+msgstr "រក​មើល​ទីតាំង​បណ្ដាញ​មូលដ្ឋាន និង​បាន​ចំណាំ"
+
+#: ../gnome-panel/panel.c:1394
+msgid "Delete this panel?"
+msgstr "លុប​បន្ទះ​នេះ​ឬ ?"
+
+#: ../gnome-panel/panel.c:1398
+msgid ""
+"When a panel is deleted, the panel and its\n"
+"settings are lost."
+msgstr ""
+"នៅ​ពេល​​លុប​បន្ទះ បន្ទះ និង​ការ​កំណត់​របស់​វា​​ត្រូវ​បាន​បាត់បង់\n"
+" ។"
+
+#: ../gnome-panel/panel-context-menu.c:61
 msgid "Cannot delete this panel"
 msgstr "មិន​អាច​លុប​បន្ទះ​នេះ​បាន​ទេ"
 
-#: ../gnome-panel/panel-context-menu.c:64
+#: ../gnome-panel/panel-context-menu.c:62
 msgid "You must always have at least one panel."
 msgstr "អ្នក​ត្រូវ​តែ​មាន​បន្ទះ​យ៉ាងហោចណាស់​មួយ​​ជា​និច្ច ។"
 
-#: ../gnome-panel/panel-context-menu.c:122
+#: ../gnome-panel/panel-context-menu.c:120
 msgid "_Add to Panel..."
 msgstr "បន្ថែម​ទៅកាន់​បន្ទះ..."
 
-#: ../gnome-panel/panel-context-menu.c:143
+#: ../gnome-panel/panel-context-menu.c:141
 msgid "_Delete This Panel"
 msgstr "លុប​បន្ទះ​នេះ"
 
-#: ../gnome-panel/panel-context-menu.c:158
+#: ../gnome-panel/panel-context-menu.c:156
 msgid "_New Panel"
 msgstr "បន្ទះ​ថ្មី"
 
-#: ../gnome-panel/panel-ditem-editor.c:114
+#: ../gnome-panel/panel-ditem-editor.c:111
 msgid "Application"
 msgstr "កម្មវិធី"
 
-#: ../gnome-panel/panel-ditem-editor.c:116
+#: ../gnome-panel/panel-ditem-editor.c:113
 msgid "Application in Terminal"
 msgstr "កម្មវិធី​នៅ​ក្នុង​ស្ថានីយ"
 
-#: ../gnome-panel/panel-ditem-editor.c:118
+#: ../gnome-panel/panel-ditem-editor.c:115
 msgid "Location"
 msgstr "ទីតាំង"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:618
+#: ../gnome-panel/panel-ditem-editor.c:615
 msgid "_Type:"
 msgstr "ប្រភេទ ៖"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:625
+#: ../gnome-panel/panel-ditem-editor.c:622
 msgid "_Name:"
 msgstr "ឈ្មោះ ៖"
 
-#: ../gnome-panel/panel-ditem-editor.c:652
+#: ../gnome-panel/panel-ditem-editor.c:649
 msgid "_Browse..."
 msgstr "រក​មើល..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-ditem-editor.c:656
 msgid "Co_mment:"
 msgstr "មតិយោបល់ ៖"
 
-#: ../gnome-panel/panel-ditem-editor.c:1008
+#: ../gnome-panel/panel-ditem-editor.c:1002
 msgid "Choose an application..."
 msgstr "ជ្រើស​កម្មវិធី..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1012
+#: ../gnome-panel/panel-ditem-editor.c:1006
 msgid "Choose a file..."
 msgstr "ជ្រើស​ឯកសារ..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1177
-#: ../gnome-panel/panel-ditem-editor.c:1186
+#: ../gnome-panel/panel-ditem-editor.c:1171
+#: ../gnome-panel/panel-ditem-editor.c:1180
 msgid "Comm_and:"
 msgstr "ពាក្យ​បញ្ជា ៖"
 
-#: ../gnome-panel/panel-ditem-editor.c:1195
+#: ../gnome-panel/panel-ditem-editor.c:1189
 msgid "_Location:"
 msgstr "ទីតាំង ៖"
 
-#: ../gnome-panel/panel-ditem-editor.c:1358
+#: ../gnome-panel/panel-ditem-editor.c:1352
 msgid "The name of the launcher is not set."
 msgstr "ឈ្មោះ​របស់​ឧបករណ៍​ចាប់ផ្ដើម​​មិន​ត្រូវ​បាន​កំណត់​ឡើយ ។"
 
-#: ../gnome-panel/panel-ditem-editor.c:1362
+#: ../gnome-panel/panel-ditem-editor.c:1356
 msgid "Could not save directory properties"
 msgstr "មិន​អាច​រក្សាទុក​លក្ខណសម្បត្តិ​ថត​បាន​ទេ"
 
-#: ../gnome-panel/panel-ditem-editor.c:1363
+#: ../gnome-panel/panel-ditem-editor.c:1357
 msgid "The name of the directory is not set."
 msgstr "ឈ្មោះ​របស់​ថត​មិន​ត្រូវ​បាន​កំណត់​ឡើយ ។"
 
-#: ../gnome-panel/panel-ditem-editor.c:1379
+#: ../gnome-panel/panel-ditem-editor.c:1373
 msgid "The command of the launcher is not set."
 msgstr "ពាក្យ​បញ្ជា​របស់​ឧបករណ៍​ចាប់ផ្ដើម​​មិន​ត្រូវ​បាន​កំណត់​ឡើយ ។"
 
-#: ../gnome-panel/panel-ditem-editor.c:1382
+#: ../gnome-panel/panel-ditem-editor.c:1376
 msgid "The location of the launcher is not set."
 msgstr "ទីតាំង​របស់​ឧបករណ៍​ចាប់ផ្ដើម​​មិន​ត្រូវ​បាន​កំណត់​ឡើយ ។"
 
-#: ../gnome-panel/panel-ditem-editor.c:1459
-msgid "Could not display help document"
-msgstr "មិន​អាច​បង្ហាញ​ឯកសារ​ជំនួយ​​បាន​ទេ"
-
 #: ../gnome-panel/panel-force-quit.c:77
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"ចុច​លើ​បង្អួច​ ដើម្បី​បង្ខំ​កម្មវិធី​ត្រូវ​បោះបង់ ។ ដើម្បី​បោះបង់ ចុច <ESC> "
-"។"
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "ចុច​លើ​បង្អួច​ ដើម្បី​បង្ខំ​កម្មវិធី​ត្រូវ​បោះបង់ ។ ដើម្បី​បោះបង់ ចុច <ESC> ។"
 
 #: ../gnome-panel/panel-force-quit.c:222
 msgid "Force this application to exit?"
@@ -2207,400 +1996,344 @@ msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
-"ប្រសិនបើ​អ្នក​ជ្រើស​បង្ខំ​កម្មវិធី ដើម្បី​ចេញ ការ​ផ្លាស់ប្ដូរ​ដែល​មិន​បាន​រក"
-"្សាទុក​នៅ​ក្នុង​​ឯកសារ​ដែល​បើក​មួយ​ចំនួន​នឹង​អាច​ត្រូវ​បាន​បាត់បង់ ។"
+"ប្រសិនបើ​អ្នក​ជ្រើស​បង្ខំ​កម្មវិធី ដើម្បី​ចេញ ការ​ផ្លាស់ប្ដូរ​ដែល​មិន​បាន​រក្សាទុក​នៅ​ក្នុង​​ឯកសារ​ដែល​បើក​មួយ​ចំនួន​នឹង​"
+"អាច​ត្រូវ​បាន​បាត់បង់ ។"
 
-#: ../gnome-panel/panel-layout.c:1197 ../gnome-panel/panel-layout.c:1211
+#: ../gnome-panel/panel-layout.c:1220 ../gnome-panel/panel-layout.c:1234
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "មិន​អាច​បង្កើត​ប្លង់​បន្ទះ​ដំបូង​បាន​ទេ ។\n"
 
-#: ../gnome-panel/panel-menu-bar.c:91
+#: ../gnome-panel/panel-menu-bar.c:88
 msgid "Browse and run installed applications"
 msgstr "រកមើល និង​ដំណើរការ​កម្មវិធី​ដែល​បាន​ដំឡើង"
 
-#: ../gnome-panel/panel-menu-bar.c:93
+#: ../gnome-panel/panel-menu-bar.c:90
 msgid "Access documents, folders and network places"
 msgstr "ចូល​ដំណើរការ​ឯកសារ ថត និង​ទីតាំង​បណ្ដាញ"
 
-#: ../gnome-panel/panel-menu-bar.c:124
+#: ../gnome-panel/panel-menu-bar.c:121
 msgid "Applications"
 msgstr "កម្មវិធី"
 
-#: ../gnome-panel/panel-menu-bar.c:226 ../gnome-panel/panel-menu-button.c:562
+#: ../gnome-panel/panel-menu-bar.c:223 ../gnome-panel/panel-menu-button.c:559
 msgid "_Edit Menus"
 msgstr "កែសម្រួល​ម៉ឺនុយ"
 
-#: ../gnome-panel/panel-menu-bar.c:233
-msgid "_Help"
-msgstr "ជំនួយ"
-
-#: ../gnome-panel/panel-menu-items.c:491
+#: ../gnome-panel/panel-menu-items.c:489
 msgid "Switch User"
 msgstr "ប្តូរ​អ្នក​ប្រើ"
 
-#: ../gnome-panel/panel-menu-items.c:622
+#: ../gnome-panel/panel-menu-items.c:619
 msgid "Bookmarks"
 msgstr "ចំណាំ"
 
-#. Translators: %s is a URI
-#: ../gnome-panel/panel-menu-items.c:646 ../gnome-panel/panel.c:596
-#, c-format
-msgid "Open '%s'"
-msgstr "បើក '%s'"
-
-#: ../gnome-panel/panel-menu-items.c:717
+#: ../gnome-panel/panel-menu-items.c:714
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "មិន​អាច​វិភាគ​រក %s សម្រាប់​ការ​ផ្លាស់ប្ដូរ​មេឌៀ​បាន​ទេ"
 
-#: ../gnome-panel/panel-menu-items.c:759
+#: ../gnome-panel/panel-menu-items.c:756
 #, c-format
 msgid "Rescan %s"
 msgstr "វិភាគ​រក​ឡើងវិញ %s"
 
-#: ../gnome-panel/panel-menu-items.c:796
+#: ../gnome-panel/panel-menu-items.c:793
 #, c-format
 msgid "Unable to mount %s"
 msgstr "មិន​អាច​ម៉ោន %s"
 
-#: ../gnome-panel/panel-menu-items.c:858
+#: ../gnome-panel/panel-menu-items.c:855
 #, c-format
 msgid "Mount %s"
 msgstr "ម៉ោន %s"
 
-#: ../gnome-panel/panel-menu-items.c:1066
+#: ../gnome-panel/panel-menu-items.c:1063
 msgid "Removable Media"
 msgstr "មេឌៀ​ចល័ត"
 
-#: ../gnome-panel/panel-menu-items.c:1157
+#: ../gnome-panel/panel-menu-items.c:1154
 msgid "Network Places"
 msgstr "ទីតាំង​បណ្ដាញ"
-
-#. is_exec?
-#. exec
-#. name
-#: ../gnome-panel/panel-menu-items.c:1201 ../gnome-panel/panel.c:644
-msgid "Open your personal folder"
-msgstr "បើក​​ថត​ផ្ទាល់ខ្លួន​របស់​អ្នក"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1221
+#: ../gnome-panel/panel-menu-items.c:1218
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "ផ្ទៃតុ"
 
-#: ../gnome-panel/panel-menu-items.c:1222
+#: ../gnome-panel/panel-menu-items.c:1219
 msgid "Open the contents of your desktop in a folder"
 msgstr "បើក​មាតិកា​របស់​ផ្ទៃតុ​របស់​អ្នក​នៅ​ក្នុង​ថត"
 
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1237 ../gnome-panel/panel.c:653
-msgid "Computer"
-msgstr "កុំព្យូទ័រ"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1243 ../gnome-panel/panel.c:654
-msgid "Browse all local and remote disks and folders accessible from this computer"
-msgstr ""
-"រក​មើល​មូលដ្ឋាន​ទាំងអស់ ថាស​ពី​ចម្ងាយ "
-"និង​ថត​ដែល​អាច​ចូល​ដំណើរការ​បាន​ពី​កុំព្យូទ័រ​នេះ"
-
-#. is_exec?
-#. exec
-#: ../gnome-panel/panel-menu-items.c:1253 ../gnome-panel/panel.c:661
-msgid "Network"
-msgstr "បណ្ដាញ"
-
-#. name
-#: ../gnome-panel/panel-menu-items.c:1254 ../gnome-panel/panel.c:662
-msgid "Browse bookmarked and local network locations"
-msgstr "រក​មើល​ទីតាំង​បណ្ដាញ​មូលដ្ឋាន និង​បាន​ចំណាំ"
-
-#: ../gnome-panel/panel-menu-items.c:1359
+#: ../gnome-panel/panel-menu-items.c:1356
 msgid "Available"
 msgstr "មាន"
 
-#: ../gnome-panel/panel-menu-items.c:1369
+#: ../gnome-panel/panel-menu-items.c:1366
 msgid "Busy"
 msgstr "រវល់"
 
-#: ../gnome-panel/panel-menu-items.c:1628
+#: ../gnome-panel/panel-menu-items.c:1619
 msgid "Places"
 msgstr "ទីតាំង"
 
-#: ../gnome-panel/panel-properties-dialog.c:81
+#: ../gnome-panel/panel-properties-dialog.c:77
 #: ../gnome-panel/panel-test-applets.c:55
 msgctxt "Orientation"
 msgid "Top"
 msgstr "កំពូល"
 
-#: ../gnome-panel/panel-properties-dialog.c:82
+#: ../gnome-panel/panel-properties-dialog.c:78
 #: ../gnome-panel/panel-test-applets.c:56
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "បាត"
 
-#: ../gnome-panel/panel-properties-dialog.c:83
+#: ../gnome-panel/panel-properties-dialog.c:79
 #: ../gnome-panel/panel-test-applets.c:57
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ឆ្វេង"
 
-#: ../gnome-panel/panel-properties-dialog.c:84
+#: ../gnome-panel/panel-properties-dialog.c:80
 #: ../gnome-panel/panel-test-applets.c:58
 msgctxt "Orientation"
 msgid "Right"
 msgstr "ស្ដាំ"
 
-#: ../gnome-panel/panel-properties-dialog.c:821
-#: ../gnome-panel/panel-run-dialog.c:1896
-#, c-format
-msgid "Unable to load file '%s': %s."
-msgstr "មិន​អាច​ផ្ទុក​ឯកសារ '%s' ៖ %s ។"
-
-#: ../gnome-panel/panel-properties-dialog.c:827
-msgid "Could not display properties dialog"
-msgstr "មិន​អាច​បង្ហាញ​ប្រអប់​លក្ខណសម្បត្តិ​បាន​ទេ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:2
-msgid "<small>Opaque</small>"
-msgstr "<small>ស្រអាប់</small>"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:3
-msgid "<small>Transparent</small>"
-msgstr "<small>ថ្លា</small>"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:4
-msgid "Arro_ws on hide buttons"
-msgstr "ព្រួញ​នៅ​លើ​ប៊ូតុង​ដែល​លាក់"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-msgid "Background"
-msgstr "ផ្ទៃ​ខាង​ក្រោយ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
-msgid "Background _image:"
-msgstr "រូបភាព​ផ្ទៃខាងក្រោយ ៖"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
-msgid "Co_lor:"
-msgstr "ពណ៌ ៖"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
-msgid "E_xpand"
-msgstr "ពង្រីក"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
-msgid "Image Background Details"
-msgstr "សេចក្ដី​លម្អិត​រូបភាព​ផ្ទៃ​ខាងក្រោយ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
+#: ../gnome-panel/panel-properties-dialog.ui.h:1
 msgid "Panel Properties"
 msgstr "លក្ខណសម្បត្តិ​បន្ទះ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
-msgid "Pick a color"
-msgstr "ជ្រើស​ពណ៌"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:13
-msgid "Rotate image when panel is _vertical"
-msgstr "បង្វិល​រូបភាព នៅ​ពេល​បន្ទះ​បញ្ឈរ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
-msgid "S_tyle:"
-msgstr "រចនាប័ទ្ម ៖"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
-msgid "Select background"
-msgstr "ជ្រើស​ផ្ទៃខាងក្រោយ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Show hide _buttons"
-msgstr "បង្ហាញ​ប៊ូតុង​ដែល​លាក់"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Solid c_olor"
-msgstr "ពណ៌តាន់"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
+#: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "Some of these properties are locked down"
 msgstr "លក្ខណសម្បត្តិ​ទាំងនេះ​មួយ​ចំនួន​ត្រូវ​បាន​ជាប់សោ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "St_retch"
-msgstr "ទាញ​ឲ្យវែង"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
-msgid "_Autohide"
-msgstr "លាក់​ស្វ័យប្រវត្តិ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "_None (use system theme)"
-msgstr "គ្មាន (ប្រើ​ស្បែក​ប្រព័ន្ធ)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
-#: ../gnome-panel/panel-test-applets.ui.h:4
-msgid "_Orientation:"
-msgstr "ទិស ៖"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-msgid "_Scale"
-msgstr "មាត្រដ្ឋាន"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Size:"
-msgstr "ទំហំ ៖"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
-msgid "_Tile"
-msgstr "ក្រឡា​ក្បឿង"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:3
 msgid "pixels"
 msgstr "ភីកសែល"
 
-#: ../gnome-panel/panel-recent.c:78 ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-properties-dialog.ui.h:4
+#: ../gnome-panel/panel-test-applets.ui.h:5
+msgid "_Orientation:"
+msgstr "ទិស ៖"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "_Size:"
+msgstr "ទំហំ ៖"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
+msgid "E_xpand"
+msgstr "ពង្រីក"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
+msgid "_Autohide"
+msgstr "លាក់​ស្វ័យប្រវត្តិ"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
+msgid "Show hide _buttons"
+msgstr "បង្ហាញ​ប៊ូតុង​ដែល​លាក់"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
+msgid "Arro_ws on hide buttons"
+msgstr "ព្រួញ​នៅ​លើ​ប៊ូតុង​ដែល​លាក់"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
+msgid "_None (use system theme)"
+msgstr "គ្មាន (ប្រើ​ស្បែក​ប្រព័ន្ធ)"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
+msgid "Solid c_olor"
+msgstr "ពណ៌តាន់"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
+msgid "Pick a color"
+msgstr "ជ្រើស​ពណ៌"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
+msgid "Transparent"
+msgstr ""
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
+msgid "Opaque"
+msgstr ""
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
+msgid "Co_lor:"
+msgstr "ពណ៌ ៖"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
+msgid "S_tyle:"
+msgstr "រចនាប័ទ្ម ៖"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
+msgid "Background _image:"
+msgstr "រូបភាព​ផ្ទៃខាងក្រោយ ៖"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
+msgid "Select background"
+msgstr "ជ្រើស​ផ្ទៃខាងក្រោយ"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
+msgid "Background"
+msgstr "ផ្ទៃ​ខាង​ក្រោយ"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
+msgid "Image Background Details"
+msgstr "សេចក្ដី​លម្អិត​រូបភាព​ផ្ទៃ​ខាងក្រោយ"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
+msgid "_Tile"
+msgstr "ក្រឡា​ក្បឿង"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
+msgid "_Scale"
+msgstr "មាត្រដ្ឋាន"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
+msgid "St_retch"
+msgstr "ទាញ​ឲ្យវែង"
+
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
+msgid "Rotate image when panel is _vertical"
+msgstr "បង្វិល​រូបភាព នៅ​ពេល​បន្ទះ​បញ្ឈរ"
+
+#: ../gnome-panel/panel-recent.c:76 ../gnome-panel/panel-recent.c:86
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "មិន​អាច​បើក​ឯកសារ​ដែល​បាន​ប្រើ​បច្ចុប្បន្ន​បាន​ឡើយ \"%s\""
 
-#: ../gnome-panel/panel-recent.c:90
+#: ../gnome-panel/panel-recent.c:88
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "កំហុស​ដែល​មិន​ស្គាល់​បាន​កើត​ឡើង ខណៈ​ពេល​កំពុង​បើក \"%s\" ។"
 
-#: ../gnome-panel/panel-recent.c:147
+#: ../gnome-panel/panel-recent.c:145
 msgid "Clear the Recent Documents list?"
 msgstr "សម្អាត​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន​ឬ ?"
 
-#: ../gnome-panel/panel-recent.c:149
+#: ../gnome-panel/panel-recent.c:147
+#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"• All items from the Places → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
+"ے All items from the Places ے Recent Documents menu item.\n"
+"ے All items from the recent documents list in all applications."
 msgstr ""
-"ប្រសិនបើ​សម្អាត​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន អ្នក​សម្អាត​ដូច​តទៅ ៖\n• "
-"ធាតុ​ទាំងអស់​ពី​ទីតាំង → ធាតុ​ម៉ឺនុយ​ឯកសារ​បច្ចុប្បន្ន ។\n• "
-"ធាតុ​ទាំងអស់​ពី​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន​នៅ​ក្នុង​កម្មវិធី​ទាំងអស់ ។"
+"ប្រសិនបើ​សម្អាត​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន អ្នក​សម្អាត​ដូច​តទៅ ៖\n"
+"• ធាតុ​ទាំងអស់​ពី​ទីតាំង → ធាតុ​ម៉ឺនុយ​ឯកសារ​បច្ចុប្បន្ន ។\n"
+"• ធាតុ​ទាំងអស់​ពី​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន​នៅ​ក្នុង​កម្មវិធី​ទាំងអស់ ។"
 
-#: ../gnome-panel/panel-recent.c:161
+#: ../gnome-panel/panel-recent.c:159
 msgid "Clear Recent Documents"
 msgstr "សម្អាត​ឯកសារ​បច្ចុប្បន្ន"
 
-#: ../gnome-panel/panel-recent.c:196
+#: ../gnome-panel/panel-recent.c:194
 msgid "Recent Documents"
 msgstr "ឯកសារ​បច្ចុប្បន្ន"
 
-#: ../gnome-panel/panel-recent.c:235
+#: ../gnome-panel/panel-recent.c:233
 msgid "Clear Recent Documents..."
 msgstr "សម្អាត​ឯកសារ​បច្ចុប្បន្ន..."
 
-#: ../gnome-panel/panel-recent.c:237
+#: ../gnome-panel/panel-recent.c:235
 msgid "Clear all items from the recent documents list"
 msgstr "សម្អាត​ធាតុ​ទាំងអស់​ពី​បញ្ជី​ឯកសារ​បច្ចុប្បន្ន"
 
-#: ../gnome-panel/panel-run-dialog.c:361
+#: ../gnome-panel/panel-run-dialog.c:432
+msgid "Cannot find a terminal, using xterm, even if it may not work"
+msgstr ""
+
+#: ../gnome-panel/panel-run-dialog.c:496
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "មិន​អាច​រត់​ពាក្យ​បញ្ជា '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:409
+#: ../gnome-panel/panel-run-dialog.c:546
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "មិន​អាច​បម្លែង '%s' ពី UTF-8 បាន​ទេ"
 
-#: ../gnome-panel/panel-run-dialog.c:1160
+#: ../gnome-panel/panel-run-dialog.c:1293
 msgid "Choose a file to append to the command..."
 msgstr "ជម្រើស​ឯកសារ​ដើម្បី​បន្ថែម​ទៅកាន់​ពាក្យ​បញ្ជា​ខាង​ចុង..."
 
-#: ../gnome-panel/panel-run-dialog.c:1543
-#: ../gnome-panel/panel-run-dialog.ui.h:8
+#: ../gnome-panel/panel-run-dialog.c:1676
+#: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "ជ្រើស​កម្មវិធី​ដើម្បី​មើល​សេចក្ដី​ពិពណ៌នា​របស់​វា ។"
 
-#: ../gnome-panel/panel-run-dialog.c:1581
+#: ../gnome-panel/panel-run-dialog.c:1714
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "នឹង​រត់​ពាក្យ​បញ្ជា ៖ '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1614
+#: ../gnome-panel/panel-run-dialog.c:1747
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
-"បញ្ជី URI ដែល​បាន​ទម្លាក់​នៅ​លើ​​ប្រអប់​ដែល​រត់​មាន​ទ្រង់ទ្រាយ​ខុស (%d) "
-"ឬ​ប្រវែង (%d)\n"
-
-#: ../gnome-panel/panel-run-dialog.c:1901
-msgid "Could not display run dialog"
-msgstr "មិន​អាច​បង្ហាញ​ប្រអប់​ដែល​រត់​បាន​ទេ"
+msgstr "បញ្ជី URI ដែល​បាន​ទម្លាក់​នៅ​លើ​​ប្រអប់​ដែល​រត់​មាន​ទ្រង់ទ្រាយ​ខុស (%d) ឬ​ប្រវែង (%d)\n"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:1
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
-msgstr ""
-"ចុច​ប៊ូតុង​នេះ ដើម្បី​រកមើល​ឯកសារ​ដែល​​ឈ្មោះ​ត្រូវ​បន្ថែម​​​​ខាង​ចុង​ទៅកាន់​"
-"​ខ្សែ​អក្សរ​ពាក្យ​បញ្ជា​ ។"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:2
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
-msgstr ""
-"ចុច​ប៊ូតុង​នេះ​ដើម្បី​ដំណើរការ​កម្មវិធី​ដែល​បាន​ជ្រើស "
-"​ឬ​ពាក្យ​បញ្ជា​នៅ​ក្នុង​វាល​ធាតុ​ពាក្យ​បញ្ជា ។"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:3
-msgid "Command icon"
-msgstr "រូបតំណាង​ពាក្យ​បញ្ជា"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:4
-msgid "List of known applications"
-msgstr "បញ្ជី​របស់​កម្មវិធី​ដែល​មិន​ស្គាល់"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:5
 msgid "Run Application"
 msgstr "ដំណើរការ​កម្មវិធី"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:6
+#: ../gnome-panel/panel-run-dialog.ui.h:2
+msgid "Command icon"
+msgstr "រូបតំណាង​ពាក្យ​បញ្ជា"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:3
+msgid "The icon of the command to be run."
+msgstr "រូបតំណាង​របស់​ពាក្យ​បញ្ជា​ត្រូវ​រត់ ។"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:4
 msgid "Run in _terminal"
 msgstr "ដំណើរការ​នៅ​ក្នុង​ស្ថានីយ"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:7
+#: ../gnome-panel/panel-run-dialog.ui.h:5
+msgid "Select this box to run the command in a terminal window."
+msgstr "ជ្រើស​ប្រអប់​នេះ​ ដើម្បី​រត់​ពាក្យ​បញ្ជា​នៅ​ក្នុង​បង្អួច​ស្ថានីយ ។"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:6
 msgid "Run with _file..."
 msgstr "ដំណើរការ​ជាមួយ​ឯកសារ..."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:9
-msgid "Select this box to run the command in a terminal window."
-msgstr "ជ្រើស​ប្រអប់​នេះ​ ដើម្បី​រត់​ពាក្យ​បញ្ជា​នៅ​ក្នុង​បង្អួច​ស្ថានីយ ។"
+#: ../gnome-panel/panel-run-dialog.ui.h:7
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr "ចុច​ប៊ូតុង​នេះ ដើម្បី​រកមើល​ឯកសារ​ដែល​​ឈ្មោះ​ត្រូវ​បន្ថែម​​​​ខាង​ចុង​ទៅកាន់​​ខ្សែ​អក្សរ​ពាក្យ​បញ្ជា​ ។"
+
+#: ../gnome-panel/panel-run-dialog.ui.h:8
+msgid "List of known applications"
+msgstr "បញ្ជី​របស់​កម្មវិធី​ដែល​មិន​ស្គាល់"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:10
 msgid "Show list of known _applications"
 msgstr "បង្ហាញ​បញ្ជី​របស់​កម្មវិធី​ដែល​មិន​ស្គាល់"
 
 #: ../gnome-panel/panel-run-dialog.ui.h:11
-msgid "The icon of the command to be run."
-msgstr "រូបតំណាង​របស់​ពាក្យ​បញ្ជា​ត្រូវ​រត់ ។"
-
-#: ../gnome-panel/panel-run-dialog.ui.h:12
-#: ../gnome-panel/panel-stock-icons.c:83
+#: ../gnome-panel/panel-stock-icons.c:81
 msgid "_Run"
 msgstr "រត់"
 
-#: ../gnome-panel/panel-stock-icons.c:84
+#: ../gnome-panel/panel-run-dialog.ui.h:12
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr "ចុច​ប៊ូតុង​នេះ​ដើម្បី​ដំណើរការ​កម្មវិធី​ដែល​បាន​ជ្រើស ​ឬ​ពាក្យ​បញ្ជា​នៅ​ក្នុង​វាល​ធាតុ​ពាក្យ​បញ្ជា ។"
+
+#: ../gnome-panel/panel-stock-icons.c:82
 msgid "_Force quit"
 msgstr "បង្ខំ​ការ​បោះបង់"
 
-#: ../gnome-panel/panel-stock-icons.c:85
+#: ../gnome-panel/panel-stock-icons.c:83
 msgid "C_lear"
 msgstr "សម្អាត"
 
-#: ../gnome-panel/panel-stock-icons.c:86
+#: ../gnome-panel/panel-stock-icons.c:84
 msgid "D_on't Delete"
 msgstr "កុំ​លុប"
 
@@ -2609,7 +2342,8 @@ msgid "Specify an applet IID to load"
 msgstr "បញ្ជាក់​អាប់ភ្លេត IID ត្រូវ​ផ្ទុក"
 
 #: ../gnome-panel/panel-test-applets.c:37
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr "បញ្ជាក់​ទីតាំង gconf ​ចំណូលចិត្ត​អាប់ភ្លេត​គួរ​តែ​ត្រូវ​បាន​ទុក"
 
 #: ../gnome-panel/panel-test-applets.c:38
@@ -2617,7 +2351,8 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "បញ្ជាក់​ទំហំ​ដំបូង​របស់​អាប់ភ្លេត (xx តូច មធ្យម ធំ -ល- ។)"
 
 #: ../gnome-panel/panel-test-applets.c:39
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "បញ្ជាក់​ទិស​ដំបូង​​របស់​អាប់ភ្លេត (កំពូល បាត ឆ្វេង ឬ​ស្ដាំ)"
 
 #: ../gnome-panel/panel-test-applets.c:63
@@ -2665,11 +2400,11 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទ
 msgid "Test applet utility"
 msgstr "សាកល្បង​ឧបករណ៍​ប្រើប្រាស់​អាប់ភ្លេត"
 
-#: ../gnome-panel/panel-test-applets.ui.h:3
+#: ../gnome-panel/panel-test-applets.ui.h:4
 msgid "_Applet:"
 msgstr "អាប់ភ្លេត ៖"
 
-#: ../gnome-panel/panel-test-applets.ui.h:5
+#: ../gnome-panel/panel-test-applets.ui.h:6
 msgid "_Prefs Dir:"
 msgstr "_Prefs Dir:"
 
@@ -2776,24 +2511,9 @@ msgstr "ស្វែងរក"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../gnome-panel/panel.c:527
-#, c-format
-msgid "Open URL: %s"
-msgstr "បើក URL ៖ %s"
-
-#: ../gnome-panel/panel.c:1393
-msgid "Delete this panel?"
-msgstr "លុប​បន្ទះ​នេះ​ឬ ?"
-
-#: ../gnome-panel/panel.c:1397
-msgid ""
-"When a panel is deleted, the panel and its\n"
-"settings are lost."
-msgstr "នៅ​ពេល​​លុប​បន្ទះ បន្ទះ និង​ការ​កំណត់​របស់​វា​​ត្រូវ​បាន​បាត់បង់\n ។"
-
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-msgid "A simple applet for testing the GNOME panel"
-msgstr "អាប់ភ្លេត​សាមញ្ញ​សម្រាប់​បន្ទះ​ GNOME"
+msgid "Test DBus Applet Factory"
+msgstr "សាកល្បង​រោងចក្រ​អាប់ភ្លេត DBus"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
 msgid "Factory for Test DBus Applet"
@@ -2804,6 +2524,173 @@ msgid "Test DBus Applet"
 msgstr "សាកល្បង​អាប់ភ្លេត DBus"
 
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-msgid "Test DBus Applet Factory"
-msgstr "សាកល្បង​រោងចក្រ​អាប់ភ្លេត DBus"
+msgid "A simple applet for testing the GNOME panel"
+msgstr "អាប់ភ្លេត​សាមញ្ញ​សម្រាប់​បន្ទះ​ GNOME"
 
+#~ msgid "%l:%M:%S %p"
+#~ msgstr "%l:%M:%S %p"
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%H:%M:%S"
+
+#~ msgid "%a %b %e"
+#~ msgstr "%a %b %e"
+
+#~ msgid ""
+#~ "%1$s\n"
+#~ "%2$s"
+#~ msgstr ""
+#~ "%1$s\n"
+#~ "%2$s"
+
+#~ msgid "%1$s, %2$s"
+#~ msgstr "%1$s, %2$s"
+
+#~ msgid "%I:%M:%S %p"
+#~ msgstr "%I:%M:%S %p"
+
+#~ msgid "%I:%M %p"
+#~ msgstr "%I:%M %p"
+
+#~ msgid "%A, %B %d %Y"
+#~ msgstr "%A, %B %d %Y"
+
+#~ msgid "Copy _Date"
+#~ msgstr "ចម្លង​កាលបរិច្ឆេទ"
+
+#~ msgid "Custom format"
+#~ msgstr "ទ្រង់ទ្រាយ​ផ្ទាល់ខ្លួន​"
+
+#~ msgid "24 hour"
+#~ msgstr "២៤ ម៉ោង"
+
+#~ msgid "UNIX time"
+#~ msgstr "ពេលវេលា​យូនីក"
+
+#~ msgid "Internet time"
+#~ msgstr "ពេលវេលា​អ៊ីនធឺណិត"
+
+#~ msgid "Custom _format:"
+#~ msgstr "ពេលវេលា​ផ្ទាល់ខ្លួន ៖"
+
+#~ msgid "24-hour"
+#~ msgstr "២៤ ម៉ោង"
+
+#~ msgid "Custom format of the clock"
+#~ msgstr "ទ្រង់ទ្រាយ​នាឡិកា​ផ្ទាល់ខ្លួន"
+
+#~ msgid "Hour format"
+#~ msgstr "ទ្រង់ទ្រាយ​ម៉ោង"
+
+#~ msgid "If true, display date in the clock, in addition to time."
+#~ msgstr "ប្រសិនបើ​ពិត បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​នាឡិកា ថែមលើនេះទៀត​ទៅកាន់​ពេលវេលា ។"
+
+#~ msgid "If true, display seconds in time."
+#~ msgstr "ប្រសិនបើ​ពិត បង្ហាញ​​ពេលវេលា​ជា​វិនាទី ។"
+
+#~ msgid "Show date in clock"
+#~ msgstr "បង្ហាញ​កាលបរិច្ឆេទ​នៅ​ក្នុង​នាឡិកា"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "បង្ហាញ​ពេលវេលា​ជា​វិនាទី"
+
+#~ msgid "Speed unit"
+#~ msgstr "ឯកតា​ល្បឿន"
+
+#~ msgid "Temperature unit"
+#~ msgstr "ឯកតា​សីតុណ្ហភាព"
+
+#~ msgid "The unit to use when showing temperatures."
+#~ msgstr "ឯកតា​ត្រូវ​ប្រើ នៅ​ពេល​បង្ហាញ​សីតុណ្ហភាព ។"
+
+#~ msgid "The unit to use when showing wind speed."
+#~ msgstr "ឯកតា​ត្រូវ​ប្រើ នៅ​ពេល​បង្ហាញ​ល្បឿន​ខ្យល់ ។"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.22 with the use of an "
+#~ "internal time configuration tool. The schema is retained for "
+#~ "compatibility with older versions."
+#~ msgstr ""
+#~ "ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង GNOME ២.២២ ដោយ​ប្រើ​​ឧបករណ៍​ការ​កំណត់​រចនាសម្ព័ន្ធ​ពេលវេលា​"
+#~ "ខាងក្នុង ។ ឌីយ៉ាក្រាម​​ត្រូវ​បាន​​ទុក​សម្រាប់​ភាព​ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.28 in favour of the use of "
+#~ "timezones. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង​ GNOME ២.២៨  ក្នុង​ការ​ប្រើ​តំបន់​ពេលវេលា ។ ឌីយ៉ាក្រាម​ត្រូវ​បាន​ទុក​"
+#~ "សម្រាប់​ភាព​ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
+
+#~ msgid ""
+#~ "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+#~ "key. The schema is retained for compatibility with older versions."
+#~ msgstr ""
+#~ "ប្រើ​សោ​នេះ​ត្រូវ​បាន​បដិសេធ​នៅ​ក្នុង GNOME ២.៦ សោ 'ទ្រង់ទ្រាយ' ។ ឌីយ៉ាក្រាម​​ត្រូវ​បាន​ទុក​សម្រាប់​ភាព​"
+#~ "ឆបគ្នា​ដោយ​មាន​កំណែ​ចាស់​ជាង ។"
+
+#~ msgid ""
+#~ "This key specifies the format used by the clock applet when the format "
+#~ "key is set to \"custom\". You can use conversion specifiers understood by "
+#~ "strftime() to obtain a specific format. See the strftime() manual for "
+#~ "more information."
+#~ msgstr ""
+#~ "បញ្ជាក់​ទ្រង់ទ្រាយ​សោ​នេះ​ដែល​បាន​ប្រើ​ដោយ​អាប់ភ្លេត​នាឡិកា ​នៅ​ពេល​សោ​ទ្រង់ទ្រាយ​ត្រូវ​បាន​កំណត់​ "
+#~ "\"ផ្ទាល់ខ្លួន\" ។ អ្នក​អាច​ប្រើ​កម្មវិធី​បញ្ជាក់​ការ​បម្លែង​ដោយ strftime() ដើម្បី​បាន​បញ្ជាក់​"
+#~ "ទ្រង់ទ្រាយ ។ មើល​សៀវភៅ​ដៃ strftime() សម្រាប់​ព័ត៌មាន​បន្ថែម ។"
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom"
+#~ "\". If set to \"internet\", the clock will display Internet time. The "
+#~ "Internet time system divides the day into 1000 \".beats\". There are no "
+#~ "time zones in this system, so time is the same all over the world. If set "
+#~ "to \"unix\", the clock will display time in seconds since Epoch, i.e. "
+#~ "1970-01-01. If set to \"custom\", the clock will display time according "
+#~ "to the format specified in the custom_format key."
+#~ msgstr ""
+#~ "ការ​បញ្ជាក់​សោ​នេះ ទ្រង់ទ្រាយ​ម៉ោង​បាន​ប្រើ​ដោយ​អាប់ភ្លេត​នាឡិកា ។ តម្លៃ​​ដែល​អាច​គឺ \"១២ ម៉ោង\", "
+#~ "\"២៤ ម៉ោង\"  \"អ៊ីនធឺណិត\" \"យូនីក\" និង \"ផ្ទាល់ខ្លួន\" ។ ប្រសិនបើ​កំណត់ \"អ៊ីនធឺណិត\" នាឡិកា​នឹង​"
+#~ "បង្ហាញ​ពេលវេលា​អ៊ីនធឺណិត ។ ការ​បែងចែក​ប្រព័ន្ធ​ពេលវេលា​អ៊ីនធឺណិត​ថ្ងៃ​ទៅ​​ជា 1000 \".beats\". "
+#~ "គ្មាន​តំបន់​ពេលវេលា​នៅ​ក្នុង​ប្រព័ន្ធ​នេះ​ឡើយ ដូច្នេះ​ពេលវេលា​គឺ​ដូច​គ្នា​ទាំងអស់​នៅ​លើ​ពិភពលោក ។ ប្រសិនបើ​"
+#~ "កំណត់ \"យូនីក\" នាឡិកា​នឹង​​បង្ហាញ​ពេលវេលា​ជា​វិនាទី​ចាប់តាំង Epoch, ឧ. 1970-01-01 ។ ប្រសិនបើ​"
+#~ "កំណត់ \"ផ្ទាល់ខ្លួន\" នាឡិកា​នឹង​បង្ហាញ​ពេលវេលា​ទៅ​តាម​ទ្រង់ទ្រាយ​ដែល​​បាន​​បញ្ជាក់​នៅ​ក្នុង "
+#~ "custom_format key ។"
+
+#~ msgid "Time configuration tool"
+#~ msgstr "ឧបករណ៍​ការ​កំណត់​រចនាសម្ព័ន្ធ​ពេលវេលា"
+
+#~ msgid "Use Internet time"
+#~ msgstr "ប្រើ​ពេលវេលា​អ៊ីនធឺណិត"
+
+#~ msgid "Use UNIX time"
+#~ msgstr "ប្រើ​ពេលវេលា​យូនីក"
+
+#~ msgid "Use UTC"
+#~ msgstr "ប្រើ UTC"
+
+#~ msgid "Unknown"
+#~ msgstr "មិន​ស្គាល់"
+
+#~ msgid "Shut Down..."
+#~ msgstr "បិទ​..."
+
+#~ msgid "Could not display help document"
+#~ msgstr "មិន​អាច​បង្ហាញ​ឯកសារ​ជំនួយ​​បាន​ទេ"
+
+#~ msgid "_Help"
+#~ msgstr "ជំនួយ"
+
+#~ msgid "Unable to load file '%s': %s."
+#~ msgstr "មិន​អាច​ផ្ទុក​ឯកសារ '%s' ៖ %s ។"
+
+#~ msgid "Could not display properties dialog"
+#~ msgstr "មិន​អាច​បង្ហាញ​ប្រអប់​លក្ខណសម្បត្តិ​បាន​ទេ"
+
+#~ msgid "<small>Opaque</small>"
+#~ msgstr "<small>ស្រអាប់</small>"
+
+#~ msgid "<small>Transparent</small>"
+#~ msgstr "<small>ថ្លា</small>"
+
+#~ msgid "Could not display run dialog"
+#~ msgstr "មិន​អាច​បង្ហាញ​ប្រអប់​ដែល​រត់​បាន​ទេ"
