@@ -4,10 +4,26 @@ Version 3.8.1
 
   Flashback Session
 
-	* add session description for using Flashback mode with Compiz
-	* This is _not_ a supported mode for Gnome Flashback, but
+	* Add session description for using Flashback mode with Compiz
+	  This is _not_ a supported mode for Gnome Flashback, but only
 	  included for Ubuntu's convenience.
 	  (Dmitry Shachnev, Philipp Kaluza)
+
+  libpanel-applet
+
+	* Deprecation announcement:
+	  The GConf functions for applets in libpanel-applet have been
+	  marked as deprecated since version 3.0, but this deprecation had
+	  never been formally announced. It has been suggested that
+          these functions are removed as the last included applets
+          migrate to GSettings.
+	  We hereby announce that these Gconf functions will be removed
+          in an ABI- and API-breaking major release of libpanel-applet
+          sometime after 2014-12-31.
+
+	  Maintainers of applets that rely on libpanel-applet are encouraged
+	  to get in contact with the gnome-flashback-list to coordinate
+	  a schedule that fits everybody's needs. (Philipp Kaluza)
 
   Panel
 
@@ -16,10 +32,12 @@ Version 3.8.1
 	* Fix a number of deprecation warnings (Alberts Muktupāvels)
 	* Improve names of GConf objects (Alberts Muktupāvels)
 	* Updated FSF's address (Daniel Mustieles)
-	* update doap files (Piotr Drąg)
+	* Update doap files (Piotr Drąg)
 	* Modernize run and properties dialogs (Sebastian Geiger)
-	* use "gnome-applications.menu" instead of "applications.menu",
+	* Use "gnome-applications.menu" instead of "applications.menu",
 	  following gnome-menus 3.8 (Alberts Muktupāvels)
+	* Bring old translation files back in sync with current code,
+	  especially the session files (Philipp Kaluza)
 
   Clock Applet
 
