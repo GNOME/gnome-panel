@@ -8,7 +8,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 
-#include <gnome-panel/libpanel-util/panel-color.h>
+#include <libpanel-util/panel-color.h>
 
 #include "clock.h"
 #include "clock-map.h"
