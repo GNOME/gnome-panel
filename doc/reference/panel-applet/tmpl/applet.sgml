@@ -42,14 +42,6 @@ Panel Applet
 @panelapplet: the object which received the signal.
 @arg1: 
 
-<!-- ##### SIGNAL PanelApplet::change-size ##### -->
-<para>
-
-</para>
-
-@panelapplet: the object which received the signal.
-@arg1: 
-
 <!-- ##### SIGNAL PanelApplet::move-focus-out-of-applet ##### -->
 <para>
 
@@ -93,17 +85,7 @@ Panel Applet
 
 </para>
 
-<!-- ##### ARG PanelApplet:prefs-key ##### -->
-<para>
-
-</para>
-
 <!-- ##### ARG PanelApplet:settings-path ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG PanelApplet:size ##### -->
 <para>
 
 </para>
@@ -134,15 +116,6 @@ Panel Applet
 @PANEL_APPLET_HAS_HANDLE: 
 
 <!-- ##### FUNCTION panel_applet_get_orient ##### -->
-<para>
-
-</para>
-
-@applet: 
-@Returns: 
-
-
-<!-- ##### FUNCTION panel_applet_get_size ##### -->
 <para>
 
 </para>
@@ -217,25 +190,6 @@ Panel Applet
 @Returns: 
 
 
-<!-- ##### FUNCTION panel_applet_add_preferences ##### -->
-<para>
-
-</para>
-
-@applet: 
-@schema_dir: 
-@error: 
-
-
-<!-- ##### FUNCTION panel_applet_get_preferences_key ##### -->
-<para>
-
-</para>
-
-@applet: 
-@Returns: 
-
-
 <!-- ##### FUNCTION panel_applet_request_focus ##### -->
 <para>
 
@@ -253,6 +207,7 @@ Panel Applet
 @applet: 
 @xml: 
 @action_group: 
+@translation_domain: 
 
 
 <!-- ##### FUNCTION panel_applet_setup_menu_from_file ##### -->
@@ -263,5 +218,17 @@ Panel Applet
 @applet: 
 @filename: 
 @action_group: 
+@translation_domain: 
+
+
+<!-- ##### FUNCTION panel_applet_setup_menu_from_resource ##### -->
+<para>
+
+</para>
+
+@applet: 
+@resource_path: 
+@action_group: 
+@translation_domain: 
 
 

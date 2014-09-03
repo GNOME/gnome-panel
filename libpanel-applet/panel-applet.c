@@ -691,11 +691,12 @@ panel_applet_menu_cmd_move (GSimpleAction *action,
  * panel_applet_setup_menu:
  * @applet: a #PanelApplet.
  * @xml: a menu XML string.
- * @action_group: a #GtkActionGroup.
+ * @action_group: a #GSimpleActionGroup.
+ * @translation_domain: gettext translation domain
  *
  * Sets up the context menu of @applet. @xml is a #GtkUIManager UI definition,
  * describing how to display the menu items. @action_group contains the
- * various #GtkAction that are referenced in @xml.
+ * various #GSimpleAction that are referenced in @xml.
  *
  * See also the <link linkend="getting-started.context-menu">Context
  * Menu</link> section.
@@ -733,11 +734,12 @@ panel_applet_setup_menu (PanelApplet    *applet,
  * panel_applet_setup_menu_from_file:
  * @applet: a #PanelApplet.
  * @filename: path to a menu XML file.
- * @action_group: a #GtkActionGroup.
+ * @action_group: a #GSimpleActionGroup.
+ * @translation_domain: gettext translation domain
  *
  * Sets up the context menu of @applet. @filename is the path to a menu XML
  * file, containing a #GtkUIManager UI definition that describes how to display
- * the menu items. @action_group contains the various #GtkAction that
+ * the menu items. @action_group contains the various #GSimpleAction that
  * are referenced in @xml.
  *
  * See also the <link linkend="getting-started.context-menu">Context
@@ -766,11 +768,12 @@ panel_applet_setup_menu_from_file (PanelApplet    *applet,
  * panel_applet_setup_menu_from_resource:
  * @applet: a #PanelApplet.
  * @resource_path: a resource path
- * @action_group: a #GtkActionGroup.
+ * @action_group: a #GSimpleActionGroup.
+ * @translation_domain: gettext translation domain
  *
  * Sets up the context menu of @applet. @filename is a resource path to a menu
  * XML file, containing a #GtkUIManager UI definition that describes how to
- * display the menu items. @action_group contains the various #GtkAction that
+ * display the menu items. @action_group contains the various #GSimpleAction that
  * are referenced in @xml.
  *
  * See also the <link linkend="getting-started.context-menu">Context
