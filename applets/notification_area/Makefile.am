@@ -28,7 +28,7 @@ NOTIFICATION_AREA_SOURCES = main.c main.h
 
 NOTIFICATION_AREA_LDADD =				\
 	libtray.la					\
-	../../libpanel-applet/libpanel-applet-4.la	\
+	../../libpanel-applet/libpanel-applet.la	\
 	$(X_LIBS)					\
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBPANEL_APPLET_LIBS)

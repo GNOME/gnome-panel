@@ -57,7 +57,7 @@ CLOCK_CPPFLAGS =						\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
 
 CLOCK_LDADD =						\
-	../../libpanel-applet/libpanel-applet-4.la	\
+	../../libpanel-applet/libpanel-applet.la	\
 	../../gnome-panel/libpanel-util/libpanel-util.la	\
 	$(CLOCK_LIBS)					\
 	$(CLOCK_EDS_LIBS)					\
