@@ -794,13 +794,11 @@ load_launcher_applet (const char  *location,
 
 	panel_applet_add_callback (launcher->info,
 				   "launch",
-				   GTK_STOCK_EXECUTE,
 				   _("_Launch"),
 				   NULL);
 
 	panel_applet_add_callback (launcher->info,
 				   "properties",
-				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
 				   lancher_properties_enabled);
 

@@ -219,7 +219,6 @@ panel_menu_bar_load (PanelWidget *panel,
 	    panel_is_program_in_path ("gmenu-simple-editor")) {
 		panel_applet_add_callback (menubar->priv->info,
 					   "edit",
-					   NULL,
 					   _("_Edit Menus"),
 					   panel_lockdown_get_not_panels_locked_down_s);
 	}

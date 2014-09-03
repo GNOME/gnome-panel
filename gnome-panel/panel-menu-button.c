@@ -555,7 +555,7 @@ panel_menu_button_load_helper (const char  *menu_path,
 
         if (panel_is_program_in_path ("alacarte") ||
 	    panel_is_program_in_path ("gmenu-simple-editor"))
-		panel_applet_add_callback (info, "edit", NULL,
+		panel_applet_add_callback (info, "edit",
 					   _("_Edit Menus"),
 					   panel_lockdown_get_not_panels_locked_down_s);
 
