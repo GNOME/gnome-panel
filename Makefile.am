@@ -14,9 +14,7 @@ DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --enable-introspection --disable-sc
 
 EXTRA_DIST = \
 	COPYING-DOCS		\
-	HACKING			\
-	MAINTAINERS		\
-	ChangeLog.pre-git
+	HACKING
 
 MAINTAINERCLEANFILES = \
 	$(srcdir)/INSTALL \
