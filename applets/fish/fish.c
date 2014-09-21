@@ -1403,14 +1403,17 @@ fish_applet_settings_changed (GSettings  *settings,
 	if (!key || g_strcmp0 (key, FISH_NAME_KEY) == 0) {
 		value_str = g_settings_get_string (settings, FISH_NAME_KEY);
 		fish_applet_update_name (fish, value_str);
+		g_free (value_str);
 	}
 	if (!key || g_strcmp0 (key, FISH_IMAGE_KEY) == 0) {
 		value_str = g_settings_get_string (settings, FISH_IMAGE_KEY);
 		fish_applet_update_image (fish, value_str);
+		g_free (value_str);
 	}
 	if (!key || g_strcmp0 (key, FISH_COMMAND_KEY) == 0) {
 		value_str = g_settings_get_string (settings, FISH_COMMAND_KEY);
 		fish_applet_update_command (fish, value_str);
+		g_free (value_str);
 	}
 	if (!key || g_strcmp0 (key, FISH_SPEED_KEY) == 0) {
 		value_double = g_settings_get_double (settings, FISH_SPEED_KEY);
@@ -1420,8 +1423,6 @@ fish_applet_settings_changed (GSettings  *settings,
 		value_boolean = g_settings_get_boolean (settings, FISH_ROTATE_KEY);
 		fish_applet_update_rotate (fish, value_boolean);
 	}
-
-	g_free (value_str);
 }
 
 static gboolean
