@@ -36,11 +36,44 @@ GSList *panels = NULL;
 GSList *panel_list = NULL;
 
 static gboolean  replace = FALSE;
+static GtkCssProvider *provider = NULL;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
   { NULL }
 };
+
+static void
+theme_changed (GtkSettings *settings)
+{
+	GdkScreen *screen;
+	gchar     *theme;
+
+	screen = gdk_screen_get_default ();
+	g_object_get (settings, "gtk-theme-name", &theme, NULL);
+
+	if (g_str_equal (theme, "Adwaita")) {
+		if (provider == NULL) {
+			GFile *file;
+
+			file = g_file_new_for_uri ("resource:///org/gnome/panel/Adwaita.css");
+			provider = gtk_css_provider_new ();
+
+			gtk_css_provider_load_from_file (provider, file, NULL);
+
+			g_object_unref (file);
+		}
+
+		gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),
+		                                           GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	} else if (provider != NULL) {
+		gtk_style_context_remove_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider));
+		g_object_unref (provider);
+		provider = NULL;
+	}
+
+	g_free (theme);
+}
 
 int
 main (int argc, char **argv)
@@ -48,6 +81,7 @@ main (int argc, char **argv)
 	char           *desktopfile;
 	GOptionContext *context;
 	GError         *error;
+	GtkSettings    *settings;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -110,6 +144,10 @@ main (int argc, char **argv)
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
 	panel_session_init ();
+
+	settings = gtk_settings_get_default ();
+	g_signal_connect (settings, "notify::gtk-theme-name", G_CALLBACK (theme_changed), NULL);
+	theme_changed (settings);
 
 	gtk_main ();
 
