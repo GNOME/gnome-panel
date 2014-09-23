@@ -437,6 +437,7 @@ do_icons_to_add (void)
 {
 	while (icons_to_add) {
 		IconToAdd *icon_to_add = icons_to_add->data;
+		int icon_height;
 
 		icons_to_add = g_list_delete_link (icons_to_add, icons_to_add);
 
@@ -458,6 +459,9 @@ do_icons_to_add (void)
 
 			g_object_unref (icon_to_add->pixbuf);
 		}
+
+		if (gtk_icon_size_lookup (icon_to_add->icon_size, NULL, &icon_height))
+			gtk_image_set_pixel_size (GTK_IMAGE (icon_to_add->image), icon_height);
 
 		if (icon_to_add->gicon)
 			g_object_unref (icon_to_add->gicon);
