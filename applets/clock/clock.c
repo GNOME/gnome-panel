@@ -1832,6 +1832,7 @@ fill_prefs_window (ClockData *cd)
         };
 
         static const struct int_char_pair temperatures[] = {
+                { GWEATHER_TEMP_UNIT_DEFAULT, N_("Default") },
                 { GWEATHER_TEMP_UNIT_KELVIN, N_("Kelvin") },
                 { GWEATHER_TEMP_UNIT_CENTIGRADE, N_("Celsius") },
                 { GWEATHER_TEMP_UNIT_FAHRENHEIT, N_("Fahrenheit") },
@@ -1839,6 +1840,7 @@ fill_prefs_window (ClockData *cd)
         };
 
         static const struct int_char_pair speeds[] = {
+                { GWEATHER_SPEED_UNIT_DEFAULT, N_("Default") },
                 { GWEATHER_SPEED_UNIT_MS, N_("Meters per second (m/s)") },
                 { GWEATHER_SPEED_UNIT_KPH, N_("Kilometers per hour (kph)") },
                 { GWEATHER_SPEED_UNIT_MPH, N_("Miles per hour (mph)") },
