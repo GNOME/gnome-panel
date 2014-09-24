@@ -41,8 +41,6 @@
 #define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
 			fish_applet_get_type(),          \
 			FishApplet))
-#define FISH_IS_APPLET(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
-			   FISH_TYPE_APPLET))
 
 #define FISH_ICON "gnome-panel-fish"
 #define FISH_RESOURCE_PATH "/org/gnome/panel/applet/fish/"
@@ -104,7 +102,6 @@ typedef struct {
 	PanelAppletClass klass;
 } FishAppletClass;
 
-
 static gboolean load_fish_image          (FishApplet *fish);
 static void     update_surface           (FishApplet *fish);
 static void     something_fishy_going_on (FishApplet *fish,
@@ -114,7 +111,7 @@ static void     set_tooltip              (FishApplet *fish);
 
 static GType fish_applet_get_type (void);
 
-static GObjectClass *parent_class;
+G_DEFINE_TYPE (FishApplet, fish_applet, PANEL_TYPE_APPLET)
 
 static int fools_day        = 0;
 static int fools_month      = 0;
@@ -1550,12 +1547,11 @@ fish_applet_dispose (GObject *object)
 
 	fish_close_channel (fish);
 
-	G_OBJECT_CLASS (parent_class)->dispose (object);
+	G_OBJECT_CLASS (fish_applet_parent_class)->dispose (object);
 }
 
 static void
-fish_applet_instance_init (FishApplet      *fish,
-			   FishAppletClass *klass)
+fish_applet_init (FishApplet *fish)
 {
 	fish->settings          = NULL;
 	fish->lockdown_settings = NULL;
@@ -1612,37 +1608,11 @@ fish_applet_class_init (FishAppletClass *klass)
 	PanelAppletClass *applet_class  = (PanelAppletClass *) klass;
 	GObjectClass     *gobject_class = (GObjectClass *) klass;
 
-	parent_class = g_type_class_peek_parent (klass);
-
 	applet_class->change_orient = fish_applet_change_orient;
 
 	gobject_class->dispose = fish_applet_dispose;
 
 	init_fools_day ();
-}
-
-static GType
-fish_applet_get_type (void)
-{
-	static GType type = 0;
-
-	if (!type) {
-		static const GTypeInfo info = {
-			sizeof (PanelAppletClass),
-			NULL, NULL,
-			(GClassInitFunc) fish_applet_class_init,
-			NULL, NULL,
-			sizeof (FishApplet),
-			0,
-			(GInstanceInitFunc) fish_applet_instance_init,
-			NULL
-		};
-
-		type = g_type_register_static (
-				PANEL_TYPE_APPLET, "FishApplet", &info, 0);
-	}
-
-	return type;
 }
 
 #ifdef FISH_INPROCESS
