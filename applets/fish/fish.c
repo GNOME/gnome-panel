@@ -258,6 +258,16 @@ handle_response (GtkWidget  *widget,
 	gtk_widget_hide (fish->preferences_dialog);
 }
 
+static void
+fill_combo_box_text (GtkComboBoxText *combo)
+{
+	gtk_combo_box_text_append (combo, "wanda.fish", "Wanda");
+	gtk_combo_box_text_append (combo, "monkey.fish", "Monkey");
+	gtk_combo_box_text_append (combo, "oldwanda.fish", "Old Wanda");
+	gtk_combo_box_text_append (combo, "fishanim.fish", "Fish Anim");
+	gtk_combo_box_text_append (combo, "footguy.fish", "Foot Guy");
+}
+
 static void 
 display_preferences_dialog (GSimpleAction *action,
                             GVariant      *parameter,
@@ -268,6 +278,7 @@ display_preferences_dialog (GSimpleAction *action,
 	GtkWidget  *box;
 	GtkWidget  *name_entry;
 	GtkWidget  *command_entry;
+	GtkWidget  *image;
 	GtkWidget  *speed_spin;
 	GtkWidget  *rotate_toggle;
 	GtkWidget  *button;
@@ -318,6 +329,12 @@ display_preferences_dialog (GSimpleAction *action,
 	g_settings_bind (fish->lockdown_settings, LOCKDOWN_COMMANDLINE_KEY,
 			 box, "visible",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_INVERT_BOOLEAN);
+
+	image = GTK_WIDGET (gtk_builder_get_object (builder, "image_comboboxtext"));
+	fill_combo_box_text (GTK_COMBO_BOX_TEXT (image));
+	g_settings_bind (fish->settings, FISH_IMAGE_KEY,
+	                 GTK_COMBO_BOX (image), "active-id",
+	                 G_SETTINGS_BIND_DEFAULT);
 
 	speed_spin = GTK_WIDGET (gtk_builder_get_object (builder, "speed_spin"));
 	box = GTK_WIDGET (gtk_builder_get_object (builder, "speed_box"));
