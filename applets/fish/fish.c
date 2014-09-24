@@ -1454,11 +1454,6 @@ fish_applet_fill (FishApplet *fish)
 	fish->settings = panel_applet_settings_new (applet, FISH_SCHEMA);
 	fish->lockdown_settings = g_settings_new (LOCKDOWN_SCHEMA);
 
-	g_signal_connect (fish->settings, "changed",
-			  G_CALLBACK (fish_applet_settings_changed), fish);
-	/* NULL means we will update for all settings */
-	fish_applet_settings_changed (fish->settings, NULL, fish);
-
 	action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
 	                                 fish_menu_actions,
@@ -1483,6 +1478,10 @@ fish_applet_fill (FishApplet *fish)
 	gtk_window_set_default_icon_name (FISH_ICON);
 #endif
 	setup_fish_widget (fish);
+
+	g_signal_connect (fish->settings, "changed",
+	                  G_CALLBACK (fish_applet_settings_changed), fish);
+	fish_applet_settings_changed (fish->settings, NULL, fish);
 
 	return TRUE;
 }
