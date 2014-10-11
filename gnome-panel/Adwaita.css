@@ -1,7 +1,7 @@
-@define-color os_chrome_bg_color black;
-@define-color os_chrome_fg_color #ccc;
-@define-color os_chrome_selected_bg_color #333;
-@define-color os_chrome_selected_fg_color white;
+@define-color bg_color #000000;
+@define-color bg_color_selected #333333;
+@define-color fg_color #cccccc;
+@define-color fg_color_selected #ffffff;
 
 .gnome-panel-menu-bar,
 PanelApplet > GtkMenuBar.menubar,
@@ -9,12 +9,11 @@ PanelToplevel,
 PanelWidget,
 PanelAppletFrame,
 PanelApplet {
-    background-color: @os_chrome_bg_color;
+    background-color: @bg_color;
     background-image: none;
-    color: @os_chrome_fg_color;
+    color: @fg_color;
 }
 
-ClockBox,
 .gnome-panel-menu-bar.menubar,
 PanelApplet > GtkMenuBar.menubar {
     font: bold;
@@ -22,7 +21,12 @@ PanelApplet > GtkMenuBar.menubar {
 
 .gnome-panel-menu-bar.menubar .menuitem *:hover,
 PanelApplet > GtkMenuBar.menubar .menuitem *:hover {
-    text-shadow: 0 1px @os_chrome_bg_color;
+    text-shadow: 0 1px @bg_color;
+}
+
+.gnome-panel-menu-bar.menubar .menuitem:prelight,
+PanelApplet > GtkMenuBar.menubar .menuitem:prelight {
+    box-shadow: none;
 }
 
 .gnome-panel-menu-bar.menubar .menu,
@@ -39,54 +43,107 @@ PanelApplet > GtkMenuBar.menubar .menu *:hover {
 PanelApplet > GtkMenuBar.menubar .menuitem:hover,
 .gnome-panel-menu-bar .menuitem *:hover,
 PanelApplet > GtkMenuBar.menubar .menuitem *:hover {
-    background-color: @os_chrome_selected_bg_color;
-    color: @os_chrome_selected_fg_color;
+    background-color: @bg_color_selected;
+    color: @fg_color_selected;
 }
 
 .gnome-panel-menu-bar .menuitem *:hover,
 PanelApplet > GtkMenuBar.menubar .menuitem *:hover {
-    color: @os_chrome_selected_fg_color;
-}
-
-PanelApplet .button,
-PanelApplet .button:hover {
-    padding: 4px;
-
-    border-image: none;
-    border-width: 0;
-    border-radius: 0;
-
-    background-image: none;
-    background-color: @os_chrome_bg_color;
-
-    color: @os_chrome_fg_color;
-    text-shadow: none;
-}
-
-PanelApplet .button:active:hover,
-PanelApplet .button:active {
-    border-image: none;
-    background-image: none;
-    background-color: @os_chrome_selected_bg_color;
-    border-width: 0;
-    border-radius: 0;
-}
-
-PanelApplet *:hover {
-    color: @os_chrome_selected_fg_color;
-}
-
-PanelApplet *:active,
-PanelApplet *:hover:active {
-    color: @os_chrome_selected_fg_color;
-    text-shadow: 0 1px @os_chrome_bg_color;
-}
-
-WnckPager {
-    background-color: lighter(@os_chrome_selected_bg_color);
+    color: @fg_color_selected;
 }
 
 NaTrayApplet {
     -NaTrayApplet-icon-padding: 12;
     -NaTrayApplet-icon-size: 16;
+}
+
+/*
+ * Applet
+ * Clock
+ */
+GtkToggleButton#clock-applet-button {
+	border: 0px;
+	border-radius: 0px;
+	transition: none;
+	padding: 0px 4px;
+	color: @fg_color;
+	outline-color: transparent;
+	border-color: transparent;
+	background-image: none;
+	background-color: @bg_color;
+	text-shadow: none;
+	icon-shadow: none;
+	box-shadow: none;
+}
+
+GtkToggleButton#clock-applet-button:hover {
+	color: @fg_color;
+	outline-color: transparent;
+	border-color: transparent;
+	background-image: none;
+	text-shadow: none;
+	icon-shadow: none;
+	box-shadow: none;
+	background-color: @bg_color_selected;
+	-gtk-image-effect: none;
+}
+
+GtkToggleButton#clock-applet-button:checked {
+	color: @fg_color_selected;
+	background-color: @bg_color_selected;
+}
+
+ClockBox {
+	font: bold;
+}
+
+/*
+ * Applet
+ * Window List
+ */
+GtkToggleButton#tasklist-button {
+	border: 0px;
+	border-radius: 0px;
+	transition: none;
+	padding: 4px;
+	color: @fg_color;
+	outline-color: transparent;
+	border-color: transparent;
+	background-image: none;
+	background-color: @bg_color;
+	text-shadow: none;
+	icon-shadow: none;
+	box-shadow: none;
+}
+
+GtkToggleButton#tasklist-button:hover {
+	color: @fg_color;
+	outline-color: transparent;
+	border-color: transparent;
+	background-image: none;
+	text-shadow: none;
+	icon-shadow: none;
+	box-shadow: none;
+	background-color: @bg_color_selected;
+}
+
+GtkToggleButton#tasklist-button:checked {
+	color: @fg_color_selected;
+	background-color: @bg_color_selected;
+}
+
+/*
+ * Applet
+ * Workspace Switcher
+ */
+WnckPager {
+	background-color: lighter(@bg_color_selected);
+}
+
+WnckPager:selected {
+    /*
+     * Color from screenshot:
+     * https://wiki.gnome.org/Projects/GnomeFlashback
+     */
+	background-color: #376594;
 }
