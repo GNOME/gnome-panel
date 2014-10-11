@@ -614,8 +614,8 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       
       parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
     }
-  
-  if (xgrab_shell && !gtk_menu_get_tearoff_state (GTK_MENU(xgrab_shell)))
+
+  if (xgrab_shell)
     {
       gboolean      status;
       GdkDisplay    *display;
