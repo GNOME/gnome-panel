@@ -400,6 +400,9 @@ clock_needs_label_refresh (ClockLocationTile *this)
 	long offset;
 	gboolean retval;
 
+	if (!priv->last_refresh)
+		return TRUE;
+
         now = clock_location_localtime (priv->location);
 	offset = clock_location_get_offset (priv->location);
 
