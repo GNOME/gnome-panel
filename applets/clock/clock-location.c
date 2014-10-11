@@ -52,7 +52,7 @@ enum {
 static guint location_signals[LAST_SIGNAL] = { 0 };
 
 static void clock_location_finalize (GObject *);
-static gboolean update_weather_info (ClockLocation *loc);
+static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
 
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TYPE, ClockLocationPrivate))
@@ -455,8 +455,9 @@ weather_info_updated (GWeatherInfo *info, gpointer data)
 }
 
 static gboolean
-update_weather_info (ClockLocation *loc)
+update_weather_info (gpointer user_data)
 {
+	ClockLocation *loc = user_data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 
 	gweather_info_abort (priv->weather_info);
