@@ -164,17 +164,6 @@ AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
 AC_SUBST(CLOCK_EDS_ICONDIR)
 
 DBUS_REQUIRED=1.1.2
-NETWORK_MANAGER_REQUIRED=0.6
- 
-AC_ARG_ENABLE(network_manager, AS_HELP_STRING([--enable-network-manager],[Enable NetworkManager support (auto)]),enable_network_manager=$enableval,enable_network_manager=auto)
-if test "x$enable_network_manager" = "xno" ; then
-  HAVE_NETWORK_MANAGER=no
-else
-  PKG_CHECK_MODULES(NETWORK_MANAGER, NetworkManager >= $NETWORK_MANAGER_REQUIRED, HAVE_NETWORK_MANAGER=yes, HAVE_NETWORK_MANAGER=no)
-fi
-if test "x$HAVE_NETWORK_MANAGER" = "xyes" ; then
-    AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
-fi
 
 # Make it possible to compile the applets in-process
 PANEL_INPROCESS_NONE=
@@ -372,7 +361,6 @@ echo "
         Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Evolution-Data-Server support: ${enable_eds}
         Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
-        NetworkManager support:        ${HAVE_NETWORK_MANAGER}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}

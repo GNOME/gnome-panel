@@ -16,10 +16,6 @@
 #include <glib.h>
 #include <gio/gio.h>
 
-#ifdef HAVE_NETWORK_MANAGER
-#include <NetworkManager/NetworkManager.h>
-#endif
-
 #include "clock-location.h"
 #include "clock-marshallers.h"
 #include "set-timezone.h"
@@ -56,9 +52,8 @@ enum {
 static guint location_signals[LAST_SIGNAL] = { 0 };
 
 static void clock_location_finalize (GObject *);
+static gboolean update_weather_info (ClockLocation *loc);
 static void setup_weather_updates (ClockLocation *loc);
-static void add_to_network_monitor (ClockLocation *loc);
-static void remove_from_network_monitor (ClockLocation *loc);
 
 #define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TYPE, ClockLocationPrivate))
 
@@ -129,22 +124,44 @@ clock_location_class_init (ClockLocationClass *this_class)
 }
 
 static void
+network_changed (GNetworkMonitor *monitor,
+                 gboolean         available,
+                 ClockLocation   *loc)
+{
+        ClockLocationPrivate *priv = PRIVATE (loc);
+
+        if (available) {
+                priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
+                update_weather_info (loc);
+        }
+}
+
+static void
 clock_location_init (ClockLocation *this)
 {
         ClockLocationPrivate *priv = PRIVATE (this);
+        GNetworkMonitor *monitor;
 
         priv->systz = system_timezone_new ();
 
         priv->latitude = 0;
         priv->longitude = 0;
+
+        monitor = g_network_monitor_get_default();
+        g_signal_connect (monitor, "network-changed",
+                          G_CALLBACK (network_changed), this);
 }
 
 static void
 clock_location_finalize (GObject *g_obj)
 {
         ClockLocationPrivate *priv = PRIVATE (g_obj);
+        GNetworkMonitor *monitor;
 
-	remove_from_network_monitor (CLOCK_LOCATION (g_obj));
+	monitor = g_network_monitor_get_default ();
+	g_signal_handlers_disconnect_by_func (monitor,
+	                                      G_CALLBACK (network_changed),
+	                                      CLOCK_LOCATION (g_obj));
 
 	g_free (priv->name);
 
@@ -397,8 +414,6 @@ clock_location_get_weather_info (ClockLocation *loc)
 	return priv->weather_info;
 }
 
-static gboolean update_weather_info (gpointer data);
-
 static void
 set_weather_update_timeout (ClockLocation *loc)
 {
@@ -440,93 +455,14 @@ weather_info_updated (GWeatherInfo *info, gpointer data)
 }
 
 static gboolean
-update_weather_info (gpointer data)
+update_weather_info (ClockLocation *loc)
 {
-	ClockLocation *loc = data;
 	ClockLocationPrivate *priv = PRIVATE (loc);
 
 	gweather_info_abort (priv->weather_info);
         gweather_info_update (priv->weather_info);
 
 	return TRUE;
-}
-
-static GList *locations = NULL;
-
-#ifdef HAVE_NETWORK_MANAGER
-static void
-update_weather_infos (void)
-{
-	GList *l;
-
-	for (l = locations; l; l = l->next) {
-		ClockLocation *loc = l->data;
-		ClockLocationPrivate *priv = PRIVATE (loc);
-
-		priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
-		update_weather_info (loc);
-	}
-}
-
-static void
-network_monitor_signal (GDBusProxy  *proxy,
-			const gchar *sender_name,
-			const gchar *signal_name,
-			GVariant    *parameters,
-			gpointer     user_data)
-{
-	if (g_str_equal (signal_name, "StateChanged")) {
-		if (g_variant_is_of_type (parameters, G_VARIANT_TYPE ("(u)"))) {
-			guint32 state;
-
-			g_variant_get (parameters, "(u)", &state);
-
-			if (state == NM_STATE_CONNECTED) {
-				update_weather_infos ();
-			}
-		}
-	}
-}
-
-static void
-setup_network_monitor (void)
-{
-	static GDBusProxy *proxy;
-	GError *error = NULL;
-
-        if (proxy == NULL) {
-		proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
-						       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
-						       NULL, NM_DBUS_SERVICE, NM_DBUS_PATH, NM_DBUS_INTERFACE,
-						       NULL, &error);
-
-		if (proxy == NULL) {
-			g_warning ("Couldn't create NetworkManager proxy: %s",
-				   error->message);
-			g_error_free (error);
-			return;
-		}
-
-		g_signal_connect (proxy, "g-signal", G_CALLBACK (network_monitor_signal), NULL);
-	}
-}
-#endif
-
-static void
-add_to_network_monitor (ClockLocation *loc)
-{
-#ifdef HAVE_NETWORK_MANAGER
-	setup_network_monitor ();
-#endif
-
-	if (!g_list_find (locations, loc))
-		locations = g_list_prepend (locations, loc);
-}
-
-static void
-remove_from_network_monitor (ClockLocation *loc)
-{
-	locations = g_list_remove (locations, loc);
 }
 
 static void
@@ -547,7 +483,4 @@ setup_weather_updates (ClockLocation *loc)
 			  G_CALLBACK (weather_info_updated), loc);
 
 	set_weather_update_timeout (loc);
-
-	add_to_network_monitor (loc);
 }
-
