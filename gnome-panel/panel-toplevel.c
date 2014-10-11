@@ -4325,9 +4325,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	                  G_CALLBACK (gtk_true),
 	                  NULL);
 
-        /* We don't want a resize grip on the panel */
-        gtk_window_set_has_resize_grip (GTK_WINDOW (toplevel), FALSE);
-
 	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 }
