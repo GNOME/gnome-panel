@@ -102,8 +102,6 @@ LIBRSVG_REQUIRED=2.36.2
 
 dnl pkg-config dependency checks
 
-PKG_CHECK_MODULES(EGG_SMCLIENT, ice sm gtk+-3.0)
-
 PKG_CHECK_MODULES(PANEL, gmodule-2.0 >= $GLIB_REQUIRED
 			 gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
 			 pango >= $PANGO_REQUIRED
@@ -258,7 +256,6 @@ data/32x32/Makefile
 data/48x48/Makefile
 data/scalable/Makefile
 gnome-panel/Makefile
-gnome-panel/libegg/Makefile
 gnome-panel/libpanel-applet-private/Makefile
 gnome-panel/libpanel-util/Makefile
 gnome-panel/gnome-panel.desktop.in

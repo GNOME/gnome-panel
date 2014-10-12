@@ -1,4 +1,4 @@
-SUBDIRS = libegg libpanel-applet-private libpanel-util
+SUBDIRS = libpanel-applet-private libpanel-util
 
 bin_PROGRAMS = \
 	gnome-panel 			\
@@ -128,7 +128,6 @@ gnome_panel_CPPFLAGS = 				\
 	-DGNOME_DESKTOP_USE_UNSTABLE_API
 
 gnome_panel_LDADD =		\
-	$(top_builddir)/gnome-panel/libegg/libegg.la					\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
