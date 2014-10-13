@@ -209,15 +209,11 @@ static gboolean
 show_image (PanelImageMenuItem *image_menu_item)
 {
   PanelImageMenuItemPrivate *priv = image_menu_item->priv;
-  GtkSettings *settings = gtk_widget_get_settings (GTK_WIDGET (image_menu_item));
-  gboolean show;
 
   if (priv->always_show_image)
-    show = TRUE;
-  else
-    g_object_get (settings, "gtk-menu-images", &show, NULL);
+    return TRUE;
 
-  return show;
+  return FALSE;
 }
 
 static void
@@ -676,50 +672,11 @@ show_image_change_notify (PanelImageMenuItem *image_menu_item)
 }
 
 static void
-traverse_container (GtkWidget *widget,
-                    gpointer   data)
-{
-  if (PANEL_IS_IMAGE_MENU_ITEM (widget))
-    show_image_change_notify (PANEL_IMAGE_MENU_ITEM (widget));
-  else if (GTK_IS_CONTAINER (widget))
-    gtk_container_forall (GTK_CONTAINER (widget), traverse_container, NULL);
-}
-
-static void
-panel_image_menu_item_setting_changed (GtkSettings *settings)
-{
-  GList *list, *l;
-
-  list = gtk_window_list_toplevels ();
-
-  for (l = list; l; l = l->next)
-    gtk_container_forall (GTK_CONTAINER (l->data),
-                          traverse_container, NULL);
-
-  g_list_free (list);
-}
-
-static void
 panel_image_menu_item_screen_changed (GtkWidget *widget,
                                       GdkScreen *previous_screen)
 {
-  GtkSettings *settings;
-  gulong show_image_connection;
-
   if (!gtk_widget_has_screen (widget))
     return;
-
-  settings = gtk_widget_get_settings (widget);
-
-  show_image_connection =
-    g_signal_handler_find (settings, G_SIGNAL_MATCH_FUNC, 0, 0,
-                           NULL, panel_image_menu_item_setting_changed, NULL);
-
-  if (show_image_connection)
-    return;
-
-  g_signal_connect (settings, "notify::gtk-menu-images",
-                    G_CALLBACK (panel_image_menu_item_setting_changed), NULL);
 
   show_image_change_notify (PANEL_IMAGE_MENU_ITEM (widget));
 }
