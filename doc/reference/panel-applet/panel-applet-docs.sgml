@@ -556,11 +556,6 @@ Icon=hello-world-icon
          <constant>Icon</constant> (string, optional): the icon name of the applet type. For example: <constant>hello-world-icon</constant>. It can also be the path to an icon, but this not recommended.
         </para>
        </listitem>
-       <listitem>
-        <para>
-         <constant>BonoboId</constant> (list of strings, optional): a list of bonobo id. This will tell the panel that this applet type can be used instead of a bonobo applet if the bonobo applet id is in this list.
-        </para>
-       </listitem>
       </itemizedlist>
 
      </sect3>
@@ -717,15 +712,6 @@ PanelApplet.Applet.factory_main("HelloWorldFactory",
 
     <para>
      There is no major issue porting a D-Bus-based applet from GNOME 2.x, from a Panel Applet library perspective. It is actually likely that the main issues will be that the applet has to be ported to GTK+ 3. Please refer to the <ulink url="http://library.gnome.org/devel/gtk3/stable/gtk-migrating-2-to-3.html">GTK+ 2 to GTK+ 3 migration guide</ulink> for this.
-    </para>
-
-   </refsect1>
-
-   <refsect1 id="port-gnome2.bonobo">
-    <title>Porting a Bonobo-based Applet</title>
-
-    <para>
-     Please see the <ulink url="http://live.gnome.org/GnomeGoals/AppletsDbusMigration">documentation</ulink> on the wiki.
     </para>
 
    </refsect1>
