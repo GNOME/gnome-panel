@@ -52,7 +52,7 @@ theme_changed (GtkSettings *settings)
 	screen = gdk_screen_get_default ();
 	g_object_get (settings, "gtk-theme-name", &theme, NULL);
 
-	if (g_str_equal (theme, "Adwaita")) {
+	if (g_str_equal (theme, "Adwaita") || g_str_equal (theme, "HighContrast")) {
 		if (provider == NULL) {
 			GFile *file;
 
