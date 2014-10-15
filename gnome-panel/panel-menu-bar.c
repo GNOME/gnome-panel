@@ -192,7 +192,7 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 		g_param_spec_boolean ("icon-visible",
 				      "Icon visible",
 				      "Whether the menubar icon is visible",
-				      FALSE,
+				      TRUE,
 				      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
@@ -224,6 +224,8 @@ panel_menu_bar_load (PanelWidget *panel,
 					   _("_Edit Menus"),
 					   panel_lockdown_get_not_panels_locked_down_s);
 	}
+
+	panel_menu_bar_style_updated (menubar);
 
 	panel_menu_bar_object_object_load_finish (PANEL_MENU_BAR_OBJECT (menubar),
 						  panel);
