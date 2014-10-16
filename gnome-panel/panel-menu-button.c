@@ -93,11 +93,23 @@ static void panel_menu_button_set_icon              (PanelMenuButton *button);
 
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
 
+static void
+fix_application_menu_name (void)
+{
+	static gboolean updated = FALSE;
+	if (!updated) {
+		root_items [0].filename = get_applications_menu ();
+		updated = TRUE;
+	}
+}
+
 static const char *
 panel_menu_path_root_to_filename (MenuPathRoot path_root)
 {
 	const char *retval;
 	int         i;
+
+	fix_application_menu_name ();
 
 	retval = NULL;
 
@@ -116,6 +128,8 @@ panel_menu_filename_to_scheme (const char *filename)
 {
 	const char *retval;
 	int         i;
+
+	fix_application_menu_name ();
 
 	retval = NULL;
 	
@@ -139,6 +153,8 @@ panel_menu_scheme_to_path_root (const char *scheme)
 {
 	MenuPathRoot retval;
 	int          i;
+
+	fix_application_menu_name ();
 
 	retval = LAST_MENU;
 	

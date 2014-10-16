@@ -913,8 +913,11 @@ get_all_applications (void)
 	GMenuTree          *tree;
 	GMenuTreeDirectory *root;
 	GSList             *retval;
+	gchar              *applications_menu;
 
-	tree = gmenu_tree_new ("gnome-applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+	applications_menu = get_applications_menu ();
+	tree = gmenu_tree_new (applications_menu, GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+	g_free (applications_menu);
 
 	if (!gmenu_tree_load_sync (tree, NULL))
 		return NULL;

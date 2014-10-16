@@ -30,6 +30,7 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "launcher.h"
+#include "menu.h"
 #include "panel.h"
 #include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
@@ -653,6 +654,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 	GtkTreeStore      *store;
 	GMenuTree          *tree;
 	GMenuTreeDirectory *root;
+	gchar              *applications_menu;
 
 	if (dialog->filter_application_model != NULL)
 		return;
@@ -663,7 +665,8 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	tree = gmenu_tree_new ("gnome-applications.menu", GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+	applications_menu = get_applications_menu ();
+	tree = gmenu_tree_new (applications_menu, GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, NULL)) {
 		g_object_unref (tree);
@@ -672,12 +675,14 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	if (tree != NULL && (root = gmenu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
-						   root, "gnome-applications.menu",
+						   root, applications_menu,
 						   PANEL_ADDTO_MENU_SHOW_ALL);
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 
 		gmenu_tree_item_unref (root);
 	}
+
+	g_free (applications_menu);
 
 	if (tree != NULL)
 		g_object_unref (tree);

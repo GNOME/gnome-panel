@@ -110,11 +110,15 @@ panel_menu_bar_setup_tooltip (PanelMenuBar *menubar)
 static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
+	gchar *applications_menu;
+
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
 
 	menubar->priv->info = NULL;
 
-	menubar->priv->applications_menu = create_applications_menu ("gnome-applications.menu", NULL, TRUE);
+	applications_menu = get_applications_menu ();
+	menubar->priv->applications_menu = create_applications_menu (applications_menu, NULL, TRUE);
+	g_free (applications_menu);
 
 	menubar->priv->applications_item = panel_image_menu_item_new2 ();
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),

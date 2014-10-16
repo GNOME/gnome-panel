@@ -1385,8 +1385,11 @@ GtkWidget *
 create_main_menu (PanelWidget *panel)
 {
 	GtkWidget *main_menu;
+	gchar *applications_menu;
 
+	applications_menu = get_applications_menu ();
 	main_menu = create_applications_menu ("gnome-applications.menu", NULL, TRUE);
+	g_free (applications_menu);
 
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 	/* FIXME need to update the panel on parent_set */
@@ -1486,4 +1489,12 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 			  G_CALLBACK (image_menu_destroy), NULL);
 
 	image_menu_items = g_slist_prepend (image_menu_items, image);
+}
+
+gchar *
+get_applications_menu (void)
+{
+	const gchar *xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+	return g_strdup_printf ("%sapplications.menu",
+	                        xdg_menu_prefx ? xdg_menu_prefx : "gnome-");
 }

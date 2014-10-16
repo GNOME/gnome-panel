@@ -67,6 +67,7 @@ GtkWidget      *add_menu_separator   (GtkWidget *menu);
 gboolean menu_dummy_button_press_event (GtkWidget      *menuitem,
 					GdkEventButton *event);
 
+gchar          *get_applications_menu (void);
 
 G_END_DECLS
 
