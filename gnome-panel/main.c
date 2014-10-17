@@ -56,7 +56,7 @@ theme_changed (GtkSettings *settings)
 		if (provider == NULL) {
 			GFile *file;
 
-			file = g_file_new_for_uri ("resource:///org/gnome/panel/Adwaita.css");
+			file = g_file_new_for_uri ("resource:///org/gnome/panel/gnome-panel.css");
 			provider = gtk_css_provider_new ();
 
 			gtk_css_provider_load_from_file (provider, file, NULL);
