@@ -441,32 +441,63 @@ static void
 panel_menu_item_activate_switch_user (GtkWidget *menuitem,
 				      gpointer   user_data)
 {
-	GdkScreen *screen;
-	GAppInfo  *app_info;
-
 	if (panel_lockdown_get_disable_switch_user_s ())
 		return;
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (menuitem));
-	app_info = g_app_info_create_from_commandline (GDM_FLEXISERVER_COMMAND " " GDM_FLEXISERVER_ARGS,
-						       GDM_FLEXISERVER_COMMAND,
-						       G_APP_INFO_CREATE_NONE,
-						       NULL);
+	/* If running under LightDM switch to the greeter using dbus */
+	if (g_getenv("XDG_SEAT_PATH")) {
+		GDBusConnection *bus;
+		GError  *error = NULL;
+		GVariant *result = NULL;
 
-	if (app_info) {
-		GdkAppLaunchContext *launch_context;
-		GdkDisplay          *display;
+		bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+		if (error)
+			g_warning ("Failed to get system bus: %s", error->message);
+		g_clear_error (&error);
 
-		display = gdk_screen_get_display (screen);
-		launch_context = gdk_display_get_app_launch_context (display);
-		gdk_app_launch_context_set_screen (launch_context, screen);
+		if (bus)
+			result = g_dbus_connection_call_sync (bus,
+							      "org.freedesktop.DisplayManager",
+							      g_getenv ("XDG_SEAT_PATH"),
+							      "org.freedesktop.DisplayManager.Seat",
+							      "SwitchToGreeter",
+							      g_variant_new ("()"),
+							      G_VARIANT_TYPE ("()"),
+							      G_DBUS_CALL_FLAGS_NONE,
+							      -1,
+							      NULL,
+							      &error);
+                if (error)
+                        g_warning ("Failed to switch to greeter: %s", error->message);
+                g_clear_error (&error);
 
-		g_app_info_launch (app_info, NULL,
-				   G_APP_LAUNCH_CONTEXT (launch_context),
-				   NULL);
+                if (result)
+                        g_variant_unref (result);
+        } else {
+		GdkScreen *screen;
+		GAppInfo  *app_info;
 
-		g_object_unref (launch_context);
-		g_object_unref (app_info);
+		screen = gtk_widget_get_screen (GTK_WIDGET (menuitem));
+		app_info = g_app_info_create_from_commandline (GDM_FLEXISERVER_COMMAND " " GDM_FLEXISERVER_ARGS,
+							       GDM_FLEXISERVER_COMMAND,
+							       G_APP_INFO_CREATE_NONE,
+							       NULL);
+
+		if (app_info) {
+			GdkAppLaunchContext *launch_context;
+			GdkDisplay          *display;
+
+			display = gdk_screen_get_display (screen);
+			launch_context = gdk_display_get_app_launch_context (display);
+			gdk_app_launch_context_set_screen (launch_context, screen);
+
+			g_app_info_launch (app_info, NULL,
+					   G_APP_LAUNCH_CONTEXT (launch_context),
+					   NULL);
+
+			g_object_unref (launch_context);
+			g_object_unref (app_info);
+		}
 	}
 }
 
