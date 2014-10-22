@@ -79,6 +79,7 @@ PanelSessionManagerPresenceType panel_session_manager_get_presence (PanelSession
 void panel_session_manager_request_logout   (PanelSessionManager           *session,
 					     PanelSessionManagerLogoutType  mode);
 void panel_session_manager_request_shutdown (PanelSessionManager *session);
+void panel_session_manager_request_reboot   (PanelSessionManager *session);
 
 gboolean panel_session_manager_is_shutdown_available (PanelSessionManager *session);
 
