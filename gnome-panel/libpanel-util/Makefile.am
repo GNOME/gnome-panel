@@ -14,8 +14,17 @@ panel_util_enum_headers =	\
 	panel-session-manager.h
 
 BUILT_SOURCES =			\
+	dbus-login1-manager.c \
+	dbus-login1-manager.h \
 	panel-util-types.c	\
 	panel-util-types.h
+
+dbus-login1-manager.h:
+dbus-login1-manager.c: org.freedesktop.login1.Manager.xml Makefile.am
+	$(AM_V_GEN) gdbus-codegen \
+		--interface-prefix=org.freedesktop \
+		--generate-c-code dbus-login1-manager \
+		org.freedesktop.login1.Manager.xml
 
 panel-util-types.c: $(panel_util_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
@@ -51,6 +60,8 @@ libpanel_util_la_SOURCES =		\
 	panel-cleanup.h			\
 	panel-dconf.c			\
 	panel-dconf.h			\
+	panel-end-session-dialog.c \
+	panel-end-session-dialog.h \
 	panel-color.c			\
 	panel-color.h			\
 	panel-error.c			\
@@ -77,6 +88,9 @@ libpanel_util_la_SOURCES =		\
 	panel-show.h			\
 	panel-xdg.c			\
 	panel-xdg.h
+
+EXTRA_DIST = \
+	org.freedesktop.login1.Manager.xml
 
 CLEANFILES = \
 	$(BUILT_SOURCES)
