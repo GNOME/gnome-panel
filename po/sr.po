@@ -1,20 +1,20 @@
 # Милош Поповић <gpopac@gmail.com>, 2011.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011, 2012, 2013, 2014.
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2011—2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-08-22 16:52+0200\n"
-"PO-Revision-Date: 2014-01-27 12:19+0200\n"
+"POT-Creation-Date: 2014-10-25 07:03+0000\n"
+"PO-Revision-Date: 2014-10-26 07:38+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: This is a strftime format string.
@@ -28,7 +28,7 @@ msgstr ""
 #: ../applets/clock/calendar-window.c:309
 #: ../applets/clock/clock-location-tile.c:503
 msgid "%l:%M %p"
-msgstr "%l:%M"
+msgstr "%l:%M %p"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
@@ -89,7 +89,7 @@ msgstr "Календар"
 #. * it will be used to insert the timezone name later.
 #: ../applets/clock/clock.c:295
 msgid "%A %B %d (%%s)"
-msgstr "%A %B %d (%%s)"
+msgstr "%A, %d. %B (%%s)"
 
 #: ../applets/clock/clock.c:307
 msgid "Click to hide your appointments and tasks"
@@ -386,7 +386,7 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"Упозорење: Наредба се може чинити заправо корисном.\n"
+"Упозорење:  Наредба изгледа као нешто заправо врло корисно.\n"
 "Како је ово бескорисно програмче, можда не желите да ово урадите.\n"
 "Строго вам саветујемо да не користите „%s“ за било шта што би ово програмче "
 "учинило „практичним“ или корисним."
@@ -504,7 +504,7 @@ msgstr "Вандина производња"
 
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
 msgid "From Whence That Stupid Fish Came"
-msgstr "Одакле ли се само појави ова глупава риба"
+msgstr "Одакле ли се само појави ова тупава риба"
 
 #: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
 msgid "Fish"
@@ -701,9 +701,8 @@ msgstr "Радни простори"
 
 #: ../data/gnome-fallback.desktop.in.in.h:1
 #: ../data/gnome-flashback.session.desktop.in.h:1
-#, fuzzy
 msgid "GNOME Flashback"
-msgstr "Стари Гном (Матасити)"
+msgstr "Стари Гном"
 
 #: ../data/gnome-fallback.desktop.in.in.h:2
 msgid "This session logs you into GNOME with the traditional panel"
@@ -711,16 +710,16 @@ msgstr "Ова сесија вас пријављује у Гном са тра�
 
 #: ../data/gnome-flashback-compiz.desktop.in.in.h:1
 #: ../data/gnome-flashback-compiz.session.desktop.in.h:1
-#, fuzzy
 msgid "GNOME Flashback (Compiz)"
-msgstr "Стари Гном (Матасити)"
+msgstr "Стари Гном (Компиз)"
 
 #: ../data/gnome-flashback-compiz.desktop.in.in.h:2
-#, fuzzy
 msgid ""
 "This session logs you into GNOME with Compiz window-manager and the "
 "traditional panel"
-msgstr "Ова сесија вас пријављује у Гном са традиционалним панелом"
+msgstr ""
+"Ова сесија вас пријављује у Гном са Компизом као управником прозора и "
+"традиционалним панелом"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
 msgid "Show date in tooltip"
@@ -1451,9 +1450,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"Брзина којом се одвијају анимације. Постоје три могуће вредности: "
-"„slow“ (споро), „medium“ (средње) и „fast“ (брзо). Ова поставка је значајна "
-"једино када је постављен кључ „enable_animations“ (укључи_анимације)."
+"Брзина којом се одвијају анимације. Постоје три могуће вредности: „slow“ "
+"(споро), „medium“ (средње) и „fast“ (брзо). Ова поставка је значајна једино "
+"када је постављен кључ „enable_animations“ (укључи_анимације)."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background type"
@@ -2274,14 +2273,12 @@ msgid "Clear the Recent Documents list?"
 msgstr "Да очистим списак скорашњих докумената?"
 
 #: ../gnome-panel/panel-recent.c:147
-#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"ے All items from the Places ے Recent Documents menu item.\n"
-"ے All items from the recent documents list in all applications."
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 "Уколико очистите списак скорашњих докумената, чистите следеће:\n"
-"\n"
 "• Све из изборника Пречице → Скорашњи документи.\n"
 "• Све из списка скорашњих докумената у свим програмима."
 
@@ -2453,7 +2450,7 @@ msgstr "Огромни"
 #: ../gnome-panel/panel-test-applets.c:69
 msgctxt "Size"
 msgid "XX Large"
-msgstr "Гигантски"
+msgstr "Дивовски"
 
 #: ../gnome-panel/panel-test-applets.c:127
 #, c-format
