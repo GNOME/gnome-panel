@@ -1,3 +1,45 @@
+Version 3.14.0
+==============
+- Fix many deprecation warnings. This affects libpanel-applet, functions for
+  setting up applet menu has changed - GtkActionGroup replaced with
+  GSimpleActionGroup and added extra parameter for setting translation domain.
+  (Alberts Muktupāvels)
+- Removed or ported to GSettings last use of gconf. This affects
+  libpanel-applet, all gconf related functions are removed! (Alberts
+  Mukutpāvels)
+- Removed panel_applet_get_size function from libpanel-applet. It was deprecated
+  in 3.0 version. (Alberts Muktupāvels)
+- Removed flashback session related files. These are now installed by
+  gnome-flashback module. (Alberts Muktupāvels)
+- Restored EDS integration in clock applet. (Alberts Muktupāvels)
+- Restored option to change icon size in menu applet from gsettings. This is
+  only temporary solution and panel must be restarted after changing icon
+  size. (Alberts Muktupāvels)
+- Fix memory leak in fish applet. (Dmitry Shachnev)
+- Added default style for Adwaita theme. (Alberts Muktupāvels, Balló György)
+- Fixed large icons bug in applications menu. (Alberts Muktupāvels)
+- Restored option to change fish applet animation. (Alberts Muktupāvels)
+- Droped NetworkManager dependency by switching to GNetworkMonitor (Alberts
+  Muktupāvels)
+- Added back show desktop applet to bottom panel. (Balló György)
+- Don't hardcode application .menu file. Use XDG_MENU_PREFIX "applicaitons.menu"
+  to load correct .menu file. (Alberts Muktupāvels)
+- Show icon in menu bar applet by default. (Balló György)
+- Added hibernate, suspend, and hybrid sleep to user menu applet if logind
+  is available and gnome-flashback module is running. (Alberts Muktupāvels,
+  Balló György)
+- Added support for user switching with LightDM or other display managers that
+  implements the org.freedesktop.DisplayManager D-Bus interface. (Balló György)
+- Updated translations:
+  Andika Triwidada (id), Balázs Úr (hu), Daniel Mustieles (es),
+  Enrico Nicoletto (pt_BR), Kjartan Maraas (nb), Krishnababu Krothapalli (te),
+  Manoj Kumar Giri (or), Marek Černocký (cs), Matej Urbančič (sl),
+  Мирослав Николић (sr), Nilamdyuti Goswami (as), Rajesh Ranjan (hi),
+  Saibal Ray (bn_IN), Sandeep Sheshrao Shedmake (mr), Shankar Prasad (kn),
+  Shantha kumar (ta), Stas Solovey (ru), Sweta Kothari (gu).
+
+NOTE: This version breaks API/ABI!
+
 =============
 Version 3.8.1
 =============
