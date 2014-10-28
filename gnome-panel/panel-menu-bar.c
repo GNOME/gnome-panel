@@ -225,7 +225,7 @@ panel_menu_bar_load (PanelWidget *panel,
 					   panel_lockdown_get_not_panels_locked_down_s);
 	}
 
-	panel_menu_bar_style_updated (menubar);
+	panel_menu_bar_style_updated (GTK_WIDGET (menubar));
 
 	panel_menu_bar_object_object_load_finish (PANEL_MENU_BAR_OBJECT (menubar),
 						  panel);
