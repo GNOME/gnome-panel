@@ -47,6 +47,7 @@
 #include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-launch.h>
+#include <libpanel-util/panel-end-session-dialog.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
@@ -1777,6 +1778,8 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 	GList      *children;
 	GList      *last;
 	GtkWidget  *item;
+	GtkWidget *separator;
+	gboolean   hide_separator;
 
 	children = gtk_container_get_children (GTK_CONTAINER (menu));
 	last = g_list_last (children);
@@ -1829,29 +1832,88 @@ panel_menu_items_append_lock_logout (GtkWidget *menu)
 					G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
 	}
 
-	/* FIXME: should be dynamic */
-	if (panel_session_manager_is_shutdown_available (panel_session_manager_get ())) {
-		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
+	/* Separator */
+	separator = add_menu_separator (menu);
+	hide_separator = TRUE;
+
+	g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+	                        separator, "visible",
+	                        G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+
+	/* Hibernate */
+	if (panel_end_session_dialog_is_hibernate_available (panel_end_session_dialog_get ())) {
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_HIBERNATE,
 								 NULL, NULL, TRUE);
 		if (item != NULL) {
-			GtkWidget *sep;
-
-			sep = add_menu_separator (menu);
+			hide_separator = FALSE;
 
 			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
-			g_object_bind_property (panel_lockdown_get (),
-						"disable-log-out",
-						sep,
-						"visible",
-						G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
-			g_object_bind_property (panel_lockdown_get (),
-						"disable-log-out",
-						item,
-						"visible",
-						G_BINDING_SYNC_CREATE|G_BINDING_INVERT_BOOLEAN);
+			g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+			                        item, "visible",
+			                        G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
 		}
 	}
+
+	/* Suspend */
+	if (panel_end_session_dialog_is_suspend_available (panel_end_session_dialog_get ())) {
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SUSPEND,
+								 NULL, NULL, TRUE);
+		if (item != NULL) {
+			hide_separator = FALSE;
+
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+			g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+			                        item, "visible",
+			                        G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+		}
+	}
+
+	/* Hubrid Sleep */
+	if (panel_end_session_dialog_is_hybrid_sleep_available (panel_end_session_dialog_get ())) {
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_HYBRID_SLEEP,
+								 NULL, NULL, TRUE);
+		if (item != NULL) {
+			hide_separator = FALSE;
+
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+			g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+			                        item, "visible",
+			                        G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+		}
+	}
+
+	/* FIXME: should be dynamic */
+	if (panel_session_manager_is_shutdown_available (panel_session_manager_get ())) {
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_REBOOT,
+	                                                 NULL, NULL, TRUE);
+		if (item != NULL) {
+			hide_separator = FALSE;
+
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+			g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+				                item, "visible",
+				                G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+		}
+
+		item = panel_menu_items_create_action_item_full (PANEL_ACTION_SHUTDOWN,
+								 NULL, NULL, TRUE);
+		if (item != NULL) {
+			hide_separator = FALSE;
+
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+			g_object_bind_property (panel_lockdown_get (), "disable-log-out",
+				                item, "visible",
+				                G_BINDING_SYNC_CREATE | G_BINDING_INVERT_BOOLEAN);
+		}
+	}
+
+	if (hide_separator)
+		g_object_set (separator, "visible", FALSE, NULL);
 }
 
 void

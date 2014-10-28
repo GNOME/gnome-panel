@@ -34,6 +34,7 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-launch.h>
 #include <libpanel-util/panel-screensaver.h>
+#include <libpanel-util/panel-end-session-dialog.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
@@ -79,6 +80,10 @@ static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_SEARCH,         "search"         },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
+	{ PANEL_ACTION_HIBERNATE,      "hibernate"      },
+	{ PANEL_ACTION_SUSPEND,        "suspend"        },
+	{ PANEL_ACTION_HYBRID_SLEEP,   "hybrid-sleep"   },
+	{ PANEL_ACTION_REBOOT,         "reboot"         },
 	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
 	{ 0,                           NULL             },
 };
@@ -197,6 +202,81 @@ panel_action_logout (GtkWidget *widget)
 	 * http://bugzilla.gnome.org/show_bug.cgi?id=536914 */
 	panel_session_manager_request_logout (panel_session_manager_get (),
 					      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
+}
+
+static void
+panel_action_hibernate (GtkWidget *widget)
+{
+	PanelEndSessionDialog *dialog;
+
+	dialog = panel_end_session_dialog_get ();
+	panel_end_session_dialog_request_hibernate (dialog);
+}
+
+static gboolean
+panel_action_hibernate_is_disabled (void)
+{
+	PanelEndSessionDialog *dialog;
+
+	if (panel_lockdown_get_disable_log_out_s ())
+		return TRUE;
+
+	dialog = panel_end_session_dialog_get ();
+
+	return (!panel_end_session_dialog_is_hibernate_available (dialog));
+}
+
+static void
+panel_action_suspend (GtkWidget *widget)
+{
+	PanelEndSessionDialog *dialog;
+
+	dialog = panel_end_session_dialog_get ();
+	panel_end_session_dialog_request_suspend (dialog);
+}
+
+static gboolean
+panel_action_suspend_is_disabled (void)
+{
+	PanelEndSessionDialog *dialog;
+
+	if (panel_lockdown_get_disable_log_out_s ())
+		return TRUE;
+
+	dialog = panel_end_session_dialog_get ();
+
+	return (!panel_end_session_dialog_is_suspend_available (dialog));
+}
+
+static void
+panel_action_hybrid_sleep  (GtkWidget *widget)
+{
+	PanelEndSessionDialog *dialog;
+
+	dialog = panel_end_session_dialog_get ();
+	panel_end_session_dialog_request_hybrid_sleep (dialog);
+}
+
+static gboolean
+panel_action_hybrid_sleep_is_disabled (void)
+{
+	PanelEndSessionDialog *dialog;
+
+	if (panel_lockdown_get_disable_log_out_s ())
+		return TRUE;
+
+	dialog = panel_end_session_dialog_get ();
+
+	return (!panel_end_session_dialog_is_hybrid_sleep_available (dialog));
+}
+
+static void
+panel_action_reboot (GtkWidget *widget)
+{
+	PanelSessionManager *manager;
+
+	manager = panel_session_manager_get ();
+	panel_session_manager_request_reboot (manager);
 }
 
 static void
@@ -371,6 +451,42 @@ static PanelAction actions [] = {
 		N_("Connect to a remote computer or shared disk"),
 		"ACTION:connect-server:NEW",
 		panel_action_connect_server, NULL, NULL, NULL
+	},
+	{
+		PANEL_ACTION_HIBERNATE,
+		NULL,
+		N_("Hibernate"),
+		NULL,
+		"ACTION:hibernate:NEW",
+		panel_action_hibernate, NULL, NULL,
+		panel_action_hibernate_is_disabled
+	},
+	{
+		PANEL_ACTION_SUSPEND,
+		NULL,
+		N_("Suspend"),
+		NULL,
+		"ACTION:suspend:NEW",
+		panel_action_suspend, NULL, NULL,
+		panel_action_suspend_is_disabled
+	},
+	{
+		PANEL_ACTION_HYBRID_SLEEP,
+		NULL,
+		N_("Hybrid sleep"),
+		NULL,
+		"ACTION:hybrid-sleep:NEW",
+		panel_action_hybrid_sleep, NULL, NULL,
+		panel_action_hybrid_sleep_is_disabled
+	},
+	{
+		PANEL_ACTION_REBOOT,
+		NULL,
+		N_("Restart"),
+		N_("Restart the computer"),
+		"ACTION:reboot:NEW",
+		panel_action_reboot, NULL, NULL,
+		panel_action_shutdown_reboot_is_disabled
 	},
 	{
 		PANEL_ACTION_SHUTDOWN,
