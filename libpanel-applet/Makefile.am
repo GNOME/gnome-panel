@@ -121,10 +121,10 @@ PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_FILES = $(addprefix $(srcdir)/,$(i
 PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanel-applet
 INTROSPECTION_GIRS += PanelApplet-$(LIBPANEL_APPLET_API_VERSION).gir
 
-girdir = $(datadir)/gir-1.0
+girdir = $(INTROSPECTION_GIRDIR)
 gir_DATA = $(INTROSPECTION_GIRS)
 
-typelibdir = $(libdir)/girepository-1.0
+typelibdir = $(INTROSPECTION_TYPELIBDIR)
 typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 
 CLEANFILES += $(gir_DATA) $(typelib_DATA)
