@@ -10,7 +10,9 @@ SUBDIRS =			\
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --enable-introspection --disable-scrollkeeper
+DISTCHECK_CONFIGURE_FLAGS = \
+	--enable-gtk-doc \
+	--enable-introspection
 
 EXTRA_DIST = \
 	COPYING-DOCS		\
