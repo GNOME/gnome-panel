@@ -46,6 +46,26 @@ GNOME_COMPILE_WARNINGS([maximum])
 # Check for introspection
 GOBJECT_INTROSPECTION_CHECK([0.9.5])
 
+AC_ARG_WITH([girdir],
+	AS_HELP_STRING([--with-girdir=DIR], [Installation path for .gir files @<:@auto@:>@]),
+	[ac_with_girdir=$withval], [ac_with_girdir=""])
+if test "$ac_with_girdir" != ""; then
+	INTROSPECTION_GIRDIR=${ac_with_girdir}
+fi
+
+AC_ARG_WITH([typelibdir],
+	AS_HELP_STRING([--with-typelibdir=DIR],[Installation path for .typelib files @<:@auto@:>@]),
+	[ac_with_typelibdir=$withval], [ac_with_typelibdir=""])
+if test "$ac_with_typelibdir" != ""; then
+	INTROSPECTION_TYPELIBDIR=${ac_with_typelibdir}
+fi
+
+AC_MSG_NOTICE([installing .gir files in $INTROSPECTION_GIRDIR])
+AC_MSG_NOTICE([installing .typelib files in $INTROSPECTION_TYPELIBDIR])
+
+AC_SUBST(INTROSPECTION_GIRDIR)
+AC_SUBST(INTROSPECTION_TYPELIBDIR)
+
 GLIB_GSETTINGS
 
 m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
