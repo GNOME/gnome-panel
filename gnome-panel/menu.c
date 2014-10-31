@@ -28,6 +28,7 @@
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
 
+#include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-xdg.h>
 
@@ -1496,5 +1497,5 @@ get_applications_menu (void)
 {
 	const gchar *xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
 	return g_strdup_printf ("%sapplications.menu",
-	                        xdg_menu_prefx ? xdg_menu_prefx : "gnome-");
+	                        !PANEL_GLIB_STR_EMPTY (xdg_menu_prefx) ? xdg_menu_prefx : "gnome-");
 }
