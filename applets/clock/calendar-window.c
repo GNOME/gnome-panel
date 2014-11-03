@@ -251,7 +251,7 @@ enum {
         APPOINTMENT_COLUMN_START_TEXT,
         APPOINTMENT_COLUMN_END_TIME,
         APPOINTMENT_COLUMN_ALL_DAY,
-        APPOINTMENT_COLUMN_PIXBUF,
+        APPOINTMENT_COLUMN_COLOR,
         N_APPOINTMENT_COLUMNS
 };
 
@@ -570,26 +570,25 @@ set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
                                      GtkTreeIter     *iter,
                                      gint             column_number)
 {
-        char      *color_string;
-        GdkPixbuf *pixbuf = NULL;
-        GdkColor   color;
+        gchar *color_string;
+        GdkRGBA color;
 
         gtk_tree_model_get (model, iter, column_number, &color_string, -1);
 
-        if (color_string && gdk_color_parse (color_string, &color)) {
-                pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 16, 16);
-                /* GdkColor has 16 bits per color, gdk_pixbuf only uses 8 bits
-                 * per color. So just drop the least significant parts */
-                gdk_pixbuf_fill (pixbuf,
-				 (color.red   & 0xff00) << 16 |
-				 (color.green & 0xff00) << 8  | 
-				 (color.blue  & 0xff00));
+        if (color_string && gdk_rgba_parse (&color, color_string)) {
+                cairo_surface_t *surface;
+                cairo_t *cr;
 
-                g_object_set (renderer, "visible", pixbuf != NULL, "pixbuf", pixbuf, NULL);
+                surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 16, 16);
+                cr = cairo_create (surface);
 
-                if (pixbuf)
-                        g_object_unref (pixbuf);
+                gdk_cairo_set_source_rgba (cr, &color);
+                cairo_paint (cr);
 
+                g_object_set (renderer, "visible", surface != NULL, "surface", surface, NULL);
+
+                cairo_destroy (cr);
+                cairo_surface_destroy (surface);
                 g_free (color_string);
         }
 }
@@ -687,7 +686,7 @@ appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
         set_renderer_pixbuf_color_by_column (renderer,
                                              model,
                                              iter,
-                                             APPOINTMENT_COLUMN_PIXBUF);
+                                             APPOINTMENT_COLUMN_COLOR);
 }
 static void
 birthday_pixbuf_cell_data_func (GtkTreeViewColumn   *column,
@@ -970,7 +969,7 @@ handle_appointments_changed (CalendarWindow *calwin)
                                     APPOINTMENT_COLUMN_START_TEXT,  start_text,
                                     APPOINTMENT_COLUMN_END_TIME,    (gint64)appointment->end_time,
                                     APPOINTMENT_COLUMN_ALL_DAY,     appointment->is_all_day,
-                                    APPOINTMENT_COLUMN_PIXBUF,      appointment->color_string,
+                                    APPOINTMENT_COLUMN_COLOR,       appointment->color_string,
                                     -1);
 
                 g_free (start_text);
