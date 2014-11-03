@@ -19,12 +19,12 @@ G_BEGIN_DECLS
 
 typedef struct
 {
-        GtkAlignment parent;
+        GtkBin parent;
 } ClockLocationTile;
 
 typedef struct
 {
-        GtkAlignmentClass parent_class;
+        GtkBinClass parent_class;
 
 	void (* tile_pressed) (ClockLocationTile *tile);
         int  (* need_clock_format) (ClockLocationTile *tile);

@@ -17,7 +17,7 @@
 #include "clock-marshallers.h"
 #include "set-timezone.h"
 
-G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_ALIGNMENT)
+G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
 
 enum {
 	TILE_PRESSED,
