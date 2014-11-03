@@ -284,13 +284,13 @@ clock_location_tile_fill (ClockLocationTile *this)
 
         priv->city_label = gtk_label_new (NULL);
         gtk_widget_set_margin_end (priv->city_label, 3);
-        gtk_misc_set_alignment (GTK_MISC (priv->city_label), 0, 0);
+        gtk_label_set_xalign (GTK_LABEL (priv->city_label), 0);
 
         gtk_box_pack_start (GTK_BOX (head_section), priv->city_label, FALSE, FALSE, 0);
 
         priv->time_label = gtk_label_new (NULL);
         gtk_widget_set_margin_end (priv->time_label, 3);
-        gtk_misc_set_alignment (GTK_MISC (priv->time_label), 0, 0);
+        gtk_label_set_yalign (GTK_LABEL (priv->time_label), 0);
 
         priv->weather_icon = gtk_image_new ();
         gtk_widget_set_valign (priv->weather_icon, GTK_ALIGN_START);
@@ -310,7 +310,6 @@ clock_location_tile_fill (ClockLocationTile *this)
 				     _("Set location as current location and use its timezone for this computer"));
 
 	priv->current_marker = gtk_image_new_from_icon_name ("go-home", GTK_ICON_SIZE_BUTTON);
-	gtk_misc_set_alignment (GTK_MISC (priv->current_marker), 1.0, 0.5);
 	gtk_widget_set_no_show_all (priv->current_marker, TRUE);
 
 	priv->current_spacer = gtk_event_box_new ();
