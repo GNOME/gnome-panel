@@ -629,14 +629,18 @@ panel_applet_menu_get_action (PanelApplet *applet,
 static void
 panel_applet_menu_update_actions (PanelApplet *applet)
 {
-	gboolean locked_down = applet->priv->locked_down;
+	gboolean locked_down;
+	GAction *action;
 
-	g_object_set (panel_applet_menu_get_action (applet, "Move"),
-		      "enabled", !locked_down,
-		      NULL);
-	g_object_set (panel_applet_menu_get_action (applet, "Remove"),
-		      "enabled", !locked_down,
-		      NULL);
+	locked_down = applet->priv->locked_down;
+
+	action = panel_applet_menu_get_action (applet, "Move");
+	if (action)
+		g_object_set (action, "enabled", !locked_down, NULL);
+
+	action = panel_applet_menu_get_action (applet, "Remove");
+	if (action)
+		g_object_set (action, "enabled", !locked_down, NULL);
 }
 
 static void
