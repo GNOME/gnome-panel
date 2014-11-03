@@ -44,8 +44,6 @@ typedef struct {
         GtkWidget *current_label;
         GtkWidget *current_marker;
         GtkWidget *current_spacer;
-        GtkSizeGroup *current_group;
-        GtkSizeGroup *button_group;
 
         GtkWidget *weather_icon;
 
@@ -152,16 +150,6 @@ clock_location_tile_finalize (GObject *g_obj)
                 priv->location = NULL;
         }
 
-        if (priv->button_group) {
-                g_object_unref (priv->button_group);
-                priv->button_group = NULL;
-        }
-
-        if (priv->current_group) {
-                g_object_unref (priv->current_group);
-                priv->current_group = NULL;
-        }
-
         G_OBJECT_CLASS (clock_location_tile_parent_class)->finalize (g_obj);
 }
 
@@ -264,6 +252,8 @@ clock_location_tile_fill (ClockLocationTile *this)
         GtkWidget *box;
         GtkWidget *tile;
         GtkWidget *head_section;
+        GtkSizeGroup *current_group;
+        GtkSizeGroup *button_group;
 
         priv->box = gtk_event_box_new ();
 
@@ -320,10 +310,12 @@ clock_location_tile_fill (ClockLocationTile *this)
         gtk_box_pack_start (GTK_BOX (box), priv->current_button, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->current_marker, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (box), priv->current_spacer, FALSE, FALSE, 0);
-        priv->button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
-        gtk_size_group_set_ignore_hidden (priv->button_group, FALSE);
-        gtk_size_group_add_widget (priv->button_group, strut);
-        gtk_size_group_add_widget (priv->button_group, priv->current_button);
+
+        button_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
+        gtk_size_group_set_ignore_hidden (button_group, FALSE);
+        gtk_size_group_add_widget (button_group, strut);
+        gtk_size_group_add_widget (button_group, priv->current_button);
+        g_object_unref (button_group);
 
 	/* 
 	 * Avoid resizing the popup as the tiles display the current marker, 
@@ -334,11 +326,12 @@ clock_location_tile_fill (ClockLocationTile *this)
  	 * (The all have to be shown initially to get the sizes worked out, 
  	 * but they are never visible together). 
 	 */
-        priv->current_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
-        gtk_size_group_set_ignore_hidden (priv->current_group, FALSE);
-        gtk_size_group_add_widget (priv->current_group, priv->current_button);
-        gtk_size_group_add_widget (priv->current_group, priv->current_marker);
-        gtk_size_group_add_widget (priv->current_group, priv->current_spacer);
+        current_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
+        gtk_size_group_set_ignore_hidden (current_group, FALSE);
+        gtk_size_group_add_widget (current_group, priv->current_button);
+        gtk_size_group_add_widget (current_group, priv->current_marker);
+        gtk_size_group_add_widget (current_group, priv->current_spacer);
+        g_object_unref (current_group);
 	
 	gtk_widget_show (priv->current_button);
 	gtk_widget_show (priv->current_marker);
