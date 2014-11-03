@@ -112,7 +112,6 @@ struct _ClockData {
 
 	GtkListStore *cities_store;
         GtkWidget *cities_section;
-        GtkWidget *map_section;
         GtkWidget *map_widget;
 
 	/* preferences */
@@ -729,7 +728,7 @@ create_map_section (ClockData *cd)
         ClockMap *map;
 
         if (cd->map_widget) {
-                gtk_widget_destroy (GTK_WIDGET (cd->map_section));
+                gtk_widget_destroy (cd->map_widget);
                 cd->map_widget = NULL;
         }
 
@@ -737,16 +736,15 @@ create_map_section (ClockData *cd)
         g_signal_connect (map, "need-locations",
                           G_CALLBACK (map_need_locations_cb), cd);
 
-        cd->map_section = gtk_alignment_new (0, 0, 1, 1);
         cd->map_widget = GTK_WIDGET (map);
 
-        gtk_container_add (GTK_CONTAINER (cd->map_section), cd->map_widget);
+        gtk_widget_set_margin_top (cd->map_widget, 1);
+        gtk_widget_set_margin_bottom (cd->map_widget, 1);
+        gtk_widget_set_margin_start (cd->map_widget, 1);
+        gtk_widget_set_margin_end (cd->map_widget, 1);
 
-        gtk_alignment_set_padding (GTK_ALIGNMENT (cd->map_section), 1, 1, 1, 1);
-
-        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_section, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (cd->clock_vbox), cd->map_widget, TRUE, TRUE, 0);
         gtk_widget_show (cd->map_widget);
-        gtk_widget_show (cd->map_section);
 }
 
 static void
@@ -757,7 +755,6 @@ update_calendar_popup (ClockData *cd)
                         gtk_widget_destroy (cd->calendar_popup);
                         cd->calendar_popup = NULL;
                         cd->cities_section = NULL;
-                        cd->map_section = NULL;
                         cd->map_widget = NULL;
 			cd->clock_vbox = NULL;
 			
