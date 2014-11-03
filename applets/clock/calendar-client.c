@@ -773,13 +773,6 @@ get_source_backend_name (ECal *esource)
   return e_source_backend_dup_backend_name (extension);
 }
 
-static inline int
-null_safe_strcmp (const char *a,
-		  const char *b)
-{
-  return (!a && !b) ? 0 : (a && !b) || (!a && b) ? 1 : strcmp (a, b);
-}
-
 static inline gboolean
 calendar_appointment_equal (CalendarAppointment *a,
 			    CalendarAppointment *b)
@@ -800,13 +793,13 @@ calendar_appointment_equal (CalendarAppointment *a,
     }
 
   return
-    null_safe_strcmp (a->uid,          b->uid)          == 0 &&
-    null_safe_strcmp (a->backend_name, b->backend_name) == 0 &&
-    null_safe_strcmp (a->summary,      b->summary)      == 0 &&
-    null_safe_strcmp (a->description,  b->description)  == 0 &&
-    null_safe_strcmp (a->color_string, b->color_string) == 0 &&
-    a->start_time == b->start_time                         &&
-    a->end_time   == b->end_time                           &&
+    g_strcmp0 (a->uid, b->uid) == 0 &&
+    g_strcmp0 (a->backend_name, b->backend_name) == 0 &&
+    g_strcmp0 (a->summary, b->summary) == 0 &&
+    g_strcmp0 (a->description, b->description) == 0 &&
+    g_strcmp0 (a->color_string, b->color_string) == 0 &&
+    a->start_time == b->start_time &&
+    a->end_time == b->end_time &&
     a->is_all_day == b->is_all_day;
 }
 
@@ -961,15 +954,15 @@ calendar_task_equal (CalendarTask *a,
 		     CalendarTask *b)
 {
   return
-    null_safe_strcmp (a->uid,          b->uid)          == 0 &&
-    null_safe_strcmp (a->summary,      b->summary)      == 0 &&
-    null_safe_strcmp (a->description,  b->description)  == 0 &&
-    null_safe_strcmp (a->color_string, b->color_string) == 0 &&
-    a->start_time       == b->start_time                   &&
-    a->due_time         == b->due_time                     &&
-    a->percent_complete == b->percent_complete             &&
-    a->completed_time   == b->completed_time               &&
-    a->priority         == b->priority;
+    g_strcmp0 (a->uid, b->uid) == 0 &&
+    g_strcmp0 (a->summary, b->summary) == 0 &&
+    g_strcmp0 (a->description, b->description) == 0 &&
+    g_strcmp0 (a->color_string, b->color_string) == 0 &&
+    a->start_time == b->start_time &&
+    a->due_time == b->due_time &&
+    a->percent_complete == b->percent_complete &&
+    a->completed_time == b->completed_time &&
+    a->priority == b->priority;
 }
 
 static void
