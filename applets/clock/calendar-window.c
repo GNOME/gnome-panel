@@ -128,86 +128,49 @@ static GtkWidget * create_hig_frame 		  (CalendarWindow *calwin,
 
 #ifdef HAVE_EDS
 
-/*
- * Set the DISPLAY variable, to be use by g_spawn_async.
- */
-static void
-set_environment (gpointer display)
-{
-	g_setenv ("DISPLAY", display, TRUE);
-}
-
 static void
 clock_launch_calendar_tasks_app (CalendarWindow *calwin,
-				 const char     *schema_program,
-				 const char     *argument)
+                                 const gchar    *schema_program,
+                                 const gchar    *argument)
 {
-	GSettings  *settings;
-	char      **argv;
-	char       *program;
-	gboolean    terminal;
-	char       *command_line;
-	GdkScreen  *screen;
-	GError     *error;
-	gboolean    result;
-	char       *display;
+	GSettings *settings;
+	gchar *program;
+	gchar *command_line;
+	GAppInfo *app_info;
+	GError *error;
 
 	settings = g_settings_new (schema_program);
 	program = g_settings_get_string (settings, "exec");
-	terminal = g_settings_get_boolean (settings, "needs-term");
 	g_object_unref (settings);
 
 	if (program == NULL) {
-		g_printerr ("Cannot launch calendar/tasks application: key not set\n");
+		g_warning ("Cannot launch calendar/tasks application: key not set");
 		return;
 	}
 
-	/* FIXME: reintroduce terminal support if a proper GAppInfo port of gnome-panel is ever done */
-	if (terminal) {
-		g_printerr ("Terminal-based calendar/tasks applications are no longer supported, sorry. "
-		            "Please configure a different application.\n");
-		return;
-	}
+	if (argument)
+		command_line = g_strdup_printf ("%s %s", program, argument);
+	else
+		command_line = g_strdup (program);
+	g_free (program);
 
-	command_line = g_find_program_in_path (program);
-	if (command_line == NULL) {
-		g_printerr ("Cannot launch calendar/tasks application: %s in path\n", program);
-		g_free (program);
-		return;
-	}
+	error = NULL;
+	app_info = g_app_info_create_from_commandline (command_line,
+	                                               NULL,
+	                                               G_APP_INFO_CREATE_NONE,
+	                                               &error);
 	g_free (command_line);
 
-	if (argument) {
-		argv = g_new0 (char *, 3);
-		argv[1] = g_strdup (argument);
-	} else {
-		argv = g_new0 (char *, 2);
+	if (error) {
+		g_warning ("Cannot launch calendar/tasks application: %s", error->message);
+		g_error_free (error);
+		return;
 	}
-	argv[0] = program; /* no strdup, and it will get freed for free */
 
-	screen = gtk_widget_get_screen (calwin->priv->calendar);
-	error = NULL;
-
-	display = gdk_screen_make_display_name (screen);
-
-	result = g_spawn_async (NULL, /* working directory */
-			        argv,
-				NULL, /* envp */
-				G_SPAWN_SEARCH_PATH,
-				set_environment, /* child setup func */
-				&display, /* user data for child setup */
-				NULL,     /* child pid */
-				&error);
-
-	g_free (display);
-
-	if (!result) {
-		g_printerr ("Cannot launch calendar/tasks application: %s\n",
-			    error->message);
+	if (!g_app_info_launch (app_info, NULL, NULL, &error)) {
+		g_warning ("Cannot launch calendar/tasks application: %s", error->message);
 		g_error_free (error);
 	}
-
-	g_strfreev (argv);
 }
 
 static void
