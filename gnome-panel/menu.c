@@ -776,7 +776,7 @@ setup_menuitem (GtkWidget   *menuitem,
 
 	gtk_accel_label_set_accel_widget (GTK_ACCEL_LABEL (label), menuitem);
 
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_label_set_xalign (GTK_LABEL (label), 0);
 	gtk_widget_show (label);
        
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
