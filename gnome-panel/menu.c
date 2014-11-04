@@ -1389,7 +1389,7 @@ create_main_menu (PanelWidget *panel)
 	gchar *applications_menu;
 
 	applications_menu = get_applications_menu ();
-	main_menu = create_applications_menu ("gnome-applications.menu", NULL, TRUE);
+	main_menu = create_applications_menu (applications_menu, NULL, TRUE);
 	g_free (applications_menu);
 
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
