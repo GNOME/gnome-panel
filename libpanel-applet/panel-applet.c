@@ -1033,12 +1033,18 @@ panel_applet_can_focus (GtkWidget *widget)
 
 /* Taken from libbonoboui/bonobo/bonobo-plug.c */
 static gboolean
-panel_applet_button_event (GtkWidget      *widget,
-			   GdkEventButton *event)
+panel_applet_button_event (PanelApplet    *applet,
+                           GdkEventButton *event)
 {
+	GtkWidget *widget;
 	GdkWindow *window;
 	GdkWindow *socket_window;
 	XEvent     xevent;
+
+	if (!applet->priv->out_of_process)
+		return FALSE;
+
+	widget = applet->priv->plug;
 
 	if (!gtk_widget_is_toplevel (widget))
 		return FALSE;
@@ -1112,7 +1118,7 @@ panel_applet_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	return panel_applet_button_event (applet->priv->plug, event);
+	return panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -1121,7 +1127,7 @@ panel_applet_button_release (GtkWidget      *widget,
 {
 	PanelApplet *applet = PANEL_APPLET (widget);
 
-	return panel_applet_button_event (applet->priv->plug, event);
+	return panel_applet_button_event (applet, event);
 }
 
 static gboolean
@@ -1847,6 +1853,9 @@ panel_applet_constructor (GType                  type,
 	                                                                  construct_properties);
 	applet = PANEL_APPLET (object);
 
+	if (!applet->priv->out_of_process)
+		return object;
+
 	applet->priv->plug = gtk_plug_new (0);
 
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
@@ -2447,6 +2456,9 @@ guint32
 panel_applet_get_xid (PanelApplet *applet,
 		      GdkScreen   *screen)
 {
+	if (applet->priv->out_of_process == FALSE)
+		return 0;
+
 	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
 	gtk_widget_show (applet->priv->plug);
 
@@ -2463,5 +2475,14 @@ G_MODULE_EXPORT GtkWidget *
 panel_applet_get_applet_widget (const gchar *factory_id,
                                 guint        uid)
 {
-	return panel_applet_factory_get_applet_widget (factory_id, uid);
+	GtkWidget *widget;
+
+	widget = panel_applet_factory_get_applet_widget (factory_id, uid);
+	if (!widget) {
+		return NULL;
+	}
+
+	panel_applet_setup (PANEL_APPLET (widget));
+
+	return widget;
 }

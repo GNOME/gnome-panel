@@ -20,6 +20,7 @@
 
 #include <string.h>
 #include <gtk/gtkx.h>
+#include <panel-applets-manager.h>
 #include "panel-applet-container.h"
 #include "panel-marshal.h"
 
@@ -29,6 +30,7 @@ struct _PanelAppletContainerPrivate {
 	guint       name_watcher_id;
 	gchar      *bus_name;
 
+	gchar      *iid;
 	gboolean    out_of_process;
 	guint32     xid;
 	guint32     uid;
@@ -84,19 +86,32 @@ panel_applet_container_init (PanelAppletContainer *container)
 {
 	container->priv = PANEL_APPLET_CONTAINER_GET_PRIVATE (container);
 
-	container->priv->socket = gtk_socket_new ();
-	g_signal_connect_swapped (container->priv->socket, "plug-removed",
-				  G_CALLBACK (panel_applet_container_plug_removed),
-				  container);
-
 	container->priv->pending_ops = g_hash_table_new_full (g_direct_hash,
 							      g_direct_equal,
 							      NULL,
 							      (GDestroyNotify) g_object_unref);
+}
 
-	gtk_container_add (GTK_CONTAINER (container),
-			   container->priv->socket);
-	gtk_widget_show (container->priv->socket);
+static void
+panel_applet_container_setup (PanelAppletContainer *container)
+{
+	if (container->priv->out_of_process) {
+		container->priv->socket = gtk_socket_new ();
+
+		g_signal_connect_swapped (container->priv->socket,
+		                          "plug-removed",
+		                          G_CALLBACK (panel_applet_container_plug_removed),
+		                          container);
+
+		gtk_container_add (GTK_CONTAINER (container), container->priv->socket);
+		gtk_widget_show (container->priv->socket);
+	} else {
+		GtkWidget *applet;
+
+		applet = panel_applets_manager_get_applet_widget (container->priv->iid, container->priv->uid);
+
+		gtk_container_add (GTK_CONTAINER (container), applet);
+	}
 }
 
 static void
@@ -132,6 +147,11 @@ panel_applet_container_dispose (GObject *object)
 	if (container->priv->bus_name) {
 		g_free (container->priv->bus_name);
 		container->priv->bus_name = NULL;
+	}
+
+	if (container->priv->iid) {
+		g_free (container->priv->iid);
+		container->priv->iid = NULL;
 	}
 
 	if (container->priv->name_watcher_id > 0) {
@@ -339,6 +359,8 @@ on_proxy_appeared (GObject      *source_object,
 	g_simple_async_result_complete (result);
 	g_object_unref (result);
 
+	panel_applet_container_setup (container);
+
 	if (container->priv->xid > 0) {
 		gtk_socket_add_id (GTK_SOCKET (container->priv->socket),
 				   container->priv->xid);
@@ -486,6 +508,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 
 	bus_name = g_strdup_printf (PANEL_APPLET_BUS_NAME, factory_id);
 
+	container->priv->iid = g_strdup (iid);
 	container->priv->name_watcher_id =
 		g_bus_watch_name (G_BUS_TYPE_SESSION,
 				  bus_name,
