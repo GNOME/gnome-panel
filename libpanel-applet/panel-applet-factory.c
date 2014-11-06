@@ -30,6 +30,9 @@ struct _PanelAppletFactory {
 	GType      applet_type;
 	GClosure  *closure;
 
+	GHashTable      *applets;
+	guint            next_uid;
+
 	GDBusConnection *connection;
 	gint             owner_id;
 	gint             registration_id;
@@ -73,6 +76,11 @@ panel_applet_factory_finalize (GObject *object)
 		factory->factory_id = NULL;
 	}
 
+	if (factory->applets) {
+		g_hash_table_unref (factory->applets);
+		factory->applets = NULL;
+	}
+
 	if (factory->closure) {
 		g_closure_unref (factory->closure);
 		factory->closure = NULL;
@@ -84,6 +92,8 @@ panel_applet_factory_finalize (GObject *object)
 static void
 panel_applet_factory_init (PanelAppletFactory *factory)
 {
+	factory->applets = g_hash_table_new (NULL, NULL);
+	factory->next_uid = 1;
 }
 
 static void
@@ -98,6 +108,12 @@ static void
 panel_applet_factory_applet_removed (PanelAppletFactory *factory,
 				     GObject            *applet)
 {
+	guint uid;
+
+	uid = GPOINTER_TO_UINT (g_object_get_data (applet, "uid"));
+
+	g_hash_table_remove (factory->applets, GUINT_TO_POINTER (uid));
+
 	factory->n_applets--;
 	if (factory->n_applets == 0)
 		g_object_unref (factory);
@@ -175,6 +191,7 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 	GVariant    *props;
 	GdkScreen   *screen;
 	guint32      xid;
+	guint32      uid;
 	const gchar *object_path;
 
 	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
@@ -196,7 +213,11 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 		gdk_screen_get_default ();
 
 	xid = panel_applet_get_xid (PANEL_APPLET (applet), screen);
+	uid = factory->next_uid++;
 	object_path = panel_applet_get_object_path (PANEL_APPLET (applet));
+
+	g_hash_table_insert (factory->applets, GUINT_TO_POINTER (uid), applet);
+	g_object_set_data (applet, "uid", GUINT_TO_POINTER (uid));
 
 	g_dbus_method_invocation_return_value (invocation,
 					       g_variant_new ("(ou)", object_path, xid));
