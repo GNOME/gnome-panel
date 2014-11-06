@@ -44,10 +44,19 @@ struct _PanelAppletFactoryClass {
 
 G_DEFINE_TYPE (PanelAppletFactory, panel_applet_factory, G_TYPE_OBJECT)
 
+static GHashTable *factories = NULL;
+
 static void
 panel_applet_factory_finalize (GObject *object)
 {
 	PanelAppletFactory *factory = PANEL_APPLET_FACTORY (object);
+
+	g_hash_table_remove (factories, factory->factory_id);
+
+	if (g_hash_table_size (factories) == 0) {
+		g_hash_table_unref (factories);
+		factories = NULL;
+	}
 
 	if (factory->registration_id) {
 		g_dbus_connection_unregister_object (factory->connection, factory->registration_id);
@@ -107,6 +116,12 @@ panel_applet_factory_new (const gchar *factory_id,
 	factory->out_of_process = out_of_process;
 	factory->applet_type = applet_type;
 	factory->closure = g_closure_ref (closure);
+
+	if (factories == NULL) {
+		factories = g_hash_table_new (g_str_hash, g_str_equal);
+	}
+
+	g_hash_table_insert (factories, factory->factory_id, factory);
 
 	return factory;
 }
