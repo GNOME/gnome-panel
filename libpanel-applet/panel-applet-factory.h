@@ -40,12 +40,6 @@ PanelAppletFactory *panel_applet_factory_new              (const gchar        *a
 							   GClosure           *closure);
 gboolean            panel_applet_factory_register_service (PanelAppletFactory *factory);
 
-/* This technically belongs to panel-applet.h, but it's not something that
- * should be public API. */
-guint32            panel_applet_get_xid              (PanelApplet *applet,
-						      GdkScreen   *screen);
-const gchar       *panel_applet_get_object_path      (PanelApplet *applet);
-
 G_END_DECLS
 
 #endif /* PANEL_APPLET_FACTORY_H */

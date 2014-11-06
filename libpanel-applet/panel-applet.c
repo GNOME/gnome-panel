@@ -40,6 +40,7 @@
 #include <cairo-xlib.h>
 
 #include "panel-applet.h"
+#include "panel-applet-private.h"
 #include "panel-applet-bindings.h"
 #include "panel-applet-factory.h"
 #include "panel-applet-marshal.h"

@@ -18,7 +18,7 @@
  */
 
 #include "panel-applet.h"
-
+#include "panel-applet-private.h"
 #include "panel-applet-factory.h"
 
 struct _PanelAppletFactory {
