@@ -1826,19 +1826,36 @@ panel_applet_init (PanelApplet *applet)
 	gtk_widget_insert_action_group (GTK_WIDGET (applet), "libpanel-applet",
 	                                G_ACTION_GROUP (applet->priv->panel_action_group));
 
-	applet->priv->plug = gtk_plug_new (0);
-	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
-				  G_CALLBACK (panel_applet_setup),
-				  applet);
-
 	gtk_widget_set_events (GTK_WIDGET (applet),
 			       GDK_BUTTON_PRESS_MASK |
 			       GDK_BUTTON_RELEASE_MASK);
 
 	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+}
+
+static GObject *
+panel_applet_constructor (GType                  type,
+                          guint                  n_construct_properties,
+                          GObjectConstructParam *construct_properties)
+{
+	GObject     *object;
+	PanelApplet *applet;
+
+	object = G_OBJECT_CLASS (panel_applet_parent_class)->constructor (type,
+	                                                                  n_construct_properties,
+	                                                                  construct_properties);
+	applet = PANEL_APPLET (object);
+
+	applet->priv->plug = gtk_plug_new (0);
+
+	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
+		                      G_CALLBACK (panel_applet_setup),
+		                      applet);
 
 	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
+
+	return object;
 }
 
 static void
@@ -1863,6 +1880,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	gobject_class->get_property = panel_applet_get_property;
 	gobject_class->set_property = panel_applet_set_property;
+	gobject_class->constructor = panel_applet_constructor;
 	gobject_class->constructed = panel_applet_constructed;
         gobject_class->finalize = panel_applet_finalize;
 
