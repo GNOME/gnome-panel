@@ -25,9 +25,9 @@
 
 G_BEGIN_DECLS
 
-guint32      panel_applet_get_xid         (PanelApplet *applet,
-                                           GdkScreen   *screen);
-const gchar *panel_applet_get_object_path (PanelApplet *applet);
+guint32      panel_applet_get_xid           (PanelApplet *applet,
+                                             GdkScreen   *screen);
+const gchar *panel_applet_get_object_path   (PanelApplet *applet);
 
 G_END_DECLS
 
