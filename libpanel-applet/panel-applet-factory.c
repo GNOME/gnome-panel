@@ -321,4 +321,23 @@ panel_applet_factory_register_service (PanelAppletFactory *factory)
 	return TRUE;
 }
 
+GtkWidget *
+panel_applet_factory_get_applet_widget (const gchar *id,
+                                        guint        uid)
+{
+	PanelAppletFactory *factory;
+	GObject            *object;
 
+	if (!factories)
+		return NULL;
+
+	factory = g_hash_table_lookup (factories, id);
+	if (!factory)
+		return NULL;
+
+	object = g_hash_table_lookup (factory->applets, GUINT_TO_POINTER (uid));
+	if (!object || !GTK_IS_WIDGET (object))
+		return NULL;
+
+	return GTK_WIDGET (object);
+}

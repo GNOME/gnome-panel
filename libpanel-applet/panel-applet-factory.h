@@ -40,7 +40,8 @@ PanelAppletFactory *panel_applet_factory_new               (const gchar        *
                                                             GType               applet_type,
                                                             GClosure           *closure);
 gboolean            panel_applet_factory_register_service  (PanelAppletFactory *factory);
-
+GtkWidget          *panel_applet_factory_get_applet_widget (const gchar        *id,
+                                                            guint               uid);
 G_END_DECLS
 
 #endif /* PANEL_APPLET_FACTORY_H */
