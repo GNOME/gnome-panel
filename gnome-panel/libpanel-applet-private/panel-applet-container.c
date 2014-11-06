@@ -29,7 +29,9 @@ struct _PanelAppletContainerPrivate {
 	guint       name_watcher_id;
 	gchar      *bus_name;
 
+	gboolean    out_of_process;
 	guint32     xid;
+	guint32     uid;
 	GtkWidget  *socket;
 
 	GHashTable *pending_ops;
@@ -369,7 +371,12 @@ get_applet_cb (GObject      *source_object,
 	}
 
 	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (result)));
-	g_variant_get (retvals, "(&ou)", &applet_path, &container->priv->xid);
+	g_variant_get (retvals,
+	               "(&obuu)",
+	               &applet_path,
+	               &container->priv->out_of_process,
+	               &container->priv->xid,
+	               &container->priv->uid);
 
 	g_dbus_proxy_new (connection,
 			  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
@@ -422,7 +429,7 @@ on_factory_appeared (GDBusConnection   *connection,
 				PANEL_APPLET_FACTORY_INTERFACE,
 				"GetApplet",
 				data->parameters,
-				G_VARIANT_TYPE ("(ou)"),
+				G_VARIANT_TYPE ("(obuu)"),
 				G_DBUS_CALL_FLAGS_NONE,
 				-1,
 				data->cancellable,
