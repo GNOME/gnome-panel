@@ -74,8 +74,6 @@
  * your binary.
  */
 
-#define PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, PanelAppletPrivate))
-
 struct _PanelAppletPrivate {
 	GtkWidget         *plug;
 	GtkWidget         *applet;
@@ -167,7 +165,7 @@ static const GActionEntry menu_entries[] = {
 	{ "move",   panel_applet_menu_cmd_move,   NULL, NULL, NULL }
 };
 
-G_DEFINE_TYPE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
 
 #define PANEL_APPLET_INTERFACE   "org.gnome.panel.applet.Applet"
 #define PANEL_APPLET_OBJECT_PATH "/org/gnome/panel/applet/%s/%d"
@@ -1808,7 +1806,7 @@ panel_applet_init (PanelApplet *applet)
 {
 	GtkStyleContext *context;
 
-	applet->priv = PANEL_APPLET_GET_PRIVATE (applet);
+	applet->priv = panel_applet_get_instance_private (applet);
 
 	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;
 	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
@@ -1880,8 +1878,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	widget_class->draw = panel_applet_draw;
 	widget_class->focus = panel_applet_focus;
 	widget_class->realize = panel_applet_realize;
-
-	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
 	/**
 	 * PanelApplet:out-of-process: (skip)
