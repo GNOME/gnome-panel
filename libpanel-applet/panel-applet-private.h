@@ -28,6 +28,8 @@ G_BEGIN_DECLS
 guint32      panel_applet_get_xid           (PanelApplet *applet,
                                              GdkScreen   *screen);
 const gchar *panel_applet_get_object_path   (PanelApplet *applet);
+GtkWidget   *panel_applet_get_applet_widget (const gchar *factory_id,
+                                             guint        uid);
 
 G_END_DECLS
 

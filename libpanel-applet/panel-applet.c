@@ -2458,3 +2458,10 @@ panel_applet_get_object_path (PanelApplet *applet)
 {
 	return applet->priv->object_path;
 }
+
+G_MODULE_EXPORT GtkWidget *
+panel_applet_get_applet_widget (const gchar *factory_id,
+                                guint        uid)
+{
+	return panel_applet_factory_get_applet_widget (factory_id, uid);
+}

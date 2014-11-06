@@ -197,3 +197,23 @@ panel_applets_manager_load_applet (const gchar                *iid,
 
 	return FALSE;
 }
+
+GtkWidget *
+panel_applets_manager_get_applet_widget (const gchar *iid,
+                                         guint        uid)
+{
+	GSList *l;
+
+	_panel_applets_managers_ensure_loaded ();
+
+	for (l = panel_applets_managers; l != NULL; l = l->next) {
+		PanelAppletsManager *manager = PANEL_APPLETS_MANAGER (l->data);
+
+		if (!PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid))
+			continue;
+
+		return PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_widget (manager, iid, uid);
+	}
+
+	return NULL;
+}

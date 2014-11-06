@@ -64,6 +64,10 @@ struct _PanelAppletsManagerClass {
 	gboolean           (*load_applet)           (PanelAppletsManager         *manager,
 						     const gchar                 *iid,
 						     PanelAppletFrameActivating  *frame_act);
+
+	GtkWidget        * (*get_applet_widget)     (PanelAppletsManager         *manager,
+	                                             const gchar                 *iid,
+	                                             guint                        uid);
 };
 
 struct _PanelAppletsManager {
@@ -82,6 +86,9 @@ PanelAppletInfo  *panel_applets_manager_get_applet_info_from_old_id (const gchar
 
 gboolean          panel_applets_manager_load_applet                 (const gchar                *iid,
 								     PanelAppletFrameActivating *frame_act);
+
+GtkWidget        *panel_applets_manager_get_applet_widget           (const gchar     *iid,
+                                                                     guint            uid);
 
 G_END_DECLS
 
