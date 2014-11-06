@@ -259,23 +259,12 @@ applet_factory (PanelApplet *applet,
         strcmp (iid, "SystemTrayApplet") == 0))
     return FALSE;
 
-#ifndef NOTIFICATION_AREA_INPROCESS
-  gtk_window_set_default_icon_name (NOTIFICATION_AREA_ICON);
-#endif
-
   gtk_widget_show_all (GTK_WIDGET (applet));
 
   return TRUE;
 }
 
-#ifdef NOTIFICATION_AREA_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("NotificationAreaAppletFactory",
 				 NA_TYPE_TRAY_APPLET,
 				 applet_factory,
 				 NULL)
-#else
-PANEL_APPLET_OUT_PROCESS_FACTORY ("NotificationAreaAppletFactory",
-				  NA_TYPE_TRAY_APPLET,
-				  applet_factory,
-				  NULL)
-#endif

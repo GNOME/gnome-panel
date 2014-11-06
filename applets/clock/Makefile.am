@@ -71,8 +71,6 @@ test_system_timezone_SOURCES = 	\
 	test-system-timezone.c
 test_system_timezone_LDADD = libsystem-timezone.la
 
-if CLOCK_INPROCESS
-APPLET_IN_PROCESS = true
 APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libclock-applet.so
 
 clock_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
@@ -83,17 +81,6 @@ libclock_applet_la_LIBADD = $(CLOCK_LDADD)
 libclock_applet_la_LDFLAGS = -module -avoid-version
 libclock_applet_la_CFLAGS = $(AM_CFLAGS)
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
-else
-APPLET_IN_PROCESS = false
-APPLET_LOCATION = $(libexecdir)/clock-applet
-
-libexec_PROGRAMS = clock-applet
-clock_applet_SOURCES = $(CLOCK_SOURCES)
-clock_applet_CPPFLAGS = $(CLOCK_CPPFLAGS)
-clock_applet_LDADD = $(CLOCK_LDADD)
-clock_applet_CFLAGS = $(AM_CFLAGS)
-$(clock_applet_OBJECTS): $(BUILT_SOURCES)
-endif
 
 clock-marshallers.c: clock-marshallers.list
 	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
@@ -147,22 +134,10 @@ applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
 $(applet_in_files): $(applet_in_files).in Makefile
 	$(AM_V_GEN)sed \
 		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-		-e "s|\@IN_PROCESS\@|$(APPLET_IN_PROCESS)|" \
 		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
 		$< > $@
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
-
-if !CLOCK_INPROCESS
-servicedir       = $(datadir)/dbus-1/services
-service_in_files = org.gnome.panel.applet.ClockAppletFactory.service.in
-service_DATA     = $(service_in_files:.service.in=.service)
-
-org.gnome.panel.applet.ClockAppletFactory.service: $(service_in_files)
-	$(AM_V_GEN)sed \
-		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-		$< > $@
-endif
 
 ui_FILES =		\
 	clock.ui	\
@@ -178,15 +153,11 @@ EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(ui_FILES)					\
 	clock.gresource.xml				\
-	clock-marshallers.list				\
-	$(service_in_files)
+	clock-marshallers.list
 
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
 	$(applet_DATA) 		\
-	$(applet_DATA).in	\
-	$(service_DATA)		\
-	$(polkit_DATA)		\
-	$(dbus_services_DATA)
+	$(applet_DATA).in
 
 -include $(top_srcdir)/git.mk

@@ -1330,9 +1330,6 @@ fill_clock_applet (PanelApplet *applet)
 
 	create_clock_widget (cd);
 
-#ifndef CLOCK_INPROCESS
-	gtk_window_set_default_icon_name (CLOCK_ICON);
-#endif
 	gtk_widget_show (cd->applet);
 
 	/* FIXME: Update this comment. */
@@ -2099,14 +2096,7 @@ clock_factory (PanelApplet *applet,
 	return retval;
 }
 
-#ifdef CLOCK_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("ClockAppletFactory",
                                  PANEL_TYPE_APPLET,
                                  clock_factory,
                                  NULL)
-#else
-PANEL_APPLET_OUT_PROCESS_FACTORY ("ClockAppletFactory",
-                                  PANEL_TYPE_APPLET,
-                                  clock_factory,
-                                  NULL)
-#endif

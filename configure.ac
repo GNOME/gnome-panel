@@ -182,66 +182,6 @@ fi
 AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
 AC_SUBST(CLOCK_EDS_ICONDIR)
 
-# Make it possible to compile the applets in-process
-PANEL_INPROCESS_NONE=
-PANEL_INPROCESS_ALL=
-PANEL_INPROCESS_APPLETS=
-AC_ARG_WITH(in-process-applets,
-	AC_HELP_STRING([--with-in-process-applets=APPLETS],
-		[comma-separated list of applets to compile in-process (possible values: none, clock, fish, notification-area, wncklet, all) @<:@default=none@:>@]),
-	[for i in `echo $withval | tr , ' '`; do
-		if test $i = "none"; then
-			PANEL_INPROCESS_NONE=1
-		else if test $i = "all"; then
-			PANEL_INPROCESS_ALL=1
-		else if test $i = "clock"; then
-			PANEL_INPROCESS_APPLETS="$PANEL_INPROCESS_APPLETS $i"
-		else if test $i = "fish"; then
-			PANEL_INPROCESS_APPLETS="$PANEL_INPROCESS_APPLETS $i"
-		else if test $i = "notification-area"; then
-			PANEL_INPROCESS_APPLETS="$PANEL_INPROCESS_APPLETS $i"
-		else if test $i = "wncklet"; then
-			PANEL_INPROCESS_APPLETS="$PANEL_INPROCESS_APPLETS $i"
-		else
-			echo "applet $i not recognized, ignoring..."
-		fi; fi; fi; fi; fi; fi
-	done],
-	[])
-
-if test -n "$PANEL_INPROCESS_ALL"; then
-	PANEL_INPROCESS_APPLETS="clock fish notification-area wncklet"
-fi
-if test -n "$PANEL_INPROCESS_NONE"; then
-	PANEL_INPROCESS_APPLETS=""
-fi
-for i in $PANEL_INPROCESS_APPLETS; do
-	if test $i = "clock"; then
-		CLOCK_COMPILE_INPROCESS=1
-		AC_DEFINE([CLOCK_INPROCESS], 1,
-		[Defined when compiling the clock applet in-process])
-	else if test $i = "fish"; then
-		FISH_COMPILE_INPROCESS=1
-		AC_DEFINE([FISH_INPROCESS], 1,
-		[Defined when compiling the fish applet in-process])
-	else if test $i = "notification-area"; then
-		NOTIFICATION_AREA_COMPILE_INPROCESS=1
-		AC_DEFINE([NOTIFICATION_AREA_INPROCESS], 1,
-		[Defined when compiling the notification-area applet in-process])
-	else if test $i = "wncklet"; then
-		WNCKLET_COMPILE_INPROCESS=1
-		AC_DEFINE([WNCKLET_INPROCESS], 1,
-		[Defined when compiling the wncklet applet in-process])
-	fi; fi; fi; fi
-done
-if test "x$PANEL_INPROCESS_APPLETS" = "x"; then
-	PANEL_INPROCESS_APPLETS="(none)"
-fi
-
-AM_CONDITIONAL(CLOCK_INPROCESS, test -n "$CLOCK_COMPILE_INPROCESS")
-AM_CONDITIONAL(FISH_INPROCESS, test -n "$FISH_COMPILE_INPROCESS")
-AM_CONDITIONAL(NOTIFICATION_AREA_INPROCESS, test -n "$NOTIFICATION_AREA_COMPILE_INPROCESS")
-AM_CONDITIONAL(WNCKLET_INPROCESS, test -n "$WNCKLET_COMPILE_INPROCESS")
-
 # For the run dialog
 gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
 
@@ -375,7 +315,6 @@ echo "
         Maintainer mode:               ${USE_MAINTAINER_MODE}
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
 
-        Applets to build in-process:   ${PANEL_INPROCESS_APPLETS}
         Evolution-Data-Server support: ${enable_eds}
         Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
         XRandr support:                ${have_randr}

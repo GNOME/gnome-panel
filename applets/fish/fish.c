@@ -1471,9 +1471,6 @@ fish_applet_fill (FishApplet *fish)
 
 	g_object_unref (action_group);
 
-#ifndef FISH_INPROCESS
-	gtk_window_set_default_icon_name (FISH_ICON);
-#endif
 	setup_fish_widget (fish);
 
 	g_signal_connect (fish->settings, "changed",
@@ -1615,15 +1612,7 @@ fish_applet_class_init (FishAppletClass *klass)
 	init_fools_day ();
 }
 
-#ifdef FISH_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("FishAppletFactory",
 				 fish_applet_get_type (),
 				 fishy_factory,
 				 NULL)
-
-#else
-PANEL_APPLET_OUT_PROCESS_FACTORY ("FishAppletFactory",
-				  fish_applet_get_type (),
-				  fishy_factory,
-				  NULL)
-#endif

@@ -97,15 +97,7 @@ wncklet_factory (PanelApplet *applet,
 	return retval;
 }
 
-
-#ifdef WNCKLET_INPROCESS
 PANEL_APPLET_IN_PROCESS_FACTORY ("WnckletFactory",
 				 PANEL_TYPE_APPLET,
 				 wncklet_factory,
 				 NULL)
-#else
-PANEL_APPLET_OUT_PROCESS_FACTORY ("WnckletFactory",
-				  PANEL_TYPE_APPLET,
-				  wncklet_factory,
-				  NULL)
-#endif
