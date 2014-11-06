@@ -26,20 +26,20 @@
 
 G_BEGIN_DECLS
 
-#define PANEL_TYPE_APPLET_FACTORY            (panel_applet_factory_get_type ())
-#define PANEL_APPLET_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), PANEL_TYPE_APPLET_FACTORY, PanelAppletFactory))
-#define PANEL_APPLET_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), PANEL_TYPE_APPLET_FACTORY, PanelAppletFactoryClass))
-#define PANEL_IS_APPLET_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), PANEL_TYPE_APPLET_FACTORY))
+#define PANEL_TYPE_APPLET_FACTORY     (panel_applet_factory_get_type ())
+#define PANEL_APPLET_FACTORY(o)       (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET_FACTORY, PanelAppletFactory))
+#define PANEL_APPLET_FACTORY_CLASS(c) (G_TYPE_CHECK_CLASS_CAST((c),     PANEL_TYPE_APPLET_FACTORY, PanelAppletFactoryClass))
+#define PANEL_IS_APPLET_FACTORY(o)    (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_APPLET_FACTORY))
 
-typedef struct _PanelAppletFactory        PanelAppletFactory;
-typedef struct _PanelAppletFactoryClass   PanelAppletFactoryClass;
+typedef struct _PanelAppletFactory      PanelAppletFactory;
+typedef struct _PanelAppletFactoryClass PanelAppletFactoryClass;
 
-GType               panel_applet_factory_get_type         (void) G_GNUC_CONST;
-PanelAppletFactory *panel_applet_factory_new              (const gchar        *applet_id,
-                                                           gboolean            out_of_process,
-							   GType               applet_type,
-							   GClosure           *closure);
-gboolean            panel_applet_factory_register_service (PanelAppletFactory *factory);
+GType               panel_applet_factory_get_type          (void) G_GNUC_CONST;
+PanelAppletFactory *panel_applet_factory_new               (const gchar        *applet_id,
+                                                            gboolean            out_of_process,
+                                                            GType               applet_type,
+                                                            GClosure           *closure);
+gboolean            panel_applet_factory_register_service  (PanelAppletFactory *factory);
 
 G_END_DECLS
 
