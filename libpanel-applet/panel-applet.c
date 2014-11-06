@@ -81,6 +81,8 @@ struct _PanelAppletPrivate {
 	GtkWidget         *applet;
 	GDBusConnection   *connection;
 
+	gboolean           out_of_process;
+
 	char              *id;
 	GClosure          *closure;
 	char              *object_path;
@@ -118,6 +120,7 @@ static guint panel_applet_signals [LAST_SIGNAL];
 
 enum {
 	PROP_0,
+	PROP_OUT_OF_PROCESS,
 	PROP_ID,
 	PROP_CLOSURE,
 	PROP_CONNECTION,
@@ -1641,6 +1644,9 @@ panel_applet_get_property (GObject    *object,
 	PanelApplet *applet = PANEL_APPLET (object);
 
 	switch (prop_id) {
+	case PROP_OUT_OF_PROCESS:
+		g_value_set_boolean (value, applet->priv->out_of_process);
+		break;
 	case PROP_ID:
 		g_value_set_string (value, applet->priv->id);
 		break;
@@ -1693,6 +1699,9 @@ panel_applet_set_property (GObject      *object,
 	PanelApplet *applet = PANEL_APPLET (object);
 
 	switch (prop_id) {
+	case PROP_OUT_OF_PROCESS:
+		applet->priv->out_of_process = g_value_get_boolean (value);
+		break;
 	case PROP_ID:
 		applet->priv->id = g_value_dup_string (value);
 		break;
@@ -1874,6 +1883,19 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
+	/**
+	 * PanelApplet:out-of-process: (skip)
+	 *
+	 * Implementation detail.
+	 **/
+	g_object_class_install_property (gobject_class,
+	                                 PROP_OUT_OF_PROCESS,
+	                                 g_param_spec_boolean ("out-of-process",
+	                                                       "out-of-process",
+	                                                       "out-of-process",
+	                                                       TRUE,
+	                                                       G_PARAM_CONSTRUCT_ONLY |
+	                                                       G_PARAM_READWRITE));
 	/**
 	 * PanelApplet:id: (skip)
 	 *
@@ -2294,7 +2316,7 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
 		_panel_applet_setup_x_error_handler ();
 
 	closure = g_cclosure_new (G_CALLBACK (callback), user_data, NULL);
-	factory = panel_applet_factory_new (factory_id, applet_type, closure);
+	factory = panel_applet_factory_new (factory_id, out_process, applet_type, closure);
 	g_closure_unref (closure);
 
 	if (panel_applet_factory_register_service (factory)) {
