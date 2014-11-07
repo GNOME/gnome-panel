@@ -15,9 +15,6 @@
 #include <glib/gi18n.h>
 #include <glib-unix.h>
 
-#include <libegg/eggdesktopfile.h>
-#include <libegg/eggsmclient.h>
-
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
@@ -93,7 +90,6 @@ on_int_signal (gpointer user_data)
 int
 main (int argc, char **argv)
 {
-	char           *desktopfile;
 	GOptionContext *context;
 	GError         *error;
 	GtkSettings    *settings;
@@ -106,12 +102,6 @@ main (int argc, char **argv)
 	textdomain (GETTEXT_PACKAGE);
 
 	g_set_prgname ("gnome-panel");
-
-	desktopfile = panel_g_lookup_in_applications_dirs ("gnome-panel.desktop");
-	if (desktopfile) {
-		egg_set_desktop_file (desktopfile);
-		g_free (desktopfile);
-	}
 
 	context = g_option_context_new ("");
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
@@ -137,10 +127,8 @@ main (int argc, char **argv)
 	if (session == NULL)
 		return 1;
 
-	if (!egg_get_desktop_file ()) {
-		g_set_application_name (_("Panel"));
-		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
-	}
+	g_set_application_name (_("Panel"));
+	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 
 	panel_action_protocol_init ();
 	panel_multiscreen_init ();
