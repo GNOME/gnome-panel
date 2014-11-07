@@ -20,7 +20,7 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-shell.h"
+#include "panel-toplevel.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
 #include "panel-stock-icons.h"
@@ -82,13 +82,13 @@ main (int argc, char **argv)
 	GOptionContext *context;
 	GError         *error;
 	GtkSettings    *settings;
+	PanelSession   *session;
+	GSList         *toplevels_to_destroy;
+	GSList         *l;
 
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
-
-	/* We will register explicitly when we're ready -- see panel-session.c */
-	egg_sm_client_set_mode (EGG_SM_CLIENT_MODE_DISABLED);
 
 	g_set_prgname ("gnome-panel");
 
@@ -99,8 +99,6 @@ main (int argc, char **argv)
 	}
 
 	context = g_option_context_new ("");
-	g_option_context_add_group (context,
-				    egg_sm_client_get_option_group ());
 	g_option_context_add_group (context, gtk_get_option_group (TRUE));
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
@@ -117,14 +115,13 @@ main (int argc, char **argv)
 
 	g_option_context_free (context);
 
+	session = panel_session_new (replace);
+	if (session == NULL)
+		return 1;
+
 	if (!egg_get_desktop_file ()) {
 		g_set_application_name (_("Panel"));
 		gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
-	}
-
-	if (!panel_shell_register (replace)) {
-		panel_cleanup_do ();
-		return 1;
 	}
 
 	panel_action_protocol_init ();
@@ -143,13 +140,20 @@ main (int argc, char **argv)
 
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
-	panel_session_init ();
+	panel_session_register_client (session);
 
 	settings = gtk_settings_get_default ();
 	g_signal_connect (settings, "notify::gtk-theme-name", G_CALLBACK (theme_changed), NULL);
 	theme_changed (settings);
 
 	gtk_main ();
+
+	g_object_unref (session);
+
+	toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
+	for (l = toplevels_to_destroy; l; l = l->next)
+	gtk_widget_destroy (l->data);
+	g_slist_free (toplevels_to_destroy);
 
 	panel_cleanup_do ();
 

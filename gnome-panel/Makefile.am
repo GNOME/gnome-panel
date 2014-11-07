@@ -35,7 +35,6 @@ panel_sources =			\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
-	panel-shell.c		\
 	panel-background.c	\
 	panel-background-monitor.c	\
 	panel-stock-icons.c	\
@@ -83,7 +82,6 @@ panel_headers =			\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
-	panel-shell.h		\
 	panel-background.h	\
 	panel-background-monitor.h	\
 	panel-stock-icons.h	\
