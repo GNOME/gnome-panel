@@ -13,6 +13,7 @@
 #include <sys/wait.h>
 
 #include <glib/gi18n.h>
+#include <glib-unix.h>
 
 #include <libegg/eggdesktopfile.h>
 #include <libegg/eggsmclient.h>
@@ -75,6 +76,20 @@ theme_changed (GtkSettings *settings)
 	g_free (theme);
 }
 
+static gboolean
+on_term_signal (gpointer user_data)
+{
+	gtk_main_quit ();
+	return FALSE;
+}
+
+static gboolean
+on_int_signal (gpointer user_data)
+{
+	gtk_main_quit ();
+	return FALSE;
+}
+
 int
 main (int argc, char **argv)
 {
@@ -103,6 +118,9 @@ main (int argc, char **argv)
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	gtk_init (&argc, &argv);
+
+	g_unix_signal_add (SIGTERM, on_term_signal, NULL);
+	g_unix_signal_add (SIGINT, on_int_signal, NULL);
 
 	error = NULL;
 	if (!g_option_context_parse (context, &argc, &argv, &error)) {
