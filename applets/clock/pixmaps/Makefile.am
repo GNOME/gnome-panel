@@ -1,10 +1,8 @@
-icon_FILES =				\
-	clock-face-large.svg		\
-	clock-face-small.svg		\
-	clock-face-small-morning.svg	\
-	clock-face-small-day.svg	\
-	clock-face-small-evening.svg	\
-	clock-face-small-night.svg	\
+icon_FILES = \
+	clock-face-morning.svg \
+	clock-face-day.svg \
+	clock-face-evening.svg \
+	clock-face-night.svg \
 	clock-map.png			\
 	clock-map-location-marker.png	\
 	clock-map-location-current.png	\
