@@ -586,7 +586,7 @@ create_cities_store (ClockData *cd)
 	cd->cities_store = g_object_ref (gtk_list_store_new (COL_CITY_LAST,
                                                              G_TYPE_STRING,		/* COL_CITY_NAME */
                                                              G_TYPE_STRING,		/* COL_CITY_TZ */
-                                                             CLOCK_LOCATION_TYPE));	/* COL_CITY_LOC */
+                                                             CLOCK_TYPE_LOCATION));	/* COL_CITY_LOC */
 
         list = g_list_copy (cities);
         list = g_list_sort (list, sort_locations_by_name);

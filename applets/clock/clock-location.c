@@ -55,7 +55,7 @@ static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
 
-#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TYPE, ClockLocationPrivate))
+#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_TYPE_LOCATION, ClockLocationPrivate))
 
 ClockLocation *
 clock_location_new (GWeatherLocation *world,
@@ -68,7 +68,7 @@ clock_location_new (GWeatherLocation *world,
         ClockLocation *this;
         ClockLocationPrivate *priv;
 
-        this = g_object_new (CLOCK_LOCATION_TYPE, NULL);
+        this = g_object_new (CLOCK_TYPE_LOCATION, NULL);
         priv = PRIVATE (this);
 
 	priv->world = gweather_location_ref (world);
