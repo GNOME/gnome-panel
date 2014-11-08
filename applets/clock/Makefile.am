@@ -38,6 +38,8 @@ CLOCK_SOURCES = 		\
 	clock-map.h		\
 	clock-sunpos.c		\
 	clock-sunpos.h		\
+	clock-time.c \
+	clock-time.h \
 	clock-utils.c		\
 	clock-utils.h		\
 	set-timezone.c		\
