@@ -1,61 +1,68 @@
-/**
- * clock.h
+/*
+ * Copyright (C) 2014 Alberts Muktupāvels
  *
- * A GTK+ widget that implements a clock face
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * (c) 2007, Peter Teichman
- * (c) 2005-2006, Davyd Madeley
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors:
- *   Davyd Madeley  <davyd@madeley.id.au>
- *   Peter Teichman <peter@novell.com>
+ *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
  */
 
-#ifndef __INTL_CLOCK_FACE_H__
-#define __INTL_CLOCK_FACE_H__
+#ifndef CLOCK_FACE_H
+#define CLOCK_FACE_H
 
 #include <gtk/gtk.h>
+
 #include "clock-location.h"
+#include "clock-time.h"
 
 G_BEGIN_DECLS
 
-#define INTL_TYPE_CLOCK_FACE          (clock_face_get_type ())
-#define CLOCK_FACE(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), INTL_TYPE_CLOCK_FACE, ClockFace))
-#define CLOCK_FACE_CLASS(obj)         (G_TYPE_CHECK_CLASS_CAST ((obj), INTL_CLOCK_FACE, ClockFaceClass))
-#define INTL_IS_CLOCK_FACE(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), INTL_TYPE_CLOCK_FACE))
-#define INTL_IS_CLOCK_FACE_CLASS(obj) (G_TYPE_CHECK_CLASS_TYPE ((obj), INTL_TYPE_CLOCK_FACE))
-#define CLOCK_FACE_GET_CLASS          (G_TYPE_INSTANCE_GET_CLASS ((obj), INTL_TYPE_CLOCK_FACE, ClockFaceClass))
+#define CLOCK_TYPE_FACE         (clock_face_get_type ())
+#define CLOCK_FACE(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), \
+                                 CLOCK_TYPE_FACE,                 \
+                                 ClockFace))
+#define CLOCK_FACE_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c),    \
+                                 CLOCK_TYPE_FACE,                 \
+                                 ClockFaceClass))
+#define CLOCK_IS_FACE(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
+                                 CLOCK_TYPE_FACE))
+#define CLOCK_IS_FACE_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c),    \
+                                 CLOCK_TYPE_FACE))
+#define CLOCK_FACE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS((o),   \
+                                 CLOCK_TYPE_FACE,                 \
+                                 ClockFaceClass))
 
-typedef struct _ClockFace           ClockFace;
-typedef struct _ClockFacePrivate    ClockFacePrivate;
-typedef struct _ClockFaceClass      ClockFaceClass;
+typedef struct _ClockFace        ClockFace;
+typedef struct _ClockFaceClass   ClockFaceClass;
+typedef struct _ClockFacePrivate ClockFacePrivate;
 
 struct _ClockFace
 {
-        GtkWidget parent;
-
-        /* < private > */
-        ClockFacePrivate *priv;
+	GtkImage          parent;
+	ClockFacePrivate *priv;
 };
 
 struct _ClockFaceClass
 {
-        GtkWidgetClass parent_class;
+	GtkImageClass parent_class;
 };
 
-typedef enum {
-        CLOCK_FACE_SMALL,
-        CLOCK_FACE_LARGE
-} ClockFaceSize;
+GType      clock_face_get_type (void);
 
-GType clock_face_get_type (void);
-
-GtkWidget *clock_face_new (ClockFaceSize size);
-GtkWidget *clock_face_new_with_location (ClockFaceSize size,
-					 ClockLocation *loc,
-					 GtkWidget *size_widget);
-gboolean clock_face_refresh (ClockFace *this);
-
+GtkWidget *clock_face_new      (ClockLocation *location,
+                                ClockTime     *time,
+                                gboolean       show_seconds);
 
 G_END_DECLS
 

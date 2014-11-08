@@ -11,6 +11,7 @@
 
 #include "clock.h"
 #include "clock-face.h"
+#include "clock-time.h"
 #include "clock-location-tile.h"
 #include "clock-location.h"
 #include "clock-utils.h"
@@ -33,7 +34,6 @@ typedef struct {
         GDateTime *last_refresh;
 	long last_offset;
 
-        ClockFaceSize size;
 
 	GtkWidget *box;
         GtkWidget *clock_face;
@@ -63,8 +63,7 @@ static gboolean weather_tooltip (GtkWidget *widget,
 		                 gpointer    data);
 
 ClockLocationTile *
-clock_location_tile_new (ClockLocation *loc,
-			 ClockFaceSize size)
+clock_location_tile_new (ClockLocation *loc)
 {
         ClockLocationTile *this;
         ClockLocationTilePrivate *priv;
@@ -73,7 +72,6 @@ clock_location_tile_new (ClockLocation *loc,
         priv = PRIVATE (this);
 
         priv->location = g_object_ref (loc);
-        priv->size = size;
 
         clock_location_tile_fill (this);
 
@@ -125,7 +123,6 @@ clock_location_tile_init (ClockLocationTile *this)
 	priv->last_refresh = NULL;
 	priv->last_offset = 0;
 
-        priv->size = CLOCK_FACE_SMALL;
 
         priv->clock_face = NULL;
         priv->city_label = NULL;
@@ -340,44 +337,16 @@ clock_location_tile_fill (ClockLocationTile *this)
         g_signal_connect (priv->current_button, "clicked",
                           G_CALLBACK (make_current), this);
 
-        priv->clock_face = clock_face_new_with_location (
-                priv->size, priv->location, head_section);
+        ClockTime *time = clock_time_new (priv->location);
+        priv->clock_face = clock_face_new (priv->location, time, FALSE);
+        gtk_widget_set_size_request (priv->clock_face, 52, 52);
+		g_object_unref (time);
 
         gtk_box_pack_start (GTK_BOX (tile), priv->clock_face, FALSE, FALSE, 0);
         gtk_box_pack_start (GTK_BOX (tile), head_section, TRUE, TRUE, 0);
 
         gtk_container_add (GTK_CONTAINER (priv->box), tile);
         gtk_container_add (GTK_CONTAINER (this), priv->box);
-}
-
-static gboolean
-clock_needs_face_refresh (ClockLocationTile *this)
-{
-        ClockLocationTilePrivate *priv = PRIVATE (this);
-        GDateTime *now;
-	gboolean retval;
-
-	if (!priv->last_refresh)
-		return TRUE;
-
-        now = clock_location_localtime (priv->location);
-
-	retval = FALSE;
-        if (g_date_time_get_year (now) > g_date_time_get_year (priv->last_refresh)
-            || g_date_time_get_month (now) > g_date_time_get_month (priv->last_refresh)
-            || g_date_time_get_day_of_month (now) > g_date_time_get_day_of_month (priv->last_refresh)
-            || g_date_time_get_hour (now) > g_date_time_get_hour (priv->last_refresh)
-            || g_date_time_get_minute (now) > g_date_time_get_minute (priv->last_refresh)) {
-		retval = TRUE;
-        }
-
-        if ((priv->size == CLOCK_FACE_LARGE)
-            && g_date_time_get_second (now) > g_date_time_get_second (priv->last_refresh)) {
-                retval = TRUE;
-        }
-
-	g_date_time_unref (now);
-	return retval;
 }
 
 static gboolean
@@ -539,10 +508,6 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 			gtk_widget_show (priv->current_spacer);
 		}
 	}
-
-        if (clock_needs_face_refresh (this)) {
-                clock_face_refresh (CLOCK_FACE (priv->clock_face));
-        }
 
         if (!force_refresh && !clock_needs_label_refresh (this)) {
                 return;

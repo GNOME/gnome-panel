@@ -689,7 +689,7 @@ create_cities_section (ClockData *cd)
         while (node) {
                 ClockLocation *loc = node->data;
 
-                city = clock_location_tile_new (loc, CLOCK_FACE_SMALL);
+                city = clock_location_tile_new (loc);
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
                 g_signal_connect (city, "need-clock-format",
