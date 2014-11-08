@@ -6,7 +6,6 @@
 #include "clock.h"
 #include "clock-face.h"
 #include "clock-location.h"
-#include "clock-utils.h"
 
 G_BEGIN_DECLS
 
@@ -35,9 +34,6 @@ GType clock_location_tile_get_type (void);
 ClockLocationTile *clock_location_tile_new (ClockLocation *loc);
 
 ClockLocation *clock_location_tile_get_location (ClockLocationTile *this);
-
-void weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTooltip *tip,
-				 GDesktopClockFormat clock_format);
 
 void clock_location_tile_refresh (ClockLocationTile *this,
                                   gboolean           force_refresh);

@@ -14,6 +14,7 @@
 #include <math.h>
 
 #include <glib.h>
+#include <glib/gi18n.h>
 #include <gio/gio.h>
 
 #include "clock-location.h"
@@ -484,4 +485,115 @@ setup_weather_updates (ClockLocation *loc)
 			  G_CALLBACK (weather_info_updated), loc);
 
 	set_weather_update_timeout (loc);
+}
+
+static char *
+convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *timezone)
+{
+	const gchar *format;
+	GTimeZone *tz;
+	GDateTime *utc, *local;
+	char *ret;
+
+	if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
+                /* Translators: This is a strftime format string.
+                 * It is used to display the time in 12-hours format (eg, like
+                 * in the US: 8:10 am). The %p expands to am/pm.
+                 */
+		format = _("%l:%M %p");
+	}
+	else {
+                /* Translators: This is a strftime format string.
+                 * It is used to display the time in 24-hours format (eg, like
+                 * in France: 20:10).
+                 */
+		format = _("%H:%M");
+	}
+
+	tz = g_time_zone_new (timezone);
+
+	utc = g_date_time_new_from_unix_utc (now);
+	local = g_date_time_to_timezone (utc, tz);
+
+	ret = g_date_time_format (local, format);
+
+	g_date_time_unref (utc);
+	g_date_time_unref (local);
+	g_time_zone_unref (tz);
+
+	return ret;
+}
+
+void
+weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTooltip *tooltip,
+			    GDesktopClockFormat clock_format)
+{
+        GdkPixbuf *pixbuf = NULL;
+        GtkIconTheme *theme = NULL;
+	gchar *conditions, *sky, *wind;
+	gchar *temp, *apparent;
+	gchar *line1, *line2, *line3, *line4, *tip;
+	const gchar *icon_name;
+	time_t sunrise_time, sunset_time;
+	gchar *sunrise_str, *sunset_str;
+	const char *timezone;
+	gdouble unused;
+	GWeatherWindDirection unused2;
+
+	icon_name = gweather_info_get_icon_name (info);
+	theme = gtk_icon_theme_get_default ();
+	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 48,
+	                                   GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+	if (pixbuf)
+                gtk_tooltip_set_icon (tooltip, pixbuf);
+
+	conditions = gweather_info_get_conditions (info);
+	sky = gweather_info_get_sky (info);
+	if (strcmp (conditions, "-") != 0) {
+		line1 = g_strdup_printf (_("%s, %s"),
+					 conditions, sky);
+		g_free (sky);
+	} else {
+		line1 = sky;
+	}
+	g_free (conditions);
+
+	temp = gweather_info_get_temp (info);
+	apparent = gweather_info_get_apparent (info);
+	if (strcmp (apparent, temp) != 0 &&
+	    gweather_info_get_value_apparent (info, GWEATHER_TEMP_UNIT_DEFAULT, &unused))
+		/* Translators: The two strings are temperatures. */
+		line2 = g_strdup_printf (_("%s, feels like %s"), temp, apparent);
+	else
+		line2 = g_strdup (temp);
+	g_free (temp);
+	g_free (apparent);
+
+	wind = gweather_info_get_wind (info);
+        if (gweather_info_get_value_wind (info, GWEATHER_SPEED_UNIT_DEFAULT, &unused, &unused2))
+		line3 = g_strdup_printf ("%s\n", wind);
+	else
+		line3 = g_strdup ("");
+
+	timezone = clock_location_get_tzname (location);
+	if (gweather_info_get_value_sunrise (info, &sunrise_time))
+		sunrise_str = convert_time_to_str (sunrise_time, clock_format, timezone);
+	else
+		sunrise_str = g_strdup ("???");
+	if (gweather_info_get_value_sunset (info, &sunset_time))
+		sunset_str = convert_time_to_str (sunset_time, clock_format, timezone);
+	else
+		sunset_str = g_strdup ("???");
+	line4 = g_strdup_printf (_("Sunrise: %s / Sunset: %s"),
+				 sunrise_str, sunset_str);
+	g_free (sunrise_str);
+	g_free (sunset_str);
+
+	tip = g_strdup_printf ("<b>%s</b>\n%s\n%s%s", line1, line2, line3, line4);
+	gtk_tooltip_set_markup (tooltip, tip);
+	g_free (line1);
+	g_free (line2);
+	g_free (line3);
+	g_free (line4);
+	g_free (tip);
 }

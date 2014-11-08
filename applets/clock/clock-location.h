@@ -6,6 +6,8 @@
 #include <glib-object.h>
 #include <libgweather/gweather-weather.h>
 
+#include "clock-utils.h"
+
 G_BEGIN_DECLS
 
 #define CLOCK_TYPE_LOCATION         (clock_location_get_type ())
@@ -60,6 +62,11 @@ const gchar *clock_location_get_weather_code (ClockLocation *loc);
 GWeatherInfo *clock_location_get_weather_info (ClockLocation *loc);
 
 glong clock_location_get_offset (ClockLocation *loc);
+
+void weather_info_setup_tooltip (GWeatherInfo *info,
+                                 ClockLocation *location,
+                                 GtkTooltip *tip,
+                                 GDesktopClockFormat clock_format);
 
 G_END_DECLS
 #endif /* __CLOCK_LOCATION_H__ */
