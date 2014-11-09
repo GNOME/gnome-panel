@@ -247,18 +247,6 @@ set_atk_name_description (GtkWidget  *widget,
 		atk_object_set_name (obj, name);
 }
 
-static void
-update_location_tiles (ClockData *cd)
-{
-        GList *l;
-
-        for (l = cd->location_tiles; l; l = l->next) {
-                ClockLocationTile *tile;
-
-                tile = CLOCK_LOCATION_TILE (l->data);
-                clock_location_tile_refresh (tile, FALSE);
-        }
-}
 
 static void
 update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockData * cd)
@@ -272,7 +260,6 @@ update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockData * cd)
 	gtk_widget_queue_resize (cd->panel_button);
 
 	update_tooltip (cd);
-        update_location_tiles (cd);
 
         if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
                 clock_map_update_time (CLOCK_MAP (cd->map_widget));
@@ -635,24 +622,13 @@ sort_locations_by_time (gconstpointer a, gconstpointer b)
 }
 
 static void
-location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
+location_tile_pressed_cb (ClockLocationTile *tile,
+                          ClockLocation     *loc,
+                          gpointer           data)
 {
         ClockData *cd = data;
-        ClockLocation *loc;
-
-        loc = clock_location_tile_get_location (tile);
 
         clock_map_blink_location (CLOCK_MAP (cd->map_widget), loc);
-
-        g_object_unref (loc);
-}
-
-static int
-location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
-{
-        ClockData *cd = data;
-
-        return g_settings_get_enum (cd->clock_settings, "clock-format");
 }
 
 static void
@@ -692,16 +668,16 @@ create_cities_section (ClockData *cd)
                 city = clock_location_tile_new (loc);
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
-                g_signal_connect (city, "need-clock-format",
-                                  G_CALLBACK (location_tile_need_clock_format_cb), cd);
+
+                g_settings_bind (cd->clock_settings, "clock-format",
+                                 city, "clock-format",
+                                 G_SETTINGS_BIND_GET);
 
                 gtk_box_pack_start (GTK_BOX (cd->cities_section),
                                     GTK_WIDGET (city),
                                     FALSE, FALSE, 0);
 
                 cd->location_tiles = g_list_prepend (cd->location_tiles, city);
-
-                clock_location_tile_refresh (city, TRUE);
 
                 node = g_list_next (node);
         }
@@ -1212,7 +1188,6 @@ location_set_current_cb (ClockLocation *loc,
 
 	if (cd->map_widget)
 		clock_map_refresh (CLOCK_MAP (cd->map_widget));
-        update_location_tiles (cd);
 }
 
 static void
