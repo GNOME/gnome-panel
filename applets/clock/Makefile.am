@@ -122,6 +122,8 @@ clock-typebuiltins.h: $(clock_enum_headers)
 		$(clock_enum_headers) > $@
 
 BUILT_SOURCES =					\
+	timedate1.c \
+	timedate1.h \
 	clock-marshallers.c			\
 	clock-marshallers.h			\
 	clock-resources.c			\
@@ -151,7 +153,15 @@ clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
+timedate1.c: timedate1.h
+timedate1.h: Makefile.in org.freedesktop.timedate1.xml
+	gdbus-codegen \
+		--interface-prefix org.freedesktop. \
+		--generate-c-code timedate1 \
+		$(srcdir)/org.freedesktop.timedate1.xml
+
 EXTRA_DIST =						\
+	org.freedesktop.timedate1.xml \
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(ui_FILES)					\
 	clock.gresource.xml				\

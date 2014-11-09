@@ -63,6 +63,7 @@
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
+#include "timedate1.h"
 #include "system-timezone.h"
 
 enum {
@@ -140,6 +141,8 @@ struct _ClockData {
         gboolean   custom_format_shown;
 
 	gboolean   can_handle_format_12;
+
+        Timedate1 *timedate1;
 };
 
 static void  update_clock (GnomeWallClock *, GParamSpec *, ClockData * cd);
@@ -321,6 +324,8 @@ free_locations (ClockData *cd)
 static void
 destroy_clock (GtkWidget * widget, ClockData *cd)
 {
+        g_clear_object (&cd->timedate1);
+
         g_clear_object (&cd->applet_settings);
         g_clear_object (&cd->clock_settings);
         g_clear_object (&cd->weather_settings);
@@ -1270,12 +1275,37 @@ load_cities (ClockData *cd)
         cd->locations = g_list_reverse (cd->locations);
 }
 
+static void
+timezone_changed (ClockData *cd)
+{
+        const gchar *timezone;
+        GList       *locations;
+        GList       *l;
+
+        timezone = timedate1_get_timezone (cd->timedate1);
+
+        if (timezone == NULL)
+                return;
+
+        locations = cd->locations;
+        for (l = locations; l; l = l->next) {
+                ClockLocation *location = l->data;
+                const gchar   *tzname = clock_location_get_tzname (location);
+
+                if (g_strcmp0 (timezone, tzname) == 0) {
+                        /* FIXME: make this location as current */
+                        break;
+                }
+        }
+}
+
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
 	ClockData          *cd;
         GSimpleActionGroup *action_group;
         GAction            *action;
+        GError             *error;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -1297,6 +1327,21 @@ fill_clock_applet (PanelApplet *applet)
         cd->world = gweather_location_get_world ();
         load_cities (cd);
         locations_changed (NULL, NULL, cd);
+
+        error = NULL;
+        cd->timedate1 = timedate1_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                          G_DBUS_PROXY_FLAGS_NONE,
+                                                          "org.freedesktop.timedate1",
+                                                          "/org/freedesktop/timedate1",
+                                                          NULL,
+                                                          &error);
+        if (error) {
+                g_warning ("%s", error->message);
+                g_error_free (error);
+        } else {
+                g_signal_connect_swapped (cd->timedate1, "notify::timezone",
+                                          G_CALLBACK (timezone_changed), cd);
+        }
 
 	cd->builder = gtk_builder_new ();
 	gtk_builder_set_translation_domain (cd->builder, GETTEXT_PACKAGE);
