@@ -674,10 +674,6 @@ create_cities_section (ClockData *cd)
                 g_signal_connect (city, "tile-pressed",
                                   G_CALLBACK (location_tile_pressed_cb), cd);
 
-                g_settings_bind (cd->clock_settings, "clock-format",
-                                 city, "clock-format",
-                                 G_SETTINGS_BIND_GET);
-
                 gtk_box_pack_start (GTK_BOX (cd->cities_section),
                                     GTK_WIDGET (city),
                                     FALSE, FALSE, 0);
@@ -1270,6 +1266,10 @@ load_cities (ClockData *cd)
                                           name, code,
                                           latlon_override, latitude, longitude);
 
+                g_settings_bind (cd->clock_settings, "clock-format",
+                                 loc, "clock-format",
+                                 G_SETTINGS_BIND_GET);
+
                 cd->locations = g_list_prepend (cd->locations, loc);
         }
 
@@ -1505,6 +1505,9 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         }
 
         loc = clock_location_new (cd->world, name, weather_code, TRUE, lat, lon);
+        g_settings_bind (cd->clock_settings, "clock-format",
+                         loc, "clock-format",
+                         G_SETTINGS_BIND_GET);
         /* has the side-effect of setting the current location if
          * there's none and this one can be considered as a current one
          */

@@ -41,9 +41,9 @@ struct _ClockLocationTilePrivate
 {
 	ClockLocation       *location;
 	ClockTime           *time;
-	GDesktopClockFormat  clock_format;
 
 	gulong               weather_updated_id;
+	gulong               clock_format_id;
 
 	GtkWidget           *time_label;
 
@@ -67,7 +67,6 @@ enum
 {
 	PROP_0,
 	PROP_LOCATION,
-	PROP_CLOCK_FORMAT,
 	N_PROPERTIES
 };
 
@@ -174,28 +173,6 @@ clock_location_tile_enter_or_leave (GtkWidget        *widget,
 	return TRUE;
 }
 
-/*
- * Should match enum values in gdesktop-enums.h:
- * https://git.gnome.org/browse/gsettings-desktop-schemas/tree/headers/gdesktop-enums.h
- */
-static GType
-g_desktop_clock_format_get_type (void)
-{
-	static GType etype = 0;
-
-	if (etype == 0) {
-		static const GEnumValue values[] = {
-			{ G_DESKTOP_CLOCK_FORMAT_24H, "G_DESKTOP_CLOCK_FORMAT_24H", "24h" },
-			{ G_DESKTOP_CLOCK_FORMAT_12H, "G_DESKTOP_CLOCK_FORMAT_12H", "12h" },
-			{ 0, NULL, NULL }
-		};
-
-		etype = g_enum_register_static ("GDesktopClockFormat", values);
-	}
-
-	return etype;
-}
-
 static gboolean
 show_weather_tooltip (GtkWidget  *widget,
                       gint        x,
@@ -210,7 +187,7 @@ show_weather_tooltip (GtkWidget  *widget,
 
 	return clock_location_setup_weather_tooltip (tile->priv->location,
 	                                             tooltip,
-	                                             tile->priv->clock_format);
+	                                             clock_location_get_clock_format (tile->priv->location));
 }
 
 static void
@@ -290,6 +267,7 @@ format_time (ClockLocationTile *tile)
 	glong        offset;
 	gint         day_of_week;
 	gint         day_of_week_local;
+	GDesktopClockFormat  clock_format;
 	const gchar *format;
 	gchar       *buf;
 	glong        hours;
@@ -304,8 +282,10 @@ format_time (ClockLocationTile *tile)
 	day_of_week = g_date_time_get_day_of_week (time);
 	day_of_week_local = g_date_time_get_day_of_week (time_local);
 
+	clock_format = clock_location_get_clock_format (tile->priv->location);
+
 	if (day_of_week != day_of_week_local) {
-		if (tile->priv->clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
+		if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
 			/* Translators: This is a strftime format string.
 			 * It is used to display the time in 12-hours format
 			 * (eg, like in the US: 8:10 am), when the local
@@ -323,7 +303,7 @@ format_time (ClockLocationTile *tile)
 			format = _("%H:%M <small>(%A)</small>");
 		}
 	} else {
-		if (tile->priv->clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
+		if (clock_format == G_DESKTOP_CLOCK_FORMAT_12H) {
 			/* Translators: This is a strftime format string.
 			 * It is used to display the time in 12-hours format
 			 * (eg, like in the US: 8:10 am). The %p expands to
@@ -542,6 +522,18 @@ update_time_label (ClockLocationTile *tile)
 }
 
 static void
+clock_location_tile_clock_format_changed (ClockLocation       *location,
+                                          GDesktopClockFormat  clock_format,
+                                          gpointer             user_data)
+{
+	ClockLocationTile *tile;
+
+	tile = CLOCK_LOCATION_TILE (user_data);
+
+	update_time_label (tile);
+}
+
+static void
 clock_location_tile_minute_changed (ClockTime *time,
                                     gint       hour,
                                     gint       minute,
@@ -566,6 +558,10 @@ clock_location_tile_set_location (ClockLocationTile *tile,
 
 	tile->priv->location = g_object_ref (location);
 	tile->priv->time = clock_time_new (location);
+
+	tile->priv->clock_format_id =
+		g_signal_connect (tile->priv->location, "notify::clock-format",
+		                  G_CALLBACK (clock_location_tile_clock_format_changed), tile);
 
 	g_signal_connect (tile->priv->time, "minute-changed",
 	                  G_CALLBACK (clock_location_tile_minute_changed), tile);
@@ -614,6 +610,12 @@ clock_location_tile_finalize (GObject *object)
 		tile->priv->weather_updated_id = 0;
 	}
 
+	if (tile->priv->clock_format_id > 0) {
+		g_signal_handler_disconnect (tile->priv->location,
+		                             tile->priv->clock_format_id);
+		tile->priv->clock_format_id = 0;
+	}
+
 	g_clear_object (&tile->priv->time);
 	g_clear_object (&tile->priv->location);
 
@@ -635,10 +637,6 @@ clock_location_tile_set_property (GObject      *object,
 		case PROP_LOCATION:
 			clock_location_tile_set_location (tile,
 			                                  g_value_get_object (value));
-			break;
-		case PROP_CLOCK_FORMAT:
-			tile->priv->clock_format = g_value_get_enum (value);
-			update_time_label (tile);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object,
@@ -662,9 +660,6 @@ clock_location_tile_get_property (GObject    *object,
 	{
 		case PROP_LOCATION:
 			g_value_set_object (value, tile->priv->location);
-			break;
-		case PROP_CLOCK_FORMAT:
-			g_value_set_enum (value, tile->priv->clock_format);
 			break;
 		default:
 			G_OBJECT_WARN_INVALID_PROPERTY_ID (object,
@@ -705,14 +700,6 @@ clock_location_tile_class_init (ClockLocationTileClass *class)
 		                     CLOCK_TYPE_LOCATION,
 		                     G_PARAM_CONSTRUCT_ONLY |
 		                     G_PARAM_READWRITE);
-
-	object_properties[PROP_CLOCK_FORMAT] =
-		g_param_spec_enum ("clock-format",
-		                   "clock-format",
-		                   "clock-format",
-		                   g_desktop_clock_format_get_type (),
-		                   G_DESKTOP_CLOCK_FORMAT_24H,
-		                   G_PARAM_READWRITE);
 
 	g_object_class_install_properties (object_class,
 	                                   N_PROPERTIES,

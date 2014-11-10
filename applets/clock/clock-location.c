@@ -63,6 +63,8 @@ struct _ClockLocationPrivate
 
         SystemTimezone *systz;
 
+	GDesktopClockFormat  clock_format;
+
         gdouble latitude;
         gdouble longitude;
 
@@ -80,11 +82,41 @@ enum
 	LAST_SIGNAL
 };
 
+enum
+{
+	PROP_0,
+	PROP_CLOCK_FORMAT,
+	N_PROPERTIES
+};
+
 static guint location_signals[LAST_SIGNAL] = { 0 };
+static GParamSpec *object_properties[N_PROPERTIES] = { NULL, };
 
 static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
+
+/*
+ * Should match enum values in gdesktop-enums.h:
+ * https://git.gnome.org/browse/gsettings-desktop-schemas/tree/headers/gdesktop-enums.h
+ */
+static GType
+g_desktop_clock_format_get_type (void)
+{
+	static GType etype = 0;
+
+	if (etype == 0) {
+		static const GEnumValue values[] = {
+			{ G_DESKTOP_CLOCK_FORMAT_24H, "G_DESKTOP_CLOCK_FORMAT_24H", "24h" },
+			{ G_DESKTOP_CLOCK_FORMAT_12H, "G_DESKTOP_CLOCK_FORMAT_12H", "12h" },
+			{ 0, NULL, NULL }
+		};
+
+		etype = g_enum_register_static ("GDesktopClockFormat", values);
+	}
+
+	return etype;
+}
 
 ClockLocation *
 clock_location_new (GWeatherLocation *world,
@@ -125,6 +157,52 @@ clock_location_new (GWeatherLocation *world,
 static ClockLocation *current_location = NULL;
 
 static void
+clock_location_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+	ClockLocation *location;
+
+	location = CLOCK_LOCATION (object);
+
+	switch (property_id)
+	{
+		case PROP_CLOCK_FORMAT:
+			location->priv->clock_format = g_value_get_enum (value);
+			break;
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object,
+			                                   property_id,
+			                                   pspec);
+			break;
+	}
+}
+
+static void
+clock_location_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+	ClockLocation *location;
+
+	location = CLOCK_LOCATION (object);
+
+	switch (property_id)
+	{
+		case PROP_CLOCK_FORMAT:
+			g_value_set_enum (value, location->priv->clock_format);
+			break;
+		default:
+			G_OBJECT_WARN_INVALID_PROPERTY_ID (object,
+			                                   property_id,
+			                                   pspec);
+			break;
+	}
+}
+
+static void
 clock_location_class_init (ClockLocationClass *class)
 {
 	GObjectClass *object_class;
@@ -132,6 +210,8 @@ clock_location_class_init (ClockLocationClass *class)
 	object_class = G_OBJECT_CLASS (class);
 
 	object_class->finalize = clock_location_finalize;
+	object_class->set_property = clock_location_set_property;
+	object_class->get_property = clock_location_get_property;
 
 	location_signals[WEATHER_UPDATED] =
 		g_signal_new ("weather-updated",
@@ -157,6 +237,18 @@ clock_location_class_init (ClockLocationClass *class)
 		              g_cclosure_marshal_VOID__VOID,
 		              G_TYPE_NONE,
 		              0);
+
+	object_properties[PROP_CLOCK_FORMAT] =
+		g_param_spec_enum ("clock-format",
+		                   "clock-format",
+		                   "clock-format",
+		                   g_desktop_clock_format_get_type (),
+		                   G_DESKTOP_CLOCK_FORMAT_24H,
+		                   G_PARAM_READWRITE);
+
+	g_object_class_install_properties (object_class,
+	                                   N_PROPERTIES,
+	                                   object_properties);
 }
 
 static void
@@ -565,6 +657,12 @@ convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *t
 	g_time_zone_unref (tz);
 
 	return ret;
+}
+
+GDesktopClockFormat
+clock_location_get_clock_format (ClockLocation *location)
+{
+	return location->priv->clock_format;
 }
 
 gboolean
