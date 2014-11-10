@@ -1,5 +1,31 @@
-#ifndef __CLOCK_LOCATION_H__
-#define __CLOCK_LOCATION_H__
+/*
+ * Copyright (C) 2014 Alberts Muktupāvels
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ * Authors:
+ *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
+ *    Carlos Garcia Campos <carlosgc@gnome.org>
+ *    Dan Winship <danw@src.gnome.org>
+ *    Federico Mena Quintero <federico@novell.com>
+ *    Giovanni Campagna <gcampagna@src.gnome.org>
+ *    Matthias Clasen <mclasen@redhat.com>
+ *    Vincent Untz <vuntz@gnome.org>
+ */
+
+#ifndef CLOCK_LOCATION_H
+#define CLOCK_LOCATION_H
 
 #include <time.h>
 #include <glib.h>
@@ -11,25 +37,38 @@
 G_BEGIN_DECLS
 
 #define CLOCK_TYPE_LOCATION         (clock_location_get_type ())
-#define CLOCK_LOCATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), CLOCK_TYPE_LOCATION, ClockLocation))
-#define CLOCK_LOCATION_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), CLOCK_TYPE_LOCATION, ClockLocationClass))
-#define IS_CLOCK_LOCATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), CLOCK_TYPE_LOCATION))
-#define IS_CLOCK_LOCATION_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), CLOCK_TYPE_LOCATION))
-#define CLOCK_LOCATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), CLOCK_TYPE_LOCATION, ClockLocationClass))
+#define CLOCK_LOCATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), \
+                                     CLOCK_TYPE_LOCATION,             \
+                                     ClockLocation))
+#define CLOCK_LOCATION_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c),    \
+                                     CLOCK_TYPE_LOCATION,             \
+                                     ClockLocationClass))
+#define CLOCK_IS_LOCATION(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), \
+                                     CLOCK_TYPE_LOCATION))
+#define CLOCK_IS_LOCATION_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c),    \
+                                     CLOCK_TYPE_LOCATION))
+#define CLOCK_LOCATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o),  \
+                                     CLOCK_TYPE_LOCATION,             \
+                                     ClockLocationClass))
 
-typedef struct
+typedef struct _ClockLocation        ClockLocation;
+typedef struct _ClockLocationClass   ClockLocationClass;
+typedef struct _ClockLocationPrivate ClockLocationPrivate;
+
+struct _ClockLocation
 {
-        GObject g_object;
-} ClockLocation;
+	GObject               parent;
+	ClockLocationPrivate *priv;
+};
 
-typedef struct
+struct _ClockLocationClass
 {
-        GObjectClass g_object_class;
+	GObjectClass parent_class;
 
-	void (* weather_updated) (ClockLocation *location, GWeatherInfo *info);
-
-	void (* set_current) (ClockLocation *location);
-} ClockLocationClass;
+	void (* weather_updated) (ClockLocation *location,
+	                          GWeatherInfo  *info);
+	void (* set_current)     (ClockLocation *location);
+};
 
 GType clock_location_get_type (void);
 
@@ -68,4 +107,5 @@ gboolean clock_location_setup_weather_tooltip (ClockLocation       *location,
                                                GDesktopClockFormat  clock_format);
 
 G_END_DECLS
-#endif /* __CLOCK_LOCATION_H__ */
+
+#endif

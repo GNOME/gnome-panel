@@ -1,7 +1,35 @@
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+/*
+ * Copyright (C) 2014 Alberts Muktupāvels
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ * Authors:
+ *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
+ *    Alexis Ballier <aballier@gentoo.org>
+ *    Carlos Garcia Campos <carlosgc@gnome.org>
+ *    Chris Vine <chris@cvine.freeserve.co.uk>
+ *    Christian Persch <chpe@gnome.org>
+ *    Dan Winship <danw@src.gnome.org>
+ *    Federico Mena Quintero <federico@novell.com>
+ *    Giovanni Campagna <gcampagna@src.gnome.org>
+ *    Jens Granseuer <jensgr@gmx.net>
+ *    Matthias Clasen <mclasen@redhat.com>
+ *    Ryan Lortie <desrt@desrt.ca>
+ *    Vincent Untz <vuntz@gnome.org>
+ */
 
+#include <config.h>
 #include <dirent.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -22,9 +50,12 @@
 #include "set-timezone.h"
 #include "system-timezone.h"
 
-G_DEFINE_TYPE (ClockLocation, clock_location, G_TYPE_OBJECT)
+#define WEATHER_TIMEOUT_BASE 30
+#define WEATHER_TIMEOUT_MAX  1800
+#define WEATHER_EMPTY_CODE   "-"
 
-typedef struct {
+struct _ClockLocationPrivate
+{
         gchar *name;
 
 	GWeatherLocation *world;
@@ -38,13 +69,12 @@ typedef struct {
         GWeatherInfo *weather_info;
 	gint          weather_timeout;
 	gint          weather_retry_time;
-} ClockLocationPrivate;
+};
 
-#define WEATHER_TIMEOUT_BASE 30
-#define WEATHER_TIMEOUT_MAX  1800
-#define WEATHER_EMPTY_CODE   "-"
+G_DEFINE_TYPE_WITH_PRIVATE (ClockLocation, clock_location, G_TYPE_OBJECT)
 
-enum {
+enum
+{
 	WEATHER_UPDATED,
 	SET_CURRENT,
 	LAST_SIGNAL
@@ -55,8 +85,6 @@ static guint location_signals[LAST_SIGNAL] = { 0 };
 static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
-
-#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_TYPE_LOCATION, ClockLocationPrivate))
 
 ClockLocation *
 clock_location_new (GWeatherLocation *world,
@@ -70,7 +98,7 @@ clock_location_new (GWeatherLocation *world,
         ClockLocationPrivate *priv;
 
         this = g_object_new (CLOCK_TYPE_LOCATION, NULL);
-        priv = PRIVATE (this);
+        priv = this->priv;
 
 	priv->world = gweather_location_ref (world);
 	priv->loc = gweather_location_find_by_station_code (priv->world,
@@ -97,31 +125,38 @@ clock_location_new (GWeatherLocation *world,
 static ClockLocation *current_location = NULL;
 
 static void
-clock_location_class_init (ClockLocationClass *this_class)
+clock_location_class_init (ClockLocationClass *class)
 {
-        GObjectClass *g_obj_class = G_OBJECT_CLASS (this_class);
+	GObjectClass *object_class;
 
-        g_obj_class->finalize = clock_location_finalize;
+	object_class = G_OBJECT_CLASS (class);
 
-        location_signals[WEATHER_UPDATED] =
+	object_class->finalize = clock_location_finalize;
+
+	location_signals[WEATHER_UPDATED] =
 		g_signal_new ("weather-updated",
-			      G_OBJECT_CLASS_TYPE (g_obj_class),
-			      G_SIGNAL_RUN_FIRST,
-			      G_STRUCT_OFFSET (ClockLocationClass, weather_updated),
-			      NULL, NULL,
-			      g_cclosure_marshal_VOID__POINTER,
-			      G_TYPE_NONE, 1, G_TYPE_POINTER);
+		              G_OBJECT_CLASS_TYPE (object_class),
+		              G_SIGNAL_RUN_FIRST,
+		              G_STRUCT_OFFSET (ClockLocationClass,
+		                               weather_updated),
+		              NULL,
+		              NULL,
+		              g_cclosure_marshal_VOID__POINTER,
+		              G_TYPE_NONE,
+		              1,
+		              G_TYPE_POINTER);
 
-	location_signals[SET_CURRENT] = 
+	location_signals[SET_CURRENT] =
 		g_signal_new ("set-current",
-			      G_OBJECT_CLASS_TYPE (g_obj_class),
-			      G_SIGNAL_RUN_FIRST,
-			      G_STRUCT_OFFSET (ClockLocationClass, set_current),
-			      NULL, NULL,
-			      g_cclosure_marshal_VOID__VOID,
-			      G_TYPE_NONE, 0);
-
-        g_type_class_add_private (this_class, sizeof (ClockLocationPrivate));
+		              G_OBJECT_CLASS_TYPE (object_class),
+		              G_SIGNAL_RUN_FIRST,
+		              G_STRUCT_OFFSET (ClockLocationClass,
+		                               set_current),
+		              NULL,
+		              NULL,
+		              g_cclosure_marshal_VOID__VOID,
+		              G_TYPE_NONE,
+		              0);
 }
 
 static void
@@ -129,7 +164,7 @@ network_changed (GNetworkMonitor *monitor,
                  gboolean         available,
                  ClockLocation   *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
         if (available) {
                 priv->weather_retry_time = WEATHER_TIMEOUT_BASE;
@@ -138,10 +173,14 @@ network_changed (GNetworkMonitor *monitor,
 }
 
 static void
-clock_location_init (ClockLocation *this)
+clock_location_init (ClockLocation *location)
 {
-        ClockLocationPrivate *priv = PRIVATE (this);
-        GNetworkMonitor *monitor;
+	ClockLocationPrivate *priv;
+	GNetworkMonitor      *monitor;
+
+	location->priv = clock_location_get_instance_private (location);
+
+	priv = location->priv;
 
         priv->systz = system_timezone_new ();
 
@@ -150,19 +189,23 @@ clock_location_init (ClockLocation *this)
 
         monitor = g_network_monitor_get_default();
         g_signal_connect (monitor, "network-changed",
-                          G_CALLBACK (network_changed), this);
+                          G_CALLBACK (network_changed), location);
 }
 
 static void
 clock_location_finalize (GObject *g_obj)
 {
-        ClockLocationPrivate *priv = PRIVATE (g_obj);
+	ClockLocation        *location;
+	ClockLocationPrivate *priv;
         GNetworkMonitor *monitor;
+
+	location = CLOCK_LOCATION (g_obj);
+	priv = location->priv;
 
 	monitor = g_network_monitor_get_default ();
 	g_signal_handlers_disconnect_by_func (monitor,
 	                                      G_CALLBACK (network_changed),
-	                                      CLOCK_LOCATION (g_obj));
+	                                      location);
 
 	g_free (priv->name);
 
@@ -188,7 +231,7 @@ clock_location_finalize (GObject *g_obj)
 const gchar *
 clock_location_get_name (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
         return priv->name;
 }
@@ -196,7 +239,7 @@ clock_location_get_name (ClockLocation *loc)
 void
 clock_location_set_name (ClockLocation *loc, const gchar *name)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
         if (priv->name) {
                 g_free (priv->name);
@@ -209,7 +252,7 @@ clock_location_set_name (ClockLocation *loc, const gchar *name)
 gchar *
 clock_location_get_city (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
         return gweather_location_get_city_name (priv->loc);
 }
@@ -217,7 +260,7 @@ clock_location_get_city (ClockLocation *loc)
 const gchar *
 clock_location_get_timezone (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	GWeatherTimezone *tz;
 
 	tz = gweather_location_get_timezone (priv->loc);
@@ -227,7 +270,7 @@ clock_location_get_timezone (ClockLocation *loc)
 const gchar *
 clock_location_get_tzname (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	GWeatherTimezone *tz;
 
 	tz = gweather_location_get_timezone (priv->loc);
@@ -239,7 +282,7 @@ clock_location_get_coords (ClockLocation *loc,
 			   gdouble *latitude,
 			   gdouble *longitude)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
         *latitude = priv->latitude;
         *longitude = priv->longitude;
@@ -248,7 +291,7 @@ clock_location_get_coords (ClockLocation *loc,
 GDateTime *
 clock_location_localtime (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	GWeatherTimezone *wtz;
 	GTimeZone *tz;
 	GDateTime *dt;
@@ -265,7 +308,7 @@ clock_location_localtime (ClockLocation *loc)
 gboolean
 clock_location_is_current_timezone (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	GWeatherTimezone *wtz;
 	const char *zone;
 
@@ -307,7 +350,7 @@ clock_location_is_current (ClockLocation *loc)
 glong
 clock_location_get_offset (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	GWeatherTimezone *wtz;
 
 	wtz = gweather_location_get_timezone (priv->loc);
@@ -360,7 +403,7 @@ clock_location_make_current (ClockLocation *loc,
                              gpointer       data,
                              GDestroyNotify destroy)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 	MakeCurrentData *mcdata;
 	GWeatherTimezone *wtz;
 
@@ -402,7 +445,7 @@ clock_location_make_current (ClockLocation *loc,
 const gchar *
 clock_location_get_weather_code (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
 	return gweather_location_get_code (priv->loc);
 }
@@ -410,7 +453,7 @@ clock_location_get_weather_code (ClockLocation *loc)
 GWeatherInfo *
 clock_location_get_weather_info (ClockLocation *loc)
 {
-        ClockLocationPrivate *priv = PRIVATE (loc);
+        ClockLocationPrivate *priv = loc->priv;
 
 	return priv->weather_info;
 }
@@ -418,7 +461,7 @@ clock_location_get_weather_info (ClockLocation *loc)
 static void
 set_weather_update_timeout (ClockLocation *loc)
 {
-	ClockLocationPrivate *priv = PRIVATE (loc);
+	ClockLocationPrivate *priv = loc->priv;
 	guint timeout;
 
 	if (!gweather_info_network_error (priv->weather_info)) {
@@ -448,7 +491,7 @@ static void
 weather_info_updated (GWeatherInfo *info, gpointer data)
 {
 	ClockLocation *loc = data;
-	ClockLocationPrivate *priv = PRIVATE (loc);
+	ClockLocationPrivate *priv = loc->priv;
 
 	set_weather_update_timeout (loc);
 	g_signal_emit (loc, location_signals[WEATHER_UPDATED],
@@ -459,7 +502,7 @@ static gboolean
 update_weather_info (gpointer user_data)
 {
 	ClockLocation *loc = user_data;
-	ClockLocationPrivate *priv = PRIVATE (loc);
+	ClockLocationPrivate *priv = loc->priv;
 
 	gweather_info_abort (priv->weather_info);
         gweather_info_update (priv->weather_info);
@@ -470,7 +513,7 @@ update_weather_info (gpointer user_data)
 static void
 setup_weather_updates (ClockLocation *loc)
 {
-	ClockLocationPrivate *priv = PRIVATE (loc);
+	ClockLocationPrivate *priv = loc->priv;
 
 	g_clear_object (&priv->weather_info);
 
