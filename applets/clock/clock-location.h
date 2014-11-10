@@ -63,10 +63,9 @@ GWeatherInfo *clock_location_get_weather_info (ClockLocation *loc);
 
 glong clock_location_get_offset (ClockLocation *loc);
 
-void weather_info_setup_tooltip (GWeatherInfo *info,
-                                 ClockLocation *location,
-                                 GtkTooltip *tip,
-                                 GDesktopClockFormat clock_format);
+gboolean clock_location_setup_weather_tooltip (ClockLocation       *location,
+                                               GtkTooltip          *tip,
+                                               GDesktopClockFormat  clock_format);
 
 G_END_DECLS
 #endif /* __CLOCK_LOCATION_H__ */

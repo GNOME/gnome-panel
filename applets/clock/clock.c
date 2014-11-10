@@ -858,19 +858,20 @@ weather_tooltip (GtkWidget   *widget,
                  ClockData   *cd)
 {
         GList *locations, *l;
-        GWeatherInfo *info;
 
         locations = cd->locations;
 
         for (l = locations; l; l = l->next) {
 		ClockLocation *location = l->data;
                 if (clock_location_is_current (location)) {
-                        info = clock_location_get_weather_info (location);
-                        if (!info || !gweather_info_is_valid (info))
-                                continue;
+                        gboolean ok;
 
-                        weather_info_setup_tooltip (info, location, tooltip,
-                                                    g_settings_get_enum (cd->clock_settings, "clock-format"));
+                        ok = clock_location_setup_weather_tooltip (location,
+                                                                   tooltip,
+                                                                   g_settings_get_enum (cd->clock_settings,
+                                                                   "clock-format"));
+                        if (ok == FALSE)
+                                continue;
 
                         return TRUE;
                 }

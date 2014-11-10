@@ -205,20 +205,12 @@ show_weather_tooltip (GtkWidget  *widget,
                       gpointer    user_data)
 {
 	ClockLocationTile *tile;
-	GWeatherInfo      *info;
 
 	tile = CLOCK_LOCATION_TILE (user_data);
-	info = clock_location_get_weather_info (tile->priv->location);
 
-	if (!info || !gweather_info_is_valid (info))
-		return FALSE;
-
-	weather_info_setup_tooltip (info,
-	                            tile->priv->location,
-	                            tooltip,
-	                            tile->priv->clock_format);
-
-	return TRUE;
+	return clock_location_setup_weather_tooltip (tile->priv->location,
+	                                             tooltip,
+	                                             tile->priv->clock_format);
 }
 
 static void

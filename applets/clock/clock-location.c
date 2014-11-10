@@ -524,10 +524,12 @@ convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *t
 	return ret;
 }
 
-void
-weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTooltip *tooltip,
-			    GDesktopClockFormat clock_format)
+gboolean
+clock_location_setup_weather_tooltip (ClockLocation       *location,
+                                      GtkTooltip          *tooltip,
+                                      GDesktopClockFormat  clock_format)
 {
+	GWeatherInfo *info;
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
 	gchar *conditions, *sky, *wind;
@@ -539,6 +541,11 @@ weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTool
 	const char *timezone;
 	gdouble unused;
 	GWeatherWindDirection unused2;
+
+	info = clock_location_get_weather_info (location);
+
+	if (!info || !gweather_info_is_valid (info))
+		return FALSE;
 
 	icon_name = gweather_info_get_icon_name (info);
 	theme = gtk_icon_theme_get_default ();
@@ -596,4 +603,6 @@ weather_info_setup_tooltip (GWeatherInfo *info, ClockLocation *location, GtkTool
 	g_free (line3);
 	g_free (line4);
 	g_free (tip);
+
+	return TRUE;
 }
