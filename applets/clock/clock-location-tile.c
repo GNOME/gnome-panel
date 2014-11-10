@@ -39,18 +39,18 @@
 
 struct _ClockLocationTilePrivate
 {
-	ClockLocation       *location;
-	ClockTime           *time;
+	ClockLocation *location;
+	ClockTime     *time;
 
-	gulong               weather_updated_id;
-	gulong               clock_format_id;
+	gulong         weather_updated_id;
+	gulong         clock_format_id;
 
-	GtkWidget           *time_label;
+	GtkWidget     *time_label;
 
-	GtkWidget           *button_label;
-	GtkWidget           *button;
-	GtkWidget           *marker;
-	GtkWidget           *spacer;
+	GtkWidget     *button_label;
+	GtkWidget     *button;
+	GtkWidget     *marker;
+	GtkWidget     *spacer;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationTile,
@@ -261,18 +261,18 @@ clock_location_tile_get_title (ClockLocation *location)
 static gchar *
 format_time (ClockLocationTile *tile)
 {
-	GDateTime   *time;
-	GDateTime   *time_local;
-	const gchar *tzname;
-	glong        offset;
-	gint         day_of_week;
-	gint         day_of_week_local;
+	GDateTime           *time;
+	GDateTime           *time_local;
+	const gchar         *tzname;
+	glong                offset;
+	gint                 day_of_week;
+	gint                 day_of_week_local;
 	GDesktopClockFormat  clock_format;
-	const gchar *format;
-	gchar       *buf;
-	glong        hours;
-	glong        minutes;
-	gchar       *tmp;
+	const gchar         *format;
+	gchar               *buf;
+	glong                hours;
+	glong                minutes;
+	gchar               *tmp;
 
 	time = clock_location_localtime (tile->priv->location);
 	time_local = g_date_time_new_now_local ();
