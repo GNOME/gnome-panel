@@ -104,9 +104,8 @@ glong clock_location_get_offset (ClockLocation *loc);
 
 GDesktopClockFormat  clock_location_get_clock_format (ClockLocation *location);
 
-gboolean clock_location_setup_weather_tooltip (ClockLocation       *location,
-                                               GtkTooltip          *tip,
-                                               GDesktopClockFormat  clock_format);
+gboolean             clock_location_setup_weather_tooltip (ClockLocation *location,
+                                                           GtkTooltip    *tip);
 
 G_END_DECLS
 

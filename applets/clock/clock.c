@@ -863,9 +863,7 @@ weather_tooltip (GtkWidget   *widget,
                         gboolean ok;
 
                         ok = clock_location_setup_weather_tooltip (location,
-                                                                   tooltip,
-                                                                   g_settings_get_enum (cd->clock_settings,
-                                                                   "clock-format"));
+                                                                   tooltip);
                         if (ok == FALSE)
                                 continue;
 

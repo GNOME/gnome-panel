@@ -666,9 +666,8 @@ clock_location_get_clock_format (ClockLocation *location)
 }
 
 gboolean
-clock_location_setup_weather_tooltip (ClockLocation       *location,
-                                      GtkTooltip          *tooltip,
-                                      GDesktopClockFormat  clock_format)
+clock_location_setup_weather_tooltip (ClockLocation *location,
+                                      GtkTooltip    *tooltip)
 {
 	GWeatherInfo *info;
         GdkPixbuf *pixbuf = NULL;
@@ -725,11 +724,15 @@ clock_location_setup_weather_tooltip (ClockLocation       *location,
 
 	timezone = clock_location_get_tzname (location);
 	if (gweather_info_get_value_sunrise (info, &sunrise_time))
-		sunrise_str = convert_time_to_str (sunrise_time, clock_format, timezone);
+		sunrise_str = convert_time_to_str (sunrise_time,
+		                                   location->priv->clock_format,
+		                                   timezone);
 	else
 		sunrise_str = g_strdup ("???");
 	if (gweather_info_get_value_sunset (info, &sunset_time))
-		sunset_str = convert_time_to_str (sunset_time, clock_format, timezone);
+		sunset_str = convert_time_to_str (sunset_time,
+		                                  location->priv->clock_format,
+		                                  timezone);
 	else
 		sunset_str = g_strdup ("???");
 	line4 = g_strdup_printf (_("Sunrise: %s / Sunset: %s"),

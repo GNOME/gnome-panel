@@ -186,8 +186,7 @@ show_weather_tooltip (GtkWidget  *widget,
 	tile = CLOCK_LOCATION_TILE (user_data);
 
 	return clock_location_setup_weather_tooltip (tile->priv->location,
-	                                             tooltip,
-	                                             clock_location_get_clock_format (tile->priv->location));
+	                                             tooltip);
 }
 
 static void
