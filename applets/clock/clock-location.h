@@ -72,8 +72,7 @@ struct _ClockLocationClass
 
 GType                clock_location_get_type              (void);
 
-ClockLocation       *clock_location_new                   (GWeatherLocation *world,
-                                                           const gchar   *name,
+ClockLocation       *clock_location_new                   (const gchar   *name,
                                                            const gchar   *metar_code,
                                                            gboolean       override_latlon,
                                                            gdouble        latitude,

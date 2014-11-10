@@ -1260,8 +1260,7 @@ load_cities (ClockData *cd)
                                     &latitude, &longitude)) {
                 ClockLocation *loc;
 
-                loc = clock_location_new (cd->world,
-                                          name, code,
+                loc = clock_location_new (name, code,
                                           latlon_override, latitude, longitude);
 
                 g_settings_bind (cd->clock_settings, "clock-format",
@@ -1502,7 +1501,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
                 lon = -lon;
         }
 
-        loc = clock_location_new (cd->world, name, weather_code, TRUE, lat, lon);
+        loc = clock_location_new (name, weather_code, TRUE, lat, lon);
         g_settings_bind (cd->clock_settings, "clock-format",
                          loc, "clock-format",
                          G_SETTINGS_BIND_GET);

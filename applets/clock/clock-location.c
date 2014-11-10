@@ -58,7 +58,6 @@ struct _ClockLocationPrivate
 {
         gchar *name;
 
-	GWeatherLocation *world;
 	GWeatherLocation *loc;
 
         SystemTimezone *systz;
@@ -119,22 +118,26 @@ g_desktop_clock_format_get_type (void)
 }
 
 ClockLocation *
-clock_location_new (GWeatherLocation *world,
-		    const char       *name,
-		    const char       *metar_code,
-		    gboolean          override_latlon,
-		    gdouble           latitude,
-		    gdouble           longitude)
+clock_location_new (const gchar *name,
+                    const gchar *metar_code,
+                    gboolean     override_latlon,
+                    gdouble      latitude,
+                    gdouble      longitude)
 {
+	GWeatherLocation *world;
         ClockLocation *this;
         ClockLocationPrivate *priv;
+
+	world = gweather_location_get_world ();
+
+	if (!world)
+		return NULL;
 
         this = g_object_new (CLOCK_TYPE_LOCATION, NULL);
         priv = this->priv;
 
-	priv->world = gweather_location_ref (world);
-	priv->loc = gweather_location_find_by_station_code (priv->world,
-							    metar_code);
+	priv->loc = gweather_location_find_by_station_code (world,
+	                                                    metar_code);
 
 	if (name && *name) {
 		priv->name = g_strdup (name);
@@ -301,7 +304,6 @@ clock_location_finalize (GObject *g_obj)
 
 	g_free (priv->name);
 
-	gweather_location_unref (priv->world);
 	gweather_location_unref (priv->loc);
 
 	if (priv->weather_timeout)
