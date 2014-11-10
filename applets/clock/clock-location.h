@@ -70,39 +70,42 @@ struct _ClockLocationClass
 	void (* set_current)     (ClockLocation *location);
 };
 
-GType clock_location_get_type (void);
+GType                clock_location_get_type              (void);
 
-ClockLocation *clock_location_new (GWeatherLocation *world,
-				   const gchar *name,
-				   const gchar *metar_code,
-				   gboolean override_latlon,
-				   gdouble  latitude,
-				   gdouble  longitude);
+ClockLocation       *clock_location_new                   (GWeatherLocation *world,
+                                                           const gchar   *name,
+                                                           const gchar   *metar_code,
+                                                           gboolean       override_latlon,
+                                                           gdouble        latitude,
+                                                           gdouble        longitude);
 
-const gchar *clock_location_get_tzname (ClockLocation *loc);
+const gchar         *clock_location_get_tzname            (ClockLocation *location);
 
-const char *clock_location_get_name (ClockLocation *loc);
-void clock_location_set_name (ClockLocation *loc, const gchar *name);
+const char          *clock_location_get_name              (ClockLocation *location);
+void                 clock_location_set_name              (ClockLocation *location,
+                                                           const gchar   *name);
 
-gchar *clock_location_get_city (ClockLocation *loc);
-const gchar *clock_location_get_timezone (ClockLocation *loc);
-void clock_location_get_coords (ClockLocation *loc, gdouble *latitude, gdouble *longitude);
+gchar               *clock_location_get_city              (ClockLocation *location);
+const gchar         *clock_location_get_timezone          (ClockLocation *location);
+void                 clock_location_get_coords            (ClockLocation *location,
+                                                           gdouble       *latitude,
+                                                           gdouble       *longitude);
 
-GDateTime *clock_location_localtime (ClockLocation *loc);
+GDateTime           *clock_location_localtime             (ClockLocation *location);
 
-gboolean clock_location_is_current (ClockLocation *loc);
-void clock_location_make_current (ClockLocation *loc,
-				  GFunc          callback,
-				  gpointer       data,
-				  GDestroyNotify destroy);
-gboolean clock_location_is_current_timezone (ClockLocation *loc);
+gboolean             clock_location_is_current            (ClockLocation *location);
+void                 clock_location_make_current          (ClockLocation *location,
+                                                           GFunc          callback,
+                                                           gpointer       data,
+                                                           GDestroyNotify destroy);
+gboolean             clock_location_is_current_timezone   (ClockLocation *location);
 
-const gchar *clock_location_get_weather_code (ClockLocation *loc);
-GWeatherInfo *clock_location_get_weather_info (ClockLocation *loc);
+const gchar         *clock_location_get_weather_code      (ClockLocation *location);
+GWeatherInfo        *clock_location_get_weather_info      (ClockLocation *location);
 
-glong clock_location_get_offset (ClockLocation *loc);
+glong                clock_location_get_offset            (ClockLocation *location);
 
-GDesktopClockFormat  clock_location_get_clock_format (ClockLocation *location);
+GDesktopClockFormat  clock_location_get_clock_format      (ClockLocation *location);
 
 gboolean             clock_location_setup_weather_tooltip (ClockLocation *location,
                                                            GtkTooltip    *tip);
