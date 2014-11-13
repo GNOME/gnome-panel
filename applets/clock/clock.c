@@ -1617,8 +1617,7 @@ edit_clear (ClockData *cd)
         GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
 
         /* clear out the old data */
-        /* TODO: reinstate after bumping to gweather >= 3.10.1 */
-        //gweather_location_entry_set_location (cd->location_entry, NULL);
+        gweather_location_entry_set_location (cd->location_entry, NULL);
         gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
 
         gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
