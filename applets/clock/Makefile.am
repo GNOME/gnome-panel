@@ -36,6 +36,8 @@ CLOCK_SOURCES = 		\
 	clock-location-tile.h	\
 	clock-map.c		\
 	clock-map.h		\
+	clock-preferences.c	\
+	clock-preferences.h	\
 	clock-sunpos.c		\
 	clock-sunpos.h		\
 	clock-time.c \
