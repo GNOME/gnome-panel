@@ -22,7 +22,19 @@
 
 struct _ClockLocationEditPrivate
 {
-        GSettings *settings;
+	GSettings *settings;
+
+	GtkWidget *ok_button;
+	GtkWidget *cancel_button;
+
+	GtkWidget *name_box;
+	GtkWidget *timezone_box;
+
+	GtkWidget *latitude_entry;
+	GtkWidget *latitude_combo;
+
+	GtkWidget *longitude_entry;
+	GtkWidget *longitude_combo;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationEdit,
@@ -64,7 +76,7 @@ clock_location_edit_set_property (GObject      *object,
 	switch (property_id)
 	{
 		case PROP_SETTINGS:
-		        settings = g_value_get_object (value);
+			settings = g_value_get_object (value);
 			edit->priv->settings = g_object_ref (settings);
 			break;
 		default:
@@ -123,8 +135,36 @@ clock_location_edit_class_init (ClockLocationEditClass *class)
 	                                   N_PROPERTIES,
 	                                   object_properties);
 
-        gtk_widget_class_set_template_from_resource (widget_class,
-                                                     CLOCK_RESOURCE_PATH "clock-location-edit.ui"
+	gtk_widget_class_set_template_from_resource (widget_class,
+	                                             CLOCK_RESOURCE_PATH "clock-location-edit.ui");
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              ok_button);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              cancel_button);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              name_box);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              timezone_box);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              latitude_entry);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              latitude_combo);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              longitude_entry);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              longitude_combo);
 }
 
 static void
@@ -132,7 +172,7 @@ clock_location_edit_init (ClockLocationEdit *edit)
 {
 	edit->priv = clock_location_edit_get_instance_private (edit);
 
-        gtk_widget_init_template (GTK_WIDGET (edit));
+	gtk_widget_init_template (GTK_WIDGET (edit));
 }
 
 GtkWidget *
