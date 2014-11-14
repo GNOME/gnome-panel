@@ -22,7 +22,31 @@
 
 struct _ClockPreferencesPrivate
 {
-        GSettings *settings;
+	GSettings *settings;
+
+	GtkWidget *help_button;
+	GtkWidget *time_settings_button;
+	GtkWidget *close_button;
+
+	/* General */
+	GtkWidget *12hr_radio;
+	GtkWidget *24hr_radio;
+	GtkWidget *show_date;
+	GtkWidget *show_seconds;
+	GtkWidget *show_weather;
+	GtkWidget *show_temperature;
+
+	/* Locations */
+	GtkWidget *cities_list;
+	GtkWidget *add_button;
+	GtkWidget *edit_button;
+	GtkWidget *remove_button;
+
+	/* Weather */
+	GtkWidget *temperature_combo;
+	GtkWidget *wind_speed_combo;
+	GtkWidget *pressure_combo;
+	GtkWidget *visibility_combo;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockPreferences,
@@ -123,8 +147,63 @@ clock_preferences_class_init (ClockPreferencesClass *class)
 	                                   N_PROPERTIES,
 	                                   object_properties);
 
-        gtk_widget_class_set_template_from_resource (widget_class,
-                                                     CLOCK_RESOURCE_PATH "clock-preferences.ui"
+	gtk_widget_class_set_template_from_resource (widget_class,
+	                                             CLOCK_RESOURCE_PATH "clock-preferences.ui");
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              help_button);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              time_settings_button);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              close_button);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              12hr_radio);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              24hr_radio);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              show_date);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              show_seconds);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              show_weather);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              show_temperature);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              cities_list);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              add_button);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              edit_button);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              remove_button);
+
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              temperature_combo);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              wind_speed_combo);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              pressure_combo);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockPreferences,
+	                                              visibility_combo);
 }
 
 static void
@@ -132,7 +211,7 @@ clock_preferences_init (ClockPreferences *preferences)
 {
 	preferences->priv = clock_preferences_get_instance_private (preferences);
 
-        gtk_widget_init_template (GTK_WIDGET (preferences));
+	gtk_widget_init_template (GTK_WIDGET (preferences));
 }
 
 GtkWidget *

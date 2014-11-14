@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.12"/>
-  <template class="prefs-window" parent="GtkDialog">
+  <template class="clock-preferences" parent="GtkDialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Clock Preferences</property>
@@ -11,17 +11,17 @@
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox5">
+      <object class="GtkBox" id="dialog-vbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area5">
+          <object class="GtkButtonBox" id="dialog-action-area">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="prefs-help-button">
+              <object class="GtkButton" id="help-button">
                 <property name="label" translatable="yes">_Help</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -51,7 +51,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="prefs-close-button">
+              <object class="GtkButton" id="close-button">
                 <property name="label" translatable="yes">_Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -80,7 +80,7 @@
             <property name="can_focus">True</property>
             <property name="border_width">5</property>
             <child>
-              <object class="GtkBox" id="vbox17">
+              <object class="GtkBox" id="general">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
@@ -93,7 +93,7 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkLabel" id="label210">
+                      <object class="GtkLabel" id="clock-format-label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
@@ -116,7 +116,7 @@
                         <property name="margin_start">12</property>
                         <property name="spacing">13</property>
                         <child>
-                          <object class="GtkRadioButton" id="12hr_radio">
+                          <object class="GtkRadioButton" id="12hr-radio">
                             <property name="label" translatable="yes">_12 hour format</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -134,7 +134,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="24hr_radio">
+                          <object class="GtkRadioButton" id="24hr-radio">
                             <property name="label" translatable="yes">_24 hour format</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -166,13 +166,13 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox29">
+                  <object class="GtkBox" id="panel-display">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkLabel" id="label229">
+                      <object class="GtkLabel" id="panel-display-label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
@@ -196,7 +196,7 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkCheckButton" id="date_check">
+                          <object class="GtkCheckButton" id="show-date">
                             <property name="label" translatable="yes">Show the _date</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -213,7 +213,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="seconds_check">
+                          <object class="GtkCheckButton" id="show-seconds">
                             <property name="label" translatable="yes">Show seco_nds</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -230,7 +230,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="weather_check">
+                          <object class="GtkCheckButton" id="show-weather">
                             <property name="label" translatable="yes">Show _weather</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -247,7 +247,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkCheckButton" id="temperature_check">
+                          <object class="GtkCheckButton" id="show-temperature">
                             <property name="label" translatable="yes">Show _temperature</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -280,7 +280,7 @@
               </object>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label209">
+              <object class="GtkLabel" id="general-label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">General</property>
@@ -290,7 +290,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="vbox24">
+              <object class="GtkBox" id="locations">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
@@ -309,7 +309,7 @@
                         <property name="vscrollbar_policy">never</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkTreeView" id="cities_list">
+                          <object class="GtkTreeView" id="cities-list">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="vexpand">True</property>
@@ -335,7 +335,7 @@
                         <property name="spacing">6</property>
                         <property name="layout_style">start</property>
                         <child>
-                          <object class="GtkButton" id="prefs-locations-add-button">
+                          <object class="GtkButton" id="add-button">
                             <property name="label" translatable="yes">_Add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -350,7 +350,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="prefs-locations-edit-button">
+                          <object class="GtkButton" id="edit-button">
                             <property name="label" translatable="yes">_Edit</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -365,7 +365,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="prefs-locations-remove-button">
+                          <object class="GtkButton" id="remove-button">
                             <property name="label" translatable="yes">_Remove</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -399,7 +399,7 @@
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label220">
+              <object class="GtkLabel" id="locations-label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Locations</property>
@@ -410,7 +410,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkBox" id="vbox27">
+              <object class="GtkBox" id="weather">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
@@ -423,7 +423,7 @@
                     <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkLabel" id="label224">
+                      <object class="GtkLabel" id="display-label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="xalign">0</property>
@@ -439,7 +439,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkGrid" id="table25">
+                      <object class="GtkGrid" id="grid">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_left">12</property>
@@ -447,7 +447,7 @@
                         <property name="row_spacing">6</property>
                         <property name="column_spacing">12</property>
                         <child>
-                          <object class="GtkComboBox" id="visibility_combo">
+                          <object class="GtkComboBox" id="visibility-combo">
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
                           </object>
@@ -457,7 +457,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label232">
+                          <object class="GtkLabel" id="visibility-label">
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Visibility unit:</property>
@@ -470,7 +470,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="pressure_combo">
+                          <object class="GtkComboBox" id="pressure-combo">
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
                           </object>
@@ -480,7 +480,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label231">
+                          <object class="GtkLabel" id="pressure-label">
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
                             <property name="label" translatable="yes">_Pressure unit:</property>
@@ -493,7 +493,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="wind_speed_combo">
+                          <object class="GtkComboBox" id="wind-speed-combo">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
@@ -504,7 +504,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBox" id="temperature_combo">
+                          <object class="GtkComboBox" id="temperature-combo">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
@@ -515,7 +515,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label227">
+                          <object class="GtkLabel" id="temperature-label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
@@ -529,7 +529,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label228">
+                          <object class="GtkLabel" id="wind-speed-label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="xalign">0</property>
@@ -562,7 +562,7 @@
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label223">
+              <object class="GtkLabel" id="weather-label">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Weather</property>
@@ -582,9 +582,9 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-11">prefs-help-button</action-widget>
+      <action-widget response="-11">help-button</action-widget>
       <action-widget response="0">time-settings-button</action-widget>
-      <action-widget response="-7">prefs-close-button</action-widget>
+      <action-widget response="-7">close-button</action-widget>
     </action-widgets>
   </template>
 </interface>
