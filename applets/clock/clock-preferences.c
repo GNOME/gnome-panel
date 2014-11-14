@@ -18,6 +18,9 @@
  *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
  */
 
+#include <gtk/gtk.h>
+
+#include "clock-common.h"
 #include "clock-preferences.h"
 
 struct _ClockPreferencesPrivate

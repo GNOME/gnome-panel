@@ -18,6 +18,9 @@
  *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
  */
 
+#include <gtk/gtk.h>
+
+#include "clock-common.h"
 #include "clock-location-edit.h"
 
 struct _ClockLocationEditPrivate
@@ -55,7 +58,7 @@ clock_location_edit_finalize (GObject *object)
 {
 	ClockLocationEdit *edit;
 
-	edit = CLOCK_LOCATION_EDIT (object)
+	edit = CLOCK_LOCATION_EDIT (object);
 
 	g_clear_object (&edit->priv->settings);
 
