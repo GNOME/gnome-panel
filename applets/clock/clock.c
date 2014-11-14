@@ -272,7 +272,7 @@ update_tooltip (ClockData * cd)
 {
         gboolean show_date;
 
-        show_date = g_settings_get_boolean (cd->clock_settings, "clock-show-date");
+        show_date = g_settings_get_boolean (cd->clock_settings, KEY_CLOCK_SHOW_DATE);
         if (!show_date) {
                 GDateTime *dt;
                 char *tip, *format;
@@ -406,9 +406,9 @@ create_calendar (ClockData *cd)
 				G_BINDING_DEFAULT|G_BINDING_SYNC_CREATE);
 
 	calendar_window_set_show_weeks (CALENDAR_WINDOW (window),
-				        g_settings_get_boolean (cd->applet_settings, "show-weeks"));
+				        g_settings_get_boolean (cd->applet_settings, KEY_SHOW_WEEKS));
 	calendar_window_set_time_format (CALENDAR_WINDOW (window),
-					 g_settings_get_enum (cd->clock_settings, "clock-format"));
+					 g_settings_get_enum (cd->clock_settings, KEY_CLOCK_FORMAT));
 
         gtk_window_set_screen (GTK_WINDOW (window),
 			       gtk_widget_get_screen (cd->applet));
@@ -908,12 +908,12 @@ create_clock_widget (ClockData *cd)
         /* Weather widgets */
         cd->panel_weather_icon = gtk_image_new ();
         gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_weather_icon, FALSE, FALSE, 0);
-        g_settings_bind (cd->applet_settings, "show-weather", cd->panel_weather_icon, "visible",
+        g_settings_bind (cd->applet_settings, KEY_SHOW_WEATHER, cd->panel_weather_icon, "visible",
                          G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
         cd->panel_temperature_label = gtk_label_new (NULL);
         gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_temperature_label, FALSE, FALSE, 0);
-        g_settings_bind (cd->applet_settings, "show-temperature", cd->panel_temperature_label, "visible",
+        g_settings_bind (cd->applet_settings, KEY_SHOW_TEMPERATURE, cd->panel_temperature_label, "visible",
                          G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
 
         /* Main label for time display */
@@ -1123,7 +1123,7 @@ format_changed (GSettings    *settings,
 {
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_time_format (CALENDAR_WINDOW (clock->calendar_popup),
-                                                 g_settings_get_enum (settings, "clock-format"));
+                                                 g_settings_get_enum (settings, KEY_CLOCK_FORMAT));
                 position_calendar_popup (clock);
 	}
 
@@ -1134,8 +1134,8 @@ update_panel_weather (ClockData *cd)
 {
         gboolean show_weather, show_temperature;
 
-        show_weather = g_settings_get_boolean (cd->applet_settings, "show-weather");
-        show_temperature = g_settings_get_boolean (cd->applet_settings, "show-temperature");
+        show_weather = g_settings_get_boolean (cd->applet_settings, KEY_SHOW_WEATHER);
+        show_temperature = g_settings_get_boolean (cd->applet_settings, KEY_SHOW_TEMPERATURE);
 
 	if ((show_weather || show_temperature) &&
 	    g_list_length (cd->locations) > 0)
@@ -1239,7 +1239,7 @@ show_week_changed (GSettings    *settings,
 {
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_show_weeks (CALENDAR_WINDOW (clock->calendar_popup),
-                                                g_settings_get_boolean (settings, "show-weeks"));
+                                                g_settings_get_boolean (settings, KEY_SHOW_WEEKS));
                 position_calendar_popup (clock);
 	}
 }
@@ -1253,7 +1253,7 @@ load_cities (ClockData *cd)
         gboolean latlon_override;
         gdouble latitude, longitude;
 
-        g_settings_get (cd->applet_settings, "cities", "a(ssm(dd))", &iter);
+        g_settings_get (cd->applet_settings, KEY_CITIES, "a(ssm(dd))", &iter);
 
         while (g_variant_iter_loop (iter, "(&s&sm(dd))", &name, &code, &latlon_override,
                                     &latitude, &longitude)) {
@@ -1262,7 +1262,7 @@ load_cities (ClockData *cd)
                 loc = clock_location_new (name, code,
                                           latlon_override, latitude, longitude);
 
-                g_settings_bind (cd->clock_settings, "clock-format",
+                g_settings_bind (cd->clock_settings, KEY_CLOCK_FORMAT,
                                  loc, "clock-format",
                                  G_SETTINGS_BIND_GET);
 
@@ -1308,15 +1308,15 @@ fill_clock_applet (PanelApplet *applet)
 
 	cd = g_new0 (ClockData, 1);
 
-	cd->applet_settings = panel_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
-        cd->clock_settings = g_settings_new ("org.gnome.desktop.interface");
-        cd->weather_settings = g_settings_new ("org.gnome.GWeather");
+	cd->applet_settings = panel_applet_settings_new (applet, CLOCK_SCHEMA);
+        cd->clock_settings = g_settings_new (DESKTOP_INTERFACE_SCHEMA);
+        cd->weather_settings = g_settings_new (GWEATHER_SCHEMA);
 
-        g_signal_connect (cd->clock_settings, "changed::clock-format",
+        g_signal_connect (cd->clock_settings, "changed::" KEY_CLOCK_FORMAT,
                           G_CALLBACK (format_changed), cd);
-        g_signal_connect (cd->clock_settings, "changed::clock-show-weeks",
+        g_signal_connect (cd->clock_settings, "changed::" KEY_CLOCK_SHOW_WEEKS,
                           G_CALLBACK (show_week_changed), cd);
-        g_signal_connect (cd->applet_settings, "changed::cities",
+        g_signal_connect (cd->applet_settings, "changed::" KEY_CITIES,
                           G_CALLBACK (locations_changed), cd);
 
 	cd->applet = GTK_WIDGET (applet);
@@ -1432,7 +1432,7 @@ save_cities_store (ClockData *cd)
                 list = list->next;
         }
 
-        g_settings_set_value (cd->applet_settings, "cities",
+        g_settings_set_value (cd->applet_settings, KEY_CITIES,
                               g_variant_builder_end (&builder));
 
         create_cities_store (cd);
@@ -1501,7 +1501,7 @@ run_prefs_edit_save (GtkButton *button, ClockData *cd)
         }
 
         loc = clock_location_new (name, weather_code, TRUE, lat, lon);
-        g_settings_bind (cd->clock_settings, "clock-format",
+        g_settings_bind (cd->clock_settings, KEY_CLOCK_FORMAT,
                          loc, "clock-format",
                          G_SETTINGS_BIND_GET);
         /* has the side-effect of setting the current location if
@@ -1832,7 +1832,7 @@ set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
         else
                 format = G_DESKTOP_CLOCK_FORMAT_24H;
 
-        g_settings_set_enum (cd->clock_settings, "clock-format", format);
+        g_settings_set_enum (cd->clock_settings, KEY_CLOCK_FORMAT, format);
 }
 
 static void
@@ -1875,7 +1875,7 @@ fill_prefs_window (ClockData *cd)
         radio_12hr = _clock_get_widget (cd, "12hr_radio");
         radio_24hr = _clock_get_widget (cd, "24hr_radio");
 
-        if (g_settings_get_enum (cd->clock_settings, "clock-format") ==
+        if (g_settings_get_enum (cd->clock_settings, KEY_CLOCK_FORMAT) ==
             G_DESKTOP_CLOCK_FORMAT_12H)
                 widget = radio_12hr;
         else
@@ -1888,22 +1888,22 @@ fill_prefs_window (ClockData *cd)
 
 	/* Set the "Show Date" checkbox */
 	widget = _clock_get_widget (cd, "date_check");
-        g_settings_bind (cd->clock_settings, "clock-show-date", widget, "active",
+        g_settings_bind (cd->clock_settings, KEY_CLOCK_SHOW_DATE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show Seconds" checkbox */
 	widget = _clock_get_widget (cd, "seconds_check");
-        g_settings_bind (cd->clock_settings, "clock-show-seconds", widget, "active",
+        g_settings_bind (cd->clock_settings, KEY_CLOCK_SHOW_SECONDS, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show weather" checkbox */
 	widget = _clock_get_widget (cd, "weather_check");
-        g_settings_bind (cd->applet_settings, "show-weather", widget, "active",
+        g_settings_bind (cd->applet_settings, KEY_SHOW_WEATHER, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
 	/* Set the "Show temperature" checkbox */
 	widget = _clock_get_widget (cd, "temperature_check");
-        g_settings_bind (cd->applet_settings, "show-temperature", widget, "active",
+        g_settings_bind (cd->applet_settings, KEY_SHOW_TEMPERATURE, widget, "active",
                          G_SETTINGS_BIND_DEFAULT);
 
 	/* Fill the Cities list */
@@ -1940,7 +1940,7 @@ fill_prefs_window (ClockData *cd)
                                                    -1);
         g_type_class_unref (enum_class);
 
-        g_settings_bind (cd->weather_settings, "temperature-unit", widget, "active-id",
+        g_settings_bind (cd->weather_settings, KEY_TEMPERATURE_UNIT, widget, "active-id",
                          G_SETTINGS_BIND_DEFAULT);
 
         /* Wind speed combo */
@@ -1960,7 +1960,7 @@ fill_prefs_window (ClockData *cd)
                                                    -1);
         g_type_class_unref (enum_class);
 
-        g_settings_bind (cd->weather_settings, "speed-unit", widget, "active-id",
+        g_settings_bind (cd->weather_settings, KEY_SPEED_UNIT, widget, "active-id",
                          G_SETTINGS_BIND_DEFAULT);
 }
 
