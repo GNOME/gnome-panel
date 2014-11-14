@@ -32,6 +32,8 @@ CLOCK_SOURCES = 		\
 	clock-face.h		\
 	clock-location.c	\
 	clock-location.h	\
+	clock-location-edit.c	\
+	clock-location-edit.h	\
 	clock-location-tile.c	\
 	clock-location-tile.h	\
 	clock-map.c		\
@@ -147,6 +149,7 @@ $(applet_in_files): $(applet_in_files).in Makefile
 
 ui_FILES =		\
 	clock.ui	\
+	clock-location-edit.ui \
 	clock-preferences.ui \
 	clock-menu.xml
 
