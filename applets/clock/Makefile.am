@@ -27,7 +27,7 @@ CLOCK_SOURCES = 		\
 	calendar-window.c	\
 	calendar-window.h	\
 	clock.c			\
-	clock.h			\
+	clock-common.h		\
 	clock-face.c		\
 	clock-face.h		\
 	clock-location.c	\

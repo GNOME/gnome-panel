@@ -26,7 +26,7 @@
 #include <gtk/gtk.h>
 #include <math.h>
 
-#include "clock.h"
+#include "clock-common.h"
 #include "clock-face.h"
 
 typedef enum _ClockFaceType ClockFaceType;

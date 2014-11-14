@@ -29,11 +29,9 @@
 #endif
 
 #include <glib/gi18n.h>
-
 #include <gtk/gtk.h>
 
-#include "clock.h"
-
+#include "clock-common.h"
 #include "clock-utils.h"
 
 gboolean

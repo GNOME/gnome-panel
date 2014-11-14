@@ -42,7 +42,7 @@
 
 #include "calendar-window.h"
 
-#include "clock.h"
+#include "clock-common.h"
 #include "clock-utils.h"
 #include "clock-typebuiltins.h"
 #ifdef HAVE_EDS

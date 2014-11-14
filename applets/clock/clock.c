@@ -56,8 +56,7 @@
 #include <libgweather/timezone-menu.h>
 #include <libgweather/gweather-enum-types.h>
 
-#include "clock.h"
-
+#include "clock-common.h"
 #include "calendar-window.h"
 #include "clock-location.h"
 #include "clock-location-tile.h"

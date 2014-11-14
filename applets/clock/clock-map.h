@@ -1,7 +1,6 @@
 #ifndef __CLOCK_MAP_H__
 #define __CLOCK_MAP_H__
 
-#include "clock.h"
 #include "clock-location.h"
 
 #include <gtk/gtk.h>
