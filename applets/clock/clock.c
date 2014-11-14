@@ -1213,7 +1213,6 @@ location_set_current_cb (ClockLocation *loc,
 	if (cd->map_widget)
 		clock_map_refresh (CLOCK_MAP (cd->map_widget));
         update_location_tiles (cd);
-	save_cities_store (cd);	
 }
 
 static void
