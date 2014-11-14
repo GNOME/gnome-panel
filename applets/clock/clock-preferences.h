@@ -46,18 +46,19 @@ typedef struct _ClockPreferencesPrivate ClockPreferencesPrivate;
 
 struct _ClockPreferences
 {
-	GtkWindow                parent;
+	GtkDialog                parent;
 	ClockPreferencesPrivate *priv;
 };
 
 struct _ClockPreferencesClass
 {
-	GtkWindowClass parent_class;
+	GtkDialogClass parent_class;
 };
 
 GType      clock_preferences_get_type (void);
 
-GtkWidget *clock_preferences_new      (GSettings *settings);
+GtkWidget *clock_preferences_new      (GSettings *settings,
+                                       GtkWindow *parent);
 
 G_END_DECLS
 

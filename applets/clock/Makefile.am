@@ -147,6 +147,7 @@ $(applet_in_files): $(applet_in_files).in Makefile
 
 ui_FILES =		\
 	clock.ui	\
+	clock-preferences.ui \
 	clock-menu.xml
 
 clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)

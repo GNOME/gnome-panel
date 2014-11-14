@@ -27,7 +27,7 @@ struct _ClockPreferencesPrivate
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockPreferences,
                             clock_preferences,
-                            GTK_TYPE_WINDOW)
+                            GTK_TYPE_DIALOG)
 
 enum
 {
@@ -122,22 +122,31 @@ clock_preferences_class_init (ClockPreferencesClass *class)
 	g_object_class_install_properties (object_class,
 	                                   N_PROPERTIES,
 	                                   object_properties);
+
+        gtk_widget_class_set_template_from_resource (widget_class,
+                                                     CLOCK_RESOURCE_PATH "clock-preferences.ui"
 }
 
 static void
 clock_preferences_init (ClockPreferences *preferences)
 {
 	preferences->priv = clock_preferences_get_instance_private (preferences);
+
+        gtk_widget_init_template (GTK_WIDGET (preferences));
 }
 
 GtkWidget *
-clock_preferences_new (GSettings *settings)
+clock_preferences_new (GSettings *settings,
+                       GtkWindow *parent)
 {
         GObject *object;
 
         object = g_object_new (CLOCK_TYPE_PREFERENCES,
                                "settings", settings,
                                NULL);
+
+        gtk_window_set_transient_for (GTK_WINDOW (object),
+                                      parent);
 
         return GTK_WIDGET (object);
 }
