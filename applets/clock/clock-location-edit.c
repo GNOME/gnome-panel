@@ -25,19 +25,21 @@
 
 struct _ClockLocationEditPrivate
 {
-	GSettings *settings;
+	GSettings             *settings;
 
-	GtkWidget *ok_button;
-	GtkWidget *cancel_button;
+	GtkWidget             *ok_button;
+	GtkWidget             *cancel_button;
 
-	GtkWidget *name_box;
-	GtkWidget *timezone_box;
-
-	GtkWidget *latitude_entry;
-	GtkWidget *latitude_combo;
-
-	GtkWidget *longitude_entry;
-	GtkWidget *longitude_combo;
+	GtkWidget             *location_label;
+	GtkWidget             *location_box;
+	GWeatherLocationEntry *location_entry;
+	GtkWidget             *timezone_label;
+	GtkWidget             *timezone_box;
+	GWeatherTimezoneMenu  *timezone_combo;
+	GtkWidget             *latitude_entry;
+	GtkWidget             *latitude_combo;
+	GtkWidget             *longitude_entry;
+	GtkWidget             *longitude_combo;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationEdit,
@@ -52,6 +54,52 @@ enum
 };
 
 static GParamSpec *object_properties[N_PROPERTIES] = { NULL, };
+
+static void
+clock_location_edit_setup_widgets (ClockLocationEdit *edit)
+{
+	GWeatherLocation *world;
+	GtkWidget        *location_entry;
+	GtkWidget        *timezone_combo;
+
+	world = gweather_location_get_world ();
+	location_entry = gweather_location_entry_new (world);
+	timezone_combo = gweather_timezone_menu_new (world);
+
+	gtk_widget_show (location_entry);
+	gtk_widget_show (timezone_combo);
+
+	gtk_container_add (GTK_CONTAINER (edit->priv->location_box),
+	                   location_entry);
+	gtk_container_add (GTK_CONTAINER (edit->priv->timezone_box),
+	                   timezone_combo);
+
+	gtk_label_set_mnemonic_widget (GTK_LABEL (edit->priv->location_label),
+	                               location_entry);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (edit->priv->timezone_label),
+	                               timezone_combo);
+
+	edit->priv->location_entry = GWEATHER_LOCATION_ENTRY (location_entry);
+	edit->priv->timezone_combo = GWEATHER_TIMEZONE_MENU (timezone_combo);
+}
+
+static GObject *
+clock_location_edit_constructor (GType                  type,
+                                 guint                  n_properties,
+                                 GObjectConstructParam *properties)
+{
+	GObject           *object;
+	ClockLocationEdit *edit;
+
+	object = G_OBJECT_CLASS (clock_location_edit_parent_class)->constructor (type,
+	                                                                         n_properties,
+	                                                                         properties);
+	edit = CLOCK_LOCATION_EDIT (object);
+
+	clock_location_edit_setup_widgets (edit);
+
+	return object;
+}
 
 static void
 clock_location_edit_finalize (GObject *object)
@@ -122,6 +170,7 @@ clock_location_edit_class_init (ClockLocationEditClass *class)
 	object_class = G_OBJECT_CLASS (class);
 	widget_class = GTK_WIDGET_CLASS (class);
 
+	object_class->constructor = clock_location_edit_constructor;
 	object_class->finalize = clock_location_edit_finalize;
 	object_class->set_property = clock_location_edit_set_property;
 	object_class->get_property = clock_location_edit_get_property;
@@ -150,18 +199,22 @@ clock_location_edit_class_init (ClockLocationEditClass *class)
 
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
-	                                              name_box);
+	                                              location_label);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              location_box);
+	gtk_widget_class_bind_template_child_private (widget_class,
+	                                              ClockLocationEdit,
+	                                              timezone_label);
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
 	                                              timezone_box);
-
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
 	                                              latitude_entry);
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
 	                                              latitude_combo);
-
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
 	                                              longitude_entry);
