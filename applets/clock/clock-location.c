@@ -362,6 +362,16 @@ clock_location_get_timezone (ClockLocation *loc)
 }
 
 const gchar *
+clock_location_get_tzid (ClockLocation *location)
+{
+	GWeatherTimezone *timezone;
+
+	timezone = gweather_location_get_timezone (location->priv->loc);
+
+	return gweather_timezone_get_tzid (timezone);
+}
+
+const gchar *
 clock_location_get_tzname (ClockLocation *loc)
 {
         ClockLocationPrivate *priv = loc->priv;

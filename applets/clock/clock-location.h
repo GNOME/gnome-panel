@@ -86,6 +86,7 @@ void                 clock_location_set_name              (ClockLocation *locati
 
 gchar               *clock_location_get_city              (ClockLocation *location);
 const gchar         *clock_location_get_timezone          (ClockLocation *location);
+const gchar         *clock_location_get_tzid              (ClockLocation *location);
 void                 clock_location_get_coords            (ClockLocation *location,
                                                            gdouble       *latitude,
                                                            gdouble       *longitude);
