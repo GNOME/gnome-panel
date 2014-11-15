@@ -762,3 +762,16 @@ clock_location_setup_weather_tooltip (ClockLocation *location,
 
 	return TRUE;
 }
+
+gboolean
+clock_location_equal (ClockLocation *location1,
+                      ClockLocation *location2)
+{
+	if (g_strcmp0 (location1->priv->name, location2->priv->name) == 0 &&
+	    location1->priv->latitude == location2->priv->latitude &&
+	    location1->priv->longitude == location2->priv->longitude &&
+	    gweather_location_equal (location1->priv->loc, location2->priv->loc))
+		return TRUE;
+
+	return FALSE;
+}

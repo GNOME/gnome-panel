@@ -110,6 +110,9 @@ GDesktopClockFormat  clock_location_get_clock_format      (ClockLocation *locati
 gboolean             clock_location_setup_weather_tooltip (ClockLocation *location,
                                                            GtkTooltip    *tip);
 
+gboolean             clock_location_equal                 (ClockLocation *location1,
+                                                           ClockLocation *location2);
+
 G_END_DECLS
 
 #endif
