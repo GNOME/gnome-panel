@@ -59,6 +59,7 @@
 #include "clock-common.h"
 #include "calendar-window.h"
 #include "clock-location.h"
+#include "clock-location-edit.h"
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
@@ -162,9 +163,6 @@ static void update_orient (ClockData *cd);
 static void applet_change_orient (PanelApplet       *applet,
 				  PanelAppletOrient  orient,
 				  ClockData         *cd);
-
-static void edit_hide (GtkWidget *unused, ClockData *cd);
-static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
 static void save_cities_store (ClockData *cd);
 
 /* ClockBox, an instantiable GtkBox */
@@ -1402,18 +1400,6 @@ prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
         gtk_widget_set_sensitive (cd->prefs_location_remove_button, n > 0);
 }
 
-static GVariant *
-location_serialize (ClockLocation *loc)
-{
-        gdouble lat, lon;
-
-        clock_location_get_coords (loc, &lat, &lon);
-        return g_variant_new ("(ssm(dd))",
-                              clock_location_get_name (loc),
-                              clock_location_get_weather_code (loc),
-                              TRUE, lat, lon);
-}
-
 static void
 save_cities_store (ClockData *cd)
 {
@@ -1427,7 +1413,7 @@ save_cities_store (ClockData *cd)
         while (list) {
                 loc = CLOCK_LOCATION (list->data);
                 g_variant_builder_add_value (&builder,
-                                             location_serialize (loc));
+                                             clock_location_serialize (loc));
 
                 list = list->next;
         }
@@ -1439,244 +1425,9 @@ save_cities_store (ClockData *cd)
 }
 
 static void
-run_prefs_edit_save (GtkButton *button, ClockData *cd)
-{
-        GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
-
-        ClockLocation *loc = g_object_get_data (G_OBJECT (edit_window), "clock-location");
-
-        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
-        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
-        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
-        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
-
-        const gchar *timezone, *weather_code;
-        gchar *city, *name;
-
-        GWeatherLocation *gloc, *station_loc;
-        gfloat lat = 0;
-        gfloat lon = 0;
-
-        if (loc) {
-                cd->locations = g_list_remove (cd->locations, loc);
-                g_object_unref (loc);
-        }
-
-        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
-        if (!timezone) {
-                edit_hide (NULL, cd);
-                return;
-        }
-
-        city = NULL;
-        weather_code = NULL;
-        name = NULL;
-
-        gloc = gweather_location_entry_get_location (cd->location_entry);
-        if (!gloc) {
-                edit_hide (NULL, cd);
-                return;
-        }
-
-        station_loc = gloc;
-        while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
-                station_loc = gweather_location_get_children (station_loc)[0];
-                g_assert (station_loc != NULL);
-        }
-
-        weather_code = gweather_location_get_code (station_loc);
-        if (gweather_location_entry_has_custom_text (cd->location_entry)) {
-                name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
-        }
-
-        sscanf (gtk_entry_get_text (GTK_ENTRY (lat_entry)), "%f", &lat);
-        sscanf (gtk_entry_get_text (GTK_ENTRY (lon_entry)), "%f", &lon);
-
-        if (gtk_combo_box_get_active (GTK_COMBO_BOX (lat_combo)) != 0) {
-                lat = -lat;
-        }
-
-        if (gtk_combo_box_get_active (GTK_COMBO_BOX (lon_combo)) != 0) {
-                lon = -lon;
-        }
-
-        loc = clock_location_new (name, weather_code, TRUE, lat, lon);
-        g_settings_bind (cd->clock_settings, KEY_CLOCK_FORMAT,
-                         loc, "clock-format",
-                         G_SETTINGS_BIND_GET);
-        /* has the side-effect of setting the current location if
-         * there's none and this one can be considered as a current one
-         */
-        clock_location_is_current (loc);
-
-        cd->locations = g_list_append (cd->locations, loc);
-
-        g_free (city);
-
-	/* This will update everything related to locations to take into
-	 * account the new location (via the gconf notification) */
-        save_cities_store (cd);
-
-        edit_hide (edit_window, cd);
-}
-
-static void
-update_coords_helper (gfloat value, GtkWidget *entry, GtkWidget *combo)
-{
-        gchar *tmp;
-
-        tmp = g_strdup_printf ("%f", fabsf (value));
-        gtk_entry_set_text (GTK_ENTRY (entry), tmp);
-        g_free (tmp);
-
-        if (value > 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
-        } else {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 1);
-        }
-}
-
-static void
-update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
-{
-        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
-        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
-        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
-        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
-
-	if (!valid) {
-        	gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
-        	gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
-
-		return;
-	}
-
-	update_coords_helper (lat, lat_entry, lat_combo);
-	update_coords_helper (lon, lon_entry, lon_combo);
-}
-
-static void
-fill_timezone_combo_from_location (ClockData *cd, ClockLocation *loc)
-{
-        if (loc != NULL) {
-                gweather_timezone_menu_set_tzid (cd->zone_combo, 
-                                                 clock_location_get_timezone (loc));
-        } else {
-                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-        }
-}
-
-static void
-location_update_ok_sensitivity (ClockData *cd)
-{
-	GtkWidget *ok_button;
-        const gchar *timezone;
-        gchar *name;
-
-        ok_button = _clock_get_widget (cd, "edit-location-ok-button");
-
-        timezone = gweather_timezone_menu_get_tzid (cd->zone_combo);
-        name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
-
-        if (timezone && name && name[0] != '\0') {
-                gtk_widget_set_sensitive (ok_button, TRUE);
-        } else {
-                gtk_widget_set_sensitive (ok_button, FALSE);
-        }
-
-        g_free (name);
-}
-
-static void
-location_changed (GObject *object, GParamSpec *param, ClockData *cd)
-{
-        GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
-        GWeatherLocation *gloc;
-        GWeatherTimezone *zone;
-        gboolean latlon_valid;
-        double latitude = 0.0, longitude = 0.0;
-
-        gloc = gweather_location_entry_get_location (entry);
-
-	latlon_valid = gloc && gweather_location_has_coords (gloc);
-        if (latlon_valid)
-                gweather_location_get_coords (gloc, &latitude, &longitude);
-        update_coords (cd, latlon_valid, latitude, longitude);
-
-        zone = gloc ? gweather_location_get_timezone (gloc) : NULL;
-        if (zone)
-                gweather_timezone_menu_set_tzid (cd->zone_combo, gweather_timezone_get_tzid (zone));
-        else
-                gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-
-        if (gloc)
-                gweather_location_unref (gloc);
-}
-
-static void
-location_name_changed (GObject *object, ClockData *cd)
-{
-    location_update_ok_sensitivity (cd);
-}
-
-static void
-location_timezone_changed (GObject *object, GParamSpec *param, ClockData *cd)
-{
-    location_update_ok_sensitivity (cd);
-}
-
-static void
-edit_clear (ClockData *cd)
-{
-        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
-        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
-        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
-        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
-
-        /* clear out the old data */
-        gweather_location_entry_set_location (cd->location_entry, NULL);
-        gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-
-        gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
-        gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
-        gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
-}
-
-static void
-edit_hide (GtkWidget *unused, ClockData *cd)
-{
-        GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
-
-        gtk_widget_hide (edit_window);
-        edit_clear (cd);
-}
-
-static gboolean
-edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
-{
-	edit_hide (unused, cd);
-
-	return TRUE;
-}
-
-static gboolean
-edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
-{
-        edit_hide (widget, cd);
-
-        return TRUE;
-}
-
-static void
 prefs_hide (GtkWidget *widget, ClockData *cd)
 {
         GtkWidget *tree;
-
-	edit_hide (widget, cd);
 
 	gtk_widget_hide (cd->prefs_window);
 
@@ -1726,23 +1477,14 @@ run_prefs_locations_remove (GtkButton *button, ClockData *cd)
 static void
 run_prefs_locations_add (GtkButton *button, ClockData *cd)
 {
-        GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
+        GtkWidget *edit_window;
 
-        fill_timezone_combo_from_location (cd, NULL);
+        edit_window = clock_location_edit_new (cd->applet_settings,
+                                               GTK_WINDOW (cd->prefs_window),
+                                               NULL);
 
-        g_object_set_data (G_OBJECT (edit_window), "clock-location", NULL);
-        gtk_window_set_title (GTK_WINDOW (edit_window), _("Choose Location"));
-        gtk_window_set_transient_for (GTK_WINDOW (edit_window), GTK_WINDOW (cd->prefs_window));
-
-	if (g_object_get_data (G_OBJECT (edit_window), "delete-handler") == NULL) {
-		g_object_set_data (G_OBJECT (edit_window), "delete-handler",
-				   GINT_TO_POINTER (g_signal_connect (edit_window, "delete_event", G_CALLBACK (edit_delete), cd)));
-	}
-
-        location_update_ok_sensitivity (cd);
-
-	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
-	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
+	/*gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
+	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);*/
 
         gtk_window_present_with_time (GTK_WINDOW (edit_window), gtk_get_current_event_time ());
 }
@@ -1750,67 +1492,21 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 static void
 edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-        ClockData *cd = data;
-        ClockLocation *loc;
-        const char *name;
-        gchar *tmp;
-        gdouble lat, lon;
+        ClockData     *cd;
+	GtkWidget     *edit_window;
+	ClockLocation *clock_location;
 
-        /* fill the dialog with this location's data, show it */
-        GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
+        cd = data;
 
-        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
+        gtk_tree_model_get (model, iter, COL_CITY_LOC, &clock_location, -1);
 
-        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
+	edit_window = clock_location_edit_new (cd->applet_settings,
+	                                       GTK_WINDOW (cd->prefs_window),
+	                                       clock_location);
 
-        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
+        /*gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
+	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);*/
 
-        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
-
-        edit_clear (cd);
-
-        gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
-
-        gweather_location_entry_set_city (cd->location_entry,
-                                          clock_location_get_city (loc),
-                                          clock_location_get_weather_code (loc));
-	name = clock_location_get_name (loc);
-        if (name && name[0]) {
-                gtk_entry_set_text (GTK_ENTRY (cd->location_entry), name);
-	}
-
-        clock_location_get_coords (loc, &lat, &lon);
-
-        fill_timezone_combo_from_location (cd, loc);
-
-        tmp = g_strdup_printf ("%f", fabsf(lat));
-        gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
-        g_free (tmp);
-
-        if (lat > 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 0);
-        } else {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 1);
-        }
-
-        tmp = g_strdup_printf ("%f", fabsf(lon));
-        gtk_entry_set_text (GTK_ENTRY (lon_entry), tmp);
-        g_free (tmp);
-
-        if (lon > 0) {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 0);
-        } else {
-                gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), 1);
-        }
-
-        location_update_ok_sensitivity (cd);
-
-        g_object_set_data (G_OBJECT (edit_window), "clock-location", loc);
-
-	gtk_widget_grab_focus (GTK_WIDGET (cd->location_entry));
-	gtk_editable_set_position (GTK_EDITABLE (cd->location_entry), -1);
-
-        gtk_window_set_title (GTK_WINDOW (edit_window), _("Edit Location"));
         gtk_window_present (GTK_WINDOW (edit_window));
 }
 
@@ -1967,16 +1663,9 @@ fill_prefs_window (ClockData *cd)
 static void
 ensure_prefs_window_is_created (ClockData *cd)
 {
-        GtkWidget *edit_window;
 	GtkWidget *prefs_close_button;
 	GtkWidget *prefs_help_button;
 	GtkWidget *clock_options;
-        GtkWidget *edit_cancel_button;
-        GtkWidget *edit_ok_button;
-        GtkWidget *location_box;
-        GtkWidget *zone_box;
-        GtkWidget *location_name_label;
-        GtkWidget *timezone_label;
         GtkTreeSelection *selection;
 
         if (cd->prefs_window)
@@ -1990,9 +1679,6 @@ ensure_prefs_window_is_created (ClockData *cd)
         prefs_help_button = _clock_get_widget (cd, "prefs-help-button");
         clock_options = _clock_get_widget (cd, "clock-options");
         cd->prefs_locations = GTK_TREE_VIEW (_clock_get_widget (cd, "cities_list"));
-        location_name_label = _clock_get_widget (cd, "location-name-label");
-        timezone_label = _clock_get_widget (cd, "timezone-label");
-
 
 	if (!clock_locale_supports_am_pm ())
 		gtk_widget_hide (clock_options);
@@ -2024,46 +1710,6 @@ ensure_prefs_window_is_created (ClockData *cd)
 
         g_signal_connect (G_OBJECT (cd->prefs_location_edit_button), "clicked",
                           G_CALLBACK (run_prefs_locations_edit), cd);
-
-        edit_window = _clock_get_widget (cd, "edit-location-window");
-
-        gtk_window_set_transient_for (GTK_WINDOW (edit_window),
-                                      GTK_WINDOW (cd->prefs_window));
-
-        g_signal_connect (G_OBJECT (edit_window), "delete_event",
-                          G_CALLBACK (edit_hide_event), cd);
-
-        edit_cancel_button = _clock_get_widget (cd, "edit-location-cancel-button");
-
-        edit_ok_button = _clock_get_widget (cd, "edit-location-ok-button");
-
-        location_box = _clock_get_widget (cd, "edit-location-name-box");
-        cd->location_entry = GWEATHER_LOCATION_ENTRY (gweather_location_entry_new (cd->world));
-        gtk_widget_show (GTK_WIDGET (cd->location_entry));
-        gtk_container_add (GTK_CONTAINER (location_box), GTK_WIDGET (cd->location_entry));
-        gtk_label_set_mnemonic_widget (GTK_LABEL (location_name_label),
-                                       GTK_WIDGET (cd->location_entry));
-
-        g_signal_connect (G_OBJECT (cd->location_entry), "notify::location",
-                          G_CALLBACK (location_changed), cd);
-        g_signal_connect (G_OBJECT (cd->location_entry), "changed",
-                          G_CALLBACK (location_name_changed), cd);
-
-        zone_box = _clock_get_widget (cd, "edit-location-timezone-box");
-        cd->zone_combo = GWEATHER_TIMEZONE_MENU (gweather_timezone_menu_new (cd->world));
-        gtk_widget_show (GTK_WIDGET (cd->zone_combo));
-        gtk_container_add (GTK_CONTAINER (zone_box), GTK_WIDGET (cd->zone_combo));
-        gtk_label_set_mnemonic_widget (GTK_LABEL (timezone_label),
-                                       GTK_WIDGET (cd->zone_combo));
-
-        g_signal_connect (G_OBJECT (cd->zone_combo), "notify::tzid",
-                          G_CALLBACK (location_timezone_changed), cd);
-
-        g_signal_connect (G_OBJECT (edit_cancel_button), "clicked",
-                          G_CALLBACK (edit_hide), cd);
-
-        g_signal_connect (G_OBJECT (edit_ok_button), "clicked",
-                          G_CALLBACK (run_prefs_edit_save), cd);
 
         /* Set up the time setting section */
 
