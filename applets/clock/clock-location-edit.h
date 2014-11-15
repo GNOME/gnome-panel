@@ -21,7 +21,7 @@
 #ifndef CLOCK_LOCATION_EDIT_H
 #define CLOCK_LOCATION_EDIT_H
 
-#include <gtk/gtk.h>
+#include "clock-location.h"
 
 G_BEGIN_DECLS
 
@@ -57,8 +57,9 @@ struct _ClockLocationEditClass
 
 GType      clock_location_edit_get_type (void);
 
-GtkWidget *clock_location_edit_new      (GSettings *settings,
-                                         GtkWindow *parent);
+GtkWidget *clock_location_edit_new      (GSettings     *settings,
+                                         GtkWindow     *parent,
+                                         ClockLocation *clock_location);
 
 G_END_DECLS
 
