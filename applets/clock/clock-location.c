@@ -775,3 +775,18 @@ clock_location_equal (ClockLocation *location1,
 
 	return FALSE;
 }
+
+GVariant *
+clock_location_serialize (ClockLocation *location)
+{
+	ClockLocationPrivate *priv;
+
+	priv = location->priv;
+
+	return g_variant_new ("(ssm(dd))",
+	                      priv->name,
+	                      gweather_location_get_code (priv->loc),
+	                      TRUE,
+	                      priv->latitude,
+	                      priv->longitude);
+}

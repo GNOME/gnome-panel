@@ -113,6 +113,8 @@ gboolean             clock_location_setup_weather_tooltip (ClockLocation *locati
 gboolean             clock_location_equal                 (ClockLocation *location1,
                                                            ClockLocation *location2);
 
+GVariant            *clock_location_serialize             (ClockLocation *location);
+
 G_END_DECLS
 
 #endif
