@@ -146,6 +146,8 @@ update_cities (ClockLocationEdit *edit,
 
 	g_object_unref (clock_location);
 	g_list_free (locations);
+
+	gtk_widget_destroy (GTK_WIDGET (edit));
 }
 
 static void
@@ -434,7 +436,6 @@ clock_location_edit_constructor (GType                  type,
 	                                                                         properties);
 	edit = CLOCK_LOCATION_EDIT (object);
 
-	clock_location_edit_setup_widgets (edit);
 	clock_location_edit_connect_signals (edit);
 
 	return object;
@@ -448,9 +449,6 @@ clock_location_edit_finalize (GObject *object)
 
 	edit = CLOCK_LOCATION_EDIT (object);
 	priv = edit->priv;
-
-	g_clear_object (&priv->location_entry);
-	g_clear_object (&priv->timezone_combo);
 
 	g_clear_object (&priv->clock_location);
 	g_clear_object (&priv->settings);
@@ -591,6 +589,8 @@ clock_location_edit_init (ClockLocationEdit *edit)
 	edit->priv = clock_location_edit_get_instance_private (edit);
 
 	gtk_widget_init_template (GTK_WIDGET (edit));
+
+	clock_location_edit_setup_widgets (edit);
 }
 
 GtkWidget *

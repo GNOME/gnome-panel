@@ -32,8 +32,8 @@ struct _ClockPreferencesPrivate
 	GtkWidget *close_button;
 
 	/* General */
-	GtkWidget *12hr_radio;
-	GtkWidget *24hr_radio;
+	GtkWidget *clock_format_12hr;
+	GtkWidget *clock_format_24hr;
 	GtkWidget *show_date;
 	GtkWidget *show_seconds;
 	GtkWidget *show_weather;
@@ -165,10 +165,10 @@ clock_preferences_class_init (ClockPreferencesClass *class)
 
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockPreferences,
-	                                              12hr_radio);
+	                                              clock_format_12hr);
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockPreferences,
-	                                              24hr_radio);
+	                                              clock_format_24hr);
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockPreferences,
 	                                              show_date);

@@ -637,7 +637,7 @@ static void
 create_cities_section (ClockData *cd)
 {
         GList *node;
-        ClockLocationTile *city;
+        GtkWidget *city;
         GList *cities;
 
         if (cd->cities_section) {
