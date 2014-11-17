@@ -50,6 +50,14 @@ G_BEGIN_DECLS
 #define KEY_TEMPERATURE_UNIT    "temperature-unit"
 #define KEY_SPEED_UNIT          "speed-unit"
 
+enum
+{
+	COLUMN_NAME,
+	COLUMN_TIMEZONE,
+	COLUMN_LOCATION,
+	COLUMN_LAST
+};
+
 G_END_DECLS
 
 #endif

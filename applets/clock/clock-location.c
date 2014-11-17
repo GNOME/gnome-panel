@@ -47,6 +47,7 @@
 
 #include "clock-location.h"
 #include "clock-marshallers.h"
+#include "gdesktop-enum-types.h"
 #include "set-timezone.h"
 #include "system-timezone.h"
 
@@ -94,28 +95,6 @@ static GParamSpec *object_properties[N_PROPERTIES] = { NULL, };
 static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
-
-/*
- * Should match enum values in gdesktop-enums.h:
- * https://git.gnome.org/browse/gsettings-desktop-schemas/tree/headers/gdesktop-enums.h
- */
-static GType
-g_desktop_clock_format_get_type (void)
-{
-	static GType etype = 0;
-
-	if (etype == 0) {
-		static const GEnumValue values[] = {
-			{ G_DESKTOP_CLOCK_FORMAT_24H, "G_DESKTOP_CLOCK_FORMAT_24H", "24h" },
-			{ G_DESKTOP_CLOCK_FORMAT_12H, "G_DESKTOP_CLOCK_FORMAT_12H", "12h" },
-			{ 0, NULL, NULL }
-		};
-
-		etype = g_enum_register_static ("GDesktopClockFormat", values);
-	}
-
-	return etype;
-}
 
 ClockLocation *
 clock_location_new (const gchar *name,
@@ -245,7 +224,7 @@ clock_location_class_init (ClockLocationClass *class)
 		g_param_spec_enum ("clock-format",
 		                   "clock-format",
 		                   "clock-format",
-		                   g_desktop_clock_format_get_type (),
+		                   G_DESKTOP_TYPE_CLOCK_FORMAT,
 		                   G_DESKTOP_CLOCK_FORMAT_24H,
 		                   G_PARAM_READWRITE);
 

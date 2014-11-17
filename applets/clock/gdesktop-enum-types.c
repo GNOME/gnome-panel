@@ -1,7 +1,5 @@
 /*
- * clock-utils.h
- *
- * Copyright (C) 2007 Vincent Untz <vuntz@gnome.org>
+ * Copyright (C) 2014 Alberts Muktupāvels
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -10,29 +8,33 @@
  *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors:
- *      Vincent Untz <vuntz@gnome.org>
- *
- * Most of the original code comes from clock.c
+ *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
  */
 
-#ifndef __CLOCK_UTILS_H__
-#define __CLOCK_UTILS_H__
-
-#include <gtk/gtk.h>
 #include <gdesktop-enums.h>
 
-G_BEGIN_DECLS
+#include "gdesktop-enum-types.h"
 
-gboolean clock_locale_supports_am_pm (void);
-GDesktopClockFormat clock_locale_format (void);
+static const GEnumValue values[] = {
+	{ G_DESKTOP_CLOCK_FORMAT_24H, "G_DESKTOP_CLOCK_FORMAT_24H", "24h" },
+	{ G_DESKTOP_CLOCK_FORMAT_12H, "G_DESKTOP_CLOCK_FORMAT_12H", "12h" },
+	{ 0, NULL, NULL }
+};
 
-G_END_DECLS
+GType
+g_desktop_clock_format_get_type (void)
+{
+	static GType type = 0;
 
-#endif /* __CLOCK_UTILS_H__ */
+	if (!type)
+		type = g_enum_register_static ("GDesktopClockFormat", values);
+
+	return type;
+}

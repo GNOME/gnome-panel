@@ -1,7 +1,5 @@
 /*
- * clock-utils.h
- *
- * Copyright (C) 2007 Vincent Untz <vuntz@gnome.org>
+ * Copyright (C) 2014 Alberts Muktupāvels
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -10,29 +8,26 @@
  *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors:
- *      Vincent Untz <vuntz@gnome.org>
- *
- * Most of the original code comes from clock.c
+ *    Alberts Muktupāvels <alberts.muktupavels@gmail.com>
  */
 
-#ifndef __CLOCK_UTILS_H__
-#define __CLOCK_UTILS_H__
+#ifndef G_DESKTOP_ENUM_TYPES_H
+#define G_DESKTOP_ENUM_TYPES_H
 
-#include <gtk/gtk.h>
-#include <gdesktop-enums.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
-gboolean clock_locale_supports_am_pm (void);
-GDesktopClockFormat clock_locale_format (void);
+#define G_DESKTOP_TYPE_CLOCK_FORMAT	(g_desktop_clock_format_get_type ())
+GType g_desktop_clock_format_get_type (void) G_GNUC_CONST;
 
 G_END_DECLS
 
-#endif /* __CLOCK_UTILS_H__ */
+#endif

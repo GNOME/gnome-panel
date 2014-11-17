@@ -44,7 +44,6 @@
 
 #include "clock-common.h"
 #include "clock-utils.h"
-#include "clock-typebuiltins.h"
 #ifdef HAVE_EDS
 #include "calendar-client.h"
 #endif

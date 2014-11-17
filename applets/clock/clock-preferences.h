@@ -55,10 +55,15 @@ struct _ClockPreferencesClass
 	GtkDialogClass parent_class;
 };
 
-GType      clock_preferences_get_type (void);
+GType      clock_preferences_get_type         (void);
 
-GtkWidget *clock_preferences_new      (GSettings *settings,
-                                       GtkWindow *parent);
+GtkWidget *clock_preferences_new              (GSettings     *applet_settings,
+                                               GtkWindow     *parent,
+                                               gint           page_number);
+
+void       clock_preferences_update_locations (GSettings     *settings,
+                                               ClockLocation *edit_or_remove_location,
+                                               ClockLocation *new_or_edited_location);
 
 G_END_DECLS
 

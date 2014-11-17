@@ -46,6 +46,8 @@ CLOCK_SOURCES = 		\
 	clock-time.h \
 	clock-utils.c		\
 	clock-utils.h		\
+	gdesktop-enum-types.c \
+	gdesktop-enum-types.h \
 	set-timezone.c		\
 	set-timezone.h		\
 	$(BUILT_SOURCES)	\
@@ -94,46 +96,13 @@ clock-marshallers.c: clock-marshallers.list
 clock-marshallers.h: clock-marshallers.list
 	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --internal $< > $@
 
-clock_enum_headers =					\
-	$(top_srcdir)/applets/clock/clock-utils.h
-
-clock-typebuiltins.c: $(clock_enum_headers)
-	$(AM_V_GEN)glib-mkenums \
-			--fhead "#include <glib-object.h>\n" \
-			--fhead "#include \"clock-typebuiltins.h\"\n\n" \
-			--fprod "\n/* enumerations from \"@filename@\" */" \
-			--fprod "\n#include \"@filename@\"\n" \
-			--vhead "static const GEnumValue _@enum_name@_values[] = {" \
-			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
-			--vtail "  { 0, NULL, NULL }\n};\n\n" \
-			--vtail "GType\n@enum_name@_get_type (void)\n{\n" \
-			--vtail "  static GType type = 0;\n\n" \
-			--vtail "  if (!type)\n" \
-			--vtail "    type = g_enum_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
-			--vtail "  return type;\n}\n\n" \
-		$(clock_enum_headers) > $@
-
-clock-typebuiltins.h: $(clock_enum_headers)
-	$(AM_V_GEN)glib-mkenums \
-			--fhead "#ifndef __CLOCK_TYPEBUILTINS_H__\n" \
-			--fhead "#define __CLOCK_TYPEBUILTINS_H__ 1\n\n" \
-			--fhead "G_BEGIN_DECLS\n\n" \
-			--ftail "G_END_DECLS\n\n" \
-			--ftail "#endif /* __CLOCK_TYPEBUILTINS_H__ */\n" \
-			--fprod "\n/* --- @filename@ --- */" \
-			--eprod "#define CLOCK_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
-			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(clock_enum_headers) > $@
-
 BUILT_SOURCES =					\
 	timedate1.c \
 	timedate1.h \
 	clock-marshallers.c			\
 	clock-marshallers.h			\
 	clock-resources.c			\
-	clock-resources.h			\
-	clock-typebuiltins.c			\
-	clock-typebuiltins.h
+	clock-resources.h
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
@@ -148,7 +117,6 @@ $(applet_in_files): $(applet_in_files).in Makefile
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
 ui_FILES =		\
-	clock.ui	\
 	clock-location-edit.ui \
 	clock-preferences.ui \
 	clock-menu.xml

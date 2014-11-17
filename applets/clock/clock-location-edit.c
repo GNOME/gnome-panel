@@ -34,6 +34,7 @@
 
 #include "clock-common.h"
 #include "clock-location-edit.h"
+#include "clock-preferences.h"
 
 struct _ClockLocationEditPrivate
 {
@@ -41,7 +42,6 @@ struct _ClockLocationEditPrivate
 	ClockLocation         *clock_location;
 
 	GtkWidget             *ok_button;
-	GtkWidget             *cancel_button;
 
 	GtkWidget             *location_label;
 	GtkWidget             *location_box;
@@ -68,87 +68,6 @@ enum
 };
 
 static GParamSpec *object_properties[N_PROPERTIES] = { NULL, };
-
-static gint
-sort_locations_by_name (gconstpointer a,
-                        gconstpointer b)
-{
-	ClockLocation *location1;
-	ClockLocation *location2;
-	const gchar   *name1;
-	const gchar   *name2;
-
-	location1 = CLOCK_LOCATION (a);
-	location2 = CLOCK_LOCATION (a);
-
-	name1 = clock_location_get_name (location1);
-	name2 = clock_location_get_name (location2);
-
-	return g_strcmp0 (name1, name2);
-}
-
-static void
-update_cities (ClockLocationEdit *edit,
-               ClockLocation     *clock_location)
-{
-	ClockLocationEditPrivate *priv;
-	GVariantIter             *iter;
-	GList                    *locations;
-	const gchar              *name;
-	const gchar              *code;
-	gboolean                  latlon_override;
-	gdouble                   latitude;
-	gdouble                   longitude;
-	GList                    *l;
-	GVariantBuilder           builder;
-
-	priv = edit->priv;
-
-	g_settings_get (priv->settings, KEY_CITIES, "a(ssm(dd))", &iter);
-	locations = NULL;
-
-	while (g_variant_iter_loop (iter, "(&s&sm(dd))",
-	                            &name, &code,
-	                            &latlon_override,
-	                            &latitude, &longitude)) {
-		ClockLocation *location;
-
-		location = clock_location_new (name, code,
-		                               latlon_override,
-		                               latitude, longitude);
-
-		if (priv->clock_location) {
-			if (clock_location_equal (priv->clock_location, location)) {
-				g_clear_object (&priv->clock_location);
-				continue;
-			}
-		}
-
-		locations = g_list_append (locations, location);
-	}
-
-	locations = g_list_append (locations, clock_location);
-	locations = g_list_sort (locations, sort_locations_by_name);
-
-	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(ssm(dd))"));
-
-	for (l = locations; l; l = l->next) {
-		ClockLocation *tmp;
-
-		tmp = CLOCK_LOCATION (l->data);
-		g_variant_builder_add_value (&builder,
-		                             clock_location_serialize (tmp));
-		g_object_unref (tmp);
-	}
-
-	g_settings_set_value (priv->settings, KEY_CITIES,
-	                      g_variant_builder_end (&builder));
-
-	g_object_unref (clock_location);
-	g_list_free (locations);
-
-	gtk_widget_destroy (GTK_WIDGET (edit));
-}
 
 static void
 ok_button_clicked (GtkButton *button,
@@ -213,7 +132,11 @@ ok_button_clicked (GtkButton *button,
 	                                     longitude);
 	g_free (name);
 
-	update_cities (edit, clock_location);
+	clock_preferences_update_locations (edit->priv->settings,
+	                                    edit->priv->clock_location,
+	                                    clock_location);
+
+	gtk_widget_destroy (GTK_WIDGET (edit));
 }
 
 static void
@@ -326,9 +249,6 @@ clock_location_edit_connect_signals (ClockLocationEdit *edit)
 
 	priv = edit->priv;
 
-	g_signal_connect_swapped (priv->cancel_button, "clicked",
-	                          G_CALLBACK (gtk_widget_destroy), GTK_WIDGET (edit));
-
 	g_signal_connect (priv->ok_button, "clicked",
 	                  G_CALLBACK (ok_button_clicked), edit);
 
@@ -430,13 +350,18 @@ clock_location_edit_constructor (GType                  type,
 {
 	GObject           *object;
 	ClockLocationEdit *edit;
+	GtkWidget         *entry;
 
 	object = G_OBJECT_CLASS (clock_location_edit_parent_class)->constructor (type,
 	                                                                         n_properties,
 	                                                                         properties);
 	edit = CLOCK_LOCATION_EDIT (object);
+	entry = GTK_WIDGET (edit->priv->location_entry);
 
 	clock_location_edit_connect_signals (edit);
+
+	gtk_widget_grab_focus (entry);
+	gtk_editable_set_position (GTK_EDITABLE (entry), -1);
 
 	return object;
 }
@@ -553,9 +478,6 @@ clock_location_edit_class_init (ClockLocationEditClass *class)
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
 	                                              ok_button);
-	gtk_widget_class_bind_template_child_private (widget_class,
-	                                              ClockLocationEdit,
-	                                              cancel_button);
 
 	gtk_widget_class_bind_template_child_private (widget_class,
 	                                              ClockLocationEdit,
@@ -598,15 +520,17 @@ clock_location_edit_new (GSettings     *settings,
                          GtkWindow     *parent,
                          ClockLocation *clock_location)
 {
-        GObject *object;
+	GObject   *object;
+	GtkWindow *window;
 
-        object = g_object_new (CLOCK_TYPE_LOCATION_EDIT,
-                               "settings", settings,
-                               "clock-location", clock_location,
-                               NULL);
+	object = g_object_new (CLOCK_TYPE_LOCATION_EDIT,
+	                       "settings", settings,
+	                       "clock-location", clock_location,
+	                       NULL);
+	window = GTK_WINDOW (object);
 
-        gtk_window_set_transient_for (GTK_WINDOW (object),
-                                      parent);
+	gtk_window_set_modal (window, TRUE);
+	gtk_window_set_transient_for (window, parent);
 
-        return GTK_WIDGET (object);
+	return GTK_WIDGET (object);
 }
