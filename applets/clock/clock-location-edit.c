@@ -529,7 +529,6 @@ clock_location_edit_new (GSettings     *settings,
 	                       NULL);
 	window = GTK_WINDOW (object);
 
-	gtk_window_set_modal (window, TRUE);
 	gtk_window_set_transient_for (window, parent);
 
 	return GTK_WIDGET (object);

@@ -75,7 +75,7 @@ struct _ClockPreferencesPrivate
 
 G_DEFINE_TYPE_WITH_PRIVATE (ClockPreferences,
                             clock_preferences,
-                            GTK_TYPE_DIALOG)
+                            GTK_TYPE_WINDOW)
 
 enum
 {
@@ -847,7 +847,6 @@ clock_preferences_new (GSettings *applet_settings,
 	preferences = CLOCK_PREFERENCES (object);
 	window = GTK_WINDOW (object);
 
-	gtk_window_set_transient_for (window, parent);
 	gtk_window_set_icon_name (window, CLOCK_ICON);
 
 	if (page_number > -1)
