@@ -58,7 +58,6 @@ struct _ClockPreferencesClass
 GType      clock_preferences_get_type         (void);
 
 GtkWidget *clock_preferences_new              (GSettings     *applet_settings,
-                                               GtkWindow     *parent,
                                                gint           page_number);
 
 void       clock_preferences_update_locations (GSettings     *settings,

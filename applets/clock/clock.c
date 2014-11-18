@@ -1299,7 +1299,6 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
                 page_number = 1;
 
         prefs_window = clock_preferences_new (cd->applet_settings,
-                                              GTK_WINDOW (gtk_widget_get_toplevel (cd->applet)),
                                               page_number);
 
         gtk_window_present (GTK_WINDOW (prefs_window));

@@ -834,7 +834,6 @@ clock_preferences_init (ClockPreferences *preferences)
 
 GtkWidget *
 clock_preferences_new (GSettings *applet_settings,
-                       GtkWindow *parent,
                        gint       page_number)
 {
 	GObject          *object;
