@@ -1520,82 +1520,12 @@ panel_applet_set_background_string (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "background");
 }
 
-static GtkStyleProperties *
-_panel_applet_get_widget_style_properties (GtkWidget *widget,
-                                           gboolean   create_if_needed)
-{
-        GtkStyleProperties *properties;
-
-        properties = g_object_get_data (G_OBJECT (widget),
-                                        "panel-applet-style-props");
-
-        if (!properties && create_if_needed) {
-                properties = gtk_style_properties_new ();
-                g_object_set_data_full (G_OBJECT (widget),
-                                        "panel-applet-style-props",
-                                        properties,
-                                        (GDestroyNotify) g_object_unref);
-        }
-
-        return properties;
-}
-
-static void
-_panel_applet_reset_widget_style_properties (GtkWidget *widget)
-{
-        GtkStyleProperties *properties;
-
-        properties = _panel_applet_get_widget_style_properties (widget, FALSE);
-
-        if (properties)
-                gtk_style_context_remove_provider (gtk_widget_get_style_context (widget),
-                                                   GTK_STYLE_PROVIDER (properties));
-
-        g_object_set_data (G_OBJECT (widget), "panel-applet-style-props", NULL);
-}
-
 static void
 panel_applet_update_background_for_widget (GtkWidget       *widget,
 					   cairo_pattern_t *pattern)
 {
-        GtkStyleProperties *properties;
-
-        gtk_widget_reset_style (widget);
-
-        if (!pattern) {
-                _panel_applet_reset_widget_style_properties (widget);
-                return;
-        }
-
-        properties = _panel_applet_get_widget_style_properties (widget, TRUE);
-
-        switch (cairo_pattern_get_type (pattern)) {
-        case CAIRO_PATTERN_TYPE_SOLID: {
-                GdkRGBA color;
-
-                cairo_pattern_get_rgba (pattern, &color.red, &color.green, &color.blue, &color.alpha);
-                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
-                                          "background-color", &color,
-                                          "background-image", NULL,
-                                          NULL);
-        }
-                break;
-        case CAIRO_PATTERN_TYPE_SURFACE:
-                gtk_style_properties_set (properties, GTK_STATE_FLAG_NORMAL,
-					  /* background-color can't be NULL,
-					   * but is ignored anyway */
-                                          "background-image", pattern,
-                                          NULL);
-                break;
-        default:
-                break;
-        }
-
-	/* Note: this actually replaces the old properties, since it's the same
-	 * pointer */
-        gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
-                                        GTK_STYLE_PROVIDER (properties),
-                                        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+	gdk_window_set_background_pattern (gtk_widget_get_window (widget),
+	                                   pattern);
 }
 
 static void

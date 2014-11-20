@@ -141,47 +141,12 @@ panel_menu_bar_object_set_property (GObject	  *object,
 }
 
 static void
-panel_menu_bar_object_size_allocate (GtkWidget     *widget,
-				     GtkAllocation *allocation)
-{
-	GtkAllocation    old_allocation;
-	GtkAllocation    widget_allocation;
-	PanelBackground *background;
-
-	gtk_widget_get_allocation (widget, &widget_allocation);
-
-	old_allocation.x      = widget_allocation.x;
-	old_allocation.y      = widget_allocation.y;
-	old_allocation.width  = widget_allocation.width;
-	old_allocation.height = widget_allocation.height;
-
-	GTK_WIDGET_CLASS (panel_menu_bar_object_parent_class)->size_allocate (widget, allocation);
-
-	if (old_allocation.x      == allocation->x &&
-	    old_allocation.y      == allocation->y &&
-	    old_allocation.width  == allocation->width &&
-	    old_allocation.height == allocation->height)
-		return;
-
-	background = &PANEL_MENU_BAR_OBJECT (widget)->priv->panel->background;
-
-	if (background->type == PANEL_BACK_NONE ||
-	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
-		return;
-
-	panel_menu_bar_object_change_background (PANEL_MENU_BAR_OBJECT (widget));
-}
-
-static void
 panel_menu_bar_object_class_init (PanelMenuBarObjectClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
-	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 
 	gobject_class->get_property = panel_menu_bar_object_get_property;
         gobject_class->set_property = panel_menu_bar_object_set_property;
-
-	widget_class->size_allocate = panel_menu_bar_object_size_allocate;
 
 	g_type_class_add_private (klass, sizeof (PanelMenuBarObjectPrivate));
 
@@ -231,7 +196,6 @@ panel_menu_bar_object_object_load_finish (PanelMenuBarObject *menubar,
 	menubar->priv->panel = panel;
 
 	/* we didn't do this on "applet-added" since we didn't have the panel yet */
-	panel_menu_bar_object_change_background (menubar);
         panel_menu_bar_object_update_orientation (menubar);
 	panel_menu_bar_object_update_text_gravity (menubar);
 
@@ -248,16 +212,6 @@ panel_menu_bar_object_object_load_finish (PanelMenuBarObject *menubar,
 	gtk_widget_set_can_focus (GTK_WIDGET (menubar), TRUE);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
-}
-
-void
-panel_menu_bar_object_change_background (PanelMenuBarObject *menubar)
-{
-	if (!menubar->priv->panel)
-		return;
-
-	panel_background_change_background_on_widget (&menubar->priv->panel->background,
-						      GTK_WIDGET (menubar));
 }
 
 static void

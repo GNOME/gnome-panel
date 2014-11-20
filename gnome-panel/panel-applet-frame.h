@@ -86,9 +86,6 @@ void  panel_applet_frame_load               (PanelWidget         *panel_widget,
 void  panel_applet_frame_change_orientation (PanelAppletFrame    *frame,
 					     PanelOrientation     orientation);
 
-void  panel_applet_frame_change_background  (PanelAppletFrame    *frame,
-					     PanelBackgroundType  type);
-
 void  panel_applet_frame_set_panel          (PanelAppletFrame    *frame,
 					     PanelWidget         *panel);
 

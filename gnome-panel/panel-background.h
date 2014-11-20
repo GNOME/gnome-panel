@@ -101,7 +101,4 @@ const GdkRGBA       *panel_background_get_color  (PanelBackground *background);
 PanelBackgroundType
       panel_background_effective_type    (PanelBackground     *background);
 
-void panel_background_change_background_on_widget (PanelBackground *background,
-						   GtkWidget       *widget);
-
 #endif /* __PANEL_BACKGROUND_H__ */

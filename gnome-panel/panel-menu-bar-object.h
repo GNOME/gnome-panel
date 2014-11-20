@@ -55,8 +55,6 @@ GType      panel_menu_bar_object_get_type  (void) G_GNUC_CONST;
 void panel_menu_bar_object_object_load_finish (PanelMenuBarObject *menubar,
 					       PanelWidget        *panel);
 
-void       panel_menu_bar_object_change_background (PanelMenuBarObject *menubar);
-
 void             panel_menu_bar_object_set_orientation (PanelMenuBarObject     *menubar,
 							PanelOrientation        orientation);
 PanelOrientation panel_menu_bar_object_get_orientation (PanelMenuBarObject     *menubar);

@@ -112,17 +112,19 @@ void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
+	PanelAppletFrame    *frame;
+	PanelBackgroundType  type;
+
 	switch (info->type) {
 	case PANEL_OBJECT_APPLET:
-		panel_applet_frame_change_background (
-			PANEL_APPLET_FRAME (info->widget), panel->background.type);
+		frame = PANEL_APPLET_FRAME (info->widget);
+		type = panel->background.type;
+
+		PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
 	case PANEL_OBJECT_USER_MENU:
-		panel_menu_bar_object_change_background (PANEL_MENU_BAR_OBJECT (info->widget));
-		break;
 	case PANEL_OBJECT_SEPARATOR:
-		panel_separator_change_background (PANEL_SEPARATOR (info->widget));
 		break;
 	default:
 		break;
