@@ -158,7 +158,7 @@ create_tray_on_screen (GdkScreen *screen,
   hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new_with_mnemonic ("_Orientation:");
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   combo = gtk_combo_box_text_new ();
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), "Horizontal");
@@ -169,7 +169,7 @@ create_tray_on_screen (GdkScreen *screen,
 
   label = gtk_label_new (NULL);
   data->count_label = GTK_LABEL (label);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   data->tray = na_tray_new_for_screen (screen, GTK_ORIENTATION_HORIZONTAL);
