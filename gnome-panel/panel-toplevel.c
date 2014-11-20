@@ -558,7 +558,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	cursor_type = panel_toplevel_grab_op_cursor (
 				toplevel, toplevel->priv->grab_op);
 
-	cursor = gdk_cursor_new (cursor_type);
+	cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
+	                                     cursor_type);
 
 	display = gdk_window_get_display (window);
 	device_manager = gdk_display_get_device_manager (display);

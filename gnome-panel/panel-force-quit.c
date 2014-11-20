@@ -325,7 +325,8 @@ panel_force_quit (GdkScreen *screen,
 
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 
-	cross = gdk_cursor_new (GDK_CROSS);
+	cross = gdk_cursor_new_for_display (gdk_display_get_default (),
+	                                    GDK_CROSS);
 
 	display = gdk_window_get_display (root);
 	device_manager = gdk_display_get_device_manager (display);
