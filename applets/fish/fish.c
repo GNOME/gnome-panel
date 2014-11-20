@@ -687,8 +687,7 @@ display_fortune_dialog (FishApplet *fish)
 		gtk_label_set_ellipsize (GTK_LABEL (fish->fortune_label),
 					 PANGO_ELLIPSIZE_MIDDLE);
 		fish->fortune_cmd_label = gtk_label_new ("");
-		gtk_misc_set_alignment (GTK_MISC (fish->fortune_cmd_label),
-					0, 0.5);
+		gtk_label_set_xalign (GTK_LABEL (fish->fortune_cmd_label), 0.0);
 
 		vbox = gtk_dialog_get_content_area (GTK_DIALOG (fish->fortune_dialog));
 		gtk_box_pack_start (GTK_BOX (vbox),
