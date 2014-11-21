@@ -1593,9 +1593,6 @@ fish_applet_init (FishApplet *fish)
 
 	panel_applet_set_flags (PANEL_APPLET (fish),
 				PANEL_APPLET_EXPAND_MINOR);
-
-	panel_applet_set_background_widget (PANEL_APPLET (fish),
-					    GTK_WIDGET (fish));
 }
 
 static void

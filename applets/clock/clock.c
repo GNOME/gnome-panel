@@ -1345,9 +1345,6 @@ fill_clock_applet (PanelApplet *applet)
 			  G_CALLBACK (panel_button_change_pixel_size),
 			  cd);
 
-	panel_applet_set_background_widget (PANEL_APPLET (cd->applet),
-					    GTK_WIDGET (cd->applet));
-
         action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
 	                                 clock_menu_actions,

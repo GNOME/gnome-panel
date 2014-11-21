@@ -457,9 +457,6 @@ show_desktop_applet_fill (PanelApplet *applet)
                           G_CALLBACK (applet_change_orient),
                           sdd);
 
-	panel_applet_set_background_widget (PANEL_APPLET (sdd->applet),
-					    GTK_WIDGET (sdd->applet));
-
         g_signal_connect (G_OBJECT (sdd->applet),
                           "destroy",
                           G_CALLBACK (applet_destroyed),

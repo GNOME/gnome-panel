@@ -211,9 +211,6 @@ window_menu_applet_fill (PanelApplet *applet)
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 
 			   window_menu->selector);
 
-	panel_applet_set_background_widget (PANEL_APPLET (window_menu->applet),
-					    GTK_WIDGET (window_menu->selector));
-
 	g_signal_connect (window_menu->applet, "key_press_event",
 			  G_CALLBACK (window_menu_key_press_event), window_menu);
 	g_signal_connect (window_menu->applet, "size-allocate",

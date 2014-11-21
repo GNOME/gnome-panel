@@ -244,9 +244,6 @@ na_tray_applet_init (NaTrayApplet *applet)
   panel_applet_set_flags (PANEL_APPLET (applet),
                           PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
 
-  panel_applet_set_background_widget (PANEL_APPLET (applet),
-                                      GTK_WIDGET (applet));
-
   force_no_focus_padding (GTK_WIDGET (applet));
 }
 

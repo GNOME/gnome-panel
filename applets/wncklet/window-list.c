@@ -414,9 +414,6 @@ window_list_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (applet_change_background),
 			  tasklist);
 
-	panel_applet_set_background_widget (PANEL_APPLET (tasklist->applet),
-					    GTK_WIDGET (tasklist->applet));
-
 	action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
 	                                 tasklist_menu_actions,

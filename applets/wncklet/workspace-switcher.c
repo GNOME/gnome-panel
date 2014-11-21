@@ -374,9 +374,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	gtk_widget_show (pager->applet);
 
-	panel_applet_set_background_widget (PANEL_APPLET (pager->applet),
-					    GTK_WIDGET (pager->applet));
-
         action_group = g_simple_action_group_new ();
 	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
 	                                 pager_menu_actions,
