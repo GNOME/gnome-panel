@@ -309,11 +309,16 @@ panel_popup_menu (PanelToplevel *toplevel,
 	panel_data   = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 
 	current_event = gtk_get_current_event ();
+	if (!current_event)
+		return FALSE;
+
 	if (current_event->type == GDK_BUTTON_PRESS)
 		panel_data->insert_pack_type = panel_widget_get_insert_pack_type_at_cursor (panel_widget);
 	else
 		panel_data->insert_pack_type = PANEL_OBJECT_PACK_START;
-	
+
+	gdk_event_free (current_event);
+
 	menu = make_popup_panel_menu (panel_widget);
 	if (!menu)
 		return FALSE;
