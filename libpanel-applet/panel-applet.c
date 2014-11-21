@@ -1518,7 +1518,14 @@ static void
 panel_applet_update_background_for_widget (GtkWidget       *widget,
 					   cairo_pattern_t *pattern)
 {
-	gdk_window_set_background_pattern (gtk_widget_get_window (widget),
+	GdkWindow *window;
+
+	window = gtk_widget_get_window (widget);
+
+	if (!window)
+		return;
+
+	gdk_window_set_background_pattern (window,
 	                                   pattern);
 }
 
