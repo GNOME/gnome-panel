@@ -1390,7 +1390,6 @@ panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
         cairo_t         *cr;
         cairo_surface_t *background;
         cairo_surface_t *surface;
-        cairo_matrix_t   matrix;
         cairo_pattern_t *pattern;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
@@ -1430,13 +1429,8 @@ panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
 
 	pattern = NULL;
 
-        if (cairo_status (cr) == CAIRO_STATUS_SUCCESS) {
-                pattern = cairo_pattern_create_for_surface (surface);
-                cairo_matrix_init_translate (&matrix, 0, 0);
-                cairo_matrix_scale (&matrix, width, height);
-                cairo_pattern_set_matrix (pattern, &matrix);
-                cairo_pattern_set_extend (pattern, CAIRO_EXTEND_PAD);
-        }
+	if (cairo_status (cr) == CAIRO_STATUS_SUCCESS)
+		pattern = cairo_pattern_create_for_surface (surface);
 
         cairo_destroy (cr);
         cairo_surface_destroy (surface);
