@@ -221,6 +221,25 @@ panel_applet_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height,
 }
 
 static void
+change_background (PanelAppletFrame *frame,
+                   GtkAllocation    *old,
+                   GtkAllocation    *new)
+{
+	PanelBackgroundType type;
+
+	if (old->x == new->x &&
+	    old->y == new->y &&
+	    old->width == new->width &&
+	    old->height == new->height)
+		return;
+
+	type = frame->priv->panel->background.type;
+
+	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame,
+	                                                         type);
+}
+
+static void
 panel_applet_frame_size_allocate (GtkWidget     *widget,
 				  GtkAllocation *allocation)
 {
@@ -239,10 +258,12 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
 										   allocation);
+		change_background (frame, &widget_allocation, allocation);
 		return;
 	}
 
 	gtk_widget_set_allocation (widget, allocation);
+	change_background (frame, &widget_allocation, allocation);
 
 	frame->priv->handle_rect.x = 0;
 	frame->priv->handle_rect.y = 0;
