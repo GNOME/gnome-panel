@@ -835,10 +835,10 @@ na_tray_set_icon_size (NaTray *tray,
 
 void
 na_tray_set_colors (NaTray   *tray,
-                    GdkColor *fg,
-                    GdkColor *error,
-                    GdkColor *warning,
-                    GdkColor *success)
+                    GdkRGBA  *fg,
+                    GdkRGBA  *error,
+                    GdkRGBA  *warning,
+                    GdkRGBA  *success)
 {
   NaTrayPrivate *priv = tray->priv;
 

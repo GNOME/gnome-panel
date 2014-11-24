@@ -56,10 +56,10 @@ struct _NaTrayManager
   GtkOrientation orientation;
   gint padding;
   gint icon_size;
-  GdkColor fg;
-  GdkColor error;
-  GdkColor warning;
-  GdkColor success;
+  GdkRGBA fg;
+  GdkRGBA error;
+  GdkRGBA warning;
+  GdkRGBA success;
 
   GList *messages;
   GHashTable *socket_table;
@@ -101,10 +101,10 @@ void            na_tray_manager_set_padding     (NaTrayManager      *manager,
 void            na_tray_manager_set_icon_size   (NaTrayManager      *manager,
 						 gint                padding);
 void            na_tray_manager_set_colors      (NaTrayManager      *manager,
-						 GdkColor           *fg,
-						 GdkColor           *error,
-						 GdkColor           *warning,
-						 GdkColor           *success);
+						 GdkRGBA            *fg,
+						 GdkRGBA            *error,
+						 GdkRGBA            *warning,
+						 GdkRGBA            *success);
 
 
 G_END_DECLS

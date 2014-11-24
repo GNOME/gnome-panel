@@ -96,21 +96,25 @@ na_tray_manager_init (NaTrayManager *manager)
   manager->padding = 0;
   manager->icon_size = 0;
 
-  manager->fg.red = 0;
-  manager->fg.green = 0;
-  manager->fg.blue = 0;
+  manager->fg.red = 0.0;
+  manager->fg.green = 0.0;
+  manager->fg.blue = 0.0;
+  manager->fg.alpha = 1.0;
 
-  manager->error.red = 0xffff;
-  manager->error.green = 0;
-  manager->error.blue = 0;
+  manager->error.red = 1.0;
+  manager->error.green = 0.0;
+  manager->error.blue = 0.0;
+  manager->error.alpha = 1.0;
 
-  manager->warning.red = 0xffff;
-  manager->warning.green = 0xffff;
-  manager->warning.blue = 0;
+  manager->warning.red = 1.0;
+  manager->warning.green = 1.0;
+  manager->warning.blue = 0.0;
+  manager->warning.alpha = 1.0;
 
-  manager->success.red = 0;
-  manager->success.green = 0xffff;
-  manager->success.blue = 0;
+  manager->success.red = 0.0;
+  manager->success.green = 1.0;
+  manager->success.blue = 0.0;
+  manager->success.alpha = 1.0;
 }
 
 static void
@@ -717,18 +721,18 @@ na_tray_manager_set_colors_property (NaTrayManager *manager)
   atom = gdk_x11_get_xatom_by_name_for_display (display,
                                                 "_NET_SYSTEM_TRAY_COLORS");
 
-  data[0] = manager->fg.red;
-  data[1] = manager->fg.green;
-  data[2] = manager->fg.blue;
-  data[3] = manager->error.red;
-  data[4] = manager->error.green;
-  data[5] = manager->error.blue;
-  data[6] = manager->warning.red;
-  data[7] = manager->warning.green;
-  data[8] = manager->warning.blue;
-  data[9] = manager->success.red;
-  data[10] = manager->success.green;
-  data[11] = manager->success.blue;
+  data[0] = manager->fg.red * 65535;
+  data[1] = manager->fg.green * 65535;
+  data[2] = manager->fg.blue * 65535;
+  data[3] = manager->error.red * 65535;
+  data[4] = manager->error.green * 65535;
+  data[5] = manager->error.blue * 65535;
+  data[6] = manager->warning.red * 65535;
+  data[7] = manager->warning.green * 65535;
+  data[8] = manager->warning.blue * 65535;
+  data[9] = manager->success.red * 65535;
+  data[10] = manager->success.green * 65535;
+  data[11] = manager->success.blue * 65535;
 
   XChangeProperty (GDK_DISPLAY_XDISPLAY (display),
                    GDK_WINDOW_XID (window),
@@ -951,17 +955,17 @@ na_tray_manager_set_icon_size (NaTrayManager *manager,
 
 void
 na_tray_manager_set_colors (NaTrayManager *manager,
-                            GdkColor      *fg,
-                            GdkColor      *error,
-                            GdkColor      *warning,
-                            GdkColor      *success)
+                            GdkRGBA       *fg,
+                            GdkRGBA       *error,
+                            GdkRGBA       *warning,
+                            GdkRGBA       *success)
 {
   g_return_if_fail (NA_IS_TRAY_MANAGER (manager));
 
-  if (!gdk_color_equal (&manager->fg, fg) ||
-      !gdk_color_equal (&manager->error, error) ||
-      !gdk_color_equal (&manager->warning, warning) ||
-      !gdk_color_equal (&manager->success, success))
+  if (!gdk_rgba_equal (&manager->fg, fg) ||
+      !gdk_rgba_equal (&manager->error, error) ||
+      !gdk_rgba_equal (&manager->warning, warning) ||
+      !gdk_rgba_equal (&manager->success, success))
     {
       manager->fg = *fg;
       manager->error = *error;
