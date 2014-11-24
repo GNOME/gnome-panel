@@ -46,7 +46,6 @@ struct _NaTrayPrivate
   TraysScreen *trays_screen;
 
   GtkWidget *box;
-  GtkWidget *frame;
 
   guint idle_redraw_id;
 
@@ -551,14 +550,10 @@ na_tray_init (NaTray *tray)
   priv->screen = NULL;
   priv->orientation = GTK_ORIENTATION_HORIZONTAL;
 
-  priv->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  gtk_container_add (GTK_CONTAINER (tray), priv->frame);
-  gtk_widget_show (priv->frame);
-
   priv->box = gtk_box_new (priv->orientation, ICON_SPACING);
   g_signal_connect (priv->box, "draw",
                     G_CALLBACK (na_tray_draw_box), NULL);
-  gtk_container_add (GTK_CONTAINER (priv->frame), priv->box);
+  gtk_container_add (GTK_CONTAINER (tray), priv->box);
   gtk_widget_show (priv->box);
 }
 
