@@ -1,4 +1,4 @@
-AC_INIT([gnome-panel], [3.15.0],
+AC_INIT([gnome-panel], [3.15.2],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
 AC_CONFIG_HEADERS(config.h)
 AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz tar-ustar -Wno-portability])
@@ -20,7 +20,7 @@ AC_SUBST([LIBPANEL_APPLET_API_VERSION])
 LIBPANEL_APPLET_GIR_VERSION=5_0
 AC_SUBST([LIBPANEL_APPLET_GIR_VERSION])
 
-LIB_PANEL_APPLET_LT_VERSION=0:0:0
+LIB_PANEL_APPLET_LT_VERSION=0:1:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 GNOME_MAINTAINER_MODE_DEFINES

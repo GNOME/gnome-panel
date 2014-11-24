@@ -1,3 +1,18 @@
+Version 3.15.2
+==============
+- Fixed more deprecation warnings (again). (Alberts Muktupāvels)
+- Fixed evolution opening from clock applet. (Alberts Muktupāvels)
+- Stop using GtkPlug/GtkSocket for in process applets. (Alberts Muktupāvels)
+- Applets are build as in process applets. (Alberts Muktupāvels)
+- Don't set background color for GtkMenuBar in panel. It breaks transparent
+  panels. (Alberts Muktupāvels)
+- Fix crash in clock applet. (Alberts Muktupāvels)
+- Use dbus to register with session manager, drop libegg. (Alberts Muktupāvels)
+- Restored ability to have transparent panels. (Alberts Muktupāvels)
+- Updated translations:
+  Milo Casagrande (it), Piotr Drąg (pl), Sweta Kothari (gu), Tiago S (pt),
+  Timo Jyrinki (fi), Tom Tryfonidis (el).
+
 Version 3.14.0
 ==============
 - Fix many deprecation warnings. This affects libpanel-applet, functions for
