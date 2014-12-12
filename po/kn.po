@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel.master.kn\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-21 19:10+0000\n"
-"PO-Revision-Date: 2014-09-22 12:19+0530\n"
+"POT-Creation-Date: 2014-12-12 08:14+0000\n"
+"PO-Revision-Date: 2014-12-12 16:51+0530\n"
 "Last-Translator: Shankar Prasad <svenkate AT redhat Dot com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: en_US\n"
@@ -28,8 +28,8 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:309
-#: ../applets/clock/clock-location-tile.c:503
+#: ../applets/clock/calendar-window.c:269
+#: ../applets/clock/clock-location-tile.c:494
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -40,50 +40,50 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:314
-#: ../applets/clock/clock-location-tile.c:466
-#: ../applets/clock/clock-location-tile.c:510
+#: ../applets/clock/calendar-window.c:274
+#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:501
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:280
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:829
+#: ../applets/clock/calendar-window.c:788
 msgid "Tasks"
 msgstr "ಕಾರ್ಯಗಳು"
 
-#: ../applets/clock/calendar-window.c:829
-#: ../applets/clock/calendar-window.c:1012
-#: ../applets/clock/calendar-window.c:1548
+#: ../applets/clock/calendar-window.c:788
+#: ../applets/clock/calendar-window.c:971
+#: ../applets/clock/calendar-window.c:1546
 msgid "Edit"
 msgstr "ಸಂಪಾದನೆ"
 
-#: ../applets/clock/calendar-window.c:952
+#: ../applets/clock/calendar-window.c:911
 msgid "All Day"
 msgstr "ಎಲ್ಲಾ ದಿನ"
 
-#: ../applets/clock/calendar-window.c:1096
+#: ../applets/clock/calendar-window.c:1055
 msgid "Appointments"
 msgstr "ಅಪಾಯಿಂಟ್‌ಮೆಂಟುಗಳು"
 
-#: ../applets/clock/calendar-window.c:1121
+#: ../applets/clock/calendar-window.c:1080
 msgid "Birthdays and Anniversaries"
 msgstr "ಜನ್ಮದಿನಗಳು ಹಾಗು ವಾರ್ಷಿಕೋತ್ಸವ"
 
-#: ../applets/clock/calendar-window.c:1146
+#: ../applets/clock/calendar-window.c:1105
 msgid "Weather Information"
 msgstr "ಹವಾಮಾನ ಮಾಹಿತಿ"
 
-#: ../applets/clock/calendar-window.c:1548 ../applets/clock/clock.ui.h:23
+#: ../applets/clock/calendar-window.c:1546 ../applets/clock/clock.ui.h:30
 msgid "Locations"
 msgstr "ಸ್ಥಳಗಳು"
 
-#: ../applets/clock/calendar-window.c:1803
+#: ../applets/clock/calendar-window.c:1801
 msgid "Calendar"
 msgstr "ಕ್ಯಾಲೆಂಡರ್"
 
@@ -110,7 +110,7 @@ msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ಅಡಗಿಸ�
 msgid "Click to view month calendar"
 msgstr "ತಿಂಗಳ ಕ್ಯಾಲೆಂಡರನ್ನು ನೋಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ"
 
-#: ../applets/clock/clock.c:954
+#: ../applets/clock/clock.c:952
 msgid "Computer Clock"
 msgstr "ಗಣಕದ ಗಡಿಯಾರ"
 
@@ -118,81 +118,71 @@ msgstr "ಗಣಕದ ಗಡಿಯಾರ"
 msgid "Failed to open the time settings"
 msgstr "ಗಣಕದ ಸಮಯದ ಸಿದ್ಧತೆಗಳನ್ನು ತೆರೆಯಲು ವಿಫಲವಾಗಿದೆ"
 
-#: ../applets/clock/clock.c:1138 ../applets/fish/fish.c:1305
-#: ../applets/wncklet/window-list.c:155
-#: ../applets/wncklet/workspace-switcher.c:218
-msgid "_Preferences"
-msgstr "ಆದ್ಯತೆಗಳು (_P)"
-
-#: ../applets/clock/clock.c:1141
-msgid "Copy Date and _Time"
-msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯವನ್ನು ಪ್ರತಿಮಾಡು (_T)"
-
-#: ../applets/clock/clock.c:1144
-msgid "Ad_just Date & Time"
-msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯವನ್ನು ಹೊಂದಿಸು (_j)"
-
-#: ../applets/clock/clock.c:1721
+#: ../applets/clock/clock.c:1711
 msgid "Choose Location"
 msgstr "ಸ್ಥಳವನ್ನು ಆರಿಸಿ"
 
-#: ../applets/clock/clock.c:1800
+#: ../applets/clock/clock.c:1790
 msgid "Edit Location"
 msgstr "ಸ್ಥಳವನ್ನು ಸಂಪಾದಿಸಿ"
 
-#: ../applets/clock/clock.c:1834
+#: ../applets/clock/clock.c:1824 ../applets/clock/clock.c:1832
+msgid "Default"
+msgstr "ಪೂರ್ವನಿಯೋಜಿತ"
+
+#: ../applets/clock/clock.c:1825
 msgid "Kelvin"
 msgstr "ಕೆಲ್ವಿನ್"
 
-#: ../applets/clock/clock.c:1835
+#: ../applets/clock/clock.c:1826
 msgid "Celsius"
 msgstr "ಸೆಲ್ಸಿಯಸ್"
 
-#: ../applets/clock/clock.c:1836
+#: ../applets/clock/clock.c:1827
 msgid "Fahrenheit"
 msgstr "ಫ್ಯಾರನ್ಹೀಟ್"
 
-#: ../applets/clock/clock.c:1841
+#: ../applets/clock/clock.c:1833
 msgid "Meters per second (m/s)"
 msgstr "ಪ್ರತಿ ಸೆಕೆಂಡುಗಳ ಮೀಟರುಗಳು (m/s)"
 
-#: ../applets/clock/clock.c:1842
+#: ../applets/clock/clock.c:1834
 msgid "Kilometers per hour (kph)"
 msgstr "ಪ್ರತಿ ಗಂಟೆಗಳಲ್ಲಿನ ಕಿಲೋಮೀಟರುಗಳು (kph)"
 
-#: ../applets/clock/clock.c:1843
+#: ../applets/clock/clock.c:1835
 msgid "Miles per hour (mph)"
 msgstr "ಪ್ರತಿ ಗಂಟೆಗಳಲ್ಲಿನ ಮೈಲುಗಳು (mph)"
 
-#: ../applets/clock/clock.c:1844
+#: ../applets/clock/clock.c:1836
 msgid "Knots"
 msgstr "ನಾಟ್‌ಗಳು"
 
-#: ../applets/clock/clock.c:1845
+#: ../applets/clock/clock.c:1837
 msgid "Beaufort scale"
 msgstr "ಬಿಫೋರ್ಟ್ ಅಳತೆಗೋಲು"
 
-#: ../applets/clock/clock.c:1898
+#: ../applets/clock/clock.c:1890
 msgid "City Name"
 msgstr "ಊರಿನ ಹೆಸರು"
 
-#: ../applets/clock/clock.c:1902
+#: ../applets/clock/clock.c:1894
 msgid "City Time Zone"
 msgstr "ಊರಿನ ಕಾಲವಲಯ"
 
-#: ../applets/clock/clock-location-tile.c:188
+#: ../applets/clock/clock-location-tile.c:176
 msgid "Failed to set the system timezone"
 msgstr "ಗಣಕದ ಕಾಲವಲಯವನ್ನು ಹೊಂದಿಸಲು ವಿಫಲಗೊಂಡಿದೆ"
 
-#: ../applets/clock/clock-location-tile.c:236
+#: ../applets/clock/clock-location-tile.c:224
 msgid "<small>Set...</small>"
 msgstr "<small>ಹೊಂದಿಸು...</small>"
 
-#: ../applets/clock/clock-location-tile.c:237
+#: ../applets/clock/clock-location-tile.c:225
 msgid "<small>Set</small>"
 msgstr "<small>ಹೊಂದಿಸು</small>"
 
-#: ../applets/clock/clock-location-tile.c:313
+#: ../applets/clock/clock-location-tile.c:300
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "ಈಗಿನ ಸ್ಥಳವನ್ನು ಗಣಕ ಸ್ಥಳವೆಂದು ಹಾಗು ಅದರ ಕಾಲವಲಯವನ್ನು ಈ ಗಣಕದ ಸಮಯವೆಂದು ಹೊಂದಿಸಿ"
@@ -203,7 +193,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:443
+#: ../applets/clock/clock-location-tile.c:434
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -212,7 +202,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:451
+#: ../applets/clock/clock-location-tile.c:442
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -220,25 +210,39 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:460
+#: ../applets/clock/clock-location-tile.c:451
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:610
+#: ../applets/clock/clock-location-tile.c:601
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:623
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, %s ಎಂದೆನಿಸುತ್ತದೆ"
 
-#: ../applets/clock/clock-location-tile.c:644
+#: ../applets/clock/clock-location-tile.c:635
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "ಸೂರ್ಯೋದಯ: %s / ಸೂರ್ಯಾಸ್ತ: %s"
+
+#: ../applets/clock/clock-menu.xml.h:1
+msgid "Copy Date and _Time"
+msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯವನ್ನು ಪ್ರತಿಮಾಡು (_T)"
+
+#: ../applets/clock/clock-menu.xml.h:2
+msgid "Ad_just Date & Time"
+msgstr "ದಿನಾಂಕ ಹಾಗು ಸಮಯವನ್ನು ಹೊಂದಿಸು (_j)"
+
+#: ../applets/clock/clock-menu.xml.h:3
+#: ../applets/wncklet/window-list-menu.xml.h:1
+#: ../applets/wncklet/workspace-switcher-menu.xml.h:1
+msgid "_Preferences"
+msgstr "ಆದ್ಯತೆಗಳು (_P)"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "East"
@@ -257,23 +261,38 @@ msgid "South"
 msgstr "ದಕ್ಷಿಣ"
 
 #: ../applets/clock/clock.ui.h:5
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
+#: ../gnome-panel/panel.c:1375 ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:998
+#: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
+#: ../gnome-panel/panel-run-dialog.c:1299
+#: ../gnome-panel/panel-run-dialog.ui.h:11
+msgid "_Cancel"
+msgstr "ರದ್ದು ಮಾಡು (_C)"
+
+#: ../applets/clock/clock.ui.h:6 ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-run-dialog.c:1300
+msgid "_OK"
+msgstr "ಸರಿ (_O)"
+
+#: ../applets/clock/clock.ui.h:7
 msgid "(optional)"
 msgstr "(ಐಚ್ಛಿಕ)"
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:8
 msgid "_Location Name:"
 msgstr "ಸ್ಥಳದ ಹೆಸರು (_L):"
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:9
 msgid "L_atitude:"
 msgstr "ಅಕ್ಷಾಂಶ (_a):"
 
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:10
 msgid "L_ongitude:"
 msgstr "ರೇಖಾಂಶ (_o):"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: ../applets/clock/clock.ui.h:10
+#: ../applets/clock/clock.ui.h:12
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
@@ -281,85 +300,111 @@ msgstr ""
 "ಪುಟಿಕೆಯಿಂದ "
 "ಆರಿಸಿ."
 
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:13
 msgid "_Timezone:"
 msgstr "ಕಾಲವಲಯ (_T):"
 
-#: ../applets/clock/clock.ui.h:12
+#: ../applets/clock/clock.ui.h:14
 msgid "Clock Preferences"
 msgstr "ಗಡಿಯಾರ ಆದ್ಯತೆಗಳು"
 
-#: ../applets/clock/clock.ui.h:13
+#: ../applets/clock/clock.ui.h:15 ../applets/fish/fish.ui.h:2
+msgid "_Help"
+msgstr "ಸಹಾಯ(_H)"
+
+#: ../applets/clock/clock.ui.h:16
 msgid "Time _Settings"
 msgstr "ಸಮಯದ ಸಿದ್ಧತೆಗಳು (_S)"
 
-#: ../applets/clock/clock.ui.h:14
+#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../gnome-panel/panel-addto.c:1248 ../gnome-panel/panel-ditem-editor.c:653
+#: ../gnome-panel/panel-properties-dialog.ui.h:2
+msgid "_Close"
+msgstr "ಮುಚ್ಚು (_C)"
+
+#: ../applets/clock/clock.ui.h:18
 msgid "Clock Format"
 msgstr "ಗಡಿಯಾರದ ನಮೂನೆ"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:19
 msgid "_12 hour format"
 msgstr "_12 ಗಂಟೆಯ ಮಾದರಿ"
 
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:20
 msgid "_24 hour format"
 msgstr "_24 ಗಂಟೆಯ ಮಾದರಿ"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:21
 msgid "Panel Display"
 msgstr "ಫಲಕ ಪ್ರದರ್ಶಕ"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:22
 msgid "Show the _date"
 msgstr "ದಿನಾಂಕವನ್ನು ತೋರಿಸು (_d)"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:23
 msgid "Show seco_nds"
 msgstr "ಸೆಕೆಂಡುಗಳನ್ನು ತೋರಿಸು (_n)"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:24
 msgid "Show _weather"
 msgstr "ಹವಾಮಾನವನ್ನು ತೋರಿಸು (_w)"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:25
 msgid "Show _temperature"
 msgstr "ಉಷ್ಣತೆಯನ್ನು ತೋರಿಸು (_t)"
 
-#: ../applets/clock/clock.ui.h:22 ../applets/fish/fish.ui.h:2
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
+#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:4
+#: ../gnome-panel/panel-properties-dialog.ui.h:11
 msgid "General"
 msgstr "ಸಾಮಾನ್ಯ"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto.c:1149
+#: ../gnome-panel/panel-addto.c:1245
+msgid "_Add"
+msgstr "ಸೇರಿಸು (_A)"
+
+#: ../applets/clock/clock.ui.h:28
+#| msgid "Edit"
+msgid "_Edit"
+msgstr "ಸಂಪಾದನೆ (_E)"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Remove"
+msgstr "ತೆಗೆದುಹಾಕು (_R)"
+
+#: ../applets/clock/clock.ui.h:31
 msgid "Display"
 msgstr "ಪ್ರದರ್ಶಕ"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
 msgstr "ಗೋಚರಿಕೆಯ ಘಟಕ (_V):"
 
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:33
 msgid "_Pressure unit:"
 msgstr "ಒತ್ತಡದ ಘಟಕ (_P):"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:34
 msgid "_Temperature unit:"
 msgstr "ತಾಪಮಾನದ ಘಟಕ (_T):"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:35
 msgid "_Wind speed unit:"
 msgstr "ಗಾಳಿಯ ವೇಗದ ಘಟಕ (_W):"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:36
 msgid "Weather"
 msgstr "ಹವಾಮಾನ"
 
-#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:162
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:159
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "ಸಹಾಯದ ದಸ್ತಾವೇಜು %s ಅನ್ನು ತೋರಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:188
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:185
 msgid "Error displaying help document"
 msgstr "ಸಹಾಯದ ದಸ್ತಾವೇಜನ್ನು ತೋರಿಸುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ"
 
@@ -379,7 +424,7 @@ msgstr "ಗಡಿಯಾರ"
 msgid "Get the current time and date"
 msgstr "ಪ್ರಸಕ್ತ ಸಮಯ ಹಾಗು ದಿನಾಂಕವನ್ನು ಪಡೆದುಕೊ"
 
-#: ../applets/fish/fish.c:216
+#: ../applets/fish/fish.c:213
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -392,26 +437,26 @@ msgstr ""
 "ಆಪ್ಲೆಟನ್ನು \"ಕ್ರಿಯಾಶೀಲ\" ಅಥವ ಉಪಯುಕ್ತಗೊಳಿಸುವಂತಹ ಏನನ್ನಾದರೂ ಮಾಡಲು \n"
 "%s ಅನ್ನು ಬಳಸಿಕೊಳ್ಳದಂತೆ ನಾವು ನಿಮಗೆ ಬಲವಾಗಿ ಸಲಹೆ ಮಾಡುತ್ತೇವೆ."
 
-#: ../applets/fish/fish.c:356 ../applets/fish/fish.c:472
+#: ../applets/fish/fish.c:372 ../applets/fish/fish.c:488
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s ಮೀನು"
 
-#: ../applets/fish/fish.c:357
+#: ../applets/fish/fish.c:373
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s ಮೀನು, ಒಬ್ಬ ಸಮಕಾಲೀನ ಭವಿಷ್ಯಗಾರ"
 
-#: ../applets/fish/fish.c:428
+#: ../applets/fish/fish.c:444
 msgid "Unable to locate the command to execute"
 msgstr "ಕಾರ್ಯಗತಗೊಳಿಸಬೇಕಿರುವ ಆದೇಶವನ್ನು ಪತ್ತೆ ಮಾಡಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../applets/fish/fish.c:477
+#: ../applets/fish/fish.c:493
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s ಮೀನು ಹೀಗೆ ಹೇಳುತ್ತದೆ:"
 
-#: ../applets/fish/fish.c:546
+#: ../applets/fish/fish.c:562
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -422,16 +467,16 @@ msgstr ""
 "\n"
 "ವಿವರ: %s"
 
-#: ../applets/fish/fish.c:623
+#: ../applets/fish/fish.c:639
 msgid "_Speak again"
 msgstr "ಪುನಃ ಹೇಳು (_S)"
 
-#: ../applets/fish/fish.c:705
+#: ../applets/fish/fish.c:720
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "ಸಂರಚಿಸಲಾದ ಆದೇಶವು ಕೆಲಸ ಮಾಡುತ್ತಿಲ್ಲ ಹಾಗು ಅದು ಇದರಿಂದ ಬದಲಾಯಿಸಲ್ಪಟ್ಟಿದೆ: %s"
 
-#: ../applets/fish/fish.c:739
+#: ../applets/fish/fish.c:754
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -442,7 +487,7 @@ msgstr ""
 "\n"
 "ವಿವರಗಳು: %s"
 
-#: ../applets/fish/fish.c:755
+#: ../applets/fish/fish.c:770
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -453,48 +498,54 @@ msgstr ""
 "\n"
 "ವಿವರಗಳು: %s"
 
-#: ../applets/fish/fish.c:1155
+#: ../applets/fish/fish.c:1170
 msgid "The water needs changing"
 msgstr "ನೀರಿನ ಬದಲಾವಣೆ ಅಗತ್ಯವಿದೆ"
 
-#: ../applets/fish/fish.c:1157
+#: ../applets/fish/fish.c:1172
 msgid "Look at today's date!"
 msgstr "ಇಂದಿನ ದಿನಾಂಕವನ್ನು ನೋಡಿ!"
 
-#: ../applets/fish/fish.c:1250
+#: ../applets/fish/fish.c:1265
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s ಎಂಬ ಮೀನು, ಭವಿಷ್ಯವನ್ನು ಹೇಳುತ್ತದೆ"
+
+#: ../applets/fish/fish-menu.xml.h:1
+#| msgid "_Preferences"
+msgid "Preferences"
+msgstr "ಆದ್ಯತೆಗಳು"
 
 #: ../applets/fish/fish.ui.h:1
 msgid "Fish Preferences"
 msgstr "ಮೀನಿನ ಆದ್ಯತೆಗಳು"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "ಮೀನಿನ ಹೆಸರು (_N):"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "ಕ್ಲಿಕ್ ಮಾಡಿದಾಗ ಚಲಾಯಿಸಬೇಕಿರುವ ಆದೇಶ (_m):"
 
-#: ../applets/fish/fish.ui.h:5
-msgid "Animation"
-msgstr "ಸಜೀವನ(ಅನಿಮೇಶನ್‌)"
+#: ../applets/fish/fish.ui.h:7
+#| msgid "Animation"
+msgid "Animation:"
+msgstr "ಆ್ಯನಿಮೇಶನ್‌:"
 
-#: ../applets/fish/fish.ui.h:6 ../gnome-panel/panel-properties-dialog.ui.h:13
+#: ../applets/fish/fish.ui.h:8 ../gnome-panel/panel-properties-dialog.ui.h:14
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_Pause per frame:"
 msgstr "ಪ್ರತಿ ಚೌಕಟ್ಟಿನಲ್ಲಿ ಸ್ಥಗಿತಗೊಳಿಸಬೇಕಿರುವ ಸಂಖ್ಯೆ (_P):"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "seconds"
 msgstr "ಸೆಕೆಂಡುಗಳು"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Rotate on vertical panels"
 msgstr "ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗಿಸು (_R)"
 
@@ -514,7 +565,7 @@ msgstr "ಮೀನು"
 msgid "Display a swimming fish or another animated creature"
 msgstr "ಈಜುತ್ತಿರುವ ಮೀನು ಅಥವ ಬೇರೆ ಯಾವುದಾದರೂ ಚಲಿಸುವ ಜೀವಿಯನ್ನು ತೋರಿಸಲಾಗುತ್ತದೆ"
 
-#: ../applets/notification_area/main.c:243
+#: ../applets/notification_area/main.c:221
 msgid "Panel Notification Area"
 msgstr "ಫಲಕದಲ್ಲಿನ ಸೂಚನಾ ಸ್ಥಳ"
 
@@ -592,11 +643,11 @@ msgstr "ಅಡಗಿಸಲಾದ ವಿಂಡೋಗಳನ್ನು ಮರಳಿ 
 msgid "Click here to hide all windows and show the desktop."
 msgstr "ಎಲ್ಲಾ ವಿಂಡೋಗಳನ್ನು ಅಡಗಿಸಲು ಹಾಗು ಗಣಕತೆರೆಯನ್ನು ತೋರಿಸಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ಕಿಸಿ."
 
-#: ../applets/wncklet/showdesktop.c:437
+#: ../applets/wncklet/showdesktop.c:435
 msgid "Show Desktop Button"
 msgstr "ಗಣಕತೆರೆ ಗುಂಡಿಯನ್ನು ತೋರಿಸು"
 
-#: ../applets/wncklet/showdesktop.c:505
+#: ../applets/wncklet/showdesktop.c:500
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -649,13 +700,13 @@ msgstr "ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮರ�
 msgid "Restore to na_tive workspace"
 msgstr "ಸ್ಥಳೀಯ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮರಳಿಸ್ಥಾಪಿಸು (_t)"
 
-#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:198
 #: ../applets/wncklet/workspace-switcher.c:716
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "ಅಡ್ಡಸಾಲುಗಳು"
 
-#: ../applets/wncklet/workspace-switcher.c:194
+#: ../applets/wncklet/workspace-switcher.c:198
 #: ../applets/wncklet/workspace-switcher.c:716
 msgid "columns"
 msgstr "ಕಾಲಂಗಳು"
@@ -664,63 +715,43 @@ msgstr "ಕಾಲಂಗಳು"
 msgid "Workspace Switcher Preferences"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರ ಬದಲಾವಣೆಗಾರನ ಆದ್ಯತೆಗಳು"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "ಕೇವಲ ಈಗಿನ ಕಾರ್ಯಕ್ಷೇತ್ರವನ್ನು ಮಾತ್ರ ತೋರಿಸು (_o)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _all workspaces in:"
 msgstr "ಎಲ್ಲಾ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳನ್ನು ಇಲ್ಲಿ ತೋರಿಸು (_a):"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
+#| msgctxt "panel:showusername"
+#| msgid "1"
+msgid "1"
+msgstr "1"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "ಬದಲಾವಣೆಗಾರ"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರಗಳ ಸಂಖ್ಯೆ (_w):"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರದ ಹೆಸರುಗಳು (_m):"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರದ ಹೆಸರುಗಳು"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರಗಳ ಹೆಸರುಗಳನ್ನು ಬದಲಾವಣೆಗಾರನಲ್ಲಿ ತೋರಿಸು (_n)"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Workspaces"
 msgstr "ಕಾರ್ಯಕ್ಷೇತ್ರಗಳು"
-
-#: ../data/gnome-fallback.desktop.in.in.h:1
-#: ../data/gnome-flashback.session.desktop.in.h:1
-msgid "GNOME Flashback"
-msgstr "GNOME ಹಿನ್ನೋಟ"
-
-#: ../data/gnome-fallback.desktop.in.in.h:2
-msgid "This session logs you into GNOME with the traditional panel"
-msgstr ""
-"ಈ ಅಧಿವೇಶನವು ಸಾಂಪ್ರದಾಯಿಕ ಫಲಕದೊಂದಿಗೆ (-ಪ್ಯಾನೆಲ್) ನಿಮ್ಮನ್ನು GNOME ಗೆ "
-"ಪ್ರವೇಶಿಸುವಂತೆ "
-"ಮಾಡುತ್ತದೆ"
-
-#: ../data/gnome-flashback-compiz.desktop.in.in.h:1
-#: ../data/gnome-flashback-compiz.session.desktop.in.h:1
-msgid "GNOME Flashback (Compiz)"
-msgstr "GNOME ಫ್ಲ್ಯಾಶ್‌ಬ್ಯಾಕ್ (ಕಾಂಪಿಜ಼್)"
-
-#: ../data/gnome-flashback-compiz.desktop.in.in.h:2
-msgid ""
-"This session logs you into GNOME with Compiz window-manager and the "
-"traditional panel"
-msgstr ""
-"ಈ ಅಧಿವೇಶನವು ಕಾಂಪಿಜ಼್ ಕಿಟಕಿ-ವ್ಯವಸ್ಥಾಪಕ ಮತ್ತು ಸಾಂಪ್ರದಾಯಿಕ ಫಲಕದೊಂದಿಗೆ (ಪ್ಯಾನೆಲ್) "
-"ನಿಮ್ಮನ್ನು GNOME ಗೆ ಪ್ರವೇಶಿಸುವಂತೆ "
-"ಮಾಡುತ್ತದೆ"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
 msgid "Show date in tooltip"
@@ -982,10 +1013,18 @@ msgstr ""
 "ಖಚಿತಪಡಿಸುವಂತೆ ಕೇಳಲಾಗುವುದು."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Icon size in the menus"
+msgstr "ಮೆನುಗಳಲ್ಲಿ ಚಿಹ್ನೆಯ ಗಾತ್ರ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid "Icon size for only Applications item in the Menu Bar applet"
+msgstr "ಮೆನು ಪಟ್ಟಿ ಆಪ್ಲೆಟ್‌ನಲ್ಲಿನ ಅನ್ವಯಗಳ ಅಂಶಕ್ಕಾಗಿನ ಚಿಹ್ನೆಯ ಗಾತ್ರ"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
 msgid "Panel ID list"
 msgstr "ಫಲಕದ ಐಡಿ ಪಟ್ಟಿ"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -994,11 +1033,11 @@ msgstr ""
 "ಗುರುತಿಸುತ್ತದೆ. ಈ ಪ್ರತಿಯೊಂದು ಫಲಕಗಳಿಗಾಗಿನ ಸಿದ್ಧತೆಗಳನ್ನು /apps/panel/toplevels/"
 "$(id) ನಲ್ಲಿ ಶೇಖರಿಸಿಡಲಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
 msgid "Panel object ID list"
 msgstr "ಫಲಕದ ವಸ್ತು ಐಡಿ ಪಟ್ಟಿ"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -1010,11 +1049,11 @@ msgstr ""
 "ಈ ಪ್ರತಿಯೊಂದು ಫಲಕಗಳಿಗಾಗಿನ ಸಿದ್ಧತೆಗಳನ್ನು /apps/panel/objects/$(id) ನಲ್ಲಿ "
 "ಶೇಖರಿಸಿಡಲಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
 msgid "Complete panel lockdown"
 msgstr "ಸಂಪೂರ್ಣ ಫಲಕ ಲಾಕ್ ಮಾಡುವಿಕೆ"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1025,11 +1064,11 @@ msgstr ""
 "ಬರಲು "
 "ಫಲಕವನ್ನು ಮರಳಿ ಆರಂಭಿಸಬೇಕಾಗುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid "Applet IIDs to disable from loading"
 msgstr "ಲೋಡ್ ಆಗದಂತೆ ತಡೆಯಬೇಕಿರುವ ಆಪ್ಲೆಟ್ ಐಐಡಿಗಳು"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1043,11 +1082,11 @@ msgstr ""
 "ಆಪ್ಲೆಟ್ ಅನ್ನು ಅಶಕ್ತಗೊಳಿಸಲು ಪಟ್ಟಿಗೆ 'OAFIID:GNOME_MiniCommanderApplet' ಅನ್ನು "
 "ಸೇರಿಸಬೇಕು. ಇದು ಕಾರ್ಯರೂಪಕ್ಕೆ ಬರಲು ಫಲಕವನ್ನು ಮರಳಿ ಆರಂಭಿಸಬೇಕಾಗುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
 msgid "Disable Force Quit"
 msgstr "ಒತ್ತಾಯಪೂರ್ವಕ ನಿರ್ಗಮಿಸುವಿಕೆಯನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸು"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1056,20 +1095,20 @@ msgstr ""
 "ಮೂಲಕ "
 "ಬಳಕೆದಾರನು ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚದಂತೆ ಫಲಕವು ತಡೆಯುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
 msgid "History of \"Run Application\" dialog"
 msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದಚೌಕದ ಇತಿಹಾಸ"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಈ ಹಿಂದೆ ಬಳಸಲಾದ ಆದೇಶಗಳ ಪಟ್ಟಿ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಪ್ರೊಗ್ರಾಂಗಳ ಪಟ್ಟಿಯನ್ನು ಶಕ್ತಗೊಳಿಸು"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1080,11 +1119,11 @@ msgstr ""
 "ಲಭ್ಯವಿರುತ್ತದೆ. ಸಂವಾದವನ್ನು ತೋರಿಸಿದಾಗ ಪಟ್ಟಿಯನ್ನು ವಿಸ್ತರಿಸಲಾಗುವುದೆ ಎನ್ನುವುದನ್ನು "
 "enable_program_list ಕೀಲಿಯಿಂದ ನಿಯಂತ್ರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಪ್ರೊಗ್ರಾಂಗಳ ಪಟ್ಟಿಯನ್ನು ವಿಸ್ತರಿಸು"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1096,11 +1135,11 @@ msgstr ""
 "ಇದು "
 "ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:23
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "\"ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು\" ಸಂವಾದದಲ್ಲಿ ಸ್ವಯಂಪೂರ್ಣಗೊಳಿಕೆಯನ್ನು ಶಕ್ತಗೊಳಿಸು"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:24
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -1212,23 +1251,10 @@ msgstr ""
 "ಸಹಕಾರಿಯಾಗುತ್ತದೆ."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
-msgid "X screen where the panel is displayed"
-msgstr "ಫಲಕವು ತೋರಿಸಲ್ಪಡುವ X ತೆರೆ"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"ಅನೇಕ-ತೆರೆಯ ಸೆಟ್ಅಪ್‌ನಿಂದ ನೀವು ಪ್ರತಿಯೊಂದು ತೆರೆಗಳಿಗಾಗಿ ಪ್ರತ್ಯೇಕ ಫಲಕಗಳನ್ನು "
-"ಹೊಂದಬಹುದಾಗಿದೆ. ಯಾವ ಫಲಕದಲ್ಲಿ ಈ ತೆರೆಯು ತೋರಿಸಲ್ಪಡುತ್ತಿದೆ ಎಂದು ಈ ಕೀಲಿಯು ಕಂಡು "
-"ಹಿಡಿಯುತ್ತದೆ."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "ಫಲಕವು ತೋರಿಸಲ್ಪಡಬೇಕಿರುವ Xinerama ತೆರೆ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1237,11 +1263,11 @@ msgstr ""
 "ಬಳಸಬಹುದು. "
 "ಈ ಕೀಲಿಯು ಫಲಕವನ್ನು ತೋರಿಸಲಾಗುತ್ತಿರುವ ಪ್ರಸಕ್ತ ತೆರೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
 msgid "Expand to occupy entire screen width"
 msgstr "ತೆರೆಯ ಸಂಪೂರ್ಣ ಗಾತ್ರಕ್ಕೆ ಹೊಂದುವಂತೆ ಹಿಗ್ಗಿಸು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -1254,11 +1280,11 @@ msgstr ""
 "ಇರಿಸಬಹುದಾಗಿದೆ. ನಿಜವಾಗಿರದೆ ಇದ್ದಲ್ಲಿ, ಫಲಕಕ್ಕೆ ಆಪ್ಲೆಟ್‌ಗಳನ್ನು, ಆರಂಭಕಗಳನ್ನು ಹಾಗು "
 "ಗುಂಡಿಗಳನ್ನು ಸೇರಿಸಿಕೊಳ್ಳುವಷ್ಟು ಮಾತ್ರವೆ ಫಲಕವು ದೊಡ್ಡದಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
 msgid "Panel orientation"
 msgstr "ಫಲಕದ ವಾಲಿಕೆ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -1280,11 +1306,11 @@ msgstr ""
 "ಗುಂಡಿಯು ಆದರ ಮೆನು ಅಂಶಗಳನ್ನು ಕೆಳಕ್ಕೆ ಪುಟಿಯುವಂತೆ ಮಾಡುತ್ತದೆ ಆದರೆ \"ಕೆಳಗಿನ\" "
 "ಫಲಕದಲ್ಲಿನ ಮೆನುವಿನ ಅಂಶಗಳು ಫಲಕದಿಂದ ಮೇಲಕ್ಕೆ ಪುಟಿಯಲ್ಪಡುತ್ತವೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
 msgid "Panel size"
 msgstr "ಫಲಕದ ಗಾತ್ರ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1297,11 +1323,11 @@ msgstr ""
 "ಗರಿಷ್ಟ "
 "ಗಾತ್ರವು ತೆರೆಯ ಎತ್ತರದ(ಅಥವ ಅಗಲದ) ಕಾಲುಭಾಗವೆಂದು ನಿಗದಿಸಲಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
 msgid "X co-ordinate of panel"
 msgstr "ಫಲಕದ X ಅಕ್ಷಾಂಶ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1313,11 +1339,11 @@ msgstr ""
 "ಫಲಕವು "
 "ವಾಲಿಕೆಯ ಕೀಲಿಯಿಂದ ಸೂಚಿತಗೊಂಡ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಇರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
 msgid "Y co-ordinate of panel"
 msgstr "ಫಲಕದ Y ಅಕ್ಷಾಂಶ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1329,11 +1355,11 @@ msgstr ""
 "ಫಲಕವು "
 "ವಾಲಿಕೆಯ ಕೀಲಿಯಿಂದ ಸೂಚಿತಗೊಂಡ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಇರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "ಫಲಕದ X ಅಕ್ಷಾಂಶ, ತೆರೆಯ ಕೆಳಗಿನಿಂದ ಆರಂಭಗೊಳ್ಳುವ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1352,11 +1378,11 @@ msgstr ""
 "ಬಿಟ್ಟಬಿಡಲಾಗುತ್ತದೆ "
 "ಹಾಗು ಫಲಕವು ವಾಲಿಕೆಯ ಕೀಲಿಯಿಂದ ಸೂಚಿತಗೊಂಡ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಇರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "ಫಲಕದ y ಅಕ್ಷಾಂಶ, ತೆರೆಯ ಕೆಳಗಿನಿಂದ ಆರಂಭಗೊಳ್ಳುವ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1375,11 +1401,11 @@ msgstr ""
 "ಬಿಟ್ಟಬಿಡಲಾಗುತ್ತದೆ "
 "ಹಾಗು ಫಲಕವು ವಾಲಿಕೆಯ ಕೀಲಿಯಿಂದ ಸೂಚಿತಗೊಂಡ ತೆರೆಯ ಅಂಚಿನಲ್ಲಿ ಇರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
 msgid "Center panel on x-axis"
 msgstr "x-ಅಕ್ಷಾಂಶದಲ್ಲಿರುವ ಮಧ್ಯ ಫಲಕ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1394,11 +1420,11 @@ msgstr ""
 "ಆಗಿದ್ದಲ್ಲಿ, x "
 "ಹಾಗು x_bottom ಕೀಲಿಗಳು ಫಲಕದ ಸ್ಥಾನವನ್ನು ಸೂಚಿಸುತ್ತವೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
 msgid "Center panel on y-axis"
 msgstr "y-ಅಕ್ಷಾಂಶದಲ್ಲಿನ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1413,11 +1439,11 @@ msgstr ""
 "ಆಗಿದ್ದಲ್ಲಿ, y "
 "ಹಾಗು y_bottom ಕೀಲಿಗಳು ಫಲಕದ ಸ್ಥಾನವನ್ನು ಸೂಚಿಸುತ್ತವೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
 msgid "Automatically hide panel into corner"
 msgstr "ಫಲಕವು ತಾನಾಗಿಯೆ ಮೂಲೆಯಲ್ಲಿ ಅಡಗಿಸು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -1427,11 +1453,11 @@ msgstr ""
 "ಮೂಲೆಯಲ್ಲಿ "
 "ಅಡಗಿಸಲ್ಪಡುತ್ತದೆ. ಸೂಚಕವನ್ನು ಆ ಮೂಲೆಗೆ ಕೊಂಡುಹೋದಾಗ ಫಲಕ ಮರಳಿ ಕಾಣಿಸಿಕೊಳ್ಳುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
 msgid "Enable hide buttons"
 msgstr "ಅಡಗಿಸುವ ಗುಂಡಿಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -1440,11 +1466,11 @@ msgstr ""
 "ಬಳಸಿಕೊಂಡು "
 "ಕೇವಲ ಗುಂಡಿಯ ಮಾತ್ರವೆ ಕಾಣಿಸುತ್ತಿರುವಂತೆ ಫಲಕವನ್ನು ತೆರೆಯ ಅಂಚಿಗೆ ಎಳೆದೊಯ್ಯಬಹುದು."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
 msgid "Enable arrows on hide buttons"
 msgstr "ಅಡಗಿಸುವ ಗುಂಡಿಗಳಲ್ಲಿ ಬಾಣದ ಗುರುತುಗಳನ್ನು ಶಕ್ತಗೊಳಿಸು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -1453,11 +1479,11 @@ msgstr ""
 "enable_buttons(ಗುಂಡಿಯನ್ನು ಶಕ್ತಗೊಳಿಸು) ಕೀಲಿಯು ನಿಜವಾಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಕೀಲಿಯು "
 "ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
 msgid "Panel autohide delay"
 msgstr "ಫಲಕವು ತಾನಾಗಿಯೆ ಅಡಗಿಸುವಲ್ಲಿನ ವಿಳಂಬ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -1468,11 +1494,11 @@ msgstr ""
 "ಆಗಿದ್ದಲ್ಲಿ "
 "ಮಾತ್ರ ಈ ಕೀಲಿಯು ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
 msgid "Panel autounhide delay"
 msgstr "ಫಲಕದ ಸ್ವಯಂ-ಅಡಗುವಿಕೆಯಲ್ಲಿ ವಿಳಂಬ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -1484,11 +1510,11 @@ msgstr ""
 "ಆಗಿದ್ದಲ್ಲಿ "
 "ಮಾತ್ರ ಈ ಕೀಲಿಯು ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
 msgid "Visible pixels when hidden"
 msgstr "ಅಡಗಿಸಿದಾಗ ಕಾಣಿಸುವ ಪಿಕ್ಸೆಲ್‍ಗಳು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -1497,11 +1523,11 @@ msgstr ""
 "ಸೂಚಿಸಲಾಗುತ್ತದೆ. auto_hide ಕೀಲಿಯು true ಆಗಿದ್ದಲ್ಲಿ ಮಾತ್ರ ಈ ಕೀಲಿಯು "
 "ಸೂಕ್ತವಾಗಿರುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
 msgid "Animation speed"
 msgstr "ಸಜೀವನದ(ಅನಿಮೇಶನ್) ವೇಗ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -1513,11 +1539,11 @@ msgstr ""
 "ಮಾತ್ರವೆ "
 "ಇದು ಸೂಕ್ತವೆನಿಸುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
 msgid "Background type"
 msgstr "ಹಿನ್ನಲೆಯ ಬಗೆ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"none\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -1530,19 +1556,19 @@ msgstr ""
 "ಚಿತ್ರವು "
 "ಹಿನ್ನಲೆಯಾಗಿ ಬಳಸಲಾಗುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background color"
 msgstr "ಹಿನ್ನೆಲೆ ಬಣ್ಣ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "ಫಲಕಕ್ಕೆ #RGB ವಿನ್ಯಾಸದಲ್ಲಿ ಹಿನ್ನಲೆಯ ಬಣ್ಣವನ್ನು ಸೂಚಿಸುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid "Background image"
 msgstr "ಹಿನ್ನಲೆಯ ಚಿತ್ರ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -1552,22 +1578,22 @@ msgstr ""
 "ಅನ್ನು "
 "ಹೊಂದಿದ್ದಲ್ಲಿ, ಅದನ್ನು ಹಿನ್ನಲೆ ಚಿತ್ರದೊಂದಿಗೆ ಮಿಶ್ರ ಮಾಡಲಾಗುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
 msgid "Rotate image on vertical panels"
 msgstr "ಚಿತ್ರಗಳನ್ನು ಲಂಬ ಫಲಕಗಳಲ್ಲಿ ತಿರುಗಿಸಿ"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
 "ನಿಜವಾಗಿದ್ದಲ್ಲಿ, ಫಲಕವನ್ನು ಲಂಬವಾಗಿ ಇರಿಸಿದಾಗ ಹಿನ್ನಲೆಯ ಚಿತ್ರವು ತಿರುಗಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
 msgid "Image options"
 msgstr "ಚಿತ್ರದ ಆಯ್ಕೆಗಳು"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -1585,45 +1611,45 @@ msgstr ""
 "ಹೊಂದಿಕೆಯಾಗುವಂತೆ "
 "ಗಾತ್ರಬದಲಿಸಲಾಗುತ್ತದೆ."
 
-#: ../gnome-panel/applet.c:359
+#: ../gnome-panel/applet.c:348
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:167
+#: ../gnome-panel/applet.c:486 ../libpanel-applet/panel-applet.c:1759
 msgid "_Move"
 msgstr "ಜರುಗಿಸು (_M)"
 
-#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:164
+#: ../gnome-panel/applet.c:493 ../libpanel-applet/panel-applet.c:1759
 msgid "_Remove From Panel"
 msgstr "ಫಲಕದಿಂದ ತೆಗೆ (_R)"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:29
+#: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "ನೀಡಲಾದ ಕೋಶದಲ್ಲಿ ಹೊಸ ಕಡತವನ್ನು ರಚಿಸಿ"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:30
+#: ../gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FILE...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:108
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- .desktop ಕಡತಗಳನ್ನು ಸಂಪಾದಿಸು"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:894
+#: ../gnome-panel/gnome-desktop-item-edit.c:144
+#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:892
 msgid "Create Launcher"
 msgstr "ಆರಂಭಕವನ್ನು ನಿರ್ಮಿಸಿ"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:171
-#: ../gnome-panel/gnome-desktop-item-edit.c:194
+#: ../gnome-panel/gnome-desktop-item-edit.c:169
+#: ../gnome-panel/gnome-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "ಕೋಶದ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:732
+#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:732
 msgid "Launcher Properties"
 msgstr "ಆರಂಭಕದ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:130
 msgid "Panel"
 msgstr "ಫಲಕ"
 
@@ -1662,89 +1688,26 @@ msgstr "ಫಲಕವನ್ನು ಆರಂಭಿಸುವ ಗಣಕತೆರೆ 
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ಗಣಕತೆರೆ ಕಡತ %s ಅನ್ನು ಫಲಕದ ಆರಂಭಕ %s%s ಕ್ಕಾಗಿ ತೆರೆಯಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ\n"
 
-#: ../gnome-panel/launcher.c:798
+#: ../gnome-panel/launcher.c:797
 msgid "_Launch"
 msgstr "ಆರಂಭಿಸು (_L)"
 
-#: ../gnome-panel/launcher.c:804 ../gnome-panel/panel-action-button.c:137
-#: ../gnome-panel/panel-context-menu.c:131
+#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:172
+#: ../gnome-panel/panel-context-menu.c:128
 msgid "_Properties"
 msgstr "ಗುಣಲಕ್ಷಣಗಳು (_P)"
 
-#: ../gnome-panel/launcher.c:835
+#: ../gnome-panel/launcher.c:833
 #, c-format
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr ""
 "ಆರಂಭಕದ ಸ್ಥಳವನ್ನು ಹೊಂದಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ, ಆರಂಭಕವನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ\n"
 
-#: ../gnome-panel/launcher.c:965 ../gnome-panel/panel-ditem-editor.c:1351
-#: ../gnome-panel/panel-ditem-editor.c:1385
-#: ../gnome-panel/panel-ditem-editor.c:1416
+#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1316
+#: ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1381
 msgid "Could not save launcher"
 msgstr "ಆರಂಭಕವನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:164
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "ಕಡತವು ಒಂದು ಸೂಕ್ತವಾದ .desktop ಕಡತವಾಗಿಲ್ಲ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:187
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "ಗುರುತಿಸಲಾಗದ ಗಣಕತೆರೆ ಕಡತ ಆವೃತ್ತಿ '%s'"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:967
-#, c-format
-msgid "Starting %s"
-msgstr "%s ಅನ್ನು ಆರಂಭಿಸಲಾಗುತ್ತಿದೆ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1109
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "ಅನ್ವಯವು ಆಜ್ಞಾ ಸಾಲಿನಲ್ಲಿ ದಸ್ತಾವೇಜುಗಳನ್ನು ಸ್ವೀಕರಿಸುವುದಿಲ್ಲ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1177
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "ಗುರುತಿಸಲಾಗದ ಆರಂಭ ಆಯ್ಕೆ: %d"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1382
-#, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr "ಒಂದು 'Type=Link' ಗಣಕತೆರೆ ನಮೂದಿಗಾಗಿ ದಸ್ತಾವೇಜು URIಗಳನ್ನು ಒದಗಿಸಲಾಗಿಲ್ಲ"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1403
-#, c-format
-msgid "Not a launchable item"
-msgstr "ಆರಂಭಿಸಬಹುದಾದ ಒಂದು ಅಂಶವಾಗಿಲ್ಲ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:224
-msgid "Disable connection to session manager"
-msgstr "ಅಧಿವೇಶನದ ವ್ಯವಸ್ಥಾಪಕನೊಂದಿಗಿನ ಸಂಪರ್ಕವನ್ನು ಅಶಕ್ತಗೊಳಿಸು"
-
-#: ../gnome-panel/libegg/eggsmclient.c:227
-msgid "Specify file containing saved configuration"
-msgstr "ಉಳಿಸಲಾದ ಸಂರಚನೆಯನ್ನು ಹೊಂದಿರುವ ಕಡತವನ್ನು ಸೂಚಿಸಿ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:227
-msgid "FILE"
-msgstr "FILE"
-
-#: ../gnome-panel/libegg/eggsmclient.c:230
-msgid "Specify session management ID"
-msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಐಡಿಯನ್ನು ಸೂಚಿಸಿ"
-
-#: ../gnome-panel/libegg/eggsmclient.c:230
-msgid "ID"
-msgstr "ID"
-
-#: ../gnome-panel/libegg/eggsmclient.c:251
-msgid "Session management options:"
-msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಆಯ್ಕೆಗಳು:"
-
-#: ../gnome-panel/libegg/eggsmclient.c:252
-msgid "Show session management options"
-msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಆಯ್ಕೆಗಳನ್ನು ತೋರಿಸು"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1752,14 +1715,19 @@ msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಆಯ್ಕೆಗಳನ�
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:805
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:749
+#: ../gnome-panel/panel-applet-frame.c:909
 msgid "Error"
 msgstr "ದೋಷ"
 
 #: ../gnome-panel/libpanel-util/panel-icon-chooser.c:383
 msgid "Choose an icon"
 msgstr "ಚಿಹ್ನೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:388
+#: ../gnome-panel/panel-ditem-editor.c:1000
+msgid "_Open"
+msgstr "ತೆರೆ (_O)"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:47
 #, c-format
@@ -1775,166 +1743,195 @@ msgstr "ಸ್ಥಳ '%s' ಅನ್ನು ತೆರೆಯಲಾಗಿಲ್ಲ"
 msgid "No application to handle search folders is installed."
 msgstr "ಕಡತಕೋಶಗಳನ್ನು ಹುಡುಕುವಂತಹ ಯಾವುದೆ ಅನ್ವಯವು ಅನುಸ್ಥಾಪಿತಗೊಂಡಿಲ್ಲ."
 
-#: ../gnome-panel/main.c:41
+#: ../gnome-panel/main.c:40
 msgid "Replace a currently running panel"
 msgstr "ಪ್ರಸಕ್ತ ಚಾಲನೆಯಲ್ಲಿರುವ ಫಲಕವನ್ನು ಬದಲಾಯಿಸು"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
 msgstr "ತೆರೆಯನ್ನು ಲಾಕ್ ಮಾಡು (_L)"
 
-#: ../gnome-panel/panel-action-button.c:131
+#: ../gnome-panel/panel-action-button.c:167
 msgid "_Activate Screensaver"
 msgstr "ಸ್ಕ್ರೀನ್‌ಸೇವರನ್ನು ಸಕ್ರಿಯಗೊಳಿಸು (_A)"
 
-#: ../gnome-panel/panel-action-button.c:237
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Connect to server"
 msgstr "ಪೂರೈಕೆಗಣಕಕ್ಕೆ ಸಂಪರ್ಕಿಸು"
 
-#: ../gnome-panel/panel-action-button.c:261
+#: ../gnome-panel/panel-action-button.c:371
 msgid "Could not connect to server"
 msgstr "ಪರಿಚಾರಕಕ್ಕೆ ಸಂಪರ್ಕ ಕಲ್ಪಿಸಲಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-action-button.c:291
+#: ../gnome-panel/panel-action-button.c:401
 msgid "Lock Screen"
 msgstr "ತೆರೆಯನ್ನು ಲಾಕ್ ಮಾಡು"
 
-#: ../gnome-panel/panel-action-button.c:292
+#: ../gnome-panel/panel-action-button.c:402
 msgid "Protect your computer from unauthorized use"
 msgstr "ನಿಮ್ಮ ಗಣಕವನ್ನು ಅನಧಿಕೃತ ಬಳಕೆಯಿಂದ ಸಂರಕ್ಷಿಸಿ"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:305
+#: ../gnome-panel/panel-action-button.c:415
 msgid "Log Out"
 msgstr "ನಿರ್ಗಮಿಸು"
 
-#: ../gnome-panel/panel-action-button.c:306
+#: ../gnome-panel/panel-action-button.c:416
 msgid "Log out of this session to log in as a different user"
 msgstr "ಬೇರೊಂದು ಬಳಕೆದಾರನಾಗಿ ಪ್ರವೇಶಿಸುವ ಸಲುವಾಗಿ ಈ ಅಧಿವೇಶನದಿಂದ ನಿರ್ಗಮಿಸಿ"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:424
 msgid "Run Application..."
 msgstr "ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸು..."
 
-#: ../gnome-panel/panel-action-button.c:315
+#: ../gnome-panel/panel-action-button.c:425
 msgid "Run an application by typing a command or choosing from a list"
 msgstr ""
 "ಒಂದು ಆದೇಶವನ್ನು ಟೈಪಿಸುವ ಮೂಲಕ ಅಥವ ಪಟ್ಟಿಯಿಂದ ಆರಿಸುವ ಮೂಲಕ ಒಂದು ಅನ್ವಯವನ್ನು ಚಲಾಯಿಸಿ"
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:433
 msgid "Search for Files..."
 msgstr "ಕಡತಗಳಿಗಾಗಿ ಹುಡುಕು..."
 
-#: ../gnome-panel/panel-action-button.c:324
+#: ../gnome-panel/panel-action-button.c:434
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "ಈ ಗಣಕ ಯಂತ್ರದಲ್ಲಿ ಹೆಸರು ಅಥವ ವಿಷಯಗಳ ಆಧಾರದ ಮೇಲೆ ದಸ್ತಾವೇಜುಗಳನ್ನು ಮತ್ತು "
 "ಕಡತಕೋಶಗಳನ್ನು "
 "ಪತ್ತೆ ಮಾಡಿ"
 
-#: ../gnome-panel/panel-action-button.c:331
-#: ../gnome-panel/panel-force-quit.c:239
+#: ../gnome-panel/panel-action-button.c:441
+#: ../gnome-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚು"
 
-#: ../gnome-panel/panel-action-button.c:332
+#: ../gnome-panel/panel-action-button.c:442
 msgid "Force a misbehaving application to quit"
 msgstr "ಅನುಚಿತವಾಗಿ ವರ್ತಿಸುತ್ತಿರುವ ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚು"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:340
+#: ../gnome-panel/panel-action-button.c:450
 msgid "Connect to Server..."
 msgstr "ಪರಿಚಾರಕಕ್ಕೆ ಸಂಪರ್ಕ ಕಲ್ಪಿಸು..."
 
-#: ../gnome-panel/panel-action-button.c:341
+#: ../gnome-panel/panel-action-button.c:451
 msgid "Connect to a remote computer or shared disk"
 msgstr "ದೂರಸ್ಥ ಗಣಕ ಅಥವ ಹಂಚಲಾಗಿರುವ ಡಿಸ್ಕಿಗೆ ಸಂಪರ್ಕ ಕಲ್ಪಿಸಿ"
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:458
+msgid "Hibernate"
+msgstr "ಹೈಬರ್ನೇಟ್"
+
+#: ../gnome-panel/panel-action-button.c:467
+msgid "Suspend"
+msgstr "ಸ್ಥಗಿತಗೊಳಿಸು"
+
+#: ../gnome-panel/panel-action-button.c:476
+msgid "Hybrid sleep"
+msgstr "ಹೈಬ್ರಿಡ್ ಜಡಸ್ಥಿತಿ"
+
+#: ../gnome-panel/panel-action-button.c:485
+msgid "Restart"
+msgstr "ಮರುಆರಂಭಿಸು"
+
+#: ../gnome-panel/panel-action-button.c:486
+#| msgid "Power off the computer"
+msgid "Restart the computer"
+msgstr "ಗಣಕವನ್ನು ಮರುಆರಂಭಿಸು"
+
+#: ../gnome-panel/panel-action-button.c:494
 msgid "Power Off"
 msgstr "ಸ್ಥಗಿತಗೊಳಿಸು"
 
-#: ../gnome-panel/panel-action-button.c:349
+#: ../gnome-panel/panel-action-button.c:495
 msgid "Power off the computer"
 msgstr "ಗಣಕವನ್ನು ಸ್ಥಗಿತಗೊಳಿಸು"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:960
+#: ../gnome-panel/panel-addto.c:143 ../gnome-panel/panel-menu-button.c:976
 msgid "Main Menu"
 msgstr "ಮುಖ್ಯ ಅಂಶಪಟ್ಟಿ"
 
-#: ../gnome-panel/panel-addto.c:143
+#: ../gnome-panel/panel-addto.c:144
 msgid "The main GNOME menu"
 msgstr "ಮುಖ್ಯ GNOME ಅಂಶಪಟ್ಟಿ"
 
-#: ../gnome-panel/panel-addto.c:152
+#: ../gnome-panel/panel-addto.c:153
 msgid "Menu Bar"
 msgstr "ಪರಿವಿಡಿ ಪಟ್ಟಿ"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto.c:154
 msgid "A custom menu bar"
 msgstr "ನನ್ನಿಚ್ಛೆಯ ಮೆನು ಪಟ್ಟಿ"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto.c:163
 msgid "Separator"
 msgstr "ವಿಭಜಕ"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto.c:164
 msgid "A separator to organize the panel items"
 msgstr "ಫಲಕ ಅಂಶಗಳನ್ನು ವ್ಯವಸ್ಥಿತವಾಗಿ ಜೋಡಿಸಲು ಒಂದು ವಿಭಜಕ"
 
-#: ../gnome-panel/panel-addto.c:172
+#: ../gnome-panel/panel-addto.c:173
 msgid "User menu"
 msgstr "ಬಳಕೆದಾರ ಪರಿವಿಡಿ"
 
-#: ../gnome-panel/panel-addto.c:173
+#: ../gnome-panel/panel-addto.c:174
 msgid "Menu to change your settings and your online status"
 msgstr "ನಿಮ್ಮ ಸಿದ್ಧತೆಗಳು ಮತ್ತು ನಿಮ್ಮ ಆನ್‌ಲೈನ್ ಸ್ಥಿತಿಯನ್ನು ಬದಲಾಯಿಸುವ ಪರಿವಿಡಿ"
 
-#: ../gnome-panel/panel-addto.c:219
+#: ../gnome-panel/panel-addto.c:220
 msgid "(empty)"
 msgstr "(ಖಾಲಿ)"
 
-#: ../gnome-panel/panel-addto.c:419
+#: ../gnome-panel/panel-addto.c:420
 msgid "Custom Application Launcher"
 msgstr "ಇಚ್ಛೆಯ ಅನ್ವಯ ಆರಂಭಕ"
 
-#: ../gnome-panel/panel-addto.c:420
+#: ../gnome-panel/panel-addto.c:421
 msgid "Create a new launcher"
 msgstr "ಒಂದು ಹೊಸ ಆರಂಭಕವನ್ನು ನಿರ್ಮಿಸು"
 
-#: ../gnome-panel/panel-addto.c:430
+#: ../gnome-panel/panel-addto.c:431
 msgid "Application Launcher..."
 msgstr "ಅನ್ವಯದ ಆರಂಭಕ..."
 
-#: ../gnome-panel/panel-addto.c:431
+#: ../gnome-panel/panel-addto.c:432
 msgid "Copy a launcher from the applications menu"
 msgstr "ಅನ್ವಯಗಳ ಮೆನುವಿನಿಂದ ಒಂದು ಆರಂಭಕವನ್ನು ಕಾಪಿ ಮಾಡಿ"
 
-#: ../gnome-panel/panel-addto.c:1011
+#: ../gnome-panel/panel-addto.c:1016
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" ಗೆ ಸೇರಿಸಲು ಒಂದು ಅಂಶವನ್ನು ಪತ್ತೆ ಮಾಡು (_i):"
 
-#: ../gnome-panel/panel-addto.c:1015
+#: ../gnome-panel/panel-addto.c:1020
 msgid "Find an _item to add to the panel:"
 msgstr "ಫಲಕಕ್ಕೆ ಸೇರಿಸಲು ಒಂದು ಅಂಶವನ್ನು ಪತ್ತೆ ಮಾಡು (_i):"
 
-#: ../gnome-panel/panel-addto.c:1018
+#: ../gnome-panel/panel-addto.c:1023
 msgid "Add to Panel"
 msgstr "ಫಲಕಕ್ಕೆ ಸೇರಿಸು"
 
-#: ../gnome-panel/panel-applet-frame.c:774
+#: ../gnome-panel/panel-addto.c:1146
+msgid "_Forward"
+msgstr "ಮುಂದಕ್ಕೆ (_F)"
+
+#: ../gnome-panel/panel-addto.c:1242
+msgid "_Back"
+msgstr "ಹಿಂದಕ್ಕೆ (_B)"
+
+#: ../gnome-panel/panel-applet-frame.c:718
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" ವು ಅನಿರೀಕ್ಷಿತವಾಗಿ ನಿರ್ಗಮಿಸಿತು"
 
-#: ../gnome-panel/panel-applet-frame.c:776
+#: ../gnome-panel/panel-applet-frame.c:720
 msgid "Panel object has quit unexpectedly"
 msgstr "ಫಲಕದಲ್ಲಿನ ವಸ್ತುವು ಅನಿರೀಕ್ಷಿತವಾಗಿ ನಿರ್ಗಮಿಸಿದೆ"
 
-#: ../gnome-panel/panel-applet-frame.c:783
+#: ../gnome-panel/panel-applet-frame.c:727
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1942,30 +1939,43 @@ msgstr ""
 "ಒಂದು ಫಲಕದ ವಸ್ತುವನ್ನು ನೀವು ಮತ್ತೊಮ್ಮೆ ಲೋಡ್ ಮಾಡಿದಲ್ಲಿ, ಅದು ತಾನಾಗಿಯೆ ಫಲಕಕ್ಕೆ ಮರಳಿ "
 "ಸೇರಿಸಲ್ಪಡುತ್ತದೆ."
 
-#: ../gnome-panel/panel-applet-frame.c:789
+#: ../gnome-panel/panel-applet-frame.c:733
 msgid "_Don't Reload"
 msgstr "ಪುನಃ ಲೋಡ್ ಮಾಡಬೇಡ (_D)"
 
-#: ../gnome-panel/panel-applet-frame.c:790
+#: ../gnome-panel/panel-applet-frame.c:734
 msgid "_Reload"
 msgstr "ಪುನಃ ಲೋಡ್ ಮಾಡು (_R)"
 
-#: ../gnome-panel/panel-applet-frame.c:940
+#: ../gnome-panel/panel-applet-frame.c:872
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" ಅನ್ನು ಫಲಕಕ್ಕೆ ಲೋಡ್ ಮಾಡುವಾಗ ಒಂದು ದೋಷ ಎದುರಾಗಿದೆ."
 
-#: ../gnome-panel/panel-applet-frame.c:956
+#: ../gnome-panel/panel-applet-frame.c:884
+msgid "OK"
+msgstr "ಸರಿ"
+
+#: ../gnome-panel/panel-applet-frame.c:888
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "ನಿಮ್ಮ ಸಂರಚನೆಯಿಂದ ಆಪ್ಲೆಟ್ ಅನ್ನು ನೀವು ಅಳಿಸಿ ಹಾಕಲು ಬಯಸುತ್ತೀರೆ?"
 
-#: ../gnome-panel/panel.c:527
+#: ../gnome-panel/panel-applet-frame.c:891
+msgid "D_on't Delete"
+msgstr "ಅಳಿಸಬೇಡ (_o)"
+
+#: ../gnome-panel/panel-applet-frame.c:892 ../gnome-panel/panel.c:1376
+#| msgid "D_on't Delete"
+msgid "_Delete"
+msgstr "ಅಳಿಸು (_D)"
+
+#: ../gnome-panel/panel.c:504
 #, c-format
 msgid "Open URL: %s"
 msgstr "ಈ URL ಅನ್ನು ತೆರೆ: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:670
 #, c-format
 msgid "Open '%s'"
 msgstr "'%s' ಅನ್ನು ತೆರೆ"
@@ -1973,18 +1983,18 @@ msgstr "'%s' ಅನ್ನು ತೆರೆ"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1198
+#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1224
 msgid "Open your personal folder"
 msgstr "ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ಕಡತಕೋಶವನ್ನು ತೆರೆಯಿರಿ"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1234
+#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1253
 msgid "Computer"
 msgstr "ಗಣಕ"
 
 #. name
-#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1240
+#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1254
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1993,20 +2003,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1250
+#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1263
 msgid "Network"
 msgstr "ಜಾಲಬಂಧ"
 
 #. name
-#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1251
+#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1264
 msgid "Browse bookmarked and local network locations"
 msgstr "ಬುಕ್‌ಮಾರ್ಕ್ ಮಾಡಲಾದ ಮತ್ತು ಸ್ಥಳೀಯ ಜಾಲಬಂಧ ಸ್ಥಳಗಳನ್ನು ವೀಕ್ಷಿಸು"
 
-#: ../gnome-panel/panel.c:1394
+#: ../gnome-panel/panel.c:1367
 msgid "Delete this panel?"
 msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಬೇಕೆ?"
 
-#: ../gnome-panel/panel.c:1398
+#: ../gnome-panel/panel.c:1371
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2022,15 +2032,15 @@ msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಲಾಗಿಲ್ಲ"
 msgid "You must always have at least one panel."
 msgstr "ನಿಮ್ಮಲ್ಲಿ ಯಾವಾಗಲೂ ಕನಿಷ್ಟ ಒಂದು ಫಲಕ ಇರಲೆ ಬೇಕು."
 
-#: ../gnome-panel/panel-context-menu.c:120
+#: ../gnome-panel/panel-context-menu.c:119
 msgid "_Add to Panel..."
 msgstr "ಫಲಕಕ್ಕೆ ಸೇರಿಸು (_A)..."
 
-#: ../gnome-panel/panel-context-menu.c:141
+#: ../gnome-panel/panel-context-menu.c:135
 msgid "_Delete This Panel"
 msgstr "ಈ ಫಲಕವನ್ನು ಅಳಿಸಿಹಾಕು (_D)"
 
-#: ../gnome-panel/panel-context-menu.c:156
+#: ../gnome-panel/panel-context-menu.c:147
 msgid "_New Panel"
 msgstr "ಹೊಸ ಫಲಕ (_N)"
 
@@ -2047,62 +2057,66 @@ msgid "Location"
 msgstr "ಸ್ಥಳ"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:615
+#: ../gnome-panel/panel-ditem-editor.c:601
 msgid "_Type:"
 msgstr "ಬಗೆ (_T):"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:608
 msgid "_Name:"
 msgstr "ಹೆಸರು (_N):"
 
-#: ../gnome-panel/panel-ditem-editor.c:649
+#: ../gnome-panel/panel-ditem-editor.c:633
 msgid "_Browse..."
 msgstr "ವೀಕ್ಷಿಸು (_B)..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:640
 msgid "Co_mment:"
 msgstr "ಅಭಿಪ್ರಾಯ (_m):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1002
+#: ../gnome-panel/panel-ditem-editor.c:647
+msgid "_Revert"
+msgstr "ಹಿಮ್ಮರಳಿಸು (_R)"
+
+#: ../gnome-panel/panel-ditem-editor.c:967
 msgid "Choose an application..."
 msgstr "ಒಂದು ಅನ್ವಯವನ್ನು ಆರಿಸು..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1006
+#: ../gnome-panel/panel-ditem-editor.c:971
 msgid "Choose a file..."
 msgstr "ಒಂದು ಕಡತವನ್ನು ಆರಿಸು..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1171
-#: ../gnome-panel/panel-ditem-editor.c:1180
+#: ../gnome-panel/panel-ditem-editor.c:1136
+#: ../gnome-panel/panel-ditem-editor.c:1145
 msgid "Comm_and:"
 msgstr "ಆದೇಶ (_a):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1189
+#: ../gnome-panel/panel-ditem-editor.c:1154
 msgid "_Location:"
 msgstr "ಸ್ಥಳ (_L):"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1317
 msgid "The name of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಹೆಸರನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1321
 msgid "Could not save directory properties"
 msgstr "ಕೋಶದ ಗುಣಲಕ್ಷಣಗಳನ್ನು ಉಳಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1322
 msgid "The name of the directory is not set."
 msgstr "ಕೋಶದ ಹೆಸರನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1373
+#: ../gnome-panel/panel-ditem-editor.c:1338
 msgid "The command of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಆದೇಶವನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-ditem-editor.c:1376
+#: ../gnome-panel/panel-ditem-editor.c:1341
 msgid "The location of the launcher is not set."
 msgstr "ಆರಂಭಕದ ಸ್ಥಳವನ್ನು ಸೂಚಿಸಲಾಗಿಲ್ಲ."
 
-#: ../gnome-panel/panel-force-quit.c:77
+#: ../gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
@@ -2110,11 +2124,11 @@ msgstr ""
 "ESC> ಅನ್ನು "
 "ಒತ್ತಿ."
 
-#: ../gnome-panel/panel-force-quit.c:222
+#: ../gnome-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "ಈ ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಬೇಕೆ?"
 
-#: ../gnome-panel/panel-force-quit.c:225
+#: ../gnome-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2122,7 +2136,11 @@ msgstr ""
 "ನೀವು ಒಂದು ಅನ್ವಯವನ್ನು ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ಮುಚ್ಚಲು ಬಯಸಿದಲ್ಲಿ, ಅದರಲ್ಲಿ ತೆರೆದಿರುವ "
 "ದಸ್ತಾವೇಜುಗಳಲ್ಲಿರುವ ಉಳಿಸದೆ ಇರುವ ಬದಲಾವಣೆಗಳು ಇಲ್ಲವಾಗುತ್ತವೆ."
 
-#: ../gnome-panel/panel-layout.c:1220 ../gnome-panel/panel-layout.c:1234
+#: ../gnome-panel/panel-force-quit.c:230
+msgid "_Force quit"
+msgstr "ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ನಿರ್ಗಮಿಸು (_F)"
+
+#: ../gnome-panel/panel-layout.c:1100 ../gnome-panel/panel-layout.c:1114
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "ಆರಂಭಿಕ ಪ್ಯಾನೆಲ್ ವಿನ್ಯಾಸವನ್ನು ರಚಿಸಲಾಗಿಲ್ಲ.\n"
@@ -2135,94 +2153,110 @@ msgstr "ಅನುಸ್ಥಾಪಿಸಲಾದ ಅನ್ವಯಗಳನ್ನ�
 msgid "Access documents, folders and network places"
 msgstr "ದಸ್ತಾವೇಜುಗಳನ್ನು, ಕಡತಕೋಶಗಳನ್ನು ಹಾಗು ಜಾಲಬಂಧ ಸ್ಥಳಗಳನ್ನು ನಿಲುಕಿಸಿಕೊಳ್ಳಿ"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:125
 msgid "Applications"
 msgstr "ಅನ್ವಯಗಳು"
 
-#: ../gnome-panel/panel-menu-bar.c:223 ../gnome-panel/panel-menu-button.c:559
+#: ../gnome-panel/panel-menu-bar.c:224 ../gnome-panel/panel-menu-button.c:575
 msgid "_Edit Menus"
 msgstr "ಅಂಶಗಳನ್ನು ಸಂಪಾದಿಸು (_E)"
 
-#: ../gnome-panel/panel-menu-items.c:489
+#: ../gnome-panel/panel-menu-items.c:516
 msgid "Switch User"
 msgstr "ಬಳಕೆದಾರನನ್ನು ಬದಲಿಸು"
 
-#: ../gnome-panel/panel-menu-items.c:619
+#: ../gnome-panel/panel-menu-items.c:646
 msgid "Bookmarks"
 msgstr "ಬುಕ್‌ಮಾರ್ಕುಗಳು"
 
-#: ../gnome-panel/panel-menu-items.c:714
+#: ../gnome-panel/panel-menu-items.c:741
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "ಮಾಧ್ಯಮ ಬದಲಾವಣೆಗಾಗಿ %s ಅನ್ನು ಶೋಧಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-menu-items.c:756
+#: ../gnome-panel/panel-menu-items.c:783
 #, c-format
 msgid "Rescan %s"
 msgstr "%s ಅನ್ನು ಇನ್ನೊಮ್ಮೆ ಶೋಧಿಸು"
 
-#: ../gnome-panel/panel-menu-items.c:793
+#: ../gnome-panel/panel-menu-items.c:820
 #, c-format
 msgid "Unable to mount %s"
 msgstr "'%s' ಅನ್ನು ಆರೋಹಿಸಲಾಗಲಿಲ್ಲ"
 
-#: ../gnome-panel/panel-menu-items.c:855
+#: ../gnome-panel/panel-menu-items.c:882
 #, c-format
 msgid "Mount %s"
 msgstr "%s ಅನ್ನು ಆರೋಹಿಸು"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:1090
 msgid "Removable Media"
 msgstr "ತೆಗೆಯಬಹುದಾದ ಮಾಧ್ಯಮ"
 
-#: ../gnome-panel/panel-menu-items.c:1154
+#: ../gnome-panel/panel-menu-items.c:1181
 msgid "Network Places"
 msgstr "ಜಾಲಬಂಧ ಸ್ಥಳಗಳು"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1218
+#: ../gnome-panel/panel-menu-items.c:1241
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "ಗಣಕತೆರೆ"
 
-#: ../gnome-panel/panel-menu-items.c:1219
+#: ../gnome-panel/panel-menu-items.c:1242
 msgid "Open the contents of your desktop in a folder"
 msgstr "ನಿಮ್ಮ ಗಣಕತೆರೆಯಲ್ಲಿರುವವುಗಳನ್ನು ಒಂದು ಕಡತಕೋಶದಲ್ಲಿ ತೆರೆ"
 
-#: ../gnome-panel/panel-menu-items.c:1356
+#: ../gnome-panel/panel-menu-items.c:1366
 msgid "Available"
 msgstr "ಲಭ್ಯ"
 
-#: ../gnome-panel/panel-menu-items.c:1366
+#: ../gnome-panel/panel-menu-items.c:1376
 msgid "Busy"
 msgstr "ಕಾರ್ಯನಿರತ"
 
-#: ../gnome-panel/panel-menu-items.c:1619
+#: ../gnome-panel/panel-menu-items.c:1608
 msgid "Places"
 msgstr "ಸ್ಥಳಗಳು"
 
+#: ../gnome-panel/panel-image-menu-item.c:125
+msgid "Image widget"
+msgstr "ಚಿತ್ರದ ವಿಜೆಟ್"
+
+#: ../gnome-panel/panel-image-menu-item.c:126
+msgid "Child widget to appear next to the menu text"
+msgstr "ಪರಿವಿಡಿ ಪಟ್ಟಿಯ ಎದುರು ಕಾಣಿಸಿಕೊಳ್ಳಬೇಕಿರುವ ಉಪ ವಿಜೆಟ್"
+
+#: ../gnome-panel/panel-image-menu-item.c:133
+msgid "Always show image"
+msgstr "ಯಾವಾಗಲೂ ಚಿತ್ರವನ್ನು ತೋರಿಸು"
+
+#: ../gnome-panel/panel-image-menu-item.c:134
+msgid "Whether the image will always be shown"
+msgstr "ಚಿತ್ರವನ್ನು ಯಾವಾಗಲೂ ತೋರಿಸಲಾಗುತ್ತದೆಯೆ"
+
 #: ../gnome-panel/panel-properties-dialog.c:77
-#: ../gnome-panel/panel-test-applets.c:55
+#: ../gnome-panel/panel-test-applets.c:48
 msgctxt "Orientation"
 msgid "Top"
 msgstr "ಮೇಲಕ್ಕೆ"
 
 #: ../gnome-panel/panel-properties-dialog.c:78
-#: ../gnome-panel/panel-test-applets.c:56
+#: ../gnome-panel/panel-test-applets.c:49
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "ಕೆಳಕ್ಕೆ"
 
 #: ../gnome-panel/panel-properties-dialog.c:79
-#: ../gnome-panel/panel-test-applets.c:57
+#: ../gnome-panel/panel-test-applets.c:50
 msgctxt "Orientation"
 msgid "Left"
 msgstr "ಎಡ"
 
 #: ../gnome-panel/panel-properties-dialog.c:80
-#: ../gnome-panel/panel-test-applets.c:58
+#: ../gnome-panel/panel-test-applets.c:51
 msgctxt "Orientation"
 msgid "Right"
 msgstr "ಬಲ"
@@ -2231,115 +2265,114 @@ msgstr "ಬಲ"
 msgid "Panel Properties"
 msgstr "ಫಲಕದ ಗುಣಲಕ್ಷಣಗಳು"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:2
+#: ../gnome-panel/panel-properties-dialog.ui.h:3
 msgid "Some of these properties are locked down"
 msgstr "ಈ ಕೆಲವು ಗುಣಲಕ್ಷಣಗಳನ್ನು ಲಾಕ್ ಮಾಡಲಾಗಿದೆ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:3
+#: ../gnome-panel/panel-properties-dialog.ui.h:4
 msgid "pixels"
 msgstr "ಪಿಕ್ಸೆಲ್ಲುಗಳು"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:4
-#: ../gnome-panel/panel-test-applets.ui.h:5
+#: ../gnome-panel/panel-properties-dialog.ui.h:5
+#: ../gnome-panel/panel-test-applets.ui.h:6
 msgid "_Orientation:"
 msgstr "ವಾಲಿಕೆ (_O):"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:3
+#: ../gnome-panel/panel-properties-dialog.ui.h:6
 msgid "_Size:"
 msgstr "ಗಾತ್ರ (_S):"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
+#: ../gnome-panel/panel-properties-dialog.ui.h:7
 msgid "E_xpand"
 msgstr "ಹಿಗ್ಗಿಸು (_x)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
+#: ../gnome-panel/panel-properties-dialog.ui.h:8
 msgid "_Autohide"
 msgstr "ತಾನಾಗಿಯೆ ಅಡಗಿಸು (_A)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
+#: ../gnome-panel/panel-properties-dialog.ui.h:9
 msgid "Show hide _buttons"
 msgstr "ಅಡಗಿಸುವ ಗುಂಡಿಗಳನ್ನು ತೋರಿಸು (_b)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
+#: ../gnome-panel/panel-properties-dialog.ui.h:10
 msgid "Arro_ws on hide buttons"
 msgstr "ಅಡಗಿಸುವ ಗುಂಡಿಯಲ್ಲಿರುವ ಬಾಣದ ಗುರುತುಗಳು (_w)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
+#: ../gnome-panel/panel-properties-dialog.ui.h:12
 msgid "_None (use system theme)"
 msgstr "ಯಾವುದೂ ಇಲ್ಲ (ಗಣಕದ ಥೀಮನ್ನು ಬಳಸು) (_N)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
+#: ../gnome-panel/panel-properties-dialog.ui.h:13
 msgid "Solid c_olor"
 msgstr "ಗಾಢ ಬಣ್ಣ (_o)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
 msgid "Pick a color"
 msgstr "ಒಂದು ಬಣ್ಣವನ್ನು ಆರಿಸು"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
 msgid "Transparent"
 msgstr "ಪಾರದರ್ಶಕ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
 msgid "Opaque"
 msgstr "ಅಪಾರದರ್ಶಕ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
 msgid "Co_lor:"
 msgstr "ಬಣ್ಣ (_l):"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "S_tyle:"
 msgstr "ಶೈಲಿ (_t):"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
 msgid "Background _image:"
 msgstr "ಹಿನ್ನಲೆ ಚಿತ್ರ (_i):"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
 msgid "Select background"
 msgstr "ಹಿನ್ನಲೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "Background"
 msgstr "ಹಿನ್ನಲೆ"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:23
 msgid "Image Background Details"
 msgstr "ಚಿತ್ರ ಹಿನ್ನಲೆ ವಿವರಗಳು"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../gnome-panel/panel-properties-dialog.ui.h:24
 msgid "_Tile"
 msgstr "ಟೈಲ್ (_T)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:25
 msgid "_Scale"
 msgstr "ಅಳತೆ (_S)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../gnome-panel/panel-properties-dialog.ui.h:26
 msgid "St_retch"
 msgstr "ಹಿಗ್ಗಿಸು (_r)"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:27
 msgid "Rotate image when panel is _vertical"
 msgstr "ಫಲಕವು ಲಂಬವಾಗಿದ್ದಾಗ ಚಿತ್ರವನ್ನು ತಿರುಗಿಸು (_v)"
 
-#: ../gnome-panel/panel-recent.c:76 ../gnome-panel/panel-recent.c:86
+#: ../gnome-panel/panel-recent.c:77 ../gnome-panel/panel-recent.c:87
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "ಇತ್ತೀಚೆಗೆ ಬಳಸಲಾದ \"%s\" ದಸ್ತಾವೇಜನ್ನು ತೆರಯಲಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:89
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" ಅನ್ನು ತೆರೆಯಲು ಪ್ರಯತ್ನಿಸಿದಾಗ ಒಂದು ಅಜ್ಞಾತ ದೋಷ ಎದುರಾಗಿದೆ."
 
-#: ../gnome-panel/panel-recent.c:145
+#: ../gnome-panel/panel-recent.c:146
 msgid "Clear the Recent Documents list?"
 msgstr "ಇತ್ತಿಚಿನ ದಸ್ತಾವೇಜುಗಳ ಪಟ್ಟಿಯನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೆ?"
 
-#: ../gnome-panel/panel-recent.c:147
+#: ../gnome-panel/panel-recent.c:148
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2350,11 +2383,15 @@ msgstr ""
 "• ಸ್ಥಳಗಳಲ್ಲಿನ ಎಲ್ಲಾ ಅಂಶಗಳು → ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳು ಮೆನು ಅಂಶ.\n"
 "• ಎಲ್ಲಾ ಅನ್ವಯಗಳಲ್ಲಿರುವ ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳ ಪಟ್ಟಿಯಲ್ಲಿನ ಎಲ್ಲಾ ಅಂಶಗಳು."
 
-#: ../gnome-panel/panel-recent.c:159
+#: ../gnome-panel/panel-recent.c:154
+msgid "C_lear"
+msgstr "ತೆರವುಗೊಳಿಸು (_l)"
+
+#: ../gnome-panel/panel-recent.c:160
 msgid "Clear Recent Documents"
 msgstr "ಇತ್ತಿಚಿನ ದಸ್ತಾವೇಜುಗಳನ್ನು ತೆರವುಗೊಳಿಸು"
 
-#: ../gnome-panel/panel-recent.c:194
+#: ../gnome-panel/panel-recent.c:195
 msgid "Recent Documents"
 msgstr "ಇತ್ತೀಚಿನ ದಸ್ತಾವೇಜುಗಳು"
 
@@ -2381,21 +2418,21 @@ msgstr "ಆದೇಶ '%s' ಅನ್ನು ಚಲಾಯಿಸಲಾಗಿಲ್�
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' ಅನ್ನು UTF-8 ರಿಂದ ಮಾರ್ಪಡಿಸಲು ಸಾಧ್ಯವಾಗಿಲ್ಲ"
 
-#: ../gnome-panel/panel-run-dialog.c:1293
+#: ../gnome-panel/panel-run-dialog.c:1296
 msgid "Choose a file to append to the command..."
 msgstr "ಆದೇಶಕ್ಕೆ ಸೇರಿಸಲು ಒಂದು ಕಡತವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ..."
 
-#: ../gnome-panel/panel-run-dialog.c:1676
+#: ../gnome-panel/panel-run-dialog.c:1679
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "ಒಂದು ಅನ್ವಯದ ವಿವರಣೆಯನ್ನು ನೋಡಲು ಅದನ್ನು ಆಯ್ಕೆ ಮಾಡಿ."
 
-#: ../gnome-panel/panel-run-dialog.c:1714
+#: ../gnome-panel/panel-run-dialog.c:1717
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ಈ ಆದೇಶವನ್ನು ಚಲಾಯಿಸಲಾಗುವುದು : '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1747
+#: ../gnome-panel/panel-run-dialog.c:1750
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2443,12 +2480,11 @@ msgstr "ಗೊತ್ತಿರುವ ಅನ್ವಯಗಳ ಪಟ್ಟಿ"
 msgid "Show list of known _applications"
 msgstr "ಗೊತ್ತಿರುವ ಅನ್ವಯಗಳ ಪಟ್ಟಿಯನ್ನು ತೋರಿಸು (_a)"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:11
-#: ../gnome-panel/panel-stock-icons.c:81
+#: ../gnome-panel/panel-run-dialog.ui.h:12
 msgid "_Run"
 msgstr "ಚಲಾಯಿಸು (_R)"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:12
+#: ../gnome-panel/panel-run-dialog.ui.h:13
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2456,72 +2492,16 @@ msgstr ""
 "ಆಯ್ಕೆ ಮಾಡಲಾದ ಅನ್ವಯವನ್ನು ಅಥವ ಆದೇಶವನ್ನು ಆದೇಶವನ್ನು ನಮೂದಿಸುವ ಜಾಗದಲ್ಲಿ ಚಲಾಯಿಸಲು ಈ "
 "ಗುಂಡಿಯನ್ನು ಒತ್ತಿ."
 
-#: ../gnome-panel/panel-stock-icons.c:82
-msgid "_Force quit"
-msgstr "ಒತ್ತಾಯಪೂರ್ವಕವಾಗಿ ನಿರ್ಗಮಿಸು (_F)"
-
-#: ../gnome-panel/panel-stock-icons.c:83
-msgid "C_lear"
-msgstr "ತೆರವುಗೊಳಿಸು (_l)"
-
-#: ../gnome-panel/panel-stock-icons.c:84
-msgid "D_on't Delete"
-msgstr "ಅಳಿಸಬೇಡ (_o)"
-
-#: ../gnome-panel/panel-test-applets.c:36
+#: ../gnome-panel/panel-test-applets.c:31
 msgid "Specify an applet IID to load"
 msgstr "ಲೋಡ್‌ ಮಾಡಲು ಒಂದು ಅನ್ವಯ IID ಯನ್ನು ಸೂಚಿಸಿ"
 
-#: ../gnome-panel/panel-test-applets.c:37
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr "ಅನ್ವಯದ ಆದ್ಯತೆಗಳನ್ನು ಶೇಖರಿಸಿಡಲು ಒಂದು gconf ಸ್ಥಳವನ್ನು ಸೂಚಿಸಿ"
-
-#: ../gnome-panel/panel-test-applets.c:38
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "ಅನ್ವಯದ ಆರಂಭಿಕ ಗಾತ್ರವನ್ನು ಸೂಚಿಸಿ (xx-ಚಿಕ್ಕದಾದ, ಮಧ್ಯಮ, ದೊಡ್ಡದಾದ ಇತ್ಯಾದಿ)"
-
-#: ../gnome-panel/panel-test-applets.c:39
+#: ../gnome-panel/panel-test-applets.c:32
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "ಅನ್ವಯದ ಆರಂಭಿಕ ವಾಲಿಕೆಯನ್ನು ಸೂಚಿಸಿ (ಮೇಲೆ, ಕೆಳಗೆ, ಎಡ ಅಥವ ಬಲ)"
 
-#: ../gnome-panel/panel-test-applets.c:63
-msgctxt "Size"
-msgid "XX Small"
-msgstr "XX ಚಿಕ್ಕದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:64
-msgctxt "Size"
-msgid "X Small"
-msgstr "X ಚಿಕ್ಕದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:65
-msgctxt "Size"
-msgid "Small"
-msgstr "ಚಿಕ್ಕದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:66
-msgctxt "Size"
-msgid "Medium"
-msgstr "ಮಧ್ಯಮ"
-
-#: ../gnome-panel/panel-test-applets.c:67
-msgctxt "Size"
-msgid "Large"
-msgstr "ದೊಡ್ಡದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:68
-msgctxt "Size"
-msgid "X Large"
-msgstr "X ದೊಡ್ಡದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:69
-msgctxt "Size"
-msgid "XX Large"
-msgstr "XX ದೊಡ್ಡದಾದ"
-
-#: ../gnome-panel/panel-test-applets.c:127
+#: ../gnome-panel/panel-test-applets.c:109
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "%s ಅನ್ವಯವನ್ನು ಲೋಡ್‌ ಮಾಡುವಲ್ಲಿ ವಿಫಲತೆ"
@@ -2531,81 +2511,85 @@ msgstr "%s ಅನ್ವಯವನ್ನು ಲೋಡ್‌ ಮಾಡುವಲ್�
 msgid "Test applet utility"
 msgstr "ಆಪ್ಲೆಟ್ ಸವಲತ್ತನ್ನು ಪರೀಕ್ಷಿಸಿ"
 
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "Execute"
+msgstr "ಚಲಾಯಿಸು"
+
 #: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "Close"
+msgstr "ಮುಚ್ಚು"
+
+#: ../gnome-panel/panel-test-applets.ui.h:5
 msgid "_Applet:"
 msgstr "ಆಪ್ಲೆಟ್ (_A):"
 
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Prefs Dir:"
-msgstr "ಆದ್ಯತೆಗಳ ಕೋಶ (_P):"
-
-#: ../gnome-panel/panel-toplevel.c:1272
+#: ../gnome-panel/panel-toplevel.c:1271
 msgid "Hide Panel"
 msgstr "ಫಲಕವನ್ನು ಅಡಗಿಸು"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1657
+#: ../gnome-panel/panel-toplevel.c:1647
 msgid "Top Expanded Edge Panel"
 msgstr "ಮೇಲಿನ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1658
+#: ../gnome-panel/panel-toplevel.c:1648
 msgid "Top Centered Panel"
 msgstr "ಮೇಲಿನ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1659
+#: ../gnome-panel/panel-toplevel.c:1649
 msgid "Top Floating Panel"
 msgstr "ಮೇಲಿನ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1660
+#: ../gnome-panel/panel-toplevel.c:1650
 msgid "Top Edge Panel"
 msgstr "ಮೇಲಿನ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1664
+#: ../gnome-panel/panel-toplevel.c:1654
 msgid "Bottom Expanded Edge Panel"
 msgstr "ಕೆಳಗಿನ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1665
+#: ../gnome-panel/panel-toplevel.c:1655
 msgid "Bottom Centered Panel"
 msgstr "ಕೆಳಗಿನ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1666
+#: ../gnome-panel/panel-toplevel.c:1656
 msgid "Bottom Floating Panel"
 msgstr "ಕೆಳಗಿನ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1667
+#: ../gnome-panel/panel-toplevel.c:1657
 msgid "Bottom Edge Panel"
 msgstr "ಕೆಳಗಿನ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1671
+#: ../gnome-panel/panel-toplevel.c:1661
 msgid "Left Expanded Edge Panel"
 msgstr "ಎಡ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1672
+#: ../gnome-panel/panel-toplevel.c:1662
 msgid "Left Centered Panel"
 msgstr "ಎಡ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1673
+#: ../gnome-panel/panel-toplevel.c:1663
 msgid "Left Floating Panel"
 msgstr "ಎಡಭಾಗದಲ್ಲಿ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1674
+#: ../gnome-panel/panel-toplevel.c:1664
 msgid "Left Edge Panel"
 msgstr "ಎಡ ಅಂಚಿನ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1678
+#: ../gnome-panel/panel-toplevel.c:1668
 msgid "Right Expanded Edge Panel"
 msgstr "ಬಲ ಅಂಚನ್ನು ಹಿಗ್ಗಿಸಲಾದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1679
+#: ../gnome-panel/panel-toplevel.c:1669
 msgid "Right Centered Panel"
 msgstr "ಬಲ ಮಧ್ಯದ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1680
+#: ../gnome-panel/panel-toplevel.c:1670
 msgid "Right Floating Panel"
 msgstr "ಬಲಭಾಗದ ತೇಲುವ ಫಲಕ"
 
-#: ../gnome-panel/panel-toplevel.c:1681
+#: ../gnome-panel/panel-toplevel.c:1671
 msgid "Right Edge Panel"
 msgstr "ಬಲ ಮೂಲೆಯ ಫಲಕ"
 
@@ -2618,17 +2602,17 @@ msgstr "ಚಿಹ್ನೆ '%s' ಯು ಕಂಡು ಬಂದಿಲ್ಲ"
 msgid "file"
 msgstr "ಕಡತ"
 
-#: ../gnome-panel/panel-util.c:734
+#: ../gnome-panel/panel-util.c:732
 msgid "Home Folder"
 msgstr "ನೆಲೆ ಕಡತಕೋಶ"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:746
+#: ../gnome-panel/panel-util.c:744
 msgid "File System"
 msgstr "ಕಡತ ವ್ಯವಸ್ಥೆ"
 
-#: ../gnome-panel/panel-util.c:919
+#: ../gnome-panel/panel-util.c:917
 msgid "Search"
 msgstr "ಹುಡುಕು"
 
@@ -2637,7 +2621,7 @@ msgstr "ಹುಡುಕು"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:965
+#: ../gnome-panel/panel-util.c:963
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -2658,14 +2642,121 @@ msgstr "DBus ಅನ್ವಯವನ್ನು ಪರೀಕ್ಷಿಸು"
 msgid "A simple applet for testing the GNOME panel"
 msgstr "GNOME ಪ್ಯಾನೆಲ್ ಅನ್ನು ಪರೀಕ್ಷಿಸಲು ಒಂದು ಸರಳ ಕಿರುಅನ್ವಯ"
 
+#~ msgid "GNOME Flashback"
+#~ msgstr "GNOME ಹಿನ್ನೋಟ"
+
+#~ msgid "This session logs you into GNOME with the traditional panel"
+#~ msgstr ""
+#~ "ಈ ಅಧಿವೇಶನವು ಸಾಂಪ್ರದಾಯಿಕ ಫಲಕದೊಂದಿಗೆ (-ಪ್ಯಾನೆಲ್) ನಿಮ್ಮನ್ನು GNOME ಗೆ ಪ್ರವೇಶಿಸುವಂತೆ "
+#~ "ಮಾಡುತ್ತದೆ"
+
+#~ msgid "GNOME Flashback (Compiz)"
+#~ msgstr "GNOME ಫ್ಲ್ಯಾಶ್‌ಬ್ಯಾಕ್ (ಕಾಂಪಿಜ಼್)"
+
+#~ msgid ""
+#~ "This session logs you into GNOME with Compiz window-manager and the "
+#~ "traditional panel"
+#~ msgstr ""
+#~ "ಈ ಅಧಿವೇಶನವು ಕಾಂಪಿಜ಼್ ಕಿಟಕಿ-ವ್ಯವಸ್ಥಾಪಕ ಮತ್ತು ಸಾಂಪ್ರದಾಯಿಕ ಫಲಕದೊಂದಿಗೆ (ಪ್ಯಾನೆಲ್) "
+#~ "ನಿಮ್ಮನ್ನು GNOME ಗೆ ಪ್ರವೇಶಿಸುವಂತೆ ಮಾಡುತ್ತದೆ"
+
+#~ msgid "X screen where the panel is displayed"
+#~ msgstr "ಫಲಕವು ತೋರಿಸಲ್ಪಡುವ X ತೆರೆ"
+
+#~ msgid ""
+#~ "With a multi-screen setup, you may have panels on each individual screen. "
+#~ "This key identifies the current screen the panel is displayed on."
+#~ msgstr ""
+#~ "ಅನೇಕ-ತೆರೆಯ ಸೆಟ್ಅಪ್‌ನಿಂದ ನೀವು ಪ್ರತಿಯೊಂದು ತೆರೆಗಳಿಗಾಗಿ ಪ್ರತ್ಯೇಕ ಫಲಕಗಳನ್ನು "
+#~ "ಹೊಂದಬಹುದಾಗಿದೆ. ಯಾವ ಫಲಕದಲ್ಲಿ ಈ ತೆರೆಯು ತೋರಿಸಲ್ಪಡುತ್ತಿದೆ ಎಂದು ಈ ಕೀಲಿಯು ಕಂಡು "
+#~ "ಹಿಡಿಯುತ್ತದೆ."
+
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "ಕಡತವು ಒಂದು ಸೂಕ್ತವಾದ .desktop ಕಡತವಾಗಿಲ್ಲ"
+
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "ಗುರುತಿಸಲಾಗದ ಗಣಕತೆರೆ ಕಡತ ಆವೃತ್ತಿ '%s'"
+
+#~ msgid "Starting %s"
+#~ msgstr "%s ಅನ್ನು ಆರಂಭಿಸಲಾಗುತ್ತಿದೆ"
+
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "ಅನ್ವಯವು ಆಜ್ಞಾ ಸಾಲಿನಲ್ಲಿ ದಸ್ತಾವೇಜುಗಳನ್ನು ಸ್ವೀಕರಿಸುವುದಿಲ್ಲ"
+
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "ಗುರುತಿಸಲಾಗದ ಆರಂಭ ಆಯ್ಕೆ: %d"
+
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr "ಒಂದು 'Type=Link' ಗಣಕತೆರೆ ನಮೂದಿಗಾಗಿ ದಸ್ತಾವೇಜು URIಗಳನ್ನು ಒದಗಿಸಲಾಗಿಲ್ಲ"
+
+#~ msgid "Not a launchable item"
+#~ msgstr "ಆರಂಭಿಸಬಹುದಾದ ಒಂದು ಅಂಶವಾಗಿಲ್ಲ"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "ಅಧಿವೇಶನದ ವ್ಯವಸ್ಥಾಪಕನೊಂದಿಗಿನ ಸಂಪರ್ಕವನ್ನು ಅಶಕ್ತಗೊಳಿಸು"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "ಉಳಿಸಲಾದ ಸಂರಚನೆಯನ್ನು ಹೊಂದಿರುವ ಕಡತವನ್ನು ಸೂಚಿಸಿ"
+
+#~ msgid "FILE"
+#~ msgstr "FILE"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಐಡಿಯನ್ನು ಸೂಚಿಸಿ"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Session management options:"
+#~ msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಆಯ್ಕೆಗಳು:"
+
+#~ msgid "Show session management options"
+#~ msgstr "ಅಧಿವೇಶನ ನಿರ್ವಹಣಾ ಆಯ್ಕೆಗಳನ್ನು ತೋರಿಸು"
+
+#~ msgid ""
+#~ "Specify a gconf location in which the applet preferences should be stored"
+#~ msgstr "ಅನ್ವಯದ ಆದ್ಯತೆಗಳನ್ನು ಶೇಖರಿಸಿಡಲು ಒಂದು gconf ಸ್ಥಳವನ್ನು ಸೂಚಿಸಿ"
+
+#~ msgid ""
+#~ "Specify the initial size of the applet (xx-small, medium, large etc.)"
+#~ msgstr "ಅನ್ವಯದ ಆರಂಭಿಕ ಗಾತ್ರವನ್ನು ಸೂಚಿಸಿ (xx-ಚಿಕ್ಕದಾದ, ಮಧ್ಯಮ, ದೊಡ್ಡದಾದ ಇತ್ಯಾದಿ)"
+
+#~ msgctxt "Size"
+#~ msgid "XX Small"
+#~ msgstr "XX ಚಿಕ್ಕದಾದ"
+
+#~ msgctxt "Size"
+#~ msgid "X Small"
+#~ msgstr "X ಚಿಕ್ಕದಾದ"
+
+#~ msgctxt "Size"
+#~ msgid "Small"
+#~ msgstr "ಚಿಕ್ಕದಾದ"
+
+#~ msgctxt "Size"
+#~ msgid "Medium"
+#~ msgstr "ಮಧ್ಯಮ"
+
+#~ msgctxt "Size"
+#~ msgid "Large"
+#~ msgstr "ದೊಡ್ಡದಾದ"
+
+#~ msgctxt "Size"
+#~ msgid "X Large"
+#~ msgstr "X ದೊಡ್ಡದಾದ"
+
+#~ msgctxt "Size"
+#~ msgid "XX Large"
+#~ msgstr "XX ದೊಡ್ಡದಾದ"
+
+#~ msgid "_Prefs Dir:"
+#~ msgstr "ಆದ್ಯತೆಗಳ ಕೋಶ (_P):"
+
 #~ msgid "Copy _Date"
 #~ msgstr "ದಿನಾಂಕವನ್ನು ಕಾಪಿ ಮಾಡು(_D)"
 
 #~ msgid "_About"
 #~ msgstr "ಬಗ್ಗೆ (_A)"
-
-#~ msgid "_Help"
-#~ msgstr "ಸಹಾಯ(_H)"
 
 #~ msgid "%l:%M:%S %p"
 #~ msgstr "%l:%M:%S %p"
@@ -3121,10 +3212,6 @@ msgstr "GNOME ಪ್ಯಾನೆಲ್ ಅನ್ನು ಪರೀಕ್ಷಿಸ�
 
 #~ msgid "System"
 #~ msgstr "ವ್ಯವಸ್ಥೆ"
-
-#~ msgctxt "panel:showusername"
-#~ msgid "1"
-#~ msgstr "1"
 
 #~ msgid "Log Out %s..."
 #~ msgstr "%s ಇಂದ ನಿರ್ಗಮಿಸು..."
