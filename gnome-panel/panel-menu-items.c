@@ -1611,9 +1611,14 @@ panel_place_menu_item_new (gboolean use_image,
 	if (in_menubar) {
 		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
 		if (use_image) {
+			GtkIconSize icon_size;
 			GtkWidget *image;
-			image = gtk_image_new_from_icon_name (icon_name,
-							      panel_menu_bar_object_icon_get_size ());
+
+			icon_size = panel_menu_bar_object_icon_get_size ();
+			image = gtk_image_new_from_icon_name (icon_name, icon_size);
+
+			gtk_image_set_pixel_size (GTK_IMAGE (image),
+			                          panel_menu_bar_object_icon_get_pixel_size (icon_size));
 			panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menuitem), image);
 		}
 	} else {
@@ -1718,6 +1723,8 @@ panel_desktop_menu_item_new (gboolean use_image,
 			GtkWidget *image;
 			image = gtk_image_new_from_icon_name (icon_name,
 							      menuitem->priv->icon_size);
+			gtk_image_set_pixel_size (GTK_IMAGE (image),
+			                          panel_menu_bar_object_icon_get_pixel_size (menuitem->priv->icon_size));
 			panel_image_menu_item_set_image (PANEL_IMAGE_MENU_ITEM (menuitem), image);
 		}
 	} else {

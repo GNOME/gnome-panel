@@ -111,6 +111,7 @@ static void
 panel_menu_bar_init (PanelMenuBar *menubar)
 {
 	gchar *applications_menu;
+	GtkIconSize icon_size;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
 
@@ -123,8 +124,11 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	menubar->priv->applications_item = panel_image_menu_item_new2 ();
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
 				 _("Applications"));
-	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU,
-							     panel_menu_bar_object_icon_get_size ());
+
+	icon_size = panel_menu_bar_object_icon_get_size ();
+	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU, icon_size);
+	gtk_image_set_pixel_size (GTK_IMAGE (menubar->priv->image),
+	                          panel_menu_bar_object_icon_get_pixel_size (icon_size));
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
 				   menubar->priv->applications_menu);

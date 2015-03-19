@@ -60,6 +60,7 @@ void             panel_menu_bar_object_set_orientation (PanelMenuBarObject     *
 PanelOrientation panel_menu_bar_object_get_orientation (PanelMenuBarObject     *menubar);
 
 GtkIconSize      panel_menu_bar_object_icon_get_size (void);
+int              panel_menu_bar_object_icon_get_pixel_size (GtkIconSize size);
 
 G_END_DECLS
 

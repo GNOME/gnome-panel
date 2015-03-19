@@ -66,6 +66,22 @@ panel_menu_bar_object_icon_get_size (void)
 	return panel_menu_bar_object_icon_size;
 }
 
+int
+panel_menu_bar_object_icon_get_pixel_size (GtkIconSize size)
+{
+  switch (size)
+  {
+    case GTK_ICON_SIZE_DIALOG:
+      return 48;
+    case GTK_ICON_SIZE_DND:
+      return 32;
+    case GTK_ICON_SIZE_LARGE_TOOLBAR:
+      return 24;
+    default:
+      return 16;
+  }
+}
+
 static void
 panel_menu_bar_object_init (PanelMenuBarObject *menubar)
 {
