@@ -132,7 +132,7 @@ panel_image_menu_item_class_init (PanelImageMenuItemClass *klass)
                                    g_param_spec_boolean ("always-show-image",
                                                          _("Always show image"),
                                                          _("Whether the image will always be shown"),
-                                                         FALSE,
+                                                         TRUE,
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 }
 
