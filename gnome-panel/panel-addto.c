@@ -191,6 +191,10 @@ panel_addto_prepend_internal_applets (GSList *list)
 	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
 		PanelAddtoItemInfo *info;
 
+		if (i == PANEL_ACTION_REBOOT || i == PANEL_ACTION_HYBRID_SLEEP
+		    || i == PANEL_ACTION_SUSPEND || i == PANEL_ACTION_HIBERNATE)
+			continue;
+
 		if (panel_action_get_is_disabled (i))
 			continue;
 
