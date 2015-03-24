@@ -12,9 +12,7 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
-	--enable-introspection \
-	--with-girdir='$${datadir}/gir-distcheck' \
-	--with-typelibdir='$${libdir}/girepository-distcheck'
+	--enable-introspection
 
 EXTRA_DIST = \
 	COPYING-DOCS		\
