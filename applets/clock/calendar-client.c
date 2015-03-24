@@ -235,12 +235,14 @@ calendar_client_config_get_timezone (GSettings *calendar_settings)
 }
 
 static icaltimezone *
-calendar_client_config_get_icaltimezone (GSettings *calendar_settings)
+calendar_client_config_get_icaltimezone (CalendarClient *client)
 {
-  char         *location;
+  gchar        *location = NULL;
   icaltimezone *zone = NULL;
-	
-  location = calendar_client_config_get_timezone (calendar_settings);
+
+  if (client->priv->calendar_settings != NULL)
+    location = calendar_client_config_get_timezone (client->priv->calendar_settings);
+
   if (!location)
     return icaltimezone_get_utc_timezone ();
 
@@ -255,7 +257,7 @@ calendar_client_set_timezone (CalendarClient *client)
 {
   GList *list, *link;
 
-  client->priv->zone = calendar_client_config_get_icaltimezone (client->priv->calendar_settings);
+  client->priv->zone = calendar_client_config_get_icaltimezone (client);
 
   list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
   for (link = list; link != NULL; link = g_list_next (link))
@@ -353,11 +355,17 @@ static void
 calendar_client_init (CalendarClient *client)
 {
   GList *list;
+  GSettingsSchemaSource *schema_source;
+  const gchar *evolution_calendar_schema;
 
   client->priv = CALENDAR_CLIENT_GET_PRIVATE (client);
 
   client->priv->calendar_sources = calendar_sources_get ();
-  client->priv->calendar_settings = g_settings_new ("org.gnome.evolution.calendar");
+
+  schema_source = g_settings_schema_source_get_default();
+  evolution_calendar_schema = "org.gnome.evolution.calendar";
+  if (g_settings_schema_source_lookup (schema_source, evolution_calendar_schema, FALSE))
+    client->priv->calendar_settings = g_settings_new (evolution_calendar_schema);
 
   list = calendar_sources_get_appointment_clients (client->priv->calendar_sources);
   client->priv->appointment_sources =
@@ -383,10 +391,11 @@ calendar_client_init (CalendarClient *client)
 			    G_CALLBACK (calendar_client_task_sources_changed),
 			    client);
 
-  client->priv->zone_listener = g_signal_connect (client->priv->calendar_settings,
-                                                  "changed::timezone",
-                                                  G_CALLBACK (calendar_client_timezone_changed_cb),
-                                                  client);
+  if (client->priv->calendar_settings != NULL)
+    client->priv->zone_listener = g_signal_connect (client->priv->calendar_settings,
+                                                    "changed::timezone",
+                                                    G_CALLBACK (calendar_client_timezone_changed_cb),
+                                                    client);
 
   client->priv->day   = -1;
   client->priv->month = -1;
