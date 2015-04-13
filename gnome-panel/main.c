@@ -42,35 +42,44 @@ static const GOptionEntry options[] = {
 };
 
 static void
+remove_style_provider (GdkScreen *screen)
+{
+  GtkStyleProvider *style_provider;
+
+  if (provider == NULL)
+    return;
+
+  style_provider = GTK_STYLE_PROVIDER (provider);
+  gtk_style_context_remove_provider_for_screen (screen, style_provider);
+  g_clear_object (&provider);
+}
+
+static void
 theme_changed (GtkSettings *settings)
 {
-	GdkScreen *screen;
-	gchar     *theme;
+  GdkScreen *screen;
+  gchar *theme;
 
-	screen = gdk_screen_get_default ();
-	g_object_get (settings, "gtk-theme-name", &theme, NULL);
+  screen = gdk_screen_get_default ();
+  g_object_get (settings, "gtk-theme-name", &theme, NULL);
 
-	if (g_str_equal (theme, "Adwaita") || g_str_equal (theme, "HighContrast")) {
-		if (provider == NULL) {
-			GFile *file;
+  remove_style_provider (screen);
 
-			file = g_file_new_for_uri ("resource:///org/gnome/panel/gnome-panel.css");
-			provider = gtk_css_provider_new ();
+  if (g_strcmp0 (theme, "Adwaita") == 0 || g_strcmp0 (theme, "HighContrast") == 0)
+    {
+      gchar *resource;
 
-			gtk_css_provider_load_from_file (provider, file, NULL);
+      provider = gtk_css_provider_new ();
 
-			g_object_unref (file);
-		}
+      resource = g_strdup_printf ("/org/gnome/panel/%s.css", theme);
+      gtk_css_provider_load_from_resource (provider, resource);
+      g_free (resource);
 
-		gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),
-		                                           GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-	} else if (provider != NULL) {
-		gtk_style_context_remove_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider));
-		g_object_unref (provider);
-		provider = NULL;
-	}
+      gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),
+                                                 GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
 
-	g_free (theme);
+  g_free (theme);
 }
 
 static gboolean

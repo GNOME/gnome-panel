@@ -1,0 +1,45 @@
+PanelWidget {
+	background-color: @theme_unfocused_bg_color;
+}
+
+.gnome-panel-menu-bar,
+PanelApplet > GtkMenuBar.menubar,
+ClockBox {
+	font: bold;
+	color: @theme_unfocused_fg_color;
+	background: transparent;
+}
+
+.gnome-panel-menu-bar,
+PanelApplet > GtkMenuBar.menubar {
+	box-shadow: none;
+}
+
+.gnome-panel-menu-bar .menu,
+PanelApplet > GtkMenuBar.menubar .menu {
+	font: regular;
+}
+
+.gnome-panel-menu-bar .menuitem:hover,
+PanelApplet > GtkMenuBar.menubar .menuitem:hover {
+	background-color: @theme_selected_bg_color;
+	color: @theme_selected_fg_color;
+}
+
+PanelApplet GtkButton#tasklist-button,
+PanelApplet GtkButton#clock-applet-button,
+PanelApplet GtkButton#showdesktop-button {
+	padding: 0px 4px;
+	color: @theme_unfocused_fg_color;
+	border: 0;
+	border-radius: 0;
+}
+
+WnckPager:selected {
+	background-color: @theme_selected_bg_color;
+}
+
+NaTrayApplet {
+	-NaTrayApplet-icon-padding: 2;
+	-NaTrayApplet-icon-size: 16;
+}
