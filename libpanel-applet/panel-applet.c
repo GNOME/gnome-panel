@@ -1539,6 +1539,8 @@ panel_applet_handle_background (PanelApplet *applet)
 	if (applet->priv->background_widget)
 		panel_applet_update_background_for_widget (applet->priv->background_widget,
 							   pattern);
+	else
+		panel_applet_update_background_for_widget (GTK_WIDGET (applet), pattern);
 
         g_signal_emit (G_OBJECT (applet),
                         panel_applet_signals [CHANGE_BACKGROUND],
