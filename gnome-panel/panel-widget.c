@@ -1570,6 +1570,7 @@ static void
 panel_widget_state_flags_changed (GtkWidget    *widget,
                                   GtkStateFlags previous_state)
 {
+        GTK_WIDGET_CLASS (panel_widget_parent_class)->state_flags_changed (widget, previous_state);
         panel_widget_set_background_default_style (widget);
 }
 
