@@ -758,8 +758,7 @@ panel_background_set_default_style (PanelBackground *background,
 
         background->default_pattern = pattern;
 
-	if (background->type == PANEL_BACK_NONE)
-		panel_background_prepare (background);
+	panel_background_prepare (background);
 }
 
 void
