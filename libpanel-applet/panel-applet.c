@@ -1515,6 +1515,18 @@ panel_applet_set_background_string (PanelApplet *applet,
 }
 
 static void
+panel_applet_style_updated (GtkWidget *widget)
+{
+  PanelApplet *applet;
+
+  applet = PANEL_APPLET (widget);
+
+  GTK_WIDGET_CLASS (panel_applet_parent_class)->style_updated (widget);
+
+  panel_applet_handle_background (applet);
+}
+
+static void
 panel_applet_update_background_for_widget (GtkWidget       *widget,
 					   cairo_pattern_t *pattern)
 {
@@ -1836,6 +1848,7 @@ panel_applet_class_init (PanelAppletClass *klass)
         widget_class->get_preferred_height = panel_applet_get_preferred_height;
 	widget_class->size_allocate = panel_applet_size_allocate;
 	widget_class->draw = panel_applet_draw;
+	widget_class->style_updated = panel_applet_style_updated;
 	widget_class->focus = panel_applet_focus;
 	widget_class->realize = panel_applet_realize;
 
