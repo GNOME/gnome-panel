@@ -4,7 +4,7 @@
 #include <time.h>
 #include <glib.h>
 #include <glib-object.h>
-#include <libgweather/gweather-weather.h>
+#include <libgweather/gweather.h>
 
 G_BEGIN_DECLS
 
