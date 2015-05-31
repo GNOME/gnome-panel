@@ -10,7 +10,6 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <sys/wait.h>
 
 #include <glib/gi18n.h>
 #include <glib-unix.h>
@@ -21,7 +20,6 @@
 #include "panel-toplevel.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
-#include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 #include "panel-icon-names.h"
 #include "panel-layout.h"
