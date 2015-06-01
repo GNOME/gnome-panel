@@ -21,10 +21,10 @@
 /* Some important code copied from PonG */
 typedef struct _FreeTheFish FreeTheFish;
 struct _FreeTheFish {
-        GdkWindow *win;
+        GdkWindow *window;
         gboolean hide_mode;
         int state;
-        int x, y, xs, ys;
+        int x, y, x_speed, y_speed;
         guint handler;
         cairo_pattern_t *fish_pattern[FISH_FRAMES];
         cairo_pattern_t *fish_pattern_reverse[FISH_FRAMES];
@@ -55,12 +55,13 @@ fish_kill (void)
                 cairo_region_destroy (fish.fish_shape_reverse);
         fish.fish_shape_reverse = NULL;
 
-        gdk_window_destroy (fish.win);
+        gdk_window_destroy (fish.window);
 
         g_source_remove (fish.handler);
 
         memset (&fish, 0, sizeof (FreeTheFish));
 
+        /* We need to remove our fish_handle_event function and restore the original gtk function. */
         gdk_event_handler_set ((GdkEventFunc)gtk_main_do_event, NULL, NULL);
 }
 
@@ -76,16 +77,16 @@ fish_draw (int orient, int frame)
         region = orient ? fish.fish_shape : fish.fish_shape_reverse;
         shape_offset = orient ? -frame : frame + 1 - FISH_FRAMES;
 
-        cr = gdk_cairo_create (fish.win);
+        cr = gdk_cairo_create (fish.window);
         cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
         cairo_set_source (cr, pattern);
         cairo_paint (cr);
         cairo_destroy (cr);
 
         /* Yes. Don't ask. */
-        gdk_window_set_background_pattern (fish.win, pattern);
+        gdk_window_set_background_pattern (fish.window, pattern);
 
-        gdk_window_shape_combine_region (fish.win, region,
+        gdk_window_shape_combine_region (fish.window, region,
                                          shape_offset * FISH_WIDTH, 0);
 }
 
@@ -95,8 +96,8 @@ fish_move (gpointer data)
         int orient, frame;
         gboolean change = TRUE;
 
-        fish.x += fish.xs;
-        fish.y += fish.ys;
+        fish.x += fish.x_speed;
+        fish.y += fish.y_speed;
         if (fish.x <= -FISH_WIDTH ||
             fish.x >= gdk_screen_width ()) {
                 fish_kill ();
@@ -105,9 +106,9 @@ fish_move (gpointer data)
         if (fish.y <= 0 ||
             fish.y >= gdk_screen_height () - FISH_HEIGHT ||
             g_random_int() % (fish.hide_mode?10:50) == 0)
-                fish.ys = -fish.ys;
+                fish.y_speed = -fish.y_speed;
 
-        fish.state ++;
+        fish.state++;
         if (fish.hide_mode) {
                 fish.state ++;
                 if (fish.state >= 2* FISH_FRAMES)
@@ -120,13 +121,13 @@ fish_move (gpointer data)
         }
 
         frame = fish.state / (fish.hide_mode?2:1);
-        orient = fish.xs >= 0 ? 0 : 1;
+        orient = fish.x_speed >= 0 ? 0 : 1;
 
         if (change)
                 fish_draw (orient, frame);
 
-        gdk_window_move (fish.win, fish.x, fish.y);
-        gdk_window_raise (fish.win);
+        gdk_window_move (fish.window, fish.x, fish.y);
+        gdk_window_raise (fish.window);
 
         return TRUE;
 }
@@ -134,7 +135,7 @@ fish_move (gpointer data)
 static void
 fish_handle_event (GdkEvent *event)
 {
-        if (event->any.window != fish.win)
+        if (event->any.window != fish.window)
                 goto out;
 
         if (fish.hide_mode)
@@ -172,21 +173,21 @@ fish_unsea (cairo_surface_t *surface)
 {
         guchar *pixels = cairo_image_surface_get_data (surface);
         int rs = cairo_image_surface_get_stride (surface);
-        int w = cairo_image_surface_get_width (surface);
-        int h = cairo_image_surface_get_height (surface);
-        int x, y;
-        guint32 *p;
+        int width = cairo_image_surface_get_width (surface);
+        int height = cairo_image_surface_get_height (surface);
+        int column, row;
+        guint32 *current_pixel;
         guchar a, r, g, b;
 
-        for (y = 0; y < h; y++, pixels += rs) {
-                p = (guint32 *) pixels;
-                for (x = 0; x < w; x++, p++) {
-                        a = ((*p)>>24);
-                        r = ((*p)>>16)&0xff;
-                        g = ((*p)>> 8)&0xff;
-                        b = ((*p)>> 0)&0xff;
+        for (row = 0; row < height; row++, pixels += rs) {
+                current_pixel = (guint32 *) pixels;
+                for (column = 0; column < width; column++, current_pixel++) {
+                        a = ((*current_pixel)>>24);
+                        r = (((*current_pixel)>>16)&0xff);
+                        g = (((*current_pixel)>> 8)&0xff);
+                        b = (((*current_pixel)>> 0)&0xff);
                         if (FISH_PIXEL_STORE_MOVE(a, r, g, b))
-                                *p = 0;
+                                *current_pixel = 0;
                 }
         }
 }
@@ -276,7 +277,7 @@ get_fish_shape_reverse (cairo_surface_t *surface)
 
 /* this checks the screen */
 static void
-check_screen (void)
+fish_init (void)
 {
         GdkWindowAttr attributes;
         GdkPixbuf *fish_pixbuf;
@@ -286,7 +287,7 @@ check_screen (void)
         int orient;
         int i;
 
-        if (fish.win != NULL)
+        if (fish.window != NULL)
                 return;
 
         fish_pixbuf = gdk_pixbuf_new_from_resource ("/org/gnome/panel/anim/wanda.png", NULL);
@@ -325,8 +326,8 @@ check_screen (void)
         fish.hide_mode = FALSE;
         fish.x = orient ? -FISH_WIDTH : gdk_screen_width ();
         fish.y = (g_random_int() % (gdk_screen_height() - FISH_HEIGHT - 2)) + 1;
-        fish.xs = orient ? FISH_XS : -FISH_XS;
-        fish.ys = FISH_YS;
+        fish.x_speed = orient ? FISH_XS : -FISH_XS;
+        fish.y_speed = FISH_YS;
 
         attributes.window_type = GDK_WINDOW_TEMP;
         attributes.x = fish.x;
@@ -336,12 +337,12 @@ check_screen (void)
         attributes.wclass = GDK_INPUT_OUTPUT;
         attributes.event_mask = GDK_BUTTON_PRESS_MASK;
 
-        fish.win = gdk_window_new (NULL, &attributes,
+        fish.window = gdk_window_new (NULL, &attributes,
                                    GDK_WA_X | GDK_WA_Y);
 
         for (i = 0; i < FISH_FRAMES; i++) {
-                fish.fish_pattern[i] = get_fish_frame (fish.win, surface, i);
-                fish.fish_pattern_reverse[i] = get_fish_frame_reverse (fish.win, surface, i);
+                fish.fish_pattern[i] = get_fish_frame (fish.window, surface, i);
+                fish.fish_pattern_reverse[i] = get_fish_frame_reverse (fish.window, surface, i);
         }
 
         fish.fish_shape = get_fish_shape (surface);
@@ -350,7 +351,7 @@ check_screen (void)
         cairo_surface_destroy (surface);
 
         fish_draw (0, 0);
-        gdk_window_show (fish.win);
+        gdk_window_show (fish.window);
 
         gdk_event_handler_set ((GdkEventFunc)fish_handle_event, NULL, NULL);
 
@@ -364,7 +365,7 @@ check_screen_timeout (gpointer data)
 {
         screen_check_id = 0;
 
-        check_screen ();
+        fish_init ();
 
         screen_check_id = g_timeout_add (FISH_CHECK_TIMEOUT,
                                          check_screen_timeout, NULL);
