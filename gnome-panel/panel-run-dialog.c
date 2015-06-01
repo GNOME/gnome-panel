@@ -527,13 +527,19 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		g_free (command);
 		return;
 	}
-	
+
 	/* evil eggies, do not translate! */
 	if (!strcmp (command, "free the fish")) {
 		free_the_fish ();
 
 		g_free (command);
 		gtk_widget_destroy (dialog->run_dialog);
+		return;
+	} else if (!strcmp (command, "catch the fish")) {
+		catch_the_fish ();
+
+		g_free(command);
+		gtk_widget_destroy(dialog->run_dialog);
 		return;
 	}
 		

@@ -7,6 +7,8 @@ G_BEGIN_DECLS
 
 void free_the_fish (void);
 
+void catch_the_fish (void);
+
 G_END_DECLS
 
 #endif

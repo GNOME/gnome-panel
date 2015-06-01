@@ -386,3 +386,11 @@ free_the_fish (void)
 
         check_screen_timeout (NULL);
 }
+
+void
+catch_the_fish (void)
+{
+        if (screen_check_id > 0)
+                g_source_remove (screen_check_id);
+        fish_start_hide_mode ();
+}
