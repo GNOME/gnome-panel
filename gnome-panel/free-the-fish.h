@@ -5,7 +5,7 @@
 
 G_BEGIN_DECLS
 
-void start_screen_check (void);
+void free_the_fish (void);
 
 G_END_DECLS
 

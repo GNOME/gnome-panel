@@ -83,7 +83,7 @@ panel_context_menu_check_for_screen (GtkWidget *w,
 		times++;
 		if (times == 3) {
 			times = 0;
-			start_screen_check ();
+			free_the_fish ();
 		}
 	}
 	return FALSE;

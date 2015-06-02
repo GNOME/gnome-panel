@@ -372,7 +372,7 @@ check_screen_timeout (gpointer data)
 }
 
 void
-start_screen_check (void)
+free_the_fish (void)
 {
         if (screen_check_id > 0)
                 g_source_remove (screen_check_id);

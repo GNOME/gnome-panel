@@ -530,7 +530,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	
 	/* evil eggies, do not translate! */
 	if (!strcmp (command, "free the fish")) {
-		start_screen_check ();
+		free_the_fish ();
 
 		g_free (command);
 		gtk_widget_destroy (dialog->run_dialog);
