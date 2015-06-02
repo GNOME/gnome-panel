@@ -166,19 +166,6 @@ out:
         gtk_main_do_event (event);
 }
 
-static GdkPixbuf *
-get_phsh_pixbuf (void)
-{
-        char *resource;
-        GdkPixbuf *pixbuf;
-
-        resource = g_strdup_printf ("%s%cand%c.png", "/org/gnome/panel/anim/", 'w', 'a');
-        pixbuf = gdk_pixbuf_new_from_resource (resource, NULL);
-        g_free (resource);
-
-        return pixbuf;
-}
-
 static void
 phsh_unsea (cairo_surface_t *surface)
 {
@@ -301,7 +288,7 @@ check_screen (void)
         if (phsh.win != NULL)
                 return;
 
-        phsh_pixbuf = get_phsh_pixbuf ();
+        phsh_pixbuf = gdk_pixbuf_new_from_resource ("/org/gnome/panel/anim/wanda.png", NULL);
 
         if (phsh_pixbuf == NULL)
                 return;
