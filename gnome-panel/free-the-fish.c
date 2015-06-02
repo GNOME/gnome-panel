@@ -1,5 +1,4 @@
 #include <gtk/gtk.h>
-#include <X11/Xlib.h>
 #include <string.h>
 
 #include "free-the-fish.h"
