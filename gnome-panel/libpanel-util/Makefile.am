@@ -24,7 +24,7 @@ dbus-login1-manager.c: org.freedesktop.login1.Manager.xml Makefile.am
 	$(AM_V_GEN) gdbus-codegen \
 		--interface-prefix=org.freedesktop \
 		--generate-c-code dbus-login1-manager \
-		org.freedesktop.login1.Manager.xml
+		$(srcdir)/org.freedesktop.login1.Manager.xml
 
 panel-util-types.c: $(panel_util_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
