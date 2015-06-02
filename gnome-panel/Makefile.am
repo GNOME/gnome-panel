@@ -23,6 +23,7 @@ panel_sources =			\
 	panel-widget.c		\
 	button-widget.c		\
 	xstuff.c		\
+	free-the-fish.c		\
 	panel-session.c		\
 	panel-compatibility.c	\
 	panel.c			\
@@ -70,6 +71,7 @@ panel_headers =			\
 	panel-globals.h		\
 	button-widget.h		\
 	xstuff.h		\
+	free-the-fish.h		\
 	panel-session.h		\
 	panel-compatibility.h	\
 	panel.h			\
@@ -257,8 +259,6 @@ EXTRA_DIST =					\
 	HighContrast.css \
 	$(uitest_FILES)				\
 	panel-test-applets.gresource.xml	\
-	nothing.cP				\
-	nothing.h				\
 	panel-marshal.list			\
 	$(desktop_in_files)
 

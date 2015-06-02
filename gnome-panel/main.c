@@ -25,8 +25,6 @@
 #include "panel-layout.h"
 #include "xstuff.h"
 
-#include "nothing.cP"
-
 /* globals */
 GSList *panels = NULL;
 GSList *panel_list = NULL;

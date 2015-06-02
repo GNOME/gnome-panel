@@ -1,6 +1,8 @@
+#include <gtk/gtk.h>
 #include <X11/Xlib.h>
+#include <string.h>
 
-#include "nothing.h"
+#include "free-the-fish.h"
 
 /* phish code */
 #define PHSHFRAMES 8

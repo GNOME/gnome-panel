@@ -48,7 +48,7 @@
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
 
-#include "nothing.h"
+#include "free-the-fish.h"
 #include "panel-util.h"
 #include "panel-globals.h"
 #include "panel-enums.h"

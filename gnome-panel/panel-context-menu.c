@@ -35,7 +35,7 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
 
-#include "nothing.h"
+#include "free-the-fish.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
