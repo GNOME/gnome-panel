@@ -12,10 +12,10 @@
 #define FISH_CHECK_TIMEOUT (g_random_int()%120*1000)
 #define FISH_TIMEOUT 120
 #define FISH_HIDE_TIMEOUT 80
-#define FISH_XS 5
-#define FISH_YS ((g_random_int() % 2) + 1)
-#define FISH_XS_HIDE_FACTOR 2.5
-#define FISH_YS_HIDE_FACTOR 2.5
+#define FISH_X_SPEED 5
+#define FISH_Y_SPEED ((g_random_int() % 2) + 1)
+#define FISH_X_SPEED_HIDE_FACTOR 2.5
+#define FISH_Y_SPEED_HIDE_FACTOR 2.5
 #define FISH_PIXEL_STORE_MOVE(a, r, g, b) (a < 128 || (a < 255 && b > r && b > g))
 
 /* Some important code copied from PonG */
@@ -138,8 +138,8 @@ fish_start_hide_mode (void)
         g_source_remove (fish.handler);
         fish.handler = g_timeout_add (FISH_HIDE_TIMEOUT,
                                       fish_move, NULL);
-        fish.x_speed *= FISH_XS_HIDE_FACTOR;
-        fish.y_speed *= FISH_YS_HIDE_FACTOR;
+        fish.x_speed *= FISH_X_SPEED_HIDE_FACTOR;
+        fish.y_speed *= FISH_Y_SPEED_HIDE_FACTOR;
         fish.hide_mode = TRUE;
         if (fish.x_speed > 0) {
                 if (fish.x < (gdk_screen_width () / 2))
@@ -332,8 +332,8 @@ fish_init (void)
         fish.hide_mode = FALSE;
         fish.x = orient ? -FISH_WIDTH : gdk_screen_width ();
         fish.y = (g_random_int() % (gdk_screen_height() - FISH_HEIGHT - 2)) + 1;
-        fish.x_speed = orient ? FISH_XS : -FISH_XS;
-        fish.y_speed = FISH_YS;
+        fish.x_speed = orient ? FISH_X_SPEED : -FISH_X_SPEED;
+        fish.y_speed = FISH_Y_SPEED;
 
         attributes.window_type = GDK_WINDOW_TEMP;
         attributes.x = fish.x;
