@@ -133,6 +133,24 @@ fish_move (gpointer data)
 }
 
 static void
+fish_start_hide_mode (void)
+{
+        g_source_remove (fish.handler);
+        fish.handler = g_timeout_add (FISH_HIDE_TIMEOUT,
+                                      fish_move, NULL);
+        fish.x_speed *= FISH_XS_HIDE_FACTOR;
+        fish.y_speed *= FISH_YS_HIDE_FACTOR;
+        fish.hide_mode = TRUE;
+        if (fish.x_speed > 0) {
+                if (fish.x < (gdk_screen_width () / 2))
+                        fish.x_speed *= -1;
+        } else {
+                if (fish.x > (gdk_screen_width () / 2))
+                        fish.x_speed *= -1;
+        }
+}
+
+static void
 fish_handle_event (GdkEvent *event)
 {
         if (event->any.window != fish.window)
@@ -146,19 +164,7 @@ fish_handle_event (GdkEvent *event)
                 case GDK_BUTTON_PRESS:
                 case GDK_2BUTTON_PRESS:
                 case GDK_3BUTTON_PRESS:
-                        g_source_remove (fish.handler);
-                        fish.handler = g_timeout_add (FISH_HIDE_TIMEOUT,
-                                                      fish_move, NULL);
-                        fish.xs *= FISH_XS_HIDE_FACTOR;
-                        fish.ys *= FISH_YS_HIDE_FACTOR;
-                        fish.hide_mode = TRUE;
-                        if (fish.xs > 0) {
-                                if (fish.x < (gdk_screen_width () / 2))
-                                        fish.xs *= -1;
-                        } else {
-                                if (fish.x > (gdk_screen_width () / 2))
-                                        fish.xs *= -1;
-                        }
+                        fish_start_hide_mode ();
                         break;
                 default:
                         break;
