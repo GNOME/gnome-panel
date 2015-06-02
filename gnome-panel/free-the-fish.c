@@ -25,7 +25,7 @@ struct _FreeTheFish {
         gboolean hide_mode;
         int state;
         int x, y, xs, ys;
-        int handler;
+        guint handler;
         cairo_pattern_t *fish_pattern[FISH_FRAMES];
         cairo_pattern_t *fish_pattern_reverse[FISH_FRAMES];
         cairo_region_t *fish_shape;
