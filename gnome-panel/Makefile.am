@@ -260,6 +260,7 @@ EXTRA_DIST =					\
 	$(uitest_FILES)				\
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list			\
+	wanda_no_sea.png			\
 	$(desktop_in_files)
 
 CLEANFILES = \

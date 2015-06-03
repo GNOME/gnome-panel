@@ -16,7 +16,6 @@
 #define FISH_Y_SPEED ((g_random_int() % 2) + 1)
 #define FISH_X_SPEED_HIDE_FACTOR 2.5
 #define FISH_Y_SPEED_HIDE_FACTOR 2.5
-#define FISH_PIXEL_STORE_MOVE(a, r, g, b) (a < 128 || (a < 255 && b > r && b > g))
 
 /* Some important code copied from PonG */
 typedef struct _FreeTheFish FreeTheFish;
@@ -174,30 +173,6 @@ out:
         gtk_main_do_event (event);
 }
 
-static void
-fish_unsea (cairo_surface_t *surface)
-{
-        guchar *pixels = cairo_image_surface_get_data (surface);
-        int rs = cairo_image_surface_get_stride (surface);
-        int width = cairo_image_surface_get_width (surface);
-        int height = cairo_image_surface_get_height (surface);
-        int column, row;
-        guint32 *current_pixel;
-        guchar a, r, g, b;
-
-        for (row = 0; row < height; row++, pixels += rs) {
-                current_pixel = (guint32 *) pixels;
-                for (column = 0; column < width; column++, current_pixel++) {
-                        a = (guchar)  ((*current_pixel)>>24);
-                        r = (guchar) (((*current_pixel)>>16)&0xff);
-                        g = (guchar) (((*current_pixel)>> 8)&0xff);
-                        b = (guchar) (((*current_pixel)>> 0)&0xff);
-                        if (FISH_PIXEL_STORE_MOVE(a, r, g, b))
-                                *current_pixel = 0;
-                }
-        }
-}
-
 static cairo_pattern_t *
 get_fish_frame (GdkWindow *win, cairo_surface_t *source, int frame)
 {
@@ -296,7 +271,7 @@ fish_init (void)
         if (fish.window != NULL)
                 return;
 
-        fish_pixbuf = gdk_pixbuf_new_from_resource ("/org/gnome/panel/anim/wanda.png", NULL);
+        fish_pixbuf = gdk_pixbuf_new_from_resource ("/org/gnome/panel/wanda_no_sea.png", NULL);
 
         if (fish_pixbuf == NULL)
                 return;
@@ -323,8 +298,6 @@ fish_init (void)
                 cairo_surface_destroy (surface);
                 return;
         }
-
-        fish_unsea (surface);
 
         orient = g_random_int() % 2;
 
