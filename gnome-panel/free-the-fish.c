@@ -188,7 +188,7 @@ fish_unsea (cairo_surface_t *surface)
         for (row = 0; row < height; row++, pixels += rs) {
                 current_pixel = (guint32 *) pixels;
                 for (column = 0; column < width; column++, current_pixel++) {
-                        a = (guchar) ((*current_pixel)>>24);
+                        a = (guchar)  ((*current_pixel)>>24);
                         r = (guchar) (((*current_pixel)>>16)&0xff);
                         g = (guchar) (((*current_pixel)>> 8)&0xff);
                         b = (guchar) (((*current_pixel)>> 0)&0xff);
