@@ -812,7 +812,7 @@ panel_run_dialog_find_command_idle (PanelRunDialog *dialog)
 		}
 
 		g_free (exec);
-		g_object_unref (icon);
+		g_clear_object (&icon);
 		g_free (name);
 		g_free (comment);
 	
