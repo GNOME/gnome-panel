@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "free-the-fish.h"
+#include "panel-screensaver-gdbus.h"
 
 /* free the fish code */
 #define FISH_FRAMES 8
@@ -31,6 +32,8 @@ struct _FreeTheFish {
         cairo_region_t *fish_shape_reverse;
 };
 static FreeTheFish fish = {NULL};
+
+static void fish_register_dbus_handler (void);
 
 static void
 fish_kill (void)
@@ -333,6 +336,7 @@ fish_init (void)
         gdk_window_show (fish.window);
 
         gdk_event_handler_set ((GdkEventFunc)fish_handle_event, NULL, NULL);
+        fish_register_dbus_handler ();
 
         fish.handler = g_timeout_add (FISH_TIMEOUT, fish_move, NULL);
 }
@@ -349,6 +353,32 @@ check_screen_timeout (gpointer data)
         screen_check_id = g_timeout_add (FISH_CHECK_TIMEOUT,
                                          check_screen_timeout, NULL);
         return FALSE;
+}
+
+static void
+fish_screen_saver_active_changed_cb (PanelGDBusScreenSaver *proxy, gboolean active)
+{
+        if (active) {
+                gdk_window_hide (fish.window);
+        } else {
+                gdk_window_show (fish.window);
+        }
+}
+
+static void fish_register_dbus_handler (void) {
+        GError *error = NULL;
+        PanelGDBusScreenSaver *proxy = panel_gdbus_screen_saver_proxy_new_for_bus_sync (
+                G_BUS_TYPE_SESSION,
+                G_DBUS_PROXY_FLAGS_NONE,
+                "org.gnome.ScreenSaver",
+                "/org/gnome/ScreenSaver",
+                NULL, &error);
+
+        if (error) {
+                g_warning ("[Free the fish] Error connecting to screen saver dbus: %s", error->message);
+        } else {
+                g_signal_connect (proxy, "active-changed", G_CALLBACK (fish_screen_saver_active_changed_cb), NULL);
+        }
 }
 
 void

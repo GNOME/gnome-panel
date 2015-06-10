@@ -210,13 +210,18 @@ panel-typebuiltins.h: $(panel_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) > $@
 
+%-gdbus.c %-gdbus.h: %-dbus.xml
+	gdbus-codegen --interface-prefix org.gnome. --generate-c-code $*-gdbus --c-namespace PanelGDBus $<
+
 gnome_panel_BUILT_SOURCES = \
 	panel-typebuiltins.c		\
 	panel-typebuiltins.h		\
 	panel-resources.c		\
 	panel-resources.h		\
 	panel-marshal.c			\
-	panel-marshal.h
+	panel-marshal.h         \
+	panel-screensaver-gdbus.c   \
+	panel-screensaver-gdbus.h
 
 panel_test_applets_BUILT_SOURCES = 	\
 	panel-test-applets-resources.c	\
