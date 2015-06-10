@@ -80,10 +80,12 @@ fish_draw (int orient, int frame)
         shape_offset = orient ? -frame : frame + 1 - FISH_FRAMES;
 
         cr = gdk_cairo_create (fish.window);
-        cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-        cairo_set_source (cr, pattern);
-        cairo_paint (cr);
-        cairo_destroy (cr);
+        if (cr) {
+            cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+            cairo_set_source (cr, pattern);
+            cairo_paint (cr);
+            cairo_destroy (cr);
+        }
 
         /* Yes. Don't ask. */
         gdk_window_set_background_pattern (fish.window, pattern);
