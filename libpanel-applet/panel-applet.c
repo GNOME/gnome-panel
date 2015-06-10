@@ -404,6 +404,28 @@ panel_applet_get_orient (PanelApplet *applet)
 	return applet->priv->orient;
 }
 
+/**
+ * panel_applet_get_gtk_orientation:
+ * @applet: a #PanelApplet
+ *
+ * Gets the #GtkOrientation of @applet.
+ *
+ * Returns: the #GtkOrientation of @applet.
+ *
+ * Since 3.18
+ */
+GtkOrientation
+panel_applet_get_gtk_orientation (PanelApplet *applet)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), GTK_ORIENTATION_HORIZONTAL);
+
+	if (applet->priv->orient == PANEL_APPLET_ORIENT_LEFT ||
+	    applet->priv->orient == PANEL_APPLET_ORIENT_RIGHT)
+		return GTK_ORIENTATION_VERTICAL;
+
+	return GTK_ORIENTATION_HORIZONTAL;
+}
+
 /* Applets cannot set their orientation, so API is not public. */
 static void
 panel_applet_set_orient (PanelApplet      *applet,
