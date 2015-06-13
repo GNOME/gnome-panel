@@ -116,13 +116,8 @@ set_system_timezone_finish (GAsyncResult  *result,
   GDBusConnection *system_bus = get_system_bus (NULL);
   GVariant *reply;
 
-  /* detect if we set an error due to being unable to get the system bus */
-  if (g_simple_async_result_is_valid (result, NULL, set_system_timezone_async))
-    {
-      g_simple_async_result_propagate_error (G_SIMPLE_ASYNC_RESULT (result),
-                                             error);
-      return FALSE;
-    }
+  if (g_task_is_valid (result, NULL))
+    return g_task_propagate_boolean (G_TASK (result), error);
 
   g_assert (system_bus != NULL);
 
@@ -146,14 +141,12 @@ set_system_timezone_async (const gchar         *tz,
 
   if (system_bus == NULL)
     {
-      GSimpleAsyncResult *simple;
+      GTask *task;
 
-      simple = g_simple_async_result_new (NULL, callback, user_data,
-                                          set_system_timezone_async);
-      g_simple_async_result_set_from_error (simple, error);
-      g_simple_async_result_complete_in_idle (simple);
-      g_object_unref (simple);
-      g_error_free (error);
+      task = g_task_new (NULL, NULL, callback, user_data);
+
+      g_task_return_error (task, error);
+      g_object_unref (task);
     }
 
   g_dbus_connection_call (system_bus, MECHANISM_BUS_NAME,
