@@ -84,8 +84,7 @@ typedef struct {
 	GList		 *possible_executables;
 	GList		 *completion_items;
 	GCompletion      *completion;
-	
-	GSList           *add_icon_paths;
+
 	int	          add_items_idle_id;
 	int		  find_command_idle_id;
 	gboolean	  use_program_list;
@@ -176,10 +175,6 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 	dialog->changed_id = 0;
 
 	g_object_unref (dialog->list_expander);
-	
-	g_slist_foreach (dialog->add_icon_paths, (GFunc) gtk_tree_path_free, NULL);
-	g_slist_free (dialog->add_icon_paths);
-	dialog->add_icon_paths = NULL;
 
 	if (dialog->gicon)
 		g_object_unref (dialog->gicon);
@@ -987,7 +982,6 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 	for (l = all_applications; l; l = l->next) {
 		GMenuTreeEntry *entry = l->data;
 		GtkTreeIter     iter;
-		GtkTreePath    *path;
 		GAppInfo       *app_info;
 
 		app_info = G_APP_INFO (gmenu_tree_entry_get_app_info (entry));
@@ -1001,10 +995,6 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 				    COLUMN_PATH,    gmenu_tree_entry_get_desktop_file_path (entry),
 				    COLUMN_VISIBLE, TRUE,
 				    -1);
-
-		path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->program_list_store), &iter);
-		if (path != NULL)
-			dialog->add_icon_paths = g_slist_prepend (dialog->add_icon_paths, path);
 
 		gmenu_tree_item_unref (entry);
 	}
@@ -1035,8 +1025,6 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
                                              NULL);
 					          
 	gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->program_list), column);
-
-	dialog->add_icon_paths = g_slist_reverse (dialog->add_icon_paths);
 
 	dialog->add_items_idle_id = 0;					 
 	return FALSE;
