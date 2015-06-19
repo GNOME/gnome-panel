@@ -2523,6 +2523,8 @@ panel_widget_set_packed (PanelWidget *panel_widget,
 {
 	panel_widget->packed = packed;
 
+	panel_widget_update_size_hints_for_toplevel (panel_widget);
+
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
