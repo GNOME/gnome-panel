@@ -499,13 +499,18 @@ panel_addto_prepend_directory (GSList             **parent_list,
 			       const char          *filename)
 {
 	PanelAddtoAppList *data;
+	GIcon *icon;
 
 	data = g_new0 (PanelAddtoAppList, 1);
+
+	icon = gmenu_tree_directory_get_icon (directory);
+	if (icon)
+		g_object_ref (icon);
 
 	data->item_info.type          = PANEL_ADDTO_MENU;
 	data->item_info.name          = g_strdup (gmenu_tree_directory_get_name (directory));
 	data->item_info.description   = g_strdup (gmenu_tree_directory_get_comment (directory));
-	data->item_info.icon          = g_object_ref (gmenu_tree_directory_get_icon (directory));
+	data->item_info.icon          = icon;
 	data->item_info.menu_filename = g_strdup (filename);
 	data->item_info.menu_path     = gmenu_tree_directory_make_path (directory, NULL);
 	data->item_info.static_strings = FALSE;
@@ -532,15 +537,20 @@ panel_addto_prepend_entry (GSList         **parent_list,
 {
 	PanelAddtoAppList *data;
 	GAppInfo *app_info;
+	GIcon *icon;
 
 	data = g_new0 (PanelAddtoAppList, 1);
 
 	app_info = G_APP_INFO (gmenu_tree_entry_get_app_info (entry));
 
+	icon = g_app_info_get_icon (app_info);
+	if (icon)
+		g_object_ref (icon);
+
 	data->item_info.type          = PANEL_ADDTO_LAUNCHER;
 	data->item_info.name          = g_strdup (g_app_info_get_display_name (app_info));
 	data->item_info.description   = g_strdup (g_app_info_get_description (app_info));
-	data->item_info.icon          = g_object_ref (g_app_info_get_icon (app_info));
+	data->item_info.icon          = icon;
 	data->item_info.launcher_path = g_strdup (gmenu_tree_entry_get_desktop_file_path (entry));
 	data->item_info.static_strings = FALSE;
 
