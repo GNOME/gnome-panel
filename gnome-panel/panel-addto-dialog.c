@@ -75,8 +75,6 @@ struct _PanelAddtoDialog
 	gchar        *search_text;
 	gchar        *applet_search_text;
 
-	guint         name_notify;
-
 	PanelObjectPackType insert_pack_type;
 };
 
@@ -1155,11 +1153,11 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	                    dialog);
 
 	dialog->panel_widget = panel_widget;
-	dialog->name_notify =
-		g_signal_connect (dialog->panel_widget->toplevel,
-				  "notify::name",
-				  G_CALLBACK (panel_addto_name_notify),
-				  dialog);
+
+	g_signal_connect_object (dialog->panel_widget->toplevel,
+	                         "notify::name",
+	                         G_CALLBACK (panel_addto_name_notify),
+	                         dialog, 0);
 
 	gtk_widget_show_all (dialog->dialog_vbox);
 
@@ -1197,12 +1195,6 @@ panel_addto_dialog_dispose (GObject *object)
 	PanelAddtoDialog *dialog;
 
 	dialog = PANEL_ADDTO_DIALOG (object);
-
-	if (dialog->name_notify)
-		g_signal_handler_disconnect (dialog->panel_widget->toplevel,
-		                             dialog->name_notify);
-
-	dialog->name_notify = 0;
 
 	g_clear_object (&dialog->filter_applet_model);
 	g_clear_object (&dialog->applet_model);
