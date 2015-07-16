@@ -23,10 +23,16 @@
 #ifndef PANEL_ADDTO_DIALOG_H
 #define PANEL_ADDTO_DIALOG_H
 
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 
-void panel_addto_present                    (GtkMenuItem *item,
-					     PanelWidget *panel_widget);
+#define PANEL_TYPE_ADDTO_DIALOG panel_addto_dialog_get_type()
+G_DECLARE_FINAL_TYPE (PanelAddtoDialog, panel_addto_dialog,
+                      PANEL, ADDTO_DIALOG, GtkWindow)
+
+void panel_addto_present (GtkMenuItem *item,
+                          PanelWidget *panel_widget);
 
 G_END_DECLS
 

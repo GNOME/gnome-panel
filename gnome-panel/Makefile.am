@@ -229,6 +229,7 @@ BUILT_SOURCES = 				\
 	$(panel_test_applets_BUILT_SOURCES)
 
 ui_FILES =					\
+	panel-addto-dialog.ui \
 	panel-properties-dialog.ui		\
 	panel-run-dialog.ui
 
