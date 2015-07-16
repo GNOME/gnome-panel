@@ -1312,7 +1312,6 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	dialog->tree_view = gtk_tree_view_new ();
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (dialog->tree_view),
 					   FALSE);
-	gtk_tree_view_expand_all (GTK_TREE_VIEW (dialog->tree_view));
 
 	renderer = g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
 				 "xpad", 4,
