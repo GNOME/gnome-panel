@@ -42,7 +42,7 @@
 #include "panel-properties-dialog.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
-#include "panel-addto.h"
+#include "panel-addto-dialog.h"
 #include "panel-icon-names.h"
 
 static void

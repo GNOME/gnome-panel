@@ -20,7 +20,6 @@
 #include "button-widget.h"
 #include "launcher.h"
 #include "panel.h"
-#include "panel-addto.h"
 #include "panel-bindings.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"

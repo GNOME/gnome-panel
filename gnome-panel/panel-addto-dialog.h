@@ -20,8 +20,8 @@
  *	Vincent Untz <vincent@vuntz.net>
  */
 
-#ifndef __PANEL_ADDTO_H__
-#define __PANEL_ADDTO_H__
+#ifndef PANEL_ADDTO_DIALOG_H
+#define PANEL_ADDTO_DIALOG_H
 
 G_BEGIN_DECLS
 
@@ -30,4 +30,4 @@ void panel_addto_present                    (GtkMenuItem *item,
 
 G_END_DECLS
 
-#endif /* __PANEL_ADDTO_H__ */
+#endif

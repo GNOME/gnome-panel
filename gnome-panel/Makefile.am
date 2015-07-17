@@ -57,7 +57,7 @@ panel_sources =			\
 	panel-bindings.c	\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
-	panel-addto.c		\
+	panel-addto-dialog.c	\
 	panel-ditem-editor.c	\
 	panel-layout.c		\
 	panel-modules.c		\
@@ -107,7 +107,7 @@ panel_headers =			\
 	panel-enums-gsettings.h	\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
-	panel-addto.h		\
+	panel-addto-dialog.h	\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-layout.h		\
