@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-23 07:44+0000\n"
-"PO-Revision-Date: 2015-06-23 14:14+0200\n"
+"POT-Creation-Date: 2015-07-18 07:46+0000\n"
+"PO-Revision-Date: 2015-07-18 15:48+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -327,7 +327,8 @@ msgstr "I_dő beállításai"
 #: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
 #: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
 #: ../applets/wncklet/workspace-switcher.ui.h:2
-#: ../gnome-panel/panel-addto.c:1252 ../gnome-panel/panel-ditem-editor.c:653
+#: ../gnome-panel/panel-addto-dialog.ui.h:6
+#: ../gnome-panel/panel-ditem-editor.c:653
 #: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "_Close"
 msgstr "_Bezárás"
@@ -369,8 +370,8 @@ msgstr "_Hőmérséklet megjelenítése"
 msgid "General"
 msgstr "Általános"
 
-#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto.c:1153
-#: ../gnome-panel/panel-addto.c:1249
+#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1080
+#: ../gnome-panel/panel-addto-dialog.ui.h:5
 msgid "_Add"
 msgstr "_Hozzáadás"
 
@@ -1168,9 +1169,6 @@ msgid "Menu content path"
 msgstr "Menü elemeinek útvonala"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
-#| msgid ""
-#| "The path from which the menu contents is contructed. If empty, the menu "
-#| "will be the default applications menu."
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
@@ -1566,15 +1564,15 @@ msgstr ""
 "„fit” esetén a kép a panel magasságához (ha az vízszintes) lesz igazítva, a "
 "méretarány megtartása mellett."
 
-#: ../gnome-panel/applet.c:348
+#: ../gnome-panel/applet.c:347
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:486 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1795
 msgid "_Move"
 msgstr "Át_helyezés"
 
-#: ../gnome-panel/applet.c:493 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1795
 msgid "_Remove From Panel"
 msgstr "_Eltávolítás a panelról"
 
@@ -1799,76 +1797,87 @@ msgstr "Kikapcsolás"
 msgid "Power off the computer"
 msgstr "A számítógép kikapcsolása"
 
-#: ../gnome-panel/panel-addto.c:143 ../gnome-panel/panel-menu-button.c:976
+#: ../gnome-panel/panel-addto-dialog.c:143
+#: ../gnome-panel/panel-menu-button.c:976
 msgid "Main Menu"
 msgstr "Főmenü"
 
-#: ../gnome-panel/panel-addto.c:144
+#: ../gnome-panel/panel-addto-dialog.c:144
 msgid "The main GNOME menu"
 msgstr "A GNOME főmenüje"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto-dialog.c:153
 msgid "Menu Bar"
 msgstr "Menü"
 
-#: ../gnome-panel/panel-addto.c:154
+#: ../gnome-panel/panel-addto-dialog.c:154
 msgid "A custom menu bar"
 msgstr "Egy egyéni menüsor"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto-dialog.c:163
 msgid "Separator"
 msgstr "Elválasztó"
 
-#: ../gnome-panel/panel-addto.c:164
+#: ../gnome-panel/panel-addto-dialog.c:164
 msgid "A separator to organize the panel items"
 msgstr "Egy elválasztó a panel elemeinek rendezéséhez"
 
-#: ../gnome-panel/panel-addto.c:173
+#: ../gnome-panel/panel-addto-dialog.c:173
 msgid "User menu"
 msgstr "Felhasználómenü"
 
-#: ../gnome-panel/panel-addto.c:174
+#: ../gnome-panel/panel-addto-dialog.c:174
 msgid "Menu to change your settings and your online status"
 msgstr "Személyes beállításainak és elérhetőségi állapotának módosítása"
 
-#: ../gnome-panel/panel-addto.c:224
+#: ../gnome-panel/panel-addto-dialog.c:224
 msgid "(empty)"
 msgstr "(üres)"
 
-#: ../gnome-panel/panel-addto.c:424
+#: ../gnome-panel/panel-addto-dialog.c:424
 msgid "Custom Application Launcher"
 msgstr "Egyedi parancsikon"
 
-#: ../gnome-panel/panel-addto.c:425
+#: ../gnome-panel/panel-addto-dialog.c:425
 msgid "Create a new launcher"
 msgstr "Új parancsikon létrehozása"
 
-#: ../gnome-panel/panel-addto.c:435
+#: ../gnome-panel/panel-addto-dialog.c:435
 msgid "Application Launcher..."
 msgstr "Parancsikon…"
 
-#: ../gnome-panel/panel-addto.c:436
+#: ../gnome-panel/panel-addto-dialog.c:436
 msgid "Copy a launcher from the applications menu"
 msgstr "Parancsikon másolása az Alkalmazások menüből"
 
-#: ../gnome-panel/panel-addto.c:1020
+#: ../gnome-panel/panel-addto-dialog.c:951
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "A következőhöz adandó _elem keresése: „%s”:"
 
-#: ../gnome-panel/panel-addto.c:1024
+#: ../gnome-panel/panel-addto-dialog.c:955
 msgid "Find an _item to add to the panel:"
 msgstr "A panelhez adandó _elem keresése:"
 
-#: ../gnome-panel/panel-addto.c:1027
-msgid "Add to Panel"
-msgstr "Hozzáadás a panelhez"
-
-#: ../gnome-panel/panel-addto.c:1150
+#: ../gnome-panel/panel-addto-dialog.c:1077
 msgid "_Forward"
 msgstr "_Tovább"
 
-#: ../gnome-panel/panel-addto.c:1246
+#: ../gnome-panel/panel-addto-dialog.ui.h:1
+msgid "Add to Panel"
+msgstr "Hozzáadás a panelhez"
+
+#: ../gnome-panel/panel-addto-dialog.ui.h:2
+#| msgid "Find an _item to add to the panel:"
+msgid "Find an item to add to the panel:"
+msgstr "A panelhez adandó elem keresése:"
+
+#: ../gnome-panel/panel-addto-dialog.ui.h:3
+#| msgid "columns"
+msgid "column"
+msgstr "oszlop"
+
+#: ../gnome-panel/panel-addto-dialog.ui.h:4
 msgid "_Back"
 msgstr "_Vissza"
 
