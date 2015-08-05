@@ -72,7 +72,6 @@ GLIB_REQUIRED=2.36.0
 GTK_REQUIRED=3.15.2
 LIBWNCK_REQUIRED=3.4.6
 LIBGNOME_MENU_REQUIRED=3.7.90
-TELEPATHY_GLIB_REQUIRED=0.14.0
 LIBECAL_REQUIRED=3.5.3
 LIBEDATASERVER_REQUIRED=3.5.3
 CAIRO_REQUIRED=1.0.0
@@ -95,16 +94,6 @@ PKG_CHECK_MODULES(PANEL, gmodule-2.0 >= $GLIB_REQUIRED
 			 dconf >= $DCONF_REQUIRED)
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
-
-AC_ARG_ENABLE(telepathy_glib, AS_HELP_STRING([--enable-telepathy-glib],[Enable telepathy-glib support (auto)]),enable_telepathy_glib=$enableval,enable_telepathy_glib=auto)
-if test "x$enable_telepathy_glib" = "xno" ; then
-  HAVE_TELEPATHY_GLIB=no
-else
-  PKG_CHECK_MODULES(TELEPATHY_GLIB, telepathy-glib >= $TELEPATHY_GLIB_REQUIRED, HAVE_TELEPATHY_GLIB=yes, HAVE_TELEPATHY_GLIB=no)
-fi
-if test "x$HAVE_TELEPATHY_GLIB" = "xyes" ; then
-    AC_DEFINE(HAVE_TELEPATHY_GLIB, 1, [Defined if telepathy-glib support is enabled])
-fi
 
 PKG_CHECK_MODULES(LIBPANEL_APPLET, gtk+-3.0 >= $GTK_REQUIRED cairo-xlib cairo-gobject gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
 AC_SUBST(LIBPANEL_APPLET_CFLAGS)
@@ -293,7 +282,6 @@ echo "
         Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
 
         Evolution-Data-Server support: ${enable_eds}
-        Telepathy-Glib support:        ${HAVE_TELEPATHY_GLIB}
         XRandr support:                ${have_randr}
         Build introspection support:   ${found_introspection}
         Build gtk-doc documentation:   ${enable_gtk_doc}

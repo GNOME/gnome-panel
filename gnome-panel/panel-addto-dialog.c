@@ -171,8 +171,8 @@ prepend_internal_applets (GSList *list)
 	internal = g_new0 (PanelAddtoItemInfo, 1);
 	internal->type = PANEL_ADDTO_USER_MENU;
 	internal->name = _("User menu");
-	internal->description = _("Menu to change your settings and your online status");
-	internal->icon = g_themed_icon_new (PANEL_ICON_USER_AVAILABLE);
+	internal->description = _("Menu to change your settings and log out");
+	internal->icon = g_themed_icon_new (PANEL_ICON_COMPUTER);
 	internal->action_type = PANEL_ACTION_NONE;
 	internal->iid = "USERMENU:NEW";
 	internal->static_strings = TRUE;

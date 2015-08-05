@@ -38,10 +38,6 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 
-#ifdef HAVE_TELEPATHY_GLIB
-#include <telepathy-glib/account-manager.h>
-#endif
-
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-gtk.h>
@@ -95,95 +91,7 @@ struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
 	GtkIconSize  icon_size;
-
-#ifdef HAVE_TELEPATHY_GLIB
-	GList            *presence_items;
-	guint             presence_changed_id;
-	TpAccountManager *account_manager;
-#endif
 };
-
-#ifdef HAVE_TELEPATHY_GLIB
-static void
-panel_menu_item_activate_presence (GtkWidget        *menuitem,
-				   TpAccountManager *account_manager)
-{
-	PanelSessionManagerPresenceType  presence_type;
-	TpConnectionPresenceType         tp_presence_type;
-	const char                      *status;
-	char                            *message;
-
-	presence_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menuitem),
-							    "panel-menu-presence"));
-
-	panel_session_manager_set_presence (panel_session_manager_get (),
-					    presence_type);
-
-	tp_presence_type = tp_account_manager_get_most_available_presence (account_manager,
-									   NULL,
-									   &message);
-
-	if (tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_UNSET ||
-	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_OFFLINE ||
-	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_UNKNOWN ||
-	    tp_presence_type == TP_CONNECTION_PRESENCE_TYPE_ERROR)
-		goto free_message;
-
-	if (presence_type == PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE) {
-		tp_presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE;
-		status = "available";
-	} else if (presence_type == PANEL_SESSION_MANAGER_PRESENCE_BUSY) {
-		tp_presence_type = TP_CONNECTION_PRESENCE_TYPE_BUSY;
-		status = "busy";
-	} else
-		goto free_message;
-
-	tp_account_manager_set_all_requested_presences (account_manager,
-							tp_presence_type,
-							status, message);
-
-free_message:
-	g_free (message);
-}
-
-static GtkWidget *
-panel_menu_item_presence_new (TpAccountManager                *account_manager,
-			      PanelSessionManagerPresenceType  presence_type,
-			      const char                      *name,
-			      const char                      *icon,
-			      gboolean                         use_icon)
-{
-	GtkWidget *item;
-
-	if (!account_manager)
-		return NULL;
-
-	item = gtk_check_menu_item_new ();
-	setup_menuitem (item, GTK_ICON_SIZE_INVALID, NULL, name);
-	gtk_check_menu_item_set_draw_as_radio (GTK_CHECK_MENU_ITEM (item), TRUE);
-
-	/* TODO: we need to add an icon at the right of this CheckMenuItem */
-#if 0
-	if (use_icon) {
-		GtkWidget *image;
-		image = gtk_image_new_from_icon_name (icon,
-						      panel_menu_icon_get_size ());
-		gtk_container_add (GTK_CONTAINER (item), image);
-	}
-#endif
-
-	g_object_set_data (G_OBJECT (item), "panel-menu-presence",
-			   GINT_TO_POINTER (presence_type));
-
-	g_signal_connect (item, "activate",
-			  G_CALLBACK (panel_menu_item_activate_presence),
-			  account_manager);
-	g_signal_connect (G_OBJECT (item), "button_press_event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-
-	return item;
-}
-#endif
 
 static void
 activate_uri_on_screen (const char *uri,
@@ -1352,38 +1260,8 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 {
 	GtkWidget *desktop_menu;
 	GtkWidget *item;
-#ifdef HAVE_TELEPATHY_GLIB
-	gboolean   added;
-#endif
 
 	desktop_menu = panel_create_menu ();
-
-#ifdef HAVE_TELEPATHY_GLIB
-	desktop_item->priv->account_manager = tp_account_manager_dup ();
-
-	item = panel_menu_item_presence_new (desktop_item->priv->account_manager,
-					     PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE,
-					     _("Available"),
-					     PANEL_ICON_USER_AVAILABLE, TRUE);
-	if (item) {
-		desktop_item->priv->presence_items = g_list_prepend (desktop_item->priv->presence_items, item);
-		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
-		added = TRUE;
-	}
-
-	item = panel_menu_item_presence_new (desktop_item->priv->account_manager,
-					     PANEL_SESSION_MANAGER_PRESENCE_BUSY,
-					     _("Busy"),
-					     PANEL_ICON_USER_BUSY, TRUE);
-	if (item) {
-		desktop_item->priv->presence_items = g_list_prepend (desktop_item->priv->presence_items, item);
-		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
-		added = TRUE;
-	}
-
-	if (added)
-		add_menu_separator (desktop_menu);
-#endif
 
 	/* Do not force the string like in gnome-shell, but just use the one
 	 * from the .desktop file */
@@ -1465,20 +1343,6 @@ static void
 panel_desktop_menu_item_finalize (GObject *object)
 {
 	PanelDesktopMenuItem *menuitem = (PanelDesktopMenuItem *) object;
-
-#ifdef HAVE_TELEPATHY_GLIB
-	g_list_free (menuitem->priv->presence_items);
-	menuitem->priv->presence_items = NULL;
-
-	if (menuitem->priv->presence_changed_id != 0)
-		g_signal_handler_disconnect (panel_session_manager_get (),
-					     menuitem->priv->presence_changed_id);
-	menuitem->priv->presence_changed_id = 0;
-
-	if (menuitem->priv->account_manager != NULL)
-		g_object_unref (menuitem->priv->account_manager);
-	menuitem->priv->account_manager = NULL;
-#endif
 
 	G_OBJECT_CLASS (panel_desktop_menu_item_parent_class)->finalize (object);
 }
@@ -1567,12 +1431,6 @@ static void
 panel_desktop_menu_item_init (PanelDesktopMenuItem *menuitem)
 {
 	menuitem->priv = PANEL_DESKTOP_MENU_ITEM_GET_PRIVATE (menuitem);
-
-#ifdef HAVE_TELEPATHY_GLIB
-	menuitem->priv->presence_items = NULL;
-	menuitem->priv->presence_changed_id = 0;
-	menuitem->priv->account_manager = NULL;
-#endif
 }
 
 static void
@@ -1640,58 +1498,6 @@ panel_place_menu_item_new (gboolean use_image,
 	return GTK_WIDGET (menuitem);
 }
 
-#ifdef HAVE_TELEPATHY_GLIB
-static void
-panel_desktop_menu_item_on_presence_changed (PanelSessionManager             *manager,
-					     PanelSessionManagerPresenceType  presence_type,
-					     PanelDesktopMenuItem            *desktop_item)
-{
-	const char *icon;
-	GtkWidget  *image;
-	GList      *l;
-
-	switch (presence_type) {
-	case PANEL_SESSION_MANAGER_PRESENCE_AVAILABLE:
-		icon = PANEL_ICON_USER_AVAILABLE;
-		break;
-        case PANEL_SESSION_MANAGER_PRESENCE_INVISIBLE:
-		icon = PANEL_ICON_USER_INVISIBLE;
-		break;
-        case PANEL_SESSION_MANAGER_PRESENCE_BUSY:
-		icon = PANEL_ICON_USER_BUSY;
-		break;
-	case PANEL_SESSION_MANAGER_PRESENCE_IDLE:
-	default:
-		icon = PANEL_ICON_USER_IDLE;
-		break;
-	}
-
-	image = panel_image_menu_item_get_image (PANEL_IMAGE_MENU_ITEM (desktop_item));
-	/* we only have an image if we are specifically using an icon for this
-	 * menu */
-	if (image) {
-		gtk_image_set_from_icon_name (GTK_IMAGE (image),
-					      icon, desktop_item->priv->icon_size);
-	}
-
-	for (l = desktop_item->priv->presence_items; l != NULL; l = l->next) {
-		PanelSessionManagerPresenceType for_presence;
-		GObject *object = l->data;
-
-		for_presence = GPOINTER_TO_INT (g_object_get_data (object,
-								   "panel-menu-presence"));
-		g_signal_handlers_block_by_func (object,
-						 panel_menu_item_activate_presence,
-						 desktop_item->priv->account_manager);
-		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (object),
-						for_presence == presence_type);
-		g_signal_handlers_unblock_by_func (object,
-						   panel_menu_item_activate_presence,
-						   desktop_item->priv->account_manager);
-	}
-}
-#endif
-
 GtkWidget *
 panel_desktop_menu_item_new (gboolean use_image,
 			     gboolean in_menubar,
@@ -1700,18 +1506,11 @@ panel_desktop_menu_item_new (gboolean use_image,
 	PanelDesktopMenuItem *menuitem;
 	char                 *name;
 	const char           *icon_name;
-#ifdef HAVE_TELEPATHY_GLIB
-	PanelSessionManager  *manager;
-#endif
 
 	menuitem = g_object_new (PANEL_TYPE_DESKTOP_MENU_ITEM, NULL);
 
 	name = panel_util_get_user_name ();
-#ifdef HAVE_TELEPATHY_GLIB
-	icon_name = PANEL_ICON_USER_AVAILABLE;
-#else
 	icon_name = PANEL_ICON_COMPUTER;
-#endif
 
 	/* if we're in a menubar, we don't want to use setup_* as it changes
 	 * the size requests and can make the panels bigger than we'd like */
@@ -1741,31 +1540,12 @@ panel_desktop_menu_item_new (gboolean use_image,
 					name);
 	}
 
-#ifdef HAVE_TELEPATHY_GLIB
-	if (use_image)
-		panel_image_menu_item_set_always_show_image (PANEL_IMAGE_MENU_ITEM (menuitem), TRUE);
-#endif
-
 	g_free (name);
 
 	menuitem->priv->menu = panel_desktop_menu_item_create_menu (menuitem,
 								    append_lock_logout);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menuitem->priv->menu);
-
-#ifdef HAVE_TELEPATHY_GLIB
-	manager = panel_session_manager_get ();
-
-	menuitem->priv->presence_changed_id =
-		g_signal_connect (manager,
-				  "presence-changed",
-				  G_CALLBACK (panel_desktop_menu_item_on_presence_changed),
-				  menuitem);
-
-	panel_desktop_menu_item_on_presence_changed (manager,
-						     panel_session_manager_get_presence (manager),
-						     menuitem);
-#endif
 
 	return GTK_WIDGET (menuitem);
 }

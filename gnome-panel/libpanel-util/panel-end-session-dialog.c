@@ -25,7 +25,6 @@
 #include "dbus-login1-manager.h"
 #include "panel-cleanup.h"
 #include "panel-end-session-dialog.h"
-#include "panel-util-types.h"
 
 #define END_SESSION_DIALOG_NAME      "org.gnome.Shell"
 #define END_SESSION_DIALOG_PATH      "/org/gnome/SessionManager/EndSessionDialog"
