@@ -481,7 +481,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_REBOOT,
-		NULL,
+		PANEL_ICON_REBOOT,
 		N_("Restart"),
 		N_("Restart the computer"),
 		"ACTION:reboot:NEW",
