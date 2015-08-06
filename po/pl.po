@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-19 16:32+0200\n"
-"PO-Revision-Date: 2015-07-19 16:33+0200\n"
+"POT-Creation-Date: 2015-08-06 11:38+0200\n"
+"PO-Revision-Date: 2015-08-06 11:39+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1819,8 +1819,8 @@ msgid "User menu"
 msgstr "Menu użytkownika"
 
 #: ../gnome-panel/panel-addto-dialog.c:174
-msgid "Menu to change your settings and your online status"
-msgstr "Menu do zmieniania ustawień i stanu online użytkownika"
+msgid "Menu to change your settings and log out"
+msgstr "Menu do zmieniania ustawień i wylogowywania"
 
 #: ../gnome-panel/panel-addto-dialog.c:224
 msgid "(empty)"
@@ -1923,7 +1923,7 @@ msgid "Open URL: %s"
 msgstr "Otwórz adres URL: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:670
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "Otwiera \"%s\""
@@ -1931,18 +1931,18 @@ msgstr "Otwiera \"%s\""
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1224
+#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "Otwiera katalog osobisty użytkownika"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1253
+#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1254
+#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1951,12 +1951,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1263
+#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "Sieć"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1264
+#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "Przegląda zakładki i lokalne położenia sieciowe"
 
@@ -2108,63 +2108,55 @@ msgstr "Programy"
 msgid "_Edit Menus"
 msgstr "_Modyfikuj menu"
 
-#: ../gnome-panel/panel-menu-items.c:516
+#: ../gnome-panel/panel-menu-items.c:424
 msgid "Switch User"
 msgstr "Przełącz użytkownika"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:554
 msgid "Bookmarks"
 msgstr "Zakładki"
 
-#: ../gnome-panel/panel-menu-items.c:741
+#: ../gnome-panel/panel-menu-items.c:649
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Nie można skanować %s w poszukiwaniu zmian nośników"
 
-#: ../gnome-panel/panel-menu-items.c:783
+#: ../gnome-panel/panel-menu-items.c:691
 #, c-format
 msgid "Rescan %s"
 msgstr "Skanuj %s ponownie"
 
-#: ../gnome-panel/panel-menu-items.c:820
+#: ../gnome-panel/panel-menu-items.c:728
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nie można zamontować %s"
 
-#: ../gnome-panel/panel-menu-items.c:882
+#: ../gnome-panel/panel-menu-items.c:790
 #, c-format
 msgid "Mount %s"
 msgstr "Montuje %s"
 
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:998
 msgid "Removable Media"
 msgstr "Nośniki wymienne"
 
-#: ../gnome-panel/panel-menu-items.c:1181
+#: ../gnome-panel/panel-menu-items.c:1089
 msgid "Network Places"
 msgstr "Miejsca sieciowe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1241
+#: ../gnome-panel/panel-menu-items.c:1149
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Pulpit"
 
-#: ../gnome-panel/panel-menu-items.c:1242
+#: ../gnome-panel/panel-menu-items.c:1150
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otwiera pulpit jako katalog"
 
-#: ../gnome-panel/panel-menu-items.c:1366
-msgid "Available"
-msgstr "Dostępny"
-
-#: ../gnome-panel/panel-menu-items.c:1376
-msgid "Busy"
-msgstr "Zajęty"
-
-#: ../gnome-panel/panel-menu-items.c:1608
+#: ../gnome-panel/panel-menu-items.c:1466
 msgid "Places"
 msgstr "Miejsca"
 
