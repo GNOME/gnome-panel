@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-07-21 19:44+0000\n"
-"PO-Revision-Date: 2015-07-22 06:30+0200\n"
+"POT-Creation-Date: 2015-08-06 07:48+0000\n"
+"PO-Revision-Date: 2015-08-06 10:02+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1808,8 +1808,8 @@ msgid "User menu"
 msgstr "Uživatelská nabídka"
 
 #: ../gnome-panel/panel-addto-dialog.c:174
-msgid "Menu to change your settings and your online status"
-msgstr "Nabídka pro změnu vašeho nastavení a vašeho stavu připojení"
+msgid "Menu to change your settings and log out"
+msgstr "Nabídka pro změnu vašeho nastavení a odhlášení"
 
 #: ../gnome-panel/panel-addto-dialog.c:224
 msgid "(empty)"
@@ -1910,7 +1910,7 @@ msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:670
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "Otevře „%s“"
@@ -1918,18 +1918,18 @@ msgstr "Otevře „%s“"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1224
+#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "Otevře osobní složku"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1253
+#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "Počítač"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1254
+#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1938,12 +1938,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1263
+#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "Síť"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1264
+#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "Procházet poznačená a místní síťová umístění"
 
@@ -2094,63 +2094,55 @@ msgstr "Aplikace"
 msgid "_Edit Menus"
 msgstr "_Upravit nabídky"
 
-#: ../gnome-panel/panel-menu-items.c:516
+#: ../gnome-panel/panel-menu-items.c:424
 msgid "Switch User"
 msgstr "Přepnout uživatele"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:554
 msgid "Bookmarks"
 msgstr "Záložky"
 
-#: ../gnome-panel/panel-menu-items.c:741
+#: ../gnome-panel/panel-menu-items.c:649
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s nelze prohledat na změny médií"
 
-#: ../gnome-panel/panel-menu-items.c:783
+#: ../gnome-panel/panel-menu-items.c:691
 #, c-format
 msgid "Rescan %s"
 msgstr "Znovu prohledat %s"
 
-#: ../gnome-panel/panel-menu-items.c:820
+#: ../gnome-panel/panel-menu-items.c:728
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nelze připojit %s"
 
-#: ../gnome-panel/panel-menu-items.c:882
+#: ../gnome-panel/panel-menu-items.c:790
 #, c-format
 msgid "Mount %s"
 msgstr "Připojit %s"
 
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:998
 msgid "Removable Media"
 msgstr "Výměnná média"
 
-#: ../gnome-panel/panel-menu-items.c:1181
+#: ../gnome-panel/panel-menu-items.c:1089
 msgid "Network Places"
 msgstr "Místa v síti"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1241
+#: ../gnome-panel/panel-menu-items.c:1149
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Pracovní plocha"
 
-#: ../gnome-panel/panel-menu-items.c:1242
+#: ../gnome-panel/panel-menu-items.c:1150
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otevře obsah pracovní plochy ve složce"
 
-#: ../gnome-panel/panel-menu-items.c:1366
-msgid "Available"
-msgstr "Přítomen"
-
-#: ../gnome-panel/panel-menu-items.c:1376
-msgid "Busy"
-msgstr "Zaneprázdněn"
-
-#: ../gnome-panel/panel-menu-items.c:1608
+#: ../gnome-panel/panel-menu-items.c:1466
 msgid "Places"
 msgstr "Místa"
 
