@@ -454,7 +454,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_HIBERNATE,
-		NULL,
+		PANEL_ICON_HIBERNATE,
 		N_("Hibernate"),
 		NULL,
 		"ACTION:hibernate:NEW",
@@ -463,7 +463,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SUSPEND,
-		NULL,
+		PANEL_ICON_SUSPEND,
 		N_("Suspend"),
 		NULL,
 		"ACTION:suspend:NEW",
@@ -472,7 +472,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_HYBRID_SLEEP,
-		NULL,
+		PANEL_ICON_SUSPEND,
 		N_("Hybrid sleep"),
 		NULL,
 		"ACTION:hybrid-sleep:NEW",

@@ -3,6 +3,8 @@ size = 48x48
 iconsdir = $(datadir)/icons/hicolor/$(size)/apps
 
 icons_DATA =					\
+	gnome-panel-hibernate.png		\
+	gnome-panel-suspend.png			\
 	gnome-panel.png
 
 icons_SOURCE =					\

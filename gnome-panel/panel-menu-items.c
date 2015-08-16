@@ -421,7 +421,7 @@ panel_menu_items_create_switch_user (gboolean use_icon)
 	}
 
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
-				   NULL, NULL, _("Switch User"));
+				   PANEL_ICON_USERS, NULL, _("Switch User"));
 
 	g_signal_connect (item, "activate",
 			  G_CALLBACK (panel_menu_item_activate_switch_user),

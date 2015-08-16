@@ -17,6 +17,7 @@
 #define PANEL_ICON_FONTS		"preferences-desktop-font"
 #define PANEL_ICON_FORCE_QUIT		"gnome-panel-force-quit"
 #define PANEL_ICON_HOME			"user-home"
+#define PANEL_ICON_HIBERNATE		"gnome-panel-hibernate"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_LOCKSCREEN		"system-lock-screen"
 #define PANEL_ICON_LOGOUT		"system-log-out"
@@ -33,8 +34,10 @@
 #define PANEL_ICON_SAVED_SEARCH		"folder-saved-search"
 #define PANEL_ICON_SEARCHTOOL		"system-search"
 #define PANEL_ICON_SHUTDOWN		"system-shutdown"
+#define PANEL_ICON_SUSPEND		"gnome-panel-suspend"
 #define PANEL_ICON_THEME		"preferences-desktop-theme"
 #define PANEL_ICON_TRASH		"user-trash"
 #define PANEL_ICON_UNKNOWN		"image-missing"
+#define PANEL_ICON_USERS		"system-users"
 
 #endif /* PANEL_ICON_NAMES_H */

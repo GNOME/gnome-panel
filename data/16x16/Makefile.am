@@ -6,9 +6,11 @@ icons_DATA =					\
 	gnome-panel-clock.png			\
 	gnome-panel-fish.png			\
 	gnome-panel-force-quit.png		\
+	gnome-panel-hibernate.png		\
 	gnome-panel-launcher.png		\
 	gnome-panel-notification-area.png	\
 	gnome-panel-separator.png		\
+	gnome-panel-suspend.png			\
 	gnome-panel.png				\
 	gnome-panel-window-list.png		\
 	gnome-panel-window-menu.png		\
