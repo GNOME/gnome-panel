@@ -30,10 +30,12 @@ GSList *panels = NULL;
 GSList *panel_list = NULL;
 
 static gboolean  replace = FALSE;
+static gboolean  version = FALSE;
 static GtkCssProvider *provider = NULL;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
+  { "version", 0, 0, G_OPTION_ARG_NONE, &version, N_("Print version"), NULL},
   { NULL }
 };
 
@@ -127,6 +129,11 @@ main (int argc, char **argv)
 	}
 
 	g_option_context_free (context);
+
+	if (version) {
+		printf("%s\n", PACKAGE " " VERSION);
+		return EXIT_SUCCESS;
+	}
 
 	session = panel_session_new (replace);
 	if (session == NULL)
