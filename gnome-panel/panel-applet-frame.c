@@ -46,6 +46,10 @@
 
 #include "panel-applet-frame.h"
 
+#define PANEL_RESPONSE_DELETE      0
+#define PANEL_RESPONSE_DONT_RELOAD 1
+#define PANEL_RESPONSE_RELOAD      2
+
 static void panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act);
 
 static void panel_applet_frame_loading_failed  (const char  *iid,
@@ -659,7 +663,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 
 	info = frame->priv->applet_info;
 
-	if (response == GTK_RESPONSE_YES) {
+	if (response == PANEL_RESPONSE_RELOAD) {
 		PanelWidget *panel;
 		char        *iid;
 		char        *id = NULL;
@@ -682,11 +686,11 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		if (settings)
 			g_object_unref (settings);
 
-	} else if (info) {
+	} else if (response == PANEL_RESPONSE_DELETE) {
 		/* if we can't write to applets list we can't really delete
 		   it, so we'll just ignore this.  FIXME: handle this
 		   more correctly I suppose. */
-		if (panel_layout_is_writable ())
+		if (panel_layout_is_writable () && info)
 			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
@@ -729,13 +733,21 @@ _panel_applet_frame_applet_broken (PanelAppletFrame *frame)
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
 
-	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				_("_Don't Reload"), GTK_RESPONSE_NO,
-				_("_Reload"), GTK_RESPONSE_YES,
-				NULL);
+	if (panel_layout_is_writable ()) {
+		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+		                        _("D_elete"), PANEL_RESPONSE_DELETE,
+		                        _("_Don't Reload"), PANEL_RESPONSE_DONT_RELOAD,
+		                        _("_Reload"), PANEL_RESPONSE_RELOAD,
+		                        NULL);
+	} else {
+		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+		                        _("_Don't Reload"), PANEL_RESPONSE_DONT_RELOAD,
+		                        _("_Reload"), PANEL_RESPONSE_RELOAD,
+		                        NULL);
+	}
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-					 GTK_RESPONSE_YES);
+	                                 PANEL_RESPONSE_RELOAD);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
