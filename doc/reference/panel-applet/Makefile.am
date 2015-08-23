@@ -38,7 +38,8 @@ IGNORE_HFILES =					\
 HTML_IMAGES =
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
-content_files =
+content_files = \
+	version.xml
 
 # Other files to distribute.
 extra_files =
@@ -64,5 +65,8 @@ dist-hook-local:
 #	for f in $(srcdir)/TEXT/* ; do  \
 #	  test -f $$f && cp -p $$f $(distdir)/TEXT; \
 #	done
+
+EXTRA_DIST += \
+	version.xml.in
 
 -include $(top_srcdir)/git.mk

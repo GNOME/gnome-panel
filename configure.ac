@@ -241,6 +241,7 @@ applets/wncklet/Makefile
 doc/Makefile
 doc/reference/Makefile
 doc/reference/panel-applet/Makefile
+doc/reference/panel-applet/version.xml
 help/Makefile
 help/clock/Makefile
 help/fish/Makefile
