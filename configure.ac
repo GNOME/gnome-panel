@@ -201,7 +201,7 @@ AM_GLIB_GNU_GETTEXT
 
 dnl gtk-doc stuff
 
-GTK_DOC_CHECK([1.0])
+GTK_DOC_CHECK([1.9],[--flavour no-tmpl])
 
 dnl yelp-tools stuff
 
