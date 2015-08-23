@@ -202,7 +202,8 @@ int                panel_applet_factory_setup_in_process (const gchar           
  * PANEL_APPLET_OUT_PROCESS_FACTORY:
  * @id: identifier of an applet factory.
  * @type: GType of the applet this factory creates.
- * @callback: (scope call): callback to be called when a new applet is created.
+ * @callback: (scope call): a %PanelAppletFactoryCallback to be called
+ *     when a new applet is created.
  * @data: (closure): callback data.
  *
  * Convenience macro providing a main() function for an out-of-process applet.
@@ -256,7 +257,8 @@ int main (int argc, char *argv [])						\
  * PANEL_APPLET_IN_PROCESS_FACTORY:
  * @id: identifier of an applet factory.
  * @type: GType of the applet this factory creates.
- * @callback: (scope call): callback to be called when a new applet is created.
+ * @callback: (scope call): a %PanelAppletFactoryCallback to be called
+ *     when a new applet is created.
  * @data: (closure): callback data.
  *
  * Convenience macro providing the symbol needed to automatically register the
