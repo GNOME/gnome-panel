@@ -412,7 +412,7 @@ panel_applet_get_orient (PanelApplet *applet)
  *
  * Returns: the #GtkOrientation of @applet.
  *
- * Since 3.18
+ * Since: 3.18
  */
 GtkOrientation
 panel_applet_get_gtk_orientation (PanelApplet *applet)
