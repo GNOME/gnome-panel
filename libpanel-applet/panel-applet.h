@@ -50,7 +50,18 @@ typedef enum {
 	PANEL_APPLET_ORIENT_RIGHT
 } PanelAppletOrient;
 
+/**
+ * PANEL_APPLET_ORIENT_FIRST:
+ *
+ * This macro is an alias for #PANEL_APPLET_ORIENT_UP
+ **/
 #define PANEL_APPLET_ORIENT_FIRST PANEL_APPLET_ORIENT_UP
+
+/**
+ * PANEL_APPLET_ORIENT_LAST:
+ *
+ * This macro is an alias for #PANEL_APPLET_ORIENT_RIGHT
+ **/
 #define PANEL_APPLET_ORIENT_LAST  PANEL_APPLET_ORIENT_RIGHT
 
 #define PANEL_TYPE_APPLET         (panel_applet_get_type ())
@@ -84,7 +95,15 @@ typedef enum {
 	PANEL_APPLET_HAS_HANDLE   = 1 << 2
 } PanelAppletFlags;
 
-#define PANEL_APPLET_FLAGS_ALL (PANEL_APPLET_EXPAND_MAJOR|PANEL_APPLET_EXPAND_MINOR|PANEL_APPLET_HAS_HANDLE)
+/**
+ * PANEL_APPLET_FLAGS_ALL:
+ *
+ * A convenience macro that combines #PANEL_APPLET_EXPAND_MAJOR, #PANEL_APPLET_EXPAND_MINOR and
+ *     #PANEL_APPLET_HAS_HANDLE from #PanelAppletFlags
+ **/
+#define PANEL_APPLET_FLAGS_ALL (PANEL_APPLET_EXPAND_MAJOR | \
+                                PANEL_APPLET_EXPAND_MINOR | \
+                                PANEL_APPLET_HAS_HANDLE)
 
 typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
