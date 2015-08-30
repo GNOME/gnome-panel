@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-19 15:28+0300\n"
-"PO-Revision-Date: 2015-07-19 15:29+0300\n"
+"POT-Creation-Date: 2015-08-30 11:48+0300\n"
+"PO-Revision-Date: 2015-08-30 11:49+0300\n"
 "Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
@@ -291,7 +291,7 @@ msgstr "קו _רוחב:"
 msgid "L_ongitude:"
 msgstr "קו _אורך:"
 
-#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
+#. Languages that have a single word that translates as either
 #: ../applets/clock/clock.ui.h:12
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
@@ -1578,7 +1578,7 @@ msgstr "מאפייני תיקייה"
 msgid "Launcher Properties"
 msgstr "מאפייני משגר"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:135
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:142
 msgid "Panel"
 msgstr "לוח"
 
@@ -1640,8 +1640,8 @@ msgstr "לא ניתן לשמור משגר"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:749
-#: ../gnome-panel/panel-applet-frame.c:909
+#: ../gnome-panel/panel-applet-frame.c:761
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "שגיאה"
 
@@ -1668,9 +1668,13 @@ msgstr "לא ניתן לפתוח את המיקום '%s'"
 msgid "No application to handle search folders is installed."
 msgstr "לא מותקן יישום לטיפול בתיקיות חיפוש."
 
-#: ../gnome-panel/main.c:36
+#: ../gnome-panel/main.c:37
 msgid "Replace a currently running panel"
 msgstr "החלפת לוח הפעיל כעת"
+
+#: ../gnome-panel/main.c:38
+msgid "Print version"
+msgstr "Print version"
 
 #: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
@@ -1799,8 +1803,8 @@ msgid "User menu"
 msgstr "תפריט משתמש"
 
 #: ../gnome-panel/panel-addto-dialog.c:174
-msgid "Menu to change your settings and your online status"
-msgstr "תפריט לשינוי ההגדרות שלך ומצב חייך המקוונים"
+msgid "Menu to change your settings and log out"
+msgstr "תפריט לשינוי ההגדרות שלך ולהתנתקות"
 
 #: ../gnome-panel/panel-addto-dialog.c:224
 msgid "(empty)"
@@ -1851,47 +1855,53 @@ msgstr "עמודה"
 msgid "_Back"
 msgstr "ה_בא"
 
-#: ../gnome-panel/panel-applet-frame.c:718
+#: ../gnome-panel/panel-applet-frame.c:722
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" הסתיים באופן בלתי צפוי"
 
-#: ../gnome-panel/panel-applet-frame.c:720
+#: ../gnome-panel/panel-applet-frame.c:724
 msgid "Panel object has quit unexpectedly"
 msgstr "מופע הלוח הסתיים באופן בלתי צפוי"
 
-#: ../gnome-panel/panel-applet-frame.c:727
+#: ../gnome-panel/panel-applet-frame.c:731
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "אם יוטען מחדש את אובייקט הלוח, הוא יחזור אוטומטית למקומו בלוח."
 
-#: ../gnome-panel/panel-applet-frame.c:733
+#: ../gnome-panel/panel-applet-frame.c:738
+msgid "D_elete"
+msgstr "_מחיקה"
+
+#: ../gnome-panel/panel-applet-frame.c:739
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid "_Don't Reload"
 msgstr "_לא לטעון מחדש"
 
-#: ../gnome-panel/panel-applet-frame.c:734
+#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:745
 msgid "_Reload"
 msgstr "_ריענון"
 
-#: ../gnome-panel/panel-applet-frame.c:872
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "הלוח נתקל בתקלה בזמן טעינת \"%s\"."
 
-#: ../gnome-panel/panel-applet-frame.c:884
+#: ../gnome-panel/panel-applet-frame.c:896
 msgid "OK"
 msgstr "_אישור"
 
-#: ../gnome-panel/panel-applet-frame.c:888
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "האם ברצונך למחוק יישומון זה מהתצורה שלך?"
 
-#: ../gnome-panel/panel-applet-frame.c:891
+#: ../gnome-panel/panel-applet-frame.c:903
 msgid "D_on't Delete"
 msgstr "_לא למחוק"
 
-#: ../gnome-panel/panel-applet-frame.c:892 ../gnome-panel/panel.c:1376
+#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1376
 msgid "_Delete"
 msgstr "_מחיקה"
 
@@ -1901,7 +1911,7 @@ msgid "Open URL: %s"
 msgstr "פתיחת כתובת: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:670
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "פתיחת '%s'"
@@ -1909,30 +1919,30 @@ msgstr "פתיחת '%s'"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1224
+#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "פתיחת התיקייה האישית שלך"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1253
+#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "מחשב"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1254
+#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "עיון בכל הכוננים והתיקיות המקומיים והמרוחקים הזמינים ממחשה זה"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1263
+#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "רשת"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1264
+#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "עיון במיקומי רשת מקומיים ומסומנים"
 
@@ -2080,63 +2090,55 @@ msgstr "יישומים"
 msgid "_Edit Menus"
 msgstr "_עריכת תפריטים"
 
-#: ../gnome-panel/panel-menu-items.c:516
+#: ../gnome-panel/panel-menu-items.c:424
 msgid "Switch User"
 msgstr "החלפת משתמש"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:554
 msgid "Bookmarks"
 msgstr "סימניות"
 
-#: ../gnome-panel/panel-menu-items.c:741
+#: ../gnome-panel/panel-menu-items.c:649
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "לא ניתן לסרוק את %s עבור שינויים במדיה"
 
-#: ../gnome-panel/panel-menu-items.c:783
+#: ../gnome-panel/panel-menu-items.c:691
 #, c-format
 msgid "Rescan %s"
 msgstr "רענון %s"
 
-#: ../gnome-panel/panel-menu-items.c:820
+#: ../gnome-panel/panel-menu-items.c:728
 #, c-format
 msgid "Unable to mount %s"
 msgstr "לא ניתן לעגן את %s"
 
-#: ../gnome-panel/panel-menu-items.c:882
+#: ../gnome-panel/panel-menu-items.c:790
 #, c-format
 msgid "Mount %s"
 msgstr "עיגון %s"
 
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:998
 msgid "Removable Media"
 msgstr "מדיה ניתנת להסרה"
 
-#: ../gnome-panel/panel-menu-items.c:1181
+#: ../gnome-panel/panel-menu-items.c:1089
 msgid "Network Places"
 msgstr "מקומות ברשת"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1241
+#: ../gnome-panel/panel-menu-items.c:1149
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "שולחן העבודה"
 
-#: ../gnome-panel/panel-menu-items.c:1242
+#: ../gnome-panel/panel-menu-items.c:1150
 msgid "Open the contents of your desktop in a folder"
 msgstr "פתיחת תוכן שולחן העבודה שלך בתיקייה"
 
-#: ../gnome-panel/panel-menu-items.c:1366
-msgid "Available"
-msgstr "זמין"
-
-#: ../gnome-panel/panel-menu-items.c:1376
-msgid "Busy"
-msgstr "עסוק"
-
-#: ../gnome-panel/panel-menu-items.c:1608
+#: ../gnome-panel/panel-menu-items.c:1466
 msgid "Places"
 msgstr "מקומות"
 
@@ -2555,6 +2557,12 @@ msgstr "יישומון בדיקת DBus"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "יישומון פשוט לבדיקת לוח GNOME"
+
+#~ msgid "Available"
+#~ msgstr "זמין"
+
+#~ msgid "Busy"
+#~ msgstr "עסוק"
 
 #~ msgid "X screen where the panel is displayed"
 #~ msgstr "X screen where the panel is displayed"
