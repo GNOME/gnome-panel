@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-07-18 07:46+0000\n"
-"PO-Revision-Date: 2015-07-18 15:48+0200\n"
+"POT-Creation-Date: 2015-08-31 07:48+0000\n"
+"PO-Revision-Date: 2015-08-31 18:42+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -1602,7 +1602,7 @@ msgstr "Könyvtár tulajdonságai"
 msgid "Launcher Properties"
 msgstr "Parancsikon tulajdonságai"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:135
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:142
 msgid "Panel"
 msgstr "Panel"
 
@@ -1667,8 +1667,8 @@ msgstr "A parancsikon nem menthető"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:749
-#: ../gnome-panel/panel-applet-frame.c:909
+#: ../gnome-panel/panel-applet-frame.c:761
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Hiba"
 
@@ -1695,9 +1695,13 @@ msgstr "A(z) „%s” hely nem nyitható meg"
 msgid "No application to handle search folders is installed."
 msgstr "Nincs alkalmazás telepítve a keresőmappák kezelésére."
 
-#: ../gnome-panel/main.c:36
+#: ../gnome-panel/main.c:37
 msgid "Replace a currently running panel"
 msgstr "Jelenleg futó panel cseréje"
+
+#: ../gnome-panel/main.c:38
+msgid "Print version"
+msgstr "Verzió kiírása"
 
 #: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
@@ -1827,8 +1831,9 @@ msgid "User menu"
 msgstr "Felhasználómenü"
 
 #: ../gnome-panel/panel-addto-dialog.c:174
-msgid "Menu to change your settings and your online status"
-msgstr "Személyes beállításainak és elérhetőségi állapotának módosítása"
+#| msgid "Menu to change your settings and your online status"
+msgid "Menu to change your settings and log out"
+msgstr "Egy menü a beállításai módosításához és a kijelentkezéshez"
 
 #: ../gnome-panel/panel-addto-dialog.c:224
 msgid "(empty)"
@@ -1868,12 +1873,10 @@ msgid "Add to Panel"
 msgstr "Hozzáadás a panelhez"
 
 #: ../gnome-panel/panel-addto-dialog.ui.h:2
-#| msgid "Find an _item to add to the panel:"
 msgid "Find an item to add to the panel:"
 msgstr "A panelhez adandó elem keresése:"
 
 #: ../gnome-panel/panel-addto-dialog.ui.h:3
-#| msgid "columns"
 msgid "column"
 msgstr "oszlop"
 
@@ -1881,16 +1884,16 @@ msgstr "oszlop"
 msgid "_Back"
 msgstr "_Vissza"
 
-#: ../gnome-panel/panel-applet-frame.c:718
+#: ../gnome-panel/panel-applet-frame.c:722
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "„%s” váratlanul kilépett"
 
-#: ../gnome-panel/panel-applet-frame.c:720
+#: ../gnome-panel/panel-applet-frame.c:724
 msgid "Panel object has quit unexpectedly"
 msgstr "A panelobjektum váratlanul kilépett"
 
-#: ../gnome-panel/panel-applet-frame.c:727
+#: ../gnome-panel/panel-applet-frame.c:731
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1898,32 +1901,39 @@ msgstr ""
 "Ha újratölt egy panelobjektumot, az automatikusan újra hozzá lesz adva a "
 "panelhez."
 
-#: ../gnome-panel/panel-applet-frame.c:733
+#: ../gnome-panel/panel-applet-frame.c:738
+#| msgid "_Delete"
+msgid "D_elete"
+msgstr "_Törlés"
+
+#: ../gnome-panel/panel-applet-frame.c:739
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid "_Don't Reload"
 msgstr "Ne _töltse újra"
 
-#: ../gnome-panel/panel-applet-frame.c:734
+#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:745
 msgid "_Reload"
 msgstr "Új_ratöltés"
 
-#: ../gnome-panel/panel-applet-frame.c:872
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "A(z) „%s” betöltése közben a panel hibát érzékelt."
 
-#: ../gnome-panel/panel-applet-frame.c:884
+#: ../gnome-panel/panel-applet-frame.c:896
 msgid "OK"
 msgstr "OK"
 
-#: ../gnome-panel/panel-applet-frame.c:888
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Törli ezt a kisalkalmazást a beállításaiból?"
 
-#: ../gnome-panel/panel-applet-frame.c:891
+#: ../gnome-panel/panel-applet-frame.c:903
 msgid "D_on't Delete"
 msgstr "Ne _törölje"
 
-#: ../gnome-panel/panel-applet-frame.c:892 ../gnome-panel/panel.c:1376
+#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1376
 msgid "_Delete"
 msgstr "_Törlés"
 
@@ -1933,7 +1943,7 @@ msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:670
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "„%s” megnyitása"
@@ -1941,18 +1951,18 @@ msgstr "„%s” megnyitása"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1224
+#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "A személyes mappájának megnyitása"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1253
+#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "Számítógép"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1254
+#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1960,12 +1970,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1263
+#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "Hálózat"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1264
+#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "Könyvjelzőzött és helyi hálózati helyek tallózása"
 
@@ -2115,63 +2125,55 @@ msgstr "Alkalmazások"
 msgid "_Edit Menus"
 msgstr "_Menük szerkesztése"
 
-#: ../gnome-panel/panel-menu-items.c:516
+#: ../gnome-panel/panel-menu-items.c:424
 msgid "Switch User"
 msgstr "Felhasználóváltás"
 
-#: ../gnome-panel/panel-menu-items.c:646
+#: ../gnome-panel/panel-menu-items.c:554
 msgid "Bookmarks"
 msgstr "Könyvjelzők"
 
-#: ../gnome-panel/panel-menu-items.c:741
+#: ../gnome-panel/panel-menu-items.c:649
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s médiaváltozásai nem olvashatók be"
 
-#: ../gnome-panel/panel-menu-items.c:783
+#: ../gnome-panel/panel-menu-items.c:691
 #, c-format
 msgid "Rescan %s"
 msgstr "%s újraolvasása"
 
-#: ../gnome-panel/panel-menu-items.c:820
+#: ../gnome-panel/panel-menu-items.c:728
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s nem csatolható"
 
-#: ../gnome-panel/panel-menu-items.c:882
+#: ../gnome-panel/panel-menu-items.c:790
 #, c-format
 msgid "Mount %s"
 msgstr "%s csatolása"
 
-#: ../gnome-panel/panel-menu-items.c:1090
+#: ../gnome-panel/panel-menu-items.c:998
 msgid "Removable Media"
 msgstr "Cserélhető adathordozók"
 
-#: ../gnome-panel/panel-menu-items.c:1181
+#: ../gnome-panel/panel-menu-items.c:1089
 msgid "Network Places"
 msgstr "Hálózati helyek"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1241
+#: ../gnome-panel/panel-menu-items.c:1149
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Asztal"
 
-#: ../gnome-panel/panel-menu-items.c:1242
+#: ../gnome-panel/panel-menu-items.c:1150
 msgid "Open the contents of your desktop in a folder"
 msgstr "Az asztal tartalmának megnyitása egy mappában"
 
-#: ../gnome-panel/panel-menu-items.c:1366
-msgid "Available"
-msgstr "Elérhető"
-
-#: ../gnome-panel/panel-menu-items.c:1376
-msgid "Busy"
-msgstr "Elfoglalt"
-
-#: ../gnome-panel/panel-menu-items.c:1608
+#: ../gnome-panel/panel-menu-items.c:1466
 msgid "Places"
 msgstr "Helyek"
 
@@ -2596,6 +2598,12 @@ msgstr "Teszt D-Bus kisalkalmazás"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Egyszerű kisalkalmazás a GNOME panel teszteléséhez"
+
+#~ msgid "Available"
+#~ msgstr "Elérhető"
+
+#~ msgid "Busy"
+#~ msgstr "Elfoglalt"
 
 #~ msgid "GNOME Flashback"
 #~ msgstr "GNOME Flashback"
