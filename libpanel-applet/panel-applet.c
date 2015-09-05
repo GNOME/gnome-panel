@@ -1152,6 +1152,21 @@ panel_applet_button_release (GtkWidget      *widget,
 	return panel_applet_button_event (applet, event);
 }
 
+static void
+panel_applet_composited_changed (GtkWidget *widget)
+{
+	GdkScreen *screen;
+	GdkVisual *visual;
+
+	screen = gtk_widget_get_screen (widget);
+	visual = gdk_screen_get_rgba_visual (screen);
+
+	if (visual == NULL)
+		visual = gdk_screen_get_system_visual (screen);
+
+	gtk_widget_set_visual (widget, visual);
+}
+
 static gboolean
 panel_applet_key_press_event (GtkWidget   *widget,
 			      GdkEventKey *event)
@@ -1805,6 +1820,8 @@ panel_applet_init (PanelApplet *applet)
 
 	context = gtk_widget_get_style_context (GTK_WIDGET (applet));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+
+	panel_applet_composited_changed (GTK_WIDGET (applet));
 }
 
 static GObject *
@@ -1864,6 +1881,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->button_release_event = panel_applet_button_release;
+	widget_class->composited_changed = panel_applet_composited_changed;
 	widget_class->key_press_event = panel_applet_key_press_event;
 	widget_class->get_request_mode = panel_applet_get_request_mode;
         widget_class->get_preferred_width = panel_applet_get_preferred_width;
