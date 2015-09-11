@@ -823,7 +823,13 @@ AC_SUBST(LIBPANEL_APPLET_DIR)
      </para>
 
      <para>
-      In some rare cases, though, <link linkend="panel-applet-set-background-widget"><function>panel_applet_set_background_widget()</function></link> will not be enough. The solution is then to connect to the <link linkend="PanelApplet-change-background"><function>"change-background"</function></link> signal of the <link linkend="PanelApplet"><type>PanelApplet</type></link> object: it will be emitted when the background has changed, and it will provide the <type>cairo_pattern_t</type> pattern to use as a basis to draw the background.
+      In some rare cases, though,
+      <link linkend="panel-applet-set-background-widget">
+          <function>panel_applet_set_background_widget()</function>
+      </link> will not be enough. The solution is then to connect to the
+      <link linkend="PanelApplet-change-background"><function>"change-background"</function></link> signal of the
+      <link linkend="PanelApplet"><type>PanelApplet</type></link> object: it will be emitted when the background has
+      changed, and it will provide the <type>cairo_pattern_t</type> pattern to use as a basis to draw the background.
      </para>
 
     </sect2>
@@ -832,15 +838,24 @@ AC_SUBST(LIBPANEL_APPLET_DIR)
      <title>Panel Lockdown</title>
 
      <para>
-      The panel has proper support for lockdown, and when it is locked down, it is expected that all applets behave consistently in a lockdown mode too. This generally means that the preferences of the applet should not be accessible, but it could also imply a restriction on the behavior of the applet.
+      The panel has proper support for lockdown, and when it is locked down, it is expected that all applets behave
+      consistently in a lockdown mode too. This generally means that the preferences of the applet should not be
+      accessible, but it could also imply a restriction on the behavior of the applet.
      </para>
 
      <para>
-      The <link linkend="panel-applet-get-locked-down"><function>panel_applet_get_locked_down()</function></link> function can be used to query the state of the panel lockdown. It is also possible to react to changes by monitoring the <link linkend="PanelApplet--locked-down"><function>"locked-down"</function></link> property of the <link linkend="PanelApplet"><type>PanelApplet</type></link> object. You can achieve this by connecting to the <function>"notify::locked-down"</function> event.
+      The <link linkend="panel-applet-get-locked-down"><function>panel_applet_get_locked_down()</function></link>
+      function can be used to query the state of the panel lockdown. It is also possible to react to changes by
+      monitoring the <link linkend="PanelApplet--locked-down"><function>"locked-down"</function></link>
+      property of the <link linkend="PanelApplet"><type>PanelApplet</type></link> object. You can achieve this
+      by connecting to the <function>"notify::locked-down"</function> event.
      </para>
 
      <para>
-       In most cases, the <type>GBinding</type> API is enough to respect the panel lockdown: <function>g_object_bind_property()</function> can be used to automatically update the visiblity of a menu item in the context menu of the applet. In the following example, the <function>"HelloWorldPrefs"</function> action (which is an action from the context menu) will only be displayed if the panel is not locked down.
+       In most cases, the <type>GBinding</type> API is enough to respect the panel lockdown:
+       <function>g_object_bind_property()</function> can be used to automatically update the visiblity of a menu
+       item in the context menu of the applet. In the following example, the <function>"HelloWorldPrefs"</function>
+       action (which is an action from the context menu) will only be displayed if the panel is not locked down.
 
       <informalexample>
        <programlisting language="c">
@@ -852,7 +867,8 @@ g_object_bind_property (applet, "locked-down",
       </informalexample>
 
       <para>
-       It is obviously possible to use <function>g_object_bind_property()</function> to change the visibility of widgets that appear outside of the context menu, like a button in a window.
+       Of course it is also possible to use <function>g_object_bind_property()</function> to change the visibility of
+       widgets that appear outside of the context menu, like a button in a window.
       </para>
 
      </para>
