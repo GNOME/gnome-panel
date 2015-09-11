@@ -671,51 +671,55 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
    </chapter>
 
    <chapter id="getting-started.install">
-    <title>Making the Applet Visible to the Panel</title>
+    <title>Applet Registration, Installation and Build System</title>
 
     <para>
-     Simply installing the applet binary will obviously not be enough to make this applet working in the panel. Two files should be installed for this:
+      Simply installing the applet binary will obviously not be enough. The applet also needs to be registered to the
+      panel. In order to do this you need to provide a Panel Applet File. Panel Applet files are ini-style text
+      files with an extension named <constant>.panel-applet</constant>.
     </para>
 
-    <itemizedlist>
-     <listitem>
-      <para>
-       a <filename>.panel-applet</filename> file so that the panel knows that the applet.
-      </para>
-     </listitem>
-     <listitem>
-      <para>
-       a D-Bus service file to autostart the binary when the panel wants to create an applet.
-      </para>
-     </listitem>
-    </itemizedlist>
+    <warning>
+        <simpara>
+          If you are creating an out-process applet, then you also need to provide a D-Bus service file
+          to automatically start the binary when the panel wants to create an applet.
+        </simpara>
+    </warning>
 
-    <sect2 id="getting-started.install.panel-applet">
-     <title>Panel Applet File</title>
+       <para>
+           This chapter explains the syntax of <constant>.panel-applet</constant> files and gives the necessary
+           information to setup the build system in order to install all the required parts of the applet on the system.
+           For the build system part it is assumed that GNU Autotools (e.g. autoconf and automake) are used.
+       </para>
+
+    <sect1 id="getting-started.install.panel-applet">
+     <title>Panel Applet File Syntax</title>
 
      <para>
-      The <filename>.panel-applet</filename> file is a key file about the applet binary, describing the <link linkend="getting-started.concepts.applet-factory">applet factory</link> from the binary and the <link linkend="getting-started.concepts.applet-types">applet types</link> this factory can create.
+      The <filename>.panel-applet</filename> file is a key file about the applet binary, describing the
+         <link linkend="getting-started.concepts.applet-factory">applet factory</link> of the binary and the
+         <link linkend="getting-started.concepts.applet-types">applet types</link> this factory can create.
      </para>
 
-     <sect3>
-      <title>Example</title>
+     <sect2>
+      <title>Panel Applet File Example</title>
       <informalexample>
        <programlisting>
-[Applet Factory]
-Id=HelloWorldFactory
-Name=Hello World Applet Factory
-Description=Factory for the window navigation related applets
+            [Applet Factory]
+            Id=HelloWorldFactory
+            Name=Hello World Applet Factory
+            Description=Factory for the our example applets
 
-[HelloWorldApplet]
-Name=Hello World
-Description=Factory for the Hello World applet example
-Icon=hello-world-icon
+            [HelloWorldApplet]
+            Name=Hello World
+            Description=Factory for the Hello World example applet
+            Icon=hello-world-icon
        </programlisting>
       </informalexample>
-     </sect3>
+     </sect2>
 
-     <sect3>
-      <title>Format</title>
+     <sect2>
+      <title>File Format and well known Fields</title>
       <para>
        The file must contain a <constant>Applet Factory</constant> group with the following keys:
       </para>
@@ -769,38 +773,201 @@ Icon=hello-world-icon
         </para>
        </listitem>
       </itemizedlist>
+     </sect2>
 
-     </sect3>
-
-     <sect3>
+     <sect2>
       <title>Installation</title>
       <para>
-       The <filename>.panel-applet</filename> file must be installed in a specific directory to be discoverable by the panel. You can fetch this directory during <constant>configure</constant> withe following code:
+       The <filename>.panel-applet</filename> file must be installed in a specific directory to be discoverable by the panel. The exact path of this directory can be queried with <constant>pkg-config</constant>:
+
+          <informalexample>
+              <programlisting>
+                  pkg-config --variable=libpanel_applet_dir libpanel-applet
+              </programlisting>
+          </informalexample>
+
+          The path depends on how GNOME Panel was compiled and installed so it could be different depending on which
+          Linux distribution is used. Therefore never hard-code the path in your build system but use he above
+          command instead.
+
+          Please see the <link linkend="getting-started.install.build-system">Build System</link> section for more
+          information on how install a Panel Applet file with autotools.
       </para>
 
-      <informalexample>
-       <programlisting>
-LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanel-applet`
-AC_SUBST(LIBPANEL_APPLET_DIR)
-       </programlisting>
-      </informalexample>
+         </sect2>
 
-     </sect3>
+       </sect1>
 
-    </sect2>
+       <sect1 id="getting-started.in-out-process">
+           <title>Out-of-Process vs In-Process</title>
 
-    <sect2 id="getting-started.install.dbus-service">
-     <title>D-Bus Service File</title>
+           <para>
+               Applets can either live in their own process ("out-of-process") or in the panel process ("in-process").
+               The decision to choose one or the other is done at build time, with the macro that you use to define the applet
+               factory:
+               <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function>
+               </link>
+               is used for out-of-process applets while
+               <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_IN_PROCESS_FACTORY()</function>
+               </link> is used for in-process applets. Obviously, only one of those two macros can be used. If both
+               types should be supported, then each macro must be placed between preprocessor conditions and switched on
+               through a configure option. For example:
 
-     <para>
-      The communication between the panel and the applet factory is done over D-Bus. When creating an applet, the panel will send a message to the D-Bus service of the applet factory. If the D-Bus service is not running yet, it must be started automatically. We use D-Bus activation for this, which requires install a standard D-Bus service file. Please refer to the <ulink url="http://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-starting-services">D-Bus documentation</ulink> for more information about D-Bus service files.
-     </para>
+               <informalexample>
+                   <programlisting>
+                       #ifdef MY_APPLET_OUT_PROCESS_ENABLED
+                       PANEL_APPLET_OUT_PROCESS_FACTORY (...)
+                       #else
+                       PANEL_APPLET_IN_PROCESS_FACTORY (...)
+                       #endif
+                   </programlisting>
+               </informalexample>
 
-     <para>
-      This is only needed for <link linkend="getting-started.in-out-process">out-of-process applets</link>, because in-process applets do no need to have their binary autostarted for obvious reasons.
-     </para>
+           </para>
 
-    </sect2>
+           <para>
+               For most practical matters, from the applet perspective, the two options are the same.
+               In-process applets do offer a slightly better performance when the applet is loaded, but this should not have
+               much effect on the user experience. However, an in-process applet can potentially affect the whole behavior of
+               the panel, especially in case of crashes or memory corruptions: a crash in an in-process applet will crash the
+               whole panel. It is therefore recommended to use out-of-process applets.
+           </para>
+
+           <para>
+               The communication between the panel and the applet factory is done over D-Bus. When creating an applet,
+               the panel will send a message to the D-Bus service of the applet factory. If the D-Bus service is not
+               running yet, it must be started automatically. We use D-Bus activation for this, which requires install a
+               standard D-Bus service file. This is only needed for, because in-process applets do no need to have their
+               binary autostarted for obvious reasons.
+           </para>
+
+           <note>
+               <simpara>
+                   Please refer to the
+                   <ulink url="http://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-starting-services">
+                       D-Bus documentation</ulink> for more information about D-Bus service files.
+               </simpara>
+           </note>
+
+           <para>
+               Here is an example for a D-Bus Service file. It should be named <constant>org.gnome.panel.applet.HelloWorldFactory.service.in</constant>
+           </para>
+           <informalexample>
+               <programlisting>
+                   [D-BUS Service]
+                   Name=org.gnome.panel.applet.HelloWorldFactory
+                   Exec=@LOCATION@
+               </programlisting>
+           </informalexample>
+           <para>
+               Additionally you should adjust the build system to replace <constant>@LOCATION@</constant> by the install location of the applet binary. The file itself must be installed into
+               <constant>$(datadir)/dbus-1/services/</constant>.
+           </para>
+
+           <para>
+               The next section contains an explanation how to setup the Makefile in order to install the service file
+               to the correct location on the system.
+           </para>
+       </sect1>
+
+
+
+       <sect1 id="getting-started.install.build-system">
+           <title>Build system</title>
+
+           <sect2>
+               <title>Configure</title>
+
+               <para>
+                   In <constant>configure.ac</constant> a variable should be defined that contains the location
+                   where the .panel-applet files are installed.
+
+                   You can fetch this directory during <constant>configure</constant> with the following code:
+               </para>
+
+               <informalexample>
+                   <programlisting>
+                       LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanel-applet`
+                       AC_SUBST(LIBPANEL_APPLET_DIR)
+                   </programlisting>
+               </informalexample>
+
+           </sect2>
+
+           <sect2>
+               <title>Makefiles</title>
+
+               A typical Makefile for that is used to build and install an applet contains the following declarations:
+               <itemizedlist>
+                   <listitem>
+                       <para>A rule to install the <constant>.panel-applet</constant> file.</para>
+                   </listitem>
+                   <listitem>
+                       <para>A rule to install the D-Bus service file if the applet is an out process applet.</para>
+                   </listitem>
+                   <listitem>
+                       <para>The <constant>.panel-applet</constant> file and the D-Bus <constant>.service</constant> file
+                       are added to EXTRA_DIST and CLEANFILES.</para>
+                   </listitem>
+               </itemizedlist>
+
+               <sect3>
+                   <title>Installing the Panel Applet File</title>
+                   <informalexample>
+                       <programlisting language="bash">
+                           appletdir       = $(LIBPANEL_APPLET_DIR)
+                           applet_in_files = org.gnome.HelloWorld.panel-applet.in
+                           applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
+
+                           $(applet_in_files): $(applet_in_files).in Makefile
+                               $(AM_V_GEN)sed \
+                               -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+                               -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+                               $&lt; &gt; $@
+
+                           %.panel-applet: %.panel-applet.in \
+                                           $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; \
+                                           $(INTLTOOL_MERGE) $(top_srcdir)/po $&lt; $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+                       </programlisting>
+                   </informalexample>
+               </sect3>
+
+               <sect3>
+                   <title>Installing the D-Bus service file</title>
+
+                   <para>To install the service file the following rule can be placed in the applets Makefile:</para>
+                   <informalexample>
+                       <programlisting>
+                           servicedir       = $(datadir)/dbus-1/services
+                           service_in_files = org.gnome.panel.applet.HelloWorldFactory.service.in
+                           service_DATA     = $(service_in_files:.service.in=.service)
+
+                           org.gnome.panel.applet.HelloWorldFactory.service: $(service_in_files)
+                               $(AM_V_GEN) sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" $&lt; &gt; $@
+                       </programlisting>
+                   </informalexample>
+               </sect3>
+
+               <sect3>
+                   <title>Distribution and Cleanup</title>
+                   <para>Add panel-applet .in.in and service file to EXTRA_DIST and $(applet_DATA) $(applet_DATA).in to CLEANFILES</para>
+                   <informalexample>
+                   <programlisting>
+                       EXTRA_DIST = \
+                           GNOME_MixerApplet.panel-applet.in.in \
+                           $(service_in_files) \
+                           $(ui_DATA) \
+                           $(schemas_in_files)
+
+                       CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(schemas_DATA)
+                   </programlisting>
+                   </informalexample>
+               </sect3>
+
+           </sect2>
+       </sect1>
 
    </chapter>
 
