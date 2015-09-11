@@ -245,7 +245,57 @@
     <title>Hello World Example</title>
 
     <para>
-     An example is worth a million words, so here is a simple one:
+      In this section we will write a simple example applet. This simple applet will have no functionality and
+      only displays a label with "Hello World" on the panel. For this simple applet only following three parts
+      are needed:
+    </para>
+
+    <itemizedlist>
+       <listitem>
+           <para>
+               <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function>
+               </link>: this creates an <link linkend="getting-started.concepts.applet-factory">applet factory</link> named
+               <constant>HelloWorldFactory</constant>, and each time our applet is added to a GNOME Panel, this applet
+               factory will create an applet instance, and calls <function>hello_world_factory_callback()</function>
+               with a <link linkend="PanelApplet"><type>PanelApplet</type></link> object already created.
+           </para>
+       </listitem>
+       <listitem>
+           <para>
+               <function>hello_world_factory_callback()</function>: this checks if the request to create an applet
+               instance is for an <link linkend="getting-started.concepts.applet-types">applet type</link> supported
+               by our <link linkend="getting-started.concepts.applet-factory">applet factory</link>. Here we can see
+               that we only support the <constant>HelloWorldApplet</constant> applet type. This function returns
+               <constant>TRUE</constant> on success and <constant>FALSE</constant> on failures.
+
+               <note>
+                   <simpara>If you return <constant>FALSE</constant> here, GNOME Panel will show a dialog and
+                   notify the user that the applet loading failed.</simpara>
+               </note>
+           </para>
+       </listitem>
+       <listitem>
+           <para>
+               <function>hello_world_applet_start()</function>: this is where we actually setup the
+               <link linkend="PanelApplet"><type>PanelApplet</type></link> widget for the work the applet should do.
+               This can include adding widgets to the applet, connecting to signals, loading settings via GSettings,
+               etc.
+
+               <note>
+                 <simpara>
+                   The PanelApplet is a subclass of <link linkend="GtkBin"><type>GtkBin</type></link>
+                   container, to add more than one widget to it you will need to use another GtkContainer
+                   implementation such as <link linkend="GtkBox"><type>GtkBox</type></link> or
+                   <link linkend="GtkGrid"><type>GtkGrid</type></link>.
+                 </simpara>
+               </note>
+           </para>
+       </listitem>
+    </itemizedlist>
+
+    <para>
+      An example is worth a million words, so here is the code for our <emphasis>Hello World</emphasis> applet.
     </para>
 
     <example id="getting-started.example.simple">
@@ -254,7 +304,7 @@
 #include &lt;gtk/gtk.h&gt;
 #include &lt;panel-applet.h&gt;
 
-static gboolean
+static void
 hello_world_applet_start (PanelApplet *applet)
 {
     GtkWidget *label;
@@ -262,8 +312,6 @@ hello_world_applet_start (PanelApplet *applet)
     label = gtk_label_new ("Hello World");
     gtk_container_add (GTK_CONTAINER (applet), label);
     gtk_widget_show_all (GTK_WIDGET (applet));
-
-    return TRUE;
 }
 
 static gboolean
@@ -271,12 +319,12 @@ hello_world_factory_callback (PanelApplet  *applet,
                               const gchar  *iid,
                               gpointer      data)
 {
-    gboolean retval = FALSE;
+    if (g_strcmp0 (iid, "HelloWorldApplet") != 0)
+         return FALSE;
 
-    if (g_strcmp0 (iid, "HelloWorldApplet") == 0)
-        retval = hello_world_applet_start (applet);
+    hello_world_applet_start (applet);
 
-    return retval;
+    return TRUE;
 }
 
 PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
@@ -287,29 +335,12 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
     </example>
 
     <para>
-     Here are the few things that are important in this example:
-    </para>
-
-    <itemizedlist>
-     <listitem>
-      <para>
-       <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link>: this creates an <link linkend="getting-started.concepts.applet-factory">applet factory</link> named <constant>HelloWorldFactory</constant>, and each time this applet factory will create an applet instance, it will call <function>hello_world_factory_callback()</function> with a <link linkend="PanelApplet"><type>PanelApplet</type></link> object already created.
-      </para>
-     </listitem>
-     <listitem>
-      <para>
-      <function>hello_world_factory_callback()</function>: this checks if the request to create an applet instance is for an <link linkend="getting-started.concepts.applet-types">applet type</link> supported by the <link linkend="getting-started.concepts.applet-factory">applet factory</link>. Here we can see that we only support the <constant>HelloWorldApplet</constant> applet type. This function returns <constant>TRUE</constant> on success and <constant>FALSE</constant> on failures.
-      </para>
-     </listitem>
-     <listitem>
-      <para>
-      <function>hello_world_applet_start()</function>: this is where we actually setup the <link linkend="PanelApplet"><type>PanelApplet</type></link> widget for the work the applet should do. This can include filling the widget, connecting to signals, etc.
-      </para>
-     </listitem>
-    </itemizedlist>
-
-    <para>
-     While the previous example is simple, it can be useful to directly subclass the <link linkend="PanelApplet"><type>PanelApplet</type></link> type. This makes it easy to have a per-applet instance private structure, among other benefits.
+      While the previous example is simple, it can be useful to directly subclass the
+      <link linkend="PanelApplet"><type>PanelApplet</type></link> type. This makes it easy to have a per-applet
+      instance private structure, among other benefits. Most of the code below is related to the GObject system
+      and needed to subclass the Panel Applet. The only noteworthy difference is that the
+      <constant>PANEL_APPLET_OUT_PROCESS_FACTORY</constant> macro now takes our subclassed type (e.g. <constant>HELLO_WORLD_TYPE_APPLET</constant>)
+      as its second parameter, instead of <constant>PANEL_TYPE_APPLET</constant>.
     </para>
 
     <example id="getting-started.example.subclass">
@@ -361,12 +392,10 @@ hello_world_applet_class_init (HelloWorldAppletClass *klass)
   g_type_class_add_private (class, sizeof (HelloWorldAppletPrivate));
 }
 
-static gboolean
+static
 hello_world_applet_start (HelloWorldApplet *applet)
 {
     gtk_widget_show (GTK_WIDGET (applet));
-
-    return TRUE;
 }
 
 static gboolean
@@ -374,17 +403,17 @@ hello_world_factory_callback (HelloWorldApplet *applet,
                               const gchar      *iid,
                               gpointer          data)
 {
-    gboolean retval = FALSE;
+    if (g_strcmp0 (iid, "HelloWorldApplet") != 0)
+         return FALSE;
 
-    if (g_strcmp0 (iid, "HelloWorldApplet") == 0)
-        retval = hello_world_applet_start (applet);
+    hello_world_applet_start (applet);
 
-    return retval;
+    return TRUE;
 }
 
 PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
                                   HELLO_WORLD_TYPE_APPLET,
-                                  (PanelAppletFactoryCallback) hello_world_factory_callback,
+                                  hello_world_factory_callback,
                                   NULL)
      </programlisting>
     </example>
