@@ -26,6 +26,7 @@ MAINTAINERCLEANFILES = \
 	$(GITIGNORE_MAINTAINERCLEANFILES_M4_LIBTOOL) \
 	$(srcdir)/INSTALL \
 	$(srcdir)/configure \
+	$(srcdir)/config.h.in~ \
 	$(srcdir)/gtk-doc.make \
 	$(srcdir)/m4/gtk-doc.m4 \
 	$(srcdir)/m4/intltool.m4 \
