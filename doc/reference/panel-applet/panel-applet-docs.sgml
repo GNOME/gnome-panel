@@ -926,16 +926,274 @@ PanelApplet.Applet.factory_main("HelloWorldFactory",
   </part>
 
   <part id="port-gnome2">
-    <title>Porting Applets from GNOME 2.x</title>
+    <title>Porting older Applets</title>
 
-   <refsect1 id="port-gnome2.dbus">
-    <title>Porting a D-Bus-based Applet</title>
+    <chapter id="port-gnome2.dbus">
+       <title>Porting to a D-Bus-based Applet</title>
 
-    <para>
-     There is no major issue porting a D-Bus-based applet from GNOME 2.x, from a Panel Applet library perspective. It is actually likely that the main issues will be that the applet has to be ported to GTK+ 3. Please refer to the <ulink url="http://library.gnome.org/devel/gtk3/stable/gtk-migrating-2-to-3.html">GTK+ 2 to GTK+ 3 migration guide</ulink> for this.
-    </para>
+        <sect1 id="port-gnome2.dbus.introduction">
+            <title>Introduction</title>
+            <para>
+                Applets that were written for Gnome 2.x must we ported to be usable with Gnome 3 and the latest Panel Applet
+                Library. First of all if the applet was written for Gnome 2.x then it will still use GTK+ 2 and must be migrated
+                to GTK+ 3. Please refer to the
+                <ulink url="http://library.gnome.org/devel/gtk3/stable/gtk-migrating-2-to-3.html">GTK+ 2 to GTK+ 3 migration guide</ulink>
+                for further details.
+            </para>
 
-   </refsect1>
+            <para>
+                Once the GTK+ 2 to 3 migration has been completed you must migrate the Panel Applet Library specific
+                parts of the applet. During Gnome 2 times, the Panel Applet Library used LibBonobo, which was replaced
+                by a DBUS based API during the switch to Panel Applet Library version 4.0. During the change to
+                version 5.0 additional API have been replaced in particular the GConf related functions have been
+                removed and were replaced by the GSettings API. Also GtkAction related functions have been replaced
+                by the GAction API.
+            </para>
+
+            <note>
+                <simpara>
+                    The following migration guide is based on the
+                    <ulink url="https://wiki.gnome.org/Initiatives/GnomeGoals/AppletsDbusMigration">
+                        AppletsDBUsMigration
+                    </ulink> guide in the GNOME Wiki. This guide was originally written for the migration of GNOME 2
+                    applets to GNOME 3 and Panel Applet Library version 4.0. Based on the information of the
+                    original guide this section improves some of the explanations, adds references to other parts
+                    of this manual and has been updated for the migration to version 5.0 of this library.
+                </simpara>
+            </note>
+        </sect1>
+
+        <sect1 id="port-gnome2.dbus.remove-libbonobo-factory">
+            <title>Removing LibBonobo factory</title>
+            <para>
+                To migrate from LibBonobo to the DBUS API remove PANEL_APPLET_BONOBO_FACTORY and replace it with
+                either PANEL_APPLET_OUT_PROCESS_FACTORY or PANEL_APPLET_IN_PROCESS_FACTORY depending if you want
+                an out-process or in-process applet, respectively.
+            </para>
+            <para>
+                The new macros have the same parameters as the old, except the version and description parameters have been
+                removed. Also the <constant>OAFIID:GNOME_</constant> prefix of the first parameter can be dropped both from
+                the factory ID and the applet type name. The following
+                two code listings show the difference between the old and new macro definitions:
+            </para>
+
+            <informalexample>
+                <programlisting>
+                    PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_HelloWorldFactory",
+                                                 PANEL_TYPE_APPLET,
+                                                 "WindowNavigationApplets",
+                                                 "0",
+                                                 hello_world_factory,
+                                                 NULL)
+                </programlisting>
+            </informalexample>
+
+            The new version of the macro should be:
+
+            <informalexample>
+                <programlisting>
+                    PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
+                                                      PANEL_TYPE_APPLET,
+                                                      hello_world_factory,
+                                                      NULL)
+                </programlisting>
+            </informalexample>
+
+            <para>
+                The applet factory callback, in this case the <function>hello_world_factory</function> usually contains a
+                check to ensure that the applet factory supports the requested applet. Here the
+                <constant>OAFIID:GNOME_</constant> prefix should be dropped as well, see the following two code listings.
+            </para>
+
+            <note>
+                <simpara>
+                    When you drop the prefix here, you must also remove the prefix from the applet name in the Panel Applet File.
+                </simpara>
+            </note>
+
+            Old definition:
+
+            <informalexample>
+                <programlisting>
+                    static gboolean
+                    hello_world_factory (PanelApplet *applet,
+                    const char  *iid,
+                    gpointer     data)
+                    {
+
+                    if (!g_strcmp (iid, "OAFIID:GNOME_HelloWorldApplet") != 0)
+                    return FALSE;
+
+                    hello_world_applet_fill (applet);
+
+                    return TRUE;
+                    }
+                </programlisting>
+            </informalexample>
+
+            The new version of of the factory callback should be:
+
+            <informalexample>
+                <programlisting>
+                    static gboolean
+                    hello_world_factory (PanelApplet *applet,
+                    const char  *iid,
+                    gpointer     data)
+                    {
+
+                    if (!g_strcmp0 (iid, "HelloWorldApplet") != 0)
+                    return FALSE;
+
+                    hello_world_applet_fill (applet);
+
+                    return TRUE;
+                    }
+                </programlisting>
+            </informalexample>
+
+            <sect2 id="port-gnome2.dbus.migrate-to-panel-applet-file">
+                <title>Migrating Service file to Panel Applet File</title>
+
+                <para>
+                    The old applet will have a <constant>service.in.in</constant> file that was used to register the
+                    applet with the GNOME Panel. This file must be renamed to <constant>.panel-applet</constant> and its
+                    content changed to match the format of the new file type. See
+                    <link linkend="getting-started.install">Panel Applet Files</link> for a detailed explanation of the
+                    valid fields. If you decided to use the out-process factory macro, then you should also supply a
+                    <link linkend="getting-started.in-out-process">D-BUS Service File</link> so your applet can be started
+                    using D-BUS activation.
+                </para>
+
+                <para>
+                    For compatibility you can keep the old <constant>BonoboId</constant>. This field can contain the old
+                    bonobo identifier. It allows the panel to load applets using existing configuration data in your panels
+                    settings. It can be a single string or a list of strings in case of applets with more than one
+                    identifier.
+                </para>
+
+                Example for the migrated panel applet file:
+                <informalexample>
+                    <programlisting>
+                        [Applet Factory]
+                        Id=HellWorldFactory
+                        Location=@LOCATION@
+                        _Name=Hello World Applet Factory
+                        _Description=Factory for the our example applets
+
+                        [HelloWorldApplet]
+                        _Name=Hello World
+                        _Description=Factory for the Hello World example applet
+                        Icon=hello-world-icon
+                        BonoboId=OAFIID:GNOME_HelloWorldApplet
+                        X-GNOME-Bugzilla-Bugzilla=GNOME
+                        X-GNOME-Bugzilla-Product=gnome-panel
+                        X-GNOME-Bugzilla-Component=hello-world-applet
+                        X-GNOME-Bugzilla-Version=@VERSION@
+                        X-GNOME-Bugzilla-OtherBinaries=hello-world-applet
+                    </programlisting>
+                </informalexample>
+            </sect2>
+        </sect1>
+
+        <sect1 id="port-gnome2.dbus.migrate-menus-to-gaction">
+            <title>Migrating LibBonobo menus to GAction</title>
+            <para>
+                During GNOME 2 days the context menu of the applet was based on the <constant>BonoboUiVerb</constant>
+                class. These old menu verb definitions have been removed and should be replaced by
+                the <type>GAction</type> interface family of objects.
+
+                <note>
+                    <simpara>
+                        Previous versions of this migration guide suggested to migrate to the family of
+                        <type>GtkActionGroup</type> classes. Since Gtk+ 3.10 these are deprecated and with the
+                        change of the Panel Applet Library API to version 5.0 the <function>panel_applet_setup_menu</function>
+                        family of functions now accept the <type>GActionGroup</type> interface and its related classes.
+                    </simpara>
+                </note>
+            </para>
+
+            If the applet that is being ports had a context menu then it should contain code that looks similar to the
+            following listing:
+
+            <informalexample>
+                <programlisting>
+                    static const BonoboUIVerb show_desktop_menu_verbs [] = {
+                        BONOBO_UI_UNSAFE_VERB ("ShowDesktopPreferences", display_preferences_dialog),
+                        BONOBO_UI_UNSAFE_VERB ("ShowDesktopAbout",       display_about_dialog),
+                        BONOBO_UI_VERB_END
+                    };
+                </programlisting>
+            </informalexample>
+
+            The new code instead looks like this:
+
+            <informalexample>
+                <programlisting>
+                    static const GActionEntry menu_actions[] = {
+                        { "preferences", display_preferences_dialog },
+                        { "about",       display_about_dialog }
+                    };
+                </programlisting>
+            </informalexample>
+
+            This change also means that the callbacks must be changed to match the GAction API:
+
+            Old callback looked like this:
+            <informalexample>
+                <programlisting>
+                    static void
+                    display_preferences_dialog (BonoboUIComponent *uic,
+                                                gpointer          *user_data,
+                                                const gchar       *verbname)
+                </programlisting>
+            </informalexample>
+
+            The new version should have the following signature:
+            <informalexample>
+                <programlisting>
+                    static void
+                    display_preferences_dialog (GSimpleAction *action,
+                                                GVariant      *parameter,
+                                                gpointer       user_data)
+                </programlisting>
+            </informalexample>
+
+            <para>
+                Additionally you should use GtkBuilder to define a GMenuModel in XML and use the
+                <function>panel_applet_setup_menu</function> family of functions to setup the menu. See
+                <link linkend="getting-started.context-menu">Using a context menu</link> for more details.
+                For more information about using the GMenu and GAction APIs please refer to the GIO Reference
+                Manual.
+            </para>
+        </sect1>
+   </chapter>
+
+   <chapter>
+     <title>Porting Applets from Panel Applet Library 4.0</title>
+       <para>
+           The Panel Applet Library name has been renamed during the switch from version 4.0 to 5.0 and is now called
+           <constant>libpanel-applet</constant>.
+       </para>
+       <note>
+           <simpara>
+               Note that the version information in the library name has been dropped and there is now an
+               additional hypen between 'panel' and 'applet'.
+           </simpara>
+       </note>
+
+       <para>
+           GConf support has been removed and was replaced by GSettings. If the applet still uses GConf it must
+           migrate to GSettings. It is recommended to use the <function>panel_applet_settings_new()</function> function
+           to store your settings.
+       </para>
+
+       <para>
+           The <function>panel_applet_setup_menu</function> familiy of functions have been changed and now accept the
+           <type>GActionGroup</type> interface instead of the deprecated <type>GtkActionGroup</type>. Thus older applets
+           need to be changed and must migrate their menus to the <type>GAction</type> model. Please refer to the Gtk+
+           documentation for more details about <type>GAction</type> and the related interfaces.
+       </para>
+   </chapter>
 
   </part>
 
