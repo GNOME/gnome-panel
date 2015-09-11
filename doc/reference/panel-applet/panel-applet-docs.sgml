@@ -85,44 +85,159 @@
    <chapter id="getting-started.concepts">
     <title>Concepts</title>
 
-    <sect2 id="getting-started.concepts.applet-types">
-     <title>Applet Types</title>
+       <para>
+         In order to write an applet it is important to understand the relationships between GNOME Panel and your
+         applets. For example, how are applets registered to the GNOME Panel? How does the GNOME Panel instantiate an
+         applet?
+       </para>
+       <para>
+         On a typical desktop there can be multiple GNOME Panels and each GNOME Panel can have several instances of
+         your applet. These different instances are created by an <emphasis>applet factory</emphasis> which must be
+         registered to the GNOME Panel. Additionally, in order to identify your applet and instantiate the correct
+         applet, each applet is identified by an <emphasis>applet type</emphasis>.
+       </para>
 
-     <para>
-      The applet type is the identifier representing a type of applets to the panel. It is a simple string, like <constant>HelloWorldApplet</constant> and is unique per <link linkend="getting-started.concepts.applet-factory">applet factory</link>.
-     </para>
+       <sect1>
+           <title>Applet Registration</title>
 
-    </sect2>
+           <para>
+             To make your applets and the applet factory known to GNOME Panel - so that it can show your
+             applet in the list of applets of the "Add to Panel" dialog - and to add applets to the panel, you
+             must create a Panel Applet File.
+             <link linkend="getting-started.install.panel-applet">Panel Applet files</link> are introduced in more
+             detail later in this document. However it is important for applet authors to understand the relationship
+             between <emphasis>the panel applet file</emphasis>, <emphasis>the applet factory</emphasis>, and the
+             <emphasis>applet type</emphasis>. Therefore this section contains a short example of a Panel Applet file.
+           </para>
 
-    <sect2 id="getting-started.concepts.applet-factory">
-     <title>Applet Factory</title>
+           <sect2>
+               <title>Panel Applet Files</title>
+               <para>
+                   <link linkend="getting-started.install.panel-applet">Panel Applet files</link> are
+                   <constant>ini</constant>-file formatted files that contain the necessary information about your
+                   factory and your applet types. The following example listing shows a simple Panel Applet file.
+               </para>
+               <informalexample>
+                   <programlisting>
+                       [Applet Factory]
+                       Id=HelloWorldFactory
+                       Name=Hello World Applet Factory
+                       Description=Factory for our example applets
 
-     <para>
-      The applet factory is an implementation detail that is mostly hidden by the Panel Applet library, but it still appears in a few places (<link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link>, <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> and <link linkend="getting-started.install.panel-applet"><filename>.panel-applet</filename> files</link>) so it is important to understand what is an applet factory.
-     </para>
+                       [HelloWorldApplet]
+                       Name=Hello World
+                       Description=The Hello World example applet
+                       Icon=hello-world-icon
+                   </programlisting>
+               </informalexample>
+           </sect2>
 
-     <para>
-      The applet factory is the object that will create a new applet instance when the panel requests a new applet to be created. It is identified with a simple string id, for example <constant>HelloWorldFactory</constant>.
-     </para>
+           <sect2 id="getting-started.concepts.applet-types">
+               <title>Applet Types</title>
 
-     <para>
-      The requests the applet factory will receive from the panel specify which type of applet should be created. This is what makes it possible to have more than one applet types in one applet binary. In most cases, however, the applet factory will be specific to only one applet type. The map between applet types and the applet factory is recorded in <link linkend="getting-started.install.panel-applet"><filename>.panel-applet</filename> files</link>.
-     </para>
+               <para>
+                   The applet type is the identifier representing a type of applets to the panel. It is a simple string,
+                   like <constant>HelloWorldApplet</constant> and is unique per
+                   <link linkend="getting-started.concepts.applet-factory">applet factory</link>.
+               </para>
 
-     <para>
-      There is only one applet factory per applet binary, and it is always running before any applet instance is created by the applet binary. The applet factory is created via <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link>.
-     </para>
+               <note>
+                   <simpara>
+                       In the example listing above the applet type can be found in the second section title
+                       (e.g. <constant>[HelloWorldApplet]</constant>, but without the square brackets).
+                   </simpara>
+               </note>
+           </sect2>
 
-    </sect2>
+           <sect2 id="getting-started.concepts.applet-factory">
+               <title>Applet Factory</title>
 
-    <sect2 id="getting-started.concepts.applet-instances">
-     <title>Applet Instances</title>
+               <para>
+                 The applet factory is an implementation detail that is mostly hidden by the Panel Applet Library,
+                 but it still appears in a few places such as:
+                 <itemizedlist>
+                     <listitem>
+                       <para>
+                         The <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                         <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> macro, which is used to build
+                         out process applets. It gets the factory id passed as its first parameter.
+                       </para>
+                     </listitem>
+                     <listitem>
+                       <para>
+                         The <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS">
+                         <function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> macro, which is used to build in
+                         process applets. It gets the factory id passed as its first parameter.
+                       </para>
+                     </listitem>
+                     <listitem>
+                       <para>
+                         A Panel Applet file, which is used to register applet types and the applet factory to the
+                         GNOME Panel. It must contain the same applet factory id as used in the above two macros.
+                       </para>
+                         <warning>
+                             <simpara>By default applets are out-process, if you have used the
+                                 <function>PANEL_APPLET_IN_PROCESS_FACTORY</function>, then you must add:
+                                 <constant>InProces=true</constant> to the <constant>[Applet Factory]</constant>
+                                 section.
+                             </simpara>
+                         </warning>
+                     </listitem>
+                 </itemizedlist>
+               </para>
 
-     <para>
-      There is no restriction as to how many instances of one applet type can be created. The user might choose to add more than one <constant>HelloWorldApplet</constant> applets to his panels. This can have some implications on the design used to write applets. The most important implication is that it is generally wrong to have global variables to keep a state specific to an applet instance.
-     </para>
+               <para>
+                   The applet factory is the object that will create a new applet instance when the panel requests a
+                   new applet to be created. It is identified with a simple string id, for example
+                   <constant>HelloWorldFactory</constant>.
+               </para>
 
-    </sect2>
+               <note>
+                   <simpara>
+                       In the example listing above the applet factory id can be found in the
+                       <constant>ID</constant>-field of the <constant>[Applet Factory]</constant> section.
+                   </simpara>
+               </note>
+
+               <para>
+                   The requests the applet factory will receive from the GNOME Panel specify which type of applet should be created.
+                   This is what makes it possible to have more than one applet type in one applet binary. In most cases, however, the
+                   applet factory will be specific to only one applet type.
+               </para>
+
+               <para>
+                   There is only one applet factory per applet binary, and it is always running before any applet instance is
+                   created by the applet binary. The applet factory is created via one of these two macros:
+                   <itemizedlist>
+                       <listitem>
+                           <para><link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link></para>
+                       </listitem>, or
+                       <listitem>
+                           <para><link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link></para>
+                       </listitem>.
+                   </itemizedlist>
+               </para>
+
+           </sect2>
+
+       </sect1>
+
+       <sect1 id="getting-started.concepts.applet-instances">
+           <title>Applet Instances</title>
+           <para>
+               There is no restriction as to how many instances of one applet type can be created. The user might
+               choose to add more than one <constant>HelloWorldApplet</constant> applets to his panels. This can
+               have some implications on the design used to write applets. The most important implication is that
+               it is generally wrong to have global variables to keep a state specific to an applet instance.
+
+               <warning>
+                   <simpara>
+                       Using global variables in an applet can cause problems when the applet is instantiated
+                       several times.
+                   </simpara>
+               </warning>
+           </para>
+       </sect1>
 
    </chapter>
 
