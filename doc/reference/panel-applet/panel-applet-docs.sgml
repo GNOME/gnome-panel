@@ -424,42 +424,48 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
     <title>Using a Context Menu</title>
 
     <para>
-     The Panel Applet library uses <type>GtkAction</type> to define menu items appearing in the context menu of the applet.
+     The Panel Applet library uses <type>GAction</type> to define menu items appearing in the context menu of the
+     applet. This chapter provides some guidelines to applet developers and explains how to setup the context menu.
     </para>
 
-    <sect2 id="getting-started.context-menu.content">
+    <sect1 id="getting-started.context-menu.content">
      <title>Guidelines for Context Menu</title>
 
      <para>
-      To help guarantee consistency in the interaction with applets, there are some guidelines that are recommended to follow:
+      To help guarantee consistency in the interaction with applets, there are some guidelines that are
+      recommended to follow:
      </para>
 
      <itemizedlist>
       <listitem>
        <para>
-        Do not make the context menu too long: if you have more than five or six menu items, then it might be worth investing efforts on rethinking what is important in the menu.
+        Do not make the context menu too long: if you have more than five or six menu items, then it might be worth
+        investing efforts on rethinking what is important in the menu.
        </para>
       </listitem>
       <listitem>
        <para>
-        For the menu item that will enable the user to configure the applet, use "Preferences" for the label, and try to avoid "Configure", "Configuration", "Settings", etc.
+        For the menu item that will enable the user to configure the applet, use "Preferences" for the label,
+        and try to avoid "Configure", "Configuration", "Settings", etc.
        </para>
       </listitem>
       <listitem>
        <para>
-        Avoid putting a "Help" menu item. The user will usually explicitly add the applet, so it is expected that he knows what the applet is about. Putting a "Help" menu item in the context menu is therefore too prominent. It might make sense to add a "Help" button in the Preferences dialog, though.
+        Avoid putting a "Help" menu item. The user will usually explicitly add the applet, so it is expected that he knows what the applet is about.
+        Putting a "Help" menu item in the context menu is therefore too prominent. It might make sense to add a "Help" button in the Preferences dialog, though.
        </para>
       </listitem>
       <listitem>
        <para>
-        If you agree, avoid putting a "About" menu item. To the user, applets are not different applications but elements of one global application, the panel. Of course, this means that credits for working on the applet are not visible to the user.
+        If you agree, avoid putting a "About" menu item. To the user, applets are not different applications but elements of one global application, the panel. Of course, this means that credits
+        for working on the applet are not visible to the user.
        </para>
       </listitem>
      </itemizedlist>
 
-    </sect2>
+    </sect1>
 
-    <sect2 id="getting-started.context-menu.setup">
+    <sect1 id="getting-started.context-menu.setup">
      <title>Setting Up the Menu</title>
 
      <para>
@@ -592,7 +598,7 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
      </listitem>
     </itemizedlist>
 
-    </sect2>
+    </sect1>
 
     <sect2 id="getting-started.context-menu.xml-file">
      <title>Menu XML File</title>
@@ -627,21 +633,41 @@ PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
     <itemizedlist>
      <listitem>
       <para>
-       Global settings: those are settings that should be shared among all instances of the same applets. For instance, the preferred unit for temperature is something that the user will want to set only one. The way to store those settings is in no way specific to the Panel Applet library, as it should work like in any other application.
+       Global settings: those are settings that should be shared among all instances of the same applets.
+       For instance, the preferred unit for temperature is something that the user will want to set only one.
+       The way to store those settings is in no way specific to the Panel Applet library, as it should work
+       like in any other application.
       </para>
      </listitem>
      <listitem>
       <para>
-       Per-applet instance settings: those are settings that might be different depending on the instance of an applet. For instance, an applet whose goal is to display a picture should make it possible for the user to choose a different picture for each instance of the applet. The Panel Applet library provides API to help with this.
+       Per-applet instance settings: those are settings that might be different depending on the instance
+       of an applet. For instance, an applet whose goal is to display a picture should make it possible for
+       the user to choose a different picture for each instance of the applet. The Panel Applet library
+       provides API to help with this.
       </para>
      </listitem>
     </itemizedlist>
 
     <para>
-     There is actually a third case, which is rather rare, though: per-screen settings. It might be that some applets control some per-screen settings, like the layout of the workspaces. There is currently no API to help with this as it is a very specific case that you will probably never have to deal with for a usual applet.
+     There is actually a third case, which is rather rare, though: per-screen settings.
+     It might be that some applets control some per-screen settings, like the layout of the workspaces.
+     There is currently no API to help with this as it is a very specific case that you will probably
+     never have to deal with for a usual applet.
     </para>
 
-     TODO: describe settings-oriented API
+    <sect1 id="getting-started.settings.per-instance">
+       <title>Per Instance Settings</title>
+       <para>
+           In order to store per instance settings for an applet it is recommended to use GSettings. The
+           Panel Applet Library privides a function named <function>panel_applet_settings_new()</function>
+           for this purpose. You need to provide a GSettings schema file for your applet and the Panel
+           Applet library will setup the GSettings object for you.
+       </para>
+
+        TODO: describe settings-oriented API in more detail and give an example for per instance settings.
+
+    </sect1>
    </chapter>
 
    <chapter id="getting-started.install">
