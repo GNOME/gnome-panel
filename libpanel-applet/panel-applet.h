@@ -127,6 +127,12 @@ typedef gboolean (*PanelAppletFactoryCallback) (PanelApplet *applet,
 						const gchar *iid,
 						gpointer     user_data);
 
+/**
+ * PanelApplet:
+ *
+ * #PanelApplet is an opaque data structure and can only be accessed using
+ * the following functions.
+ */
 struct _PanelApplet {
 	GtkEventBox          event_box;
 
@@ -134,6 +140,18 @@ struct _PanelApplet {
 	PanelAppletPrivate  *priv;
 };
 
+/**
+ * PanelAppletClass:
+ * @event_box_class: The parent class.
+ * @change_orient: Signal is emitted when the orientation of applet
+ *    has changed.
+ * @change_background: Signal is emmited when the background af applet
+ *    has changed.
+ * @move_focus_out_of_applet: Signal is emmited when the focus is moved
+ *    out of applet. This is an implementation detail.
+ *
+ * The class structure for the #PanelApplet class.
+ */
 struct _PanelAppletClass {
 	GtkEventBoxClass     event_box_class;
 
