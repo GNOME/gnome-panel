@@ -877,23 +877,14 @@ g_object_bind_property (applet, "locked-down",
 
    </chapter>
 
-   <chapter id="getting-started.in-out-process">
-    <title>Out-of-Process vs In-Process</title>
-
-    <para>
-     Applets can either live in their own process ("out-of-process") or in the panel process ("in-process"). The decision to choose one or the other is done at build time, with the macro that you use to define the applet factory: <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> is used for out-of-process applets while <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> is used for in-process applets. Obviously, only one of those two macros can be used.
-    </para>
-
-    <para>
-      For most practical matters, from the applet perspective, the two options are the same. In-process applets do offer a slightly better performance when the applet is loaded, but this should not affect much the user experience. However, an in-process applet can potentially affect the whole behavior of the panel, especially in case of crashes or memory corruptions: a crash in an in-process applet will crash the whole panel. It is therefore recommended to use out-of-process applets.
-    </para>
-   </chapter>
-
    <chapter id="getting-started.introspection">
     <title>Writing an applet in languages other than C</title>
 
     <para>
-     The Panel Applet library comes with support for <ulink url="http://live.gnome.org/GObjectIntrospection">GObject Introspection</ulink>. This makes it possible to write applets in the languages that have <ulink url="http://live.gnome.org/GObjectIntrospection/Users">bindings based on GObject Introspection</ulink>.
+     The Panel Applet library comes with support for
+     <ulink url="http://live.gnome.org/GObjectIntrospection">GObject Introspection</ulink>.
+     This makes it possible to write applets in the languages that have
+     <ulink url="http://live.gnome.org/GObjectIntrospection/Users">bindings based on GObject Introspection</ulink>.
     </para>
 
     <para>
@@ -926,7 +917,9 @@ PanelApplet.Applet.factory_main("HelloWorldFactory",
     </para>
 
     <para>
-     The only limitation of writing an applet in a language other than C is that the applet will not be able to run in the panel process: it will have to stay out-of-process. However, since it is recommended to leave applets out-of-process, this limitation is mitigated.
+     The only limitation of writing an applet in a language other than C is that the applet will
+     not be able to run in the panel process: it will have to stay out-of-process. However, since
+     it is recommended to leave applets out-of-process, this limitation is mitigated.
     </para>
    </chapter>
 
