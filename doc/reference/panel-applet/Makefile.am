@@ -7,7 +7,7 @@ DOC_MODULE=panel-applet
 DOC_MODULE_VERSION=$(LIBPANEL_APPLET_API_VERSION)
 
 # The top-level SGML file. Change it if you want.
-DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
+DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.xml
 
 # The directory containing the source code. Relative to $(srcdir).
 # gtk-doc will search all .c & .h files beneath here for inline comments
