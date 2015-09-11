@@ -35,7 +35,8 @@ IGNORE_HFILES =					\
 	panel-applet-marshal.h
 
 # Images to copy into HTML directory.
-HTML_IMAGES =
+HTML_IMAGES = \
+	add_to_panel.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE).
 content_files = \

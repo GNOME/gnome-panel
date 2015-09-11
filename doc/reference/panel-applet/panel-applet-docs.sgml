@@ -16,19 +16,45 @@
   </bookinfo>
 
   <part id="overview">
-   <title>Panel Applet Library Overview</title>
+    <title>Panel Applet Library Overview</title>
+    <partintro>
+      <para>
+        The Panel Applet Library is used in the GNOME Flashback desktop to write applets that can be added to GNOME
+        Panel. GNOME Panel is the main user interface used in the GNOME Flashback desktop environment, through which
+        users interact with their computer and open applications.
+      </para>
 
-    <para>
-     Applets are small applications that are embedded in the GNOME panel. They can be used to give quick access to some features, or to display the state of something specific.
-    </para>
+      <para>
+        Applets are small applications that are embedded in the GNOME Panel. They can be used to give quick access
+        to some features, or to display the state of something specific. Most features in GNOME Panel such as the clock,
+        the application menu, the calendar and many others are written with this Panel Applet Library. Applets are added
+        through the "Add to Panel" dialog which can be opened from the "Add to Panel..." option on the context menu of
+        a GNOME Panel.
+      </para>
 
-   <para>
-     The Panel Applet library is what should be used to write applets as it handles all the communication with the GNOME panel. It hides all of the embedding process of the applet behind a <link linkend="PanelApplet"><type>PanelApplet</type></link> widget. It also provides <link linkend="PanelApplet"><type>PanelApplet</type></link> API to properly integrate the applet in the panel.
-   </para>
+      <mediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="add_to_panel.png" format="PNG"/>
+        </imageobject>
+      </mediaobject>
 
-   <note><simpara>
-    Keep in mind that starting with GNOME 3, the panel and applets are only available in the fallback mode. An applet will therefore not be usable in the default GNOME that users may use.
-   </simpara></note>
+      <para>
+        The Panel Applet Library is what should be used to write applets as it handles all the communication with
+        the GNOME panel. It hides all of the embedding process of the applet behind a
+        <link linkend="PanelApplet"><type>PanelApplet</type></link> widget. It also provides
+        <link linkend="reference"><type>PanelApplet API</type></link> to properly integrate the applet in the
+        panel.
+      </para>
+
+      <note>
+        <simpara>
+          The Panel Applet Library was original part of the default GNOME desktop but was deprecated with GNOME 3,
+          when GNOME Shell was released. Nowadays development continues as part of the GNOME Flashback project. The
+          default desktop of GNOME now uses GNOME Shell, which uses a different system for extension, so an applet
+          written with the Panel Applet Library will not be usable in the default GNOME that users may use.
+        </simpara>
+      </note>
+    </partintro>
 
   </part>
 
