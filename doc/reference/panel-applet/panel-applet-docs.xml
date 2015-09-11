@@ -1,15 +1,17 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd"
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
 [
-<!ENTITY version SYSTEM "version.xml">
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+  <!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent">
+  %gtkdocentities;
 ]>
-<book id="index" xmlns:xi="http://www.w3.org/2003/XInclude">
+<book id="index">
 
   <bookinfo>
     <title>Panel Applet Library Reference Manual</title>
     <releaseinfo>
-      This document is for the Panel Applet 5.0 library, version &version;.
+      This document is for the Panel Applet 5.0 library, version &package_version;.
       The latest versions can be found online at
       <ulink role="online-location" url="http://developer.gnome.org/panel-applet/">http://developer.gnome.org/panel-applet/</ulink>.
     </releaseinfo>

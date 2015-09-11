@@ -61,9 +61,7 @@ HTML_IMAGES = \
 
 # Extra files that are included by $(DOC_MAIN_SGML_FILE).
 # e.g. content_files=running.xml building.xml changes-2.0.xml
-content_files = \
-	version.xml \
-	$(NULL)
+content_files =
 
 # Files where gtk-doc abbrevations (#GtkWidget) are expanded
 # e.g. expand_content_files=running.xml
@@ -87,10 +85,6 @@ GTKDOC_LIBS = \
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.
 include $(top_srcdir)/gtk-doc.make
-
-EXTRA_DIST += \
-	version.xml.in \
-	$(NULL)
 
 # Comment this out if you want 'make check' to test you doc status
 # and run some sanity checks

@@ -201,7 +201,7 @@ AM_GLIB_GNU_GETTEXT
 
 dnl gtk-doc stuff
 
-GTK_DOC_CHECK([1.10],[--flavour no-tmpl])
+GTK_DOC_CHECK([1.24.1], [--flavour no-tmpl])
 
 dnl yelp-tools stuff
 
@@ -241,7 +241,6 @@ applets/wncklet/Makefile
 doc/Makefile
 doc/reference/Makefile
 doc/reference/panel-applet/Makefile
-doc/reference/panel-applet/version.xml
 help/Makefile
 help/clock/Makefile
 help/fish/Makefile
