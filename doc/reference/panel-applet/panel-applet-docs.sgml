@@ -39,12 +39,20 @@
     <title>Introduction</title>
 
     <para>
-     While applets are rather simple to write, they are not the most easy form of interaction to users for two reasons: it is not intuitive how to add or remove applets for many users, and the restriction in size of applets can limit their interface. Therefore, before writing an applet, think hard whether this is the form of interaction that is best for the feature you want to provide.
+     While applets are rather simple to write, they are not the most easy form of interaction to users for two reasons:
+     <itemizedlist>
+        <listitem>
+            It is not intuitive how to add or remove applets for many users, so users may not know about your applet,
+            or may not know how to add it to the GNOME Panel.
+        </listitem>
+         <listitem>
+            The restriction in size of applets can limit their interface, so you should only use applets for simple
+            tasks such as displaying information, or for controlling other applications and programs.
+         </listitem>
+     </itemizedlist>
+     Therefore, before writing an applet, think hard whether this is the form of interaction that
+     is best for the feature you want to provide.
     </para>
-
-    <note><simpara>
-     Keep in mind that starting with GNOME 3, the panel and applets are only available in the fallback mode. An applet will therefore not be usable in the default GNOME that users may use.
-    </simpara></note>
 
    </chapter>
 
