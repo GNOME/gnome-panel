@@ -4,7 +4,7 @@ NULL =
 DOC_MODULE = panel-applet
 
 # Uncomment for versioned docs and specify the version of the module, e.g. '2'.
-DOC_MODULE_VERSION = $(LIBPANEL_APPLET_API_VERSION)
+#DOC_MODULE_VERSION =
 
 # The top-level XML file.
 DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.xml
