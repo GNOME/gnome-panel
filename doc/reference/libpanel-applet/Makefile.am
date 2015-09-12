@@ -1,7 +1,7 @@
 NULL =
 
 # The name of the module, e.g. 'glib'.
-DOC_MODULE = panel-applet
+DOC_MODULE = libpanel-applet
 
 # Uncomment for versioned docs and specify the version of the module, e.g. '2'.
 #DOC_MODULE_VERSION =

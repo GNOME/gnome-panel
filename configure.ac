@@ -240,7 +240,7 @@ applets/notification_area/Makefile
 applets/wncklet/Makefile
 doc/Makefile
 doc/reference/Makefile
-doc/reference/panel-applet/Makefile
+doc/reference/libpanel-applet/Makefile
 help/Makefile
 help/clock/Makefile
 help/fish/Makefile
