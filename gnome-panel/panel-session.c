@@ -29,7 +29,6 @@
  */
 
 #include <config.h>
-#include <dbus/dbus-glib.h>
 #include <gtk/gtk.h>
 
 #include "panel-session.h"
@@ -41,6 +40,17 @@
 #define SESSION_MANAGER_INTERFACE "org.gnome.SessionManager"
 
 #define SESSION_MANAGER_CLIENT_PRIVATE_INTERFACE "org.gnome.SessionManager.ClientPrivate"
+
+#define DBUS_SERVICE_DBUS "org.freedesktop.DBus"
+#define DBUS_PATH_DBUS "/org/freedesktop/DBus"
+#define DBUS_INTERFACE_DBUS "org.freedesktop.DBus"
+
+#define DBUS_NAME_FLAG_ALLOW_REPLACEMENT 0x1
+#define DBUS_NAME_FLAG_REPLACE_EXISTING 0x2
+#define DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER 1
+#define DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER 4
+#define DBUS_REQUEST_NAME_REPLY_IN_QUEUE 2
+#define DBUS_REQUEST_NAME_REPLY_EXISTS 3
 
 struct _PanelSessionPrivate {
 	GDBusConnection *connection;
