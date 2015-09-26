@@ -122,6 +122,9 @@ back_change (AppletInfo  *info,
 
 		PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
 		break;
+	case PANEL_OBJECT_ACTION:
+	case PANEL_OBJECT_LAUNCHER:
+	case PANEL_OBJECT_MENU:
 	case PANEL_OBJECT_MENU_BAR:
 	case PANEL_OBJECT_USER_MENU:
 	case PANEL_OBJECT_SEPARATOR:
@@ -604,13 +607,13 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 					   "OAFIID:GNOME_Panel_TrashApplet");
 	else if (strncmp (basename, "home", strlen ("home")) == 0) {
 		char  *name;
-		char  *uri;
+		char  *uri_tmp;
 		GFile *file;
 
 		file = g_file_new_for_path (g_get_home_dir ());
-		uri = g_file_get_uri (file);
-		name = panel_util_get_label_for_uri (uri);
-		g_free (uri);
+		uri_tmp = g_file_get_uri (file);
+		name = panel_util_get_label_for_uri (uri_tmp);
+		g_free (uri_tmp);
 		g_object_unref (file);
 
 		panel_launcher_create_from_info (panel->toplevel,
@@ -972,17 +975,17 @@ static GtkTargetList *
 get_target_list (void)
 {
 	static GtkTargetEntry drop_types [] = {
-		{ "text/uri-list",                       0, TARGET_URL },
-		{ "x-url/http",                          0, TARGET_NETSCAPE_URL },
-		{ "x-url/ftp",                           0, TARGET_NETSCAPE_URL },
-		{ "_NETSCAPE_URL",                       0, TARGET_NETSCAPE_URL },
-		{ "application/x-panel-directory",       0, TARGET_DIRECTORY },
-		{ "application/x-panel-applet-iid",      0, TARGET_APPLET },
-		{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
-		{ "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
-		{ "application/x-color",                 0, TARGET_COLOR },
-		{ "property/bgimage",                    0, TARGET_BGIMAGE },
-		{ "x-special/gnome-reset-background",    0, TARGET_BACKGROUND_RESET },
+		{ (gchar *) "text/uri-list",                       0, TARGET_URL },
+		{ (gchar *) "x-url/http",                          0, TARGET_NETSCAPE_URL },
+		{ (gchar *) "x-url/ftp",                           0, TARGET_NETSCAPE_URL },
+		{ (gchar *) "_NETSCAPE_URL",                       0, TARGET_NETSCAPE_URL },
+		{ (gchar *) "application/x-panel-directory",       0, TARGET_DIRECTORY },
+		{ (gchar *) "application/x-panel-applet-iid",      0, TARGET_APPLET },
+		{ (gchar *) "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
+		{ (gchar *) "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
+		{ (gchar *) "application/x-color",                 0, TARGET_COLOR },
+		{ (gchar *) "property/bgimage",                    0, TARGET_BGIMAGE },
+		{ (gchar *) "x-special/gnome-reset-background",    0, TARGET_BACKGROUND_RESET },
 	};
 	static GtkTargetList *target_list = NULL;
 
