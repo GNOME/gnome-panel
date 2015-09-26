@@ -319,6 +319,8 @@ calc_arrow (PanelOrientation  orientation,
                 *angle = 3 * (G_PI / 2);
 		retval = GTK_ARROW_LEFT;
 		break;
+	default:
+		break;
 	}
 
 	return retval;
@@ -555,7 +557,7 @@ static gboolean
 button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkStateFlags state_flags;
-	gboolean in_button;
+	guint in_button;
 	gboolean hover_highlight;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
@@ -579,7 +581,7 @@ static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkStateFlags state_flags;
-	gboolean in_button;
+	guint in_button;
 	gboolean hover_highlight;
 
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
