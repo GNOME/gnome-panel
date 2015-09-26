@@ -1,17 +1,19 @@
-AM_CPPFLAGS =							\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	$(WNCKLET_CFLAGS)					\
-	-I$(top_builddir)					\
-	-I$(top_builddir)/applets/wncklet			\
-	-I$(top_srcdir)/libpanel-applet				\
-	-I$(top_builddir)/libpanel-applet			\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DWNCK_I_KNOW_THIS_IS_UNSTABLE				\
-	$(DISABLE_DEPRECATED_CFLAGS)
+NULL =
 
-AM_CFLAGS = $(WARN_CFLAGS)
+libwnck_applet_la_CFLAGS = \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
+	-I$(top_builddir) \
+	-I$(top_builddir)/applets/wncklet \
+	-I$(top_srcdir)/libpanel-applet \
+	-I$(top_builddir)/libpanel-applet \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(WNCKLET_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
-WNCKLET_SOURCES = \
+libwnck_applet_la_SOURCES = \
 	wncklet.c \
 	wncklet.h \
 	window-menu.c \
@@ -22,21 +24,25 @@ WNCKLET_SOURCES = \
 	workspace-switcher.h \
 	showdesktop.c \
 	showdesktop.h \
-	$(BUILT_SOURCES)
+	$(BUILT_SOURCES) \
+	$(NULL)
 
-WNCKLET_LDADD =						\
+libwnck_applet_la_LIBADD = \
 	../../libpanel-applet/libpanel-applet.la	\
 	$(WNCKLET_LIBS)					\
-	$(LIBPANEL_APPLET_LIBS)
+	$(LIBPANEL_APPLET_LIBS) \
+	$(NULL)
+
+libwnck_applet_la_LDFLAGS = \
+	-module -avoid-version \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libwnck-applet.so
 
 wnck_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 wnck_appletlib_LTLIBRARIES = libwnck-applet.la
-libwnck_applet_la_SOURCES = $(WNCKLET_SOURCES)
-libwnck_applet_la_LIBADD = $(WNCKLET_LDADD)
-libwnck_applet_la_LDFLAGS = -module -avoid-version
-libwnck_applet_la_CFLAGS = $(AM_CFLAGS)
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in

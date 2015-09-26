@@ -30,6 +30,18 @@ dnl **************************************************************************
 AX_IS_RELEASE([git-directory])
 
 dnl **************************************************************************
+dnl Enable debug
+dnl **************************************************************************
+
+AX_CHECK_ENABLE_DEBUG([yes])
+
+dnl **************************************************************************
+dnl Add warning flags
+dnl **************************************************************************
+
+AX_COMPILER_FLAGS([WARN_CFLAGS], [WARN_LDFLAGS])
+
+dnl **************************************************************************
 dnl Initialize automake
 dnl **************************************************************************
 
@@ -74,8 +86,6 @@ AM_PATH_PYTHON
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
-GNOME_COMPILE_WARNINGS([maximum])
-
 # Check for introspection
 GOBJECT_INTROSPECTION_CHECK([0.9.5])
 
@@ -84,16 +94,6 @@ GLIB_GSETTINGS
 m4_pattern_allow([AM_V_GEN])dnl Make autoconf not complain about the rule below
 PANEL_INTLTOOL_PANEL_APPLET_RULE='%.panel-applet: %.panel-applet.in $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*.po) ; $(AM_V_GEN) LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< [$]@'
 AC_SUBST([PANEL_INTLTOOL_PANEL_APPLET_RULE])
-
-AC_ARG_ENABLE(deprecation_flags,
-              [AC_HELP_STRING([--enable-deprecation-flags],
-                              [use *_DISABLE_DEPRECATED flags @<:@default=no@:>@])],,
-              [enable_deprecation_flags=no])
-
-if test "x$enable_deprecation_flags" = "xyes"; then
-   DISABLE_DEPRECATED_CFLAGS=$DISABLE_DEPRECATED
-   AC_SUBST(DISABLE_DEPRECATED_CFLAGS)
-fi
 
 AC_CHECK_HEADERS(crt_externs.h)
 AC_CHECK_FUNCS(_NSGetEnviron)
@@ -320,7 +320,6 @@ echo "  sbindir .........................: ${sbindir}"
 echo "  sysconfdir ......................: ${sysconfdir}"
 echo ""
 echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
-echo "  Use *_DISABLE_DEPRECATED ........: ${enable_deprecation_flags}"
 echo ""
 echo "  Evolution-Data-Server support ...: ${enable_eds}"
 echo "  XRandr support ..................: ${have_randr}"

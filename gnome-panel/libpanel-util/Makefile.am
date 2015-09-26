@@ -1,14 +1,15 @@
+NULL =
+
 noinst_LTLIBRARIES = libpanel-util.la
 
-AM_CPPFLAGS =							\
-	$(PANEL_CFLAGS)						\
-	-I.							\
-	-I$(srcdir)						\
-	-I$(top_builddir)/gnome-panel/libpanel-util		\
-	-DDATADIR=\""$(datadir)"\"				\
-	$(DISABLE_DEPRECATED_CFLAGS)
-
-AM_CFLAGS = $(WARN_CFLAGS)
+libpanel_util_la_CFLAGS = \
+	-DDATADIR=\""$(datadir)"\" \
+	-I$(srcdir) \
+	-I$(top_builddir)/gnome-panel/libpanel-util \
+	$(PANEL_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 BUILT_SOURCES =			\
 	dbus-login1-manager.c \
@@ -54,9 +55,16 @@ libpanel_util_la_SOURCES =		\
 	panel-show.c			\
 	panel-show.h			\
 	panel-xdg.c			\
-	panel-xdg.h
+	panel-xdg.h \
+	$(NULL)
+
+libpanel_util_la_LDFLAGS = \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 EXTRA_DIST = \
-	org.freedesktop.login1.Manager.xml
+	org.freedesktop.login1.Manager.xml \
+	$(NULL)
 
 -include $(top_srcdir)/git.mk

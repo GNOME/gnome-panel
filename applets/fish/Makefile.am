@@ -1,32 +1,36 @@
-AM_CPPFLAGS =							\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	$(FISH_CFLAGS)						\
-	-I$(srcdir)						\
-	-I$(srcdir)/../../libpanel-applet			\
-	-I$(top_builddir)/libpanel-applet			\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\"			\
-	$(DISABLE_DEPRECATED_CFLAGS)
+NULL =
 
-AM_CFLAGS = $(WARN_CFLAGS)
+libfish_applet_la_CFLAGS = \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
+	-I$(srcdir) \
+	-I$(srcdir)/../../libpanel-applet \
+	-I$(top_builddir)/libpanel-applet \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(FISH_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
-FISH_SOURCES = 		\
+libfish_applet_la_SOURCES = \
 	fish.c		\
 	$(BUILT_SOURCES)
 
-FISH_LDADD =						\
+libfish_applet_la_LIBADD = \
 	../../libpanel-applet/libpanel-applet.la	\
 	$(FISH_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)
+
+libfish_applet_la_LDFLAGS = \
+	-module -avoid-version \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libfish-applet.so
 
 fish_applet_libdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 fish_applet_lib_LTLIBRARIES = libfish-applet.la
-libfish_applet_la_SOURCES = $(FISH_SOURCES)
-libfish_applet_la_LIBADD = $(FISH_LDADD)
-libfish_applet_la_LDFLAGS = -module -avoid-version
-libfish_applet_la_CFLAGS = $(AM_CFLAGS)
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.FishApplet.panel-applet.in

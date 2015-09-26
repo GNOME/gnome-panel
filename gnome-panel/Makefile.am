@@ -1,23 +1,15 @@
 NULL =
 
-SUBDIRS = libpanel-applet-private libpanel-util
+SUBDIRS = \
+	libpanel-applet-private \
+	libpanel-util \
+	$(NULL)
 
 bin_PROGRAMS = \
-	gnome-panel 			\
-	gnome-desktop-item-edit		\
-	panel-test-applets
-
-AM_CPPFLAGS =							\
-	$(PANEL_CFLAGS)						\
-	-I.							\
-	-I$(srcdir)						\
-	-I$(top_builddir)/gnome-panel				\
-	-I$(top_builddir)/gnome-panel/libpanel-util		\
-	-DPANELDATADIR=\""$(datadir)/gnome-panel"\"		\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	$(DISABLE_DEPRECATED_CFLAGS)
-
-AM_CFLAGS = $(WARN_CFLAGS)
+	gnome-panel \
+	gnome-desktop-item-edit \
+	panel-test-applets \
+	$(NULL)
 
 panel_sources =			\
 	$(gnome_panel_BUILT_SOURCES) \
@@ -123,21 +115,34 @@ gnome_panel_SOURCES =			\
 	$(panel_sources)		\
 	$(panel_headers)
 
-gnome_panel_CPPFLAGS = 				\
-	$(AM_CPPFLAGS)				\
-	$(XRANDR_CFLAGS)			\
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE		\
-	-DGNOME_DESKTOP_USE_UNSTABLE_API
+gnome_panel_CFLAGS = \
+	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
+	-DGNOME_DESKTOP_USE_UNSTABLE_API \
+	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I$(srcdir) \
+	-I$(top_builddir)/gnome-panel \
+	-I$(top_builddir)/gnome-panel/libpanel-util \
+	$(XRANDR_CFLAGS) \
+	$(PANEL_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
 	$(XRANDR_LIBS)									\
-	$(X_LIBS)
+	$(X_LIBS) \
+	$(NULL)
 
-gnome_panel_LDFLAGS = -export-dynamic
+gnome_panel_LDFLAGS = \
+	-export-dynamic \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 gnome_desktop_item_edit_SOURCES =	\
 	gnome-desktop-item-edit.c	\
@@ -146,10 +151,27 @@ gnome_desktop_item_edit_SOURCES =	\
 	panel-util.c			\
 	xstuff.c
 
+gnome_desktop_item_edit_CFLAGS = \
+	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I$(srcdir) \
+	-I$(top_builddir)/gnome-panel \
+	-I$(top_builddir)/gnome-panel/libpanel-util \
+	$(PANEL_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
+
 gnome_desktop_item_edit_LDADD = 	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la	\
 	$(PANEL_LIBS)							\
-	$(X_LIBS)
+	$(X_LIBS) \
+	$(NULL)
+
+gnome_desktop_item_edit_LDFLAGS = \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 panel_test_applets_SOURCES =			\
 	$(panel_test_applets_BUILT_SOURCES)	\
@@ -158,17 +180,30 @@ panel_test_applets_SOURCES =			\
 	panel-applets-manager.c			\
 	panel-test-applets.c
 
-panel_test_applets_CPPFLAGS =			\
-	$(AM_CPPFLAGS)				\
+panel_test_applets_CFLAGS = \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
-	-DPANEL_APPLETS_DIR=\"$(appletsdir)\"
+	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
+	-I$(srcdir) \
+	-I$(top_builddir)/gnome-panel \
+	-I$(top_builddir)/gnome-panel/libpanel-util \
+	$(PANEL_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 panel_test_applets_LDADD = 		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private-mini.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la				\
-	$(PANEL_LIBS)
+	$(PANEL_LIBS) \
+	$(NULL)
 
-panel_test_applets_LDFLAGS = -export-dynamic
+panel_test_applets_LDFLAGS = \
+	-export-dynamic \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 panel_enum_headers =						\
 	$(top_srcdir)/gnome-panel/panel-enums.h			\

@@ -1,13 +1,16 @@
+NULL =
+
 SUBDIRS = pixmaps
 
 noinst_LTLIBRARIES = libsystem-timezone.la
 noinst_PROGRAMS = test-system-timezone
 
-AM_CPPFLAGS =				\
-	$(TZ_CFLAGS)			\
-	$(DISABLE_DEPRECATED_CFLAGS)
-
-AM_CFLAGS = $(WARN_CFLAGS)
+libsystem_timezone_la_CFLAGS = \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(TZ_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 libsystem_timezone_la_SOURCES = \
 	system-timezone.c	\
@@ -23,7 +26,7 @@ CALENDAR_SOURCES =		\
 	calendar-debug.h
 endif
 
-CLOCK_SOURCES = 		\
+libclock_applet_la_SOURCES = \
 	calendar-window.c	\
 	calendar-window.h	\
 	clock.c			\
@@ -45,20 +48,23 @@ CLOCK_SOURCES = 		\
 	$(BUILT_SOURCES)	\
 	$(CALENDAR_SOURCES)
 
-CLOCK_CPPFLAGS =						\
-	$(AM_CPPFLAGS)						\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	$(CLOCK_CFLAGS)						\
-	$(CLOCK_EDS_CFLAGS)					\
-	-I$(srcdir)/../../libpanel-applet			\
-	-I$(top_builddir)/libpanel-applet			\
-	-I$(srcdir)/../../gnome-panel               \
-	-I$(top_builddir)/gnome-panel               \
+libclock_applet_la_CFLAGS = \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
-	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE
+	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
+	-I$(srcdir)/../../libpanel-applet \
+	-I$(top_builddir)/libpanel-applet \
+	-I$(srcdir)/../../gnome-panel \
+	-I$(top_builddir)/gnome-panel \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(TZ_CFLAGS) \
+	$(CLOCK_CFLAGS) \
+	$(CLOCK_EDS_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
-CLOCK_LDADD =						\
+libclock_applet_la_LIBADD = \
 	../../libpanel-applet/libpanel-applet.la	\
 	../../gnome-panel/libpanel-util/libpanel-util.la	\
 	$(CLOCK_LIBS)					\
@@ -67,19 +73,32 @@ CLOCK_LDADD =						\
 	libsystem-timezone.la				\
 	-lm
 
+libclock_applet_la_LDFLAGS = \
+	-module -avoid-version \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
+
 test_system_timezone_SOURCES = 	\
 	test-system-timezone.c
 test_system_timezone_LDADD = libsystem-timezone.la
+
+test_system_timezone_CFLAGS = \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(TZ_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
+
+test_system_timezone_LDFLAGS = \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
 
 APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libclock-applet.so
 
 clock_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
-libclock_applet_la_SOURCES = $(CLOCK_SOURCES)
-libclock_applet_la_CPPFLAGS = $(CLOCK_CPPFLAGS)
-libclock_applet_la_LIBADD = $(CLOCK_LDADD)
-libclock_applet_la_LDFLAGS = -module -avoid-version
-libclock_applet_la_CFLAGS = $(AM_CFLAGS)
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
 
 clock-marshallers.c: clock-marshallers.list

@@ -1,13 +1,15 @@
+NULL =
+
 lib_LTLIBRARIES = libpanel-applet.la
 noinst_PROGRAMS = test-dbus-applet
 
-AM_CPPFLAGS =							\
-	$(LIBPANEL_APPLET_CFLAGS)				\
-	-I$(top_builddir)/libpanel-applet			\
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
-	$(DISABLE_DEPRECATED_CFLAGS)
-
-AM_CFLAGS = $(WARN_CFLAGS)
+libpanel_applet_la_CFLAGS = \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I$(top_builddir)/libpanel-applet \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 libpanel_appletincludedir = $(includedir)/gnome-panel/libpanel-applet
 libpanel_appletinclude_HEADERS =	\
@@ -29,8 +31,19 @@ libpanel_applet_la_LIBADD  = \
 	$(X_LIBS)
 
 libpanel_applet_la_LDFLAGS = \
-	-version-info $(LIB_PANEL_APPLET_LT_VERSION)	\
-	-no-undefined
+	-version-info $(LIB_PANEL_APPLET_LT_VERSION) \
+	-no-undefined \
+	$(WARN_LDFLAGS) \
+	$(AM_LDFLAGS) \
+	$(NULL)
+
+test_dbus_applet_CFLAGS = \
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-I$(top_builddir)/libpanel-applet \
+	$(LIBPANEL_APPLET_CFLAGS) \
+	$(WARN_CFLAGS) \
+	$(AM_CFLAGS) \
+	$(NULL)
 
 test_dbus_applet_LDADD =	\
 	$(LIBPANEL_APPLET_LIBS)	\
@@ -116,10 +129,10 @@ built_introspection_sources =	\
 
 PanelApplet-$(LIBPANEL_APPLET_API_VERSION).gir: libpanel-applet.la
 PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_INCLUDES = GObject-2.0 Gtk-3.0
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_CFLAGS = $(AM_CPPFLAGS)
+PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_CFLAGS = $(libpanel_applet_la_CFLAGS)
 PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_LIBS = libpanel-applet.la
 PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanel-applet
+PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanel-applet $(WARN_SCANNERFLAGS)
 INTROSPECTION_GIRS += PanelApplet-$(LIBPANEL_APPLET_API_VERSION).gir
 
 girdir = $(datadir)/gir-1.0
