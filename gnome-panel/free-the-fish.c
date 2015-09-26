@@ -158,15 +158,11 @@ fish_handle_event (GdkEvent *event)
         if (fish.hide_mode)
                 goto out;
 
-        switch (event->type) {
-                case GDK_SCROLL:
-                case GDK_BUTTON_PRESS:
-                case GDK_2BUTTON_PRESS:
-                case GDK_3BUTTON_PRESS:
-                        fish_start_hide_mode ();
-                        break;
-                default:
-                        break;
+        if (event->type == GDK_SCROLL ||
+            event->type == GDK_BUTTON_PRESS ||
+            event->type == GDK_2BUTTON_PRESS ||
+            event->type == GDK_3BUTTON_PRESS) {
+                fish_start_hide_mode ();
         }
 
 out:
