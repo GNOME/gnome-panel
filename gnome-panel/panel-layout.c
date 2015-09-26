@@ -120,6 +120,7 @@ panel_layout_append_self_check (GSettings                 *settings,
                                 int                        key_definitions_len,
                                 GError                   **error)
 {
+        GSettingsSchema *schema;
         char **settings_keys = NULL;
         int    i, j=0;
 
@@ -147,7 +148,9 @@ panel_layout_append_self_check (GSettings                 *settings,
 
         g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-        settings_keys = g_settings_list_keys (settings);
+        g_object_get (settings, "settings-schema", &schema, NULL);
+        settings_keys =  g_settings_schema_list_keys (schema);
+        g_settings_schema_unref (schema);
 
         for (i = 0; settings_keys[i] != NULL; i++) {
                 gboolean found = FALSE;
