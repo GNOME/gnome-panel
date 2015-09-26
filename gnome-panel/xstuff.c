@@ -120,6 +120,9 @@ zoom_draw (GtkWidget *widget,
 			x = 0;
 			y = (height - gdk_pixbuf_get_height (scaled)) / 2;
 			break;
+
+		default:
+			break;
 		}
 
 
@@ -191,6 +194,9 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 	case PANEL_ORIENTATION_LEFT:
 		wx = x;
 		wy = y - h * (ZOOM_FACTOR / 2);
+		break;
+
+	default:
 		break;
 	}
 
