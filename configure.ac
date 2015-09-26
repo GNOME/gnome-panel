@@ -182,8 +182,11 @@ fi
 AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
 AC_SUBST(CLOCK_EDS_ICONDIR)
 
-# For the run dialog
-gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
+dnl **************************************************************************
+dnl Check if struct dirent contains a d_type member, for run dialog
+dnl **************************************************************************
+
+AC_STRUCT_DIRENT_D_TYPE
 
 dnl X development libraries check
 
