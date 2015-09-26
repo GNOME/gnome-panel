@@ -138,7 +138,7 @@ panel_g_utf8_strstrcase (const char *haystack, const char *needle)
 	for (p = _unicode_get_utf8 (o, &unival);
 	     p && unival;
 	     p = _unicode_get_utf8 (p, &unival)) {
-		gint sc;
+		gunichar sc;
 		sc = g_unichar_tolower (unival);
 		/* We have valid stripped char */
 		if (sc == nuni[0]) {

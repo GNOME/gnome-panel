@@ -400,10 +400,10 @@ _panel_icon_chooser_clicked (GtkButton *button)
 					      path, NULL);
 	g_free (path);
 
+	path = NULL;
 	filechooser_path_set = FALSE;
 
 	if (chooser->priv->icon) {
-		char *path = NULL;
 		if (g_path_is_absolute (chooser->priv->icon)) {
 			path = g_strdup (chooser->priv->icon);
 		} else {
@@ -436,7 +436,6 @@ _panel_icon_chooser_clicked (GtkButton *button)
 	}
 
 	if (!filechooser_path_set) {
-		char *path;
 		// FIXME? Use current icon theme? But there might not be a lot
 		// of icons there...
 		path = g_build_filename (DATADIR, "icons", NULL);
