@@ -269,7 +269,6 @@ AC_CONFIG_FILES([
   gnome-panel/Makefile
   gnome-panel/libpanel-applet-private/Makefile
   gnome-panel/libpanel-util/Makefile
-  gnome-panel/gnome-panel.desktop.in
 
   libpanel-applet/Makefile
   libpanel-applet/libpanel-applet.pc

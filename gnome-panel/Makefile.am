@@ -1,3 +1,5 @@
+NULL =
+
 SUBDIRS = libpanel-applet-private libpanel-util
 
 bin_PROGRAMS = \
@@ -246,8 +248,12 @@ panel-test-applets-resources.h: panel-test-applets.gresource.xml $(shell $(GLIB_
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $<
 
 desktopdir = $(datadir)/applications
+desktop_in_in_files = gnome-panel.desktop.in.in
 desktop_in_files = gnome-panel.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
+%.desktop.in: %.desktop.in.in
+	$(AM_V_GEN) sed -e 's,[@]VERSION[@],$(VERSION),g' < $< > $@
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -260,14 +266,14 @@ EXTRA_DIST =					\
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list			\
 	wanda_no_sea.png			\
-	$(desktop_in_files)
+	$(desktop_in_in_files) \
+	$(NULL)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
-	$(desktop_DATA)
-
-dist-hook:
-	cd $(distdir) ; rm -f $(CLEANFILES)
+	$(desktop_in_files) \
+	$(desktop_DATA) \
+	$(NULL)
 
 -include $(top_srcdir)/git.mk
