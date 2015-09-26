@@ -1,10 +1,41 @@
-AC_INIT([gnome-panel], [3.17.2],
-        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
-AC_CONFIG_HEADERS(config.h)
-AM_INIT_AUTOMAKE([1.11 no-dist-gzip dist-xz tar-ustar -Wno-portability])
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+dnl **************************************************************************
+dnl Define version info
+dnl **************************************************************************
 
+m4_define([gp_major_version], [3])
+m4_define([gp_minor_version], [17])
+m4_define([gp_micro_version], [2])
+m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
+
+dnl **************************************************************************
+dnl Define bugzilla address
+dnl **************************************************************************
+
+m4_define([gp_bugzilla_url],
+          [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
+
+dnl **************************************************************************
+dnl Initialize autoconf
+dnl **************************************************************************
+
+AC_INIT([gnome-panel], [gp_version], [gp_bugzilla_url])
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+
+dnl **************************************************************************
+dnl Initialize automake
+dnl **************************************************************************
+
+AM_INIT_AUTOMAKE([1.13 no-dist-gzip dist-xz tar-ustar -Wno-portability])
+AM_MAINTAINER_MODE([enable])
+AM_SILENT_RULES([yes])
+
+dnl **************************************************************************
+dnl Initialize libtool
+dnl **************************************************************************
+
+LT_PREREQ([2.2.6])
+LT_INIT([dlopen disable-static])
 
 # Before making a release, the LT_VERSION string should be modified.
 # The string is of the form C:R:A.
@@ -23,15 +54,10 @@ AC_SUBST([LIBPANEL_APPLET_GIR_VERSION])
 LIB_PANEL_APPLET_LT_VERSION=0:3:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
-GNOME_MAINTAINER_MODE_DEFINES
-
 AC_ARG_ENABLE([documentation],
 	AS_HELP_STRING([--enable-documentation], [enable man pages and HTML]),
 	[], [enable_documentation=yes])
 AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
-
-LT_PREREQ([2.2.6])
-LT_INIT([dlopen disable-static])
 
 IT_PROG_INTLTOOL([0.40.6])
 
@@ -215,75 +241,80 @@ case $host in
 	;;
 esac
 
+dnl **************************************************************************
+dnl Process .in files
+dnl **************************************************************************
+
 AC_CONFIG_FILES([
-Makefile
-data/Makefile
-data/16x16/Makefile
-data/22x22/Makefile
-data/24x24/Makefile
-data/32x32/Makefile
-data/48x48/Makefile
-data/scalable/Makefile
-gnome-panel/Makefile
-gnome-panel/libpanel-applet-private/Makefile
-gnome-panel/libpanel-util/Makefile
-gnome-panel/gnome-panel.desktop.in
-libpanel-applet/Makefile
-libpanel-applet/libpanel-applet.pc
-libpanel-applet/libpanel-applet-uninstalled.pc
-po/Makefile.in
-applets/Makefile
-applets/clock/Makefile
-applets/clock/pixmaps/Makefile
-applets/fish/Makefile
-applets/notification_area/Makefile
-applets/wncklet/Makefile
-doc/Makefile
-doc/reference/Makefile
-doc/reference/libpanel-applet/Makefile
-help/Makefile
-help/clock/Makefile
-help/fish/Makefile
-man/Makefile
+  Makefile
+
+  data/Makefile
+  data/16x16/Makefile
+  data/22x22/Makefile
+  data/24x24/Makefile
+  data/32x32/Makefile
+  data/48x48/Makefile
+  data/scalable/Makefile
+
+  gnome-panel/Makefile
+  gnome-panel/libpanel-applet-private/Makefile
+  gnome-panel/libpanel-util/Makefile
+  gnome-panel/gnome-panel.desktop.in
+
+  libpanel-applet/Makefile
+  libpanel-applet/libpanel-applet.pc
+  libpanel-applet/libpanel-applet-uninstalled.pc
+
+  po/Makefile.in
+
+  applets/Makefile
+  applets/clock/Makefile
+  applets/clock/pixmaps/Makefile
+  applets/fish/Makefile
+  applets/notification_area/Makefile
+  applets/wncklet/Makefile
+
+  doc/Makefile
+  doc/reference/Makefile
+  doc/reference/libpanel-applet/Makefile
+
+  help/Makefile
+  help/clock/Makefile
+  help/fish/Makefile
+
+  man/Makefile
 ])
 
 AC_OUTPUT
 
-if echo foo | xgettext --from-code=UTF-8 -LC -o - - 2>/dev/null ; then
-:;
-else
-echo "Warning: Your version of gettext does not support --from-code."
-echo "         This will cause translation of some strings in non US-English"
-echo "         locales to fail. For full support please upgrade to GNU"
-echo "         gettext 0.12 or later."
-echo
-fi
+dnl **************************************************************************
+dnl Show summary
+dnl **************************************************************************
 
-dnl ---------------------------------------------------------------------------
-dnl - Show summary
-dnl ---------------------------------------------------------------------------
-
-echo "
-              gnome-panel $VERSION
-              `echo gnome-panel $VERSION | sed "s/./=/g"`
-
-        prefix:                        ${prefix}
-        exec_prefix:                   ${exec_prefix}
-        libdir:                        ${libdir}
-        bindir:                        ${bindir}
-        sbindir:                       ${sbindir}
-        sysconfdir:                    ${sysconfdir}
-        localstatedir:                 ${localstatedir}
-        datadir:                       ${datadir}
-        source code location:          ${srcdir}
-        compiler:                      ${CC}
-        cflags:                        ${CFLAGS}
-        Maintainer mode:               ${USE_MAINTAINER_MODE}
-        Use *_DISABLE_DEPRECATED:      ${enable_deprecation_flags}
-
-        Evolution-Data-Server support: ${enable_eds}
-        XRandr support:                ${have_randr}
-        Build introspection support:   ${found_introspection}
-        Build gtk-doc documentation:   ${enable_gtk_doc}
-
-"
+echo ""
+echo "  GNOME Panel $VERSION"
+echo "  `echo GNOME Panel $VERSION | sed "s/./=/g"`"
+echo ""
+echo "  srcdir ..........................: ${srcdir}"
+echo ""
+echo "  compiler ........................: ${CC}"
+echo "  cflags ..........................: ${CFLAGS}"
+echo ""
+echo "  prefix ..........................: ${prefix}"
+echo "  exec_prefix .....................: ${exec_prefix}"
+echo "  bindir ..........................: ${bindir}"
+echo "  datadir .........................: ${datadir}"
+echo "  libdir ..........................: ${libdir}"
+echo "  libexecdir ......................: ${libexecdir}"
+echo "  localstatedir ...................: ${localstatedir}"
+echo "  sbindir .........................: ${sbindir}"
+echo "  sysconfdir ......................: ${sysconfdir}"
+echo ""
+echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
+echo "  Use *_DISABLE_DEPRECATED ........: ${enable_deprecation_flags}"
+echo ""
+echo "  Evolution-Data-Server support ...: ${enable_eds}"
+echo "  XRandr support ..................: ${have_randr}"
+echo "  Build introspection support .....: ${found_introspection}"
+echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
+echo ""
