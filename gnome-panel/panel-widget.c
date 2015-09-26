@@ -801,8 +801,9 @@ panel_widget_update_positions (PanelWidget *panel)
 		for(list = g_list_last(panel->applet_list);
 		    list!=NULL;
 		    list = g_list_previous(list)) {
-			ad = list->data;
 			int cells;
+
+			ad = list->data;
 
 			if (ad->constrained + ad->min_cells > i)
 				ad->constrained = MAX (i - ad->min_cells, 0);
@@ -1394,9 +1395,11 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		for(list = panel->applet_list;
 		    list!=NULL;
 		    list = g_list_next(list)) {
-			ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
+
+			ad = list->data;
+
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 
 			ad->constrained = i;
@@ -1445,8 +1448,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		for (list = panel->applet_list;
 		     list != NULL;
 		     list = g_list_next (list)) {
-			ad = list->data;
 			GtkRequisition chreq;
+
+			ad = list->data;
 
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 
@@ -1469,9 +1473,11 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		for(list = panel->applet_list;
 		    list!=NULL;
 		    list = g_list_next(list)) {
-			ad = list->data;
 			GtkAllocation challoc;
 			GtkRequisition chreq;
+
+			ad = list->data;
+
 			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
@@ -2049,6 +2055,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	case PANEL_PUSH_MOVE:
 		panel_widget_push_move (panel, ad, 0);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -2230,24 +2238,17 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	g_return_val_if_fail(GTK_IS_WIDGET(widget),FALSE);
 	g_return_val_if_fail(event!=NULL,FALSE);
 
-	switch (event->type) {
-		/*pass these to the parent!*/
-		case GDK_BUTTON_PRESS:
-		case GDK_BUTTON_RELEASE:
-		case GDK_MOTION_NOTIFY: {
-			GdkEventButton *bevent = (GdkEventButton *)event;
+	/*pass these to the parent!*/
+	if (event->type == GDK_BUTTON_PRESS ||
+	    event->type == GDK_BUTTON_RELEASE ||
+	    event->type == GDK_MOTION_NOTIFY) {
+		GdkEventButton *bevent = (GdkEventButton *) event;
 
-			if (bevent->button != 1 || panel_applet_in_drag)
-				return gtk_widget_event (data, event);
-
-			}
-			break;
-		case GDK_KEY_PRESS:
-			if (panel_applet_in_drag)
-				return gtk_widget_event(data, event);
-			break;
-		default:
-			break;
+		if (bevent->button != 1 || panel_applet_in_drag)
+			return gtk_widget_event (data, event);
+	} else if (event->type == GDK_KEY_PRESS) {
+		if (panel_applet_in_drag)
+			return gtk_widget_event(data, event);
 	}
 
 	return FALSE;
@@ -2362,15 +2363,15 @@ panel_widget_add (PanelWidget         *panel,
 	if (!use_pack_index || pack_index < 0) {
 		if (panel->packed) {
 			/* add at the end of packed panels */
-			AppletData *ad;
+			AppletData *tmp;
 			GList *list,*l;
 
 			list = get_applet_list_pack (panel, PANEL_OBJECT_PACK_END);
 			if (list) {
 				for (l = list; l; l = l->next) {
-					ad = l->data;
-					ad->pack_index += 1;
-					emit_applet_moved (panel, ad);
+					tmp = l->data;
+					tmp->pack_index += 1;
+					emit_applet_moved (panel, tmp);
 				}
 				pack_type = PANEL_OBJECT_PACK_END;
 				pack_index = 0;
@@ -2384,9 +2385,9 @@ panel_widget_add (PanelWidget         *panel,
 					pack_index = 0;
 				} else {
 					l = g_list_last (list);
-					AppletData *ad = l->data;
-					pack_type = ad->pack_type;
-					pack_index = ad->pack_index + 1;
+					tmp = l->data;
+					pack_type = tmp->pack_type;
+					pack_index = tmp->pack_index + 1;
 				}
 			}
 
@@ -2412,8 +2413,8 @@ panel_widget_add (PanelWidget         *panel,
 			if (!l)
 				pack_index = 0;
 			else {
-				AppletData *ad = l->data;
-				pack_index = ad->pack_index + 1;
+				AppletData *tmp = l->data;
+				pack_index = tmp->pack_index + 1;
 			}
 
 			g_list_free (list);
@@ -2597,6 +2598,8 @@ panel_widget_push_move_applet (PanelWidget     *panel,
 	case GTK_DIR_DOWN:
 		direction = 1;
 		break;
+	case GTK_DIR_TAB_FORWARD:
+	case GTK_DIR_TAB_BACKWARD:
 	default:
 		return;
 	}
@@ -2626,6 +2629,8 @@ panel_widget_switch_move_applet (PanelWidget      *panel,
 	case GTK_DIR_DOWN:
 		panel_widget_switch_applet_right (panel, list, -1, TRUE);
 		break;
+	case GTK_DIR_TAB_FORWARD:
+	case GTK_DIR_TAB_BACKWARD:
 	default:
 		return;
 	}
