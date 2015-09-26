@@ -109,7 +109,6 @@ void                 panel_toplevel_get_position           (PanelToplevel       
 							    int                 *y_bottom);
 gboolean             panel_toplevel_get_x_centered         (PanelToplevel       *toplevel);
 gboolean             panel_toplevel_get_y_centered         (PanelToplevel       *toplevel);
-int                  panel_toplevel_get_monitor            (PanelToplevel       *toplevel);
 
 void                 panel_toplevel_rotate                 (PanelToplevel       *toplevel,
 							    gboolean             clockwise);
