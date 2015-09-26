@@ -1340,14 +1340,6 @@ panel_place_menu_item_finalize (GObject *object)
 }
 
 static void
-panel_desktop_menu_item_finalize (GObject *object)
-{
-	PanelDesktopMenuItem *menuitem = (PanelDesktopMenuItem *) object;
-
-	G_OBJECT_CLASS (panel_desktop_menu_item_parent_class)->finalize (object);
-}
-
-static void
 panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 {
 	GFile *bookmark;
@@ -1446,10 +1438,6 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 static void
 panel_desktop_menu_item_class_init (PanelDesktopMenuItemClass *klass)
 {
-	GObjectClass *gobject_class = (GObjectClass *) klass;
-
-	gobject_class->finalize = panel_desktop_menu_item_finalize;
-
 	g_type_class_add_private (klass, sizeof (PanelDesktopMenuItemPrivate));
 }
 
