@@ -21,6 +21,7 @@ dnl **************************************************************************
 AC_INIT([gnome-panel], [gp_version], [gp_bugzilla_url])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
 
 dnl **************************************************************************
 dnl Initialize automake
