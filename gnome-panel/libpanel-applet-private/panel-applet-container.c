@@ -223,7 +223,7 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 static const AppletPropertyInfo *
 panel_applet_container_child_property_get_info (const gchar *property_name)
 {
-	gint i;
+	gsize i;
 
 	g_assert (property_name != NULL);
 

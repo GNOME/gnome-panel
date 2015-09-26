@@ -124,7 +124,7 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 	GKeyFile               *applet_file;
 	gchar                 **groups;
 	gsize                   n_groups;
-	gint                    i;
+	gsize                   i;
 	GError                 *error = NULL;
 
 	applet_file = g_key_file_new ();
@@ -224,65 +224,78 @@ applets_directory_changed (GFileMonitor     *monitor,
 			   GFileMonitorEvent event_type,
 			   gpointer          user_data)
 {
-	PanelAppletsManagerDBus *manager = PANEL_APPLETS_MANAGER_DBUS (user_data);
+  PanelAppletsManagerDBus *manager;
+  PanelAppletFactoryInfo *info;
+  PanelAppletFactoryInfo *old_info;
+  gchar *filename;
+  GSList *dirs;
+  GSList *d;
 
-	switch (event_type) {
-	case G_FILE_MONITOR_EVENT_CHANGED:
-	case G_FILE_MONITOR_EVENT_CREATED: {
-		PanelAppletFactoryInfo *info;
-		PanelAppletFactoryInfo *old_info;
-		gchar                  *filename;
-		GSList                 *dirs, *d;
+  /* Ignore any other change */
+  if (event_type != G_FILE_MONITOR_EVENT_CHANGED &&
+      event_type != G_FILE_MONITOR_EVENT_CREATED)
+    return;
 
-		filename = g_file_get_path (file);
-		if (!g_str_has_suffix (filename, PANEL_APPLETS_EXTENSION)) {
-			g_free (filename);
+  manager = PANEL_APPLETS_MANAGER_DBUS (user_data);
+
+  filename = g_file_get_path (file);
+
+  if (!g_str_has_suffix (filename, PANEL_APPLETS_EXTENSION))
+    {
+      g_free (filename);
 			return;
-		}
+    }
 
-		info = panel_applets_manager_get_applet_factory_info_from_file (filename);
-		g_free (filename);
+  info = panel_applets_manager_get_applet_factory_info_from_file (filename);
+  g_free (filename);
 
-		if (!info)
-			return;
+  if (!info)
+    return;
 
-		old_info = g_hash_table_lookup (manager->priv->applet_factories, info->id);
-		if (!old_info) {
-			/* New applet, just insert it */
-			g_hash_table_insert (manager->priv->applet_factories, g_strdup (info->id), info);
-			return;
-		}
+  old_info = g_hash_table_lookup (manager->priv->applet_factories, info->id);
 
-		/* Make sure we don't update an applet that has changed in
-		 * another source dir unless it takes precedence over the
-		 * current one */
-		if (g_strcmp0 (info->srcdir, old_info->srcdir) == 0) {
-			g_hash_table_replace (manager->priv->applet_factories, g_strdup (info->id), info);
-			return;
-		}
+  if (!old_info)
+    {
+      /* New applet, just insert it */
+      g_hash_table_insert (manager->priv->applet_factories,
+                           g_strdup (info->id), info);
+      return;
+    }
 
-		dirs = panel_applets_manager_get_applets_dirs ();
+  /*
+   * Make sure we don't update an applet that has changed in another source
+   * dir unless it takes precedence over the current one.
+   */
+  if (g_strcmp0 (info->srcdir, old_info->srcdir) == 0)
+    {
+      g_hash_table_replace (manager->priv->applet_factories,
+                            g_strdup (info->id), info);
+      return;
+    }
 
-		for (d = dirs; d; d = g_slist_next (d)) {
-			gchar *path = (gchar *) d->data;
+  dirs = panel_applets_manager_get_applets_dirs ();
 
-			if (g_strcmp0 (path, old_info->srcdir) == 0) {
-				panel_applet_factory_info_free (info);
-				break;
-			} else if (g_strcmp0 (path, info->srcdir) == 0) {
-				g_hash_table_replace (manager->priv->applet_factories, g_strdup (info->id), info);
-				break;
-			}
-		}
+  for (d = dirs; d; d = g_slist_next (d))
+    {
+      gchar *path;
 
-		g_slist_foreach (dirs, (GFunc) g_free, NULL);
-		g_slist_free (dirs);
-	}
-		break;
-	default:
-		/* Ignore any other change */
-		break;
-	}
+      path = (gchar *) d->data;
+
+      if (g_strcmp0 (path, old_info->srcdir) == 0)
+        {
+          panel_applet_factory_info_free (info);
+          break;
+        }
+      else if (g_strcmp0 (path, info->srcdir) == 0)
+        {
+          g_hash_table_replace (manager->priv->applet_factories,
+                                g_strdup (info->id), info);
+          break;
+        }
+    }
+
+  g_slist_foreach (dirs, (GFunc) g_free, NULL);
+  g_slist_free (dirs);
 }
 
 static void
