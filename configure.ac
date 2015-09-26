@@ -3,8 +3,8 @@ dnl Define version info
 dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
-m4_define([gp_minor_version], [17])
-m4_define([gp_micro_version], [2])
+m4_define([gp_minor_version], [18])
+m4_define([gp_micro_version], [0])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
 dnl **************************************************************************
@@ -58,7 +58,7 @@ AC_SUBST([LIBPANEL_APPLET_API_VERSION])
 LIBPANEL_APPLET_GIR_VERSION=5_0
 AC_SUBST([LIBPANEL_APPLET_GIR_VERSION])
 
-LIB_PANEL_APPLET_LT_VERSION=0:3:0
+LIB_PANEL_APPLET_LT_VERSION=1:0:1
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 AC_ARG_ENABLE([documentation],
