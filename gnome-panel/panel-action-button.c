@@ -376,10 +376,10 @@ panel_action_connect_server (GtkWidget *widget)
 
 typedef struct {
 	PanelActionButtonType   type;
-	char                   *icon_name;
-	char                   *text;
-	char                   *tooltip;
-	char                   *drag_id;
+	const gchar            *icon_name;
+	const gchar            *text;
+	const gchar            *tooltip;
+	const gchar            *drag_id;
 	void                  (*invoke)      (GtkWidget         *widget);
 	void                  (*setup_menu)  (PanelActionButton *button);
 	void                  (*invoke_menu) (PanelActionButton *button,
@@ -905,7 +905,7 @@ panel_action_button_set_dnd_enabled (PanelActionButton *button,
 
 	if (enabled) {
 		static GtkTargetEntry dnd_targets [] = {
-			{ "application/x-panel-applet-internal", 0, 0 }
+			{ (gchar *) "application/x-panel-applet-internal", 0, 0 }
 		};
 
 		gtk_widget_set_has_window (GTK_WIDGET (button), TRUE);
