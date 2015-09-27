@@ -4,7 +4,7 @@ noinst_LTLIBRARIES = libtray.la
 noinst_PROGRAMS = testtray
 
 libtray_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""notification-area-applet"\" \
 	-DNOTIFICATION_AREA_MENU_UI_DIR=\""$(uidir)"\" \
 	-I$(srcdir) \

@@ -4,7 +4,7 @@ lib_LTLIBRARIES = libpanel-applet.la
 noinst_PROGRAMS = test-dbus-applet
 
 libpanel_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(top_builddir)/libpanel-applet \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(WARN_CFLAGS) \
@@ -38,7 +38,7 @@ libpanel_applet_la_LDFLAGS = \
 	$(NULL)
 
 test_dbus_applet_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(top_builddir)/libpanel-applet \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(WARN_CFLAGS) \

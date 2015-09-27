@@ -49,7 +49,7 @@ libclock_applet_la_SOURCES = \
 	$(CALENDAR_SOURCES)
 
 libclock_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DGNOMELOCALEDIR=\""$(localedir)"\"	\
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(srcdir)/../../libpanel-applet \

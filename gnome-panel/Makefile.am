@@ -120,7 +120,7 @@ gnome_panel_CFLAGS = \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel/libpanel-util \
@@ -153,7 +153,7 @@ gnome_desktop_item_edit_SOURCES =	\
 
 gnome_desktop_item_edit_CFLAGS = \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel/libpanel-util \
@@ -181,7 +181,7 @@ panel_test_applets_SOURCES =			\
 	panel-test-applets.c
 
 panel_test_applets_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
 	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \

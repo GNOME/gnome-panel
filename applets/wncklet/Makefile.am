@@ -1,7 +1,7 @@
 NULL =
 
 libwnck_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(top_builddir) \
 	-I$(top_builddir)/applets/wncklet \

@@ -1,7 +1,7 @@
 NULL =
 
 libfish_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
 	-I$(srcdir) \
 	-I$(srcdir)/../../libpanel-applet \
