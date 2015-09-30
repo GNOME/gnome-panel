@@ -55,6 +55,7 @@ dnl **************************************************************************
 
 LT_PREREQ([2.2.6])
 LT_INIT([dlopen disable-static])
+LT_LIB_M
 
 # Before making a release, the LT_VERSION string should be modified.
 # The string is of the form C:R:A.

@@ -67,11 +67,12 @@ libclock_applet_la_CFLAGS = \
 libclock_applet_la_LIBADD = \
 	../../libpanel-applet/libpanel-applet.la	\
 	../../gnome-panel/libpanel-util/libpanel-util.la	\
+	libsystem-timezone.la \
 	$(CLOCK_LIBS)					\
 	$(CLOCK_EDS_LIBS)					\
 	$(LIBPANEL_APPLET_LIBS)				\
-	libsystem-timezone.la				\
-	-lm
+	$(LIBM) \
+	$(NULL)
 
 libclock_applet_la_LDFLAGS = \
 	-module -avoid-version \
