@@ -2393,6 +2393,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	GtkBorder        padding;
 	int              monitor_width, monitor_height;
 	int              width, height;
+	int              size;
 	int              minimum_height;
 	int              non_panel_widget_size;
 
@@ -2435,6 +2436,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 							non_panel_widget_size);
 
 		width  = MAX (MINIMUM_WIDTH, width);
+		size = height;
 	} else {
 		width = MAX (MIN (MAX (width, toplevel->priv->size),
 				  panel_toplevel_get_maximum_size (toplevel)),
@@ -2450,6 +2452,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 							non_panel_widget_size);
 
 		height = MAX (MINIMUM_WIDTH, height);
+		size = width;
 	}
 
 	if (toplevel->priv->edges & PANEL_EDGE_TOP)
@@ -2465,6 +2468,9 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
 	toplevel->priv->original_width  = toplevel->priv->geometry.width;
 	toplevel->priv->original_height = toplevel->priv->geometry.height;
+
+	if (toplevel->priv->size < size)
+		panel_widget_set_size (toplevel->priv->panel_widget, size);
 }
 
 static void
@@ -3454,10 +3460,14 @@ panel_toplevel_focus_out_event (GtkWidget     *widget,
 static void
 panel_toplevel_style_updated (GtkWidget *widget)
 {
-	panel_toplevel_update_hide_buttons (PANEL_TOPLEVEL (widget));
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
+
+	panel_toplevel_update_hide_buttons (toplevel);
 
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated)
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated (widget);
+
+	panel_widget_set_size (toplevel->priv->panel_widget, toplevel->priv->size);
 }
 
 static void
