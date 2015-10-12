@@ -2610,7 +2610,6 @@ panel_toplevel_realize (GtkWidget *widget)
 	GdkWindow     *window;
 	GdkGeometry    geometry;
 
-	gtk_window_set_decorated (GTK_WINDOW (widget), FALSE);
 	gtk_window_stick (GTK_WINDOW (widget));
 
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize)
@@ -2619,7 +2618,6 @@ panel_toplevel_realize (GtkWidget *widget)
 	window = gtk_widget_get_window (widget);
 
 	panel_struts_set_window_hint (toplevel);
-	panel_xutils_set_window_type (window, PANEL_XUTILS_TYPE_DOCK);
 
 	gdk_window_set_group (window, window);
 	gdk_window_set_geometry_hints (window, &geometry, GDK_HINT_POS);

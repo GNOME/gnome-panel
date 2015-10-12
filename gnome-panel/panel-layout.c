@@ -1034,8 +1034,10 @@ panel_layout_load_toplevel (const char *toplevel_id)
                                 PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
 
         toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
-                                 "toplevel-id", toplevel_id,
+                                 "decorated", FALSE,
                                  "settings-path", path,
+                                 "toplevel-id", toplevel_id,
+                                 "type-hint", GDK_WINDOW_TYPE_HINT_DOCK,
                                  NULL);
 
         g_free (path);
