@@ -35,7 +35,6 @@ typedef enum {
 G_DEFINE_TYPE (PanelWidget, panel_widget, GTK_TYPE_FIXED);
 
 enum {
-	SIZE_CHANGE_SIGNAL,
 	BACK_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
@@ -278,17 +277,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
-	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
-                g_signal_new ("size_change",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, size_change),
-                              NULL,
-                              NULL, 
-                              g_cclosure_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-
 	panel_widget_signals[BACK_CHANGE_SIGNAL] =
                 g_signal_new ("back_change",
                               G_TYPE_FROM_CLASS (object_class),
@@ -383,7 +371,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
-	class->size_change = NULL;
 	class->back_change = NULL;
 	class->applet_move = NULL;
 	class->applet_added = NULL;
@@ -2560,11 +2547,8 @@ panel_widget_set_size (PanelWidget *panel_widget,
 		return;
 
 	panel_widget->sz = size;
-	
+
 	queue_resize_on_all_applets (panel_widget);
-
-	g_signal_emit (panel_widget, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
-
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
