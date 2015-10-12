@@ -90,7 +90,7 @@ panel_properties_size_spin_update_range (PanelPropertiesDialog *dialog)
 		return;
 
 	gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->size_spin),
-				   panel_toplevel_get_minimum_size (dialog->toplevel),
+				   16,
 				   panel_toplevel_get_maximum_size (dialog->toplevel));
 }
 

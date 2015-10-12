@@ -152,7 +152,6 @@ gboolean             panel_toplevel_get_enable_arrows      (PanelToplevel       
 void                 panel_toplevel_update_edges           (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_is_last                (PanelToplevel       *toplevel);
-int                  panel_toplevel_get_minimum_size       (PanelToplevel *toplevel);
 int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);
 
 GSList              *panel_toplevel_list_toplevels         (void);
