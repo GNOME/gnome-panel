@@ -811,8 +811,7 @@ panel_background_change_region (PanelBackground *background,
 			/* if orientation changes and we are rotating */
 			need_to_retransform = TRUE;
 		} else if ((background->region.width != width ||
-			    background->region.height != height) &&
-			   (background->style_image != PANEL_BACKGROUND_IMAGE_STYLE_NONE)) {
+			    background->region.height != height)) {
 			/* or if the size changes and we are 
 			   stretching or fitting the image */
 			need_to_retransform = TRUE;
