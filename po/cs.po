@@ -15,11 +15,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel master\n"
+"Project-Id-Version: gnome-panel gnome-3.18\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-06 07:48+0000\n"
-"PO-Revision-Date: 2015-08-06 10:02+0200\n"
+"POT-Creation-Date: 2015-10-15 08:12+0000\n"
+"PO-Revision-Date: 2015-10-15 12:08+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -272,7 +272,7 @@ msgstr "Jih"
 
 #: ../applets/clock/clock.ui.h:5
 #: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
-#: ../gnome-panel/panel.c:1375 ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel.c:1378 ../gnome-panel/panel-ditem-editor.c:656
 #: ../gnome-panel/panel-ditem-editor.c:998
 #: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
 #: ../gnome-panel/panel-run-dialog.c:1293
@@ -301,7 +301,7 @@ msgstr "Zeměpisná šířk_a:"
 msgid "L_ongitude:"
 msgstr "Z_eměpisná délka:"
 
-#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
+#. Languages that have a single word that translates as either
 #: ../applets/clock/clock.ui.h:12
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
@@ -1549,11 +1549,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1810
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1810
 msgid "_Remove From Panel"
 msgstr "_Odstranit z panelu"
 
@@ -1583,7 +1583,7 @@ msgstr "Vlastnosti adresáře"
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:135
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:142
 msgid "Panel"
 msgstr "Panel"
 
@@ -1648,8 +1648,8 @@ msgstr "Nelze uložit spouštěč"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:749
-#: ../gnome-panel/panel-applet-frame.c:909
+#: ../gnome-panel/panel-applet-frame.c:761
+#: ../gnome-panel/panel-applet-frame.c:921
 msgid "Error"
 msgstr "Chyba"
 
@@ -1676,9 +1676,13 @@ msgstr "Nelze otevřít umístění „%s“"
 msgid "No application to handle search folders is installed."
 msgstr "Není nainstalována žádná aplikace určená k obsluze složek hledání."
 
-#: ../gnome-panel/main.c:36
+#: ../gnome-panel/main.c:37
 msgid "Replace a currently running panel"
 msgstr "Nahradit právě spuštěný panel"
+
+#: ../gnome-panel/main.c:38
+msgid "Print version"
+msgstr "Vypsat verzi"
 
 #: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
@@ -1860,57 +1864,63 @@ msgstr "sloupec"
 msgid "_Back"
 msgstr "Zpě_t"
 
-#: ../gnome-panel/panel-applet-frame.c:718
+#: ../gnome-panel/panel-applet-frame.c:722
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "„%s“ neočekávaně skončil"
 
-#: ../gnome-panel/panel-applet-frame.c:720
+#: ../gnome-panel/panel-applet-frame.c:724
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočekávaně skončil"
 
-#: ../gnome-panel/panel-applet-frame.c:727
+#: ../gnome-panel/panel-applet-frame.c:731
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Pokud obnovíte objekt panelu, bude automaticky přidán zpět na panel."
 
-#: ../gnome-panel/panel-applet-frame.c:733
+#: ../gnome-panel/panel-applet-frame.c:738
+msgid "D_elete"
+msgstr "O_dstranit"
+
+#: ../gnome-panel/panel-applet-frame.c:739
+#: ../gnome-panel/panel-applet-frame.c:744
 msgid "_Don't Reload"
 msgstr "_Neobnovovat"
 
-#: ../gnome-panel/panel-applet-frame.c:734
+#: ../gnome-panel/panel-applet-frame.c:740
+#: ../gnome-panel/panel-applet-frame.c:745
 msgid "_Reload"
 msgstr "_Obnovit"
 
-#: ../gnome-panel/panel-applet-frame.c:872
+#: ../gnome-panel/panel-applet-frame.c:884
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "V panelu došlo k problému při načítání „%s“."
 
-#: ../gnome-panel/panel-applet-frame.c:884
+#: ../gnome-panel/panel-applet-frame.c:896
 msgid "OK"
 msgstr "Budiž"
 
-#: ../gnome-panel/panel-applet-frame.c:888
+#: ../gnome-panel/panel-applet-frame.c:900
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete tento applet odstranit ze svého nastavení?"
 
-#: ../gnome-panel/panel-applet-frame.c:891
+#: ../gnome-panel/panel-applet-frame.c:903
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: ../gnome-panel/panel-applet-frame.c:892 ../gnome-panel/panel.c:1376
+#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1379
 msgid "_Delete"
 msgstr "O_dstranit"
 
-#: ../gnome-panel/panel.c:504
+#: ../gnome-panel/panel.c:507
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
+#: ../gnome-panel/panel.c:576 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "Otevře „%s“"
@@ -1918,18 +1928,18 @@ msgstr "Otevře „%s“"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
+#: ../gnome-panel/panel.c:624 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "Otevře osobní složku"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
+#: ../gnome-panel/panel.c:633 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "Počítač"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
+#: ../gnome-panel/panel.c:634 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1938,20 +1948,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
+#: ../gnome-panel/panel.c:641 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "Síť"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
+#: ../gnome-panel/panel.c:642 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "Procházet poznačená a místní síťová umístění"
 
-#: ../gnome-panel/panel.c:1367
+#: ../gnome-panel/panel.c:1370
 msgid "Delete this panel?"
 msgstr "Odstranit tento panel?"
 
-#: ../gnome-panel/panel.c:1371
+#: ../gnome-panel/panel.c:1374
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2073,7 +2083,7 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Vynutit ukončení"
 
-#: ../gnome-panel/panel-layout.c:1100 ../gnome-panel/panel-layout.c:1114
+#: ../gnome-panel/panel-layout.c:1105 ../gnome-panel/panel-layout.c:1119
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nelze vytvořit počáteční rozložení panelu.\n"
@@ -2142,7 +2152,7 @@ msgstr "Pracovní plocha"
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otevře obsah pracovní plochy ve složce"
 
-#: ../gnome-panel/panel-menu-items.c:1466
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Místa"
 
