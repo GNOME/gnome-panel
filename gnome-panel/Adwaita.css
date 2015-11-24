@@ -4,6 +4,7 @@ PanelWidget {
 
 .gnome-panel-menu-bar,
 PanelApplet > GtkMenuBar.menubar,
+PanelApplet > menubar,
 ClockBox {
 	font: regular;
 	color: @theme_unfocused_text_color;
@@ -11,17 +12,22 @@ ClockBox {
 }
 
 .gnome-panel-menu-bar,
-PanelApplet > GtkMenuBar.menubar {
+PanelApplet > GtkMenuBar.menubar,
+PanelApplet > menubar {
 	box-shadow: none;
 }
 
 .gnome-panel-menu-bar .menu,
-PanelApplet > GtkMenuBar.menubar .menu {
+.gnome-panel-menu-bar menu,
+PanelApplet > GtkMenuBar.menubar .menu,
+PanelApplet > menubar menu {
 	font: regular;
 }
 
 .gnome-panel-menu-bar .menuitem:hover,
-PanelApplet > GtkMenuBar.menubar .menuitem:hover {
+.gnome-panel-menu-bar menuitem:hover,
+PanelApplet > GtkMenuBar.menubar .menuitem:hover,
+PanelApplet > menubar menuitem:hover {
 	background-color: @theme_selected_bg_color;
 	color: @theme_selected_fg_color;
 }
