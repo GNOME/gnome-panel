@@ -1,12 +1,12 @@
 .\"
-.\" gnome-about manual page.  
+.\" gnome-panel manual page.
 .\" (C) 2010 Vincent Untz (vuntz@gnome.org)
 .\"
 .TH GNOME-PANEL 1 "GNOME"
 .SH NAME
 gnome-panel \- Display the GNOME panel
 .SH SYNOPSIS
-.B gnome-about [\-\-replace]
+.B gnome-panel [\-\-replace] [\-\-version] [\-\-display=DISPLAY]
 .SH DESCRIPTION
 The \fIgnome-panel\fP program provides the panels of the the GNOME
 desktop.
@@ -20,8 +20,14 @@ panels. The applets usually provide quick access to specific
 features.
 .SH OPTIONS
 .TP
-.I --replace
+.B \-\-replace
 Replace an already running panel.
+.TP
+.B \-\-version
+Print version and exit.
+.TP
+.B \-\-display\fP=\fBDISPLAY
+Set the X display to use.
 .SH BUGS
 If you find bugs in the \fIgnome-panel\fP program, please report
 these on https://bugzilla.gnome.org.
