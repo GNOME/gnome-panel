@@ -184,6 +184,23 @@ AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
 AC_SUBST(CLOCK_EDS_ICONDIR)
 
 dnl **************************************************************************
+dnl Build with libstatus-notifier (experimental)
+dnl **************************************************************************
+
+AC_ARG_WITH([libstatus-notifier],
+            [AS_HELP_STRING([--with-libstatus-notifier],
+                            [Build with libstatus-notifier (experimental)])],
+            [with_libstatus_notifier="$withval"],
+            [with_libstatus_notifier=no])
+
+AS_IF([test "x$with_libstatus_notifier" = "xyes"], [
+  PKG_CHECK_MODULES([STATUS_NOTIFIER], [libstatus-notifier-3.0])
+])
+
+AM_CONDITIONAL([WITH_LIBSTATUS_NOTIFIER],
+               [test "x$with_libstatus_notifier" = "xyes"])
+
+dnl **************************************************************************
 dnl Check if struct dirent contains a d_type member, for run dialog
 dnl **************************************************************************
 
@@ -282,6 +299,7 @@ AC_CONFIG_FILES([
   applets/clock/pixmaps/Makefile
   applets/fish/Makefile
   applets/notification_area/Makefile
+  applets/status-notifier/Makefile
   applets/wncklet/Makefile
 
   doc/Makefile
@@ -326,4 +344,6 @@ echo "  Evolution-Data-Server support ...: ${enable_eds}"
 echo "  XRandr support ..................: ${have_randr}"
 echo "  Build introspection support .....: ${found_introspection}"
 echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
+echo ""
+echo "  Build with libstatus-notifier ...: ${with_libstatus_notifier}"
 echo ""
