@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-30 18:30+0200\n"
-"PO-Revision-Date: 2015-08-30 18:35+0200\n"
+"POT-Creation-Date: 2015-12-12 17:44+0100\n"
+"PO-Revision-Date: 2015-12-12 17:45+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -272,7 +272,7 @@ msgstr "Południe"
 
 #: ../applets/clock/clock.ui.h:5
 #: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
-#: ../gnome-panel/panel.c:1375 ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel.c:1378 ../gnome-panel/panel-ditem-editor.c:656
 #: ../gnome-panel/panel-ditem-editor.c:998
 #: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
 #: ../gnome-panel/panel-run-dialog.c:1293
@@ -592,6 +592,22 @@ msgstr "Obszar powiadamiania"
 #: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
 msgid "Area where notification icons appear"
 msgstr "Obszar, w którym pojawiają się ikony powiadomień"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:1
+msgid "Status Notifier Host Applet Factory"
+msgstr "Generator apletu gospodarza obszaru powiadamiania"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:2
+msgid "Factory for status notifier host applet"
+msgstr "Generator apletu gospodarza obszaru powiadamiania"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:3
+msgid "Status Notifier Host"
+msgstr "Gospodarz obszaru powiadamiania"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:4
+msgid "Display all Status Notifier Items"
+msgstr "Wyświetlanie wszystkich elementów obszaru powiadamiania"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
@@ -1559,11 +1575,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1810
 msgid "_Move"
 msgstr "_Przesuń"
 
-#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1795
+#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1810
 msgid "_Remove From Panel"
 msgstr "U_suń z panelu"
 
@@ -1613,8 +1629,7 @@ msgstr "Nie można wyświetlić tego adresu URL"
 msgid "No URL was specified."
 msgstr "Nie określono adresu URL."
 
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:50
+#: ../gnome-panel/launcher.c:175 ../gnome-panel/libpanel-util/panel-launch.c:50
 msgid "Could not launch application"
 msgstr "Nie można uruchomić programu"
 
@@ -1922,17 +1937,17 @@ msgstr "Usunąć aplet z konfiguracji?"
 msgid "D_on't Delete"
 msgstr "_Nie usuwaj"
 
-#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1376
+#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1379
 msgid "_Delete"
 msgstr "_Usuń"
 
-#: ../gnome-panel/panel.c:504
+#: ../gnome-panel/panel.c:507
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otwarcie adresu URL: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:578
+#: ../gnome-panel/panel.c:576 ../gnome-panel/panel-menu-items.c:578
 #, c-format
 msgid "Open '%s'"
 msgstr "Otwiera „%s”"
@@ -1940,18 +1955,18 @@ msgstr "Otwiera „%s”"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:621 ../gnome-panel/panel-menu-items.c:1132
+#: ../gnome-panel/panel.c:624 ../gnome-panel/panel-menu-items.c:1132
 msgid "Open your personal folder"
 msgstr "Otwiera katalog osobisty użytkownika"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:630 ../gnome-panel/panel-menu-items.c:1161
+#: ../gnome-panel/panel.c:633 ../gnome-panel/panel-menu-items.c:1161
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: ../gnome-panel/panel.c:631 ../gnome-panel/panel-menu-items.c:1162
+#: ../gnome-panel/panel.c:634 ../gnome-panel/panel-menu-items.c:1162
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1960,20 +1975,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:638 ../gnome-panel/panel-menu-items.c:1171
+#: ../gnome-panel/panel.c:641 ../gnome-panel/panel-menu-items.c:1171
 msgid "Network"
 msgstr "Sieć"
 
 #. name
-#: ../gnome-panel/panel.c:639 ../gnome-panel/panel-menu-items.c:1172
+#: ../gnome-panel/panel.c:642 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
 msgstr "Przegląda zakładki i lokalne położenia sieciowe"
 
-#: ../gnome-panel/panel.c:1367
+#: ../gnome-panel/panel.c:1370
 msgid "Delete this panel?"
 msgstr "Usunąć ten panel?"
 
-#: ../gnome-panel/panel.c:1371
+#: ../gnome-panel/panel.c:1374
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2096,7 +2111,7 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Wymuś zamknięcie"
 
-#: ../gnome-panel/panel-layout.c:1100 ../gnome-panel/panel-layout.c:1114
+#: ../gnome-panel/panel-layout.c:1105 ../gnome-panel/panel-layout.c:1119
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nie można utworzyć początkowego układu panelu.\n"
@@ -2165,7 +2180,7 @@ msgstr "Pulpit"
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otwiera pulpit jako katalog"
 
-#: ../gnome-panel/panel-menu-items.c:1466
+#: ../gnome-panel/panel-menu-items.c:1454
 msgid "Places"
 msgstr "Miejsca"
 
