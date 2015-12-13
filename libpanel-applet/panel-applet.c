@@ -1681,7 +1681,7 @@ panel_applet_setup (PanelApplet *applet)
 {
 	GValue   value = {0, };
 	GArray  *params;
-	gint     i;
+	guint    i;
 	gboolean ret;
 
 	g_assert (applet->priv->id != NULL &&
