@@ -156,24 +156,6 @@ na_tray_applet_change_orient (PanelApplet       *panel_applet,
                            get_gtk_orientation_from_applet_orient (orient));
 }
 
-static inline void
-force_no_focus_padding (GtkWidget *widget)
-{
-  GtkCssProvider *provider;
-
-  provider = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (provider,
-                                   "NaTrayApplet {\n"
-                                   " -GtkWidget-focus-line-width: 0px;\n"
-                                   " -GtkWidget-focus-padding: 0px;\n"
-				   "}",
-                                   -1, NULL);
-  gtk_style_context_add_provider (gtk_widget_get_style_context (widget),
-                                  GTK_STYLE_PROVIDER (provider),
-                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  g_object_unref (provider);
-}
-
 static void
 na_tray_applet_class_init (NaTrayAppletClass *class)
 {
@@ -222,8 +204,6 @@ na_tray_applet_init (NaTrayApplet *applet)
 
   panel_applet_set_flags (PANEL_APPLET (applet),
                           PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
-
-  force_no_focus_padding (GTK_WIDGET (applet));
 }
 
 static gboolean
