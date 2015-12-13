@@ -1199,54 +1199,6 @@ panel_applet_get_request_mode (GtkWidget *widget)
 }
 
 static void
-panel_applet_get_preferred_width (GtkWidget *widget,
-                                  int       *minimum_width,
-                                  int       *natural_width)
-{
-        int focus_width = 0;
-
-        GTK_WIDGET_CLASS (panel_applet_parent_class)->get_preferred_width (widget,
-                                                                           minimum_width,
-                                                                           natural_width);
-        if (!panel_applet_can_focus (widget))
-                return;
-
-        /* We are deliberately ignoring focus-padding here to
-         * save valuable panel real estate.
-         */
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              NULL);
-
-        *minimum_width += 2 * focus_width;
-        *natural_width += 2 * focus_width;
-}
-
-static void
-panel_applet_get_preferred_height (GtkWidget *widget,
-                                  int       *minimum_height,
-                                  int       *natural_height)
-{
-        int focus_width = 0;
-
-        GTK_WIDGET_CLASS (panel_applet_parent_class)->get_preferred_height (widget,
-                                                                            minimum_height,
-                                                                            natural_height);
-        if (!panel_applet_can_focus (widget))
-                return;
-
-        /* We are deliberately ignoring focus-padding here to
-         * save valuable panel real estate.
-         */
-        gtk_widget_style_get (widget,
-                              "focus-line-width", &focus_width,
-                              NULL);
-
-        *minimum_height += 2 * focus_width;
-        *natural_height += 2 * focus_width;
-}
-
-static void
 panel_applet_size_allocate (GtkWidget     *widget,
 			    GtkAllocation *allocation)
 {
@@ -1254,27 +1206,18 @@ panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	GtkWidget     *child;
 	int            border_width;
-	int            focus_width = 0;
 	PanelApplet   *applet;
 
 	if (!panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (panel_applet_parent_class)->size_allocate (widget, allocation);
 	} else {
-		/*
-		 * We are deliberately ignoring focus-padding here to
-		 * save valuable panel real estate.
-		 */
-		gtk_widget_style_get (widget,
-				      "focus-line-width", &focus_width,
-				      NULL);
-
 		border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
 		gtk_widget_set_allocation (widget, allocation);
 		bin = GTK_BIN (widget);
 
-		child_allocation.x = focus_width;
-		child_allocation.y = focus_width;
+		child_allocation.x = 0;
+		child_allocation.y = 0;
 
 		child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
 		child_allocation.height = MAX (allocation->height - border_width * 2, 0);
@@ -1285,9 +1228,6 @@ panel_applet_size_allocate (GtkWidget     *widget,
 						allocation->y + border_width,
 						child_allocation.width,
 						child_allocation.height);
-
-		child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
-		child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
 
 		child = gtk_bin_get_child (bin);
 		if (child)
@@ -1311,7 +1251,6 @@ panel_applet_draw (GtkWidget *widget,
 {
         GtkStyleContext *context;
 	int border_width;
-	int focus_width = 0;
 	gdouble x, y, width, height;
 
 	GTK_WIDGET_CLASS (panel_applet_parent_class)->draw (widget, cr);
@@ -1321,14 +1260,6 @@ panel_applet_draw (GtkWidget *widget,
 
         width = gtk_widget_get_allocated_width (widget);
         height = gtk_widget_get_allocated_height (widget);
-
-	/*
-	 * We are deliberately ignoring focus-padding here to
-	 * save valuable panel real estate.
-	 */
-	gtk_widget_style_get (widget,
-			      "focus-line-width", &focus_width,
-			      NULL);
 
 	border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
@@ -1884,8 +1815,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	widget_class->composited_changed = panel_applet_composited_changed;
 	widget_class->key_press_event = panel_applet_key_press_event;
 	widget_class->get_request_mode = panel_applet_get_request_mode;
-        widget_class->get_preferred_width = panel_applet_get_preferred_width;
-        widget_class->get_preferred_height = panel_applet_get_preferred_height;
 	widget_class->size_allocate = panel_applet_size_allocate;
 	widget_class->draw = panel_applet_draw;
 	widget_class->style_updated = panel_applet_style_updated;
