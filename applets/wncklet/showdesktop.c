@@ -130,8 +130,6 @@ update_icon (ShowDesktopData *sdd)
         GdkPixbuf *scaled;
         int        icon_size;
 	GError    *error;
-	int	   focus_width = 0;
-	int	   focus_pad = 0;
 	int	   thickness = 0;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
@@ -143,10 +141,6 @@ update_icon (ShowDesktopData *sdd)
 	state = gtk_widget_get_state_flags (sdd->button);
 	context = gtk_widget_get_style_context (sdd->button);
 	gtk_style_context_get_padding (context, state, &padding);
-	gtk_style_context_get_style (context,
-			             "focus-line-width", &focus_width,
-			             "focus-padding", &focus_pad,
-			             NULL);
 
 	switch (sdd->orient) {
 	case GTK_ORIENTATION_HORIZONTAL:
@@ -157,7 +151,7 @@ update_icon (ShowDesktopData *sdd)
 		break;
 	}
 
-	icon_size = sdd->size - 2 * (focus_width + focus_pad) - thickness;
+	icon_size = sdd->size - thickness;
 
 	if (icon_size < 22)
 		icon_size = 16;
