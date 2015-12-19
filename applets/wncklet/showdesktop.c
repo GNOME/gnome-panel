@@ -117,6 +117,9 @@ button_size_allocated (GtkWidget       *button,
 	case GTK_ORIENTATION_VERTICAL:
 		sdd->size = allocation->width;
 		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
         update_icon (sdd);
@@ -148,6 +151,9 @@ update_icon (ShowDesktopData *sdd)
 		break;
 	case GTK_ORIENTATION_VERTICAL:
 		thickness = padding.left + padding.right;
+		break;
+	default:
+		g_assert_not_reached ();
 		break;
 	}
 
@@ -191,6 +197,9 @@ update_icon (ShowDesktopData *sdd)
         case GTK_ORIENTATION_VERTICAL:
                 height = (icon_size * height) / width;
                 width = icon_size;
+                break;
+        default:
+                g_assert_not_reached ();
                 break;
         }
 

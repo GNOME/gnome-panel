@@ -538,11 +538,11 @@ setup_dialog (GtkBuilder   *builder,
 	button = get_grouping_button (tasklist, tasklist->grouping);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_object_set_data (G_OBJECT (tasklist->never_group_radio),
-			   "group_value", "never-group");
+			   "group_value", (gpointer) "never-group");
 	g_object_set_data (G_OBJECT (tasklist->auto_group_radio),
-			   "group_value", "auto-group");
+			   "group_value", (gpointer) "auto-group");
 	g_object_set_data (G_OBJECT (tasklist->always_group_radio),
-			   "group_value", "always-group");
+			   "group_value", (gpointer) "always-group");
 
 	g_signal_connect (G_OBJECT (tasklist->never_group_radio), "toggled",
 			  (GCallback) group_windows_toggled, tasklist);
