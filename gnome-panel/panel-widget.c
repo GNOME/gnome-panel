@@ -1496,6 +1496,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 {
 	GtkWidget       *widget;
 	GtkAllocation   allocation;
+	GdkSeat         *seat;
 	GdkDevice       *device;
 	int             x,y;
 	int             w,h;
@@ -1509,7 +1510,8 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   !gtk_widget_get_visible(widget))
 		return FALSE;
 
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+	seat = gdk_display_get_default_seat (gtk_widget_get_display (widget));
+	device = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
 
 	gtk_widget_get_allocation (widget, &allocation);
@@ -1829,19 +1831,16 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		GdkGrabStatus  status;
 		GdkCursor     *fleur_cursor;
 		GdkDisplay    *display;
-		GdkDevice     *pointer;
-		GdkDeviceManager *device_manager;
+		GdkSeat       *seat;
 
 		fleur_cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
 		                                           GDK_FLEUR);
 
 		display = gdk_window_get_display (window);
-		device_manager = gdk_display_get_device_manager (display);
-		pointer = gdk_device_manager_get_client_pointer (device_manager);
-		status = gdk_device_grab (pointer, window,
-					  GDK_OWNERSHIP_NONE, FALSE,
-					  APPLET_EVENT_MASK,
-					  fleur_cursor, time_);
+		seat = gdk_display_get_default_seat (display);
+
+		status = gdk_seat_grab (seat, window, GDK_SEAT_CAPABILITY_POINTER,
+		                        FALSE, fleur_cursor, NULL, NULL, NULL);
 
 		g_object_unref (fleur_cursor);
 		gdk_flush ();
@@ -1857,9 +1856,8 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 void
 panel_widget_applet_drag_end (PanelWidget *panel)
 {
-	GdkDisplay    *display;
-	GdkDevice     *pointer;
-	GdkDeviceManager *device_manager;
+	GdkDisplay *display;
+	GdkSeat *seat;
 
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
@@ -1867,10 +1865,9 @@ panel_widget_applet_drag_end (PanelWidget *panel)
 		return;
 
 	display = gtk_widget_get_display (GTK_WIDGET (panel));
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
+	seat = gdk_display_get_default_seat (display);
 
-	gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+	gdk_seat_ungrab (seat);
 	gtk_grab_remove (panel->currently_dragged_applet->applet);
 	panel_widget_applet_drag_end_no_grab (panel);
 	panel_toplevel_pop_autohide_disabler (panel->toplevel);
@@ -1883,11 +1880,13 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 {
 	int             x, y;
 	gboolean        rtl;
+	GdkSeat        *seat;
 	GdkDevice      *device;
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (GTK_WIDGET (panel))));
+	seat = gdk_display_get_default_seat (gtk_widget_get_display (GTK_WIDGET (panel)));
+	device = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(gtk_widget_get_window (GTK_WIDGET (panel)), device, &x, &y, NULL);
 	rtl = gtk_widget_get_direction (GTK_WIDGET (panel)) == GTK_TEXT_DIR_RTL;
 	
@@ -2065,13 +2064,15 @@ move_timeout_handler(gpointer data)
 	if(panel->currently_dragged_applet && repeat_if_outside) {
 		GtkWidget       *widget;
 		GtkAllocation   allocation;
+		GdkSeat         *seat;
 		GdkDevice       *device;
 		int             x,y;
 		int             w,h;
 
 		widget = panel->currently_dragged_applet->applet;
 
-		device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
+		seat = gdk_display_get_default_seat (gtk_widget_get_display (widget));
+		device = gdk_seat_get_pointer (seat);
 		gdk_window_get_device_position(gtk_widget_get_window (widget), device, &x, &y, NULL);
 
 		gtk_widget_get_allocation (widget, &allocation);
