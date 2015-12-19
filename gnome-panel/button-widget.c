@@ -410,21 +410,11 @@ button_widget_draw (GtkWidget *widget,
 	}
 
 	if (gtk_widget_has_focus (widget)) {
-		gint focus_pad;
-
                 gtk_style_context_save (context);
                 gtk_style_context_set_state (context, state_flags);
 
-		gtk_widget_style_get (widget,
-				      "focus-padding", &focus_pad,
-				      NULL);
-		x = focus_pad;
-		y = focus_pad;
-		w = width -  2 * focus_pad;
-		h = height - 2 * focus_pad;
-
                 cairo_save (cr);
-		gtk_render_focus (context, cr, x, y, w, h);
+		gtk_render_focus (context, cr, 0, 0, width, height);
                 cairo_restore (cr);
 
                 gtk_style_context_restore (context);
