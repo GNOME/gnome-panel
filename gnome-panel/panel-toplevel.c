@@ -507,9 +507,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
 	GdkDisplay    *display;
-	GdkDevice     *pointer;
-	GdkDevice     *keyboard;
-	GdkDeviceManager *device_manager;
+	GdkSeat *seat;
+	GdkSeatCapabilities capabilities;
 
 	if (toplevel->priv->state != PANEL_STATE_NORMAL ||
 	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
@@ -562,22 +561,16 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	                                     cursor_type);
 
 	display = gdk_window_get_display (window);
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	keyboard = gdk_device_get_associated_device (pointer);
+	seat = gdk_display_get_default_seat (display);
 
-	gdk_device_grab (pointer, window,
-		         GDK_OWNERSHIP_NONE, FALSE,
-			 GDK_POINTER_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-			 cursor, time_);
+	capabilities = GDK_SEAT_CAPABILITY_POINTER;
+	if (grab_keyboard)
+		capabilities |= GDK_SEAT_CAPABILITY_KEYBOARD;
+
+	gdk_seat_grab (seat, window, capabilities, FALSE, cursor,
+	               NULL, NULL, NULL);
 
 	g_object_unref (cursor);
-
-	if (grab_keyboard)
-		gdk_device_grab (keyboard, window,
-				 GDK_OWNERSHIP_NONE, FALSE,
-				 GDK_KEY_PRESS | GDK_KEY_RELEASE,
-				 NULL, time_);
 }
 
 static void
@@ -585,10 +578,8 @@ panel_toplevel_end_grab_op (PanelToplevel *toplevel,
 			    guint32        time_)
 {
 	GtkWidget *widget;
-	GdkDisplay    *display;
-	GdkDevice     *pointer;
-	GdkDevice     *keyboard;
-	GdkDeviceManager *device_manager;
+	GdkDisplay *display;
+	GdkSeat *seat;
 
 	g_return_if_fail (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE);
 
@@ -600,12 +591,9 @@ panel_toplevel_end_grab_op (PanelToplevel *toplevel,
 	gtk_grab_remove (widget);
 
 	display = gtk_widget_get_display (widget);
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	keyboard = gdk_device_get_associated_device (pointer);
+	seat = gdk_display_get_default_seat (display);
 
-	gdk_device_ungrab (pointer, time_);
-	gdk_device_ungrab (keyboard, time_);
+	gdk_seat_ungrab (seat);
 }
 
 static void
@@ -924,13 +912,17 @@ panel_toplevel_warp_pointer_increment (PanelToplevel *toplevel,
 {
 	GdkScreen 	*screen;
 	GdkWindow 	*root_window;
+	GdkDisplay      *display;
+	GdkSeat         *seat;
 	GdkDevice 	*device;
 	int        	 new_x, new_y;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	root_window = gdk_screen_get_root_window (screen);
 
-	device = gdk_device_manager_get_client_pointer(gdk_display_get_device_manager(gtk_widget_get_display(GTK_WIDGET(toplevel))));
+	display = gtk_widget_get_display (GTK_WIDGET (toplevel));
+	seat = gdk_display_get_default_seat (display);
+	device = gdk_seat_get_pointer (seat);
 	gdk_window_get_device_position(root_window, device, &new_x, &new_y, NULL);
 
 	switch (keyval) {
@@ -1393,17 +1385,18 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 	GdkDisplay *display;
 	GdkScreen  *screen;
 	GtkWidget  *widget;
-	GdkDeviceManager *device_manager;
+	GdkSeat    *seat;
 	GdkDevice  *pointer;
 	int         x, y;
 
-	display = gdk_display_get_default ();
-	device_manager = gdk_display_get_device_manager (display);
-	pointer = gdk_device_manager_get_client_pointer (device_manager);
-	widget  = GTK_WIDGET (toplevel);
+	widget = GTK_WIDGET (toplevel);
 
 	if (!gtk_widget_get_realized (widget))
 		return FALSE;
+
+	display = gdk_display_get_default ();
+	seat = gdk_display_get_default_seat (display);
+	pointer = gdk_seat_get_pointer (seat);
 
 	screen = NULL;
 	x = y = -1;
