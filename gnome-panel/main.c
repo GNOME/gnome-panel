@@ -31,7 +31,7 @@ GSList *panel_list = NULL;
 
 static gboolean  replace = FALSE;
 static gboolean  version = FALSE;
-static GtkCssProvider *provider = NULL;
+static GtkStyleProvider *provider = NULL;
 
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
@@ -40,44 +40,49 @@ static const GOptionEntry options[] = {
 };
 
 static void
-remove_style_provider (GdkScreen *screen)
-{
-  GtkStyleProvider *style_provider;
-
-  if (provider == NULL)
-    return;
-
-  style_provider = GTK_STYLE_PROVIDER (provider);
-  gtk_style_context_remove_provider_for_screen (screen, style_provider);
-  g_clear_object (&provider);
-}
-
-static void
-theme_changed (GtkSettings *settings)
+theme_changed (GtkSettings *settings,
+               gpointer     user_data)
 {
   GdkScreen *screen;
-  gchar *theme;
+  gchar *theme_name;
+  gboolean dark_theme;
+  guint priority;
+  gchar *resource;
+  GtkCssProvider *css;
 
   screen = gdk_screen_get_default ();
-  g_object_get (settings, "gtk-theme-name", &theme, NULL);
 
-  remove_style_provider (screen);
-
-  if (g_strcmp0 (theme, "Adwaita") == 0 || g_strcmp0 (theme, "HighContrast") == 0)
+  if (provider != NULL)
     {
-      gchar *resource;
-
-      provider = gtk_css_provider_new ();
-
-      resource = g_strdup_printf ("/org/gnome/panel/%s.css", theme);
-      gtk_css_provider_load_from_resource (provider, resource);
-      g_free (resource);
-
-      gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider),
-                                                 GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+      gtk_style_context_remove_provider_for_screen (screen, provider);
+      g_clear_object (&provider);
     }
 
-  g_free (theme);
+  g_object_get (settings, "gtk-theme-name", &theme_name, NULL);
+
+  if (g_strcmp0 (theme_name, "Adwaita") != 0 &&
+      g_strcmp0 (theme_name, "HighContrast") != 0)
+    {
+      g_free (theme_name);
+      return;
+    }
+
+  g_object_get (settings,
+                "gtk-application-prefer-dark-theme", &dark_theme,
+                NULL);
+
+  priority = GTK_STYLE_PROVIDER_PRIORITY_APPLICATION;
+  resource = g_strdup_printf ("/org/gnome/gnome-panel/theme/%s/gnome-panel%s.css",
+                              theme_name, dark_theme ? "-dark" : "");
+
+  css = gtk_css_provider_new ();
+  provider = GTK_STYLE_PROVIDER (css);
+
+  gtk_css_provider_load_from_resource (css, resource);
+  gtk_style_context_add_provider_for_screen (screen, provider, priority);
+
+  g_free (theme_name);
+  g_free (resource);
 }
 
 static gboolean
@@ -162,7 +167,7 @@ main (int argc, char **argv)
 
 	settings = gtk_settings_get_default ();
 	g_signal_connect (settings, "notify::gtk-theme-name", G_CALLBACK (theme_changed), NULL);
-	theme_changed (settings);
+	theme_changed (settings, NULL);
 
 	gtk_main ();
 

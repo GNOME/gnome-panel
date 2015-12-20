@@ -1,4 +1,9 @@
-SUBDIRS = 16x16 22x22 24x24 32x32 48x48 scalable
+NULL =
+
+SUBDIRS = \
+	16x16 22x22 24x24 32x32 48x48 scalable \
+	theme \
+	$(NULL)
 
 gsettings_applets_schemas_in_in =						\
 	org.gnome.gnome-panel.applet.fish.gschema.xml.in.in			\

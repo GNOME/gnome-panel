@@ -284,6 +284,10 @@ AC_CONFIG_FILES([
   data/48x48/Makefile
   data/scalable/Makefile
 
+  data/theme/Makefile
+  data/theme/Adwaita/Makefile
+  data/theme/HighContrast/Makefile
+
   gnome-panel/Makefile
   gnome-panel/libpanel-applet-private/Makefile
   gnome-panel/libpanel-util/Makefile
