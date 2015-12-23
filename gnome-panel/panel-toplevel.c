@@ -2468,8 +2468,13 @@ panel_toplevel_unexpand (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
 {
+	GtkDirectionType dir;
+
+	dir = toplevel->priv->orientation & PANEL_VERTICAL_MASK ?
+	      GTK_DIR_UP : GTK_DIR_LEFT;
+
 	if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_hide (toplevel, toplevel->priv->auto_hide, -1);
+		panel_toplevel_hide (toplevel, toplevel->priv->auto_hide, dir);
 	else
 		panel_toplevel_unhide (toplevel);
 
@@ -3122,13 +3127,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 	else {
-		if (direction == -1) {
-			if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-				direction = GTK_DIR_UP;
-			else
-				direction = GTK_DIR_LEFT;
-		}
-
 		switch (direction) {
 		case GTK_DIR_UP:
 			g_return_if_fail (toplevel->priv->orientation & PANEL_VERTICAL_MASK);
@@ -3163,6 +3161,8 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 static gboolean
 panel_toplevel_auto_hide_timeout_handler (PanelToplevel *toplevel)
 {
+	GtkDirectionType dir;
+
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
 
 	if (panel_toplevel_get_autohide_disabled (toplevel)) {
@@ -3178,7 +3178,10 @@ panel_toplevel_auto_hide_timeout_handler (PanelToplevel *toplevel)
 	if (toplevel->priv->animating)
 		return TRUE;
 
-	panel_toplevel_hide (toplevel, TRUE, -1);
+	dir = toplevel->priv->orientation & PANEL_VERTICAL_MASK ?
+	      GTK_DIR_UP : GTK_DIR_LEFT;
+
+	panel_toplevel_hide (toplevel, TRUE, dir);
 
 	toplevel->priv->hide_timeout = 0;
 
@@ -3226,9 +3229,15 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	 * again to get at the right size */
 	if (!toplevel->priv->initial_animation_done &&
 	    toplevel->priv->auto_hide) {
+		GtkDirectionType dir;
+
+		dir = toplevel->priv->orientation & PANEL_VERTICAL_MASK ?
+		      GTK_DIR_UP : GTK_DIR_LEFT;
+
 		toplevel->priv->unhide_timeout = 0;
 		panel_toplevel_unhide (toplevel);
-		panel_toplevel_hide (toplevel, TRUE, -1);
+		panel_toplevel_hide (toplevel, TRUE, dir);
+
 		return FALSE;
 	}
 
@@ -4761,8 +4770,13 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
 		if (panel_toplevel_update_struts (toplevel, FALSE)) {
 			if (toplevel->priv->animate) {
+				GtkDirectionType dir;
+
+				dir = toplevel->priv->orientation & PANEL_VERTICAL_MASK ?
+				      GTK_DIR_UP : GTK_DIR_LEFT;
+
 				panel_toplevel_unhide (toplevel);
-				panel_toplevel_hide (toplevel, TRUE, -1);
+				panel_toplevel_hide (toplevel, TRUE, dir);
 			} else
 				gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 		}
