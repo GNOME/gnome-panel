@@ -468,12 +468,8 @@ static void
 panel_properties_dialog_color_button_setup (PanelPropertiesDialog *dialog,
 					    GtkBuilder            *gui)
 {
-	GtkWidget *color_label;
-
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
-	color_label = PANEL_GTK_BUILDER_GET (gui, "color_label");
-	g_return_if_fail (color_label != NULL);
 
 	panel_properties_dialog_background_color_update (dialog);
 
@@ -481,9 +477,6 @@ panel_properties_dialog_color_button_setup (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_color_button_changed),
 				  dialog);
 
-	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_COLOR_KEY,
-				  color_label, "sensitive", FALSE);
 	g_settings_bind_writable (dialog->settings_background,
 				  PANEL_BACKGROUND_COLOR_KEY,
 				  dialog->color_button, "sensitive", FALSE);
