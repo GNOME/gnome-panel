@@ -1,2 +1,17 @@
 @import url("resource:///org/gnome/panel/Adwaita.css");
 @import url("resource:///org/gnome/gnome-panel/theme/common.css");
+
+gp-arrow-button {
+  border: 1px solid #9d9d99;
+  border-radius: 3px;
+  background-image: linear-gradient(to bottom, #e8e8e7, #dededd 60%, #cfcfcd);
+  margin: 2px;
+}
+
+gp-arrow-button:hover {
+  background-image: linear-gradient(to bottom, #f7f7f7, #e8e8e7 60%, #dededd);
+}
+
+gp-arrow-button:active {
+  background-image: linear-gradient(to bottom, #c8c8c5, #dcdcda);
+}

@@ -35,6 +35,7 @@
 
 #include <libpanel-util/panel-glib.h>
 
+#include "gp-arrow-button.h"
 #include "panel-frame.h"
 #include "panel-xutils.h"
 #include "panel-multiscreen.h"
@@ -59,7 +60,6 @@ G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 #define MINIMUM_WIDTH             100
 #define MAXIMUM_SIZE_SCREEN_RATIO 5
 #define SNAP_TOLERANCE_FACTOR     6
-#define DEFAULT_ARROW_SIZE        20
 #define HANDLE_SIZE               10
 
 typedef enum {
@@ -224,8 +224,7 @@ enum {
 	PROP_AUTOHIDE_SIZE,
 	PROP_ANIMATE,
 	PROP_ANIMATION_SPEED,
-	PROP_BUTTONS_ENABLED,
-	PROP_ARROWS_ENABLED
+	PROP_BUTTONS_ENABLED
 };
 
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
@@ -1219,10 +1218,10 @@ panel_toplevel_hide_button_clicked (PanelToplevel *toplevel,
 		return;
 
 	ltr = gtk_widget_get_direction (GTK_WIDGET (toplevel)) == GTK_TEXT_DIR_LTR;
-	arrow_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "arrow-type"));
+	arrow_type = gp_arrow_button_get_arrow_type (GP_ARROW_BUTTON (button));
 
 	if (toplevel->priv->state == PANEL_STATE_NORMAL) {
-		GtkDirectionType direction = -1;
+		GtkDirectionType direction;
 
 		switch (arrow_type) {
 		case GTK_ARROW_UP:
@@ -1237,6 +1236,7 @@ panel_toplevel_hide_button_clicked (PanelToplevel *toplevel,
 		case GTK_ARROW_RIGHT:
 			direction = ltr ? GTK_DIR_RIGHT : GTK_DIR_LEFT;
 			break;
+		case GTK_ARROW_NONE:
 		default:
 			g_assert_not_reached ();
 			break;
@@ -1254,45 +1254,8 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				int            top)
 {
 	GtkWidget *button;
-	AtkObject *obj;
-	GtkWidget *arrow;
-	int        arrow_size;
-	
-	button = gtk_button_new ();
-	obj = gtk_widget_get_accessible (button);
-	atk_object_set_name (obj, _("Hide Panel"));
-	gtk_widget_set_can_default (button, FALSE);
 
-	gtk_widget_style_get (GTK_WIDGET (toplevel),
-			      "arrow-size", &arrow_size,
-			      NULL);
-
-	switch (arrow_type) {
-	case GTK_ARROW_UP:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_DOWN:
-		gtk_widget_set_size_request (button, -1, arrow_size);
-		break;
-	case GTK_ARROW_LEFT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	case GTK_ARROW_RIGHT:
-		gtk_widget_set_size_request (button, arrow_size, -1);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	arrow = gtk_arrow_new (arrow_type, GTK_SHADOW_NONE);
-	gtk_misc_set_padding (GTK_MISC (arrow), 0, 0);
-	gtk_container_add (GTK_CONTAINER (button), arrow);
-	gtk_widget_show (arrow);
-
-	g_object_set_data (G_OBJECT (button),
-			   "arrow-type",
-			   GINT_TO_POINTER (arrow_type));
+	button = gp_arrow_button_new (arrow_type);
 
 	g_signal_connect_swapped (button, "clicked",
 				  G_CALLBACK (panel_toplevel_hide_button_clicked), toplevel);
@@ -1347,35 +1310,15 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 	}
 
 	if (toplevel->priv->arrows_enabled) {
-		int arrow_size;
-
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
-
-		gtk_widget_style_get (GTK_WIDGET (toplevel),
-				      "arrow-size", &arrow_size,
-				      NULL);
-
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,
-					     -1, arrow_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom,
-					     -1, arrow_size);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,
-					     arrow_size, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,
-					     arrow_size, -1);
 	} else {
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
 		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
-
-		gtk_widget_set_size_request (toplevel->priv->hide_button_top,    -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_bottom, -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_left,   -1, -1);
-		gtk_widget_set_size_request (toplevel->priv->hide_button_right,  -1, -1);
 	}
 }
 
@@ -3644,9 +3587,6 @@ panel_toplevel_set_property (GObject      *object,
 	case PROP_BUTTONS_ENABLED:
 		panel_toplevel_set_enable_buttons (toplevel, g_value_get_boolean (value));
 		break;
-	case PROP_ARROWS_ENABLED:
-		panel_toplevel_set_enable_arrows (toplevel, g_value_get_boolean (value));
-		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -3725,9 +3665,6 @@ panel_toplevel_get_property (GObject    *object,
 		break;
 	case PROP_BUTTONS_ENABLED:
 		g_value_set_boolean (value, toplevel->priv->buttons_enabled);
-		break;
-	case PROP_ARROWS_ENABLED:
-		g_value_set_boolean (value, toplevel->priv->arrows_enabled);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -4047,27 +3984,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"Enable hide/show buttons",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_ARROWS_ENABLED,
-		g_param_spec_boolean (
-			"arrows-enabled",
-			"Arrows Enabled",
-			"Enable arrows on hide/show buttons",
-			TRUE,
-			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	gtk_widget_class_install_style_property (
-		widget_class,
-		g_param_spec_int (
-			"arrow-size",
-			"Arrow Size",
-			"The size of the arrows on the hide/show buttons",
-			0,
-			G_MAXINT,
-			DEFAULT_ARROW_SIZE,
-			G_PARAM_READABLE));
 
 	toplevel_signals [HIDE_SIGNAL] =
 		g_signal_new ("hiding",
@@ -4492,11 +4408,27 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 			 "buttons-enabled",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
+	/* FIXME: should be in panel_toplevel_add_hide_button */
+
 	g_settings_bind (toplevel->priv->settings,
-			 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
-			 toplevel,
-			 "arrows-enabled",
-			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
+	                 toplevel->priv->hide_button_top, "arrow-visible",
+	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
+	                 toplevel->priv->hide_button_bottom, "arrow-visible",
+	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
+	                 toplevel->priv->hide_button_left, "arrow-visible",
+	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->settings,
+	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
+	                 toplevel->priv->hide_button_right, "arrow-visible",
+	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
 }
 
 static void
@@ -5200,32 +5132,6 @@ panel_toplevel_get_enable_buttons (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
 
 	return toplevel->priv->buttons_enabled;
-}
-
-void
-panel_toplevel_set_enable_arrows (PanelToplevel *toplevel,
-				  gboolean       enable_arrows)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-
-	enable_arrows = enable_arrows != FALSE;
-
-	if (toplevel->priv->arrows_enabled == enable_arrows)
-		return;
-
-	toplevel->priv->arrows_enabled = enable_arrows;
-
-	panel_toplevel_update_hide_buttons (toplevel);
-
-	g_object_notify (G_OBJECT (toplevel), "arrows-enabled");
-}
-
-gboolean
-panel_toplevel_get_enable_arrows (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->arrows_enabled;
 }
 
 void

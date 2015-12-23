@@ -13,6 +13,8 @@ bin_PROGRAMS = \
 
 panel_sources =			\
 	$(gnome_panel_BUILT_SOURCES) \
+	gp-arrow-button.c \
+	gp-arrow-button.h \
 	main.c			\
 	panel-widget.c		\
 	button-widget.c		\

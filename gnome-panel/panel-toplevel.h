@@ -146,9 +146,6 @@ PanelAnimationSpeed  panel_toplevel_get_animation_speed    (PanelToplevel       
 void                 panel_toplevel_set_enable_buttons     (PanelToplevel       *toplevel,
 							    gboolean             enable_buttons);
 gboolean             panel_toplevel_get_enable_buttons     (PanelToplevel       *toplevel);
-void                 panel_toplevel_set_enable_arrows      (PanelToplevel       *toplevel,
-							    gboolean             enable_arrows);
-gboolean             panel_toplevel_get_enable_arrows      (PanelToplevel       *toplevel);
 void                 panel_toplevel_update_edges           (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_is_last                (PanelToplevel       *toplevel);
