@@ -411,6 +411,7 @@ panel_toplevel_grab_op_cursor (PanelToplevel   *toplevel,
 	case PANEL_GRAB_OP_RESIZE_RIGHT:
 		retval = GDK_RIGHT_SIDE;
 		break;
+	case PANEL_GRAB_OP_NONE:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -441,6 +442,9 @@ panel_toplevel_init_resize_drag_offsets (PanelToplevel   *toplevel,
 		toplevel->priv->drag_offset_x =
 			toplevel->priv->geometry.x + toplevel->priv->geometry.width;
 		break;
+	case PANEL_GRAB_OP_MOVE:
+	case PANEL_GRAB_OP_RESIZE:
+	case PANEL_GRAB_OP_NONE:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -480,6 +484,7 @@ panel_toplevel_warp_pointer (PanelToplevel *toplevel)
 		x = geometry.width;
 		y = (geometry.height / 2);
 		break;
+	case PANEL_GRAB_OP_NONE:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -668,6 +673,9 @@ panel_toplevel_resize_to_pointer (PanelToplevel *toplevel,
 		else
 			new_x_right = -1;
 		break;
+	case PANEL_GRAB_OP_MOVE:
+	case PANEL_GRAB_OP_RESIZE:
+	case PANEL_GRAB_OP_NONE:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -1079,6 +1087,7 @@ panel_toplevel_handle_grab_op_key_event (PanelToplevel *toplevel,
 			retval = panel_toplevel_warp_pointer_increment (
 						toplevel, event->keyval, 1);
 			break;
+		case PANEL_GRAB_OP_NONE:
 		default:
 			g_assert_not_reached ();
 			break;
@@ -1123,6 +1132,8 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 	case PANEL_GRAB_OP_RESIZE_RIGHT:
 		panel_toplevel_resize_to_pointer (toplevel, event->x_root, event->y_root);
 		return TRUE;
+	case PANEL_GRAB_OP_NONE:
+	case PANEL_GRAB_OP_RESIZE:
 	default:
 		break;
 	}
@@ -1838,6 +1849,8 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 					   &hide_allocation);
 		*x = monitor_width - MAX (hide_allocation.width, min_hide_size);
 		break;
+	case PANEL_STATE_NORMAL:
+	case PANEL_STATE_AUTO_HIDDEN:
 	default:
 		g_assert_not_reached ();
 		break;
@@ -2753,10 +2766,10 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 	     challoc.y != child_allocation.y ||
 	     challoc.width  != child_allocation.width ||
 	     challoc.height != child_allocation.height)) {
-		GtkAllocation allocation;
+		GtkAllocation tmp;
 
-		gtk_widget_get_allocation (widget, &allocation);
-		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &allocation, FALSE);
+		gtk_widget_get_allocation (widget, &tmp);
+		gdk_window_invalidate_rect (gtk_widget_get_window (widget), &tmp, FALSE);
 	}
 
 	if (child && gtk_widget_get_visible (child))
@@ -3144,6 +3157,8 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 			g_return_if_fail (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK);
 			toplevel->priv->state = PANEL_STATE_HIDDEN_RIGHT;
 			break;
+		case GTK_DIR_TAB_FORWARD:
+		case GTK_DIR_TAB_BACKWARD:
 		default:
 			g_assert_not_reached ();
 			break;
@@ -4708,6 +4723,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 		if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 			toplevel->priv->state = PANEL_STATE_HIDDEN_DOWN;
 		break;
+	case PANEL_STATE_NORMAL:
+	case PANEL_STATE_AUTO_HIDDEN:
 	default:
 		break;
 	}
