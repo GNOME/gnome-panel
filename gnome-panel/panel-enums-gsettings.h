@@ -58,6 +58,12 @@ typedef enum {
 	PANEL_BACKGROUND_IMAGE_STYLE_FIT     = 2
 } PanelBackgroundImageStyle;
 
+typedef enum {
+	PANEL_THEME_VARIANT_SYSTEM,
+	PANEL_THEME_VARIANT_LIGHT,
+	PANEL_THEME_VARIANT_DARK
+} PanelThemeVariant;
+
 G_END_DECLS
 
 #endif /* __PANEL_ENUMS_GSETTINGS_H__ */

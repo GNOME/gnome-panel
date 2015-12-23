@@ -23,6 +23,7 @@
 #include "panel-action-protocol.h"
 #include "panel-icon-names.h"
 #include "panel-layout.h"
+#include "panel-schemas.h"
 #include "xstuff.h"
 
 /* globals */
@@ -31,6 +32,9 @@ GSList *panel_list = NULL;
 
 static gboolean  replace = FALSE;
 static gboolean  version = FALSE;
+
+static GSettings *g_settings = NULL;
+static GtkSettings *gtk_settings = NULL;
 static GtkStyleProvider *provider = NULL;
 
 static const GOptionEntry options[] = {
@@ -85,6 +89,29 @@ theme_changed (GtkSettings *settings,
   g_free (resource);
 }
 
+static void
+theme_variant_changed_cb (GSettings   *settings,
+                          const gchar *key,
+                          gpointer     user_data)
+{
+  PanelThemeVariant variant;
+
+  variant = g_settings_get_enum (settings, key);
+
+  if (variant == PANEL_THEME_VARIANT_SYSTEM)
+    {
+      gtk_settings_reset_property (gtk_settings,
+                                   "gtk-application-prefer-dark-theme");
+    }
+  else
+    {
+      g_object_set (gtk_settings, "gtk-application-prefer-dark-theme",
+                    variant == PANEL_THEME_VARIANT_DARK, NULL);
+    }
+
+  theme_changed (gtk_settings, NULL);
+}
+
 static gboolean
 on_term_signal (gpointer user_data)
 {
@@ -104,7 +131,6 @@ main (int argc, char **argv)
 {
 	GOptionContext *context;
 	GError         *error;
-	GtkSettings    *settings;
 	PanelSession   *session;
 	GSList         *toplevels_to_destroy;
 	GSList         *l;
@@ -165,12 +191,21 @@ main (int argc, char **argv)
 	 * connecting to the session manager */
 	panel_session_register_client (session);
 
-	settings = gtk_settings_get_default ();
-	g_signal_connect (settings, "notify::gtk-theme-name", G_CALLBACK (theme_changed), NULL);
-	theme_changed (settings, NULL);
+	g_settings = g_settings_new (PANEL_GENERAL_SCHEMA);
+	g_signal_connect (g_settings, "changed::" PANEL_GENERAL_THEME_VARIANT_KEY,
+	                  G_CALLBACK (theme_variant_changed_cb), NULL);
+
+	gtk_settings = gtk_settings_get_default ();
+	g_signal_connect (gtk_settings, "notify::gtk-theme-name",
+	                  G_CALLBACK (theme_changed), NULL);
+	g_signal_connect (gtk_settings, "notify::gtk-application-prefer-dark-theme",
+	                  G_CALLBACK (theme_changed), NULL);
+
+	theme_variant_changed_cb (g_settings, PANEL_GENERAL_THEME_VARIANT_KEY, NULL);
 
 	gtk_main ();
 
+	g_object_unref (g_settings);
 	g_object_unref (session);
 
 	toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
