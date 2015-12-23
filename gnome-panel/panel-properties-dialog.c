@@ -54,7 +54,6 @@ typedef struct {
 	GtkWidget     *image_widgets;
 	GtkWidget     *color_button;
 	GtkWidget     *image_chooser;
-	GtkWidget     *opacity_scale;
 
 	GtkWidget     *writability_warn_general;
 	GtkWidget     *writability_warn_background;
@@ -423,9 +422,6 @@ panel_properties_dialog_background_color_update_from_rgba (PanelPropertiesDialog
 							   GdkRGBA               *color)
 {
 	/* note: we might not be fully setup, so we have to do checks */
-	if (dialog->opacity_scale)
-		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale),
-				     color->alpha * 100.);
 	if (dialog->color_button)
 		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
 					   color);
@@ -491,60 +487,6 @@ panel_properties_dialog_color_button_setup (PanelPropertiesDialog *dialog,
 	g_settings_bind_writable (dialog->settings_background,
 				  PANEL_BACKGROUND_COLOR_KEY,
 				  dialog->color_button, "sensitive", FALSE);
-
-	if (!g_settings_is_writable (dialog->settings_background,
-				     PANEL_BACKGROUND_COLOR_KEY))
-		gtk_widget_show (dialog->writability_warn_background);
-}
-
-
-static void
-panel_properties_dialog_opacity_scale_changed (PanelPropertiesDialog *dialog)
-{
-	gdouble percentage;
-        GdkRGBA color;
-
-	percentage = gtk_range_get_value (GTK_RANGE (dialog->opacity_scale));
-
-	if (percentage >= 98)
-		percentage = 100;
-	else if (percentage <= 2)
-		percentage = 0;
-
-	panel_properties_dialog_background_color_get_rgba (dialog, &color);
-	color.alpha = (percentage / 100.);
-	panel_properties_dialog_background_color_set_from_rgba (dialog, &color);
-}
-
-static void
-panel_properties_dialog_opacity_scale_setup (PanelPropertiesDialog *dialog,
-					     GtkBuilder            *gui)
-{
-	GtkWidget *opacity_label;
-	GtkWidget *opacity_legend;
-
-	dialog->opacity_scale = PANEL_GTK_BUILDER_GET (gui, "opacity_scale");
-	g_return_if_fail (dialog->opacity_scale != NULL);
-	opacity_label = PANEL_GTK_BUILDER_GET (gui, "opacity_label");
-	g_return_if_fail (opacity_label != NULL);
-	opacity_legend = PANEL_GTK_BUILDER_GET (gui, "opacity_legend");
-	g_return_if_fail (opacity_legend != NULL);
-
-	panel_properties_dialog_background_color_update (dialog);
-
-	g_signal_connect_swapped (dialog->opacity_scale, "value_changed",
-				  G_CALLBACK (panel_properties_dialog_opacity_scale_changed),
-				  dialog);
-
-	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_COLOR_KEY,
-				  opacity_label, "sensitive", FALSE);
-	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_COLOR_KEY,
-				  opacity_legend, "sensitive", FALSE);
-	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_COLOR_KEY,
-				  dialog->opacity_scale, "sensitive", FALSE);
 
 	if (!g_settings_is_writable (dialog->settings_background,
 				     PANEL_BACKGROUND_COLOR_KEY))
@@ -764,7 +706,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	panel_properties_dialog_image_chooser_setup     (dialog, gui);
 	panel_properties_dialog_color_button_setup      (dialog, gui);
-	panel_properties_dialog_opacity_scale_setup     (dialog, gui);
 	panel_properties_dialog_background_radios_setup (dialog, gui);
 
 	g_signal_connect (dialog->settings_background, "changed",
