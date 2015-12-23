@@ -403,65 +403,40 @@ panel_properties_dialog_image_chooser_setup (PanelPropertiesDialog *dialog,
  * Background color *
 \********************/
 
-static void
-panel_properties_dialog_background_color_get_rgba (PanelPropertiesDialog *dialog,
-						   GdkRGBA               *color)
+static gboolean
+get_color (GValue   *value,
+           GVariant *variant,
+           gpointer  user_data)
 {
-	char *color_str;
+	const gchar *color;
+	GdkRGBA rgba;
 
-	color_str = g_settings_get_string (dialog->settings_background,
-					   PANEL_BACKGROUND_COLOR_KEY);
+	color = g_variant_get_string (variant, NULL);
 
-	if (!gdk_rgba_parse (color, color_str))
-		gdk_rgba_parse (color, PANEL_BACKGROUND_COLOR_DEFAULT);
-	g_free (color_str);
+	if (!gdk_rgba_parse (&rgba, color))
+		return FALSE;
+
+	g_value_set_boxed (value, &rgba);
+
+	return TRUE;
 }
 
-static void
-panel_properties_dialog_background_color_update_from_rgba (PanelPropertiesDialog *dialog,
-							   GdkRGBA               *color)
+static GVariant *
+set_color (const GValue       *value,
+           const GVariantType *expected_type,
+           gpointer            user_data)
 {
-	/* note: we might not be fully setup, so we have to do checks */
-	if (dialog->color_button)
-		gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->color_button),
-					   color);
-}
+	GdkRGBA *rgba;
+	gchar *color;
+	GVariant *variant;
 
-static void
-panel_properties_dialog_background_color_set_from_rgba (PanelPropertiesDialog *dialog,
-							GdkRGBA               *color)
-{
-	char *color_str;
+	rgba = g_value_get_boxed (value);
+	color = gdk_rgba_to_string (rgba);
 
-	color_str = gdk_rgba_to_string (color);
-	g_settings_set_string (dialog->settings_background,
-			       PANEL_BACKGROUND_COLOR_KEY, color_str);
-	g_free (color_str);
+	variant = g_variant_new_string (color);
+	g_free (color);
 
-	/* make sure all widgets are consistent */
-	panel_properties_dialog_background_color_update_from_rgba (dialog, color);
-}
-
-static void
-panel_properties_dialog_background_color_update (PanelPropertiesDialog *dialog)
-{
-	GdkRGBA color;
-
-	panel_properties_dialog_background_color_get_rgba (dialog, &color);
-	panel_properties_dialog_background_color_update_from_rgba (dialog, &color);
-}
-
-static void
-panel_properties_dialog_color_button_changed (PanelPropertiesDialog *dialog,
-					      GtkColorChooser        *color_button)
-{
-	GdkRGBA old_color;
-	GdkRGBA new_color;
-
-	panel_properties_dialog_background_color_get_rgba (dialog, &old_color);
-	gtk_color_chooser_get_rgba (color_button, &new_color);
-	new_color.alpha = old_color.alpha;
-	panel_properties_dialog_background_color_set_from_rgba (dialog, &new_color);
+	return variant;
 }
 
 static void
@@ -471,15 +446,12 @@ panel_properties_dialog_color_button_setup (PanelPropertiesDialog *dialog,
 	dialog->color_button = PANEL_GTK_BUILDER_GET (gui, "color_button");
 	g_return_if_fail (dialog->color_button != NULL);
 
-	panel_properties_dialog_background_color_update (dialog);
-
-	g_signal_connect_swapped (dialog->color_button, "color_set",
-				  G_CALLBACK (panel_properties_dialog_color_button_changed),
-				  dialog);
-
-	g_settings_bind_writable (dialog->settings_background,
-				  PANEL_BACKGROUND_COLOR_KEY,
-				  dialog->color_button, "sensitive", FALSE);
+	g_settings_bind_with_mapping (dialog->settings_background,
+	                              PANEL_BACKGROUND_COLOR_KEY,
+	                              dialog->color_button, "rgba",
+	                              G_SETTINGS_BIND_DEFAULT,
+	                              get_color, set_color,
+	                              dialog, NULL);
 
 	if (!g_settings_is_writable (dialog->settings_background,
 				     PANEL_BACKGROUND_COLOR_KEY))
@@ -605,8 +577,6 @@ panel_properties_dialog_background_changed (GSettings             *settings,
 		panel_properties_dialog_background_type_update (dialog);
 	else if (g_strcmp0 (key, PANEL_BACKGROUND_IMAGE_URI_KEY) == 0)
 		panel_properties_dialog_background_image_update (dialog);
-	else if (g_strcmp0 (key, PANEL_BACKGROUND_COLOR_KEY) == 0)
-		panel_properties_dialog_background_color_update (dialog);
 }
 
 /******************************\
