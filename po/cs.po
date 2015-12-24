@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-14 08:26+0000\n"
-"PO-Revision-Date: 2015-10-14 14:12+0200\n"
+"POT-Creation-Date: 2015-12-24 09:49+0000\n"
+"PO-Revision-Date: 2015-12-24 10:59+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -99,83 +99,83 @@ msgstr "Kalendář"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:293
+#: ../applets/clock/clock.c:287
 msgid "%A %B %d (%%s)"
 msgstr "%A, %e. %B (%%s)"
 
-#: ../applets/clock/clock.c:305
+#: ../applets/clock/clock.c:299
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknutím se skryjí události a úkoly"
 
-#: ../applets/clock/clock.c:308
+#: ../applets/clock/clock.c:302
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknutím se zobrazí události a úkoly"
 
-#: ../applets/clock/clock.c:312
+#: ../applets/clock/clock.c:306
 msgid "Click to hide month calendar"
 msgstr "Kliknutím se skryje měsíční kalendář"
 
-#: ../applets/clock/clock.c:315
+#: ../applets/clock/clock.c:309
 msgid "Click to view month calendar"
 msgstr "Kliknutím se zobrazí měsíční kalendář"
 
-#: ../applets/clock/clock.c:950
+#: ../applets/clock/clock.c:919
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: ../applets/clock/clock.c:1116
+#: ../applets/clock/clock.c:1085
 msgid "Failed to open the time settings"
 msgstr "Selhalo otevření nastavení času"
 
-#: ../applets/clock/clock.c:1709
+#: ../applets/clock/clock.c:1678
 msgid "Choose Location"
 msgstr "Vybrat místo"
 
-#: ../applets/clock/clock.c:1788
+#: ../applets/clock/clock.c:1757
 msgid "Edit Location"
 msgstr "Upravit místo"
 
-#: ../applets/clock/clock.c:1822 ../applets/clock/clock.c:1830
+#: ../applets/clock/clock.c:1791 ../applets/clock/clock.c:1799
 msgid "Default"
 msgstr "výchozí"
 
-#: ../applets/clock/clock.c:1823
+#: ../applets/clock/clock.c:1792
 msgid "Kelvin"
 msgstr "Stupně Kelvina"
 
-#: ../applets/clock/clock.c:1824
+#: ../applets/clock/clock.c:1793
 msgid "Celsius"
 msgstr "Stupně Celsia"
 
-#: ../applets/clock/clock.c:1825
+#: ../applets/clock/clock.c:1794
 msgid "Fahrenheit"
 msgstr "Stupně Fahrenheita"
 
-#: ../applets/clock/clock.c:1831
+#: ../applets/clock/clock.c:1800
 msgid "Meters per second (m/s)"
 msgstr "Metry za sekundu (m/s)"
 
-#: ../applets/clock/clock.c:1832
+#: ../applets/clock/clock.c:1801
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometry za hodinu (km/h)"
 
-#: ../applets/clock/clock.c:1833
+#: ../applets/clock/clock.c:1802
 msgid "Miles per hour (mph)"
 msgstr "Míle za hodinu (mph)"
 
-#: ../applets/clock/clock.c:1834
+#: ../applets/clock/clock.c:1803
 msgid "Knots"
 msgstr "Uzly"
 
-#: ../applets/clock/clock.c:1835
+#: ../applets/clock/clock.c:1804
 msgid "Beaufort scale"
 msgstr "Beaufortova stupnice"
 
-#: ../applets/clock/clock.c:1888
+#: ../applets/clock/clock.c:1857
 msgid "City Name"
 msgstr "Název města"
 
-#: ../applets/clock/clock.c:1892
+#: ../applets/clock/clock.c:1861
 msgid "City Time Zone"
 msgstr "Časové pásmo města"
 
@@ -540,7 +540,7 @@ msgstr "Příkaz, který spustit _při kliknutí:"
 msgid "Animation:"
 msgstr "Animace:"
 
-#: ../applets/fish/fish.ui.h:8 ../gnome-panel/panel-properties-dialog.ui.h:14
+#: ../applets/fish/fish.ui.h:8
 msgid "    "
 msgstr "    "
 
@@ -572,7 +572,7 @@ msgstr "Ryba"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Zobrazit plavající rybu nebo jinou animovanou potvoru"
 
-#: ../applets/notification_area/main.c:221
+#: ../applets/notification_area/main.c:208
 msgid "Panel Notification Area"
 msgstr "Oznamovací oblast na panelu"
 
@@ -592,16 +592,34 @@ msgstr "Oznamovací oblast"
 msgid "Area where notification icons appear"
 msgstr "Oblast, ve které se objevují oznamovací ikony"
 
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:1
+#| msgid "Test DBus Applet Factory"
+msgid "Status Notifier Host Applet Factory"
+msgstr "Generátor apletu Hostitel oznamování stavu"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:2
+#| msgid "Factory for Test DBus Applet"
+msgid "Factory for status notifier host applet"
+msgstr "Generátor pro aplet Hostitel oznamování stavu"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:3
+msgid "Status Notifier Host"
+msgstr "Hostitel oznamování stavu"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:4
+msgid "Display all Status Notifier Items"
+msgstr "Zobrazí všechny položky z oznamování stavu"
+
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
-msgstr "Generátor apletu navigace v oknech"
+msgstr "Generátor apletu Navigace v oknech"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
 msgid "Factory for the window navigation related applets"
 msgstr "Generátor pro aplety vztahující se k navigaci v oknech"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:202
+#: ../applets/wncklet/window-menu.c:181
 msgid "Window Selector"
 msgstr "Výběr oken"
 
@@ -642,19 +660,19 @@ msgstr "Nelze načíst %s: %s\n"
 msgid "Icon not found"
 msgstr "Ikona nenalezena"
 
-#: ../applets/wncklet/showdesktop.c:227
+#: ../applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Skrytá okna obnovíte kliknutím zde."
 
-#: ../applets/wncklet/showdesktop.c:229
+#: ../applets/wncklet/showdesktop.c:232
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
 
-#: ../applets/wncklet/showdesktop.c:435
+#: ../applets/wncklet/showdesktop.c:426
 msgid "Show Desktop Button"
 msgstr "Tlačítko Zobrazit pracovní plochu"
 
-#: ../applets/wncklet/showdesktop.c:500
+#: ../applets/wncklet/showdesktop.c:491
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -1006,10 +1024,14 @@ msgid "Icon size for only Applications item in the Menu Bar applet"
 msgstr "Velikost ikon puze pro položky aplikací v apletu Lišta nabídky"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+msgid "Which theme variant to use"
+msgstr "Která varianta motivu se má použít"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
 msgid "Panel ID list"
 msgstr "Seznam ID panelů"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -1017,11 +1039,11 @@ msgstr ""
 "Seznam ID panelů. Každé ID identifikuje jeden panel nejvyšší úrovně. "
 "Nastavení každého takového panelu je uloženo v /apps/panel/toplevels/$(id)."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
 msgid "Panel object ID list"
 msgstr "Seznam ID objektů panelu"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -1031,11 +1053,11 @@ msgstr ""
 "aplet, spouštěč, tlačítko akce nebo nabídku tlačítka/lišty). Nastavení "
 "každého takového objektu je uloženo v /apps/panel/objects/$(id)."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
 msgid "Complete panel lockdown"
 msgstr "Úplné zamčení panelu"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1045,11 +1067,11 @@ msgstr ""
 "applety ale možná bude potřeba zamknout odděleně. Aby mělo toto nastavení "
 "vliv, musí být panel restartován."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
 msgid "Applet IIDs to disable from loading"
 msgstr "IID appletů, jejichž načítání zakázat"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1062,11 +1084,11 @@ msgstr ""
 "do tohoto seznamu. Aby mělo takové nastavení vliv, musí být panel "
 "restartován."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
 msgid "Disable Force Quit"
 msgstr "Zakázat vynucení ukončení"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1074,20 +1096,20 @@ msgstr ""
 "Je-li zapnuto, panel uživateli nedovolí vynutit ukončení aplikace tím, že "
 "odstraní přístup k tlačítku vynuceného ukončení."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
 msgid "History of \"Run Application\" dialog"
 msgstr "Historie dialogového okna „Spustit aplikaci“"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "Seznam příkazů použitý dříve v dialogovém okně „Spustit aplikaci“."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Povolit seznam programů v dialogu „Spustit aplikaci“"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1097,11 +1119,11 @@ msgstr ""
 "„Známé aplikace“. Zda seznam je nebo není rozbalen při zobrazení dialogu, to "
 "je řízeno nastavením klíče show_program_list."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Rozbalit seznam programů v dialogu „Spustit aplikaci“"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:23
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1111,11 +1133,11 @@ msgstr ""
 "okna „Spustit aplikaci“ rozbalen. Toto nastavení má vliv jen pokud je klíč "
 "enable_program_list zapnutý."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:23
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:24
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Povolit automatické doplňování v dialogu „Spustit aplikaci“"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:24
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:25
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -1549,11 +1571,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1810
+#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1741
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1810
+#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1741
 msgid "_Remove From Panel"
 msgstr "_Odstranit z panelu"
 
@@ -1583,7 +1605,7 @@ msgstr "Vlastnosti adresáře"
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:142
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
@@ -1595,6 +1617,10 @@ msgstr ""
 "Spouští další aplikace a poskytuje různé nástroje ke správě oken, zobrazuje "
 "čas atd."
 
+#: ../gnome-panel/gp-arrow-button.c:120
+msgid "Hide Panel"
+msgstr "Skrýt panel"
+
 #: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
 msgstr "Toto URL nelze zobrazit"
@@ -1603,8 +1629,7 @@ msgstr "Toto URL nelze zobrazit"
 msgid "No URL was specified."
 msgstr "Nebylo zadáno URL."
 
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:50
+#: ../gnome-panel/launcher.c:175 ../gnome-panel/libpanel-util/panel-launch.c:50
 msgid "Could not launch application"
 msgstr "Nelze spustit aplikaci"
 
@@ -1676,11 +1701,11 @@ msgstr "Nelze otevřít umístění „%s“"
 msgid "No application to handle search folders is installed."
 msgstr "Není nainstalována žádná aplikace určená k obsluze složek hledání."
 
-#: ../gnome-panel/main.c:37
+#: ../gnome-panel/main.c:41
 msgid "Replace a currently running panel"
 msgstr "Nahradit právě spuštěný panel"
 
-#: ../gnome-panel/main.c:38
+#: ../gnome-panel/main.c:42
 msgid "Print version"
 msgstr "Vypsat verzi"
 
@@ -2172,25 +2197,25 @@ msgstr "Vždy zobrazovat obrázky"
 msgid "Whether the image will always be shown"
 msgstr "Zda mají být obrázky vždy zobrazeny"
 
-#: ../gnome-panel/panel-properties-dialog.c:77
+#: ../gnome-panel/panel-properties-dialog.c:76
 #: ../gnome-panel/panel-test-applets.c:48
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Nahoru"
 
-#: ../gnome-panel/panel-properties-dialog.c:78
+#: ../gnome-panel/panel-properties-dialog.c:77
 #: ../gnome-panel/panel-test-applets.c:49
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Dolů"
 
-#: ../gnome-panel/panel-properties-dialog.c:79
+#: ../gnome-panel/panel-properties-dialog.c:78
 #: ../gnome-panel/panel-test-applets.c:50
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Doleva"
 
-#: ../gnome-panel/panel-properties-dialog.c:80
+#: ../gnome-panel/panel-properties-dialog.c:79
 #: ../gnome-panel/panel-test-applets.c:51
 msgctxt "Orientation"
 msgid "Right"
@@ -2241,55 +2266,39 @@ msgstr "Žá_dné (používat motiv systému)"
 msgid "Solid c_olor"
 msgstr "_Jednolitá barva"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
+#: ../gnome-panel/panel-properties-dialog.ui.h:14
 msgid "Pick a color"
 msgstr "Vybrat barvu"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Transparent"
-msgstr "Průhledné"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Opaque"
-msgstr "Neprůhledné"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "Co_lor:"
-msgstr "_Barva:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "S_tyle:"
-msgstr "_Styl:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
+#: ../gnome-panel/panel-properties-dialog.ui.h:15
 msgid "Background _image:"
 msgstr "_Obrázek na pozadí:"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
+#: ../gnome-panel/panel-properties-dialog.ui.h:16
 msgid "Select background"
 msgstr "Zvolit pozadí"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
+#: ../gnome-panel/panel-properties-dialog.ui.h:17
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
+#: ../gnome-panel/panel-properties-dialog.ui.h:18
 msgid "Image Background Details"
 msgstr "Detaily obrázku na pozadí"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
+#: ../gnome-panel/panel-properties-dialog.ui.h:19
 msgid "_Tile"
 msgstr "Dlažd_ice"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
+#: ../gnome-panel/panel-properties-dialog.ui.h:20
 msgid "_Scale"
 msgstr "Přizpů_sobený"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
+#: ../gnome-panel/panel-properties-dialog.ui.h:21
 msgid "St_retch"
 msgstr "_Roztažený"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:27
+#: ../gnome-panel/panel-properties-dialog.ui.h:22
 msgid "Rotate image when panel is _vertical"
 msgstr "Na s_vislém panelu obrázek otočit"
 
@@ -2455,73 +2464,69 @@ msgstr "Zavřít"
 msgid "_Applet:"
 msgstr "App_let:"
 
-#: ../gnome-panel/panel-toplevel.c:1271
-msgid "Hide Panel"
-msgstr "Skrýt panel"
-
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1647
+#: ../gnome-panel/panel-toplevel.c:1594
 msgid "Top Expanded Edge Panel"
 msgstr "Rozpínací hranový panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1648
+#: ../gnome-panel/panel-toplevel.c:1595
 msgid "Top Centered Panel"
 msgstr "Panel nahoře uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1649
+#: ../gnome-panel/panel-toplevel.c:1596
 msgid "Top Floating Panel"
 msgstr "Plovoucí panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1650
+#: ../gnome-panel/panel-toplevel.c:1597
 msgid "Top Edge Panel"
 msgstr "Hranový panel nahoře"
 
-#: ../gnome-panel/panel-toplevel.c:1654
+#: ../gnome-panel/panel-toplevel.c:1601
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rozpínací hranový panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1655
+#: ../gnome-panel/panel-toplevel.c:1602
 msgid "Bottom Centered Panel"
 msgstr "Panel dole uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1656
+#: ../gnome-panel/panel-toplevel.c:1603
 msgid "Bottom Floating Panel"
 msgstr "Plovoucí panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1657
+#: ../gnome-panel/panel-toplevel.c:1604
 msgid "Bottom Edge Panel"
 msgstr "Hranový panel dole"
 
-#: ../gnome-panel/panel-toplevel.c:1661
+#: ../gnome-panel/panel-toplevel.c:1608
 msgid "Left Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1662
+#: ../gnome-panel/panel-toplevel.c:1609
 msgid "Left Centered Panel"
 msgstr "Panel vlevo uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1663
+#: ../gnome-panel/panel-toplevel.c:1610
 msgid "Left Floating Panel"
 msgstr "Plovoucí panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1664
+#: ../gnome-panel/panel-toplevel.c:1611
 msgid "Left Edge Panel"
 msgstr "Hranový panel vlevo"
 
-#: ../gnome-panel/panel-toplevel.c:1668
+#: ../gnome-panel/panel-toplevel.c:1615
 msgid "Right Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vpravo"
 
-#: ../gnome-panel/panel-toplevel.c:1669
+#: ../gnome-panel/panel-toplevel.c:1616
 msgid "Right Centered Panel"
 msgstr "Panel vpravo uprostřed"
 
-#: ../gnome-panel/panel-toplevel.c:1670
+#: ../gnome-panel/panel-toplevel.c:1617
 msgid "Right Floating Panel"
 msgstr "Plovoucí panel vpravo"
 
-#: ../gnome-panel/panel-toplevel.c:1671
+#: ../gnome-panel/panel-toplevel.c:1618
 msgid "Right Edge Panel"
 msgstr "Hranový panel vpravo"
 
@@ -2573,3 +2578,15 @@ msgstr "Aplet testování DBus"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Jednoduchý aplet pro testování panelu GNOME"
+
+#~ msgid "Transparent"
+#~ msgstr "Průhledné"
+
+#~ msgid "Opaque"
+#~ msgstr "Neprůhledné"
+
+#~ msgid "Co_lor:"
+#~ msgstr "_Barva:"
+
+#~ msgid "S_tyle:"
+#~ msgstr "_Styl:"
