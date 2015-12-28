@@ -1,11 +1,18 @@
 @import url("resource:///org/gnome/panel/HighContrast.css");
-@import url("resource:///org/gnome/gnome-panel/theme/common.css");
 
 gp-arrow-button {
+  min-width: 20px;
+  min-height: 0px;
+
   border: 2px solid #7f7f7f;
   border-radius: 3px;
   background-color: #ffffff;
   margin: 2px;
+}
+
+.vertical gp-arrow-button {
+  min-width: 0px;
+  min-height: 20px;
 }
 
 gp-arrow-button:hover {
