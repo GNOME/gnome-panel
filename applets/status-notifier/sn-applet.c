@@ -91,7 +91,7 @@ item_added_cb (SnHost   *host,
   gtk_box_pack_start (GTK_BOX (applet->box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  g_object_bind_property (applet->box, "orientation", item, "orientation",
+  g_object_bind_property (applet->box, "orientation", button, "orientation",
                           G_BINDING_DEFAULT);
 
   gtk_container_foreach (GTK_CONTAINER (applet->box), reorder_items, applet);
