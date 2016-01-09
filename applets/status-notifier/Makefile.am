@@ -17,6 +17,8 @@ libsn_applet_la_CFLAGS = \
 libsn_applet_la_SOURCES = \
 	sn-applet.c \
 	sn-applet.h \
+	sn-button.c \
+	sn-button.h \
 	$(NULL)
 
 libsn_applet_la_LIBADD = \
