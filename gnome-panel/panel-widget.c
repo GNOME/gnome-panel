@@ -1421,6 +1421,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.y = ad->constrained;
 			}
 			ad->min_cells  = ad->cells;
+
+			challoc.width = MAX (challoc.width, 0);
+			challoc.height = MAX (challoc.height, 0);
+
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
 		}
@@ -1483,7 +1487,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
-			
+
+			challoc.width = MAX (challoc.width, 0);
+			challoc.height = MAX (challoc.height, 0);
+
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
