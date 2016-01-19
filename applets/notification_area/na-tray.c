@@ -533,11 +533,12 @@ na_tray_draw_icon (GtkWidget *widget,
     }
 }
 
-static void
+static gboolean
 na_tray_draw_box (GtkWidget *box,
 		  cairo_t   *cr)
 {
   gtk_container_foreach (GTK_CONTAINER (box), na_tray_draw_icon, cr);
+  return TRUE;
 }
 
 static void
