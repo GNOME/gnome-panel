@@ -180,6 +180,11 @@ clock_box_init (ClockBox *box)
 static void
 clock_box_class_init (ClockBoxClass *klass)
 {
+	GtkWidgetClass *widget_class;
+
+	widget_class = GTK_WIDGET_CLASS (klass);
+
+	gtk_widget_class_set_css_name (widget_class, "clock-box");
 }
 
 /* Clock */
