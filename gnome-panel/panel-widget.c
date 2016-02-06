@@ -394,6 +394,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
+
+	gtk_widget_class_set_css_name (widget_class, "panel-widget");
 }
 
 static void
