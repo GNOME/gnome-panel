@@ -1,4 +1,44 @@
-@import url("resource:///org/gnome/panel/Adwaita.css");
+panel-widget {
+  background-color: #393f3f;
+}
+
+.gnome-panel-menu-bar,
+panel-applet > menubar,
+clock-box {
+  font: regular;
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.gnome-panel-menu-bar menu,
+panel-applet > menubar menu {
+  font: regular;
+}
+
+.gnome-panel-menu-bar menuitem:hover,
+panel-applet > menubar menuitem:hover {
+  background-color: darken(#4a90d9, 20%);
+  color: #ffffff;
+}
+
+#tasklist-button,
+#clock-applet-button,
+#showdesktop-button {
+  padding: 0px 4px;
+  color: #ffffff;
+  border: 0;
+  border-radius: 0;
+}
+
+wnck-pager:selected {
+  background-color: darken(#4a90d9, 20%);
+}
+
+na-tray-applet {
+  -NaTrayApplet-icon-padding: 2;
+  -NaTrayApplet-icon-size: 16;
+}
 
 gp-arrow-button {
   min-width: 20px;

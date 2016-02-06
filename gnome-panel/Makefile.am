@@ -297,8 +297,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =					\
 	$(ui_FILES)				\
 	panel.gresource.xml			\
-	Adwaita.css \
-	HighContrast.css \
 	$(uitest_FILES)				\
 	panel-test-applets.gresource.xml	\
 	panel-marshal.list			\
