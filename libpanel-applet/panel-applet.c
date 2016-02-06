@@ -2017,6 +2017,8 @@ panel_applet_class_init (PanelAppletClass *klass)
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
+
+	gtk_widget_class_set_css_name (widget_class, "panel-applet");
 }
 
 static void
