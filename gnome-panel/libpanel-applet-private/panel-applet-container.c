@@ -427,6 +427,8 @@ applet_factory_data_free (AppletFactoryData *data)
 	if (data->cancellable)
 		g_object_unref (data->cancellable);
 
+	g_variant_unref (data->parameters);
+
 	g_free (data);
 }
 
@@ -470,6 +472,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 {
 	GTask              *task;
 	AppletFactoryData  *data;
+	GVariant           *parameters;
 	gint                screen_number;
 	gchar              *bus_name;
 	gchar              *factory_id;
@@ -495,11 +498,12 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 	/* we can't use the screen of the container widget since it's not in a
 	 * widget hierarchy yet */
 	screen_number = gdk_screen_get_number (screen);
+	parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
 
 	data = g_new (AppletFactoryData, 1);
 	data->task = task;
 	data->factory_id = factory_id;
-	data->parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
+	data->parameters = g_variant_ref_sink (parameters);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
 
 	bus_name = g_strdup_printf (PANEL_APPLET_BUS_NAME, factory_id);
