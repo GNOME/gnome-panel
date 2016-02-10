@@ -368,13 +368,21 @@ on_proxy_appeared (GObject      *source_object,
 	g_object_unref (container);
 }
 
+typedef struct {
+	GTask        *task;
+	gchar        *factory_id;
+	GVariant     *parameters;
+	GCancellable *cancellable;
+} AppletFactoryData;
+
 static void
 get_applet_cb (GObject      *source_object,
-	       GAsyncResult *res,
-	       gpointer      user_data)
+               GAsyncResult *res,
+               gpointer       user_data)
 {
+	AppletFactoryData    *data = (AppletFactoryData*) user_data;
 	GDBusConnection      *connection = G_DBUS_CONNECTION (source_object);
-	GTask                *task = G_TASK (user_data);
+	GTask                *task = data->task;
 	PanelAppletContainer *container;
 	GVariant             *retvals;
 	const gchar          *applet_path;
@@ -413,16 +421,13 @@ get_applet_cb (GObject      *source_object,
 	g_object_unref (container);
 }
 
-typedef struct {
-	GTask        *task;
-	gchar        *factory_id;
-	GVariant     *parameters;
-	GCancellable *cancellable;
-} AppletFactoryData;
-
 static void
 applet_factory_data_free (AppletFactoryData *data)
 {
+	if (!data)
+		return;
+
+	g_object_unref (data->task);
 	g_free (data->factory_id);
 	if (data->cancellable)
 		g_object_unref (data->cancellable);
@@ -442,6 +447,10 @@ on_factory_appeared (GDBusConnection   *connection,
 	gchar                *object_path;
 
 	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (data->task)));
+
+	g_bus_unwatch_name (container->priv->name_watcher_id);
+	container->priv->name_watcher_id = 0;
+
 	container->priv->bus_name = g_strdup (name_owner);
 	g_object_unref (container);
 
@@ -457,7 +466,7 @@ on_factory_appeared (GDBusConnection   *connection,
 				-1,
 				data->cancellable,
 				get_applet_cb,
-				data->task);
+				data);
 	g_free (object_path);
 }
 
@@ -477,6 +486,8 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 	gchar              *bus_name;
 	gchar              *factory_id;
 	gchar              *applet_id;
+
+	g_message ("panel_applet_container_get_applet");
 
 	task = g_task_new (container, cancellable, callback, user_data);
 
@@ -501,7 +512,7 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 	parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
 
 	data = g_new (AppletFactoryData, 1);
-	data->task = task;
+	data->task = g_object_ref (task);
 	data->factory_id = factory_id;
 	data->parameters = g_variant_ref_sink (parameters);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
@@ -534,6 +545,8 @@ panel_applet_container_add (PanelAppletContainer *container,
 	g_return_if_fail (iid != NULL);
 
 	panel_applet_container_cancel_pending_operations (container);
+
+	g_message ("panel_applet_container_add");
 
 	panel_applet_container_get_applet (container, screen, iid, properties,
 					   cancellable, callback, user_data);
