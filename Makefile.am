@@ -11,7 +11,7 @@ SUBDIRS = \
 	po \
 	$(NULL)
 
-DISTCHECK_CONFIGURE_FLAGS = \
+AM_DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
 	--enable-introspection \
 	$(NULL)
