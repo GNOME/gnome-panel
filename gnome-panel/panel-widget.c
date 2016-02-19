@@ -69,7 +69,6 @@ static void panel_widget_cremove              (GtkContainer     *container,
 					       GtkWidget        *widget);
 static void panel_widget_dispose              (GObject          *obj);
 static void panel_widget_finalize             (GObject          *obj);
-static void panel_widget_realize              (GtkWidget        *widget);
 
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
@@ -379,7 +378,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->get_preferred_width = panel_widget_get_preferred_width;
 	widget_class->get_preferred_height = panel_widget_get_preferred_height;
 	widget_class->size_allocate = panel_widget_size_allocate;
-	widget_class->realize = panel_widget_realize;
 	widget_class->focus = panel_widget_real_focus;
 
 	container_class->add = panel_widget_cadd;
@@ -1496,23 +1494,6 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	   (y-overlap)<=h)
 		return TRUE;
 	return FALSE;
-}
-
-static void
-panel_widget_realize (GtkWidget *widget)
-{
-	GdkScreen *screen;
-	GdkVisual *visual;
-
-	screen = gtk_widget_get_screen (widget);
-	visual = gdk_screen_get_rgba_visual (screen);
-
-	if (visual == NULL)
-		visual = gdk_screen_get_system_visual (screen);
-
-	gtk_widget_set_visual (widget, visual);
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 }
 
 static void

@@ -2592,14 +2592,24 @@ set_background_default_style (GtkWidget *widget)
 static void
 panel_toplevel_realize (GtkWidget *widget)
 {
-	PanelToplevel *toplevel = (PanelToplevel *) widget;
-	GdkWindow     *window;
-	GdkGeometry    geometry;
+	PanelToplevel *toplevel;
+	GdkScreen *screen;
+	GdkVisual *visual;
+	GdkWindow *window;
+	GdkGeometry geometry;
 
+	toplevel = PANEL_TOPLEVEL (widget);
+
+	screen = gtk_widget_get_screen (widget);
+	visual = gdk_screen_get_rgba_visual (screen);
+
+	if (visual == NULL)
+		visual = gdk_screen_get_system_visual (screen);
+
+	gtk_widget_set_visual (widget, visual);
 	gtk_window_stick (GTK_WINDOW (widget));
 
-	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize)
-		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
+	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
 
 	window = gtk_widget_get_window (widget);
 
