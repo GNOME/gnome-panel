@@ -117,7 +117,7 @@ panel_applet_frame_draw (GtkWidget *widget,
 	gtk_style_context_get (context, state,
 			       "background-image", &bg_pattern,
 			       NULL);
-	background = &frame->priv->panel->background;
+	background = &frame->priv->panel->toplevel->background;
 
 	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
 	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
@@ -237,7 +237,7 @@ change_background (PanelAppletFrame *frame,
 	    old->height == new->height)
 		return;
 
-	type = frame->priv->panel->background.type;
+	type = frame->priv->panel->toplevel->background.type;
 
 	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame,
 	                                                         type);
@@ -643,7 +643,7 @@ _panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 		}
 	}
 
-	return panel_background_make_string (&panel->background, x, y);
+	return panel_background_make_string (&panel->toplevel->background, x, y);
 }
 
 static void

@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "panel-background.h"
 #include "panel-enums.h"
 
 G_BEGIN_DECLS
@@ -49,6 +50,8 @@ typedef struct _PanelToplevelPrivate PanelToplevelPrivate;
 
 struct _PanelToplevel {
 	GtkWindow              window_instance;
+
+	PanelBackground        background;
 
 	PanelToplevelPrivate  *priv;
 };

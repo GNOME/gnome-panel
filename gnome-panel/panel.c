@@ -118,7 +118,7 @@ back_change (AppletInfo  *info,
 	switch (info->type) {
 	case PANEL_OBJECT_APPLET:
 		frame = PANEL_APPLET_FRAME (info->widget);
-		type = panel->background.type;
+		type = panel->toplevel->background.type;
 
 		PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
 		break;

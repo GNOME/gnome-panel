@@ -70,13 +70,6 @@ static void panel_widget_cremove              (GtkContainer     *container,
 static void panel_widget_dispose              (GObject          *obj);
 static void panel_widget_finalize             (GObject          *obj);
 static void panel_widget_realize              (GtkWidget        *widget);
-static void panel_widget_unrealize            (GtkWidget        *panel);
-static void panel_widget_state_flags_changed  (GtkWidget        *widget,
-					       GtkStateFlags     previous_state);
-static void panel_widget_style_updated        (GtkWidget        *widget);
-
-static void panel_widget_background_changed (PanelBackground *background,
-					     PanelWidget     *panel);
 
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
@@ -387,15 +380,10 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->get_preferred_height = panel_widget_get_preferred_height;
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->realize = panel_widget_realize;
-	widget_class->unrealize = panel_widget_unrealize;
 	widget_class->focus = panel_widget_real_focus;
-	widget_class->state_flags_changed = panel_widget_state_flags_changed;
-	widget_class->style_updated = panel_widget_style_updated;
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
-
-	gtk_widget_class_set_css_name (widget_class, "panel-widget");
 }
 
 static void
@@ -1323,29 +1311,6 @@ queue_resize_on_all_applets(PanelWidget *panel)
 }
 
 static void
-panel_widget_set_background_region (PanelWidget *panel)
-{
-	GtkWidget     *widget;
-	int            origin_x = -1, origin_y = -1;
-	GtkAllocation  allocation;
-
-	widget = GTK_WIDGET (panel);
-
-	if (!gtk_widget_get_realized (widget))
-		return;
-
-	gdk_window_get_origin (gtk_widget_get_window (widget), &origin_x, &origin_y);
-
-	gtk_widget_get_allocation (widget, &allocation);
-
-	panel_background_change_region (
-		&panel->background, panel->orient,
-		origin_x, origin_y,
-		allocation.width,
-		allocation.height);
-}
-
-static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	PanelWidget *panel;
@@ -1496,8 +1461,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
-
-	panel_widget_set_background_region (panel);
 }
 
 gboolean
@@ -1536,91 +1499,20 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 }
 
 static void
-panel_widget_set_background_default_style (GtkWidget *widget)
-{
-	GtkStyleContext *context;
-	GtkStateFlags    state;
-	GdkRGBA         *bg_color;
-	cairo_pattern_t *bg_image;
-	PanelBackground *background;
-
-	if (gtk_widget_get_realized (widget)) {
-		context = gtk_widget_get_style_context (widget);
-		state = gtk_widget_get_state_flags (widget);
-		background = &PANEL_WIDGET (widget)->background;
-
-		gtk_style_context_get (context, state,
-		                       "background-color", &bg_color,
-		                       "background-image", &bg_image,
-		                       NULL);
-
-		panel_background_set_default_style (background,
-		                                    bg_color,
-		                                    bg_image);
-
-		if (bg_image)
-			cairo_pattern_destroy (bg_image);
-	}
-}
-
-static void
-panel_widget_style_updated (GtkWidget *widget)
-{
-        GTK_WIDGET_CLASS (panel_widget_parent_class)->style_updated (widget);
-        panel_widget_set_background_default_style (widget);
-}
-
-static void
-panel_widget_state_flags_changed (GtkWidget    *widget,
-                                  GtkStateFlags previous_state)
-{
-        GTK_WIDGET_CLASS (panel_widget_parent_class)->state_flags_changed (widget, previous_state);
-        panel_widget_set_background_default_style (widget);
-}
-
-static gboolean
-toplevel_configure_event (GtkWidget         *widget,
-			  GdkEventConfigure *event,
-			  PanelWidget       *panel)
-{
-	panel_widget_set_background_region (panel);
-
-	return FALSE;
-}
-
-static void
 panel_widget_realize (GtkWidget *widget)
 {
-	PanelWidget     *panel = (PanelWidget *) widget;
-	GdkWindow       *window;
+	GdkScreen *screen;
+	GdkVisual *visual;
 
-	g_signal_connect (panel->toplevel, "configure-event",
-			  G_CALLBACK (toplevel_configure_event), panel);
+	screen = gtk_widget_get_screen (widget);
+	visual = gdk_screen_get_rgba_visual (screen);
+
+	if (visual == NULL)
+		visual = gdk_screen_get_system_visual (screen);
+
+	gtk_widget_set_visual (widget, visual);
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
-
-	window = gtk_widget_get_window (widget);
-	/* For auto-hidden panels with a colored background, we need native
-	 * windows to avoid some uglyness on unhide */
-	gdk_window_ensure_native (window);
-
-        panel_widget_set_background_default_style (widget);
-	panel_background_realized (&panel->background, window);
-}
-
-static void
-panel_widget_unrealize (GtkWidget *widget)
-{
-	PanelWidget *panel = (PanelWidget *) widget;
-
-	panel_background_unrealized (&panel->background);
-
-	g_signal_handlers_disconnect_by_func (
-		panel->toplevel,
-		G_CALLBACK (toplevel_configure_event),
-		panel);
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->unrealize (widget);
 }
 
 static void
@@ -1632,15 +1524,12 @@ panel_widget_finalize (GObject *obj)
 
 	panel = PANEL_WIDGET (obj);
 
-	panel_background_free (&panel->background);
-
 	if (panel->applets_hints != NULL)
 		g_free (panel->applets_hints);
 	panel->applets_hints = NULL;
 	if (panel->applets_using_hint != NULL)
 		g_free (panel->applets_using_hint);
 	panel->applets_using_hint = NULL;
-
 
 	G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }
@@ -1707,10 +1596,6 @@ panel_widget_init (PanelWidget *panel)
 
 	context = gtk_widget_get_style_context (widget);
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-
-	panel_background_init (&panel->background,
-			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
-			       panel);
 
 	panels = g_slist_append (panels, panel);
 }
@@ -2545,7 +2430,6 @@ panel_widget_set_orientation (PanelWidget    *panel_widget,
 		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
 		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 	}
-	panel_widget_style_updated (GTK_WIDGET (panel_widget));
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
@@ -2563,17 +2447,6 @@ panel_widget_set_size (PanelWidget *panel_widget,
 
 	queue_resize_on_all_applets (panel_widget);
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
-}
-
-static void
-panel_widget_background_changed (PanelBackground *background,
-				 PanelWidget     *panel)
-{
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	panel_toplevel_update_edges (panel->toplevel);
-	g_signal_emit (G_OBJECT (panel),
-		       panel_widget_signals [BACK_CHANGE_SIGNAL],
-		       0);
 }
 
 static void 
@@ -2817,4 +2690,10 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 				 G_CALLBACK (panel_widget_open_dialog_destroyed),
 				 panel,
 				 G_CONNECT_SWAPPED);
+}
+
+void
+panel_widget_emit_background_changed (PanelWidget *panel)
+{
+	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 }

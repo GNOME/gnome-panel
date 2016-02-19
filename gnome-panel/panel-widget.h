@@ -14,7 +14,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "button-widget.h"
 #include "panel-types.h"
-#include "panel-background.h"
 #include "panel-toplevel.h"
 
 G_BEGIN_DECLS
@@ -86,8 +85,6 @@ struct _PanelWidget
 
 	AppletData     *currently_dragged_applet;
 	guint           dragged_state;
-
-	PanelBackground background;
 
 	GtkWidget      *drop_widget;     /* widget that the panel checks for
 	                                  * the cursor on drops usually the
@@ -205,6 +202,9 @@ void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
 
 void     panel_widget_register_open_dialog        (PanelWidget *panel,
 						   GtkWidget   *dialog);  
+
+void     panel_widget_emit_background_changed     (PanelWidget *panel);
+
 G_END_DECLS
 
 #endif /* PANEL_WIDGET_H */
