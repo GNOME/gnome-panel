@@ -915,7 +915,10 @@ panel_applet_position_menu (GtkMenu   *menu,
 	PanelApplet    *applet;
 	GtkAllocation   allocation;
 	GtkRequisition  requisition;
+	GdkDisplay     *display;
+	GdkSeat        *seat;
 	GdkDevice      *device;
+	GdkWindow      *window;
 	GdkScreen      *screen;
 	int             menu_x = 0;
 	int             menu_y = 0;
@@ -926,16 +929,17 @@ panel_applet_position_menu (GtkMenu   *menu,
 
 	applet = PANEL_APPLET (widget);
 
+	display = gtk_widget_get_display (widget);
+	seat = gdk_display_get_default_seat (display);
+	device = gdk_seat_get_pointer (seat);
 	screen = gtk_widget_get_screen (widget);
-	
-	gtk_menu_set_screen(menu, screen);
+	window = gtk_widget_get_window (widget);
+
+	gtk_menu_set_screen (menu, screen);
 
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
-	gdk_window_get_origin (gtk_widget_get_window (widget),
-			       &menu_x, &menu_y);
-	device = gdk_device_manager_get_client_pointer (gdk_display_get_device_manager (gtk_widget_get_display (widget)));
-	gdk_window_get_device_position(gtk_widget_get_window (widget), device, &pointer_x, &pointer_y, NULL);
-
+	gdk_window_get_origin (window, &menu_x, &menu_y);
+	gdk_window_get_device_position (window, device, &pointer_x, &pointer_y, NULL);
 	gtk_widget_get_allocation (widget, &allocation);
 
 	menu_x += allocation.x;
