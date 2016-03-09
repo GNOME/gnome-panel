@@ -1724,6 +1724,7 @@ static void
 panel_applet_init (PanelApplet *applet)
 {
 	GtkStyleContext *context;
+	gchar *xml;
 
 	applet->priv = panel_applet_get_instance_private (applet);
 
@@ -1738,7 +1739,7 @@ panel_applet_init (PanelApplet *applet)
 
 	applet->priv->builder = gtk_builder_new ();
 
-	gchar *xml = g_strdup_printf (panel_menu_ui, _("_Remove From Panel"), _("_Move"));
+	xml = g_strdup_printf (panel_menu_ui, _("_Remove From Panel"), _("_Move"));
 	gtk_builder_add_from_string (applet->priv->builder, xml, -1, NULL);
 	g_free (xml);
 
