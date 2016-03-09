@@ -160,7 +160,7 @@ static void
 load_applet_from_command_line (void)
 {
 	guint orient = PANEL_ORIENTATION_TOP;
-	gint i;
+	guint i;
 
 	g_assert (cli_iid != NULL);
 
