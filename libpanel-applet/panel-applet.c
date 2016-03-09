@@ -45,6 +45,7 @@
 #include "panel-applet-factory.h"
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
+#include "panel-plug-private.h"
 
 /**
  * SECTION:applet
@@ -94,7 +95,6 @@ struct _PanelAppletPrivate {
 	PanelAppletFlags   flags;
 	PanelAppletOrient  orient;
 	char              *background;
-	GtkWidget         *background_widget;
 
 	int                previous_width;
 	int                previous_height;
@@ -1495,37 +1495,27 @@ panel_applet_style_updated (GtkWidget *widget)
 }
 
 static void
-panel_applet_update_background_for_widget (GtkWidget       *widget,
-					   cairo_pattern_t *pattern)
-{
-	GdkWindow *window;
-
-	window = gtk_widget_get_window (widget);
-
-	if (!window)
-		return;
-
-	gdk_window_set_background_pattern (window,
-	                                   pattern);
-}
-
-static void
 panel_applet_handle_background (PanelApplet *applet)
 {
-        cairo_pattern_t *pattern;
+	GdkWindow *window;
+	cairo_pattern_t *pattern;
+
+	if (applet->priv->plug == NULL)
+		return;
+
+	window = gtk_widget_get_window (applet->priv->plug);
+
+	if (window == NULL)
+	  return;
 
 	pattern = panel_applet_get_background (applet);
 
-	if (applet->priv->background_widget)
-		panel_applet_update_background_for_widget (applet->priv->background_widget,
-							   pattern);
-	else
-		panel_applet_update_background_for_widget (GTK_WIDGET (applet), pattern);
+	gdk_window_set_background_pattern (window, pattern);
+	gtk_widget_queue_draw (applet->priv->plug);
 
-        g_signal_emit (G_OBJECT (applet),
-                        panel_applet_signals [CHANGE_BACKGROUND],
-                        0, pattern);
-        if (pattern)
+	g_signal_emit (applet, panel_applet_signals [CHANGE_BACKGROUND], 0, pattern);
+
+	if (pattern)
 		cairo_pattern_destroy (pattern);
 }
 
@@ -1771,7 +1761,7 @@ panel_applet_constructor (GType                  type,
 	if (!applet->priv->out_of_process)
 		return object;
 
-	applet->priv->plug = gtk_plug_new (0);
+	applet->priv->plug = panel_plug_new ();
 
 	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
 		                      G_CALLBACK (panel_applet_setup),
@@ -2352,21 +2342,13 @@ panel_applet_factory_setup_in_process (const gchar               *factory_id,
  * Configure #PanelApplet to automatically draw the background of the applet on
  * @widget. It is generally enough to call this function with @applet as
  * @widget.
+ *
+ * Deprecated: 3.20: Do not use this API. Since 3.20 this function does nothing.
  **/
 void
 panel_applet_set_background_widget (PanelApplet *applet,
 				    GtkWidget   *widget)
 {
-	applet->priv->background_widget = widget;
-
-	if (widget && gtk_widget_get_realized (widget)) {
-		cairo_pattern_t *pattern;
-
-		pattern = panel_applet_get_background (applet);
-		panel_applet_update_background_for_widget (widget, pattern);
-		if (pattern)
-			cairo_pattern_destroy (pattern);
-	}
 }
 
 guint32
