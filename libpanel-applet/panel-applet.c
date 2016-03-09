@@ -1079,14 +1079,20 @@ panel_applet_button_event (PanelApplet    *applet,
 	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
 
 	if (event->type == GDK_BUTTON_PRESS) {
+		GdkDisplay *display;
+		GdkSeat *seat;
+
 		xevent.xbutton.type = ButtonPress;
+
+		display = gdk_display_get_default ();
+		seat = gdk_display_get_default_seat (display);
 
 		/* X does an automatic pointer grab on button press
 		 * if we have both button press and release events
 		 * selected.
 		 * We don't want to hog the pointer on our parent.
 		 */
-		gdk_device_ungrab (event->device, GDK_CURRENT_TIME);
+		gdk_seat_ungrab (seat);
 	} else {
 		xevent.xbutton.type = ButtonRelease;
 	}
