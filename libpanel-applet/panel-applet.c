@@ -1461,8 +1461,6 @@ panel_applet_get_background (PanelApplet *applet)
 
                 g_variant_get (variant, "(uii)", &xid, &x, &y);
                 pattern = panel_applet_get_pattern_from_pixmap (applet, xid, x, y);
-                if (!pattern)
-                        g_warning ("Failed to get pixmap %d, %d, %d", xid, x, y);
         }
                 break;
         default:
