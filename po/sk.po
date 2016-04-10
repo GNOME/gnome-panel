@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-19 21:54+0000\n"
-"PO-Revision-Date: 2016-03-20 09:29+0100\n"
+"POT-Creation-Date: 2016-04-09 21:13+0000\n"
+"PO-Revision-Date: 2016-04-10 09:58+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -746,8 +746,6 @@ msgid "Show _all workspaces in:"
 msgstr "_Zobraziť všetky pracovné plochy:"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
-#| msgctxt "panel:showusername"
-#| msgid "1"
 msgid "1"
 msgstr "1"
 
@@ -1018,7 +1016,7 @@ msgstr "Veľkosť ikony iba pre položku aplikácií v aplete panelu ponuky"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
 msgid "Which theme variant to use"
-msgstr ""
+msgstr "Ktorý variant témy sa má použiť"
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
 msgid "Panel ID list"
@@ -1506,10 +1504,10 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"Ktorý typ pozadia sa má pre tento panel použiť. Možné hodnoty sú \"gtk\" - "
-"predvolený prvok GTK+ pre pozadie, \"color\" - použije sa farba zadaná v "
-"kľúči \"color\" alebo \"image\" - použije sa obrázok zadaný v kľúči \"image"
-"\"."
+"Which type of background should be used for this panel. Possible values are "
+"\"none\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
 msgid "Background color"
@@ -1696,7 +1694,7 @@ msgstr "Nahradiť aktuálne bežiaci panel"
 
 #: ../gnome-panel/main.c:42
 msgid "Print version"
-msgstr ""
+msgstr "Vypíše verziu"
 
 #: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
@@ -1866,10 +1864,8 @@ msgid "Add to Panel"
 msgstr "Pridať do panelu"
 
 #: ../gnome-panel/panel-addto-dialog.ui.h:2
-#, fuzzy
-#| msgid "Find an _item to add to the panel:"
 msgid "Find an item to add to the panel:"
-msgstr "_Zvoľte položku, ktorú pridať do panelu:"
+msgstr "Nájdite položku, ktorá sa má pridať do panelu:"
 
 #: ../gnome-panel/panel-addto-dialog.ui.h:3
 msgid "column"
@@ -1959,6 +1955,8 @@ msgstr "Počítač"
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"Prehliada všetky miestne a vzdialené disky a priečinky sprístupnené tomuto "
+"počítaču"
 
 #. is_exec?
 #. exec
@@ -1969,7 +1967,7 @@ msgstr "Sieť"
 #. name
 #: ../gnome-panel/panel.c:642 ../gnome-panel/panel-menu-items.c:1172
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "Prehliada miestne sieťové umiestnenia a umiestnenia v záložkách"
 
 #: ../gnome-panel/panel.c:1370
 msgid "Delete this panel?"
@@ -2304,26 +2302,25 @@ msgstr "Počas pokusu o otvorenie \"%s\" nastala neznáma chyba."
 
 #: ../gnome-panel/panel-recent.c:146
 msgid "Clear the Recent Documents list?"
-msgstr "Vyčistiť zoznam Nedávnych dokumentov?"
+msgstr "Vymazať zoznam Nedávnych dokumentov?"
 
 #: ../gnome-panel/panel-recent.c:148
-#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
-"Ak vyčistíte zoznam Nedávnych dokumentov, vyčistíte nasledujúce:\n"
+"Ak vymažete zoznam Nedávnych dokumentov, vymažete nasledujúce:\n"
 "• Všetky položky z položky ponuky Miesta → Nedávne dokumenty.\n"
 "• Všetky položky zo zoznamu nedávnych dokumentov všetkých aplikácií."
 
 #: ../gnome-panel/panel-recent.c:154
 msgid "C_lear"
-msgstr "Vyči_stiť"
+msgstr "Vy_mazať"
 
 #: ../gnome-panel/panel-recent.c:160
 msgid "Clear Recent Documents"
-msgstr "Vyčistiť Nedávne dokumenty"
+msgstr "Vymazať Nedávne dokumenty"
 
 #: ../gnome-panel/panel-recent.c:195
 msgid "Recent Documents"
@@ -2331,11 +2328,11 @@ msgstr "Nedávne dokumenty"
 
 #: ../gnome-panel/panel-recent.c:233
 msgid "Clear Recent Documents..."
-msgstr "Vyčistiť Nedávne dokumenty..."
+msgstr "Vymazať Nedávne dokumenty..."
 
 #: ../gnome-panel/panel-recent.c:235
 msgid "Clear all items from the recent documents list"
-msgstr "Vyčistiť všetky položky zo zoznamu nedávnych dokumentov"
+msgstr "Vymazať všetky položky zo zoznamu nedávnych dokumentov"
 
 #: ../gnome-panel/panel-run-dialog.c:427
 msgid "Cannot find a terminal, using xterm, even if it may not work"
