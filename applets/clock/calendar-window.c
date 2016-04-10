@@ -1784,6 +1784,8 @@ calendar_window_class_init (CalendarWindowClass *klass)
 				      "Whether the window should offer access to preferences",
 				      FALSE,
 				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	gtk_widget_class_set_css_name (gobject_class, "gp-calendar-window");
 }
 
 static void

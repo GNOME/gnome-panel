@@ -5,28 +5,38 @@ panel-plug {
 
 .gnome-panel-menu-bar,
 panel-applet > menubar {
-  font: regular;
   background: transparent;
-  color: #000000;
   box-shadow: none;
-}
-
-.gnome-panel-menu-bar menu,
-panel-applet > menubar menu {
-  font: regular;
 }
 
 .gnome-panel-menu-bar menuitem:hover,
 panel-applet > menubar menuitem:hover {
   background-color: #000000;
+}
+
+.gnome-panel-menu-bar > menuitem > label,
+panel-applet > menubar > menuitem > label,
+clock-box label,
+gp-calendar-window label,
+#tasklist-button label,
+#clock-applet-button label,
+#showdesktop-button label {
+  font: regular;
+  color: #000000;
+}
+
+.gnome-panel-menu-bar > menuitem:hover > label,
+panel-applet > menubar > menuitem:hover > label,
+.gnome-panel-menu-bar > menuitem:hover > image,
+panel-applet > menubar > menuitem:hover > image {
   color: #ffffff;
 }
+
 
 #tasklist-button,
 #clock-applet-button,
 #showdesktop-button {
   padding: 0px 4px;
-  color: #000000;
   border: 0;
   border-radius: 0;
 }
@@ -35,6 +45,11 @@ panel-applet > menubar menuitem:hover {
 #clock-applet-button:checked,
 #showdesktop-button:checked {
   background-color: #000000;
+}
+
+#tasklist-button:checked label,
+#clock-applet-button:checked label,
+#showdesktop-button:checked label {
   color: #ffffff;
 }
 
