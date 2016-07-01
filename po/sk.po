@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-04-09 21:13+0000\n"
-"PO-Revision-Date: 2016-04-10 09:58+0200\n"
+"POT-Creation-Date: 2016-06-14 21:12+0000\n"
+"PO-Revision-Date: 2016-07-01 17:07+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -87,7 +87,7 @@ msgstr "Informácie o počasí"
 msgid "Locations"
 msgstr "Miesta"
 
-#: ../applets/clock/calendar-window.c:1801
+#: ../applets/clock/calendar-window.c:1807
 msgid "Calendar"
 msgstr "Kalendár"
 
@@ -198,9 +198,8 @@ msgstr ""
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
 #: ../applets/clock/clock-location-tile.c:434
-#, fuzzy
 msgid "%l:%M <small>%p (%A)</small>"
-msgstr "%l:%M <small>%p (%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 24-hours format
@@ -216,9 +215,8 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
 #: ../applets/clock/clock-location-tile.c:451
-#, fuzzy
 msgid "%l:%M <small>%p</small>"
-msgstr "%l:%M <small>%p</small>"
+msgstr "%H:%M"
 
 #: ../applets/clock/clock-location-tile.c:601
 #, c-format
@@ -324,7 +322,7 @@ msgstr "Na_stavenie času"
 #: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
 #: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
 #: ../applets/wncklet/workspace-switcher.ui.h:2
-#: ../gnome-panel/panel-addto-dialog.ui.h:6
+#: ../gnome-panel/panel-addto-dialog.ui.h:5
 #: ../gnome-panel/panel-ditem-editor.c:653
 #: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "_Close"
@@ -369,7 +367,7 @@ msgid "General"
 msgstr "Všeobecné"
 
 #: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1080
-#: ../gnome-panel/panel-addto-dialog.ui.h:5
+#: ../gnome-panel/panel-addto-dialog.ui.h:4
 msgid "_Add"
 msgstr "_Pridať"
 
@@ -1868,10 +1866,6 @@ msgid "Find an item to add to the panel:"
 msgstr "Nájdite položku, ktorá sa má pridať do panelu:"
 
 #: ../gnome-panel/panel-addto-dialog.ui.h:3
-msgid "column"
-msgstr "stĺpec"
-
-#: ../gnome-panel/panel-addto-dialog.ui.h:4
 msgid "_Back"
 msgstr "_Späť"
 
@@ -2567,6 +2561,9 @@ msgstr "Test apletu DBus"
 #: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
 msgid "A simple applet for testing the GNOME panel"
 msgstr "Jednoduchý aplet na testovanie panelu prostredia GNOME"
+
+#~ msgid "column"
+#~ msgstr "stĺpec"
 
 #~ msgid "X screen where the panel is displayed"
 #~ msgstr "Displej X s panelom"
