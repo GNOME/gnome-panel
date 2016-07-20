@@ -136,8 +136,6 @@ gnome_panel_LDADD =		\
 	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
-	$(XRANDR_LIBS)									\
-	$(X_LIBS) \
 	$(NULL)
 
 gnome_panel_LDFLAGS = \
@@ -167,7 +165,6 @@ gnome_desktop_item_edit_CFLAGS = \
 gnome_desktop_item_edit_LDADD = 	\
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la	\
 	$(PANEL_LIBS)							\
-	$(X_LIBS) \
 	$(NULL)
 
 gnome_desktop_item_edit_LDFLAGS = \

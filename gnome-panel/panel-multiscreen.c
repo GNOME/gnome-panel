@@ -42,7 +42,6 @@ static gboolean       have_randr  = FALSE;
 static gboolean       have_randr_1_3 = FALSE;
 static guint          reinit_id   = 0;
 
-#ifdef HAVE_RANDR
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 					   RROutput       output,
@@ -83,14 +82,12 @@ _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 	 */
 	return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
 }
-#endif
 
 static gboolean
 panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 						 int           *monitors_ret,
 						 GdkRectangle **geometries_ret)
 {
-#ifdef HAVE_RANDR
 	Display            *xdisplay;
 	Window              xroot;
 	XRRScreenResources *resources;
@@ -128,7 +125,6 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
 	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
 
-#if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
 	if (have_randr_1_3) {
 		resources = XRRGetScreenResourcesCurrent (xdisplay, xroot);
 		if (resources->noutput == 0) {
@@ -141,18 +137,13 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 		}
 	} else
 		resources = XRRGetScreenResources (xdisplay, xroot);
-#else
-	resources = XRRGetScreenResources (xdisplay, xroot);
-#endif
 
 	if (!resources)
 		return FALSE;
 
 	primary = None;
-#if (RANDR_MAJOR > 1 || (RANDR_MAJOR == 1 && RANDR_MINOR >= 3))
 	if (have_randr_1_3)
 		primary = XRRGetOutputPrimary (xdisplay, xroot);
-#endif
 
 	geometries = g_array_sized_new (FALSE, FALSE,
 					sizeof (GdkRectangle),
@@ -221,9 +212,6 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
 
 	return TRUE;
-#else
-	return FALSE;
-#endif
 }
 
 static void
@@ -405,15 +393,12 @@ panel_multiscreen_queue_reinit (void)
 static void
 panel_multiscreen_init_randr (GdkDisplay *display)
 {
-#ifdef HAVE_RANDR
 	Display *xdisplay;
 	int      event_base, error_base;
-#endif
 
 	have_randr = FALSE;
 	have_randr_1_3 = FALSE;
 
-#ifdef HAVE_RANDR
 	xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
 	/* We don't remember the event/error bases, as we expect to get "screen
@@ -430,7 +415,6 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 		if ((major == 1 && minor >= 3) || major > 1)
 			have_randr_1_3 = TRUE;
 	}
-#endif
 }
 
 void

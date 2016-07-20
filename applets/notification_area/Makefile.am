@@ -33,7 +33,6 @@ libnotification_area_applet_la_SOURCES = main.c main.h
 libnotification_area_applet_la_LIBADD = \
 	libtray.la					\
 	../../libpanel-applet/libpanel-applet.la	\
-	$(X_LIBS)					\
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBPANEL_APPLET_LIBS)
 
@@ -46,7 +45,6 @@ libnotification_area_applet_la_LDFLAGS = \
 testtray_SOURCES = testtray.c
 testtray_LDADD =			\
 	libtray.la			\
-	$(X_LIBS)			\
 	$(NOTIFICATION_AREA_LIBS)
 
 testtray_CFLAGS = \

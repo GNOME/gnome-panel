@@ -109,34 +109,44 @@ CAIRO_REQUIRED=1.0.0
 GWEATHER_REQUIRED=3.17.1
 DCONF_REQUIRED=0.13.4
 LIBRSVG_REQUIRED=2.36.2
+XRANDR_REQUIRED=1.3.0
 
 dnl pkg-config dependency checks
 
-PKG_CHECK_MODULES(PANEL, gmodule-2.0 >= $GLIB_REQUIRED
-			 gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
-			 pango >= $PANGO_REQUIRED
-			 gtk+-3.0 >= $GTK_REQUIRED
-			 cairo-xlib glib-2.0 >= $GLIB_REQUIRED
-			 gmodule-2.0 >= $GLIB_REQUIRED
-			 gio-2.0 >= $GLIB_REQUIRED
-			 gio-unix-2.0 >= $GLIB_REQUIRED
-			 gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED
-			 libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
-			 dconf >= $DCONF_REQUIRED)
-AC_SUBST(PANEL_CFLAGS)
-AC_SUBST(PANEL_LIBS)
+PKG_CHECK_MODULES([PANEL], [
+  gmodule-2.0 >= $GLIB_REQUIRED
+  gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED
+  pango >= $PANGO_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
+  cairo-xlib
+  glib-2.0 >= $GLIB_REQUIRED
+  gmodule-2.0 >= $GLIB_REQUIRED
+  gio-2.0 >= $GLIB_REQUIRED
+  gio-unix-2.0 >= $GLIB_REQUIRED
+  gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED
+  libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
+  dconf >= $DCONF_REQUIRED
+  x11
+  xrandr >= $XRANDR_REQUIRED
+])
 
-PKG_CHECK_MODULES(LIBPANEL_APPLET, gtk+-3.0 >= $GTK_REQUIRED cairo-xlib cairo-gobject gio-2.0 >= $GLIB_REQUIRED gio-unix-2.0 >= $GLIB_REQUIRED)
-AC_SUBST(LIBPANEL_APPLET_CFLAGS)
-AC_SUBST(LIBPANEL_APPLET_LIBS)
+PKG_CHECK_MODULES([LIBPANEL_APPLET], [
+  gtk+-3.0 >= $GTK_REQUIRED
+  cairo-xlib
+  cairo-gobject
+  gio-2.0 >= $GLIB_REQUIRED
+  gio-unix-2.0 >= $GLIB_REQUIRED
+  x11
+])
 
 PKG_CHECK_MODULES(FISH, gtk+-3.0 >= $GTK_REQUIRED cairo >= $CAIRO_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
 
-PKG_CHECK_MODULES(NOTIFICATION_AREA, gtk+-3.0 >= $GTK_REQUIRED)
-AC_SUBST(NOTIFICATION_AREA_CFLAGS)
-AC_SUBST(NOTIFICATION_AREA_LIBS)
+PKG_CHECK_MODULES([NOTIFICATION_AREA], [
+  gtk+-3.0 >= $GTK_REQUIRED
+  x11
+])
 
 PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED)
 AC_SUBST(WNCKLET_CFLAGS)
@@ -202,38 +212,6 @@ dnl Check if struct dirent contains a d_type member, for run dialog
 dnl **************************************************************************
 
 AC_STRUCT_DIRENT_D_TYPE
-
-dnl X development libraries check
-
-PKG_CHECK_MODULES(X, x11 xau, :, [
-  # pkg-config modules not found (only present since X11R7 aka Xorg); use
-  # old-style detection
-  AC_PATH_XTRA()
-  # X not found
-  if test x$no_x = xyes ; then
-    AC_MSG_ERROR([X development libraries not found])
-  fi
-
-  gp_save_cflags="$CFLAGS"
-  gp_save_libs="$LIBS"
-  CFLAGS="$X_CFLAGS"
-  LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS"
-  AC_CHECK_LIB(X11, XFree,, AC_MSG_ERROR([libX11 not found]))
-  AC_CHECK_LIB(Xau, XauFileName,, AC_MSG_ERROR([libXau not found]))
-  CFLAGS="$gp_save_cflags"
-  LIBS="$gp_save_libs"
-
-  X_LIBS="$X_PRE_LIBS $X_LIBS -lX11 -lXau $X_EXTRA_LIBS"
-])
-
-AC_SUBST(X_LIBS)
-
-dnl X RANDR extension
-
-PKG_CHECK_MODULES(XRANDR, xrandr >= 1.2.0, have_randr=yes, have_randr=no)
-if test "x$have_randr" = "xyes"; then
-  AC_DEFINE(HAVE_RANDR, 1, [Have the Xrandr extension library])
-fi
 
 dnl Modules dir
 AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
@@ -342,7 +320,6 @@ echo ""
 echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
 echo ""
 echo "  Evolution-Data-Server support ...: ${enable_eds}"
-echo "  XRandr support ..................: ${have_randr}"
 echo "  Build introspection support .....: ${found_introspection}"
 echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
 echo ""

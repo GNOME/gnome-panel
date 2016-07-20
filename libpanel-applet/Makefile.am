@@ -30,7 +30,7 @@ libpanel_applet_la_SOURCES =		\
 
 libpanel_applet_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \
-	$(X_LIBS)
+	$(NULL)
 
 libpanel_applet_la_LDFLAGS = \
 	-version-info $(LIB_PANEL_APPLET_LT_VERSION) \
