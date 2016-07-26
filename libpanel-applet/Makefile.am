@@ -1,7 +1,6 @@
 NULL =
 
 lib_LTLIBRARIES = libpanel-applet.la
-noinst_PROGRAMS = test-dbus-applet
 
 libpanel_applet_la_CFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
@@ -38,20 +37,6 @@ libpanel_applet_la_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
-
-test_dbus_applet_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(localedir)"\" \
-	-I$(top_builddir)/libpanel-applet \
-	$(LIBPANEL_APPLET_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-test_dbus_applet_LDADD =	\
-	$(LIBPANEL_APPLET_LIBS)	\
-	libpanel-applet.la
-
-$(libpanel_applet_la_OBJECTS) $(test_dbus_applet_OBJECTS): $(BUILT_SOURCES)
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
@@ -99,14 +84,7 @@ BUILT_SOURCES = \
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanel-applet.pc
 
-appletdir       = $(appletsdir)
-applet_in_files = org.gnome.panel.TestApplet.panel-applet.in
-noinst_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
-
-@PANEL_INTLTOOL_PANEL_APPLET_RULE@
-
 EXTRA_DIST =						\
-	org.gnome.panel.TestApplet.panel-applet.in	\
 	panel-applet-marshal.list			\
 	libpanel-applet.pc.in			\
 	libpanel-applet-uninstalled.pc.in
