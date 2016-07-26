@@ -199,15 +199,6 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-applet_change_background (PanelApplet               *applet,
-                          cairo_pattern_t           *pattern,
-			  PagerData                 *pager)
-{
-        wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
-                                    pattern != NULL ? GTK_SHADOW_NONE : GTK_SHADOW_IN);
-}
-
-static void
 destroy_pager(GtkWidget * widget, PagerData *pager)
 {
 	g_object_unref (G_OBJECT (pager->settings));
@@ -366,10 +357,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
-			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "change_background",
-			  G_CALLBACK (applet_change_background),
 			  pager);
 
 	gtk_widget_show (pager->applet);

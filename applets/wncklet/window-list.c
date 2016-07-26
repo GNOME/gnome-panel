@@ -120,16 +120,6 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-applet_change_background (PanelApplet     *applet,
-			  cairo_pattern_t *pattern,
-			  TasklistData    *tasklist)
-{
-        wnck_tasklist_set_button_relief (WNCK_TASKLIST (tasklist->tasklist),
-                                         pattern != NULL ? GTK_RELIEF_NONE
-                                                         : GTK_RELIEF_NORMAL);
-}
-
-static void
 destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
 	g_object_unref (tasklist->settings);
@@ -408,10 +398,6 @@ window_list_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "change_background",
-			  G_CALLBACK (applet_change_background),
 			  tasklist);
 
 	action_group = g_simple_action_group_new ();
