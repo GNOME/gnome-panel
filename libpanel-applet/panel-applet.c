@@ -1416,16 +1416,7 @@ panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
 	return pattern;
 }
 
-/**
- * panel_applet_get_background:
- * @applet: a #PanelApplet.
- *
- * Gets the background pattern for @applet, or %NULL if there is none.
- *
- * Returns: (transfer full): a new #cairo_pattern_t to use as background for
- * @applet.
- **/
-cairo_pattern_t *
+static cairo_pattern_t *
 panel_applet_get_background (PanelApplet *applet)
 {
         cairo_pattern_t *pattern = NULL;

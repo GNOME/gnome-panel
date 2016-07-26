@@ -167,7 +167,6 @@ GType              panel_applet_get_type             (void) G_GNUC_CONST;
  
 PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 GtkOrientation     panel_applet_get_gtk_orientation  (PanelApplet *applet);
-cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);
 
 GSettings         *panel_applet_settings_new         (PanelApplet *applet,
 						      const char  *schema);
