@@ -169,9 +169,6 @@ PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 GtkOrientation     panel_applet_get_gtk_orientation  (PanelApplet *applet);
 cairo_pattern_t   *panel_applet_get_background       (PanelApplet *applet);
 
-void               panel_applet_set_background_widget (PanelApplet *applet,
-						       GtkWidget   *widget);
-
 GSettings         *panel_applet_settings_new         (PanelApplet *applet,
 						      const char  *schema);
 

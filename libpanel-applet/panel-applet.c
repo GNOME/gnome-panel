@@ -2343,23 +2343,6 @@ panel_applet_factory_setup_in_process (const gchar               *factory_id,
 						    callback, data);
 }
 
-/**
- * panel_applet_set_background_widget:
- * @applet: a #PanelApplet.
- * @widget: a #GtkWidget.
- *
- * Configure #PanelApplet to automatically draw the background of the applet on
- * @widget. It is generally enough to call this function with @applet as
- * @widget.
- *
- * Deprecated: 3.20: Do not use this API. Since 3.20 this function does nothing.
- **/
-void
-panel_applet_set_background_widget (PanelApplet *applet,
-				    GtkWidget   *widget)
-{
-}
-
 guint32
 panel_applet_get_xid (PanelApplet *applet,
 		      GdkScreen   *screen)
