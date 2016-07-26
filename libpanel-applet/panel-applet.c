@@ -109,7 +109,6 @@ struct _PanelAppletPrivate {
 
 enum {
         CHANGE_ORIENT,
-        CHANGE_BACKGROUND,
 	MOVE_FOCUS_OUT_OF_APPLET,
         LAST_SIGNAL
 };
@@ -1512,8 +1511,6 @@ panel_applet_handle_background (PanelApplet *applet)
 	gdk_window_set_background_pattern (window, pattern);
 	gtk_widget_queue_draw (applet->priv->plug);
 
-	g_signal_emit (applet, panel_applet_signals [CHANGE_BACKGROUND], 0, pattern);
-
 	if (pattern)
 		cairo_pattern_destroy (pattern);
 }
@@ -1962,25 +1959,6 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_UINT);
-
-        /**
-         * PanelApplet::change-background:
-         * @applet: the #PanelApplet which emitted the signal.
-         * @pattern: the new background pattern for @applet, or %NULL if there is none.
-         *
-         * Emitted when the background of @applet has changed.
-         **/
-	panel_applet_signals [CHANGE_BACKGROUND] =
-                g_signal_new ("change_background",
-                              G_TYPE_FROM_CLASS (klass),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelAppletClass, change_background),
-                              NULL,
-			      NULL,
-                              g_cclosure_marshal_VOID__BOXED,
-                              G_TYPE_NONE,
-			      1,
-			      CAIRO_GOBJECT_TYPE_PATTERN);
 
         /**
          * PanelApplet::move-focus-out-of-applet: (skip)

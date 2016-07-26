@@ -145,8 +145,6 @@ struct _PanelApplet {
  * @event_box_class: The parent class.
  * @change_orient: Signal is emitted when the orientation of applet
  *    has changed.
- * @change_background: Signal is emmited when the background af applet
- *    has changed.
  * @move_focus_out_of_applet: Signal is emmited when the focus is moved
  *    out of applet. This is an implementation detail.
  *
@@ -157,8 +155,6 @@ struct _PanelAppletClass {
 
 	void (*change_orient) (PanelApplet       *applet,
 			       PanelAppletOrient  orient);
-	void (*change_background) (PanelApplet     *applet,
-				   cairo_pattern_t *pattern);
 	void (*move_focus_out_of_applet) (PanelApplet        *frame,
 					  GtkDirectionType    direction);
 };
