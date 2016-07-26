@@ -67,7 +67,6 @@ void            na_tray_set_colors      (NaTray        *tray,
 					 GdkRGBA       *error,
 					 GdkRGBA       *warning,
 					 GdkRGBA       *success);
-void		na_tray_force_redraw	(NaTray        *tray);
 
 G_END_DECLS
 

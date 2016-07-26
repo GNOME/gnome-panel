@@ -47,8 +47,6 @@ struct _NaTrayPrivate
 
   GtkWidget *box;
 
-  guint idle_redraw_id;
-
   GtkOrientation orientation;
 };
 
@@ -668,12 +666,6 @@ na_tray_dispose (GObject *object)
 
   priv->trays_screen = NULL;
 
-  if (priv->idle_redraw_id != 0)
-    {
-      g_source_remove (priv->idle_redraw_id);
-      priv->idle_redraw_id = 0;
-    }
-
   G_OBJECT_CLASS (na_tray_parent_class)->dispose (object);
 }
 
@@ -797,18 +789,6 @@ na_tray_get_orientation (NaTray *tray)
   return tray->priv->orientation;
 }
 
-static gboolean
-idle_redraw_cb (NaTray *tray)
-{
-  NaTrayPrivate *priv = tray->priv;
-
-  gtk_container_foreach (GTK_CONTAINER (priv->box), (GtkCallback)na_tray_child_force_redraw, tray);
-  
-  priv->idle_redraw_id = 0;
-
-  return FALSE;
-}
-
 void
 na_tray_set_padding (NaTray *tray,
                      gint    padding)
@@ -840,15 +820,4 @@ na_tray_set_colors (NaTray   *tray,
 
   if (get_tray (priv->trays_screen) == tray)
     na_tray_manager_set_colors (priv->trays_screen->tray_manager, fg, error, warning, success);
-}
-
-void
-na_tray_force_redraw (NaTray *tray)
-{
-  NaTrayPrivate *priv = tray->priv;
-
-  /* Force the icons to redraw their backgrounds.
-   */
-  if (priv->idle_redraw_id == 0)
-    priv->idle_redraw_id = g_idle_add ((GSourceFunc) idle_redraw_cb, tray);
 }

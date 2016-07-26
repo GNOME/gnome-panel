@@ -137,18 +137,6 @@ na_tray_applet_style_updated (GtkWidget *widget)
 }
 
 static void
-na_tray_applet_change_background (PanelApplet     *panel_applet,
-                                  cairo_pattern_t *pattern)
-{
-  NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
-
-  if (!applet->priv->tray)
-    return;
-
-  na_tray_force_redraw (applet->priv->tray);
-}
-
-static void
 na_tray_applet_change_orient (PanelApplet       *panel_applet,
                               PanelAppletOrient  orient)
 {
@@ -170,7 +158,6 @@ na_tray_applet_class_init (NaTrayAppletClass *class)
   widget_class->realize = na_tray_applet_realize;
   widget_class->unrealize = na_tray_applet_unrealize;
   widget_class->style_updated = na_tray_applet_style_updated;
-  applet_class->change_background = na_tray_applet_change_background;
   applet_class->change_orient = na_tray_applet_change_orient;
 
   gtk_widget_class_install_style_property (
