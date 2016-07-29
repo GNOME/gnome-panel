@@ -120,6 +120,7 @@ PKG_CHECK_MODULES(PANEL, gmodule-2.0 >= $GLIB_REQUIRED
 			 pango >= $PANGO_REQUIRED
 			 gtk+-3.0 >= $GTK_REQUIRED
 			 cairo-xlib glib-2.0 >= $GLIB_REQUIRED
+			 gdm
 			 gmodule-2.0 >= $GLIB_REQUIRED
 			 gio-2.0 >= $GLIB_REQUIRED
 			 gio-unix-2.0 >= $GLIB_REQUIRED
