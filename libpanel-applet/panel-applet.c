@@ -1822,6 +1822,9 @@ panel_applet_init (PanelApplet *applet)
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
 	panel_applet_composited_changed (GTK_WIDGET (applet));
+
+	/* FIXME: High dpi scaling does not work... */
+	gdk_x11_display_set_window_scale (gdk_display_get_default (), 1);
 }
 
 static GObject *
