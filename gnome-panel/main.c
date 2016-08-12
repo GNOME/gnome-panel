@@ -13,6 +13,7 @@
 
 #include <glib/gi18n.h>
 #include <glib-unix.h>
+#include <gtk/gtkx.h>
 
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
@@ -146,6 +147,9 @@ main (int argc, char **argv)
 	g_option_context_add_main_entries (context, options, GETTEXT_PACKAGE);
 
 	gtk_init (&argc, &argv);
+
+	/* FIXME: High dpi scaling does not work... */
+	gdk_x11_display_set_window_scale (gdk_display_get_default (), 1);
 
 	g_unix_signal_add (SIGTERM, on_term_signal, NULL);
 	g_unix_signal_add (SIGINT, on_int_signal, NULL);
