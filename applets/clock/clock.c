@@ -163,30 +163,6 @@ static void edit_hide (GtkWidget *unused, ClockData *cd);
 static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
 static void save_cities_store (ClockData *cd);
 
-/* ClockBox, an instantiable GtkBox */
-
-typedef GtkBox      ClockBox;
-typedef GtkBoxClass ClockBoxClass;
-
-static GType clock_box_get_type (void);
-
-G_DEFINE_TYPE (ClockBox, clock_box, GTK_TYPE_BOX)
-
-static void
-clock_box_init (ClockBox *box)
-{
-}
-
-static void
-clock_box_class_init (ClockBoxClass *klass)
-{
-	GtkWidgetClass *widget_class;
-
-	widget_class = GTK_WIDGET_CLASS (klass);
-
-	gtk_widget_class_set_css_name (widget_class, "clock-box");
-}
-
 /* Clock */
 
 static inline GtkWidget *
@@ -889,14 +865,12 @@ create_clock_widget (ClockData *cd)
         gtk_widget_show (cd->panel_button);
 
         /* Main orientable box */
-        cd->main_obox = g_object_new (clock_box_get_type (), NULL);
-        gtk_box_set_spacing (GTK_BOX (cd->main_obox), 12); /* spacing between weather and time */
+        cd->main_obox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
         gtk_container_add (GTK_CONTAINER (cd->panel_button), cd->main_obox);
         gtk_widget_show (cd->main_obox);
 
         /* Weather orientable box */
-        cd->weather_obox = g_object_new (clock_box_get_type (), NULL);
-        gtk_box_set_spacing (GTK_BOX (cd->weather_obox), 2); /* spacing between weather icon and temperature */
+        cd->weather_obox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
         gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->weather_obox, FALSE, FALSE, 0);
         gtk_widget_set_has_tooltip (cd->weather_obox, TRUE);
         g_signal_connect (cd->weather_obox, "query-tooltip",
