@@ -155,9 +155,9 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 	h += 2;
 
 	zoom = g_slice_new (CompositedZoomData);
-	zoom->size = w;
-	zoom->size_start = w;
-	zoom->size_end = w * ZOOM_FACTOR;
+	zoom->size = MIN (w,h);
+	zoom->size_start = zoom->size;
+	zoom->size_end = zoom->size * ZOOM_FACTOR;
 	zoom->orientation = orientation;
 	zoom->opacity = 1.0;
 	zoom->pixbuf = g_object_ref (pixbuf);
