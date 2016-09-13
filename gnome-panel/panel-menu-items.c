@@ -1269,70 +1269,61 @@ panel_place_menu_item_dispose (GObject *object)
 
   g_clear_object (&menuitem->priv->settings);
 
+  if (menuitem->priv->bookmarks_monitor != NULL)
+    {
+      g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
+
+      g_clear_object (&menuitem->priv->bookmarks_monitor);
+    }
+
+  if (menuitem->priv->drive_changed_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->drive_changed_id);
+  menuitem->priv->drive_changed_id = 0;
+
+  if (menuitem->priv->drive_connected_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->drive_connected_id);
+  menuitem->priv->drive_connected_id = 0;
+
+  if (menuitem->priv->drive_disconnected_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->drive_disconnected_id);
+  menuitem->priv->drive_disconnected_id = 0;
+
+  if (menuitem->priv->volume_added_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->volume_added_id);
+  menuitem->priv->volume_added_id = 0;
+
+  if (menuitem->priv->volume_changed_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->volume_changed_id);
+  menuitem->priv->volume_changed_id = 0;
+
+  if (menuitem->priv->volume_removed_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->volume_removed_id);
+  menuitem->priv->volume_removed_id = 0;
+
+  if (menuitem->priv->mount_added_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->mount_added_id);
+  menuitem->priv->mount_added_id = 0;
+
+  if (menuitem->priv->mount_changed_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->mount_changed_id);
+  menuitem->priv->mount_changed_id = 0;
+
+  if (menuitem->priv->mount_removed_id)
+    g_signal_handler_disconnect (menuitem->priv->volume_monitor,
+                                 menuitem->priv->mount_removed_id);
+  menuitem->priv->mount_removed_id = 0;
+
+  g_clear_object (&menuitem->priv->volume_monitor);
+
   G_OBJECT_CLASS (panel_place_menu_item_parent_class)->dispose (object);
-}
-
-static void
-panel_place_menu_item_finalize (GObject *object)
-{
-	PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
-
-	if (menuitem->priv->bookmarks_monitor != NULL) {
-		g_file_monitor_cancel (menuitem->priv->bookmarks_monitor);
-		g_object_unref (menuitem->priv->bookmarks_monitor);
-	}
-	menuitem->priv->bookmarks_monitor = NULL;
-
-	if (menuitem->priv->drive_changed_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->drive_changed_id);
-	menuitem->priv->drive_changed_id = 0;
-
-	if (menuitem->priv->drive_connected_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->drive_connected_id);
-	menuitem->priv->drive_connected_id = 0;
-
-	if (menuitem->priv->drive_disconnected_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->drive_disconnected_id);
-	menuitem->priv->drive_disconnected_id = 0;
-
-	if (menuitem->priv->volume_added_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->volume_added_id);
-	menuitem->priv->volume_added_id = 0;
-
-	if (menuitem->priv->volume_changed_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->volume_changed_id);
-	menuitem->priv->volume_changed_id = 0;
-
-	if (menuitem->priv->volume_removed_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->volume_removed_id);
-	menuitem->priv->volume_removed_id = 0;
-
-	if (menuitem->priv->mount_added_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->mount_added_id);
-	menuitem->priv->mount_added_id = 0;
-
-	if (menuitem->priv->mount_changed_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->mount_changed_id);
-	menuitem->priv->mount_changed_id = 0;
-
-	if (menuitem->priv->mount_removed_id)
-		g_signal_handler_disconnect (menuitem->priv->volume_monitor,
-					     menuitem->priv->mount_removed_id);
-	menuitem->priv->mount_removed_id = 0;
-
-	if (menuitem->priv->volume_monitor != NULL)
-		g_object_unref (menuitem->priv->volume_monitor);
-	menuitem->priv->volume_monitor = NULL;
-
-	G_OBJECT_CLASS (panel_place_menu_item_parent_class)->finalize (object);
 }
 
 static void
@@ -1429,7 +1420,6 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 {
 	GObjectClass *gobject_class = (GObjectClass *) klass;
 
-	gobject_class->finalize = panel_place_menu_item_finalize;
 	gobject_class->dispose = panel_place_menu_item_dispose;
 
 	g_type_class_add_private (klass, sizeof (PanelPlaceMenuItemPrivate));
