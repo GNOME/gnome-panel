@@ -71,6 +71,7 @@ G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, PANEL_TYPE_IMAGE_M
 struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
 	PanelWidget *panel;
+	GSettings   *settings;
 
 	GtkRecentManager *recent_manager;
 
@@ -1262,6 +1263,16 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 }
 
 static void
+panel_place_menu_item_dispose (GObject *object)
+{
+  PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
+
+  g_clear_object (&menuitem->priv->settings);
+
+  G_OBJECT_CLASS (panel_place_menu_item_parent_class)->dispose (object);
+}
+
+static void
 panel_place_menu_item_finalize (GObject *object)
 {
 	PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
@@ -1335,6 +1346,9 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
 
 	settings = g_settings_new (GNOME_NAUTILUS_DESKTOP_SCHEMA);
+
+	menuitem->priv->settings = settings;
+
 	g_signal_connect (settings, "changed::" GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY,
 	                  G_CALLBACK (panel_place_menu_item_key_changed), menuitem);
 
@@ -1416,6 +1430,7 @@ panel_place_menu_item_class_init (PanelPlaceMenuItemClass *klass)
 	GObjectClass *gobject_class = (GObjectClass *) klass;
 
 	gobject_class->finalize = panel_place_menu_item_finalize;
+	gobject_class->dispose = panel_place_menu_item_dispose;
 
 	g_type_class_add_private (klass, sizeof (PanelPlaceMenuItemPrivate));
 }
