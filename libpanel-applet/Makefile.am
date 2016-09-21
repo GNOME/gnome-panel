@@ -23,9 +23,7 @@ libpanel_applet_la_SOURCES =		\
 	panel-applet-factory.c		\
 	panel-applet-bindings.h		\
 	panel-applet-bindings.c		\
-	panel-applet-private.h		\
-	panel-plug.c			\
-	panel-plug-private.h
+	panel-applet-private.h
 
 libpanel_applet_la_LIBADD  = \
 	$(LIBPANEL_APPLET_LIBS) \

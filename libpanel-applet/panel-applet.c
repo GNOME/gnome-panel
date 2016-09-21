@@ -45,7 +45,6 @@
 #include "panel-applet-factory.h"
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
-#include "panel-plug-private.h"
 
 /**
  * SECTION:applet
@@ -76,7 +75,6 @@
  */
 
 struct _PanelAppletPrivate {
-	GtkWidget         *plug;
 	GtkWidget         *applet;
 	GDBusConnection   *connection;
 
@@ -1056,71 +1054,11 @@ panel_applet_can_focus (GtkWidget *widget)
 	return !container_has_focusable_child (GTK_CONTAINER (widget));
 }
 
-/* Taken from libbonoboui/bonobo/bonobo-plug.c */
 static gboolean
 panel_applet_button_event (PanelApplet    *applet,
                            GdkEventButton *event)
 {
-	GtkWidget *widget;
-	GdkWindow *window;
-	GdkWindow *socket_window;
-	XEvent     xevent;
-
-	if (!applet->priv->out_of_process)
-		return FALSE;
-
-	widget = applet->priv->plug;
-
-	if (!gtk_widget_is_toplevel (widget))
-		return FALSE;
-
-	window = gtk_widget_get_window (widget);
-	socket_window = gtk_plug_get_socket_window (GTK_PLUG (widget));
-
-	if (event->type == GDK_BUTTON_PRESS) {
-		GdkDisplay *display;
-		GdkSeat *seat;
-
-		xevent.xbutton.type = ButtonPress;
-
-		display = gdk_display_get_default ();
-		seat = gdk_display_get_default_seat (display);
-
-		/* X does an automatic pointer grab on button press
-		 * if we have both button press and release events
-		 * selected.
-		 * We don't want to hog the pointer on our parent.
-		 */
-		gdk_seat_ungrab (seat);
-	} else {
-		xevent.xbutton.type = ButtonRelease;
-	}
-
-	xevent.xbutton.display     = GDK_WINDOW_XDISPLAY (window);
-	xevent.xbutton.window      = GDK_WINDOW_XID (socket_window);
-	xevent.xbutton.root        = GDK_WINDOW_XID (gdk_screen_get_root_window
-							 (gdk_window_get_screen (window)));
-	/*
-	 * FIXME: the following might cause
-	 *        big problems for non-GTK apps
-	 */
-	xevent.xbutton.x           = 0;
-	xevent.xbutton.y           = 0;
-	xevent.xbutton.x_root      = 0;
-	xevent.xbutton.y_root      = 0;
-	xevent.xbutton.state       = event->state;
-	xevent.xbutton.button      = event->button;
-	xevent.xbutton.same_screen = TRUE; /* FIXME ? */
-
-	gdk_error_trap_push ();
-
-	XSendEvent (GDK_WINDOW_XDISPLAY (window),
-		    GDK_WINDOW_XID (socket_window),
-		    False, NoEventMask, &xevent);
-
-	gdk_error_trap_pop_ignored ();
-
-	return TRUE;
+	return FALSE;
 }
 
 static gboolean
@@ -1337,131 +1275,6 @@ panel_applet_focus (GtkWidget        *widget,
 	return ret;
 }
 
-static cairo_surface_t *
-panel_applet_create_foreign_surface_for_display (GdkDisplay *display,
-                                                 GdkVisual  *visual,
-                                                 Window      xid)
-{
-        Window window;
-        gint x, y;
-        guint width, height, border, depth;
-
-        if (!XGetGeometry (GDK_DISPLAY_XDISPLAY (display), xid, &window,
-                           &x, &y, &width, &height, &border, &depth))
-                return NULL;
-
-        return cairo_xlib_surface_create (GDK_DISPLAY_XDISPLAY (display),
-                                          xid, gdk_x11_visual_get_xvisual (visual),
-                                          width, height);
-}
-
-static cairo_pattern_t *
-panel_applet_get_pattern_from_pixmap (PanelApplet *applet,
-                                      Window       xid,
-                                      int          x,
-                                      int          y)
-{
-	GdkWindow       *window;
-	int              width;
-	int              height;
-        cairo_t         *cr;
-        cairo_surface_t *background;
-        cairo_surface_t *surface;
-        cairo_pattern_t *pattern;
-
-	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (!gtk_widget_get_realized (GTK_WIDGET (applet)))
-		return NULL;
-
-        window = gtk_widget_get_window (GTK_WIDGET (applet));
-
-        gdk_error_trap_push ();
-        background = panel_applet_create_foreign_surface_for_display (gdk_window_get_display (window),
-                                                                      gdk_window_get_visual (window),
-                                                                      xid);
-        gdk_error_trap_pop_ignored ();
-
-        /* background can be NULL if the user changes the background very fast.
-         * We'll get the next update, so it's not a big deal. */
-        if (!background ||
-            cairo_surface_status (background) != CAIRO_STATUS_SUCCESS) {
-                if (background)
-                        cairo_surface_destroy (background);
-                return NULL;
-        }
-
-        width = gdk_window_get_width (window);
-        height = gdk_window_get_height (window);
-        surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-
-        gdk_error_trap_push ();
-        cr = cairo_create (surface);
-        cairo_set_source_surface (cr, background, -x, -y);
-        cairo_rectangle (cr, 0, 0, width, height);
-        cairo_fill (cr);
-        gdk_error_trap_pop_ignored ();
-
-        cairo_surface_destroy (background);
-
-	pattern = NULL;
-
-	if (cairo_status (cr) == CAIRO_STATUS_SUCCESS)
-		pattern = cairo_pattern_create_for_surface (surface);
-
-        cairo_destroy (cr);
-        cairo_surface_destroy (surface);
-
-	return pattern;
-}
-
-static cairo_pattern_t *
-panel_applet_get_background (PanelApplet *applet)
-{
-        cairo_pattern_t *pattern = NULL;
-        GVariant        *variant;
-        GVariantIter     iter;
-        GError          *error = NULL;
-
-        g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-
-	if (!gtk_widget_get_realized (GTK_WIDGET (applet)) || !applet->priv->background)
-		return NULL;
-
-        variant = g_variant_parse (NULL, applet->priv->background,
-                                   NULL, NULL, &error);
-        if (!variant) {
-                g_warning ("Error parsing background %s: %s\n", applet->priv->background, error->message);
-                g_error_free (error);
-                return NULL;
-        }
-
-        g_variant_iter_init (&iter, variant);
-        switch (g_variant_iter_n_children (&iter)) {
-        case 4: {
-                gdouble red, green, blue, alpha;
-
-                g_variant_get (variant, "(dddd)", &red, &green, &blue, &alpha);
-                pattern = cairo_pattern_create_rgba (red, green, blue, alpha);
-        }
-                break;
-        case 3: {
-                guint32 xid;
-                int x, y;
-
-                g_variant_get (variant, "(uii)", &xid, &x, &y);
-                pattern = panel_applet_get_pattern_from_pixmap (applet, xid, x, y);
-        }
-                break;
-        default:
-                break;
-        }
-
-        g_variant_unref (variant);
-
-        return pattern;
-}
-
 static void
 panel_applet_set_background_string (PanelApplet *applet,
 				    const gchar *background)
@@ -1495,24 +1308,6 @@ panel_applet_style_updated (GtkWidget *widget)
 static void
 panel_applet_handle_background (PanelApplet *applet)
 {
-	GdkWindow *window;
-	cairo_pattern_t *pattern;
-
-	if (applet->priv->plug == NULL)
-		return;
-
-	window = gtk_widget_get_window (applet->priv->plug);
-
-	if (window == NULL)
-	  return;
-
-	pattern = panel_applet_get_background (applet);
-
-	gdk_window_set_background_pattern (window, pattern);
-	gtk_widget_queue_draw (applet->priv->plug);
-
-	if (pattern)
-		cairo_pattern_destroy (pattern);
 }
 
 static void
@@ -1745,33 +1540,6 @@ panel_applet_init (PanelApplet *applet)
 	gdk_x11_display_set_window_scale (gdk_display_get_default (), 1);
 }
 
-static GObject *
-panel_applet_constructor (GType                  type,
-                          guint                  n_construct_properties,
-                          GObjectConstructParam *construct_properties)
-{
-	GObject     *object;
-	PanelApplet *applet;
-
-	object = G_OBJECT_CLASS (panel_applet_parent_class)->constructor (type,
-	                                                                  n_construct_properties,
-	                                                                  construct_properties);
-	applet = PANEL_APPLET (object);
-
-	if (!applet->priv->out_of_process)
-		return object;
-
-	applet->priv->plug = panel_plug_new ();
-
-	g_signal_connect_swapped (G_OBJECT (applet->priv->plug), "embedded",
-		                      G_CALLBACK (panel_applet_setup),
-		                      applet);
-
-	gtk_container_add (GTK_CONTAINER (applet->priv->plug), GTK_WIDGET (applet));
-
-	return object;
-}
-
 static void
 panel_applet_constructed (GObject *object)
 {
@@ -1794,7 +1562,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 
 	gobject_class->get_property = panel_applet_get_property;
 	gobject_class->set_property = panel_applet_set_property;
-	gobject_class->constructor = panel_applet_constructor;
 	gobject_class->constructed = panel_applet_constructed;
         gobject_class->finalize = panel_applet_finalize;
 
@@ -2277,19 +2044,6 @@ panel_applet_factory_setup_in_process (const gchar               *factory_id,
 {
 	return _panel_applet_factory_main_internal (factory_id, FALSE, applet_type,
 						    callback, data);
-}
-
-guint32
-panel_applet_get_xid (PanelApplet *applet,
-		      GdkScreen   *screen)
-{
-	if (applet->priv->out_of_process == FALSE)
-		return 0;
-
-	gtk_window_set_screen (GTK_WINDOW (applet->priv->plug), screen);
-	gtk_widget_show (applet->priv->plug);
-
-	return gtk_plug_get_id (GTK_PLUG (applet->priv->plug));
 }
 
 const gchar *

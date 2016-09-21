@@ -190,8 +190,6 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 	gint         screen_num;
 	GVariant    *props;
 	GVariant    *return_value;
-	GdkScreen   *screen;
-	guint32      xid;
 	guint32      uid;
 	const gchar *object_path;
 
@@ -209,11 +207,6 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 	set_applet_constructor_properties (applet, props);
 	g_variant_unref (props);
 
-	screen = screen_num != -1 ?
-		gdk_display_get_screen (gdk_display_get_default (), screen_num) :
-		gdk_screen_get_default ();
-
-	xid = panel_applet_get_xid (PANEL_APPLET (applet), screen);
 	uid = factory->next_uid++;
 	object_path = panel_applet_get_object_path (PANEL_APPLET (applet));
 
@@ -223,7 +216,7 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 	return_value = g_variant_new ("(obuu)",
 	                              object_path,
 	                              factory->out_of_process,
-	                              xid,
+	                              0,
 	                              uid);
 
 	g_dbus_method_invocation_return_value (invocation, return_value);

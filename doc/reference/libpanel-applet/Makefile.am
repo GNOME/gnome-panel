@@ -51,7 +51,6 @@ IGNORE_HFILES = \
 	panel-applet-factory.h \
 	panel-applet-marshal.h \
 	panel-applet-private.h \
-	panel-plug-private.h \
 	$(NULL)
 
 # Images to copy into HTML directory.
