@@ -228,61 +228,6 @@ int                panel_applet_factory_setup_in_process (const gchar           
 #endif /* !defined(ENABLE_NLS) */
 
 /**
- * PANEL_APPLET_OUT_PROCESS_FACTORY:
- * @factory_id: identifier of an applet factory.
- * @type: GType of the applet this factory creates.
- * @callback: (scope call): a %PanelAppletFactoryCallback to be called
- *     when a new applet is created.
- * @data: (closure): callback data.
- *
- * Convenience macro providing a main() function for an out-of-process applet.
- * Internally, it will call panel_applet_factory_main() to create the
- * @factory_id applet factory.
- *
- * Applet instances created by the applet factory will use @applet_type as
- * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
- * as @applet_type.
- *
- * On creation of the applet instances, @callback is called to setup the
- * applet. If @callback returns %FALSE, the creation of the applet instance is
- * cancelled.
- *
- * It can only be used once, and is incompatible with the use of
- * %PANEL_APPLET_IN_PROCESS_FACTORY and panel_applet_factory_main().
- **/
-#define PANEL_APPLET_OUT_PROCESS_FACTORY(factory_id, type, callback, data)      \
-int main (int argc, char *argv [])						\
-{										\
-	GOptionContext *context;						\
-	GError         *error;							\
-	int             retval;							\
-										\
-	_PANEL_APPLET_SETUP_GETTEXT (TRUE);					\
-										\
-	context = g_option_context_new ("");					\
-	g_option_context_add_group (context, gtk_get_option_group (TRUE));	\
-										\
-	error = NULL;								\
-	if (!g_option_context_parse (context, &argc, &argv, &error)) {		\
-		if (error) {							\
-			g_printerr ("Cannot parse arguments: %s.\n",		\
-				    error->message);				\
-			g_error_free (error);					\
-		} else								\
-			g_printerr ("Cannot parse arguments.\n");		\
-		g_option_context_free (context);				\
-		return 1;							\
-	}									\
-										\
-	gtk_init (&argc, &argv);						\
-                                                                                \
-        retval = panel_applet_factory_main (factory_id, type, callback, data);  \
-	g_option_context_free (context);					\
-										\
-	return retval;								\
-}
-
-/**
  * PANEL_APPLET_IN_PROCESS_FACTORY:
  * @factory_id: identifier of an applet factory.
  * @type: GType of the applet this factory creates.
@@ -302,8 +247,8 @@ int main (int argc, char *argv [])						\
  * cancelled.
  *
  * It can only be used once, and is incompatible with the use of
- * %PANEL_APPLET_OUT_PROCESS_FACTORY and panel_applet_factory_main().
- **/
+ * panel_applet_factory_main().
+ */
 #define PANEL_APPLET_IN_PROCESS_FACTORY(factory_id, type, callback, data)       \
 gboolean _panel_applet_shlib_factory (void);					\
 G_MODULE_EXPORT gint                                                            \

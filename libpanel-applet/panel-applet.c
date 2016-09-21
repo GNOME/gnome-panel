@@ -2264,11 +2264,8 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
  * applet. If @callback returns %FALSE, the creation of the applet instance is
  * cancelled.
  *
- * If using C, it is recommended to use #PANEL_APPLET_OUT_PROCESS_FACTORY
- * instead as it will create a main() function for you.
- *
  * It can only be used once, and is incompatible with the use of
- * %PANEL_APPLET_IN_PROCESS_FACTORY and %PANEL_APPLET_OUT_PROCESS_FACTORY.
+ * %PANEL_APPLET_IN_PROCESS_FACTORY.
  *
  * Returns: 0 on success, 1 if there is an error.
  **/
@@ -2301,7 +2298,7 @@ panel_applet_factory_main (const gchar               *factory_id,
  * cancelled.
  *
  * It can only be used once, and is incompatible with the use of
- * %PANEL_APPLET_IN_PROCESS_FACTORY and %PANEL_APPLET_OUT_PROCESS_FACTORY.
+ * %PANEL_APPLET_IN_PROCESS_FACTORY.
  *
  * Returns: 0 on success, 1 if there is an error.
  **/
