@@ -92,9 +92,6 @@ struct _PanelAppletPrivate {
 	PanelAppletOrient  orient;
 	char              *background;
 
-	int                previous_width;
-	int                previous_height;
-
         int               *size_hints;
         int                size_hints_len;
 
@@ -124,7 +121,6 @@ enum {
 	PROP_LOCKED_DOWN
 };
 
-static void       panel_applet_handle_background   (PanelApplet       *applet);
 static GAction   *panel_applet_menu_get_action     (PanelApplet       *applet,
 						    const gchar       *action);
 static void       panel_applet_menu_update_actions (PanelApplet       *applet);
@@ -1134,7 +1130,6 @@ panel_applet_size_allocate (GtkWidget     *widget,
 	GtkBin        *bin;
 	GtkWidget     *child;
 	int            border_width;
-	PanelApplet   *applet;
 
 	if (!panel_applet_can_focus (widget)) {
 		GTK_WIDGET_CLASS (panel_applet_parent_class)->size_allocate (widget, allocation);
@@ -1160,16 +1155,6 @@ panel_applet_size_allocate (GtkWidget     *widget,
 		child = gtk_bin_get_child (bin);
 		if (child)
 			gtk_widget_size_allocate (child, &child_allocation);
-	}
-
-	applet = PANEL_APPLET (widget);
-
-	if (applet->priv->previous_height != allocation->height ||
-	    applet->priv->previous_width  != allocation->width) {
-		applet->priv->previous_height = allocation->height;
-		applet->priv->previous_width = allocation->width;
-
-		panel_applet_handle_background (applet);
 	}
 }
 
@@ -1269,35 +1254,8 @@ panel_applet_set_background_string (PanelApplet *applet,
 	if (applet->priv->background)
 		g_free (applet->priv->background);
 	applet->priv->background = background ? g_strdup (background) : NULL;
-	panel_applet_handle_background (applet);
 
 	g_object_notify (G_OBJECT (applet), "background");
-}
-
-static void
-panel_applet_style_updated (GtkWidget *widget)
-{
-  PanelApplet *applet;
-
-  applet = PANEL_APPLET (widget);
-
-  GTK_WIDGET_CLASS (panel_applet_parent_class)->style_updated (widget);
-
-  panel_applet_handle_background (applet);
-}
-
-static void
-panel_applet_handle_background (PanelApplet *applet)
-{
-}
-
-static void
-panel_applet_realize (GtkWidget *widget)
-{
-	GTK_WIDGET_CLASS (panel_applet_parent_class)->realize (widget);
-
-	if (PANEL_APPLET (widget)->priv->background)
-		panel_applet_handle_background (PANEL_APPLET (widget));
 }
 
 static void
@@ -1545,9 +1503,7 @@ panel_applet_class_init (PanelAppletClass *klass)
 	widget_class->get_request_mode = panel_applet_get_request_mode;
 	widget_class->size_allocate = panel_applet_size_allocate;
 	widget_class->draw = panel_applet_draw;
-	widget_class->style_updated = panel_applet_style_updated;
 	widget_class->focus = panel_applet_focus;
-	widget_class->realize = panel_applet_realize;
 
 	/**
 	 * PanelApplet:id: (skip)
