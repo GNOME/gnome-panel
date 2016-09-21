@@ -161,6 +161,11 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 
 			return NULL;
 		}
+	} else {
+		panel_applet_factory_info_free (info);
+		g_key_file_free (applet_file);
+
+		return NULL;
 	}
 
 	info->has_old_ids = FALSE;
