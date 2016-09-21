@@ -249,13 +249,6 @@ panel_applet_frame_dbus_size_hints_changed (PanelAppletContainer *container,
 }
 
 static void
-panel_applet_frame_dbus_applet_broken (PanelAppletContainer *container,
-				       PanelAppletFrame     *frame)
-{
-	_panel_applet_frame_applet_broken (frame);
-}
-
-static void
 panel_applet_frame_dbus_applet_remove (PanelAppletContainer *container,
 				       PanelAppletFrame     *frame)
 {
@@ -300,9 +293,6 @@ panel_applet_frame_dbus_init (PanelAppletFrameDBus *frame)
 			  frame);
 	g_signal_connect (container, "child-property-changed::size-hints",
 			  G_CALLBACK (panel_applet_frame_dbus_size_hints_changed),
-			  frame);
-	g_signal_connect (container, "applet-broken",
-			  G_CALLBACK (panel_applet_frame_dbus_applet_broken),
 			  frame);
 	g_signal_connect (container, "applet-remove",
 			  G_CALLBACK (panel_applet_frame_dbus_applet_remove),

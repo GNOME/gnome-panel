@@ -15,7 +15,6 @@
  *
  * You should have received a copy of the GNU Library General Public
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 #include "config.h"
@@ -39,7 +38,6 @@ struct _PanelAppletContainerPrivate {
 };
 
 enum {
-	APPLET_BROKEN,
 	APPLET_MOVE,
 	APPLET_REMOVE,
 	CHILD_PROPERTY_CHANGED,
@@ -159,16 +157,6 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 
 	gobject_class->dispose = panel_applet_container_dispose;
 
-	signals[APPLET_BROKEN] =
-		g_signal_new ("applet-broken",
-			      G_TYPE_FROM_CLASS (klass),
-			      G_SIGNAL_RUN_LAST,
-			      G_STRUCT_OFFSET (PanelAppletContainerClass, applet_broken),
-			      NULL,
-			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
-			      G_TYPE_NONE,
-			      0);
 	signals[APPLET_MOVE] =
 		g_signal_new ("applet-move",
 			      G_TYPE_FROM_CLASS (klass),

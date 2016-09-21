@@ -84,13 +84,6 @@ get_combo_applet_id (GtkWidget *combo_box)
 }
 
 static void
-applet_broken_cb (GtkWidget *container,
-		  GtkWidget *window)
-{
-	gtk_widget_destroy (window);
-}
-
-static void
 applet_activated_cb (GObject      *source_object,
 		     GAsyncResult *res,
 		     GtkWidget    *applet_window)
@@ -140,10 +133,6 @@ load_applet_into_window (const char *title,
 	container = panel_applet_container_new ();
 	gtk_box_set_center_widget (GTK_BOX (box), container);
 	gtk_widget_show (container);
-
-	g_signal_connect (container, "applet-broken",
-			  G_CALLBACK (applet_broken_cb),
-			  applet_window);
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
