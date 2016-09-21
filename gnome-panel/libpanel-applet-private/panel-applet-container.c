@@ -392,7 +392,6 @@ on_factory_appeared (GDBusConnection   *connection,
 
 static void
 panel_applet_container_get_applet (PanelAppletContainer *container,
-				   GdkScreen            *screen,
 				   const gchar          *iid,
 				   GVariant             *props,
 				   GCancellable         *cancellable,
@@ -445,7 +444,6 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 
 void
 panel_applet_container_add (PanelAppletContainer *container,
-			    GdkScreen            *screen,
 			    const gchar          *iid,
 			    GCancellable         *cancellable,
 			    GAsyncReadyCallback   callback,
@@ -457,7 +455,7 @@ panel_applet_container_add (PanelAppletContainer *container,
 
 	panel_applet_container_cancel_pending_operations (container);
 
-	panel_applet_container_get_applet (container, screen, iid, properties,
+	panel_applet_container_get_applet (container, iid, properties,
 					   cancellable, callback, user_data);
 }
 

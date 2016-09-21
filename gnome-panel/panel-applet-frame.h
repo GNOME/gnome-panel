@@ -91,7 +91,6 @@ void  panel_applet_frame_set_panel          (PanelAppletFrame    *frame,
 
 typedef struct _PanelAppletFrameActivating        PanelAppletFrameActivating;
 
-GdkScreen        *panel_applet_frame_activating_get_screen      (PanelAppletFrameActivating *frame_act);
 PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act);
 gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act);
