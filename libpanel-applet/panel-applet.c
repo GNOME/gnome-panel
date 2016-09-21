@@ -1052,13 +1052,6 @@ panel_applet_can_focus (GtkWidget *widget)
 }
 
 static gboolean
-panel_applet_button_event (PanelApplet    *applet,
-                           GdkEventButton *event)
-{
-	return FALSE;
-}
-
-static gboolean
 panel_applet_button_press (GtkWidget      *widget,
 			   GdkEventButton *event)
 {
@@ -1084,16 +1077,7 @@ panel_applet_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	return panel_applet_button_event (applet, event);
-}
-
-static gboolean
-panel_applet_button_release (GtkWidget      *widget,
-			     GdkEventButton *event)
-{
-	PanelApplet *applet = PANEL_APPLET (widget);
-
-	return panel_applet_button_event (applet, event);
+	return FALSE;
 }
 
 static void
@@ -1559,7 +1543,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
-	widget_class->button_release_event = panel_applet_button_release;
 	widget_class->composited_changed = panel_applet_composited_changed;
 	widget_class->key_press_event = panel_applet_key_press_event;
 	widget_class->get_request_mode = panel_applet_get_request_mode;
