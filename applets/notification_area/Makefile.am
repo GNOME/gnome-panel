@@ -62,9 +62,9 @@ testtray_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libnotification-area-applet.so
+APPLET_LOCATION   = $(pkglibdir)/libnotification-area-applet.so
 
-notification_area_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
+notification_area_appletlibdir = $(pkglibdir)
 notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
 
 appletdir       = $(appletsdir)

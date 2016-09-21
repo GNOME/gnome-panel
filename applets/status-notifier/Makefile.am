@@ -34,9 +34,9 @@ libsn_applet_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libsn-applet.so
+APPLET_LOCATION = $(pkglibdir)/libsn-applet.so
 
-sn_applet_libdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
+sn_applet_libdir = $(pkglibdir)
 sn_applet_lib_LTLIBRARIES = libsn-applet.la
 
 appletdir = $(appletsdir)

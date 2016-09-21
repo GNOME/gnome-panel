@@ -39,9 +39,9 @@ libwnck_applet_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libwnck-applet.so
+APPLET_LOCATION   = $(pkglibdir)/libwnck-applet.so
 
-wnck_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
+wnck_appletlibdir = $(pkglibdir)
 wnck_appletlib_LTLIBRARIES = libwnck-applet.la
 
 appletdir       = $(appletsdir)

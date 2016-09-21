@@ -27,9 +27,9 @@ libfish_applet_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libfish-applet.so
+APPLET_LOCATION   = $(pkglibdir)/libfish-applet.so
 
-fish_applet_libdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
+fish_applet_libdir = $(pkglibdir)
 fish_applet_lib_LTLIBRARIES = libfish-applet.la
 
 appletdir       = $(appletsdir)

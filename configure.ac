@@ -65,9 +65,6 @@ LT_LIB_M
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIBPANEL_APPLET_API_VERSION=5.0
-AC_SUBST([LIBPANEL_APPLET_API_VERSION])
-
 LIB_PANEL_APPLET_LT_VERSION=1:0:1
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
@@ -212,8 +209,8 @@ dnl Modules dir
 AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
 
 dnl Applets dir
-AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/\$(LIBPANEL_APPLET_API_VERSION)/applets")
-AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/\${libpanel_applet_api_version}/applets")
+AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
+AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/applets")
 
 dnl  Language Support
 

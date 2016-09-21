@@ -96,9 +96,9 @@ test_system_timezone_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)/libclock-applet.so
+APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
 
-clock_appletlibdir = $(pkglibdir)/$(LIBPANEL_APPLET_API_VERSION)
+clock_appletlibdir = $(pkglibdir)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
 
