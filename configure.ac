@@ -68,9 +68,6 @@ LT_LIB_M
 LIBPANEL_APPLET_API_VERSION=5.0
 AC_SUBST([LIBPANEL_APPLET_API_VERSION])
 
-LIBPANEL_APPLET_GIR_VERSION=5_0
-AC_SUBST([LIBPANEL_APPLET_GIR_VERSION])
-
 LIB_PANEL_APPLET_LT_VERSION=1:0:1
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
@@ -86,9 +83,6 @@ AC_PROG_CC
 AM_PATH_PYTHON
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
-
-# Check for introspection
-GOBJECT_INTROSPECTION_CHECK([0.9.5])
 
 GLIB_GSETTINGS
 
@@ -321,7 +315,6 @@ echo ""
 echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
 echo ""
 echo "  Evolution-Data-Server support ...: ${enable_eds}"
-echo "  Build introspection support .....: ${found_introspection}"
 echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
 echo ""
 echo "  Build with libstatus-notifier ...: ${with_libstatus_notifier}"

@@ -13,7 +13,6 @@ SUBDIRS = \
 
 AM_DISTCHECK_CONFIGURE_FLAGS = \
 	--enable-gtk-doc \
-	--enable-introspection \
 	$(NULL)
 
 EXTRA_DIST = \

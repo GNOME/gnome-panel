@@ -91,41 +91,6 @@ EXTRA_DIST =						\
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
-###############################
-# Introspection generation
-
--include $(INTROSPECTION_MAKEFILE)
-INTROSPECTION_GIRS =
-INTROSPECTION_SCANNER_ARGS = --warn-all --add-include-path=$(srcdir)
-INTROSPECTION_COMPILER_ARGS = --includedir=$(srcdir)
-
-if HAVE_INTROSPECTION
-introspection_sources = 	\
-	panel-applet.c		\
-	panel-applet.h
-built_introspection_sources =	\
-	panel-applet-enums.c	\
-	panel-applet-enums.h
-
-PanelApplet-$(LIBPANEL_APPLET_API_VERSION).gir: libpanel-applet.la
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_INCLUDES = GObject-2.0 Gtk-3.0
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_CFLAGS = $(libpanel_applet_la_CFLAGS)
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_LIBS = libpanel-applet.la
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_FILES = $(addprefix $(srcdir)/,$(introspection_sources)) $(addprefix $(builddir)/,$(built_introspection_sources))
-PanelApplet_@LIBPANEL_APPLET_GIR_VERSION@_gir_SCANNERFLAGS = --identifier-prefix=Panel --symbol-prefix=panel --pkg-export=libpanel-applet $(WARN_SCANNERFLAGS)
-INTROSPECTION_GIRS += PanelApplet-$(LIBPANEL_APPLET_API_VERSION).gir
-
-girdir = $(datadir)/gir-1.0
-gir_DATA = $(INTROSPECTION_GIRS)
-
-typelibdir = $(libdir)/girepository-1.0
-typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
-
-CLEANFILES += $(gir_DATA) $(typelib_DATA)
-endif
-
-################################
-
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
 
