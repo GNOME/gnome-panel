@@ -9,8 +9,6 @@ void xstuff_zoom_animate                (GtkWidget        *widget,
 					 PanelOrientation  orientation,
 					 GdkRectangle     *opt_src_rect);
 
-gboolean xstuff_is_display_dead         (void);
-
 void xstuff_init                        (void);
 
 #endif /* __XSTUFF_H__ */
