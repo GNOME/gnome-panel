@@ -149,28 +149,24 @@ set_applet_constructor_properties (GObject  *applet,
 
 	g_variant_iter_init (&iter, props);
 	while (g_variant_iter_loop (&iter, "{sv}", &key, &value)) {
-		switch (g_variant_classify (value)) {
-		case G_VARIANT_CLASS_UINT32: {
+		GVariantClass variant_class;
+
+		variant_class = g_variant_classify (value);
+
+		if (variant_class == G_VARIANT_CLASS_UINT32) {
 			guint32 v = g_variant_get_uint32 (value);
 
 			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		case G_VARIANT_CLASS_STRING: {
+		} else if (variant_class == G_VARIANT_CLASS_STRING) {
 			const gchar *v = g_variant_get_string (value, NULL);
 
 			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		case G_VARIANT_CLASS_BOOLEAN: {
+		} else if (variant_class == G_VARIANT_CLASS_BOOLEAN) {
 			gboolean v = g_variant_get_boolean (value);
 
 			g_object_set (applet, key, v, NULL);
-		}
-			break;
-		default:
+		} else {
 			g_assert_not_reached ();
-			break;
 		}
 	}
 }
