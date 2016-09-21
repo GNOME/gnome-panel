@@ -1778,7 +1778,7 @@ panel_applet_constructed (GObject *object)
 	PanelApplet *applet = PANEL_APPLET (object);
 
 	if (!applet->priv->connection || !applet->priv->closure || !applet->priv->id) {
-		g_printerr ("Bad use of PanelApplet API: you should not create a PanelApplet object yourself. Please use panel_applet_factory_main() instead.\n");
+		g_printerr ("Bad use of PanelApplet API: you should not create a PanelApplet object yourself.\n");
 		g_assert_not_reached ();
 	}
 
@@ -2244,39 +2244,6 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_object_unref (factory);
 
 	return 1;
-}
-
-/**
- * panel_applet_factory_main:
- * @factory_id: identifier of an applet factory.
- * @applet_type: GType of the applet this factory creates.
- * @callback: (scope call): callback to be called when a new applet is created.
- * @data: (closure): callback data.
- *
- * Creates the applet factory for @factory_id, so that the factory can create
- * instances of the applet types it is associated with.
- *
- * Applet instances created by the applet factory will use @applet_type as
- * GType. Unless you subclass #PanelApplet, you should use %PANEL_TYPE_APPLET
- * as @applet_type.
- *
- * On creation of the applet instances, @callback is called to setup the
- * applet. If @callback returns %FALSE, the creation of the applet instance is
- * cancelled.
- *
- * It can only be used once, and is incompatible with the use of
- * %PANEL_APPLET_IN_PROCESS_FACTORY.
- *
- * Returns: 0 on success, 1 if there is an error.
- **/
-int
-panel_applet_factory_main (const gchar               *factory_id,
-			   GType                      applet_type,
-			   PanelAppletFactoryCallback callback,
-			   gpointer                   data)
-{
-	return _panel_applet_factory_main_internal (factory_id, TRUE, applet_type,
-						    callback, data);
 }
 
 /**

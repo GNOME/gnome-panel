@@ -194,11 +194,6 @@ void               panel_applet_setup_menu_from_resource (PanelApplet    *applet
 							  GSimpleActionGroup *action_group,
 							  const gchar        *translation_domain);
 
-int                panel_applet_factory_main          (const gchar		  *factory_id,
-						       GType                       applet_type,
-						       PanelAppletFactoryCallback  callback,
-						       gpointer			   data);
-
 int                panel_applet_factory_setup_in_process (const gchar               *factory_id,
 							  GType                      applet_type,
 							  PanelAppletFactoryCallback callback,
@@ -245,9 +240,6 @@ int                panel_applet_factory_setup_in_process (const gchar           
  * On creation of the applet instances, @callback is called to setup the
  * applet. If @callback returns %FALSE, the creation of the applet instance is
  * cancelled.
- *
- * It can only be used once, and is incompatible with the use of
- * panel_applet_factory_main().
  */
 #define PANEL_APPLET_IN_PROCESS_FACTORY(factory_id, type, callback, data)       \
 gboolean _panel_applet_shlib_factory (void);					\
