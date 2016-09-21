@@ -18,9 +18,11 @@
  *
  */
 
+#include "config.h"
+
 #include <string.h>
-#include <gtk/gtkx.h>
 #include <panel-applets-manager.h>
+
 #include "panel-applet-container.h"
 #include "panel-marshal.h"
 
@@ -31,10 +33,7 @@ struct _PanelAppletContainerPrivate {
 	gchar      *bus_name;
 
 	gchar      *iid;
-	gboolean    out_of_process;
-	guint32     xid;
 	guint32     uid;
-	GtkWidget  *socket;
 
 	GHashTable *pending_ops;
 };
@@ -71,8 +70,6 @@ static const AppletPropertyInfo applet_properties [] = {
 #define PANEL_APPLET_FACTORY_OBJECT_PATH "/org/gnome/panel/applet/%s"
 #define PANEL_APPLET_INTERFACE           "org.gnome.panel.applet.Applet"
 
-static gboolean panel_applet_container_plug_removed (PanelAppletContainer *container);
-
 G_DEFINE_TYPE (PanelAppletContainer, panel_applet_container, GTK_TYPE_EVENT_BOX);
 
 GQuark
@@ -95,23 +92,10 @@ panel_applet_container_init (PanelAppletContainer *container)
 static void
 panel_applet_container_setup (PanelAppletContainer *container)
 {
-	if (container->priv->out_of_process) {
-		container->priv->socket = gtk_socket_new ();
+	GtkWidget *applet;
 
-		g_signal_connect_swapped (container->priv->socket,
-		                          "plug-removed",
-		                          G_CALLBACK (panel_applet_container_plug_removed),
-		                          container);
-
-		gtk_container_add (GTK_CONTAINER (container), container->priv->socket);
-		gtk_widget_show (container->priv->socket);
-	} else {
-		GtkWidget *applet;
-
-		applet = panel_applets_manager_get_applet_widget (container->priv->iid, container->priv->uid);
-
-		gtk_container_add (GTK_CONTAINER (container), applet);
-	}
+	applet = panel_applets_manager_get_applet_widget (container->priv->iid, container->priv->uid);
+	gtk_container_add (GTK_CONTAINER (container), applet);
 }
 
 static void
@@ -245,35 +229,6 @@ panel_applet_container_new (void)
 	return container;
 }
 
-static gboolean
-panel_applet_container_plug_removed (PanelAppletContainer *container)
-{
-	if (!container->priv->applet_proxy)
-		return FALSE;
-
-	panel_applet_container_cancel_pending_operations (container);
-
-	if (container->priv->name_watcher_id > 0) {
-		g_bus_unwatch_name (container->priv->name_watcher_id);
-		container->priv->name_watcher_id = 0;
-	}
-
-	g_object_unref (container->priv->applet_proxy);
-	container->priv->applet_proxy = NULL;
-
-	/* The "plug-removed" signal is also emitted when the socket is being
-	 * unrealized (eg., when PanelAppletContainer is torn down during
-	 * cleanup on exit). Only emit "applet-broken" if the socket is
-	 * still realized. */
-	if (gtk_widget_get_realized (container->priv->socket))
-		g_signal_emit (container, signals[APPLET_BROKEN], 0);
-
-	/* Continue destroying, in case of reloading
-	 * a new frame widget is created
-	 */
-	return FALSE;
-}
-
 static void
 panel_applet_container_child_signal (GDBusProxy           *proxy,
 				     gchar                *sender_name,
@@ -359,12 +314,6 @@ on_proxy_appeared (GObject      *source_object,
 	g_object_unref (task);
 
 	panel_applet_container_setup (container);
-
-	if (container->priv->xid > 0) {
-		gtk_socket_add_id (GTK_SOCKET (container->priv->socket),
-				   container->priv->xid);
-	}
-
 	g_object_unref (container);
 }
 
@@ -391,12 +340,7 @@ get_applet_cb (GObject      *source_object,
 
 	container = PANEL_APPLET_CONTAINER (g_async_result_get_source_object (G_ASYNC_RESULT (task)));
 
-	g_variant_get (retvals,
-	               "(&obuu)",
-	               &applet_path,
-	               &container->priv->out_of_process,
-	               &container->priv->xid,
-	               &container->priv->uid);
+	g_variant_get (retvals, "(&ou)", &applet_path, &container->priv->uid);
 
 	g_dbus_proxy_new (connection,
 			  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
@@ -450,7 +394,7 @@ on_factory_appeared (GDBusConnection   *connection,
 				PANEL_APPLET_FACTORY_INTERFACE,
 				"GetApplet",
 				data->parameters,
-				G_VARIANT_TYPE ("(obuu)"),
+				G_VARIANT_TYPE ("(ou)"),
 				G_DBUS_CALL_FLAGS_NONE,
 				-1,
 				data->cancellable,
@@ -470,7 +414,6 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 {
 	GTask              *task;
 	AppletFactoryData  *data;
-	gint                screen_number;
 	gchar              *bus_name;
 	gchar              *factory_id;
 	gchar              *applet_id;
@@ -492,14 +435,10 @@ panel_applet_container_get_applet (PanelAppletContainer *container,
 	factory_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
 	applet_id += 2;
 
-	/* we can't use the screen of the container widget since it's not in a
-	 * widget hierarchy yet */
-	screen_number = gdk_screen_get_number (screen);
-
 	data = g_new (AppletFactoryData, 1);
 	data->task = task;
 	data->factory_id = factory_id;
-	data->parameters = g_variant_new ("(si*)", applet_id, screen_number, props);
+	data->parameters = g_variant_new ("(s*)", applet_id, props);
 	data->cancellable = cancellable ? g_object_ref (cancellable) : NULL;
 
 	bus_name = g_strdup_printf (PANEL_APPLET_BUS_NAME, factory_id);

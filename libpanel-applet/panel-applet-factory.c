@@ -184,13 +184,12 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 {
 	GObject     *applet;
 	const gchar *applet_id;
-	gint         screen_num;
 	GVariant    *props;
 	GVariant    *return_value;
 	guint32      uid;
 	const gchar *object_path;
 
-	g_variant_get (parameters, "(&si@a{sv})", &applet_id, &screen_num, &props);
+	g_variant_get (parameters, "(&s@a{sv})", &applet_id, &props);
 
 	applet = g_object_new (factory->applet_type,
 			       "id", applet_id,
@@ -209,7 +208,7 @@ panel_applet_factory_get_applet (PanelAppletFactory    *factory,
 	g_hash_table_insert (factory->applets, GUINT_TO_POINTER (uid), applet);
 	g_object_set_data (applet, "uid", GUINT_TO_POINTER (uid));
 
-	return_value = g_variant_new ("(obuu)", object_path, FALSE, 0, uid);
+	return_value = g_variant_new ("(ou)", object_path, uid);
 
 	g_dbus_method_invocation_return_value (invocation, return_value);
 }
@@ -236,11 +235,8 @@ static const gchar introspection_xml[] =
 	    "<interface name='org.gnome.panel.applet.AppletFactory'>"
 	      "<method name='GetApplet'>"
 	        "<arg name='applet_id' type='s' direction='in'/>"
-	        "<arg name='screen' type='i' direction='in'/>"
 	        "<arg name='props' type='a{sv}' direction='in'/>"
 	        "<arg name='applet' type='o' direction='out'/>"
-	        "<arg name='out-of-process' type='b' direction='out'/>"
-	        "<arg name='xid' type='u' direction='out'/>"
 	        "<arg name='uid' type='u' direction='out'/>"
 	      "</method>"
 	    "</interface>"
