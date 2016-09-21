@@ -261,7 +261,6 @@ AC_CONFIG_FILES([
 
   libpanel-applet/Makefile
   libpanel-applet/libpanel-applet.pc
-  libpanel-applet/libpanel-applet-uninstalled.pc
 
   po/Makefile.in
 

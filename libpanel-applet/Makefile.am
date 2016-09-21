@@ -86,8 +86,7 @@ pkgconfig_DATA = libpanel-applet.pc
 
 EXTRA_DIST =						\
 	panel-applet-marshal.list			\
-	libpanel-applet.pc.in			\
-	libpanel-applet-uninstalled.pc.in
+	libpanel-applet.pc.in
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
