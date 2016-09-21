@@ -36,7 +36,6 @@ typedef struct _PanelAppletFactoryClass PanelAppletFactoryClass;
 
 GType               panel_applet_factory_get_type          (void) G_GNUC_CONST;
 PanelAppletFactory *panel_applet_factory_new               (const gchar        *applet_id,
-                                                            gboolean            out_of_process,
                                                             GType               applet_type,
                                                             GClosure           *closure);
 gboolean            panel_applet_factory_register_service  (PanelAppletFactory *factory);

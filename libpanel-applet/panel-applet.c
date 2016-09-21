@@ -78,8 +78,6 @@ struct _PanelAppletPrivate {
 	GtkWidget         *applet;
 	GDBusConnection   *connection;
 
-	gboolean           out_of_process;
-
 	char              *id;
 	GClosure          *closure;
 	char              *object_path;
@@ -115,7 +113,6 @@ static guint panel_applet_signals [LAST_SIGNAL];
 
 enum {
 	PROP_0,
-	PROP_OUT_OF_PROCESS,
 	PROP_ID,
 	PROP_CLOSURE,
 	PROP_CONNECTION,
@@ -1342,9 +1339,6 @@ panel_applet_get_property (GObject    *object,
 	PanelApplet *applet = PANEL_APPLET (object);
 
 	switch (prop_id) {
-	case PROP_OUT_OF_PROCESS:
-		g_value_set_boolean (value, applet->priv->out_of_process);
-		break;
 	case PROP_ID:
 		g_value_set_string (value, applet->priv->id);
 		break;
@@ -1397,9 +1391,6 @@ panel_applet_set_property (GObject      *object,
 	PanelApplet *applet = PANEL_APPLET (object);
 
 	switch (prop_id) {
-	case PROP_OUT_OF_PROCESS:
-		applet->priv->out_of_process = g_value_get_boolean (value);
-		break;
 	case PROP_ID:
 		applet->priv->id = g_value_dup_string (value);
 		break;
@@ -1578,19 +1569,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 	widget_class->focus = panel_applet_focus;
 	widget_class->realize = panel_applet_realize;
 
-	/**
-	 * PanelApplet:out-of-process: (skip)
-	 *
-	 * Implementation detail.
-	 **/
-	g_object_class_install_property (gobject_class,
-	                                 PROP_OUT_OF_PROCESS,
-	                                 g_param_spec_boolean ("out-of-process",
-	                                                       "out-of-process",
-	                                                       "out-of-process",
-	                                                       TRUE,
-	                                                       G_PARAM_CONSTRUCT_ONLY |
-	                                                       G_PARAM_READWRITE));
 	/**
 	 * PanelApplet:id: (skip)
 	 *
@@ -1915,70 +1893,8 @@ panel_applet_register_object (PanelApplet *applet)
 	}
 }
 
-static void
-panel_applet_factory_main_finalized (gpointer data,
-				     GObject *object)
-{
-	gtk_main_quit ();
-
-	if (introspection_data) {
-		g_dbus_node_info_unref (introspection_data);
-		introspection_data = NULL;
-	}
-}
-
-static int (*_x_error_func) (Display *, XErrorEvent *);
-
-static int
-_x_error_handler (Display *display, XErrorEvent *error)
-{
-	if (!error->error_code)
-		return 0;
-
-	/* If we got a BadDrawable or a BadWindow, we ignore it for now.
-	 * FIXME: We need to somehow distinguish real errors from
-	 * X-server-induced errors. Keeping a list of windows for which we
-	 * will ignore BadDrawables would be a good idea. */
-	if (error->error_code == BadDrawable ||
-	    error->error_code == BadWindow)
-		return 0;
-
-	return _x_error_func (display, error);
-}
-
-/*
- * To do graphical embedding in the X window system, GNOME Panel
- * uses the classic foreign-window-reparenting trick. The
- * GtkPlug/GtkSocket widgets are used for this purpose. However,
- * serious robustness problems arise if the GtkSocket end of the
- * connection unexpectedly dies. The X server sends out DestroyNotify
- * events for the descendants of the GtkPlug (i.e., your embedded
- * component's windows) in effectively random order. Furthermore, if
- * you happened to be drawing on any of those windows when the
- * GtkSocket was destroyed (a common state of affairs), an X error
- * will kill your application.
- *
- * To solve this latter problem, GNOME Panel sets up its own X error
- * handler which ignores certain X errors that might have been
- * caused by such a scenario. Other X errors get passed to gdk_x_error
- * normally.
- */
-static void
-_panel_applet_setup_x_error_handler (void)
-{
-	static gboolean error_handler_setup = FALSE;
-
-	if (error_handler_setup)
-		return;
-
-	error_handler_setup = TRUE;
-
-	_x_error_func = XSetErrorHandler (_x_error_handler);
-}
-
 static int
 _panel_applet_factory_main_internal (const gchar               *factory_id,
-				     gboolean                   out_process,
 				     GType                      applet_type,
 				     PanelAppletFactoryCallback callback,
 				     gpointer                   user_data)
@@ -1990,21 +1906,11 @@ _panel_applet_factory_main_internal (const gchar               *factory_id,
 	g_return_val_if_fail (callback != NULL, 1);
 	g_assert (g_type_is_a (applet_type, PANEL_TYPE_APPLET));
 
-	if (out_process)
-		_panel_applet_setup_x_error_handler ();
-
 	closure = g_cclosure_new (G_CALLBACK (callback), user_data, NULL);
-	factory = panel_applet_factory_new (factory_id, out_process, applet_type, closure);
+	factory = panel_applet_factory_new (factory_id, applet_type, closure);
 	g_closure_unref (closure);
 
 	if (panel_applet_factory_register_service (factory)) {
-		if (out_process) {
-			g_object_weak_ref (G_OBJECT (factory),
-					   panel_applet_factory_main_finalized,
-					   NULL);
-			gtk_main ();
-		}
-
 		return 0;
 	}
 
@@ -2042,7 +1948,7 @@ panel_applet_factory_setup_in_process (const gchar               *factory_id,
 				       PanelAppletFactoryCallback callback,
 				       gpointer                   data)
 {
-	return _panel_applet_factory_main_internal (factory_id, FALSE, applet_type,
+	return _panel_applet_factory_main_internal (factory_id, applet_type,
 						    callback, data);
 }
 
