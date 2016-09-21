@@ -36,10 +36,8 @@
 #include "panel-schemas.h"
 #include "panel-util.h"
 
-
 static gboolean panel_background_composite (PanelBackground *background);
 static void load_background_file (PanelBackground *background);
-
 
 static gboolean
 panel_background_prepare (PanelBackground *background)
@@ -927,44 +925,6 @@ panel_background_free (PanelBackground *background)
 	if (background->default_pattern)
                 cairo_pattern_destroy (background->default_pattern);
 	background->default_pattern = NULL;
-}
-
-char *
-panel_background_make_string (PanelBackground *background,
-			      int              x,
-			      int              y)
-{
-	PanelBackgroundType  effective_type;
-        GVariant            *variant;
-        gchar               *retval;
-
-	effective_type = panel_background_effective_type (background);
-
-	if (effective_type == PANEL_BACK_IMAGE ||
-	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
-                cairo_surface_t *surface;
-
-		if (!background->composited_pattern)
-			return NULL;
-
-                if (cairo_pattern_get_surface (background->composited_pattern, &surface) != CAIRO_STATUS_SUCCESS)
-                        return NULL;
-
-                g_assert (cairo_surface_get_type (surface) == CAIRO_SURFACE_TYPE_XLIB);
-
-                variant = g_variant_new ("(uii)", (guint32)cairo_xlib_surface_get_drawable (surface),
-                                         x, y);
-	} else if (effective_type == PANEL_BACK_COLOR) {
-                variant = g_variant_new ("(dddd)",
-                                         background->color.red, background->color.green,
-                                         background->color.blue, background->color.alpha);
-	} else
-		variant = g_variant_new ("()");
-
-        retval = g_variant_print (variant, TRUE);
-        g_variant_unref (variant);
-
-        return retval;
 }
 
 PanelBackgroundType

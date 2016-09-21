@@ -4276,7 +4276,6 @@ background_changed (PanelBackground *background,
                     PanelToplevel   *toplevel)
 {
 	panel_toplevel_update_edges (toplevel);
-	panel_widget_emit_background_changed (toplevel->priv->panel_widget);
 }
 
 static void

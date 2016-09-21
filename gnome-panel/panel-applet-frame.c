@@ -225,25 +225,6 @@ panel_applet_frame_get_preferred_height(GtkWidget *widget, gint *minimal_height,
 }
 
 static void
-change_background (PanelAppletFrame *frame,
-                   GtkAllocation    *old,
-                   GtkAllocation    *new)
-{
-	PanelBackgroundType type;
-
-	if (old->x == new->x &&
-	    old->y == new->y &&
-	    old->width == new->width &&
-	    old->height == new->height)
-		return;
-
-	type = frame->priv->panel->toplevel->background.type;
-
-	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame,
-	                                                         type);
-}
-
-static void
 panel_applet_frame_size_allocate (GtkWidget     *widget,
 				  GtkAllocation *allocation)
 {
@@ -262,12 +243,10 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	if (!frame->priv->has_handle) {
 		GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->size_allocate (widget,
 										   allocation);
-		change_background (frame, &widget_allocation, allocation);
 		return;
 	}
 
 	gtk_widget_set_allocation (widget, allocation);
-	change_background (frame, &widget_allocation, allocation);
 
 	frame->priv->handle_rect.x = 0;
 	frame->priv->handle_rect.y = 0;
@@ -609,41 +588,6 @@ _panel_applet_frame_update_size_hints (PanelAppletFrame *frame,
 					    GTK_WIDGET (frame),
 					    size_hints,
 					    n_elements);
-}
-
-char *
-_panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
-					   PanelWidget         *panel,
-					   PanelBackgroundType  type)
-{
-	GtkAllocation allocation;
-	int x;
-	int y;
-
-	gtk_widget_get_allocation (GTK_WIDGET (frame), &allocation);
-
-	x = allocation.x;
-	y = allocation.y;
-
-	if (frame->priv->has_handle) {
-		switch (frame->priv->orientation) {
-		case PANEL_ORIENTATION_TOP:
-		case PANEL_ORIENTATION_BOTTOM:
-			if (gtk_widget_get_direction (GTK_WIDGET (frame)) !=
-			    GTK_TEXT_DIR_RTL)
-				x += frame->priv->handle_rect.width;
-			break;
-		case PANEL_ORIENTATION_LEFT:
-		case PANEL_ORIENTATION_RIGHT:
-			y += frame->priv->handle_rect.height;
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-		}
-	}
-
-	return panel_background_make_string (&panel->toplevel->background, x, y);
 }
 
 static void

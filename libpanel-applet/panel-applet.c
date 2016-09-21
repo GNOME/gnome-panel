@@ -90,7 +90,6 @@ struct _PanelAppletPrivate {
 
 	PanelAppletFlags   flags;
 	PanelAppletOrient  orient;
-	char              *background;
 
         int               *size_hints;
         int                size_hints_len;
@@ -115,7 +114,6 @@ enum {
 	PROP_CONNECTION,
 	PROP_SETTINGS_PATH,
 	PROP_ORIENT,
-	PROP_BACKGROUND,
 	PROP_FLAGS,
 	PROP_SIZE_HINTS,
 	PROP_LOCKED_DOWN
@@ -861,7 +859,6 @@ panel_applet_finalize (GObject *object)
 
 	g_free (applet->priv->size_hints);
 	g_free (applet->priv->settings_path);
-	g_free (applet->priv->background);
 	g_free (applet->priv->id);
 
 	/* closure is owned by the factory */
@@ -1242,23 +1239,6 @@ panel_applet_focus (GtkWidget        *widget,
 }
 
 static void
-panel_applet_set_background_string (PanelApplet *applet,
-				    const gchar *background)
-{
-	if (applet->priv->background == background)
-		return;
-
-	if (g_strcmp0 (applet->priv->background, background) == 0)
-		return;
-
-	if (applet->priv->background)
-		g_free (applet->priv->background);
-	applet->priv->background = background ? g_strdup (background) : NULL;
-
-	g_object_notify (G_OBJECT (applet), "background");
-}
-
-static void
 panel_applet_move_focus_out_of_applet (PanelApplet      *applet,
 				       GtkDirectionType  dir)
 {
@@ -1295,9 +1275,6 @@ panel_applet_get_property (GObject    *object,
 		break;
 	case PROP_ORIENT:
 		g_value_set_uint (value, applet->priv->orient);
-		break;
-	case PROP_BACKGROUND:
-		g_value_set_string (value, applet->priv->background);
 		break;
 	case PROP_FLAGS:
 		g_value_set_uint (value, applet->priv->flags);
@@ -1353,9 +1330,6 @@ panel_applet_set_property (GObject      *object,
 		break;
 	case PROP_ORIENT:
 		panel_applet_set_orient (applet, g_value_get_uint (value));
-		break;
-	case PROP_BACKGROUND:
-		panel_applet_set_background_string (applet, g_value_get_string (value));
 		break;
 	case PROP_FLAGS:
 		panel_applet_set_flags (applet, g_value_get_uint (value));
@@ -1575,18 +1549,6 @@ panel_applet_class_init (PanelAppletClass *klass)
 							    PANEL_APPLET_ORIENT_UP,
 							    G_PARAM_READWRITE));
 	/**
-	 * PanelApplet:background: (skip)
-	 *
-	 * Implementation detail.
-	 **/
-	g_object_class_install_property (gobject_class,
-					 PROP_BACKGROUND,
-					 g_param_spec_string ("background",
-							      "Background",
-							      "Panel Applet Background",
-							      NULL,
-							      G_PARAM_READWRITE));
-	/**
 	 * PanelApplet:flags:
 	 *
 	 * The #PanelAppletFlags of the applet.
@@ -1721,9 +1683,6 @@ get_property_cb (GDBusConnection *connection,
 					       applet->priv->settings_path : "");
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		retval = g_variant_new_uint32 (applet->priv->orient);
-	} else if (g_strcmp0 (property_name, "Background") == 0) {
-		retval = g_variant_new_string (applet->priv->background ?
-					       applet->priv->background : "");
 	} else if (g_strcmp0 (property_name, "Flags") == 0) {
 		retval = g_variant_new_uint32 (applet->priv->flags);
 	} else if (g_strcmp0 (property_name, "SizeHints") == 0) {
@@ -1759,8 +1718,6 @@ set_property_cb (GDBusConnection *connection,
 		panel_applet_set_settings_path (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Orient") == 0) {
 		panel_applet_set_orient (applet, g_variant_get_uint32 (value));
-	} else if (g_strcmp0 (property_name, "Background") == 0) {
-		panel_applet_set_background_string (applet, g_variant_get_string (value, NULL));
 	} else if (g_strcmp0 (property_name, "Flags") == 0) {
 		panel_applet_set_flags (applet, g_variant_get_uint32 (value));
 	} else if (g_strcmp0 (property_name, "SizeHints") == 0) {
@@ -1789,7 +1746,6 @@ static const gchar introspection_xml[] =
 	    "</method>"
 	    "<property name='SettingsPath' type='s' access='readwrite'/>"
 	    "<property name='Orient' type='u' access='readwrite' />"
-	    "<property name='Background' type='s' access='readwrite'/>"
 	    "<property name='Flags' type='u' access='readwrite'/>"
 	    "<property name='SizeHints' type='ai' access='readwrite'/>"
 	    "<property name='LockedDown' type='b' access='readwrite'/>"

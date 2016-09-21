@@ -221,46 +221,6 @@ panel_applet_frame_dbus_change_orientation (PanelAppletFrame *frame,
 }
 
 static void
-container_child_background_set (GObject      *source_object,
-				GAsyncResult *res,
-				gpointer      user_data)
-{
-	PanelAppletContainer *container = PANEL_APPLET_CONTAINER (source_object);
-	PanelAppletFrameDBus *frame = PANEL_APPLET_FRAME_DBUS (user_data);
-
-	panel_applet_container_child_set_finish (container, res, NULL);
-
-	if (frame->priv->bg_cancellable)
-		g_object_unref (frame->priv->bg_cancellable);
-	frame->priv->bg_cancellable = NULL;
-}
-
-static void
-panel_applet_frame_dbus_change_background (PanelAppletFrame    *frame,
-					   PanelBackgroundType  type)
-{
-	PanelAppletFrameDBus *dbus_frame = PANEL_APPLET_FRAME_DBUS (frame);
-	char *bg_str;
-
-	bg_str = _panel_applet_frame_get_background_string (
-			frame, PANEL_WIDGET (gtk_widget_get_parent (GTK_WIDGET (frame))), type);
-
-	if (bg_str != NULL) {
-		if (dbus_frame->priv->bg_cancellable)
-			g_cancellable_cancel (dbus_frame->priv->bg_cancellable);
-		dbus_frame->priv->bg_cancellable = g_cancellable_new ();
-
-		panel_applet_container_child_set (dbus_frame->priv->container,
-						  "background",
-						  g_variant_new_string (bg_str),
-						  dbus_frame->priv->bg_cancellable,
-						  container_child_background_set,
-						  dbus_frame);
-		g_free (bg_str);
-	}
-}
-
-static void
 panel_applet_frame_dbus_flags_changed (PanelAppletContainer *container,
 				       const gchar          *prop_name,
 				       GVariant             *value,
@@ -365,7 +325,6 @@ panel_applet_frame_dbus_class_init (PanelAppletFrameDBusClass *class)
 	frame_class->popup_menu = panel_applet_frame_dbus_popup_menu;
 	frame_class->popup_edit_menu = panel_applet_frame_dbus_popup_edit_menu;
 	frame_class->change_orientation = panel_applet_frame_dbus_change_orientation;
-	frame_class->change_background = panel_applet_frame_dbus_change_background;
 
 	g_type_class_add_private (class, sizeof (PanelAppletFrameDBusPrivate));
 }
@@ -396,7 +355,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 	GVariantBuilder       builder;
 	GdkScreen            *screen;
 	gchar                *settings_path;
-	gchar                *background;
 	guint                 orient;
 
 	g_return_val_if_fail (iid != NULL, FALSE);
@@ -412,9 +370,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 	screen = panel_applet_frame_activating_get_screen (frame_act);
 	orient = get_panel_applet_orient (panel_applet_frame_activating_get_orientation (frame_act));
 	settings_path = panel_applet_frame_activating_get_settings_path (frame_act);
-	/* we can't really get a background string at this point since we don't
-	 * know the position of the applet */
-	background = NULL;
 
 	g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 	g_variant_builder_add (&builder, "{sv}",
@@ -426,11 +381,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 	g_variant_builder_add (&builder, "{sv}",
 			       "locked-down",
 			       g_variant_new_boolean (panel_applet_frame_activating_get_locked_down (frame_act)));
-	if (background) {
-		g_variant_builder_add (&builder, "{sv}",
-				       "background",
-				       g_variant_new_string (background));
-	}
 
 	g_object_set_data (G_OBJECT (frame), "panel-applet-frame-activating", frame_act);
 
@@ -441,7 +391,6 @@ panel_applet_frame_dbus_load (const gchar                 *iid,
 				    g_variant_builder_end (&builder));
 
 	g_free (settings_path);
-	g_free (background);
 
 	return TRUE;
 }

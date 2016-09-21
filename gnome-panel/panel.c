@@ -108,56 +108,6 @@ panel_orient_change (GtkWidget *widget, gpointer data)
 			      widget);
 }
 
-void
-back_change (AppletInfo  *info,
-	     PanelWidget *panel)
-{
-	PanelAppletFrame    *frame;
-	PanelBackgroundType  type;
-
-	switch (info->type) {
-	case PANEL_OBJECT_APPLET:
-		frame = PANEL_APPLET_FRAME (info->widget);
-		type = panel->toplevel->background.type;
-
-		PANEL_APPLET_FRAME_GET_CLASS (frame)->change_background (frame, type);
-		break;
-	case PANEL_OBJECT_ACTION:
-	case PANEL_OBJECT_LAUNCHER:
-	case PANEL_OBJECT_MENU:
-	case PANEL_OBJECT_MENU_BAR:
-	case PANEL_OBJECT_USER_MENU:
-	case PANEL_OBJECT_SEPARATOR:
-		break;
-	default:
-		break;
-	}
-}
-
-static void
-back_change_foreach (GtkWidget   *widget,
-		     PanelWidget *panel)
-{
-	AppletInfo *info;
-
-	info = g_object_get_data (G_OBJECT (widget), "applet_info");
-
-	back_change (info, panel);
-}
-
-static void
-panel_back_change (GtkWidget *widget, gpointer data)
-{
-	gtk_container_foreach (GTK_CONTAINER (widget),
-			       (GtkCallback) back_change_foreach,
-			       widget);
-
-#ifdef FIXME_FOR_NEW_CONFIG
-	/*update the configuration box if it is displayed*/
-	update_config_back(PANEL_WIDGET(widget));
-#endif /* FIXME_FOR_NEW_CONFIG */
-}
-
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
@@ -166,7 +116,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	info = g_object_get_data (G_OBJECT (applet), "applet_info");
 
 	orientation_change(info,PANEL_WIDGET(widget));
-	back_change(info,PANEL_WIDGET(widget));
 }
 
 static gboolean
@@ -1266,10 +1215,6 @@ panel_widget_setup(PanelWidget *panel)
 	g_signal_connect (G_OBJECT(panel),
 			  "applet_move",
 			  G_CALLBACK(panel_applet_move),
-			  NULL);
-	g_signal_connect (G_OBJECT (panel),
-			  "back_change",
-			  G_CALLBACK (panel_back_change),
 			  NULL);
 }
 

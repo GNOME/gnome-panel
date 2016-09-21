@@ -108,7 +108,6 @@ struct _PanelWidgetClass
 {
 	GtkFixedClass parent_class;
 
-	void (* back_change) (PanelWidget *panel);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
@@ -202,8 +201,6 @@ void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
 
 void     panel_widget_register_open_dialog        (PanelWidget *panel,
 						   GtkWidget   *dialog);  
-
-void     panel_widget_emit_background_changed     (PanelWidget *panel);
 
 G_END_DECLS
 

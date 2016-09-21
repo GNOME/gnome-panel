@@ -61,9 +61,6 @@ struct _PanelAppletFrameClass {
 
 	void     (*change_orientation)    (PanelAppletFrame    *frame,
 					   PanelOrientation     orientation);
-
-	void     (*change_background)     (PanelAppletFrame    *frame,
-					   PanelBackgroundType  type);
 };
 
 struct _PanelAppletFrame {
@@ -114,10 +111,6 @@ void  _panel_applet_frame_update_flags          (PanelAppletFrame *frame,
 void  _panel_applet_frame_update_size_hints     (PanelAppletFrame *frame,
 						 gint             *size_hints,
 						 guint             n_elements);
-
-char *_panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
-						 PanelWidget         *panel,
-						 PanelBackgroundType  type);
 
 void  _panel_applet_frame_applet_broken         (PanelAppletFrame *frame);
 

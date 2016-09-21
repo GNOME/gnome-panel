@@ -35,7 +35,6 @@ typedef enum {
 G_DEFINE_TYPE (PanelWidget, panel_widget, GTK_TYPE_FIXED);
 
 enum {
-	BACK_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
@@ -269,17 +268,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
-	panel_widget_signals[BACK_CHANGE_SIGNAL] =
-                g_signal_new ("back_change",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, back_change),
-                              NULL,
-                              NULL, 
-                              g_cclosure_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
                 g_signal_new ("applet_move",
                               G_TYPE_FROM_CLASS (object_class),
@@ -363,7 +351,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
-	class->back_change = NULL;
 	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
@@ -2671,10 +2658,4 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 				 G_CALLBACK (panel_widget_open_dialog_destroyed),
 				 panel,
 				 G_CONNECT_SWAPPED);
-}
-
-void
-panel_widget_emit_background_changed (PanelWidget *panel)
-{
-	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
 }

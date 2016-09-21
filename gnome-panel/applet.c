@@ -985,7 +985,6 @@ panel_applet_register (GtkWidget       *applet,
 	gtk_widget_show (applet);
 
 	orientation_change (info, panel);
-	back_change (info, panel);
 
 	if (type != PANEL_OBJECT_APPLET)
 		gtk_widget_grab_focus (applet);
