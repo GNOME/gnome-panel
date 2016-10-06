@@ -576,7 +576,7 @@ _panel_applet_frame_update_size_hints (PanelAppletFrame *frame,
 {
 	if (frame->priv->has_handle) {
 		gint extra_size = HANDLE_SIZE + 1;
-		gint i;
+		guint i;
 
 		for (i = 0; i < n_elements; i++)
 			size_hints[i] += extra_size;
