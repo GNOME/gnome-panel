@@ -104,7 +104,6 @@ typedef struct {
 	char                  *menu_filename;
 	char                  *menu_path;
 	char                  *iid;
-	gboolean               static_strings;
 } PanelAddtoItemInfo;
 
 typedef struct {
@@ -140,42 +139,38 @@ prepend_internal_applets (GSList *list)
 
 	internal = g_new0 (PanelAddtoItemInfo, 1);
 	internal->type = PANEL_ADDTO_MENU;
-	internal->name = _("Main Menu");
-	internal->description = _("The main GNOME menu");
+	internal->name = g_strdup (_("Main Menu"));
+	internal->description = g_strdup (_("The main GNOME menu"));
 	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
 	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = "MENU:MAIN";
-	internal->static_strings = TRUE;
+	internal->iid = g_strdup ("MENU:MAIN");
 	list = g_slist_prepend (list, internal);
 	
 	internal = g_new0 (PanelAddtoItemInfo, 1);
 	internal->type = PANEL_ADDTO_MENUBAR;
-	internal->name = _("Menu Bar");
-	internal->description = _("A custom menu bar");
+	internal->name = g_strdup (_("Menu Bar"));
+	internal->description = g_strdup (_("A custom menu bar"));
 	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
 	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = "MENUBAR:NEW";
-	internal->static_strings = TRUE;
+	internal->iid = g_strdup ("MENUBAR:NEW");
 	list = g_slist_prepend (list, internal);
 
 	internal = g_new0 (PanelAddtoItemInfo, 1);
 	internal->type = PANEL_ADDTO_SEPARATOR;
-	internal->name = _("Separator");
-	internal->description = _("A separator to organize the panel items");
+	internal->name = g_strdup (_("Separator"));
+	internal->description = g_strdup (_("A separator to organize the panel items"));
 	internal->icon = g_themed_icon_new (PANEL_ICON_SEPARATOR);
 	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = "SEPARATOR:NEW";
-	internal->static_strings = TRUE;
+	internal->iid = g_strdup ("SEPARATOR:NEW");
 	list = g_slist_prepend (list, internal);
 
 	internal = g_new0 (PanelAddtoItemInfo, 1);
 	internal->type = PANEL_ADDTO_USER_MENU;
-	internal->name = _("User menu");
-	internal->description = _("Menu to change your settings and log out");
+	internal->name = g_strdup (_("User menu"));
+	internal->description = g_strdup (_("Menu to change your settings and log out"));
 	internal->icon = g_themed_icon_new (PANEL_ICON_COMPUTER);
 	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = "USERMENU:NEW";
-	internal->static_strings = TRUE;
+	internal->iid = g_strdup ("USERMENU:NEW");
 	list = g_slist_prepend (list, internal);
 
 	return list;
@@ -201,12 +196,11 @@ panel_addto_prepend_internal_applets (GSList *list)
 		info              = g_new0 (PanelAddtoItemInfo, 1);
 		info->type        = PANEL_ADDTO_ACTION;
 		info->action_type = i;
-		info->name        = (char *) panel_action_get_text (i);
-		info->description = (char *) panel_action_get_tooltip (i);
+		info->name        = g_strdup (panel_action_get_text (i));
+		info->description = g_strdup (panel_action_get_tooltip (i));
 		if (panel_action_get_icon_name (i) != NULL)
 			info->icon = g_themed_icon_new (panel_action_get_icon_name (i));
-		info->iid         = (char *) panel_action_get_drag_id (i);
-		info->static_strings = TRUE;
+		info->iid         = g_strdup (panel_action_get_drag_id (i));
 
 		list = g_slist_prepend (list, info);
 	}
@@ -302,8 +296,8 @@ static void
 panel_addto_setup_launcher_drag (GtkTreeView *tree_view,
 				 const char  *path)
 {
-        static GtkTargetEntry target[] = {
-		{ "text/uri-list", 0, 0 }
+	static const GtkTargetEntry target[] = {
+		{ (gchar *) "text/uri-list", 0, 0 }
 	};
 	char *uri;
 	char *uri_list;
@@ -319,8 +313,8 @@ static void
 panel_addto_setup_applet_drag (GtkTreeView *tree_view,
 			       const char  *iid)
 {
-	static GtkTargetEntry target[] = {
-		{ "application/x-panel-applet-iid", 0, 0 }
+	static const GtkTargetEntry target[] = {
+		{ (gchar *) "application/x-panel-applet-iid", 0, 0 }
 	};
 
 	panel_addto_setup_drag (tree_view, target, iid);
@@ -330,8 +324,8 @@ static void
 panel_addto_setup_internal_applet_drag (GtkTreeView *tree_view,
 					const char  *applet_type)
 {
-	static GtkTargetEntry target[] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
+	static const GtkTargetEntry target[] = {
+		{ (gchar *) "application/x-panel-applet-internal", 0, 0 }
 	};
 
 	panel_addto_setup_drag (tree_view, target, applet_type);
@@ -369,7 +363,6 @@ panel_addto_query_applets (GSList *list)
 		if (icon)
 			applet->icon = g_themed_icon_new (icon);
 		applet->iid = g_strdup (iid);
-		applet->static_strings = FALSE;
 
 		list = g_slist_prepend (list, applet);
 	}
@@ -421,23 +414,21 @@ panel_addto_append_special_applets (PanelAddtoDialog *dialog,
 	if (!panel_lockdown_get_disable_command_line_s ()) {
 		special = g_new0 (PanelAddtoItemInfo, 1);
 		special->type = PANEL_ADDTO_LAUNCHER_NEW;
-		special->name = _("Custom Application Launcher");
-		special->description = _("Create a new launcher");
+		special->name = g_strdup (_("Custom Application Launcher"));
+		special->description = g_strdup (_("Create a new launcher"));
 		special->icon = g_themed_icon_new (PANEL_ICON_LAUNCHER);
 		special->action_type = PANEL_ACTION_NONE;
-		special->iid = "LAUNCHER:ASK";
-		special->static_strings = TRUE;
+		special->iid = g_strdup ("LAUNCHER:ASK");
 		panel_addto_append_item (dialog, model, special);
 	}
 
 	special = g_new0 (PanelAddtoItemInfo, 1);
 	special->type = PANEL_ADDTO_LAUNCHER_MENU;
-	special->name = _("Application Launcher...");
-	special->description = _("Copy a launcher from the applications menu");
+	special->name = g_strdup (_("Application Launcher..."));
+	special->description = g_strdup (_("Copy a launcher from the applications menu"));
 	special->icon = g_themed_icon_new (PANEL_ICON_LAUNCHER);
 	special->action_type = PANEL_ACTION_NONE;
-	special->iid = "LAUNCHER:MENU";
-	special->static_strings = TRUE;
+	special->iid = g_strdup ("LAUNCHER:MENU");
 	panel_addto_append_item (dialog, model, special);
 }
 
@@ -513,7 +504,6 @@ panel_addto_prepend_directory (GSList             **parent_list,
 	data->item_info.icon          = icon;
 	data->item_info.menu_filename = g_strdup (filename);
 	data->item_info.menu_path     = gmenu_tree_directory_make_path (directory, NULL);
-	data->item_info.static_strings = FALSE;
 
 	/* We should set the iid here to something and do
 	 * iid = g_strdup_printf ("MENU:%s", tfr->name)
@@ -552,7 +542,6 @@ panel_addto_prepend_entry (GSList         **parent_list,
 	data->item_info.description   = g_strdup (g_app_info_get_description (app_info));
 	data->item_info.icon          = icon;
 	data->item_info.launcher_path = g_strdup (gmenu_tree_entry_get_desktop_file_path (entry));
-	data->item_info.static_strings = FALSE;
 
 	*parent_list = g_slist_prepend (*parent_list, data);
 }
@@ -562,25 +551,22 @@ panel_addto_prepend_alias (GSList         **parent_list,
 			   GMenuTreeAlias  *alias,
 			   const char      *filename)
 {
-	switch (gmenu_tree_alias_get_aliased_item_type (alias)) {
-	case GMENU_TREE_ITEM_DIRECTORY: {
+	GMenuTreeItemType type;
+
+	type = gmenu_tree_alias_get_aliased_item_type (alias);
+
+	if (type == GMENU_TREE_ITEM_DIRECTORY) {
 		GMenuTreeDirectory *directory = gmenu_tree_alias_get_aliased_directory (alias);
 		panel_addto_prepend_directory (parent_list,
 					       directory,
 					       filename);
 		gmenu_tree_item_unref (directory);
-		break;
-	}
-	case GMENU_TREE_ITEM_ENTRY: {
+	} else if (type == GMENU_TREE_ITEM_ENTRY) {
 		GMenuTreeEntry *entry = gmenu_tree_alias_get_aliased_entry (alias);
 		panel_addto_prepend_entry (parent_list,
 					   entry,
 					   filename);
 		gmenu_tree_item_unref (entry);
-		break;
-	}
-	default:
-		break;
 	}
 }
 
@@ -596,33 +582,24 @@ panel_addto_make_application_list (GSList                  **parent_list,
 	iter = gmenu_tree_directory_iter (directory);
 
 	while ((next_type = gmenu_tree_iter_next (iter)) != GMENU_TREE_ITEM_INVALID) {
-		switch (next_type) {
-		case GMENU_TREE_ITEM_DIRECTORY:
+		if (next_type == GMENU_TREE_ITEM_DIRECTORY) {
 			if (show_flags & PANEL_ADDTO_MENU_SHOW_DIRECTORIES) {
 				GMenuTreeDirectory *dir = gmenu_tree_iter_get_directory (iter);
 				panel_addto_prepend_directory (parent_list, dir, filename);
 				gmenu_tree_item_unref (dir);
 			}
-			break;
-
-		case GMENU_TREE_ITEM_ENTRY:
+		} else if (next_type == GMENU_TREE_ITEM_ENTRY) {
 			if (show_flags & PANEL_ADDTO_MENU_SHOW_ENTRIES) {
 				GMenuTreeEntry *entry = gmenu_tree_iter_get_entry (iter);
 				panel_addto_prepend_entry (parent_list, entry, filename);
 				gmenu_tree_item_unref (entry);
 			}
-			break;
-
-		case GMENU_TREE_ITEM_ALIAS:
+		} else if (next_type == GMENU_TREE_ITEM_ALIAS) {
 			if (show_flags & PANEL_ADDTO_MENU_SHOW_ALIAS) {
 				GMenuTreeAlias *alias = gmenu_tree_iter_get_alias (iter);
 				panel_addto_prepend_alias (parent_list, alias, filename);
 				gmenu_tree_item_unref (alias);
 			}
-			break;
-
-		default:
-			break;
 		}
 	}
 	gmenu_tree_iter_unref (iter);
@@ -801,6 +778,8 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 					dialog->insert_pack_type,
 					pack_index);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -895,9 +874,6 @@ panel_addto_dialog_free_item_info (PanelAddtoItemInfo *item_info)
 
 	/* the GIcon is never static */
 	g_clear_object (&item_info->icon);
-
-	if (item_info->static_strings)
-		return;
 
 	g_free (item_info->name);
 	item_info->name = NULL;
@@ -1082,19 +1058,15 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 
 	/* only allow dragging applets if we can add applets */
 	if (panel_layout_is_writable ()) {
-		switch (data->type) {
-		case PANEL_ADDTO_LAUNCHER:
+		if (data->type == PANEL_ADDTO_LAUNCHER) {
 			panel_addto_setup_launcher_drag (GTK_TREE_VIEW (dialog->tree_view),
 							 data->launcher_path);
-			break;
-		case PANEL_ADDTO_APPLET:
+		} else if (data->type == PANEL_ADDTO_APPLET) {
 			panel_addto_setup_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
 						       data->iid);
-			break;
-		case PANEL_ADDTO_LAUNCHER_MENU:
+		} else if (data->type == PANEL_ADDTO_LAUNCHER_MENU) {
 			gtk_tree_view_unset_rows_drag_source (GTK_TREE_VIEW (dialog->tree_view));
-			break;
-		case PANEL_ADDTO_MENU:
+		} else if (data->type == PANEL_ADDTO_MENU) {
 			/* build the iid for menus other than the main menu */
 			if (data->iid == NULL) {
 				iid = g_strdup_printf ("MENU:%s/%s",
@@ -1106,11 +1078,9 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
 							        iid);
 			g_free (iid);
-			break;
-		default:
+		} else {
 			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
 							        data->iid);
-			break;
 		}
 	}
 }
