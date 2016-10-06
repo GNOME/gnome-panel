@@ -567,107 +567,6 @@ menu_dummy_button_press_event (GtkWidget      *menuitem,
 }
 
 static void  
-drag_begin_menu_cb (GtkWidget *widget, GdkDragContext     *context)
-{
-	/* FIXME: workaround for a possible gtk+ bug
-	 *    See bugs #92085(gtk+) and #91184(panel) for details.
-	 *    Maybe it's not needed with GtkTooltip?
-	 */
-	g_object_set (widget, "has-tooltip", FALSE, NULL);
-}
-
-/* This is a _horrible_ hack to have this here. This needs to be added to the
- * GTK+ menuing code in some manner.
- */
-static void  
-drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
-{
-  GtkWidget *xgrab_shell;
-  GtkWidget *parent;
-
-  /* Find the last viewable ancestor, and make an X grab on it
-   */
-  parent = gtk_widget_get_parent (widget);
-  xgrab_shell = NULL;
-
-  /* FIXME: workaround for a possible gtk+ bug
-   *    See bugs #92085(gtk+) and #91184(panel) for details.
-   */
-  g_object_set (widget, "has-tooltip", TRUE, NULL);
-
-  while (parent)
-    {
-      gboolean viewable = TRUE;
-      GtkWidget *tmp = parent;
-      
-      while (tmp)
-	{
-	  if (!gtk_widget_get_mapped (tmp))
-	    {
-	      viewable = FALSE;
-	      break;
-	    }
-	  tmp = gtk_widget_get_parent (tmp);
-	}
-      
-      if (viewable)
-	xgrab_shell = parent;
-      
-      parent = gtk_menu_shell_get_parent_shell (GTK_MENU_SHELL (parent));
-    }
-
-  if (xgrab_shell)
-    {
-      gboolean      status;
-      GdkDisplay    *display;
-      GdkDevice     *pointer;
-      GdkDevice     *keyboard;
-      GdkDeviceManager *device_manager;
-      GdkWindow *window = gtk_widget_get_window (xgrab_shell);
-      GdkCursor *cursor = gdk_cursor_new_for_display (gdk_display_get_default (),
-                                                      GDK_ARROW);
-
-      display = gdk_window_get_display (window);
-      device_manager = gdk_display_get_device_manager (display);
-      pointer = gdk_device_manager_get_client_pointer (device_manager);
-      keyboard = gdk_device_get_associated_device (pointer);
-
-      /* FIXMEgpoo: Not sure if report to GDK_OWNERSHIP_WINDOW
-	            or GDK_OWNERSHIP_APPLICATION. Idem for the
-                    keyboard below */
-      status = gdk_device_grab (pointer, window,
-                                GDK_OWNERSHIP_WINDOW, TRUE,
-                                GDK_BUTTON_PRESS_MASK
-                                | GDK_BUTTON_RELEASE_MASK
-                                | GDK_ENTER_NOTIFY_MASK
-                                | GDK_LEAVE_NOTIFY_MASK
-                                | GDK_POINTER_MOTION_MASK,
-                                cursor, GDK_CURRENT_TIME);
-
-      if (!status)
-	{
-	  if (gdk_device_grab (keyboard, window,
-			       GDK_OWNERSHIP_WINDOW, TRUE,
-			       GDK_KEY_PRESS | GDK_KEY_RELEASE,
-			       NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
-	    {
-	    /* FIXMEgpoo: We need either accessors or a workaround to grab
-	       the focus */
-#if 0
-	     GTK_MENU_SHELL (xgrab_shell)->GSEAL(have_xgrab) = TRUE;
-#endif
-	    }
-	  else
-	    {
-	      gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-	    }
-	}
-
-      g_object_unref (cursor);
-    }
-}
-
-static void  
 drag_data_get_menu_cb (GtkWidget        *widget,
 		       GdkDragContext   *context,
 		       GtkSelectionData *selection_data,
@@ -825,15 +724,11 @@ setup_uri_drag (GtkWidget  *menuitem,
 	if (icon != NULL)
 		gtk_drag_source_set_icon_name (menuitem, icon);
 	
-	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
-			  G_CALLBACK (drag_begin_menu_cb), NULL);
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (uri),
 			       (GClosureNotify)g_free,
 			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
-			  G_CALLBACK (drag_end_menu_cb), NULL);
 }
 
 void
@@ -855,16 +750,12 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 	if (panel_action_get_icon_name (type)  != NULL)
 		gtk_drag_source_set_icon_name (menuitem,
 					       panel_action_get_icon_name (type));
-	
-	g_signal_connect (G_OBJECT (menuitem), "drag_begin",
-			  G_CALLBACK (drag_begin_menu_cb), NULL);
+
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
 			       g_strdup (panel_action_get_drag_id (type)),
 			       (GClosureNotify)g_free,
 			       0 /* connect_flags */);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
-			  G_CALLBACK (drag_end_menu_cb), NULL);
 }
 
 static void
@@ -1115,12 +1006,8 @@ create_menuitem (GtkWidget          *menu,
 		if (icon != NULL)
 			gtk_drag_source_set_icon_gicon (menuitem, icon);
 
-		g_signal_connect (G_OBJECT (menuitem), "drag_begin",
-				  G_CALLBACK (drag_begin_menu_cb), NULL);
 		g_signal_connect (menuitem, "drag_data_get",
 				  G_CALLBACK (drag_data_get_menu_cb), entry);
-		g_signal_connect (menuitem, "drag_end",
-				  G_CALLBACK (drag_end_menu_cb), NULL);
 	}
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
