@@ -33,7 +33,6 @@ panel_sources =			\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
 	panel-background.c	\
-	panel-background-monitor.c	\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-image-menu-item.c \
@@ -81,7 +80,6 @@ panel_headers =			\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
 	panel-background.h	\
-	panel-background-monitor.h	\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-image-menu-item.h \

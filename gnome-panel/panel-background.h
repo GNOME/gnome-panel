@@ -28,7 +28,6 @@
 
 #include "panel-enums.h"
 #include "panel-types.h"
-#include "panel-background-monitor.h"
 
 typedef struct _PanelBackground PanelBackground;
 
@@ -52,10 +51,6 @@ struct _PanelBackground {
 	GdkRectangle            region;
         GdkPixbuf              *transformed_image;
 	cairo_pattern_t        *composited_pattern;
-
-	PanelBackgroundMonitor *monitor;
-	GdkPixbuf              *desktop;
-	gulong                  monitor_signal;
 
 	GdkWindow              *window;
 

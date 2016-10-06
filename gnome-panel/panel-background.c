@@ -32,7 +32,6 @@
 
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-background-monitor.h"
 #include "panel-schemas.h"
 #include "panel-util.h"
 
@@ -118,70 +117,17 @@ free_composited_resources (PanelBackground *background)
 	background->composited_pattern = NULL;
 }
 
-static void
-background_changed (PanelBackgroundMonitor *monitor,
-		    PanelBackground        *background)
-{
-	GdkPixbuf *tmp;
-
-	tmp = background->desktop;
-
-	background->desktop = panel_background_monitor_get_region (
-					background->monitor,
-					background->region.x,
-					background->region.y,
-					background->region.width,
-					background->region.height);
-
-	if (tmp)
-		g_object_unref (tmp);
-
-	panel_background_composite (background);
-}
-
-// FIXMEchpe make this a cairo_pattern_t*
-static GdkPixbuf *
-get_desktop_pixbuf (PanelBackground *background)
-{
-	GdkPixbuf *desktop;
-
-	if (!background->monitor) {
-		background->monitor =
-			panel_background_monitor_get_for_screen (
-				gdk_window_get_screen (background->window));
-
-		background->monitor_signal =
-			g_signal_connect (
-			background->monitor, "changed",
-                        G_CALLBACK (background_changed), background);
-	}
-
-	desktop = panel_background_monitor_get_region (
-				background->monitor,
-				background->region.x,
-				background->region.y,
-				background->region.width,
-				background->region.height);
-
-	return desktop;
-}
-
 static cairo_pattern_t *
 composite_image_onto_desktop (PanelBackground *background)
 {
 	int              width, height;
+	GdkScreen       *screen;
 	cairo_t         *cr;
 	cairo_surface_t *surface;
 	cairo_pattern_t *pattern;
 
-	if (!background->desktop)
-		background->desktop = get_desktop_pixbuf (background);
-
-	if (!background->desktop)
-		return NULL;
-
-	width  = gdk_pixbuf_get_width  (background->desktop);
-	height = gdk_pixbuf_get_height (background->desktop);
+	width  = background->region.width;
+	height = background->region.height;
 
         surface = gdk_window_create_similar_surface (background->window,
                                                      CAIRO_CONTENT_COLOR_ALPHA,
@@ -193,13 +139,12 @@ composite_image_onto_desktop (PanelBackground *background)
 
 	cr = cairo_create (surface);
 
-        if (background->has_alpha) {
-                cairo_set_source_rgb (cr, 1, 1, 1);
-                cairo_paint (cr);
+        screen = gdk_screen_get_default ();
+        if (background->has_alpha && !gdk_screen_is_composited (screen)) {
+                GdkRGBA c = background->default_color;
 
-                gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-                cairo_rectangle (cr, 0, 0, width, height);
-                cairo_fill (cr);
+                cairo_set_source_rgb (cr, c.red, c.green, c.blue);
+                cairo_paint (cr);
         }
 
         gdk_cairo_set_source_pixbuf (cr, background->transformed_image, 0, 0);
@@ -218,14 +163,10 @@ composite_image_onto_desktop (PanelBackground *background)
 static cairo_pattern_t *
 composite_color_onto_desktop (PanelBackground *background)
 {
+        GdkScreen *screen;
         cairo_surface_t *surface;
         cairo_pattern_t *pattern;
         cairo_t *cr;
-
-        if (!background->desktop)
-                background->desktop = get_desktop_pixbuf (background);
-        if (!background->desktop)
-                return NULL;
 
         surface = gdk_window_create_similar_surface (background->window,
                                                      CAIRO_CONTENT_COLOR_ALPHA,
@@ -237,11 +178,17 @@ composite_color_onto_desktop (PanelBackground *background)
         }
 
         cr = cairo_create (surface);
-        gdk_cairo_set_source_pixbuf (cr, background->desktop, 0, 0);
-        cairo_paint (cr);
 
-        gdk_cairo_set_source_rgba (cr, &background->color);
-        cairo_paint (cr);
+        screen = gdk_screen_get_default ();
+        if (!gdk_screen_is_composited (screen)) {
+                GdkRGBA c = background->color;
+
+                cairo_set_source_rgb (cr, c.red, c.green, c.blue);
+                cairo_paint (cr);
+        } else {
+                gdk_cairo_set_source_rgba (cr, &background->color);
+                cairo_paint (cr);
+        }
 
         cairo_destroy (cr);
 
@@ -473,22 +420,6 @@ panel_background_transform (PanelBackground *background)
 }
 
 static void
-disconnect_background_monitor (PanelBackground *background)
-{
-	if (background->monitor) {
-		g_signal_handler_disconnect (
-			background->monitor, background->monitor_signal);
-		background->monitor_signal = -1;
-		g_object_unref (background->monitor);
-	}
-	background->monitor = NULL;
-
-	if (background->desktop)
-		g_object_unref (background->desktop);
-	background->desktop = NULL;
-}
-
-static void
 panel_background_update_has_alpha (PanelBackground *background)
 {
 	gboolean has_alpha = FALSE;
@@ -500,9 +431,6 @@ panel_background_update_has_alpha (PanelBackground *background)
 		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
 
 	background->has_alpha = has_alpha;
-
-	if (!has_alpha)
-		disconnect_background_monitor (background);
 }
 
 static void
@@ -829,10 +757,6 @@ panel_background_change_region (PanelBackground *background,
 
 	background->orientation = orientation;
 
-	if (background->desktop)
-		g_object_unref (background->desktop);
-	background->desktop = NULL;
-
 	if (need_to_retransform || ! background->transformed)
 		/* only retransform the background if we have in
 		   fact changed size/orientation */
@@ -874,10 +798,6 @@ panel_background_init (PanelBackground              *background,
 	background->transformed_image  = NULL;
 	background->composited_pattern = NULL;
 
-	background->monitor        = NULL;
-	background->desktop        = NULL;
-	background->monitor_signal = -1;
-
 	background->window   = NULL;
 
 	background->default_pattern     = NULL;
@@ -898,8 +818,6 @@ panel_background_init (PanelBackground              *background,
 void
 panel_background_free (PanelBackground *background)
 {
-	disconnect_background_monitor (background);
-
 	free_transformed_resources (background);
 
 	if (background->settings)
@@ -913,10 +831,6 @@ panel_background_free (PanelBackground *background)
 	if (background->loaded_image)
 		g_object_unref (background->loaded_image);
 	background->loaded_image = NULL;
-
-	if (background->monitor)
-		g_object_unref (background->monitor);
-	background->monitor = NULL;
 
 	if (background->window)
 		g_object_unref (background->window);
