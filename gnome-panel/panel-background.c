@@ -847,12 +847,6 @@ panel_background_get_type (PanelBackground *background)
 	return background->type;
 }
 
-const GdkRGBA *
-panel_background_get_color (PanelBackground *background)
-{
-	return &(background->color);
-}
-
 /* What are we actually rendering - e.g. if we're supposed to
  * be rendering an image, but haven't got a valid image, then
  * we're rendering the default gtk background.

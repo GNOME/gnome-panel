@@ -88,7 +88,6 @@ void  panel_background_change_region     (PanelBackground     *background,
 					  int                  height);
 
 PanelBackgroundType  panel_background_get_type   (PanelBackground *background);
-const GdkRGBA       *panel_background_get_color  (PanelBackground *background);
 
 PanelBackgroundType
       panel_background_effective_type    (PanelBackground     *background);
