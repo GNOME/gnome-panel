@@ -4067,12 +4067,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 }
 
 static void
-background_changed (PanelBackground *background,
-                    PanelToplevel   *toplevel)
-{
-}
-
-static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
 	GtkWidget *widget;
@@ -4183,9 +4177,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
-	panel_background_init (&toplevel->background,
-			       (PanelBackgroundChangedNotify) background_changed,
-			       toplevel);
+	panel_background_init (&toplevel->background);
 }
 
 PanelWidget *

@@ -102,8 +102,6 @@ panel_background_prepare (PanelBackground *background)
 	if (GTK_IS_WIDGET (widget))
 	  gtk_widget_queue_draw (widget);
 
-	background->notify_changed (background, background->user_data);
-
 	return TRUE;
 }
 
@@ -772,15 +770,11 @@ panel_background_change_region (PanelBackground *background,
 }
 
 void
-panel_background_init (PanelBackground              *background,
-		       PanelBackgroundChangedNotify  notify_changed,
-		       gpointer                      user_data)
+panel_background_init (PanelBackground *background)
 {
 	background->settings = NULL;
 
 	background->type = PANEL_BACK_NONE;
-	background->notify_changed = notify_changed;
-	background->user_data = user_data;
 
 	background->color.red   = 0.;
 	background->color.blue  = 0.;
