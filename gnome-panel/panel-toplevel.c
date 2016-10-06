@@ -36,7 +36,6 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "gp-arrow-button.h"
-#include "panel-frame.h"
 #include "panel-xutils.h"
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
@@ -146,7 +145,6 @@ struct _PanelToplevelPrivate {
 	guint                   animation_timeout;
 
 	PanelWidget            *panel_widget;
-	PanelFrame             *inner_frame;
 	GtkWidget              *grid;
 	GtkWidget              *hide_button_top;
 	GtkWidget              *hide_button_bottom;
@@ -1505,7 +1503,6 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 {
 	GtkWidget       *widget;
 	PanelFrameEdge   edges;
-	PanelFrameEdge   inner_edges;
 	PanelFrameEdge   outer_edges;
 	PanelBackground *background;
 	int              monitor_width, monitor_height;
@@ -1567,14 +1564,10 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 	}
 
 	if (!inner_frame) {
-		inner_edges = PANEL_EDGE_NONE;
 		outer_edges = edges;
 	} else {
-		inner_edges = edges;
 		outer_edges = PANEL_EDGE_NONE;
 	}
-
-	panel_frame_set_edges (toplevel->priv->inner_frame, inner_edges);
 
 	if (toplevel->priv->edges != outer_edges) {
 		toplevel->priv->edges = outer_edges;
@@ -2048,15 +2041,10 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 static void
 panel_toplevel_update_position (PanelToplevel *toplevel)
 {
-	PanelBackground *background;
-	GdkScreen       *screen;
-	int              x, y;
-	int              w, h;
-	int              screen_width, screen_height;
-	int              monitor_width, monitor_height;
-
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
+	int        x, y;
+	int        w, h;
+	int        monitor_width, monitor_height;
+	GdkScreen *screen;
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -2143,46 +2131,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	if (h != -1)
 		toplevel->priv->geometry.height = h;
 
-	/* This is some kind of snap: there's a possibility of an infinite loop
-	 * because of the bevels of the frame that are set in
-	 * panel_toplevel_update_edges(). The bevels change the width/height of
-	 * the toplevel. The typical loop is:
-	 * x = 1 => outer bevel => x = 0 => no outer bevel = > x = 1 => ...
-	 * FIXME: maybe the real bug is that we enter into this loop (see bug
-	 * #160748 to learn how to reproduce.) */
-	background = &toplevel->background;
-	/* There's no bevels with a color/image background */
-	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
-		GtkStyleContext *context;
-		GtkStateFlags    state;
-		GdkRectangle    *geometry;
-		GtkBorder        padding;
-		int              max_size;
-
-		state = gtk_widget_get_state_flags (GTK_WIDGET (toplevel->priv->inner_frame));
-		context = gtk_widget_get_style_context (GTK_WIDGET (toplevel->priv->inner_frame));
-		gtk_style_context_get_padding (context, state, &padding);
-		geometry = &toplevel->priv->geometry;
-
-		if (x <= padding.left && x > 0 &&
-		    !toplevel->priv->x_centered)
-			x = 0;
-
-		if (y <= padding.top && y > 0 &&
-		    !toplevel->priv->y_centered)
-			y = 0;
-
-		max_size = monitor_width - geometry->width - padding.right;
-		if (x + padding.left >= max_size && x < max_size &&
-		    !toplevel->priv->x_centered)
-			x = max_size;
-
-		max_size = monitor_height - geometry->height - padding.bottom;
-		if (y + padding.top >= max_size && y < max_size &&
-		    !toplevel->priv->y_centered)
-			y = max_size;
-	}
-
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
 	y += panel_multiscreen_y (screen, toplevel->priv->monitor);
 
@@ -2874,8 +2823,6 @@ panel_toplevel_draw (GtkWidget *widget,
 		retval = GTK_WIDGET_CLASS (panel_toplevel_parent_class)->draw (widget, cr);
 
 	edges = toplevel->priv->edges;
-	/* FIXMEchpe: WTF!? */
-        panel_frame_draw (widget, cr, edges);
 
 	if (toplevel->priv->expand ||
 	    toplevel->priv->buttons_enabled)
@@ -4247,14 +4194,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 		gtk_widget_show (toplevel->priv->hide_button_bottom);
 	}
 
-	toplevel->priv->inner_frame = g_object_new (PANEL_TYPE_FRAME, NULL);
-
-	gtk_widget_set_hexpand (GTK_WIDGET (toplevel->priv->inner_frame), TRUE);
-	gtk_widget_set_vexpand (GTK_WIDGET (toplevel->priv->inner_frame), TRUE);
-
-	gtk_grid_attach (GTK_GRID (toplevel->priv->grid), GTK_WIDGET (toplevel->priv->inner_frame), 1, 1, 1, 1);
-	gtk_widget_show (GTK_WIDGET (toplevel->priv->inner_frame));
-
 	container = panel_widget_new (toplevel,
 				      !toplevel->priv->expand,
 				      toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
@@ -4264,7 +4203,10 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 
 	toplevel->priv->panel_widget = PANEL_WIDGET (container);
 
-	gtk_container_add (GTK_CONTAINER (toplevel->priv->inner_frame), container);
+	gtk_widget_set_hexpand (container, TRUE);
+	gtk_widget_set_vexpand (container, TRUE);
+
+	gtk_grid_attach (GTK_GRID (toplevel->priv->grid), container, 1, 1, 1, 1);
 	gtk_widget_show (container);
 
 	gtk_container_add (GTK_CONTAINER (toplevel), toplevel->priv->grid);
@@ -4342,7 +4284,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animation_timeout            = 0;
 
 	toplevel->priv->panel_widget       = NULL;
-	toplevel->priv->inner_frame        = NULL;
 	toplevel->priv->grid               = NULL;
 	toplevel->priv->hide_button_top    = NULL;
 	toplevel->priv->hide_button_bottom = NULL;

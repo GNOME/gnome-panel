@@ -45,7 +45,6 @@ panel_sources =			\
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
 	panel-struts.c		\
-	panel-frame.c		\
 	panel-xutils.c		\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
@@ -92,7 +91,6 @@ panel_headers =			\
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
 	panel-struts.h		\
-	panel-frame.h		\
 	panel-xutils.h		\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
