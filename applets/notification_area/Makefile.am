@@ -1,9 +1,6 @@
 NULL =
 
-noinst_LTLIBRARIES = libtray.la
-noinst_PROGRAMS = testtray
-
-libtray_la_CFLAGS = \
+libnotification_area_applet_la_CFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""notification-area-applet"\" \
 	-DNOTIFICATION_AREA_MENU_UI_DIR=\""$(uidir)"\" \
@@ -16,48 +13,26 @@ libtray_la_CFLAGS = \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libtray_la_SOURCES =		\
-	fixedtip.h		\
-	fixedtip.c		\
-	na-tray.c		\
-	na-tray.h		\
-	na-tray-child.c		\
-	na-tray-child.h		\
-	na-tray-manager.c	\
-	na-tray-manager.h
-
-libnotification_area_applet_la_CFLAGS = $(libtray_la_CFLAGS)
-
-libnotification_area_applet_la_SOURCES = main.c main.h
+libnotification_area_applet_la_SOURCES = \
+	fixedtip.h \
+	fixedtip.c \
+	na-tray.c \
+	na-tray.h \
+	na-tray-child.c \
+	na-tray-child.h \
+	na-tray-manager.c \
+	na-tray-manager.h \
+	main.c \
+	main.h \
+	$(NULL)
 
 libnotification_area_applet_la_LIBADD = \
-	libtray.la					\
 	../../libpanel-applet/libpanel-applet.la	\
 	$(NOTIFICATION_AREA_LIBS)			\
 	$(LIBPANEL_APPLET_LIBS)
 
 libnotification_area_applet_la_LDFLAGS = \
 	-module -avoid-version \
-	$(WARN_LDFLAGS) \
-	$(AM_LDFLAGS) \
-	$(NULL)
-
-testtray_SOURCES = testtray.c
-testtray_LDADD =			\
-	libtray.la			\
-	$(NOTIFICATION_AREA_LIBS)
-
-testtray_CFLAGS = \
-	-I$(srcdir) \
-	-I$(srcdir)/../../libpanel-applet \
-	-I$(top_builddir)/libpanel-applet \
-	$(NOTIFICATION_AREA_CFLAGS) \
-	$(LIBPANEL_APPLET_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-testtray_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
