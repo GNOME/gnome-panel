@@ -709,8 +709,8 @@ setup_uri_drag (GtkWidget  *menuitem,
 		const char *uri,
 		const char *icon)
 {
-	static GtkTargetEntry menu_item_targets[] = {
-		{ "text/uri-list", 0, 0 }
+	static const GtkTargetEntry menu_item_targets[] = {
+		{ (gchar *) "text/uri-list", 0, 0 }
 	};
 
 	if (panel_lockdown_get_panels_locked_down_s ())
@@ -735,8 +735,8 @@ void
 setup_internal_applet_drag (GtkWidget             *menuitem,
 			    PanelActionButtonType  type)
 {
-	static GtkTargetEntry menu_item_targets[] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
+	static const GtkTargetEntry menu_item_targets[] = {
+		{ (gchar *) "application/x-panel-applet-internal", 0, 0 }
 	};
 
 	if (panel_lockdown_get_panels_locked_down_s ())
@@ -993,8 +993,8 @@ create_menuitem (GtkWidget          *menu,
 	if (!panel_lockdown_get_panels_locked_down_s ()) {
 		GIcon *icon;
 
-		static GtkTargetEntry menu_item_targets[] = {
-			{ "text/uri-list", 0, 0 }
+		static const GtkTargetEntry menu_item_targets[] = {
+			{ (gchar *) "text/uri-list", 0, 0 }
 		};
 
 		gtk_drag_source_set (menuitem,
@@ -1023,28 +1023,20 @@ create_menuitem_from_alias (GtkWidget      *menu,
 			    GMenuTreeAlias *alias)
 {
 	GMenuTreeDirectory *src = gmenu_tree_alias_get_directory (alias);
+	GMenuTreeItemType type = gmenu_tree_alias_get_aliased_item_type (alias);
 
-	switch (gmenu_tree_alias_get_aliased_item_type (alias)) {
-	case GMENU_TREE_ITEM_DIRECTORY: {
+	if (type == GMENU_TREE_ITEM_DIRECTORY) {
 		GMenuTreeDirectory *directory = gmenu_tree_alias_get_aliased_directory (alias);
 		create_submenu (menu,
 				directory,
 				src);
 		gmenu_tree_item_unref (directory);
-		break;
-	}
-
-	case GMENU_TREE_ITEM_ENTRY: {
+	} else if (type == GMENU_TREE_ITEM_ENTRY) {
 		GMenuTreeEntry *entry = gmenu_tree_alias_get_aliased_entry (alias);
 		create_menuitem (menu,
 				 entry,
 				 src);
 		gmenu_tree_item_unref (entry);
-		break;
-	}
-
-	default:
-		break;
 	}
 
 	gmenu_tree_item_unref (src);
@@ -1207,6 +1199,7 @@ populate_menu_from_directory (GtkWidget          *menu,
 			create_header (menu, item);
 			break;
 
+		case GMENU_TREE_ITEM_INVALID:
 		default:
 			break;
 		}
