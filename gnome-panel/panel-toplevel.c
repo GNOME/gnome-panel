@@ -113,7 +113,6 @@ struct _PanelToplevelPrivate {
 	guint                   unhide_timeout;
 
 	GdkRectangle            geometry;
-	PanelFrameEdge          edges;
 
 	int                     original_width;
 	int                     original_height;
@@ -1498,83 +1497,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 	return geometry_changed;
 }
 
-void
-panel_toplevel_update_edges (PanelToplevel *toplevel)
-{
-	GtkWidget       *widget;
-	PanelFrameEdge   edges;
-	PanelFrameEdge   outer_edges;
-	PanelBackground *background;
-	int              monitor_width, monitor_height;
-	int              width, height;
-	gboolean         inner_frame = FALSE;
-
-	widget = GTK_WIDGET (toplevel);
-
-	panel_toplevel_get_monitor_geometry (
-			toplevel, NULL, NULL, &monitor_width, &monitor_height);
-
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
-
-	edges = PANEL_EDGE_NONE;
-
-	background = &toplevel->background;
-
-	/* We don't want any bevels with a color/image background */
-	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
-		if (toplevel->priv->geometry.y > 0)
-			edges |= PANEL_EDGE_TOP;
-
-		if (toplevel->priv->geometry.x > 0)
-			edges |= PANEL_EDGE_LEFT;
-
-		if (toplevel->priv->geometry.y < (monitor_height - height))
-			edges |= PANEL_EDGE_BOTTOM;
-
-		if (toplevel->priv->geometry.x < (monitor_width - width))
-			edges |= PANEL_EDGE_RIGHT;
-
-		/* There is a conflict in the position algorithm when a
-		 * non-expanded centered panel is nearly the size of the
-		 * screen. This is similar to the one we have in
-		 * panel_toplevel_update_position(). A simple solution is
-		 * to keep the bevels in this case. */
-		if (!toplevel->priv->expand &&
-		    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK &&
-		    toplevel->priv->x_centered)
-			edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
-
-		if (!toplevel->priv->expand &&
-		    toplevel->priv->orientation & PANEL_VERTICAL_MASK &&
-		    toplevel->priv->y_centered)
-			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
-
-		if (gtk_widget_get_visible (toplevel->priv->hide_button_left) ||
-		    gtk_widget_get_visible (toplevel->priv->hide_button_right)) {
-			inner_frame = TRUE;
-			edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
-		}
-
-		if (gtk_widget_get_visible (toplevel->priv->hide_button_top) ||
-		    gtk_widget_get_visible (toplevel->priv->hide_button_bottom)) {
-			inner_frame = TRUE;
-			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
-		}
-	}
-
-	if (!inner_frame) {
-		outer_edges = edges;
-	} else {
-		outer_edges = PANEL_EDGE_NONE;
-	}
-
-	if (toplevel->priv->edges != outer_edges) {
-		toplevel->priv->edges = outer_edges;
-		gtk_widget_queue_resize (widget);
-	}
-}
-
 static const char *
 panel_toplevel_construct_description (PanelToplevel *toplevel)
 {
@@ -2279,23 +2201,14 @@ static void
 panel_toplevel_update_size (PanelToplevel  *toplevel,
 			    GtkRequisition *requisition)
 {
-	GtkWidget       *widget;
-	GtkStyleContext *context;
-	GtkStateFlags    state;
-	GtkBorder        padding;
-	int              monitor_width, monitor_height;
-	int              width, height;
-	int              size;
-	int              minimum_height;
-	int              non_panel_widget_size;
+	int monitor_width, monitor_height;
+	int width, height;
+	int size;
+	int minimum_height;
+	int non_panel_widget_size;
 
 	if (toplevel->priv->animating)
 		return;
-
-	widget = GTK_WIDGET (toplevel);
-	state = gtk_widget_get_state_flags (widget);
-	context = gtk_widget_get_style_context (widget);
-	gtk_style_context_get_padding (context, state, &padding);
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -2347,15 +2260,6 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 		size = width;
 	}
 
-	if (toplevel->priv->edges & PANEL_EDGE_TOP)
-		height += padding.top;
-	if (toplevel->priv->edges & PANEL_EDGE_BOTTOM)
-		height += padding.bottom;
-	if (toplevel->priv->edges & PANEL_EDGE_LEFT)
-		width += padding.left;
-	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
-		width += padding.right;
-
 	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_width);
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
 	toplevel->priv->original_width  = toplevel->priv->geometry.width;
@@ -2389,7 +2293,6 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 						       NULL, NULL);
 	}
 
-	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
 }
 
@@ -2738,9 +2641,6 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 {
 	PanelToplevel   *toplevel = (PanelToplevel *) widget;
 	GtkBin          *bin = (GtkBin *) widget;
-	GtkStyleContext *context;
-	GtkStateFlags    state;
-	GtkBorder        padding;
 	GtkWidget       *child;
 	GtkAllocation    challoc;
 	GtkAllocation    child_allocation;
@@ -2763,26 +2663,6 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 			challoc.height = allocation->height - 2 * HANDLE_SIZE;
 		}
 	}
-
-	state = gtk_widget_get_state_flags (widget);
-	context = gtk_widget_get_style_context (widget);
-	gtk_style_context_get_padding (context, state, &padding);
-
-	if (toplevel->priv->edges & PANEL_EDGE_TOP) {
-		challoc.y += padding.top;
-		challoc.height -= padding.top;
-	}
-
-	if (toplevel->priv->edges & PANEL_EDGE_LEFT) {
-		challoc.x += padding.left;
-		challoc.width -= padding.left;
-	}
-
-	if (toplevel->priv->edges & PANEL_EDGE_BOTTOM)
-		challoc.height -= padding.bottom;
-
-	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
-		challoc.width -= padding.right;
 
 	challoc.width  = MAX (1, challoc.width);
 	challoc.height = MAX (1, challoc.height);
@@ -2812,17 +2692,13 @@ panel_toplevel_draw (GtkWidget *widget,
                      cairo_t   *cr)
 {
 	PanelToplevel   *toplevel = (PanelToplevel *) widget;
-	PanelFrameEdge   edges;
 	gboolean         retval = FALSE;
 	GtkStyleContext *context;
 	GtkStateFlags    state;
-	GtkBorder        padding;
         int awidth, aheight;
 
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->draw)
 		retval = GTK_WIDGET_CLASS (panel_toplevel_parent_class)->draw (widget, cr);
-
-	edges = toplevel->priv->edges;
 
 	if (toplevel->priv->expand ||
 	    toplevel->priv->buttons_enabled)
@@ -2833,7 +2709,6 @@ panel_toplevel_draw (GtkWidget *widget,
         aheight = gtk_widget_get_allocated_height (widget);
 
 	context = gtk_widget_get_style_context (widget);
-	gtk_style_context_get_padding (context, state, &padding);
 
 	gtk_style_context_save (context);
 	gtk_style_context_set_state (context, state);
@@ -2846,22 +2721,11 @@ panel_toplevel_draw (GtkWidget *widget,
 		width  = HANDLE_SIZE;
 		height = aheight;
 
-		if (edges & PANEL_EDGE_TOP) {
-			y += padding.top;
-			height -= padding.top;
-		}
-		if (edges & PANEL_EDGE_BOTTOM)
-			height -= padding.bottom;
-		if (edges & PANEL_EDGE_LEFT)
-			x += padding.left;
-
 		cairo_save (cr);
 		gtk_render_handle (context, cr, x, y, width, height);
 		cairo_restore (cr);
 
 		x = awidth - HANDLE_SIZE;
-		if (edges & PANEL_EDGE_RIGHT)
-			x -= padding.right;
 
 		cairo_save (cr);
 		gtk_render_handle (context, cr, x, y, width, height);
@@ -2874,22 +2738,11 @@ panel_toplevel_draw (GtkWidget *widget,
 		width  = awidth;
 		height = HANDLE_SIZE;
 
-		if (edges & PANEL_EDGE_LEFT) {
-			x += padding.left;
-			width -= padding.left;
-		}
-		if (edges & PANEL_EDGE_RIGHT)
-			width -= padding.right;
-		if (edges & PANEL_EDGE_TOP)
-			y += padding.top;
-
 		cairo_save (cr);
 		gtk_render_handle (context, cr, x, y, width, height);
 		cairo_restore (cr);
 
 		y = aheight - HANDLE_SIZE;
-		if (edges & PANEL_EDGE_BOTTOM)
-			y -= padding.bottom;
 
 		cairo_save (cr);
 		gtk_render_handle (context, cr, x, y, width, height);
@@ -4217,7 +4070,6 @@ static void
 background_changed (PanelBackground *background,
                     PanelToplevel   *toplevel)
 {
-	panel_toplevel_update_edges (toplevel);
 }
 
 static void
