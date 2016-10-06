@@ -80,7 +80,4 @@ void  panel_background_change_region     (PanelBackground     *background,
 
 PanelBackgroundType  panel_background_get_type   (PanelBackground *background);
 
-PanelBackgroundType
-      panel_background_effective_type    (PanelBackground     *background);
-
 #endif /* __PANEL_BACKGROUND_H__ */
