@@ -15,6 +15,8 @@ panel_sources =			\
 	$(gnome_panel_BUILT_SOURCES) \
 	gp-arrow-button.c \
 	gp-arrow-button.h \
+	gp-properties-dialog.c \
+	gp-properties-dialog.h \
 	main.c			\
 	panel-widget.c		\
 	button-widget.c		\
@@ -25,7 +27,6 @@ panel_sources =			\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
-	panel-properties-dialog.c	\
 	panel-run-dialog.c	\
 	menu.c			\
 	panel-context-menu.c	\
@@ -71,7 +72,6 @@ panel_headers =			\
 	panel.h			\
 	applet.h		\
 	panel-util.h		\
-	panel-properties-dialog.h	\
 	panel-run-dialog.h	\
 	menu.h			\
 	panel-context-menu.h	\
@@ -259,8 +259,8 @@ BUILT_SOURCES = 				\
 	$(panel_test_applets_BUILT_SOURCES)
 
 ui_FILES =					\
+	gp-properties-dialog.ui \
 	panel-addto-dialog.ui \
-	panel-properties-dialog.ui		\
 	panel-run-dialog.ui
 
 panel-resources.c: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/panel.gresource.xml)

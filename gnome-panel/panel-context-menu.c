@@ -39,7 +39,7 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
-#include "panel-properties-dialog.h"
+#include "gp-properties-dialog.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-addto-dialog.h"
@@ -111,6 +111,42 @@ panel_context_menu_setup_delete_panel_item (GtkWidget *menu,
 }
 
 static void
+dialog_destroy_cb (GtkWidget     *dialog,
+                   PanelToplevel *toplevel)
+{
+  panel_toplevel_pop_autohide_disabler (toplevel);
+  g_object_set_data (G_OBJECT (toplevel), "gp-properties-dialog", NULL);
+}
+
+static void
+present_properties_dialog (GtkWidget     *widget,
+                           PanelToplevel *toplevel)
+{
+  GtkWidget *dialog;
+
+  dialog = g_object_get_data (G_OBJECT (toplevel), "gp-properties-dialog");
+
+  if (dialog == NULL)
+    {
+      const gchar *toplevel_id;
+
+      toplevel_id = panel_toplevel_get_id (toplevel);
+      dialog = gp_properties_dialog_new (toplevel_id);
+
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (dialog_destroy_cb),
+                        toplevel);
+
+      g_object_set_data_full (G_OBJECT (toplevel), "gp-properties-dialog",
+                              dialog, (GDestroyNotify) gtk_widget_destroy);
+
+      panel_toplevel_push_autohide_disabler (toplevel);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+static void
 panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
 {
@@ -128,9 +164,9 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Properties"));
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (panel_properties_dialog_present), 
-				  panel_widget->toplevel);
+	g_signal_connect (menuitem, "activate",
+	                  G_CALLBACK (present_properties_dialog),
+	                  panel_widget->toplevel);
 
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Delete This Panel"));
 	gtk_widget_show (menuitem);

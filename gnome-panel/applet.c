@@ -29,7 +29,6 @@
 #include "panel-util.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
-#include "panel-properties-dialog.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
