@@ -3723,7 +3723,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		gobject_class,
 		PROP_NAME,
 		g_param_spec_string (
-			"name",
+			"panel-name",
 			"Name",
 			"The name of this panel",
 			NULL,
@@ -4301,7 +4301,7 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_NAME_KEY,
 			 toplevel,
-			 "name",
+			 "panel-name",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
@@ -4448,7 +4448,7 @@ panel_toplevel_set_name (PanelToplevel *toplevel,
 
 	panel_toplevel_update_name (toplevel);
 
-	g_object_notify (G_OBJECT (toplevel), "name");
+	g_object_notify (G_OBJECT (toplevel), "panel-name");
 }
 
 const char *
