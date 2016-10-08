@@ -24,7 +24,6 @@
 
 #include <config.h>
 
-#include "panel-background.h"
 #include "panel-typebuiltins.h"
 
 #include "panel-menu-bar-object.h"

@@ -320,22 +320,21 @@ panel_key_press_event (PanelToplevel *toplevel,
 }
 
 static GSettings *
-get_settings_background_for_toplevel (PanelToplevel *toplevel)
+get_theme_settings_for_toplevel (PanelToplevel *toplevel)
 {
 	char      *toplevel_settings_path;
 	GSettings *settings;
-	GSettings *settings_background;
+	GSettings *theme;
 
 	g_object_get (toplevel, "settings-path", &toplevel_settings_path, NULL);
 	settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
 					     toplevel_settings_path);
-	settings_background = g_settings_get_child (settings,
-						    PANEL_BACKGROUND_SCHEMA_CHILD);
+	theme = g_settings_get_child (settings, "theme");
 
 	g_object_unref (settings);
 	g_free (toplevel_settings_path);
 
-	return settings_background;
+	return theme;
 }
 
 static gboolean
@@ -352,21 +351,18 @@ set_background_image_from_uri (PanelToplevel *toplevel,
 	}
 	g_object_unref (file);
 
-	settings = get_settings_background_for_toplevel (toplevel);
+	settings = get_theme_settings_for_toplevel (toplevel);
 
-	if (!g_settings_is_writable (settings,
-				     PANEL_BACKGROUND_TYPE_KEY) ||
-	    !g_settings_is_writable (settings,
-				     PANEL_BACKGROUND_IMAGE_URI_KEY)) {
+	if (!g_settings_is_writable (settings, "custom-bg-image") ||
+	    !g_settings_is_writable (settings, "bg-image")) {
 		g_object_unref (settings);
 		return FALSE;
 	}
 
-	g_settings_set_string (settings, PANEL_BACKGROUND_IMAGE_URI_KEY, uri);
-	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_IMAGE);
+	g_settings_set_enum (settings, "custom-bg-image", TRUE);
+	g_settings_set_string (settings, "bg-image", uri);
 
 	g_object_unref (settings);
-
 	return FALSE;
 }
 
@@ -381,12 +377,10 @@ set_background_color (PanelToplevel *toplevel,
 	if (!dropped)
 		return FALSE;
 
-	settings = get_settings_background_for_toplevel (toplevel);
+	settings = get_theme_settings_for_toplevel (toplevel);
 
-	if (!g_settings_is_writable (settings,
-				     PANEL_BACKGROUND_TYPE_KEY) ||
-	    !g_settings_is_writable (settings,
-				     PANEL_BACKGROUND_COLOR_KEY)) {
+	if (!g_settings_is_writable (settings, "custom-bg-color") ||
+	    !g_settings_is_writable (settings, "bg-color")) {
 		g_object_unref (settings);
 		return FALSE;
 	}
@@ -398,12 +392,11 @@ set_background_color (PanelToplevel *toplevel,
 
 	color_str = gdk_rgba_to_string (&color);
 
-	g_settings_set_string (settings, PANEL_BACKGROUND_COLOR_KEY, color_str);
-	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_COLOR);
-
+	g_settings_set_boolean (settings, "custom-bg-color", TRUE);
+	g_settings_set_string (settings, "bg-color", color_str);
 	g_free (color_str);
-	g_object_unref (settings);
 
+	g_object_unref (settings);
 	return TRUE;
 }
 
@@ -412,16 +405,14 @@ reset_background (PanelToplevel *toplevel)
 {
 	GSettings *settings;
 
-	settings = get_settings_background_for_toplevel (toplevel);
+	settings = get_theme_settings_for_toplevel (toplevel);
 
-	if (!g_settings_is_writable (settings,
-				     PANEL_BACKGROUND_TYPE_KEY)) {
+	if (!g_settings_is_writable (settings, "custom-bg-image")) {
 		g_object_unref (settings);
 		return FALSE;
 	}
 
-	g_settings_set_enum (settings, PANEL_BACKGROUND_TYPE_KEY, PANEL_BACK_NONE);
-
+	g_settings_set_boolean (settings, "custom-bg-image", FALSE);
 	g_object_unref (settings);
 
 	return TRUE;

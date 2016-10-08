@@ -35,7 +35,6 @@
 #include "panel.h"
 #include "applet.h"
 #include "panel-marshal.h"
-#include "panel-background.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-object-loader.h"
@@ -97,7 +96,6 @@ panel_applet_frame_draw (GtkWidget *widget,
 	GtkStyleContext *context;
 	GtkStateFlags     state;
 	cairo_pattern_t  *bg_pattern;
-	PanelBackground  *background;
 
         if (GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw)
                 GTK_WIDGET_CLASS (panel_applet_frame_parent_class)->draw (widget, cr);
@@ -117,10 +115,8 @@ panel_applet_frame_draw (GtkWidget *widget,
 	gtk_style_context_get (context, state,
 			       "background-image", &bg_pattern,
 			       NULL);
-	background = &frame->priv->panel->toplevel->background;
 
-	if (bg_pattern && (background->type == PANEL_BACK_IMAGE ||
-	    (background->type == PANEL_BACK_COLOR && background->has_alpha))) {
+	if (bg_pattern) {
 		cairo_matrix_t ptm;
 
 		cairo_matrix_init_translate (&ptm,

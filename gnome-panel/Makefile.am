@@ -17,6 +17,8 @@ panel_sources =			\
 	gp-arrow-button.h \
 	gp-properties-dialog.c \
 	gp-properties-dialog.h \
+	gp-theme.c \
+	gp-theme.h \
 	main.c			\
 	panel-widget.c		\
 	button-widget.c		\
@@ -33,7 +35,6 @@ panel_sources =			\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
-	panel-background.c	\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-image-menu-item.c \
@@ -78,7 +79,6 @@ panel_headers =			\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
-	panel-background.h	\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-image-menu-item.h \
@@ -214,7 +214,6 @@ panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
 
 panel-typebuiltins.c: $(panel_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
-			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
@@ -232,6 +231,7 @@ panel-typebuiltins.h: $(panel_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
+			--fhead "#include <glib-object.h>\n\n" \
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \
 			--ftail "#endif /* __PANEL_TYPEBUILTINS_H__ */\n" \

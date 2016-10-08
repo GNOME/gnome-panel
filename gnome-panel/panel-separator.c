@@ -22,7 +22,6 @@
 
 #include <config.h>
 
-#include "panel-background.h"
 #include "panel-layout.h"
 
 #include "panel-separator.h"

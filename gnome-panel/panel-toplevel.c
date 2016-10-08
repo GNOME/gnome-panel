@@ -36,6 +36,7 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "gp-arrow-button.h"
+#include "gp-theme.h"
 #include "panel-xutils.h"
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
@@ -78,6 +79,8 @@ struct _PanelToplevelPrivate {
 	GSettings              *settings;
 	GSettings              *delayed_settings;
 	guint                   apply_delayed_id;
+
+	GpTheme                *theme;
 
 	gboolean                expand;
 	PanelOrientation        orientation;
@@ -2410,38 +2413,6 @@ panel_toplevel_initially_hide (PanelToplevel *toplevel)
 }
 
 static void
-set_background_default_style (GtkWidget *widget)
-{
-	PanelToplevel *toplevel;
-	GtkStyleContext *context;
-	GtkStateFlags state;
-	GdkRGBA *bg_color;
-	cairo_pattern_t *bg_image;
-
-	if (!gtk_widget_get_realized (widget))
-		return;
-
-	toplevel = PANEL_TOPLEVEL (widget);
-
-	context = gtk_widget_get_style_context (widget);
-	state = gtk_style_context_get_state (context);
-
-	gtk_style_context_get (context, state,
-	                       "background-color", &bg_color,
-	                       "background-image", &bg_image,
-	                       NULL);
-
-	panel_background_set_default_style (&toplevel->background,
-	                                    bg_color, bg_image);
-
-	if (bg_color)
-		gdk_rgba_free (bg_color);
-
-	if (bg_image)
-		cairo_pattern_destroy (bg_image);
-}
-
-static void
 panel_toplevel_realize (GtkWidget *widget)
 {
 	PanelToplevel *toplevel;
@@ -2464,9 +2435,6 @@ panel_toplevel_realize (GtkWidget *widget)
 	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->realize (widget);
 
 	window = gtk_widget_get_window (widget);
-
-	set_background_default_style (widget);
-	panel_background_realized (&toplevel->background, window);
 
 	panel_struts_set_window_hint (toplevel);
 
@@ -2502,7 +2470,6 @@ panel_toplevel_unrealize (GtkWidget *widget)
 	toplevel = PANEL_TOPLEVEL (widget);
 
 	panel_toplevel_disconnect_timeouts (toplevel);
-	panel_background_unrealized (&toplevel->background);
 
 	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->unrealize (widget);
 }
@@ -2513,6 +2480,8 @@ panel_toplevel_dispose (GObject *widget)
 	PanelToplevel *toplevel = (PanelToplevel *) widget;
 	
 	panel_toplevel_disconnect_timeouts (toplevel);
+
+	g_clear_object (&toplevel->priv->theme);
 
         G_OBJECT_CLASS (panel_toplevel_parent_class)->dispose (widget);
 }
@@ -2605,37 +2574,6 @@ panel_toplevel_get_preferred_height(GtkWidget *widget, gint *minimal_height, gin
 }
 
 static void
-set_background_region (PanelToplevel *toplevel)
-{
-	GtkWidget *widget;
-	GdkWindow *window;
-	gint origin_x;
-	gint origin_y;
-	GtkAllocation allocation;
-	GtkOrientation orientation;
-
-	widget = GTK_WIDGET (toplevel);
-
-	if (!gtk_widget_get_realized (widget))
-		return;
-
-	window = gtk_widget_get_window (widget);
-	origin_x = -1;
-	origin_y = -1;
-
-	gdk_window_get_origin (window, &origin_x, &origin_y);
-	gtk_widget_get_allocation (widget, &allocation);
-
-	orientation = GTK_ORIENTATION_HORIZONTAL;
-	if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-		orientation = GTK_ORIENTATION_VERTICAL;
-
-	panel_background_change_region (&toplevel->background, orientation,
-	                                origin_x, origin_y,
-	                                allocation.width, allocation.height);
-}
-
-static void
 panel_toplevel_size_allocate (GtkWidget     *widget,
 			      GtkAllocation *allocation)
 {
@@ -2683,8 +2621,6 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 
 	if (child && gtk_widget_get_visible (child))
 		gtk_widget_size_allocate (child, &challoc);
-
-	set_background_region (toplevel);
 }
 
 static gboolean
@@ -2815,19 +2751,6 @@ panel_toplevel_button_release_event (GtkWidget      *widget,
 	panel_toplevel_end_grab_op (toplevel, event->time);
 
 	return TRUE;
-}
-
-static gboolean
-panel_toplevel_configure_event (GtkWidget	  *widget,
-				GdkEventConfigure *event)
-{
-	PanelToplevel *toplevel;
-
-	toplevel = PANEL_TOPLEVEL (widget);
-
-	set_background_region (toplevel);
-
-	return GDK_EVENT_PROPAGATE;
 }
 
 static gboolean
@@ -3307,16 +3230,6 @@ panel_toplevel_focus_out_event (GtkWidget     *widget,
 }
 
 static void
-panel_toplevel_state_flags_changed (GtkWidget     *widget,
-                                    GtkStateFlags  previous_state)
-{
-	GTK_WIDGET_CLASS (panel_toplevel_parent_class)->state_flags_changed (widget,
-	                                                                     previous_state);
-
-	set_background_default_style (widget);
-}
-
-static void
 panel_toplevel_style_updated (GtkWidget *widget)
 {
 	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
@@ -3326,9 +3239,21 @@ panel_toplevel_style_updated (GtkWidget *widget)
 	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated)
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated (widget);
 
-	set_background_default_style (widget);
-
 	panel_widget_set_size (toplevel->priv->panel_widget, toplevel->priv->size);
+}
+
+static void
+panel_toplevel_composited_changed (GtkWidget *widget)
+{
+	PanelToplevel *toplevel;
+	GdkScreen *screen;
+	gboolean composited;
+
+	toplevel = PANEL_TOPLEVEL (widget);
+	screen = gdk_screen_get_default ();
+	composited = gdk_screen_is_composited (screen);
+
+	gp_theme_set_composited (toplevel->priv->theme, composited);
 }
 
 static void
@@ -3404,6 +3329,29 @@ panel_toplevel_screen_changed (GtkWidget *widget,
 		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->screen_changed (widget, previous_screen);
 
 	gtk_widget_queue_resize (widget);
+}
+
+static void
+panel_toplevel_constructed (GObject *object)
+{
+	PanelToplevel *toplevel;
+	GdkScreen *screen;
+	gboolean composited;
+	GtkOrientation orientation;
+
+	toplevel = PANEL_TOPLEVEL (object);
+	screen = gdk_screen_get_default ();
+
+	G_OBJECT_CLASS (panel_toplevel_parent_class)->constructed (object);
+
+	composited = gdk_screen_is_composited (screen);
+	orientation = GTK_ORIENTATION_HORIZONTAL;
+
+	if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+		orientation = GTK_ORIENTATION_VERTICAL;
+
+	toplevel->priv->theme = gp_theme_new (toplevel->priv->toplevel_id,
+	                                      composited, orientation);
 }
 
 static GObject *
@@ -3615,8 +3563,6 @@ panel_toplevel_finalize (GObject *object)
 	panel_toplevel_disconnect_gtk_settings (toplevel);
 	toplevel->priv->gtk_settings = NULL;
 
-	panel_background_free (&toplevel->background);
-
 	if (toplevel->priv->description)
 		g_free (toplevel->priv->description);
 	toplevel->priv->description = NULL;
@@ -3660,6 +3606,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
         binding_set = gtk_binding_set_by_class (klass);
 
+	gobject_class->constructed  = panel_toplevel_constructed;
 	gobject_class->constructor  = panel_toplevel_constructor;
 	gobject_class->set_property = panel_toplevel_set_property;
         gobject_class->get_property = panel_toplevel_get_property;
@@ -3674,7 +3621,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->draw                 = panel_toplevel_draw;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
-	widget_class->configure_event      = panel_toplevel_configure_event;
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
 	widget_class->motion_notify_event  = panel_toplevel_motion_notify_event;
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
@@ -3682,8 +3628,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
-	widget_class->state_flags_changed  = panel_toplevel_state_flags_changed;
 	widget_class->style_updated        = panel_toplevel_style_updated;
+	widget_class->composited_changed   = panel_toplevel_composited_changed;
 
 	container_class->check_resize = panel_toplevel_check_resize;
 
@@ -4158,8 +4104,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 			       GDK_ENTER_NOTIFY_MASK |
 			       GDK_LEAVE_NOTIFY_MASK);
 
-	gtk_widget_set_app_paintable (widget, TRUE);
-
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
 	panel_toplevel_update_gtk_settings (toplevel);
@@ -4176,8 +4120,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-
-	panel_background_init (&toplevel->background);
 }
 
 PanelWidget *
@@ -4376,6 +4318,7 @@ panel_toplevel_set_toplevel_id (PanelToplevel *toplevel,
 	g_assert (toplevel->priv->toplevel_id == NULL);
 
 	toplevel->priv->toplevel_id = g_strdup (toplevel_id);
+	gtk_widget_set_name (GTK_WIDGET (toplevel), toplevel_id);
 }
 
 const char *
@@ -4390,8 +4333,6 @@ static void
 panel_toplevel_set_settings_path (PanelToplevel *toplevel,
 				  const char    *settings_path)
 {
-	GSettings *settings_background;
-
 	g_assert (toplevel->priv->settings_path == NULL);
 	g_assert (toplevel->priv->settings == NULL);
 	g_assert (toplevel->priv->delayed_settings == NULL);
@@ -4402,12 +4343,6 @@ panel_toplevel_set_settings_path (PanelToplevel *toplevel,
 	toplevel->priv->delayed_settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
 								     settings_path);
 	g_settings_delay (toplevel->priv->delayed_settings);
-
-	settings_background = g_settings_get_child (toplevel->priv->settings,
-						    PANEL_BACKGROUND_SCHEMA_CHILD);
-
-	panel_background_settings_init (&toplevel->background, settings_background);
-	g_object_unref (settings_background);
 }
 
 static void

@@ -53,14 +53,6 @@
 #define PANEL_TOPLEVEL_AUTO_HIDE_SIZE_KEY   "auto-hide-size"
 #define PANEL_TOPLEVEL_ANIMATION_SPEED_KEY  "animation-speed"
 
-#define PANEL_BACKGROUND_SCHEMA_CHILD     "background"
-#define PANEL_BACKGROUND_TYPE_KEY         "type"
-#define PANEL_BACKGROUND_COLOR_KEY        "color"
-#define PANEL_BACKGROUND_IMAGE_URI_KEY    "image-uri"
-#define PANEL_BACKGROUND_IMAGE_STYLE_KEY  "image-style"
-#define PANEL_BACKGROUND_IMAGE_ROTATE_KEY "image-rotate"
-#define PANEL_BACKGROUND_COLOR_DEFAULT    "rgba(255,255,255,.2)"
-
 #define PANEL_OBJECT_SCHEMA             "org.gnome.gnome-panel.object"
 #define PANEL_OBJECT_IID_KEY            "object-iid"
 #define PANEL_OBJECT_TOPLEVEL_ID_KEY    "toplevel-id"
