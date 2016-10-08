@@ -414,6 +414,27 @@ panel_applet_get_gtk_orientation (PanelApplet *applet)
 	return GTK_ORIENTATION_HORIZONTAL;
 }
 
+/**
+ * panel_applet_add_text_class:
+ * @applet: a #PanelApplet
+ * @widget: a #GtkWidget
+ *
+ * Use this function to add css class to widgets that are visible on panel
+ * and shows text.
+ *
+ * Since: 3.22
+ */
+void
+panel_applet_add_text_class (PanelApplet *applet,
+                             GtkWidget   *widget)
+{
+  GtkStyleContext *context;
+
+  context = gtk_widget_get_style_context (widget);
+
+  gtk_style_context_add_class (context, "gp-text-color");
+}
+
 /* Applets cannot set their orientation, so API is not public. */
 static void
 panel_applet_set_orient (PanelApplet      *applet,
