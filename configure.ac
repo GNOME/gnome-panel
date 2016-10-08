@@ -3,7 +3,7 @@ dnl Define version info
 dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
-m4_define([gp_minor_version], [20])
+m4_define([gp_minor_version], [22])
 m4_define([gp_micro_version], [0])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
@@ -65,7 +65,7 @@ LT_LIB_M
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIB_PANEL_APPLET_LT_VERSION=1:0:1
+LIB_PANEL_APPLET_LT_VERSION=2:0:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 AC_ARG_ENABLE([documentation],
