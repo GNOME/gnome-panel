@@ -813,6 +813,8 @@ create_main_clock_label (ClockData *cd)
 			  G_CALLBACK (clock_update_text_gravity),
 			  NULL);
 
+        panel_applet_add_text_class (PANEL_APPLET (cd->applet), label);
+
         return label;
 }
 

@@ -1445,7 +1445,15 @@ panel_place_menu_item_new (gboolean use_image,
 	icon_name = PANEL_ICON_FOLDER;
 
 	if (in_menubar) {
+		GtkWidget *label;
+		GtkStyleContext *context;
+
 		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
+
+		label = gtk_bin_get_child (GTK_BIN (menuitem));
+		context = gtk_widget_get_style_context (label);
+		gtk_style_context_add_class (context, "gp-text-color");
+
 		if (use_image) {
 			GtkIconSize icon_size;
 			GtkWidget *image;
@@ -1493,8 +1501,15 @@ panel_desktop_menu_item_new (gboolean use_image,
 	/* if we're in a menubar, we don't want to use setup_* as it changes
 	 * the size requests and can make the panels bigger than we'd like */
 	if (in_menubar) {
+		GtkWidget *label;
+		GtkStyleContext *context;
+
 		gtk_menu_item_set_label (GTK_MENU_ITEM (menuitem), name);
 		menuitem->priv->icon_size = panel_menu_bar_object_icon_get_size ();
+
+		label = gtk_bin_get_child (GTK_BIN (menuitem));
+		context = gtk_widget_get_style_context (label);
+		gtk_style_context_add_class (context, "gp-text-color");
 
 		if (use_image) {
 			GtkWidget *image;

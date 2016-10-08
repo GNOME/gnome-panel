@@ -112,6 +112,8 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 {
 	gchar *applications_menu;
 	GtkIconSize icon_size;
+	GtkWidget *label;
+	GtkStyleContext *context;
 
 	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
 
@@ -124,6 +126,10 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	menubar->priv->applications_item = panel_image_menu_item_new2 ();
 	gtk_menu_item_set_label (GTK_MENU_ITEM (menubar->priv->applications_item),
 				 _("Applications"));
+
+	label = gtk_bin_get_child (GTK_BIN (menubar->priv->applications_item));
+	context = gtk_widget_get_style_context (label);
+	gtk_style_context_add_class (context, "gp-text-color");
 
 	icon_size = panel_menu_bar_object_icon_get_size ();
 	menubar->priv->image = gtk_image_new_from_icon_name (PANEL_ICON_MAIN_MENU, icon_size);
