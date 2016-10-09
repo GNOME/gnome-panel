@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 02:34+0200\n"
-"PO-Revision-Date: 2016-09-09 02:35+0200\n"
+"POT-Creation-Date: 2016-10-09 08:23+0200\n"
+"PO-Revision-Date: 2016-10-09 08:24+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -115,63 +115,63 @@ msgstr "Kliknięcie ukryje miesięczny kalendarz"
 msgid "Click to view month calendar"
 msgstr "Kliknięcie wyświetli miesięczny kalendarz"
 
-#: ../applets/clock/clock.c:898
+#: ../applets/clock/clock.c:900
 msgid "Computer Clock"
 msgstr "Zegar komputerowy"
 
-#: ../applets/clock/clock.c:1064
+#: ../applets/clock/clock.c:1066
 msgid "Failed to open the time settings"
 msgstr "Otwarcie ustawień czasu się nie powiodło"
 
-#: ../applets/clock/clock.c:1657
+#: ../applets/clock/clock.c:1659
 msgid "Choose Location"
 msgstr "Wybór położenia"
 
-#: ../applets/clock/clock.c:1736
+#: ../applets/clock/clock.c:1738
 msgid "Edit Location"
 msgstr "Modyfikacja położenia"
 
-#: ../applets/clock/clock.c:1770 ../applets/clock/clock.c:1778
+#: ../applets/clock/clock.c:1772 ../applets/clock/clock.c:1780
 msgid "Default"
 msgstr "Domyślnie"
 
-#: ../applets/clock/clock.c:1771
+#: ../applets/clock/clock.c:1773
 msgid "Kelvin"
 msgstr "Kelwiny"
 
-#: ../applets/clock/clock.c:1772
+#: ../applets/clock/clock.c:1774
 msgid "Celsius"
 msgstr "Stopnie Celsjusza"
 
-#: ../applets/clock/clock.c:1773
+#: ../applets/clock/clock.c:1775
 msgid "Fahrenheit"
 msgstr "Stopnie Fahrenheita"
 
-#: ../applets/clock/clock.c:1779
+#: ../applets/clock/clock.c:1781
 msgid "Meters per second (m/s)"
 msgstr "Metry na sekundę (m/s)"
 
-#: ../applets/clock/clock.c:1780
+#: ../applets/clock/clock.c:1782
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometry na godzinę (km/s)"
 
-#: ../applets/clock/clock.c:1781
+#: ../applets/clock/clock.c:1783
 msgid "Miles per hour (mph)"
 msgstr "Mile na godzinę (mph)"
 
-#: ../applets/clock/clock.c:1782
+#: ../applets/clock/clock.c:1784
 msgid "Knots"
 msgstr "Węzły"
 
-#: ../applets/clock/clock.c:1783
+#: ../applets/clock/clock.c:1785
 msgid "Beaufort scale"
 msgstr "Skala Beauforta"
 
-#: ../applets/clock/clock.c:1836
+#: ../applets/clock/clock.c:1838
 msgid "City Name"
 msgstr "Nazwa miasta"
 
-#: ../applets/clock/clock.c:1840
+#: ../applets/clock/clock.c:1842
 msgid "City Time Zone"
 msgstr "Strefa czasowa miasta"
 
@@ -268,7 +268,7 @@ msgstr "Południe"
 
 #: ../applets/clock/clock.ui.h:5
 #: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
-#: ../gnome-panel/panel.c:1378 ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel.c:1314 ../gnome-panel/panel-ditem-editor.c:656
 #: ../gnome-panel/panel-ditem-editor.c:998
 #: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
 #: ../gnome-panel/panel-run-dialog.c:1293
@@ -326,7 +326,6 @@ msgstr "_Ustawienia czasu"
 #: ../applets/wncklet/workspace-switcher.ui.h:2
 #: ../gnome-panel/panel-addto-dialog.ui.h:5
 #: ../gnome-panel/panel-ditem-editor.c:653
-#: ../gnome-panel/panel-properties-dialog.ui.h:2
 msgid "_Close"
 msgstr "Za_mknij"
 
@@ -363,11 +362,11 @@ msgid "Show _temperature"
 msgstr "_Temperatura"
 
 #: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:4
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
+#: ../gnome-panel/gp-properties-dialog.ui.h:11
 msgid "General"
 msgstr "Ogólne"
 
-#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1080
+#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1056
 #: ../gnome-panel/panel-addto-dialog.ui.h:4
 msgid "_Add"
 msgstr "_Dodaj"
@@ -1507,33 +1506,22 @@ msgstr ""
 "tylko w przypadku ustawienia „enable_animations”."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
-msgid "Background type"
-msgstr "Typ tła"
+msgid "Use custom background color"
+msgstr "Niestandardowy kolor tła"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"none\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
-msgstr ""
-"Określa rodzaj tła użytego w tym panelu. Możliwe wartości to „none” — "
-"domyślne tło widżetu biblioteki GTK+, „color” — kolor określony przez klucz "
-"color lub „image” — obraz określony przez opcję image."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
-msgid "Background color"
+msgid "Background Color"
 msgstr "Kolor tła"
 
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
+msgid "Use custom background image"
+msgstr "Niestandardowy obraz tła"
+
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "Określa kolor tła panelu w formacie #RGB."
+msgid "Background image"
+msgstr "Obraz tła"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
-msgid "Background image"
-msgstr "Obrazu tła"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -1542,23 +1530,11 @@ msgstr ""
 "Określa plik używany jako obraz tła. Jeśli obraz zawiera kanał alfa, "
 "zostanie on nałożony na obraz tła pulpitu."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
-msgid "Rotate image on vertical panels"
-msgstr "Obracanie obrazów przy pionowym ułożeniu panelu"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr ""
-"Po włączeniu tej opcji, obraz tła będzie obracany, jeśli panel ma orientację "
-"pionową."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
 msgid "Image options"
 msgstr "Opcje obrazu"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -1572,15 +1548,35 @@ msgstr ""
 "„fit” powoduje skalowanie obrazu (zachowując proporcje obrazu) do wysokości "
 "panelu (jeśli jest poziomy)."
 
-#: ../gnome-panel/applet.c:347
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+msgid "Rotate image on vertical panels"
+msgstr "Obracanie obrazów przy pionowym ułożeniu panelu"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Po włączeniu tej opcji, obraz tła będzie obracany, jeśli panel ma orientację "
+"pionową."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+msgid "Use custom text color"
+msgstr "Niestandardowy kolor tekstu"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+msgid "Text Color"
+msgstr "Kolor tekstu"
+
+#: ../gnome-panel/applet.c:346
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1728
+#: ../gnome-panel/applet.c:484 ../libpanel-applet/panel-applet.c:1451
 msgid "_Move"
 msgstr "_Przesuń"
 
-#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1728
+#: ../gnome-panel/applet.c:491 ../libpanel-applet/panel-applet.c:1451
 msgid "_Remove From Panel"
 msgstr "U_suń z panelu"
 
@@ -1626,6 +1622,103 @@ msgstr ""
 msgid "Hide Panel"
 msgstr "Ukrywa panel"
 
+#: ../gnome-panel/gp-properties-dialog.c:213
+#: ../gnome-panel/panel-test-applets.c:48
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Góra"
+
+#: ../gnome-panel/gp-properties-dialog.c:214
+#: ../gnome-panel/panel-test-applets.c:49
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Dół"
+
+#: ../gnome-panel/gp-properties-dialog.c:215
+#: ../gnome-panel/panel-test-applets.c:50
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Lewo"
+
+#: ../gnome-panel/gp-properties-dialog.c:216
+#: ../gnome-panel/panel-test-applets.c:51
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Prawo"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:1
+msgid "Panel Properties"
+msgstr "Właściwości panelu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:2
+msgid "Some of these properties are locked down"
+msgstr "Część z tych właściwości jest zablokowana"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:3
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Orientation:"
+msgstr "_Ułożenie:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:4
+msgid "_Size:"
+msgstr "_Rozmiar:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:5
+msgid "pixels"
+msgstr "pikseli"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:6
+msgid "Miscellaneous:"
+msgstr "Różne:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:7
+msgid "E_xpand"
+msgstr "R_ozszerzanie"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:8
+msgid "_Autohide"
+msgstr "_Automatyczne ukrywanie"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:9
+msgid "Show hide _buttons"
+msgstr "_Przyciski ukrywania"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:10
+msgid "Arro_ws on hide buttons"
+msgstr "S_trzałki na przyciskach ukrywania"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:12
+msgid "Background color:"
+msgstr "Kolor tła:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:13
+msgid "Background image:"
+msgstr "Obraz tła:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:14
+msgid "Tile"
+msgstr "Kafelek"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:15
+msgid "Stretch"
+msgstr "Rozciągnięty"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:16
+msgid "Fit"
+msgstr "Dopasowany"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:17
+msgid "Rotate image on vertical panel"
+msgstr "Obrót obrazu przy pionowym ułożeniu panelu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:18
+msgid "Text color:"
+msgstr "Kolor tekstu:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:19
+msgid "Theme"
+msgstr "Motyw"
+
 #: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
 msgstr "Nie można wyświetlić tego adresu URL"
@@ -1657,7 +1750,7 @@ msgid "_Launch"
 msgstr "_Uruchom"
 
 #: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:172
-#: ../gnome-panel/panel-context-menu.c:128
+#: ../gnome-panel/panel-context-menu.c:164
 msgid "_Properties"
 msgstr "_Właściwości"
 
@@ -1678,8 +1771,7 @@ msgstr "Nie można zapisać aktywatora"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:761
-#: ../gnome-panel/panel-applet-frame.c:921
+#: ../gnome-panel/panel-applet-frame.c:736
 msgid "Error"
 msgstr "Błąd"
 
@@ -1812,69 +1904,69 @@ msgstr "Wyłącz komputer"
 msgid "Power off the computer"
 msgstr "Wyłącza komputer"
 
-#: ../gnome-panel/panel-addto-dialog.c:143
+#: ../gnome-panel/panel-addto-dialog.c:142
 #: ../gnome-panel/panel-menu-button.c:976
 msgid "Main Menu"
 msgstr "Menu główne"
 
-#: ../gnome-panel/panel-addto-dialog.c:144
+#: ../gnome-panel/panel-addto-dialog.c:143
 msgid "The main GNOME menu"
 msgstr "Menu główne GNOME"
 
-#: ../gnome-panel/panel-addto-dialog.c:153
+#: ../gnome-panel/panel-addto-dialog.c:151
 msgid "Menu Bar"
 msgstr "Pasek menu"
 
-#: ../gnome-panel/panel-addto-dialog.c:154
+#: ../gnome-panel/panel-addto-dialog.c:152
 msgid "A custom menu bar"
 msgstr "Niestandardowy pasek menu"
 
-#: ../gnome-panel/panel-addto-dialog.c:163
+#: ../gnome-panel/panel-addto-dialog.c:160
 msgid "Separator"
 msgstr "Separator"
 
-#: ../gnome-panel/panel-addto-dialog.c:164
+#: ../gnome-panel/panel-addto-dialog.c:161
 msgid "A separator to organize the panel items"
 msgstr "Separator porządkujący elementy menu"
 
-#: ../gnome-panel/panel-addto-dialog.c:173
+#: ../gnome-panel/panel-addto-dialog.c:169
 msgid "User menu"
 msgstr "Menu użytkownika"
 
-#: ../gnome-panel/panel-addto-dialog.c:174
+#: ../gnome-panel/panel-addto-dialog.c:170
 msgid "Menu to change your settings and log out"
 msgstr "Menu do zmieniania ustawień i wylogowywania"
 
-#: ../gnome-panel/panel-addto-dialog.c:224
+#: ../gnome-panel/panel-addto-dialog.c:218
 msgid "(empty)"
 msgstr "(puste)"
 
-#: ../gnome-panel/panel-addto-dialog.c:424
+#: ../gnome-panel/panel-addto-dialog.c:417
 msgid "Custom Application Launcher"
 msgstr "Niestandardowy aktywator programu"
 
-#: ../gnome-panel/panel-addto-dialog.c:425
+#: ../gnome-panel/panel-addto-dialog.c:418
 msgid "Create a new launcher"
 msgstr "Tworzy nowy aktywator"
 
-#: ../gnome-panel/panel-addto-dialog.c:435
+#: ../gnome-panel/panel-addto-dialog.c:427
 msgid "Application Launcher..."
 msgstr "Aktywator programu…"
 
-#: ../gnome-panel/panel-addto-dialog.c:436
+#: ../gnome-panel/panel-addto-dialog.c:428
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiuje aktywator z menu programu"
 
-#: ../gnome-panel/panel-addto-dialog.c:951
+#: ../gnome-panel/panel-addto-dialog.c:927
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Wy_szukiwany element do dodania do „%s”:"
 
-#: ../gnome-panel/panel-addto-dialog.c:955
+#: ../gnome-panel/panel-addto-dialog.c:931
 msgid "Find an _item to add to the panel:"
 msgstr "_Wyszukiwany element do dodania do panelu:"
 
-#: ../gnome-panel/panel-addto-dialog.c:1077
+#: ../gnome-panel/panel-addto-dialog.c:1053
 msgid "_Forward"
 msgstr "_Dalej"
 
@@ -1890,65 +1982,34 @@ msgstr "Wyszukiwany element do dodania do panelu:"
 msgid "_Back"
 msgstr "_Wstecz"
 
-#: ../gnome-panel/panel-applet-frame.c:722
-#, c-format
-msgid "\"%s\" has quit unexpectedly"
-msgstr "„%s” niespodziewanie zakończył działanie"
-
-#: ../gnome-panel/panel-applet-frame.c:724
-msgid "Panel object has quit unexpectedly"
-msgstr "Obiekt panelu niespodziewanie zakończył działanie"
-
-#: ../gnome-panel/panel-applet-frame.c:731
-msgid ""
-"If you reload a panel object, it will automatically be added back to the "
-"panel."
-msgstr ""
-"Jeżeli obiekt panelu zostanie wczytany ponownie, będzie automatycznie dodany "
-"z powrotem do panelu."
-
-#: ../gnome-panel/panel-applet-frame.c:738
-msgid "D_elete"
-msgstr "_Usuń"
-
-#: ../gnome-panel/panel-applet-frame.c:739
-#: ../gnome-panel/panel-applet-frame.c:744
-msgid "_Don't Reload"
-msgstr "_Nie wczytuj ponownie"
-
-#: ../gnome-panel/panel-applet-frame.c:740
-#: ../gnome-panel/panel-applet-frame.c:745
-msgid "_Reload"
-msgstr "Wczytaj p_onownie"
-
-#: ../gnome-panel/panel-applet-frame.c:884
+#: ../gnome-panel/panel-applet-frame.c:699
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Wystąpił problem podczas wczytywania „%s”."
 
-#: ../gnome-panel/panel-applet-frame.c:896
+#: ../gnome-panel/panel-applet-frame.c:711
 msgid "OK"
 msgstr "OK"
 
-#: ../gnome-panel/panel-applet-frame.c:900
+#: ../gnome-panel/panel-applet-frame.c:715
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Usunąć aplet z konfiguracji?"
 
-#: ../gnome-panel/panel-applet-frame.c:903
+#: ../gnome-panel/panel-applet-frame.c:718
 msgid "D_on't Delete"
 msgstr "_Nie usuwaj"
 
-#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1379
+#: ../gnome-panel/panel-applet-frame.c:719 ../gnome-panel/panel.c:1315
 msgid "_Delete"
 msgstr "_Usuń"
 
-#: ../gnome-panel/panel.c:507
+#: ../gnome-panel/panel.c:447
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otwarcie adresu URL: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:576 ../gnome-panel/panel-menu-items.c:563
+#: ../gnome-panel/panel.c:516 ../gnome-panel/panel-menu-items.c:564
 #, c-format
 msgid "Open '%s'"
 msgstr "Otwiera „%s”"
@@ -1956,18 +2017,18 @@ msgstr "Otwiera „%s”"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:624 ../gnome-panel/panel-menu-items.c:1117
+#: ../gnome-panel/panel.c:564 ../gnome-panel/panel-menu-items.c:1118
 msgid "Open your personal folder"
 msgstr "Otwiera katalog osobisty użytkownika"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:633 ../gnome-panel/panel-menu-items.c:1146
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:1147
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: ../gnome-panel/panel.c:634 ../gnome-panel/panel-menu-items.c:1147
+#: ../gnome-panel/panel.c:574 ../gnome-panel/panel-menu-items.c:1148
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1976,20 +2037,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:641 ../gnome-panel/panel-menu-items.c:1156
+#: ../gnome-panel/panel.c:581 ../gnome-panel/panel-menu-items.c:1157
 msgid "Network"
 msgstr "Sieć"
 
 #. name
-#: ../gnome-panel/panel.c:642 ../gnome-panel/panel-menu-items.c:1157
+#: ../gnome-panel/panel.c:582 ../gnome-panel/panel-menu-items.c:1158
 msgid "Browse bookmarked and local network locations"
 msgstr "Przegląda zakładki i lokalne położenia sieciowe"
 
-#: ../gnome-panel/panel.c:1370
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
 msgstr "Usunąć ten panel?"
 
-#: ../gnome-panel/panel.c:1374
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2005,15 +2066,15 @@ msgstr "Nie można usunąć tego panelu"
 msgid "You must always have at least one panel."
 msgstr "Musi istnieć przynajmniej jeden panel."
 
-#: ../gnome-panel/panel-context-menu.c:119
+#: ../gnome-panel/panel-context-menu.c:155
 msgid "_Add to Panel..."
 msgstr "_Dodaj do panelu…"
 
-#: ../gnome-panel/panel-context-menu.c:135
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "_Delete This Panel"
 msgstr "_Usuń panel"
 
-#: ../gnome-panel/panel-context-menu.c:147
+#: ../gnome-panel/panel-context-menu.c:183
 msgid "_New Panel"
 msgstr "_Nowy panel"
 
@@ -2123,63 +2184,63 @@ msgstr "Przeglądanie i uruchamianie zainstalowanych programów"
 msgid "Access documents, folders and network places"
 msgstr "Dostęp do dokumentów, katalogów i miejsc sieciowych"
 
-#: ../gnome-panel/panel-menu-bar.c:126
+#: ../gnome-panel/panel-menu-bar.c:128
 msgid "Applications"
 msgstr "Programy"
 
-#: ../gnome-panel/panel-menu-bar.c:228 ../gnome-panel/panel-menu-button.c:575
+#: ../gnome-panel/panel-menu-bar.c:234 ../gnome-panel/panel-menu-button.c:575
 msgid "_Edit Menus"
 msgstr "_Modyfikuj menu"
 
-#: ../gnome-panel/panel-menu-items.c:409
+#: ../gnome-panel/panel-menu-items.c:410
 msgid "Switch User"
 msgstr "Przełącz użytkownika"
 
-#: ../gnome-panel/panel-menu-items.c:539
+#: ../gnome-panel/panel-menu-items.c:540
 msgid "Bookmarks"
 msgstr "Zakładki"
 
-#: ../gnome-panel/panel-menu-items.c:634
+#: ../gnome-panel/panel-menu-items.c:635
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Nie można skanować %s w poszukiwaniu zmian nośników"
 
-#: ../gnome-panel/panel-menu-items.c:676
+#: ../gnome-panel/panel-menu-items.c:677
 #, c-format
 msgid "Rescan %s"
 msgstr "Skanuj %s ponownie"
 
-#: ../gnome-panel/panel-menu-items.c:713
+#: ../gnome-panel/panel-menu-items.c:714
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nie można zamontować %s"
 
-#: ../gnome-panel/panel-menu-items.c:775
+#: ../gnome-panel/panel-menu-items.c:776
 #, c-format
 msgid "Mount %s"
 msgstr "Montuje %s"
 
-#: ../gnome-panel/panel-menu-items.c:983
+#: ../gnome-panel/panel-menu-items.c:984
 msgid "Removable Media"
 msgstr "Nośniki wymienne"
 
-#: ../gnome-panel/panel-menu-items.c:1074
+#: ../gnome-panel/panel-menu-items.c:1075
 msgid "Network Places"
 msgstr "Miejsca sieciowe"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1134
+#: ../gnome-panel/panel-menu-items.c:1135
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Pulpit"
 
-#: ../gnome-panel/panel-menu-items.c:1135
+#: ../gnome-panel/panel-menu-items.c:1136
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otwiera pulpit jako katalog"
 
-#: ../gnome-panel/panel-menu-items.c:1439
+#: ../gnome-panel/panel-menu-items.c:1444
 msgid "Places"
 msgstr "Miejsca"
 
@@ -2198,111 +2259,6 @@ msgstr "Stałe wyświetlanie obrazu"
 #: ../gnome-panel/panel-image-menu-item.c:134
 msgid "Whether the image will always be shown"
 msgstr "Czy zawsze wyświetlać obraz"
-
-#: ../gnome-panel/panel-properties-dialog.c:76
-#: ../gnome-panel/panel-test-applets.c:48
-msgctxt "Orientation"
-msgid "Top"
-msgstr "Góra"
-
-#: ../gnome-panel/panel-properties-dialog.c:77
-#: ../gnome-panel/panel-test-applets.c:49
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "Dół"
-
-#: ../gnome-panel/panel-properties-dialog.c:78
-#: ../gnome-panel/panel-test-applets.c:50
-msgctxt "Orientation"
-msgid "Left"
-msgstr "Lewo"
-
-#: ../gnome-panel/panel-properties-dialog.c:79
-#: ../gnome-panel/panel-test-applets.c:51
-msgctxt "Orientation"
-msgid "Right"
-msgstr "Prawo"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
-msgid "Panel Properties"
-msgstr "Właściwości panelu"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:3
-msgid "Some of these properties are locked down"
-msgstr "Część z tych właściwości jest zablokowana"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:4
-msgid "pixels"
-msgstr "pikseli"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Orientation:"
-msgstr "_Ułożenie:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
-msgid "_Size:"
-msgstr "_Rozmiar:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
-msgid "E_xpand"
-msgstr "R_ozszerzanie"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
-msgid "_Autohide"
-msgstr "_Automatyczne ukrywanie"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
-msgid "Show hide _buttons"
-msgstr "_Przyciski ukrywania"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
-msgid "Arro_ws on hide buttons"
-msgstr "S_trzałki na przyciskach ukrywania"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
-msgid "_None (use system theme)"
-msgstr "_Brak (z motywu systemowego)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:13
-msgid "Solid c_olor"
-msgstr "Jednolity k_olor"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
-msgid "Pick a color"
-msgstr "Wybór koloru"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
-msgid "Background _image:"
-msgstr "_Plik obrazu tła:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Select background"
-msgstr "Wybór tła"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Background"
-msgstr "Tło"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "Image Background Details"
-msgstr "Szczegóły dotyczące tła obrazu"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "_Tile"
-msgstr "_Kafelek"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
-msgid "_Scale"
-msgstr "Prze_skalowany"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "St_retch"
-msgstr "_Rozciągnięty"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
-msgid "Rotate image when panel is _vertical"
-msgstr "Obrót obrazu przy ułożeniu piono_wym"
 
 #: ../gnome-panel/panel-recent.c:77 ../gnome-panel/panel-recent.c:87
 #, c-format
@@ -2446,7 +2402,7 @@ msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Określa początkowe ułożenie apletu (góra, dół, lewo lub prawo)"
 
-#: ../gnome-panel/panel-test-applets.c:109
+#: ../gnome-panel/panel-test-applets.c:102
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Wczytanie apletu %s się nie powiodło"
@@ -2470,67 +2426,67 @@ msgstr "_Aplet:"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1594
+#: ../gnome-panel/panel-toplevel.c:1512
 msgid "Top Expanded Edge Panel"
 msgstr "Górny rozwijany panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: ../gnome-panel/panel-toplevel.c:1513
 msgid "Top Centered Panel"
 msgstr "Górny panel wyśrodkowany"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: ../gnome-panel/panel-toplevel.c:1514
 msgid "Top Floating Panel"
 msgstr "Górny panel oderwany"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: ../gnome-panel/panel-toplevel.c:1515
 msgid "Top Edge Panel"
 msgstr "Górny panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1601
+#: ../gnome-panel/panel-toplevel.c:1519
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: ../gnome-panel/panel-toplevel.c:1520
 msgid "Bottom Centered Panel"
 msgstr "Dolny panel wyśrodkowany"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: ../gnome-panel/panel-toplevel.c:1521
 msgid "Bottom Floating Panel"
 msgstr "Dolny panel oderwany"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: ../gnome-panel/panel-toplevel.c:1522
 msgid "Bottom Edge Panel"
 msgstr "Dolny panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: ../gnome-panel/panel-toplevel.c:1526
 msgid "Left Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: ../gnome-panel/panel-toplevel.c:1527
 msgid "Left Centered Panel"
 msgstr "Lewy panel wyśrodkowany"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: ../gnome-panel/panel-toplevel.c:1528
 msgid "Left Floating Panel"
 msgstr "Lewy panel oderwany"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: ../gnome-panel/panel-toplevel.c:1529
 msgid "Left Edge Panel"
 msgstr "Lewy panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: ../gnome-panel/panel-toplevel.c:1533
 msgid "Right Expanded Edge Panel"
 msgstr "Prawy rozwijany panel krawędziowy"
 
-#: ../gnome-panel/panel-toplevel.c:1616
+#: ../gnome-panel/panel-toplevel.c:1534
 msgid "Right Centered Panel"
 msgstr "Prawy panel wyśrodkowany"
 
-#: ../gnome-panel/panel-toplevel.c:1617
+#: ../gnome-panel/panel-toplevel.c:1535
 msgid "Right Floating Panel"
 msgstr "Prawy panel oderwany"
 
-#: ../gnome-panel/panel-toplevel.c:1618
+#: ../gnome-panel/panel-toplevel.c:1536
 msgid "Right Edge Panel"
 msgstr "Prawy panel krawędziowy"
 
@@ -2566,19 +2522,3 @@ msgstr "Wyszukaj"
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
-
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-msgid "Test DBus Applet Factory"
-msgstr "Testowy generator apletu D-Bus"
-
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
-msgid "Factory for Test DBus Applet"
-msgstr "Generator testowego apletu D-Bus"
-
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
-msgid "Test DBus Applet"
-msgstr "Testowy aplet D-Bus"
-
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-msgid "A simple applet for testing the GNOME panel"
-msgstr "Prosty aplet do testowania panelu GNOME"
