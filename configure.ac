@@ -205,9 +205,6 @@ dnl **************************************************************************
 
 AC_STRUCT_DIRENT_D_TYPE
 
-dnl Modules dir
-AC_SUBST([modulesdir],"\$(libdir)/gnome-panel/modules")
-
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
 AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/applets")

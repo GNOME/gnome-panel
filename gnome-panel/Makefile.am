@@ -114,7 +114,6 @@ gnome_panel_SOURCES =			\
 	$(panel_headers)
 
 gnome_panel_CFLAGS = \
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\" \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
@@ -178,7 +177,6 @@ panel_test_applets_SOURCES =			\
 panel_test_applets_CFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
-	-DPANEL_MODULES_DIR=\"$(modulesdir)\"	\
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \

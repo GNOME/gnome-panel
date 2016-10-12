@@ -48,36 +48,11 @@ void
 panel_modules_ensure_loaded (void)
 {
 	static gboolean loaded_dirs = FALSE;
-	const char *module_path;
 
 	panel_modules_ensure_extension_points_registered ();
 
 	if (!loaded_dirs) {
-		GList *modules;
 		loaded_dirs = TRUE;
-
-		/* We load the modules explicitly instead of using scan_all
-		 * so that we can leak a reference to them.  This prevents them
-		 * from getting unloaded later (something they aren't designed
-		 * to cope with) */
-		modules = g_io_modules_load_all_in_directory (PANEL_MODULES_DIR);
-		g_list_free (modules);
-
-		module_path = g_getenv ("GNOME_PANEL_EXTRA_MODULES");
-
-		if (module_path) {
-			gchar **paths;
-			int i;
-
-			paths = g_strsplit (module_path, ":", 0);
-
-			for (i = 0; paths[i] != NULL; i++) {
-				modules = g_io_modules_load_all_in_directory (paths[i]);
-				g_list_free (modules);
-			}
-
-			g_strfreev (paths);
-		}
 
 		panel_applets_manager_dbus_get_type ();
 	}
