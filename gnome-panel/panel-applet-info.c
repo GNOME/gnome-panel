@@ -28,19 +28,15 @@ struct _PanelAppletInfo {
 	gchar  *name;
 	gchar  *comment;
 	gchar  *icon;
-
-	gchar **old_ids;
 };
 
 PanelAppletInfo *
 panel_applet_info_new (const gchar  *iid,
 		       const gchar  *name,
 		       const gchar  *comment,
-		       const gchar  *icon,
-		       const gchar **old_ids)
+		       const gchar  *icon)
 {
 	PanelAppletInfo *info;
-	int len;
 
 	info = g_slice_new0 (PanelAppletInfo);
 
@@ -48,19 +44,6 @@ panel_applet_info_new (const gchar  *iid,
 	info->name = g_strdup (name);
 	info->comment = g_strdup (comment);
 	info->icon = g_strdup (icon);
-
-	/* Bonobo compatibility */
-	if (old_ids != NULL) {
-		len = g_strv_length ((gchar **) old_ids);
-		if (len > 0) {
-			int i;
-
-			info->old_ids = g_new0 (gchar *, len + 1);
-
-			for (i = 0; i < len; i++)
-				info->old_ids[i] = g_strdup (old_ids[i]);
-		}
-	}
 
 	return info;
 }
@@ -75,7 +58,6 @@ panel_applet_info_free (PanelAppletInfo *info)
 	g_free (info->name);
 	g_free (info->comment);
 	g_free (info->icon);
-	g_strfreev (info->old_ids);
 
 	g_slice_free (PanelAppletInfo, info);
 }
@@ -102,10 +84,4 @@ const gchar *
 panel_applet_info_get_icon (PanelAppletInfo *info)
 {
 	return info->icon;
-}
-
-const gchar * const *
-panel_applet_info_get_old_ids (PanelAppletInfo *info)
-{
-	return (const gchar * const *) info->old_ids;
 }

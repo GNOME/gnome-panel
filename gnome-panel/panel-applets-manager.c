@@ -158,26 +158,6 @@ panel_applets_manager_get_applet_info (const gchar *iid)
 	return NULL;
 }
 
-PanelAppletInfo *
-panel_applets_manager_get_applet_info_from_old_id (const gchar *iid)
-{
-	GSList *l;
-	PanelAppletInfo *retval = NULL;
-
-	_panel_applets_managers_ensure_loaded ();
-
-	for (l = panel_applets_managers; l != NULL; l = l->next) {
-		PanelAppletsManager *manager = PANEL_APPLETS_MANAGER (l->data);
-
-		retval = PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info_from_old_id (manager, iid);
-
-		if (retval != NULL)
-			return retval;
-	}
-
-	return NULL;
-}
-
 gboolean
 panel_applets_manager_load_applet (const gchar                *iid,
 				   PanelAppletFrameActivating *frame_act)

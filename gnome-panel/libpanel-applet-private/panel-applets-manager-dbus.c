@@ -60,7 +60,6 @@ typedef struct _PanelAppletFactoryInfo {
 	gchar              *srcdir;
 
 	GList              *applet_list;
-	gboolean            has_old_ids;
 } PanelAppletFactoryInfo;
 
 #define PANEL_APPLET_FACTORY_GROUP "Applet Factory"
@@ -94,7 +93,6 @@ _panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	char             *name;
 	char             *comment;
 	char             *icon;
-	char            **old_ids;
 
 	iid = g_strdup_printf ("%s::%s", factory_id, group);
 	name = g_key_file_get_locale_string (applet_file, group,
@@ -102,17 +100,13 @@ _panel_applets_manager_get_applet_info (GKeyFile    *applet_file,
 	comment = g_key_file_get_locale_string (applet_file, group,
 						"Description", NULL, NULL);
 	icon = g_key_file_get_string (applet_file, group, "Icon", NULL);
-	/* Bonobo compatibility */
-	old_ids = g_key_file_get_string_list (applet_file, group,
-					      "BonoboId", NULL, NULL);
 
-	info = panel_applet_info_new (iid, name, comment, icon, (const char **) old_ids);
+	info = panel_applet_info_new (iid, name, comment, icon);
 
 	g_free (iid);
 	g_free (name);
 	g_free (comment);
 	g_free (icon);
-	g_strfreev (old_ids);
 
 	return info;
 }
@@ -168,8 +162,6 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 		return NULL;
 	}
 
-	info->has_old_ids = FALSE;
-
 	groups = g_key_file_get_groups (applet_file, &n_groups);
 	for (i = 0; i < n_groups; i++) {
 		PanelAppletInfo *ainfo;
@@ -179,8 +171,6 @@ panel_applets_manager_get_applet_factory_info_from_file (const gchar *filename)
 
 		ainfo = _panel_applets_manager_get_applet_info (applet_file,
 								groups[i], info->id);
-		if (panel_applet_info_get_old_ids (ainfo) != NULL)
-			info->has_old_ids = TRUE;
 
 		info->applet_list = g_list_prepend (info->applet_list, ainfo);
 	}
@@ -532,47 +522,6 @@ panel_applets_manager_dbus_get_applet_info (PanelAppletsManager *manager,
 	return NULL;
 }
 
-static PanelAppletInfo *
-panel_applets_manager_dbus_get_applet_info_from_old_id (PanelAppletsManager *manager,
-							const gchar         *iid)
-{
-	PanelAppletsManagerDBus *dbus_manager = PANEL_APPLETS_MANAGER_DBUS (manager);
-
-	GHashTableIter iter;
-	gpointer       key, value;
-
-	g_hash_table_iter_init (&iter, dbus_manager->priv->applet_factories);
-	while (g_hash_table_iter_next (&iter, &key, &value)) {
-		PanelAppletFactoryInfo *info;
-		GList                  *l;
-
-		info = (PanelAppletFactoryInfo *) value;
-		if (!info->has_old_ids)
-			continue;
-
-		for (l = info->applet_list; l; l = g_list_next (l)) {
-			PanelAppletInfo *ainfo;
-			gint             i = 0;
-			const gchar * const *old_ids;
-
-			ainfo = (PanelAppletInfo *) l->data;
-
-			old_ids = panel_applet_info_get_old_ids (ainfo);
-
-			if (old_ids == NULL)
-				continue;
-
-			while (old_ids[i]) {
-				if (g_strcmp0 (old_ids[i], iid) == 0)
-					return ainfo;
-				i++;
-			}
-		}
-	}
-
-	return NULL;
-}
-
 static gboolean
 panel_applets_manager_dbus_load_applet (PanelAppletsManager         *manager,
 					const gchar                 *iid,
@@ -641,7 +590,6 @@ panel_applets_manager_dbus_class_init (PanelAppletsManagerDBusClass *class)
 	manager_class->factory_activate = panel_applets_manager_dbus_factory_activate;
 	manager_class->factory_deactivate = panel_applets_manager_dbus_factory_deactivate;
 	manager_class->get_applet_info = panel_applets_manager_dbus_get_applet_info;
-	manager_class->get_applet_info_from_old_id = panel_applets_manager_dbus_get_applet_info_from_old_id;
 	manager_class->load_applet = panel_applets_manager_dbus_load_applet;
 	manager_class->get_applet_widget = panel_applets_manager_dbus_get_applet_widget;
 

@@ -45,10 +45,7 @@ panel_compatibility_get_applet_iid (GSettings   *settings,
 		return NULL;
 	}
 
-	info = panel_applets_manager_get_applet_info_from_old_id (object_iid);
-	if (!info)
-		info = panel_applets_manager_get_applet_info (object_iid);
-
+	info = panel_applets_manager_get_applet_info (object_iid);
 	if (!info) {
 		g_free (object_iid);
 		return NULL;

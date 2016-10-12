@@ -58,9 +58,6 @@ struct _PanelAppletsManagerClass {
 	PanelAppletInfo  * (*get_applet_info)       (PanelAppletsManager  *manager,
 						     const gchar          *iid);
 
-	PanelAppletInfo  * (*get_applet_info_from_old_id) (PanelAppletsManager  *manager,
-							   const gchar          *iid);
-
 	gboolean           (*load_applet)           (PanelAppletsManager         *manager,
 						     const gchar                 *iid,
 						     PanelAppletFrameActivating  *frame_act);
@@ -82,7 +79,6 @@ gboolean          panel_applets_manager_factory_activate            (const gchar
 void              panel_applets_manager_factory_deactivate          (const gchar     *iid);
 
 PanelAppletInfo  *panel_applets_manager_get_applet_info             (const gchar     *iid);
-PanelAppletInfo  *panel_applets_manager_get_applet_info_from_old_id (const gchar     *iid);
 
 gboolean          panel_applets_manager_load_applet                 (const gchar                *iid,
 								     PanelAppletFrameActivating *frame_act);

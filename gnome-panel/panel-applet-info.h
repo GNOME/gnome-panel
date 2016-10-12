@@ -30,15 +30,13 @@ typedef struct _PanelAppletInfo PanelAppletInfo;
 PanelAppletInfo *panel_applet_info_new                             (const gchar  *iid,
 								    const gchar  *name,
 								    const gchar  *comment,
-								    const gchar  *icon,
-								    const gchar **old_ids);
+								    const gchar  *icon);
 void             panel_applet_info_free                            (PanelAppletInfo *info);
 
 const gchar     *panel_applet_info_get_iid                         (PanelAppletInfo *info);
 const gchar     *panel_applet_info_get_name                        (PanelAppletInfo *info);
 const gchar     *panel_applet_info_get_description                 (PanelAppletInfo *info);
 const gchar     *panel_applet_info_get_icon                        (PanelAppletInfo *info);
-const gchar * const *panel_applet_info_get_old_ids                 (PanelAppletInfo *info);
 
 G_END_DECLS
 
