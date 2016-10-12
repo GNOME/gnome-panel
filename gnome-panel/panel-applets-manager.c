@@ -22,9 +22,8 @@
 
 #include <gio/gio.h>
 
+#include <libpanel-applet-private/panel-applets-manager-dbus.h>
 #include <libpanel-util/panel-cleanup.h>
-
-#include "panel-modules.h"
 
 #include "panel-applets-manager.h"
 
@@ -55,35 +54,15 @@ _panel_applets_manager_cleanup (gpointer data)
 static void
 _panel_applets_managers_ensure_loaded (void)
 {
-	GIOExtensionPoint *point;
-	GList             *extensions, *l;
+	GObject *manager;
 
 	if (panel_applets_managers != NULL)
 		return;
 
 	panel_cleanup_register (PANEL_CLEAN_FUNC (_panel_applets_manager_cleanup), NULL);
 
-	panel_modules_ensure_loaded ();
-
-	point = g_io_extension_point_lookup (PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME);
-
-	extensions = g_io_extension_point_get_extensions (point);
-
-	if (extensions == NULL)
-		g_error ("No PanelAppletsManager implementations exist.");
-
-	for (l = extensions; l != NULL; l = l->next) {
-		GIOExtension *extension;
-		GType         type;
-		GObject      *object;
-
-		extension = l->data;
-		type = g_io_extension_get_type (extension);
-		object = g_object_new (type, NULL);
-		panel_applets_managers = g_slist_prepend (panel_applets_managers, object);
-	}
-
-	panel_applets_managers = g_slist_reverse (panel_applets_managers);
+	manager = g_object_new (PANEL_TYPE_APPLETS_MANAGER_DBUS, NULL);
+	panel_applets_managers = g_slist_append (panel_applets_managers, manager);
 }
 
 GList *

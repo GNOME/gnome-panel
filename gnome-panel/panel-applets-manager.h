@@ -35,13 +35,6 @@ G_BEGIN_DECLS
 #define PANEL_IS_APPLETS_MANAGER_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), PANEL_TYPE_APPLETS_MANAGER))
 #define PANEL_APPLETS_MANAGER_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS((obj), PANEL_TYPE_APPLETS_MANAGER, PanelAppletsManagerClass))
 
-/**
- * PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME:
- *
- * Extension point for #PanelAppletsManager functionality.
- **/
-#define PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME "panel-applets-manager"
-
 typedef struct _PanelAppletsManager		PanelAppletsManager;
 typedef struct _PanelAppletsManagerClass	PanelAppletsManagerClass;
 

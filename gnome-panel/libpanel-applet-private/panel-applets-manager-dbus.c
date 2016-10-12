@@ -30,13 +30,9 @@
 
 #include "panel-applets-manager-dbus.h"
 
-G_DEFINE_TYPE_WITH_CODE (PanelAppletsManagerDBus,
-			 panel_applets_manager_dbus,
-			 PANEL_TYPE_APPLETS_MANAGER,
-			 g_io_extension_point_implement (PANEL_APPLETS_MANAGER_EXTENSION_POINT_NAME,
-							 g_define_type_id,
-							 "dbus",
-							 10))
+G_DEFINE_TYPE (PanelAppletsManagerDBus,
+               panel_applets_manager_dbus,
+               PANEL_TYPE_APPLETS_MANAGER)
 
 struct _PanelAppletsManagerDBusPrivate
 {

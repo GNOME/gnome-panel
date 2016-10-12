@@ -16,8 +16,6 @@
 #include <libpanel-applet-private/panel-applet-container.h>
 #include <libpanel-applet-private/panel-applets-manager-dbus.h>
 
-#include "panel-modules.h"
-
 G_GNUC_UNUSED void on_execute_button_clicked (GtkButton *button, gpointer dummy);
 
 static GtkWidget *win = NULL;
@@ -280,8 +278,6 @@ main (int argc, char **argv)
 
 		return 1;
 	}
-
-	panel_modules_ensure_loaded ();
 
 	if (g_file_test ("../libpanel-applet", G_FILE_TEST_IS_DIR)) {
 		applets_dir = g_strdup_printf ("%s:../libpanel-applet", PANEL_APPLETS_DIR);

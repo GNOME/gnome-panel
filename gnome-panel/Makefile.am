@@ -56,7 +56,6 @@ panel_sources =			\
 	panel-addto-dialog.c	\
 	panel-ditem-editor.c	\
 	panel-layout.c		\
-	panel-modules.c		\
 	panel-object-loader.c	\
 	panel-user-menu.c	\
 	panel-applet-info.c
@@ -103,7 +102,6 @@ panel_headers =			\
 	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-layout.h		\
-	panel-modules.h		\
 	panel-object-loader.h	\
 	panel-schemas.h		\
 	panel-user-menu.h	\
@@ -169,7 +167,6 @@ gnome_desktop_item_edit_LDFLAGS = \
 
 panel_test_applets_SOURCES =			\
 	$(panel_test_applets_BUILT_SOURCES)	\
-	panel-modules.c				\
 	panel-applet-info.c			\
 	panel-applets-manager.c			\
 	panel-test-applets.c
