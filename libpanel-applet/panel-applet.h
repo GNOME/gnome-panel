@@ -109,6 +109,8 @@ typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
 typedef struct _PanelAppletPrivate PanelAppletPrivate;
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (PanelApplet, g_object_unref)
+
 /**
  * PanelAppletFactoryCallback:
  * @applet: a newly-created #PanelApplet.
