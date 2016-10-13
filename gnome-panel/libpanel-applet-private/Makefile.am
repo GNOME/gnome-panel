@@ -2,7 +2,6 @@ NULL =
 
 noinst_LTLIBRARIES = \
 	libpanel-applet-private.la \
-	libpanel-applet-private-mini.la \
 	$(NULL)
 
 libpanel_applet_private_la_CFLAGS = \
@@ -24,34 +23,10 @@ libpanel_applet_private_la_SOURCES =	\
 	panel-applet-container.c	\
 	panel-applet-container.h	\
 	panel-applet-frame-dbus.c	\
-	panel-applet-frame-dbus.h
+	panel-applet-frame-dbus.h \
+	$(NULL)
 
 libpanel_applet_private_la_LDFLAGS = \
-	$(WARN_LDFLAGS) \
-	$(AM_LDFLAGS) \
-	$(NULL)
-
-libpanel_applet_private_mini_la_CFLAGS = \
-	-DDATADIR=\""$(datadir)"\" \
-	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
-	-I$(srcdir) \
-	-I$(top_srcdir)/gnome-panel \
-	-I$(top_builddir)/gnome-panel \
-	-I$(top_builddir)/gnome-panel/libpanel-applet-private \
-	-I$(top_builddir)/gnome-panel/libpanel-util \
-	$(PANEL_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-libpanel_applet_private_mini_la_SOURCES =\
-	panel-applet-mini.c		\
-	panel-applets-manager-dbus.c	\
-	panel-applets-manager-dbus.h	\
-	panel-applet-container.c	\
-	panel-applet-container.h
-
-libpanel_applet_private_mini_la_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
