@@ -61,6 +61,9 @@ struct _PanelAppletFrameClass {
 
 	void     (*change_orientation)    (PanelAppletFrame    *frame,
 					   PanelOrientation     orientation);
+
+	void (*move_focus_out_of_applet) (PanelAppletFrame *frame,
+	                                  GtkDirectionType  direction);
 };
 
 struct _PanelAppletFrame {

@@ -33,7 +33,6 @@
 #include <glib/gi18n-lib.h>
 #include <cairo.h>
 #include <cairo-gobject.h>
-#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
 #include <X11/Xatom.h>
@@ -94,14 +93,11 @@ struct _PanelAppletPrivate {
         int               *size_hints;
         int                size_hints_len;
 
-	gboolean           moving_focus_out;
-
 	gboolean           locked_down;
 };
 
 enum {
         CHANGE_ORIENT,
-	MOVE_FOCUS_OUT_OF_APPLET,
         LAST_SIGNAL
 };
 
@@ -1217,19 +1213,6 @@ panel_applet_focus (GtkWidget        *widget,
 {
 	gboolean ret;
 	GtkWidget *previous_focus_child;
-	PanelApplet *applet;
-
-	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
-
-	applet = PANEL_APPLET (widget);
-	if (applet->priv->moving_focus_out) {
-		/*
-		 * Applet will retain focus if there is nothing else on the
-		 * panel to get focus
-		 */
-		applet->priv->moving_focus_out = FALSE;
-		return FALSE;
-	}
 
 	previous_focus_child = gtk_container_get_focus_child (GTK_CONTAINER (widget));
 	if (!previous_focus_child && !gtk_widget_has_focus (widget)) {
@@ -1257,20 +1240,6 @@ panel_applet_focus (GtkWidget        *widget,
 	}
 
 	return ret;
-}
-
-static void
-panel_applet_move_focus_out_of_applet (PanelApplet      *applet,
-				       GtkDirectionType  dir)
-{
-	GtkWidget *toplevel;
-
-	applet->priv->moving_focus_out = TRUE;
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (applet));
-	g_return_if_fail (toplevel);
-
-	gtk_widget_child_focus (toplevel, dir);
-	applet->priv->moving_focus_out = FALSE;
 }
 
 static void
@@ -1373,19 +1342,6 @@ panel_applet_set_property (GObject      *object,
 }
 
 static void
-add_tab_bindings (GtkBindingSet   *binding_set,
-		  GdkModifierType  modifiers,
-		  GtkDirectionType direction)
-{
-	gtk_binding_entry_add_signal (binding_set, GDK_KEY_Tab, modifiers,
-				      "move_focus_out_of_applet", 1,
-				      GTK_TYPE_DIRECTION_TYPE, direction);
-	gtk_binding_entry_add_signal (binding_set, GDK_KEY_KP_Tab, modifiers,
-				      "move_focus_out_of_applet", 1,
-				      GTK_TYPE_DIRECTION_TYPE, direction);
-}
-
-static void
 panel_applet_setup (PanelApplet *applet)
 {
 	GValue   value = {0, };
@@ -1483,14 +1439,11 @@ panel_applet_class_init (PanelAppletClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
-	GtkBindingSet *binding_set;
 
 	gobject_class->get_property = panel_applet_get_property;
 	gobject_class->set_property = panel_applet_set_property;
 	gobject_class->constructed = panel_applet_constructed;
         gobject_class->finalize = panel_applet_finalize;
-
-	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->composited_changed = panel_applet_composited_changed;
@@ -1626,32 +1579,6 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_UINT);
-
-        /**
-         * PanelApplet::move-focus-out-of-applet: (skip)
-         * @applet: the #PanelApplet which emitted the signal.
-         * @direction: the move direction.
-         *
-	 * Emitted when the focus is moved out of @applet. This is an
-	 * implementation detail.
-         **/
-	panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =
-                g_signal_new ("move_focus_out_of_applet",
-                              G_TYPE_FROM_CLASS (klass),
-                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-                              G_STRUCT_OFFSET (PanelAppletClass, move_focus_out_of_applet),
-                              NULL,
-			      NULL,
-                              g_cclosure_marshal_VOID__ENUM,
-                              G_TYPE_NONE,
-			      1,
-			      GTK_TYPE_DIRECTION_TYPE);
-
-	binding_set = gtk_binding_set_by_class (gobject_class);
-	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
-	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
-	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
-	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 
 	gtk_widget_class_set_css_name (widget_class, "panel-applet");
 }

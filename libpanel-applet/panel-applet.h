@@ -157,8 +157,6 @@ struct _PanelAppletClass {
 
 	void (*change_orient) (PanelApplet       *applet,
 			       PanelAppletOrient  orient);
-	void (*move_focus_out_of_applet) (PanelApplet        *frame,
-					  GtkDirectionType    direction);
 };
 
 GType              panel_applet_get_type             (void) G_GNUC_CONST;
