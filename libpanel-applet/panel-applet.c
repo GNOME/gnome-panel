@@ -31,12 +31,7 @@
 #include <errno.h>
 
 #include <glib/gi18n-lib.h>
-#include <cairo.h>
-#include <cairo-gobject.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkx.h>
-#include <X11/Xatom.h>
-#include <cairo-xlib.h>
 
 #include "panel-applet.h"
 #include "panel-applet-private.h"
@@ -503,90 +498,6 @@ panel_applet_set_locked_down (PanelApplet *applet,
 	g_object_notify (G_OBJECT (applet), "locked-down");
 }
 
-static Atom _net_wm_window_type = None;
-static Atom _net_wm_window_type_dock = None;
-static Atom _net_active_window = None;
-
-static void
-panel_applet_init_atoms (Display *xdisplay)
-{
-	if (_net_wm_window_type == None)
-		_net_wm_window_type = XInternAtom (xdisplay,
-						   "_NET_WM_WINDOW_TYPE",
-						   False);
-
-	if (_net_wm_window_type_dock == None)
-		_net_wm_window_type_dock = XInternAtom (xdisplay,
-							"_NET_WM_WINDOW_TYPE_DOCK",
-							False);
-
-	if (_net_active_window == None)
-		_net_active_window = XInternAtom (xdisplay,
-						  "_NET_ACTIVE_WINDOW",
-						  False);
-}
-
-static Window
-panel_applet_find_toplevel_dock_window (PanelApplet *applet,
-					Display	    *xdisplay)
-{
-	GtkWidget  *toplevel;
-	Window	    xwin;
-	Window	    root, parent, *child;
-	int	    num_children;
-
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (applet));
-	if (!gtk_widget_get_realized (toplevel))
-		return None;
-
-	xwin = GDK_WINDOW_XID (gtk_widget_get_window (toplevel));
-
-	child = NULL;
-	parent = root = None;
-	do {
-		Atom	type_return;
-		Atom	window_type;
-		int	format_return;
-		gulong	number_return, bytes_after_return;
-		guchar *data_return;
-
-		XGetWindowProperty (xdisplay,
-				    xwin,
-				    _net_wm_window_type,
-				    0, 1, False,
-				    XA_ATOM,
-				    &type_return, &format_return,
-				    &number_return,
-				    &bytes_after_return,
-				    &data_return);
-
-		if (type_return == XA_ATOM) {
-			window_type = *(Atom *) data_return;
-
-			XFree (data_return);
-			data_return = NULL;
-
-			if (window_type == _net_wm_window_type_dock)
-				return xwin;
-		}
-
-		if (!XQueryTree (xdisplay,
-			   xwin,
-			   &root, &parent, &child,
-			   (guint *) &num_children)) {
-			   return None;
-		}
-
-		if (child && num_children > 0)
-			XFree (child);
-
-		xwin = parent;
-
-	} while (xwin != None && xwin != root);
-
-	return None;
-}
-
 /**
  * panel_applet_request_focus:
  * @applet: a #PanelApplet.
@@ -596,55 +507,22 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
  * Requests focus for @applet. There is no guarantee that @applet will
  * successfully get focus after that call.
  **/
-/* This function
- *   1) Gets the window id of the panel that contains the applet
- *	using XQueryTree and XGetWindowProperty to find an ancestor
- *	window with the _NET_WM_WINDOW_TYPE_DOCK window type.
- *   2) Sends a _NET_ACTIVE_WINDOW message to get that panel focused
- */
 void
 panel_applet_request_focus (PanelApplet	 *applet,
 			    guint32	  timestamp)
 {
-	GdkScreen  *screen;
-	GdkWindow  *root;
-	GdkDisplay *display;
-	Display	   *xdisplay;
-	Window	    dock_xwindow;
-	Window	    xroot;
-	XEvent	    xev;
+  GtkWidget *toplevel;
+  GdkWindow *window;
 
-	g_return_if_fail (PANEL_IS_APPLET (applet));
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (applet));
+  if (!toplevel)
+    return;
 
-	screen	= gtk_widget_get_screen (GTK_WIDGET (applet));
-	root	= gdk_screen_get_root_window (screen);
-	display = gdk_screen_get_display (screen);
+  window = gtk_widget_get_window (toplevel);
+  if (!window)
+    return;
 
-	xdisplay = GDK_DISPLAY_XDISPLAY (display);
-	xroot	 = GDK_WINDOW_XID (root);
-
-	panel_applet_init_atoms (xdisplay);
-
-	dock_xwindow = panel_applet_find_toplevel_dock_window (applet, xdisplay);
-	if (dock_xwindow == None)
-		return;
-
-	xev.xclient.type	 = ClientMessage;
-	xev.xclient.serial	 = 0;
-	xev.xclient.send_event	 = True;
-	xev.xclient.window	 = dock_xwindow;
-	xev.xclient.message_type = _net_active_window;
-	xev.xclient.format	 = 32;
-	xev.xclient.data.l[0]	 = 1; /* requestor type; we're an app, I guess */
-	xev.xclient.data.l[1]	 = timestamp;
-	xev.xclient.data.l[2]	 = None; /* "currently active window", supposedly */
-	xev.xclient.data.l[3]	 = 0;
-	xev.xclient.data.l[4]	 = 0;
-
-	XSendEvent (xdisplay,
-		    xroot, False,
-		    SubstructureRedirectMask | SubstructureNotifyMask,
-		    &xev);
+  gdk_window_focus (window, timestamp);
 }
 
 static GAction *
