@@ -617,10 +617,11 @@ display_fortune_dialog (FishApplet *fish)
 	if (!argv)
 		return;
 
+	screen = gtk_widget_get_screen (GTK_WIDGET (fish));
+
 	if (!fish->fortune_dialog) {
 		GtkWidget *scrolled;
 		GtkWidget *vbox;
-		GdkScreen *screen;
 		int        screen_width;
 		int        screen_height;
 
@@ -643,8 +644,6 @@ display_fortune_dialog (FishApplet *fish)
 				  G_CALLBACK (handle_fortune_response), fish);
 
 		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
-
-		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
 		screen_width  = gdk_screen_get_width (screen);
 		screen_height = gdk_screen_get_height (screen);
@@ -722,7 +721,6 @@ display_fortune_dialog (FishApplet *fish)
 
 	clear_fortune_text (fish);
 
-	screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 	display = gdk_screen_make_display_name (screen);
 
 	g_spawn_async_with_pipes (NULL, /* working directory */
