@@ -68,6 +68,9 @@ LT_LIB_M
 LIB_PANEL_APPLET_LT_VERSION=2:0:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
+LIBGNOME_PANEL_LT_VERSION=0:0:0
+AC_SUBST([LIBGNOME_PANEL_LT_VERSION])
+
 AC_ARG_ENABLE([documentation],
 	AS_HELP_STRING([--enable-documentation], [enable man pages and HTML]),
 	[], [enable_documentation=yes])
@@ -80,6 +83,7 @@ AC_PROG_CC
 AM_PATH_PYTHON
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
+AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
 
 GLIB_GSETTINGS
 
@@ -120,6 +124,11 @@ PKG_CHECK_MODULES([PANEL], [
   dconf >= $DCONF_REQUIRED
   x11
   xrandr >= $XRANDR_REQUIRED
+])
+
+PKG_CHECK_MODULES([LIBGNOME_PANEL], [
+  gio-2.0 >= $GLIB_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
 ])
 
 PKG_CHECK_MODULES([LIBPANEL_APPLET], [
@@ -248,6 +257,9 @@ AC_CONFIG_FILES([
   data/48x48/Makefile
   data/scalable/Makefile
 
+  data/pkgconfig/Makefile
+  data/pkgconfig/libgnome-panel.pc
+
   data/theme/Makefile
   data/theme/Adwaita/Makefile
   data/theme/HighContrast/Makefile
@@ -255,6 +267,8 @@ AC_CONFIG_FILES([
   gnome-panel/Makefile
   gnome-panel/libpanel-applet-private/Makefile
   gnome-panel/libpanel-util/Makefile
+
+  libgnome-panel/Makefile
 
   libpanel-applet/Makefile
   libpanel-applet/libpanel-applet.pc

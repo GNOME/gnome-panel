@@ -1,6 +1,7 @@
 NULL =
 
 SUBDIRS = \
+	libgnome-panel \
 	gnome-panel \
 	libpanel-applet \
 	applets \
