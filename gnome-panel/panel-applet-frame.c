@@ -342,13 +342,12 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 				   GdkEventButton *event)
 {
 	PanelAppletFrame *frame;
-	gboolean          handled = FALSE;
 	guint             modifiers;
 
 	frame = PANEL_APPLET_FRAME (widget);
 
 	if (!frame->priv->has_handle)
-		return handled;
+		return FALSE;
 
 	if (event->window != gtk_widget_get_window (widget))
 		return FALSE;
@@ -365,10 +364,10 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 				panel_widget_applet_drag_start (
 					frame->priv->panel, GTK_WIDGET (frame),
 					event->time);
-				handled = TRUE;
+				return TRUE;
 			} else if (event->type == GDK_BUTTON_RELEASE) {
 				panel_widget_applet_drag_end (frame->priv->panel);
-				handled = TRUE;
+				return TRUE;
 			}
 		}
 		break;
@@ -391,15 +390,15 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 										  event->button,
 										  event->time);
 
-			handled = TRUE;
+			return TRUE;
 		} else if (event->type == GDK_BUTTON_RELEASE)
-			handled = TRUE;
+			return TRUE;
 		break;
 	default:
 		break;
 	}
 
-	return handled;
+	return FALSE;
 }
 
 static void
