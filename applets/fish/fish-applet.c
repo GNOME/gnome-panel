@@ -265,7 +265,7 @@ fill_combo_box_text (GtkComboBoxText *combo)
 	gtk_combo_box_text_append (combo, "footguy.fish", "Foot Guy");
 }
 
-static void 
+static void
 display_preferences_dialog (GSimpleAction *action,
                             GVariant      *parameter,
                             gpointer       user_data)
@@ -354,7 +354,7 @@ display_preferences_dialog (GSimpleAction *action,
 
 	button = GTK_WIDGET (gtk_builder_get_object (builder, "done_button"));
         g_signal_connect_swapped (button, "clicked",
-				  (GCallback) gtk_widget_hide, 
+				  (GCallback) gtk_widget_hide,
 				  fish->preferences_dialog);
 
 	gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
@@ -381,7 +381,7 @@ set_ally_name_desc (GtkWidget  *widget,
 
 	name = g_strdup_printf (name_format, fish->name);
 	atk_object_set_name (obj, name);
-	g_free (name);       
+	g_free (name);
 
 	desc = g_strdup_printf (desc_format, fish->name);
 	atk_object_set_description (obj, desc);
@@ -476,7 +476,7 @@ handle_fortune_response (GtkWidget  *widget,
 }
 
 static void
-update_fortune_dialog (FishApplet *fish) 
+update_fortune_dialog (FishApplet *fish)
 {
 	char *label_text;
 	char *text;
@@ -604,7 +604,7 @@ set_environment (gpointer display)
 	g_setenv ("DISPLAY", display, TRUE);
 }
 
-static void 
+static void
 display_fortune_dialog (FishApplet *fish)
 {
 	GError      *error = NULL;
@@ -632,8 +632,8 @@ display_fortune_dialog (FishApplet *fish)
 		GdkScreen *screen;
 		int        screen_width;
 		int        screen_height;
-      
-		fish->fortune_dialog = 
+
+		fish->fortune_dialog =
 			gtk_dialog_new_with_buttons (
 				"", NULL, 0,
 				_("_Speak again"), FISH_RESPONSE_SPEAK,
@@ -705,7 +705,7 @@ display_fortune_dialog (FishApplet *fish)
 		update_fortune_dialog (fish);
 
 		/* We don't show_all for the dialog since fortune_cmd_label
-		 * might need to be hidden 
+		 * might need to be hidden
 		 * The dialog will be shown with gtk_window_present later */
 		gtk_widget_show (scrolled);
 		gtk_widget_show (fish->fortune_view);
@@ -794,7 +794,7 @@ get_location (void)
 	char        *buffer;
 	FILE        *zone;
 	int          i, len, count;
-	
+
 	/* Old method : works for glibc < 2.2 */
 	zone = fopen("/etc/timezone", "r");
 	if (zone) {
@@ -803,7 +803,7 @@ get_location (void)
 		/* if we could read it, we return what we got */
 		if (count == 1)
 			return location;
-	} 
+	}
 
 	/* New method : works for glibc 2.2 */
 	/* FIXME: this is broken for many distros, see the clock code */
@@ -827,7 +827,7 @@ get_location (void)
 	return location;
 }
 
-static void 
+static void
 init_fools_day (void)
 {
 	const char *spanish_timezones [] = {
@@ -842,7 +842,7 @@ init_fools_day (void)
 	};
 	char *location;
 	int  i;
-	
+
 	if (!(location = get_location ()))
 		return;
 
@@ -850,7 +850,7 @@ init_fools_day (void)
 	fools_month      = 3;  /* April */
 	fools_hour_start = 0;  /* Midnight */
 	fools_hour_end   = 12; /* Apparently jokes should stop at midday */
-	
+
 	for (i = 0; spanish_timezones [i]; i++)
 		if (!g_ascii_strcasecmp (spanish_timezones [i], location)) {
 			/* Hah!, We are in Spain or Mexico
@@ -871,7 +871,7 @@ check_april_fools (FishApplet *fish)
 	time (&now);
 	tm = localtime (&now);
 
-	if (fish->april_fools && 
+	if (fish->april_fools &&
 	    (tm->tm_mon  != fools_month ||
 	     tm->tm_mday != fools_day   ||
 	     tm->tm_hour >= fools_hour_end)) {
@@ -1242,12 +1242,12 @@ fish_leave_notify (GtkWidget        *widget,
   return FALSE;
 }
 
-static gboolean 
+static gboolean
 handle_button_release (FishApplet     *fish,
 		       GdkEventButton *event)
 {
 	if (!fish->in_applet || event->button != 1)
-		return FALSE; 
+		return FALSE;
 
 	if (fish->april_fools) {
 		change_water (fish);
@@ -1256,7 +1256,7 @@ handle_button_release (FishApplet     *fish,
 
 	display_fortune_dialog (fish);
 
-	return TRUE; 
+	return TRUE;
 }
 
 static void
@@ -1291,7 +1291,7 @@ setup_fish_widget (FishApplet *fish)
 	g_signal_connect (fish->drawing_area, "draw",
 			  G_CALLBACK (fish_applet_draw), fish);
 
-	gtk_widget_add_events (widget, GDK_ENTER_NOTIFY_MASK | 
+	gtk_widget_add_events (widget, GDK_ENTER_NOTIFY_MASK |
 				       GDK_LEAVE_NOTIFY_MASK |
 				       GDK_BUTTON_RELEASE_MASK);
 
