@@ -882,3 +882,12 @@ panel_applet_frame_create (PanelToplevel       *toplevel,
 				    panel_toplevel_get_id (toplevel),
 				    pack_type, pack_index);
 }
+
+gboolean
+_panel_applet_frame_get_can_move (PanelAppletFrame *frame)
+{
+	if (!frame->priv->applet_info)
+		return FALSE;
+
+	return panel_applet_can_freely_move (frame->priv->applet_info);
+}

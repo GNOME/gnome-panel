@@ -116,6 +116,8 @@ void  _panel_applet_frame_update_size_hints     (PanelAppletFrame *frame,
 						 gint             *size_hints,
 						 guint             n_elements);
 
+gboolean _panel_applet_frame_get_can_move       (PanelAppletFrame *frame);
+
 void  _panel_applet_frame_applet_remove         (PanelAppletFrame *frame);
 void  _panel_applet_frame_applet_move           (PanelAppletFrame *frame);
 
