@@ -8,6 +8,7 @@ libpanel_applet_private_la_CFLAGS = \
 	-DDATADIR=\""$(datadir)"\" \
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
 	-I$(srcdir) \
+	-I$(top_srcdir) \
 	-I$(top_srcdir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel/libpanel-applet-private \
@@ -18,6 +19,8 @@ libpanel_applet_private_la_CFLAGS = \
 	$(NULL)
 
 libpanel_applet_private_la_SOURCES =	\
+	gp-applet-frame.c \
+	gp-applet-frame.h \
 	panel-applets-manager-dbus.c	\
 	panel-applets-manager-dbus.h	\
 	panel-applet-container.c	\
