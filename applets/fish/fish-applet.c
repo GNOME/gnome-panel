@@ -200,18 +200,16 @@ command_value_changed (GtkEntry   *entry,
 	    !strncmp (text, "tail ", 5)) {
 		static gboolean message_given = FALSE;
 		char       *message;
-		const char *warning_format =
-				_("Warning:  The command "
-				  "appears to be something actually useful.\n"
-				   "Since this is a useless applet, you "
-				   "may not want to do this.\n"
-				   "We strongly advise you against "
-				   "using %s for anything\n"
-				   "which would make the applet "
-				   "\"practical\" or useful.");
 
 		if ( ! message_given) {
-			message = g_strdup_printf (warning_format, fish->name);
+			message = g_strdup_printf (_("Warning: The command "
+			                             "appears to be something actually useful.\n"
+			                             "Since this is a useless applet, you "
+			                             "may not want to do this.\n"
+			                             "We strongly advise you against "
+			                             "using %s for anything\n"
+			                             "which would make the applet "
+			                             "\"practical\" or useful."), fish->name);
 
 			something_fishy_going_on (fish, message);
 
@@ -360,8 +358,6 @@ static void
 set_ally_name_desc (GtkWidget  *widget,
 		    FishApplet *fish)
 {
-	const char *name_format = _("%s the Fish");
-	const char *desc_format = _("%s the Fish, a contemporary oracle");
 	AtkObject  *obj;
 	char       *desc, *name;
 
@@ -370,11 +366,11 @@ set_ally_name_desc (GtkWidget  *widget,
 	if (!GTK_IS_ACCESSIBLE (obj))
 		return;
 
-	name = g_strdup_printf (name_format, fish->name);
+	name = g_strdup_printf (_("%s the Fish"), fish->name);
 	atk_object_set_name (obj, name);
 	g_free (name);
 
-	desc = g_strdup_printf (desc_format, fish->name);
+	desc = g_strdup_printf (_("%s the Fish, a contemporary oracle"), fish->name);
 	atk_object_set_description (obj, desc);
 	g_free (desc);
 }
@@ -1251,10 +1247,9 @@ handle_button_release (FishApplet     *fish,
 static void
 set_tooltip (FishApplet *fish)
 {
-	const char *desc_format = _("%s the Fish, the fortune teller");
 	char       *desc;
 
-	desc = g_markup_printf_escaped (desc_format, fish->name);
+	desc = g_markup_printf_escaped (_("%s the Fish, the fortune teller"), fish->name);
 	gtk_widget_set_tooltip_markup (GTK_WIDGET (fish), desc);
 	g_free (desc);
 }
