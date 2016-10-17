@@ -44,6 +44,7 @@
 #include "xstuff.h"
 #include "panel-compatibility.h"
 
+#include <libpanel-applet-private/panel-applet-frame-dbus.h>
 #include "panel-applet-frame.h"
 
 #define PANEL_RESPONSE_DELETE      0
@@ -346,11 +347,13 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 
 	frame = PANEL_APPLET_FRAME (widget);
 
-	if (!frame->priv->has_handle)
-		return FALSE;
+	if (PANEL_IS_APPLET_FRAME_DBUS (frame)) {
+		if (!frame->priv->has_handle)
+			return FALSE;
 
-	if (event->window != gtk_widget_get_window (widget))
-		return FALSE;
+		if (event->window != gtk_widget_get_window (widget))
+			return FALSE;
+	}
 
 	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
