@@ -41,6 +41,8 @@ typedef struct _PanelAppletFrame        PanelAppletFrame;
 typedef struct _PanelAppletFrameClass   PanelAppletFrameClass;
 typedef struct _PanelAppletFramePrivate PanelAppletFramePrivate;
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (PanelAppletFrame, g_object_unref)
+
 struct _PanelAppletFrameClass {
         GtkEventBoxClass parent_class;
 
