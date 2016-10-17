@@ -13,7 +13,8 @@ libfish_applet_la_CFLAGS = \
 	$(NULL)
 
 libfish_applet_la_SOURCES = \
-	fish.c		\
+	fish-applet.c \
+	fish-applet.h \
 	$(BUILT_SOURCES)
 
 libfish_applet_la_LIBADD = \

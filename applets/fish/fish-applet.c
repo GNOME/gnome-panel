@@ -36,11 +36,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <panel-applet.h>
-
-#define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
-			fish_applet_get_type(),          \
-			FishApplet))
+#include "fish-applet.h"
 
 #define FISH_ICON "gnome-panel-fish"
 #define FISH_RESOURCE_PATH "/org/gnome/panel/applet/fish/"
@@ -58,7 +54,8 @@
 #define LOCKDOWN_SCHEMA          "org.gnome.desktop.lockdown"
 #define LOCKDOWN_COMMANDLINE_KEY "disable-command-line"
 
-typedef struct {
+struct _FishApplet
+{
 	PanelApplet        applet;
 
 	GSettings         *settings;
@@ -96,11 +93,7 @@ typedef struct {
 	GIOChannel        *io_channel;
 
 	gboolean           april_fools;
-} FishApplet;
-
-typedef struct {
-	PanelAppletClass klass;
-} FishAppletClass;
+};
 
 static gboolean load_fish_image          (FishApplet *fish);
 static void     update_surface           (FishApplet *fish);
@@ -108,8 +101,6 @@ static void     something_fishy_going_on (FishApplet *fish,
 					  const char *message);
 static void     display_fortune_dialog   (FishApplet *fish);
 static void     set_tooltip              (FishApplet *fish);
-
-static GType fish_applet_get_type (void);
 
 G_DEFINE_TYPE (FishApplet, fish_applet, PANEL_TYPE_APPLET)
 
