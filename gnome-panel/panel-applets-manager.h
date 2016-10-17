@@ -38,6 +38,8 @@ G_BEGIN_DECLS
 typedef struct _PanelAppletsManager		PanelAppletsManager;
 typedef struct _PanelAppletsManagerClass	PanelAppletsManagerClass;
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (PanelAppletsManager, g_object_unref)
+
 struct _PanelAppletsManagerClass {
 	GObjectClass parent_class;
 
