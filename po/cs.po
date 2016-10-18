@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-10-13 01:19+0000\n"
-"PO-Revision-Date: 2016-10-17 08:44+0200\n"
+"POT-Creation-Date: 2016-10-17 18:04+0000\n"
+"PO-Revision-Date: 2016-10-18 09:30+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -325,7 +325,7 @@ msgstr "Nápo_věda"
 msgid "Time _Settings"
 msgstr "Nas_tavení času"
 
-#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
+#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish-applet.c:628
 #: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
 #: ../applets/wncklet/workspace-switcher.ui.h:2
 #: ../gnome-panel/panel-addto-dialog.ui.h:5
@@ -407,12 +407,12 @@ msgstr "Jednotka _rychlosti větru:"
 msgid "Weather"
 msgstr "Počasí"
 
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:159
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish-applet.c:150
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Nelze zobrazit dokument nápovědy „%s“"
 
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:185
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish-applet.c:176
 msgid "Error displaying help document"
 msgstr "Chyba při zobrazování dokumentu nápovědy"
 
@@ -432,10 +432,10 @@ msgstr "Hodiny"
 msgid "Get the current time and date"
 msgstr "Získat aktuální čas a datum"
 
-#: ../applets/fish/fish.c:213
+#: ../applets/fish/fish-applet.c:205
 #, c-format
 msgid ""
-"Warning:  The command appears to be something actually useful.\n"
+"Warning: The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
@@ -445,26 +445,26 @@ msgstr ""
 "Doporučuje se nepoužívat %s k ničemu, co by\n"
 "mohlo tento applet učinit „praktickým“ či užitečným."
 
-#: ../applets/fish/fish.c:372 ../applets/fish/fish.c:488
+#: ../applets/fish/fish-applet.c:369 ../applets/fish/fish-applet.c:475
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Ryba %s"
 
-#: ../applets/fish/fish.c:373
+#: ../applets/fish/fish-applet.c:373
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Ryba %s, soudobá věštkyně"
 
-#: ../applets/fish/fish.c:444
+#: ../applets/fish/fish-applet.c:431
 msgid "Unable to locate the command to execute"
 msgstr "Nelze nalézt program, který se má spustit"
 
-#: ../applets/fish/fish.c:493
+#: ../applets/fish/fish-applet.c:480
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Ryba %s říká:"
 
-#: ../applets/fish/fish.c:562
+#: ../applets/fish/fish-applet.c:549
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -475,16 +475,16 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:639
+#: ../applets/fish/fish-applet.c:627
 msgid "_Speak again"
 msgstr "Pro_mluvit znovu"
 
-#: ../applets/fish/fish.c:720
+#: ../applets/fish/fish-applet.c:706
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavený příkaz nefunguje a byl nahrazen: %s"
 
-#: ../applets/fish/fish.c:754
+#: ../applets/fish/fish-applet.c:739
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -495,7 +495,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:770
+#: ../applets/fish/fish-applet.c:755
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -506,15 +506,15 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: ../applets/fish/fish.c:1170
+#: ../applets/fish/fish-applet.c:1155
 msgid "The water needs changing"
 msgstr "Je potřeba vyměnit vodu"
 
-#: ../applets/fish/fish.c:1172
+#: ../applets/fish/fish-applet.c:1157
 msgid "Look at today's date!"
 msgstr "Mrkněte na dnešní datum!"
 
-#: ../applets/fish/fish.c:1265
+#: ../applets/fish/fish-applet.c:1252
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Ryba %s, věštkyně"
@@ -1564,11 +1564,11 @@ msgstr "Barva textu"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:484 ../libpanel-applet/panel-applet.c:1451
+#: ../gnome-panel/applet.c:484 ../libpanel-applet/panel-applet.c:1285
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: ../gnome-panel/applet.c:491 ../libpanel-applet/panel-applet.c:1451
+#: ../gnome-panel/applet.c:491 ../libpanel-applet/panel-applet.c:1285
 msgid "_Remove From Panel"
 msgstr "_Odstranit z panelu"
 
@@ -1758,7 +1758,7 @@ msgstr "Nelze uložit spouštěč"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:736
+#: ../gnome-panel/panel-applet-frame.c:806
 msgid "Error"
 msgstr "Chyba"
 
@@ -1969,24 +1969,24 @@ msgstr "Vyhledat položku pro přidání na panel:"
 msgid "_Back"
 msgstr "Zpě_t"
 
-#: ../gnome-panel/panel-applet-frame.c:699
+#: ../gnome-panel/panel-applet-frame.c:769
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "V panelu došlo k problému při načítání „%s“."
 
-#: ../gnome-panel/panel-applet-frame.c:711
+#: ../gnome-panel/panel-applet-frame.c:781
 msgid "OK"
 msgstr "Budiž"
 
-#: ../gnome-panel/panel-applet-frame.c:715
+#: ../gnome-panel/panel-applet-frame.c:785
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete tento applet odstranit ze svého nastavení?"
 
-#: ../gnome-panel/panel-applet-frame.c:718
+#: ../gnome-panel/panel-applet-frame.c:788
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: ../gnome-panel/panel-applet-frame.c:719 ../gnome-panel/panel.c:1315
+#: ../gnome-panel/panel-applet-frame.c:789 ../gnome-panel/panel.c:1315
 msgid "_Delete"
 msgstr "O_dstranit"
 
@@ -2477,3 +2477,4 @@ msgstr "Hledat"
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
+
