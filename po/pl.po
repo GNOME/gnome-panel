@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-09 08:23+0200\n"
-"PO-Revision-Date: 2016-10-09 08:24+0200\n"
+"POT-Creation-Date: 2016-10-18 20:35+0200\n"
+"PO-Revision-Date: 2016-10-18 20:37+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -321,7 +321,7 @@ msgstr "Pomo_c"
 msgid "Time _Settings"
 msgstr "_Ustawienia czasu"
 
-#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
+#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish-applet.c:628
 #: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
 #: ../applets/wncklet/workspace-switcher.ui.h:2
 #: ../gnome-panel/panel-addto-dialog.ui.h:5
@@ -403,12 +403,12 @@ msgstr "Jednostka prędkości _wiatru:"
 msgid "Weather"
 msgstr "Pogoda"
 
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:159
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish-applet.c:150
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Nie można wyświetlić dokumentu pomocy „%s”"
 
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:185
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish-applet.c:176
 msgid "Error displaying help document"
 msgstr "Błąd podczas wyświetlania dokumentu pomocy"
 
@@ -428,10 +428,10 @@ msgstr "Zegar"
 msgid "Get the current time and date"
 msgstr "Wyświetla bieżący czas i datę"
 
-#: ../applets/fish/fish.c:213
+#: ../applets/fish/fish-applet.c:205
 #, c-format
 msgid ""
-"Warning:  The command appears to be something actually useful.\n"
+"Warning: The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
@@ -440,28 +440,28 @@ msgstr ""
 "Ponieważ aplet ten jest bezużyteczny, najprawdopodobniej nie\n"
 "ma potrzeby tego robić. Zdecydowanie odradza się wykorzystywanie\n"
 "apletu %s do czegokolwiek, co można uznać za przydatne, czy choć\n"
-"trochę „użyteczne”."
+"trochę użyteczne."
 
-#: ../applets/fish/fish.c:372 ../applets/fish/fish.c:488
+#: ../applets/fish/fish-applet.c:369 ../applets/fish/fish-applet.c:475
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Rybka %s"
 
-#: ../applets/fish/fish.c:373
+#: ../applets/fish/fish-applet.c:373
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s jest rybką, współczesną wróżbitką"
 
-#: ../applets/fish/fish.c:444
+#: ../applets/fish/fish-applet.c:431
 msgid "Unable to locate the command to execute"
 msgstr "Nie można odnaleźć wykonywanego polecenia"
 
-#: ../applets/fish/fish.c:493
+#: ../applets/fish/fish-applet.c:480
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Rybka %s przemawia:"
 
-#: ../applets/fish/fish.c:562
+#: ../applets/fish/fish-applet.c:549
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -472,16 +472,16 @@ msgstr ""
 "\n"
 "Szczegóły: %s"
 
-#: ../applets/fish/fish.c:639
+#: ../applets/fish/fish-applet.c:627
 msgid "_Speak again"
 msgstr "_Przemów jeszcze raz"
 
-#: ../applets/fish/fish.c:720
+#: ../applets/fish/fish-applet.c:706
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Skonfigurowane polecenie nie działa i zostało zastąpione przez: %s"
 
-#: ../applets/fish/fish.c:754
+#: ../applets/fish/fish-applet.c:739
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -492,7 +492,7 @@ msgstr ""
 "\n"
 "Szczegóły: %s"
 
-#: ../applets/fish/fish.c:770
+#: ../applets/fish/fish-applet.c:755
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -503,15 +503,15 @@ msgstr ""
 "\n"
 "Szczegóły: %s"
 
-#: ../applets/fish/fish.c:1170
+#: ../applets/fish/fish-applet.c:1155
 msgid "The water needs changing"
 msgstr "Woda wymaga wymiany"
 
-#: ../applets/fish/fish.c:1172
+#: ../applets/fish/fish-applet.c:1157
 msgid "Look at today's date!"
 msgstr "Zobacz dzisiejszą datę!"
 
-#: ../applets/fish/fish.c:1265
+#: ../applets/fish/fish-applet.c:1252
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Rybka %s obwieszczająca wróżby"
@@ -1572,11 +1572,15 @@ msgstr "Kolor tekstu"
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:484 ../libpanel-applet/panel-applet.c:1451
+#: ../gnome-panel/applet.c:484
+#: ../gnome-panel/libpanel-applet-private/gp-applet-frame.c:212
+#: ../libpanel-applet/panel-applet.c:1285
 msgid "_Move"
 msgstr "_Przesuń"
 
-#: ../gnome-panel/applet.c:491 ../libpanel-applet/panel-applet.c:1451
+#: ../gnome-panel/applet.c:491
+#: ../gnome-panel/libpanel-applet-private/gp-applet-frame.c:219
+#: ../libpanel-applet/panel-applet.c:1285
 msgid "_Remove From Panel"
 msgstr "U_suń z panelu"
 
@@ -1623,25 +1627,21 @@ msgid "Hide Panel"
 msgstr "Ukrywa panel"
 
 #: ../gnome-panel/gp-properties-dialog.c:213
-#: ../gnome-panel/panel-test-applets.c:48
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Góra"
 
 #: ../gnome-panel/gp-properties-dialog.c:214
-#: ../gnome-panel/panel-test-applets.c:49
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Dół"
 
 #: ../gnome-panel/gp-properties-dialog.c:215
-#: ../gnome-panel/panel-test-applets.c:50
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Lewo"
 
 #: ../gnome-panel/gp-properties-dialog.c:216
-#: ../gnome-panel/panel-test-applets.c:51
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Prawo"
@@ -1655,7 +1655,6 @@ msgid "Some of these properties are locked down"
 msgstr "Część z tych właściwości jest zablokowana"
 
 #: ../gnome-panel/gp-properties-dialog.ui.h:3
-#: ../gnome-panel/panel-test-applets.ui.h:6
 msgid "_Orientation:"
 msgstr "_Ułożenie:"
 
@@ -1771,7 +1770,7 @@ msgstr "Nie można zapisać aktywatora"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:736
+#: ../gnome-panel/panel-applet-frame.c:808
 msgid "Error"
 msgstr "Błąd"
 
@@ -1982,24 +1981,24 @@ msgstr "Wyszukiwany element do dodania do panelu:"
 msgid "_Back"
 msgstr "_Wstecz"
 
-#: ../gnome-panel/panel-applet-frame.c:699
+#: ../gnome-panel/panel-applet-frame.c:771
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Wystąpił problem podczas wczytywania „%s”."
 
-#: ../gnome-panel/panel-applet-frame.c:711
+#: ../gnome-panel/panel-applet-frame.c:783
 msgid "OK"
 msgstr "OK"
 
-#: ../gnome-panel/panel-applet-frame.c:715
+#: ../gnome-panel/panel-applet-frame.c:787
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Usunąć aplet z konfiguracji?"
 
-#: ../gnome-panel/panel-applet-frame.c:718
+#: ../gnome-panel/panel-applet-frame.c:790
 msgid "D_on't Delete"
 msgstr "_Nie usuwaj"
 
-#: ../gnome-panel/panel-applet-frame.c:719 ../gnome-panel/panel.c:1315
+#: ../gnome-panel/panel-applet-frame.c:791 ../gnome-panel/panel.c:1315
 msgid "_Delete"
 msgstr "_Usuń"
 
@@ -2392,37 +2391,6 @@ msgid ""
 msgstr ""
 "Kliknięcie tego przycisku powoduje uruchomienie wybranego programu lub "
 "polecenia wpisanego do pola tekstowego."
-
-#: ../gnome-panel/panel-test-applets.c:31
-msgid "Specify an applet IID to load"
-msgstr "IID apletu do wczytania"
-
-#: ../gnome-panel/panel-test-applets.c:32
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr "Określa początkowe ułożenie apletu (góra, dół, lewo lub prawo)"
-
-#: ../gnome-panel/panel-test-applets.c:102
-#, c-format
-msgid "Failed to load applet %s"
-msgstr "Wczytanie apletu %s się nie powiodło"
-
-#. This is an utility to easily test various applets
-#: ../gnome-panel/panel-test-applets.ui.h:2
-msgid "Test applet utility"
-msgstr "Narzędzie testowania apletów"
-
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "Execute"
-msgstr "Wykonaj"
-
-#: ../gnome-panel/panel-test-applets.ui.h:4
-msgid "Close"
-msgstr "Zamknij"
-
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Applet:"
-msgstr "_Aplet:"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
