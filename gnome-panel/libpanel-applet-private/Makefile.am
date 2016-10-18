@@ -21,6 +21,8 @@ libpanel_applet_private_la_CFLAGS = \
 libpanel_applet_private_la_SOURCES =	\
 	gp-applet-frame.c \
 	gp-applet-frame.h \
+	gp-applet-manager.c \
+	gp-applet-manager.h \
 	panel-applets-manager-dbus.c	\
 	panel-applets-manager-dbus.h	\
 	panel-applet-container.c	\
