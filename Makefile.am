@@ -6,6 +6,7 @@ SUBDIRS = \
 	libpanel-applet \
 	applets \
 	doc \
+	docs \
 	help \
 	data \
 	man \

@@ -25,6 +25,15 @@
 G_BEGIN_DECLS
 
 /**
+ * SECTION: gp-module
+ * @title: Module
+ * @short_description: a module with one or more applets
+ * @include: libngome-panel/gp-module.h
+ *
+ * A module with one or more applets.
+ */
+
+/**
  * GP_MODULE_ABI_VERSION:
  *
  * The version of the module system's ABI.
@@ -108,16 +117,64 @@ typedef GType         (* GpModuleGetAppletType) (const gchar    *applet);
 typedef gboolean      (* GpModuleSetupAbout)    (GtkAboutDialog *dialog,
                                                  const gchar    *applet);
 
+/**
+ * gp_module_get_info:
+ * @abi_version: (out): return location for module ABI version
+ *
+ * Required API for GNOME Panel modules to implement, see %GpModuleGetInfo.
+ *
+ * Returns: (transfer full): a newly created #GpModuleInfo.
+ */
 GpModuleInfo *gp_module_get_info        (guint32        *abi_version);
 
+/**
+ * gp_module_load:
+ * @module: a #GTypeModule
+ *
+ * Required API for GNOME Panel modules to implement.
+ */
 void          gp_module_load            (GTypeModule    *module);
 
+/**
+ * gp_module_unload:
+ * @module: a #GTypeModule
+ *
+ * Required API for GNOME Panel modules to implement.
+ */
 void          gp_module_unload          (GTypeModule    *module);
 
+/**
+ * gp_module_get_applet_info:
+ * @applet: the applet id
+ *
+ * Required API for GNOME Panel modules to implement, see
+ * %GpModuleGetAppletInfo.
+ *
+ * Returns: (transfer full): a newly created #GpAppletInfo.
+ */
 GpAppletInfo *gp_module_get_applet_info (const gchar    *applet);
 
+/**
+ * gp_module_get_applet_type:
+ * @applet: the applet id
+ *
+ * Required API for GNOME Panel modules to implement, see
+ * %GpModuleGetAppletType.
+ *
+ * Returns: a previously registered #GType.
+ */
 GType         gp_module_get_applet_type (const gchar    *applet);
 
+/**
+ * gp_module_setup_about:
+ * @dialog: a #GtkAboutDialog
+ * @applet: the applet id
+ *
+ * Optional API for GNOME Panel modules to implement, see
+ * %GpModuleSetupAbout.
+ *
+ * Returns: %TRUE if dialog is ready, %FALSE otherwise.
+ */
 gboolean      gp_module_setup_about     (GtkAboutDialog *dialog,
                                          const gchar    *applet);
 

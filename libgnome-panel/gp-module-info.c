@@ -15,6 +15,15 @@
  * along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
+/**
+ * SECTION: gp-module-info
+ * @title: GpModuleInfo
+ * @short_description: a module info
+ * @include: libngome-panel/gp-module.h
+ *
+ * #GpModuleInfo is used to provide info about loaded module.
+ */
+
 #include "config.h"
 
 #include <stdarg.h>

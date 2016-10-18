@@ -22,6 +22,28 @@
  *     Mark McLoughlin <mark@skynet.ie>
  */
 
+/**
+ * SECTION: gp-applet
+ * @title: GpApplet
+ * @short_description: a widget embedded in a panel
+ * @include: libngome-panel/gp-applet.h
+ *
+ * Applets are small applications that are embedded in the GNOME Panel. They
+ * can be used to give quick access to some features, or to display the state
+ * of something specific.
+ *
+ * The #GpApplet API hides all of the embedding process as it handles all
+ * the communication with the GNOME Panel. It is a subclass of #GtkEventBox,
+ * so you can add any kind of widgets to it.
+ */
+
+/**
+ * GpApplet:
+ *
+ * #GpApplet is an opaque data structure and can only be accessed using
+ * the following functions.
+ */
+
 #include "config.h"
 
 #include "gp-applet-private.h"

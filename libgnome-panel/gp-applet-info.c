@@ -15,6 +15,15 @@
  * along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
+/**
+ * SECTION: gp-applet-info
+ * @title: GpAppletInfo
+ * @short_description: the applet info
+ * @include: libngome-panel/gp-module.h
+ *
+ * #GpAppletInfo is used to provide full info about applet.
+ */
+
 #include "config.h"
 
 #include "gp-applet-info-private.h"
