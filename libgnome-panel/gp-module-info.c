@@ -49,7 +49,6 @@ get_applets (va_list args)
  * gp_module_info_new:
  * @id: the id of this module
  * @version: the version of this module
- * @translation_domain: the translation domain or NULL
  *
  * Creates a new #GpModuleInfo.
  *
@@ -57,8 +56,7 @@ get_applets (va_list args)
  */
 GpModuleInfo *
 gp_module_info_new (const gchar *id,
-                    const gchar *version,
-                    const gchar *translation_domain)
+                    const gchar *version)
 {
   GpModuleInfo *info;
 
@@ -66,7 +64,6 @@ gp_module_info_new (const gchar *id,
 
   info->id = g_strdup (id);
   info->version = g_strdup (version);
-  info->translation_domain = g_strdup (translation_domain);
 
   return info;
 }
@@ -90,6 +87,21 @@ gp_module_info_set_applets (GpModuleInfo *info,
   va_end (args);
 }
 
+/**
+ * gp_module_info_set_translation_domain:
+ * @info: a #GpModuleInfo
+ * @domain: the translation domain or NULL
+ *
+ * Sets the translation domain.
+ */
+void
+gp_module_info_set_translation_domain (GpModuleInfo *info,
+                                       const gchar  *domain)
+{
+  g_free (info->domain);
+  info->domain = g_strdup (domain);
+}
+
 void
 gp_module_info_free (GpModuleInfo *info)
 {
@@ -98,8 +110,8 @@ gp_module_info_free (GpModuleInfo *info)
 
   g_free (info->id);
   g_free (info->version);
-  g_free (info->translation_domain);
   g_strfreev (info->applets);
+  g_free (info->domain);
 
   g_free (info);
 }
