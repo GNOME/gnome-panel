@@ -50,7 +50,6 @@ get_applets (va_list args)
  * @id: the id of this module
  * @version: the version of this module
  * @translation_domain: the translation domain or NULL
- * @...: a %NULL-terminated list of applet ids in this module
  *
  * Creates a new #GpModuleInfo.
  *
@@ -59,11 +58,9 @@ get_applets (va_list args)
 GpModuleInfo *
 gp_module_info_new (const gchar *id,
                     const gchar *version,
-                    const gchar *translation_domain,
-                    ...)
+                    const gchar *translation_domain)
 {
   GpModuleInfo *info;
-  va_list args;
 
   info = g_new0 (GpModuleInfo, 1);
 
@@ -71,11 +68,26 @@ gp_module_info_new (const gchar *id,
   info->version = g_strdup (version);
   info->translation_domain = g_strdup (translation_domain);
 
-  va_start (args, translation_domain);
+  return info;
+}
+
+/**
+ * gp_module_info_set_applets:
+ * @info: a #GpModuleInfo
+ * @...: a %NULL-terminated list of applet ids in this module
+ *
+ * Sets the applets available in this module.
+ */
+void
+gp_module_info_set_applets (GpModuleInfo *info,
+                            ...)
+{
+  va_list args;
+
+  va_start (args, info);
+  g_strfreev (info->applets);
   info->applets = get_applets (args);
   va_end (args);
-
-  return info;
 }
 
 void
