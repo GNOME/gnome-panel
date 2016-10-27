@@ -584,9 +584,13 @@ fish_read_output (GIOChannel   *source,
  * Set the DISPLAY variable, to be use by g_spawn_async.
  */
 static void
-set_environment (gpointer display)
+set_environment (gpointer user_data)
 {
-	g_setenv ("DISPLAY", display, TRUE);
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+
+	g_setenv ("DISPLAY", gdk_display_get_name (display), TRUE);
 }
 
 static void
@@ -599,7 +603,6 @@ display_fortune_dialog (FishApplet *fish)
 	int          argc;
 	char       **argv;
 	GdkScreen   *screen;
-	char        *display;
 
 	/* if there is still a pipe, close it */
 	if (fish->source_id)
@@ -713,21 +716,17 @@ display_fortune_dialog (FishApplet *fish)
 
 	clear_fortune_text (fish);
 
-	display = gdk_screen_make_display_name (screen);
-
 	g_spawn_async_with_pipes (NULL, /* working directory */
 				  argv,
 				  NULL, /* envp */
 				  G_SPAWN_SEARCH_PATH|G_SPAWN_STDERR_TO_DEV_NULL,
 				  set_environment,
-				  &display,
+				  NULL,
 				  NULL, /* child pid */
 				  NULL, /* stdin */
 				  &output,
 				  NULL, /* stderr */
 				  &error);
-
-	g_free (display);
 
 	if (error) {
 		char *message;
