@@ -367,7 +367,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	                                 G_N_ELEMENTS (pager_menu_actions),
 	                                 pager);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
-					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.xml",
+					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.ui",
 					       action_group,
 					       GETTEXT_PACKAGE);
 

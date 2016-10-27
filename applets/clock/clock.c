@@ -1299,7 +1299,7 @@ fill_clock_applet (PanelApplet *applet)
 	                                 G_N_ELEMENTS (clock_menu_actions),
 	                                 cd);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (cd->applet),
-					       CLOCK_RESOURCE_PATH "clock-menu.xml",
+					       CLOCK_RESOURCE_PATH "clock-menu.ui",
 					       action_group,
 					       GETTEXT_PACKAGE);
 

@@ -406,7 +406,7 @@ window_list_applet_fill (PanelApplet *applet)
 	                                 G_N_ELEMENTS (tasklist_menu_actions),
 	                                 tasklist);
 	panel_applet_setup_menu_from_resource (PANEL_APPLET (tasklist->applet),
-					       WNCKLET_RESOURCE_PATH "window-list-menu.xml",
+					       WNCKLET_RESOURCE_PATH "window-list-menu.ui",
 					       action_group,
 					       GETTEXT_PACKAGE);
 

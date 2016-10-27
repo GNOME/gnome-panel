@@ -57,9 +57,9 @@ $(applet_in_files): $(applet_in_files).in Makefile
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
 ui_FILES = 				\
-	window-list-menu.xml		\
+	window-list-menu.ui		\
 	window-list.ui			\
-	workspace-switcher-menu.xml 	\
+	workspace-switcher-menu.ui 	\
 	workspace-switcher.ui
 
 

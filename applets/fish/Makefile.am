@@ -60,7 +60,7 @@ fishbitmaps_DATA = 	\
 
 ui_FILES = 		\
 	fish.ui		\
-	fish-menu.xml
+	fish-menu.ui
 
 fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<

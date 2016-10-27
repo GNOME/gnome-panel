@@ -1424,7 +1424,7 @@ fish_applet_fill (FishApplet *fish)
 	                                 G_N_ELEMENTS (fish_menu_actions),
 	                                 fish);
 	panel_applet_setup_menu_from_resource (applet,
-					       FISH_RESOURCE_PATH "fish-menu.xml",
+					       FISH_RESOURCE_PATH "fish-menu.ui",
 					       action_group,
 					       GETTEXT_PACKAGE);
 
