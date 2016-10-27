@@ -23,6 +23,8 @@ libpanel_applet_private_la_SOURCES =	\
 	gp-applet-frame.h \
 	gp-applet-manager.c \
 	gp-applet-manager.h \
+	gp-module.c \
+	gp-module-private.h \
 	panel-applets-manager-dbus.c	\
 	panel-applets-manager-dbus.h	\
 	panel-applet-container.c	\
