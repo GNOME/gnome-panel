@@ -1,26 +1,35 @@
 NULL =
 
-libfish_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(localedir)"\" \
+fish_applet_libdir = $(pkglibdir)
+fish_applet_lib_LTLIBRARIES = libfish-applet.la
+
+libfish_applet_la_SOURCES = \
+	fish-applet.c \
+	fish-applet.h \
+	$(BUILT_SOURCES) \
+	$(NULL)
+
+libfish_applet_la_CPPFLAGS = \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
-	-I$(srcdir) \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir)/../../libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
+	-I$(top_srcdir) \
+	$(AM_CPPFLAGS) \
+	$(NULL)
+
+libfish_applet_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(FISH_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libfish_applet_la_SOURCES = \
-	fish-applet.c \
-	fish-applet.h \
-	$(BUILT_SOURCES)
-
 libfish_applet_la_LIBADD = \
-	../../libpanel-applet/libpanel-applet.la	\
-	$(FISH_LIBS)					\
-	$(LIBPANEL_APPLET_LIBS)
+	$(top_builddir)/libpanel-applet/libpanel-applet.la \
+	$(LIBPANEL_APPLET_LIBS) \
+	$(FISH_LIBS) \
+	$(NULL)
 
 libfish_applet_la_LDFLAGS = \
 	-module -avoid-version \
@@ -29,9 +38,6 @@ libfish_applet_la_LDFLAGS = \
 	$(NULL)
 
 APPLET_LOCATION   = $(pkglibdir)/libfish-applet.so
-
-fish_applet_libdir = $(pkglibdir)
-fish_applet_lib_LTLIBRARIES = libfish-applet.la
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.FishApplet.panel-applet.in
@@ -46,21 +52,23 @@ $(applet_in_files): $(applet_in_files).in Makefile
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
 fishbitmapsdir = $(datadir)/gnome-panel/fish
-fishbitmaps_DATA = 	\
-	wanda.fish	\
-	wanda.png	\
-	fishanim.fish	\
-	fishanim.png	\
-	oldwanda.fish	\
-	oldwanda.png	\
-	footguy.fish	\
-	footguy.png	\
-	monkey.fish	\
-	monkey.png
+fishbitmaps_DATA = \
+	wanda.fish \
+	wanda.png \
+	fishanim.fish \
+	fishanim.png \
+	oldwanda.fish \
+	oldwanda.png \
+	footguy.fish \
+	footguy.png \
+	monkey.fish \
+	monkey.png \
+	$(NULL)
 
-ui_FILES = 		\
-	fish.ui		\
-	fish-menu.ui
+ui_FILES = \
+	fish.ui \
+	fish-menu.ui \
+	$(NULL)
 
 fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
@@ -68,17 +76,23 @@ fish-resources.c: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourced
 fish-resources.h: fish.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/fish.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fish $<
 
-BUILT_SOURCES = 		\
-	fish-resources.c	\
-	fish-resources.h
+BUILT_SOURCES = \
+	fish-resources.c \
+	fish-resources.h \
+	$(NULL)
 
-EXTRA_DIST =						\
-	wanda.svg					\
-	$(fishbitmaps_DATA)				\
-	org.gnome.panel.FishApplet.panel-applet.in.in	\
-	$(ui_FILES)					\
-	fish.gresource.xml
+EXTRA_DIST = \
+	wanda.svg \
+	org.gnome.panel.FishApplet.panel-applet.in.in \
+	fish.gresource.xml \
+	$(fishbitmaps_DATA) \
+	$(ui_FILES) \
+	$(NULL)
 
-CLEANFILES = $(BUILT_SOURCES) $(applet_DATA) $(applet_DATA).in
+CLEANFILES = \
+	$(applet_DATA) \
+	$(applet_DATA).in \
+	$(BUILT_SOURCES) \
+	$(NULL)
 
 -include $(top_srcdir)/git.mk
