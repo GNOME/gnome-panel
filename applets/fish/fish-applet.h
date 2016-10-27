@@ -18,12 +18,12 @@
 #ifndef FISH_APPLET_H
 #define FISH_APPLET_H
 
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
 #define FISH_TYPE_APPLET fish_applet_get_type ()
-G_DECLARE_FINAL_TYPE (FishApplet, fish_applet, FISH, APPLET, PanelApplet)
+G_DECLARE_FINAL_TYPE (FishApplet, fish_applet, FISH, APPLET, GpApplet)
 
 G_END_DECLS
 

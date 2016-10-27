@@ -56,7 +56,7 @@
 
 struct _FishApplet
 {
-	PanelApplet        applet;
+	GpApplet           applet;
 
 	GSettings         *settings;
 	GSettings         *lockdown_settings;
@@ -67,8 +67,6 @@ struct _FishApplet
 	int                n_frames;
 	gdouble            speed;
 	gboolean           rotate;
-
-	PanelAppletOrient  orientation;
 
 	GtkWidget         *frame;
 	GtkWidget         *drawing_area;
@@ -102,7 +100,7 @@ static void     something_fishy_going_on (FishApplet *fish,
 static void     display_fortune_dialog   (FishApplet *fish);
 static void     set_tooltip              (FishApplet *fish);
 
-G_DEFINE_TYPE (FishApplet, fish_applet, PANEL_TYPE_APPLET)
+G_DEFINE_TYPE (FishApplet, fish_applet, GP_TYPE_APPLET)
 
 static int fools_day        = 0;
 static int fools_month      = 0;
@@ -947,9 +945,7 @@ update_surface (FishApplet *fish)
 	if (!fish->pixbuf && !load_fish_image (fish))
 		return;
 
-	if (fish->rotate &&
-	    (fish->orientation == PANEL_APPLET_ORIENT_LEFT ||
-	     fish->orientation == PANEL_APPLET_ORIENT_RIGHT))
+	if (fish->rotate && gp_applet_get_orientation (GP_APPLET (fish)) == GTK_ORIENTATION_VERTICAL)
 		rotate = TRUE;
 
 	pixbuf_width  = gdk_pixbuf_get_width  (fish->pixbuf);
@@ -957,8 +953,7 @@ update_surface (FishApplet *fish)
 
 	prev_requisition = fish->requisition;
 
-	if (fish->orientation == PANEL_APPLET_ORIENT_UP ||
-	    fish->orientation == PANEL_APPLET_ORIENT_DOWN) {
+	if (gp_applet_get_orientation (GP_APPLET (fish)) == GTK_ORIENTATION_HORIZONTAL) {
 		height = allocation.height;
 		width  = pixbuf_width * ((gdouble) height / pixbuf_height);
 
@@ -1019,7 +1014,7 @@ update_surface (FishApplet *fish)
 	}
 
 	if (rotate) {
-		if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT) {
+		if (gp_applet_get_position (GP_APPLET (fish)) == GTK_POS_LEFT) {
 			cairo_matrix_translate (&matrix, pixbuf_width - 1, 0);
 			cairo_matrix_rotate (&matrix, M_PI * 0.5);
 		} else {
@@ -1067,9 +1062,9 @@ fish_applet_draw (GtkWidget  *widget,
 	src_y = 0;
 
 	if (fish->rotate) {
-		if (fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
+		if (gp_applet_get_position (GP_APPLET (fish)) == GTK_POS_LEFT)
 			src_y = ((height * (fish->n_frames - 1 - fish->current_frame)) / fish->n_frames);
-		else if (fish->orientation == PANEL_APPLET_ORIENT_LEFT)
+		else if (gp_applet_get_position (GP_APPLET (fish)) == GTK_POS_RIGHT)
 			src_y = ((height * fish->current_frame) / fish->n_frames);
 		else
 			src_x = ((width * fish->current_frame) / fish->n_frames);
@@ -1112,21 +1107,6 @@ fish_applet_unrealize (GtkWidget  *widget,
 	if (fish->surface)
 		cairo_surface_destroy (fish->surface);
 	fish->surface = NULL;
-}
-
-static void
-fish_applet_change_orient (PanelApplet       *applet,
-			   PanelAppletOrient  orientation)
-{
-	FishApplet *fish = (FishApplet *) applet;
-
-	if (fish->orientation == orientation)
-		return;
-
-	fish->orientation = orientation;
-
-	if (fish->surface)
-		update_surface (fish);
 }
 
 static void
@@ -1281,11 +1261,12 @@ setup_fish_widget (FishApplet *fish)
 	g_signal_connect (fish, "key_press_event",
 			  G_CALLBACK (handle_keypress), fish);
 
-	gtk_widget_show_all (widget);
+	gtk_widget_show_all (fish->frame);
 }
 
 static const GActionEntry fish_menu_actions [] = {
-	{ "preferences", display_preferences_dialog, NULL, NULL, NULL }
+	{ "preferences", display_preferences_dialog, NULL, NULL, NULL },
+	{ NULL }
 };
 
 static void
@@ -1365,8 +1346,7 @@ fish_applet_update_rotate (FishApplet *fish,
 {
 	fish->rotate = rotate;
 
-	if (fish->orientation == PANEL_APPLET_ORIENT_LEFT ||
-	    fish->orientation == PANEL_APPLET_ORIENT_RIGHT)
+	if (gp_applet_get_orientation (GP_APPLET (fish)) == GTK_ORIENTATION_VERTICAL)
 		update_surface (fish);
 }
 
@@ -1406,58 +1386,32 @@ fish_applet_settings_changed (GSettings  *settings,
 	}
 }
 
-static gboolean
-fish_applet_fill (FishApplet *fish)
+static void
+fish_applet_constructed (GObject *object)
 {
-	PanelApplet        *applet = PANEL_APPLET (fish);
-	GSimpleActionGroup *action_group;
-	GAction            *action;
+	FishApplet *fish = FISH_APPLET (object);
+	GpApplet *applet = GP_APPLET (fish);
+	GAction *action;
 
-	fish->orientation = panel_applet_get_orient (applet);
+	G_OBJECT_CLASS (fish_applet_parent_class)->constructed (object);
 
-	fish->settings = panel_applet_settings_new (applet, FISH_SCHEMA);
+	fish->settings = gp_applet_settings_new (applet, FISH_SCHEMA);
 	fish->lockdown_settings = g_settings_new (LOCKDOWN_SCHEMA);
 
-	action_group = g_simple_action_group_new ();
-	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-	                                 fish_menu_actions,
-	                                 G_N_ELEMENTS (fish_menu_actions),
-	                                 fish);
-	panel_applet_setup_menu_from_resource (applet,
-					       FISH_RESOURCE_PATH "fish-menu.ui",
-					       action_group,
-					       GETTEXT_PACKAGE);
+	gp_applet_setup_menu_from_resource (applet,
+	                                    FISH_RESOURCE_PATH "fish-menu.ui",
+	                                    fish_menu_actions);
 
-	gtk_widget_insert_action_group (GTK_WIDGET (applet), "fish",
-	                                G_ACTION_GROUP (action_group));
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
+	action = gp_applet_menu_lookup_action (applet, "preferences");
 	g_object_bind_property (applet, "locked-down",
 				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-
-	g_object_unref (action_group);
 
 	setup_fish_widget (fish);
 
 	g_signal_connect (fish->settings, "changed",
 	                  G_CALLBACK (fish_applet_settings_changed), fish);
 	fish_applet_settings_changed (fish->settings, NULL, fish);
-
-	return TRUE;
-}
-
-static gboolean
-fishy_factory (PanelApplet *applet,
-	       const char  *iid,
-	       gpointer     data)
-{
-	gboolean retval = FALSE;
-
-	if (!strcmp (iid, "FishApplet"))
-		retval = fish_applet_fill (FISH_APPLET (applet));
-
-	return retval;
 }
 
 static void
@@ -1515,68 +1469,37 @@ fish_applet_dispose (GObject *object)
 }
 
 static void
-fish_applet_init (FishApplet *fish)
+fish_applet_placement_changed (GpApplet        *applet,
+                               GtkOrientation   orientation,
+                               GtkPositionType  position)
 {
-	fish->settings          = NULL;
-	fish->lockdown_settings = NULL;
+	FishApplet *fish;
 
-	fish->name     = NULL;
-	fish->image    = NULL;
-	fish->command  = NULL;
-	fish->n_frames = 1;
-	fish->speed    = 0.0;
-	fish->rotate   = FALSE;
+	fish = FISH_APPLET (applet);
 
-	fish->orientation = PANEL_APPLET_ORIENT_UP;
-
-	fish->frame         = NULL;
-	fish->drawing_area  = NULL;
-	fish->surface       = NULL;
-	fish->timeout       = 0;
-	fish->current_frame = 0;
-	fish->in_applet     = FALSE;
-
-	fish->requisition.width  = -1;
-	fish->requisition.height = -1;
-
-	fish->prev_allocation.x      = -1;
-	fish->prev_allocation.y      = -1;
-	fish->prev_allocation.width  = -1;
-	fish->prev_allocation.height = -1;
-
-	fish->pixbuf = NULL;
-
-	fish->preferences_dialog = NULL;
-
-	fish->fortune_dialog = NULL;
-	fish->fortune_view   = NULL;
-	fish->fortune_label  = NULL;
-	fish->fortune_cmd_label = NULL;
-	fish->fortune_buffer = NULL;
-
-	fish->source_id  = 0;
-	fish->io_channel = NULL;
-
-	fish->april_fools = FALSE;
-
-	panel_applet_set_flags (PANEL_APPLET (fish),
-				PANEL_APPLET_EXPAND_MINOR);
+	if (fish->surface)
+		update_surface (fish);
 }
 
 static void
-fish_applet_class_init (FishAppletClass *klass)
+fish_applet_class_init (FishAppletClass *fish_class)
 {
-	PanelAppletClass *applet_class  = (PanelAppletClass *) klass;
-	GObjectClass     *gobject_class = (GObjectClass *) klass;
+	GObjectClass *object_class;
+	GpAppletClass *applet_class;
 
-	applet_class->change_orient = fish_applet_change_orient;
+	object_class = G_OBJECT_CLASS (fish_class);
+	applet_class = GP_APPLET_CLASS (fish_class);
 
-	gobject_class->dispose = fish_applet_dispose;
+	object_class->constructed = fish_applet_constructed;
+	object_class->dispose = fish_applet_dispose;
+
+	applet_class->placement_changed = fish_applet_placement_changed;
 
 	init_fools_day ();
 }
 
-PANEL_APPLET_IN_PROCESS_FACTORY ("FishAppletFactory",
-				 fish_applet_get_type (),
-				 fishy_factory,
-				 NULL)
+static void
+fish_applet_init (FishApplet *fish)
+{
+	gp_applet_set_flags (GP_APPLET (fish), GP_APPLET_FLAGS_EXPAND_MINOR);
+}
