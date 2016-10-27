@@ -42,17 +42,15 @@ G_BEGIN_DECLS
 
 /**
  * GpModuleGetInfo:
- * @abi_version: (out): return location for module ABI version
  *
  * Each module must have a function gp_module_get_info() with this
- * prototype. This function must always return %GP_MODULE_ABI_VERSION
- * as @abi_version.
+ * prototype.
  *
  * Use gp_module_info_new() to create return value.
  *
  * Returns: (transfer full): a newly created #GpModuleInfo.
  */
-typedef GpModuleInfo *(* GpModuleGetInfo)       (guint32        *abi_version);
+typedef GpModuleInfo *(* GpModuleGetInfo)       (void);
 
 /**
  * GpModuleLoad:
@@ -116,6 +114,16 @@ typedef GType         (* GpModuleGetAppletType) (const gchar    *applet);
  */
 typedef gboolean      (* GpModuleSetupAbout)    (GtkAboutDialog *dialog,
                                                  const gchar    *applet);
+
+/**
+ * gp_module_get_abi_version:
+ *
+ * Required API for GNOME Panel modules to implement. This function must
+ * always return %GP_MODULE_ABI_VERSION.
+ *
+ * Returns: the module ABI version.
+ */
+guint32       gp_module_get_abi_version (void);
 
 /**
  * gp_module_get_info:
