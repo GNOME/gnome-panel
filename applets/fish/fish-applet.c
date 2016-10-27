@@ -285,8 +285,6 @@ display_preferences_dialog (GSimpleAction *action,
 	g_object_add_weak_pointer (G_OBJECT (fish->preferences_dialog),
 				   (void**) &fish->preferences_dialog);
 
-	gtk_window_set_wmclass (GTK_WINDOW (fish->preferences_dialog),
-				"fish", "Fish");
 	gtk_window_set_icon_name (GTK_WINDOW (fish->preferences_dialog),
 				  FISH_ICON);
 	gtk_dialog_set_default_response (
@@ -638,8 +636,6 @@ display_fortune_dialog (FishApplet *fish)
 				  G_CALLBACK (delete_event), fish);
 		g_signal_connect (fish->fortune_dialog, "response",
 				  G_CALLBACK (handle_fortune_response), fish);
-
-		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
 
 		screen_width  = gdk_screen_get_width (screen);
 		screen_height = gdk_screen_get_height (screen);
@@ -1156,7 +1152,6 @@ change_water (FishApplet *fish)
 	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
 						  _("Look at today's date!"));
 	gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
-	gtk_window_set_wmclass (GTK_WINDOW (dialog), "fish", "Fish");
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
 
