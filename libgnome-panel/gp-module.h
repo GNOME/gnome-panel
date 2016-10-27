@@ -31,6 +31,99 @@ G_BEGIN_DECLS
  * @include: libngome-panel/gp-module.h
  *
  * A module with one or more applets.
+ *
+ * |[<!-- language="C" -->
+ * static GpModuleInfo *
+ * example_get_module_info (void)
+ * {
+ *   GpModuleInfo *info;
+ *
+ *   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+ *   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+ *
+ *   info = gp_module_info_new ("example", PACKAGE_VERSION);
+ *
+ *   gp_module_info_set_applets (info, "example1", "example2", NULL);
+ *   gp_module_info_set_translation_domain (info, GETTEXT_PACKAGE);
+ *
+ *   return info;
+ * }
+ *
+ * static GpAppletInfo *
+ * example_get_applet_info (const gchar *applet)
+ * {
+ *   GpAppletInfo *info;
+ *
+ *   if (g_strcmp0 (applet, "example1") == 0)
+ *     {
+ *       info = gp_applet_info_new (_("Example 1 name"),
+ *                                  _("Example 1 description"),
+ *                                  "example1-icon");
+ *     }
+ *   else if (g_strcmp0 (applet, "example2") == 0)
+ *     {
+ *       info = gp_applet_info_new (_("Example 2 name"),
+ *                                  _("Example 2 description"),
+ *                                  "example2-icon");
+ *
+ *       gp_applet_info_set_backends (info, "x11");
+ *     }
+ *   else
+ *     {
+ *       info = NULL;
+ *     }
+ *
+ *   return info;
+ * }
+ *
+ * static GType
+ * example_get_applet_type (const gchar *applet)
+ * {
+ *   if (g_strcmp0 (applet, "example1") == 0)
+ *     {
+ *       return EXAMPLE_TYPE_EXAMPLE1;
+ *     }
+ *   else if (g_strcmp0 (applet, "example2") == 0)
+ *     {
+ *       return EXAMPLE_TYPE_EXAMPLE2;
+ *     }
+ *
+ *   return G_TYPE_NONE;
+ * }
+ *
+ * static gboolean
+ * example_setup_about (GtkAboutDialog *dialog,
+ *                      const gchar    *applet)
+ * {
+ *   if (g_strcmp0 (applet, "example1") == 0)
+ *     {
+ *       gtk_about_dialog_set_comments (about, "...");
+ *       gtk_about_dialog_set_copyright (about, "...");
+ *       // ...
+ *
+ *       return TRUE;
+ *     }
+ *
+ *   return FALSE;
+ * }
+ *
+ * guint32
+ * gp_module_get_abi_version (void)
+ * {
+ *   return GP_MODULE_ABI_VERSION;
+ * }
+ *
+ * void
+ * gp_module_get_vtable (GpModuleVTable *vtable)
+ * {
+ *   *vtable = (GpModuleVTable) {
+ *     example_get_module_info,
+ *     example_get_applet_info,
+ *     example_get_applet_type,
+ *     example_setup_about // or NULL if not needed
+ *   };
+ * }
+ * ]|
  */
 
 /**
