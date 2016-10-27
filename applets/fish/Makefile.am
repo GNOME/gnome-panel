@@ -1,15 +1,15 @@
 NULL =
 
-fish_applet_libdir = $(pkglibdir)
-fish_applet_lib_LTLIBRARIES = libfish-applet.la
+fish_libdir = $(pkglibdir)
+fish_lib_LTLIBRARIES = fish.la
 
-libfish_applet_la_SOURCES = \
+fish_la_SOURCES = \
 	fish-applet.c \
 	fish-applet.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-libfish_applet_la_CPPFLAGS = \
+fish_la_CPPFLAGS = \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir)/../../libpanel-applet \
@@ -18,26 +18,26 @@ libfish_applet_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-libfish_applet_la_CFLAGS = \
+fish_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(FISH_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libfish_applet_la_LIBADD = \
+fish_la_LIBADD = \
 	$(top_builddir)/libpanel-applet/libpanel-applet.la \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(FISH_LIBS) \
 	$(NULL)
 
-libfish_applet_la_LDFLAGS = \
+fish_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/libfish-applet.so
+APPLET_LOCATION   = $(pkglibdir)/fish.so
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.FishApplet.panel-applet.in
