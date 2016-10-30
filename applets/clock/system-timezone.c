@@ -143,7 +143,7 @@ system_timezone_class_init (SystemTimezoneClass *class)
 			      G_SIGNAL_RUN_FIRST,
 			      G_STRUCT_OFFSET (SystemTimezoneClass, changed),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__STRING,
+			      NULL,
 			      G_TYPE_NONE, 1, G_TYPE_STRING);
 
         g_type_class_add_private (class, sizeof (SystemTimezonePrivate));

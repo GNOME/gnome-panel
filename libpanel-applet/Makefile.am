@@ -36,13 +36,6 @@ libpanel_applet_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
-
-panel-applet-marshal.c: panel-applet-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)echo "#include \"panel-applet-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=panel_applet_marshal >> $@
-
 panel_applet_enum_headers = $(top_srcdir)/libpanel-applet/panel-applet.h
 
 panel-applet-enums.c: $(panel_applet_enum_headers)
@@ -76,14 +69,12 @@ panel-applet-enums.h: $(panel_applet_enum_headers)
 BUILT_SOURCES = \
 	panel-applet-enums.c			\
 	panel-applet-enums.h			\
-	panel-applet-marshal.c			\
-	panel-applet-marshal.h
+	$(NULL)
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanel-applet.pc
 
 EXTRA_DIST =						\
-	panel-applet-marshal.list			\
 	libpanel-applet.pc.in
 
 CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)

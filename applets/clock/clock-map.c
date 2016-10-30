@@ -13,7 +13,6 @@
 #include "clock.h"
 #include "clock-map.h"
 #include "clock-sunpos.h"
-#include "clock-marshallers.h"
 
 G_DEFINE_TYPE (ClockMap, clock_map, GTK_TYPE_WIDGET)
 
@@ -117,7 +116,7 @@ clock_map_class_init (ClockMapClass *this_class)
 						G_STRUCT_OFFSET (ClockMapClass, need_locations),
 						NULL,
 						NULL,
-						_clock_marshal_POINTER__VOID,
+						NULL,
 						G_TYPE_POINTER, 0);
 }
 

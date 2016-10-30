@@ -35,7 +35,6 @@
 #include "panel-bindings.h"
 #include "panel.h"
 #include "applet.h"
-#include "panel-marshal.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-object-loader.h"
@@ -483,7 +482,7 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass)
                 g_signal_new ("move_focus_out_of_applet",
                               G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
                               G_STRUCT_OFFSET (PanelAppletFrameClass, move_focus_out_of_applet),
-                              NULL, NULL, g_cclosure_marshal_VOID__ENUM,
+                              NULL, NULL, NULL,
                               G_TYPE_NONE, 1, GTK_TYPE_DIRECTION_TYPE);
 
 	binding_set = gtk_binding_set_by_class (gobject_class);

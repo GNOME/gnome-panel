@@ -41,7 +41,6 @@
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
 #include "panel-typebuiltins.h"
-#include "panel-marshal.h"
 #include "panel-widget.h"
 #include "panel-bindings.h"
 #include "panel-struts.h"
@@ -3873,7 +3872,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, hiding),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE,
 			      0);
 
@@ -3884,7 +3883,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, unhiding),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE,
 			      0);
 
@@ -3895,7 +3894,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, popup_panel_menu),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3906,7 +3905,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_expand),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3917,7 +3916,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, expand),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3928,7 +3927,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, unexpand),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3939,7 +3938,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_hidden),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3950,7 +3949,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, begin_move),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 
@@ -3961,7 +3960,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_STRUCT_OFFSET (PanelToplevelClass, begin_resize),
 			      NULL,
 			      NULL,
-			      panel_marshal_BOOLEAN__VOID,
+			      NULL,
 			      G_TYPE_BOOLEAN,
 			      0);
 

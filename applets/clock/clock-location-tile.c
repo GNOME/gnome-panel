@@ -14,7 +14,6 @@
 #include "clock-location-tile.h"
 #include "clock-location.h"
 #include "clock-utils.h"
-#include "clock-marshallers.h"
 #include "set-timezone.h"
 
 G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
@@ -103,7 +102,7 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 					      G_STRUCT_OFFSET (ClockLocationTileClass, tile_pressed),
 					      NULL,
 					      NULL,
-					      g_cclosure_marshal_VOID__VOID,
+					      NULL,
 					      G_TYPE_NONE, 0);
 	signals[NEED_CLOCK_FORMAT] = g_signal_new ("need-clock-format",
 						   G_TYPE_FROM_CLASS (g_obj_class),
@@ -111,7 +110,7 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 						   G_STRUCT_OFFSET (ClockLocationTileClass, need_clock_format),
 						   NULL,
 						   NULL,
-						   _clock_marshal_INT__VOID,
+						   NULL,
 						   G_TYPE_INT, 0);
 }
 

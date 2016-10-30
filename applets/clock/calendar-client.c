@@ -209,7 +209,7 @@ calendar_client_class_init (CalendarClientClass *klass)
 		  G_STRUCT_OFFSET (CalendarClientClass, tasks_changed),
 		  NULL,
 		  NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  NULL,
 		  G_TYPE_NONE,
 		  0);
 
@@ -220,7 +220,7 @@ calendar_client_class_init (CalendarClientClass *klass)
 		  G_STRUCT_OFFSET (CalendarClientClass, tasks_changed),
 		  NULL,
 		  NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  NULL,
 		  G_TYPE_NONE,
 		  0);
 }

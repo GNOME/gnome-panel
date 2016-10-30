@@ -140,7 +140,6 @@ gnome_panel_LDFLAGS = \
 gnome_desktop_item_edit_SOURCES =	\
 	gnome-desktop-item-edit.c	\
 	panel-ditem-editor.c		\
-	panel-marshal.c			\
 	panel-util.c			\
 	xstuff.c
 
@@ -169,13 +168,6 @@ panel_enum_headers =						\
 	$(top_srcdir)/gnome-panel/panel-enums.h			\
 	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
 	$(top_srcdir)/gnome-panel/panel-types.h
-
-panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@
-
-panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
-	$(AM_V_GEN)echo "#include \"panel-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=panel_marshal >> $@
 
 panel-typebuiltins.c: $(panel_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
@@ -210,8 +202,6 @@ BUILT_SOURCES = \
 	panel-typebuiltins.h \
 	panel-resources.c \
 	panel-resources.h \
-	panel-marshal.c \
-	panel-marshal.h \
 	$(NULL)
 
 ui_FILES =					\
@@ -238,7 +228,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =					\
 	$(ui_FILES)				\
 	panel.gresource.xml			\
-	panel-marshal.list			\
 	wanda_no_sea.png			\
 	$(desktop_in_in_files) \
 	$(NULL)

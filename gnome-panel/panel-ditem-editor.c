@@ -36,7 +36,6 @@
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
 #include "panel-util.h"
-#include "panel-marshal.h"
 
 struct _PanelDItemEditorPrivate
 {
@@ -387,7 +386,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE, 0);
 
 	ditem_edit_signals[CHANGED] =
@@ -398,7 +397,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE, 0);
 
 	ditem_edit_signals[NAME_CHANGED] =
@@ -409,7 +408,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       name_changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__STRING,
+			      NULL,
 			      G_TYPE_NONE, 1,
 			      G_TYPE_STRING);
 
@@ -421,7 +420,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       command_changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__STRING,
+			      NULL,
 			      G_TYPE_NONE, 1,
 			      G_TYPE_STRING);
 
@@ -433,7 +432,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       comment_changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__STRING,
+			      NULL,
 			      G_TYPE_NONE, 1,
 			      G_TYPE_STRING);
 
@@ -445,7 +444,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       icon_changed),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__STRING,
+			      NULL,
 			      G_TYPE_NONE, 1,
 			      G_TYPE_STRING);
 
@@ -457,7 +456,7 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 					       error_reported),
 			      NULL,
 			      NULL,
-			      panel_marshal_VOID__STRING_STRING,
+			      NULL,
 			      G_TYPE_NONE, 2,
 			      G_TYPE_STRING, G_TYPE_STRING);
 

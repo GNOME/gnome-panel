@@ -23,7 +23,6 @@
 #include <panel-applets-manager.h>
 
 #include "panel-applet-container.h"
-#include "panel-marshal.h"
 
 struct _PanelAppletContainerPrivate {
 	GDBusProxy *applet_proxy;
@@ -164,7 +163,7 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 			      G_STRUCT_OFFSET (PanelAppletContainerClass, applet_move),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE,
 			      0);
 	signals[APPLET_REMOVE] =
@@ -174,7 +173,7 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 			      G_STRUCT_OFFSET (PanelAppletContainerClass, applet_remove),
 			      NULL,
 			      NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE,
 			      0);
 	signals[CHILD_PROPERTY_CHANGED] =
@@ -185,7 +184,7 @@ panel_applet_container_class_init (PanelAppletContainerClass *klass)
 			      G_STRUCT_OFFSET (PanelAppletContainerClass, child_property_changed),
 			      NULL,
 			      NULL,
-			      panel_marshal_VOID__STRING_POINTER,
+			      NULL,
 			      G_TYPE_NONE, 2,
 			      G_TYPE_STRING,
 			      G_TYPE_POINTER);

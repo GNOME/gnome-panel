@@ -17,7 +17,6 @@
 #include <gio/gio.h>
 
 #include "clock-location.h"
-#include "clock-marshallers.h"
 #include "set-timezone.h"
 #include "system-timezone.h"
 
@@ -108,7 +107,7 @@ clock_location_class_init (ClockLocationClass *this_class)
 			      G_SIGNAL_RUN_FIRST,
 			      G_STRUCT_OFFSET (ClockLocationClass, weather_updated),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__POINTER,
+			      NULL,
 			      G_TYPE_NONE, 1, G_TYPE_POINTER);
 
 	location_signals[SET_CURRENT] = 
@@ -117,7 +116,7 @@ clock_location_class_init (ClockLocationClass *this_class)
 			      G_SIGNAL_RUN_FIRST,
 			      G_STRUCT_OFFSET (ClockLocationClass, set_current),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__VOID,
+			      NULL,
 			      G_TYPE_NONE, 0);
 
         g_type_class_add_private (this_class, sizeof (ClockLocationPrivate));

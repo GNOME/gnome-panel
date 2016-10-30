@@ -49,7 +49,6 @@ IGNORE_HFILES = \
 	panel-applet-bindings.h \
 	panel-applet-enums.h \
 	panel-applet-factory.h \
-	panel-applet-marshal.h \
 	panel-applet-private.h \
 	$(NULL)
 

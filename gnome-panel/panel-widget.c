@@ -21,7 +21,6 @@
 #include "panel.h"
 #include "panel-bindings.h"
 #include "panel-util.h"
-#include "panel-marshal.h"
 #include "panel-typebuiltins.h"
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
@@ -275,7 +274,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_move),
                               NULL,
                               NULL, 
-                              g_cclosure_marshal_VOID__POINTER,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -287,7 +286,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_added),
                               NULL,
                               NULL, 
-                              g_cclosure_marshal_VOID__POINTER,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -299,7 +298,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, applet_removed),
                               NULL,
                               NULL, 
-                              g_cclosure_marshal_VOID__POINTER,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_POINTER); 
@@ -311,7 +310,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, push_move),
                               NULL,
                               NULL,
-                              g_cclosure_marshal_VOID__ENUM,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
@@ -323,7 +322,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, switch_move),
                               NULL,
                               NULL,
-                              g_cclosure_marshal_VOID__ENUM,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
@@ -335,7 +334,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			      G_STRUCT_OFFSET (PanelWidgetClass, tab_move),
                               NULL,
                               NULL,
-                              g_cclosure_marshal_VOID__BOOLEAN,
+                              NULL,
                               G_TYPE_NONE,
                               1,
                               G_TYPE_BOOLEAN);
@@ -347,7 +346,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, end_move),
                               NULL,
                               NULL,
-                              g_cclosure_marshal_VOID__VOID,
+                              NULL,
                               G_TYPE_NONE,
                               0);
 

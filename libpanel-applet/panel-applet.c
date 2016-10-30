@@ -37,7 +37,6 @@
 #include "panel-applet-private.h"
 #include "panel-applet-bindings.h"
 #include "panel-applet-factory.h"
-#include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
 
 /**
@@ -1187,8 +1186,7 @@ panel_applet_set_property (GObject      *object,
 		 * panel_applet_constructed() with a proper message if this is
 		 * the case. */
 		if (applet->priv->closure)
-			g_closure_set_marshal (applet->priv->closure,
-					       panel_applet_marshal_BOOLEAN__STRING);
+			g_closure_set_marshal (applet->priv->closure, g_cclosure_marshal_generic);
 		break;
 	case PROP_CONNECTION:
 		applet->priv->connection = g_value_dup_object (value);

@@ -155,7 +155,7 @@ calendar_sources_class_init (CalendarSourcesClass *klass)
 				   appointment_sources_changed),
 		  NULL,
 		  NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  NULL,
 		  G_TYPE_NONE,
 		  0);
 
@@ -167,7 +167,7 @@ calendar_sources_class_init (CalendarSourcesClass *klass)
 				   task_sources_changed),
 		  NULL,
 		  NULL,
-		  g_cclosure_marshal_VOID__VOID,
+		  NULL,
 		  G_TYPE_NONE,
 		  0);
 }

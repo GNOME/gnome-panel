@@ -1750,7 +1750,7 @@ calendar_window_class_init (CalendarWindowClass *klass)
 						G_STRUCT_OFFSET (CalendarWindowClass, edit_locations),
 						NULL,
 						NULL,
-						g_cclosure_marshal_VOID__VOID,
+						NULL,
 						G_TYPE_NONE, 0);
 
 	g_object_class_install_property (

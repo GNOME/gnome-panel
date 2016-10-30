@@ -102,12 +102,6 @@ clock_appletlibdir = $(pkglibdir)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
 
-clock-marshallers.c: clock-marshallers.list
-	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --body --internal $< > $@
-
-clock-marshallers.h: clock-marshallers.list
-	$(AM_V_GEN)glib-genmarshal --prefix _clock_marshal --header --internal $< > $@
-
 clock_enum_headers =					\
 	$(top_srcdir)/applets/clock/clock-utils.h
 
@@ -140,8 +134,6 @@ clock-typebuiltins.h: $(clock_enum_headers)
 		$(clock_enum_headers) > $@
 
 BUILT_SOURCES =					\
-	clock-marshallers.c			\
-	clock-marshallers.h			\
 	clock-resources.c			\
 	clock-resources.h			\
 	clock-typebuiltins.c			\
@@ -173,7 +165,7 @@ EXTRA_DIST =						\
 	org.gnome.panel.ClockApplet.panel-applet.in.in	\
 	$(ui_FILES)					\
 	clock.gresource.xml				\
-	clock-marshallers.list
+	$(NULL)
 
 CLEANFILES =			\
 	$(BUILT_SOURCES)	\
