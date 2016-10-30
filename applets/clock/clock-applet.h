@@ -25,10 +25,15 @@
 #ifndef CLOCK_APPLET_H
 #define CLOCK_APPLET_H
 
+#include <panel-applet.h>
+
 G_BEGIN_DECLS
 
 #define CLOCK_ICON "gnome-panel-clock"
 #define CLOCK_RESOURCE_PATH "/org/gnome/panel/applet/clock/"
+
+#define CLOCK_TYPE_APPLET clock_applet_get_type ()
+G_DECLARE_FINAL_TYPE (ClockApplet, clock_applet, CLOCK, APPLET, PanelApplet)
 
 G_END_DECLS
 

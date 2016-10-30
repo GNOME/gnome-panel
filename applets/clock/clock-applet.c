@@ -39,8 +39,6 @@
 #include <math.h>
 #include <locale.h>
 
-#include <panel-applet.h>
-
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gio/gdesktopappinfo.h>
@@ -70,12 +68,11 @@ enum {
 	COL_CITY_LAST
 };
 
-typedef struct _ClockData ClockData;
+struct _ClockApplet
+{
+	PanelApplet parent;
 
-struct _ClockData {
 	/* widgets */
-	GtkWidget *applet;
-
         GtkWidget *panel_button;	/* main toggle button for the whole clock */
 
 	GtkWidget *main_obox;		/* orientable box inside panel_button */
@@ -140,34 +137,19 @@ struct _ClockData {
 	gboolean   can_handle_format_12;
 };
 
-static void  update_clock (GnomeWallClock *, GParamSpec *, ClockData * cd);
-static void  update_tooltip (ClockData * cd);
-static void  update_panel_weather (ClockData *cd);
+G_DEFINE_TYPE (ClockApplet, clock_applet, PANEL_TYPE_APPLET)
 
-static void set_atk_name_description (GtkWidget *widget,
-                                      const char *name,
-                                      const char *desc);
-static void verb_display_properties_dialog (GSimpleAction *action,
-                                            GVariant      *parameter,
-                                            gpointer       user_data);
+static void display_properties_dialog (ClockApplet       *applet,
+                                       gboolean           start_in_locations_page);
 
-static void display_properties_dialog (ClockData  *cd,
-                                       gboolean    start_in_locations_page);
-static void position_calendar_popup   (ClockData  *cd);
-static void update_orient (ClockData *cd);
-static void applet_change_orient (PanelApplet       *applet,
-				  PanelAppletOrient  orient,
-				  ClockData         *cd);
-
-static void edit_hide (GtkWidget *unused, ClockData *cd);
-static gboolean edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd);
-static void save_cities_store (ClockData *cd);
-
-/* Clock */
+static void update_orient             (ClockApplet       *applet);
+static void applet_change_orient      (PanelApplet       *papplet,
+                                       PanelAppletOrient  orient,
+                                       ClockApplet       *applet);
 
 static inline GtkWidget *
-_clock_get_widget (ClockData  *cd,
-		   const char *name)
+_clock_get_widget (ClockApplet *cd,
+                   const gchar *name)
 {
 	return GTK_WIDGET (gtk_builder_get_object (cd->builder, name));
 }
@@ -221,7 +203,7 @@ set_atk_name_description (GtkWidget  *widget,
 }
 
 static void
-update_location_tiles (ClockData *cd)
+update_location_tiles (ClockApplet *cd)
 {
         GList *l;
 
@@ -234,25 +216,7 @@ update_location_tiles (ClockData *cd)
 }
 
 static void
-update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockData * cd)
-{
-        const char *clock;
-
-        clock = gnome_wall_clock_get_clock (cd->wall_clock);
-        gtk_label_set_text (GTK_LABEL (cd->clockw), clock);
-
-	update_orient (cd);
-	gtk_widget_queue_resize (cd->panel_button);
-
-	update_tooltip (cd);
-        update_location_tiles (cd);
-
-        if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
-                clock_map_update_time (CLOCK_MAP (cd->map_widget));
-}
-
-static void
-update_tooltip (ClockData * cd)
+update_tooltip (ClockApplet *cd)
 {
         gboolean show_date;
 
@@ -291,7 +255,25 @@ update_tooltip (ClockData * cd)
 }
 
 static void
-free_locations (ClockData *cd)
+update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockApplet *cd)
+{
+        const char *clock;
+
+        clock = gnome_wall_clock_get_clock (cd->wall_clock);
+        gtk_label_set_text (GTK_LABEL (cd->clockw), clock);
+
+        update_orient (cd);
+        gtk_widget_queue_resize (cd->panel_button);
+
+        update_tooltip (cd);
+        update_location_tiles (cd);
+
+        if (cd->map_widget && cd->calendar_popup && gtk_widget_get_visible (cd->calendar_popup))
+                clock_map_update_time (CLOCK_MAP (cd->map_widget));
+}
+
+static void
+free_locations (ClockApplet *cd)
 {
         GList *l;
 
@@ -300,45 +282,6 @@ free_locations (ClockData *cd)
 
         g_list_free (cd->locations);
         cd->locations = NULL;
-}
-
-static void
-destroy_clock (GtkWidget * widget, ClockData *cd)
-{
-        g_clear_object (&cd->applet_settings);
-        g_clear_object (&cd->clock_settings);
-        g_clear_object (&cd->weather_settings);
-
-        g_clear_object (&cd->wall_clock);
-
-	if (cd->props)
-		gtk_widget_destroy (cd->props);
-        cd->props = NULL;
-
-	if (cd->calendar_popup)
-		gtk_widget_destroy (cd->calendar_popup);
-	cd->calendar_popup = NULL;
-
-	if (cd->datetime_appinfo)
-		g_object_unref (cd->datetime_appinfo);
-	cd->datetime_appinfo = NULL;
-
-        free_locations (cd);
-
-        g_list_free (cd->location_tiles);
-        cd->location_tiles = NULL;
-
-        if (cd->cities_store) {
-                g_object_unref (cd->cities_store);
-                cd->cities_store = NULL;
-        }
-
-	if (cd->builder) {
-		g_object_unref (cd->builder);
-		cd->builder = NULL;
-	}
-
-	g_free (cd);
 }
 
 static gboolean
@@ -366,7 +309,7 @@ delete_event (GtkWidget       *widget,
 static void
 edit_locations_cb (CalendarWindow *calwin, gpointer data)
 {
-        ClockData *cd;
+        ClockApplet *cd;
 
         cd = data;
 
@@ -374,14 +317,14 @@ edit_locations_cb (CalendarWindow *calwin, gpointer data)
 }
 
 static GtkWidget *
-create_calendar (ClockData *cd)
+create_calendar (ClockApplet *cd)
 {
 	GtkWidget *window;
 
 	window = calendar_window_new (cd->applet_settings,
 				      cd->orient == PANEL_APPLET_ORIENT_UP);
 
-	g_object_bind_property (cd->applet, "locked-down",
+	g_object_bind_property (cd, "locked-down",
 				window, "locked-down",
 				G_BINDING_DEFAULT|G_BINDING_SYNC_CREATE);
 
@@ -391,7 +334,7 @@ create_calendar (ClockData *cd)
 					 g_settings_get_enum (cd->clock_settings, "clock-format"));
 
         gtk_window_set_screen (GTK_WINDOW (window),
-			       gtk_widget_get_screen (cd->applet));
+			       gtk_widget_get_screen (GTK_WIDGET (cd)));
 
         g_signal_connect (window, "edit-locations",
                           G_CALLBACK (edit_locations_cb), cd);
@@ -405,7 +348,7 @@ create_calendar (ClockData *cd)
 }
 
 static void
-get_monitor_geometry (ClockData    *cd,
+get_monitor_geometry (ClockApplet  *applet,
                       GdkRectangle *geometry)
 {
 	GdkDisplay *display;
@@ -413,14 +356,14 @@ get_monitor_geometry (ClockData    *cd,
 	GdkMonitor *monitor;
 
 	display = gdk_display_get_default ();
-	window = gtk_widget_get_window (cd->panel_button);
+	window = gtk_widget_get_window (applet->panel_button);
 	monitor = gdk_display_get_monitor_at_window (display, window);
 
 	gdk_monitor_get_geometry (monitor, geometry);
 }
 
 static void
-position_calendar_popup (ClockData *cd)
+position_calendar_popup (ClockApplet *cd)
 {
 	GtkRequisition  req;
 	GtkAllocation   allocation;
@@ -507,7 +450,7 @@ add_to_group (GtkWidget *child, gpointer data)
 }
 
 static void
-create_clock_window (ClockData *cd)
+create_clock_window (ClockApplet *cd)
 {
 	GtkWidget *locations_box;
 
@@ -537,7 +480,7 @@ sort_locations_by_name (gconstpointer a, gconstpointer b)
 }
 
 static void
-create_cities_store (ClockData *cd)
+create_cities_store (ClockApplet *cd)
 {
 	GtkTreeIter iter;
         GList *cities = cd->locations;
@@ -603,7 +546,7 @@ sort_locations_by_time (gconstpointer a, gconstpointer b)
 static void
 location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
 {
-        ClockData *cd = data;
+        ClockApplet *cd = data;
         ClockLocation *loc;
 
         loc = clock_location_tile_get_location (tile);
@@ -616,13 +559,13 @@ location_tile_pressed_cb (ClockLocationTile *tile, gpointer data)
 static int
 location_tile_need_clock_format_cb(ClockLocationTile *tile, gpointer data)
 {
-        ClockData *cd = data;
+        ClockApplet *cd = data;
 
         return g_settings_get_enum (cd->clock_settings, "clock-format");
 }
 
 static void
-create_cities_section (ClockData *cd)
+create_cities_section (ClockApplet *cd)
 {
         GList *node;
         ClockLocationTile *city;
@@ -683,13 +626,13 @@ create_cities_section (ClockData *cd)
 static GList *
 map_need_locations_cb (ClockMap *map, gpointer data)
 {
-        ClockData *cd = data;
+        ClockApplet *cd = data;
 
         return cd->locations;
 }
 
 static void
-create_map_section (ClockData *cd)
+create_map_section (ClockApplet *cd)
 {
         ClockMap *map;
 
@@ -714,7 +657,7 @@ create_map_section (ClockData *cd)
 }
 
 static void
-update_calendar_popup (ClockData *cd)
+update_calendar_popup (ClockApplet *cd)
 {
         if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (cd->panel_button))) {
                 if (cd->calendar_popup) {
@@ -752,7 +695,7 @@ update_calendar_popup (ClockData *cd)
 
 static void
 toggle_calendar (GtkWidget *button,
-                 ClockData *cd)
+                 ClockApplet *cd)
 {
 	/* if time is wrong, the user might try to fix it by clicking on the
 	 * clock */
@@ -795,7 +738,7 @@ create_main_clock_button (void)
 }
 
 static GtkWidget *
-create_main_clock_label (ClockData *cd)
+create_main_clock_label (ClockApplet *cd)
 {
         GtkWidget *label;
 
@@ -806,7 +749,7 @@ create_main_clock_label (ClockData *cd)
 			  G_CALLBACK (clock_update_text_gravity),
 			  NULL);
 
-        panel_applet_add_text_class (PANEL_APPLET (cd->applet), label);
+        panel_applet_add_text_class (PANEL_APPLET (cd), label);
 
         return label;
 }
@@ -817,7 +760,7 @@ weather_tooltip (GtkWidget   *widget,
                  gint         y,
                  gboolean     keyboard_mode,
                  GtkTooltip  *tooltip,
-                 ClockData   *cd)
+                 ClockApplet *cd)
 {
         GList *locations, *l;
         GWeatherInfo *info;
@@ -842,7 +785,24 @@ weather_tooltip (GtkWidget   *widget,
 }
 
 static void
-create_clock_widget (ClockData *cd)
+update_panel_weather (ClockApplet *cd)
+{
+        gboolean show_weather, show_temperature;
+
+        show_weather = g_settings_get_boolean (cd->applet_settings, "show-weather");
+        show_temperature = g_settings_get_boolean (cd->applet_settings, "show-temperature");
+
+        if ((show_weather || show_temperature) &&
+            g_list_length (cd->locations) > 0)
+                gtk_widget_show (cd->weather_obox);
+        else
+                gtk_widget_hide (cd->weather_obox);
+
+        gtk_widget_queue_resize (GTK_WIDGET (cd));
+}
+
+static void
+create_clock_widget (ClockApplet *cd)
 {
         cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
         g_signal_connect (cd->wall_clock, "notify::clock",
@@ -854,9 +814,6 @@ create_clock_widget (ClockData *cd)
 			  G_CALLBACK (do_not_eat_button_press), NULL);
 	g_signal_connect (cd->panel_button, "toggled",
 			  G_CALLBACK (toggle_calendar), cd);
-	g_signal_connect (G_OBJECT (cd->panel_button), "destroy",
-			  G_CALLBACK (destroy_clock),
-			  cd);
         gtk_widget_show (cd->panel_button);
 
         /* Main orientable box */
@@ -889,11 +846,10 @@ create_clock_widget (ClockData *cd)
 
         /* Done! */
 
-	set_atk_name_description (GTK_WIDGET (cd->applet), NULL,
-	                          _("Computer Clock"));
+	set_atk_name_description (GTK_WIDGET (cd), NULL, _("Computer Clock"));
 
-	gtk_container_add (GTK_CONTAINER (cd->applet), cd->panel_button);
-	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
+	gtk_container_add (GTK_CONTAINER (cd), cd->panel_button);
+	gtk_container_set_border_width (GTK_CONTAINER (cd), 0);
 
 	cd->props = NULL;
 	cd->orient = -1;
@@ -902,13 +858,13 @@ create_clock_widget (ClockData *cd)
 
 	/* Refresh the clock so that it paints its first state */
         update_clock (NULL, NULL, cd);
-	applet_change_orient (PANEL_APPLET (cd->applet),
-			      panel_applet_get_orient (PANEL_APPLET (cd->applet)),
+	applet_change_orient (PANEL_APPLET (cd),
+			      panel_applet_get_orient (PANEL_APPLET (cd)),
 			      cd);
 }
 
 static void
-update_orient (ClockData *cd)
+update_orient (ClockApplet *cd)
 {
 	const gchar   *text;
 	int            min_width;
@@ -938,9 +894,9 @@ update_orient (ClockData *cd)
 
 /* this is when the panel orientation changes */
 static void
-applet_change_orient (PanelApplet       *applet,
-		      PanelAppletOrient  orient,
-		      ClockData         *cd)
+applet_change_orient (PanelApplet       *papplet,
+                      PanelAppletOrient  orient,
+                      ClockApplet       *cd)
 {
         GtkOrientation o;
 
@@ -978,7 +934,7 @@ applet_change_orient (PanelApplet       *applet,
 static void
 panel_button_change_pixel_size (GtkWidget     *widget,
                                 GtkAllocation *allocation,
-                                ClockData	*cd)
+                                ClockApplet   *cd)
 {
 	if (cd->old_allocation.width  == allocation->width &&
 	    cd->old_allocation.height == allocation->height)
@@ -990,11 +946,19 @@ panel_button_change_pixel_size (GtkWidget     *widget,
 }
 
 static void
+verb_display_properties_dialog (GSimpleAction *action,
+                                GVariant      *parameter,
+                                gpointer       user_data)
+{
+        display_properties_dialog (CLOCK_APPLET (user_data), FALSE);
+}
+
+static void
 copy_time (GSimpleAction *action,
            GVariant      *parameter,
 	   gpointer       user_data)
 {
-        ClockData *cd = (ClockData *) user_data;
+	ClockApplet *cd = (ClockApplet *) user_data;
 	const char *time;
 
         time = gnome_wall_clock_get_clock (cd->wall_clock);
@@ -1006,14 +970,14 @@ copy_time (GSimpleAction *action,
 }
 
 static void
-ensure_datetime_appinfo (ClockData *cd)
+ensure_datetime_appinfo (ClockApplet *cd)
 {
 	if (!cd->datetime_appinfo)
 		cd->datetime_appinfo = (GAppInfo *) g_desktop_app_info_new ("gnome-datetime-panel.desktop");
 }
 
 static void
-update_set_time_button (ClockData *cd)
+update_set_time_button (ClockApplet *cd)
 {
 	if (!cd->time_settings_button)
 		return;
@@ -1025,7 +989,8 @@ update_set_time_button (ClockData *cd)
 }
 
 static void
-run_time_settings (GtkWidget *unused, ClockData *cd)
+run_time_settings (GtkWidget   *unused,
+                   ClockApplet *cd)
 {
 	GdkScreen           *screen;
 	GdkDisplay          *display;
@@ -1038,7 +1003,7 @@ run_time_settings (GtkWidget *unused, ClockData *cd)
 	if (!cd->datetime_appinfo)
 		return;
 
-	screen = gtk_widget_get_screen (cd->applet);
+        screen = gtk_widget_get_screen (GTK_WIDGET (cd));
         display = gdk_screen_get_display (screen);
         context = gdk_display_get_app_launch_context (display);
         gdk_app_launch_context_set_screen (context, screen);
@@ -1072,8 +1037,7 @@ config_date (GSimpleAction *action,
              GVariant      *parameter,
              gpointer       user_data)
 {
-        ClockData *cd = (ClockData *) user_data;
-	run_time_settings (NULL, cd);
+	run_time_settings (NULL, CLOCK_APPLET (user_data));
 }
 
 static const GActionEntry clock_menu_actions [] = {
@@ -1083,9 +1047,9 @@ static const GActionEntry clock_menu_actions [] = {
 };
 
 static void
-format_changed (GSettings    *settings,
-                const char   *key,
-                ClockData    *clock)
+format_changed (GSettings   *settings,
+                const gchar *key,
+                ClockApplet *clock)
 {
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_time_format (CALENDAR_WINDOW (clock->calendar_popup),
@@ -1096,28 +1060,11 @@ format_changed (GSettings    *settings,
 }
 
 static void
-update_panel_weather (ClockData *cd)
-{
-        gboolean show_weather, show_temperature;
-
-        show_weather = g_settings_get_boolean (cd->applet_settings, "show-weather");
-        show_temperature = g_settings_get_boolean (cd->applet_settings, "show-temperature");
-
-	if ((show_weather || show_temperature) &&
-	    g_list_length (cd->locations) > 0)
-                gtk_widget_show (cd->weather_obox);
-        else
-                gtk_widget_hide (cd->weather_obox);
-
-	gtk_widget_queue_resize (cd->applet);
-}
-
-static void
 location_weather_updated_cb (ClockLocation  *location,
                              GWeatherInfo   *info,
                              gpointer        data)
 {
-	ClockData *cd = data;
+	ClockApplet *cd = data;
 	const gchar *icon_name;
 	const gchar *temp;
 	GtkIconTheme *theme;
@@ -1145,7 +1092,7 @@ static void
 location_set_current_cb (ClockLocation *loc, 
 			 gpointer       data)
 {
-	ClockData *cd = data;
+	ClockApplet *cd = data;
 	GWeatherInfo *info;
 
 	info = clock_location_get_weather_info (loc);
@@ -1157,9 +1104,9 @@ location_set_current_cb (ClockLocation *loc,
 }
 
 static void
-locations_changed (GSettings  *settings,
-                   const char *key,
-                   ClockData  *cd)
+locations_changed (GSettings   *settings,
+                   const gchar *key,
+                   ClockApplet *cd)
 {
 	GList *l;
 	ClockLocation *loc;
@@ -1200,9 +1147,9 @@ locations_changed (GSettings  *settings,
 }
 
 static void
-show_week_changed (GSettings    *settings,
-                   const char   *key,
-		   ClockData    *clock)
+show_week_changed (GSettings   *settings,
+                   const gchar *key,
+                   ClockApplet *clock)
 {
 	if (clock->calendar_popup != NULL) {
 		calendar_window_set_show_weeks (CALENDAR_WINDOW (clock->calendar_popup),
@@ -1212,7 +1159,7 @@ show_week_changed (GSettings    *settings,
 }
 
 static void
-load_cities (ClockData *cd)
+load_cities (ClockApplet *cd)
 {
         GVariantIter *iter;
         const char *name;
@@ -1239,13 +1186,13 @@ load_cities (ClockData *cd)
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
-	ClockData          *cd;
+        ClockApplet *cd;
         GSimpleActionGroup *action_group;
         GAction            *action;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
-	cd = g_new0 (ClockData, 1);
+	cd = CLOCK_APPLET (applet);
 
 	cd->applet_settings = panel_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
         cd->clock_settings = g_settings_new ("org.gnome.desktop.interface");
@@ -1258,8 +1205,6 @@ fill_clock_applet (PanelApplet *applet)
         g_signal_connect (cd->applet_settings, "changed::cities",
                           G_CALLBACK (locations_changed), cd);
 
-	cd->applet = GTK_WIDGET (applet);
-
         cd->world = gweather_location_get_world ();
         load_cities (cd);
         locations_changed (NULL, NULL, cd);
@@ -1270,14 +1215,13 @@ fill_clock_applet (PanelApplet *applet)
 
 	create_clock_widget (cd);
 
-	gtk_widget_show (cd->applet);
+	gtk_widget_show (GTK_WIDGET (cd));
 
 	/* FIXME: Update this comment. */
 	/* we have to bind change_orient before we do applet_widget_add
 	   since we need to get an initial change_orient signal to set our
 	   initial oriantation, and we get that during the _add call */
-	g_signal_connect (G_OBJECT (cd->applet),
-			  "change_orient",
+	g_signal_connect (cd, "change-orient",
 			  G_CALLBACK (applet_change_orient),
 			  cd);
 
@@ -1291,7 +1235,7 @@ fill_clock_applet (PanelApplet *applet)
 	                                 clock_menu_actions,
 	                                 G_N_ELEMENTS (clock_menu_actions),
 	                                 cd);
-	panel_applet_setup_menu_from_resource (PANEL_APPLET (cd->applet),
+	panel_applet_setup_menu_from_resource (PANEL_APPLET (cd),
 					       CLOCK_RESOURCE_PATH "clock-menu.ui",
 					       action_group,
 					       GETTEXT_PACKAGE);
@@ -1300,12 +1244,12 @@ fill_clock_applet (PanelApplet *applet)
 	                                G_ACTION_GROUP (action_group));
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
-	g_object_bind_property (cd->applet, "locked-down",
+	g_object_bind_property (cd, "locked-down",
 				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
 	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "config");
-	g_object_bind_property (cd->applet, "locked-down",
+	g_object_bind_property (cd, "locked-down",
 				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
         g_object_unref (action_group);
@@ -1314,7 +1258,8 @@ fill_clock_applet (PanelApplet *applet)
 }
 
 static void
-prefs_locations_changed (GtkTreeSelection *selection, ClockData *cd)
+prefs_locations_changed (GtkTreeSelection *selection,
+                         ClockApplet      *cd)
 {
         gint n;
 
@@ -1336,7 +1281,7 @@ location_serialize (ClockLocation *loc)
 }
 
 static void
-save_cities_store (ClockData *cd)
+save_cities_store (ClockApplet *cd)
 {
         ClockLocation *loc;
         GVariantBuilder builder;
@@ -1360,7 +1305,39 @@ save_cities_store (ClockData *cd)
 }
 
 static void
-run_prefs_edit_save (GtkButton *button, ClockData *cd)
+edit_clear (ClockApplet *cd)
+{
+        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
+        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
+        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
+        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
+
+        /* clear out the old data */
+        gweather_location_entry_set_location (cd->location_entry, NULL);
+        gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
+
+        gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
+        gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
+        gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
+}
+
+static void
+edit_hide (GtkWidget   *unused,
+           ClockApplet *applet)
+{
+        GtkWidget *edit_window;
+
+        edit_window = _clock_get_widget (applet, "edit-location-window");
+        gtk_widget_hide (edit_window);
+
+        edit_clear (applet);
+}
+
+static void
+run_prefs_edit_save (GtkButton   *button,
+                     ClockApplet *cd)
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
@@ -1455,7 +1432,10 @@ update_coords_helper (gfloat value, GtkWidget *entry, GtkWidget *combo)
 }
 
 static void
-update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
+update_coords (ClockApplet *cd,
+               gboolean     valid,
+               gfloat       lat,
+               gfloat       lon)
 {
         GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
         GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
@@ -1476,7 +1456,8 @@ update_coords (ClockData *cd, gboolean valid, gfloat lat, gfloat lon)
 }
 
 static void
-fill_timezone_combo_from_location (ClockData *cd, ClockLocation *loc)
+fill_timezone_combo_from_location (ClockApplet   *cd,
+                                   ClockLocation *loc)
 {
         if (loc != NULL) {
                 gweather_timezone_menu_set_tzid (cd->zone_combo, 
@@ -1487,7 +1468,7 @@ fill_timezone_combo_from_location (ClockData *cd, ClockLocation *loc)
 }
 
 static void
-location_update_ok_sensitivity (ClockData *cd)
+location_update_ok_sensitivity (ClockApplet *cd)
 {
 	GtkWidget *ok_button;
         const gchar *timezone;
@@ -1508,7 +1489,9 @@ location_update_ok_sensitivity (ClockData *cd)
 }
 
 static void
-location_changed (GObject *object, GParamSpec *param, ClockData *cd)
+location_changed (GObject     *object,
+                  GParamSpec  *param,
+                  ClockApplet *cd)
 {
         GWeatherLocationEntry *entry = GWEATHER_LOCATION_ENTRY (object);
         GWeatherLocation *gloc;
@@ -1534,47 +1517,24 @@ location_changed (GObject *object, GParamSpec *param, ClockData *cd)
 }
 
 static void
-location_name_changed (GObject *object, ClockData *cd)
+location_name_changed (GObject     *object,
+                       ClockApplet *cd)
 {
     location_update_ok_sensitivity (cd);
 }
 
 static void
-location_timezone_changed (GObject *object, GParamSpec *param, ClockData *cd)
+location_timezone_changed (GObject     *object,
+                           GParamSpec  *param,
+                           ClockApplet *cd)
 {
     location_update_ok_sensitivity (cd);
-}
-
-static void
-edit_clear (ClockData *cd)
-{
-        GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
-        GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
-        GtkWidget *lat_combo = _clock_get_widget (cd, "edit-location-latitude-combo");
-        GtkWidget *lon_combo = _clock_get_widget (cd, "edit-location-longitude-combo");
-
-        /* clear out the old data */
-        gweather_location_entry_set_location (cd->location_entry, NULL);
-        gweather_timezone_menu_set_tzid (cd->zone_combo, NULL);
-
-        gtk_entry_set_text (GTK_ENTRY (lat_entry), "");
-        gtk_entry_set_text (GTK_ENTRY (lon_entry), "");
-
-        gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), -1);
-        gtk_combo_box_set_active (GTK_COMBO_BOX (lon_combo), -1);
-}
-
-static void
-edit_hide (GtkWidget *unused, ClockData *cd)
-{
-        GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
-
-        gtk_widget_hide (edit_window);
-        edit_clear (cd);
 }
 
 static gboolean
-edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
+edit_delete (GtkWidget   *unused,
+             GdkEvent    *event,
+             ClockApplet *cd)
 {
 	edit_hide (unused, cd);
 
@@ -1582,7 +1542,7 @@ edit_delete (GtkWidget *unused, GdkEvent *event, ClockData *cd)
 }
 
 static gboolean
-edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockApplet *cd)
 {
         edit_hide (widget, cd);
 
@@ -1590,7 +1550,8 @@ edit_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
 }
 
 static void
-prefs_hide (GtkWidget *widget, ClockData *cd)
+prefs_hide (GtkWidget   *widget,
+            ClockApplet *cd)
 {
         GtkWidget *tree;
 
@@ -1604,7 +1565,9 @@ prefs_hide (GtkWidget *widget, ClockData *cd)
 }
 
 static gboolean
-prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
+prefs_hide_event (GtkWidget   *widget,
+                  GdkEvent    *event,
+                  ClockApplet *cd)
 {
         prefs_hide (widget, cd);
 
@@ -1612,7 +1575,8 @@ prefs_hide_event (GtkWidget *widget, GdkEvent *event, ClockData *cd)
 }
 
 static void
-prefs_help (GtkWidget *widget, ClockData *cd)
+prefs_help (GtkWidget   *widget,
+            ClockApplet *cd)
 {
 	clock_utils_display_help (cd->prefs_window,
 				  "clock", "clock-settings");
@@ -1621,7 +1585,7 @@ prefs_help (GtkWidget *widget, ClockData *cd)
 static void
 remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-        ClockData *cd = data;
+        ClockApplet *cd = data;
         ClockLocation *loc = NULL;
 
         gtk_tree_model_get (model, iter, COL_CITY_LOC, &loc, -1);
@@ -1634,7 +1598,8 @@ remove_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoi
 }
 
 static void
-run_prefs_locations_remove (GtkButton *button, ClockData *cd)
+run_prefs_locations_remove (GtkButton   *button,
+                            ClockApplet *cd)
 {
         GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
 
@@ -1642,7 +1607,8 @@ run_prefs_locations_remove (GtkButton *button, ClockData *cd)
 }
 
 static void
-run_prefs_locations_add (GtkButton *button, ClockData *cd)
+run_prefs_locations_add (GtkButton   *button,
+                         ClockApplet *cd)
 {
         GtkWidget *edit_window = _clock_get_widget (cd, "edit-location-window");
 
@@ -1668,7 +1634,7 @@ run_prefs_locations_add (GtkButton *button, ClockData *cd)
 static void
 edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer data)
 {
-        ClockData *cd = data;
+        ClockApplet *cd = data;
         ClockLocation *loc;
         const char *name;
         gchar *tmp;
@@ -1733,7 +1699,8 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 }
 
 static void
-run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
+run_prefs_locations_edit (GtkButton   *unused,
+                          ClockApplet *cd)
 {
         GtkTreeSelection *sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (cd->prefs_locations));
 
@@ -1741,7 +1708,8 @@ run_prefs_locations_edit (GtkButton *unused, ClockData *cd)
 }
 
 static void
-set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
+set_12hr_format_radio_cb (GtkWidget   *widget,
+                          ClockApplet *cd)
 {
         GDesktopClockFormat format;
 
@@ -1754,7 +1722,7 @@ set_12hr_format_radio_cb (GtkWidget *widget, ClockData *cd)
 }
 
 static void
-fill_prefs_window (ClockData *cd)
+fill_prefs_window (ClockApplet *cd)
 {
         struct int_char_pair {
                 int v;
@@ -1883,7 +1851,7 @@ fill_prefs_window (ClockData *cd)
 }
 
 static void
-ensure_prefs_window_is_created (ClockData *cd)
+ensure_prefs_window_is_created (ClockApplet *cd)
 {
         GtkWidget *edit_window;
 	GtkWidget *prefs_close_button;
@@ -1994,7 +1962,8 @@ ensure_prefs_window_is_created (ClockData *cd)
 }
 
 static void
-display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
+display_properties_dialog (ClockApplet *cd,
+                           gboolean     start_in_locations_page)
 {
         ensure_prefs_window_is_created (cd);
 
@@ -2006,17 +1975,8 @@ display_properties_dialog (ClockData *cd, gboolean start_in_locations_page)
 	update_set_time_button (cd);
 
         gtk_window_set_screen (GTK_WINDOW (cd->prefs_window),
-                               gtk_widget_get_screen (cd->applet));
+                               gtk_widget_get_screen (GTK_WIDGET (cd)));
 	gtk_window_present (GTK_WINDOW (cd->prefs_window));
-}
-
-static void
-verb_display_properties_dialog (GSimpleAction *action,
-                                GVariant      *parameter,
-                                gpointer       user_data)
-{
-        ClockData *cd = (ClockData *) user_data;
-        display_properties_dialog (cd, FALSE);
 }
 
 static gboolean
@@ -2032,7 +1992,53 @@ clock_factory (PanelApplet *applet,
 	return retval;
 }
 
+static void
+clock_applet_dispose (GObject *object)
+{
+        ClockApplet *applet;
+
+        applet = CLOCK_APPLET (object);
+
+        g_clear_object (&applet->applet_settings);
+        g_clear_object (&applet->clock_settings);
+        g_clear_object (&applet->weather_settings);
+
+        g_clear_object (&applet->wall_clock);
+
+        g_clear_pointer (&applet->props, gtk_widget_destroy);
+        g_clear_pointer (&applet->calendar_popup, gtk_widget_destroy);
+
+        g_clear_object (&applet->datetime_appinfo);
+
+        free_locations (applet);
+
+        if (applet->location_tiles != NULL) {
+                g_list_free (applet->location_tiles);
+                applet->location_tiles = NULL;
+        }
+
+        g_clear_object (&applet->cities_store);
+        g_clear_object (&applet->builder);
+
+        G_OBJECT_CLASS (clock_applet_parent_class)->dispose (object);
+}
+
+static void
+clock_applet_class_init (ClockAppletClass *applet_class)
+{
+	GObjectClass *object_class;
+
+	object_class = G_OBJECT_CLASS (applet_class);
+
+	object_class->dispose = clock_applet_dispose;
+}
+
+static void
+clock_applet_init (ClockApplet *applet)
+{
+}
+
 PANEL_APPLET_IN_PROCESS_FACTORY ("ClockAppletFactory",
-                                 PANEL_TYPE_APPLET,
+                                 CLOCK_TYPE_APPLET,
                                  clock_factory,
                                  NULL)
