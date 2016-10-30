@@ -501,6 +501,9 @@ update_size_and_orientation (NaTray *tray)
     case GTK_ORIENTATION_HORIZONTAL:
       gtk_widget_set_size_request (priv->box, -1, MIN_BOX_SIZE);
       break;
+    default:
+      g_assert_not_reached ();
+      break;
     }
 }
 
