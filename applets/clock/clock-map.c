@@ -28,7 +28,7 @@ enum {
         MARKER_NB
 };
 
-static char *marker_files[MARKER_NB] = {
+static const gchar *marker_files[MARKER_NB] = {
         "clock-map-location-marker.png",
         "clock-map-location-hilight.png",
         "clock-map-location-current.png"
