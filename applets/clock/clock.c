@@ -407,18 +407,30 @@ create_calendar (ClockData *cd)
 }
 
 static void
+get_monitor_geometry (ClockData    *cd,
+                      GdkRectangle *geometry)
+{
+	GdkDisplay *display;
+	GdkWindow *window;
+	GdkMonitor *monitor;
+
+	display = gdk_display_get_default ();
+	window = gtk_widget_get_window (cd->panel_button);
+	monitor = gdk_display_get_monitor_at_window (display, window);
+
+	gdk_monitor_get_geometry (monitor, geometry);
+}
+
+static void
 position_calendar_popup (ClockData *cd)
 {
 	GtkRequisition  req;
 	GtkAllocation   allocation;
-	GdkScreen      *screen;
 	GdkRectangle    monitor;
 	GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
 	int             button_w, button_h;
 	int             x, y;
 	int             w, h;
-	int             i, n;
-	gboolean        found_monitor = FALSE;
 
 	/* Get root origin of the toggle button, and position above that. */
 	gdk_window_get_origin (gtk_widget_get_window (cd->panel_button),
@@ -433,26 +445,7 @@ position_calendar_popup (ClockData *cd)
 	button_w = allocation.width;
 	button_h = allocation.height;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (cd->calendar_popup));
-
-	n = gdk_screen_get_n_monitors (screen);
-	for (i = 0; i < n; i++) {
-		gdk_screen_get_monitor_geometry (screen, i, &monitor);
-		if (x >= monitor.x && x <= monitor.x + monitor.width &&
-		    y >= monitor.y && y <= monitor.y + monitor.height) {
-			found_monitor = TRUE;
-			break;
-		}
-	}
-
-	if (!found_monitor) {
-		/* eek, we should be on one of those xinerama
-		   monitors */
-		monitor.x = 0;
-		monitor.y = 0;
-		monitor.width = gdk_screen_get_width (screen);
-		monitor.height = gdk_screen_get_height (screen);
-	}
+	get_monitor_geometry (cd, &monitor);
 
 	/* Based on panel orientation, position the popup.
 	 * Ignore window gravity since the window is undecorated.
@@ -497,6 +490,9 @@ position_calendar_popup (ClockData *cd)
 
 		gravity = GDK_GRAVITY_SOUTH_WEST;
 
+		break;
+	default:
+		g_assert_not_reached ();
 		break;
 	}
 

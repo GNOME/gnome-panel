@@ -1236,6 +1236,21 @@ typedef struct
 } ConstraintData;
 
 static void
+get_monitor_geometry (GtkWidget    *widget,
+                      GdkRectangle *geometry)
+{
+	GdkDisplay *display;
+	GdkWindow *window;
+	GdkMonitor *monitor;
+
+	display = gdk_display_get_default ();
+	window = gtk_widget_get_window (widget);
+	monitor = gdk_display_get_monitor_at_window (display, window);
+
+	gdk_monitor_get_geometry (monitor, geometry);
+}
+
+static void
 constrain_list_size (GtkWidget      *widget,
                      GtkAllocation  *allocation,
                      ConstraintData *constraint)
@@ -1244,7 +1259,7 @@ constrain_list_size (GtkWidget      *widget,
 	GtkStyleContext *context;
 	GtkStateFlags    state;
 	GtkBorder        padding;
-        int              screen_h;
+        GdkRectangle     monitor;
         int              width;
         int              height;
         int              max_height;
@@ -1253,9 +1268,10 @@ constrain_list_size (GtkWidget      *widget,
         gtk_widget_get_preferred_size (constraint->calendar, &req, NULL);
         width = MIN (allocation->width, req.width);
 
-	screen_h = gdk_screen_get_height (gtk_widget_get_screen (widget));
+        get_monitor_geometry (widget, &monitor);
+
         /* constrain height to be the tree height up to a max */
-        max_height = (screen_h - req.height) / 3;
+        max_height = (monitor.height - req.height) / 3;
         gtk_widget_get_preferred_size (constraint->tree, &req, NULL);
 
 	state = gtk_widget_get_state_flags (widget);
