@@ -5,6 +5,9 @@ SUBDIRS = pixmaps
 noinst_LTLIBRARIES = libsystem-timezone.la
 noinst_PROGRAMS = test-system-timezone
 
+clock_libdir = $(pkglibdir)
+clock_lib_LTLIBRARIES = clock.la
+
 libsystem_timezone_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(TZ_CFLAGS) \
@@ -29,7 +32,7 @@ CALENDAR_SOURCES = \
 	$(NULL)
 endif
 
-libclock_applet_la_SOURCES = \
+clock_la_SOURCES = \
 	calendar-window.c \
 	calendar-window.h \
 	clock-applet.c \
@@ -52,7 +55,7 @@ libclock_applet_la_SOURCES = \
 	$(CALENDAR_SOURCES) \
 	$(NULL)
 
-libclock_applet_la_CPPFLAGS = \
+clock_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
@@ -64,7 +67,7 @@ libclock_applet_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-libclock_applet_la_CFLAGS = \
+clock_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(TZ_CFLAGS) \
 	$(CLOCK_CFLAGS) \
@@ -73,7 +76,7 @@ libclock_applet_la_CFLAGS = \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libclock_applet_la_LIBADD = \
+clock_la_LIBADD = \
 	$(top_builddir)/libpanel-applet/libpanel-applet.la \
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	libsystem-timezone.la \
@@ -83,7 +86,7 @@ libclock_applet_la_LIBADD = \
 	$(LIBM) \
 	$(NULL)
 
-libclock_applet_la_LDFLAGS = \
+clock_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
@@ -107,11 +110,7 @@ test_system_timezone_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION = $(pkglibdir)/libclock-applet.so
-
-clock_appletlibdir = $(pkglibdir)
-clock_appletlib_LTLIBRARIES = libclock-applet.la
-$(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
+APPLET_LOCATION = $(pkglibdir)/clock.so
 
 clock_enum_headers = \
 	$(top_srcdir)/applets/clock/clock-utils.h \
