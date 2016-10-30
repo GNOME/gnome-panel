@@ -13,49 +13,58 @@ libsystem_timezone_la_CFLAGS = \
 	$(NULL)
 
 libsystem_timezone_la_SOURCES = \
-	system-timezone.c	\
-	system-timezone.h
+	system-timezone.c \
+	system-timezone.h \
+	$(NULL)
+
 libsystem_timezone_la_LIBADD = $(TZ_LIBS)
 
 if ENABLE_EDS
-CALENDAR_SOURCES =		\
-	calendar-client.c	\
-	calendar-client.h	\
-	calendar-sources.c	\
-	calendar-sources.h	\
-	calendar-debug.h
+CALENDAR_SOURCES = \
+	calendar-client.c \
+	calendar-client.h \
+	calendar-sources.c \
+	calendar-sources.h \
+	calendar-debug.h \
+	$(NULL)
 endif
 
 libclock_applet_la_SOURCES = \
-	calendar-window.c	\
-	calendar-window.h	\
-	clock-applet.c		\
-	clock-applet.h		\
-	clock-face.c		\
-	clock-face.h		\
-	clock-location.c	\
-	clock-location.h	\
-	clock-location-tile.c	\
-	clock-location-tile.h	\
-	clock-map.c		\
-	clock-map.h		\
-	clock-sunpos.c		\
-	clock-sunpos.h		\
-	clock-utils.c		\
-	clock-utils.h		\
-	set-timezone.c		\
-	set-timezone.h		\
-	$(BUILT_SOURCES)	\
-	$(CALENDAR_SOURCES)
+	calendar-window.c \
+	calendar-window.h \
+	clock-applet.c \
+	clock-applet.h \
+	clock-face.c \
+	clock-face.h \
+	clock-location.c \
+	clock-location.h \
+	clock-location-tile.c \
+	clock-location-tile.h \
+	clock-map.c \
+	clock-map.h \
+	clock-sunpos.c \
+	clock-sunpos.h \
+	clock-utils.c \
+	clock-utils.h \
+	set-timezone.c \
+	set-timezone.h \
+	$(BUILT_SOURCES) \
+	$(CALENDAR_SOURCES) \
+	$(NULL)
 
-libclock_applet_la_CFLAGS = \
-	-DGNOMELOCALEDIR=\""$(localedir)"\"	\
-	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\""		\
+libclock_applet_la_CPPFLAGS = \
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
+	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(srcdir)/../../libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
 	-I$(srcdir)/../../gnome-panel \
 	-I$(top_builddir)/gnome-panel \
+	-I$(top_srcdir) \
+	$(AM_CPPFLAGS) \
+	$(NULL)
+
+libclock_applet_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(TZ_CFLAGS) \
 	$(CLOCK_CFLAGS) \
@@ -65,12 +74,12 @@ libclock_applet_la_CFLAGS = \
 	$(NULL)
 
 libclock_applet_la_LIBADD = \
-	../../libpanel-applet/libpanel-applet.la	\
-	../../gnome-panel/libpanel-util/libpanel-util.la	\
+	$(top_builddir)/libpanel-applet/libpanel-applet.la \
+	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	libsystem-timezone.la \
-	$(CLOCK_LIBS)					\
-	$(CLOCK_EDS_LIBS)					\
-	$(LIBPANEL_APPLET_LIBS)				\
+	$(CLOCK_LIBS) \
+	$(CLOCK_EDS_LIBS) \
+	$(LIBPANEL_APPLET_LIBS) \
 	$(LIBM) \
 	$(NULL)
 
@@ -80,8 +89,10 @@ libclock_applet_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-test_system_timezone_SOURCES = 	\
-	test-system-timezone.c
+test_system_timezone_SOURCES = \
+	test-system-timezone.c \
+	$(NULL)
+
 test_system_timezone_LDADD = libsystem-timezone.la
 
 test_system_timezone_CFLAGS = \
@@ -96,14 +107,15 @@ test_system_timezone_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/libclock-applet.so
+APPLET_LOCATION = $(pkglibdir)/libclock-applet.so
 
 clock_appletlibdir = $(pkglibdir)
 clock_appletlib_LTLIBRARIES = libclock-applet.la
 $(libclock_applet_la_OBJECTS): $(BUILT_SOURCES)
 
-clock_enum_headers =					\
-	$(top_srcdir)/applets/clock/clock-utils.h
+clock_enum_headers = \
+	$(top_srcdir)/applets/clock/clock-utils.h \
+	$(NULL)
 
 clock-typebuiltins.c: $(clock_enum_headers)
 	$(AM_V_GEN)glib-mkenums \
@@ -133,11 +145,12 @@ clock-typebuiltins.h: $(clock_enum_headers)
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(clock_enum_headers) > $@
 
-BUILT_SOURCES =					\
-	clock-resources.c			\
-	clock-resources.h			\
-	clock-typebuiltins.c			\
-	clock-typebuiltins.h
+BUILT_SOURCES = \
+	clock-resources.c \
+	clock-resources.h \
+	clock-typebuiltins.c \
+	clock-typebuiltins.h \
+	$(NULL)
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
@@ -151,9 +164,10 @@ $(applet_in_files): $(applet_in_files).in Makefile
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
-ui_FILES =		\
-	clock.ui	\
-	clock-menu.ui
+ui_FILES = \
+	clock.ui \
+	clock-menu.ui \
+	$(NULL)
 
 clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
@@ -161,15 +175,16 @@ clock-resources.c: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/clock.gresource.xml)
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name clock $<
 
-EXTRA_DIST =						\
-	org.gnome.panel.ClockApplet.panel-applet.in.in	\
-	$(ui_FILES)					\
-	clock.gresource.xml				\
+EXTRA_DIST = \
+	clock.gresource.xml \
+	org.gnome.panel.ClockApplet.panel-applet.in.in \
+	$(ui_FILES) \
 	$(NULL)
 
-CLEANFILES =			\
-	$(BUILT_SOURCES)	\
-	$(applet_DATA) 		\
-	$(applet_DATA).in
+CLEANFILES = \
+	$(BUILT_SOURCES) \
+	$(applet_DATA) \
+	$(applet_DATA).in \
+	$(NULL)
 
 -include $(top_srcdir)/git.mk
