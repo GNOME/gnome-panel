@@ -247,43 +247,44 @@ format_time (GDesktopClockFormat format,
              gint                month,
              gint                day)
 {
-        struct tm *tm;
-        char      *time_format;
-        char       result [256] = { 0, };
+        GDateTime *dt;
+        gchar *time;
 
         if (!t)
                 return NULL;
 
-	tm = localtime (&t);
-        if (!tm)
+        dt = g_date_time_new_from_unix_local (t);
+        time = NULL;
+
+        if (!dt)
                 return NULL;
 
-        if (year  == (tm->tm_year + 1900) &&
-            month == tm->tm_mon &&
-            day   == tm->tm_mday) {
-                if (format == G_DESKTOP_CLOCK_FORMAT_12H)
-			/* Translators: This is a strftime format string.
-			 * It is used to display the time in 12-hours format
-			 * (eg, like in the US: 8:10 am). The %p expands to
-			 * am/pm. */
-                        time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
-                else
-			/* Translators: This is a strftime format string.
-			 * It is used to display the time in 24-hours format
-			 * (eg, like in France: 20:10). */
-                        time_format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
-        }
-        else {
-		/* Translators: This is a strftime format string.
-		 * It is used to display the start date of an appointment, in
-		 * the most abbreviated way possible. */
-                time_format = g_locale_from_utf8 (_("%b %d"), -1, NULL, NULL, NULL);
+        if (year == (g_date_time_get_year (dt) + 1900) &&
+            month == g_date_time_get_month (dt) &&
+            day == g_date_time_get_day_of_month (dt)) {
+                if (format == G_DESKTOP_CLOCK_FORMAT_12H) {
+                        /* Translators: This is a strftime format string.
+                         * It is used to display the time in 12-hours format
+                         * (eg, like in the US: 8:10 am). The %p expands to
+                         * am/pm.
+                         */
+                        time = g_date_time_format (dt, _("%l:%M %p"));
+                } else {
+                        /* Translators: This is a strftime format string.
+                         * It is used to display the time in 24-hours format
+                         * (eg, like in France: 20:10).
+                         */
+                        time = g_date_time_format (dt, _("%H:%M"));
+                }
+        } else {
+                /* Translators: This is a strftime format string.
+                 * It is used to display the start date of an appointment, in
+                 * the most abbreviated way possible.
+                 */
+                time = g_date_time_format (dt, _("%b %d"));
         }
 
-        strftime (result, sizeof (result), time_format, tm);
-        g_free (time_format);
-
-        return g_locale_to_utf8 (result, -1, NULL, NULL, NULL);
+        return time;
 }
 
 static void
