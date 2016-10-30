@@ -54,7 +54,7 @@
 
 #include <libgweather/gweather.h>
 
-#include "clock.h"
+#include "clock-applet.h"
 
 #include "calendar-window.h"
 #include "clock-location.h"

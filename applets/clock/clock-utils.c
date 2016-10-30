@@ -34,8 +34,7 @@
 
 #include <librsvg/rsvg.h>
 
-#include "clock.h"
-
+#include "clock-applet.h"
 #include "clock-utils.h"
 
 gboolean

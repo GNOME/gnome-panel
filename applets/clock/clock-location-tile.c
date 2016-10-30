@@ -9,7 +9,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
-#include "clock.h"
 #include "clock-face.h"
 #include "clock-location-tile.h"
 #include "clock-location.h"

@@ -10,7 +10,7 @@
 
 #include <libpanel-util/panel-color.h>
 
-#include "clock.h"
+#include "clock-applet.h"
 #include "clock-map.h"
 #include "clock-sunpos.h"
 

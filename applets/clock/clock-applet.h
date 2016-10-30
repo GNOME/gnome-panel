@@ -22,8 +22,8 @@
  * Most of the original code comes from clock.c
  */
 
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef CLOCK_APPLET_H
+#define CLOCK_APPLET_H
 
 G_BEGIN_DECLS
 

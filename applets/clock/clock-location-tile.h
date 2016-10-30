@@ -3,7 +3,6 @@
 
 #include <gtk/gtk.h>
 
-#include "clock.h"
 #include "clock-face.h"
 #include "clock-location.h"
 #include "clock-utils.h"
