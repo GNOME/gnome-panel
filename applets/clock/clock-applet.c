@@ -70,7 +70,7 @@ enum {
 
 struct _ClockApplet
 {
-	PanelApplet parent;
+	GpApplet parent;
 
 	/* widgets */
         GtkWidget *panel_button;	/* main toggle button for the whole clock */
@@ -122,7 +122,6 @@ struct _ClockApplet
 	/* runtime data */
         time_t             current_time;
         GnomeWallClock    *wall_clock;
-	PanelAppletOrient  orient;
 	GtkAllocation      old_allocation;
 
 	SystemTimezone *systz;
@@ -137,15 +136,12 @@ struct _ClockApplet
 	gboolean   can_handle_format_12;
 };
 
-G_DEFINE_TYPE (ClockApplet, clock_applet, PANEL_TYPE_APPLET)
+G_DEFINE_TYPE (ClockApplet, clock_applet, GP_TYPE_APPLET)
 
 static void display_properties_dialog (ClockApplet       *applet,
                                        gboolean           start_in_locations_page);
 
 static void update_orient             (ClockApplet       *applet);
-static void applet_change_orient      (PanelApplet       *papplet,
-                                       PanelAppletOrient  orient,
-                                       ClockApplet       *applet);
 
 static inline GtkWidget *
 _clock_get_widget (ClockApplet *cd,
@@ -319,10 +315,11 @@ edit_locations_cb (CalendarWindow *calwin, gpointer data)
 static GtkWidget *
 create_calendar (ClockApplet *cd)
 {
+	gboolean invert;
 	GtkWidget *window;
 
-	window = calendar_window_new (cd->applet_settings,
-				      cd->orient == PANEL_APPLET_ORIENT_UP);
+	invert = gp_applet_get_position (GP_APPLET (cd)) == GTK_POS_BOTTOM;
+	window = calendar_window_new (cd->applet_settings, invert);
 
 	g_object_bind_property (cd, "locked-down",
 				window, "locked-down",
@@ -393,8 +390,8 @@ position_calendar_popup (ClockApplet *cd)
 	 * The orientations are all named backward from what
 	 * I expected.
 	 */
-	switch (cd->orient) {
-	case PANEL_APPLET_ORIENT_RIGHT:
+	switch (gp_applet_get_position (GP_APPLET (cd))) {
+	case GTK_POS_RIGHT:
 		x += button_w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
@@ -405,7 +402,7 @@ position_calendar_popup (ClockApplet *cd)
 			gravity = GDK_GRAVITY_NORTH_WEST;
 
 		break;
-	case PANEL_APPLET_ORIENT_LEFT:
+	case GTK_POS_LEFT:
 		x -= w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
@@ -416,7 +413,7 @@ position_calendar_popup (ClockApplet *cd)
 			gravity = GDK_GRAVITY_NORTH_EAST;
 
 		break;
-	case PANEL_APPLET_ORIENT_DOWN:
+	case GTK_POS_TOP:
 		y += button_h;
 		if ((x + w) > monitor.x + monitor.width)
 			x -= (x + w) - (monitor.x + monitor.width);
@@ -424,7 +421,7 @@ position_calendar_popup (ClockApplet *cd)
 		gravity = GDK_GRAVITY_NORTH_WEST;
 
 		break;
-	case PANEL_APPLET_ORIENT_UP:
+	case GTK_POS_BOTTOM:
 		y -= h;
 		if ((x + w) > monitor.x + monitor.width)
 			x -= (x + w) - (monitor.x + monitor.width);
@@ -749,7 +746,7 @@ create_main_clock_label (ClockApplet *cd)
 			  G_CALLBACK (clock_update_text_gravity),
 			  NULL);
 
-        panel_applet_add_text_class (PANEL_APPLET (cd), label);
+        gp_applet_add_text_class (GP_APPLET (cd), label);
 
         return label;
 }
@@ -804,6 +801,10 @@ update_panel_weather (ClockApplet *cd)
 static void
 create_clock_widget (ClockApplet *cd)
 {
+        GtkOrientation orientation;
+
+        orientation = gp_applet_get_orientation (GP_APPLET (cd));
+
         cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
         g_signal_connect (cd->wall_clock, "notify::clock",
                           G_CALLBACK (update_clock), cd);
@@ -817,12 +818,12 @@ create_clock_widget (ClockApplet *cd)
         gtk_widget_show (cd->panel_button);
 
         /* Main orientable box */
-        cd->main_obox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+        cd->main_obox = gtk_box_new (orientation, 12);
         gtk_container_add (GTK_CONTAINER (cd->panel_button), cd->main_obox);
         gtk_widget_show (cd->main_obox);
 
         /* Weather orientable box */
-        cd->weather_obox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+        cd->weather_obox = gtk_box_new (orientation, 2);
         gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->weather_obox, FALSE, FALSE, 0);
         gtk_widget_set_has_tooltip (cd->weather_obox, TRUE);
         g_signal_connect (cd->weather_obox, "query-tooltip",
@@ -852,15 +853,11 @@ create_clock_widget (ClockApplet *cd)
 	gtk_container_set_border_width (GTK_CONTAINER (cd), 0);
 
 	cd->props = NULL;
-	cd->orient = -1;
 
 	update_panel_weather (cd);
 
 	/* Refresh the clock so that it paints its first state */
         update_clock (NULL, NULL, cd);
-	applet_change_orient (PANEL_APPLET (cd),
-			      panel_applet_get_orient (PANEL_APPLET (cd)),
-			      cd);
 }
 
 static void
@@ -876,10 +873,10 @@ update_orient (ClockApplet *cd)
 	min_width = calculate_minimum_width (cd->panel_button, text);
 	gtk_widget_get_allocation (cd->panel_button, &allocation);
 
-	if (cd->orient == PANEL_APPLET_ORIENT_LEFT &&
+	if (gp_applet_get_position (GP_APPLET (cd)) == GTK_POS_RIGHT &&
 	    min_width > allocation.width)
 		new_angle = 270;
-	else if (cd->orient == PANEL_APPLET_ORIENT_RIGHT &&
+	else if (gp_applet_get_position (GP_APPLET (cd)) == GTK_POS_LEFT &&
 		 min_width > allocation.width)
 		new_angle = 90;
 	else
@@ -890,44 +887,6 @@ update_orient (ClockApplet *cd)
 		gtk_label_set_angle (GTK_LABEL (cd->clockw), new_angle);
                 gtk_label_set_angle (GTK_LABEL (cd->panel_temperature_label), new_angle);
 	}
-}
-
-/* this is when the panel orientation changes */
-static void
-applet_change_orient (PanelApplet       *papplet,
-                      PanelAppletOrient  orient,
-                      ClockApplet       *cd)
-{
-        GtkOrientation o;
-
-	if (orient == cd->orient)
-		return;
-
-        cd->orient = orient;
-
-	switch (cd->orient) {
-        case PANEL_APPLET_ORIENT_RIGHT:
-                o = GTK_ORIENTATION_VERTICAL;
-		break;
-        case PANEL_APPLET_ORIENT_LEFT:
-                o = GTK_ORIENTATION_VERTICAL;
-		break;
-        case PANEL_APPLET_ORIENT_DOWN:
-                o = GTK_ORIENTATION_HORIZONTAL;
-		break;
-        case PANEL_APPLET_ORIENT_UP:
-                o = GTK_ORIENTATION_HORIZONTAL;
-		break;
-        default:
-                g_assert_not_reached ();
-                return;
-	}
-
-        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->main_obox), o);
-        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->weather_obox), o);
-
-        update_clock (NULL, NULL, cd);
-        update_calendar_popup (cd);
 }
 
 /* this is when the panel size changes */
@@ -1043,7 +1002,8 @@ config_date (GSimpleAction *action,
 static const GActionEntry clock_menu_actions [] = {
         { "preferences", verb_display_properties_dialog, NULL, NULL, NULL },
         { "copy-time",   copy_time,                      NULL, NULL, NULL },
-        { "config",      config_date,                    NULL, NULL, NULL }
+        { "config",      config_date,                    NULL, NULL, NULL },
+        { NULL }
 };
 
 static void
@@ -1184,17 +1144,14 @@ load_cities (ClockApplet *cd)
 }
 
 static gboolean
-fill_clock_applet (PanelApplet *applet)
+fill_clock_applet (ClockApplet *cd)
 {
-        ClockApplet *cd;
-        GSimpleActionGroup *action_group;
-        GAction            *action;
+        GpApplet *applet;
+        GAction *action;
 
-	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
+        applet = GP_APPLET (cd);
 
-	cd = CLOCK_APPLET (applet);
-
-	cd->applet_settings = panel_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
+        cd->applet_settings = gp_applet_settings_new (applet, "org.gnome.gnome-panel.applet.clock");
         cd->clock_settings = g_settings_new ("org.gnome.desktop.interface");
         cd->weather_settings = g_settings_new ("org.gnome.GWeather");
 
@@ -1215,44 +1172,26 @@ fill_clock_applet (PanelApplet *applet)
 
 	create_clock_widget (cd);
 
-	gtk_widget_show (GTK_WIDGET (cd));
-
-	/* FIXME: Update this comment. */
-	/* we have to bind change_orient before we do applet_widget_add
-	   since we need to get an initial change_orient signal to set our
-	   initial oriantation, and we get that during the _add call */
-	g_signal_connect (cd, "change-orient",
-			  G_CALLBACK (applet_change_orient),
-			  cd);
-
 	g_signal_connect (G_OBJECT (cd->panel_button),
 			  "size_allocate",
 			  G_CALLBACK (panel_button_change_pixel_size),
 			  cd);
 
-        action_group = g_simple_action_group_new ();
-	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-	                                 clock_menu_actions,
-	                                 G_N_ELEMENTS (clock_menu_actions),
-	                                 cd);
-	panel_applet_setup_menu_from_resource (PANEL_APPLET (cd),
-					       CLOCK_RESOURCE_PATH "clock-menu.ui",
-					       action_group,
-					       GETTEXT_PACKAGE);
+	gp_applet_setup_menu_from_resource (applet,
+	                                    CLOCK_RESOURCE_PATH "clock-menu.ui",
+	                                    clock_menu_actions);
 
-        gtk_widget_insert_action_group (GTK_WIDGET (applet), "clock",
-	                                G_ACTION_GROUP (action_group));
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
+	action = gp_applet_menu_lookup_action (applet, "preferences");
 	g_object_bind_property (cd, "locked-down",
 				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "config");
+	action = gp_applet_menu_lookup_action (applet, "config");
 	g_object_bind_property (cd, "locked-down",
 				action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-        g_object_unref (action_group);
+
+	gtk_widget_show (GTK_WIDGET (cd));
 
 	return TRUE;
 }
@@ -1979,17 +1918,12 @@ display_properties_dialog (ClockApplet *cd,
 	gtk_window_present (GTK_WINDOW (cd->prefs_window));
 }
 
-static gboolean
-clock_factory (PanelApplet *applet,
-	       const char  *iid,
-	       gpointer     data)
+static void
+clock_applet_constructed (GObject *object)
 {
-	gboolean retval = FALSE;
+        G_OBJECT_CLASS (clock_applet_parent_class)->constructed (object);
 
-	if (!strcmp (iid, "ClockApplet"))
-		retval = fill_clock_applet (applet);
-
-	return retval;
+        fill_clock_applet (CLOCK_APPLET (object));
 }
 
 static void
@@ -2024,21 +1958,41 @@ clock_applet_dispose (GObject *object)
 }
 
 static void
-clock_applet_class_init (ClockAppletClass *applet_class)
+clock_applet_placement_changed (GpApplet        *applet,
+                                GtkOrientation   orientation,
+                                GtkPositionType  position)
+{
+        ClockApplet *cd;
+
+        cd = CLOCK_APPLET (applet);
+
+        if (cd->main_obox == NULL)
+                return;
+
+        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->main_obox), orientation);
+        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->weather_obox), orientation);
+
+        update_clock (NULL, NULL, cd);
+        update_calendar_popup (cd);
+}
+
+static void
+clock_applet_class_init (ClockAppletClass *clock_class)
 {
 	GObjectClass *object_class;
+	GpAppletClass *applet_class;
 
-	object_class = G_OBJECT_CLASS (applet_class);
+	object_class = G_OBJECT_CLASS (clock_class);
+	applet_class = GP_APPLET_CLASS (clock_class);
 
+	object_class->constructed = clock_applet_constructed;
 	object_class->dispose = clock_applet_dispose;
+
+	applet_class->placement_changed = clock_applet_placement_changed;
 }
 
 static void
 clock_applet_init (ClockApplet *applet)
 {
+        gp_applet_set_flags (GP_APPLET (applet), GP_APPLET_FLAGS_EXPAND_MINOR);
 }
-
-PANEL_APPLET_IN_PROCESS_FACTORY ("ClockAppletFactory",
-                                 CLOCK_TYPE_APPLET,
-                                 clock_factory,
-                                 NULL)

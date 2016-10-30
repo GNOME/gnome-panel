@@ -5,11 +5,11 @@ SUBDIRS = pixmaps
 noinst_LTLIBRARIES = libsystem-timezone.la
 noinst_PROGRAMS = test-system-timezone
 
-clock_libdir = $(pkglibdir)
+clock_libdir = $(libdir)/gnome-panel/applets
 clock_lib_LTLIBRARIES = clock.la
 
 libsystem_timezone_la_CFLAGS = \
-	$(LIBPANEL_APPLET_CFLAGS) \
+	$(LIBGNOME_PANEL_CFLAGS) \
 	$(TZ_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
@@ -45,6 +45,7 @@ clock_la_SOURCES = \
 	clock-location-tile.h \
 	clock-map.c \
 	clock-map.h \
+	clock-module.c \
 	clock-sunpos.c \
 	clock-sunpos.h \
 	clock-utils.c \
@@ -56,11 +57,9 @@ clock_la_SOURCES = \
 	$(NULL)
 
 clock_la_CPPFLAGS = \
-	-DGNOMELOCALEDIR=\""$(localedir)"\" \
+	-DLOCALEDIR=\""$(localedir)"\" \
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
-	-I$(srcdir)/../../libpanel-applet \
-	-I$(top_builddir)/libpanel-applet \
 	-I$(srcdir)/../../gnome-panel \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_srcdir) \
@@ -68,7 +67,7 @@ clock_la_CPPFLAGS = \
 	$(NULL)
 
 clock_la_CFLAGS = \
-	$(LIBPANEL_APPLET_CFLAGS) \
+	$(LIBGNOME_PANEL_CFLAGS) \
 	$(TZ_CFLAGS) \
 	$(CLOCK_CFLAGS) \
 	$(CLOCK_EDS_CFLAGS) \
@@ -77,12 +76,12 @@ clock_la_CFLAGS = \
 	$(NULL)
 
 clock_la_LIBADD = \
-	$(top_builddir)/libpanel-applet/libpanel-applet.la \
+	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	libsystem-timezone.la \
 	$(CLOCK_LIBS) \
 	$(CLOCK_EDS_LIBS) \
-	$(LIBPANEL_APPLET_LIBS) \
+	$(LIBGNOME_PANEL_LIBS) \
 	$(LIBM) \
 	$(NULL)
 
@@ -99,7 +98,7 @@ test_system_timezone_SOURCES = \
 test_system_timezone_LDADD = libsystem-timezone.la
 
 test_system_timezone_CFLAGS = \
-	$(LIBPANEL_APPLET_CFLAGS) \
+	$(LIBGNOME_PANEL_CFLAGS) \
 	$(TZ_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
@@ -109,8 +108,6 @@ test_system_timezone_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
-
-APPLET_LOCATION = $(pkglibdir)/clock.so
 
 clock_enum_headers = \
 	$(top_srcdir)/applets/clock/clock-utils.h \
@@ -151,18 +148,6 @@ BUILT_SOURCES = \
 	clock-typebuiltins.h \
 	$(NULL)
 
-appletdir       = $(appletsdir)
-applet_in_files = org.gnome.panel.ClockApplet.panel-applet.in
-applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
-
-$(applet_in_files): $(applet_in_files).in Makefile
-	$(AM_V_GEN)sed \
-		-e "s|\@LOCATION\@|$(APPLET_LOCATION)|" \
-		-e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
-		$< > $@
-
-@PANEL_INTLTOOL_PANEL_APPLET_RULE@
-
 ui_FILES = \
 	clock.ui \
 	clock-menu.ui \
@@ -176,14 +161,11 @@ clock-resources.h: clock.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 
 EXTRA_DIST = \
 	clock.gresource.xml \
-	org.gnome.panel.ClockApplet.panel-applet.in.in \
 	$(ui_FILES) \
 	$(NULL)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
-	$(applet_DATA) \
-	$(applet_DATA).in \
 	$(NULL)
 
 -include $(top_srcdir)/git.mk
