@@ -397,9 +397,9 @@ calendar_client_init (CalendarClient *client)
                                                     G_CALLBACK (calendar_client_timezone_changed_cb),
                                                     client);
 
-  client->priv->day   = -1;
-  client->priv->month = -1;
-  client->priv->year  = -1;
+  client->priv->day = 0;
+  client->priv->month = 0;
+  client->priv->year = 0;
 }
 
 static void
@@ -1404,9 +1404,10 @@ check_object_remove (gpointer key,
                      gpointer value,
                      gpointer data)
 {
-  char             *uid = data;
-  ssize_t           len;
+  char *uid;
+  size_t len;
 
+  uid = data;
   len = strlen (uid);
   
   if (len <= strlen (key) && strncmp (uid, key, len) == 0)
@@ -1442,7 +1443,7 @@ calendar_client_handle_objects_removed (CalendarClientSource *source,
 
       if (!id->rid || !(*id->rid))
 	{
-	  int size = g_hash_table_size (query->events);
+	  guint size = g_hash_table_size (query->events);
 
 	  g_hash_table_foreach_remove (query->events, check_object_remove, id->uid);
 
@@ -1562,8 +1563,7 @@ calendar_client_update_appointments (CalendarClient *client)
   char   *month_begin;
   char   *month_end;
 
-  if (client->priv->month == -1 ||
-      client->priv->year  == -1)
+  if (client->priv->month == 0 || client->priv->year == 0)
     return;
 
   month_begin = make_isodate_for_day_begin (1,
@@ -1612,9 +1612,9 @@ calendar_client_update_tasks (CalendarClient *client)
   char   *day_begin;
   char   *day_end;
 
-  if (client->priv->day   == -1 ||
-      client->priv->month == -1 ||
-      client->priv->year  == -1)
+  if (client->priv->day == 0 ||
+      client->priv->month == 0 ||
+      client->priv->year == 0)
     return;
 
   day_begin = make_isodate_for_day_begin (client->priv->day,
@@ -1979,9 +1979,9 @@ calendar_client_get_events (CalendarClient    *client,
   time_t  day_end;
 
   g_return_val_if_fail (CALENDAR_IS_CLIENT (client), NULL);
-  g_return_val_if_fail (client->priv->day   != -1 &&
-			client->priv->month != -1 &&
-			client->priv->year  != -1, NULL);
+  g_return_val_if_fail (client->priv->day != 0, NULL);
+  g_return_val_if_fail (client->priv->month != 0, NULL);
+  g_return_val_if_fail (client->priv->year != 0, NULL);
 
   day_begin = make_time_for_day_begin (client->priv->day,
 				       client->priv->month,
@@ -2036,8 +2036,8 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
 
   g_return_if_fail (CALENDAR_IS_CLIENT (client));
   g_return_if_fail (iter_func != NULL);
-  g_return_if_fail (client->priv->month != -1 &&
-		    client->priv->year  != -1);
+  g_return_if_fail (client->priv->month != 0);
+  g_return_if_fail (client->priv->year != 0);
 
   month_begin = make_time_for_day_begin (1,
 					 client->priv->month,

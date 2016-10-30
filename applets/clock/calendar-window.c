@@ -242,10 +242,10 @@ enum {
 
 static char *
 format_time (GDesktopClockFormat format,
-             time_t      t,
-             guint       year,
-             guint       month,
-             guint       day)
+             time_t              t,
+             gint                year,
+             gint                month,
+             gint                day)
 {
         struct tm *tm;
         char      *time_format;
