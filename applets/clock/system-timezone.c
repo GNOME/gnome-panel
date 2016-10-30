@@ -62,7 +62,7 @@
 #define ETC_CONF_D_CLOCK    "/etc/conf.d/clock"
 #define ETC_LOCALTIME       "/etc/localtime"
 
-static char *files_to_check[CHECK_NB] = {
+static const gchar *files_to_check[CHECK_NB] = {
         ETC_TIMEZONE,
         ETC_TIMEZONE_MAJ,
         ETC_SYSCONFIG_CLOCK,
@@ -496,7 +496,7 @@ static char *
 recursive_compare (struct stat  *localtime_stat,
                    const char   *localtime_content,
                    gsize         localtime_content_len,
-                   char         *file,
+                   const gchar  *file,
                    CompareFiles  compare_func)
 {
         struct stat file_stat;
