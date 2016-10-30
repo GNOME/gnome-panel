@@ -259,19 +259,17 @@ update_tooltip (ClockData * cd)
         show_date = g_settings_get_boolean (cd->clock_settings, "clock-show-date");
         if (!show_date) {
                 GDateTime *dt;
-                char *tip, *format;
+                char *tip;
 
                 dt = g_date_time_new_now_local ();
+
 		/* Translators: This is a strftime format string.
-		 * It is used to display a date. Please leave "%%s" as it is:
-		 * it will be used to insert the timezone name later. */
-                format = g_date_time_format (dt, _("%A %B %d (%%s)"));
-                tip = g_strdup_printf (format, g_date_time_get_timezone_abbreviation (dt));
+		 * It is used to display a date.
+		 */
+                tip = g_date_time_format (dt, _("%A %B %d (%Z)"));
+                g_date_time_unref (dt);
 
                 gtk_widget_set_tooltip_text (cd->panel_button, tip);
-
-                g_date_time_unref (dt);
-                g_free (format);
                 g_free (tip);
         } else {
 #ifdef HAVE_EDS
