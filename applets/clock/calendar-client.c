@@ -331,6 +331,7 @@ load_calendars (CalendarClient    *client,
       case CALENDAR_EVENT_TASK:
         clients = client->priv->task_sources;
         break;
+      case CALENDAR_EVENT_ALL:
       default:
         g_assert_not_reached ();
     }
@@ -743,6 +744,8 @@ get_source_color (ECal *esource)
       case E_CAL_SOURCE_TYPE_TODO:
         extension_name = E_SOURCE_EXTENSION_TASK_LIST;
         break;
+      case E_CAL_SOURCE_TYPE_JOURNAL:
+      case E_CAL_SOURCE_TYPE_LAST:
       default:
         g_return_val_if_reached (NULL);
     }
@@ -773,6 +776,8 @@ get_source_backend_name (ECal *esource)
       case E_CAL_SOURCE_TYPE_TODO:
         extension_name = E_SOURCE_EXTENSION_TASK_LIST;
         break;
+      case E_CAL_SOURCE_TYPE_JOURNAL:
+      case E_CAL_SOURCE_TYPE_LAST:
       default:
         g_return_val_if_reached (NULL);
     }
@@ -1038,6 +1043,7 @@ calendar_event_free (CalendarEvent *event)
     case CALENDAR_EVENT_TASK:
       calendar_task_finalize (CALENDAR_TASK (event));
       break;
+    case CALENDAR_EVENT_ALL:
     default:
       g_assert_not_reached ();
       break;
@@ -1052,29 +1058,28 @@ calendar_event_new (icalcomponent        *ical,
                     icaltimezone         *default_zone)
 {
   CalendarEvent *event;
+  icalcomponent_kind component;
 
   event = g_new0 (CalendarEvent, 1);
+  component = icalcomponent_isa (ical);
 
-  switch (icalcomponent_isa (ical))
+  if (component == ICAL_VEVENT_COMPONENT)
     {
-    case ICAL_VEVENT_COMPONENT:
       event->type = CALENDAR_EVENT_APPOINTMENT;
       calendar_appointment_init (CALENDAR_APPOINTMENT (event),
-                                 ical,
-                                 source,
-                                 default_zone);
-      break;
-    case ICAL_VTODO_COMPONENT:
+                                 ical, source, default_zone);
+    }
+  else if (component == ICAL_VTODO_COMPONENT)
+    {
       event->type = CALENDAR_EVENT_TASK;
       calendar_task_init (CALENDAR_TASK (event),
-                          ical,
-                          source,
-                          default_zone);
-      break;
-    default:
-      g_warning ("Unknown calendar component type: %d\n",
-                 icalcomponent_isa (ical));
+                          ical, source, default_zone);
+    }
+  else
+    {
+      g_warning ("Unknown calendar component type: %d\n", component);
       g_free (event);
+
       return NULL;
     }
 
@@ -1103,6 +1108,7 @@ calendar_event_copy (CalendarEvent *event)
       calendar_task_copy (CALENDAR_TASK (event),
 			  CALENDAR_TASK (retval));
       break;
+    case CALENDAR_EVENT_ALL:
     default:
       g_assert_not_reached ();
       break;
@@ -1122,6 +1128,7 @@ calendar_event_get_uid (CalendarEvent *event)
     case CALENDAR_EVENT_TASK:
       return g_strdup (CALENDAR_TASK (event)->uid);
       break;
+    case CALENDAR_EVENT_ALL:
     default:
       g_assert_not_reached ();
       break;
@@ -1151,6 +1158,7 @@ calendar_event_equal (CalendarEvent *a,
     case CALENDAR_EVENT_TASK:
       return calendar_task_equal (CALENDAR_TASK (a),
 				  CALENDAR_TASK (b));
+    case CALENDAR_EVENT_ALL:
     default:
       break;
     }

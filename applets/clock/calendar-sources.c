@@ -382,6 +382,8 @@ calendar_sources_load_esource_list (ESourceRegistry *registry,
       case E_CAL_SOURCE_TYPE_TODO:
         extension_name = E_SOURCE_EXTENSION_TASK_LIST;
         break;
+      case E_CAL_SOURCE_TYPE_JOURNAL:
+      case E_CAL_SOURCE_TYPE_LAST:
       default:
         g_return_if_reached ();
     }
