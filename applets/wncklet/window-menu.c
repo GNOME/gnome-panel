@@ -40,11 +40,11 @@ typedef struct {
 	GtkWidget    *selector;
 	int	      size;
 	PanelAppletOrient orient;
-} WindowMenu;
+} WindowMenuApplet;
 
 static void
-window_menu_destroy (GtkWidget  *widget,
-                     WindowMenu *window_menu)
+window_menu_destroy (GtkWidget        *widget,
+                     WindowMenuApplet *window_menu)
 {
 	g_free (window_menu);
 }
@@ -56,7 +56,7 @@ window_menu_on_draw (GtkWidget *widget,
 {
         GtkStyleContext *context;
         GtkStateFlags    state;
-        WindowMenu      *window_menu = data;
+        WindowMenuApplet *window_menu = data;
 
 	if (!gtk_widget_has_focus (window_menu->applet))
                 return FALSE;
@@ -79,9 +79,9 @@ window_menu_on_draw (GtkWidget *widget,
 }
 
 static void
-window_menu_size_allocate (PanelApplet	 *applet, 
-			   GtkAllocation *allocation,
-			   WindowMenu	 *window_menu)
+window_menu_size_allocate (PanelApplet      *applet,
+                           GtkAllocation    *allocation,
+                           WindowMenuApplet *window_menu)
 {
 	PanelAppletOrient  orient;
 	GList             *children;
@@ -112,9 +112,9 @@ window_menu_size_allocate (PanelApplet	 *applet,
 }
 
 static gboolean
-window_menu_key_press_event (GtkWidget   *widget,
-                             GdkEventKey *event,
-                             WindowMenu  *window_menu)
+window_menu_key_press_event (GtkWidget        *widget,
+                             GdkEventKey      *event,
+                             WindowMenuApplet *window_menu)
 {
 	GtkMenuShell *menu_shell;
 	WnckSelector *selector;
@@ -167,9 +167,9 @@ filter_button_press (GtkWidget *widget,
 gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
-	WindowMenu *window_menu;
+	WindowMenuApplet *window_menu;
 
-	window_menu = g_new0 (WindowMenu, 1);
+	window_menu = g_new0 (WindowMenuApplet, 1);
 
 	window_menu->applet = GTK_WIDGET (applet);
 	gtk_widget_set_name (window_menu->applet, "window-menu-applet-button");
