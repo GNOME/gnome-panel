@@ -17,39 +17,16 @@
  */
 
 
-#ifndef __NA_TRAY_APPLET_H__
-#define __NA_TRAY_APPLET_H__
+#ifndef NA_APPLET_H
+#define NA_APPLET_H
 
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-#define NA_TYPE_TRAY_APPLET             (na_tray_applet_get_type ())
-#define NA_TRAY_APPLET(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), NA_TYPE_TRAY_APPLET, NaTrayApplet))
-#define NA_TRAY_APPLET_CLASS(klass)     (G_TYPE_CHECK_CLASS_CAST ((klass), NA_TYPE_TRAY_APPLET, NaTrayAppletClass))
-#define NA_IS_TRAY_APPLET(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), NA_TYPE_TRAY_APPLET))
-#define NA_IS_TRAY_APPLET_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), NA_TYPE_TRAY_APPLET))
-#define NA_TRAY_APPLET_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS((obj), NA_TYPE_TRAY_APPLET, NaTrayAppletClass))
-
-typedef struct _NaTrayApplet        NaTrayApplet;
-typedef struct _NaTrayAppletClass   NaTrayAppletClass;
-typedef struct _NaTrayAppletPrivate NaTrayAppletPrivate;
-
-struct _NaTrayApplet
-{
-  PanelApplet parent_object;
-
-  /*< private >*/
-  NaTrayAppletPrivate *priv;
-};
-
-struct _NaTrayAppletClass
-{
-  PanelAppletClass parent_class;
-};
-
-GType na_tray_applet_get_type (void) G_GNUC_CONST;
+#define NA_TYPE_APPLET na_applet_get_type ()
+G_DECLARE_FINAL_TYPE (NaApplet, na_applet, NA, APPLET, GpApplet)
 
 G_END_DECLS
 
-#endif /* __NA_TRAY_APPLET_H__ */
+#endif

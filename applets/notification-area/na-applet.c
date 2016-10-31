@@ -1,5 +1,3 @@
-/* System tray main() */
-
 /*
  * Copyright (C) 2002 Red Hat, Inc.
  * Copyright (C) 2003-2006 Vincent Untz
@@ -18,98 +16,38 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <config.h>
-#include <string.h>
-
-#include <panel-applet.h>
+#include "config.h"
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "na-applet.h"
 #include "na-tray-manager.h"
 #include "na-tray.h"
 #include "fixedtip.h"
 
-#define NOTIFICATION_AREA_ICON "gnome-panel-notification-area"
-
-static void na_tray_applet_style_updated (GtkWidget *widget);
-
-struct _NaTrayAppletPrivate
+struct _NaApplet
 {
-  NaTray *tray;
+  GpApplet  parent;
+  NaTray   *tray;
 };
 
-G_DEFINE_TYPE (NaTrayApplet, na_tray_applet, PANEL_TYPE_APPLET)
-
-static GtkOrientation
-get_gtk_orientation_from_applet_orient (PanelAppletOrient orient)
-{
-  switch (orient)
-    {
-    case PANEL_APPLET_ORIENT_LEFT:
-    case PANEL_APPLET_ORIENT_RIGHT:
-      return GTK_ORIENTATION_VERTICAL;
-    case PANEL_APPLET_ORIENT_UP:
-    case PANEL_APPLET_ORIENT_DOWN:
-    default:
-      return GTK_ORIENTATION_HORIZONTAL;
-    }
-
-  g_assert_not_reached ();
-
-  return GTK_ORIENTATION_HORIZONTAL;
-}
+G_DEFINE_TYPE (NaApplet, na_applet, GP_TYPE_APPLET)
 
 static void
-na_tray_applet_realize (GtkWidget *widget)
+update_style (GtkWidget *widget)
 {
-  NaTrayApplet      *applet = NA_TRAY_APPLET (widget);
-  PanelAppletOrient  orient;
-
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->realize (widget);
-
-  g_assert (applet->priv->tray == NULL);
-
-  orient = panel_applet_get_orient (PANEL_APPLET (widget));
-
-  applet->priv->tray = na_tray_new_for_screen (gtk_widget_get_screen (widget),
-                                               get_gtk_orientation_from_applet_orient (orient));
-
-  gtk_container_add (GTK_CONTAINER (widget), GTK_WIDGET (applet->priv->tray));
-  na_tray_applet_style_updated (widget);
-  gtk_widget_show (GTK_WIDGET (applet->priv->tray));
-}
-
-static void
-na_tray_applet_unrealize (GtkWidget *widget)
-{
-  NaTrayApplet *applet = NA_TRAY_APPLET (widget);
-
-  g_assert (applet->priv->tray != NULL);
-
-  gtk_widget_destroy (GTK_WIDGET (applet->priv->tray));
-  applet->priv->tray = NULL;
-
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->unrealize (widget);
-}
-
-static void
-na_tray_applet_style_updated (GtkWidget *widget)
-{
-  NaTrayApplet    *applet = NA_TRAY_APPLET (widget);
+  NaApplet *na;
   GtkStyleContext *context;
-  GdkRGBA          fg;
-  GdkRGBA          error;
-  GdkRGBA          warning;
-  GdkRGBA          success;
-  gint             padding;
-  gint             icon_size;
+  GdkRGBA fg;
+  GdkRGBA error;
+  GdkRGBA warning;
+  GdkRGBA success;
+  gint padding;
+  gint icon_size;
 
-  GTK_WIDGET_CLASS (na_tray_applet_parent_class)->style_updated (widget);
-
-  if (!applet->priv->tray)
-    return;
+  na = NA_APPLET (widget);
 
   context = gtk_widget_get_style_context (widget);
 
@@ -127,94 +65,102 @@ na_tray_applet_style_updated (GtkWidget *widget)
 
   gtk_style_context_restore (context);
 
-  na_tray_set_colors (applet->priv->tray, &fg, &error, &warning, &success);
+  na_tray_set_colors (na->tray, &fg, &error, &warning, &success);
 
   gtk_widget_style_get (widget, "icon-padding", &padding, NULL);
-  na_tray_set_padding (applet->priv->tray, padding);
+  na_tray_set_padding (na->tray, padding);
 
   gtk_widget_style_get (widget, "icon-size", &icon_size, NULL);
-  na_tray_set_icon_size (applet->priv->tray, icon_size);
+  na_tray_set_icon_size (na->tray, icon_size);
 }
 
 static void
-na_tray_applet_change_orient (PanelApplet       *panel_applet,
-                              PanelAppletOrient  orient)
+na_applet_style_updated (GtkWidget *widget)
 {
-  NaTrayApplet *applet = NA_TRAY_APPLET (panel_applet);
-
-  if (!applet->priv->tray)
-    return;
-
-  na_tray_set_orientation (applet->priv->tray,
-                           get_gtk_orientation_from_applet_orient (orient));
+  GTK_WIDGET_CLASS (na_applet_parent_class)->style_updated (widget);
+  update_style (widget);
 }
 
 static void
-na_tray_applet_class_init (NaTrayAppletClass *class)
+na_applet_constructed (GObject *object)
 {
-  GtkWidgetClass   *widget_class = GTK_WIDGET_CLASS (class);
-  PanelAppletClass *applet_class = PANEL_APPLET_CLASS (class);
+  G_OBJECT_CLASS (na_applet_parent_class)->constructed (object);
+  gtk_widget_show (GTK_WIDGET (object));
+}
 
-  widget_class->realize = na_tray_applet_realize;
-  widget_class->unrealize = na_tray_applet_unrealize;
-  widget_class->style_updated = na_tray_applet_style_updated;
-  applet_class->change_orient = na_tray_applet_change_orient;
+static void
+na_applet_placement_changed (GpApplet        *applet,
+                             GtkOrientation   orientation,
+                             GtkPositionType  position)
+{
+  NaApplet *na;
 
-  gtk_widget_class_install_style_property (
-          widget_class,
-          g_param_spec_int ("icon-padding",
-                            "Padding around icons",
-                            "Padding that should be put around icons, in pixels",
-                            0, G_MAXINT, 0,
-                            G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+  na = NA_APPLET (applet);
 
-  gtk_widget_class_install_style_property (
-          widget_class,
-          g_param_spec_int ("icon-size",
-                            "Icon size",
-                            "If non-zero, hardcodes the size of the icons in pixels",
-                            0, G_MAXINT, 0,
-                            G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+  na_tray_set_orientation (na->tray, orientation);
+}
 
-  g_type_class_add_private (class, sizeof (NaTrayAppletPrivate));
+static void
+install_style_properties (GtkWidgetClass *widget_class)
+{
+  GParamSpec *spec;
+
+  spec = g_param_spec_int ("icon-padding",
+                           "Padding around icons",
+                           "Padding that should be put around icons, in pixels",
+                           0, G_MAXINT, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  gtk_widget_class_install_style_property (widget_class, spec);
+
+  spec = g_param_spec_int ("icon-size",
+                           "Icon size",
+                           "If non-zero, hardcodes the size of the icons in pixels",
+                           0, G_MAXINT, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+  gtk_widget_class_install_style_property (widget_class, spec);
+}
+
+static void
+na_applet_class_init (NaAppletClass *na_class)
+{
+  GObjectClass *object_class;
+  GtkWidgetClass *widget_class;
+  GpAppletClass *applet_class;
+
+  object_class = G_OBJECT_CLASS (na_class);
+  widget_class = GTK_WIDGET_CLASS (na_class);
+  applet_class = GP_APPLET_CLASS (na_class);
+
+  object_class->constructed = na_applet_constructed;
+
+  widget_class->style_updated = na_applet_style_updated;
+
+  applet_class->placement_changed = na_applet_placement_changed;
 
   gtk_widget_class_set_css_name (widget_class, "na-tray-applet");
+  install_style_properties (widget_class);
 }
 
 static void
-na_tray_applet_init (NaTrayApplet *applet)
+na_applet_init (NaApplet *na)
 {
-  AtkObject *atko;
+  GpAppletFlags flags;
+  AtkObject *atk_object;
+  GdkScreen *screen;
+  GtkOrientation orientation;
 
-  applet->priv = G_TYPE_INSTANCE_GET_PRIVATE (applet, NA_TYPE_TRAY_APPLET,
-                                              NaTrayAppletPrivate);
+  flags = GP_APPLET_FLAGS_HAS_HANDLE | GP_APPLET_FLAGS_EXPAND_MINOR;
+  gp_applet_set_flags (GP_APPLET (na), flags);
 
-  /* Defer creating NaTray until applet is added to panel so
-   * gtk_widget_get_screen returns correct information */
-  applet->priv->tray = NULL;
+  atk_object = gtk_widget_get_accessible (GTK_WIDGET (na));
+  atk_object_set_name (atk_object, _("Panel Notification Area"));
 
-  atko = gtk_widget_get_accessible (GTK_WIDGET (applet));
-  atk_object_set_name (atko, _("Panel Notification Area"));
+  screen = gdk_screen_get_default ();
+  orientation = gp_applet_get_orientation (GP_APPLET (na));
+  na->tray = na_tray_new_for_screen (screen, orientation);
 
-  panel_applet_set_flags (PANEL_APPLET (applet),
-                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
+  gtk_container_add (GTK_CONTAINER (na), GTK_WIDGET (na->tray));
+  gtk_widget_show (GTK_WIDGET (na->tray));
+
+  update_style (GTK_WIDGET (na));
 }
-
-static gboolean
-applet_factory (PanelApplet *applet,
-                const gchar *iid,
-                gpointer     user_data)
-{
-  if (!(strcmp (iid, "NotificationArea") == 0 ||
-        strcmp (iid, "SystemTrayApplet") == 0))
-    return FALSE;
-
-  gtk_widget_show_all (GTK_WIDGET (applet));
-
-  return TRUE;
-}
-
-PANEL_APPLET_IN_PROCESS_FACTORY ("NotificationAreaAppletFactory",
-				 NA_TYPE_TRAY_APPLET,
-				 applet_factory,
-				 NULL)

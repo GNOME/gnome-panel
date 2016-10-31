@@ -20,8 +20,6 @@
 #include <config.h>
 #include <string.h>
 
-#include <panel-applet.h>
-
 #include <gtk/gtk.h>
 
 #include "na-tray-manager.h"
