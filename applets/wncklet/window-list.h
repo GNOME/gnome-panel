@@ -20,12 +20,13 @@
 #ifndef WINDOW_LIST_APPLET_H
 #define WINDOW_LIST_APPLET_H
 
-#include <glib.h>
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean window_list_applet_fill (PanelApplet *applet);
+#define WINDOW_LIST_TYPE_APPLET window_list_applet_get_type ()
+G_DECLARE_FINAL_TYPE (WindowListApplet, window_list_applet,
+                      WINDOW_LIST, APPLET, GpApplet)
 
 G_END_DECLS
 

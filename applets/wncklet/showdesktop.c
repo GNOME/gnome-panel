@@ -30,8 +30,10 @@
 #define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
-typedef struct {
-        GtkWidget *applet;
+struct _ShowDesktopApplet
+{
+        GpApplet parent;
+
         GtkWidget *button;
         GtkWidget *image;
 
@@ -44,7 +46,9 @@ typedef struct {
         guint button_activate;
 
         GtkIconTheme *icon_theme;
-} ShowDesktopApplet;
+};
+
+G_DEFINE_TYPE (ShowDesktopApplet, show_desktop_applet, GP_TYPE_APPLET)
 
 static void
 update_icon (ShowDesktopApplet *sdd)
@@ -137,34 +141,6 @@ update_icon (ShowDesktopApplet *sdd)
 					   icon);
 
         g_object_unref (icon);
-}
-
-static void
-applet_change_orient (PanelApplet       *applet,
-                      PanelAppletOrient  orient,
-                      ShowDesktopApplet *sdd)
-{
-        GtkOrientation new_orient;
-
-        switch (orient)
-        {
-        case PANEL_APPLET_ORIENT_LEFT:
-        case PANEL_APPLET_ORIENT_RIGHT:
-                new_orient = GTK_ORIENTATION_VERTICAL;
-                break;
-        case PANEL_APPLET_ORIENT_UP:
-        case PANEL_APPLET_ORIENT_DOWN:
-        default:
-                new_orient = GTK_ORIENTATION_HORIZONTAL;
-                break;
-        }
-
-        if (new_orient == sdd->orient)
-                return;
-
-        sdd->orient = new_orient;
-
-        update_icon (sdd);
 }
 
 static void
@@ -320,8 +296,6 @@ applet_destroyed (GtkWidget         *applet,
 						      sdd);
 		sdd->icon_theme = NULL;
 	}
-
-        g_free (sdd);
 }
 
 static gboolean
@@ -378,13 +352,9 @@ button_drag_motion (GtkWidget         *widget,
 }
 
 static void 
-show_desktop_applet_realized (PanelApplet *applet, 
-			      gpointer     data)
+show_desktop_applet_realized (GtkWidget         *widget,
+                              ShowDesktopApplet *sdd)
 {
-	ShowDesktopApplet *sdd;
-	
-	sdd = (ShowDesktopApplet *) data;
-
 	if (sdd->wnck_screen != NULL)
 		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
 						      show_desktop_changed_callback,
@@ -401,8 +371,7 @@ show_desktop_applet_realized (PanelApplet *applet,
 		wncklet_connect_while_alive (sdd->wnck_screen,
 					     "showing_desktop_changed",
 					     G_CALLBACK (show_desktop_changed_callback),
-					     sdd,
-					     sdd->applet);
+					     sdd, sdd);
 	else
 		g_warning ("Could not get WnckScreen!");
 
@@ -411,39 +380,23 @@ show_desktop_applet_realized (PanelApplet *applet,
 	sdd->icon_theme = gtk_icon_theme_get_default ();
 	wncklet_connect_while_alive (sdd->icon_theme, "changed",
 				     G_CALLBACK (theme_changed_callback),
-				     sdd,
-				     sdd->applet);
+				     sdd, sdd);
 
         update_icon (sdd);
 }
 
-gboolean
-show_desktop_applet_fill (PanelApplet *applet)
+static void
+show_desktop_applet_fill (GpApplet *applet)
 {
 	ShowDesktopApplet *sdd;
 	AtkObject       *atk_obj;
 
-	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
-
-	sdd = g_new0 (ShowDesktopApplet, 1);
-
-        sdd->applet = GTK_WIDGET (applet);
+	sdd = SHOW_DESKTOP_APPLET (applet);
 
 	sdd->image = gtk_image_new ();
+	sdd->orient = gp_applet_get_orientation (applet);
 
-        switch (panel_applet_get_orient (applet)) {
-        case PANEL_APPLET_ORIENT_LEFT:
-        case PANEL_APPLET_ORIENT_RIGHT:
-                sdd->orient = GTK_ORIENTATION_VERTICAL;
-                break;
-        case PANEL_APPLET_ORIENT_UP:
-        case PANEL_APPLET_ORIENT_DOWN:
-        default:
-                sdd->orient = GTK_ORIENTATION_HORIZONTAL;
-                break;
-        }
-
-	g_signal_connect (G_OBJECT (sdd->applet), "realize",
+	g_signal_connect (sdd, "realize",
 			  G_CALLBACK (show_desktop_applet_realized), sdd);
 
         sdd->button = gtk_toggle_button_new ();
@@ -460,24 +413,14 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         gtk_container_set_border_width (GTK_CONTAINER (sdd->button), 0);
         gtk_container_add (GTK_CONTAINER (sdd->button), sdd->image);
-        gtk_container_add (GTK_CONTAINER (sdd->applet), sdd->button);
+        gtk_container_add (GTK_CONTAINER (sdd), sdd->button);
 
         g_signal_connect (G_OBJECT (sdd->button),
                           "size_allocate",
                           G_CALLBACK (button_size_allocated),
                           sdd);
 
-        /* FIXME: Update this comment. */
-        /* we have to bind change_orient before we do applet_widget_add
-           since we need to get an initial change_orient signal to set our
-           initial oriantation, and we get that during the _add call */
-        g_signal_connect (G_OBJECT (sdd->applet),
-                          "change_orient",
-                          G_CALLBACK (applet_change_orient),
-                          sdd);
-
-        g_signal_connect (G_OBJECT (sdd->applet),
-                          "destroy",
+        g_signal_connect (sdd, "destroy",
                           G_CALLBACK (applet_destroyed),
                           sdd);
 
@@ -490,7 +433,50 @@ show_desktop_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (button_drag_leave),
 			  sdd);
 
-  	gtk_widget_show_all (sdd->applet);
+	gtk_widget_show_all (GTK_WIDGET (sdd));
+}
 
-        return TRUE;
+static void
+show_desktop_applet_constructed (GObject *object)
+{
+	G_OBJECT_CLASS (show_desktop_applet_parent_class)->constructed (object);
+
+	show_desktop_applet_fill (GP_APPLET (object));
+}
+
+static void
+show_desktop_applet_placement_changed (GpApplet        *applet,
+                                       GtkOrientation   orientation,
+                                       GtkPositionType  position)
+{
+	ShowDesktopApplet *sdd;
+
+	sdd = SHOW_DESKTOP_APPLET (applet);
+
+	if (orientation == sdd->orient)
+		return;
+
+	sdd->orient = orientation;
+
+	update_icon (sdd);
+}
+
+static void
+show_desktop_applet_class_init (ShowDesktopAppletClass *sdd_class)
+{
+	GObjectClass *object_class;
+	GpAppletClass *applet_class;
+
+	object_class = G_OBJECT_CLASS (sdd_class);
+	applet_class = GP_APPLET_CLASS (sdd_class);
+
+	object_class->constructed = show_desktop_applet_constructed;
+
+	applet_class->placement_changed = show_desktop_applet_placement_changed;
+}
+
+static void
+show_desktop_applet_init (ShowDesktopApplet *sdd)
+{
+	gp_applet_set_flags (GP_APPLET (sdd), GP_APPLET_FLAGS_EXPAND_MINOR);
 }

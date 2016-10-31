@@ -19,12 +19,13 @@
 #ifndef SHOW_DESKTOP_APPLET_H
 #define SHOW_DESKTOP_APPLET_H
 
-#include <glib.h>
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean show_desktop_applet_fill (PanelApplet *applet);
+#define SHOW_DESKTOP_TYPE_APPLET show_desktop_applet_get_type ()
+G_DECLARE_FINAL_TYPE (ShowDesktopApplet, show_desktop_applet,
+                      SHOW_DESKTOP, APPLET, GpApplet)
 
 G_END_DECLS
 

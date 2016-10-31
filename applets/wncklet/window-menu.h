@@ -26,12 +26,13 @@
 #ifndef WINDOW_MENU_APPLET_H
 #define WINDOW_MENU_APPLET_H
 
-#include <glib.h>
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean window_menu_applet_fill (PanelApplet *applet);
+#define WINDOW_MENU_TYPE_APPLET window_menu_applet_get_type ()
+G_DECLARE_FINAL_TYPE (WindowMenuApplet, window_menu_applet,
+                      WINDOW_MENU, APPLET, GpApplet)
 
 G_END_DECLS
 

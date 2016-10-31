@@ -22,14 +22,9 @@
 
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
-#include <panel-applet.h>
 #include <string.h>
 
 #include "wncklet.h"
-#include "window-menu.h"
-#include "workspace-switcher.h"
-#include "window-list.h"
-#include "showdesktop.h"
 
 void
 wncklet_connect_while_alive (gpointer    object,
@@ -48,38 +43,3 @@ wncklet_connect_while_alive (gpointer    object,
 			closure,
 			FALSE);
 }
-
-static gboolean 
-wncklet_factory (PanelApplet *applet,
-		 const char  *iid,
-		 gpointer     data)
-{
-	gboolean retval = FALSE;
-	static gboolean type_registered = FALSE;
-
-	if (!type_registered) {
-		wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
-		type_registered = TRUE;
-	}
-
-	if (!strcmp (iid, "WindowMenuApplet"))
-		retval = window_menu_applet_fill (applet);
-
-	else if (!strcmp (iid, "WorkspaceSwitcherApplet")||
-	         !strcmp (iid, "PagerApplet"))
-		retval = workspace_switcher_applet_fill (applet);
-
-	else if (!strcmp (iid, "WindowListApplet") ||
-	         !strcmp (iid, "TasklistApplet"))
-		retval = window_list_applet_fill (applet);
-
-	else if (!strcmp (iid, "ShowDesktopApplet"))
-		retval = show_desktop_applet_fill (applet);
-
-	return retval;
-}
-
-PANEL_APPLET_IN_PROCESS_FACTORY ("WnckletFactory",
-				 PANEL_TYPE_APPLET,
-				 wncklet_factory,
-				 NULL)

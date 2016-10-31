@@ -20,12 +20,13 @@
 #ifndef WORKSPACE_SWITCHER_APPLET_H
 #define WORKSPACE_SWITCHER_APPLET_H
 
-#include <glib.h>
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean workspace_switcher_applet_fill (PanelApplet *applet);
+#define WORKSPACE_SWITCHER_TYPE_APPLET workspace_switcher_applet_get_type ()
+G_DECLARE_FINAL_TYPE (WorkspaceSwitcherApplet, workspace_switcher_applet,
+                      WORKSPACE_SWITCHER, APPLET, GpApplet)
 
 G_END_DECLS
 

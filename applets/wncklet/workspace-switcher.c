@@ -23,7 +23,6 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
-#include <panel-applet.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -39,11 +38,12 @@ typedef enum {
 	PAGER_WM_UNKNOWN
 } PagerWM;
 
-typedef struct {
-	GtkWidget *applet;
+struct _WorkspaceSwitcherApplet
+{
+	GpApplet parent;
 
 	GtkWidget *pager;
-	
+
 	WnckScreen *screen;
 	PagerWM     wm;
 
@@ -67,7 +67,9 @@ typedef struct {
 	gboolean display_all;
 
 	GSettings *settings;
-} WorkspaceSwitcherApplet;
+};
+
+G_DEFINE_TYPE (WorkspaceSwitcherApplet, workspace_switcher_applet, GP_TYPE_APPLET)
 
 static void
 pager_update (WorkspaceSwitcherApplet *pager)
@@ -148,7 +150,7 @@ window_manager_changed (WnckScreen              *screen,
 }
 
 static void
-applet_realized (PanelApplet             *applet,
+applet_realized (GtkWidget               *widget,
                  WorkspaceSwitcherApplet *pager)
 {
 	pager->screen = wnck_screen_get_default ();
@@ -156,44 +158,15 @@ applet_realized (PanelApplet             *applet,
 	window_manager_changed (pager->screen, pager);
 	wncklet_connect_while_alive (pager->screen, "window_manager_changed",
 				     G_CALLBACK (window_manager_changed),
-				     pager,
-				     pager->applet);
+				     pager, pager);
 }
 
 static void
-applet_unrealized (PanelApplet             *applet,
+applet_unrealized (GtkWidget               *widget,
                    WorkspaceSwitcherApplet *pager)
 {
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
-}
-
-static void
-applet_change_orient (PanelApplet             *applet,
-                      PanelAppletOrient        orient,
-                      WorkspaceSwitcherApplet *pager)
-{
-	GtkOrientation new_orient;
-  
-	switch (orient)	{
-	case PANEL_APPLET_ORIENT_LEFT:
-	case PANEL_APPLET_ORIENT_RIGHT:
-		new_orient = GTK_ORIENTATION_VERTICAL;
-		break;
-	case PANEL_APPLET_ORIENT_UP:
-	case PANEL_APPLET_ORIENT_DOWN:
-	default:
-		new_orient = GTK_ORIENTATION_HORIZONTAL;
-		break;
-	}
-
-	if (new_orient == pager->orientation)
-		return;
-  
-	pager->orientation = new_orient;
-	pager_update (pager);
-	if (pager->label_row_col) 
-		gtk_label_set_text (GTK_LABEL (pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));	
 }
 
 static void
@@ -204,8 +177,6 @@ destroy_pager (GtkWidget               *widget,
 
 	if (pager->properties_dialog)
 		gtk_widget_destroy (pager->properties_dialog);
-
-	g_free (pager);
 }
 
 static void
@@ -277,7 +248,7 @@ static void
 setup_gsettings (WorkspaceSwitcherApplet *pager)
 {
 	pager->settings =
-	  panel_applet_settings_new (PANEL_APPLET (pager->applet),
+	  gp_applet_settings_new (GP_APPLET (pager),
 				     "org.gnome.gnome-panel.applet.workspace-switcher");
 
 	g_signal_connect (pager->settings, "changed::num-rows",
@@ -691,28 +662,22 @@ display_properties_dialog (GSimpleAction *action,
 
 	gtk_window_set_icon_name (GTK_WINDOW (pager->properties_dialog),
 	                          WORKSPACE_SWITCHER_ICON);
-	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
-			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));
 }
 
 static const GActionEntry pager_menu_actions [] = {
         { "preferences", display_properties_dialog, NULL, NULL, NULL },
+        { NULL }
 };
 
-gboolean
-workspace_switcher_applet_fill (PanelApplet *applet)
+static void
+workspace_switcher_applet_fill (GpApplet *applet)
 {
 	WorkspaceSwitcherApplet *pager;
-	GSimpleActionGroup *action_group;
 	GAction *action;
 	gboolean display_names;
 
-	pager = g_new0 (WorkspaceSwitcherApplet, 1);
-
-	pager->applet = GTK_WIDGET (applet);
-
-	panel_applet_set_flags (PANEL_APPLET (pager->applet), PANEL_APPLET_EXPAND_MINOR);
+	pager = WORKSPACE_SWITCHER_APPLET (applet);
 
 	setup_gsettings (pager);
 
@@ -728,17 +693,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	pager->display_all = g_settings_get_boolean (pager->settings, "display-all-workspaces");
 
-	switch (panel_applet_get_orient (applet)) {
-	case PANEL_APPLET_ORIENT_LEFT:
-	case PANEL_APPLET_ORIENT_RIGHT:
-		pager->orientation = GTK_ORIENTATION_VERTICAL;
-		break;
-	case PANEL_APPLET_ORIENT_UP:
-	case PANEL_APPLET_ORIENT_DOWN:
-	default:
-		pager->orientation = GTK_ORIENTATION_HORIZONTAL;
-		break;
-	}
+	pager->orientation = gp_applet_get_orientation (applet);
 
 	pager->pager = wnck_pager_new ();
 	pager->screen = NULL;
@@ -749,43 +704,72 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (destroy_pager),
 			  pager);
 
-	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
+	gtk_container_add (GTK_CONTAINER (pager), pager->pager);
 	gtk_widget_show (pager->pager);
 
-	g_signal_connect (G_OBJECT (pager->applet),
+	g_signal_connect (G_OBJECT (pager),
 			  "realize",
 			  G_CALLBACK (applet_realized),
 			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
+	g_signal_connect (G_OBJECT (pager),
 			  "unrealize",
 			  G_CALLBACK (applet_unrealized),
 			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "change_orient",
-			  G_CALLBACK (applet_change_orient),
-			  pager);
 
-	gtk_widget_show (pager->applet);
+	gp_applet_setup_menu_from_resource (applet,
+	                                    WNCKLET_RESOURCE_PATH "workspace-switcher-menu.ui",
+	                                    pager_menu_actions);
 
-	action_group = g_simple_action_group_new ();
-	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-	                                 pager_menu_actions,
-	                                 G_N_ELEMENTS (pager_menu_actions),
-	                                 pager);
-	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
-					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.ui",
-					       action_group,
-					       GETTEXT_PACKAGE);
-
-	gtk_widget_insert_action_group (GTK_WIDGET (applet), "ws",
-	                                G_ACTION_GROUP (action_group));
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
-	g_object_bind_property (pager->applet, "locked-down",
-				action, "enabled",
+	action = gp_applet_menu_lookup_action (applet, "preferences");
+	g_object_bind_property (pager, "locked-down", action, "enabled",
 				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
 
-	g_object_unref (action_group);
+	gtk_widget_show (GTK_WIDGET (pager));
+}
 
-	return TRUE;
+static void
+workspace_switcher_applet_constructed (GObject *object)
+{
+	G_OBJECT_CLASS (workspace_switcher_applet_parent_class)->constructed (object);
+
+	workspace_switcher_applet_fill (GP_APPLET (object));
+}
+
+static void
+workspace_switcher_applet_placement_changed (GpApplet        *applet,
+                                             GtkOrientation   orientation,
+                                             GtkPositionType  position)
+{
+	WorkspaceSwitcherApplet *pager;
+
+	pager = WORKSPACE_SWITCHER_APPLET (applet);
+
+	if (orientation == pager->orientation)
+		return;
+
+	pager->orientation = orientation;
+	pager_update (pager);
+
+	if (pager->label_row_col)
+		gtk_label_set_text (GTK_LABEL (pager->label_row_col), orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
+}
+
+static void
+workspace_switcher_applet_class_init (WorkspaceSwitcherAppletClass *pager_class)
+{
+	GObjectClass *object_class;
+	GpAppletClass *applet_class;
+
+	object_class = G_OBJECT_CLASS (pager_class);
+	applet_class = GP_APPLET_CLASS (pager_class);
+
+	object_class->constructed = workspace_switcher_applet_constructed;
+
+	applet_class->placement_changed = workspace_switcher_applet_placement_changed;
+}
+
+static void
+workspace_switcher_applet_init (WorkspaceSwitcherApplet *pager)
+{
+	gp_applet_set_flags (GP_APPLET (pager), GP_APPLET_FLAGS_EXPAND_MINOR);
 }
