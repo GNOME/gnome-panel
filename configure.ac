@@ -265,10 +265,6 @@ AC_CONFIG_FILES([
   applets/status-notifier/Makefile
   applets/wncklet/Makefile
 
-  doc/Makefile
-  doc/reference/Makefile
-  doc/reference/libpanel-applet/Makefile
-
   docs/Makefile
   docs/reference/Makefile
   docs/reference/libgnome-panel/Makefile

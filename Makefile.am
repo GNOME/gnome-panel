@@ -5,7 +5,6 @@ SUBDIRS = \
 	gnome-panel \
 	libpanel-applet \
 	applets \
-	doc \
 	docs \
 	help \
 	data \
