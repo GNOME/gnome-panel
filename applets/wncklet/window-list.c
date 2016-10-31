@@ -56,10 +56,10 @@ typedef struct {
 	GtkWidget *change_workspace_radio;
 
 	GSettings *settings;
-} TasklistData;
+} WindowListApplet;
 
 static void
-tasklist_update (TasklistData *tasklist)
+tasklist_update (WindowListApplet *tasklist)
 {
 	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL) {
 		gtk_widget_set_size_request (GTK_WIDGET (tasklist->tasklist),
@@ -78,17 +78,17 @@ tasklist_update (TasklistData *tasklist)
 }
 
 static void
-response_cb (GtkWidget    *widget,
-	     int           id,
-	     TasklistData *tasklist)
+response_cb (GtkWidget        *widget,
+             gint              id,
+             WindowListApplet *tasklist)
 {
 	gtk_widget_hide (widget);
 }
 
 static void
 applet_change_orient (PanelApplet       *applet,
-		      PanelAppletOrient  orient,
-		      TasklistData      *tasklist)
+                      PanelAppletOrient  orient,
+                      WindowListApplet  *tasklist)
 {
 	GtkOrientation new_orient;
   
@@ -115,7 +115,8 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
+destroy_tasklist (GtkWidget        *widget,
+                  WindowListApplet *tasklist)
 {
 	g_object_unref (tasklist->settings);
 	tasklist->settings = NULL;
@@ -127,7 +128,7 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 }
 
 static void
-tasklist_properties_update_content_radio (TasklistData *tasklist)
+tasklist_properties_update_content_radio (WindowListApplet *tasklist)
 {
 	GtkWidget *button;
 	
@@ -152,9 +153,9 @@ tasklist_properties_update_content_radio (TasklistData *tasklist)
 }
 
 static void
-display_all_workspaces_changed (GSettings    *settings,
-				const gchar  *key,
-                                TasklistData *tasklist)
+display_all_workspaces_changed (GSettings        *settings,
+                                const gchar      *key,
+                                WindowListApplet *tasklist)
 {
 	gboolean value;
 
@@ -167,8 +168,8 @@ display_all_workspaces_changed (GSettings    *settings,
 }
 
 static GtkWidget *
-get_grouping_button (TasklistData *tasklist,
-		     WnckTasklistGroupingType type)
+get_grouping_button (WindowListApplet         *tasklist,
+                     WnckTasklistGroupingType  type)
 {
 	switch (type) {
 	default:
@@ -185,9 +186,9 @@ get_grouping_button (TasklistData *tasklist,
 }
 
 static void
-group_windows_changed (GSettings    *settings,
-                       const gchar  *key,
-		       TasklistData *tasklist)
+group_windows_changed (GSettings        *settings,
+                       const gchar      *key,
+                       WindowListApplet *tasklist)
 {
 	GtkWidget *button;
 
@@ -202,7 +203,7 @@ group_windows_changed (GSettings    *settings,
 }
 
 static void
-tasklist_update_unminimization_radio (TasklistData *tasklist)
+tasklist_update_unminimization_radio (WindowListApplet *tasklist)
 {
 	GtkWidget *button;
 	
@@ -221,9 +222,9 @@ tasklist_update_unminimization_radio (TasklistData *tasklist)
 
 
 static void
-move_unminimized_windows_changed (GSettings    *settings,
-                                  const gchar  *key,
-				  TasklistData *tasklist)
+move_unminimized_windows_changed (GSettings        *settings,
+                                  const gchar      *key,
+                                  WindowListApplet *tasklist)
 {
 	gboolean value;
 	
@@ -236,7 +237,7 @@ move_unminimized_windows_changed (GSettings    *settings,
 }
 
 static void
-setup_gsettings (TasklistData *tasklist)
+setup_gsettings (WindowListApplet *tasklist)
 {
         tasklist->settings =
           panel_applet_settings_new (PANEL_APPLET (tasklist->applet),
@@ -253,9 +254,9 @@ setup_gsettings (TasklistData *tasklist)
 }
 
 static void
-applet_size_allocate (GtkWidget      *widget,
-                      GtkAllocation  *allocation,
-                      TasklistData   *tasklist)
+applet_size_allocate (GtkWidget        *widget,
+                      GtkAllocation    *allocation,
+                      WindowListApplet *tasklist)
 {
 	gint len, size;
 	const int *size_hints;
@@ -287,7 +288,7 @@ icon_loader_func (const char  *icon,
                   unsigned int flags,
                   void        *data)
 {
-        TasklistData *tasklist;
+	WindowListApplet *tasklist;
 	GdkPixbuf    *retval;
 	char         *icon_no_extension;
 	char         *p;
@@ -332,8 +333,8 @@ icon_loader_func (const char  *icon,
 }
 
 static void
-group_windows_toggled (GtkToggleButton *button,
-		       TasklistData    *tasklist)
+group_windows_toggled (GtkToggleButton  *button,
+                       WindowListApplet *tasklist)
 {
 	if (gtk_toggle_button_get_active (button)) {
 		char *str;
@@ -343,16 +344,16 @@ group_windows_toggled (GtkToggleButton *button,
 }
 
 static void
-move_minimized_toggled (GtkToggleButton *button,
-			TasklistData    *tasklist)
+move_minimized_toggled (GtkToggleButton  *button,
+                        WindowListApplet *tasklist)
 {
 	g_settings_set_boolean (tasklist->settings, "move-unminimized-windows",
                                 gtk_toggle_button_get_active (button));
 }
 
 static void
-display_all_workspaces_toggled (GtkToggleButton *button,
-				TasklistData    *tasklist)
+display_all_workspaces_toggled (GtkToggleButton  *button,
+                                WindowListApplet *tasklist)
 {
 	g_settings_set_boolean (tasklist->settings, "display-all-workspaces",
                                 gtk_toggle_button_get_active (button));
@@ -361,12 +362,12 @@ display_all_workspaces_toggled (GtkToggleButton *button,
 #define WID(s) GTK_WIDGET (gtk_builder_get_object (builder, s))
 
 static void
-setup_sensitivity (TasklistData *tasklist,
-		   GtkBuilder *builder,
-		   const char *wid1,
-		   const char *wid2,
-		   const char *wid3,
-		   const char *key)
+setup_sensitivity (WindowListApplet *tasklist,
+                   GtkBuilder       *builder,
+                   const gchar      *wid1,
+                   const gchar      *wid2,
+                   const gchar      *wid3,
+                   const gchar      *key)
 {
 	GtkWidget *w;
 
@@ -392,8 +393,8 @@ setup_sensitivity (TasklistData *tasklist,
 }
 
 static void
-setup_dialog (GtkBuilder   *builder,
-	      TasklistData *tasklist)
+setup_dialog (GtkBuilder       *builder,
+              WindowListApplet *tasklist)
 {
 	GtkWidget *button;
 	
@@ -466,7 +467,7 @@ display_properties_dialog (GSimpleAction *action,
                            GVariant      *parameter,
                            gpointer       user_data)
 {
-	TasklistData *tasklist = (TasklistData *) user_data;
+	WindowListApplet *tasklist = (WindowListApplet *) user_data;
 
 	if (tasklist->properties_dialog == NULL) {
 		GtkBuilder *builder;
@@ -501,11 +502,11 @@ static const GActionEntry tasklist_menu_actions [] = {
 gboolean
 window_list_applet_fill (PanelApplet *applet)
 {
-	TasklistData *tasklist;
+	WindowListApplet *tasklist;
 	GSimpleActionGroup *action_group;
 	GAction *action;
 
-	tasklist = g_new0 (TasklistData, 1);
+	tasklist = g_new0 (WindowListApplet, 1);
 
 	tasklist->applet = GTK_WIDGET (applet);
 
