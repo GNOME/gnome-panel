@@ -26,7 +26,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "main.h"
+#include "na-applet.h"
 #include "na-tray-manager.h"
 #include "na-tray.h"
 #include "fixedtip.h"

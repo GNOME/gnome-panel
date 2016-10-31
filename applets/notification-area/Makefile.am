@@ -22,14 +22,14 @@ notification_area_la_CFLAGS = \
 notification_area_la_SOURCES = \
 	fixedtip.h \
 	fixedtip.c \
+	na-applet.c \
+	na-applet.h \
 	na-tray.c \
 	na-tray.h \
 	na-tray-child.c \
 	na-tray-child.h \
 	na-tray-manager.c \
 	na-tray-manager.h \
-	main.c \
-	main.h \
 	$(NULL)
 
 notification_area_la_LIBADD = \
