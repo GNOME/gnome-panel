@@ -1,5 +1,4 @@
-/* window-menu.c: Window Selector applet
- *
+/*
  * Copyright (C) 2003 Sun Microsystems, Inc.
  * Copyright (C) 2001 Free Software Foundation, Inc.
  * Copyright (C) 2000 Helix Code, Inc.
@@ -23,17 +22,13 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <string.h>
-#include <panel-applet.h>
+#include "config.h"
 
 #include <glib/gi18n.h>
 #include <gdk/gdkkeysyms.h>
-
 #include <libwnck/libwnck.h>
+#include <panel-applet.h>
+#include <string.h>
 
 #include "wncklet.h"
 #include "window-menu.h"

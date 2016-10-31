@@ -1,6 +1,3 @@
-/* -*- mode: C; c-file-style: "linux" -*- */
-/* "Show desktop" panel applet */
-
 /*
  * Copyright (C) 2002 Red Hat, Inc.
  * Developed by Havoc Pennington
@@ -19,28 +16,21 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "config.h"
 
-#include <glib/gi18n.h>
-
-#include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
+#include <string.h>
 
 #include "wncklet.h"
 #include "showdesktop.h"
 
-#include <string.h>
-
 #define TIMEOUT_ACTIVATE_SECONDS 1
 #define SHOW_DESKTOP_ICON "user-desktop"
 
-
 typedef struct {
-        /* widgets */
         GtkWidget *applet;
         GtkWidget *button;
         GtkWidget *image;
@@ -53,77 +43,8 @@ typedef struct {
         guint showing_desktop : 1;
         guint button_activate;
 
-	GtkIconTheme *icon_theme;
+        GtkIconTheme *icon_theme;
 } ShowDesktopData;
-
-static void update_icon           (ShowDesktopData *sdd);
-static void update_button_state   (ShowDesktopData *sdd);
-static void update_button_display (ShowDesktopData *sdd);
-
-static void theme_changed_callback        (GtkIconTheme    *icon_theme,
-					   ShowDesktopData *sdd);
-
-static void button_toggled_callback       (GtkWidget       *button,
-                                           ShowDesktopData *sdd);
-static void show_desktop_changed_callback (WnckScreen      *screen,
-                                           ShowDesktopData *sdd);
-
-/* this is when the panel orientation changes */
-
-static void
-applet_change_orient (PanelApplet       *applet,
-                      PanelAppletOrient  orient,
-                      ShowDesktopData   *sdd)
-{
-        GtkOrientation new_orient;
-
-        switch (orient)
-        {
-        case PANEL_APPLET_ORIENT_LEFT:
-        case PANEL_APPLET_ORIENT_RIGHT:
-                new_orient = GTK_ORIENTATION_VERTICAL;
-                break;
-        case PANEL_APPLET_ORIENT_UP:
-        case PANEL_APPLET_ORIENT_DOWN:
-        default:
-                new_orient = GTK_ORIENTATION_HORIZONTAL;
-                break;
-        }
-
-        if (new_orient == sdd->orient)
-                return;
-
-        sdd->orient = new_orient;
-
-        update_icon (sdd);
-}
-
-/* this is when the panel size changes */
-static void
-button_size_allocated (GtkWidget       *button,
-		       GtkAllocation   *allocation,
-                       ShowDesktopData *sdd)
-{
-	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
-		&& (sdd->size == allocation->height))
-	    || ((sdd->orient == GTK_ORIENTATION_VERTICAL)
-	    	&& (sdd->size == allocation->width)))
-	     return;
-
-	switch (sdd->orient) {
-	case GTK_ORIENTATION_HORIZONTAL:
-		sdd->size = allocation->height;
-		break;
-	case GTK_ORIENTATION_VERTICAL:
-		sdd->size = allocation->width;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-        update_icon (sdd);
-}
 
 static void
 update_icon (ShowDesktopData *sdd)
@@ -218,6 +139,60 @@ update_icon (ShowDesktopData *sdd)
         g_object_unref (icon);
 }
 
+static void
+applet_change_orient (PanelApplet       *applet,
+                      PanelAppletOrient  orient,
+                      ShowDesktopData   *sdd)
+{
+        GtkOrientation new_orient;
+
+        switch (orient)
+        {
+        case PANEL_APPLET_ORIENT_LEFT:
+        case PANEL_APPLET_ORIENT_RIGHT:
+                new_orient = GTK_ORIENTATION_VERTICAL;
+                break;
+        case PANEL_APPLET_ORIENT_UP:
+        case PANEL_APPLET_ORIENT_DOWN:
+        default:
+                new_orient = GTK_ORIENTATION_HORIZONTAL;
+                break;
+        }
+
+        if (new_orient == sdd->orient)
+                return;
+
+        sdd->orient = new_orient;
+
+        update_icon (sdd);
+}
+
+static void
+button_size_allocated (GtkWidget       *button,
+		       GtkAllocation   *allocation,
+                       ShowDesktopData *sdd)
+{
+	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
+		&& (sdd->size == allocation->height))
+	    || ((sdd->orient == GTK_ORIENTATION_VERTICAL)
+		&& (sdd->size == allocation->width)))
+	     return;
+
+	switch (sdd->orient) {
+	case GTK_ORIENTATION_HORIZONTAL:
+		sdd->size = allocation->height;
+		break;
+	case GTK_ORIENTATION_VERTICAL:
+		sdd->size = allocation->width;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+        update_icon (sdd);
+}
+
 /* This updates things that should be consistent with the button's appearance,
  * and update_button_state updates the button appearance itself
  */
@@ -233,6 +208,51 @@ update_button_display (ShowDesktopData *sdd)
         }
 
 	gtk_widget_set_tooltip_text (sdd->button, tip);
+}
+
+static void
+button_toggled_callback (GtkWidget       *button,
+                         ShowDesktopData *sdd)
+{
+        if (!gdk_x11_screen_supports_net_wm_hint (gtk_widget_get_screen (button),
+                                                  gdk_atom_intern ("_NET_SHOWING_DESKTOP", FALSE))) {
+                static GtkWidget *dialog = NULL;
+
+                if (dialog &&
+                    gtk_widget_get_screen (dialog) != gtk_widget_get_screen (button))
+                        gtk_widget_destroy (dialog);
+
+                if (dialog) {
+                        gtk_window_present (GTK_WINDOW (dialog));
+                        return;
+                }
+
+                dialog = gtk_message_dialog_new (NULL,
+                                                 GTK_DIALOG_MODAL,
+                                                 GTK_MESSAGE_ERROR,
+                                                 GTK_BUTTONS_CLOSE,
+                                                 _("Your window manager does not support the show desktop button, or you are not running a window manager."));
+
+                g_object_add_weak_pointer (G_OBJECT (dialog),
+                                           (gpointer) &dialog);
+
+                g_signal_connect (G_OBJECT (dialog), "response",
+                                  G_CALLBACK (gtk_widget_destroy),
+                                  NULL);
+
+                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+                gtk_window_set_screen (GTK_WINDOW (dialog),
+                                       gtk_widget_get_screen (button));
+                gtk_widget_show (dialog);
+
+                return;
+        }
+
+        if (sdd->wnck_screen != NULL)
+                wnck_screen_toggle_showing_desktop (sdd->wnck_screen,
+                                                    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
+
+        update_button_display (sdd);
 }
 
 static void
@@ -259,6 +279,23 @@ update_button_state (ShowDesktopData *sdd)
         }
 
         update_button_display (sdd);
+}
+
+static void
+show_desktop_changed_callback (WnckScreen      *screen,
+                               ShowDesktopData *sdd)
+{
+        if (sdd->wnck_screen != NULL)
+                sdd->showing_desktop =
+                        wnck_screen_get_showing_desktop (sdd->wnck_screen);
+        update_button_state (sdd);
+}
+
+static void
+theme_changed_callback (GtkIconTheme    *icon_theme,
+                        ShowDesktopData *sdd)
+{
+	update_icon (sdd);
 }
 
 static void
@@ -382,13 +419,6 @@ show_desktop_applet_realized (PanelApplet *applet,
         update_icon (sdd);
 }
 
-static void
-theme_changed_callback (GtkIconTheme    *icon_theme,
-			ShowDesktopData *sdd)
-{
-	update_icon (sdd);
-}
-
 gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
@@ -465,59 +495,4 @@ show_desktop_applet_fill (PanelApplet *applet)
   	gtk_widget_show_all (sdd->applet);
 
         return TRUE;
-}
-
-static void
-button_toggled_callback (GtkWidget       *button,
-                         ShowDesktopData *sdd)
-{
-        if (!gdk_x11_screen_supports_net_wm_hint (gtk_widget_get_screen (button),
-                                                  gdk_atom_intern ("_NET_SHOWING_DESKTOP", FALSE))) {
-                static GtkWidget *dialog = NULL;
-
-                if (dialog &&
-                    gtk_widget_get_screen (dialog) != gtk_widget_get_screen (button))
-                        gtk_widget_destroy (dialog);
-
-                if (dialog) {
-                        gtk_window_present (GTK_WINDOW (dialog));
-                        return;
-                }
-                
-                dialog = gtk_message_dialog_new (NULL,
-                                                 GTK_DIALOG_MODAL,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
-                                                 _("Your window manager does not support the show desktop button, or you are not running a window manager."));
-
-                g_object_add_weak_pointer (G_OBJECT (dialog),
-                                           (gpointer) &dialog);
-                
-                g_signal_connect (G_OBJECT (dialog), "response",
-                                  G_CALLBACK (gtk_widget_destroy),
-                                  NULL);
-                
-                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-                gtk_window_set_screen (GTK_WINDOW (dialog),
-                                       gtk_widget_get_screen (button));
-                gtk_widget_show (dialog);
-
-                return;
-        }
-        
-        if (sdd->wnck_screen != NULL)
-                wnck_screen_toggle_showing_desktop (sdd->wnck_screen,
-                                                    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
-
-        update_button_display (sdd);
-}
-
-static void
-show_desktop_changed_callback (WnckScreen      *screen,
-                               ShowDesktopData *sdd)
-{
-        if (sdd->wnck_screen != NULL)
-                sdd->showing_desktop =
-                        wnck_screen_get_showing_desktop (sdd->wnck_screen);
-        update_button_state (sdd);
 }

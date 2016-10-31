@@ -1,5 +1,4 @@
-/* window-menu.h: Window Menu applet
- *
+/*
  * Copyright (C) 2003 Sun Microsystems, Inc.
  * Copyright (C) 2001 Free Software Foundation, Inc.
  * Copyright (C) 2000 Helix Code, Inc.
@@ -24,8 +23,8 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
-#ifndef __WINDOW_MENU_H__
-#define __WINDOW_MENU_H__
+#ifndef WINDOW_MENU_APPLET_H
+#define WINDOW_MENU_APPLET_H
 
 #include <glib.h>
 #include <panel-applet.h>

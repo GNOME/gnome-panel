@@ -1,24 +1,30 @@
-/* -*- mode: C; c-file-style: "linux" -*- */
 /*
- * libwnck based tasklist applet.
- * (C) 2001 Red Hat, Inc
- * (C) 2001 Alexander Larsson 
+ * Copyright (C) 2001 Red Hat, Inc
+ * Copyright (C) 2001 Alexander Larsson
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors: Alexander Larsson
- *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <string.h>
-
-#include <panel-applet.h>
+#include "config.h"
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
+#include <panel-applet.h>
+#include <string.h>
 
 #include "wncklet.h"
 #include "window-list.h"
@@ -36,7 +42,7 @@ typedef struct {
 	GtkOrientation orientation;
 	int size;
 
-        GtkIconTheme *icon_theme;
+	GtkIconTheme *icon_theme;
   
 	/* Properties: */
 	GtkWidget *properties_dialog;
@@ -49,12 +55,8 @@ typedef struct {
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
 
-        GSettings *settings;
+	GSettings *settings;
 } TasklistData;
-
-static void display_properties_dialog (GSimpleAction *action,
-                                       GVariant      *parameter,
-                                       gpointer       user_data);
 
 static void
 tasklist_update (TasklistData *tasklist)
@@ -130,10 +132,6 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 
         g_free (tasklist);
 }
-
-static const GActionEntry tasklist_menu_actions [] = {
-        { "preferences", display_properties_dialog, NULL, NULL, NULL },
-};
 
 static void
 tasklist_properties_update_content_radio (TasklistData *tasklist)
@@ -340,91 +338,6 @@ icon_loader_func (const char  *icon,
 	return retval;
 }
 
-gboolean
-window_list_applet_fill (PanelApplet *applet)
-{
-	TasklistData *tasklist;
-	GSimpleActionGroup *action_group;
-	GAction *action;
-
-	tasklist = g_new0 (TasklistData, 1);
-
-	tasklist->applet = GTK_WIDGET (applet);
-
-	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
-				PANEL_APPLET_EXPAND_MAJOR |
-				PANEL_APPLET_EXPAND_MINOR |
-				PANEL_APPLET_HAS_HANDLE);
-
-	setup_gsettings (tasklist);
-
-	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
-	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
-	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
-
-	switch (panel_applet_get_orient (applet)) {
-	case PANEL_APPLET_ORIENT_LEFT:
-	case PANEL_APPLET_ORIENT_RIGHT:
-		tasklist->orientation = GTK_ORIENTATION_VERTICAL;
-		break;
-	case PANEL_APPLET_ORIENT_UP:
-	case PANEL_APPLET_ORIENT_DOWN:
-	default:
-		tasklist->orientation = GTK_ORIENTATION_HORIZONTAL;
-		break;
-	}
-
-	tasklist->tasklist = wnck_tasklist_new ();
-
-	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
-	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
-	                               icon_loader_func, tasklist, NULL);
-
-	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
-			  G_CALLBACK (destroy_tasklist),
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->applet), "size_allocate",
-			  G_CALLBACK (applet_size_allocate),
-			  tasklist);
-	tasklist_update (tasklist);
-	gtk_widget_show (tasklist->tasklist);
-
-	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
-
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "realize",
-			  G_CALLBACK (applet_realized),
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "change_orient",
-			  G_CALLBACK (applet_change_orient),
-			  tasklist);
-
-	action_group = g_simple_action_group_new ();
-	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-	                                 tasklist_menu_actions,
-	                                 G_N_ELEMENTS (tasklist_menu_actions),
-	                                 tasklist);
-	panel_applet_setup_menu_from_resource (PANEL_APPLET (tasklist->applet),
-					       WNCKLET_RESOURCE_PATH "window-list-menu.ui",
-					       action_group,
-					       GETTEXT_PACKAGE);
-
-	gtk_widget_insert_action_group (GTK_WIDGET (applet), "tasklist",
-	                                G_ACTION_GROUP (action_group));
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
-	g_object_bind_property (tasklist->applet, "locked-down",
-				action, "enabled",
-				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-
-	g_object_unref (action_group);
-
-	gtk_widget_show (tasklist->applet);
-	
-	return TRUE;
-}
-
 static void
 group_windows_toggled (GtkToggleButton *button,
 		       TasklistData    *tasklist)
@@ -555,8 +468,6 @@ setup_dialog (GtkBuilder   *builder,
 			  tasklist);
 }
 
-
-
 static void 
 display_properties_dialog (GSimpleAction *action,
                            GVariant      *parameter,
@@ -588,4 +499,93 @@ display_properties_dialog (GSimpleAction *action,
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),
 			       gtk_widget_get_screen (tasklist->applet));
 	gtk_window_present (GTK_WINDOW (tasklist->properties_dialog));
+}
+
+static const GActionEntry tasklist_menu_actions [] = {
+        { "preferences", display_properties_dialog, NULL, NULL, NULL },
+};
+
+gboolean
+window_list_applet_fill (PanelApplet *applet)
+{
+	TasklistData *tasklist;
+	GSimpleActionGroup *action_group;
+	GAction *action;
+
+	tasklist = g_new0 (TasklistData, 1);
+
+	tasklist->applet = GTK_WIDGET (applet);
+
+	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
+				PANEL_APPLET_EXPAND_MAJOR |
+				PANEL_APPLET_EXPAND_MINOR |
+				PANEL_APPLET_HAS_HANDLE);
+
+	setup_gsettings (tasklist);
+
+	tasklist->include_all_workspaces = g_settings_get_boolean (tasklist->settings, "display-all-workspaces");
+	tasklist->grouping = g_settings_get_enum (tasklist->settings, "group-windows");
+	tasklist->move_unminimized_windows = g_settings_get_boolean (tasklist->settings, "move-unminimized-windows");
+
+	switch (panel_applet_get_orient (applet)) {
+	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
+		tasklist->orientation = GTK_ORIENTATION_VERTICAL;
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+	case PANEL_APPLET_ORIENT_DOWN:
+	default:
+		tasklist->orientation = GTK_ORIENTATION_HORIZONTAL;
+		break;
+	}
+
+	tasklist->tasklist = wnck_tasklist_new ();
+
+	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
+	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
+	                               icon_loader_func, tasklist, NULL);
+
+	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
+			  G_CALLBACK (destroy_tasklist),
+			  tasklist);
+	g_signal_connect (G_OBJECT (tasklist->applet), "size_allocate",
+			  G_CALLBACK (applet_size_allocate),
+			  tasklist);
+	tasklist_update (tasklist);
+	gtk_widget_show (tasklist->tasklist);
+
+	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
+
+	g_signal_connect (G_OBJECT (tasklist->applet),
+			  "realize",
+			  G_CALLBACK (applet_realized),
+			  tasklist);
+	g_signal_connect (G_OBJECT (tasklist->applet),
+			  "change_orient",
+			  G_CALLBACK (applet_change_orient),
+			  tasklist);
+
+	action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 tasklist_menu_actions,
+	                                 G_N_ELEMENTS (tasklist_menu_actions),
+	                                 tasklist);
+	panel_applet_setup_menu_from_resource (PANEL_APPLET (tasklist->applet),
+					       WNCKLET_RESOURCE_PATH "window-list-menu.ui",
+					       action_group,
+					       GETTEXT_PACKAGE);
+
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "tasklist",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
+	g_object_bind_property (tasklist->applet, "locked-down",
+				action, "enabled",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
+
+	g_object_unref (action_group);
+
+	gtk_widget_show (tasklist->applet);
+
+	return TRUE;
 }

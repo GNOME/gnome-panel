@@ -1,10 +1,7 @@
-/* -*- mode: C; c-file-style: "linux" -*- */
-/* "Show desktop" panel applet */
-
-/* 
+/*
  * Copyright (C) 2002 Red Hat, Inc.
  * Developed by Havoc Pennington
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
@@ -14,13 +11,13 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _SHOWDESKTOP_H_
-#define _SHOWDESKTOP_H_
+#ifndef SHOW_DESKTOP_APPLET_H
+#define SHOW_DESKTOP_APPLET_H
 
 #include <glib.h>
 #include <panel-applet.h>
@@ -32,5 +29,3 @@ gboolean show_desktop_applet_fill (PanelApplet *applet);
 G_END_DECLS
 
 #endif
-
-

@@ -1,33 +1,36 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /*
- * libwnck based pager applet.
- * (C) 2001 Alexander Larsson 
- * (C) 2001 Red Hat, Inc
+ * Copyright (C) 2001 Red Hat, Inc
+ * Copyright (C) 2001 Alexander Larsson
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors: Alexander Larsson
- *
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <string.h>
-
-#include <panel-applet.h>
-
-#include <stdlib.h>
+#include "config.h"
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
+#include <panel-applet.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "workspace-switcher.h"
-
 #include "wncklet.h"
 
 #define NEVER_SENSITIVE "never_sensitive"
-
 #define WORKSPACE_SWITCHER_ICON "gnome-panel-workspace-switcher"
 
 typedef enum {
@@ -63,12 +66,8 @@ typedef struct {
 	WnckPagerDisplayMode display_mode;
 	gboolean display_all;
 
-        GSettings *settings;
+	GSettings *settings;
 } PagerData;
-
-static void display_properties_dialog (GSimpleAction *action,
-                                       GVariant      *parameter,
-                                       gpointer       user_data);
 
 static void
 pager_update (PagerData *pager)
@@ -209,10 +208,6 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 	g_free (pager);
 }
 
-static const GActionEntry pager_menu_actions [] = {
-        { "preferences", display_properties_dialog, NULL, NULL, NULL },
-};
-
 static void
 num_rows_changed (GSettings   *settings,
 		  const gchar *key,
@@ -292,96 +287,6 @@ setup_gsettings (PagerData *pager)
 			  G_CALLBACK (display_workspace_names_changed), pager);
 	g_signal_connect (pager->settings, "changed::display-all-workspaces",
 			  G_CALLBACK (all_workspaces_changed), pager);
-}
-
-gboolean
-workspace_switcher_applet_fill (PanelApplet *applet)
-{
-	PagerData *pager;
-        GSimpleActionGroup *action_group;
-	GAction *action;
-	gboolean display_names;
-
-	pager = g_new0 (PagerData, 1);
-
-	pager->applet = GTK_WIDGET (applet);
-
-	panel_applet_set_flags (PANEL_APPLET (pager->applet), PANEL_APPLET_EXPAND_MINOR);
-
-	setup_gsettings (pager);
-	
-	pager->n_rows = g_settings_get_int (pager->settings, "num-rows");
-
-	display_names = g_settings_get_boolean (pager->settings, "display-workspace-names");
-
-	if (display_names) {
-		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
-	} else {
-		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
-	}
-
-	pager->display_all = g_settings_get_boolean (pager->settings, "display-all-workspaces");
-	
-	switch (panel_applet_get_orient (applet)) {
-	case PANEL_APPLET_ORIENT_LEFT:
-	case PANEL_APPLET_ORIENT_RIGHT:
-		pager->orientation = GTK_ORIENTATION_VERTICAL;
-		break;
-	case PANEL_APPLET_ORIENT_UP:
-	case PANEL_APPLET_ORIENT_DOWN:
-	default:
-		pager->orientation = GTK_ORIENTATION_HORIZONTAL;
-		break;
-	}
-
-	pager->pager = wnck_pager_new ();
-	pager->screen = NULL;
-	pager->wm = PAGER_WM_UNKNOWN;
-	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
-
-	g_signal_connect (G_OBJECT (pager->pager), "destroy",
-			  G_CALLBACK (destroy_pager),
-			  pager);
-	
-	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
-	gtk_widget_show (pager->pager);
-
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "realize",
-			  G_CALLBACK (applet_realized),
-			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "unrealize",
-			  G_CALLBACK (applet_unrealized),
-			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "change_orient",
-			  G_CALLBACK (applet_change_orient),
-			  pager);
-
-	gtk_widget_show (pager->applet);
-
-        action_group = g_simple_action_group_new ();
-	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
-	                                 pager_menu_actions,
-	                                 G_N_ELEMENTS (pager_menu_actions),
-	                                 pager);
-	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
-					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.ui",
-					       action_group,
-					       GETTEXT_PACKAGE);
-
-        gtk_widget_insert_action_group (GTK_WIDGET (applet), "ws",
-	                                G_ACTION_GROUP (action_group));
-
-	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
-	g_object_bind_property (pager->applet, "locked-down",
-				action, "enabled",
-				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
-
-        g_object_unref (action_group);
-
-	return TRUE;
 }
 
 static void
@@ -790,4 +695,98 @@ display_properties_dialog (GSimpleAction *action,
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));
+}
+
+static const GActionEntry pager_menu_actions [] = {
+        { "preferences", display_properties_dialog, NULL, NULL, NULL },
+};
+
+gboolean
+workspace_switcher_applet_fill (PanelApplet *applet)
+{
+	PagerData *pager;
+	GSimpleActionGroup *action_group;
+	GAction *action;
+	gboolean display_names;
+
+	pager = g_new0 (PagerData, 1);
+
+	pager->applet = GTK_WIDGET (applet);
+
+	panel_applet_set_flags (PANEL_APPLET (pager->applet), PANEL_APPLET_EXPAND_MINOR);
+
+	setup_gsettings (pager);
+
+	pager->n_rows = g_settings_get_int (pager->settings, "num-rows");
+
+	display_names = g_settings_get_boolean (pager->settings, "display-workspace-names");
+
+	if (display_names) {
+		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
+	} else {
+		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
+	}
+
+	pager->display_all = g_settings_get_boolean (pager->settings, "display-all-workspaces");
+
+	switch (panel_applet_get_orient (applet)) {
+	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
+		pager->orientation = GTK_ORIENTATION_VERTICAL;
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+	case PANEL_APPLET_ORIENT_DOWN:
+	default:
+		pager->orientation = GTK_ORIENTATION_HORIZONTAL;
+		break;
+	}
+
+	pager->pager = wnck_pager_new ();
+	pager->screen = NULL;
+	pager->wm = PAGER_WM_UNKNOWN;
+	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
+
+	g_signal_connect (G_OBJECT (pager->pager), "destroy",
+			  G_CALLBACK (destroy_pager),
+			  pager);
+
+	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
+	gtk_widget_show (pager->pager);
+
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "realize",
+			  G_CALLBACK (applet_realized),
+			  pager);
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "unrealize",
+			  G_CALLBACK (applet_unrealized),
+			  pager);
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "change_orient",
+			  G_CALLBACK (applet_change_orient),
+			  pager);
+
+	gtk_widget_show (pager->applet);
+
+	action_group = g_simple_action_group_new ();
+	g_action_map_add_action_entries (G_ACTION_MAP (action_group),
+	                                 pager_menu_actions,
+	                                 G_N_ELEMENTS (pager_menu_actions),
+	                                 pager);
+	panel_applet_setup_menu_from_resource (PANEL_APPLET (pager->applet),
+					       WNCKLET_RESOURCE_PATH "workspace-switcher-menu.ui",
+					       action_group,
+					       GETTEXT_PACKAGE);
+
+	gtk_widget_insert_action_group (GTK_WIDGET (applet), "ws",
+	                                G_ACTION_GROUP (action_group));
+
+	action = g_action_map_lookup_action (G_ACTION_MAP (action_group), "preferences");
+	g_object_bind_property (pager->applet, "locked-down",
+				action, "enabled",
+				G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
+
+	g_object_unref (action_group);
+
+	return TRUE;
 }
