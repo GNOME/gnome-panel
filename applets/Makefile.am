@@ -4,11 +4,8 @@ SUBDIRS = \
 	clock \
 	fish \
 	notification-area \
+	status-notifier \
 	wncklet \
 	$(NULL)
-
-if WITH_LIBSTATUS_NOTIFIER
-SUBDIRS += status-notifier
-endif
 
 -include $(top_srcdir)/git.mk

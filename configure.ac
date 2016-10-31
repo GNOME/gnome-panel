@@ -148,6 +148,10 @@ PKG_CHECK_MODULES([NOTIFICATION_AREA], [
   x11
 ])
 
+PKG_CHECK_MODULES([STATUS_NOTIFIER], [
+  gtk+-3.0 >= $GTK_REQUIRED
+])
+
 PKG_CHECK_MODULES(WNCKLET, gtk+-3.0 >= $GTK_REQUIRED libwnck-3.0 >= $LIBWNCK_REQUIRED)
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
@@ -189,23 +193,6 @@ fi
 
 AM_CONDITIONAL(ENABLE_EDS, test "$enable_eds" = "yes")
 AC_SUBST(CLOCK_EDS_ICONDIR)
-
-dnl **************************************************************************
-dnl Build with libstatus-notifier (experimental)
-dnl **************************************************************************
-
-AC_ARG_WITH([libstatus-notifier],
-            [AS_HELP_STRING([--with-libstatus-notifier],
-                            [Build with libstatus-notifier (experimental)])],
-            [with_libstatus_notifier="$withval"],
-            [with_libstatus_notifier=no])
-
-AS_IF([test "x$with_libstatus_notifier" = "xyes"], [
-  PKG_CHECK_MODULES([STATUS_NOTIFIER], [libstatus-notifier-3.0])
-])
-
-AM_CONDITIONAL([WITH_LIBSTATUS_NOTIFIER],
-               [test "x$with_libstatus_notifier" = "xyes"])
 
 dnl **************************************************************************
 dnl Check if struct dirent contains a d_type member, for run dialog
@@ -326,6 +313,4 @@ echo "  Maintainer mode .................: ${USE_MAINTAINER_MODE}"
 echo ""
 echo "  Evolution-Data-Server support ...: ${enable_eds}"
 echo "  Build gtk-doc documentation .....: ${enable_gtk_doc}"
-echo ""
-echo "  Build with libstatus-notifier ...: ${with_libstatus_notifier}"
 echo ""

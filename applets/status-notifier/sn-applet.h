@@ -18,26 +18,12 @@
 #ifndef SN_APPLET_H
 #define SN_APPLET_H
 
-#include <panel-applet.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-#define SN_TYPE_APPLET            (sn_applet_get_type())
-#define SN_APPLET(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SN_TYPE_APPLET, SnApplet))
-#define SN_APPLET_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass),  SN_TYPE_APPLET, SnAppletClass))
-#define SN_IS_APPLET(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), SN_TYPE_APPLET))
-#define SN_IS_APPLET_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass),  SN_TYPE_APPLET))
-#define SN_APPLET_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj),   SN_TYPE_APPLET, SnAppletClass))
-
-typedef struct _SnApplet      SnApplet;
-typedef struct _SnAppletClass SnAppletClass;
-
-struct _SnAppletClass
-{
-  PanelAppletClass parent_class;
-};
-
-GType sn_applet_get_type (void);
+#define SN_TYPE_APPLET sn_applet_get_type ()
+G_DECLARE_FINAL_TYPE (SnApplet, sn_applet, SN, APPLET, GpApplet)
 
 G_END_DECLS
 
