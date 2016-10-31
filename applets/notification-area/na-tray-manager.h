@@ -37,7 +37,7 @@ G_BEGIN_DECLS
 #define NA_IS_TRAY_MANAGER(obj)			(G_TYPE_CHECK_INSTANCE_TYPE ((obj), NA_TYPE_TRAY_MANAGER))
 #define NA_IS_TRAY_MANAGER_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), NA_TYPE_TRAY_MANAGER))
 #define NA_TRAY_MANAGER_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS ((obj), NA_TYPE_TRAY_MANAGER, NaTrayManagerClass))
-	
+
 typedef struct _NaTrayManager	    NaTrayManager;
 typedef struct _NaTrayManagerClass  NaTrayManagerClass;
 
@@ -50,7 +50,7 @@ struct _NaTrayManager
   Atom    opcode_atom;
   Atom    message_data_atom;
 #endif
-  
+
   GtkWidget *invisible;
   GdkScreen *screen;
   GtkOrientation orientation;
@@ -79,7 +79,7 @@ struct _NaTrayManagerClass
 			      const gchar        *message,
 			      glong               id,
 			      glong               timeout);
-  
+
   void (* message_cancelled) (NaTrayManager      *manager,
 			      NaTrayChild        *child,
 			      glong               id);

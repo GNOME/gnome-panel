@@ -278,7 +278,7 @@ AC_CONFIG_FILES([
   applets/clock/Makefile
   applets/clock/pixmaps/Makefile
   applets/fish/Makefile
-  applets/notification_area/Makefile
+  applets/notification-area/Makefile
   applets/status-notifier/Makefile
   applets/wncklet/Makefile
 

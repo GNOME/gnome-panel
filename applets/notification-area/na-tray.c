@@ -12,7 +12,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
@@ -88,7 +88,7 @@ get_tray (TraysScreen *trays_screen)
 {
   if (trays_screen->all_trays == NULL)
     return NULL;
-  
+
   return trays_screen->all_trays->data;
 }
 
@@ -372,7 +372,7 @@ message_sent (NaTrayManager *manager,
   icontip = g_hash_table_lookup (trays_screen->tip_table, icon);
 
   find_buffer.id = id;
-  if (icontip && 
+  if (icontip &&
       (icontip->id == id ||
        g_slist_find_custom (icontip->buffer, &find_buffer,
                             icon_tip_buffer_compare) != NULL))
@@ -623,7 +623,7 @@ na_tray_constructor (GType type,
           g_object_unref (tray_manager);
         }
     }
-      
+
   priv->trays_screen = &trays_screens [screen_number];
   trays_screens [screen_number].all_trays = g_slist_append (trays_screens [screen_number].all_trays,
                                                             tray);
@@ -747,7 +747,7 @@ na_tray_class_init (NaTrayClass *klass)
 			G_PARAM_STATIC_NAME |
 			G_PARAM_STATIC_NICK |
 			G_PARAM_STATIC_BLURB));
-  
+
   g_object_class_install_property
     (gobject_class,
      PROP_SCREEN,
@@ -780,7 +780,7 @@ na_tray_set_orientation (NaTray         *tray,
 
   if (orientation == priv->orientation)
     return;
-  
+
   priv->orientation = orientation;
 
   update_size_and_orientation (tray);

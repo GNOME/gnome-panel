@@ -1,9 +1,9 @@
 /* Metacity fixed tooltip routine */
 
-/* 
+/*
  * Copyright (C) 2001 Havoc Pennington
  * Copyright (C) 2003-2006 Vincent Untz
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
@@ -13,7 +13,7 @@
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
@@ -155,7 +155,7 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 
   /* pad between panel and message window */
 #define PAD 5
-  
+
   if (fixedtip->priv->orientation == GTK_ORIENTATION_VERTICAL)
     {
       if (root_x <= screen_width / 2)
@@ -177,7 +177,7 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
 
   if ((root_y + req.height) > screen_height)
     root_y = screen_height - req.height;
-  
+
   gtk_window_move (GTK_WINDOW (fixedtip), root_x, root_y);
 }
 
@@ -215,7 +215,7 @@ na_fixed_tip_new (GtkWidget      *parent,
   //FIXME: would be nice to be able to get the toplevel for the tip, but this
   //doesn't work
   GtkWidget  *toplevel;
-  
+
   toplevel = gtk_widget_get_toplevel (parent);
   /*
   if (toplevel && gtk_widget_is_toplevel (toplevel) && GTK_IS_WINDOW (toplevel))

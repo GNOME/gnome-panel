@@ -3,7 +3,7 @@ NULL =
 SUBDIRS = \
 	clock \
 	fish \
-	notification_area \
+	notification-area \
 	wncklet \
 	$(NULL)
 
