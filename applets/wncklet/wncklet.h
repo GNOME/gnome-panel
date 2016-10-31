@@ -1,5 +1,4 @@
-/* wncklet.h
- *
+/*
  * Copyright (C) 2003  Wipro Technologies
  *
  * This library is free software; you can redistribute it and/or
@@ -16,24 +15,19 @@
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
  *
  * Authors: Arvind Samptur <arvind.samptur@wipro.com>
- *
  */
 
-#ifndef __WNCKLET_H__
-#define __WNCKLET_H__
-
-#include <libwnck/libwnck.h>
+#ifndef WNCKLET_H
+#define WNCKLET_H
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <panel-applet.h>
+#include <libwnck/libwnck.h>
 
 #define WNCKLET_RESOURCE_PATH "/org/gnome/panel/applet/wncklet/"
 
 G_BEGIN_DECLS
 
-WnckScreen *wncklet_get_screen          (GtkWidget *applet);
-	
 void        wncklet_connect_while_alive (gpointer    object,
 					 const char *signal,
 					 GCallback   func,

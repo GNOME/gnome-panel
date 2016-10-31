@@ -151,7 +151,7 @@ static void
 applet_realized (PanelApplet *applet,
 		 PagerData   *pager)
 {
-	pager->screen = wncklet_get_screen (GTK_WIDGET (applet));
+	pager->screen = wnck_screen_get_default ();
 
 	window_manager_changed (pager->screen, pager);
 	wncklet_connect_while_alive (pager->screen, "window_manager_changed",
@@ -167,7 +167,6 @@ applet_unrealized (PanelApplet *applet,
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 }
-
 
 static void
 applet_change_orient (PanelApplet       *applet,

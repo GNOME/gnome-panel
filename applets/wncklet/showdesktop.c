@@ -382,7 +382,6 @@ show_desktop_applet_realized (PanelApplet *applet,
 			      gpointer     data)
 {
 	ShowDesktopData *sdd;
-	GdkScreen       *screen;
 	
 	sdd = (ShowDesktopData *) data;
 
@@ -396,8 +395,7 @@ show_desktop_applet_realized (PanelApplet *applet,
 						      theme_changed_callback,
 						      sdd);
 
-	screen = gtk_widget_get_screen (sdd->applet);
-	sdd->wnck_screen = wnck_screen_get (gdk_x11_screen_get_screen_number (screen));
+	sdd->wnck_screen = wnck_screen_get_default ();
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive (sdd->wnck_screen,
@@ -410,7 +408,7 @@ show_desktop_applet_realized (PanelApplet *applet,
 
         show_desktop_changed_callback (sdd->wnck_screen, sdd);
 
-	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
+	sdd->icon_theme = gtk_icon_theme_get_default ();
 	wncklet_connect_while_alive (sdd->icon_theme, "changed",
 				     G_CALLBACK (theme_changed_callback),
 				     sdd,

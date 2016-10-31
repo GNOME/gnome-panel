@@ -1,5 +1,4 @@
-/* wncklet.c: A collection of window navigation applets
- *
+/*
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,36 +18,18 @@
  *      Mark McLoughlin <mark@skynet.ie>
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "config.h"
 
-#include <string.h>
-#include <panel-applet.h>
-
-#include <glib/gi18n.h>
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
+#include <panel-applet.h>
+#include <string.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
 #include "workspace-switcher.h"
 #include "window-list.h"
 #include "showdesktop.h"
-
-WnckScreen *
-wncklet_get_screen (GtkWidget *applet)
-{
-	int screen_num;
-
-	if (!gtk_widget_has_screen (applet))
-		return wnck_screen_get_default ();
-
-	screen_num = gdk_x11_screen_get_screen_number (gtk_widget_get_screen (applet));
-
-	return wnck_screen_get (screen_num);
-}
 
 void
 wncklet_connect_while_alive (gpointer    object,

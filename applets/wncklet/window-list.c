@@ -86,13 +86,6 @@ response_cb (GtkWidget    *widget,
 }
 
 static void
-applet_realized (PanelApplet  *applet,
-		 TasklistData *tasklist)
-{
-	tasklist->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (tasklist->applet));
-}
-
-static void
 applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      TasklistData      *tasklist)
@@ -540,6 +533,7 @@ window_list_applet_fill (PanelApplet *applet)
 	}
 
 	tasklist->tasklist = wnck_tasklist_new ();
+	tasklist->icon_theme = gtk_icon_theme_get_default ();
 
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
 	wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
@@ -556,10 +550,6 @@ window_list_applet_fill (PanelApplet *applet)
 
 	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
 
-	g_signal_connect (G_OBJECT (tasklist->applet),
-			  "realize",
-			  G_CALLBACK (applet_realized),
-			  tasklist);
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
