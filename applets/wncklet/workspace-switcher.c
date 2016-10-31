@@ -67,10 +67,10 @@ typedef struct {
 	gboolean display_all;
 
 	GSettings *settings;
-} PagerData;
+} WorkspaceSwitcherApplet;
 
 static void
-pager_update (PagerData *pager)
+pager_update (WorkspaceSwitcherApplet *pager)
 {
 	wnck_pager_set_orientation (WNCK_PAGER (pager->pager),
 				    pager->orientation);
@@ -88,7 +88,7 @@ pager_update (PagerData *pager)
 }
 
 static void
-update_properties_for_wm (PagerData *pager)
+update_properties_for_wm (WorkspaceSwitcherApplet *pager)
 {
 	switch (pager->wm) {
 	case PAGER_WM_METACITY:
@@ -127,8 +127,8 @@ update_properties_for_wm (PagerData *pager)
 }
 
 static void
-window_manager_changed (WnckScreen *screen,
-			PagerData  *pager)
+window_manager_changed (WnckScreen              *screen,
+                        WorkspaceSwitcherApplet *pager)
 {
 	const char *wm_name;
 
@@ -148,8 +148,8 @@ window_manager_changed (WnckScreen *screen,
 }
 
 static void
-applet_realized (PanelApplet *applet,
-		 PagerData   *pager)
+applet_realized (PanelApplet             *applet,
+                 WorkspaceSwitcherApplet *pager)
 {
 	pager->screen = wnck_screen_get_default ();
 
@@ -161,17 +161,17 @@ applet_realized (PanelApplet *applet,
 }
 
 static void
-applet_unrealized (PanelApplet *applet,
-		   PagerData   *pager)
+applet_unrealized (PanelApplet             *applet,
+                   WorkspaceSwitcherApplet *pager)
 {
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 }
 
 static void
-applet_change_orient (PanelApplet       *applet,
-		      PanelAppletOrient  orient,
-		      PagerData         *pager)
+applet_change_orient (PanelApplet             *applet,
+                      PanelAppletOrient        orient,
+                      WorkspaceSwitcherApplet *pager)
 {
 	GtkOrientation new_orient;
   
@@ -197,7 +197,8 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-destroy_pager(GtkWidget * widget, PagerData *pager)
+destroy_pager (GtkWidget               *widget,
+               WorkspaceSwitcherApplet *pager)
 {
 	g_object_unref (G_OBJECT (pager->settings));
 
@@ -208,9 +209,9 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 }
 
 static void
-num_rows_changed (GSettings   *settings,
-		  const gchar *key,
-		  PagerData   *pager)
+num_rows_changed (GSettings               *settings,
+                  const gchar             *key,
+                  WorkspaceSwitcherApplet *pager)
 {
 	int n_rows;
 
@@ -225,9 +226,9 @@ num_rows_changed (GSettings   *settings,
 }
 
 static void
-display_workspace_names_changed (GSettings   *settings,
-				 const gchar *key,
-				 PagerData   *pager)
+display_workspace_names_changed (GSettings               *settings,
+                                 const gchar             *key,
+                                 WorkspaceSwitcherApplet *pager)
 {
 	gboolean value;
        
@@ -247,11 +248,10 @@ display_workspace_names_changed (GSettings   *settings,
 	}
 }
 
-
 static void
-all_workspaces_changed (GSettings   *settings,
-			const gchar *key,
-			PagerData   *pager)
+all_workspaces_changed (GSettings               *settings,
+                        const gchar             *key,
+                        WorkspaceSwitcherApplet *pager)
 {
 	gboolean value;
 
@@ -274,7 +274,7 @@ all_workspaces_changed (GSettings   *settings,
 }
 
 static void
-setup_gsettings (PagerData *pager)
+setup_gsettings (WorkspaceSwitcherApplet *pager)
 {
 	pager->settings =
 	  panel_applet_settings_new (PANEL_APPLET (pager->applet),
@@ -289,8 +289,8 @@ setup_gsettings (PagerData *pager)
 }
 
 static void
-display_workspace_names_toggled (GtkToggleButton *button,
-				 PagerData       *pager)
+display_workspace_names_toggled (GtkToggleButton         *button,
+                                 WorkspaceSwitcherApplet *pager)
 {
 	g_settings_set_boolean (pager->settings,
 				"display-workspace-names",
@@ -298,8 +298,8 @@ display_workspace_names_toggled (GtkToggleButton *button,
 }
 
 static void
-all_workspaces_toggled (GtkToggleButton *button,
-			PagerData       *pager)
+all_workspaces_toggled (GtkToggleButton         *button,
+                        WorkspaceSwitcherApplet *pager)
 {
   	g_settings_set_boolean (pager->settings,
 				"display-all-workspaces",
@@ -307,8 +307,8 @@ all_workspaces_toggled (GtkToggleButton *button,
 }
 
 static void
-num_rows_value_changed (GtkSpinButton *button,
-			PagerData       *pager)
+num_rows_value_changed (GtkSpinButton           *button,
+                        WorkspaceSwitcherApplet *pager)
 {
 	g_settings_set_int (pager->settings,
 			    "num-rows",
@@ -316,7 +316,7 @@ num_rows_value_changed (GtkSpinButton *button,
 }
 
 static void
-update_workspaces_model (PagerData *pager)
+update_workspaces_model (WorkspaceSwitcherApplet *pager)
 {
 	int nr_ws, i;
 	WnckWorkspace *workspace;
@@ -341,8 +341,8 @@ update_workspaces_model (PagerData *pager)
 }
 
 static void
-workspace_renamed (WnckWorkspace *space,
-		   PagerData     *pager)
+workspace_renamed (WnckWorkspace           *space,
+                   WorkspaceSwitcherApplet *pager)
 {
 	int         i;
 	GtkTreeIter iter;
@@ -357,9 +357,9 @@ workspace_renamed (WnckWorkspace *space,
 }
 
 static void
-workspace_created (WnckScreen    *screen,
-		   WnckWorkspace *space,
-		   PagerData     *pager)
+workspace_created (WnckScreen              *screen,
+                   WnckWorkspace           *space,
+                   WorkspaceSwitcherApplet *pager)
 {
         g_return_if_fail (WNCK_IS_SCREEN (screen));
         
@@ -373,17 +373,17 @@ workspace_created (WnckScreen    *screen,
 }
 
 static void
-workspace_destroyed (WnckScreen    *screen,
-		     WnckWorkspace *space,
-		     PagerData     *pager)
+workspace_destroyed (WnckScreen              *screen,
+                     WnckWorkspace           *space,
+                     WorkspaceSwitcherApplet *pager)
 {
         g_return_if_fail (WNCK_IS_SCREEN (screen));
 	update_workspaces_model (pager);
 }
 
 static void
-num_workspaces_value_changed (GtkSpinButton *button,
-			      PagerData     *pager)
+num_workspaces_value_changed (GtkSpinButton           *button,
+                              WorkspaceSwitcherApplet *pager)
 {
 #if 0
 	/* Slow down a bit after the first change, since it's moving really to
@@ -397,9 +397,9 @@ num_workspaces_value_changed (GtkSpinButton *button,
 }
 
 static gboolean
-workspaces_tree_focused_out (GtkTreeView   *treeview,
-			     GdkEventFocus *event,
-			     PagerData     *pager)
+workspaces_tree_focused_out (GtkTreeView             *treeview,
+                             GdkEventFocus           *event,
+                             WorkspaceSwitcherApplet *pager)
 {
 	GtkTreeSelection *selection;
 
@@ -409,10 +409,10 @@ workspaces_tree_focused_out (GtkTreeView   *treeview,
 }
 
 static void 
-workspace_name_edited (GtkCellRendererText *cell_renderer_text,
-		       const gchar         *path,
-		       const gchar         *new_text,
-		       PagerData           *pager)
+workspace_name_edited (GtkCellRendererText     *cell_renderer_text,
+                       const gchar             *path,
+                       const gchar             *new_text,
+                       WorkspaceSwitcherApplet *pager)
 {
         const gint *indices;
         WnckWorkspace *workspace;
@@ -437,8 +437,8 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
 }
 
 static void
-properties_dialog_destroyed (GtkWidget *widget,
-			     PagerData *pager)
+properties_dialog_destroyed (GtkWidget               *widget,
+                             WorkspaceSwitcherApplet *pager)
 {
 	pager->properties_dialog = NULL;
 	pager->workspaces_frame = NULL;
@@ -462,9 +462,9 @@ delete_event (GtkWidget *widget, gpointer data)
 }
 
 static void 
-response_cb (GtkWidget *widget,
-	     int        id,
-	     PagerData *pager)
+response_cb (GtkWidget               *widget,
+             gint                     id,
+             WorkspaceSwitcherApplet *pager)
 {
 	gtk_widget_destroy (widget);
 }
@@ -473,7 +473,7 @@ static void
 close_dialog (GtkWidget *button,
               gpointer data)
 {
-	PagerData *pager = data;
+	WorkspaceSwitcherApplet *pager = data;
 	GtkTreeViewColumn *col;
 	GtkCellArea *area;
 	GtkCellEditable *edit_widget;
@@ -498,12 +498,12 @@ close_dialog (GtkWidget *button,
 #define WID(s) GTK_WIDGET (gtk_builder_get_object (builder, s))
 
 static void
-setup_sensitivity (PagerData *pager,
-		   GtkBuilder *builder,
-		   const char *wid1,
-		   const char *wid2,
-		   const char *wid3,
-		   const char *key)
+setup_sensitivity (WorkspaceSwitcherApplet *pager,
+                   GtkBuilder              *builder,
+                   const gchar             *wid1,
+                   const gchar             *wid2,
+                   const gchar             *wid3,
+                   const gchar             *key)
 {
 	GtkWidget *w;
 
@@ -535,8 +535,8 @@ setup_sensitivity (PagerData *pager,
 }
 
 static void
-setup_dialog (GtkBuilder *builder,
-	      PagerData  *pager)
+setup_dialog (GtkBuilder              *builder,
+              WorkspaceSwitcherApplet *pager)
 {
 	gboolean value;
 	GtkTreeViewColumn *column;
@@ -670,7 +670,7 @@ display_properties_dialog (GSimpleAction *action,
                            GVariant      *parameter,
                            gpointer       user_data)
 {
-        PagerData *pager = (PagerData *) user_data;
+	WorkspaceSwitcherApplet *pager = (WorkspaceSwitcherApplet *) user_data;
 
 	if (pager->properties_dialog == NULL) {
 		GtkBuilder *builder;
@@ -703,12 +703,12 @@ static const GActionEntry pager_menu_actions [] = {
 gboolean
 workspace_switcher_applet_fill (PanelApplet *applet)
 {
-	PagerData *pager;
+	WorkspaceSwitcherApplet *pager;
 	GSimpleActionGroup *action_group;
 	GAction *action;
 	gboolean display_names;
 
-	pager = g_new0 (PagerData, 1);
+	pager = g_new0 (WorkspaceSwitcherApplet, 1);
 
 	pager->applet = GTK_WIDGET (applet);
 
