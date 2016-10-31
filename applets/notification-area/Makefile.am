@@ -1,12 +1,18 @@
 NULL =
 
-libnotification_area_applet_la_CFLAGS = \
+notification_area_appletlibdir = $(pkglibdir)
+notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
+
+libnotification_area_applet_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""notification-area-applet"\" \
-	-DNOTIFICATION_AREA_MENU_UI_DIR=\""$(uidir)"\" \
 	-I$(srcdir) \
 	-I$(srcdir)/../../libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
+	$(AM_CPPFLAGS) \
+	$(NULL)
+
+libnotification_area_applet_la_CFLAGS = \
 	$(NOTIFICATION_AREA_CFLAGS) \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(WARN_CFLAGS) \
@@ -27,9 +33,10 @@ libnotification_area_applet_la_SOURCES = \
 	$(NULL)
 
 libnotification_area_applet_la_LIBADD = \
-	../../libpanel-applet/libpanel-applet.la	\
-	$(NOTIFICATION_AREA_LIBS)			\
-	$(LIBPANEL_APPLET_LIBS)
+	$(top_builddir)/libpanel-applet/libpanel-applet.la \
+	$(NOTIFICATION_AREA_LIBS) \
+	$(LIBPANEL_APPLET_LIBS) \
+	$(NULL)
 
 libnotification_area_applet_la_LDFLAGS = \
 	-module -avoid-version \
@@ -38,9 +45,6 @@ libnotification_area_applet_la_LDFLAGS = \
 	$(NULL)
 
 APPLET_LOCATION   = $(pkglibdir)/libnotification-area-applet.so
-
-notification_area_appletlibdir = $(pkglibdir)
-notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
@@ -54,12 +58,13 @@ $(applet_in_files): $(applet_in_files).in Makefile
 
 @PANEL_INTLTOOL_PANEL_APPLET_RULE@
 
-EXTRA_DIST =								\
-	org.gnome.panel.NotificationAreaApplet.panel-applet.in.in	\
-	$(ui_DATA)
+EXTRA_DIST = \
+	org.gnome.panel.NotificationAreaApplet.panel-applet.in.in \
+	$(NULL)
 
-CLEANFILES =			\
-	$(applet_DATA) 		\
-	$(applet_DATA).in
+CLEANFILES = \
+	$(applet_DATA) \
+	$(applet_DATA).in \
+	$(NULL)
 
 -include $(top_srcdir)/git.mk
