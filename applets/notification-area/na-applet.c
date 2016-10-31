@@ -146,7 +146,6 @@ na_applet_init (NaApplet *na)
 {
   GpAppletFlags flags;
   AtkObject *atk_object;
-  GdkScreen *screen;
   GtkOrientation orientation;
 
   flags = GP_APPLET_FLAGS_HAS_HANDLE | GP_APPLET_FLAGS_EXPAND_MINOR;
@@ -155,9 +154,8 @@ na_applet_init (NaApplet *na)
   atk_object = gtk_widget_get_accessible (GTK_WIDGET (na));
   atk_object_set_name (atk_object, _("Panel Notification Area"));
 
-  screen = gdk_screen_get_default ();
   orientation = gp_applet_get_orientation (GP_APPLET (na));
-  na->tray = na_tray_new_for_screen (screen, orientation);
+  na->tray = na_tray_new_for_screen (orientation);
 
   gtk_container_add (GTK_CONTAINER (na), GTK_WIDGET (na->tray));
   gtk_widget_show (GTK_WIDGET (na->tray));
