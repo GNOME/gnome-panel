@@ -189,6 +189,9 @@ gp_applet_frame_popup_menu (PanelAppletFrame *applet_frame,
   frame = GP_APPLET_FRAME (applet_frame);
   menu = gp_applet_get_menu (frame->applet);
 
+  if (menu == NULL)
+    return;
+
   popup_menu (GTK_MENU (menu), frame->applet);
 }
 
