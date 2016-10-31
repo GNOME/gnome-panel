@@ -787,88 +787,8 @@ container_has_focusable_child (GtkContainer *container)
 }
 
 static void
-panel_applet_position_menu (GtkMenu   *menu,
-			    int       *x,
-			    int       *y,
-			    gboolean  *push_in,
-			    GtkWidget *widget)
-{
-	PanelApplet    *applet;
-	GtkAllocation   allocation;
-	GtkRequisition  requisition;
-	GdkDisplay     *display;
-	GdkSeat        *seat;
-	GdkDevice      *device;
-	GdkWindow      *window;
-	GdkScreen      *screen;
-	int             menu_x = 0;
-	int             menu_y = 0;
-	int             pointer_x;
-	int             pointer_y;
-
-	g_return_if_fail (PANEL_IS_APPLET (widget));
-
-	applet = PANEL_APPLET (widget);
-
-	display = gtk_widget_get_display (widget);
-	seat = gdk_display_get_default_seat (display);
-	device = gdk_seat_get_pointer (seat);
-	screen = gtk_widget_get_screen (widget);
-	window = gtk_widget_get_window (widget);
-
-	gtk_menu_set_screen (menu, screen);
-
-	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
-	gdk_window_get_origin (window, &menu_x, &menu_y);
-	gdk_window_get_device_position (window, device, &pointer_x, &pointer_y, NULL);
-	gtk_widget_get_allocation (widget, &allocation);
-
-	menu_x += allocation.x;
-	menu_y += allocation.y;
-
-	if (applet->priv->orient == PANEL_APPLET_ORIENT_UP ||
-	    applet->priv->orient == PANEL_APPLET_ORIENT_DOWN) {
-		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
-			if (pointer_x < allocation.width &&
-			    requisition.width < pointer_x)
-				menu_x += MIN (pointer_x,
-					       allocation.width - requisition.width);
-		} else {
-			menu_x += allocation.width - requisition.width;
-			if (pointer_x > 0 && pointer_x < allocation.width &&
-			    pointer_x < allocation.width - requisition.width) {
-				menu_x -= MIN (allocation.width - pointer_x,
-					       allocation.width - requisition.width);
-			}
-		}
-		menu_x = MIN (menu_x, gdk_screen_get_width (screen) - requisition.width);
-
-		if (menu_y > gdk_screen_get_height (screen) / 2)
-			menu_y -= requisition.height;
-		else
-			menu_y += allocation.height;
-	} else  {
-		if (pointer_y < allocation.height &&
-		    requisition.height < pointer_y)
-			menu_y += MIN (pointer_y, allocation.height - requisition.height);
-		menu_y = MIN (menu_y, gdk_screen_get_height (screen) - requisition.height);
-
-		if (menu_x > gdk_screen_get_width (screen) / 2)
-			menu_x -= requisition.width;
-		else
-			menu_x += allocation.width;
-
-	}
-
-	*x = menu_x;
-	*y = menu_y;
-	*push_in = FALSE;
-}
-
-static void
 panel_applet_menu_popup (PanelApplet *applet,
-			 guint        button,
-			 guint32      time)
+                         GdkEvent    *event)
 {
 	GtkWidget *menu;
 	GMenu     *gmenu;
@@ -891,17 +811,16 @@ panel_applet_menu_popup (PanelApplet *applet,
 	if (!visible)
 		return;
 
-	gtk_menu_popup (GTK_MENU (menu),
-			NULL, NULL,
-			(GtkMenuPositionFunc) panel_applet_position_menu,
-			applet,
-			button, time);
+	gtk_menu_popup_at_widget (GTK_MENU (menu),
+	                          GTK_WIDGET (applet),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+	                          event);
 }
 
 static void
 panel_applet_edit_menu_popup (PanelApplet *applet,
-			      guint        button,
-			      guint32      time)
+                              GdkEvent    *event)
 {
 	GtkWidget *menu;
 	GMenu     *gmenu;
@@ -913,13 +832,11 @@ panel_applet_edit_menu_popup (PanelApplet *applet,
 	menu = gtk_menu_new_from_model (G_MENU_MODEL (gmenu));
 
 	gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (applet), NULL);
-
-	gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (GTK_WIDGET (applet)));
-	gtk_menu_popup (GTK_MENU (menu),
-			NULL, NULL,
-			NULL,
-			applet,
-			button, time);
+	gtk_menu_popup_at_widget (GTK_MENU (menu),
+	                          GTK_WIDGET (applet),
+	                          GDK_GRAVITY_SOUTH_WEST,
+	                          GDK_GRAVITY_NORTH_WEST,
+	                          event);
 }
 
 static gboolean
@@ -957,9 +874,9 @@ panel_applet_button_press (GtkWidget      *widget,
 		modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 		if (modifiers == panel_applet_bindings_get_mouse_button_modifier_keymask ())
-			panel_applet_edit_menu_popup (applet, event->button, event->time);
+			panel_applet_edit_menu_popup (applet, (GdkEvent *) event);
 		else
-			panel_applet_menu_popup (applet, event->button, event->time);
+			panel_applet_menu_popup (applet, (GdkEvent *) event);
 
 		return TRUE;
 	}
@@ -992,9 +909,9 @@ panel_applet_key_press_event (GtkWidget   *widget,
 	panel_applet_bindings_key_event_is_popup (event, &is_popup, &is_edit_popup);
 
 	if (is_edit_popup)
-		panel_applet_edit_menu_popup (PANEL_APPLET (widget), 3, event->time);
+		panel_applet_edit_menu_popup (PANEL_APPLET (widget), (GdkEvent *) event);
 	else if (is_popup)
-		panel_applet_menu_popup (PANEL_APPLET (widget), 3, event->time);
+		panel_applet_menu_popup (PANEL_APPLET (widget), (GdkEvent *) event);
 
 	return (is_popup || is_edit_popup);
 }
@@ -1459,6 +1376,30 @@ panel_applet_class_init (PanelAppletClass *klass)
 	gtk_widget_class_set_css_name (widget_class, "panel-applet");
 }
 
+static GdkEvent *
+button_press_event_new (PanelApplet *applet,
+                        guint        button,
+                        guint        time)
+{
+  GdkDisplay *display;
+  GdkSeat *seat;
+  GdkDevice *device;
+  GdkEvent *event;
+
+  display = gdk_display_get_default ();
+  seat = gdk_display_get_default_seat (display);
+  device = gdk_seat_get_pointer (seat);
+
+  event = gdk_event_new (GDK_BUTTON_PRESS);
+
+  event->button.time = time;
+  event->button.button = button;
+
+  gdk_event_set_device (event, device);
+
+  return event;
+}
+
 static void
 method_call_cb (GDBusConnection       *connection,
 		const gchar           *sender,
@@ -1470,13 +1411,17 @@ method_call_cb (GDBusConnection       *connection,
 		gpointer               user_data)
 {
 	PanelApplet *applet = PANEL_APPLET (user_data);
+	GdkEvent *event;
 
 	if (g_strcmp0 (method_name, "PopupMenu") == 0) {
 		guint button;
 		guint time;
 
 		g_variant_get (parameters, "(uu)", &button, &time);
-		panel_applet_menu_popup (applet, button, time);
+
+		event = button_press_event_new (applet, button, time);
+		panel_applet_menu_popup (applet, event);
+		gdk_event_free (event);
 
 		g_dbus_method_invocation_return_value (invocation, NULL);
 	} else if (g_strcmp0 (method_name, "PopupEditMenu") == 0) {
@@ -1484,7 +1429,10 @@ method_call_cb (GDBusConnection       *connection,
 		guint time;
 
 		g_variant_get (parameters, "(uu)", &button, &time);
-		panel_applet_edit_menu_popup (applet, button, time);
+
+		event = button_press_event_new (applet, button, time);
+		panel_applet_edit_menu_popup (applet, event);
+		gdk_event_free (event);
 
 		g_dbus_method_invocation_return_value (invocation, NULL);
 	}
