@@ -223,7 +223,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 %.desktop.in: %.desktop.in.in
 	$(AM_V_GEN) sed -e 's,[@]VERSION[@],$(VERSION),g' < $< > $@
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
+		-d $(top_srcdir)/po && mv $@-t $@
 
 EXTRA_DIST =					\
 	$(ui_FILES)				\

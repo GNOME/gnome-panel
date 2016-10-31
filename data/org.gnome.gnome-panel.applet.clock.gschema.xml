@@ -1,0 +1,57 @@
+<schemalist gettext-domain="gnome-panel">
+  <schema id="org.gnome.gnome-panel.applet.clock">
+    <key name="show-tooltip" type="b">
+      <default>true</default>
+      <summary>Show date in tooltip</summary>
+      <description>If true, show date in a tooltip when the pointer is over the clock.</description>
+    </key>
+    <key name="show-weather" type="b">
+      <default>true</default>
+      <summary>Show weather in clock</summary>
+      <description>If true, display a weather icon.</description>
+    </key>
+    <key name="show-temperature" type="b">
+      <default>true</default>
+      <summary>Show temperature in clock</summary>
+      <description>If true, show the temperature next to the weather icon.</description>
+    </key>
+    <key name="show-weeks" type="b">
+      <default>true</default>
+      <summary>Show week numbers in calendar</summary>
+      <description>If true, show week numbers in the calendar.</description>
+    </key>
+    <key name="expand-appointments" type="b">
+      <default>false</default>
+      <summary>Expand list of appointments</summary>
+      <description>If true, expand the list of appointments in the calendar window.</description>
+    </key>
+    <key name="expand-birthdays" type="b">
+      <default>false</default>
+      <summary>Expand list of birthdays</summary>
+      <description>If true, expand the list of birthdays in the calendar window.</description>
+    </key>
+    <key name="expand-tasks" type="b">
+      <default>false</default>
+      <summary>Expand list of tasks</summary>
+      <description>If true, expand the list of tasks in the calendar window.</description>
+    </key>
+    <key name="expand-weather" type="b">
+      <default>false</default>
+      <summary>Expand list of weather information</summary>
+      <description>If true, expand the list of weather information in the calendar window.</description>
+    </key>
+    <key name="expand-locations" type="b">
+      <default>false</default>
+      <summary>Expand list of locations</summary>
+      <description>If true, expand the list of locations in the calendar window.</description>
+    </key>
+    <key name="cities" type="a(ssm(dd))">
+      <default>[]</default>
+      <summary>List of locations</summary>
+      <description>
+	  A list of locations to display in the calendar window. Each location is a tuple of
+	  display name, METAR code and coordinates.
+      </description>
+    </key>
+  </schema>
+</schemalist>

@@ -57,6 +57,18 @@ LT_PREREQ([2.2.6])
 LT_INIT([dlopen disable-static])
 LT_LIB_M
 
+dnl **************************************************************************
+dnl Internationalization
+dnl **************************************************************************
+
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.4])
+
+GETTEXT_PACKAGE=gnome-panel
+AC_SUBST([GETTEXT_PACKAGE])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
+                   [Name of default gettext domain])
+
 # Before making a release, the LT_VERSION string should be modified.
 # The string is of the form C:R:A.
 # - If interfaces have been changed or added, but binary compatibility has
@@ -75,8 +87,6 @@ AC_ARG_ENABLE([documentation],
 	AS_HELP_STRING([--enable-documentation], [enable man pages and HTML]),
 	[], [enable_documentation=yes])
 AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
-
-IT_PROG_INTLTOOL([0.40.6])
 
 AC_PROG_CC
 
@@ -199,14 +209,6 @@ AC_STRUCT_DIRENT_D_TYPE
 dnl Applets dir
 AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
 AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/applets")
-
-dnl  Language Support
-
-GETTEXT_PACKAGE=gnome-panel-3.0
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Define the gettext package to be used])
-AC_SUBST(GETTEXT_PACKAGE)
-
-AM_GLIB_GNU_GETTEXT
 
 dnl gtk-doc stuff
 
