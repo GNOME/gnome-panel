@@ -1,9 +1,9 @@
 NULL =
 
-wnck_appletlibdir = $(pkglibdir)
-wnck_appletlib_LTLIBRARIES = libwnck-applet.la
+wncklet_libdir = $(pkglibdir)
+wncklet_lib_LTLIBRARIES = wncklet.la
 
-libwnck_applet_la_CPPFLAGS = \
+wncklet_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(top_builddir) \
@@ -13,14 +13,14 @@ libwnck_applet_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-libwnck_applet_la_CFLAGS = \
+wncklet_la_CFLAGS = \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(WNCKLET_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libwnck_applet_la_SOURCES = \
+wncklet_la_SOURCES = \
 	wncklet.c \
 	wncklet.h \
 	window-menu.c \
@@ -34,19 +34,19 @@ libwnck_applet_la_SOURCES = \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-libwnck_applet_la_LIBADD = \
+wncklet_la_LIBADD = \
 	$(top_builddir)/libpanel-applet/libpanel-applet.la \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(WNCKLET_LIBS) \
 	$(NULL)
 
-libwnck_applet_la_LDFLAGS = \
+wncklet_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION = $(pkglibdir)/libwnck-applet.so
+APPLET_LOCATION = $(pkglibdir)/wncklet.so
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.Wncklet.panel-applet.in
