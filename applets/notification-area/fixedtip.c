@@ -127,22 +127,31 @@ na_fixed_tip_init (NaFixedTip *fixedtip)
 }
 
 static void
+get_monitor_geometry (GdkWindow    *window,
+                      GdkRectangle *geometry)
+{
+  GdkDisplay *display;
+  GdkMonitor *monitor;
+
+  display = gdk_display_get_default ();
+  monitor = gdk_display_get_monitor_at_window (display, window);
+
+  gdk_monitor_get_geometry (monitor, geometry);
+}
+
+static void
 na_fixed_tip_position (NaFixedTip *fixedtip)
 {
-  GdkScreen      *screen;
   GdkWindow      *parent_window;
+  GdkRectangle    monitor;
   GtkRequisition  req;
   int             root_x;
   int             root_y;
   int             parent_width;
   int             parent_height;
-  int             screen_width;
-  int             screen_height;
 
-  screen = gtk_widget_get_screen (fixedtip->priv->parent);
   parent_window = gtk_widget_get_window (fixedtip->priv->parent);
-
-  gtk_window_set_screen (GTK_WINDOW (fixedtip), screen);
+  get_monitor_geometry (parent_window, &monitor);
 
   gtk_widget_get_preferred_size (GTK_WIDGET (fixedtip), &req, NULL);
 
@@ -150,33 +159,30 @@ na_fixed_tip_position (NaFixedTip *fixedtip)
   parent_width = gdk_window_get_width (parent_window);
   parent_height = gdk_window_get_height (parent_window);
 
-  screen_width = gdk_screen_get_width (screen);
-  screen_height = gdk_screen_get_height (screen);
-
   /* pad between panel and message window */
 #define PAD 5
 
   if (fixedtip->priv->orientation == GTK_ORIENTATION_VERTICAL)
     {
-      if (root_x <= screen_width / 2)
+      if (root_x <= monitor.width / 2)
         root_x += parent_width + PAD;
       else
         root_x -= req.width + PAD;
     }
   else
     {
-      if (root_y <= screen_height / 2)
+      if (root_y <= monitor.height / 2)
         root_y += parent_height + PAD;
       else
         root_y -= req.height + PAD;
     }
 
   /* Push onscreen */
-  if ((root_x + req.width) > screen_width)
-    root_x = screen_width - req.width;
+  if ((root_x + req.width) > monitor.width)
+    root_x = monitor.width - req.width;
 
-  if ((root_y + req.height) > screen_height)
-    root_y = screen_height - req.height;
+  if ((root_y + req.height) > monitor.height)
+    root_y = monitor.height - req.height;
 
   gtk_window_move (GTK_WINDOW (fixedtip), root_x, root_y);
 }
