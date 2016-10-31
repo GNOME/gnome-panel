@@ -44,10 +44,10 @@ typedef struct {
         guint button_activate;
 
         GtkIconTheme *icon_theme;
-} ShowDesktopData;
+} ShowDesktopApplet;
 
 static void
-update_icon (ShowDesktopData *sdd)
+update_icon (ShowDesktopApplet *sdd)
 {
         int width, height;
         GdkPixbuf *icon;
@@ -142,7 +142,7 @@ update_icon (ShowDesktopData *sdd)
 static void
 applet_change_orient (PanelApplet       *applet,
                       PanelAppletOrient  orient,
-                      ShowDesktopData   *sdd)
+                      ShowDesktopApplet *sdd)
 {
         GtkOrientation new_orient;
 
@@ -168,9 +168,9 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-button_size_allocated (GtkWidget       *button,
-		       GtkAllocation   *allocation,
-                       ShowDesktopData *sdd)
+button_size_allocated (GtkWidget         *button,
+                       GtkAllocation     *allocation,
+                       ShowDesktopApplet *sdd)
 {
 	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
 		&& (sdd->size == allocation->height))
@@ -197,7 +197,7 @@ button_size_allocated (GtkWidget       *button,
  * and update_button_state updates the button appearance itself
  */
 static void
-update_button_display (ShowDesktopData *sdd)
+update_button_display (ShowDesktopApplet *sdd)
 {
 	const char *tip;
 
@@ -211,8 +211,8 @@ update_button_display (ShowDesktopData *sdd)
 }
 
 static void
-button_toggled_callback (GtkWidget       *button,
-                         ShowDesktopData *sdd)
+button_toggled_callback (GtkWidget         *button,
+                         ShowDesktopApplet *sdd)
 {
         if (!gdk_x11_screen_supports_net_wm_hint (gtk_widget_get_screen (button),
                                                   gdk_atom_intern ("_NET_SHOWING_DESKTOP", FALSE))) {
@@ -256,7 +256,7 @@ button_toggled_callback (GtkWidget       *button,
 }
 
 static void
-update_button_state (ShowDesktopData *sdd)
+update_button_state (ShowDesktopApplet *sdd)
 {
         if (sdd->showing_desktop) {
                 g_signal_handlers_block_by_func (G_OBJECT (sdd->button),
@@ -282,8 +282,8 @@ update_button_state (ShowDesktopData *sdd)
 }
 
 static void
-show_desktop_changed_callback (WnckScreen      *screen,
-                               ShowDesktopData *sdd)
+show_desktop_changed_callback (WnckScreen        *screen,
+                               ShowDesktopApplet *sdd)
 {
         if (sdd->wnck_screen != NULL)
                 sdd->showing_desktop =
@@ -292,15 +292,15 @@ show_desktop_changed_callback (WnckScreen      *screen,
 }
 
 static void
-theme_changed_callback (GtkIconTheme    *icon_theme,
-                        ShowDesktopData *sdd)
+theme_changed_callback (GtkIconTheme      *icon_theme,
+                        ShowDesktopApplet *sdd)
 {
 	update_icon (sdd);
 }
 
 static void
-applet_destroyed (GtkWidget       *applet,
-                  ShowDesktopData *sdd)
+applet_destroyed (GtkWidget         *applet,
+                  ShowDesktopApplet *sdd)
 {
 	if (sdd->button_activate != 0) {
 		g_source_remove (sdd->button_activate);
@@ -338,7 +338,7 @@ do_not_eat_button_press (GtkWidget      *widget,
 static gboolean
 button_motion_timeout (gpointer data)
 {
-	ShowDesktopData *sdd = (ShowDesktopData*) data;
+	ShowDesktopApplet *sdd = (ShowDesktopApplet*) data;
 
 	sdd->button_activate = 0;
 
@@ -348,10 +348,10 @@ button_motion_timeout (gpointer data)
 }
 
 static void
-button_drag_leave (GtkWidget          *widget,
-		   GdkDragContext     *context,
-		   guint               time,
-		   ShowDesktopData    *sdd)
+button_drag_leave (GtkWidget         *widget,
+                   GdkDragContext    *context,
+                   guint              time,
+                   ShowDesktopApplet *sdd)
 {
 	if (sdd->button_activate != 0) {
 		g_source_remove (sdd->button_activate);
@@ -360,12 +360,12 @@ button_drag_leave (GtkWidget          *widget,
 }
 
 static gboolean
-button_drag_motion (GtkWidget          *widget,
-		    GdkDragContext     *context,
-		    gint                x,
-		    gint                y,
-		    guint               time,
-		    ShowDesktopData    *sdd)
+button_drag_motion (GtkWidget         *widget,
+                    GdkDragContext    *context,
+                    gint               x,
+                    gint               y,
+                    guint              time,
+                    ShowDesktopApplet *sdd)
 {
 
 	if (sdd->button_activate == 0)
@@ -381,9 +381,9 @@ static void
 show_desktop_applet_realized (PanelApplet *applet, 
 			      gpointer     data)
 {
-	ShowDesktopData *sdd;
+	ShowDesktopApplet *sdd;
 	
-	sdd = (ShowDesktopData *) data;
+	sdd = (ShowDesktopApplet *) data;
 
 	if (sdd->wnck_screen != NULL)
 		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
@@ -420,12 +420,12 @@ show_desktop_applet_realized (PanelApplet *applet,
 gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
-        ShowDesktopData *sdd;
+	ShowDesktopApplet *sdd;
 	AtkObject       *atk_obj;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
-        sdd = g_new0 (ShowDesktopData, 1);
+	sdd = g_new0 (ShowDesktopApplet, 1);
 
         sdd->applet = GTK_WIDGET (applet);
 
