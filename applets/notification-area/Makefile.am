@@ -1,9 +1,9 @@
 NULL =
 
-notification_area_appletlibdir = $(pkglibdir)
-notification_area_appletlib_LTLIBRARIES = libnotification-area-applet.la
+notification_area_libdir = $(pkglibdir)
+notification_area_lib_LTLIBRARIES = notification-area.la
 
-libnotification_area_applet_la_CPPFLAGS = \
+notification_area_la_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""notification-area-applet"\" \
 	-I$(srcdir) \
@@ -12,14 +12,14 @@ libnotification_area_applet_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-libnotification_area_applet_la_CFLAGS = \
+notification_area_la_CFLAGS = \
 	$(NOTIFICATION_AREA_CFLAGS) \
 	$(LIBPANEL_APPLET_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libnotification_area_applet_la_SOURCES = \
+notification_area_la_SOURCES = \
 	fixedtip.h \
 	fixedtip.c \
 	na-tray.c \
@@ -32,19 +32,19 @@ libnotification_area_applet_la_SOURCES = \
 	main.h \
 	$(NULL)
 
-libnotification_area_applet_la_LIBADD = \
+notification_area_la_LIBADD = \
 	$(top_builddir)/libpanel-applet/libpanel-applet.la \
 	$(NOTIFICATION_AREA_LIBS) \
 	$(LIBPANEL_APPLET_LIBS) \
 	$(NULL)
 
-libnotification_area_applet_la_LDFLAGS = \
+notification_area_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
-APPLET_LOCATION   = $(pkglibdir)/libnotification-area-applet.so
+APPLET_LOCATION = $(pkglibdir)/notification-area.so
 
 appletdir       = $(appletsdir)
 applet_in_files = org.gnome.panel.NotificationAreaApplet.panel-applet.in
