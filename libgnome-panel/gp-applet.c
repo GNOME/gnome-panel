@@ -69,6 +69,8 @@ typedef struct
 
   GpAppletFlags       flags;
   GpSizeHints        *size_hints;
+
+  guint               size_hints_idle;
 } GpAppletPrivate;
 
 enum
@@ -101,6 +103,37 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX)
+
+static gboolean
+emit_size_hints_changed_cb (gpointer user_data)
+{
+  GpApplet *applet;
+  GpAppletPrivate *priv;
+
+  applet = GP_APPLET (user_data);
+  priv = gp_applet_get_instance_private (applet);
+
+  priv->size_hints_idle = 0;
+  g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
+
+  return G_SOURCE_REMOVE;
+}
+
+static void
+emit_size_hints_changed (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+  const gchar *name;
+
+  priv = gp_applet_get_instance_private (applet);
+  if (priv->size_hints_idle != 0)
+    return;
+
+  priv->size_hints_idle = g_idle_add (emit_size_hints_changed_cb, applet);
+
+  name = "[libgnome-panel] emit_size_hints_changed_cb";
+  g_source_set_name_by_id (priv->size_hints_idle, name);
+}
 
 static void
 gp_size_hints_free (gpointer data)
@@ -165,6 +198,12 @@ gp_applet_dispose (GObject *object)
 
   g_clear_object (&priv->builder);
   g_clear_object (&priv->action_group);
+
+  if (priv->size_hints_idle != 0)
+    {
+      g_source_remove (priv->size_hints_idle);
+      priv->size_hints_idle = 0;
+    }
 
   G_OBJECT_CLASS (gp_applet_parent_class)->dispose (object);
 }
@@ -742,7 +781,7 @@ gp_applet_set_size_hints (GpApplet   *applet,
   if (!size_hints || n_elements == 0)
     {
       g_clear_pointer (&priv->size_hints, gp_size_hints_free);
-      g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
+      emit_size_hints_changed (applet);
 
       return;
     }
@@ -767,7 +806,7 @@ gp_applet_set_size_hints (GpApplet   *applet,
   for (i = 0; i < n_elements; i++)
     priv->size_hints->size_hints[i] = size_hints[i] + base_size;
 
-  g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
+  emit_size_hints_changed (applet);
 }
 
 /**
