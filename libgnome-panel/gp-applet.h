@@ -45,8 +45,8 @@ G_DECLARE_DERIVABLE_TYPE (GpApplet, gp_applet, GP, APPLET, GtkEventBox)
  *     #GpApplet. This handle will be usable to move the applet, and to open
  *     the context menu of the applet.
  *
- * Flags to be used with gp_applet_get_flags() and gp_applet_set_flags(),
- * to indicate to the panel a specific behavior requested by the #GpApplet.
+ * Flags to be used with gp_applet_set_flags(), to indicate to the panel a
+ * specific behavior requested by the #GpApplet.
  */
 typedef enum
 {
@@ -86,8 +86,6 @@ gboolean         gp_applet_get_locked_down          (GpApplet           *applet)
 GtkOrientation   gp_applet_get_orientation          (GpApplet           *applet);
 
 GtkPositionType  gp_applet_get_position             (GpApplet           *applet);
-
-GpAppletFlags    gp_applet_get_flags                (GpApplet           *applet);
 
 void             gp_applet_set_flags                (GpApplet           *applet,
                                                      GpAppletFlags       flags);
