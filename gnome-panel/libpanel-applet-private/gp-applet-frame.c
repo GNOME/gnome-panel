@@ -119,27 +119,13 @@ static void
 update_size_hints (PanelAppletFrame *applet_frame)
 {
   GpAppletFrame *frame;
-  GArray *array;
+  guint n_elements;
   gint *size_hints;
-  guint i;
 
   frame = GP_APPLET_FRAME (applet_frame);
-  array = gp_applet_get_size_hints (frame->applet);
 
-  if (!array || array->len == 0)
-    {
-      _panel_applet_frame_update_size_hints (applet_frame, NULL, 0);
-      return;
-    }
-
-  size_hints = g_new (gint, array->len);
-
-  for (i = 0; i < array->len; i++)
-    {
-      size_hints[i] = g_array_index (array, gint, i);
-    }
-
-  _panel_applet_frame_update_size_hints (applet_frame, size_hints, array->len);
+  size_hints = gp_applet_get_size_hints (frame->applet, &n_elements);
+  _panel_applet_frame_update_size_hints (applet_frame, size_hints, n_elements);
 }
 
 static void

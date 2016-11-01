@@ -668,20 +668,39 @@ gp_applet_set_flags (GpApplet      *applet,
 /**
  * gp_applet_get_size_hints:
  * @applet: a #GpApplet
+ * @n_elements: (out): return location for the length of the returned array
  *
- * Retrieves the #GArray with size hints.
+ * Returns array with size hints.
  *
- * Returns: (transfer none): a pointer to a #GArray, or %NULL.
+ * Returns: (transfer full) (array length=n_elements): a newly allocated
+ *     array, or %NULL.
  */
-GArray *
-gp_applet_get_size_hints (GpApplet *applet)
+gint *
+gp_applet_get_size_hints (GpApplet *applet,
+                          guint    *n_elements)
 {
   GpAppletPrivate *priv;
+  gint *size_hints;
+  guint i;
 
   g_return_val_if_fail (GP_IS_APPLET (applet), NULL);
+  g_return_val_if_fail (n_elements != NULL, NULL);
+
   priv = gp_applet_get_instance_private (applet);
 
-  return priv->size_hints;
+  if (!priv->size_hints || priv->size_hints->len == 0)
+    {
+      *n_elements = 0;
+      return NULL;
+    }
+
+  *n_elements = priv->size_hints->len;
+  size_hints = g_new0 (gint, priv->size_hints->len);
+
+  for (i = 0; i < priv->size_hints->len; i++)
+    size_hints[i] = g_array_index (priv->size_hints, gint, i);
+
+  return size_hints;
 }
 
 /**
