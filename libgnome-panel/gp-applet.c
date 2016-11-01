@@ -60,6 +60,7 @@ typedef struct
   gboolean            locked_down;
   GtkOrientation      orientation;
   GtkPositionType     position;
+
   GpAppletFlags       flags;
   GArray             *size_hints;
 } GpAppletPrivate;
@@ -74,8 +75,6 @@ enum
   PROP_LOCKED_DOWN,
   PROP_ORIENTATION,
   PROP_POSITION,
-  PROP_FLAGS,
-  PROP_SIZE_HINTS,
 
   LAST_PROP
 };
@@ -86,6 +85,9 @@ enum
 {
   LOCKED_DOWN_CHANGED,
   PLACEMENT_CHANGED,
+
+  FLAGS_CHANGED,
+  SIZE_HINTS_CHANGED,
 
   LAST_SIGNAL
 };
@@ -208,14 +210,6 @@ gp_applet_get_property (GObject    *object,
         g_value_set_enum (value, priv->position);
         break;
 
-      case PROP_FLAGS:
-        g_value_set_flags (value, priv->flags);
-        break;
-
-      case PROP_SIZE_HINTS:
-        g_value_set_boxed (value, priv->size_hints);
-        break;
-
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -261,13 +255,6 @@ gp_applet_set_property (GObject      *object,
 
       case PROP_POSITION:
         gp_applet_set_position (applet, g_value_get_enum (value));
-        break;
-
-      case PROP_FLAGS:
-        gp_applet_set_flags (applet, g_value_get_flags (value));
-        break;
-
-      case PROP_SIZE_HINTS:
         break;
 
       default:
@@ -418,28 +405,6 @@ install_properties (GObjectClass *object_class)
                        G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
                        G_PARAM_STATIC_STRINGS);
 
-  /**
-   * GpApplet:flags:
-   *
-   * The #GpAppletFlags of the applet.
-   */
-  properties[PROP_FLAGS] =
-    g_param_spec_flags ("flags", "Flags", "Flags",
-                       GP_TYPE_APPLET_FLAGS, GP_APPLET_FLAGS_NONE,
-                       G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY |
-                       G_PARAM_STATIC_STRINGS);
-
-  /**
-   * GpApplet:size-hints:
-   *
-   * The size hints set for the applet. See gp_applet_set_size_hints().
-   */
-  properties[PROP_SIZE_HINTS] =
-    g_param_spec_boxed ("size-hints", "Size Hints", "Size Hints",
-                        G_TYPE_ARRAY,
-                        G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
-                        G_PARAM_STATIC_STRINGS);
-
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
 
@@ -476,6 +441,26 @@ install_signals (void)
                   G_STRUCT_OFFSET (GpAppletClass, placement_changed),
                   NULL, NULL, NULL, G_TYPE_NONE, 2,
                   GTK_TYPE_ORIENTATION, GTK_TYPE_POSITION_TYPE);
+
+  /**
+   * GpApplet::flags-changed:
+   * @applet: the object on which the signal is emitted
+   *
+   * Signal is emitted when flags has changed.
+   */
+  signals[FLAGS_CHANGED] =
+    g_signal_new ("flags-changed", GP_TYPE_APPLET, G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL, G_TYPE_NONE, 0);
+
+  /**
+   * GpApplet::size-hints-changed:
+   * @applet: the object on which the signal is emitted
+   *
+   * Signal is emitted when size hints has changed.
+   */
+  signals[SIZE_HINTS_CHANGED] =
+    g_signal_new ("size-hints-changed", GP_TYPE_APPLET, G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL, G_TYPE_NONE, 0);
 }
 
 static void
@@ -662,7 +647,7 @@ gp_applet_set_flags (GpApplet      *applet,
 
   priv->flags = flags;
 
-  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_FLAGS]);
+  g_signal_emit (applet, signals[FLAGS_CHANGED], 0);
 }
 
 /**
@@ -740,8 +725,7 @@ gp_applet_set_size_hints (GpApplet   *applet,
   if (!size_hints && priv->size_hints)
     {
       g_clear_pointer (&priv->size_hints, g_array_unref);
-      g_object_notify_by_pspec (G_OBJECT (applet),
-                                properties[PROP_SIZE_HINTS]);
+      g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
 
       return;
     }
@@ -768,7 +752,7 @@ gp_applet_set_size_hints (GpApplet   *applet,
       g_array_insert_val (priv->size_hints, i, size);
     }
 
-  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_SIZE_HINTS]);
+  g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
 }
 
 /**

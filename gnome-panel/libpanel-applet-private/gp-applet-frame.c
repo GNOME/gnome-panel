@@ -129,16 +129,14 @@ update_size_hints (PanelAppletFrame *applet_frame)
 }
 
 static void
-flags_changed_cb (GObject       *object,
-                  GParamSpec    *pspec,
+flags_changed_cb (GpApplet      *applet,
                   GpAppletFrame *frame)
 {
   update_flags (PANEL_APPLET_FRAME (frame));
 }
 
 static void
-size_hints_changed_cb (GObject       *object,
-                       GParamSpec    *pspec,
+size_hints_changed_cb (GpApplet      *applet,
                        GpAppletFrame *frame)
 {
   update_size_hints (PANEL_APPLET_FRAME (frame));
@@ -276,9 +274,9 @@ gp_applet_frame_set_applet (GpAppletFrame *frame,
 {
   frame->applet = applet;
 
-  g_signal_connect (applet, "notify::flags",
+  g_signal_connect (applet, "flags-changed",
                     G_CALLBACK (flags_changed_cb), frame);
 
-  g_signal_connect (applet, "notify::size-hints",
+  g_signal_connect (applet, "size-hints-changed",
                     G_CALLBACK (size_hints_changed_cb), frame);
 }
