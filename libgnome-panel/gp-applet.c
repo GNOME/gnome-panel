@@ -50,6 +50,12 @@
 #include "gp-enum-types.h"
 
 typedef struct
+ {
+  gint  *size_hints;
+  guint  n_elements;
+} GpSizeHints;
+
+typedef struct
 {
   GtkBuilder         *builder;
   GSimpleActionGroup *action_group;
@@ -62,7 +68,7 @@ typedef struct
   GtkPositionType     position;
 
   GpAppletFlags       flags;
-  GArray             *size_hints;
+  GpSizeHints        *size_hints;
 } GpAppletPrivate;
 
 enum
@@ -96,26 +102,34 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX)
 
+static void
+gp_size_hints_free (gpointer data)
+{
+  GpSizeHints *size_hints;
+
+  size_hints = (GpSizeHints *) data;
+
+  g_free (size_hints->size_hints);
+  g_free (size_hints);
+}
+
 static gboolean
 size_hints_changed (GpAppletPrivate *priv,
                     const gint      *size_hints,
                     guint            n_elements,
                     gint             base_size)
 {
-  GArray *array;
   guint i;
 
-  array = priv->size_hints;
-
-  if (!array)
+  if ((!priv->size_hints && size_hints) || (priv->size_hints && !size_hints))
     return TRUE;
 
-  if (array->len != n_elements)
+  if (priv->size_hints->n_elements != n_elements)
     return TRUE;
 
   for (i = 0; i < n_elements; i++)
     {
-      if (g_array_index (array, gint, i) != size_hints[i] + base_size)
+      if (priv->size_hints->size_hints[i] != size_hints[i] + base_size)
         return TRUE;
     }
 
@@ -167,7 +181,7 @@ gp_applet_finalize (GObject *object)
   g_clear_pointer (&priv->id, g_free);
   g_clear_pointer (&priv->settings_path, g_free);
   g_clear_pointer (&priv->translation_domain, g_free);
-  g_clear_pointer (&priv->size_hints, g_array_unref);
+  g_clear_pointer (&priv->size_hints, gp_size_hints_free);
 
   G_OBJECT_CLASS (gp_applet_parent_class)->finalize (object);
 }
@@ -673,17 +687,17 @@ gp_applet_get_size_hints (GpApplet *applet,
 
   priv = gp_applet_get_instance_private (applet);
 
-  if (!priv->size_hints || priv->size_hints->len == 0)
+  if (!priv->size_hints || priv->size_hints->n_elements == 0)
     {
       *n_elements = 0;
       return NULL;
     }
 
-  *n_elements = priv->size_hints->len;
-  size_hints = g_new0 (gint, priv->size_hints->len);
+  *n_elements = priv->size_hints->n_elements;
+  size_hints = g_new0 (gint, priv->size_hints->n_elements);
 
-  for (i = 0; i < priv->size_hints->len; i++)
-    size_hints[i] = g_array_index (priv->size_hints, gint, i);
+  for (i = 0; i < priv->size_hints->n_elements; i++)
+    size_hints[i] = priv->size_hints->size_hints[i];
 
   return size_hints;
 }
@@ -722,35 +736,36 @@ gp_applet_set_size_hints (GpApplet   *applet,
   g_return_if_fail (GP_IS_APPLET (applet));
   priv = gp_applet_get_instance_private (applet);
 
-  if (!size_hints && priv->size_hints)
+  if (!size_hints_changed (priv, size_hints, n_elements, base_size))
+    return;
+
+  if (!size_hints || n_elements == 0)
     {
-      g_clear_pointer (&priv->size_hints, g_array_unref);
+      g_clear_pointer (&priv->size_hints, gp_size_hints_free);
       g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
 
       return;
     }
 
-  if (!size_hints_changed (priv, size_hints, n_elements, base_size))
-    return;
-
   if (!priv->size_hints)
     {
-      priv->size_hints = g_array_sized_new (FALSE, FALSE,
-                                            sizeof (gint),
-                                            n_elements);
+      priv->size_hints = g_new0 (GpSizeHints, 1);
+      priv->size_hints->size_hints = g_new0 (gint, n_elements);
+      priv->size_hints->n_elements = n_elements;
     }
   else
     {
-      g_array_set_size (priv->size_hints, n_elements);
+      if (priv->size_hints->n_elements < n_elements)
+        {
+          g_free (priv->size_hints->size_hints);
+          priv->size_hints->size_hints = g_new0 (gint, n_elements);
+        }
+
+      priv->size_hints->n_elements = n_elements;
     }
 
   for (i = 0; i < n_elements; i++)
-    {
-      gint size;
-
-      size = size_hints[i] + base_size;
-      g_array_insert_val (priv->size_hints, i, size);
-    }
+    priv->size_hints->size_hints[i] = size_hints[i] + base_size;
 
   g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
 }
