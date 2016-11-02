@@ -25,6 +25,10 @@ status_notifier_la_SOURCES = \
 	sn-host.h \
 	sn-host-v0.c \
 	sn-host-v0.h \
+	sn-item.c \
+	sn-item.h \
+	sn-item-v0.c \
+	sn-item-v0.h \
 	sn-module.c \
 	$(BUILT_SOURCES) \
 	$(NULL)
