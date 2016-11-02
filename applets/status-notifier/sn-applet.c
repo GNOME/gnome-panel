@@ -18,10 +18,13 @@
 #include "config.h"
 
 #include "sn-applet.h"
+#include "sn-host-v0.h"
 
 struct _SnApplet
 {
   GpApplet   parent;
+
+  SnHost    *host_v0;
 
   GtkWidget *box;
 };
@@ -31,8 +34,26 @@ G_DEFINE_TYPE (SnApplet, sn_applet, GP_TYPE_APPLET)
 static void
 sn_applet_constructed (GObject *object)
 {
+  SnApplet *sn;
+
   G_OBJECT_CLASS (sn_applet_parent_class)->constructed (object);
+  sn = SN_APPLET (object);
+
+  sn->host_v0 = sn_host_v0_new ();
+
   gtk_widget_show (GTK_WIDGET (object));
+}
+
+static void
+sn_applet_dispose (GObject *object)
+{
+  SnApplet *sn;
+
+  sn = SN_APPLET (object);
+
+  g_clear_object (&sn->host_v0);
+
+  G_OBJECT_CLASS (sn_applet_parent_class)->dispose (object);
 }
 
 static void
@@ -59,6 +80,7 @@ sn_applet_class_init (SnAppletClass *sn_class)
   applet_class = GP_APPLET_CLASS (sn_class);
 
   object_class->constructed = sn_applet_constructed;
+  object_class->dispose = sn_applet_dispose;
 
   applet_class->placement_changed = sn_applet_placement_changed;
 }

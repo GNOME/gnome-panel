@@ -91,6 +91,7 @@ AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
 AC_PROG_CC
 
 AM_PATH_PYTHON
+AC_PATH_PROG([GDBUS_CODEGEN], [gdbus-codegen])
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
 
