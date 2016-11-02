@@ -41,6 +41,12 @@ status_notifier_la_LDFLAGS = \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
+sn-dbus-menu-gen.h:
+sn-dbus-menu-gen.c: com.canonical.dbusmenu.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Sn \
+		--generate-c-code sn-dbus-menu-gen \
+		$(srcdir)/com.canonical.dbusmenu.xml
+
 sn-host-v0-gen.h:
 sn-host-v0-gen.c: org.kde.StatusNotifierHost.xml
 	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Sn \
@@ -60,6 +66,8 @@ sn-watcher-v0-gen.c: org.kde.StatusNotifierWatcher.xml
 		$(srcdir)/org.kde.StatusNotifierWatcher.xml
 
 BUILT_SOURCES = \
+	sn-dbus-menu-gen.c \
+	sn-dbus-menu-gen.h \
 	sn-host-v0-gen.c \
 	sn-host-v0-gen.h \
 	sn-item-v0-gen.c \
@@ -69,6 +77,7 @@ BUILT_SOURCES = \
 	$(NULL)
 
 EXTRA_DIST = \
+	com.canonical.dbusmenu.xml \
 	org.kde.StatusNotifierHost.xml \
 	org.kde.StatusNotifierItem.xml \
 	org.kde.StatusNotifierWatcher.xml \
