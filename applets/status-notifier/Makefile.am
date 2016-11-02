@@ -47,6 +47,12 @@ sn-host-v0-gen.c: org.kde.StatusNotifierHost.xml
 		--generate-c-code sn-host-v0-gen \
 		$(srcdir)/org.kde.StatusNotifierHost.xml
 
+sn-item-v0-gen.h:
+sn-item-v0-gen.c: org.kde.StatusNotifierItem.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Sn \
+		--generate-c-code sn-item-v0-gen \
+		$(srcdir)/org.kde.StatusNotifierItem.xml
+
 sn-watcher-v0-gen.h:
 sn-watcher-v0-gen.c: org.kde.StatusNotifierWatcher.xml
 	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Sn \
@@ -56,12 +62,15 @@ sn-watcher-v0-gen.c: org.kde.StatusNotifierWatcher.xml
 BUILT_SOURCES = \
 	sn-host-v0-gen.c \
 	sn-host-v0-gen.h \
+	sn-item-v0-gen.c \
+	sn-item-v0-gen.h \
 	sn-watcher-v0-gen.c \
 	sn-watcher-v0-gen.h \
 	$(NULL)
 
 EXTRA_DIST = \
 	org.kde.StatusNotifierHost.xml \
+	org.kde.StatusNotifierItem.xml \
 	org.kde.StatusNotifierWatcher.xml \
 	$(NULL)
 
