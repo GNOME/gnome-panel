@@ -58,6 +58,15 @@ LT_INIT([dlopen disable-static])
 LT_LIB_M
 
 dnl **************************************************************************
+dnl Check for required programs
+dnl **************************************************************************
+
+AC_PROG_CC
+AC_PATH_PROG([GDBUS_CODEGEN], [gdbus-codegen])
+AC_PATH_PROG([GLIB_COMPILE_RESOURCES], [glib-compile-resources])
+AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
+
+dnl **************************************************************************
 dnl Internationalization
 dnl **************************************************************************
 
@@ -68,6 +77,12 @@ GETTEXT_PACKAGE=gnome-panel
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
                    [Name of default gettext domain])
+
+dnl **************************************************************************
+dnl Desktop settings support
+dnl **************************************************************************
+
+GLIB_GSETTINGS
 
 # Before making a release, the LT_VERSION string should be modified.
 # The string is of the form C:R:A.
@@ -87,14 +102,6 @@ AC_ARG_ENABLE([documentation],
 	AS_HELP_STRING([--enable-documentation], [enable man pages and HTML]),
 	[], [enable_documentation=yes])
 AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
-
-AC_PROG_CC
-
-AC_PATH_PROG([GDBUS_CODEGEN], [gdbus-codegen])
-AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
-AC_PATH_PROG([GLIB_MKENUMS], [glib-mkenums])
-
-GLIB_GSETTINGS
 
 LIBGNOME_DESKTOP_REQUIRED=2.91.0
 GDK_PIXBUF_REQUIRED=2.25.2
