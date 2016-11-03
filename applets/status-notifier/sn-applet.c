@@ -33,6 +33,47 @@ struct _SnApplet
 
 G_DEFINE_TYPE (SnApplet, sn_applet, GP_TYPE_APPLET)
 
+static gint
+compare_items (gconstpointer a,
+               gconstpointer b)
+{
+  SnItem *item1;
+  SnItem *item2;
+  SnItemCategory c1;
+  SnItemCategory c2;
+  const gchar *id1;
+  const gchar *id2;
+
+  item1 = (SnItem *) a;
+  item2 = (SnItem *) b;
+
+  c1 = sn_item_get_category (item1);
+  c2 = sn_item_get_category (item2);
+
+  if (c1 < c2)
+    return -1;
+  else if (c1 > c2)
+    return 1;
+
+  id1 = sn_item_get_id (item1);
+  id2 = sn_item_get_id (item2);
+
+  return g_strcmp0 (id1, id2);
+}
+
+static void
+reorder_items (GtkWidget *widget,
+               gpointer   user_data)
+{
+  SnApplet *sn;
+  gint position;
+
+  sn = SN_APPLET (user_data);
+
+  position = g_slist_index (sn->items, widget);
+  gtk_box_reorder_child (GTK_BOX (sn->box), widget, position);
+}
+
 static void
 item_added_cb (SnHost   *host,
                SnItem   *item,
@@ -40,7 +81,9 @@ item_added_cb (SnHost   *host,
 {
   sn->items = g_slist_prepend (sn->items, item);
   gtk_box_pack_start (GTK_BOX (sn->box), GTK_WIDGET (item), FALSE, FALSE, 0);
-  gtk_widget_show (GTK_WIDGET (item));
+
+  sn->items = g_slist_sort (sn->items, compare_items);
+  gtk_container_foreach (GTK_CONTAINER (sn->box), reorder_items, sn);
 }
 
 static void

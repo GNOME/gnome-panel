@@ -88,6 +88,13 @@ get_bus_name_and_object_path (const gchar  *service,
 }
 
 static void
+ready_cb (SnItem   *item,
+          SnHostV0 *v0)
+{
+  sn_host_emit_item_added (SN_HOST (v0), item);
+}
+
+static void
 add_registered_item (SnHostV0    *v0,
                      const gchar *service)
 {
@@ -104,7 +111,7 @@ add_registered_item (SnHostV0    *v0,
   g_object_ref_sink (item);
 
   v0->items = g_slist_prepend (v0->items, item);
-  sn_host_emit_item_added (SN_HOST (v0), item);
+  g_signal_connect (item, "ready", G_CALLBACK (ready_cb), v0);
 
   g_free (bus_name);
   g_free (object_path);

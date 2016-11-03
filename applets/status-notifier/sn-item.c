@@ -37,6 +37,15 @@ enum
 
 static GParamSpec *properties[LAST_PROP] = { NULL };
 
+enum
+{
+  SIGNAL_READY,
+
+  LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL] = { 0 };
+
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (SnItem, sn_item, GTK_TYPE_BUTTON)
 
 static void
@@ -127,6 +136,15 @@ install_properties (GObjectClass *object_class)
 }
 
 static void
+install_signals (SnItemClass *item_class)
+{
+  signals[SIGNAL_READY] =
+    g_signal_new ("ready", G_TYPE_FROM_CLASS (item_class),
+                  G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+}
+
+static void
 sn_item_class_init (SnItemClass *item_class)
 {
   GObjectClass *object_class;
@@ -138,11 +156,38 @@ sn_item_class_init (SnItemClass *item_class)
   object_class->set_property = sn_item_set_property;
 
   install_properties (object_class);
+  install_signals (item_class);
 }
 
 static void
 sn_item_init (SnItem *item)
 {
+}
+
+const gchar *
+sn_item_get_id (SnItem *item)
+{
+  return SN_ITEM_GET_CLASS (item)->get_id (item);
+}
+
+SnItemCategory
+sn_item_get_category (SnItem *item)
+{
+  const gchar *string;
+  SnItemCategory category;
+
+  string = SN_ITEM_GET_CLASS (item)->get_category (item);
+
+  if (g_strcmp0 (string, "Hardware") == 0)
+    category = SN_ITEM_CATEGORY_HARDWARE;
+  else if (g_strcmp0 (string, "SystemServices") == 0)
+    category = SN_ITEM_CATEGORY_SYSTEM_SERVICES;
+  else if (g_strcmp0 (string, "Communications") == 0)
+    category = SN_ITEM_CATEGORY_COMMUNICATIONS;
+  else
+    category = SN_ITEM_CATEGORY_APPLICATION_STATUS;
+
+  return category;
 }
 
 const gchar *
@@ -163,4 +208,10 @@ sn_item_get_object_path (SnItem *item)
   priv = sn_item_get_instance_private (item);
 
   return priv->object_path;
+}
+
+void
+sn_item_emit_ready (SnItem *item)
+{
+  g_signal_emit (item, signals[SIGNAL_READY], 0);
 }

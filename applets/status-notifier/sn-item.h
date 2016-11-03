@@ -25,13 +25,30 @@ G_BEGIN_DECLS
 #define SN_TYPE_ITEM sn_item_get_type ()
 G_DECLARE_DERIVABLE_TYPE (SnItem, sn_item, SN, ITEM, GtkButton)
 
+typedef enum
+{
+  SN_ITEM_CATEGORY_APPLICATION_STATUS,
+  SN_ITEM_CATEGORY_COMMUNICATIONS,
+  SN_ITEM_CATEGORY_SYSTEM_SERVICES,
+  SN_ITEM_CATEGORY_HARDWARE
+} SnItemCategory;
+
 struct _SnItemClass
 {
   GtkButtonClass parent_class;
+
+  const gchar * (* get_id)       (SnItem *item);
+  const gchar * (* get_category) (SnItem *item);
 };
 
-const gchar *sn_item_get_bus_name    (SnItem *item);
-const gchar *sn_item_get_object_path (SnItem *item);
+const gchar    *sn_item_get_id          (SnItem *item);
+
+SnItemCategory  sn_item_get_category    (SnItem *item);
+
+const gchar    *sn_item_get_bus_name    (SnItem *item);
+const gchar    *sn_item_get_object_path (SnItem *item);
+
+void            sn_item_emit_ready      (SnItem *item);
 
 G_END_DECLS
 
