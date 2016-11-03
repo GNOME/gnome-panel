@@ -19,27 +19,53 @@
 
 #include "sn-applet.h"
 #include "sn-host-v0.h"
+#include "sn-item.h"
 
 struct _SnApplet
 {
   GpApplet   parent;
 
-  SnHost    *host_v0;
-
   GtkWidget *box;
+
+  GSList    *hosts;
+  GSList    *items;
 };
 
 G_DEFINE_TYPE (SnApplet, sn_applet, GP_TYPE_APPLET)
 
 static void
+item_added_cb (SnHost   *host,
+               SnItem   *item,
+               SnApplet *sn)
+{
+  sn->items = g_slist_prepend (sn->items, item);
+  gtk_box_pack_start (GTK_BOX (sn->box), GTK_WIDGET (item), FALSE, FALSE, 0);
+  gtk_widget_show (GTK_WIDGET (item));
+}
+
+static void
+item_removed_cb (SnHost   *host,
+                 SnItem   *item,
+                 SnApplet *sn)
+{
+  gtk_container_remove (GTK_CONTAINER (sn->box), GTK_WIDGET (item));
+  sn->items = g_slist_remove (sn->items, item);
+}
+
+static void
 sn_applet_constructed (GObject *object)
 {
   SnApplet *sn;
+  SnHost *host;
 
   G_OBJECT_CLASS (sn_applet_parent_class)->constructed (object);
   sn = SN_APPLET (object);
 
-  sn->host_v0 = sn_host_v0_new ();
+  host = sn_host_v0_new ();
+  sn->hosts = g_slist_prepend (sn->hosts, host);
+
+  g_signal_connect (host, "item-added", G_CALLBACK (item_added_cb), sn);
+  g_signal_connect (host, "item-removed", G_CALLBACK (item_removed_cb), sn);
 
   gtk_widget_show (GTK_WIDGET (object));
 }
@@ -51,7 +77,13 @@ sn_applet_dispose (GObject *object)
 
   sn = SN_APPLET (object);
 
-  g_clear_object (&sn->host_v0);
+  if (sn->hosts != NULL)
+    {
+      g_slist_free_full (sn->hosts, g_object_unref);
+      sn->hosts = NULL;
+    }
+
+  g_clear_pointer (&sn->items, g_slist_free);
 
   G_OBJECT_CLASS (sn_applet_parent_class)->dispose (object);
 }

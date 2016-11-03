@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include "sn-host-v0.h"
+#include "sn-item-v0.h"
 #include "sn-watcher-v0-gen.h"
 
 #define SN_HOST_BUS_NAME "org.kde.StatusNotifierHost"
@@ -36,7 +37,16 @@ struct _SnHostV0
 
   guint                watcher_id;
   SnWatcherV0Gen      *watcher;
+
+  GSList              *items;
 };
+
+static void sn_host_v0_gen_init (SnHostV0GenIface *iface);
+static void sn_host_init        (SnHostInterface  *iface);
+
+G_DEFINE_TYPE_WITH_CODE (SnHostV0, sn_host_v0, SN_TYPE_HOST_V0_GEN_SKELETON,
+                         G_IMPLEMENT_INTERFACE (SN_TYPE_HOST_V0_GEN, sn_host_v0_gen_init)
+                         G_IMPLEMENT_INTERFACE (SN_TYPE_HOST, sn_host_init))
 
 static void
 sn_host_v0_gen_init (SnHostV0GenIface *iface)
@@ -47,10 +57,6 @@ static void
 sn_host_init (SnHostInterface *iface)
 {
 }
-
-G_DEFINE_TYPE_WITH_CODE (SnHostV0, sn_host_v0, SN_TYPE_HOST_V0_GEN_SKELETON,
-                         G_IMPLEMENT_INTERFACE (SN_TYPE_HOST_V0_GEN, sn_host_v0_gen_init)
-                         G_IMPLEMENT_INTERFACE (SN_TYPE_HOST, sn_host_init))
 
 static void
 get_bus_name_and_object_path (const gchar  *service,
@@ -82,22 +88,34 @@ get_bus_name_and_object_path (const gchar  *service,
 }
 
 static void
-item_registered_cb (SnWatcherV0Gen *watcher,
-                    const gchar    *service,
-                    SnHostV0       *v0)
+add_registered_item (SnHostV0    *v0,
+                     const gchar *service)
 {
   gchar *bus_name;
   gchar *object_path;
+  SnItem *item;
 
   bus_name = NULL;
   object_path = NULL;
 
   get_bus_name_and_object_path (service, &bus_name, &object_path);
 
-  g_debug ("item: bus name - %s, object path - %s", bus_name, object_path);
+  item = sn_item_v0_new (bus_name, object_path);
+  g_object_ref_sink (item);
+
+  v0->items = g_slist_prepend (v0->items, item);
+  sn_host_emit_item_added (SN_HOST (v0), item);
 
   g_free (bus_name);
   g_free (object_path);
+}
+
+static void
+item_registered_cb (SnWatcherV0Gen *watcher,
+                    const gchar    *service,
+                    SnHostV0       *v0)
+{
+  add_registered_item (v0, service);
 }
 
 static void
@@ -105,6 +123,39 @@ item_unregistered_cb (SnWatcherV0Gen *watcher,
                       const gchar    *service,
                       SnHostV0       *v0)
 {
+  GSList *l;
+
+  for (l = v0->items; l != NULL; l = g_slist_next (l))
+    {
+      SnItem *item;
+      gboolean found;
+      gchar *bus_name;
+      gchar *object_path;
+
+      item = SN_ITEM (l->data);
+
+      found = FALSE;
+      bus_name = NULL;
+      object_path = NULL;
+
+      get_bus_name_and_object_path (service, &bus_name, &object_path);
+
+      if (g_strcmp0 (sn_item_get_bus_name (item), bus_name) == 0 &&
+          g_strcmp0 (sn_item_get_object_path (item), object_path) == 0)
+        {
+          v0->items = g_slist_remove (v0->items, item);
+          sn_host_emit_item_removed (SN_HOST (v0), item);
+          g_object_unref (item);
+
+          found = TRUE;
+        }
+
+      g_free (bus_name);
+      g_free (object_path);
+
+      if (found)
+        break;
+    }
 }
 
 static void
@@ -139,20 +190,7 @@ register_host_cb (GObject      *source_object,
   items = sn_watcher_v0_gen_dup_registered_items (v0->watcher);
 
   for (i = 0; items[i] != NULL; i++)
-    {
-      gchar *bus_name;
-      gchar *object_path;
-
-      bus_name = NULL;
-      object_path = NULL;
-
-      get_bus_name_and_object_path (items[i], &bus_name, &object_path);
-
-      g_debug ("item: bus name - %s, object path - %s", bus_name, object_path);
-
-      g_free (bus_name);
-      g_free (object_path);
-    }
+    add_registered_item (v0, items[i]);
 
   g_strfreev (items);
 }
@@ -194,6 +232,13 @@ name_appeared_cb (GDBusConnection *connection,
 }
 
 static void
+emit_item_removed_signal (gpointer data,
+                          gpointer user_data)
+{
+  sn_host_emit_item_removed (SN_HOST (user_data), SN_ITEM (data));
+}
+
+static void
 name_vanished_cb (GDBusConnection *connection,
                   const gchar     *name,
                   gpointer         user_data)
@@ -203,6 +248,13 @@ name_vanished_cb (GDBusConnection *connection,
   v0 = SN_HOST_V0 (user_data);
 
   g_clear_object (&v0->watcher);
+
+  if (v0->items)
+    {
+      g_slist_foreach (v0->items, emit_item_removed_signal, v0);
+      g_slist_free_full (v0->items, g_object_unref);
+      v0->items = NULL;
+    }
 }
 
 static void
@@ -255,6 +307,13 @@ sn_host_v0_dispose (GObject *object)
     }
 
   g_clear_object (&v0->watcher);
+
+  if (v0->items)
+    {
+      g_slist_foreach (v0->items, emit_item_removed_signal, v0);
+      g_slist_free_full (v0->items, g_object_unref);
+      v0->items = NULL;
+    }
 
   G_OBJECT_CLASS (sn_host_v0_parent_class)->dispose (object);
 }

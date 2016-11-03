@@ -25,6 +25,9 @@ G_BEGIN_DECLS
 #define SN_TYPE_ITEM_V0 sn_item_v0_get_type ()
 G_DECLARE_FINAL_TYPE (SnItemV0, sn_item_v0, SN, ITEM_V0, SnItem)
 
+SnItem *sn_item_v0_new (const gchar *bus_name,
+                        const gchar *object_path);
+
 G_END_DECLS
 
 #endif

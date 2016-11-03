@@ -18,10 +18,43 @@
 #include "config.h"
 
 #include "sn-host.h"
+#include "sn-item.h"
+
+enum
+{
+  SIGNAL_ITEM_ADDED,
+  SIGNAL_ITEM_REMOVED,
+
+  LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_INTERFACE (SnHost, sn_host, G_TYPE_OBJECT)
 
 static void
 sn_host_default_init (SnHostInterface *iface)
 {
+  signals[SIGNAL_ITEM_ADDED] =
+    g_signal_new ("item-added", G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 1, SN_TYPE_ITEM);
+
+  signals[SIGNAL_ITEM_REMOVED] =
+    g_signal_new ("item-removed", G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+                  G_TYPE_NONE, 1, SN_TYPE_ITEM);
+}
+
+void
+sn_host_emit_item_added (SnHost *host,
+                         SnItem *item)
+{
+  g_signal_emit (host, signals[SIGNAL_ITEM_ADDED], 0, item);
+}
+
+void sn_host_emit_item_removed (SnHost *host,
+                                SnItem *item)
+{
+  g_signal_emit (host, signals[SIGNAL_ITEM_REMOVED], 0, item);
 }

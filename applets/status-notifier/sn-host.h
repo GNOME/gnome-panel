@@ -18,7 +18,7 @@
 #ifndef SN_HOST_H
 #define SN_HOST_H
 
-#include <glib-object.h>
+#include "sn-item.h"
 
 G_BEGIN_DECLS
 
@@ -29,6 +29,12 @@ struct _SnHostInterface
 {
   GTypeInterface parent;
 };
+
+void sn_host_emit_item_added   (SnHost *host,
+                                SnItem *item);
+
+void sn_host_emit_item_removed (SnHost *host,
+                                SnItem *item);
 
 G_END_DECLS
 

@@ -30,6 +30,9 @@ struct _SnItemClass
   GtkButtonClass parent_class;
 };
 
+const gchar *sn_item_get_bus_name    (SnItem *item);
+const gchar *sn_item_get_object_path (SnItem *item);
+
 G_END_DECLS
 
 #endif
