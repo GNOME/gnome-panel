@@ -25,6 +25,8 @@ status_notifier_la_SOURCES = \
 	sn-host.h \
 	sn-host-v0.c \
 	sn-host-v0.h \
+	sn-image-menu-item.c \
+	sn-image-menu-item.h \
 	sn-item.c \
 	sn-item.h \
 	sn-item-v0.c \
