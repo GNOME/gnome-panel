@@ -33,12 +33,39 @@ typedef enum
   SN_ITEM_CATEGORY_HARDWARE
 } SnItemCategory;
 
+typedef enum
+{
+  SN_ITEM_ORIENTATION_HORIZONTAL,
+  SN_ITEM_ORIENTATION_VERTICAL
+} SnItemOrientation;
+
 struct _SnItemClass
 {
   GtkButtonClass parent_class;
 
-  const gchar * (* get_id)       (SnItem *item);
-  const gchar * (* get_category) (SnItem *item);
+  void          (* ready)              (SnItem            *item);
+
+  const gchar * (* get_id)             (SnItem            *item);
+
+  const gchar * (* get_category)       (SnItem            *item);
+
+  const gchar * (* get_menu)           (SnItem            *item);
+
+  void          (* context_menu)       (SnItem            *item,
+                                        gint               x,
+                                        gint               y);
+
+  void          (* activate)           (SnItem            *item,
+                                        gint               x,
+                                        gint               y);
+
+  void          (* secondary_activate) (SnItem            *item,
+                                        gint               x,
+                                        gint               y);
+
+  void          (* scroll)             (SnItem            *item,
+                                        gint               delta,
+                                        SnItemOrientation  orientation);
 };
 
 const gchar    *sn_item_get_id          (SnItem *item);

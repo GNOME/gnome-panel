@@ -84,6 +84,10 @@ item_added_cb (SnHost   *host,
 
   sn->items = g_slist_sort (sn->items, compare_items);
   gtk_container_foreach (GTK_CONTAINER (sn->box), reorder_items, sn);
+
+  g_object_bind_property (sn->box, "orientation",
+                          item, "orientation",
+                          G_BINDING_DEFAULT);
 }
 
 static void

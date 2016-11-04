@@ -34,6 +34,8 @@ struct _SnItemV0
 {
   SnItem         parent;
 
+  GtkWidget     *image;
+
   GCancellable  *cancellable;
   SnItemV0Gen   *proxy;
 
@@ -64,6 +66,23 @@ static void
 update (SnItemV0 *v0)
 {
   gboolean visible;
+
+  if (v0->icon_name != NULL)
+    {
+      GtkIconTheme *icon_theme;
+      GtkImage *image;
+
+      icon_theme = gtk_icon_theme_get_default ();
+      image = GTK_IMAGE (v0->image);
+
+      gtk_icon_theme_rescan_if_needed (icon_theme);
+      gtk_image_set_from_icon_name (image, v0->icon_name, GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (image, 16);
+    }
+  else if (v0->icon_pixmap != NULL)
+    {
+      g_debug ("status notifier item does not have icon name");
+    }
 
   visible = g_strcmp0 (v0->status, "Passive") != 0;
   gtk_widget_set_visible (GTK_WIDGET (v0), visible);
@@ -481,6 +500,15 @@ new_icon_theme_path_cb (SnItemV0 *v0,
   v0->icon_theme_path = g_variant_dup_string (variant, NULL);
   g_variant_unref (variant);
 
+  if (v0->icon_theme_path != NULL)
+    {
+      GtkIconTheme *icon_theme;
+
+      icon_theme = gtk_icon_theme_get_default ();
+
+      gtk_icon_theme_append_search_path (icon_theme, v0->icon_theme_path);
+    }
+
   queue_update (v0);
 }
 
@@ -589,7 +617,7 @@ get_all_cb (GObject      *source_object,
       else if (g_strcmp0 (key, "ItemIsMenu") == 0)
         v0->item_is_menu = g_variant_get_boolean (value);
       else
-        g_assert_not_reached ();
+        g_debug ("property '%s' not handled!", key);
     }
 
   g_variant_iter_free (iter);
@@ -609,6 +637,15 @@ get_all_cb (GObject      *source_object,
                  bus_name, object_path);
 
       return;
+    }
+
+  if (v0->icon_theme_path != NULL)
+    {
+      GtkIconTheme *icon_theme;
+
+      icon_theme = gtk_icon_theme_get_default ();
+
+      gtk_icon_theme_append_search_path (icon_theme, v0->icon_theme_path);
     }
 
   g_signal_connect (v0->proxy, "g-properties-changed",
@@ -745,13 +782,137 @@ sn_item_v0_get_category (SnItem *item)
   return v0->category;
 }
 
+static const gchar *
+sn_item_v0_get_menu (SnItem *item)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (item);
+
+  return v0->menu;
+}
+
+static void
+context_menu_cb (GObject      *source_object,
+                 GAsyncResult *res,
+                 gpointer      user_data)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (user_data);
+
+  sn_item_v0_gen_call_context_menu_finish (v0->proxy, res, NULL);
+}
+
+static void
+sn_item_v0_context_menu (SnItem *item,
+                         gint    x,
+                         gint    y)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (item);
+
+  sn_item_v0_gen_call_context_menu (v0->proxy, x, y, NULL,
+                                    context_menu_cb, v0);
+}
+
+static void
+activate_cb (GObject      *source_object,
+             GAsyncResult *res,
+             gpointer      user_data)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (user_data);
+
+  sn_item_v0_gen_call_activate_finish (v0->proxy, res, NULL);
+}
+
+static void
+sn_item_v0_activate (SnItem *item,
+                     gint    x,
+                     gint    y)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (item);
+
+  sn_item_v0_gen_call_activate (v0->proxy, x, y, NULL,
+                                activate_cb, v0);
+}
+
+static void
+secondary_activate_cb (GObject      *source_object,
+                       GAsyncResult *res,
+                       gpointer      user_data)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (user_data);
+
+  sn_item_v0_gen_call_secondary_activate_finish (v0->proxy, res, NULL);
+}
+
+static void
+sn_item_v0_secondary_activate (SnItem *item,
+                               gint    x,
+                               gint    y)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (item);
+
+  sn_item_v0_gen_call_secondary_activate (v0->proxy, x, y, NULL,
+                                          secondary_activate_cb, v0);
+}
+
+static void
+scroll_cb (GObject      *source_object,
+           GAsyncResult *res,
+           gpointer      user_data)
+{
+  SnItemV0 *v0;
+
+  v0 = SN_ITEM_V0 (user_data);
+
+  sn_item_v0_gen_call_scroll_finish (v0->proxy, res, NULL);
+}
+
+static void
+sn_item_v0_scroll (SnItem            *item,
+                   gint               delta,
+                   SnItemOrientation  orientation)
+{
+  SnItemV0 *v0;
+  const gchar *tmp;
+
+  v0 = SN_ITEM_V0 (item);
+
+  switch (orientation)
+    {
+      case SN_ITEM_ORIENTATION_VERTICAL:
+        tmp = "Vertical";
+        break;
+
+      case SN_ITEM_ORIENTATION_HORIZONTAL:
+      default:
+        tmp = "Horizontal";
+        break;
+    }
+
+  sn_item_v0_gen_call_scroll (v0->proxy, delta, tmp, NULL, scroll_cb, v0);
+}
+
 static void
 sn_item_v0_class_init (SnItemV0Class *v0_class)
 {
   GObjectClass *object_class;
+  GtkWidgetClass *widget_class;
   SnItemClass *item_class;
 
   object_class = G_OBJECT_CLASS (v0_class);
+  widget_class = GTK_WIDGET_CLASS (v0_class);
   item_class = SN_ITEM_CLASS (v0_class);
 
   object_class->constructed = sn_item_v0_constructed;
@@ -760,11 +921,22 @@ sn_item_v0_class_init (SnItemV0Class *v0_class)
 
   item_class->get_id = sn_item_v0_get_id;
   item_class->get_category = sn_item_v0_get_category;
+  item_class->get_menu = sn_item_v0_get_menu;
+
+  item_class->context_menu = sn_item_v0_context_menu;
+  item_class->activate = sn_item_v0_activate;
+  item_class->secondary_activate = sn_item_v0_secondary_activate;
+  item_class->scroll = sn_item_v0_scroll;
+
+  gtk_widget_class_set_css_name (widget_class, "sn-item");
 }
 
 static void
 sn_item_v0_init (SnItemV0 *v0)
 {
+  v0->image = gtk_image_new ();
+  gtk_container_add (GTK_CONTAINER (v0), v0->image);
+  gtk_widget_show (v0->image);
 }
 
 SnItem *

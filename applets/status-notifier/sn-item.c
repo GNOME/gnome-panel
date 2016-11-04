@@ -17,12 +17,17 @@
 
 #include "config.h"
 
+#include "sn-dbus-menu.h"
 #include "sn-item.h"
 
 typedef struct
 {
-  gchar *bus_name;
-  gchar *object_path;
+  gchar          *bus_name;
+  gchar          *object_path;
+
+  GtkOrientation  orientation;
+
+  GtkMenu        *menu;
 } SnItemPrivate;
 
 enum
@@ -31,6 +36,8 @@ enum
 
   PROP_BUS_NAME,
   PROP_OBJECT_PATH,
+
+  PROP_ORIENTATION,
 
   LAST_PROP
 };
@@ -47,6 +54,20 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (SnItem, sn_item, GTK_TYPE_BUTTON)
+
+static void
+sn_item_dispose (GObject *object)
+{
+  SnItem *item;
+  SnItemPrivate *priv;
+
+  item = SN_ITEM (object);
+  priv = sn_item_get_instance_private (item);
+
+  g_clear_object (&priv->menu);
+
+  G_OBJECT_CLASS (sn_item_parent_class)->dispose (object);
+}
 
 static void
 sn_item_finalize (GObject *object)
@@ -85,6 +106,10 @@ sn_item_get_property (GObject    *object,
         g_value_set_string (value, priv->object_path);
         break;
 
+      case PROP_ORIENTATION:
+        g_value_set_enum (value, priv->orientation);
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -113,10 +138,156 @@ sn_item_set_property (GObject      *object,
         priv->object_path = g_value_dup_string (value);
         break;
 
+      case PROP_ORIENTATION:
+        priv->orientation = g_value_get_enum (value);
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
+}
+
+static gboolean
+sn_item_button_press_event (GtkWidget      *widget,
+                            GdkEventButton *event)
+{
+  SnItem *item;
+  SnItemPrivate *priv;
+
+  if (event->button < 1 || event->button > 3)
+    return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
+
+  item = SN_ITEM (widget);
+  priv = sn_item_get_instance_private (item);
+
+  if (priv->menu != NULL && event->button == 1)
+    {
+      gtk_menu_popup_at_widget (priv->menu, widget,
+                                GDK_GRAVITY_SOUTH_WEST,
+                                GDK_GRAVITY_NORTH_WEST,
+                                (GdkEvent *) event);
+    }
+  else
+    {
+      GdkWindow *window;
+      GtkWidget *toplevel;
+      gint x;
+      gint y;
+      gint width;
+      gint height;
+
+      window = gtk_widget_get_window (widget);
+      toplevel = gtk_widget_get_toplevel (widget);
+
+      gdk_window_get_geometry (window, &x, &y, &width, &height);
+      gtk_widget_translate_coordinates (widget, toplevel, x, y, &x, &y);
+
+      if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+        y += height;
+      else
+        x += width;
+
+      if (event->button == 1)
+        SN_ITEM_GET_CLASS (item)->activate (item, x, y);
+      else if (event->button == 2)
+        SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
+      else if (event->button == 3)
+        SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
+      else
+        g_assert_not_reached ();
+    }
+
+  return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
+}
+
+static gboolean
+sn_item_scroll_event (GtkWidget      *widget,
+                      GdkEventScroll *event)
+{
+  SnItem *item;
+  GdkScrollDirection direction;
+  SnItemOrientation orientation;
+  gdouble dx;
+  gdouble dy;
+  gint delta;
+
+  item = SN_ITEM (widget);
+
+  if (!gdk_event_get_scroll_direction ((GdkEvent *) event, &direction))
+    {
+      g_assert_not_reached ();
+    }
+  else
+    {
+      switch (direction)
+        {
+          case GDK_SCROLL_UP:
+          case GDK_SCROLL_DOWN:
+            orientation = SN_ITEM_ORIENTATION_VERTICAL;
+            break;
+
+          case GDK_SCROLL_LEFT:
+          case GDK_SCROLL_RIGHT:
+            orientation = SN_ITEM_ORIENTATION_HORIZONTAL;
+            break;
+
+          case GDK_SCROLL_SMOOTH:
+          default:
+            g_assert_not_reached ();
+            break;
+        }
+    }
+
+  if (!gdk_event_get_scroll_deltas ((GdkEvent *) event, &dx, &dy))
+    {
+      switch (direction)
+        {
+          case GDK_SCROLL_UP:
+          case GDK_SCROLL_LEFT:
+            delta = 1;
+            break;
+
+          case GDK_SCROLL_DOWN:
+          case GDK_SCROLL_RIGHT:
+            delta = -1;
+            break;
+
+          case GDK_SCROLL_SMOOTH:
+          default:
+            g_assert_not_reached ();
+            break;
+        }
+    }
+  else
+    {
+      if (dy != 0)
+        delta = (gint) dy;
+      else
+        delta = (gint) dx;
+    }
+
+  SN_ITEM_GET_CLASS (item)->scroll (item, delta, orientation);
+
+  return GDK_EVENT_STOP;
+}
+
+static void
+sn_item_ready (SnItem *item)
+{
+  const gchar *menu;
+  SnItemPrivate *priv;
+
+  menu = SN_ITEM_GET_CLASS (item)->get_menu (item);
+  if (menu == NULL)
+    return;
+
+  if (menu == NULL || *menu == '\0' || g_strcmp0 (menu, "/") == 0)
+    return;
+
+  priv = sn_item_get_instance_private (item);
+  priv->menu = sn_dbus_menu_new (priv->bus_name, menu);
+  g_object_ref_sink (priv->menu);
 }
 
 static void
@@ -132,6 +303,11 @@ install_properties (GObjectClass *object_class)
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
                          G_PARAM_STATIC_STRINGS);
 
+  properties[PROP_ORIENTATION] =
+    g_param_spec_enum ("orientation", "orientation", "orientation",
+                       GTK_TYPE_ORIENTATION, GTK_ORIENTATION_HORIZONTAL,
+                       G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
+
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
 
@@ -139,8 +315,8 @@ static void
 install_signals (SnItemClass *item_class)
 {
   signals[SIGNAL_READY] =
-    g_signal_new ("ready", G_TYPE_FROM_CLASS (item_class),
-                  G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
+    g_signal_new ("ready", G_TYPE_FROM_CLASS (item_class), G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (SnItemClass, ready), NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
 
@@ -148,12 +324,20 @@ static void
 sn_item_class_init (SnItemClass *item_class)
 {
   GObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = G_OBJECT_CLASS (item_class);
+  widget_class = GTK_WIDGET_CLASS (item_class);
 
+  object_class->dispose = sn_item_dispose;
   object_class->finalize = sn_item_finalize;
   object_class->get_property = sn_item_get_property;
   object_class->set_property = sn_item_set_property;
+
+  widget_class->button_press_event = sn_item_button_press_event;
+  widget_class->scroll_event = sn_item_scroll_event;
+
+  item_class->ready = sn_item_ready;
 
   install_properties (object_class);
   install_signals (item_class);
@@ -162,6 +346,7 @@ sn_item_class_init (SnItemClass *item_class)
 static void
 sn_item_init (SnItem *item)
 {
+  gtk_widget_add_events (GTK_WIDGET (item), GDK_SCROLL_MASK);
 }
 
 const gchar *
