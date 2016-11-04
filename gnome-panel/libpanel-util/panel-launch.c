@@ -228,9 +228,13 @@ panel_launch_desktop_file (const char  *desktop_file,
  * Set the DISPLAY variable, to be use by g_spawn_async.
  */
 static void
-set_environment (gpointer display)
+set_environment (gpointer user_data)
 {
-	g_setenv ("DISPLAY", display, TRUE);
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+
+	g_setenv ("DISPLAY", gdk_display_get_name (display), TRUE);
 }
 
 gboolean
@@ -241,7 +245,6 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 {
 	char     *argv[2] = { (char *) fallback_exec, NULL };
 	GError   *local_error;
-	char     *display;
 	GPid      pid;
 
 	g_return_val_if_fail (desktop_file != NULL, FALSE);
@@ -259,21 +262,17 @@ panel_launch_desktop_file_with_fallback (const char  *desktop_file,
 		local_error = NULL;
 	}
 
-	display = gdk_screen_make_display_name (screen);
-
 	g_spawn_async (NULL, /* working directory */
 		       argv,
 		       NULL, /* envp */
 		       G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
 		       set_environment,
-		       display,
+		       NULL,
 		       &pid,
 		       &local_error);
 	if (local_error == NULL) {
 		g_child_watch_add (pid, dummy_child_watch, NULL);
 	}
-
-	g_free (display);
 
 	return _panel_launch_handle_error (fallback_exec,
 					   screen, local_error, error);
