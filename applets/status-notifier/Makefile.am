@@ -21,6 +21,8 @@ status_notifier_la_CFLAGS = \
 status_notifier_la_SOURCES = \
 	sn-applet.c \
 	sn-applet.h \
+	sn-dbus-menu-item.c \
+	sn-dbus-menu-item.h \
 	sn-host.c \
 	sn-host.h \
 	sn-host-v0.c \
