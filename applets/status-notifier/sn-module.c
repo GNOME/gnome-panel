@@ -45,7 +45,8 @@ sn_get_applet_info (const gchar *applet)
   GpAppletInfo *info;
 
   description = _("Display all Status Notifier Items");
-  info = gp_applet_info_new (_("Status Notifier Host"), description, NULL);
+  info = gp_applet_info_new (_("Status Notifier Host"), description,
+                             "gnome-panel-notification-area");
 
   return info;
 }
