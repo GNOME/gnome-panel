@@ -216,6 +216,7 @@ static void
 update (SnItemV0 *v0)
 {
   GtkImage *image;
+  SnTooltip *tip;
   gboolean visible;
 
   image = GTK_IMAGE (v0->image);
@@ -241,6 +242,36 @@ update (SnItemV0 *v0)
   else
     {
       g_debug ("status notifier item does not have icon");
+    }
+
+  tip = v0->tooltip;
+
+  if (tip != NULL)
+    {
+      gchar *markup;
+
+      markup = NULL;
+
+      if ((tip->title != NULL && *tip->title != '\0') &&
+          (tip->text != NULL && *tip->text != '\0'))
+        {
+          markup = g_strdup_printf ("%s\n%s", tip->title, tip->text);
+        }
+      else if (tip->title != NULL && *tip->title != '\0')
+        {
+          markup = g_strdup (tip->title);
+        }
+      else if (tip->text != NULL && *tip->text != '\0')
+        {
+          markup = g_strdup (tip->title);
+        }
+
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), markup);
+      g_free (markup);
+    }
+  else
+    {
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), NULL);
     }
 
   visible = g_strcmp0 (v0->status, "Passive") != 0;
