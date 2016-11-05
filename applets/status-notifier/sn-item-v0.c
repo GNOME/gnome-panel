@@ -137,6 +137,12 @@ icon_pixmap_new (GVariant *variant)
       GBytes *bytes;
       gint rowstride;
 
+      if (width == 0 || height == 0)
+        {
+          g_variant_unref (value);
+          continue;
+        }
+
       bytes = g_variant_get_data_as_bytes (value);
       rowstride = g_bytes_get_size (bytes) / height;
 
