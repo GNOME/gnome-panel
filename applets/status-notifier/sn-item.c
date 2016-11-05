@@ -154,48 +154,54 @@ sn_item_button_press_event (GtkWidget      *widget,
 {
   SnItem *item;
   SnItemPrivate *priv;
+  GdkWindow *window;
+  GtkWidget *toplevel;
+  gint x;
+  gint y;
+  gint width;
+  gint height;
 
   if (event->button < 1 || event->button > 3)
     return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
 
   item = SN_ITEM (widget);
   priv = sn_item_get_instance_private (item);
+  window = gtk_widget_get_window (widget);
+  toplevel = gtk_widget_get_toplevel (widget);
 
-  if (priv->menu != NULL && event->button == 1)
+  gdk_window_get_geometry (window, &x, &y, &width, &height);
+  gtk_widget_translate_coordinates (widget, toplevel, x, y, &x, &y);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    y += height;
+  else
+    x += width;
+
+  if (event->button == 1)
     {
-      gtk_menu_popup_at_widget (priv->menu, widget,
-                                GDK_GRAVITY_SOUTH_WEST,
-                                GDK_GRAVITY_NORTH_WEST,
-                                (GdkEvent *) event);
+      SN_ITEM_GET_CLASS (item)->activate (item, x, y);
+    }
+  else if (event->button == 2)
+    {
+      SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
+    }
+  else if (event->button == 3)
+    {
+      if (priv->menu != NULL)
+        {
+          gtk_menu_popup_at_widget (priv->menu, widget,
+                                    GDK_GRAVITY_SOUTH_WEST,
+                                    GDK_GRAVITY_NORTH_WEST,
+                                    (GdkEvent *) event);
+        }
+      else
+        {
+          SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
+        }
     }
   else
     {
-      GdkWindow *window;
-      GtkWidget *toplevel;
-      gint x;
-      gint y;
-      gint width;
-      gint height;
-
-      window = gtk_widget_get_window (widget);
-      toplevel = gtk_widget_get_toplevel (widget);
-
-      gdk_window_get_geometry (window, &x, &y, &width, &height);
-      gtk_widget_translate_coordinates (widget, toplevel, x, y, &x, &y);
-
-      if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-        y += height;
-      else
-        x += width;
-
-      if (event->button == 1)
-        SN_ITEM_GET_CLASS (item)->activate (item, x, y);
-      else if (event->button == 2)
-        SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
-      else if (event->button == 3)
-        SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
-      else
-        g_assert_not_reached ();
+      g_assert_not_reached ();
     }
 
   return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
