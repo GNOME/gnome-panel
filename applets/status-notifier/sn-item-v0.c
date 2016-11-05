@@ -24,10 +24,17 @@
 
 typedef struct
 {
-  gchar      *icon_name;
-  GdkPixbuf **icon_pixmap;
-  gchar      *title;
-  gchar      *text;
+  cairo_surface_t *surface;
+  gint             width;
+  gint             height;
+} SnIconPixmap;
+
+typedef struct
+{
+  gchar         *icon_name;
+  SnIconPixmap **icon_pixmap;
+  gchar         *title;
+  gchar         *text;
 } SnTooltip;
 
 struct _SnItemV0
@@ -46,11 +53,11 @@ struct _SnItemV0
   gchar         *title;
   gint32         window_id;
   gchar         *icon_name;
-  GdkPixbuf    **icon_pixmap;
+  SnIconPixmap **icon_pixmap;
   gchar         *overlay_icon_name;
-  GdkPixbuf    **overlay_icon_pixmap;
+  SnIconPixmap **overlay_icon_pixmap;
   gchar         *attention_icon_name;
-  GdkPixbuf    **attention_icon_pixmap;
+  SnIconPixmap **attention_icon_pixmap;
   gchar         *attention_movie_name;
   SnTooltip     *tooltip;
   gchar         *icon_theme_path;
@@ -86,21 +93,15 @@ update (SnItemV0 *v0)
 
       for (i = 0; v0->icon_pixmap[i] != NULL; i++)
         {
-          gint width;
-          gint height;
-
-          width = gdk_pixbuf_get_width (v0->icon_pixmap[i]);
-          height = gdk_pixbuf_get_height (v0->icon_pixmap[i]);
-
-          g_debug ("v0->icon_pixmap[%d]: width - %d, height - %d",
-                   i, width, height);
+          g_debug ("v0->icon_pixmap[%d]: width - %d, height - %d", i,
+                   v0->icon_pixmap[i]->width, v0->icon_pixmap[i]->height);
         }
 
-      gtk_image_set_from_pixbuf (image, v0->icon_pixmap[0]);
+      gtk_image_set_from_surface (image, v0->icon_pixmap[0]->surface);
     }
   else
     {
-      g_debug ("status notifier item does not have icon name");
+      g_debug ("status notifier item does not have icon");
     }
 
   visible = g_strcmp0 (v0->status, "Passive") != 0;
@@ -193,7 +194,7 @@ icon_surface_new (GVariant *variant,
   return surface;
 }
 
-static GdkPixbuf **
+static SnIconPixmap **
 icon_pixmap_new (GVariant *variant)
 {
   GPtrArray *array;
@@ -221,22 +222,24 @@ icon_pixmap_new (GVariant *variant)
 
       if (surface != NULL)
         {
-          GdkPixbuf *pixbuf;
+          SnIconPixmap *pixmap;
 
-          pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
-          cairo_surface_destroy (surface);
+          pixmap = g_new0 (SnIconPixmap, 1);
 
-          if (pixbuf)
-            g_ptr_array_add (array, pixbuf);
+          pixmap->surface = surface;
+          pixmap->width = width;
+          pixmap->height = height;
+
+          g_ptr_array_add (array, pixmap);
         }
     }
 
   g_ptr_array_add (array, NULL);
-  return (GdkPixbuf **) g_ptr_array_free (array, FALSE);
+  return (SnIconPixmap **) g_ptr_array_free (array, FALSE);
 }
 
 static void
-icon_pixmap_free (GdkPixbuf **data)
+icon_pixmap_free (SnIconPixmap **data)
 {
   gint i;
 
@@ -244,7 +247,10 @@ icon_pixmap_free (GdkPixbuf **data)
     return;
 
   for (i = 0; data[i] != NULL; i++)
-    g_object_unref (data[i]);
+    {
+      cairo_surface_destroy (data[i]->surface);
+      g_free (data[i]);
+    }
 
   g_free (data);
 }
