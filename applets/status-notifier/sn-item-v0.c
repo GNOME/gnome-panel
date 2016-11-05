@@ -130,6 +130,69 @@ queue_update (SnItemV0 *v0)
   g_source_set_name_by_id (v0->update_id, "[status-notifier] update_cb");
 }
 
+static cairo_surface_t *
+surface_from_variant (GVariant *variant,
+                      gint      width,
+                      gint      height)
+{
+  cairo_format_t format;
+  gint stride;
+  guint32 *data;
+
+  format = CAIRO_FORMAT_ARGB32;
+  stride = cairo_format_stride_for_width (format, width);
+  data = (guint32 *) g_variant_get_data (variant);
+
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+  {
+    gint i;
+
+    for (i = 0; i < width * height; i++)
+      data[i] = GUINT32_FROM_BE (data[i]);
+  }
+#endif
+
+  return cairo_image_surface_create_for_data ((guchar *) data, format,
+                                              width, height, stride);
+}
+
+static cairo_surface_t *
+icon_surface_new (GVariant *variant,
+                  gint      width,
+                  gint      height)
+{
+  cairo_surface_t *surface;
+  cairo_surface_t *tmp;
+  cairo_t *cr;
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  if (cairo_surface_status (surface) != CAIRO_STATUS_SUCCESS)
+    return NULL;
+
+  tmp = surface_from_variant (variant, width, height);
+  if (cairo_surface_status (tmp) != CAIRO_STATUS_SUCCESS)
+    {
+      cairo_surface_destroy (surface);
+      return NULL;
+    }
+
+  cr = cairo_create (surface);
+  if (cairo_status (cr) != CAIRO_STATUS_SUCCESS)
+    {
+      cairo_surface_destroy (surface);
+      cairo_surface_destroy (tmp);
+      return NULL;
+    }
+
+  cairo_set_source_surface (cr, tmp, 0, 0);
+  cairo_paint (cr);
+
+  cairo_surface_destroy (tmp);
+  cairo_destroy (cr);
+
+  return surface;
+}
+
 static GdkPixbuf **
 icon_pixmap_new (GVariant *variant)
 {
@@ -145,9 +208,7 @@ icon_pixmap_new (GVariant *variant)
   array = g_ptr_array_new ();
   while (g_variant_iter_next (&iter, "(ii@ay)", &width, &height, &value))
     {
-      GdkPixbuf *pixbuf;
-      GBytes *bytes;
-      gint rowstride;
+      cairo_surface_t *surface;
 
       if (width == 0 || height == 0)
         {
@@ -155,15 +216,19 @@ icon_pixmap_new (GVariant *variant)
           continue;
         }
 
-      bytes = g_variant_get_data_as_bytes (value);
-      rowstride = g_bytes_get_size (bytes) / height;
-
-      pixbuf = gdk_pixbuf_new_from_bytes (bytes, GDK_COLORSPACE_RGB, TRUE,
-                                          8, width, height, rowstride);
-
-      g_ptr_array_add (array, pixbuf);
-      g_bytes_unref (bytes);
+      surface = icon_surface_new (value, width, height);
       g_variant_unref (value);
+
+      if (surface != NULL)
+        {
+          GdkPixbuf *pixbuf;
+
+          pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
+          cairo_surface_destroy (surface);
+
+          if (pixbuf)
+            g_ptr_array_add (array, pixbuf);
+        }
     }
 
   g_ptr_array_add (array, NULL);
