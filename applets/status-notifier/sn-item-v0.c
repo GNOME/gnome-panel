@@ -635,6 +635,8 @@ get_all_cb (GObject      *source_object,
         v0->item_is_menu = g_variant_get_boolean (value);
       else
         g_debug ("property '%s' not handled!", key);
+
+      g_variant_unref (value);
     }
 
   g_variant_iter_free (iter);
