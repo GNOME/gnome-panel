@@ -114,26 +114,19 @@ queue_update (SnItemV0 *v0)
 static GdkPixbuf **
 icon_pixmap_new (GVariant *variant)
 {
+  GPtrArray *array;
   GVariantIter iter;
-  gsize n_pixbufs;
-  GdkPixbuf **pixbufs;
-  guint i;
   gint width;
   gint height;
   GVariant *value;
 
-  if (variant == NULL)
+  if (variant == NULL || g_variant_iter_init (&iter, variant) == 0)
     return NULL;
 
-  n_pixbufs = g_variant_iter_init (&iter, variant);
-  if (n_pixbufs == 0)
-    return NULL;
-
-  pixbufs = g_new0 (GdkPixbuf *, n_pixbufs + 1);
-  i = 0;
-
+  array = g_ptr_array_new ();
   while (g_variant_iter_next (&iter, "(ii@ay)", &width, &height, &value))
     {
+      GdkPixbuf *pixbuf;
       GBytes *bytes;
       gint rowstride;
 
@@ -146,17 +139,16 @@ icon_pixmap_new (GVariant *variant)
       bytes = g_variant_get_data_as_bytes (value);
       rowstride = g_bytes_get_size (bytes) / height;
 
-      pixbufs[i++] = gdk_pixbuf_new_from_bytes (bytes, GDK_COLORSPACE_RGB,
-                                                TRUE, 8, width, height,
-                                                rowstride);
+      pixbuf = gdk_pixbuf_new_from_bytes (bytes, GDK_COLORSPACE_RGB, TRUE,
+                                          8, width, height, rowstride);
 
+      g_ptr_array_add (array, pixbuf);
       g_bytes_unref (bytes);
       g_variant_unref (value);
     }
 
-  pixbufs[i] = NULL;
-
-  return pixbufs;
+  g_ptr_array_add (array, NULL);
+  return (GdkPixbuf **) g_ptr_array_free (array, FALSE);
 }
 
 static void
