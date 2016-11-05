@@ -154,6 +154,8 @@ sn_item_button_press_event (GtkWidget      *widget,
 {
   SnItem *item;
   SnItemPrivate *priv;
+  GdkDisplay *display;
+  GdkSeat *seat;
   GdkWindow *window;
   GtkWidget *toplevel;
   gint x;
@@ -166,6 +168,8 @@ sn_item_button_press_event (GtkWidget      *widget,
 
   item = SN_ITEM (widget);
   priv = sn_item_get_instance_private (item);
+  display = gdk_display_get_default ();
+  seat = gdk_display_get_default_seat (display);
   window = gtk_widget_get_window (widget);
   toplevel = gtk_widget_get_toplevel (widget);
 
@@ -179,10 +183,12 @@ sn_item_button_press_event (GtkWidget      *widget,
 
   if (event->button == 1)
     {
+      gdk_seat_ungrab (seat);
       SN_ITEM_GET_CLASS (item)->activate (item, x, y);
     }
   else if (event->button == 2)
     {
+      gdk_seat_ungrab (seat);
       SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
     }
   else if (event->button == 3)
@@ -196,6 +202,7 @@ sn_item_button_press_event (GtkWidget      *widget,
         }
       else
         {
+          gdk_seat_ungrab (seat);
           SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
         }
     }
