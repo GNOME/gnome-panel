@@ -175,6 +175,7 @@ get_layout_cb (GObject      *source_object,
       return;
     }
 
+  g_hash_table_remove_all (menu->items);
   layout_parse (menu, layout, GTK_MENU (menu));
   g_variant_unref (layout);
 }
@@ -185,6 +186,7 @@ update_layout (SnDBusMenu *menu,
 {
   gint depth;
 
+  parent = 0;
   depth = -1;
 
   sn_dbus_menu_gen_call_get_layout (menu->proxy, parent, depth,
@@ -260,7 +262,6 @@ map_cb (GtkWidget  *widget,
 
   if (need_update)
     {
-      g_hash_table_remove_all (menu->items);
       update_layout (menu, 0);
     }
 }
