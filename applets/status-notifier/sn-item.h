@@ -75,6 +75,8 @@ SnItemCategory  sn_item_get_category    (SnItem *item);
 const gchar    *sn_item_get_bus_name    (SnItem *item);
 const gchar    *sn_item_get_object_path (SnItem *item);
 
+GtkOrientation  sn_item_get_orientation (SnItem *item);
+
 void            sn_item_emit_ready      (SnItem *item);
 
 G_END_DECLS

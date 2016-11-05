@@ -401,6 +401,16 @@ sn_item_get_object_path (SnItem *item)
   return priv->object_path;
 }
 
+GtkOrientation
+sn_item_get_orientation (SnItem *item)
+{
+  SnItemPrivate *priv;
+
+  priv = sn_item_get_instance_private (item);
+
+  return priv->orientation;
+}
+
 void
 sn_item_emit_ready (SnItem *item)
 {

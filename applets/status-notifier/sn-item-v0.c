@@ -17,6 +17,9 @@
 
 #include "config.h"
 
+#include <math.h>
+
+#include "sn-item.h"
 #include "sn-item-v0.h"
 #include "sn-item-v0-gen.h"
 
@@ -69,6 +72,146 @@ struct _SnItemV0
 
 G_DEFINE_TYPE (SnItemV0, sn_item_v0, SN_TYPE_ITEM)
 
+static cairo_surface_t *
+scale_surface (SnIconPixmap   *pixmap,
+               GtkOrientation  orientation,
+               gint            size)
+{
+  gdouble ratio;
+  gdouble new_width;
+  gdouble new_height;
+  gdouble scale_x;
+  gdouble scale_y;
+  gint width;
+  gint height;
+  cairo_content_t content;
+  cairo_surface_t *scaled;
+  cairo_t *cr;
+
+  ratio = pixmap->width / (gdouble) pixmap->height;
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    {
+      new_height = (gdouble) size;
+      new_width = new_height * ratio;
+    }
+  else
+    {
+      new_width = (gdouble) size;
+      new_height = new_width * ratio;
+    }
+
+  scale_x = new_width / pixmap->width;
+  scale_y = new_height / pixmap->height;
+
+  width = ceil (new_width);
+  height = ceil (new_height);
+
+  content = CAIRO_CONTENT_COLOR_ALPHA;
+  scaled = cairo_surface_create_similar (pixmap->surface, content, width, height);
+  cr = cairo_create (scaled);
+
+  cairo_scale (cr, scale_x, scale_y);
+  cairo_set_source_surface (cr, pixmap->surface, 0, 0);
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+  return scaled;
+}
+
+static gint
+compare_size (gconstpointer a,
+              gconstpointer b,
+              gpointer      user_data)
+{
+  SnIconPixmap *p1;
+  SnIconPixmap *p2;
+  GtkOrientation orientation;
+
+  p1 = (SnIconPixmap *) a;
+  p2 = (SnIconPixmap *) b;
+  orientation = GPOINTER_TO_UINT (user_data);
+
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    return p1->height - p2->height;
+  else
+    return p1->width - p2->width;
+}
+
+static GList *
+get_pixmaps_sorted (SnItemV0       *v0,
+                    GtkOrientation  orientation,
+                    gint            size)
+{
+  GList *pixmaps;
+  guint i;
+
+  pixmaps = NULL;
+  for (i = 0; v0->icon_pixmap[i] != NULL; i++)
+    pixmaps = g_list_prepend (pixmaps, v0->icon_pixmap[i]);
+
+  return g_list_sort_with_data (pixmaps, compare_size,
+                                GUINT_TO_POINTER (orientation));
+}
+
+static cairo_surface_t *
+get_surface (SnItemV0       *v0,
+             GtkOrientation  orientation,
+             gint            size)
+{
+  GList *pixmaps;
+  cairo_surface_t *surface;
+  SnIconPixmap *best;
+  GList *l;
+
+  g_assert (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL);
+
+  pixmaps = get_pixmaps_sorted (v0, orientation, size);
+  surface = NULL;
+
+  for (l = pixmaps; l != NULL; l = l->next)
+    {
+      SnIconPixmap *pixmap;
+
+      pixmap = (SnIconPixmap *) l->data;
+
+      if (orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          if (pixmap->height == size)
+            {
+              surface = pixmap->surface;
+              break;
+            }
+          else if (pixmap->height > size)
+            {
+              best = pixmap;
+              break;
+            }
+        }
+      else
+        {
+          if (pixmap->width == size)
+            {
+              surface = pixmap->surface;
+              break;
+            }
+          else if (pixmap->width > size)
+            {
+              best = pixmap;
+              break;
+            }
+        }
+
+      best = pixmap;
+    }
+
+  g_list_free (pixmaps);
+
+  if (surface != NULL)
+    return cairo_surface_reference (surface);
+
+  return scale_surface (best, orientation, size);
+}
+
 static void
 update (SnItemV0 *v0)
 {
@@ -89,15 +232,11 @@ update (SnItemV0 *v0)
     }
   else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
     {
-      guint i;
+      cairo_surface_t *surface;
 
-      for (i = 0; v0->icon_pixmap[i] != NULL; i++)
-        {
-          g_debug ("v0->icon_pixmap[%d]: width - %d, height - %d", i,
-                   v0->icon_pixmap[i]->width, v0->icon_pixmap[i]->height);
-        }
-
-      gtk_image_set_from_surface (image, v0->icon_pixmap[0]->surface);
+      surface = get_surface (v0, sn_item_get_orientation (SN_ITEM (v0)), 16);
+      gtk_image_set_from_surface (image, surface);
+      cairo_surface_destroy (surface);
     }
   else
     {
