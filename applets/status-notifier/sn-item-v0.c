@@ -65,21 +65,40 @@ G_DEFINE_TYPE (SnItemV0, sn_item_v0, SN_TYPE_ITEM)
 static void
 update (SnItemV0 *v0)
 {
+  GtkImage *image;
   gboolean visible;
 
-  if (v0->icon_name != NULL)
+  image = GTK_IMAGE (v0->image);
+
+  if (v0->icon_name != NULL && *v0->icon_name != '\0')
     {
       GtkIconTheme *icon_theme;
-      GtkImage *image;
 
       icon_theme = gtk_icon_theme_get_default ();
-      image = GTK_IMAGE (v0->image);
 
       gtk_icon_theme_rescan_if_needed (icon_theme);
       gtk_image_set_from_icon_name (image, v0->icon_name, GTK_ICON_SIZE_MENU);
       gtk_image_set_pixel_size (image, 16);
     }
-  else if (v0->icon_pixmap != NULL)
+  else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
+    {
+      guint i;
+
+      for (i = 0; v0->icon_pixmap[i] != NULL; i++)
+        {
+          gint width;
+          gint height;
+
+          width = gdk_pixbuf_get_width (v0->icon_pixmap[i]);
+          height = gdk_pixbuf_get_height (v0->icon_pixmap[i]);
+
+          g_debug ("v0->icon_pixmap[%d]: width - %d, height - %d",
+                   i, width, height);
+        }
+
+      gtk_image_set_from_pixbuf (image, v0->icon_pixmap[0]);
+    }
+  else
     {
       g_debug ("status notifier item does not have icon name");
     }
