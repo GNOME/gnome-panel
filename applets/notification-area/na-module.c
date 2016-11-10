@@ -58,6 +58,15 @@ na_get_applet_type (const gchar *applet)
   return NA_TYPE_APPLET;
 }
 
+static const gchar *
+na_get_applet_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "NotificationAreaAppletFactory::NotificationArea") == 0)
+    return "notification-area";
+
+  return NULL;
+}
+
 guint32
 gp_module_get_abi_version (void)
 {
@@ -71,6 +80,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     na_get_module_info,
     na_get_applet_info,
     na_get_applet_type,
+    na_get_applet_from_iid,
     NULL
   };
 }

@@ -58,6 +58,15 @@ clock_get_applet_type (const gchar *applet)
   return CLOCK_TYPE_APPLET;
 }
 
+static const gchar *
+clock_get_applet_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "ClockAppletFactory::ClockApplet") == 0)
+    return "clock";
+
+  return NULL;
+}
+
 guint32
 gp_module_get_abi_version (void)
 {
@@ -71,6 +80,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     clock_get_module_info,
     clock_get_applet_info,
     clock_get_applet_type,
+    clock_get_applet_from_iid,
     NULL
   };
 }

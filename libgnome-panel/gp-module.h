@@ -91,6 +91,21 @@ G_BEGIN_DECLS
  *   return G_TYPE_NONE;
  * }
  *
+ * static const gchar *
+ * example_get_applet_from_iid (const gchar *iid)
+ * {
+ *   if (g_strcmp0 (iid, "ExampleAppletFactory::Example1Applet") == 0)
+ *     {
+ *       return "example1";
+ *     }
+ *   else if (g_strcmp0 (iid, "ExampleAppletFactory::Example2Applet") == 0)
+ *     {
+ *       return "example2";
+ *     }
+ *
+ *   return NULL;
+ * }
+ *
  * static gboolean
  * example_setup_about (GtkAboutDialog *dialog,
  *                      const gchar    *applet)
@@ -120,6 +135,7 @@ G_BEGIN_DECLS
  *     example_get_module_info,
  *     example_get_applet_info,
  *     example_get_applet_type,
+ *     example_get_applet_from_iid, // or NULL if not needed
  *     example_setup_about // or NULL if not needed
  *   };
  * }
@@ -138,6 +154,7 @@ G_BEGIN_DECLS
  * @get_module_info: (transfer full): returns a #GpModuleInfo
  * @get_applet_info: (transfer full): returns a #GpAppletInfo.
  * @get_applet_type: returns a #GType.
+ * @get_applet_from_iid: Compatibility function.
  * @setup_about: Function for setting up about dialog.
  *
  * The #GpModuleVTable provides the functions required by the #GpModule.
@@ -145,14 +162,16 @@ G_BEGIN_DECLS
 typedef struct _GpModuleVTable GpModuleVTable;
 struct _GpModuleVTable
 {
-  GpModuleInfo * (* get_module_info) (void);
+  GpModuleInfo * (* get_module_info)     (void);
 
-  GpAppletInfo * (* get_applet_info) (const gchar    *applet);
+  GpAppletInfo * (* get_applet_info)     (const gchar    *applet);
 
-  GType          (* get_applet_type) (const gchar    *applet);
+  GType          (* get_applet_type)     (const gchar    *applet);
 
-  gboolean       (* setup_about)     (GtkAboutDialog *dialog,
-                                      const gchar    *applet);
+  const gchar  * (* get_applet_from_iid) (const gchar    *iid);
+
+  gboolean       (* setup_about)         (GtkAboutDialog *dialog,
+                                          const gchar    *applet);
 };
 
 /**

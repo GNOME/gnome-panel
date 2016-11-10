@@ -70,6 +70,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     sn_get_module_info,
     sn_get_applet_info,
     sn_get_applet_type,
+    NULL,
     NULL
   };
 }

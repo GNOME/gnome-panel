@@ -58,6 +58,15 @@ fish_get_applet_type (const gchar *applet)
   return FISH_TYPE_APPLET;
 }
 
+static const gchar *
+fish_get_applet_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "FishAppletFactory::FishApplet") == 0)
+    return "fish";
+
+  return NULL;
+}
+
 guint32
 gp_module_get_abi_version (void)
 {
@@ -71,6 +80,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     fish_get_module_info,
     fish_get_applet_info,
     fish_get_applet_type,
+    fish_get_applet_from_iid,
     NULL
   };
 }

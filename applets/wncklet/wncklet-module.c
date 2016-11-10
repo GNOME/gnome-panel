@@ -116,6 +116,21 @@ wncklet_get_applet_type (const gchar *applet)
   return G_TYPE_NONE;
 }
 
+static const gchar *
+wncklet_get_applet_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "WnckletFactory::ShowDesktopApplet") == 0)
+    return "show-desktop";
+  else if (g_strcmp0 (iid, "WnckletFactory::WindowListApplet") == 0)
+    return "window-list";
+  else if (g_strcmp0 (iid, "WnckletFactory::WindowMenuApplet") == 0)
+    return "window-menu";
+  else if (g_strcmp0 (iid, "WnckletFactory::WorkspaceSwitcherApplet") == 0)
+    return "workspace-switcher";
+
+  return NULL;
+}
+
 guint32
 gp_module_get_abi_version (void)
 {
@@ -129,6 +144,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     wncklet_get_module_info,
     wncklet_get_applet_info,
     wncklet_get_applet_type,
+    wncklet_get_applet_from_iid,
     NULL
   };
 }
