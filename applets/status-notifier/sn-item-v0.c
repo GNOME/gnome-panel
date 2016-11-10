@@ -241,7 +241,8 @@ update (SnItemV0 *v0)
     }
   else
     {
-      g_debug ("status notifier item does not have icon");
+      gtk_image_set_from_icon_name (image, "image-missing", GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (image, 16);
     }
 
   tip = v0->tooltip;
