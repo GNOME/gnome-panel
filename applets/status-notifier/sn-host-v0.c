@@ -35,6 +35,8 @@ struct _SnHostV0
   gchar               *object_path;
   guint                bus_name_id;
 
+  GCancellable        *cancellable;
+
   guint                watcher_id;
   SnWatcherV0Gen      *watcher;
 
@@ -170,15 +172,22 @@ register_host_cb (GObject      *source_object,
                   GAsyncResult *res,
                   gpointer      user_data)
 {
-  SnHostV0 *v0;
   GError *error;
+  SnHostV0 *v0;
   gchar **items;
   gint i;
 
-  v0 = SN_HOST_V0 (user_data);
-
   error = NULL;
-  sn_watcher_v0_gen_call_register_host_finish (v0->watcher, res, &error);
+  sn_watcher_v0_gen_call_register_host_finish (SN_WATCHER_V0_GEN (source_object),
+                                               res, &error);
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  v0 = SN_HOST_V0 (user_data);
 
   if (error)
     {
@@ -207,13 +216,21 @@ proxy_ready_cb (GObject      *source_object,
                 GAsyncResult *res,
                 gpointer      user_data)
 {
-  SnHostV0 *v0;
   GError *error;
-
-  v0 = SN_HOST_V0 (user_data);
+  SnWatcherV0Gen *watcher;
+  SnHostV0 *v0;
 
   error = NULL;
-  v0->watcher = sn_watcher_v0_gen_proxy_new_finish (res, &error);
+  watcher = sn_watcher_v0_gen_proxy_new_finish (res, &error);
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  v0 = SN_HOST_V0 (user_data);
+  v0->watcher = watcher;
 
   if (error)
     {
@@ -223,8 +240,8 @@ proxy_ready_cb (GObject      *source_object,
       return;
     }
 
-  sn_watcher_v0_gen_call_register_host (v0->watcher, v0->object_path, NULL,
-                                        register_host_cb, v0);
+  sn_watcher_v0_gen_call_register_host (v0->watcher, v0->object_path,
+                                        v0->cancellable, register_host_cb, v0);
 }
 
 static void
@@ -233,9 +250,16 @@ name_appeared_cb (GDBusConnection *connection,
                   const gchar     *name_owner,
                   gpointer         user_data)
 {
+  SnHostV0 *v0;
+
+  v0 = SN_HOST_V0 (user_data);
+
+  g_assert (v0->cancellable == NULL);
+  v0->cancellable = g_cancellable_new ();
+
   sn_watcher_v0_gen_proxy_new (connection, G_DBUS_PROXY_FLAGS_NONE,
                                SN_WATCHER_BUS_NAME, SN_WATCHER_OBJECT_PATH,
-                               NULL, proxy_ready_cb, user_data);
+                               v0->cancellable, proxy_ready_cb, user_data);
 }
 
 static void
@@ -253,6 +277,9 @@ name_vanished_cb (GDBusConnection *connection,
   SnHostV0 *v0;
 
   v0 = SN_HOST_V0 (user_data);
+
+  g_cancellable_cancel (v0->cancellable);
+  g_clear_object (&v0->cancellable);
 
   g_clear_object (&v0->watcher);
 
@@ -312,6 +339,9 @@ sn_host_v0_dispose (GObject *object)
       g_bus_unwatch_name (v0->watcher_id);
       v0->watcher_id = 0;
     }
+
+  g_cancellable_cancel (v0->cancellable);
+  g_clear_object (&v0->cancellable);
 
   g_clear_object (&v0->watcher);
 
