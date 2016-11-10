@@ -41,7 +41,6 @@
 #include "panel-schemas.h"
 #include "panel-stock-icons.h"
 #include "xstuff.h"
-#include "panel-compatibility.h"
 
 #include <libpanel-applet-private/panel-applet-frame-dbus.h>
 #include "panel-applet-frame.h"
@@ -857,14 +856,14 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	applet_iid = panel_compatibility_get_applet_iid (settings, id);
-	if (!applet_iid) {
+	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
+	if (*applet_iid == '\0') {
 		panel_object_loader_stop_loading (id);
+		g_free (applet_iid);
 		return;
 	}
 
 	panel_applet_frame_load_helper (applet_iid, panel_widget, id, settings);
-
 	g_free (applet_iid);
 }
 

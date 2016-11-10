@@ -23,7 +23,6 @@ panel_sources =			\
 	xstuff.c		\
 	free-the-fish.c		\
 	panel-session.c		\
-	panel-compatibility.c	\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
@@ -66,7 +65,6 @@ panel_headers =			\
 	xstuff.h		\
 	free-the-fish.h		\
 	panel-session.h		\
-	panel-compatibility.h	\
 	panel.h			\
 	applet.h		\
 	panel-util.h		\
