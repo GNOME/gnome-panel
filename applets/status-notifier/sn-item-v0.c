@@ -264,7 +264,7 @@ update (SnItemV0 *v0)
         }
       else if (tip->text != NULL && *tip->text != '\0')
         {
-          markup = g_strdup (tip->title);
+          markup = g_strdup (tip->text);
         }
 
       gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), markup);
