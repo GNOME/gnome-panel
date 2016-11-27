@@ -42,6 +42,7 @@ status_notifier_la_SOURCES = \
 status_notifier_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
+	$(LIBM) \
 	$(STATUS_NOTIFIER_LIBS) \
 	$(NULL)
 
