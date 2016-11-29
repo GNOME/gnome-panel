@@ -30,8 +30,6 @@ libpanel_util_la_SOURCES =		\
 	panel-dconf.h			\
 	panel-end-session-dialog.c \
 	panel-end-session-dialog.h \
-	panel-color.c			\
-	panel-color.h			\
 	panel-error.c			\
 	panel-error.h			\
 	panel-glib.c			\

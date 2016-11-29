@@ -60,8 +60,6 @@ clock_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
-	-I$(srcdir)/../../gnome-panel \
-	-I$(top_builddir)/gnome-panel \
 	-I$(top_srcdir) \
 	$(AM_CPPFLAGS) \
 	$(NULL)
@@ -77,7 +75,6 @@ clock_la_CFLAGS = \
 
 clock_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
-	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la \
 	libsystem-timezone.la \
 	$(CLOCK_LIBS) \
 	$(CLOCK_EDS_LIBS) \
