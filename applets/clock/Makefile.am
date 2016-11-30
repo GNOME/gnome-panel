@@ -3,7 +3,6 @@ NULL =
 SUBDIRS = pixmaps
 
 noinst_LTLIBRARIES = libsystem-timezone.la
-noinst_PROGRAMS = test-system-timezone
 
 clock_libdir = $(libdir)/gnome-panel/applets
 clock_lib_LTLIBRARIES = clock.la
@@ -84,24 +83,6 @@ clock_la_LIBADD = \
 
 clock_la_LDFLAGS = \
 	-module -avoid-version \
-	$(WARN_LDFLAGS) \
-	$(AM_LDFLAGS) \
-	$(NULL)
-
-test_system_timezone_SOURCES = \
-	test-system-timezone.c \
-	$(NULL)
-
-test_system_timezone_LDADD = libsystem-timezone.la
-
-test_system_timezone_CFLAGS = \
-	$(LIBGNOME_PANEL_CFLAGS) \
-	$(TZ_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-test_system_timezone_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
