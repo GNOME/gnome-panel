@@ -59,7 +59,6 @@
 #include "clock-location-tile.h"
 #include "clock-map.h"
 #include "clock-utils.h"
-#include "system-timezone.h"
 
 enum {
 	COL_CITY_NAME = 0,
@@ -123,8 +122,6 @@ struct _ClockApplet
         time_t             current_time;
         GnomeWallClock    *wall_clock;
 	GtkAllocation      old_allocation;
-
-	SystemTimezone *systz;
 
         GtkWidget *showseconds_check;
         GtkWidget *showdate_check;
