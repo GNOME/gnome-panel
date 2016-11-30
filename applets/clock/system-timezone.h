@@ -58,7 +58,6 @@ GType system_timezone_get_type (void);
 SystemTimezone *system_timezone_new (void);
 
 const char *system_timezone_get (SystemTimezone *systz);
-const char *system_timezone_get_env (SystemTimezone *systz);
 
 G_END_DECLS
 #endif /* __SYSTEM_TIMEZONE_H__ */

@@ -76,7 +76,6 @@ G_DEFINE_TYPE (SystemTimezone, system_timezone, G_TYPE_OBJECT)
 
 typedef struct {
         char *tz;
-        char *env_tz;
         GFileMonitor *monitors[CHECK_NB];
 } SystemTimezonePrivate;
 
@@ -118,17 +117,6 @@ system_timezone_get (SystemTimezone *systz)
         return priv->tz;
 }
 
-const char *
-system_timezone_get_env (SystemTimezone *systz)
-{
-        SystemTimezonePrivate *priv;
-
-        g_return_val_if_fail (IS_SYSTEM_TIMEZONE (systz), NULL);
-
-        priv = PRIVATE (systz);
-        return priv->env_tz;
-}
-
 static void
 system_timezone_class_init (SystemTimezoneClass *class)
 {
@@ -156,7 +144,6 @@ system_timezone_init (SystemTimezone *systz)
         SystemTimezonePrivate *priv = PRIVATE (systz);
 
         priv->tz = NULL;
-        priv->env_tz = NULL;
         for (i = 0; i < CHECK_NB; i++) 
                 priv->monitors[i] = NULL;
 }
@@ -182,8 +169,6 @@ system_timezone_constructor (GType                  type,
         priv = PRIVATE (obj);
 
         priv->tz = system_timezone_find ();
-
-        priv->env_tz = g_strdup (g_getenv ("TZ"));
 
         for (i = 0; i < CHECK_NB; i++) {
                 GFile     *file;
@@ -230,11 +215,6 @@ system_timezone_finalize (GObject *obj)
         if (priv->tz) {
                 g_free (priv->tz);
                 priv->tz = NULL;
-        }
-
-        if (priv->env_tz) {
-                g_free (priv->env_tz);
-                priv->env_tz = NULL;
         }
 
         for (i = 0; i < CHECK_NB; i++) {
