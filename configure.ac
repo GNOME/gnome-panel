@@ -221,13 +221,11 @@ dnl yelp-tools stuff
 
 YELP_HELP_INIT
 
-dnl platform test
-case $host in
-*-*-solaris*)
-	ostype=solaris
-	AC_DEFINE(HAVE_SOLARIS, 1, [Define to 1])
-	;;
-esac
+dnl **************************************************************************
+dnl Find zoneinfo directory
+dnl **************************************************************************
+
+AX_ZONEINFO
 
 dnl **************************************************************************
 dnl Process .in files

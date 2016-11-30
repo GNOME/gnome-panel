@@ -44,6 +44,8 @@
  * in some cases: eg, in tzdata2008b, Asia/Calcutta got renamed to
  * Asia/Kolkata and the old name is not in zone.tab. */
 
+#include "config.h"
+
 #include <string.h>
 #include <unistd.h>
 
@@ -52,6 +54,12 @@
 #include <gio/gio.h>
 
 #include "system-timezone.h"
+
+#ifdef HAVE_ZONEINFO
+#define SYSTEM_ZONEINFODIR TZDIR
+#else
+#define SYSTEM_ZONEINFODIR "/usr/share/zoneinfo"
+#endif
 
 /* Files that we look at and that should be monitored */
 #define CHECK_NB 5
