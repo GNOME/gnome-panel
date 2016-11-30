@@ -2,24 +2,8 @@ NULL =
 
 SUBDIRS = pixmaps
 
-noinst_LTLIBRARIES = libsystem-timezone.la
-
 clock_libdir = $(libdir)/gnome-panel/applets
 clock_lib_LTLIBRARIES = clock.la
-
-libsystem_timezone_la_CFLAGS = \
-	$(LIBGNOME_PANEL_CFLAGS) \
-	$(TZ_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-libsystem_timezone_la_SOURCES = \
-	system-timezone.c \
-	system-timezone.h \
-	$(NULL)
-
-libsystem_timezone_la_LIBADD = $(TZ_LIBS)
 
 if ENABLE_EDS
 CALENDAR_SOURCES = \
@@ -51,6 +35,8 @@ clock_la_SOURCES = \
 	clock-utils.h \
 	set-timezone.c \
 	set-timezone.h \
+	system-timezone.c \
+	system-timezone.h \
 	$(BUILT_SOURCES) \
 	$(CALENDAR_SOURCES) \
 	$(NULL)
@@ -65,7 +51,6 @@ clock_la_CPPFLAGS = \
 
 clock_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
-	$(TZ_CFLAGS) \
 	$(CLOCK_CFLAGS) \
 	$(CLOCK_EDS_CFLAGS) \
 	$(WARN_CFLAGS) \
@@ -74,7 +59,6 @@ clock_la_CFLAGS = \
 
 clock_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
-	libsystem-timezone.la \
 	$(CLOCK_LIBS) \
 	$(CLOCK_EDS_LIBS) \
 	$(LIBGNOME_PANEL_LIBS) \
