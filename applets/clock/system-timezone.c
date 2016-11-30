@@ -79,13 +79,6 @@ typedef struct {
         GFileMonitor *monitors[CHECK_NB];
 } SystemTimezonePrivate;
 
-enum {
-	CHANGED,
-	LAST_SIGNAL
-};
-
-static guint system_timezone_signals[LAST_SIGNAL] = { 0 };
-
 static GObject *system_timezone_constructor (GType                  type,
                                              guint                  n_construct_properties,
                                              GObjectConstructParam *construct_properties);
@@ -124,15 +117,6 @@ system_timezone_class_init (SystemTimezoneClass *class)
 
         g_obj_class->constructor = system_timezone_constructor;
         g_obj_class->finalize = system_timezone_finalize;
-
-        system_timezone_signals[CHANGED] =
-		g_signal_new ("changed",
-			      G_OBJECT_CLASS_TYPE (g_obj_class),
-			      G_SIGNAL_RUN_FIRST,
-			      G_STRUCT_OFFSET (SystemTimezoneClass, changed),
-			      NULL, NULL,
-			      NULL,
-			      G_TYPE_NONE, 1, G_TYPE_STRING);
 
         g_type_class_add_private (class, sizeof (SystemTimezonePrivate));
 }
@@ -253,10 +237,6 @@ system_timezone_monitor_changed (GFileMonitor *handle,
         if (strcmp (priv->tz, new_tz) != 0) {
                 g_free (priv->tz);
                 priv->tz = new_tz;
-
-                g_signal_emit (G_OBJECT (user_data),
-                               system_timezone_signals[CHANGED],
-                               0, priv->tz);
         } else
                 g_free (new_tz);
 }
