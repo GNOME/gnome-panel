@@ -180,3 +180,24 @@ panel_applets_manager_get_applet_widget (const gchar *iid,
 
 	return NULL;
 }
+
+gchar *
+panel_applets_manager_get_new_iid (const gchar *old_iid)
+{
+	GSList *l;
+	PanelAppletsManager *manager;
+	gchar *new_iid;
+
+	_panel_applets_managers_ensure_loaded ();
+
+	for (l = panel_applets_managers; l != NULL; l = l->next) {
+		manager = PANEL_APPLETS_MANAGER (l->data);
+
+		new_iid = PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_new_iid (manager, old_iid);
+
+		if (new_iid != NULL)
+			return new_iid;
+	}
+
+	return NULL;
+}

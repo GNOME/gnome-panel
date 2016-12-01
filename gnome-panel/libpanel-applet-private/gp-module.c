@@ -380,6 +380,16 @@ gp_module_get_applet_info (GpModule     *module,
   return get_applet_info (module, applet, error);
 }
 
+const gchar *
+gp_module_get_applet_from_iid (GpModule    *module,
+                               const gchar *old_iid)
+{
+  if (module->vtable.get_applet_from_iid == NULL)
+    return NULL;
+
+  return module->vtable.get_applet_from_iid (old_iid);
+}
+
 /**
  * gp_module_applet_new:
  * @module: a #GpModule

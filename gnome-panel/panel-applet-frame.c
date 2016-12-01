@@ -849,6 +849,19 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 
 	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
 
+	if (!panel_applets_manager_get_applet_info (applet_iid)) {
+		gchar *new_iid;
+
+		new_iid = panel_applets_manager_get_new_iid (applet_iid);
+
+		if (new_iid != NULL) {
+			g_settings_set_string (settings, PANEL_OBJECT_IID_KEY, new_iid);
+			g_free (applet_iid);
+
+			applet_iid = new_iid;
+		}
+	}
+
 	panel_applet_frame_load_helper (applet_iid, panel_widget, id, settings);
 	g_free (applet_iid);
 }

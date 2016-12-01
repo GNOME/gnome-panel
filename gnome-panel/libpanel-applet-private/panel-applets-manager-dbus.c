@@ -540,6 +540,13 @@ panel_applets_manager_dbus_get_applet_widget (PanelAppletsManager *manager,
 	return info->get_applet_widget (info->id, uid);
 }
 
+static gchar *
+panel_applets_manager_dbus_get_new_iid (PanelAppletsManager *manager,
+                                        const gchar         *old_iid)
+{
+	return NULL;
+}
+
 static void
 panel_applets_manager_dbus_finalize (GObject *object)
 {
@@ -588,6 +595,7 @@ panel_applets_manager_dbus_class_init (PanelAppletsManagerDBusClass *class)
 	manager_class->get_applet_info = panel_applets_manager_dbus_get_applet_info;
 	manager_class->load_applet = panel_applets_manager_dbus_load_applet;
 	manager_class->get_applet_widget = panel_applets_manager_dbus_get_applet_widget;
+	manager_class->get_new_iid = panel_applets_manager_dbus_get_new_iid;
 
 	g_type_class_add_private (class, sizeof (PanelAppletsManagerDBusPrivate));
 }

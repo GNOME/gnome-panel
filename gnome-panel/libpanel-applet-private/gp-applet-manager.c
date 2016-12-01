@@ -276,6 +276,40 @@ gp_applet_manager_get_applet_widget (PanelAppletsManager *manager,
   return NULL;
 }
 
+static gchar *
+gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
+                               const gchar         *old_iid)
+{
+  GpAppletManager *applet_manager;
+  GList *modules;
+  GList *l;
+  gchar *new_iid;
+
+  applet_manager = GP_APPLET_MANAGER (manager);
+
+  modules = g_hash_table_get_values (applet_manager->modules);
+  new_iid = NULL;
+
+  for (l = modules; l != NULL; l = l->next)
+    {
+      GpModule *module;
+      const gchar *applet;
+
+      module = GP_MODULE (l->data);
+      applet = gp_module_get_applet_from_iid (module, old_iid);
+
+      if (applet != NULL)
+        {
+          new_iid = g_strdup_printf ("%s::%s", gp_module_get_id (module), applet);
+          break;
+        }
+    }
+
+  g_list_free (modules);
+
+  return new_iid;
+}
+
 static void
 gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
 {
@@ -293,6 +327,7 @@ gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
   applets_manager_class->get_applet_info = gp_applet_manager_get_applet_info;
   applets_manager_class->load_applet = gp_applet_manager_load_applet;
   applets_manager_class->get_applet_widget = gp_applet_manager_get_applet_widget;
+  applets_manager_class->get_new_iid = gp_applet_manager_get_new_iid;
 }
 
 static void
