@@ -55,11 +55,6 @@ static void panel_applet_frame_loading_failed  (const char  *iid,
 					        PanelWidget *panel,
 					        const char  *id);
 
-static void panel_applet_frame_load_helper     (const gchar *iid,
-						PanelWidget *panel,
-						const char  *id,
-						GSettings   *settings);
-
 struct _PanelAppletFrameActivating {
 	PanelWidget *panel;
 	char        *id;
@@ -820,10 +815,6 @@ panel_applet_frame_load_helper (const gchar *iid,
 {
 	PanelAppletFrameActivating *frame_act;
 
-	g_return_if_fail (iid != NULL);
-	g_return_if_fail (panel != NULL);
-	g_return_if_fail (id != NULL);
-
 	if (g_slist_find_custom (no_reload_applets, id,
 				 (GCompareFunc) strcmp)) {
 		panel_object_loader_stop_loading (id);
@@ -857,11 +848,6 @@ panel_applet_frame_load (PanelWidget *panel_widget,
 	g_return_if_fail (id != NULL);
 
 	applet_iid = g_settings_get_string (settings, PANEL_OBJECT_IID_KEY);
-	if (*applet_iid == '\0') {
-		panel_object_loader_stop_loading (id);
-		g_free (applet_iid);
-		return;
-	}
 
 	panel_applet_frame_load_helper (applet_iid, panel_widget, id, settings);
 	g_free (applet_iid);
