@@ -104,7 +104,7 @@ AC_ARG_ENABLE([documentation],
 AM_CONDITIONAL(ENABLE_DOCUMENTATION, test x$enable_documentation = xyes)
 
 LIBGNOME_DESKTOP_REQUIRED=2.91.0
-GDK_PIXBUF_REQUIRED=2.25.2
+GDK_PIXBUF_REQUIRED=2.26.0
 PANGO_REQUIRED=1.15.4
 GLIB_REQUIRED=2.45.3
 GTK_REQUIRED=3.22.0
@@ -115,7 +115,6 @@ LIBEDATASERVER_REQUIRED=3.5.3
 CAIRO_REQUIRED=1.0.0
 GWEATHER_REQUIRED=3.17.1
 DCONF_REQUIRED=0.13.4
-LIBRSVG_REQUIRED=2.36.2
 XRANDR_REQUIRED=1.3.0
 
 dnl pkg-config dependency checks
@@ -172,9 +171,16 @@ AC_SUBST(WNCKLET_LIBS)
 AC_CHECK_HEADERS(langinfo.h)
 AC_CHECK_FUNCS(nl_langinfo)
 
-PKG_CHECK_MODULES(CLOCK, pango >= $PANGO_REQUIRED gtk+-3.0 >= $GTK_REQUIRED glib-2.0 >= $GLIB_REQUIRED gio-2.0 >= $GLIB_REQUIRED librsvg-2.0 >= $LIBRSVG_REQUIRED gweather-3.0 >= $GWEATHER_REQUIRED gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED polkit-gobject-1 dconf >= $DCONF_REQUIRED)
-AC_SUBST(CLOCK_CFLAGS)
-AC_SUBST(CLOCK_LIBS)
+PKG_CHECK_MODULES([CLOCK], [
+  dconf >= $DCONF_REQUIRED
+  gio-2.0 >= $GLIB_REQUIRED
+  glib-2.0 >= $GLIB_REQUIRED
+  gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
+  gweather-3.0 >= $GWEATHER_REQUIRED
+  pango >= $PANGO_REQUIRED
+  polkit-gobject-1
+])
 
 # Check whether to enable e-d-s support for clock applet
 AC_MSG_CHECKING([whether to enable evolution-data-server support])
