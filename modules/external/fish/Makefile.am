@@ -1,6 +1,6 @@
 NULL =
 
-fish_libdir = $(libdir)/gnome-panel/applets
+fish_libdir = $(libdir)/gnome-panel/modules
 fish_lib_LTLIBRARIES = fish.la
 
 fish_la_SOURCES = \

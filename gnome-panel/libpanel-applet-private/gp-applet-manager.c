@@ -78,7 +78,7 @@ load_modules (GpAppletManager *manager)
   GDir *dir;
   const gchar *name;
 
-  dir = g_dir_open (APPLETSDIR, 0, NULL);
+  dir = g_dir_open (MODULESDIR, 0, NULL);
   if (!dir)
     return;
 
@@ -88,7 +88,7 @@ load_modules (GpAppletManager *manager)
       GpModule *module;
       const gchar *id;
 
-      path = g_build_filename (APPLETSDIR, name, NULL);
+      path = g_build_filename (MODULESDIR, name, NULL);
       module = gp_module_new_from_path (path);
       g_free (path);
 

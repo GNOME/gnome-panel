@@ -1,6 +1,6 @@
 NULL =
 
-status_notifier_libdir = $(libdir)/gnome-panel/applets
+status_notifier_libdir = $(libdir)/gnome-panel/modules
 status_notifier_lib_LTLIBRARIES = status-notifier.la
 
 status_notifier_la_CPPFLAGS = \

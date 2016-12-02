@@ -5,7 +5,7 @@ noinst_LTLIBRARIES = \
 	$(NULL)
 
 libpanel_applet_private_la_CFLAGS = \
-	-DAPPLETSDIR=\""$(libdir)/gnome-panel/applets"\" \
+	-DMODULESDIR=\""$(libdir)/gnome-panel/modules"\" \
 	-DDATADIR=\""$(datadir)"\" \
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
 	-I$(srcdir) \

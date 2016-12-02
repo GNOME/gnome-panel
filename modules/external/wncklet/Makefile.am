@@ -1,6 +1,6 @@
 NULL =
 
-wncklet_libdir = $(libdir)/gnome-panel/applets
+wncklet_libdir = $(libdir)/gnome-panel/modules
 wncklet_lib_LTLIBRARIES = wncklet.la
 
 wncklet_la_CPPFLAGS = \

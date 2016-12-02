@@ -1,6 +1,6 @@
 NULL =
 
-notification_area_libdir = $(libdir)/gnome-panel/applets
+notification_area_libdir = $(libdir)/gnome-panel/modules
 notification_area_lib_LTLIBRARIES = notification-area.la
 
 notification_area_la_CPPFLAGS = \

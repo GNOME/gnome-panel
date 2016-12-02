@@ -2,7 +2,7 @@ NULL =
 
 SUBDIRS = pixmaps
 
-clock_libdir = $(libdir)/gnome-panel/applets
+clock_libdir = $(libdir)/gnome-panel/modules
 clock_lib_LTLIBRARIES = clock.la
 
 if ENABLE_EDS
