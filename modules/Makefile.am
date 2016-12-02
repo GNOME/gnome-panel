@@ -1,6 +1,7 @@
 NULL =
 
 SUBDIRS = \
+	builtin \
 	external \
 	$(NULL)
 
