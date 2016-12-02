@@ -164,6 +164,10 @@ PKG_CHECK_MODULES([NOTIFICATION_AREA], [
   x11
 ])
 
+PKG_CHECK_MODULES([SEPARATOR], [
+  gtk+-3.0 >= $GTK_REQUIRED
+])
+
 PKG_CHECK_MODULES([STATUS_NOTIFIER], [
   gtk+-3.0 >= $GTK_REQUIRED
 ])
@@ -280,6 +284,7 @@ AC_CONFIG_FILES([
 
   modules/Makefile
   modules/builtin/Makefile
+  modules/builtin/separator/Makefile
   modules/external/Makefile
   modules/external/clock/Makefile
   modules/external/clock/pixmaps/Makefile

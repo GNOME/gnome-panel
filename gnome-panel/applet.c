@@ -24,7 +24,6 @@
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
-#include "panel-separator.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-menu-button.h"
@@ -66,7 +65,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 						     dnd_enabled);
 		break;
 	case PANEL_OBJECT_MENU_BAR:
-	case PANEL_OBJECT_SEPARATOR:
 	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:
@@ -192,7 +190,6 @@ applet_callback_callback (GtkWidget      *widget,
 		 * Applet's menu's are handled differently
 		 */
 		break;
-	case PANEL_OBJECT_SEPARATOR:
 	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:

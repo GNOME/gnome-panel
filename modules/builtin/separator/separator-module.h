@@ -15,13 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
+#ifndef SEPARATOR_MODULE_H
+#define SEPARATOR_MODULE_H
 
-#include "gp-builtin.h"
-#include "separator/separator-module.h"
+#include <libgnome-panel/gp-module.h>
 
-const GpModuleVTable *builtin[] =
-{
-  &separator_vtable,
-  NULL
-};
+G_BEGIN_DECLS
+
+extern const GpModuleVTable separator_vtable;
+
+G_END_DECLS
+
+#endif

@@ -1,5 +1,9 @@
 NULL =
 
+SUBDIRS = \
+	separator \
+	$(NULL)
+
 noinst_LTLIBRARIES = libbuiltin.la
 
 libbuiltin_la_SOURCES = \
@@ -27,6 +31,7 @@ libbuiltin_la_LDFLAGS = \
 
 libbuiltin_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
+	$(top_builddir)/modules/builtin/separator/libseparator.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(BUILTIN_LIBS) \
 	$(NULL)

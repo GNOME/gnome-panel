@@ -41,7 +41,6 @@
 #include "panel-applet-frame.h"
 #include "panel-menu-bar.h"
 #include "panel-menu-button.h"
-#include "panel-separator.h"
 #include "panel-user-menu.h"
 
 #include "panel-object-loader.h"
@@ -225,11 +224,6 @@ panel_object_loader_idle_handler (gpointer dummy)
                                      object->id,
                                      object->settings);
                 break;
-        case PANEL_OBJECT_SEPARATOR:
-                panel_separator_load (panel_widget,
-                                      object->id,
-                                      object->settings);
-                break;
         case PANEL_OBJECT_USER_MENU:
                 panel_user_menu_load (panel_widget,
                                       object->id,
@@ -373,7 +367,6 @@ static struct {
         { PANEL_OBJECT_MENU_BAR,  "MenuBar"      , FALSE },
         { PANEL_OBJECT_MENU,      "MenuButton"   , FALSE },
         { PANEL_OBJECT_LAUNCHER,  "Launcher"     , FALSE },
-        { PANEL_OBJECT_SEPARATOR, "Separator"    , FALSE },
         { PANEL_OBJECT_USER_MENU, "UserMenu"     , FALSE }
 };
 

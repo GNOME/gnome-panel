@@ -15,13 +15,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
+#ifndef SEPARATOR_APPLET_H
+#define SEPARATOR_APPLET_H
 
-#include "gp-builtin.h"
-#include "separator/separator-module.h"
+#include <libgnome-panel/gp-applet.h>
 
-const GpModuleVTable *builtin[] =
-{
-  &separator_vtable,
-  NULL
-};
+G_BEGIN_DECLS
+
+#define SEPARATOR_TYPE_APPLET separator_applet_get_type ()
+G_DECLARE_FINAL_TYPE (SeparatorApplet, separator_applet,
+                      SEPARATOR, APPLET, GpApplet)
+
+G_END_DECLS
+
+#endif
