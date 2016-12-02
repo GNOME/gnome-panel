@@ -264,16 +264,6 @@ AC_CONFIG_FILES([
   libpanel-applet/Makefile
   libpanel-applet/libpanel-applet.pc
 
-  po/Makefile.in
-
-  applets/Makefile
-  applets/clock/Makefile
-  applets/clock/pixmaps/Makefile
-  applets/fish/Makefile
-  applets/notification-area/Makefile
-  applets/status-notifier/Makefile
-  applets/wncklet/Makefile
-
   docs/Makefile
   docs/reference/Makefile
   docs/reference/libgnome-panel/Makefile
@@ -283,6 +273,17 @@ AC_CONFIG_FILES([
   help/fish/Makefile
 
   man/Makefile
+
+  modules/Makefile
+  modules/external/Makefile
+  modules/external/clock/Makefile
+  modules/external/clock/pixmaps/Makefile
+  modules/external/fish/Makefile
+  modules/external/notification-area/Makefile
+  modules/external/status-notifier/Makefile
+  modules/external/wncklet/Makefile
+
+  po/Makefile.in
 ])
 
 AC_OUTPUT

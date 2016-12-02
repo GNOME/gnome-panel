@@ -2,9 +2,9 @@ NULL =
 
 SUBDIRS = \
 	libgnome-panel \
+	modules \
 	gnome-panel \
 	libpanel-applet \
-	applets \
 	docs \
 	help \
 	data \
