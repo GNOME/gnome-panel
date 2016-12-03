@@ -66,7 +66,7 @@ get_applet_infos (GpAppletManager *manager,
       iid = g_strdup_printf ("%s::%s", id, applets[i]);
       applet_info = panel_applet_info_new (iid, info->name,
                                            info->description,
-                                           info->icon);
+                                           info->icon_name);
 
       g_hash_table_insert (manager->infos, g_strdup (iid), applet_info);
       g_free (iid);

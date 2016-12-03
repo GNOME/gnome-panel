@@ -32,7 +32,7 @@
  * gp_applet_info_new:
  * @name: the name of this applet
  * @description: the description of this applet
- * @icon: the icon name for this applet
+ * @icon_name: the icon name for this applet
  *
  * Creates a new #GpAppletInfo.
  *
@@ -41,7 +41,7 @@
 GpAppletInfo *
 gp_applet_info_new (const gchar *name,
                     const gchar *description,
-                    const gchar *icon)
+                    const gchar *icon_name)
 {
   GpAppletInfo *info;
 
@@ -49,7 +49,7 @@ gp_applet_info_new (const gchar *name,
 
   info->name = g_strdup (name);
   info->description = g_strdup (description);
-  info->icon = g_strdup (icon);
+  info->icon_name = g_strdup (icon_name);
 
   info->help_uri = NULL;
   info->has_about_dialog = FALSE;
@@ -111,7 +111,7 @@ gp_applet_info_free (GpAppletInfo *info)
 
   g_free (info->name);
   g_free (info->description);
-  g_free (info->icon);
+  g_free (info->icon_name);
 
   g_free (info->help_uri);
 

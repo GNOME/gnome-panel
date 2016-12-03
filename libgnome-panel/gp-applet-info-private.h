@@ -24,7 +24,7 @@ struct _GpAppletInfo
 {
   gchar    *name;
   gchar    *description;
-  gchar    *icon;
+  gchar    *icon_name;
 
   gchar    *help_uri;
   gboolean  has_about_dialog;

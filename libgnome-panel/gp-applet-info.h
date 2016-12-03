@@ -31,7 +31,7 @@ typedef struct _GpAppletInfo GpAppletInfo;
 
 GpAppletInfo *gp_applet_info_new                  (const gchar  *name,
                                                    const gchar  *description,
-                                                   const gchar  *icon);
+                                                   const gchar  *icon_name);
 
 void          gp_applet_info_set_help_uri         (GpAppletInfo *info,
                                                    const gchar  *help_uri);
