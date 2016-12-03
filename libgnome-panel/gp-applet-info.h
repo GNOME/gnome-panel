@@ -29,15 +29,18 @@ G_BEGIN_DECLS
  */
 typedef struct _GpAppletInfo GpAppletInfo;
 
-GpAppletInfo *gp_applet_info_new          (const gchar  *name,
-                                           const gchar  *description,
-                                           const gchar  *icon);
+GpAppletInfo *gp_applet_info_new                  (const gchar  *name,
+                                                   const gchar  *description,
+                                                   const gchar  *icon);
 
-void          gp_applet_info_set_backends (GpAppletInfo *info,
-                                           const gchar  *backends);
+void          gp_applet_info_set_help_uri         (GpAppletInfo *info,
+                                                   const gchar  *help_uri);
 
-void          gp_applet_info_set_help_uri (GpAppletInfo *info,
-                                           const gchar  *help_uri);
+void          gp_applet_info_set_has_about_dialog (GpAppletInfo *info,
+                                                   gboolean      has_about_dialog);
+
+void          gp_applet_info_set_backends         (GpAppletInfo *info,
+                                                   const gchar  *backends);
 
 G_END_DECLS
 

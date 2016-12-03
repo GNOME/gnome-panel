@@ -22,13 +22,14 @@
 
 struct _GpAppletInfo
 {
-  gchar *name;
-  gchar *description;
-  gchar *icon;
+  gchar    *name;
+  gchar    *description;
+  gchar    *icon;
 
-  gchar *help_uri;
+  gchar    *help_uri;
+  gboolean  has_about_dialog;
 
-  gchar *backends;
+  gchar    *backends;
 };
 
 void gp_applet_info_free (GpAppletInfo *info);

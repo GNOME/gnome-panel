@@ -51,22 +51,12 @@ gp_applet_info_new (const gchar *name,
   info->description = g_strdup (description);
   info->icon = g_strdup (icon);
 
-  return info;
-}
+  info->help_uri = NULL;
+  info->has_about_dialog = FALSE;
 
-/**
- * gp_applet_info_set_backends:
- * @info: a #GpAppletInfo
- * @backends: (nullable): a comma-separated list of backends
- *
- * Sets a list of backends that this applet supports.
- */
-void
-gp_applet_info_set_backends (GpAppletInfo *info,
-                             const gchar  *backends)
-{
-  g_free (info->backends);
-  info->backends = g_strdup (backends);
+  info->backends = NULL;
+
+  return info;
 }
 
 /**
@@ -84,6 +74,35 @@ gp_applet_info_set_help_uri (GpAppletInfo *info,
   info->help_uri = g_strdup (help_uri);
 }
 
+/**
+ * gp_applet_info_set_has_about_dialog:
+ * @info: a #GpAppletInfo
+ * @has_about_dialog: whether applet has an about dialog
+ *
+ * Sets whether applet has an about dialog.
+ */
+void
+gp_applet_info_set_has_about_dialog (GpAppletInfo *info,
+                                     gboolean      has_about_dialog)
+{
+  info->has_about_dialog = has_about_dialog;
+}
+
+/**
+ * gp_applet_info_set_backends:
+ * @info: a #GpAppletInfo
+ * @backends: (nullable): a comma-separated list of backends
+ *
+ * Sets a list of backends that this applet supports.
+ */
+void
+gp_applet_info_set_backends (GpAppletInfo *info,
+                             const gchar  *backends)
+{
+  g_free (info->backends);
+  info->backends = g_strdup (backends);
+}
+
 void
 gp_applet_info_free (GpAppletInfo *info)
 {
@@ -93,7 +112,9 @@ gp_applet_info_free (GpAppletInfo *info)
   g_free (info->name);
   g_free (info->description);
   g_free (info->icon);
+
   g_free (info->help_uri);
+
   g_free (info->backends);
 
   g_free (info);
