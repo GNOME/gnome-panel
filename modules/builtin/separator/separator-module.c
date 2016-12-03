@@ -21,6 +21,7 @@
 #include <libgnome-panel/gp-module.h>
 
 #include "separator-applet.h"
+#include "separator-module.h"
 
 static GpModuleInfo *
 separator_get_module_info (void)
