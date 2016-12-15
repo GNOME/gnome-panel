@@ -148,6 +148,32 @@ sn_item_set_property (GObject      *object,
     }
 }
 
+static void
+sn_item_get_action_coordinates (SnItem *item,
+                                gint   *x,
+                                gint   *y)
+{
+  GtkWidget *widget;
+  SnItemPrivate *priv;
+  GdkWindow *window;
+  GtkWidget *toplevel;
+  gint width;
+  gint height;
+
+  priv = sn_item_get_instance_private (item);
+  widget = GTK_WIDGET (item);
+  window = gtk_widget_get_window (widget);
+  toplevel = gtk_widget_get_toplevel (widget);
+
+  gdk_window_get_geometry (window, x, y, &width, &height);
+  gtk_widget_translate_coordinates (widget, toplevel, *x, *y, x, y);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    *y += height;
+  else
+    *x += width;
+}
+
 static gboolean
 sn_item_button_press_event (GtkWidget      *widget,
                             GdkEventButton *event)
@@ -156,37 +182,20 @@ sn_item_button_press_event (GtkWidget      *widget,
   SnItemPrivate *priv;
   GdkDisplay *display;
   GdkSeat *seat;
-  GdkWindow *window;
-  GtkWidget *toplevel;
   gint x;
   gint y;
-  gint width;
-  gint height;
 
-  if (event->button < 1 || event->button > 3)
+  if (event->button < 2 || event->button > 3)
     return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
 
   item = SN_ITEM (widget);
   priv = sn_item_get_instance_private (item);
   display = gdk_display_get_default ();
   seat = gdk_display_get_default_seat (display);
-  window = gtk_widget_get_window (widget);
-  toplevel = gtk_widget_get_toplevel (widget);
 
-  gdk_window_get_geometry (window, &x, &y, &width, &height);
-  gtk_widget_translate_coordinates (widget, toplevel, x, y, &x, &y);
+  sn_item_get_action_coordinates (item, &x, &y);
 
-  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
-    y += height;
-  else
-    x += width;
-
-  if (event->button == 1)
-    {
-      gdk_seat_ungrab (seat);
-      SN_ITEM_GET_CLASS (item)->activate (item, x, y);
-    }
-  else if (event->button == 2)
+  if (event->button == 2)
     {
       gdk_seat_ungrab (seat);
       SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
@@ -212,6 +221,49 @@ sn_item_button_press_event (GtkWidget      *widget,
     }
 
   return GTK_WIDGET_CLASS (sn_item_parent_class)->button_press_event (widget, event);
+}
+
+static gboolean
+sn_item_popup_menu (GtkWidget *widget)
+{
+  SnItem *item;
+  SnItemPrivate *priv;
+
+  item = SN_ITEM (widget);
+  priv = sn_item_get_instance_private (item);
+
+  if (priv->menu != NULL)
+    {
+      gtk_menu_popup_at_widget (priv->menu, widget,
+                                GDK_GRAVITY_SOUTH_WEST,
+                                GDK_GRAVITY_NORTH_WEST,
+                                NULL);
+    }
+  else
+    {
+      gint x;
+      gint y;
+
+      sn_item_get_action_coordinates (item, &x, &y);
+
+      SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
+    }
+
+  return TRUE;
+}
+
+static void
+sn_item_clicked (GtkButton *button)
+{
+  SnItem *item;
+  gint x;
+  gint y;
+
+  item = SN_ITEM (button);
+
+  sn_item_get_action_coordinates (item, &x, &y);
+
+  SN_ITEM_GET_CLASS (item)->activate (item, x, y);
 }
 
 static gboolean
@@ -338,9 +390,11 @@ sn_item_class_init (SnItemClass *item_class)
 {
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
+  GtkButtonClass *button_class;
 
   object_class = G_OBJECT_CLASS (item_class);
   widget_class = GTK_WIDGET_CLASS (item_class);
+  button_class = GTK_BUTTON_CLASS (item_class);
 
   object_class->dispose = sn_item_dispose;
   object_class->finalize = sn_item_finalize;
@@ -348,7 +402,10 @@ sn_item_class_init (SnItemClass *item_class)
   object_class->set_property = sn_item_set_property;
 
   widget_class->button_press_event = sn_item_button_press_event;
+  widget_class->popup_menu = sn_item_popup_menu;
   widget_class->scroll_event = sn_item_scroll_event;
+
+  button_class->clicked = sn_item_clicked;
 
   item_class->ready = sn_item_ready;
 
