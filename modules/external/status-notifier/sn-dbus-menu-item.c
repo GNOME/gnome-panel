@@ -178,10 +178,12 @@ sn_dbus_menu_item_new (GVariant *props)
       if (g_strcmp0 (item->toggle_type, "checkmark") == 0)
         {
           item->item = gtk_check_menu_item_new ();
+          gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
         }
       else if (g_strcmp0 (item->toggle_type, "radio") == 0)
         {
           item->item = gtk_radio_menu_item_new (NULL);
+          gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
         }
       else
         {
