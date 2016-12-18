@@ -29,7 +29,6 @@
 
 /* globals */
 GSList *panels = NULL;
-GSList *panel_list = NULL;
 
 static gboolean  replace = FALSE;
 static gboolean  version = FALSE;

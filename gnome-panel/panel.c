@@ -160,8 +160,6 @@ panel_destroy (PanelToplevel *toplevel,
 	pd->deactivate_idle = 0;
 
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", NULL);
-
-	panel_list = g_slist_remove (panel_list, pd);
 	g_free (pd);
 }
 
@@ -226,13 +224,7 @@ make_popup_panel_menu (PanelWidget *panel_widget)
 	PanelData *pd;
 	GtkWidget *menu;
 
-	if (!panel_widget) {
-		PanelToplevel *toplevel;
-
-		toplevel = PANEL_TOPLEVEL (((PanelData *) panel_list->data)->panel);
-
-		panel_widget = panel_toplevel_get_panel_widget (toplevel);
-	}
+	g_assert (panel_widget != NULL);
 
 	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
 	menu = panel_menu_get (panel_widget, pd);
@@ -1211,8 +1203,6 @@ panel_setup (PanelToplevel *toplevel)
 	pd->insert_pack_type = PANEL_OBJECT_PACK_START;
 	pd->deactivate_idle = 0;
 
-	panel_list = g_slist_append (panel_list, pd);
-	
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
 
 	panel_widget_setup (panel_widget);

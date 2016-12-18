@@ -28,7 +28,6 @@
 G_BEGIN_DECLS
 
 extern GSList         *panels;
-extern GSList         *panel_list;
 
 G_END_DECLS
 
