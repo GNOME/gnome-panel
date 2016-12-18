@@ -36,7 +36,6 @@
 #include "applet.h"
 #include "panel-widget.h"
 #include "panel-util.h"
-#include "panel-globals.h"
 #include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-a11y.h"

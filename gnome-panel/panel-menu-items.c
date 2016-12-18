@@ -50,7 +50,6 @@
 
 #include "menu.h"
 #include "panel-action-button.h"
-#include "panel-globals.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
 #include "panel-menu-bar-object.h"

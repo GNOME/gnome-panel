@@ -35,7 +35,6 @@
 #include "xstuff.h"
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
-#include "panel-globals.h"
 #include "panel-multiscreen.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"

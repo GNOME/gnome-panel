@@ -12,7 +12,6 @@
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-typebuiltins.h"
-#include "panel-globals.h"
 
 #define BUTTON_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BUTTON_TYPE_WIDGET, ButtonWidgetPrivate))
 

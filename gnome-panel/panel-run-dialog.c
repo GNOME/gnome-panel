@@ -50,7 +50,6 @@
 
 #include "free-the-fish.h"
 #include "panel-util.h"
-#include "panel-globals.h"
 #include "panel-enums.h"
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"

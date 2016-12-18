@@ -38,7 +38,6 @@
 #include "panel-menu-bar.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
-#include "panel-globals.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-util.h"

@@ -37,7 +37,6 @@
 #include "applet.h"
 #include "xstuff.h"
 #include "panel-bindings.h"
-#include "panel-globals.h"
 #include "launcher.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"

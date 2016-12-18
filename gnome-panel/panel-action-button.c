@@ -42,8 +42,6 @@
 #include "panel-typebuiltins.h"
 #include "panel-force-quit.h"
 #include "panel-util.h"
-#include "panel-session.h"
-#include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-layout.h"

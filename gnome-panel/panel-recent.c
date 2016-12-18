@@ -32,7 +32,6 @@
 
 #include "menu.h"
 #include "panel-util.h"
-#include "panel-globals.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
