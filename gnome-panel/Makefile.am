@@ -21,7 +21,6 @@ panel_sources =			\
 	panel-widget.c		\
 	button-widget.c		\
 	xstuff.c		\
-	free-the-fish.c		\
 	panel-session.c		\
 	panel.c			\
 	applet.c		\
@@ -62,7 +61,6 @@ panel_headers =			\
 	panel-globals.h		\
 	button-widget.h		\
 	xstuff.h		\
-	free-the-fish.h		\
 	panel-session.h		\
 	panel.h			\
 	applet.h		\
@@ -226,7 +224,6 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =					\
 	$(ui_FILES)				\
 	panel.gresource.xml			\
-	wanda_no_sea.png			\
 	$(desktop_in_in_files) \
 	$(NULL)
 

@@ -35,7 +35,6 @@
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-show.h>
 
-#include "free-the-fish.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
@@ -66,36 +65,12 @@ panel_context_menu_delete_panel (PanelToplevel *toplevel)
         panel_delete (toplevel);
 }
 
-static gboolean
-panel_context_menu_check_for_screen (GtkWidget *w,
-				     GdkEvent *ev,
-				     gpointer data)
-{
-	static int times = 0;
-	if (!w) {
-		times = 0;
-		return FALSE;
-	}
-	if (ev->type != GDK_KEY_PRESS)
-		return FALSE;
-	if (ev->key.keyval == GDK_KEY_f ||
-	    ev->key.keyval == GDK_KEY_F) {
-		times++;
-		if (times == 3) {
-			times = 0;
-			free_the_fish ();
-		}
-	}
-	return FALSE;
-}
-
 static void
 panel_context_menu_setup_delete_panel_item (GtkWidget     *menuitem,
                                             PanelToplevel *toplevel)
 {
 	gboolean     sensitive;
 
-	panel_context_menu_check_for_screen (NULL, NULL, NULL);
 	g_assert (PANEL_IS_TOPLEVEL (toplevel));
 
 	sensitive =
@@ -199,10 +174,6 @@ panel_context_menu_create (PanelWidget *panel)
 	gtk_widget_set_name (retval, "gnome-panel-context-menu");
 
 	panel_context_menu_build_edition (panel, retval);
-
-	g_signal_connect (retval, "event",
-			  G_CALLBACK (panel_context_menu_check_for_screen),
-			  NULL);
 
 	return retval;
 }

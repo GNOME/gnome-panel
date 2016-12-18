@@ -48,7 +48,6 @@
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
 
-#include "free-the-fish.h"
 #include "panel-util.h"
 #include "panel-enums.h"
 #include "panel-stock-icons.h"
@@ -522,21 +521,6 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		return;
 	}
 
-	/* evil eggies, do not translate! */
-	if (!strcmp (command, "free the fish")) {
-		free_the_fish ();
-
-		g_free (command);
-		gtk_widget_destroy (dialog->run_dialog);
-		return;
-	} else if (!strcmp (command, "catch the fish")) {
-		catch_the_fish ();
-
-		g_free(command);
-		gtk_widget_destroy(dialog->run_dialog);
-		return;
-	}
-		
 	error = NULL;
 	disk = g_locale_from_utf8 (command, -1, NULL, NULL, &error);
 
