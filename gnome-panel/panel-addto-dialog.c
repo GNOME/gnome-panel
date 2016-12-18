@@ -24,6 +24,7 @@
 #include <string.h>
 
 #include <glib/gi18n.h>
+#include <gdk/gdkx.h>
 
 #include <gmenu-tree.h>
 
