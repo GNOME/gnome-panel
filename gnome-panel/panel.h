@@ -8,17 +8,9 @@
 
 G_BEGIN_DECLS
 
-typedef struct _PanelData PanelData;
-struct _PanelData {
-	GtkWidget *panel;
-	GtkWidget *menu;
-	PanelObjectPackType insert_pack_type;
-	guint deactivate_idle;
-};
-
 void orientation_change(AppletInfo *info, PanelWidget *panel);
 
-PanelData *panel_setup (PanelToplevel *toplevel);
+void panel_setup (PanelToplevel *toplevel);
 
 GdkScreen *panel_screen_from_panel_widget  (PanelWidget *panel);
 

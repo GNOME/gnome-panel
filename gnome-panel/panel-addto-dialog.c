@@ -1239,13 +1239,13 @@ panel_addto_present (GtkMenuItem *item,
 {
 	PanelAddtoDialog *dialog;
 	PanelToplevel *toplevel;
-	PanelData     *pd;
+	PanelObjectPackType insert_pack_type;
+	GdkEvent *current_event;
 	GdkScreen *screen;
 	gint screen_height;
 	gint height;
 
 	toplevel = panel_widget->toplevel;
-	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 
 	if (!panel_addto_dialog_quark)
 		panel_addto_dialog_quark =
@@ -1263,7 +1263,17 @@ panel_addto_present (GtkMenuItem *item,
 		panel_addto_present_applets (dialog);
 	}
 
-	dialog->insert_pack_type = pd ? pd->insert_pack_type : PANEL_OBJECT_PACK_START;
+	insert_pack_type = PANEL_OBJECT_PACK_START;
+	current_event = gtk_get_current_event ();
+
+	if (current_event != NULL) {
+		if (current_event->type == GDK_BUTTON_PRESS)
+			insert_pack_type = panel_widget_get_insert_pack_type_at_cursor (panel_widget);
+
+		gdk_event_free (current_event);
+	}
+
+	dialog->insert_pack_type = insert_pack_type;
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	gtk_window_set_default_size (GTK_WINDOW (dialog),
 				     height * 8 / 7, height);

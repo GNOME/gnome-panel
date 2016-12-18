@@ -43,6 +43,13 @@
 #include "panel-schemas.h"
 #include "panel-user-menu.h"
 
+typedef struct _PanelData PanelData;
+struct _PanelData {
+	GtkWidget *panel;
+	GtkWidget *menu;
+	guint deactivate_idle;
+};
+
 enum {
 	TARGET_URL,
 	TARGET_NETSCAPE_URL,
@@ -118,8 +125,6 @@ deactivate_idle (gpointer data)
 {
 	PanelData *pd = data;
 	pd->deactivate_idle = 0;
-
-	pd->insert_pack_type = PANEL_OBJECT_PACK_START;
 
 	return FALSE;
 }
@@ -241,22 +246,8 @@ panel_popup_menu (PanelToplevel *toplevel,
 {
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
-	PanelData   *panel_data;
-	GdkEvent    *current_event;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
-	panel_data   = g_object_get_data (G_OBJECT (toplevel), "PanelData");
-
-	current_event = gtk_get_current_event ();
-	if (!current_event)
-		return FALSE;
-
-	if (current_event->type == GDK_BUTTON_PRESS)
-		panel_data->insert_pack_type = panel_widget_get_insert_pack_type_at_cursor (panel_widget);
-	else
-		panel_data->insert_pack_type = PANEL_OBJECT_PACK_START;
-
-	gdk_event_free (current_event);
 
 	menu = make_popup_panel_menu (panel_widget);
 	if (!menu)
@@ -1187,20 +1178,19 @@ panel_widget_setup(PanelWidget *panel)
 			  NULL);
 }
 
-PanelData *
+void
 panel_setup (PanelToplevel *toplevel)
 {
 	PanelWidget *panel_widget;
 	PanelData   *pd;
 
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
 	pd = g_new0 (PanelData,1);
 	pd->menu = NULL;
 	pd->panel = GTK_WIDGET (toplevel);
-	pd->insert_pack_type = PANEL_OBJECT_PACK_START;
 	pd->deactivate_idle = 0;
 
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
@@ -1227,8 +1217,6 @@ panel_setup (PanelToplevel *toplevel)
 				  G_CALLBACK (panel_orient_change), panel_widget);
  
 	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
-
-	return pd;
 }
 
 GdkScreen *
