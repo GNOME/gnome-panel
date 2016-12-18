@@ -233,8 +233,6 @@ make_popup_panel_menu (PanelWidget *panel_widget)
 
 	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
 	menu = panel_menu_get (panel_widget, pd);
-	if (menu)
-		g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
 
 	return menu;
 }

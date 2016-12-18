@@ -99,68 +99,6 @@ activate_app_def (GtkWidget      *menuitem,
 	panel_menu_item_activate_desktop_file (menuitem, path);
 }
 
-PanelWidget *
-menu_get_panel (GtkWidget *menu)
-{
-	PanelWidget *retval = NULL;
-
-	g_return_val_if_fail (menu != NULL, NULL);
-
-	if (GTK_IS_MENU_ITEM (menu))
-		menu = gtk_widget_get_parent (menu);
-
-	g_return_val_if_fail (GTK_IS_MENU (menu), NULL);
-
-	while (menu) {
-		retval = g_object_get_data (G_OBJECT (menu), "menu_panel");
-		if (retval)
-			break;
-
-		menu = gtk_widget_get_parent (gtk_menu_get_attach_widget (GTK_MENU (menu)));
-		if (!GTK_IS_MENU (menu))
-			break;
-	}
-
-	if (retval && !PANEL_IS_WIDGET (retval)) {
-		g_warning ("Invalid PanelWidget associated with menu");
-		retval = NULL;
-	}
-
-	if (!retval) {
-		g_warning ("Cannot find the PanelWidget associated with menu");
-		retval = panels->data;
-	}
-
-	return retval;
-}
-
-static void
-setup_menu_panel (GtkWidget *menu)
-{
-	PanelWidget *panel;
-
-	panel = g_object_get_data (G_OBJECT (menu), "menu_panel");
-	if (panel)
-		return;
-
-	panel = menu_get_panel (menu);
-	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
-
-	if (panel)
-		gtk_menu_set_screen (GTK_MENU (menu),
-				     gtk_widget_get_screen (GTK_WIDGET (panel)));
-}
-
-GdkScreen *
-menuitem_to_screen (GtkWidget *menuitem)
-{
-	PanelWidget *panel_widget;
-
-	panel_widget = menu_get_panel (menuitem);
-
-	return gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel));
-}
-
 static void
 reload_image_menu_items (void)
 {
@@ -219,8 +157,6 @@ create_empty_menu (void)
 	GtkWidget *retval;
 
 	retval = panel_create_menu ();
-
-	g_signal_connect (retval, "show", G_CALLBACK (setup_menu_panel), NULL);
 
 	/* intercept all right button clicks makes sure they don't
 	   go to the object itself */
@@ -1272,9 +1208,6 @@ create_main_menu (PanelWidget *panel)
 	applications_menu = get_applications_menu ();
 	main_menu = create_applications_menu (applications_menu, NULL, TRUE);
 	g_free (applications_menu);
-
-	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
-	/* FIXME need to update the panel on parent_set */
 
 	g_object_set_data (G_OBJECT (main_menu),
 			   "panel-menu-append-callback",

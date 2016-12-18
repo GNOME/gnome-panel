@@ -502,30 +502,6 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	return info->edit_menu;
 }
 
-
-void
-panel_applet_menu_set_recurse (GtkMenu     *menu,
-			       const gchar *key,
-			       gpointer     data)
-{
-	GList *children;
-	GList *l;
-
-	g_object_set_data (G_OBJECT (menu), key, data);
-
-	children = gtk_container_get_children (GTK_CONTAINER (menu));
-
-	for (l = children; l; l = l->next) {
-		GtkWidget *submenu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (l->data));
-
-		if (submenu)
-			panel_applet_menu_set_recurse (
-				GTK_MENU (submenu), key, data);
-	}
-
-	g_list_free (children);
-}
-
 void
 panel_applet_position_menu (GtkMenu   *menu,
 			    int       *x,
@@ -621,10 +597,6 @@ applet_show_menu (AppletInfo     *info,
 		return;
 
 	panel_widget = panel_applet_get_panel_widget (info);
-
-	panel_applet_menu_set_recurse (GTK_MENU (menu),
-				       "menu_panel",
-				       panel_widget);
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));

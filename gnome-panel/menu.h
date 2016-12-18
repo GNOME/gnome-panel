@@ -60,8 +60,6 @@ GdkPixbuf *	panel_make_menu_icon (GtkIconTheme *icon_theme,
 				      int           size,
 				      gboolean     *long_operation);
 
-GdkScreen      *menuitem_to_screen   (GtkWidget *menuitem);
-PanelWidget    *menu_get_panel       (GtkWidget *menu);
 GtkWidget      *add_menu_separator   (GtkWidget *menu);
 
 gboolean menu_dummy_button_press_event (GtkWidget      *menuitem,

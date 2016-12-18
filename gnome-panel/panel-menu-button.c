@@ -277,20 +277,6 @@ panel_menu_button_set_property (GObject      *object,
 }
 
 static void
-panel_menu_button_associate_panel (PanelMenuButton *button)
-{
-	PanelWidget *panel_widget = NULL;
-
-	if (!button->priv->menu)
-		return;
-
-	if (button->priv->toplevel)
-		panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
-
-	panel_applet_menu_set_recurse (GTK_MENU (button->priv->menu), "menu_panel", panel_widget);
-}
-
-static void
 panel_menu_button_parent_set (GtkWidget *widget,
 			      GtkWidget *previous_parent)
 {
@@ -305,7 +291,6 @@ panel_menu_button_parent_set (GtkWidget *widget,
 	else
 		button->priv->toplevel = NULL;
 
-	panel_menu_button_associate_panel (button);
 	panel_menu_button_set_icon (button);
 
 	if (GTK_WIDGET_CLASS (panel_menu_button_parent_class)->parent_set)
@@ -385,8 +370,6 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 	gtk_menu_attach_to_widget (GTK_MENU (button->priv->menu),
 				   GTK_WIDGET (button),
 				   (GtkMenuDetachFunc) panel_menu_button_menu_detacher);
-
-	panel_menu_button_associate_panel (button);
 
 	g_signal_connect_swapped (button->priv->menu, "deactivate",
 				  G_CALLBACK (panel_menu_button_menu_deactivated),

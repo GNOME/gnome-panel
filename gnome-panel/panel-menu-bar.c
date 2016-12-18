@@ -162,10 +162,6 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 
 	menubar->priv->panel = (PanelWidget *) parent;
 
-	if (menubar->priv->applications_menu)
-		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->applications_menu),
-					       "menu_panel",
-					       menubar->priv->panel);
 	if (menubar->priv->places_item)
 		panel_place_menu_item_set_panel (menubar->priv->places_item,
 						 menubar->priv->panel);

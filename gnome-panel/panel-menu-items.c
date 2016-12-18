@@ -105,7 +105,7 @@ static void
 activate_uri (GtkWidget  *menuitem,
 	      const char *uri)
 {
-	activate_uri_on_screen (uri, menuitem_to_screen (menuitem));
+	activate_uri_on_screen (uri, gtk_widget_get_screen (menuitem));
 }
 
 static void
@@ -115,7 +115,7 @@ activate_path (GtkWidget  *menuitem,
 	char *uri;
 
 	uri = g_filename_to_uri (path, NULL, NULL);
-	activate_uri_on_screen (uri, menuitem_to_screen (menuitem));
+	activate_uri_on_screen (uri, gtk_widget_get_screen (menuitem));
 	g_free (uri);
 }
 
@@ -652,7 +652,7 @@ panel_menu_item_rescan_drive (GtkWidget *menuitem,
 {
 	g_drive_poll_for_media (drive, NULL,
 				drive_poll_for_media_cb,
-				menuitem_to_screen (menuitem));
+				gtk_widget_get_screen (menuitem));
 }
 
 static GtkWidget *
@@ -745,7 +745,7 @@ panel_menu_item_mount_volume (GtkWidget *menuitem,
 	PanelVolumeMountData *mount_data;
 
 	mount_data = g_slice_new (PanelVolumeMountData);
-	mount_data->screen = menuitem_to_screen (menuitem);
+	mount_data->screen = gtk_widget_get_screen (menuitem);
 	mount_data->mount_op = gtk_mount_operation_new (NULL);
 	gtk_mount_operation_set_screen (GTK_MOUNT_OPERATION (mount_data->mount_op),
 					mount_data->screen);
@@ -1193,9 +1193,6 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 		place_item->priv->menu = panel_place_menu_item_create_menu (place_item);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (place_item),
 					   place_item->priv->menu);
-		panel_applet_menu_set_recurse (GTK_MENU (place_item->priv->menu),
-					       "menu_panel",
-					       place_item->priv->panel);
 	}
 }
 
@@ -1551,8 +1548,6 @@ panel_place_menu_item_set_panel (GtkWidget   *item,
 	place_item = PANEL_PLACE_MENU_ITEM (item);
 
 	place_item->priv->panel = panel;
-	panel_applet_menu_set_recurse (GTK_MENU (place_item->priv->menu),
-				       "menu_panel", panel);
 }
 
 void
@@ -1564,8 +1559,6 @@ panel_desktop_menu_item_set_panel (GtkWidget   *item,
 	desktop_item = PANEL_DESKTOP_MENU_ITEM (item);
 
 	desktop_item->priv->panel = panel;
-	panel_applet_menu_set_recurse (GTK_MENU (desktop_item->priv->menu),
-				       "menu_panel", panel);
 }
 
 static void
@@ -1730,5 +1723,5 @@ void
 panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,
 				       const char *path)
 {
-	panel_launch_desktop_file (path, menuitem_to_screen (menuitem), NULL);
+	panel_launch_desktop_file (path, gtk_widget_get_screen (menuitem), NULL);
 }
