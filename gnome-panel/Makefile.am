@@ -57,7 +57,6 @@ panel_sources =			\
 panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
-	panel-globals.h		\
 	button-widget.h		\
 	panel-session.h		\
 	panel.h			\

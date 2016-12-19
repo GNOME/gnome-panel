@@ -39,7 +39,6 @@
 #include "panel-action-button.h"
 #include "panel-menu-button.h"
 #include "panel-menu-items.h"
-#include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"

@@ -23,7 +23,6 @@
 #include "panel-util.h"
 #include "panel-typebuiltins.h"
 #include "panel-applet-frame.h"
-#include "panel-globals.h"
 #include "panel-lockdown.h"
 
 typedef enum {
@@ -46,6 +45,8 @@ enum {
 };
 
 static guint panel_widget_signals [LAST_SIGNAL] = {0};
+
+static GSList *panels = NULL;
 
 /*define for some debug output*/
 #undef PANEL_WIDGET_DEBUG
@@ -2657,4 +2658,9 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 				 G_CALLBACK (panel_widget_open_dialog_destroyed),
 				 panel,
 				 G_CONNECT_SWAPPED);
+}
+
+GSList *panel_widget_get_panels (void)
+{
+  return panels;
 }

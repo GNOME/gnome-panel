@@ -26,9 +26,6 @@
 #include "panel-layout.h"
 #include "panel-schemas.h"
 
-/* globals */
-GSList *panels = NULL;
-
 static gboolean  replace = FALSE;
 static gboolean  version = FALSE;
 

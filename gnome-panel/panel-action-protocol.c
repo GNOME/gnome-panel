@@ -30,7 +30,6 @@
 
 #include "menu.h"
 #include "applet.h"
-#include "panel-globals.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-force-quit.h"
@@ -47,6 +46,7 @@ static void
 panel_action_protocol_main_menu (GdkScreen *screen,
 				 guint32    activate_time)
 {
+	GSList      *panels;
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
 	AppletInfo  *info;
@@ -65,6 +65,7 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 		return;
 	}
 
+	panels = panel_widget_get_panels ();
 	panel_widget = panels->data;
 	menu = create_main_menu (panel_widget);
 

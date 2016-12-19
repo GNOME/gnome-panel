@@ -36,7 +36,6 @@
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
-#include "panel-globals.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-layout.h"

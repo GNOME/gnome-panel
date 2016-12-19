@@ -202,6 +202,8 @@ void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
 void     panel_widget_register_open_dialog        (PanelWidget *panel,
 						   GtkWidget   *dialog);  
 
+GSList  *panel_widget_get_panels (void);
+
 G_END_DECLS
 
 #endif /* PANEL_WIDGET_H */
