@@ -93,7 +93,6 @@ void                 panel_toplevel_set_monitor            (PanelToplevel       
 int                  panel_toplevel_get_monitor            (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_auto_hide_size     (PanelToplevel       *toplevel,
 							    int                  autohide_size);
-int                  panel_toplevel_get_auto_hide_size     (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_x                  (PanelToplevel       *toplevel,
 							    int                  x,
 							    int                  x_right,
@@ -102,18 +101,6 @@ void                 panel_toplevel_set_y                  (PanelToplevel       
 							    int                  y,
 							    int                  y_bottom,
 							    gboolean             y_centered);
-void                 panel_toplevel_get_position           (PanelToplevel       *toplevel,
-							    int                 *x,
-							    int                 *x_right,
-							    int                 *y,
-							    int                 *y_bottom);
-gboolean             panel_toplevel_get_x_centered         (PanelToplevel       *toplevel);
-gboolean             panel_toplevel_get_y_centered         (PanelToplevel       *toplevel);
-
-void                 panel_toplevel_rotate                 (PanelToplevel       *toplevel,
-							    gboolean             clockwise);
-
-gboolean             panel_toplevel_get_is_floating	   (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_get_is_hidden          (PanelToplevel       *toplevel);
 
@@ -129,22 +116,16 @@ void                 panel_toplevel_pop_autohide_disabler  (PanelToplevel       
 
 void                 panel_toplevel_set_auto_hide          (PanelToplevel       *toplevel,
 							    gboolean             autohide);
-gboolean             panel_toplevel_get_auto_hide          (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_hide_delay         (PanelToplevel       *toplevel,
 							    int                  hide_delay);
-int                  panel_toplevel_get_hide_delay         (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_unhide_delay       (PanelToplevel       *toplevel,
 							    int                  unhide_delay);
-int                  panel_toplevel_get_unhide_delay       (PanelToplevel       *toplevel);
 
-gboolean             panel_toplevel_get_animate            (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_animation_speed    (PanelToplevel       *toplevel,
 							    PanelAnimationSpeed  animation_speed);
-PanelAnimationSpeed  panel_toplevel_get_animation_speed    (PanelToplevel       *toplevel);
 
 void                 panel_toplevel_set_enable_buttons     (PanelToplevel       *toplevel,
 							    gboolean             enable_buttons);
-gboolean             panel_toplevel_get_enable_buttons     (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_is_last                (PanelToplevel       *toplevel);
 int                  panel_toplevel_get_maximum_size       (PanelToplevel *toplevel);

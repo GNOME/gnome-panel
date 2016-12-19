@@ -4459,14 +4459,6 @@ panel_toplevel_get_expand (PanelToplevel *toplevel)
 	return toplevel->priv->expand;
 }
 
-gboolean
-panel_toplevel_get_is_floating (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), TRUE);
-
-	return toplevel->priv->floating;
-}
-
 void
 panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 				PanelOrientation  orientation)
@@ -4657,14 +4649,6 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "auto-hide-size");
 }
 
-int
-panel_toplevel_get_auto_hide_size (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), DEFAULT_AUTO_HIDE_SIZE);
-
-	return toplevel->priv->auto_hide_size;
-}
-
 void
 panel_toplevel_set_x (PanelToplevel *toplevel,
 		      int            x,
@@ -4743,44 +4727,6 @@ panel_toplevel_set_y (PanelToplevel *toplevel,
 	}
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
-}
-
-void
-panel_toplevel_get_position (PanelToplevel *toplevel,
-			     int           *x,
-			     int           *x_right,
-			     int           *y,
-			     int           *y_bottom)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-
-	if (x)
-		*x = toplevel->priv->x;
-
-	if (y)
-		*y = toplevel->priv->y;
-
-	if (x_right)
-		*x_right = toplevel->priv->x_right;
-
-	if (y_bottom)
-		*y_bottom = toplevel->priv->y_bottom;
-}
-
-gboolean
-panel_toplevel_get_x_centered (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->x_centered;
-}
-
-gboolean
-panel_toplevel_get_y_centered (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->y_centered;
 }
 
 /**
@@ -4898,14 +4844,6 @@ panel_toplevel_set_auto_hide (PanelToplevel *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "auto-hide");
 }
 
-gboolean
-panel_toplevel_get_auto_hide (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->auto_hide;
-}
-
 void
 panel_toplevel_set_hide_delay (PanelToplevel *toplevel,
 			       int            hide_delay)
@@ -4920,14 +4858,6 @@ panel_toplevel_set_hide_delay (PanelToplevel *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "hide-delay");
 }
 
-int
-panel_toplevel_get_hide_delay (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), -1);
-
-	return toplevel->priv->hide_delay;
-}
-
 void
 panel_toplevel_set_unhide_delay (PanelToplevel *toplevel,
 				 int            unhide_delay)
@@ -4940,14 +4870,6 @@ panel_toplevel_set_unhide_delay (PanelToplevel *toplevel,
 	toplevel->priv->unhide_delay = unhide_delay;
 
 	g_object_notify (G_OBJECT (toplevel), "unhide-delay");
-}
-
-int
-panel_toplevel_get_unhide_delay (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), -1);
-
-	return toplevel->priv->unhide_delay;
 }
 
 static void
@@ -4966,14 +4888,6 @@ panel_toplevel_set_animate (PanelToplevel *toplevel,
 	g_object_notify (G_OBJECT (toplevel), "animate");
 }
 
-gboolean
-panel_toplevel_get_animate (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->animate;
-}
-
 void
 panel_toplevel_set_animation_speed (PanelToplevel       *toplevel,
 				    PanelAnimationSpeed  animation_speed)
@@ -4986,14 +4900,6 @@ panel_toplevel_set_animation_speed (PanelToplevel       *toplevel,
 	toplevel->priv->animation_speed = animation_speed;
 
 	g_object_notify (G_OBJECT (toplevel), "animation-speed");
-}
-
-PanelAnimationSpeed
-panel_toplevel_get_animation_speed (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), 0);
-
-	return toplevel->priv->animation_speed;
 }
 
 void
@@ -5010,46 +4916,6 @@ panel_toplevel_set_enable_buttons (PanelToplevel *toplevel,
 	panel_toplevel_update_hide_buttons (toplevel);
 
 	g_object_notify (G_OBJECT (toplevel), "buttons-enabled");
-}
-
-gboolean
-panel_toplevel_get_enable_buttons (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->buttons_enabled;
-}
-
-void
-panel_toplevel_rotate (PanelToplevel *toplevel,
-		       gboolean       clockwise)
-{
-	PanelOrientation orientation;
-
-	/* Relies on PanelOrientation definition:
-	 *
-	 * typedef enum {
-	 *        PANEL_ORIENTATION_TOP    = 1 << 0,
-	 *        PANEL_ORIENTATION_RIGHT  = 1 << 1,
-	 *        PANEL_ORIENTATION_BOTTOM = 1 << 2,
-	 *        PANEL_ORIENTATION_LEFT   = 1 << 3
-	 * } PanelOrientation;
-	 */
-
-	orientation = toplevel->priv->orientation;
-
-	if (clockwise)
-		orientation <<= 1;
-	else
-		orientation >>= 1;
-
-	if (orientation == 0)
-		orientation = PANEL_ORIENTATION_LEFT;
-
-	else if (orientation > PANEL_ORIENTATION_LEFT)
-		orientation = PANEL_ORIENTATION_TOP;
-
-	panel_toplevel_set_orientation (toplevel, orientation);
 }
 
 gboolean
