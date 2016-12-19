@@ -62,6 +62,15 @@ G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 #define HANDLE_SIZE               10
 
 typedef enum {
+	PANEL_STATE_NORMAL       = 0,
+	PANEL_STATE_AUTO_HIDDEN  = 1,
+	PANEL_STATE_HIDDEN_UP    = 2,
+	PANEL_STATE_HIDDEN_DOWN  = 3,
+	PANEL_STATE_HIDDEN_LEFT  = 4,
+	PANEL_STATE_HIDDEN_RIGHT = 5
+} PanelState;
+
+typedef enum {
 	PANEL_GRAB_OP_NONE,
 	PANEL_GRAB_OP_MOVE,
 	PANEL_GRAB_OP_RESIZE,
@@ -5041,14 +5050,6 @@ panel_toplevel_rotate (PanelToplevel *toplevel,
 		orientation = PANEL_ORIENTATION_TOP;
 
 	panel_toplevel_set_orientation (toplevel, orientation);
-}
-
-PanelState
-panel_toplevel_get_state (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), 0);
-
-	return toplevel->priv->state;
 }
 
 gboolean

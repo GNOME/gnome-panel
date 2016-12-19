@@ -116,7 +116,6 @@ void                 panel_toplevel_rotate                 (PanelToplevel       
 gboolean             panel_toplevel_get_is_floating	   (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_get_is_hidden          (PanelToplevel       *toplevel);
-PanelState           panel_toplevel_get_state              (PanelToplevel       *toplevel);
 
 void                 panel_toplevel_hide                   (PanelToplevel       *toplevel,
 							    gboolean             auto_hide,
