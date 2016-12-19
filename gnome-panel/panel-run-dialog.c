@@ -39,6 +39,7 @@
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkx.h>
 #include <gmenu-tree.h>
 
 #include <libpanel-util/panel-error.h>
