@@ -1294,8 +1294,8 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 
 	if (dnd_enabled) {
 		static GtkTargetEntry dnd_targets[] = {
-			{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
-			{ "text/uri-list", 0, TARGET_URI_LIST }
+			{ (gchar *) "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
+			{ (gchar *) "text/uri-list", 0, TARGET_URI_LIST }
 		};
 
 		gtk_widget_set_has_window (launcher->button, TRUE);
