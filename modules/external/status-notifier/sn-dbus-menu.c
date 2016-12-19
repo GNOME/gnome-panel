@@ -101,7 +101,9 @@ layout_update_item (SnDBusMenu *menu,
 
       g_object_set_data (G_OBJECT (item->item), "item-id", GUINT_TO_POINTER (id));
       gtk_menu_shell_append (GTK_MENU_SHELL (gtk_menu), item->item);
-      g_signal_connect (item->item, "activate", G_CALLBACK (activate_cb), menu);
+
+      item->activate_id = g_signal_connect (item->item, "activate",
+                                            G_CALLBACK (activate_cb), menu);
 
       g_hash_table_replace (menu->items, GUINT_TO_POINTER (id), item);
     }

@@ -45,6 +45,8 @@ typedef struct
 
   GtkWidget   *item;
   GtkMenu     *submenu;
+
+  gulong       activate_id;
 } SnDBusMenuItem;
 
 SnDBusMenuItem *sn_dbus_menu_item_new          (GVariant       *props);

@@ -369,10 +369,14 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
 
               check = GTK_CHECK_MENU_ITEM (item->item);
 
+              g_signal_handler_block (item->item, item->activate_id);
+
               if (item->toggle_state == 1)
                 gtk_check_menu_item_set_active (check, TRUE);
               else if (item->toggle_state == 0)
                 gtk_check_menu_item_set_active (check, FALSE);
+
+              g_signal_handler_unblock (item->item, item->activate_id);
             }
         }
       else if (g_strcmp0 (prop, "type") == 0)
