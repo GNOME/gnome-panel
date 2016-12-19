@@ -214,7 +214,6 @@ draw_zoom_animation_composited (GdkScreen *gscreen,
 
 	/* see doc for gtk_widget_set_app_paintable() */
 	gtk_widget_realize (win);
-	gdk_window_set_background_pattern (gtk_widget_get_window (win), NULL);
 	gtk_widget_show (win);
 
 	zoom->timeout_id = g_timeout_add (ZOOM_DELAY,
