@@ -39,9 +39,9 @@ typedef struct {
 } KeyBinding;
 
 typedef struct {
-	char            *key;
-	char            *signal;
-	GSList          *list;
+	const gchar *key;
+	const gchar *signal;
+	GSList      *list;
 } PanelBinding;
 
 static gboolean initialised = FALSE;
@@ -201,10 +201,10 @@ panel_bindings_mouse_modifier_changed (GSettings *settings, const gchar *key)
 static void
 panel_bindings_initialise (void)
 {
-	int          i;
-	int          j;
-	char        *str;
-	gchar      **array;
+	guint i;
+	guint j;
+	gchar *str;
+	gchar **array;
 
 	if (initialised)
 		return;
@@ -241,7 +241,7 @@ panel_bindings_initialise (void)
 void
 panel_bindings_set_entries (GtkBindingSet *binding_set)
 {
-	int i;
+	guint i;
 
 	if (!initialised)
 		panel_bindings_initialise ();
