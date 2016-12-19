@@ -1,13 +1,15 @@
 /*
  * GNOME panel launcher module.
  * (C) 1997,1998,1999,2000 The Free Software Foundation
- * (C) 2000 Eazel, Inc.
+ * (C) 2000, 2001 Eazel, Inc.
+ * (C) 2002 Sun Microsystems Inc
  *
  * Authors: Miguel de Icaza
  *          Federico Mena
+ *          George Lebl <jirka@5z.com>
+ *          Mark McLoughlin <mark@skynet.ie>
  * CORBAized by George Lebl
  * de-CORBAized by George Lebl
- *
  */
 
 #include <config.h>
@@ -32,7 +34,6 @@
 
 #include "button-widget.h"
 #include "panel-util.h"
-#include "xstuff.h"
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
 #include "panel-multiscreen.h"
@@ -41,6 +42,185 @@
 #include "panel-ditem-editor.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
+
+/* zoom factor, steps and delay if composited (factor must be odd) */
+#define ZOOM_FACTOR 5
+#define ZOOM_STEPS  14
+#define ZOOM_DELAY 10
+
+typedef struct {
+	int size;
+	int size_start;
+	int size_end;
+	PanelOrientation orientation;
+	double opacity;
+	GdkPixbuf *pixbuf;
+	guint timeout_id;
+} CompositedZoomData;
+
+static gboolean
+zoom_timeout (GtkWidget *window)
+{
+	gtk_widget_queue_draw (window);
+	return TRUE;
+}
+
+static gboolean
+idle_destroy (gpointer data)
+{
+	gtk_widget_destroy (GTK_WIDGET (data));
+
+	return FALSE;
+}
+
+static gboolean
+zoom_draw (GtkWidget *widget,
+	   cairo_t   *cr,
+           gpointer   user_data)
+{
+	CompositedZoomData *zoom;
+
+	zoom = user_data;
+
+	if (zoom->size >= zoom->size_end) {
+		if (zoom->timeout_id)
+			g_source_remove (zoom->timeout_id);
+		zoom->timeout_id = 0;
+
+		gtk_widget_hide (widget);
+		g_idle_add (idle_destroy, widget);
+
+		g_object_unref (zoom->pixbuf);
+		zoom->pixbuf = NULL;
+
+		g_slice_free (CompositedZoomData, zoom);
+	} else {
+		GdkPixbuf *scaled;
+		int width, height;
+		int x = 0, y = 0;
+
+		gtk_window_get_size (GTK_WINDOW (widget), &width, &height);
+
+		zoom->size += MAX ((zoom->size_end - zoom->size_start) / ZOOM_STEPS, 1);
+		zoom->opacity -= 1.0 / ((double) ZOOM_STEPS + 1);
+
+		scaled = gdk_pixbuf_scale_simple (zoom->pixbuf,
+						  zoom->size, zoom->size,
+						  GDK_INTERP_BILINEAR);
+
+		switch (zoom->orientation) {
+		case PANEL_ORIENTATION_TOP:
+			x = (width - gdk_pixbuf_get_width (scaled)) / 2;
+			y = 0;
+			break;
+
+		case PANEL_ORIENTATION_RIGHT:
+			x = width - gdk_pixbuf_get_width (scaled);
+			y = (height - gdk_pixbuf_get_height (scaled)) / 2;
+			break;
+
+		case PANEL_ORIENTATION_BOTTOM:
+			x = (width - gdk_pixbuf_get_width (scaled)) / 2;
+			y = height - gdk_pixbuf_get_height (scaled);
+			break;
+
+		case PANEL_ORIENTATION_LEFT:
+			x = 0;
+			y = (height - gdk_pixbuf_get_height (scaled)) / 2;
+			break;
+
+		default:
+			break;
+		}
+
+		cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+		cairo_set_source_rgba (cr, 0, 0, 0, 0.0);
+		cairo_rectangle (cr, 0, 0, width, height);
+		cairo_fill (cr);
+
+		gdk_cairo_set_source_pixbuf (cr, scaled, x, y);
+		cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+		cairo_paint_with_alpha (cr, MAX (zoom->opacity, 0));
+
+		g_object_unref (scaled);
+	}
+
+	return FALSE;
+}
+
+static void
+draw_zoom_animation_composited (GdkScreen *gscreen,
+				int x, int y, int w, int h,
+				GdkPixbuf *pixbuf,
+				PanelOrientation orientation)
+{
+	GtkWidget *win;
+	CompositedZoomData *zoom;
+	int wx = 0, wy = 0;
+
+	w += 2;
+	h += 2;
+
+	zoom = g_slice_new (CompositedZoomData);
+	zoom->size = MIN (w,h);
+	zoom->size_start = zoom->size;
+	zoom->size_end = zoom->size * ZOOM_FACTOR;
+	zoom->orientation = orientation;
+	zoom->opacity = 1.0;
+	zoom->pixbuf = g_object_ref (pixbuf);
+	zoom->timeout_id = 0;
+
+	win = gtk_window_new (GTK_WINDOW_POPUP);
+
+	gtk_window_set_screen (GTK_WINDOW (win), gscreen);
+	gtk_window_set_keep_above (GTK_WINDOW (win), TRUE);
+	gtk_window_set_decorated (GTK_WINDOW (win), FALSE);
+	gtk_widget_set_app_paintable(win, TRUE);
+	gtk_widget_set_visual (win, gdk_screen_get_rgba_visual (gscreen));
+
+	gtk_window_set_gravity (GTK_WINDOW (win), GDK_GRAVITY_STATIC);
+	gtk_window_set_default_size (GTK_WINDOW (win),
+				     w * ZOOM_FACTOR, h * ZOOM_FACTOR);
+
+	switch (zoom->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		wx = x - w * (ZOOM_FACTOR / 2);
+		wy = y;
+		break;
+
+	case PANEL_ORIENTATION_RIGHT:
+		wx = x - w * (ZOOM_FACTOR - 1);
+		wy = y - h * (ZOOM_FACTOR / 2);
+		break;
+
+	case PANEL_ORIENTATION_BOTTOM:
+		wx = x - w * (ZOOM_FACTOR / 2);
+		wy = y - h * (ZOOM_FACTOR - 1);
+		break;
+
+	case PANEL_ORIENTATION_LEFT:
+		wx = x;
+		wy = y - h * (ZOOM_FACTOR / 2);
+		break;
+
+	default:
+		break;
+	}
+
+	gtk_window_move (GTK_WINDOW (win), wx, wy);
+
+	g_signal_connect (G_OBJECT (win), "draw",
+			  G_CALLBACK (zoom_draw), zoom);
+
+	/* see doc for gtk_widget_set_app_paintable() */
+	gtk_widget_realize (win);
+	gdk_window_set_background_pattern (gtk_widget_get_window (win), NULL);
+	gtk_widget_show (win);
+
+	zoom->timeout_id = g_timeout_add (ZOOM_DELAY,
+					  (GSourceFunc) zoom_timeout,
+					  win);
+}
 
 static GdkScreen *
 launcher_get_screen (Launcher *launcher)
@@ -96,9 +276,16 @@ launcher_register_error_dialog (Launcher *launcher,
 static void
 launcher_do_zoom_animation (GtkWidget *widget)
 {
+	GdkScreen *screen;
 	GtkSettings *settings;
-	gboolean     enable_animations;
+	gboolean enable_animations;
+	ButtonWidget *button_widget;
+	GdkPixbuf *pixbuf;
+	PanelOrientation orientation;
+	gint x, y;
+	GtkAllocation allocation;
 
+	screen = gtk_widget_get_screen (widget);
 	settings = gtk_widget_get_settings (widget);
 
 	enable_animations = TRUE;
@@ -106,11 +293,29 @@ launcher_do_zoom_animation (GtkWidget *widget)
 		      "gtk-enable-animations", &enable_animations,
 		      NULL);
 
-	if (enable_animations)
-		xstuff_zoom_animate (widget,
-				     button_widget_get_pixbuf (BUTTON_WIDGET (widget)),
-				     button_widget_get_orientation (BUTTON_WIDGET (widget)),
-				     NULL);
+	if (!enable_animations || !gdk_screen_is_composited (screen))
+		return;
+
+	button_widget = BUTTON_WIDGET (widget);
+	pixbuf = button_widget_get_pixbuf (button_widget);
+	orientation = button_widget_get_orientation (button_widget);
+
+	if (!pixbuf)
+		return;
+
+	gdk_window_get_origin (gtk_widget_get_window (widget), &x, &y);
+	gtk_widget_get_allocation (widget, &allocation);
+
+	if (!gtk_widget_get_has_window (widget)) {
+		x += allocation.x;
+		y += allocation.y;
+	}
+
+	draw_zoom_animation_composited (screen, x,  y,
+	                                allocation.width, allocation.height,
+	                                pixbuf, orientation);
+
+	g_object_unref (pixbuf);
 }
 
 static void

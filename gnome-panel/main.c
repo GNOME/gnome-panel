@@ -25,7 +25,6 @@
 #include "panel-icon-names.h"
 #include "panel-layout.h"
 #include "panel-schemas.h"
-#include "xstuff.h"
 
 /* globals */
 GSList *panels = NULL;
@@ -183,8 +182,6 @@ main (int argc, char **argv)
 		panel_cleanup_do ();
 		return 1;
 	}
-
-	xstuff_init ();
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the nautilus desktop). */

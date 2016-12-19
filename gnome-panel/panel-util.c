@@ -35,7 +35,6 @@
 #include <libpanel-util/panel-xdg.h>
 
 #include "applet.h"
-#include "xstuff.h"
 #include "panel-bindings.h"
 #include "launcher.h"
 #include "panel-icon-names.h"

@@ -20,7 +20,6 @@ panel_sources =			\
 	main.c			\
 	panel-widget.c		\
 	button-widget.c		\
-	xstuff.c		\
 	panel-session.c		\
 	panel.c			\
 	applet.c		\
@@ -60,7 +59,6 @@ panel_headers =			\
 	panel-widget.h		\
 	panel-globals.h		\
 	button-widget.h		\
-	xstuff.h		\
 	panel-session.h		\
 	panel.h			\
 	applet.h		\
@@ -135,7 +133,7 @@ gnome_desktop_item_edit_SOURCES =	\
 	gnome-desktop-item-edit.c	\
 	panel-ditem-editor.c		\
 	panel-util.c			\
-	xstuff.c
+	$(NULL)
 
 gnome_desktop_item_edit_CFLAGS = \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
