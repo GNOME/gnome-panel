@@ -310,6 +310,8 @@ surface_from_variant (GVariant *variant,
   cairo_format_t format;
   gint stride;
   guint32 *data;
+  guchar *p;
+  gint y;
 
   format = CAIRO_FORMAT_ARGB32;
   stride = cairo_format_stride_for_width (format, width);
@@ -323,6 +325,29 @@ surface_from_variant (GVariant *variant,
       data[i] = GUINT32_FROM_BE (data[i]);
   }
 #endif
+
+  /* CAIRO_FORMAT_ARGB32 wants premultiplied alpha, but data sent from
+   * client is not (and must not be) premultiplied alpha.
+   */
+
+  p = (guchar *) data;
+  for (y = 0; y < height; y++)
+    {
+      gint x;
+
+      for (x = 0; x < width; x++)
+        {
+          guchar alpha;
+
+          alpha = p[x * 4 + 3];
+
+          p[x * 4 + 0] = (p[x * 4 + 0] * alpha) / 255;
+          p[x * 4 + 1] = (p[x * 4 + 1] * alpha) / 255;
+          p[x * 4 + 2] = (p[x * 4 + 2] * alpha) / 255;
+        }
+
+      p += stride;
+    }
 
   return cairo_image_surface_create_for_data ((guchar *) data, format,
                                               width, height, stride);
