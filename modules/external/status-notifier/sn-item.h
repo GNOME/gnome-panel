@@ -72,6 +72,8 @@ const gchar    *sn_item_get_id          (SnItem *item);
 
 SnItemCategory  sn_item_get_category    (SnItem *item);
 
+GtkMenu        *sn_item_get_menu        (SnItem *item);
+
 const gchar    *sn_item_get_bus_name    (SnItem *item);
 const gchar    *sn_item_get_object_path (SnItem *item);
 

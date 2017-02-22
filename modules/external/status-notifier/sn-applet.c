@@ -75,6 +75,156 @@ reorder_items (GtkWidget *widget,
 }
 
 static void
+get_popup_position (SnApplet *sn,
+                    SnItem   *item,
+                    gint     *x,
+                    gint     *y)
+{
+  GtkWidget *widget;
+  GtkWidget *toplevel;
+  GdkWindow *window;
+  GpApplet *applet;
+  GtkPositionType position;
+
+  widget = GTK_WIDGET (item);
+  toplevel = gtk_widget_get_toplevel (widget);
+  window = gtk_widget_get_window (toplevel);
+
+  gtk_widget_translate_coordinates (widget, toplevel, 0, 0, x, y);
+  gdk_window_get_root_coords (window, *x, *y, x, y);
+
+  applet = GP_APPLET (sn);
+  position = gp_applet_get_position (applet);
+
+  if (position == GTK_POS_TOP || position == GTK_POS_LEFT)
+    {
+      gint width, height;
+
+      gdk_window_get_geometry (window, NULL, NULL, &width, &height);
+
+      if (gp_applet_get_orientation (applet) == GTK_ORIENTATION_HORIZONTAL)
+        *y += height;
+      else
+        *x += width;
+    }
+}
+
+static void
+popup_menu_at_item (SnApplet *sn,
+                    GtkMenu  *menu,
+                    SnItem   *item,
+                    GdkEvent *event)
+{
+  GdkGravity widget_anchor;
+  GdkGravity menu_anchor;
+
+  switch (gp_applet_get_position (GP_APPLET (sn)))
+    {
+      case GTK_POS_TOP:
+        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_LEFT:
+        widget_anchor = GDK_GRAVITY_NORTH_EAST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_RIGHT:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_EAST;
+        break;
+
+      case GTK_POS_BOTTOM:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
+        break;
+
+      default:
+        g_assert_not_reached ();
+        break;
+    }
+
+  gtk_menu_popup_at_widget (menu, GTK_WIDGET (item),
+                            widget_anchor, menu_anchor,
+                            event);
+}
+
+static gboolean
+button_press_event_cb (GtkWidget      *widget,
+                       GdkEventButton *event,
+                       SnApplet       *sn)
+{
+  SnItem *item;
+  gint x, y;
+
+  item = SN_ITEM (widget);
+
+  if (event->button == 2)
+    {
+      get_popup_position (sn, item, &x, &y);
+      SN_ITEM_GET_CLASS (item)->secondary_activate (item, x, y);
+    }
+  else if (event->button == 3)
+    {
+      GtkMenu *menu;
+
+      menu = sn_item_get_menu (item);
+
+      if (menu != NULL)
+        {
+          popup_menu_at_item (sn, menu, item, (GdkEvent *) event);
+          return GDK_EVENT_STOP;
+        }
+      else
+        {
+          get_popup_position (sn, item, &x, &y);
+          SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
+        }
+    }
+
+  return GDK_EVENT_PROPAGATE;
+}
+
+static gboolean
+popup_menu_cb (GtkWidget *widget,
+               SnApplet  *sn)
+{
+  SnItem *item;
+  GtkMenu *menu;
+
+  item = SN_ITEM (widget);
+  menu = sn_item_get_menu (item);
+
+  if (menu != NULL)
+    {
+      popup_menu_at_item (sn, menu, item, NULL);
+    }
+  else
+    {
+      gint x, y;
+
+      get_popup_position (sn, item, &x, &y);
+      SN_ITEM_GET_CLASS (item)->context_menu (item, x, y);
+    }
+
+  return TRUE;
+}
+
+static void
+clicked_cb (GtkButton *button,
+            SnApplet  *sn)
+{
+  SnItem *item;
+  gint x, y;
+
+  item = SN_ITEM (button);
+
+  get_popup_position (sn, item, &x, &y);
+  SN_ITEM_GET_CLASS (item)->activate (item, x, y);
+}
+
+static void
 item_added_cb (SnHost   *host,
                SnItem   *item,
                SnApplet *sn)
@@ -84,6 +234,15 @@ item_added_cb (SnHost   *host,
 
   sn->items = g_slist_sort (sn->items, compare_items);
   gtk_container_foreach (GTK_CONTAINER (sn->box), reorder_items, sn);
+
+  g_signal_connect (item, "button-press-event",
+                    G_CALLBACK (button_press_event_cb), sn);
+
+  g_signal_connect (item, "popup-menu",
+                    G_CALLBACK (popup_menu_cb), sn);
+
+  g_signal_connect (item, "clicked",
+                    G_CALLBACK (clicked_cb), sn);
 
   g_object_bind_property (sn->box, "orientation",
                           item, "orientation",
