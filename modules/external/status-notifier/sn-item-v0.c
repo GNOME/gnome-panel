@@ -45,6 +45,7 @@ struct _SnItemV0
   SnItem         parent;
 
   GtkWidget     *image;
+  gint           size;
 
   GCancellable  *cancellable;
   SnItemV0Gen   *proxy;
@@ -229,20 +230,20 @@ update (SnItemV0 *v0)
 
       gtk_icon_theme_rescan_if_needed (icon_theme);
       gtk_image_set_from_icon_name (image, v0->icon_name, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (image, 16);
+      gtk_image_set_pixel_size (image, v0->size);
     }
   else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
     {
       cairo_surface_t *surface;
 
-      surface = get_surface (v0, sn_item_get_orientation (SN_ITEM (v0)), 16);
+      surface = get_surface (v0, sn_item_get_orientation (SN_ITEM (v0)), v0->size);
       gtk_image_set_from_surface (image, surface);
       cairo_surface_destroy (surface);
     }
   else
     {
       gtk_image_set_from_icon_name (image, "image-missing", GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (image, 16);
+      gtk_image_set_pixel_size (image, v0->size);
     }
 
   tip = v0->tooltip;
@@ -1054,6 +1055,38 @@ sn_item_v0_finalize (GObject *object)
   G_OBJECT_CLASS (sn_item_v0_parent_class)->finalize (object);
 }
 
+static void
+sn_item_v0_size_allocate (GtkWidget     *widget,
+                          GtkAllocation *allocation)
+{
+  SnItemV0 *v0;
+  GtkStyleContext *context;
+  GtkStateFlags flags;
+  GtkBorder padding;
+  gint size;
+
+  v0 = SN_ITEM_V0 (widget);
+  context = gtk_widget_get_style_context (widget);
+  flags = gtk_style_context_get_state (context);
+
+  GTK_WIDGET_CLASS (sn_item_v0_parent_class)->size_allocate (widget, allocation);
+
+  gtk_style_context_get_padding (context, flags, &padding);
+
+  if (sn_item_get_orientation (SN_ITEM (v0)) == GTK_ORIENTATION_HORIZONTAL)
+    size = allocation->height - padding.top - padding.bottom;
+  else
+    size = allocation->width - padding.left - padding.right;
+
+  size = MAX (size, 16);
+  if (v0->size == size)
+    return;
+
+  v0->size = size;
+
+  queue_update (v0);
+}
+
 static const gchar *
 sn_item_v0_get_id (SnItem *item)
 {
@@ -1210,6 +1243,8 @@ sn_item_v0_class_init (SnItemV0Class *v0_class)
   object_class->constructed = sn_item_v0_constructed;
   object_class->dispose = sn_item_v0_dispose;
   object_class->finalize = sn_item_v0_finalize;
+
+  widget_class->size_allocate = sn_item_v0_size_allocate;
 
   item_class->get_id = sn_item_v0_get_id;
   item_class->get_category = sn_item_v0_get_category;
