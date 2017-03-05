@@ -73,7 +73,17 @@ gp-arrow-button:active {
   padding: 3px 0px;
 }
 
-#tasklist-button {
+#tasklist-button,
+#tasklist-button:hover,
+#tasklist-button:active,
+#tasklist-button:checked {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-image: none;
+}
+
+#tasklist-button > box {
   padding: 2px 4px;
   margin: 1px;
   border: 1px solid;
@@ -87,14 +97,14 @@ gp-arrow-button:active {
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
 }
 
-#tasklist-button:hover {
+#tasklist-button:hover > box {
   background-image: linear-gradient(to bottom, #353c3e, #2e3436 60%, #2a2e30);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
   -gtk-icon-effect: highlight;
 }
 
-#tasklist-button:active,
-#tasklist-button:checked {
+#tasklist-button:active > box,
+#tasklist-button:checked > box {
   outline-color: rgba(238, 238, 236, 0.3);
   border-color: #1b1f20;
   background-image: none;
