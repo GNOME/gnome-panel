@@ -5,22 +5,22 @@
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011.
 # Julen Ruiz Aizpuru <julenx@gmail.com>, 2011.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2014.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2014, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel gnome-3-8\n"
+"Project-Id-Version: gnome-panel gnome-3-22\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-08-22 16:52+0200\n"
-"PO-Revision-Date: 2014-05-02 12:19+0200\n"
+"POT-Creation-Date: 2016-11-20 22:46+0000\n"
+"PO-Revision-Date: 2017-03-07 13:05+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
-"Language-Team: Basque <librezale@librezale.org>\n"
+"Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "X-Project-Style: gnome\n"
 
 #. Translators: This is a strftime format string.
@@ -31,8 +31,8 @@ msgstr ""
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: ../applets/clock/calendar-window.c:309
-#: ../applets/clock/clock-location-tile.c:503
+#: ../applets/clock/calendar-window.c:269
+#: ../applets/clock/clock-location-tile.c:494
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -43,159 +43,149 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: ../applets/clock/calendar-window.c:314
-#: ../applets/clock/clock-location-tile.c:466
-#: ../applets/clock/clock-location-tile.c:510
+#: ../applets/clock/calendar-window.c:274
+#: ../applets/clock/clock-location-tile.c:457
+#: ../applets/clock/clock-location-tile.c:501
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:320
+#: ../applets/clock/calendar-window.c:280
 msgid "%b %d"
 msgstr "%b %d"
 
-#: ../applets/clock/calendar-window.c:829
+#: ../applets/clock/calendar-window.c:788
 msgid "Tasks"
 msgstr "Zereginak"
 
-#: ../applets/clock/calendar-window.c:829
-#: ../applets/clock/calendar-window.c:1012
-#: ../applets/clock/calendar-window.c:1548
+#: ../applets/clock/calendar-window.c:788
+#: ../applets/clock/calendar-window.c:971
+#: ../applets/clock/calendar-window.c:1546
 msgid "Edit"
 msgstr "Editatu"
 
-#: ../applets/clock/calendar-window.c:952
+#: ../applets/clock/calendar-window.c:911
 msgid "All Day"
 msgstr "Egun osoa"
 
-#: ../applets/clock/calendar-window.c:1096
+#: ../applets/clock/calendar-window.c:1055
 msgid "Appointments"
 msgstr "Hitzorduak"
 
-#: ../applets/clock/calendar-window.c:1121
+#: ../applets/clock/calendar-window.c:1080
 msgid "Birthdays and Anniversaries"
 msgstr "Urtebetetzeak eta urteurrenak"
 
-#: ../applets/clock/calendar-window.c:1146
+#: ../applets/clock/calendar-window.c:1105
 msgid "Weather Information"
 msgstr "Eguraldiaren informazioa"
 
-#: ../applets/clock/calendar-window.c:1548 ../applets/clock/clock.ui.h:23
+#: ../applets/clock/calendar-window.c:1546 ../applets/clock/clock.ui.h:30
 msgid "Locations"
 msgstr "Kokalekuak"
 
-#: ../applets/clock/calendar-window.c:1803
+#: ../applets/clock/calendar-window.c:1807
 msgid "Calendar"
 msgstr "Egutegia"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date. Please leave "%%s" as it is:
 #. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:295
+#: ../applets/clock/clock.c:268
 msgid "%A %B %d (%%s)"
 msgstr "%A, %B %d (%%s)"
 
-#: ../applets/clock/clock.c:307
+#: ../applets/clock/clock.c:280
 msgid "Click to hide your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ezkutatzeko"
 
-#: ../applets/clock/clock.c:310
+#: ../applets/clock/clock.c:283
 msgid "Click to view your appointments and tasks"
 msgstr "Egin klik hitzorduak eta zereginak ikusteko"
 
-#: ../applets/clock/clock.c:314
+#: ../applets/clock/clock.c:287
 msgid "Click to hide month calendar"
 msgstr "Egin klik hileko egutegia ezkutatzeko"
 
-#: ../applets/clock/clock.c:317
+#: ../applets/clock/clock.c:290
 msgid "Click to view month calendar"
 msgstr "Egin klik hileko egutegia ikusteko"
 
-#: ../applets/clock/clock.c:954
+#: ../applets/clock/clock.c:900
 msgid "Computer Clock"
 msgstr "Ordenagailuaren erlojua"
 
-#: ../applets/clock/clock.c:1118
+#: ../applets/clock/clock.c:1066
 msgid "Failed to open the time settings"
 msgstr "Huts egin du orduaren ezarpenak irekitzean"
 
-#: ../applets/clock/clock.c:1138 ../applets/fish/fish.c:1305
-#: ../applets/wncklet/window-list.c:155
-#: ../applets/wncklet/workspace-switcher.c:218
-msgid "_Preferences"
-msgstr "_Hobespenak"
-
-#: ../applets/clock/clock.c:1141
-msgid "Copy Date and _Time"
-msgstr "Kopiatu data eta _ordua"
-
-#: ../applets/clock/clock.c:1144
-msgid "Ad_just Date & Time"
-msgstr "D_oitu data eta ordua"
-
-#: ../applets/clock/clock.c:1721
+#: ../applets/clock/clock.c:1659
 msgid "Choose Location"
 msgstr "Aukeratu kokalekua"
 
-#: ../applets/clock/clock.c:1800
+#: ../applets/clock/clock.c:1738
 msgid "Edit Location"
 msgstr "Editatu kokalekua"
 
-#: ../applets/clock/clock.c:1834
+#: ../applets/clock/clock.c:1772 ../applets/clock/clock.c:1780
+msgid "Default"
+msgstr "Lehenetsia"
+
+#: ../applets/clock/clock.c:1773
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: ../applets/clock/clock.c:1835
+#: ../applets/clock/clock.c:1774
 msgid "Celsius"
 msgstr "Celsius"
 
-#: ../applets/clock/clock.c:1836
+#: ../applets/clock/clock.c:1775
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: ../applets/clock/clock.c:1841
+#: ../applets/clock/clock.c:1781
 msgid "Meters per second (m/s)"
 msgstr "Metro segundoko (m/s)"
 
-#: ../applets/clock/clock.c:1842
+#: ../applets/clock/clock.c:1782
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometro orduko (k/o)"
 
-#: ../applets/clock/clock.c:1843
+#: ../applets/clock/clock.c:1783
 msgid "Miles per hour (mph)"
 msgstr "Miliak orduko (mi/o)"
 
-#: ../applets/clock/clock.c:1844
+#: ../applets/clock/clock.c:1784
 msgid "Knots"
 msgstr "Korapilo"
 
-#: ../applets/clock/clock.c:1845
+#: ../applets/clock/clock.c:1785
 msgid "Beaufort scale"
 msgstr "Beaufort eskala"
 
-#: ../applets/clock/clock.c:1898
+#: ../applets/clock/clock.c:1838
 msgid "City Name"
 msgstr "Herriaren izena"
 
-#: ../applets/clock/clock.c:1902
+#: ../applets/clock/clock.c:1842
 msgid "City Time Zone"
 msgstr "Herriaren ordu-zona"
 
-#: ../applets/clock/clock-location-tile.c:188
+#: ../applets/clock/clock-location-tile.c:176
 msgid "Failed to set the system timezone"
 msgstr "Huts egin du sistemaren ordu-zona ezartzean"
 
-#: ../applets/clock/clock-location-tile.c:236
+#: ../applets/clock/clock-location-tile.c:224
 msgid "<small>Set...</small>"
 msgstr "<small>Ezarri...</small>"
 
-#: ../applets/clock/clock-location-tile.c:237
+#: ../applets/clock/clock-location-tile.c:225
 msgid "<small>Set</small>"
 msgstr "<small>Ezarri</small>"
 
-#: ../applets/clock/clock-location-tile.c:313
+#: ../applets/clock/clock-location-tile.c:300
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Ezarri kokalekua uneko kokaleku gisa eta erabili bere ordu-zona ordenagailuan"
@@ -206,7 +196,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:443
+#: ../applets/clock/clock-location-tile.c:434
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -215,7 +205,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:451
+#: ../applets/clock/clock-location-tile.c:442
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -223,25 +213,39 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: ../applets/clock/clock-location-tile.c:460
+#: ../applets/clock/clock-location-tile.c:451
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: ../applets/clock/clock-location-tile.c:610
+#: ../applets/clock/clock-location-tile.c:601
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:623
+#: ../applets/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s. Honakoa dirudi: %s"
 
-#: ../applets/clock/clock-location-tile.c:644
+#: ../applets/clock/clock-location-tile.c:635
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Eguna argitu: %s / Eguzki-sartzea: %s"
+
+#: ../applets/clock/clock-menu.xml.h:1
+msgid "Copy Date and _Time"
+msgstr "Kopiatu data eta _ordua"
+
+#: ../applets/clock/clock-menu.xml.h:2
+msgid "Ad_just Date & Time"
+msgstr "D_oitu data eta ordua"
+
+#: ../applets/clock/clock-menu.xml.h:3
+#: ../applets/wncklet/window-list-menu.xml.h:1
+#: ../applets/wncklet/workspace-switcher-menu.xml.h:1
+msgid "_Preferences"
+msgstr "_Hobespenak"
 
 #: ../applets/clock/clock.ui.h:1
 msgid "East"
@@ -260,108 +264,149 @@ msgid "South"
 msgstr "Hegoaldea"
 
 #: ../applets/clock/clock.ui.h:5
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
+#: ../gnome-panel/panel.c:1314 ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:998
+#: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
+#: ../gnome-panel/panel-run-dialog.c:1293
+#: ../gnome-panel/panel-run-dialog.ui.h:11
+msgid "_Cancel"
+msgstr "_Utzi"
+
+#: ../applets/clock/clock.ui.h:6 ../gnome-panel/panel-ditem-editor.c:659
+#: ../gnome-panel/panel-run-dialog.c:1294
+msgid "_OK"
+msgstr "_Ados"
+
+#: ../applets/clock/clock.ui.h:7
 msgid "(optional)"
 msgstr "(aukerakoa)"
 
-#: ../applets/clock/clock.ui.h:6
+#: ../applets/clock/clock.ui.h:8
 msgid "_Location Name:"
 msgstr "Kokalekuaren _izena:"
 
-#: ../applets/clock/clock.ui.h:7
+#: ../applets/clock/clock.ui.h:9
 msgid "L_atitude:"
 msgstr "_Latitudea:"
 
-#: ../applets/clock/clock.ui.h:8
+#: ../applets/clock/clock.ui.h:10
 msgid "L_ongitude:"
 msgstr "L_ongitudea:"
 
-#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: ../applets/clock/clock.ui.h:10
+#. Languages that have a single word that translates as either
+#: ../applets/clock/clock.ui.h:12
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Idatzi herri, eskualde edo estatuaren izena eta hautatu bat datorrena laster-"
 "menutik."
 
-#: ../applets/clock/clock.ui.h:11
+#: ../applets/clock/clock.ui.h:13
 msgid "_Timezone:"
 msgstr "Ordu-_zona:"
 
-#: ../applets/clock/clock.ui.h:12
+#: ../applets/clock/clock.ui.h:14
 msgid "Clock Preferences"
 msgstr "Erlojuaren hobespenak"
 
-#: ../applets/clock/clock.ui.h:13
+#: ../applets/clock/clock.ui.h:15 ../applets/fish/fish.ui.h:2
+msgid "_Help"
+msgstr "L_aguntza"
+
+#: ../applets/clock/clock.ui.h:16
 msgid "Time _Settings"
 msgstr "Orduaren _ezarpenak"
 
-#: ../applets/clock/clock.ui.h:14
+#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
+#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
+#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../gnome-panel/panel-addto-dialog.ui.h:5
+#: ../gnome-panel/panel-ditem-editor.c:653
+msgid "_Close"
+msgstr "It_xi"
+
+#: ../applets/clock/clock.ui.h:18
 msgid "Clock Format"
 msgstr "Ordulariaren formatua"
 
-#: ../applets/clock/clock.ui.h:15
+#: ../applets/clock/clock.ui.h:19
 msgid "_12 hour format"
 msgstr "_12 orduko formatua"
 
-#: ../applets/clock/clock.ui.h:16
+#: ../applets/clock/clock.ui.h:20
 msgid "_24 hour format"
 msgstr "_24 orduko formatua"
 
-#: ../applets/clock/clock.ui.h:17
+#: ../applets/clock/clock.ui.h:21
 msgid "Panel Display"
 msgstr "Panela bistaratzea"
 
-#: ../applets/clock/clock.ui.h:18
+#: ../applets/clock/clock.ui.h:22
 msgid "Show the _date"
 msgstr "Erakutsi _data"
 
-#: ../applets/clock/clock.ui.h:19
+#: ../applets/clock/clock.ui.h:23
 msgid "Show seco_nds"
 msgstr "Erakutsi segu_ndoak"
 
-#: ../applets/clock/clock.ui.h:20
+#: ../applets/clock/clock.ui.h:24
 msgid "Show _weather"
 msgstr "Erakutsi _eguraldia"
 
-#: ../applets/clock/clock.ui.h:21
+#: ../applets/clock/clock.ui.h:25
 msgid "Show _temperature"
 msgstr "Erakutsi _tenperatura"
 
-#: ../applets/clock/clock.ui.h:22 ../applets/fish/fish.ui.h:2
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
+#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:4
+#: ../gnome-panel/gp-properties-dialog.ui.h:11
 msgid "General"
 msgstr "Orokorra"
 
-#: ../applets/clock/clock.ui.h:24
+#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1056
+#: ../gnome-panel/panel-addto-dialog.ui.h:4
+msgid "_Add"
+msgstr "_Gehitu"
+
+#: ../applets/clock/clock.ui.h:28
+#| msgid "Edit"
+msgid "_Edit"
+msgstr "_Editatu"
+
+#: ../applets/clock/clock.ui.h:29
+msgid "_Remove"
+msgstr "_Kendu"
+
+#: ../applets/clock/clock.ui.h:31
 msgid "Display"
 msgstr "Pantaila"
 
-#: ../applets/clock/clock.ui.h:25
+#: ../applets/clock/clock.ui.h:32
 msgid "_Visibility unit:"
 msgstr "_Ikusgaitasun-unitatea:"
 
-#: ../applets/clock/clock.ui.h:26
+#: ../applets/clock/clock.ui.h:33
 msgid "_Pressure unit:"
 msgstr "_Presio-unitatea:"
 
-#: ../applets/clock/clock.ui.h:27
+#: ../applets/clock/clock.ui.h:34
 msgid "_Temperature unit:"
 msgstr "_Tenperatura unitatea:"
 
-#: ../applets/clock/clock.ui.h:28
+#: ../applets/clock/clock.ui.h:35
 msgid "_Wind speed unit:"
 msgstr "_Haizearen abiadura-unitatea:"
 
-#: ../applets/clock/clock.ui.h:29
+#: ../applets/clock/clock.ui.h:36
 msgid "Weather"
 msgstr "Eguraldia"
 
-#: ../applets/clock/clock-utils.c:95 ../applets/fish/fish.c:162
+#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:159
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ezin izan da laguntzako '%s' dokumentua bistaratu"
 
-#: ../applets/clock/clock-utils.c:124 ../applets/fish/fish.c:188
+#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:185
 msgid "Error displaying help document"
 msgstr "Errorea laguntzako dokumentua bistaratzean"
 
@@ -381,7 +426,7 @@ msgstr "Erlojua"
 msgid "Get the current time and date"
 msgstr "Hartu uneko data eta ordua"
 
-#: ../applets/fish/fish.c:216
+#: ../applets/fish/fish.c:213
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -395,26 +440,26 @@ msgstr ""
 "%s \"praktiko\" edo baliagarri bihur lezakeen\n"
 "ezertarako ez erabiltzeko gomendioa egiten dizugu."
 
-#: ../applets/fish/fish.c:356 ../applets/fish/fish.c:472
+#: ../applets/fish/fish.c:372 ../applets/fish/fish.c:488
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s arraina"
 
-#: ../applets/fish/fish.c:357
+#: ../applets/fish/fish.c:373
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s arraina, gure garaiko orakulua"
 
-#: ../applets/fish/fish.c:428
+#: ../applets/fish/fish.c:444
 msgid "Unable to locate the command to execute"
 msgstr "Ezin da aurkitu exekutatu beharreko komandoa"
 
-#: ../applets/fish/fish.c:477
+#: ../applets/fish/fish.c:493
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s arrainak esana:"
 
-#: ../applets/fish/fish.c:546
+#: ../applets/fish/fish.c:562
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -425,17 +470,17 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: ../applets/fish/fish.c:623
+#: ../applets/fish/fish.c:639
 msgid "_Speak again"
 msgstr "_Hitzegin berriro"
 
-#: ../applets/fish/fish.c:705
+#: ../applets/fish/fish.c:720
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Konfiguratutako komandoa ez da exekutatzen ari eta honek ordeztu du: %s"
 
-#: ../applets/fish/fish.c:739
+#: ../applets/fish/fish.c:754
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -446,7 +491,7 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: ../applets/fish/fish.c:755
+#: ../applets/fish/fish.c:770
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -457,48 +502,54 @@ msgstr ""
 "\n"
 "Xehetasunak: %s"
 
-#: ../applets/fish/fish.c:1155
+#: ../applets/fish/fish.c:1170
 msgid "The water needs changing"
 msgstr "Ura aldatu beharrean dago"
 
-#: ../applets/fish/fish.c:1157
+#: ../applets/fish/fish.c:1172
 msgid "Look at today's date!"
 msgstr "Begiratu gaurko datari!"
 
-#: ../applets/fish/fish.c:1250
+#: ../applets/fish/fish.c:1265
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s arraina, fortuna-kontalaria"
+
+#: ../applets/fish/fish-menu.xml.h:1
+#| msgid "_Preferences"
+msgid "Preferences"
+msgstr "Hobespenak"
 
 #: ../applets/fish/fish.ui.h:1
 msgid "Fish Preferences"
 msgstr "Arrainaren hobespenak"
 
-#: ../applets/fish/fish.ui.h:3
+#: ../applets/fish/fish.ui.h:5
 msgid "_Name of fish:"
 msgstr "_Arrainaren izena:"
 
-#: ../applets/fish/fish.ui.h:4
+#: ../applets/fish/fish.ui.h:6
 msgid "Co_mmand to run when clicked:"
 msgstr "_Komandoa klik egitean exekutatzeko:"
 
-#: ../applets/fish/fish.ui.h:5
-msgid "Animation"
-msgstr "Animazioa"
+#: ../applets/fish/fish.ui.h:7
+#| msgid "Animation"
+msgid "Animation:"
+msgstr "Animazioa:"
 
-#: ../applets/fish/fish.ui.h:6 ../gnome-panel/panel-properties-dialog.ui.h:13
+#: ../applets/fish/fish.ui.h:8
 msgid "    "
 msgstr "    "
 
-#: ../applets/fish/fish.ui.h:7
+#: ../applets/fish/fish.ui.h:9
 msgid "_Pause per frame:"
 msgstr "_Irudi bakoitzeko pausa:"
 
-#: ../applets/fish/fish.ui.h:8
+#: ../applets/fish/fish.ui.h:10
 msgid "seconds"
 msgstr "segundoz behin"
 
-#: ../applets/fish/fish.ui.h:9
+#: ../applets/fish/fish.ui.h:11
 msgid "_Rotate on vertical panels"
 msgstr "_Biratu panel bertikaletan"
 
@@ -518,7 +569,7 @@ msgstr "Arraina"
 msgid "Display a swimming fish or another animated creature"
 msgstr "Arrain bat igerian edo beste animalia animaturen bat bistaratzen du"
 
-#: ../applets/notification_area/main.c:243
+#: ../applets/notification_area/main.c:197
 msgid "Panel Notification Area"
 msgstr "Paneleko jakinarazpen-area"
 
@@ -538,6 +589,24 @@ msgstr "Jakinarazpen-area"
 msgid "Area where notification icons appear"
 msgstr "Jakinarazpen-ikonoak azaltzen diren lekua"
 
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:1
+#| msgid "Test DBus Applet Factory"
+msgid "Status Notifier Host Applet Factory"
+msgstr "'Egoera-jakinarazlearen ostalaria' miniaplikazioaren fabrika"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:2
+#| msgid "Factory for Test DBus Applet"
+msgid "Factory for status notifier host applet"
+msgstr "'Egoera-jakinarazlearen ostalaria' miniaplikazioaren fabrika"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:3
+msgid "Status Notifier Host"
+msgstr "Egoera-jakinarazlearen ostalaria"
+
+#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:4
+msgid "Display all Status Notifier Items"
+msgstr "Bistaratu 'Egoera-jakinarazlearen elementu' guztiak"
+
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
 msgid "Window Navigation Applet Factory"
 msgstr "Leiho-nabigazioko miniaplikazioaren fabrika"
@@ -547,7 +616,7 @@ msgid "Factory for the window navigation related applets"
 msgstr "Leiho-nabigazioko miniaplikazioen fabrika"
 
 #: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:202
+#: ../applets/wncklet/window-menu.c:181
 msgid "Window Selector"
 msgstr "Leiho hautatzailea"
 
@@ -588,19 +657,19 @@ msgstr "Huts egin du %s kargatzean: %s\n"
 msgid "Icon not found"
 msgstr "Ikonoa ez da aurkitu"
 
-#: ../applets/wncklet/showdesktop.c:227
+#: ../applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Egin klik hemen ezkutatutako leihoak leheneratzeko."
 
-#: ../applets/wncklet/showdesktop.c:229
+#: ../applets/wncklet/showdesktop.c:232
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Egin klik hemen leiho guztiak ezkutatu eta mahaigaina ikusteko."
 
-#: ../applets/wncklet/showdesktop.c:437
+#: ../applets/wncklet/showdesktop.c:426
 msgid "Show Desktop Button"
 msgstr "Erakutsi mahaigainaren botoia"
 
-#: ../applets/wncklet/showdesktop.c:505
+#: ../applets/wncklet/showdesktop.c:491
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -652,14 +721,14 @@ msgstr "Leheneratu uneko _laneko areara"
 msgid "Restore to na_tive workspace"
 msgstr "Leheneratu jato_rrizko laneko areara"
 
-#: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:716
-#: ../applets/wncklet/workspace-switcher.ui.h:4
+#: ../applets/wncklet/workspace-switcher.c:198
+#: ../applets/wncklet/workspace-switcher.c:703
+#: ../applets/wncklet/workspace-switcher.ui.h:6
 msgid "rows"
 msgstr "errenkadatan"
 
-#: ../applets/wncklet/workspace-switcher.c:194
-#: ../applets/wncklet/workspace-switcher.c:716
+#: ../applets/wncklet/workspace-switcher.c:198
+#: ../applets/wncklet/workspace-switcher.c:703
 msgid "columns"
 msgstr "zutabetan"
 
@@ -667,59 +736,41 @@ msgstr "zutabetan"
 msgid "Workspace Switcher Preferences"
 msgstr "Laneko arearen aldatzailearen hobespenak"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:2
+#: ../applets/wncklet/workspace-switcher.ui.h:3
 msgid "Show _only the current workspace"
 msgstr "_Uneko laneko area bakarrik erakutsi"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:3
+#: ../applets/wncklet/workspace-switcher.ui.h:4
 msgid "Show _all workspaces in:"
 msgstr "_Erakutsi laneko area guztiak:"
 
 #: ../applets/wncklet/workspace-switcher.ui.h:5
+msgid "1"
+msgstr "1"
+
+#: ../applets/wncklet/workspace-switcher.ui.h:7
 msgid "Switcher"
 msgstr "Aldatzailea"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:6
+#: ../applets/wncklet/workspace-switcher.ui.h:8
 msgid "Number of _workspaces:"
 msgstr "_Laneko areen kopurua:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:7
+#: ../applets/wncklet/workspace-switcher.ui.h:9
 msgid "Workspace na_mes:"
 msgstr "Laneko areen i_zenak:"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:8
+#: ../applets/wncklet/workspace-switcher.ui.h:10
 msgid "Workspace Names"
 msgstr "Laneko areen izenak"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:9
+#: ../applets/wncklet/workspace-switcher.ui.h:11
 msgid "Show workspace _names in switcher"
 msgstr "E_rakutsi laneko areen izenak aldatzailean"
 
-#: ../applets/wncklet/workspace-switcher.ui.h:10
+#: ../applets/wncklet/workspace-switcher.ui.h:12
 msgid "Workspaces"
 msgstr "Laneko areak"
-
-#: ../data/gnome-fallback.desktop.in.in.h:1
-#: ../data/gnome-flashback.session.desktop.in.h:1
-msgid "GNOME Flashback"
-msgstr "GNOME Flashback"
-
-#: ../data/gnome-fallback.desktop.in.in.h:2
-msgid "This session logs you into GNOME with the traditional panel"
-msgstr "Saio honek panel tradizionala duen GNOME mahaigainera eramango zaitu"
-
-#: ../data/gnome-flashback-compiz.desktop.in.in.h:1
-#: ../data/gnome-flashback-compiz.session.desktop.in.h:1
-#, fuzzy
-msgid "GNOME Flashback (Compiz)"
-msgstr "GNOME Flashback"
-
-#: ../data/gnome-flashback-compiz.desktop.in.in.h:2
-#, fuzzy
-msgid ""
-"This session logs you into GNOME with Compiz window-manager and the "
-"traditional panel"
-msgstr "Saio honek panel tradizionala duen GNOME mahaigainera eramango zaitu"
 
 #: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
 msgid "Show date in tooltip"
@@ -962,10 +1013,23 @@ msgstr ""
 "erabiltzailearen berrespena eskatzeko."
 
 #: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+msgid "Icon size in the menus"
+msgstr "Menuetako ikonoen tamaina"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+msgid "Icon size for only Applications item in the Menu Bar applet"
+msgstr ""
+"Ikonoen tamaina soilik Menu-barra miniaplikazioko aplikazioen elementuentzako"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+msgid "Which theme variant to use"
+msgstr "Zer gairen aldaera erabili"
+
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
 msgid "Panel ID list"
 msgstr "Panel-IDen zerrenda"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -974,11 +1038,11 @@ msgstr ""
 "Panel horietako bakoitzaren ezarpenak hemen gordetzen dira: /apps/panel/"
 "toplevels/$(id)."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
 msgid "Panel object ID list"
 msgstr "Paneleko objektuen IDen zerrenda"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -989,11 +1053,11 @@ msgstr ""
 "botoia/-barra).Objektu bakoitzaren ezarpenak hemen gordetzen dira: /apps/"
 "panel/objects/$(id)."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
 msgid "Complete panel lockdown"
 msgstr "Panela osoki blokeatu"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1004,11 +1068,11 @@ msgstr ""
 "beharko dira. Panela berrabiarazi beharko da aldaketa hauek eragina izan "
 "dezaten."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
 msgid "Applet IIDs to disable from loading"
 msgstr "Miniaplikazioen IIDak, kargatzetik desgaituko direnak"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1021,11 +1085,11 @@ msgstr ""
 "GNOME_MiniCommanderApplet' zerrenda honetan. Panela berrabiarazi beharra "
 "dago aldaketak eragina izan dezan."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
 msgid "Disable Force Quit"
 msgstr "Desgaitu derrigorrez ixtera"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1033,22 +1097,22 @@ msgstr ""
 "Egia bada, panelak ez dio erabiltzaileari aplikazio baten irteera "
 "derrigortzen utziko (derrigorrezko irteerako botoia ezabatuz)."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
 msgid "History of \"Run Application\" dialog"
 msgstr "\"Exekutatu aplikazioa\" elkarrizketa-koadroaren historia"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Iraganean \"Exekutatu aplikazioa\" elkarrizketa-koadroan erabilitako "
 "komandoen zerrenda."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Gaitu programa-zerrenda \"Exekutatu aplikazioa\" elkarrizketa-koadroan"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1058,12 +1122,12 @@ msgstr ""
 "ezagunak\" zerrenda erabilgarri egongo da. Elkarrizketa-koadroa irekitzean "
 "zerrenda zabalduko den ala ez dishow_program_list gakoak kontrolatzen du."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr ""
 "Zabaldu programa-zerrenda \"Exekutatu aplikazioa\" elkarrizketa-koadroan"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:23
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1073,12 +1137,12 @@ msgstr ""
 "ezagunak\" zerrenda zabalduko da elkarrizketa-koadroa irekitzen denean. "
 "'enable_program_list' gakoa ezarrita dagoenean bakarrik balio du."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:24
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Gaitu osatze-automatikoa \"Exekutatu aplikazioa\" elkarrizketa-koadroan"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:25
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -1122,9 +1186,12 @@ msgid "Menu content path"
 msgstr "Menuaren edukiaren bide-izena"
 
 #: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
+#| msgid ""
+#| "The path from which the menu contents is contructed. If empty, the menu "
+#| "will be the default applications menu."
 msgid ""
-"The path from which the menu contents is contructed. If empty, the menu will "
-"be the default applications menu."
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
 msgstr ""
 "Menuaren edukia eraikitzeko erabiliko den bide-izena. Hutsik egonez gero, "
 "menua aplikazioen menu lehenetsia izango da."
@@ -1188,23 +1255,10 @@ msgstr ""
 "nabigatzean panelaren leihoaren titulu gisa ikusiko dena."
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
-msgid "X screen where the panel is displayed"
-msgstr "Panela dagoen X pantaila"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
-msgstr ""
-"Pantaila anitzeko konfigurazioetan, pantaila bakoitzak bere panelak izan "
-"ditzake. Gako honek identifikatzen du unean zein pantailatan bistaratzen den "
-"panela."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Panela dagoen Xinerama monitorea"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1212,11 +1266,11 @@ msgstr ""
 "Xinerama-rekin monitore bakoitzean izan ditzakezu panelak. Gako honek "
 "identifikatzen du unean zein monitoretan bistaratzen den panela."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
 msgid "Expand to occupy entire screen width"
 msgstr "Zabaldu pantailaren zabalera osoa hartzeko"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -1228,11 +1282,11 @@ msgstr ""
 "daiteke panela. Hautatu gabe uzten bada, barruan dituen miniaplikazioak, "
 "abiarazleak eta botoiak erakusteko behar duen lekua bakarrik hartuko du."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
 msgid "Panel orientation"
 msgstr "Panelaren orientazioa"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -1252,11 +1306,11 @@ msgstr ""
 "azpian azalduko da menua, eta alderantziz, \"bottom\" bada, gainean agertuko "
 "da."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
 msgid "Panel size"
 msgstr "Panelaren tamaina"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1268,11 +1322,11 @@ msgstr ""
 "batzuetan oinarrituta. Gehienezko tamaina pantailaren altueraren (edo "
 "zabaleraren) laurdena da."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
 msgid "X co-ordinate of panel"
 msgstr "Panelaren X koordenatua"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1282,11 +1336,11 @@ msgstr ""
 "eragina. Zabalduta dagoenean, gako honi ez zaio jaramonik egiten, orientazio-"
 "gakoak zehaztutako pantaila-ertzean jartzen baita panela."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
 msgid "Y co-ordinate of panel"
 msgstr "Panelaren Y koordenatua"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1296,11 +1350,11 @@ msgstr ""
 "eragina. Zabalduta dagoenean, gako honi ez zaio jaramonik egiten, orientazio-"
 "gakoak zehaztutako pantaila-ertzean jartzen baita panela."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "Panelaren X koordenatua, pantailaren eskuinetik hasita"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1316,11 +1370,11 @@ msgstr ""
 "dagoenean, gako honi ez zaio jaramonik egiten, orientazio-gakoak zehaztutako "
 "pantaila-ertzean jartzen baita panela."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Panelaren Y koordenatua, pantailaren behetik hasita"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1336,11 +1390,11 @@ msgstr ""
 "dagoenean, gako honi ez zaio jaramonik egiten, orientazio-gakoak zehaztutako "
 "pantaila-ertzean jartzen baita panela."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
 msgid "Center panel on x-axis"
 msgstr "Zentratu panela X ardatzean"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1352,11 +1406,11 @@ msgstr ""
 "posizio berean jarraituko du, hau da, bi alboetara haziko da. Hautatzen ez "
 "bada, x eta x_eskuina gakoek zehaztuko dute panelaren posizioa."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
 msgid "Center panel on y-axis"
 msgstr "Zentratu panela Y ardatzean"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1368,11 +1422,11 @@ msgstr ""
 "posizio berean jarraituko du, hau da, bi alboetara haziko da. Hautatzen ez "
 "bada, y eta y_behea gakoek zehaztuko dute panelaren posizioa."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
 msgid "Automatically hide panel into corner"
 msgstr "Automatikoki ezkutatu panela izkinan"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -1382,11 +1436,11 @@ msgstr ""
 "erakusleak panelaren gainetik alde egiten duenean. Erakuslea izkina "
 "horretara eramaten denean, panela berriro agertuko da."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
 msgid "Enable hide buttons"
 msgstr "Gaitu ezkutatzeko botoiak"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -1394,11 +1448,11 @@ msgstr ""
 "Hautatzen bada, panelaren albo banatan botoiak jarriko dira. Botoi horiek "
 "panela pantaila-ertzera eraman eta botoi bat ikusgai uzteko erabiltzen dira."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
 msgid "Enable arrows on hide buttons"
 msgstr "Gaitu geziak ezkutatzeko botoietan"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -1406,11 +1460,11 @@ msgstr ""
 "Hautatzen bada, ezkutatzeko botoietan geziak jarriko dira. enable_buttons "
 "gakoaren balioa 'egiazkoa' denean bakarrik erabil daiteke."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
 msgid "Panel autohide delay"
 msgstr "Panela automatikoki ezkutatu arteko denbora"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -1420,11 +1474,11 @@ msgstr ""
 "ezkutatuko den automatikoki panela zehazten du. auto_hide gakoa ezarrita "
 "badago bakarrik du eragina."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
 msgid "Panel autounhide delay"
 msgstr "Panela automatikoki erakutsi arteko denbora"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -1434,11 +1488,11 @@ msgstr ""
 "azalduko den automatikoki panela zehazten du. auto_hide gakoa ezarrita "
 "badago bakarrik du eragina."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
 msgid "Visible pixels when hidden"
 msgstr "Ezkutatuta dagoenean ikusiko den pixel-kopurua"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -1446,11 +1500,11 @@ msgstr ""
 "Panela automatikoki izkinan ezkutatuta dagoenean zenbat pixel ikusiko diren "
 "zehazten du. auto_hide gakoa ezarrita dagoenean bakarrik du eragina."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
 msgid "Animation speed"
 msgstr "Animazio-abiadura"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -1460,36 +1514,26 @@ msgstr ""
 "\" (tartekoa) eta \"fast\" (bizkorra) dira. enable_animations gakoa ezarrita "
 "badago bakarrik du eragina."
 
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
+#| msgid "Background color"
+msgid "Use custom background color"
+msgstr "Erabili atzeko planoaren kolore pertsonalizatua"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
+#| msgid "Background color"
+msgid "Background Color"
+msgstr "Atzeko planoaren kolorea"
+
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
-msgid "Background type"
-msgstr "Atzeko planoaren mota"
+#| msgid "Background image"
+msgid "Use custom background image"
+msgstr "Erabili atzeko planoaren irudi pertsonalizatua"
 
 #: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"none\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
-msgstr ""
-"Panelaren atzeko planoaren mota. Hauek dira balio posibleak: \"none\" (bat "
-"ere ez) - GTK+ trepetaren atzeko plano lehenetsia erabiliko da, \"color"
-"\" (kolorea) - kolore-gakoa erabiliko da atzeko planoko kolore gisa edo "
-"\"image\" (irudia) - irudi-gakoan zehaztutako irudia erabiliko da atzeko "
-"plano gisa."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
-msgid "Background color"
-msgstr "Atzeko planoko kolorea"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "Panelaren atzeko planoko kolorea zehazten du #GBU formatuan."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
 msgid "Background image"
 msgstr "Atzeko planoko irudia"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -1498,23 +1542,11 @@ msgstr ""
 "Atzeko planoko irudi gisa erabiliko den fitxategia zehazten du. Irudiak alfa "
 "kanal bat badu, mahaigainaren atzeko planoko irudiarekin nahastuko da."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
-msgid "Rotate image on vertical panels"
-msgstr "Biratu irudia panel bertikaletan"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr ""
-"Hautatzen bada, atzeko planoko irudia biratu egingo da panela bertikalki "
-"jartzen denean."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
 msgid "Image options"
 msgstr "Irudiaren aukerak"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:48
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -1529,45 +1561,65 @@ msgstr ""
 "balioarekin, irudia eskalatu egingo da (bere aspektu-erlazioa mantenduz) "
 "panelaren altuerara (horizontala bada)."
 
-#: ../gnome-panel/applet.c:359
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
+msgid "Rotate image on vertical panels"
+msgstr "Biratu irudia panel bertikaletan"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Hautatzen bada, atzeko planoko irudia biratu egingo da panela bertikalki "
+"jartzen denean."
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+msgid "Use custom text color"
+msgstr "Erabili testu-kolore pertsonalizatua"
+
+#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:47
+msgid "Text Color"
+msgstr "Testuaren kolorea"
+
+#: ../gnome-panel/applet.c:346
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:498 ../libpanel-applet/panel-applet.c:167
+#: ../gnome-panel/applet.c:484 ../libpanel-applet/panel-applet.c:1451
 msgid "_Move"
 msgstr "_Lekuz aldatu"
 
-#: ../gnome-panel/applet.c:505 ../libpanel-applet/panel-applet.c:164
+#: ../gnome-panel/applet.c:491 ../libpanel-applet/panel-applet.c:1451
 msgid "_Remove From Panel"
 msgstr "_Kendu paneletik"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:29
+#: ../gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "Sortu fitxategi berria adierazitako direktorioan"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:30
+#: ../gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[FITXATEGIA...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:108
+#: ../gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- Editatu '.desktop' fitxategiak"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:146
-#: ../gnome-panel/gnome-desktop-item-edit.c:200 ../gnome-panel/launcher.c:894
+#: ../gnome-panel/gnome-desktop-item-edit.c:144
+#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:892
 msgid "Create Launcher"
 msgstr "Sortu abiarazlea"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:171
-#: ../gnome-panel/gnome-desktop-item-edit.c:194
+#: ../gnome-panel/gnome-desktop-item-edit.c:169
+#: ../gnome-panel/gnome-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "Direktorioaren propietateak"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:177 ../gnome-panel/launcher.c:732
+#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:732
 msgid "Launcher Properties"
 msgstr "Abiarazlearen propietateak"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:87
+#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:177
 msgid "Panel"
 msgstr "Panela"
 
@@ -1579,6 +1631,112 @@ msgstr ""
 "Abiarazi beste aplikazioak eta eskaini hainbat tresna leiho-kudeatzaileari, "
 "erakutsi ordua, e.a."
 
+#: ../gnome-panel/gp-arrow-button.c:120
+msgid "Hide Panel"
+msgstr "Ezkutatu panela"
+
+#: ../gnome-panel/gp-properties-dialog.c:213
+#: ../gnome-panel/panel-test-applets.c:48
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Goian"
+
+#: ../gnome-panel/gp-properties-dialog.c:214
+#: ../gnome-panel/panel-test-applets.c:49
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Behean"
+
+#: ../gnome-panel/gp-properties-dialog.c:215
+#: ../gnome-panel/panel-test-applets.c:50
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Ezkerrean"
+
+#: ../gnome-panel/gp-properties-dialog.c:216
+#: ../gnome-panel/panel-test-applets.c:51
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Eskuinean"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:1
+msgid "Panel Properties"
+msgstr "Panelaren propietateak"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:2
+msgid "Some of these properties are locked down"
+msgstr "Hauetako propietate batzuk blokeatuta daude"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:3
+#: ../gnome-panel/panel-test-applets.ui.h:6
+msgid "_Orientation:"
+msgstr "_Orientazioa:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:4
+msgid "_Size:"
+msgstr "_Tamaina:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:5
+msgid "pixels"
+msgstr "pixel"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:6
+msgid "Miscellaneous:"
+msgstr "Hainbat:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:7
+msgid "E_xpand"
+msgstr "Za_baldu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:8
+msgid "_Autohide"
+msgstr "_Automatikoki ezkutatu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:9
+msgid "Show hide _buttons"
+msgstr "E_rakutsi ezkutatzeko botoiak"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:10
+msgid "Arro_ws on hide buttons"
+msgstr "E_zkutuko botoietako geziak"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:12
+#| msgid "Background color"
+msgid "Background color:"
+msgstr "Atzeko planoaren kolorea:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:13
+#| msgid "Background _image:"
+msgid "Background image:"
+msgstr "Atzeko planoaren irudia:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:14
+#| msgid "_Tile"
+msgid "Tile"
+msgstr "Lauza moduan"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:15
+#| msgid "St_retch"
+msgid "Stretch"
+msgstr "Tiratu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:16
+msgid "Fit"
+msgstr "Doitu"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:17
+#| msgid "Rotate image on vertical panels"
+msgid "Rotate image on vertical panel"
+msgstr "Biratu irudia panel bertikalean"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:18
+msgid "Text color:"
+msgstr "Testuaren kolorea:"
+
+#: ../gnome-panel/gp-properties-dialog.ui.h:19
+msgid "Theme"
+msgstr "Gaia"
+
 #: ../gnome-panel/launcher.c:136
 msgid "Could not show this URL"
 msgstr "Ezin izan da URL hau erakutsi"
@@ -1587,8 +1745,7 @@ msgstr "Ezin izan da URL hau erakutsi"
 msgid "No URL was specified."
 msgstr "Ez da URLa zehaztu."
 
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:50
+#: ../gnome-panel/launcher.c:175 ../gnome-panel/libpanel-util/panel-launch.c:50
 msgid "Could not launch application"
 msgstr "Ezin izan da aplikazioa abiarazi"
 
@@ -1606,89 +1763,25 @@ msgstr "Ez da URIrik eman panel-abiarazlearen mahaigaineko fitxategiarentzat\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Ezin da ireki panel-abiarazlearen mahaigaineko %s fitxategia%s%s\n"
 
-#: ../gnome-panel/launcher.c:798
+#: ../gnome-panel/launcher.c:797
 msgid "_Launch"
 msgstr "_Abiarazi"
 
-#: ../gnome-panel/launcher.c:804 ../gnome-panel/panel-action-button.c:137
-#: ../gnome-panel/panel-context-menu.c:131
+#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:172
+#: ../gnome-panel/panel-context-menu.c:164
 msgid "_Properties"
 msgstr "_Propietateak"
 
-#: ../gnome-panel/launcher.c:835
+#: ../gnome-panel/launcher.c:833
 #, c-format
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "Abiarazlearen kokalekua ez dago ezarrita, ezin da abiarazlea kargatu\n"
 
-#: ../gnome-panel/launcher.c:965 ../gnome-panel/panel-ditem-editor.c:1351
-#: ../gnome-panel/panel-ditem-editor.c:1385
-#: ../gnome-panel/panel-ditem-editor.c:1416
+#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1316
+#: ../gnome-panel/panel-ditem-editor.c:1350
+#: ../gnome-panel/panel-ditem-editor.c:1381
 msgid "Could not save launcher"
 msgstr "Ezin izan da abiarazlea gorde"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:164
-#, c-format
-msgid "File is not a valid .desktop file"
-msgstr "Ez da baliozko '.desktop' fitxategia"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:187
-#, c-format
-msgid "Unrecognized desktop file Version '%s'"
-msgstr "Mahaigaineko (.desktop) fitxategiaren '%s' bertsioa ezezaguna"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:967
-#, c-format
-msgid "Starting %s"
-msgstr "%s abiarazten"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1109
-#, c-format
-msgid "Application does not accept documents on command line"
-msgstr "Aplikazioak ez du dokumenturik onartzen komando-lerroan"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1177
-#, c-format
-msgid "Unrecognized launch option: %d"
-msgstr "Abiarazteko aukera ezezaguna: %d"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1382
-#, c-format
-msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
-msgstr ""
-"Ezin zaizkie dokumentuen URIak mahaigaineko 'Type=Link' sarrerari igaro"
-
-#: ../gnome-panel/libegg/eggdesktopfile.c:1403
-#, c-format
-msgid "Not a launchable item"
-msgstr "Ez dago abiaraz daitekeen elementurik"
-
-#: ../gnome-panel/libegg/eggsmclient.c:224
-msgid "Disable connection to session manager"
-msgstr "Desgaitu saio-kudeatzailearen konexioa"
-
-#: ../gnome-panel/libegg/eggsmclient.c:227
-msgid "Specify file containing saved configuration"
-msgstr "Zehaztu konfigurazioa gordeta duen fitxategia"
-
-#: ../gnome-panel/libegg/eggsmclient.c:227
-msgid "FILE"
-msgstr "FITXATEGIA"
-
-#: ../gnome-panel/libegg/eggsmclient.c:230
-msgid "Specify session management ID"
-msgstr "Zehaztu saio-kudeatzailearen IDa"
-
-#: ../gnome-panel/libegg/eggsmclient.c:230
-msgid "ID"
-msgstr "IDa"
-
-#: ../gnome-panel/libegg/eggsmclient.c:251
-msgid "Session management options:"
-msgstr "Saio-kudeatzailearen aukerak:"
-
-#: ../gnome-panel/libegg/eggsmclient.c:252
-msgid "Show session management options"
-msgstr "Erakutsi saio-kudeatzailearen aukerak"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -1696,14 +1789,18 @@ msgstr "Erakutsi saio-kudeatzailearen aukerak"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:805
-#: ../gnome-panel/panel-applet-frame.c:977
+#: ../gnome-panel/panel-applet-frame.c:736
 msgid "Error"
 msgstr "Errorea"
 
 #: ../gnome-panel/libpanel-util/panel-icon-chooser.c:383
 msgid "Choose an icon"
 msgstr "Hautatu ikono bat"
+
+#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:388
+#: ../gnome-panel/panel-ditem-editor.c:1000
+msgid "_Open"
+msgstr "_Ireki"
 
 #: ../gnome-panel/libpanel-util/panel-launch.c:47
 #, c-format
@@ -1719,194 +1816,223 @@ msgstr "Ezin izan da '%s' kokalekua ireki"
 msgid "No application to handle search folders is installed."
 msgstr "Aplikaziorik ez dago instalatuta bilaketako karpetak kudeatzeko."
 
-#: ../gnome-panel/main.c:41
+#: ../gnome-panel/main.c:42
 msgid "Replace a currently running panel"
 msgstr "Ordeztu unean exekutatzen dagoen panela"
 
-#: ../gnome-panel/panel-action-button.c:125
+#: ../gnome-panel/main.c:43
+msgid "Print version"
+msgstr "Erakutsi bertsioa"
+
+#: ../gnome-panel/panel-action-button.c:162
 msgid "_Lock Screen"
 msgstr "_Blokeatu pantaila"
 
-#: ../gnome-panel/panel-action-button.c:131
+#: ../gnome-panel/panel-action-button.c:167
 msgid "_Activate Screensaver"
 msgstr "_Aktibatu pantaila-babeslea"
 
-#: ../gnome-panel/panel-action-button.c:237
+#: ../gnome-panel/panel-action-button.c:347
 msgid "Connect to server"
 msgstr "Konektatu zerbitzariarekin"
 
-#: ../gnome-panel/panel-action-button.c:261
+#: ../gnome-panel/panel-action-button.c:371
 msgid "Could not connect to server"
 msgstr "Ezin izan da zerbitzariarekin konektatu"
 
-#: ../gnome-panel/panel-action-button.c:291
+#: ../gnome-panel/panel-action-button.c:401
 msgid "Lock Screen"
 msgstr "Blokeatu pantaila"
 
-#: ../gnome-panel/panel-action-button.c:292
+#: ../gnome-panel/panel-action-button.c:402
 msgid "Protect your computer from unauthorized use"
 msgstr "Babestu ordenagailua baimenik gabe erabil ez dezaten"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:305
+#: ../gnome-panel/panel-action-button.c:415
 msgid "Log Out"
 msgstr "Amaitu saioa"
 
-#: ../gnome-panel/panel-action-button.c:306
+#: ../gnome-panel/panel-action-button.c:416
 msgid "Log out of this session to log in as a different user"
 msgstr "Irten saio honetatik beste erabiltzaile-izen batekin sartzeko"
 
-#: ../gnome-panel/panel-action-button.c:314
+#: ../gnome-panel/panel-action-button.c:424
 msgid "Run Application..."
 msgstr "Exekutatu aplikazioa..."
 
-#: ../gnome-panel/panel-action-button.c:315
+#: ../gnome-panel/panel-action-button.c:425
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Aplikazio bat exekutatu komando bat idatziz edo zerrendatik aukeratuz"
 
-#: ../gnome-panel/panel-action-button.c:323
+#: ../gnome-panel/panel-action-button.c:433
 msgid "Search for Files..."
 msgstr "Bilatu fitxategiak..."
 
-#: ../gnome-panel/panel-action-button.c:324
+#: ../gnome-panel/panel-action-button.c:434
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "Lokalizatu dokumentuak eta karpetak ordenagailuan izenaren edo edukiaren "
 "arabera"
 
-#: ../gnome-panel/panel-action-button.c:331
-#: ../gnome-panel/panel-force-quit.c:239
+#: ../gnome-panel/panel-action-button.c:441
+#: ../gnome-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "Behartu irtetera"
 
-#: ../gnome-panel/panel-action-button.c:332
+#: ../gnome-panel/panel-action-button.c:442
 msgid "Force a misbehaving application to quit"
 msgstr "Derrigortu portaera akastuna duen aplikazioa ixtera"
 
 #. FIXME icon
-#: ../gnome-panel/panel-action-button.c:340
+#: ../gnome-panel/panel-action-button.c:450
 msgid "Connect to Server..."
 msgstr "Konektatu zerbitzariarekin..."
 
-#: ../gnome-panel/panel-action-button.c:341
+#: ../gnome-panel/panel-action-button.c:451
 msgid "Connect to a remote computer or shared disk"
 msgstr "Konektatu urruneko zerbitzari edo partekatutako disko batekin"
 
-#: ../gnome-panel/panel-action-button.c:348
+#: ../gnome-panel/panel-action-button.c:458
+msgid "Hibernate"
+msgstr "Hibernatu"
+
+#: ../gnome-panel/panel-action-button.c:467
+msgid "Suspend"
+msgstr "Eseki"
+
+#: ../gnome-panel/panel-action-button.c:476
+msgid "Hybrid sleep"
+msgstr "Lo egin"
+
+#: ../gnome-panel/panel-action-button.c:485
+msgid "Restart"
+msgstr "Berrabiarazi"
+
+#: ../gnome-panel/panel-action-button.c:486
+#| msgid "Power off the computer"
+msgid "Restart the computer"
+msgstr "Berrabiarazi ordenagailua"
+
+#: ../gnome-panel/panel-action-button.c:494
 msgid "Power Off"
 msgstr "Itzali"
 
-#: ../gnome-panel/panel-action-button.c:349
+#: ../gnome-panel/panel-action-button.c:495
 msgid "Power off the computer"
 msgstr "Itzali ordenagailua"
 
-#: ../gnome-panel/panel-addto.c:142 ../gnome-panel/panel-menu-button.c:960
+#: ../gnome-panel/panel-addto-dialog.c:142
+#: ../gnome-panel/panel-menu-button.c:976
 msgid "Main Menu"
 msgstr "Menu nagusia"
 
-#: ../gnome-panel/panel-addto.c:143
+#: ../gnome-panel/panel-addto-dialog.c:143
 msgid "The main GNOME menu"
 msgstr "GNOMEren menu nagusia"
 
-#: ../gnome-panel/panel-addto.c:152
+#: ../gnome-panel/panel-addto-dialog.c:151
 msgid "Menu Bar"
 msgstr "Menu-barra"
 
-#: ../gnome-panel/panel-addto.c:153
+#: ../gnome-panel/panel-addto-dialog.c:152
 msgid "A custom menu bar"
 msgstr "Menu-barra pertsonalizatua"
 
-#: ../gnome-panel/panel-addto.c:162
+#: ../gnome-panel/panel-addto-dialog.c:160
 msgid "Separator"
 msgstr "Bereizlea"
 
-#: ../gnome-panel/panel-addto.c:163
+#: ../gnome-panel/panel-addto-dialog.c:161
 msgid "A separator to organize the panel items"
 msgstr "Paneleko elementuak antolatzeko bereizlea"
 
-#: ../gnome-panel/panel-addto.c:172
+#: ../gnome-panel/panel-addto-dialog.c:169
 msgid "User menu"
 msgstr "Erabiltzailearen menua"
 
-#: ../gnome-panel/panel-addto.c:173
-msgid "Menu to change your settings and your online status"
-msgstr "Zure ezapenak eta lineako egoera aldatzeko menua"
+#: ../gnome-panel/panel-addto-dialog.c:170
+#| msgid "Menu to change your settings and your online status"
+msgid "Menu to change your settings and log out"
+msgstr "Zure ezarpenak aldatzeko eta irteteko menua"
 
-#: ../gnome-panel/panel-addto.c:219
+#: ../gnome-panel/panel-addto-dialog.c:218
 msgid "(empty)"
 msgstr "(hutsik)"
 
-#: ../gnome-panel/panel-addto.c:419
+#: ../gnome-panel/panel-addto-dialog.c:417
 msgid "Custom Application Launcher"
 msgstr "Pertsonalizatutako aplikazioen abiarazlea"
 
-#: ../gnome-panel/panel-addto.c:420
+#: ../gnome-panel/panel-addto-dialog.c:418
 msgid "Create a new launcher"
 msgstr "Sortu abiarazle berria"
 
-#: ../gnome-panel/panel-addto.c:430
+#: ../gnome-panel/panel-addto-dialog.c:427
 msgid "Application Launcher..."
 msgstr "Exekutatu aplikazioa..."
 
-#: ../gnome-panel/panel-addto.c:431
+#: ../gnome-panel/panel-addto-dialog.c:428
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiatu abiarazlea aplikazioen menutik"
 
-#: ../gnome-panel/panel-addto.c:1011
+#: ../gnome-panel/panel-addto-dialog.c:927
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Bilatu _elementu bat \"%s\"(r)i gehitzeko:"
 
-#: ../gnome-panel/panel-addto.c:1015
+#: ../gnome-panel/panel-addto-dialog.c:931
 msgid "Find an _item to add to the panel:"
 msgstr "Bilatu _elementu bat panelari gehitzeko:"
 
-#: ../gnome-panel/panel-addto.c:1018
+#: ../gnome-panel/panel-addto-dialog.c:1053
+msgid "_Forward"
+msgstr "A_urrera"
+
+#: ../gnome-panel/panel-addto-dialog.ui.h:1
 msgid "Add to Panel"
 msgstr "Gehitu panelari"
 
-#: ../gnome-panel/panel-applet-frame.c:774
-#, c-format
-msgid "\"%s\" has quit unexpectedly"
-msgstr "\"%s\" ustekabean amaitu da"
+#: ../gnome-panel/panel-addto-dialog.ui.h:2
+#| msgid "Find an _item to add to the panel:"
+msgid "Find an item to add to the panel:"
+msgstr "Bilatu elementu bat panelari gehitzeko:"
 
-#: ../gnome-panel/panel-applet-frame.c:776
-msgid "Panel object has quit unexpectedly"
-msgstr "Paneleko objektua ustekabean amaitu da"
+#: ../gnome-panel/panel-addto-dialog.ui.h:3
+msgid "_Back"
+msgstr "_Atzera"
 
-#: ../gnome-panel/panel-applet-frame.c:783
-msgid ""
-"If you reload a panel object, it will automatically be added back to the "
-"panel."
-msgstr ""
-"Paneleko objektu bat birkargatzean automatikoki panelari gehituko zaio."
-
-#: ../gnome-panel/panel-applet-frame.c:789
-msgid "_Don't Reload"
-msgstr "_Ez birkargatu"
-
-#: ../gnome-panel/panel-applet-frame.c:790
-msgid "_Reload"
-msgstr "_Birkargatu"
-
-#: ../gnome-panel/panel-applet-frame.c:940
+#: ../gnome-panel/panel-applet-frame.c:699
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelak arazoak izan ditu \"%s\" kargatzean."
 
-#: ../gnome-panel/panel-applet-frame.c:956
+#: ../gnome-panel/panel-applet-frame.c:711
+msgid "OK"
+msgstr "Ados"
+
+#: ../gnome-panel/panel-applet-frame.c:715
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Miniaplikazio hori konfiguraziotik ezabatu nahi duzu?"
 
-#: ../gnome-panel/panel.c:527
+#: ../gnome-panel/panel-applet-frame.c:718
+msgid "D_on't Delete"
+msgstr "E_z ezabatu"
+
+#: ../gnome-panel/panel-applet-frame.c:719 ../gnome-panel/panel.c:1315
+#| msgid "D_on't Delete"
+msgid "_Delete"
+msgstr "E_zabatu"
+
+#: ../gnome-panel/panel.c:447
 #, c-format
 msgid "Open URL: %s"
 msgstr "Ireki URLa: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:596 ../gnome-panel/panel-menu-items.c:643
+#: ../gnome-panel/panel.c:516 ../gnome-panel/panel-menu-items.c:564
 #, c-format
 msgid "Open '%s'"
 msgstr "Ireki '%s'"
@@ -1914,18 +2040,18 @@ msgstr "Ireki '%s'"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:644 ../gnome-panel/panel-menu-items.c:1198
+#: ../gnome-panel/panel.c:564 ../gnome-panel/panel-menu-items.c:1118
 msgid "Open your personal folder"
 msgstr "Ireki karpeta pertsonala"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:653 ../gnome-panel/panel-menu-items.c:1234
+#: ../gnome-panel/panel.c:573 ../gnome-panel/panel-menu-items.c:1147
 msgid "Computer"
 msgstr "Ordenagailua"
 
 #. name
-#: ../gnome-panel/panel.c:654 ../gnome-panel/panel-menu-items.c:1240
+#: ../gnome-panel/panel.c:574 ../gnome-panel/panel-menu-items.c:1148
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1934,20 +2060,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:661 ../gnome-panel/panel-menu-items.c:1250
+#: ../gnome-panel/panel.c:581 ../gnome-panel/panel-menu-items.c:1157
 msgid "Network"
 msgstr "Sarea"
 
 #. name
-#: ../gnome-panel/panel.c:662 ../gnome-panel/panel-menu-items.c:1251
+#: ../gnome-panel/panel.c:582 ../gnome-panel/panel-menu-items.c:1158
 msgid "Browse bookmarked and local network locations"
 msgstr "Arakatu laster-marka jarritako eta lokaleko sareko kokalekuak"
 
-#: ../gnome-panel/panel.c:1394
+#: ../gnome-panel/panel.c:1306
 msgid "Delete this panel?"
 msgstr "Ezabatu tiradera hau?"
 
-#: ../gnome-panel/panel.c:1398
+#: ../gnome-panel/panel.c:1310
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1963,15 +2089,15 @@ msgstr "Ezin da panel hau ezabatu"
 msgid "You must always have at least one panel."
 msgstr "Gutxienez panel bat eduki behar duzu."
 
-#: ../gnome-panel/panel-context-menu.c:120
+#: ../gnome-panel/panel-context-menu.c:155
 msgid "_Add to Panel..."
 msgstr "_Gehitu panelari..."
 
-#: ../gnome-panel/panel-context-menu.c:141
+#: ../gnome-panel/panel-context-menu.c:171
 msgid "_Delete This Panel"
 msgstr "_Ezabatu panel hau"
 
-#: ../gnome-panel/panel-context-menu.c:156
+#: ../gnome-panel/panel-context-menu.c:183
 msgid "_New Panel"
 msgstr "_Panel berria"
 
@@ -1988,72 +2114,76 @@ msgid "Location"
 msgstr "Kokalekua"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:615
+#: ../gnome-panel/panel-ditem-editor.c:601
 msgid "_Type:"
 msgstr "_Mota:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:622
+#: ../gnome-panel/panel-ditem-editor.c:608
 msgid "_Name:"
 msgstr "_Izena:"
 
-#: ../gnome-panel/panel-ditem-editor.c:649
+#: ../gnome-panel/panel-ditem-editor.c:633
 msgid "_Browse..."
 msgstr "_Arakatu..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:656
+#: ../gnome-panel/panel-ditem-editor.c:640
 msgid "Co_mment:"
 msgstr "Iru_zkina:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1002
+#: ../gnome-panel/panel-ditem-editor.c:647
+msgid "_Revert"
+msgstr "_Leheneratu"
+
+#: ../gnome-panel/panel-ditem-editor.c:967
 msgid "Choose an application..."
 msgstr "Aukeratu aplikazioa..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1006
+#: ../gnome-panel/panel-ditem-editor.c:971
 msgid "Choose a file..."
 msgstr "Aukeratu fitxategia..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1171
-#: ../gnome-panel/panel-ditem-editor.c:1180
+#: ../gnome-panel/panel-ditem-editor.c:1136
+#: ../gnome-panel/panel-ditem-editor.c:1145
 msgid "Comm_and:"
 msgstr "_Komandoa:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1189
+#: ../gnome-panel/panel-ditem-editor.c:1154
 msgid "_Location:"
 msgstr "_Kokalekua:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1352
+#: ../gnome-panel/panel-ditem-editor.c:1317
 msgid "The name of the launcher is not set."
 msgstr "Ez da abiarazlearen izena ezarri."
 
-#: ../gnome-panel/panel-ditem-editor.c:1356
+#: ../gnome-panel/panel-ditem-editor.c:1321
 msgid "Could not save directory properties"
 msgstr "Ezin izan da direktorioaren propietaterik gorde"
 
-#: ../gnome-panel/panel-ditem-editor.c:1357
+#: ../gnome-panel/panel-ditem-editor.c:1322
 msgid "The name of the directory is not set."
 msgstr "Ez da direktorioaren izena ezarri."
 
-#: ../gnome-panel/panel-ditem-editor.c:1373
+#: ../gnome-panel/panel-ditem-editor.c:1338
 msgid "The command of the launcher is not set."
 msgstr "Ez da abiarazlearen komandoa ezarri."
 
-#: ../gnome-panel/panel-ditem-editor.c:1376
+#: ../gnome-panel/panel-ditem-editor.c:1341
 msgid "The location of the launcher is not set."
 msgstr "Ez da abiarazlearen kokalekua ezarri."
 
-#: ../gnome-panel/panel-force-quit.c:77
+#: ../gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Aplikazioa ixtera behartzeko, egin klik leiho batean. Uzteko, sakatu <IHES>."
 
-#: ../gnome-panel/panel-force-quit.c:222
+#: ../gnome-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "Derrigortu aplikazioa ixtea?"
 
-#: ../gnome-panel/panel-force-quit.c:225
+#: ../gnome-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2061,7 +2191,11 @@ msgstr ""
 "Aplikazioa ixtera behartzen baduzu, irekita dauden dokumentuetako gorde "
 "gabeko aldaketak galdu egingo dira."
 
-#: ../gnome-panel/panel-layout.c:1220 ../gnome-panel/panel-layout.c:1234
+#: ../gnome-panel/panel-force-quit.c:230
+msgid "_Force quit"
+msgstr "_Behartu ixtera"
+
+#: ../gnome-panel/panel-layout.c:1105 ../gnome-panel/panel-layout.c:1119
 #, c-format
 msgid "Cannot create initial panel layout.\n"
 msgstr "Ezin da hasierako panelaren diseinua sortu.\n"
@@ -2074,227 +2208,116 @@ msgstr "Arakatu eta exekutatu instalatutako aplikazioak"
 msgid "Access documents, folders and network places"
 msgstr "Eduki sarbidea dokumentuetara, karpetetara eta sareko lekuetara"
 
-#: ../gnome-panel/panel-menu-bar.c:121
+#: ../gnome-panel/panel-menu-bar.c:128
 msgid "Applications"
 msgstr "Aplikazioak"
 
-#: ../gnome-panel/panel-menu-bar.c:223 ../gnome-panel/panel-menu-button.c:559
+#: ../gnome-panel/panel-menu-bar.c:234 ../gnome-panel/panel-menu-button.c:575
 msgid "_Edit Menus"
 msgstr "_Editatu menuak"
 
-#: ../gnome-panel/panel-menu-items.c:489
+#: ../gnome-panel/panel-menu-items.c:410
 msgid "Switch User"
 msgstr "Aldatu erabiltzailea"
 
-#: ../gnome-panel/panel-menu-items.c:619
+#: ../gnome-panel/panel-menu-items.c:540
 msgid "Bookmarks"
 msgstr "Laster-markak"
 
-#: ../gnome-panel/panel-menu-items.c:714
+#: ../gnome-panel/panel-menu-items.c:635
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Ezin da %s eskaneatu euskarrien aldaketa bilatzeko"
 
-#: ../gnome-panel/panel-menu-items.c:756
+#: ../gnome-panel/panel-menu-items.c:677
 #, c-format
 msgid "Rescan %s"
 msgstr "Eskaneatu %s berriro"
 
-#: ../gnome-panel/panel-menu-items.c:793
+#: ../gnome-panel/panel-menu-items.c:714
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Ezin da %s muntatu"
 
-#: ../gnome-panel/panel-menu-items.c:855
+#: ../gnome-panel/panel-menu-items.c:776
 #, c-format
 msgid "Mount %s"
 msgstr "Muntatu %s"
 
-#: ../gnome-panel/panel-menu-items.c:1063
+#: ../gnome-panel/panel-menu-items.c:984
 msgid "Removable Media"
 msgstr "Euskarri aldagarria"
 
-#: ../gnome-panel/panel-menu-items.c:1154
+#: ../gnome-panel/panel-menu-items.c:1075
 msgid "Network Places"
 msgstr "Sareko helbidea"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1218
+#: ../gnome-panel/panel-menu-items.c:1135
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Mahaigaina"
 
-#: ../gnome-panel/panel-menu-items.c:1219
+#: ../gnome-panel/panel-menu-items.c:1136
 msgid "Open the contents of your desktop in a folder"
 msgstr "Ireki mahaigaineko edukia karpeta batean"
 
-#: ../gnome-panel/panel-menu-items.c:1356
-msgid "Available"
-msgstr "Erabilgarri"
-
-#: ../gnome-panel/panel-menu-items.c:1366
-msgid "Busy"
-msgstr "Lanpetuta"
-
-#: ../gnome-panel/panel-menu-items.c:1619
+#: ../gnome-panel/panel-menu-items.c:1444
 msgid "Places"
 msgstr "Lekuak"
 
-#: ../gnome-panel/panel-properties-dialog.c:77
-#: ../gnome-panel/panel-test-applets.c:55
-msgctxt "Orientation"
-msgid "Top"
-msgstr "Goian"
+#: ../gnome-panel/panel-image-menu-item.c:125
+msgid "Image widget"
+msgstr "Irudi-trepeta"
 
-#: ../gnome-panel/panel-properties-dialog.c:78
-#: ../gnome-panel/panel-test-applets.c:56
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "Behean"
+#: ../gnome-panel/panel-image-menu-item.c:126
+msgid "Child widget to appear next to the menu text"
+msgstr "Menuaren testuaren ondoan agertu beharreko trepeta umea"
 
-#: ../gnome-panel/panel-properties-dialog.c:79
-#: ../gnome-panel/panel-test-applets.c:57
-msgctxt "Orientation"
-msgid "Left"
-msgstr "Ezkerrean"
+#: ../gnome-panel/panel-image-menu-item.c:133
+msgid "Always show image"
+msgstr "Erakutsi beti irudia"
 
-#: ../gnome-panel/panel-properties-dialog.c:80
-#: ../gnome-panel/panel-test-applets.c:58
-msgctxt "Orientation"
-msgid "Right"
-msgstr "Eskuinean"
+#: ../gnome-panel/panel-image-menu-item.c:134
+msgid "Whether the image will always be shown"
+msgstr "Irudia beti erakutsiko den ala ez adierazten du"
 
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
-msgid "Panel Properties"
-msgstr "Panelaren propietateak"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:2
-msgid "Some of these properties are locked down"
-msgstr "Hauetako propietate batzuk blokeatuta daude"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:3
-msgid "pixels"
-msgstr "pixel"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:4
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Orientation:"
-msgstr "_Orientazioa:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "_Size:"
-msgstr "_Tamaina:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
-msgid "E_xpand"
-msgstr "Za_baldu"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
-msgid "_Autohide"
-msgstr "_Automatikoki ezkutatu"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
-msgid "Show hide _buttons"
-msgstr "E_rakutsi ezkutatzeko botoiak"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
-msgid "Arro_ws on hide buttons"
-msgstr "E_zkutuko botoietako geziak"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
-msgid "_None (use system theme)"
-msgstr "_Bat ere ez (erabili sistemaren gaia)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
-msgid "Solid c_olor"
-msgstr "Kolore _solidoa"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
-msgid "Pick a color"
-msgstr "Aukeratu kolorea"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
-msgid "Transparent"
-msgstr "Gardena"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Opaque"
-msgstr "Opakoa"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Co_lor:"
-msgstr "_Kolorea:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "S_tyle:"
-msgstr "_Estiloa:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "Background _image:"
-msgstr "Atze_ko planoko irudia:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
-msgid "Select background"
-msgstr "Hautatu atzeko planoa"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "Background"
-msgstr "Atzeko planoa"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
-msgid "Image Background Details"
-msgstr "Atzeko planoko irudiaren xehetasunak"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:23
-msgid "_Tile"
-msgstr "_Lauza"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:24
-msgid "_Scale"
-msgstr "Es_kala"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:25
-msgid "St_retch"
-msgstr "_Tiratu"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:26
-msgid "Rotate image when panel is _vertical"
-msgstr "_Biratu irudia panela bertikala denean"
-
-#: ../gnome-panel/panel-recent.c:76 ../gnome-panel/panel-recent.c:86
+#: ../gnome-panel/panel-recent.c:77 ../gnome-panel/panel-recent.c:87
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Ezin izan da orain dela gutxi erabilitako \"%s\" dokumentua ireki"
 
-#: ../gnome-panel/panel-recent.c:88
+#: ../gnome-panel/panel-recent.c:89
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Errore ezezagun bat gertatu da \"%s\" irekitzen saiatzean."
 
-#: ../gnome-panel/panel-recent.c:145
+#: ../gnome-panel/panel-recent.c:146
 msgid "Clear the Recent Documents list?"
 msgstr "Garbitu azken dokumentuen zerrenda?"
 
-#: ../gnome-panel/panel-recent.c:147
-#, fuzzy
+#: ../gnome-panel/panel-recent.c:148
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
-"ے All items from the Places ے Recent Documents menu item.\n"
-"ے All items from the recent documents list in all applications."
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 "Azken dokumentuen zerrenda garbitzen baduzu, ondorengoa ere garbituko da:\n"
 " • 'Lekuak' menuko elementu guztiak → Azken dokumentuak menuko elementu "
 "guztiak.\n"
 " • Aplikazio guztietako azken dokumentuen zerrendako elementu guztiak."
 
-#: ../gnome-panel/panel-recent.c:159
+#: ../gnome-panel/panel-recent.c:154
+msgid "C_lear"
+msgstr "_Garbitu"
+
+#: ../gnome-panel/panel-recent.c:160
 msgid "Clear Recent Documents"
 msgstr "Garbitu azken dokumentuak"
 
-#: ../gnome-panel/panel-recent.c:194
+#: ../gnome-panel/panel-recent.c:195
 msgid "Recent Documents"
 msgstr "Azken dokumentuak"
 
@@ -2306,36 +2329,36 @@ msgstr "Garbitu azken dokumentuak..."
 msgid "Clear all items from the recent documents list"
 msgstr "Garbitu azken dokumentuen zerrendako elementu guztiak?"
 
-#: ../gnome-panel/panel-run-dialog.c:432
+#: ../gnome-panel/panel-run-dialog.c:427
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Ezin da terminal bat aurkitu, xterm erabiltzen nahiz eta agian ez funtzionatu"
 
-#: ../gnome-panel/panel-run-dialog.c:496
+#: ../gnome-panel/panel-run-dialog.c:491
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Ezin izan da '%s' komandoa exekutatu"
 
-#: ../gnome-panel/panel-run-dialog.c:546
+#: ../gnome-panel/panel-run-dialog.c:547
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ezin izan da '%s' UTF-8 kodera bihurtu"
 
-#: ../gnome-panel/panel-run-dialog.c:1293
+#: ../gnome-panel/panel-run-dialog.c:1290
 msgid "Choose a file to append to the command..."
 msgstr "Aukeratu fitxategi bat komandoari eransteko..."
 
-#: ../gnome-panel/panel-run-dialog.c:1676
+#: ../gnome-panel/panel-run-dialog.c:1673
 #: ../gnome-panel/panel-run-dialog.ui.h:9
 msgid "Select an application to view its description."
 msgstr "Hautatu aplikazio bat azalpena ikusteko."
 
-#: ../gnome-panel/panel-run-dialog.c:1714
+#: ../gnome-panel/panel-run-dialog.c:1711
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Komando hau exekutatuko da: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1747
+#: ../gnome-panel/panel-run-dialog.c:1744
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2382,12 +2405,11 @@ msgstr "Aplikazio ezagunen zerrenda"
 msgid "Show list of known _applications"
 msgstr "Erakutsi _aplikazio ezagunen zerrenda"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:11
-#: ../gnome-panel/panel-stock-icons.c:81
+#: ../gnome-panel/panel-run-dialog.ui.h:12
 msgid "_Run"
 msgstr "E_xekutatu"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:12
+#: ../gnome-panel/panel-run-dialog.ui.h:13
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2395,76 +2417,18 @@ msgstr ""
 "Egin klik botoi honetan hautatutako aplikazioa edo komandoa sartzeko eremuko "
 "komandoa exekutatzeko."
 
-#: ../gnome-panel/panel-stock-icons.c:82
-msgid "_Force quit"
-msgstr "_Behartu ixtera"
-
-#: ../gnome-panel/panel-stock-icons.c:83
-msgid "C_lear"
-msgstr "_Garbitu"
-
-#: ../gnome-panel/panel-stock-icons.c:84
-msgid "D_on't Delete"
-msgstr "E_z ezabatu"
-
-#: ../gnome-panel/panel-test-applets.c:36
+#: ../gnome-panel/panel-test-applets.c:31
 msgid "Specify an applet IID to load"
 msgstr "Zehaztu miniaplikazioaren IID bat kargatzeko"
 
-#: ../gnome-panel/panel-test-applets.c:37
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr "Zehaztu miniaplikazioaren hobespenak biltegiratzeko gconf kokaleku bat"
-
-#: ../gnome-panel/panel-test-applets.c:38
-msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
-"Zehaztu miniaplikazioaren hasierako tamaina (oso txikia, tartekoa, handia, "
-"etab.)"
-
-#: ../gnome-panel/panel-test-applets.c:39
+#: ../gnome-panel/panel-test-applets.c:32
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Zehaztu miniaplikazioaren hasierako orientazioa (goian, behean, ezkerrean "
 "edo eskuinean)"
 
-#: ../gnome-panel/panel-test-applets.c:63
-msgctxt "Size"
-msgid "XX Small"
-msgstr "Oso oso txikia"
-
-#: ../gnome-panel/panel-test-applets.c:64
-msgctxt "Size"
-msgid "X Small"
-msgstr "Oso txikia"
-
-#: ../gnome-panel/panel-test-applets.c:65
-msgctxt "Size"
-msgid "Small"
-msgstr "Txikia"
-
-#: ../gnome-panel/panel-test-applets.c:66
-msgctxt "Size"
-msgid "Medium"
-msgstr "Ertaina"
-
-#: ../gnome-panel/panel-test-applets.c:67
-msgctxt "Size"
-msgid "Large"
-msgstr "Handia"
-
-#: ../gnome-panel/panel-test-applets.c:68
-msgctxt "Size"
-msgid "X Large"
-msgstr "Oso handia"
-
-#: ../gnome-panel/panel-test-applets.c:69
-msgctxt "Size"
-msgid "XX Large"
-msgstr "Oso oso handia"
-
-#: ../gnome-panel/panel-test-applets.c:127
+#: ../gnome-panel/panel-test-applets.c:102
 #, c-format
 msgid "Failed to load applet %s"
 msgstr "Huts egin du %s miniaplikazioa kargatzean"
@@ -2474,81 +2438,81 @@ msgstr "Huts egin du %s miniaplikazioa kargatzean"
 msgid "Test applet utility"
 msgstr "Probatu miniaplikazioen utilitatea"
 
+#: ../gnome-panel/panel-test-applets.ui.h:3
+msgid "Execute"
+msgstr "Exekutatu"
+
 #: ../gnome-panel/panel-test-applets.ui.h:4
+msgid "Close"
+msgstr "Itxi"
+
+#: ../gnome-panel/panel-test-applets.ui.h:5
 msgid "_Applet:"
 msgstr "_Miniaplikazioa:"
 
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Prefs Dir:"
-msgstr "_Hobsp Dir:"
-
-#: ../gnome-panel/panel-toplevel.c:1272
-msgid "Hide Panel"
-msgstr "Ezkutatu panela"
-
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1657
+#: ../gnome-panel/panel-toplevel.c:1512
 msgid "Top Expanded Edge Panel"
 msgstr "Goian zabaldutako ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1658
+#: ../gnome-panel/panel-toplevel.c:1513
 msgid "Top Centered Panel"
 msgstr "Goian zentratutako panela"
 
-#: ../gnome-panel/panel-toplevel.c:1659
+#: ../gnome-panel/panel-toplevel.c:1514
 msgid "Top Floating Panel"
 msgstr "Goiko panel mugikorra"
 
-#: ../gnome-panel/panel-toplevel.c:1660
+#: ../gnome-panel/panel-toplevel.c:1515
 msgid "Top Edge Panel"
 msgstr "Goiko ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1664
+#: ../gnome-panel/panel-toplevel.c:1519
 msgid "Bottom Expanded Edge Panel"
 msgstr "Behean zabaldutako ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1665
+#: ../gnome-panel/panel-toplevel.c:1520
 msgid "Bottom Centered Panel"
 msgstr "Behean zentratutako panela"
 
-#: ../gnome-panel/panel-toplevel.c:1666
+#: ../gnome-panel/panel-toplevel.c:1521
 msgid "Bottom Floating Panel"
 msgstr "Beheko panel mugikorra"
 
-#: ../gnome-panel/panel-toplevel.c:1667
+#: ../gnome-panel/panel-toplevel.c:1522
 msgid "Bottom Edge Panel"
 msgstr "Beheko ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1671
+#: ../gnome-panel/panel-toplevel.c:1526
 msgid "Left Expanded Edge Panel"
 msgstr "Ezkerrean zabaldutako ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1672
+#: ../gnome-panel/panel-toplevel.c:1527
 msgid "Left Centered Panel"
 msgstr "Ezkerrean zentratutako panela"
 
-#: ../gnome-panel/panel-toplevel.c:1673
+#: ../gnome-panel/panel-toplevel.c:1528
 msgid "Left Floating Panel"
 msgstr "Ezkerreko panel mugikorra"
 
-#: ../gnome-panel/panel-toplevel.c:1674
+#: ../gnome-panel/panel-toplevel.c:1529
 msgid "Left Edge Panel"
 msgstr "Ezkerreko ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1678
+#: ../gnome-panel/panel-toplevel.c:1533
 msgid "Right Expanded Edge Panel"
 msgstr "Eskuinean zabaldutako ertzeko panela"
 
-#: ../gnome-panel/panel-toplevel.c:1679
+#: ../gnome-panel/panel-toplevel.c:1534
 msgid "Right Centered Panel"
 msgstr "Eskuinean zentratutako panela"
 
-#: ../gnome-panel/panel-toplevel.c:1680
+#: ../gnome-panel/panel-toplevel.c:1535
 msgid "Right Floating Panel"
 msgstr "Eskuineko panel mugikorra"
 
-#: ../gnome-panel/panel-toplevel.c:1681
+#: ../gnome-panel/panel-toplevel.c:1536
 msgid "Right Edge Panel"
 msgstr "Eskuineko ertzeko panela"
 
@@ -2561,17 +2525,17 @@ msgstr "'%s' ikonoa ez da aurkitu"
 msgid "file"
 msgstr "fitxategia"
 
-#: ../gnome-panel/panel-util.c:734
+#: ../gnome-panel/panel-util.c:732
 msgid "Home Folder"
 msgstr "Karpeta nagusia"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:746
+#: ../gnome-panel/panel-util.c:744
 msgid "File System"
 msgstr "Fitxategi-sistema"
 
-#: ../gnome-panel/panel-util.c:919
+#: ../gnome-panel/panel-util.c:917
 msgid "Search"
 msgstr "Bilatu"
 
@@ -2580,26 +2544,208 @@ msgstr "Bilatu"
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:965
+#: ../gnome-panel/panel-util.c:963
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-msgid "Test DBus Applet Factory"
-msgstr "Probatu DBus miniaplikazioaren fabrika"
+#~ msgid "GNOME Flashback"
+#~ msgstr "GNOME Flashback"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
-msgid "Factory for Test DBus Applet"
-msgstr "DBus miniaplikazioa probatzeko fabrika"
+#~ msgid "This session logs you into GNOME with the traditional panel"
+#~ msgstr ""
+#~ "Saio honek panel tradizionala duen GNOME mahaigainera eramango zaitu"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
-msgid "Test DBus Applet"
-msgstr "Probatu DBus miniaplikazioa"
+#, fuzzy
+#~ msgid "GNOME Flashback (Compiz)"
+#~ msgstr "GNOME Flashback"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-msgid "A simple applet for testing the GNOME panel"
-msgstr "GNOME panela probatzeko miniaplikazio sinple bat"
+#, fuzzy
+#~ msgid ""
+#~ "This session logs you into GNOME with Compiz window-manager and the "
+#~ "traditional panel"
+#~ msgstr ""
+#~ "Saio honek panel tradizionala duen GNOME mahaigainera eramango zaitu"
+
+#~ msgid "X screen where the panel is displayed"
+#~ msgstr "Panela dagoen X pantaila"
+
+#~ msgid ""
+#~ "With a multi-screen setup, you may have panels on each individual screen. "
+#~ "This key identifies the current screen the panel is displayed on."
+#~ msgstr ""
+#~ "Pantaila anitzeko konfigurazioetan, pantaila bakoitzak bere panelak izan "
+#~ "ditzake. Gako honek identifikatzen du unean zein pantailatan bistaratzen "
+#~ "den panela."
+
+#~ msgid "Background type"
+#~ msgstr "Atzeko planoaren mota"
+
+#~ msgid ""
+#~ "Which type of background should be used for this panel. Possible values "
+#~ "are \"none\" - the default GTK+ widget background will be used, \"color\" "
+#~ "- the color key will be used as background color or \"image\" - the image "
+#~ "specified by the image key will be used as background."
+#~ msgstr ""
+#~ "Panelaren atzeko planoaren mota. Hauek dira balio posibleak: \"none"
+#~ "\" (bat ere ez) - GTK+ trepetaren atzeko plano lehenetsia erabiliko da, "
+#~ "\"color\" (kolorea) - kolore-gakoa erabiliko da atzeko planoko kolore "
+#~ "gisa edo \"image\" (irudia) - irudi-gakoan zehaztutako irudia erabiliko "
+#~ "da atzeko plano gisa."
+
+#~ msgid "Specifies the background color for the panel in #RGB format."
+#~ msgstr "Panelaren atzeko planoko kolorea zehazten du #GBU formatuan."
+
+#~ msgid "File is not a valid .desktop file"
+#~ msgstr "Ez da baliozko '.desktop' fitxategia"
+
+#~ msgid "Unrecognized desktop file Version '%s'"
+#~ msgstr "Mahaigaineko (.desktop) fitxategiaren '%s' bertsioa ezezaguna"
+
+#~ msgid "Starting %s"
+#~ msgstr "%s abiarazten"
+
+#~ msgid "Application does not accept documents on command line"
+#~ msgstr "Aplikazioak ez du dokumenturik onartzen komando-lerroan"
+
+#~ msgid "Unrecognized launch option: %d"
+#~ msgstr "Abiarazteko aukera ezezaguna: %d"
+
+#~ msgid "Can't pass document URIs to a 'Type=Link' desktop entry"
+#~ msgstr ""
+#~ "Ezin zaizkie dokumentuen URIak mahaigaineko 'Type=Link' sarrerari igaro"
+
+#~ msgid "Not a launchable item"
+#~ msgstr "Ez dago abiaraz daitekeen elementurik"
+
+#~ msgid "Disable connection to session manager"
+#~ msgstr "Desgaitu saio-kudeatzailearen konexioa"
+
+#~ msgid "Specify file containing saved configuration"
+#~ msgstr "Zehaztu konfigurazioa gordeta duen fitxategia"
+
+#~ msgid "FILE"
+#~ msgstr "FITXATEGIA"
+
+#~ msgid "Specify session management ID"
+#~ msgstr "Zehaztu saio-kudeatzailearen IDa"
+
+#~ msgid "ID"
+#~ msgstr "IDa"
+
+#~ msgid "Session management options:"
+#~ msgstr "Saio-kudeatzailearen aukerak:"
+
+#~ msgid "Show session management options"
+#~ msgstr "Erakutsi saio-kudeatzailearen aukerak"
+
+#~ msgid "\"%s\" has quit unexpectedly"
+#~ msgstr "\"%s\" ustekabean amaitu da"
+
+#~ msgid "Panel object has quit unexpectedly"
+#~ msgstr "Paneleko objektua ustekabean amaitu da"
+
+#~ msgid ""
+#~ "If you reload a panel object, it will automatically be added back to the "
+#~ "panel."
+#~ msgstr ""
+#~ "Paneleko objektu bat birkargatzean automatikoki panelari gehituko zaio."
+
+#~ msgid "_Don't Reload"
+#~ msgstr "_Ez birkargatu"
+
+#~ msgid "_Reload"
+#~ msgstr "_Birkargatu"
+
+#~ msgid "Available"
+#~ msgstr "Erabilgarri"
+
+#~ msgid "Busy"
+#~ msgstr "Lanpetuta"
+
+#~ msgid "_None (use system theme)"
+#~ msgstr "_Bat ere ez (erabili sistemaren gaia)"
+
+#~ msgid "Solid c_olor"
+#~ msgstr "Kolore _solidoa"
+
+#~ msgid "Pick a color"
+#~ msgstr "Aukeratu kolorea"
+
+#~ msgid "Transparent"
+#~ msgstr "Gardena"
+
+#~ msgid "Opaque"
+#~ msgstr "Opakoa"
+
+#~ msgid "Co_lor:"
+#~ msgstr "_Kolorea:"
+
+#~ msgid "S_tyle:"
+#~ msgstr "_Estiloa:"
+
+#~ msgid "Select background"
+#~ msgstr "Hautatu atzeko planoa"
+
+#~ msgid "Background"
+#~ msgstr "Atzeko planoa"
+
+#~ msgid "Image Background Details"
+#~ msgstr "Atzeko planoko irudiaren xehetasunak"
+
+#~ msgid "_Scale"
+#~ msgstr "Es_kala"
+
+#~ msgid "Rotate image when panel is _vertical"
+#~ msgstr "_Biratu irudia panela bertikala denean"
+
+#~ msgid ""
+#~ "Specify a gconf location in which the applet preferences should be stored"
+#~ msgstr ""
+#~ "Zehaztu miniaplikazioaren hobespenak biltegiratzeko gconf kokaleku bat"
+
+#~ msgid ""
+#~ "Specify the initial size of the applet (xx-small, medium, large etc.)"
+#~ msgstr ""
+#~ "Zehaztu miniaplikazioaren hasierako tamaina (oso txikia, tartekoa, "
+#~ "handia, etab.)"
+
+#~ msgctxt "Size"
+#~ msgid "XX Small"
+#~ msgstr "Oso oso txikia"
+
+#~ msgctxt "Size"
+#~ msgid "X Small"
+#~ msgstr "Oso txikia"
+
+#~ msgctxt "Size"
+#~ msgid "Small"
+#~ msgstr "Txikia"
+
+#~ msgctxt "Size"
+#~ msgid "Medium"
+#~ msgstr "Ertaina"
+
+#~ msgctxt "Size"
+#~ msgid "Large"
+#~ msgstr "Handia"
+
+#~ msgctxt "Size"
+#~ msgid "X Large"
+#~ msgstr "Oso handia"
+
+#~ msgctxt "Size"
+#~ msgid "XX Large"
+#~ msgstr "Oso oso handia"
+
+#~ msgid "_Prefs Dir:"
+#~ msgstr "_Hobsp Dir:"
+
+#~ msgid "Test DBus Applet"
+#~ msgstr "Probatu DBus miniaplikazioa"
+
+#~ msgid "A simple applet for testing the GNOME panel"
+#~ msgstr "GNOME panela probatzeko miniaplikazio sinple bat"
 
 #~ msgid "%l:%M:%S %p"
 #~ msgstr "%l:%M:%S %p"
@@ -2756,9 +2902,6 @@ msgstr "GNOME panela probatzeko miniaplikazio sinple bat"
 
 #~ msgid "Could not display help document"
 #~ msgstr "Ezin izan da laguntzako dokumentua bistaratu"
-
-#~ msgid "_Help"
-#~ msgstr "L_aguntza"
 
 #~ msgid "Unable to load file '%s': %s."
 #~ msgstr "Ezin da '%s' fitxategia kargatu: %s."
