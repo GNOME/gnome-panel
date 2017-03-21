@@ -1,0 +1,246 @@
+
+* Things which need discussion
+
+    + New toplevel behaviour
+    + Toplevel keybindings
+    + Configuration
+    + GConf usage
+
+New toplevel behaviour
+======================
+
+	There are some mildly controversial changes in the panel
+behaviour with the new toplevel widget.
+
+	1) Autohiding hides into the corner of the screen. This change
+	   was recommended by the usability team based on the fact the
+	   unhiding the panel isn't any harder - you just throw the
+	   mouse into the corner of the screen - but it makes
+	   operations near the edge of the screen a lot less error
+	   prone - previously you had to be careful not to go near the
+	   hidden panel.
+
+	2) GTK+ stock arrows on the hide buttons. I went for these
+	   instead of using the previous pixmaps because it makes
+	   theming easier and the default stock arrows are actually a
+	   lot clearer, IMHO.
+
+	3) Grab handle on floating panels with no hide buttons.
+	   Discussed before - previously there was no way to access
+	   the panel context menu on a floating panel. I'd imagine
+	   some people will cry "ugly", but I haven't seen a better
+	   suggestion yet.
+
+	4) Hiding a floating panel using the hide buttons makes the
+	   panel hide to the edge of the screen rather than just
+	   resizing into a button. Originally the reason I did this
+	   was temporary - currently the panel animations only allow
+	   moving the panel, not resizing it - but I've come to prefer
+	   the behaviour.
+
+	5) Floating panels now snap to the edge, corner and center (at
+	   the edge) of the screen. I think this makes sense, but
+	   maybe the snap region at 20 pixels is too big.
+
+	6) You can rotate a floating panel with the mouse by holding
+	   down Ctrl when moving it with the mouse.
+
+	7) You can resize the panel by clicking on the edge and
+	   dragging. Note, that you can change the width (height for
+	   vertical panels) of floating panels. The idea is that
+	   floating panels are "packed". I think this is a sensible
+	   concept.
+
+
+	I think that's about it. I'd encourage people to check out the
+"new-toplevel" branch (don't install it, just run it from the source
+dir - it doesn't recognise your preferences) and experiment with the
+behaviour before commenting.
+
+Panel toplevel keybindings
+==========================
+
+	The new toplevel widget currently binds some of metacity's
+window keybindings to similar functions on the panel.
+
+	+ activate_window_menu: popup the panel context menu. Same
+	  thing as Ctrl-F10.
+
+	+ toggle_maximized: toggle between expanded/un-expanded.
+
+        + maximize: expand the panel.
+	+ unmaximize: un-expand the panel.
+
+	+ toggle_shaded: toggle the panel between hidden/un-hidden. If
+	  you have autohide enabled this does autohiding type
+	  behaviour, otherwise its does hiding in a similar way to
+	  doing it with the hide buttons.
+
+	+ begin_move:
+	+ begin_resize: move/resize the panel in similar ways to the
+	  way you can move/resize windows using the keyboard with
+	  metacity.
+
+	So there's a few questions about this:
+
+	1) Does it make sense to overload the window keybindings with
+	   similar functions on panels. It may lead to user confusion,
+	   but I think it will just make learning the panel bindings
+	   easier and also free us of the burden of coming up with new
+	   key sequences for these operations.
+
+	2) Are the activate_window_menu and toggle_shaded bindings
+	   similar enough to popping up the context menu and hiding
+	   the panel similar enough to warrant the overloading. I
+	   think the others definetly make sense.
+
+	3) Are there any other operations which would benefit from
+	   keybindings like this. They don't neccessarily need to have
+	   equivalent ones in metacity.
+
+	4) We're tying ourselves closely here to metacity. Maybe we
+	   should only do this if metacity is running (this is what
+	   the keybindings dialog does).
+
+	To test this out with the "new-toplevel" branch you need the
+attached patch for metacity.
+
+GConf Usage
+===========
+
+	We made a litany of mistakes when we did the porting from
+gnome-config to GConf for 2.0:
+	
+	1) We use schemas for the default setup in a very dubious way.
+	   As a side effect it is extremely awkward to change the
+	   default panel setup.
+	2) We came up with the idea of panel "profiles" but never
+	   exposed it in the interface and didn't add the ability to
+	   switch between profiles.
+	3) Panel doesn't respond to GConf notifications
+	4) Using huge long internal identifiers for for panels and
+	   applets which makes it very hard to grok the panel's
+	   gconf tree.
+	5) Various little mistakes like storing a bitfield as an ints
+	   etc.
+	6) Not all changes are written to gconf immediately, there's
+	   still some weird remenants that I don't fully understand of
+	   saving configuration on receipt of SaveYourself and various
+	   global timeouts for saving all the panel configuration.
+	7) Saving the configuration to GConf on startup even though
+	   nothing has changed.
+
+	So, clearly 3, 4, 5, 6, and 7 are pretty obvious things to
+fix. Some of them will take a fair bit of work to fix, but there's no
+arguments on what the behaviour should be.
+
+========
+
+	(1) is pretty tough to figure out what should be done.
+Currently the panel does the following:
+
+	+ Installs a set of "schemas" into /schemas/apps/panel/default-profiles
+	  which really is just the default configuration tree. e.g. we
+	  install schemas like:
+
+/schemas/apps/panel/profiles/default/panels/000001/size
+/schemas/apps/panel/profiles/default/panels/000002/size
+
+	  when clearly we should have a single schema:
+
+/schemas/apps/panel/panels/size
+
+	  which is then applied to the keys:
+
+/apps/panel/profiles/default/panels/000001/size
+/apps/panel/profiles/default/panels/000002/size
+
+	  The default specified in the schema should just be the
+	  default size when you create a new panel and so we need a
+	  seperate place to get the information that "the default
+	  panel setup should have a 32 pixel wide panel on the top and
+	  a 24 pixel wide panel on the bottom".
+
+	  The most sensible solution to this is that the default panel
+	  setup should get installed into the defaults database. This
+	  could be done in a number of ways:
+
+	* Use a gconftool script which would write the default setup
+	  to the defaults database. It would look something like:
+
+export GCONF_CONFIG_SOURCE='xml:readwrite:/usr/etc/gconf/gconf.xml.defaults'
+gconftool-2 --direct
+   -s /apps/panel/profiles/default/panels/00001/size -t int 32
+gconftool-2 --direct
+   -s /apps/panel/profiles/default/panels/00002/size -t int 24
+
+	* Come up with a homegrown file format for describing a the
+	  default panel setup and write a simple program for parsing
+	  it and installing it into the defaults database. It might
+	  look something like:
+
+<default_profile>
+  <toplevel id="top_menu_panel">
+    <name>Top Menu Panel</name>
+    <orientation>top</orientation>
+    <size>24</size>
+    <auto_hide>false</auto_hide>
+    <enable_buttons>false</enable_buttons>
+    <background type="plain"/>
+
+    <applet iid="">
+    </applet>
+
+    <object type="">
+    </object>
+  </toplevel>
+</default_profile>
+
+	* Come up with a new GConf file format which
+	  --makefile-install-rule would handle just like the .schemas
+	  file. This file format would effectively be a gconf script
+	  e.g
+
+<gconfvaluesfile>
+  <valueslist>
+
+    <value type="int" key="/apps/panel/profiles/default/panels/0001/size">24</value>
+    <value type="int" key="/apps/panel/profiles/default/panels/0002/size">32</value>
+
+  </valueslist>
+</gconfvaluesfile>
+
+
+	Because of profiles and needing to be able to use the default
+setup on newly available screens, the default setup needs to always be
+available, so we would actually need to be able to install these
+defaults in somewhere like
+
+  /apps/panel/default-setup
+
+	so that we can copy it everytime we start a new profile or
+find that we've logged into a machine with a screen with no panels
+configured for it.
+
+=========
+
+	(2) is something else which needs to be decided upon. The
+original idea behind them was for session management. You could have a
+different panel setups for different purposes. I've just read over
+gnome-panel/doc/panel-session-handling.txt and reminded myself of what
+this was all about.
+
+	Alex wanted something similar to gnome-terminal AFAIK, you
+could switch between profiles at runtime, create new profiles etc. If
+you save your session, the current profile you are using is saved so
+you use this profile every time you log in to that session.
+
+	George wanted to have the current profile to be decided by the
+current session name - you basically have a profile for each session.
+
+	Thinking about it, I prefer George's approach (even though I'd
+completely forgotten about it).
+
+	Alternatively, we could forget the whole idea of session
+management with the panel. All your configuration is global and is the
+same for all sessions.

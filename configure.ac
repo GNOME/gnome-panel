@@ -272,6 +272,10 @@ AC_CONFIG_FILES([
   libpanel-applet/Makefile
   libpanel-applet/libpanel-applet.pc
 
+  doc/Makefile
+  doc/reference/Makefile
+  doc/reference/libpanel-applet/Makefile
+
   docs/Makefile
   docs/reference/Makefile
   docs/reference/libgnome-panel/Makefile

@@ -1,0 +1,26 @@
+_GNOME_PANEL_ACTION Protocol
+
+  The _GNOME_PANEL_ACTION is a simple mechanism whereby an
+  application window invoke one of a number of simple
+  actions which will be handled by the GNOME panel. This
+  protocol is intended to be used by window managers who
+  provide keybindings for these actions.
+
+  To invoke an action the application sends the following
+  ClientMessage to the root window of the screen on which
+  the keybinding was activated:
+
+   type = ClientMessage
+   window = the root window
+   message_type = _GNOME_PANEL_ACTION
+   format = 32
+   data.l[0] = action
+   data.l[1] = timestamp
+
+  Possible action atoms are:
+
+    _GNOME_PANEL_ACTION_MAIN_MENU, ATOM
+    _GNOME_PANEL_ACTION_RUN_DIALOG, ATOM
+    _GNOME_PANEL_ACTION_KILL_DIALOG, ATOM
+
+  Unsupported actions are ignored by the panel.
