@@ -1,0 +1,150 @@
+  The steps for releasing a module is more or less the same for every
+module. Below, I've described the steps I take when releasing
+gnome-panel, gnome-desktop and gnome-session.
+
+Mark McLoughlin
+14th March, 2003
+
+1) Make sure you're up to date: cvs -z3 update -dP
+
+2) Increment the version number in configure.in e.g. bump
+
+<>
+    AM_INIT_AUTOMAKE(gnome-panel, 2.3.1)
+<>
+
+3) Update the LT_VERSION string if relevant. There's a comment in
+   configure.in that explains how this works:
+
+<>
+# Before making a release, the LT_VERSION string should be modified.
+# The string is of the form C:R:A.
+# - If interfaces have been changed or added, but binary compatibility has
+#   been preserved, change to C+1:0:A+1
+# - If binary compatibility has been broken (eg removed or changed interfaces)
+#   change to C+1:0:0
+# - If the interface is the same as the previous version, change to C:R+1:A
+                                                                                                             
+LIB_PANEL_APPLET_LT_VERSION=0:14:0
+AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
+<>
+
+    In most cases you won't need to do anything.
+
+4) In the case of gnome-desktop, update:
+
+<>
+GNOME_PLATFORM=2
+GNOME_MINOR=3
+GNOME_MICRO=1
+GNOME_VENDOR="Gnome.Org"
+GNOME_DATE="14th March, 2003"
+<>
+
+   i.e. here I'm doing a release for GNOME 2.3.1 on the 14th of March.
+
+5) Update the version number at the top of the README file.
+
+6) Add an ChangeLog entry e.g.
+
+<>
+2003-03-14  Mark McLoughlin  <mark@skynet.ie>
+                                                                                                             
+        * configure.in: Version 2.3.1.
+<>
+
+7) Add an entry to the NEWS file. I use a format like
+
+<>
+=============
+Version 2.3.1
+=============
+
+Panel
+
+	* Blah blah blah
+
+Applets
+
+	....
+
+Miscellanous
+
+	....
+
+Translations
+
+	* az(Metin Amiroff), be(Dmitry G. Mastrukov), bg(Alexander Shopov),
+	  da(Ole Laursen), eo(Joël Brich), es(Pablo Gonzalo del Campo),
+	  .... and zh_TW(Abel Cheung).
+<>
+
+    This is the most time consuming part. First, I do something like:
+
+<>
+$ cvs -z3 diff -uNp -r GNOME_PANEL_2_3_0 > changes.txt
+<>
+
+   to generate a list of changes since the last release. Then you
+   should go through each of the ChangeLogs in the diff and come up
+   with a bullet point for each significant change and credit the
+   person(s) who did the work. Some tips:
+
+     o If several entries relate to the same change only use a single
+       bullet point.
+     o Try to make the bullet points short and snappy but
+       understandable for a general user. That's not always easy.
+     o Generate the list of translations from po/ChangeLog. Note,
+       that the actual translator isn't always the one with who added
+       the ChangeLog entry - try to credit the right person/team. The
+       format is "$locale($translator)". Sort alphabetically by
+       locale.
+
+8) Do a autogen && make && make install && make distcheck. Fix any
+   issues that crop up. Hopefully there are none because they can be a
+   right PITA - especially distcheck errors.
+
+9) While that's churning, compose a mail to
+   desktop-devel-list@gnome.org, release-team@gnome.org and
+   gnome-announce-list@gnome.org. I use the crappy template below:
+
+<>
+http://mail.gnome.org/archives/desktop-devel-list/2003-March/msg00331.html
+<>
+
+   Just copy the NEWS entries in and change the locations on the ftp
+   server.
+
+10) Distcheck finishes:
+
+<>
+==================================================
+gnome-panel-2.3.1.tar.gz is ready for distribution
+==================================================
+<>
+
+    Yay !
+
+11) Do a cvs commit. If that fails because someone has committed since
+    you last updated, then you'll need to repeat the whole thing
+    again. Well, update, add a new NEWS entry, and make distcheck
+    again.
+
+12) Tag the release. e.g. cvs tag GNOME_PANEL_2_3_1.
+
+13) Add version markers to all ChangeLogs e.g.:
+
+<>
+==================== 2.2.2 ====================
+
+2003-05-20 The Little Green Man <greenman@littlepeople.org>
+
+	   * pot-o-gold.c: add ability to theme the pot.
+<>
+
+14) Upload the tarball to ftp.gnome.org and install-module the
+    tarball. No command-line args are required.
+
+15) Send the mail to the lists.
+
+16) Get yourself a joffee and mutter "I hate doing this fscking crap".

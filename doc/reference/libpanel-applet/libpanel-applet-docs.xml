@@ -1,0 +1,1408 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+               "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd"
+[
+  <!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+  <!ENTITY % gtkdocentities SYSTEM "xml/gtkdocentities.ent">
+  %gtkdocentities;
+]>
+<book id="index">
+
+  <bookinfo>
+    <title>Panel Applet Reference Manual</title>
+    <releaseinfo>
+      This document is for the Panel Applet library, version &package_version;.
+      The latest version of this documentation can be found on-line at
+      <ulink role="online-location" url="https://developer.gnome.org/libpanel-applet/unstable/">https://developer.gnome.org/libpanel-applet/unstable/</ulink>.
+    </releaseinfo>
+  </bookinfo>
+
+  <part id="overview">
+    <title>Panel Applet Library Overview</title>
+    <partintro>
+      <para>
+        The Panel Applet Library is used in the GNOME Flashback desktop to write applets that can be added to GNOME
+        Panel. GNOME Panel is the main user interface used in the GNOME Flashback desktop environment, through which
+        users interact with their computer and open applications.
+      </para>
+
+      <para>
+        Applets are small applications that are embedded in the GNOME Panel. They can be used to give quick access
+        to some features, or to display the state of something specific. Most features in GNOME Panel such as the clock,
+        the application menu, the calendar and many others are written with this Panel Applet Library. Applets are added
+        through the "Add to Panel" dialog which can be opened from the "Add to Panel..." option on the context menu of
+        a GNOME Panel.
+      </para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata align="center" fileref="add_to_panel.png" format="PNG"/>
+        </imageobject>
+      </mediaobject>
+
+      <para>
+        The Panel Applet Library is what should be used to write applets as it handles all the communication with
+        the GNOME panel. It hides all of the embedding process of the applet behind a
+        <link linkend="PanelApplet"><type>PanelApplet</type></link> widget. It also provides
+        <link linkend="reference"><type>PanelApplet API</type></link> to properly integrate the applet in the
+        panel.
+      </para>
+
+      <note>
+        <simpara>
+          The Panel Applet Library was original part of the default GNOME desktop but was deprecated with GNOME 3,
+          when GNOME Shell was released. Nowadays development continues as part of the GNOME Flashback project. The
+          default desktop of GNOME now uses GNOME Shell, which uses a different system for extension, so an applet
+          written with the Panel Applet Library will not be usable in the default GNOME that users may use.
+        </simpara>
+      </note>
+    </partintro>
+
+  </part>
+
+  <part id="getting-started">
+    <title>Getting Started with the Panel Applet library</title>
+
+   <chapter id="getting-started.intro">
+    <title>Introduction</title>
+
+    <para>
+     While applets are rather simple to write, they are not the most easy form of interaction to users for two reasons:
+     <itemizedlist>
+        <listitem>
+            It is not intuitive how to add or remove applets for many users, so users may not know about your applet,
+            or may not know how to add it to the GNOME Panel.
+        </listitem>
+         <listitem>
+            The restriction in size of applets can limit their interface, so you should only use applets for simple
+            tasks such as displaying information, or for controlling other applications and programs.
+         </listitem>
+     </itemizedlist>
+     Therefore, before writing an applet, think hard whether this is the form of interaction that
+     is best for the feature you want to provide.
+    </para>
+
+   </chapter>
+
+   <chapter id="getting-started.concepts">
+    <title>Concepts</title>
+
+       <para>
+         In order to write an applet it is important to understand the relationships between GNOME Panel and your
+         applets. For example, how are applets registered to the GNOME Panel? How does the GNOME Panel instantiate an
+         applet?
+       </para>
+       <para>
+         On a typical desktop there can be multiple GNOME Panels and each GNOME Panel can have several instances of
+         your applet. These different instances are created by an <emphasis>applet factory</emphasis> which must be
+         registered to the GNOME Panel. Additionally, in order to identify your applet and instantiate the correct
+         applet, each applet is identified by an <emphasis>applet type</emphasis>.
+       </para>
+
+       <sect1>
+           <title>Applet Registration</title>
+
+           <para>
+             To make your applets and the applet factory known to GNOME Panel - so that it can show your
+             applet in the list of applets of the "Add to Panel" dialog - and to add applets to the panel, you
+             must create a Panel Applet File.
+             <link linkend="getting-started.install.panel-applet">Panel Applet files</link> are introduced in more
+             detail later in this document. However it is important for applet authors to understand the relationship
+             between <emphasis>the panel applet file</emphasis>, <emphasis>the applet factory</emphasis>, and the
+             <emphasis>applet type</emphasis>. Therefore this section contains a short example of a Panel Applet file.
+           </para>
+
+           <sect2>
+               <title>Panel Applet Files</title>
+               <para>
+                   <link linkend="getting-started.install.panel-applet">Panel Applet files</link> are
+                   <constant>ini</constant>-file formatted files that contain the necessary information about your
+                   factory and your applet types. The following example listing shows a simple Panel Applet file.
+               </para>
+               <informalexample>
+                   <programlisting>
+                       [Applet Factory]
+                       Id=HelloWorldFactory
+                       Name=Hello World Applet Factory
+                       Description=Factory for our example applets
+
+                       [HelloWorldApplet]
+                       Name=Hello World
+                       Description=The Hello World example applet
+                       Icon=hello-world-icon
+                   </programlisting>
+               </informalexample>
+           </sect2>
+
+           <sect2 id="getting-started.concepts.applet-types">
+               <title>Applet Types</title>
+
+               <para>
+                   The applet type is the identifier representing a type of applets to the panel. It is a simple string,
+                   like <constant>HelloWorldApplet</constant> and is unique per
+                   <link linkend="getting-started.concepts.applet-factory">applet factory</link>.
+               </para>
+
+               <note>
+                   <simpara>
+                       In the example listing above the applet type can be found in the second section title
+                       (e.g. <constant>[HelloWorldApplet]</constant>, but without the square brackets).
+                   </simpara>
+               </note>
+           </sect2>
+
+           <sect2 id="getting-started.concepts.applet-factory">
+               <title>Applet Factory</title>
+
+               <para>
+                 The applet factory is an implementation detail that is mostly hidden by the Panel Applet Library,
+                 but it still appears in a few places such as:
+                 <itemizedlist>
+                     <listitem>
+                       <para>
+                         The <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                         <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> macro, which is used to build
+                         out process applets. It gets the factory id passed as its first parameter.
+                       </para>
+                     </listitem>
+                     <listitem>
+                       <para>
+                         The <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS">
+                         <function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link> macro, which is used to build in
+                         process applets. It gets the factory id passed as its first parameter.
+                       </para>
+                     </listitem>
+                     <listitem>
+                       <para>
+                         A Panel Applet file, which is used to register applet types and the applet factory to the
+                         GNOME Panel. It must contain the same applet factory id as used in the above two macros.
+                       </para>
+                         <warning>
+                             <simpara>By default applets are out-process, if you have used the
+                                 <function>PANEL_APPLET_IN_PROCESS_FACTORY</function>, then you must add:
+                                 <constant>InProces=true</constant> to the <constant>[Applet Factory]</constant>
+                                 section.
+                             </simpara>
+                         </warning>
+                     </listitem>
+                 </itemizedlist>
+               </para>
+
+               <para>
+                   The applet factory is the object that will create a new applet instance when the panel requests a
+                   new applet to be created. It is identified with a simple string id, for example
+                   <constant>HelloWorldFactory</constant>.
+               </para>
+
+               <note>
+                   <simpara>
+                       In the example listing above the applet factory id can be found in the
+                       <constant>ID</constant>-field of the <constant>[Applet Factory]</constant> section.
+                   </simpara>
+               </note>
+
+               <para>
+                   The requests the applet factory will receive from the GNOME Panel specify which type of applet should be created.
+                   This is what makes it possible to have more than one applet type in one applet binary. In most cases, however, the
+                   applet factory will be specific to only one applet type.
+               </para>
+
+               <para>
+                   There is only one applet factory per applet binary, and it is always running before any applet instance is
+                   created by the applet binary. The applet factory is created via one of these two macros:
+                   <itemizedlist>
+                       <listitem>
+                           <para><link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link></para>
+                       </listitem>, or
+                       <listitem>
+                           <para><link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link></para>
+                       </listitem>.
+                   </itemizedlist>
+               </para>
+
+           </sect2>
+
+       </sect1>
+
+       <sect1 id="getting-started.concepts.applet-instances">
+           <title>Applet Instances</title>
+           <para>
+               There is no restriction as to how many instances of one applet type can be created. The user might
+               choose to add more than one <constant>HelloWorldApplet</constant> applets to his panels. This can
+               have some implications on the design used to write applets. The most important implication is that
+               it is generally wrong to have global variables to keep a state specific to an applet instance.
+
+               <warning>
+                   <simpara>
+                       Using global variables in an applet can cause problems when the applet is instantiated
+                       several times.
+                   </simpara>
+               </warning>
+           </para>
+       </sect1>
+
+   </chapter>
+
+   <chapter id="getting-started.example">
+    <title>Hello World Example</title>
+
+    <para>
+      In this section we will write a simple example applet. This simple applet will have no functionality and
+      only displays a label with "Hello World" on the panel. For this simple applet only following three parts
+      are needed:
+    </para>
+
+    <itemizedlist>
+       <listitem>
+           <para>
+               <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function>
+               </link>: this creates an <link linkend="getting-started.concepts.applet-factory">applet factory</link> named
+               <constant>HelloWorldFactory</constant>, and each time our applet is added to a GNOME Panel, this applet
+               factory will create an applet instance, and calls <function>hello_world_factory_callback()</function>
+               with a <link linkend="PanelApplet"><type>PanelApplet</type></link> object already created.
+           </para>
+       </listitem>
+       <listitem>
+           <para>
+               <function>hello_world_factory_callback()</function>: this checks if the request to create an applet
+               instance is for an <link linkend="getting-started.concepts.applet-types">applet type</link> supported
+               by our <link linkend="getting-started.concepts.applet-factory">applet factory</link>. Here we can see
+               that we only support the <constant>HelloWorldApplet</constant> applet type. This function returns
+               <constant>TRUE</constant> on success and <constant>FALSE</constant> on failures.
+
+               <note>
+                   <simpara>If you return <constant>FALSE</constant> here, GNOME Panel will show a dialog and
+                   notify the user that the applet loading failed.</simpara>
+               </note>
+           </para>
+       </listitem>
+       <listitem>
+           <para>
+               <function>hello_world_applet_start()</function>: this is where we actually setup the
+               <link linkend="PanelApplet"><type>PanelApplet</type></link> widget for the work the applet should do.
+               This can include adding widgets to the applet, connecting to signals, loading settings via GSettings,
+               etc.
+
+               <note>
+                 <simpara>
+                   The PanelApplet is a subclass of <link linkend="GtkBin"><type>GtkBin</type></link>
+                   container, to add more than one widget to it you will need to use another GtkContainer
+                   implementation such as <link linkend="GtkBox"><type>GtkBox</type></link> or
+                   <link linkend="GtkGrid"><type>GtkGrid</type></link>.
+                 </simpara>
+               </note>
+           </para>
+       </listitem>
+    </itemizedlist>
+
+    <para>
+      An example is worth a million words, so here is the code for our <emphasis>Hello World</emphasis> applet.
+    </para>
+
+    <example id="getting-started.example.simple">
+     <title>Hello World applet</title>
+     <programlisting language="c">
+#include &lt;gtk/gtk.h&gt;
+#include &lt;panel-applet.h&gt;
+
+static void
+hello_world_applet_start (PanelApplet *applet)
+{
+    GtkWidget *label;
+
+    label = gtk_label_new ("Hello World");
+    gtk_container_add (GTK_CONTAINER (applet), label);
+    gtk_widget_show_all (GTK_WIDGET (applet));
+}
+
+static gboolean
+hello_world_factory_callback (PanelApplet  *applet,
+                              const gchar  *iid,
+                              gpointer      data)
+{
+    if (g_strcmp0 (iid, "HelloWorldApplet") != 0)
+         return FALSE;
+
+    hello_world_applet_start (applet);
+
+    return TRUE;
+}
+
+PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
+                                  PANEL_TYPE_APPLET,
+                                  hello_world_factory_callback,
+                                  NULL)
+     </programlisting>
+    </example>
+
+    <para>
+      While the previous example is simple, it can be useful to directly subclass the
+      <link linkend="PanelApplet"><type>PanelApplet</type></link> type. This makes it easy to have a per-applet
+      instance private structure, among other benefits. Most of the code below is related to the GObject system
+      and needed to subclass the Panel Applet. The only noteworthy difference is that the
+      <constant>PANEL_APPLET_OUT_PROCESS_FACTORY</constant> macro now takes our subclassed type (e.g. <constant>HELLO_WORLD_TYPE_APPLET</constant>)
+      as its second parameter, instead of <constant>PANEL_TYPE_APPLET</constant>.
+    </para>
+
+    <example id="getting-started.example.subclass">
+     <title>Hello World applet, with a PanelApplet subclass</title>
+     <programlisting language="c">
+#include &lt;gtk/gtk.h&gt;
+#include &lt;panel-applet.h&gt;
+
+#define HELLO_WORLD_TYPE_APPLET (hello_world_applet_get_type ())
+
+typedef struct _HelloWorldApplet        HelloWorldApplet;
+typedef struct _HelloWorldAppletClass   HelloWorldAppletClass;
+typedef struct _HelloWorldAppletPrivate HelloWorldAppletPrivate;
+
+struct _HelloWorldApplet {
+    PanelApplet parent_object;
+
+    /*&lt; private &gt;*/
+    HelloWorldAppletPrivate *priv;
+};
+
+struct _HelloWorldAppletClass {
+    PanelAppletClass parent_class;
+};
+
+struct _HelloWorldAppletPrivate
+{
+    GtkWidget *label;
+};
+
+static GType hello_world_applet_get_type (void) G_GNUC_CONST;
+
+G_DEFINE_TYPE (HelloWorldApplet, hello_world_applet, PANEL_TYPE_APPLET);
+
+static void
+hello_world_applet_init (HelloWorldApplet *applet)
+{
+    applet->priv = G_TYPE_INSTANCE_GET_PRIVATE (applet, HELLO_WORLD_TYPE_APPLET,
+                                                HelloWorldAppletPrivate);
+
+    applet->priv->label = gtk_label_new ("Hello World");
+    gtk_container_add (GTK_CONTAINER (applet), applet->priv->label);
+    gtk_widget_show (applet->priv->label);
+}
+
+static void
+hello_world_applet_class_init (HelloWorldAppletClass *klass)
+{
+  g_type_class_add_private (class, sizeof (HelloWorldAppletPrivate));
+}
+
+static
+hello_world_applet_start (HelloWorldApplet *applet)
+{
+    gtk_widget_show (GTK_WIDGET (applet));
+}
+
+static gboolean
+hello_world_factory_callback (HelloWorldApplet *applet,
+                              const gchar      *iid,
+                              gpointer          data)
+{
+    if (g_strcmp0 (iid, "HelloWorldApplet") != 0)
+         return FALSE;
+
+    hello_world_applet_start (applet);
+
+    return TRUE;
+}
+
+PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
+                                  HELLO_WORLD_TYPE_APPLET,
+                                  hello_world_factory_callback,
+                                  NULL)
+     </programlisting>
+    </example>
+
+   </chapter>
+
+   <chapter id="getting-started.context-menu">
+    <title>Using a Context Menu</title>
+
+    <para>
+     The Panel Applet library uses <type>GAction</type> to define menu items appearing in the context menu of the
+     applet. This chapter provides some guidelines to applet developers and explains how to setup the context menu.
+    </para>
+
+    <sect1 id="getting-started.context-menu.content">
+     <title>Guidelines for Context Menu</title>
+
+     <para>
+      To help guarantee consistency in the interaction with applets, there are some guidelines that are
+      recommended to follow:
+     </para>
+
+     <itemizedlist>
+      <listitem>
+       <para>
+        Do not make the context menu too long: if you have more than five or six menu items, then it might be worth
+        investing efforts on rethinking what is important in the menu.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        For the menu item that will enable the user to configure the applet, use "Preferences" for the label,
+        and try to avoid "Configure", "Configuration", "Settings", etc.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        Avoid putting a "Help" menu item. The user will usually explicitly add the applet, so it is expected that he knows what the applet is about.
+        Putting a "Help" menu item in the context menu is therefore too prominent. It might make sense to add a "Help" button in the Preferences dialog, though.
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        If you agree, avoid putting a "About" menu item. To the user, applets are not different applications but elements of one global application, the panel. Of course, this means that credits
+        for working on the applet are not visible to the user.
+       </para>
+      </listitem>
+     </itemizedlist>
+
+    </sect1>
+
+    <sect1 id="getting-started.context-menu.setup">
+     <title>Setting Up the Menu</title>
+
+     <para>
+      The only part of dealing with a context menu that is specific to applets is how to setup the context menu. Once it is setup, this is really just a matter of using <type>GtkAction</type>.
+     </para>
+
+     <para>
+      To setup the context menu of the applet, the <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function should be used, with a path to a <link linkend="getting-started.context-menu.xml-file">menu XML file</link> and a <type>GtkActionGroup</type> object containing all actions that are used in the menu XML file. The example below shows how to achieve this:
+     </para>
+
+     <example>
+     <title>Hello World applet, with a context menu</title>
+      <programlisting language="c">
+#include &lt;glib/gi18n.h&gt;
+#include &lt;gtk/gtk.h&gt;
+#include &lt;panel-applet.h&gt;
+
+/* This would usually be defined in config.h */
+#define GETTEXT_PACKAGE "hello-world"
+/* This would usually be defined in Makefile.am */
+#define HELLO_WORLD_UI_DIR "/usr/share/hello-world"
+
+static void hello_world_applet_prefs (GtkAction   *action,
+                                      PanelApplet *applet);
+static void hello_world_applet_say   (GtkAction   *action,
+                                      PanelApplet *applet);
+
+static const GtkActionEntry hello_world_menu_actions [] = {
+        { "HelloWorldPrefs", GTK_STOCK_HELP, N_("_Preferences"),
+          NULL, NULL,
+          G_CALLBACK (hello_world_applet_prefs) },
+        { "HelloWorldSay", GTK_STOCK_ABOUT, N_("_Say Hello"),
+          NULL, NULL,
+          G_CALLBACK (hello_world_applet_say) }
+};
+
+static void
+hello_world_applet_prefs (GtkAction   *action,
+                          PanelApplet *applet)
+{
+    GtkWidget *dialog;
+    dialog = gtk_message_dialog_new (NULL, 0,
+                                    GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+                                    "Preferences");
+    g_signal_connect (dialog, "response",
+                      G_CALLBACK (gtk_widget_destroy), NULL);
+    gtk_widget_show (dialog);
+}
+
+static void
+hello_world_applet_say (GtkAction   *action,
+                        PanelApplet *applet)
+{
+    GtkWidget *dialog;
+    dialog = gtk_message_dialog_new (NULL, 0,
+                                    GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE,
+                                    "Hello World!");
+    g_signal_connect (dialog, "response",
+                      G_CALLBACK (gtk_widget_destroy), NULL);
+    gtk_widget_show (dialog);
+}
+
+static gboolean
+hello_world_applet_start (PanelApplet *applet)
+{
+    GtkWidget *label;
+    GtkActionGroup *action_group;
+    gchar *ui_path;
+
+    label = gtk_label_new ("Hello World");
+    gtk_container_add (GTK_CONTAINER (applet), label);
+
+    action_group = gtk_action_group_new ("Hello World Applet Actions");
+    gtk_action_group_set_translation_domain (action_group, GETTEXT_PACKAGE);
+    gtk_action_group_add_actions (action_group,
+                                  hello_world_menu_actions,
+                                  G_N_ELEMENTS (hello_world_menu_actions),
+                                  applet);
+
+    ui_path = g_build_filename (HELLO_WORLD_UI_DIR, "hello-world-menu.xml", NULL);
+    panel_applet_setup_menu_from_file (applet, ui_path, action_group);
+
+    g_free (ui_path);
+    g_object_unref (action_group);
+
+    gtk_widget_show_all (GTK_WIDGET (applet));
+
+    return TRUE;
+}
+
+static gboolean
+hello_world_factory_callback (PanelApplet  *applet,
+                              const gchar  *iid,
+                              gpointer      data)
+{
+    gboolean retval = FALSE;
+
+    if (g_strcmp0 (iid, "HelloWorldApplet") == 0)
+        retval = hello_world_applet_start (applet);
+
+    return retval;
+}
+
+PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
+                                  PANEL_TYPE_APPLET,
+                                  hello_world_factory_callback,
+                                  NULL)
+      </programlisting>
+     </example>
+
+     <para>
+      Here are the changes compared to the <link linkend="getting-started.example.simple">simple example</link> with no context menu:
+     </para>
+
+    <itemizedlist>
+     <listitem>
+      <para>
+       We define a list of <type>GtkActionEntry</type> entries: <constant>hello_world_menu_actions</constant>. This will be used later on to build <type>GtkAction</type> objects, with their label and callback. We obviously implement the callbacks.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       We change <function>hello_world_applet_start()</function> to define a <type>GtkActionGroup</type> object, to which we add, with <function>gtk_action_group_add_actions()</function>, <type>GtkAction</type> objects based on the <type>GtkActionEntry</type> entries. Note that the the last argument to <function>gtk_action_group_add_actions()</function> will be passed as user data to the callbacks.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       We also change <function>hello_world_applet_start()</function> to add this <type>GtkActionGroup</type> object to the context menu of the applet, by calling <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link>. This function takes as argument a path to the <link linkend="getting-started.context-menu.xml-file">menu XML file</link> that will define how to display the <type>GtkAction</type> objects in the context menu.
+      </para>
+     </listitem>
+    </itemizedlist>
+
+    </sect1>
+
+    <sect2 id="getting-started.context-menu.xml-file">
+     <title>Menu XML File</title>
+
+     <para>
+      The file that is used to setup menu with the <link linkend="panel-applet-setup-menu-from-file"><function>panel_applet_setup_menu_from_file()</function></link> function is a <type>GtkUIManager</type> UI definition file, without the top-level <constant>&lt;ui&gt;</constant> tag. It must only contain menuitem entries and separators. For example:
+     </para>
+
+     <informalexample>
+      <programlisting>
+&lt;menuitem name="Hello World Prefs" action="HelloWorldPrefs" /&gt;
+&lt;separator/&gt;
+&lt;menuitem name="Hello World Say"   action="HelloWorldSay" /&gt;
+      </programlisting>
+     </informalexample>
+
+    <para>
+     Alternatively, the <link linkend="panel-applet-setup-menu"><function>panel_applet_setup_menu()</function></link> function can be used with a string containing directly the XML.
+    </para>
+
+    </sect2>
+
+   </chapter>
+
+   <chapter id="getting-started.settings">
+    <title>Settings</title>
+
+    <para>
+     There are two main design patterns to store settings for an applet:
+    </para>
+
+    <itemizedlist>
+     <listitem>
+      <para>
+       Global settings: those are settings that should be shared among all instances of the same applets.
+       For instance, the preferred unit for temperature is something that the user will want to set only one.
+       The way to store those settings is in no way specific to the Panel Applet library, as it should work
+       like in any other application.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       Per-applet instance settings: those are settings that might be different depending on the instance
+       of an applet. For instance, an applet whose goal is to display a picture should make it possible for
+       the user to choose a different picture for each instance of the applet. The Panel Applet library
+       provides API to help with this.
+      </para>
+     </listitem>
+    </itemizedlist>
+
+    <para>
+     There is actually a third case, which is rather rare, though: per-screen settings.
+     It might be that some applets control some per-screen settings, like the layout of the workspaces.
+     There is currently no API to help with this as it is a very specific case that you will probably
+     never have to deal with for a usual applet.
+    </para>
+
+    <sect1 id="getting-started.settings.per-instance">
+       <title>Per Instance Settings</title>
+       <para>
+           In order to store per instance settings for an applet it is recommended to use GSettings. The
+           Panel Applet Library privides a function named <function>panel_applet_settings_new()</function>
+           for this purpose. You need to provide a GSettings schema file for your applet and the Panel
+           Applet library will setup the GSettings object for you.
+       </para>
+
+        TODO: describe settings-oriented API in more detail and give an example for per instance settings.
+
+    </sect1>
+   </chapter>
+
+   <chapter id="getting-started.install">
+    <title>Applet Registration, Installation and Build System</title>
+
+    <para>
+      Simply installing the applet binary will obviously not be enough. The applet also needs to be registered to the
+      panel. In order to do this you need to provide a Panel Applet File. Panel Applet files are ini-style text
+      files with an extension named <constant>.panel-applet</constant>.
+    </para>
+
+    <warning>
+        <simpara>
+          If you are creating an out-process applet, then you also need to provide a D-Bus service file
+          to automatically start the binary when the panel wants to create an applet.
+        </simpara>
+    </warning>
+
+       <para>
+           This chapter explains the syntax of <constant>.panel-applet</constant> files and gives the necessary
+           information to setup the build system in order to install all the required parts of the applet on the system.
+           For the build system part it is assumed that GNU Autotools (e.g. autoconf and automake) are used.
+       </para>
+
+    <sect1 id="getting-started.install.panel-applet">
+     <title>Panel Applet File Syntax</title>
+
+     <para>
+      The <filename>.panel-applet</filename> file is a key file about the applet binary, describing the
+         <link linkend="getting-started.concepts.applet-factory">applet factory</link> of the binary and the
+         <link linkend="getting-started.concepts.applet-types">applet types</link> this factory can create.
+     </para>
+
+     <sect2>
+      <title>Panel Applet File Example</title>
+      <informalexample>
+       <programlisting>
+            [Applet Factory]
+            Id=HelloWorldFactory
+            Name=Hello World Applet Factory
+            Description=Factory for the our example applets
+
+            [HelloWorldApplet]
+            Name=Hello World
+            Description=Factory for the Hello World example applet
+            Icon=hello-world-icon
+       </programlisting>
+      </informalexample>
+     </sect2>
+
+     <sect2>
+      <title>File Format and well known Fields</title>
+      <para>
+       The file must contain a <constant>Applet Factory</constant> group with the following keys:
+      </para>
+
+      <itemizedlist>
+       <listitem>
+        <para>
+         <constant>Id</constant> (string): the identifier of the applet factory. This must be the same name that will be used as the first parameter to <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function></link> or <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS"><function>PANEL_APPLET_IN_PROCESS_FACTORY()</function></link>.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>InProcess</constant> (boolean, optional): whether the applet should be <link linkend="getting-started.in-out-process">in-process or out-of-process</link>. By default, the applet is out-of-process.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>Location</constant> (string): the path to the applet binary. Only mandatory if <constant>InProcess</constant> is <constant>true</constant>.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>Name</constant> (localized string, optional): the name of the applet factory. For example: <constant>Hello World Factory</constant>.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>Description</constant> (localized string, optional): the description of the applet factory. For example: <constant>Factory for the Hello World applet example</constant>.
+        </para>
+       </listitem>
+      </itemizedlist>
+
+      <para>
+       For each applet type, it must also contain a group named with the applet type identifier. Such a group must have the following keys:
+      </para>
+
+      <itemizedlist>
+       <listitem>
+        <para>
+         <constant>Name</constant> (localized string): the name of the applet type. For example: <constant>Hello World</constant>.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>Description</constant> (localized string, optional): the description of the applet type. For example: <constant>Hello World applet example</constant>.
+        </para>
+       </listitem>
+       <listitem>
+        <para>
+         <constant>Icon</constant> (string, optional): the icon name of the applet type. For example: <constant>hello-world-icon</constant>. It can also be the path to an icon, but this not recommended.
+        </para>
+       </listitem>
+      </itemizedlist>
+     </sect2>
+
+     <sect2>
+      <title>Installation</title>
+      <para>
+       The <filename>.panel-applet</filename> file must be installed in a specific directory to be discoverable by the panel. The exact path of this directory can be queried with <constant>pkg-config</constant>:
+
+          <informalexample>
+              <programlisting>
+                  pkg-config --variable=libpanel_applet_dir libpanel-applet
+              </programlisting>
+          </informalexample>
+
+          The path depends on how GNOME Panel was compiled and installed so it could be different depending on which
+          Linux distribution is used. Therefore never hard-code the path in your build system but use he above
+          command instead.
+
+          Please see the <link linkend="getting-started.install.build-system">Build System</link> section for more
+          information on how install a Panel Applet file with autotools.
+      </para>
+
+         </sect2>
+
+       </sect1>
+
+       <sect1 id="getting-started.in-out-process">
+           <title>Out-of-Process vs In-Process</title>
+
+           <para>
+               Applets can either live in their own process ("out-of-process") or in the panel process ("in-process").
+               The decision to choose one or the other is done at build time, with the macro that you use to define the applet
+               factory:
+               <link linkend="PANEL-APPLET-OUT-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_OUT_PROCESS_FACTORY()</function>
+               </link>
+               is used for out-of-process applets while
+               <link linkend="PANEL-APPLET-IN-PROCESS-FACTORY:CAPS">
+                   <function>PANEL_APPLET_IN_PROCESS_FACTORY()</function>
+               </link> is used for in-process applets. Obviously, only one of those two macros can be used. If both
+               types should be supported, then each macro must be placed between preprocessor conditions and switched on
+               through a configure option. For example:
+
+               <informalexample>
+                   <programlisting>
+                       #ifdef MY_APPLET_OUT_PROCESS_ENABLED
+                       PANEL_APPLET_OUT_PROCESS_FACTORY (...)
+                       #else
+                       PANEL_APPLET_IN_PROCESS_FACTORY (...)
+                       #endif
+                   </programlisting>
+               </informalexample>
+
+           </para>
+
+           <para>
+               For most practical matters, from the applet perspective, the two options are the same.
+               In-process applets do offer a slightly better performance when the applet is loaded, but this should not have
+               much effect on the user experience. However, an in-process applet can potentially affect the whole behavior of
+               the panel, especially in case of crashes or memory corruptions: a crash in an in-process applet will crash the
+               whole panel. It is therefore recommended to use out-of-process applets.
+           </para>
+
+           <para>
+               The communication between the panel and the applet factory is done over D-Bus. When creating an applet,
+               the panel will send a message to the D-Bus service of the applet factory. If the D-Bus service is not
+               running yet, it must be started automatically. We use D-Bus activation for this, which requires install a
+               standard D-Bus service file. This is only needed for, because in-process applets do no need to have their
+               binary autostarted for obvious reasons.
+           </para>
+
+           <note>
+               <simpara>
+                   Please refer to the
+                   <ulink url="http://dbus.freedesktop.org/doc/dbus-specification.html#message-bus-starting-services">
+                       D-Bus documentation</ulink> for more information about D-Bus service files.
+               </simpara>
+           </note>
+
+           <para>
+               Here is an example for a D-Bus Service file. It should be named <constant>org.gnome.panel.applet.HelloWorldFactory.service.in</constant>
+           </para>
+           <informalexample>
+               <programlisting>
+                   [D-BUS Service]
+                   Name=org.gnome.panel.applet.HelloWorldFactory
+                   Exec=@LOCATION@
+               </programlisting>
+           </informalexample>
+           <para>
+               Additionally you should adjust the build system to replace <constant>@LOCATION@</constant> by the install location of the applet binary. The file itself must be installed into
+               <constant>$(datadir)/dbus-1/services/</constant>.
+           </para>
+
+           <para>
+               The next section contains an explanation how to setup the Makefile in order to install the service file
+               to the correct location on the system.
+           </para>
+       </sect1>
+
+
+
+       <sect1 id="getting-started.install.build-system">
+           <title>Build system</title>
+
+           <sect2>
+               <title>Configure</title>
+
+               <para>
+                   In <constant>configure.ac</constant> a variable should be defined that contains the location
+                   where the .panel-applet files are installed.
+
+                   You can fetch this directory during <constant>configure</constant> with the following code:
+               </para>
+
+               <informalexample>
+                   <programlisting>
+                       LIBPANEL_APPLET_DIR=`$PKG_CONFIG --variable=libpanel_applet_dir libpanel-applet`
+                       AC_SUBST(LIBPANEL_APPLET_DIR)
+                   </programlisting>
+               </informalexample>
+
+           </sect2>
+
+           <sect2>
+               <title>Makefiles</title>
+
+               A typical Makefile for that is used to build and install an applet contains the following declarations:
+               <itemizedlist>
+                   <listitem>
+                       <para>A rule to install the <constant>.panel-applet</constant> file.</para>
+                   </listitem>
+                   <listitem>
+                       <para>A rule to install the D-Bus service file if the applet is an out process applet.</para>
+                   </listitem>
+                   <listitem>
+                       <para>The <constant>.panel-applet</constant> file and the D-Bus <constant>.service</constant> file
+                       are added to EXTRA_DIST and CLEANFILES.</para>
+                   </listitem>
+               </itemizedlist>
+
+               <sect3>
+                   <title>Installing the Panel Applet File</title>
+                   <informalexample>
+                       <programlisting language="bash">
+                           appletdir       = $(LIBPANEL_APPLET_DIR)
+                           applet_in_files = org.gnome.HelloWorld.panel-applet.in
+                           applet_DATA     = $(applet_in_files:.panel-applet.in=.panel-applet)
+
+                           $(applet_in_files): $(applet_in_files).in Makefile
+                               $(AM_V_GEN)sed \
+                               -e "s|\@LIBEXECDIR\@|$(libexecdir)|" \
+                               -e "s|\@VERSION\@|$(PACKAGE_VERSION)|" \
+                               $&lt; &gt; $@
+
+                           %.panel-applet: %.panel-applet.in \
+                                           $(INTLTOOL_MERGE) $(wildcard $(top_srcdir)/po/*po) ; \
+                                           $(INTLTOOL_MERGE) $(top_srcdir)/po $&lt; $@ -d -u -c $(top_builddir)/po/.intltool-merge-cache
+                       </programlisting>
+                   </informalexample>
+               </sect3>
+
+               <sect3>
+                   <title>Installing the D-Bus service file</title>
+
+                   <para>To install the service file the following rule can be placed in the applets Makefile:</para>
+                   <informalexample>
+                       <programlisting>
+                           servicedir       = $(datadir)/dbus-1/services
+                           service_in_files = org.gnome.panel.applet.HelloWorldFactory.service.in
+                           service_DATA     = $(service_in_files:.service.in=.service)
+
+                           org.gnome.panel.applet.HelloWorldFactory.service: $(service_in_files)
+                               $(AM_V_GEN) sed -e "s|\@LOCATION\@|$(APPLET_LOCATION)|" $&lt; &gt; $@
+                       </programlisting>
+                   </informalexample>
+               </sect3>
+
+               <sect3>
+                   <title>Distribution and Cleanup</title>
+                   <para>Add panel-applet .in.in and service file to EXTRA_DIST and $(applet_DATA) $(applet_DATA).in to CLEANFILES</para>
+                   <informalexample>
+                   <programlisting>
+                       EXTRA_DIST = \
+                           GNOME_MixerApplet.panel-applet.in.in \
+                           $(service_in_files) \
+                           $(ui_DATA) \
+                           $(schemas_in_files)
+
+                       CLEANFILES = $(applet_DATA) $(applet_DATA).in $(service_DATA) $(schemas_DATA)
+                   </programlisting>
+                   </informalexample>
+               </sect3>
+
+           </sect2>
+       </sect1>
+
+   </chapter>
+
+   <chapter id="getting-started.integration">
+    <title>Proper Integration with the Panel</title>
+
+    <para>
+     Since the applets appear as part of the panel to users, it is important that they behave in a consistent way. A few steps can be completed to achieve proper integration.
+    </para>
+
+    <sect2 id="getting-started.integration.background">
+     <title>Panel Background</title>
+
+     <para>
+     The panel can have different types of background, depending on how the user configures the panel. By default, applets do not respect the background that is configured and can therefore look out of place.
+     </para>
+
+     <para>
+      The <link linkend="panel-applet-set-background-widget"><function>panel_applet_set_background_widget()</function></link> function can be used to automatically have the right background drawn for a specific widget. Just using this function on the <link linkend="PanelApplet"><type>PanelApplet</type></link> object itself, or its child is usually enough to have proper background integration.
+     </para>
+
+     <para>
+      In some rare cases, though,
+      <link linkend="panel-applet-set-background-widget">
+          <function>panel_applet_set_background_widget()</function>
+      </link> will not be enough. The solution is then to connect to the
+      <link linkend="PanelApplet-change-background"><function>"change-background"</function></link> signal of the
+      <link linkend="PanelApplet"><type>PanelApplet</type></link> object: it will be emitted when the background has
+      changed, and it will provide the <type>cairo_pattern_t</type> pattern to use as a basis to draw the background.
+     </para>
+
+    </sect2>
+
+    <sect2 id="getting-started.integration.lockdown">
+     <title>Panel Lockdown</title>
+
+     <para>
+      The panel has proper support for lockdown, and when it is locked down, it is expected that all applets behave
+      consistently in a lockdown mode too. This generally means that the preferences of the applet should not be
+      accessible, but it could also imply a restriction on the behavior of the applet.
+     </para>
+
+     <para>
+      The <link linkend="panel-applet-get-locked-down"><function>panel_applet_get_locked_down()</function></link>
+      function can be used to query the state of the panel lockdown. It is also possible to react to changes by
+      monitoring the <link linkend="PanelApplet--locked-down"><function>"locked-down"</function></link>
+      property of the <link linkend="PanelApplet"><type>PanelApplet</type></link> object. You can achieve this
+      by connecting to the <function>"notify::locked-down"</function> event.
+     </para>
+
+     <para>
+       In most cases, the <type>GBinding</type> API is enough to respect the panel lockdown:
+       <function>g_object_bind_property()</function> can be used to automatically update the visiblity of a menu
+       item in the context menu of the applet. In the following example, the <function>"HelloWorldPrefs"</function>
+       action (which is an action from the context menu) will only be displayed if the panel is not locked down.
+
+      <informalexample>
+       <programlisting language="c">
+action = gtk_action_group_get_action (action_group, "HelloWorldPrefs");
+g_object_bind_property (applet, "locked-down",
+                        action, "visible",
+                        G_BINDING_DEFAULT|G_BINDING_INVERT_BOOLEAN|G_BINDING_SYNC_CREATE);
+       </programlisting>
+      </informalexample>
+
+      <para>
+       Of course it is also possible to use <function>g_object_bind_property()</function> to change the visibility of
+       widgets that appear outside of the context menu, like a button in a window.
+      </para>
+
+     </para>
+
+    </sect2>
+
+   </chapter>
+
+   <chapter id="getting-started.introspection">
+    <title>Writing an applet in languages other than C</title>
+
+    <para>
+     The Panel Applet library comes with support for
+     <ulink url="http://live.gnome.org/GObjectIntrospection">GObject Introspection</ulink>.
+     This makes it possible to write applets in the languages that have
+     <ulink url="http://live.gnome.org/GObjectIntrospection/Users">bindings based on GObject Introspection</ulink>.
+    </para>
+
+    <para>
+     Here is a simple example of a python applet:
+
+     <example>
+      <title>Hello World applet, in Python</title>
+      <programlisting language="python">
+from gi.repository import Gtk
+from gi.repository import PanelApplet
+
+def applet_fill(applet):
+    label = Gtk.Label("Hello World")
+    applet.add(label)
+    applet.show_all()
+
+def applet_factory(applet, iid, data):
+    if iid != "HelloWorldApplet":
+       return False
+
+    applet_fill(applet)
+
+    return True
+
+PanelApplet.Applet.factory_main("HelloWorldFactory",
+                                PanelApplet.Applet.__gtype__,
+                                applet_factory, None)
+      </programlisting>
+     </example>
+    </para>
+
+    <para>
+     The only limitation of writing an applet in a language other than C is that the applet will
+     not be able to run in the panel process: it will have to stay out-of-process. However, since
+     it is recommended to leave applets out-of-process, this limitation is mitigated.
+    </para>
+   </chapter>
+
+  </part>
+
+  <part id="port-gnome2">
+    <title>Porting older Applets</title>
+
+    <chapter id="port-gnome2.dbus">
+       <title>Porting to a D-Bus-based Applet</title>
+
+        <sect1 id="port-gnome2.dbus.introduction">
+            <title>Introduction</title>
+            <para>
+                Applets that were written for Gnome 2.x must we ported to be usable with Gnome 3 and the latest Panel Applet
+                Library. First of all if the applet was written for Gnome 2.x then it will still use GTK+ 2 and must be migrated
+                to GTK+ 3. Please refer to the
+                <ulink url="http://library.gnome.org/devel/gtk3/stable/gtk-migrating-2-to-3.html">GTK+ 2 to GTK+ 3 migration guide</ulink>
+                for further details.
+            </para>
+
+            <para>
+                Once the GTK+ 2 to 3 migration has been completed you must migrate the Panel Applet Library specific
+                parts of the applet. During Gnome 2 times, the Panel Applet Library used LibBonobo, which was replaced
+                by a DBUS based API during the switch to Panel Applet Library version 4.0. During the change to
+                version 5.0 additional API have been replaced in particular the GConf related functions have been
+                removed and were replaced by the GSettings API. Also GtkAction related functions have been replaced
+                by the GAction API.
+            </para>
+
+            <note>
+                <simpara>
+                    The following migration guide is based on the
+                    <ulink url="https://wiki.gnome.org/Initiatives/GnomeGoals/AppletsDbusMigration">
+                        AppletsDBUsMigration
+                    </ulink> guide in the GNOME Wiki. This guide was originally written for the migration of GNOME 2
+                    applets to GNOME 3 and Panel Applet Library version 4.0. Based on the information of the
+                    original guide this section improves some of the explanations, adds references to other parts
+                    of this manual and has been updated for the migration to version 5.0 of this library.
+                </simpara>
+            </note>
+        </sect1>
+
+        <sect1 id="port-gnome2.dbus.remove-libbonobo-factory">
+            <title>Removing LibBonobo factory</title>
+            <para>
+                To migrate from LibBonobo to the DBUS API remove PANEL_APPLET_BONOBO_FACTORY and replace it with
+                either PANEL_APPLET_OUT_PROCESS_FACTORY or PANEL_APPLET_IN_PROCESS_FACTORY depending if you want
+                an out-process or in-process applet, respectively.
+            </para>
+            <para>
+                The new macros have the same parameters as the old, except the version and description parameters have been
+                removed. Also the <constant>OAFIID:GNOME_</constant> prefix of the first parameter can be dropped both from
+                the factory ID and the applet type name. The following
+                two code listings show the difference between the old and new macro definitions:
+            </para>
+
+            <informalexample>
+                <programlisting>
+                    PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_HelloWorldFactory",
+                                                 PANEL_TYPE_APPLET,
+                                                 "WindowNavigationApplets",
+                                                 "0",
+                                                 hello_world_factory,
+                                                 NULL)
+                </programlisting>
+            </informalexample>
+
+            The new version of the macro should be:
+
+            <informalexample>
+                <programlisting>
+                    PANEL_APPLET_OUT_PROCESS_FACTORY ("HelloWorldFactory",
+                                                      PANEL_TYPE_APPLET,
+                                                      hello_world_factory,
+                                                      NULL)
+                </programlisting>
+            </informalexample>
+
+            <para>
+                The applet factory callback, in this case the <function>hello_world_factory</function> usually contains a
+                check to ensure that the applet factory supports the requested applet. Here the
+                <constant>OAFIID:GNOME_</constant> prefix should be dropped as well, see the following two code listings.
+            </para>
+
+            <note>
+                <simpara>
+                    When you drop the prefix here, you must also remove the prefix from the applet name in the Panel Applet File.
+                </simpara>
+            </note>
+
+            Old definition:
+
+            <informalexample>
+                <programlisting>
+                    static gboolean
+                    hello_world_factory (PanelApplet *applet,
+                    const char  *iid,
+                    gpointer     data)
+                    {
+
+                    if (!g_strcmp (iid, "OAFIID:GNOME_HelloWorldApplet") != 0)
+                    return FALSE;
+
+                    hello_world_applet_fill (applet);
+
+                    return TRUE;
+                    }
+                </programlisting>
+            </informalexample>
+
+            The new version of of the factory callback should be:
+
+            <informalexample>
+                <programlisting>
+                    static gboolean
+                    hello_world_factory (PanelApplet *applet,
+                    const char  *iid,
+                    gpointer     data)
+                    {
+
+                    if (!g_strcmp0 (iid, "HelloWorldApplet") != 0)
+                    return FALSE;
+
+                    hello_world_applet_fill (applet);
+
+                    return TRUE;
+                    }
+                </programlisting>
+            </informalexample>
+
+            <sect2 id="port-gnome2.dbus.migrate-to-panel-applet-file">
+                <title>Migrating Service file to Panel Applet File</title>
+
+                <para>
+                    The old applet will have a <constant>service.in.in</constant> file that was used to register the
+                    applet with the GNOME Panel. This file must be renamed to <constant>.panel-applet</constant> and its
+                    content changed to match the format of the new file type. See
+                    <link linkend="getting-started.install">Panel Applet Files</link> for a detailed explanation of the
+                    valid fields. If you decided to use the out-process factory macro, then you should also supply a
+                    <link linkend="getting-started.in-out-process">D-BUS Service File</link> so your applet can be started
+                    using D-BUS activation.
+                </para>
+
+                <para>
+                    For compatibility you can keep the old <constant>BonoboId</constant>. This field can contain the old
+                    bonobo identifier. It allows the panel to load applets using existing configuration data in your panels
+                    settings. It can be a single string or a list of strings in case of applets with more than one
+                    identifier.
+                </para>
+
+                Example for the migrated panel applet file:
+                <informalexample>
+                    <programlisting>
+                        [Applet Factory]
+                        Id=HellWorldFactory
+                        Location=@LOCATION@
+                        _Name=Hello World Applet Factory
+                        _Description=Factory for the our example applets
+
+                        [HelloWorldApplet]
+                        _Name=Hello World
+                        _Description=Factory for the Hello World example applet
+                        Icon=hello-world-icon
+                        BonoboId=OAFIID:GNOME_HelloWorldApplet
+                        X-GNOME-Bugzilla-Bugzilla=GNOME
+                        X-GNOME-Bugzilla-Product=gnome-panel
+                        X-GNOME-Bugzilla-Component=hello-world-applet
+                        X-GNOME-Bugzilla-Version=@VERSION@
+                        X-GNOME-Bugzilla-OtherBinaries=hello-world-applet
+                    </programlisting>
+                </informalexample>
+            </sect2>
+        </sect1>
+
+        <sect1 id="port-gnome2.dbus.migrate-menus-to-gaction">
+            <title>Migrating LibBonobo menus to GAction</title>
+            <para>
+                During GNOME 2 days the context menu of the applet was based on the <constant>BonoboUiVerb</constant>
+                class. These old menu verb definitions have been removed and should be replaced by
+                the <type>GAction</type> interface family of objects.
+
+                <note>
+                    <simpara>
+                        Previous versions of this migration guide suggested to migrate to the family of
+                        <type>GtkActionGroup</type> classes. Since Gtk+ 3.10 these are deprecated and with the
+                        change of the Panel Applet Library API to version 5.0 the <function>panel_applet_setup_menu</function>
+                        family of functions now accept the <type>GActionGroup</type> interface and its related classes.
+                    </simpara>
+                </note>
+            </para>
+
+            If the applet that is being ports had a context menu then it should contain code that looks similar to the
+            following listing:
+
+            <informalexample>
+                <programlisting>
+                    static const BonoboUIVerb show_desktop_menu_verbs [] = {
+                        BONOBO_UI_UNSAFE_VERB ("ShowDesktopPreferences", display_preferences_dialog),
+                        BONOBO_UI_UNSAFE_VERB ("ShowDesktopAbout",       display_about_dialog),
+                        BONOBO_UI_VERB_END
+                    };
+                </programlisting>
+            </informalexample>
+
+            The new code instead looks like this:
+
+            <informalexample>
+                <programlisting>
+                    static const GActionEntry menu_actions[] = {
+                        { "preferences", display_preferences_dialog },
+                        { "about",       display_about_dialog }
+                    };
+                </programlisting>
+            </informalexample>
+
+            This change also means that the callbacks must be changed to match the GAction API:
+
+            Old callback looked like this:
+            <informalexample>
+                <programlisting>
+                    static void
+                    display_preferences_dialog (BonoboUIComponent *uic,
+                                                gpointer          *user_data,
+                                                const gchar       *verbname)
+                </programlisting>
+            </informalexample>
+
+            The new version should have the following signature:
+            <informalexample>
+                <programlisting>
+                    static void
+                    display_preferences_dialog (GSimpleAction *action,
+                                                GVariant      *parameter,
+                                                gpointer       user_data)
+                </programlisting>
+            </informalexample>
+
+            <para>
+                Additionally you should use GtkBuilder to define a GMenuModel in XML and use the
+                <function>panel_applet_setup_menu</function> family of functions to setup the menu. See
+                <link linkend="getting-started.context-menu">Using a context menu</link> for more details.
+                For more information about using the GMenu and GAction APIs please refer to the GIO Reference
+                Manual.
+            </para>
+        </sect1>
+   </chapter>
+
+   <chapter>
+     <title>Porting Applets from Panel Applet Library 4.0</title>
+       <para>
+           The Panel Applet Library name has been renamed during the switch from version 4.0 to 5.0 and is now called
+           <constant>libpanel-applet</constant>.
+       </para>
+       <note>
+           <simpara>
+               Note that the version information in the library name has been dropped and there is now an
+               additional hypen between 'panel' and 'applet'.
+           </simpara>
+       </note>
+
+       <para>
+           GConf support has been removed and was replaced by GSettings. If the applet still uses GConf it must
+           migrate to GSettings. It is recommended to use the <function>panel_applet_settings_new()</function> function
+           to store your settings.
+       </para>
+
+       <para>
+           The <function>panel_applet_setup_menu</function> familiy of functions have been changed and now accept the
+           <type>GActionGroup</type> interface instead of the deprecated <type>GtkActionGroup</type>. Thus older applets
+           need to be changed and must migrate their menus to the <type>GAction</type> model. Please refer to the Gtk+
+           documentation for more details about <type>GAction</type> and the related interfaces.
+       </para>
+   </chapter>
+
+  </part>
+
+  <part id="reference">
+    <title>API Reference</title>
+
+    <xi:include href="xml/applet.xml"/>
+    <xi:include href="xml/applet-factory.xml"/>
+  </part>
+
+  <chapter id="object-tree">
+    <title>Object Hierarchy</title>
+    <xi:include href="xml/tree_index.sgml"/>
+  </chapter>
+
+  <index id="api-index-full">
+    <title>API Index</title>
+    <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <index id="deprecated-api-index" role="deprecated">
+    <title>Index of deprecated API</title>
+    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <index id="api-index-3-4" role="3.4">
+    <title>Index of new symbols in 3.4</title>
+    <xi:include href="xml/api-index-3.4.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <index id="api-index-3-18" role="3.18">
+    <title>Index of new symbols in 3.18</title>
+    <xi:include href="xml/api-index-3.18.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <index id="api-index-3-22" role="3.22">
+    <title>Index of new symbols in 3.22</title>
+    <xi:include href="xml/api-index-3.22.xml"><xi:fallback /></xi:include>
+  </index>
+
+  <xi:include href="xml/annotation-glossary.xml"><xi:fallback /></xi:include>
+
+</book>
