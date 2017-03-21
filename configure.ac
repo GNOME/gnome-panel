@@ -92,7 +92,7 @@ GLIB_GSETTINGS
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIB_PANEL_APPLET_LT_VERSION=2:0:0
+LIB_PANEL_APPLET_LT_VERSION=3:0:0
 AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
 
 LIBGNOME_PANEL_LT_VERSION=0:0:0
