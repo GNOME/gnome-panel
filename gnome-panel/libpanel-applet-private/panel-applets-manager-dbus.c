@@ -423,7 +423,7 @@ panel_applets_manager_dbus_factory_activate (PanelAppletsManager *manager,
 		return TRUE;
 	}
 
-	info->module = g_module_open (info->location, G_MODULE_BIND_LAZY);
+	info->module = g_module_open (info->location, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
 	if (!info->module) {
 		/* FIXME: use a GError? */
 		g_warning ("Failed to load applet %s: %s\n",
