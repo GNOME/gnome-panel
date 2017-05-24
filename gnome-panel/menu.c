@@ -811,15 +811,8 @@ create_submenu_entry (GtkWidget          *menu,
 		      GMenuTreeDirectory *directory)
 {
 	GtkWidget *menuitem;
-	gboolean   force_categories_icon;
 
-	force_categories_icon = g_object_get_data (G_OBJECT (menu),
-						   "panel-menu-force-icon-for-categories") != NULL;
-
-	if (force_categories_icon)
-		menuitem = panel_image_menu_item_new2 ();
-	else
-		menuitem = panel_image_menu_item_new ();
+	menuitem = panel_image_menu_item_new2 ();
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
@@ -846,7 +839,6 @@ create_submenu (GtkWidget          *menu,
 {
 	GtkWidget *menuitem;
 	GtkWidget *submenu;
-	gboolean   force_categories_icon;
 
 	if (alias_directory)
 		menuitem = create_submenu_entry (menu, alias_directory);
@@ -856,13 +848,6 @@ create_submenu (GtkWidget          *menu,
 	submenu = create_fake_menu (directory);
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
-
-	/* Keep the infor that we force (or not) the icons to be visible */
-	force_categories_icon = g_object_get_data (G_OBJECT (menu),
-						   "panel-menu-force-icon-for-categories") != NULL;
-	g_object_set_data (G_OBJECT (submenu),
-			   "panel-menu-force-icon-for-categories",
-			   GINT_TO_POINTER (force_categories_icon));
 }
 
 static void 
@@ -1023,8 +1008,7 @@ remove_gmenu_tree_monitor (GtkWidget *menu,
 
 GtkWidget *
 create_applications_menu (const char *menu_file,
-			  const char *menu_path,
-			  gboolean    always_show_image)
+                          const char *menu_path)
 {
 	GMenuTree *tree;
 	GtkWidget *menu;
@@ -1032,12 +1016,6 @@ create_applications_menu (const char *menu_file,
 	GError *error = NULL;
 
 	menu = create_empty_menu ();
-
-	if (always_show_image)
-		g_object_set_data (G_OBJECT (menu),
-				   "panel-menu-force-icon-for-categories",
-				   GINT_TO_POINTER (TRUE));
-
 	tree = gmenu_tree_new (menu_file, GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
 
 	if (!gmenu_tree_load_sync (tree, &error)) {
@@ -1197,7 +1175,7 @@ create_main_menu (PanelWidget *panel)
 	gchar *applications_menu;
 
 	applications_menu = get_applications_menu ();
-	main_menu = create_applications_menu (applications_menu, NULL, TRUE);
+	main_menu = create_applications_menu (applications_menu, NULL);
 	g_free (applications_menu);
 
 	g_object_set_data (G_OBJECT (main_menu),

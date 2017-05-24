@@ -40,8 +40,7 @@ void            setup_menu_item_with_icon (GtkWidget        *item,
 
 GtkWidget      *create_empty_menu         (void);
 GtkWidget      *create_applications_menu  (const char  *menu_file,
-					   const char  *menu_path,
-					   gboolean    always_show_image);
+                                           const char  *menu_path);
 GtkWidget      *create_main_menu          (PanelWidget *panel);
 
 void		setup_internal_applet_drag (GtkWidget             *menuitem,

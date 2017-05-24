@@ -120,7 +120,7 @@ panel_menu_bar_init (PanelMenuBar *menubar)
 	menubar->priv->info = NULL;
 
 	applications_menu = get_applications_menu ();
-	menubar->priv->applications_menu = create_applications_menu (applications_menu, NULL, TRUE);
+	menubar->priv->applications_menu = create_applications_menu (applications_menu, NULL);
 	g_free (applications_menu);
 
 	menubar->priv->applications_item = panel_image_menu_item_new2 ();
