@@ -446,21 +446,10 @@ static PanelAction actions [] = {
 	}
 };
 
-static gboolean
-panel_action_get_is_deprecated (PanelActionButtonType type)
-{
-	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	return (type > PANEL_ACTION_LAST_NON_DEPRECATED);
-}
-
 gboolean
 panel_action_get_is_disabled (PanelActionButtonType type)
 {
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	if (panel_action_get_is_deprecated (type))
-		return TRUE;
 
 	if (actions [type].is_disabled)
 		return actions [type].is_disabled ();
@@ -679,9 +668,6 @@ panel_action_button_set_type (PanelActionButton     *button,
 {
 	g_return_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST);
 
-	if (panel_action_get_is_deprecated (type))
-		return;
-
 	if (type == button->priv->type)
 		return;
 
@@ -820,9 +806,6 @@ panel_action_button_load_from_drag (PanelToplevel       *toplevel,
 	}
 
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
-
-	if (panel_action_get_is_deprecated (type))
-		return retval;
 
 	if (strcmp (elements [2], "NEW")) {
 		*old_applet_idx = strtol (elements [2], NULL, 10);
