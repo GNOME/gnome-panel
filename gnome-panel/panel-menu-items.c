@@ -69,7 +69,6 @@ G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, PANEL_TYPE_IMAGE_M
 
 struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
-	PanelWidget *panel;
 	GSettings   *settings;
 
 	GtkRecentManager *recent_manager;
@@ -90,7 +89,6 @@ struct _PanelPlaceMenuItemPrivate {
 
 struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
-	PanelWidget *panel;
 	GtkIconSize  icon_size;
 };
 
@@ -1523,28 +1521,6 @@ panel_desktop_menu_item_new (gboolean use_image,
 				   menuitem->priv->menu);
 
 	return GTK_WIDGET (menuitem);
-}
-
-void
-panel_place_menu_item_set_panel (GtkWidget   *item,
-				 PanelWidget *panel)
-{
-	PanelPlaceMenuItem *place_item;
-
-	place_item = PANEL_PLACE_MENU_ITEM (item);
-
-	place_item->priv->panel = panel;
-}
-
-void
-panel_desktop_menu_item_set_panel (GtkWidget   *item,
-				   PanelWidget *panel)
-{
-	PanelDesktopMenuItem *desktop_item;
-
-	desktop_item = PANEL_DESKTOP_MENU_ITEM (item);
-
-	desktop_item->priv->panel = panel;
 }
 
 static void

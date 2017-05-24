@@ -161,10 +161,6 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 	g_assert (!parent || PANEL_IS_WIDGET (parent));
 
 	menubar->priv->panel = (PanelWidget *) parent;
-
-	if (menubar->priv->places_item)
-		panel_place_menu_item_set_panel (menubar->priv->places_item,
-						 menubar->priv->panel);
 }
 
 static void

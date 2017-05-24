@@ -23,7 +23,6 @@
 #define __PANEL_MENU_ITEMS_H__
 
 #include "panel-image-menu-item.h"
-#include "panel-widget.h"
 
 G_BEGIN_DECLS
 
@@ -79,11 +78,6 @@ GtkWidget *panel_place_menu_item_new   (gboolean use_image,
 GtkWidget *panel_desktop_menu_item_new (gboolean use_image,
 				        gboolean in_menubar,
 					gboolean append_lock_logout);
-
-void panel_place_menu_item_set_panel   (GtkWidget   *item,
-					PanelWidget *panel);
-void panel_desktop_menu_item_set_panel (GtkWidget   *item,
-					PanelWidget *panel);
 
 void panel_menu_items_append_lock_logout (GtkWidget *menu);
 void panel_menu_item_activate_desktop_file (GtkWidget  *menuitem,

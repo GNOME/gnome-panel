@@ -37,7 +37,6 @@ G_DEFINE_TYPE (PanelUserMenu, panel_user_menu, PANEL_TYPE_MENU_BAR_OBJECT)
 
 struct _PanelUserMenuPrivate {
 	AppletInfo  *info;
-	PanelWidget *panel;
 
 	GtkWidget   *desktop_item;
 };
@@ -56,29 +55,8 @@ panel_user_menu_init (PanelUserMenu *usermenu)
 }
 
 static void
-panel_user_menu_parent_set (GtkWidget *widget,
-			   GtkWidget *previous_parent)
-{
-	PanelUserMenu *usermenu = PANEL_USER_MENU (widget);
-	GtkWidget    *parent;
-
-	parent = gtk_widget_get_parent (widget);
-	g_assert (!parent || PANEL_IS_WIDGET (parent));
-
-	usermenu->priv->panel = (PanelWidget *) parent;
-
-	if (usermenu->priv->desktop_item)
-		panel_desktop_menu_item_set_panel (usermenu->priv->desktop_item,
-						   usermenu->priv->panel);
-}
-
-static void
 panel_user_menu_class_init (PanelUserMenuClass *klass)
 {
-	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
-
-	widget_class->parent_set = panel_user_menu_parent_set;
-
 	g_type_class_add_private (klass, sizeof (PanelUserMenuPrivate));
 }
 

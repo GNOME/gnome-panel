@@ -1166,13 +1166,10 @@ static void
 main_menu_append (GtkWidget *main_menu,
 		  gpointer   data)
 {
-	PanelWidget *panel;
 	GtkWidget   *item;
 	gboolean     add_separator;
 	GList       *children;
 	GList       *last;
-
-	panel = PANEL_WIDGET (data);
 
 	add_separator = FALSE;
 	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
@@ -1186,12 +1183,10 @@ main_menu_append (GtkWidget *main_menu,
 		add_menu_separator (main_menu);
 
 	item = panel_place_menu_item_new (TRUE, FALSE);
-	panel_place_menu_item_set_panel (item, panel);
 	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
 	gtk_widget_show (item);
 
 	item = panel_desktop_menu_item_new (TRUE, FALSE, FALSE);
-	panel_desktop_menu_item_set_panel (item, panel);
 	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
 	gtk_widget_show (item);
 
