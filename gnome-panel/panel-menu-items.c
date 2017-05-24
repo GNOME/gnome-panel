@@ -336,13 +336,6 @@ panel_menu_items_create_action_item_full (PanelActionButtonType  action_type,
 	return item;
 }
 
-static GtkWidget *
-panel_menu_items_create_action_item (PanelActionButtonType action_type)
-{
-	return panel_menu_items_create_action_item_full (action_type,
-							 NULL, NULL, FALSE);
-}
-
 static void
 panel_menu_item_activate_switch_user (GtkWidget *menuitem,
 				      gpointer   user_data)
