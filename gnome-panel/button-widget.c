@@ -27,7 +27,6 @@ struct _ButtonWidgetPrivate {
 	int               size;
 
 	guint             activatable   : 1;
-	guint             ignore_leave  : 1;
 	guint             arrow         : 1;
 	guint             dnd_highlight : 1;
 };
@@ -38,7 +37,6 @@ static void button_widget_reload_pixbuf (ButtonWidget *button);
 enum {
 	PROP_0,
 	PROP_ACTIVATABLE,
-	PROP_IGNORE_LEAVE,
 	PROP_HAS_ARROW,
 	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
@@ -219,9 +217,6 @@ button_widget_get_property (GObject    *object,
 	case PROP_ACTIVATABLE:
 		g_value_set_boolean (value, button->priv->activatable);
 		break;
-	case PROP_IGNORE_LEAVE:
-		g_value_set_boolean (value, button->priv->ignore_leave);
-		break;
 	case PROP_HAS_ARROW:
 		g_value_set_boolean (value, button->priv->arrow);
 		break;
@@ -253,9 +248,6 @@ button_widget_set_property (GObject      *object,
 	switch (prop_id) {
 	case PROP_ACTIVATABLE:
 		button_widget_set_activatable (button, g_value_get_boolean (value));
-		break;
-	case PROP_IGNORE_LEAVE:
-		button_widget_set_ignore_leave (button, g_value_get_boolean (value));
 		break;
 	case PROP_HAS_ARROW:
 		button_widget_set_has_arrow (button, g_value_get_boolean (value));
@@ -609,7 +601,6 @@ button_widget_init (ButtonWidget *button)
 	button->priv->size = 0;
 	
 	button->priv->activatable   = FALSE;
-	button->priv->ignore_leave  = FALSE;
 	button->priv->arrow         = FALSE;
 	button->priv->dnd_highlight = FALSE;
 }
@@ -647,15 +638,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      "Whether the button is activatable",
 					      TRUE,
 					      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_IGNORE_LEAVE,
-			g_param_spec_boolean ("ignore-leave",
-					      "Ignore leaving to not unhighlight the icon",
-					      "Whether or not to unhighlight the icon when the cursor leaves it",
-					      FALSE,
-					      G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -862,32 +844,6 @@ button_widget_get_dnd_highlight (ButtonWidget *button)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
 
 	return button->priv->dnd_highlight;
-}
-
-void
-button_widget_set_ignore_leave (ButtonWidget *button,
-				gboolean      ignore_leave)
-{
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	ignore_leave = ignore_leave != FALSE;
-
-	if (button->priv->ignore_leave == ignore_leave)
-		return;
-
-	button->priv->ignore_leave = ignore_leave;
-
-	gtk_widget_queue_draw (GTK_WIDGET (button));
-
-	g_object_notify (G_OBJECT (button), "ignore-leave");
-}
-
-gboolean
-button_widget_get_ignore_leave (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
-
-	return button->priv->ignore_leave;
 }
 
 GtkIconTheme *

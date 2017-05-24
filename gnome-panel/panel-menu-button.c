@@ -324,8 +324,6 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 
 	gtk_widget_unset_state_flags (GTK_WIDGET (button),
 				      GTK_STATE_FLAG_PRELIGHT);
-
-	button_widget_set_ignore_leave (BUTTON_WIDGET (button), FALSE);
 }
 
 static void 
@@ -390,8 +388,6 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 	panel_menu_button_create_menu (button);
 
 	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
-
-	button_widget_set_ignore_leave (BUTTON_WIDGET (button), TRUE);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
 	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);

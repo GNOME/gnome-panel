@@ -45,9 +45,6 @@ gboolean         button_widget_get_has_arrow     (ButtonWidget     *button);
 void             button_widget_set_dnd_highlight (ButtonWidget     *button,
 						  gboolean          dnd_highlight);
 gboolean         button_widget_get_dnd_highlight (ButtonWidget     *button);
-void             button_widget_set_ignore_leave  (ButtonWidget     *button,
-						  gboolean          ignore_leave);
-gboolean         button_widget_get_ignore_leave  (ButtonWidget     *button);
 GtkIconTheme    *button_widget_get_icon_theme    (ButtonWidget     *button);
 GdkPixbuf       *button_widget_get_pixbuf        (ButtonWidget     *button);
 
