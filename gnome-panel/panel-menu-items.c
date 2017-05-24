@@ -133,12 +133,11 @@ activate_desktop_uri (GtkWidget *menuitem,
 }
 
 static GtkWidget *
-panel_menu_item_desktop_new (char *path)
+panel_menu_item_desktop_new (const gchar *desktop_file)
 {
 	GKeyFile  *key_file;
 	gboolean   loaded;
 	GtkWidget *item;
-	char      *path_freeme;
 	char      *full_path;
 	char      *uri;
 	char      *type;
@@ -148,41 +147,24 @@ panel_menu_item_desktop_new (char *path)
 	char      *name;
 	char      *comment;
 
-	path_freeme = NULL;
-
+	full_path = NULL;
 	key_file = g_key_file_new ();
 
-	if (g_path_is_absolute (path)) {
-		loaded = g_key_file_load_from_file (key_file, path,
-						    G_KEY_FILE_NONE, NULL);
-		full_path = path;
-	} else {
+	{
 		char *lookup_file;
-		char *desktop_path;
-
-		if (!g_str_has_suffix (path, ".desktop")) {
-			desktop_path = g_strconcat (path, ".desktop", NULL);
-		} else {
-			desktop_path = path;
-		}
 
 		lookup_file = g_strconcat ("applications", G_DIR_SEPARATOR_S,
-					   desktop_path, NULL);
+					   desktop_file, NULL);
 		loaded = g_key_file_load_from_data_dirs (key_file, lookup_file,
-							 &path_freeme,
+							 &full_path,
 							 G_KEY_FILE_NONE,
 							 NULL);
-		full_path = path_freeme;
 		g_free (lookup_file);
-
-		if (desktop_path != path)
-			g_free (desktop_path);
 	}
 
 	if (!loaded) {
 		g_key_file_free (key_file);
-		if (path_freeme)
-			g_free (path_freeme);
+		g_free (full_path);
 		return NULL;
 	}
 
@@ -190,8 +172,7 @@ panel_menu_item_desktop_new (char *path)
 	type = panel_key_file_get_string (key_file, "Type");
 	if (!type) {
 		g_key_file_free (key_file);
-		if (path_freeme)
-			g_free (path_freeme);
+		g_free (full_path);
 		return NULL;
 	}
 	is_application = (strcmp (type, "Application") == 0);
@@ -211,8 +192,7 @@ panel_menu_item_desktop_new (char *path)
 				 * program appears, but that's really complex
 				 * for not a huge benefit */
 				g_key_file_free (key_file);
-				if (path_freeme)
-					g_free (path_freeme);
+				g_free (full_path);
 				return NULL;
 			}
 
@@ -246,17 +226,10 @@ panel_menu_item_desktop_new (char *path)
 
 	g_key_file_free (key_file);
 
-	if (icon)
-		g_free (icon);
-
-	if (name)
-		g_free (name);
-
-	if (comment)
-		g_free (comment);
-
-	if (path_freeme)
-		g_free (path_freeme);
+	g_free (icon);
+	g_free (name);
+	g_free (comment);
+	g_free (full_path);
 
 	return item;
 }
