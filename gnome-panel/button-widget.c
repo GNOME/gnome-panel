@@ -720,14 +720,6 @@ button_widget_set_activatable (ButtonWidget *button,
 	}
 }
 
-gboolean
-button_widget_get_activatable (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
-
-	return button->priv->activatable;
-}
-
 void
 button_widget_set_icon_name (ButtonWidget *button,
 			     const char   *icon_name)
@@ -745,14 +737,6 @@ button_widget_set_icon_name (ButtonWidget *button,
 	button_widget_reload_pixbuf (button);
 
 	g_object_notify (G_OBJECT (button), "icon-name");
-}
-
-const char *
-button_widget_get_icon_name (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
-
-	return button->priv->filename;
 }
 
 void
@@ -812,14 +796,6 @@ button_widget_set_has_arrow (ButtonWidget *button,
 	g_object_notify (G_OBJECT (button), "has-arrow");
 }
 
-gboolean
-button_widget_get_has_arrow (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
-
-	return button->priv->arrow;
-}
-
 void
 button_widget_set_dnd_highlight (ButtonWidget *button,
 				 gboolean      dnd_highlight)
@@ -836,14 +812,6 @@ button_widget_set_dnd_highlight (ButtonWidget *button,
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
 	g_object_notify (G_OBJECT (button), "dnd-highlight");
-}
-
-gboolean
-button_widget_get_dnd_highlight (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
-
-	return button->priv->dnd_highlight;
 }
 
 GtkIconTheme *

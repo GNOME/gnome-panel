@@ -32,19 +32,15 @@ GtkWidget *      button_widget_new               (const char       *pixmap,
 						  PanelOrientation  orientation);
 void             button_widget_set_activatable   (ButtonWidget     *button,
 						  gboolean          activatable);
-gboolean         button_widget_get_activatable   (ButtonWidget     *button);
 void             button_widget_set_icon_name     (ButtonWidget     *button,
 						  const char       *icon_name);
-const char *     button_widget_get_icon_name     (ButtonWidget     *button);
 void             button_widget_set_orientation   (ButtonWidget     *button,
 						  PanelOrientation  orientation);
 PanelOrientation button_widget_get_orientation   (ButtonWidget     *button);
 void             button_widget_set_has_arrow     (ButtonWidget     *button,
 						  gboolean          has_arrow);
-gboolean         button_widget_get_has_arrow     (ButtonWidget     *button);
 void             button_widget_set_dnd_highlight (ButtonWidget     *button,
 						  gboolean          dnd_highlight);
-gboolean         button_widget_get_dnd_highlight (ButtonWidget     *button);
 GtkIconTheme    *button_widget_get_icon_theme    (ButtonWidget     *button);
 GdkPixbuf       *button_widget_get_pixbuf        (ButtonWidget     *button);
 
