@@ -133,9 +133,7 @@ activate_desktop_uri (GtkWidget *menuitem,
 }
 
 static GtkWidget *
-panel_menu_item_desktop_new (char      *path,
-			     char      *force_name,
-			     gboolean   use_icon)
+panel_menu_item_desktop_new (char *path)
 {
 	GKeyFile  *key_file;
 	gboolean   loaded;
@@ -225,17 +223,9 @@ panel_menu_item_desktop_new (char      *path,
 	/* Now, simply build the menu item */
 	icon    = panel_key_file_get_locale_string (key_file, "Icon");
 	comment = panel_key_file_get_locale_string (key_file, "Comment");
+	name = panel_key_file_get_locale_string (key_file, "Name");
 
-	if (PANEL_GLIB_STR_EMPTY (force_name))
-		name = panel_key_file_get_locale_string (key_file, "Name");
-	else
-		name = g_strdup (force_name);
-
-	if (use_icon) {
-		item = panel_image_menu_item_new2 ();
-        } else {
-		item = panel_image_menu_item_new ();
-	}
+	item = panel_image_menu_item_new ();
 
 	setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 				   icon, NULL, name);
@@ -1153,9 +1143,7 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	add_menu_separator (places_menu);
 
-	item = panel_menu_item_desktop_new ("gnome-search-tool.desktop",
-					    NULL,
-					    FALSE);
+	item = panel_menu_item_desktop_new ("gnome-search-tool.desktop");
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
 
@@ -1231,8 +1219,7 @@ panel_desktop_menu_item_create_menu (PanelDesktopMenuItem *desktop_item,
 
 	/* Do not force the string like in gnome-shell, but just use the one
 	 * from the .desktop file */
-	item = panel_menu_item_desktop_new ("gnome-control-center.desktop",
-					    NULL, FALSE);
+	item = panel_menu_item_desktop_new ("gnome-control-center.desktop");
 	if (item)
 		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
 
