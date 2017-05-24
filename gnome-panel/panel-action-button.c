@@ -77,7 +77,6 @@ static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_RUN,            "run"            },
 	{ PANEL_ACTION_SEARCH,         "search"         },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
-	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" },
 	{ PANEL_ACTION_HIBERNATE,      "hibernate"      },
 	{ PANEL_ACTION_SUSPEND,        "suspend"        },
 	{ PANEL_ACTION_HYBRID_SLEEP,   "hybrid-sleep"   },
@@ -330,48 +329,6 @@ panel_action_force_quit (GtkWidget *widget)
 			  gtk_get_current_event_time ());
 }
 
-/* Connect Server
- */
-static void
-panel_action_connect_server (GtkWidget *widget)
-{
-	GdkScreen *screen;
-	GAppInfo  *app_info;
-	GError    *error;
-
-	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
-	error = NULL;
-	app_info = g_app_info_create_from_commandline ("nautilus-connect-server",
-						       _("Connect to server"),
-						       G_APP_INFO_CREATE_NONE,
-						       &error);
-
-	if (!error) {
-		GdkAppLaunchContext *launch_context;
-		GdkDisplay          *display;
-
-		display = gdk_screen_get_display (screen);
-		launch_context = gdk_display_get_app_launch_context (display);
-		gdk_app_launch_context_set_screen (launch_context, screen);
-
-		g_app_info_launch (app_info, NULL,
-				   G_APP_LAUNCH_CONTEXT (launch_context),
-				   &error);
-
-		g_object_unref (launch_context);
-		g_object_unref (app_info);
-	}
-
-	if (error) {
-		panel_error_dialog (NULL, screen,
-				    "cannot_connect_server",
-				    TRUE,
-				    _("Could not connect to server"),
-				    error->message);
-		g_clear_error (&error);
-	}
-}
-
 typedef struct {
 	PanelActionButtonType   type;
 	const gchar            *icon_name;
@@ -441,14 +398,6 @@ static PanelAction actions [] = {
 		"ACTION:force-quit:NEW",
 		panel_action_force_quit, NULL, NULL,
 		panel_lockdown_get_disable_force_quit_s
-	},
-	{
-		PANEL_ACTION_CONNECT_SERVER,
-		PANEL_ICON_REMOTE, //FIXME icon
-		N_("Connect to Server..."),
-		N_("Connect to a remote computer or shared disk"),
-		"ACTION:connect-server:NEW",
-		panel_action_connect_server, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_HIBERNATE,

@@ -1160,13 +1160,6 @@ panel_place_menu_item_create_menu (PanelPlaceMenuItem *place_item)
 
 	panel_place_menu_item_append_remote_gio (place_item, places_menu);
 
-	if (panel_is_program_in_path ("nautilus-connect-server")) {
-		item = panel_menu_items_create_action_item (PANEL_ACTION_CONNECT_SERVER);
-		if (item != NULL)
-			gtk_menu_shell_append (GTK_MENU_SHELL (places_menu),
-					       item);
-	}
-
 	add_menu_separator (places_menu);
 
 	item = panel_menu_item_desktop_new ("gnome-search-tool.desktop",
