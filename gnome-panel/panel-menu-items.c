@@ -928,19 +928,19 @@ panel_place_menu_item_append_local_gio (PanelPlaceMenuItem *place_item,
 	if (g_slist_length (items) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
 	} else {
-		GtkWidget  *item;
+		GtkWidget  *menu_item;
 
-		item = panel_image_menu_item_new ();
-		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
+		menu_item = panel_image_menu_item_new ();
+		setup_menu_item_with_icon (menu_item, panel_menu_icon_get_size (),
 					   PANEL_ICON_REMOVABLE_MEDIA,
 					   NULL,
 					   _("Removable Media"));
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		gtk_widget_show (item);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+		gtk_widget_show (menu_item);
 
 		add_menu = create_empty_menu ();
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), add_menu);
 	}
 
 	for (sl = items; sl; sl = sl->next) {
