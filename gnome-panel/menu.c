@@ -699,8 +699,7 @@ submenu_to_display (GtkWidget *menu)
 	GMenuTree           *tree;
 	GMenuTreeDirectory  *directory;
 	const char          *menu_path;
-	void               (*append_callback) (GtkWidget *, gpointer);
-	gpointer             append_data;
+	void               (*append_callback) (GtkWidget *);
 
 	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-loading"))
 		return;
@@ -733,10 +732,9 @@ submenu_to_display (GtkWidget *menu)
 
 	append_callback = g_object_get_data (G_OBJECT (menu),
 					     "panel-menu-append-callback");
-	append_data     = g_object_get_data (G_OBJECT (menu),
-					     "panel-menu-append-callback-data");
+
 	if (append_callback)
-		append_callback (menu, append_data);
+		append_callback (menu);
 }
 
 static gboolean
@@ -1163,8 +1161,7 @@ setup_menu_item_with_icon (GtkWidget   *item,
 }
 
 static void
-main_menu_append (GtkWidget *main_menu,
-		  gpointer   data)
+main_menu_append (GtkWidget *main_menu)
 {
 	GtkWidget   *item;
 	gboolean     add_separator;
@@ -1206,9 +1203,6 @@ create_main_menu (PanelWidget *panel)
 	g_object_set_data (G_OBJECT (main_menu),
 			   "panel-menu-append-callback",
 			   main_menu_append);
-	g_object_set_data (G_OBJECT (main_menu),
-			   "panel-menu-append-callback-data",
-			   panel);
 
 	return main_menu;
 }
