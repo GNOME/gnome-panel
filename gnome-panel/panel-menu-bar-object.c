@@ -76,6 +76,10 @@ panel_menu_bar_object_icon_get_pixel_size (GtkIconSize size)
       return 32;
     case GTK_ICON_SIZE_LARGE_TOOLBAR:
       return 24;
+    case GTK_ICON_SIZE_SMALL_TOOLBAR:
+    case GTK_ICON_SIZE_BUTTON:
+    case GTK_ICON_SIZE_MENU:
+    case GTK_ICON_SIZE_INVALID:
     default:
       return 16;
   }
