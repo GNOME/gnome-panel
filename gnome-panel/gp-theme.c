@@ -103,7 +103,7 @@ append_custom_bg (GpTheme *theme,
     }
   else if (custom_bg_color && bg_color != NULL)
     {
-      g_string_append_printf (string, "\tbackground-color: %s;\n", bg_color);
+      g_string_append_printf (string, "\tbackground: %s;\n", bg_color);
     }
   else if (custom_bg_image && *bg_image != '\0')
     {
