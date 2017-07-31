@@ -41,7 +41,8 @@ G_BEGIN_DECLS
  *   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
  *   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
  *
- *   info = gp_module_info_new ("example", PACKAGE_VERSION, GETTEXT_PACKAGE);
+ *   info = gp_module_info_new ("org.example.example",
+ *                              PACKAGE_VERSION, GETTEXT_PACKAGE);
  *
  *   gp_module_info_set_applets (info, "example1", "example2", NULL);
  *

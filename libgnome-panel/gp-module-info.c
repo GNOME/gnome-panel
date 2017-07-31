@@ -53,6 +53,10 @@ get_applets (va_list args)
  *
  * Creates a new #GpModuleInfo.
  *
+ * The module @id must be globally unique. For this reason, it is very
+ * strongly recommended to use reverse domain style identifier:
+ * https://wiki.gnome.org/HowDoI/ChooseApplicationID
+ *
  * Returns: (transfer full): a newly created #GpModuleInfo.
  */
 GpModuleInfo *
