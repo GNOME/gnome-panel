@@ -1,8 +1,9 @@
 NULL =
 
-noinst_LTLIBRARIES = libseparator.la
+separator_libdir = $(libdir)/gnome-panel/modules
+separator_lib_LTLIBRARIES = separator.la
 
-libseparator_la_CPPFLAGS = \
+separator_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""separator"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
@@ -10,27 +11,27 @@ libseparator_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-libseparator_la_CFLAGS = \
+separator_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(SEPARATOR_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-libseparator_la_SOURCES = \
+separator_la_SOURCES = \
 	separator-applet.c \
 	separator-applet.h \
 	separator-module.c \
-	separator-module.h \
 	$(NULL)
 
-libseparator_la_LIBADD = \
+separator_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(SEPARATOR_LIBS) \
 	$(NULL)
 
-libseparator_la_LDFLAGS = \
+separator_la_LDFLAGS = \
+	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)

@@ -284,7 +284,6 @@ AC_CONFIG_FILES([
 
   modules/Makefile
   modules/builtin/Makefile
-  modules/builtin/separator/Makefile
   modules/external/Makefile
   modules/external/clock/Makefile
   modules/external/clock/pixmaps/Makefile
@@ -292,6 +291,7 @@ AC_CONFIG_FILES([
   modules/external/notification-area/Makefile
   modules/external/status-notifier/Makefile
   modules/external/wncklet/Makefile
+  modules/separator/Makefile
 
   po/Makefile.in
 ])

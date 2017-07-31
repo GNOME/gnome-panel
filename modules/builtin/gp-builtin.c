@@ -18,10 +18,8 @@
 #include "config.h"
 
 #include "gp-builtin.h"
-#include "separator/separator-module.h"
 
 const GpModuleVTable *builtin[] =
 {
-  &separator_vtable,
   NULL
 };

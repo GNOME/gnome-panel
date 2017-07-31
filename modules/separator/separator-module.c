@@ -21,7 +21,6 @@
 #include <libgnome-panel/gp-module.h>
 
 #include "separator-applet.h"
-#include "separator-module.h"
 
 static GpModuleInfo *
 separator_get_module_info (void)
@@ -62,11 +61,20 @@ separator_get_applet_from_iid (const gchar *iid)
   return NULL;
 }
 
-const GpModuleVTable separator_vtable =
+guint32
+gp_module_get_abi_version (void)
 {
-  separator_get_module_info,
-  separator_get_applet_info,
-  separator_get_applet_type,
-  separator_get_applet_from_iid,
-  NULL
-};
+  return GP_MODULE_ABI_VERSION;
+}
+
+void
+gp_module_get_vtable (GpModuleVTable *vtable)
+{
+  *vtable = (GpModuleVTable) {
+    separator_get_module_info,
+    separator_get_applet_info,
+    separator_get_applet_type,
+    separator_get_applet_from_iid,
+    NULL
+  };
+}
