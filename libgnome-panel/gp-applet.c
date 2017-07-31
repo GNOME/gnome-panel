@@ -175,6 +175,7 @@ gp_applet_constructed (GObject *object)
   GpApplet *applet;
   GpAppletPrivate *priv;
   GActionGroup *group;
+  GtkStyleContext *context;
 
   G_OBJECT_CLASS (gp_applet_parent_class)->constructed (object);
 
@@ -185,6 +186,9 @@ gp_applet_constructed (GObject *object)
 
   group = G_ACTION_GROUP (priv->action_group);
   gtk_widget_insert_action_group (GTK_WIDGET (applet), priv->id, group);
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (applet));
+  gtk_style_context_add_class (context, priv->id);
 }
 
 static void
