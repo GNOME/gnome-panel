@@ -23,7 +23,6 @@
 #include "gp-applet-manager.h"
 #include "gp-module-private.h"
 #include "libgnome-panel/gp-applet-info-private.h"
-#include "modules/builtin/gp-builtin.h"
 
 struct _GpAppletManager
 {
@@ -70,28 +69,6 @@ get_applet_infos (GpAppletManager *manager,
 
       g_hash_table_insert (manager->infos, g_strdup (iid), applet_info);
       g_free (iid);
-    }
-}
-
-static void
-load_builtin_modules (GpAppletManager *manager)
-{
-  guint i;
-
-  for (i = 0; builtin[i] != NULL; i++)
-    {
-      GpModule *module;
-      const gchar *id;
-
-      module = gp_module_new_from_vtable (builtin[i]);
-
-      if (module == NULL)
-        continue;
-
-      id = gp_module_get_id (module);
-
-      g_hash_table_insert (manager->modules, g_strdup (id), module);
-      get_applet_infos (manager, id, module);
     }
 }
 
@@ -362,6 +339,5 @@ gp_applet_manager_init (GpAppletManager *manager)
   manager->infos = g_hash_table_new_full (g_str_hash, g_str_equal,
                                           g_free, applet_info_free);
 
-  load_builtin_modules (manager);
   load_external_modules (manager);
 }

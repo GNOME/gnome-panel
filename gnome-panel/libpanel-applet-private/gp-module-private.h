@@ -38,8 +38,6 @@ GQuark gp_module_error_quark (void);
 
 GpModule            *gp_module_new_from_path       (const gchar           *path);
 
-GpModule            *gp_module_new_from_vtable     (const GpModuleVTable  *vtable);
-
 const gchar         *gp_module_get_id              (GpModule              *module);
 
 const gchar * const *gp_module_get_applets         (GpModule              *module);

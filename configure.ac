@@ -151,10 +151,6 @@ PKG_CHECK_MODULES([LIBPANEL_APPLET], [
   x11
 ])
 
-PKG_CHECK_MODULES([BUILTIN], [
-  gio-2.0 >= $GLIB_REQUIRED
-])
-
 PKG_CHECK_MODULES(FISH, gtk+-3.0 >= $GTK_REQUIRED cairo >= $CAIRO_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
@@ -283,7 +279,6 @@ AC_CONFIG_FILES([
   man/Makefile
 
   modules/Makefile
-  modules/builtin/Makefile
   modules/external/Makefile
   modules/external/clock/Makefile
   modules/external/clock/pixmaps/Makefile

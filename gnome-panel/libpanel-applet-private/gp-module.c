@@ -38,8 +38,6 @@ struct _GpModule
 {
   GObject         parent;
 
-  gboolean        builtin;
-
   gchar          *path;
   GModule        *library;
 
@@ -255,7 +253,6 @@ gp_module_new_from_path (const gchar *path)
   g_return_val_if_fail (path != NULL && *path != '\0', NULL);
 
   module = g_object_new (GP_TYPE_MODULE, NULL);
-  module->builtin = FALSE;
 
   flags = G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL;
 
@@ -315,25 +312,6 @@ gp_module_new_from_path (const gchar *path)
     }
 
   vtable_func (&module->vtable);
-
-  if (!load_module_info (module))
-    {
-      g_object_unref (module);
-      return NULL;
-    }
-
-  return module;
-}
-
-GpModule *
-gp_module_new_from_vtable (const GpModuleVTable *vtable)
-{
-  GpModule *module;
-
-  module = g_object_new (GP_TYPE_MODULE, NULL);
-  module->builtin = TRUE;
-
-  module->vtable = *vtable;
 
   if (!load_module_info (module))
     {

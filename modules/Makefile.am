@@ -1,7 +1,6 @@
 NULL =
 
 SUBDIRS = \
-	builtin \
 	external \
 	separator \
 	$(NULL)

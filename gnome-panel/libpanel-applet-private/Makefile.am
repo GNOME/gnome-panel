@@ -36,7 +36,6 @@ libpanel_applet_private_la_SOURCES =	\
 
 libpanel_applet_private_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
-	$(top_builddir)/modules/builtin/libbuiltin.la \
 	$(NULL)
 
 libpanel_applet_private_la_LDFLAGS = \
