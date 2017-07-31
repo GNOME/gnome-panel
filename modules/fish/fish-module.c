@@ -75,9 +75,9 @@ gp_module_get_module_info (void)
 }
 
 void
-gp_module_get_vtable (GpModuleVTable *vtable)
+gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
-  *vtable = (GpModuleVTable) {
+  *vtable = (GpAppletVTable) {
     fish_get_applet_info,
     fish_get_applet_type,
     fish_get_applet_from_iid,

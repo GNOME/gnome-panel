@@ -31,9 +31,9 @@
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-module-info-private.h"
 
-typedef guint32        (* GetAbiVersionFunc) (void);
-typedef GpModuleInfo * (* GetModuleInfoFunc) (void);
-typedef void           (* GetVTableFunc)     (GpModuleVTable *vtable);
+typedef guint32        (* GetAbiVersionFunc)   (void);
+typedef GpModuleInfo * (* GetModuleInfoFunc)   (void);
+typedef void           (* GetAppletVTableFunc) (GpAppletVTable *vtable);
 
 struct _GpModule
 {
@@ -44,7 +44,7 @@ struct _GpModule
 
   GpModuleInfo   *info;
 
-  GpModuleVTable  vtable;
+  GpAppletVTable  applet_vtable;
   GHashTable     *applets;
 };
 
@@ -144,7 +144,7 @@ get_applet_info (GpModule     *module,
   if (info != NULL)
     return info;
 
-  info = module->vtable.get_applet_info (applet);
+  info = module->applet_vtable.get_applet_info (applet);
 
   if (info == NULL)
     {
@@ -222,7 +222,7 @@ gp_module_new_from_path (const gchar *path)
   const gchar *symbol;
   GetAbiVersionFunc abi_version_func;
   GetModuleInfoFunc module_info_func;
-  GetVTableFunc vtable_func;
+  GetAppletVTableFunc applet_vtable_func;
 
   g_return_val_if_fail (path != NULL && *path != '\0', NULL);
 
@@ -304,8 +304,8 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  symbol = "gp_module_get_vtable";
-  if (!g_module_symbol (module->library, symbol, (gpointer) &vtable_func))
+  symbol = "gp_module_get_applet_vtable";
+  if (!g_module_symbol (module->library, symbol, (gpointer) &applet_vtable_func))
     {
       g_warning ("Failed to get '%s' for module '%s': %s",
                  symbol, path, g_module_error ());
@@ -314,7 +314,7 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  if (vtable_func == NULL)
+  if (applet_vtable_func == NULL)
     {
       g_warning ("Invalid '%s' in module '%s'", symbol, path);
 
@@ -322,7 +322,7 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  vtable_func (&module->vtable);
+  applet_vtable_func (&module->applet_vtable);
 
   return module;
 }
@@ -367,10 +367,10 @@ const gchar *
 gp_module_get_applet_from_iid (GpModule    *module,
                                const gchar *old_iid)
 {
-  if (module->vtable.get_applet_from_iid == NULL)
+  if (module->applet_vtable.get_applet_from_iid == NULL)
     return NULL;
 
-  return module->vtable.get_applet_from_iid (old_iid);
+  return module->applet_vtable.get_applet_from_iid (old_iid);
 }
 
 /**
@@ -417,7 +417,7 @@ gp_module_applet_new (GpModule         *module,
       return NULL;
     }
 
-  type = module->vtable.get_applet_type (applet);
+  type = module->applet_vtable.get_applet_type (applet);
   if (type == G_TYPE_NONE)
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,

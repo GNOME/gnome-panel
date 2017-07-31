@@ -73,9 +73,9 @@ gp_module_get_module_info (void)
 }
 
 void
-gp_module_get_vtable (GpModuleVTable *vtable)
+gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
-  *vtable = (GpModuleVTable) {
+  *vtable = (GpAppletVTable) {
     sn_get_applet_info,
     sn_get_applet_type,
     sn_get_applet_from_iid,

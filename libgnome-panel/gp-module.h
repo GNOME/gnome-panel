@@ -129,9 +129,9 @@ G_BEGIN_DECLS
  * }
  *
  * void
- * gp_module_get_vtable (GpModuleVTable *vtable)
+ * gp_module_get_applet_vtable (GpAppletVTable *vtable)
  * {
- *   *vtable = (GpModuleVTable) {
+ *   *vtable = (GpAppletVTable) {
  *     example_get_applet_info,
  *     example_get_applet_type,
  *     example_get_applet_from_iid, // or NULL if not needed
@@ -149,16 +149,16 @@ G_BEGIN_DECLS
 #define GP_MODULE_ABI_VERSION 0x0001
 
 /**
- * GpModuleVTable:
+ * GpAppletVTable:
  * @get_applet_info: (transfer full): returns a #GpAppletInfo.
  * @get_applet_type: returns a #GType.
  * @get_applet_from_iid: Compatibility function.
  * @setup_about: Function for setting up about dialog.
  *
- * The #GpModuleVTable provides the functions required by the #GpModule.
+ * The #GpAppletVTable provides the functions required by the #GpModule.
  */
-typedef struct _GpModuleVTable GpModuleVTable;
-struct _GpModuleVTable
+typedef struct _GpAppletVTable GpAppletVTable;
+struct _GpAppletVTable
 {
   GpAppletInfo * (* get_applet_info)     (const gchar    *applet);
 
@@ -178,7 +178,7 @@ struct _GpModuleVTable
  *
  * Returns: the module ABI version.
  */
-guint32       gp_module_get_abi_version (void);
+guint32       gp_module_get_abi_version   (void);
 
 /**
  * gp_module_get_module_info:
@@ -188,15 +188,15 @@ guint32       gp_module_get_abi_version (void);
  *
  * Returns: a #GpModuleInfo.
  */
-GpModuleInfo *gp_module_get_module_info (void);
+GpModuleInfo *gp_module_get_module_info   (void);
 
 /**
- * gp_module_get_vtable:
- * @vtable: (out caller-allocates): return location for the #GpModuleVTable
+ * gp_module_get_applet_vtable:
+ * @vtable: (out caller-allocates): return location for the #GpAppletVTable
  *
  * Required API for GNOME Panel modules to implement.
  */
-void          gp_module_get_vtable      (GpModuleVTable *vtable);
+void          gp_module_get_applet_vtable (GpAppletVTable *vtable);
 
 G_END_DECLS
 
