@@ -26,26 +26,6 @@
 #include "window-menu.h"
 #include "workspace-switcher.h"
 
-static GpModuleInfo *
-wncklet_get_module_info (void)
-{
-  GpModuleInfo *info;
-
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-
-  wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
-
-  info = gp_module_info_new ("org.gnome.gnome-panel.wncklet",
-                             PACKAGE_VERSION, GETTEXT_PACKAGE);
-
-  gp_module_info_set_applets (info, "show-desktop", "window-list",
-                              "window-menu", "workspace-switcher",
-                              NULL);
-
-  return info;
-}
-
 static GpAppletInfo *
 wncklet_get_applet_info (const gchar *applet)
 {
@@ -140,11 +120,30 @@ gp_module_get_abi_version (void)
   return GP_MODULE_ABI_VERSION;
 }
 
+GpModuleInfo *
+gp_module_get_module_info (void)
+{
+  GpModuleInfo *info;
+
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
+  wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
+
+  info = gp_module_info_new ("org.gnome.gnome-panel.wncklet",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
+
+  gp_module_info_set_applets (info, "show-desktop", "window-list",
+                              "window-menu", "workspace-switcher",
+                              NULL);
+
+  return info;
+}
+
 void
 gp_module_get_vtable (GpModuleVTable *vtable)
 {
   *vtable = (GpModuleVTable) {
-    wncklet_get_module_info,
     wncklet_get_applet_info,
     wncklet_get_applet_type,
     wncklet_get_applet_from_iid,

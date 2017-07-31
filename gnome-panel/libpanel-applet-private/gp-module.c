@@ -31,8 +31,9 @@
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-module-info-private.h"
 
-typedef guint32 (* GetAbiVersionFunc) (void);
-typedef void    (* GetVTableFunc)     (GpModuleVTable *vtable);
+typedef guint32        (* GetAbiVersionFunc) (void);
+typedef GpModuleInfo * (* GetModuleInfoFunc) (void);
+typedef void           (* GetVTableFunc)     (GpModuleVTable *vtable);
 
 struct _GpModule
 {
@@ -41,9 +42,9 @@ struct _GpModule
   gchar          *path;
   GModule        *library;
 
-  GpModuleVTable  vtable;
-
   GpModuleInfo   *info;
+
+  GpModuleVTable  vtable;
   GHashTable     *applets;
 };
 
@@ -169,34 +170,6 @@ applet_info_free (gpointer data)
   gp_applet_info_free (info);
 }
 
-static gboolean
-load_module_info (GpModule *module)
-{
-  GpModuleInfo *info;
-
-  module->info = info = module->vtable.get_module_info ();
-
-  if (info == NULL)
-    {
-      g_warning ("Failed to get 'GpModuleInfo' from module '%s'", module->path);
-      return FALSE;
-    }
-
-  if (info->id == NULL || *info->id == '\0')
-    {
-      g_warning ("Module '%s' does not have valid id", module->path);
-      return FALSE;
-    }
-
-  if (info->applets == NULL || info->applets[0] == NULL)
-    {
-      g_warning ("Module '%s' does not have valid applets", module->path);
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
 static void
 gp_module_finalize (GObject *object)
 {
@@ -213,7 +186,7 @@ gp_module_finalize (GObject *object)
     }
 
   g_clear_pointer (&module->info, gp_module_info_free);
-  g_clear_pointer (&module->info, g_hash_table_destroy);
+  g_clear_pointer (&module->applets, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_module_parent_class)->finalize (object);
 }
@@ -248,6 +221,7 @@ gp_module_new_from_path (const gchar *path)
   GModuleFlags flags;
   const gchar *symbol;
   GetAbiVersionFunc abi_version_func;
+  GetModuleInfoFunc module_info_func;
   GetVTableFunc vtable_func;
 
   g_return_val_if_fail (path != NULL && *path != '\0', NULL);
@@ -293,6 +267,43 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
+  symbol = "gp_module_get_module_info";
+  if (!g_module_symbol (module->library, symbol, (gpointer) &module_info_func))
+    {
+      g_warning ("Failed to get '%s' for module '%s': %s",
+                 symbol, path, g_module_error ());
+
+      g_object_unref (module);
+      return NULL;
+    }
+
+  if (module_info_func == NULL)
+    {
+      g_warning ("Invalid '%s' in module '%s'", symbol, path);
+
+      g_object_unref (module);
+      return NULL;
+    }
+
+  module->info = module_info_func ();
+  if (module->info == NULL)
+    {
+      g_warning ("Failed to get 'GpModuleInfo' from module '%s'", module->path);
+      return NULL;
+    }
+
+  if (module->info->id == NULL || *module->info->id == '\0')
+    {
+      g_warning ("Module '%s' does not have valid id", module->path);
+      return NULL;
+    }
+
+  if (module->info->applets == NULL || module->info->applets[0] == NULL)
+    {
+      g_warning ("Module '%s' does not have valid applets", module->path);
+      return NULL;
+    }
+
   symbol = "gp_module_get_vtable";
   if (!g_module_symbol (module->library, symbol, (gpointer) &vtable_func))
     {
@@ -312,12 +323,6 @@ gp_module_new_from_path (const gchar *path)
     }
 
   vtable_func (&module->vtable);
-
-  if (!load_module_info (module))
-    {
-      g_object_unref (module);
-      return NULL;
-    }
 
   return module;
 }
@@ -405,9 +410,9 @@ gp_module_applet_new (GpModule         *module,
 
   if (!match_backend (info))
     {
-      g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,
-                   "Module '%s' did not return required info about applet '%s'",
-                   module->info->id, applet);
+      g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_TYPE,
+                   "Applet '%s' from module '%s' does not work with current backend '%s'",
+                   applet, module->info->id, get_current_backend ());
 
       return NULL;
     }
@@ -415,9 +420,9 @@ gp_module_applet_new (GpModule         *module,
   type = module->vtable.get_applet_type (applet);
   if (type == G_TYPE_NONE)
     {
-      g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_TYPE,
-                   "Applet '%s' from module '%s' does not work with current backend '%s'",
-                   applet, module->info->id, get_current_backend ());
+      g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,
+                   "Module '%s' did not return required info about applet '%s'",
+                   module->info->id, applet);
 
       return NULL;
     }

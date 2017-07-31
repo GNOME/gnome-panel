@@ -22,22 +22,6 @@
 
 #include "na-applet.h"
 
-static GpModuleInfo *
-na_get_module_info (void)
-{
-  GpModuleInfo *info;
-
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-
-  info = gp_module_info_new ("org.gnome.gnome-panel.notification-area",
-                             PACKAGE_VERSION, GETTEXT_PACKAGE);
-
-  gp_module_info_set_applets (info, "notification-area", NULL);
-
-  return info;
-}
-
 static GpAppletInfo *
 na_get_applet_info (const gchar *applet)
 {
@@ -74,11 +58,26 @@ gp_module_get_abi_version (void)
   return GP_MODULE_ABI_VERSION;
 }
 
+GpModuleInfo *
+gp_module_get_module_info (void)
+{
+  GpModuleInfo *info;
+
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
+  info = gp_module_info_new ("org.gnome.gnome-panel.notification-area",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
+
+  gp_module_info_set_applets (info, "notification-area", NULL);
+
+  return info;
+}
+
 void
 gp_module_get_vtable (GpModuleVTable *vtable)
 {
   *vtable = (GpModuleVTable) {
-    na_get_module_info,
     na_get_applet_info,
     na_get_applet_type,
     na_get_applet_from_iid,

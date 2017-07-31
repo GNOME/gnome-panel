@@ -22,22 +22,6 @@
 
 #include "sn-applet.h"
 
-static GpModuleInfo *
-sn_get_module_info (void)
-{
-  GpModuleInfo *info;
-
-  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-
-  info = gp_module_info_new ("org.gnome.gnome-panel.status-notifier",
-                             PACKAGE_VERSION, GETTEXT_PACKAGE);
-
-  gp_module_info_set_applets (info, "status-notifier", NULL);
-
-  return info;
-}
-
 static GpAppletInfo *
 sn_get_applet_info (const gchar *applet)
 {
@@ -72,11 +56,26 @@ gp_module_get_abi_version (void)
   return GP_MODULE_ABI_VERSION;
 }
 
+GpModuleInfo *
+gp_module_get_module_info (void)
+{
+  GpModuleInfo *info;
+
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+
+  info = gp_module_info_new ("org.gnome.gnome-panel.status-notifier",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
+
+  gp_module_info_set_applets (info, "status-notifier", NULL);
+
+  return info;
+}
+
 void
 gp_module_get_vtable (GpModuleVTable *vtable)
 {
   *vtable = (GpModuleVTable) {
-    sn_get_module_info,
     sn_get_applet_info,
     sn_get_applet_type,
     sn_get_applet_from_iid,

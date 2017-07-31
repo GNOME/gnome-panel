@@ -33,22 +33,6 @@ G_BEGIN_DECLS
  * A module with one or more applets.
  *
  * |[<!-- language="C" -->
- * static GpModuleInfo *
- * example_get_module_info (void)
- * {
- *   GpModuleInfo *info;
- *
- *   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
- *   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
- *
- *   info = gp_module_info_new ("org.example.example",
- *                              PACKAGE_VERSION, GETTEXT_PACKAGE);
- *
- *   gp_module_info_set_applets (info, "example1", "example2", NULL);
- *
- *   return info;
- * }
- *
  * static GpAppletInfo *
  * example_get_applet_info (const gchar *applet)
  * {
@@ -128,11 +112,26 @@ G_BEGIN_DECLS
  *   return GP_MODULE_ABI_VERSION;
  * }
  *
+ * GpModuleInfo *
+ * gp_module_get_module_info (void)
+ * {
+ *   GpModuleInfo *info;
+ *
+ *   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
+ *   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+ *
+ *   info = gp_module_info_new ("org.example.example",
+ *                              PACKAGE_VERSION, GETTEXT_PACKAGE);
+ *
+ *   gp_module_info_set_applets (info, "example1", "example2", NULL);
+ *
+ *   return info;
+ * }
+ *
  * void
  * gp_module_get_vtable (GpModuleVTable *vtable)
  * {
  *   *vtable = (GpModuleVTable) {
- *     example_get_module_info,
  *     example_get_applet_info,
  *     example_get_applet_type,
  *     example_get_applet_from_iid, // or NULL if not needed
@@ -151,7 +150,6 @@ G_BEGIN_DECLS
 
 /**
  * GpModuleVTable:
- * @get_module_info: (transfer full): returns a #GpModuleInfo
  * @get_applet_info: (transfer full): returns a #GpAppletInfo.
  * @get_applet_type: returns a #GType.
  * @get_applet_from_iid: Compatibility function.
@@ -162,8 +160,6 @@ G_BEGIN_DECLS
 typedef struct _GpModuleVTable GpModuleVTable;
 struct _GpModuleVTable
 {
-  GpModuleInfo * (* get_module_info)     (void);
-
   GpAppletInfo * (* get_applet_info)     (const gchar    *applet);
 
   GType          (* get_applet_type)     (const gchar    *applet);
@@ -182,7 +178,17 @@ struct _GpModuleVTable
  *
  * Returns: the module ABI version.
  */
-guint32 gp_module_get_abi_version (void);
+guint32       gp_module_get_abi_version (void);
+
+/**
+ * gp_module_get_module_info:
+ *
+ * Required API for GNOME Panel modules to implement. This function must
+ * return a newly created #GpModuleInfo.
+ *
+ * Returns: a #GpModuleInfo.
+ */
+GpModuleInfo *gp_module_get_module_info (void);
 
 /**
  * gp_module_get_vtable:
@@ -190,7 +196,7 @@ guint32 gp_module_get_abi_version (void);
  *
  * Required API for GNOME Panel modules to implement.
  */
-void    gp_module_get_vtable      (GpModuleVTable *vtable);
+void          gp_module_get_vtable      (GpModuleVTable *vtable);
 
 G_END_DECLS
 
