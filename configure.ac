@@ -279,14 +279,13 @@ AC_CONFIG_FILES([
   man/Makefile
 
   modules/Makefile
-  modules/external/Makefile
-  modules/external/clock/Makefile
-  modules/external/clock/pixmaps/Makefile
-  modules/external/fish/Makefile
-  modules/external/notification-area/Makefile
-  modules/external/status-notifier/Makefile
-  modules/external/wncklet/Makefile
+  modules/clock/Makefile
+  modules/clock/pixmaps/Makefile
+  modules/fish/Makefile
+  modules/notification-area/Makefile
   modules/separator/Makefile
+  modules/status-notifier/Makefile
+  modules/wncklet/Makefile
 
   po/Makefile.in
 ])
