@@ -26,10 +26,9 @@ struct _GpModuleInfo
 {
   gchar  *id;
   gchar  *version;
+  gchar  *translation_domain;
 
   gchar **applets;
-
-  gchar  *domain;
 };
 
 void gp_module_info_free (GpModuleInfo *info);

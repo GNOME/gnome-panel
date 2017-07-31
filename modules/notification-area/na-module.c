@@ -30,10 +30,9 @@ na_get_module_info (void)
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 
-  info = gp_module_info_new ("notification-area", PACKAGE_VERSION);
+  info = gp_module_info_new ("notification-area", PACKAGE_VERSION, GETTEXT_PACKAGE);
 
   gp_module_info_set_applets (info, "notification-area", NULL);
-  gp_module_info_set_translation_domain (info, GETTEXT_PACKAGE);
 
   return info;
 }

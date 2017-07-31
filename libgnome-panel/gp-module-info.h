@@ -29,14 +29,12 @@ G_BEGIN_DECLS
  */
 typedef struct _GpModuleInfo GpModuleInfo;
 
-GpModuleInfo *gp_module_info_new                    (const gchar  *id,
-                                                     const gchar  *version);
+GpModuleInfo *gp_module_info_new         (const gchar  *id,
+                                          const gchar  *version,
+                                          const gchar  *translation_domain);
 
-void          gp_module_info_set_applets            (GpModuleInfo *info,
-                                                     ...);
-
-void          gp_module_info_set_translation_domain (GpModuleInfo *info,
-                                                     const gchar  *domain);
+void          gp_module_info_set_applets (GpModuleInfo *info,
+                                          ...);
 
 G_END_DECLS
 
