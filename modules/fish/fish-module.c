@@ -30,7 +30,8 @@ fish_get_module_info (void)
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 
-  info = gp_module_info_new ("fish", PACKAGE_VERSION, GETTEXT_PACKAGE);
+  info = gp_module_info_new ("org.gnome.gnome-panel.fish",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
 
   gp_module_info_set_applets (info, "fish", NULL);
 
@@ -60,7 +61,8 @@ fish_get_applet_type (const gchar *applet)
 static const gchar *
 fish_get_applet_from_iid (const gchar *iid)
 {
-  if (g_strcmp0 (iid, "FishAppletFactory::FishApplet") == 0)
+  if (g_strcmp0 (iid, "FishAppletFactory::FishApplet") == 0 ||
+      g_strcmp0 (iid, "fish::fish") == 0)
     return "fish";
 
   return NULL;

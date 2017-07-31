@@ -36,7 +36,8 @@ wncklet_get_module_info (void)
 
   wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
 
-  info = gp_module_info_new ("wncklet", PACKAGE_VERSION, GETTEXT_PACKAGE);
+  info = gp_module_info_new ("org.gnome.gnome-panel.wncklet",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
 
   gp_module_info_set_applets (info, "show-desktop", "window-list",
                               "window-menu", "workspace-switcher",
@@ -117,13 +118,17 @@ wncklet_get_applet_type (const gchar *applet)
 static const gchar *
 wncklet_get_applet_from_iid (const gchar *iid)
 {
-  if (g_strcmp0 (iid, "WnckletFactory::ShowDesktopApplet") == 0)
+  if (g_strcmp0 (iid, "WnckletFactory::ShowDesktopApplet") == 0 ||
+      g_strcmp0 (iid, "wncklet::show-desktop") == 0)
     return "show-desktop";
-  else if (g_strcmp0 (iid, "WnckletFactory::WindowListApplet") == 0)
+  else if (g_strcmp0 (iid, "WnckletFactory::WindowListApplet") == 0 ||
+           g_strcmp0 (iid, "wncklet::window-list") == 0)
     return "window-list";
-  else if (g_strcmp0 (iid, "WnckletFactory::WindowMenuApplet") == 0)
+  else if (g_strcmp0 (iid, "WnckletFactory::WindowMenuApplet") == 0 ||
+           g_strcmp0 (iid, "wncklet::window-menu") == 0)
     return "window-menu";
-  else if (g_strcmp0 (iid, "WnckletFactory::WorkspaceSwitcherApplet") == 0)
+  else if (g_strcmp0 (iid, "WnckletFactory::WorkspaceSwitcherApplet") == 0 ||
+           g_strcmp0 (iid, "wncklet::workspace-switcher") == 0)
     return "workspace-switcher";
 
   return NULL;

@@ -30,7 +30,8 @@ sn_get_module_info (void)
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 
-  info = gp_module_info_new ("status-notifier", PACKAGE_VERSION, GETTEXT_PACKAGE);
+  info = gp_module_info_new ("org.gnome.gnome-panel.status-notifier",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
 
   gp_module_info_set_applets (info, "status-notifier", NULL);
 
@@ -56,6 +57,15 @@ sn_get_applet_type (const gchar *applet)
   return SN_TYPE_APPLET;
 }
 
+static const gchar *
+sn_get_applet_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "status-notifier::status-notifier") == 0)
+    return "status-notifier";
+
+  return NULL;
+}
+
 guint32
 gp_module_get_abi_version (void)
 {
@@ -69,7 +79,7 @@ gp_module_get_vtable (GpModuleVTable *vtable)
     sn_get_module_info,
     sn_get_applet_info,
     sn_get_applet_type,
-    NULL,
+    sn_get_applet_from_iid,
     NULL
   };
 }

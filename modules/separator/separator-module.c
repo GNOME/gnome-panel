@@ -30,7 +30,8 @@ separator_get_module_info (void)
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 
-  info = gp_module_info_new ("separator", PACKAGE_VERSION, GETTEXT_PACKAGE);
+  info = gp_module_info_new ("org.gnome.gnome-panel.separator",
+                             PACKAGE_VERSION, GETTEXT_PACKAGE);
 
   gp_module_info_set_applets (info, "separator", NULL);
 
@@ -54,7 +55,8 @@ separator_get_applet_type (const gchar *applet)
 static const gchar *
 separator_get_applet_from_iid (const gchar *iid)
 {
-  if (g_strcmp0 (iid, "PanelInternalFactory::Separator") == 0)
+  if (g_strcmp0 (iid, "PanelInternalFactory::Separator") == 0 ||
+      g_strcmp0 (iid, "separator::separator") == 0)
     return "separator";
 
   return NULL;
