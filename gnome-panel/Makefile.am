@@ -207,12 +207,8 @@ panel-resources.h: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourc
 	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name panel $<
 
 desktopdir = $(datadir)/applications
-desktop_in_in_files = gnome-panel.desktop.in.in
 desktop_in_files = gnome-panel.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-
-%.desktop.in: %.desktop.in.in
-	$(AM_V_GEN) sed -e 's,[@]VERSION[@],$(VERSION),g' < $< > $@
 
 %.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -o $@-t \
@@ -221,13 +217,12 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =					\
 	$(ui_FILES)				\
 	panel.gresource.xml			\
-	$(desktop_in_in_files) \
+	$(desktop_in_files) \
 	$(NULL)
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(sys_DATA) \
-	$(desktop_in_files) \
 	$(desktop_DATA) \
 	$(NULL)
 
