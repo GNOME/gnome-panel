@@ -757,7 +757,8 @@ panel_action_button_load (PanelWidget *panel,
 	}
 
 	if (type == PANEL_ACTION_NONE) {
-		g_warning ("Unknown action type '%s", detail_for_type);
+		g_debug ("Unknown action type '%s'", detail_for_type);
+		panel_layout_delete_object (id);
 		return;
 	}
 
