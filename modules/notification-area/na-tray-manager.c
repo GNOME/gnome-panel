@@ -622,7 +622,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
 						       "_NET_SYSTEM_TRAY_VISUAL");
 
   if (gdk_screen_get_rgba_visual (manager->screen) != NULL &&
-      gdk_screen_is_composited (manager->screen))
+      gdk_display_supports_composite (display))
     xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual (manager->screen));
   else
     {

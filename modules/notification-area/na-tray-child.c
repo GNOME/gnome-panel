@@ -288,7 +288,8 @@ na_tray_child_new (GdkScreen *screen,
   depth = gdk_visual_get_depth (visual);
 
   visual_has_alpha = red_prec + blue_prec + green_prec < depth;
-  child->has_alpha = (visual_has_alpha && gdk_screen_is_composited (screen));
+  child->has_alpha = (visual_has_alpha &&
+                      gdk_display_supports_composite (gdk_screen_get_display (screen)));
 
   child->composited = child->has_alpha;
 
