@@ -23,7 +23,7 @@
 #ifndef GP_APPLET_PRIVATE_H
 #define GP_APPLET_PRIVATE_H
 
-#include "libgnome-panel/gp-applet.h"
+#include "gp-applet.h"
 
 G_BEGIN_DECLS
 
