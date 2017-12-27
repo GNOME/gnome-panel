@@ -20,6 +20,8 @@
 
 #include "libgnome-panel/gp-applet-info.h"
 
+G_BEGIN_DECLS
+
 struct _GpAppletInfo
 {
   gchar    *name;
