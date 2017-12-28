@@ -220,8 +220,30 @@ void
 sn_image_menu_item_set_image_from_icon_pixbuf (SnImageMenuItem *item,
                                                GdkPixbuf       *pixbuf)
 {
+  gint width;
+  gint height;
+
+  g_object_ref (pixbuf);
+
+  width = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  if (width > 16 || height > 16)
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
+
+      if (scaled != NULL)
+        {
+          g_object_unref (pixbuf);
+          pixbuf = scaled;
+        }
+    }
+
   gtk_image_set_from_pixbuf (GTK_IMAGE (item->image), pixbuf);
   gtk_widget_show (item->image);
+  g_object_unref (pixbuf);
 }
 
 void
