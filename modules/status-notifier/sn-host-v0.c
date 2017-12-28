@@ -204,6 +204,8 @@ register_host_cb (GObject      *source_object,
                     G_CALLBACK (item_unregistered_cb), v0);
 
   items = sn_watcher_v0_gen_dup_registered_items (v0->watcher);
+  if (items == NULL)
+    return;
 
   for (i = 0; items[i] != NULL; i++)
     add_registered_item (v0, items[i]);
