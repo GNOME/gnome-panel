@@ -55,7 +55,7 @@ struct _SnItemV0
   gchar         *status;
 
   gchar         *title;
-  gint32         window_id;
+  guint32        window_id;
   gchar         *icon_name;
   SnIconPixmap **icon_pixmap;
   gchar         *overlay_icon_name;
