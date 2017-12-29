@@ -892,7 +892,7 @@ get_all_cb (GObject      *source_object,
       else if (g_strcmp0 (key, "Status") == 0)
         v0->status = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "WindowId") == 0)
-        v0->window_id = g_variant_get_int32 (value);
+        v0->window_id = g_variant_get_uint32 (value);
       else if (g_strcmp0 (key, "IconName") == 0)
         v0->icon_name = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (key, "IconPixmap") == 0)
