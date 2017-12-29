@@ -10,7 +10,6 @@ libpanel_applet_private_la_CFLAGS = \
 	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
 	-I$(srcdir) \
 	-I$(top_srcdir) \
-	-I$(top_srcdir)/libgnome-panel \
 	-I$(top_srcdir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel/libpanel-applet-private \

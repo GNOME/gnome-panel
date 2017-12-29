@@ -18,7 +18,7 @@
 #ifndef GP_APPLET_INFO_PRIVATE_H
 #define GP_APPLET_INFO_PRIVATE_H
 
-#include "gp-applet-info.h"
+#include "libgnome-panel/gp-applet-info.h"
 
 G_BEGIN_DECLS
 
