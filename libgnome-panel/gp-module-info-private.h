@@ -18,7 +18,7 @@
 #ifndef GP_MODULE_INFO_PRIVATE_H
 #define GP_MODULE_INFO_PRIVATE_H
 
-#include "libgnome-panel/gp-module-info.h"
+#include <libgnome-panel/gp-module-info.h>
 
 G_BEGIN_DECLS
 

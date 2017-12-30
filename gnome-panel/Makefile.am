@@ -110,6 +110,7 @@ gnome_panel_CFLAGS = \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \
 	-I$(top_builddir)/gnome-panel/libpanel-util \
+	-I$(top_srcdir) \
 	$(XRANDR_CFLAGS) \
 	$(PANEL_CFLAGS) \
 	$(WARN_CFLAGS) \

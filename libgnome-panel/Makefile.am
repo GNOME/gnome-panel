@@ -9,10 +9,12 @@ libgnome_panel_la_SOURCES = \
 	gp-applet-info.h \
 	gp-applet-info-private.h \
 	gp-applet-private.h \
+	gp-module.c \
 	gp-module.h \
 	gp-module-info.c \
 	gp-module-info.h \
 	gp-module-info-private.h \
+	gp-module-private.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 

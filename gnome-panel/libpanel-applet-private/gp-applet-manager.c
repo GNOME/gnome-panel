@@ -21,8 +21,8 @@
 
 #include "gp-applet-frame.h"
 #include "gp-applet-manager.h"
-#include "gp-module-private.h"
 #include "libgnome-panel/gp-applet-info-private.h"
+#include "libgnome-panel/gp-module-private.h"
 
 struct _GpAppletManager
 {
