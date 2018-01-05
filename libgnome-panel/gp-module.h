@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2017 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -31,10 +31,20 @@ G_BEGIN_DECLS
 #define GP_MODULE_ABI_VERSION 0x0001
 
 /**
+ * GetAppletIdFromIidFunc:
+ * @iid: the applet iid
+ *
+ * Specifies the type of the module function called to convert old applet
+ * iid to new id. See gp_module_set_compatibility().
+ *
+ * Returns: (transfer none): the applet id, or %NULL.
+ */
+typedef const gchar * (* GetAppletIdFromIidFunc) (const gchar *iid);
+
+/**
  * GpAppletVTable:
  * @get_applet_info: (transfer full): returns a #GpAppletInfo.
  * @get_applet_type: returns a #GType.
- * @get_applet_from_iid: Compatibility function.
  * @setup_about: Function for setting up about dialog.
  *
  * The #GpAppletVTable provides the functions required by the #GpModule.
@@ -46,8 +56,6 @@ struct _GpAppletVTable
 
   GType          (* get_applet_type)     (const gchar    *applet);
 
-  const gchar  * (* get_applet_from_iid) (const gchar    *iid);
-
   gboolean       (* setup_about)         (GtkAboutDialog *dialog,
                                           const gchar    *applet);
 };
@@ -55,20 +63,23 @@ struct _GpAppletVTable
 #define GP_TYPE_MODULE (gp_module_get_type ())
 G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
 
-void          gp_module_set_abi_version    (GpModule    *module,
-                                            guint32      abi_version);
+void          gp_module_set_abi_version    (GpModule               *module,
+                                            guint32                 abi_version);
 
-void          gp_module_set_gettext_domain (GpModule    *module,
-                                            const gchar *gettext_domain);
+void          gp_module_set_gettext_domain (GpModule               *module,
+                                            const gchar            *gettext_domain);
 
-void          gp_module_set_id             (GpModule    *module,
-                                            const gchar *id);
+void          gp_module_set_id             (GpModule               *module,
+                                            const gchar            *id);
 
-void          gp_module_set_version        (GpModule    *module,
-                                            const gchar *version);
+void          gp_module_set_version        (GpModule               *module,
+                                            const gchar            *version);
 
-void          gp_module_set_applet_ids     (GpModule    *module,
+void          gp_module_set_applet_ids     (GpModule               *module,
                                             ...);
+
+void          gp_module_set_compatibility  (GpModule               *module,
+                                            GetAppletIdFromIidFunc  func);
 
 /**
  * gp_module_load:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2017 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ wncklet_get_applet_type (const gchar *applet)
 }
 
 static const gchar *
-wncklet_get_applet_from_iid (const gchar *iid)
+wncklet_get_applet_id_from_iid (const gchar *iid)
 {
   if (g_strcmp0 (iid, "WnckletFactory::ShowDesktopApplet") == 0 ||
       g_strcmp0 (iid, "wncklet::show-desktop") == 0)
@@ -131,6 +131,8 @@ gp_module_load (GpModule *module)
   gp_module_set_applet_ids (module, "show-desktop", "window-list",
                             "window-menu", "workspace-switcher",
                             NULL);
+
+  gp_module_set_compatibility (module, wncklet_get_applet_id_from_iid);
 }
 
 void
@@ -139,7 +141,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
   *vtable = (GpAppletVTable) {
     wncklet_get_applet_info,
     wncklet_get_applet_type,
-    wncklet_get_applet_from_iid,
     NULL
   };
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2017 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -67,7 +67,7 @@
  * }
  *
  * static const gchar *
- * example_get_applet_from_iid (const gchar *iid)
+ * example_get_applet_id_from_iid (const gchar *iid)
  * {
  *   if (g_strcmp0 (iid, "ExampleAppletFactory::Example1Applet") == 0)
  *     {
@@ -110,6 +110,8 @@
  *   gp_module_set_version (module, PACKAGE_VERSION);
  *
  *   gp_module_set_applet_ids (module, "example1", "example2", NULL);
+ *
+ *   gp_module_set_compatibility (module, example_get_applet_id_from_iid);
  * }
  *
  * void
@@ -118,7 +120,6 @@
  *   *vtable = (GpAppletVTable) {
  *     example_get_applet_info,
  *     example_get_applet_type,
- *     example_get_applet_from_iid, // or NULL if not needed
  *     example_setup_about // or NULL if not needed
  *   };
  * }
@@ -146,22 +147,24 @@ typedef void (* GetAppletVTableFunc) (GpAppletVTable *vtable);
 
 struct _GpModule
 {
-  GObject          parent;
+  GObject                  parent;
 
-  gchar           *path;
-  GModule         *library;
+  gchar                   *path;
+  GModule                 *library;
 
-  guint32          abi_version;
+  guint32                  abi_version;
 
-  gchar           *id;
-  gchar           *version;
+  gchar                   *id;
+  gchar                   *version;
 
-  gchar           *gettext_domain;
+  gchar                   *gettext_domain;
 
-  gchar          **applet_ids;
+  gchar                  **applet_ids;
 
-  GpAppletVTable   applet_vtable;
-  GHashTable      *applets;
+  GetAppletIdFromIidFunc   compatibility_func;
+
+  GpAppletVTable           applet_vtable;
+  GHashTable              *applets;
 };
 
 G_DEFINE_TYPE (GpModule, gp_module, G_TYPE_OBJECT)
@@ -553,14 +556,31 @@ gp_module_get_applet_info (GpModule     *module,
   return get_applet_info (module, applet, error);
 }
 
-const gchar *
-gp_module_get_applet_from_iid (GpModule    *module,
-                               const gchar *old_iid)
+/**
+ * gp_module_set_compatibility:
+ * @module: a #GpModule
+ * @func: the function to call to convert applet iid to id
+ *
+ * Specifies a function to be used to convert old applet iid to id.
+ *
+ * The function must check if iid is known to module and only then return
+ * new applet id.
+ */
+void
+gp_module_set_compatibility (GpModule               *module,
+                             GetAppletIdFromIidFunc  func)
 {
-  if (module->applet_vtable.get_applet_from_iid == NULL)
+  module->compatibility_func = func;
+}
+
+const gchar *
+gp_module_get_applet_id_from_iid (GpModule    *module,
+                                  const gchar *old_iid)
+{
+  if (module->compatibility_func == NULL)
     return NULL;
 
-  return module->applet_vtable.get_applet_from_iid (old_iid);
+  return module->compatibility_func (old_iid);
 }
 
 /**

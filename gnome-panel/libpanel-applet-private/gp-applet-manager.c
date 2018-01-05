@@ -296,7 +296,7 @@ gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
       const gchar *applet;
 
       module = GP_MODULE (l->data);
-      applet = gp_module_get_applet_from_iid (module, old_iid);
+      applet = gp_module_get_applet_id_from_iid (module, old_iid);
 
       if (applet != NULL)
         {

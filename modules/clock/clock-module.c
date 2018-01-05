@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2017 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ clock_get_applet_type (const gchar *applet)
 }
 
 static const gchar *
-clock_get_applet_from_iid (const gchar *iid)
+clock_get_applet_id_from_iid (const gchar *iid)
 {
   if (g_strcmp0 (iid, "ClockAppletFactory::ClockApplet") == 0 ||
       g_strcmp0 (iid, "clock::clock") == 0)
@@ -65,6 +65,8 @@ gp_module_load (GpModule *module)
   gp_module_set_version (module, PACKAGE_VERSION);
 
   gp_module_set_applet_ids (module, "clock", NULL);
+
+  gp_module_set_compatibility (module, clock_get_applet_id_from_iid);
 }
 
 void
@@ -73,7 +75,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
   *vtable = (GpAppletVTable) {
     clock_get_applet_info,
     clock_get_applet_type,
-    clock_get_applet_from_iid,
     NULL
   };
 }
