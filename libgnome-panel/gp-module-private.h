@@ -37,6 +37,8 @@ GpModule            *gp_module_new_from_path         (const gchar           *pat
 
 const gchar         *gp_module_get_id                (GpModule              *module);
 
+const gchar         *gp_module_get_version           (GpModule              *module);
+
 const gchar * const *gp_module_get_applets           (GpModule              *module);
 
 GpAppletInfo        *gp_module_get_applet_info       (GpModule              *module,

@@ -520,6 +520,12 @@ gp_module_set_applet_ids (GpModule *module,
   va_end (args);
 }
 
+const gchar *
+gp_module_get_version (GpModule *module)
+{
+  return module->version;
+}
+
 const gchar * const *
 gp_module_get_applets (GpModule *module)
 {
