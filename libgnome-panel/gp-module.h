@@ -45,19 +45,15 @@ typedef const gchar * (* GetAppletIdFromIidFunc) (const gchar *iid);
  * GpAppletVTable:
  * @get_applet_info: (transfer full): returns a #GpAppletInfo.
  * @get_applet_type: returns a #GType.
- * @setup_about: Function for setting up about dialog.
  *
  * The #GpAppletVTable provides the functions required by the #GpModule.
  */
 typedef struct _GpAppletVTable GpAppletVTable;
 struct _GpAppletVTable
 {
-  GpAppletInfo * (* get_applet_info)     (const gchar    *applet);
+  GpAppletInfo * (* get_applet_info) (const gchar *applet);
 
-  GType          (* get_applet_type)     (const gchar    *applet);
-
-  gboolean       (* setup_about)         (GtkAboutDialog *dialog,
-                                          const gchar    *applet);
+  GType          (* get_applet_type) (const gchar *applet);
 };
 
 #define GP_TYPE_MODULE (gp_module_get_type ())

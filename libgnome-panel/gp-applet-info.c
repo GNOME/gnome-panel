@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -52,7 +52,7 @@ gp_applet_info_new (const gchar *name,
   info->icon_name = g_strdup (icon_name);
 
   info->help_uri = NULL;
-  info->has_about_dialog = FALSE;
+  info->about_dialog_func = NULL;
 
   info->backends = NULL;
 
@@ -75,17 +75,17 @@ gp_applet_info_set_help_uri (GpAppletInfo *info,
 }
 
 /**
- * gp_applet_info_set_has_about_dialog:
+ * gp_applet_info_set_about_dialog:
  * @info: a #GpAppletInfo
- * @has_about_dialog: whether applet has an about dialog
+ * @func: the function to call to setup about dialog
  *
- * Sets whether applet has an about dialog.
+ * Specifies a function to be used to setup about dialog.
  */
 void
-gp_applet_info_set_has_about_dialog (GpAppletInfo *info,
-                                     gboolean      has_about_dialog)
+gp_applet_info_set_about_dialog (GpAppletInfo           *info,
+                                 GpSetupAboutDialogFunc  func)
 {
-  info->has_about_dialog = has_about_dialog;
+  info->about_dialog_func = func;
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,7 @@
 #define GP_APPLET_INFO_H
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -29,18 +30,26 @@ G_BEGIN_DECLS
  */
 typedef struct _GpAppletInfo GpAppletInfo;
 
-GpAppletInfo *gp_applet_info_new                  (const gchar  *name,
-                                                   const gchar  *description,
-                                                   const gchar  *icon_name);
+/**
+ * GpSetupAboutDialogFunc:
+ * @dialog: a #GtkAboutDialog
+ *
+ * Function for setting up about dialog.
+ */
+typedef void (* GpSetupAboutDialogFunc) (GtkAboutDialog *dialog);
 
-void          gp_applet_info_set_help_uri         (GpAppletInfo *info,
-                                                   const gchar  *help_uri);
+GpAppletInfo *gp_applet_info_new              (const gchar            *name,
+                                               const gchar            *description,
+                                               const gchar            *icon_name);
 
-void          gp_applet_info_set_has_about_dialog (GpAppletInfo *info,
-                                                   gboolean      has_about_dialog);
+void          gp_applet_info_set_help_uri     (GpAppletInfo           *info,
+                                               const gchar            *help_uri);
 
-void          gp_applet_info_set_backends         (GpAppletInfo *info,
-                                                   const gchar  *backends);
+void          gp_applet_info_set_about_dialog (GpAppletInfo           *info,
+                                               GpSetupAboutDialogFunc  func);
+
+void          gp_applet_info_set_backends     (GpAppletInfo           *info,
+                                               const gchar            *backends);
 
 G_END_DECLS
 

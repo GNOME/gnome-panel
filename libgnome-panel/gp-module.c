@@ -24,6 +24,14 @@
  * A module with one or more applets.
  *
  * |[<!-- language="C" -->
+ * static gboolean
+ * example1_setup_about (GtkAboutDialog *dialog)
+ * {
+ *   gtk_about_dialog_set_comments (about, "...");
+ *   gtk_about_dialog_set_copyright (about, "...");
+ *   // ...
+ * }
+ *
  * static GpAppletInfo *
  * example_get_applet_info (const gchar *applet)
  * {
@@ -34,6 +42,9 @@
  *       info = gp_applet_info_new (_("Example 1 name"),
  *                                  _("Example 1 description"),
  *                                  "example1-icon");
+ *
+ *       gp_applet_info_set_about_dialog (info, example1_setup_about);
+ *       gp_applet_info_set_help_uri (info, "help:example/example1");
  *     }
  *   else if (g_strcmp0 (applet, "example2") == 0)
  *     {
@@ -81,22 +92,6 @@
  *   return NULL;
  * }
  *
- * static gboolean
- * example_setup_about (GtkAboutDialog *dialog,
- *                      const gchar    *applet)
- * {
- *   if (g_strcmp0 (applet, "example1") == 0)
- *     {
- *       gtk_about_dialog_set_comments (about, "...");
- *       gtk_about_dialog_set_copyright (about, "...");
- *       // ...
- *
- *       return TRUE;
- *     }
- *
- *   return FALSE;
- * }
- *
  * void
  * gp_module_load (GpModule *module)
  * {
@@ -120,7 +115,6 @@
  *   *vtable = (GpAppletVTable) {
  *     example_get_applet_info,
  *     example_get_applet_type,
- *     example_setup_about // or NULL if not needed
  *   };
  * }
  * ]|

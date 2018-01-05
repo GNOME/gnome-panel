@@ -74,7 +74,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
     fish_get_applet_info,
-    fish_get_applet_type,
-    NULL
+    fish_get_applet_type
   };
 }

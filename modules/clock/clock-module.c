@@ -74,7 +74,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
     clock_get_applet_info,
-    clock_get_applet_type,
-    NULL
+    clock_get_applet_type
   };
 }

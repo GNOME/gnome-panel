@@ -140,7 +140,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
     wncklet_get_applet_info,
-    wncklet_get_applet_type,
-    NULL
+    wncklet_get_applet_type
   };
 }

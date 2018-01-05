@@ -68,7 +68,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
     separator_get_applet_info,
-    separator_get_applet_type,
-    NULL
+    separator_get_applet_type
   };
 }

@@ -72,7 +72,6 @@ gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
     sn_get_applet_info,
-    sn_get_applet_type,
-    NULL
+    sn_get_applet_type
   };
 }
