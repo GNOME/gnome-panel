@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2017 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -97,26 +97,19 @@
  *   return FALSE;
  * }
  *
- * guint32
- * gp_module_get_abi_version (void)
+ * void
+ * gp_module_load (GpModule *module)
  * {
- *   return GP_MODULE_ABI_VERSION;
- * }
- *
- * GpModuleInfo *
- * gp_module_get_module_info (void)
- * {
- *   GpModuleInfo *info;
- *
  *   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
  *   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+ *   gp_module_set_gettext_domain (module, GETTEXT_PACKAGE);
  *
- *   info = gp_module_info_new ("org.example.example",
- *                              PACKAGE_VERSION, GETTEXT_PACKAGE);
+ *   gp_module_set_abi_version (module, GP_MODULE_ABI_VERSION);
  *
- *   gp_module_info_set_applets (info, "example1", "example2", NULL);
+ *   gp_module_set_id (module, "org.example.example");
+ *   gp_module_set_version (module, PACKAGE_VERSION);
  *
- *   return info;
+ *   gp_module_set_applet_ids (module, "example1", "example2", NULL);
  * }
  *
  * void
@@ -135,6 +128,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <stdarg.h>
 
 #ifdef GDK_WINDOWING_WAYLAND
 #include <gdk/gdkwayland.h>
@@ -146,26 +140,46 @@
 
 #include "gp-applet-info-private.h"
 #include "gp-module-private.h"
-#include "gp-module-info-private.h"
 
-typedef guint32        (* GetAbiVersionFunc)   (void);
-typedef GpModuleInfo * (* GetModuleInfoFunc)   (void);
-typedef void           (* GetAppletVTableFunc) (GpAppletVTable *vtable);
+typedef void (* LoadFunc)            (GpModule       *module);
+typedef void (* GetAppletVTableFunc) (GpAppletVTable *vtable);
 
 struct _GpModule
 {
-  GObject         parent;
+  GObject          parent;
 
-  gchar          *path;
-  GModule        *library;
+  gchar           *path;
+  GModule         *library;
 
-  GpModuleInfo   *info;
+  guint32          abi_version;
 
-  GpAppletVTable  applet_vtable;
-  GHashTable     *applets;
+  gchar           *id;
+  gchar           *version;
+
+  gchar           *gettext_domain;
+
+  gchar          **applet_ids;
+
+  GpAppletVTable   applet_vtable;
+  GHashTable      *applets;
 };
 
 G_DEFINE_TYPE (GpModule, gp_module, G_TYPE_OBJECT)
+
+static gchar **
+get_applets (va_list args)
+{
+  GPtrArray *array;
+  const gchar *applet;
+
+  array = g_ptr_array_new ();
+  while ((applet = va_arg (args, const gchar *)) != NULL)
+    g_ptr_array_add (array, g_strdup (applet));
+
+  g_ptr_array_add (array, NULL);
+
+  return (gchar **) g_ptr_array_free (array, FALSE);
+}
 
 static gboolean
 match_backend (GpAppletInfo *info)
@@ -236,15 +250,15 @@ is_valid_applet (GpModule     *module,
 {
   guint i;
 
-  for (i = 0; module->info->applets[i] != NULL; i++)
+  for (i = 0; module->applet_ids[i] != NULL; i++)
     {
-      if (g_strcmp0 (module->info->applets[i], applet) == 0)
+      if (g_strcmp0 (module->applet_ids[i], applet) == 0)
         return TRUE;
     }
 
   g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_APPLET_DOES_NOT_EXIST,
                "Module '%s' does not have applet '%s'",
-               module->info->id, applet);
+               module->id, applet);
 
   return FALSE;
 }
@@ -267,7 +281,7 @@ get_applet_info (GpModule     *module,
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,
                    "Module '%s' did not return required info about applet '%s'",
-                   module->info->id, applet);
+                   module->id, applet);
 
       return NULL;
     }
@@ -302,7 +316,10 @@ gp_module_finalize (GObject *object)
       module->library = NULL;
     }
 
-  g_clear_pointer (&module->info, gp_module_info_free);
+  g_clear_pointer (&module->id, g_free);
+  g_clear_pointer (&module->version, g_free);
+  g_clear_pointer (&module->gettext_domain, g_free);
+  g_clear_pointer (&module->applet_ids, g_strfreev);
   g_clear_pointer (&module->applets, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_module_parent_class)->finalize (object);
@@ -337,8 +354,7 @@ gp_module_new_from_path (const gchar *path)
   GpModule *module;
   GModuleFlags flags;
   const gchar *symbol;
-  GetAbiVersionFunc abi_version_func;
-  GetModuleInfoFunc module_info_func;
+  LoadFunc load_func;
   GetAppletVTableFunc applet_vtable_func;
 
   g_return_val_if_fail (path != NULL && *path != '\0', NULL);
@@ -358,8 +374,8 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  symbol = "gp_module_get_abi_version";
-  if (!g_module_symbol (module->library, symbol, (gpointer) &abi_version_func))
+  symbol = "gp_module_load";
+  if (!g_module_symbol (module->library, symbol, (gpointer) &load_func))
     {
       g_warning ("Failed to get '%s' for module '%s': %s",
                  symbol, path, g_module_error ());
@@ -368,7 +384,7 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  if (abi_version_func == NULL)
+  if (load_func == NULL)
     {
       g_warning ("Invalid '%s' in module '%s'", symbol, path);
 
@@ -376,7 +392,9 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  if (abi_version_func () != GP_MODULE_ABI_VERSION)
+  load_func (module);
+
+  if (module->abi_version != GP_MODULE_ABI_VERSION)
     {
       g_warning ("Module '%s' ABI version does not match", path);
 
@@ -384,38 +402,13 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  symbol = "gp_module_get_module_info";
-  if (!g_module_symbol (module->library, symbol, (gpointer) &module_info_func))
-    {
-      g_warning ("Failed to get '%s' for module '%s': %s",
-                 symbol, path, g_module_error ());
-
-      g_object_unref (module);
-      return NULL;
-    }
-
-  if (module_info_func == NULL)
-    {
-      g_warning ("Invalid '%s' in module '%s'", symbol, path);
-
-      g_object_unref (module);
-      return NULL;
-    }
-
-  module->info = module_info_func ();
-  if (module->info == NULL)
-    {
-      g_warning ("Failed to get 'GpModuleInfo' from module '%s'", module->path);
-      return NULL;
-    }
-
-  if (module->info->id == NULL || *module->info->id == '\0')
+  if (module->id == NULL || *module->id == '\0')
     {
       g_warning ("Module '%s' does not have valid id", module->path);
       return NULL;
     }
 
-  if (module->info->applets == NULL || module->info->applets[0] == NULL)
+  if (module->applet_ids == NULL || module->applet_ids[0] == NULL)
     {
       g_warning ("Module '%s' does not have valid applets", module->path);
       return NULL;
@@ -444,16 +437,96 @@ gp_module_new_from_path (const gchar *path)
   return module;
 }
 
+/**
+ * gp_module_set_abi_version:
+ * @module: a #GpModule
+ * @abi_version: %GP_MODULE_ABI_VERSION
+ *
+ * This function must be called from gp_module_load().
+ */
+void
+gp_module_set_abi_version (GpModule *module,
+                           guint32   abi_version)
+{
+  module->abi_version = abi_version;
+}
+
+/**
+ * gp_module_set_gettext_domain:
+ * @module: a #GpModule
+ * @gettext_domain: the gettext domain
+ *
+ * Sets the gettext domain for this module.
+ */
+void
+gp_module_set_gettext_domain (GpModule    *module,
+                              const gchar *gettext_domain)
+{
+  g_clear_pointer (&module->gettext_domain, g_free);
+  module->gettext_domain = g_strdup (gettext_domain);
+}
+
+/**
+ * gp_module_set_id:
+ * @module: a #GpModule
+ * @id: the id of this module
+ *
+ * The module @id must be globally unique. For this reason, it is very
+ * strongly recommended to use reverse domain style identifier:
+ * https://wiki.gnome.org/HowDoI/ChooseApplicationID
+ */
+void
+gp_module_set_id (GpModule    *module,
+                  const gchar *id)
+{
+  g_clear_pointer (&module->id, g_free);
+  module->id = g_strdup (id);
+}
+
 const gchar *
 gp_module_get_id (GpModule *module)
 {
-  return module->info->id;
+  return module->id;
+}
+
+/**
+ * gp_module_set_version:
+ * @module: a #GpModule
+ * @version: the version of this module
+ *
+ * Sets the version of this module.
+ */
+void
+gp_module_set_version (GpModule    *module,
+                       const gchar *version)
+{
+  g_clear_pointer (&module->version, g_free);
+  module->version = g_strdup (version);
+}
+
+/**
+ * gp_module_info_set_applets:
+ * @info: a #GpModuleInfo
+ * @...: a %NULL-terminated list of applet ids in this module
+ *
+ * Sets the applets available in this module.
+ */
+void
+gp_module_set_applet_ids (GpModule *module,
+                          ...)
+{
+  va_list args;
+
+  va_start (args, module);
+  g_strfreev (module->applet_ids);
+  module->applet_ids = get_applets (args);
+  va_end (args);
 }
 
 const gchar * const *
 gp_module_get_applets (GpModule *module)
 {
-  return (const gchar * const *) module->info->applets;
+  return (const gchar * const *) module->applet_ids;
 }
 
 /**
@@ -529,7 +602,7 @@ gp_module_applet_new (GpModule         *module,
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_TYPE,
                    "Applet '%s' from module '%s' does not work with current backend '%s'",
-                   applet, module->info->id, get_current_backend ());
+                   applet, module->id, get_current_backend ());
 
       return NULL;
     }
@@ -539,7 +612,7 @@ gp_module_applet_new (GpModule         *module,
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,
                    "Module '%s' did not return required info about applet '%s'",
-                   module->info->id, applet);
+                   module->id, applet);
 
       return NULL;
     }
@@ -547,7 +620,7 @@ gp_module_applet_new (GpModule         *module,
   return g_object_new (type,
                        "id", applet,
                        "settings-path", settings_path,
-                       "translation-domain", module->info->translation_domain,
+                       "translation-domain", module->gettext_domain,
                        "locked-down", locked_down,
                        "orientation", orientation,
                        "position", position,

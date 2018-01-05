@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2017 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,26 +46,19 @@ separator_get_applet_from_iid (const gchar *iid)
   return NULL;
 }
 
-guint32
-gp_module_get_abi_version (void)
+void
+gp_module_load (GpModule *module)
 {
-  return GP_MODULE_ABI_VERSION;
-}
-
-GpModuleInfo *
-gp_module_get_module_info (void)
-{
-  GpModuleInfo *info;
-
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+  gp_module_set_gettext_domain (module, GETTEXT_PACKAGE);
 
-  info = gp_module_info_new ("org.gnome.gnome-panel.separator",
-                             PACKAGE_VERSION, GETTEXT_PACKAGE);
+  gp_module_set_abi_version (module, GP_MODULE_ABI_VERSION);
 
-  gp_module_info_set_applets (info, "separator", NULL);
+  gp_module_set_id (module, "org.gnome.gnome-panel.separator");
+  gp_module_set_version (module, PACKAGE_VERSION);
 
-  return info;
+  gp_module_set_applet_ids (module, "separator", NULL);
 }
 
 void

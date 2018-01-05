@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2017 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -20,7 +20,6 @@
 
 #include <gtk/gtk.h>
 #include <libgnome-panel/gp-applet-info.h>
-#include <libgnome-panel/gp-module-info.h>
 
 G_BEGIN_DECLS
 
@@ -53,25 +52,35 @@ struct _GpAppletVTable
                                           const gchar    *applet);
 };
 
-/**
- * gp_module_get_abi_version:
- *
- * Required API for GNOME Panel modules to implement. This function must
- * always return %GP_MODULE_ABI_VERSION.
- *
- * Returns: the module ABI version.
- */
-guint32       gp_module_get_abi_version   (void);
+#define GP_TYPE_MODULE (gp_module_get_type ())
+G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
+
+void          gp_module_set_abi_version    (GpModule    *module,
+                                            guint32      abi_version);
+
+void          gp_module_set_gettext_domain (GpModule    *module,
+                                            const gchar *gettext_domain);
+
+void          gp_module_set_id             (GpModule    *module,
+                                            const gchar *id);
+
+void          gp_module_set_version        (GpModule    *module,
+                                            const gchar *version);
+
+void          gp_module_set_applet_ids     (GpModule    *module,
+                                            ...);
 
 /**
- * gp_module_get_module_info:
+ * gp_module_load:
+ * @module: a #GpModule
  *
- * Required API for GNOME Panel modules to implement. This function must
- * return a newly created #GpModuleInfo.
+ * Required API for GNOME Panel modules to implement.
  *
- * Returns: a #GpModuleInfo.
+ * This function will be called after module has been loaded and should be
+ * used to setup all required module info. As minimum gp_module_set_id() and
+ * gp_module_set_abi_version() should be called.
  */
-GpModuleInfo *gp_module_get_module_info   (void);
+void          gp_module_load               (GpModule    *module);
 
 /**
  * gp_module_get_applet_vtable:

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2017 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,9 +22,6 @@
 #include <libgnome-panel/gp-module.h>
 
 G_BEGIN_DECLS
-
-#define GP_TYPE_MODULE gp_module_get_type ()
-G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
 
 typedef enum
 {
