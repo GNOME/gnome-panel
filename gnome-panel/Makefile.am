@@ -13,6 +13,8 @@ bin_PROGRAMS = \
 panel_sources =			\
 	gp-arrow-button.c \
 	gp-arrow-button.h \
+	gp-module-manager.c \
+	gp-module-manager.h \
 	gp-properties-dialog.c \
 	gp-properties-dialog.h \
 	gp-theme.c \
@@ -105,6 +107,7 @@ gnome_panel_SOURCES =			\
 gnome_panel_CFLAGS = \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
+	-DMODULESDIR=\""$(libdir)/gnome-panel/modules"\" \
 	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir) \
