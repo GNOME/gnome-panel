@@ -1030,6 +1030,8 @@ panel_layout_load_toplevel (const char *toplevel_id)
         if (PANEL_GLIB_STR_EMPTY (toplevel_id))
                 return;
 
+        g_info ("Loading toplevel: %s", toplevel_id);
+
         path = g_strdup_printf ("%s%s/",
                                 PANEL_LAYOUT_TOPLEVEL_PATH, toplevel_id);
 

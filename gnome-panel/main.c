@@ -165,6 +165,8 @@ main (int argc, char **argv)
 		return EXIT_SUCCESS;
 	}
 
+	g_info ("Registering DBus Own Name. Replace: %s", replace ? "true" : "false");
+
 	session = panel_session_new (replace);
 	if (session == NULL)
 		return 1;
@@ -172,8 +174,15 @@ main (int argc, char **argv)
 	g_set_application_name (_("Panel"));
 	gtk_window_set_default_icon_name (PANEL_ICON_PANEL);
 
+	g_info ("Initializing action protocol");
+
 	panel_action_protocol_init ();
+
+	g_info ("Initializing multiscreen");
+
 	panel_multiscreen_init ();
+
+	g_info ("Loading panel layout");
 
 	if (!panel_layout_load ()) {
 		panel_cleanup_do ();
@@ -183,6 +192,8 @@ main (int argc, char **argv)
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the nautilus desktop). */
 	gdk_flush ();
+
+	g_info ("Registering with session manager");
 
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
@@ -201,6 +212,8 @@ main (int argc, char **argv)
 	theme_variant_changed_cb (g_settings, PANEL_GENERAL_THEME_VARIANT_KEY, NULL);
 
 	gtk_main ();
+
+	g_info ("Panel shutting down");
 
 	g_object_unref (g_settings);
 	g_object_unref (session);
