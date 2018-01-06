@@ -1081,6 +1081,40 @@ panel_layout_get_default_layout_file (void)
                                  NULL);
 }
 
+static char **
+panel_layout_load_default (void)
+{
+  char *default_layout_file;
+  char **toplevels;
+
+  if (!g_settings_is_writable (layout_settings,
+                               PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) ||
+      !g_settings_is_writable (layout_settings,
+                               PANEL_LAYOUT_OBJECT_ID_LIST_KEY))
+    {
+      g_printerr (_("Cannot create initial panel layout.\n"));
+
+      return NULL;
+    }
+
+  default_layout_file = panel_layout_get_default_layout_file ();
+  panel_layout_append_from_file (default_layout_file);
+  g_free (default_layout_file);
+
+  toplevels = g_settings_get_strv (layout_settings,
+                                   PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
+
+  if (!toplevels[0])
+    {
+      g_strfreev (toplevels);
+      g_printerr (_("Cannot create initial panel layout.\n"));
+
+      return NULL;
+    }
+
+  return toplevels;
+}
+
 gboolean
 panel_layout_load (void)
 {
@@ -1093,34 +1127,15 @@ panel_layout_load (void)
         toplevels = g_settings_get_strv (layout_settings,
                                          PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
 
-        if (!toplevels[0]) {
-                char *default_layout_file;
+        if (!toplevels[0])
+          {
+            g_strfreev (toplevels);
 
-                g_strfreev (toplevels);
+            toplevels = panel_layout_load_default ();
 
-                if (!g_settings_is_writable (layout_settings,
-                                             PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY) ||
-                    !g_settings_is_writable (layout_settings,
-                                             PANEL_LAYOUT_OBJECT_ID_LIST_KEY)) {
-                        g_printerr (_("Cannot create initial panel layout.\n"));
-
-                        return FALSE;
-                }
-
-                default_layout_file = panel_layout_get_default_layout_file ();
-                panel_layout_append_from_file (default_layout_file);
-                g_free (default_layout_file);
-
-                toplevels = g_settings_get_strv (layout_settings,
-                                                 PANEL_LAYOUT_TOPLEVEL_ID_LIST_KEY);
-
-                if (!toplevels[0]) {
-                        g_strfreev (toplevels);
-                        g_printerr (_("Cannot create initial panel layout.\n"));
-
-                        return FALSE;
-                }
-        }
+            if (!toplevels)
+              return FALSE;
+          }
 
         for (i = 0; toplevels[i] != NULL; i++)
                 panel_layout_load_toplevel (toplevels[i]);
