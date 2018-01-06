@@ -32,6 +32,7 @@ fish_get_applet_info (const gchar *applet)
   info = gp_applet_info_new (_("Fish"), description, "gnome-panel-fish");
 
   gp_applet_info_set_backends (info, "x11");
+  gp_applet_info_set_help_uri (info, "help:fish");
 
   return info;
 }
