@@ -23,7 +23,7 @@
 #include "fish-applet.h"
 
 static GpAppletInfo *
-fish_get_applet_info (const gchar *applet)
+fish_get_applet_info (const gchar *id)
 {
   const gchar *name;
   const gchar *description;
@@ -66,13 +66,6 @@ gp_module_load (GpModule *module)
 
   gp_module_set_applet_ids (module, "fish", NULL);
 
+  gp_module_set_get_applet_info (module, fish_get_applet_info);
   gp_module_set_compatibility (module, fish_get_applet_id_from_iid);
-}
-
-void
-gp_module_get_applet_vtable (GpAppletVTable *vtable)
-{
-  *vtable = (GpAppletVTable) {
-    fish_get_applet_info
-  };
 }

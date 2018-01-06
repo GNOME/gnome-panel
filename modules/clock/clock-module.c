@@ -23,7 +23,7 @@
 #include "clock-applet.h"
 
 static GpAppletInfo *
-clock_get_applet_info (const gchar *applet)
+clock_get_applet_info (const gchar *id)
 {
   const gchar *name;
   const gchar *description;
@@ -66,13 +66,6 @@ gp_module_load (GpModule *module)
 
   gp_module_set_applet_ids (module, "clock", NULL);
 
+  gp_module_set_get_applet_info (module, clock_get_applet_info);
   gp_module_set_compatibility (module, clock_get_applet_id_from_iid);
-}
-
-void
-gp_module_get_applet_vtable (GpAppletVTable *vtable)
-{
-  *vtable = (GpAppletVTable) {
-    clock_get_applet_info
-  };
 }

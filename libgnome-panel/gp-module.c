@@ -33,11 +33,11 @@
  * }
  *
  * static GpAppletInfo *
- * example_get_applet_info (const gchar *applet)
+ * example_get_applet_info (const gchar *id)
  * {
  *   GpAppletInfo *info;
  *
- *   if (g_strcmp0 (applet, "example1") == 0)
+ *   if (g_strcmp0 (id, "example1") == 0)
  *     {
  *       info = gp_applet_info_new (example1_get_type,
  *                                  _("Example 1 name"),
@@ -47,7 +47,7 @@
  *       gp_applet_info_set_about_dialog (info, example1_setup_about);
  *       gp_applet_info_set_help_uri (info, "help:example/example1");
  *     }
- *   else if (g_strcmp0 (applet, "example2") == 0)
+ *   else if (g_strcmp0 (id, "example2") == 0)
  *     {
  *       info = gp_applet_info_new (example2_get_type,
  *                                  _("Example 2 name"),
@@ -93,15 +93,8 @@
  *
  *   gp_module_set_applet_ids (module, "example1", "example2", NULL);
  *
+ *   gp_module_set_get_applet_info (module, example_get_applet_info);
  *   gp_module_set_compatibility (module, example_get_applet_id_from_iid);
- * }
- *
- * void
- * gp_module_get_applet_vtable (GpAppletVTable *vtable)
- * {
- *   *vtable = (GpAppletVTable) {
- *     example_get_applet_info
- *   };
  * }
  * ]|
  */
@@ -122,8 +115,7 @@
 #include "gp-applet-info-private.h"
 #include "gp-module-private.h"
 
-typedef void (* LoadFunc)            (GpModule       *module);
-typedef void (* GetAppletVTableFunc) (GpAppletVTable *vtable);
+typedef void (* LoadFunc) (GpModule *module);
 
 struct _GpModule
 {
@@ -141,9 +133,10 @@ struct _GpModule
 
   gchar                  **applet_ids;
 
+  GpGetAppletInfoFunc      get_applet_info_func;
+
   GetAppletIdFromIidFunc   compatibility_func;
 
-  GpAppletVTable           applet_vtable;
   GHashTable              *applets;
 };
 
@@ -258,7 +251,7 @@ get_applet_info (GpModule     *module,
   if (info != NULL)
     return info;
 
-  info = module->applet_vtable.get_applet_info (applet);
+  info = module->get_applet_info_func (applet);
 
   if (info == NULL)
     {
@@ -338,7 +331,6 @@ gp_module_new_from_path (const gchar *path)
   GModuleFlags flags;
   const gchar *symbol;
   LoadFunc load_func;
-  GetAppletVTableFunc applet_vtable_func;
 
   g_return_val_if_fail (path != NULL && *path != '\0', NULL);
 
@@ -396,26 +388,6 @@ gp_module_new_from_path (const gchar *path)
       g_warning ("Module '%s' does not have valid applets", module->path);
       return NULL;
     }
-
-  symbol = "gp_module_get_applet_vtable";
-  if (!g_module_symbol (module->library, symbol, (gpointer) &applet_vtable_func))
-    {
-      g_warning ("Failed to get '%s' for module '%s': %s",
-                 symbol, path, g_module_error ());
-
-      g_object_unref (module);
-      return NULL;
-    }
-
-  if (applet_vtable_func == NULL)
-    {
-      g_warning ("Invalid '%s' in module '%s'", symbol, path);
-
-      g_object_unref (module);
-      return NULL;
-    }
-
-  applet_vtable_func (&module->applet_vtable);
 
   return module;
 }
@@ -516,6 +488,20 @@ const gchar * const *
 gp_module_get_applets (GpModule *module)
 {
   return (const gchar * const *) module->applet_ids;
+}
+
+/**
+ * gp_module_set_get_applet_info:
+ * @module: a #GpModule
+ * @func: the function to call to get #GpAppletInfo
+ *
+ * Specifies a function to be used to get #GpAppletInfo.
+ */
+void
+gp_module_set_get_applet_info (GpModule            *module,
+                               GpGetAppletInfoFunc  func)
+{
+  module->get_applet_info_func = func;
 }
 
 /**

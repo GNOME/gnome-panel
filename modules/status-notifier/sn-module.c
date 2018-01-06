@@ -23,7 +23,7 @@
 #include "sn-applet.h"
 
 static GpAppletInfo *
-sn_get_applet_info (const gchar *applet)
+sn_get_applet_info (const gchar *id)
 {
   const gchar *name;
   const gchar *description;
@@ -62,13 +62,6 @@ gp_module_load (GpModule *module)
 
   gp_module_set_applet_ids (module, "status-notifier", NULL);
 
+  gp_module_set_get_applet_info (module, sn_get_applet_info);
   gp_module_set_compatibility (module, sn_get_applet_id_from_iid);
-}
-
-void
-gp_module_get_applet_vtable (GpAppletVTable *vtable)
-{
-  *vtable = (GpAppletVTable) {
-    sn_get_applet_info
-  };
 }

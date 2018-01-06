@@ -27,7 +27,7 @@
 #include "workspace-switcher.h"
 
 static GpAppletInfo *
-wncklet_get_applet_info (const gchar *applet)
+wncklet_get_applet_info (const gchar *id)
 {
   GpGetAppletTypeFunc type_func;
   const gchar *name;
@@ -35,28 +35,28 @@ wncklet_get_applet_info (const gchar *applet)
   const gchar *icon;
   GpAppletInfo *info;
 
-  if (g_strcmp0 (applet, "show-desktop") == 0)
+  if (g_strcmp0 (id, "show-desktop") == 0)
     {
       type_func = show_desktop_applet_get_type;
       name = _("Show Desktop");
       description = _("Hide application windows and show the desktop");
       icon = "user-desktop";
     }
-  else if (g_strcmp0 (applet, "window-list") == 0)
+  else if (g_strcmp0 (id, "window-list") == 0)
     {
       type_func = window_list_applet_get_type;
       name = _("Window List");
       description = _("Switch between open windows using buttons");
       icon = "gnome-panel-window-list";
     }
-  else if (g_strcmp0 (applet, "window-menu") == 0)
+  else if (g_strcmp0 (id, "window-menu") == 0)
     {
       type_func = window_menu_applet_get_type;
       name = _("Window Selector");
       description = _("Switch between open windows using a menu");
       icon = "gnome-panel-window-menu";
     }
-  else if (g_strcmp0 (applet, "workspace-switcher") == 0)
+  else if (g_strcmp0 (id, "workspace-switcher") == 0)
     {
       type_func = workspace_switcher_applet_get_type;
       name = _("Workspace Switcher");
@@ -113,13 +113,6 @@ gp_module_load (GpModule *module)
                             "window-menu", "workspace-switcher",
                             NULL);
 
+  gp_module_set_get_applet_info (module, wncklet_get_applet_info);
   gp_module_set_compatibility (module, wncklet_get_applet_id_from_iid);
-}
-
-void
-gp_module_get_applet_vtable (GpAppletVTable *vtable)
-{
-  *vtable = (GpAppletVTable) {
-    wncklet_get_applet_info
-  };
 }

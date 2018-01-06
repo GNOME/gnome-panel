@@ -31,6 +31,14 @@ G_BEGIN_DECLS
 #define GP_MODULE_ABI_VERSION 0x0001
 
 /**
+ * GpGetAppletInfoFunc:
+ * @id: the applet id
+ *
+ * Returns: (transfer full): returns a #GpAppletInfo.
+ */
+typedef GpAppletInfo * (* GpGetAppletInfoFunc)    (const gchar *id);
+
+/**
  * GetAppletIdFromIidFunc:
  * @iid: the applet iid
  *
@@ -39,40 +47,31 @@ G_BEGIN_DECLS
  *
  * Returns: (transfer none): the applet id, or %NULL.
  */
-typedef const gchar * (* GetAppletIdFromIidFunc) (const gchar *iid);
-
-/**
- * GpAppletVTable:
- * @get_applet_info: (transfer full): returns a #GpAppletInfo.
- *
- * The #GpAppletVTable provides the functions required by the #GpModule.
- */
-typedef struct _GpAppletVTable GpAppletVTable;
-struct _GpAppletVTable
-{
-  GpAppletInfo * (* get_applet_info) (const gchar *applet);
-};
+typedef const gchar  * (* GetAppletIdFromIidFunc) (const gchar *iid);
 
 #define GP_TYPE_MODULE (gp_module_get_type ())
 G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
 
-void          gp_module_set_abi_version    (GpModule               *module,
-                                            guint32                 abi_version);
+void          gp_module_set_abi_version     (GpModule               *module,
+                                             guint32                 abi_version);
 
-void          gp_module_set_gettext_domain (GpModule               *module,
-                                            const gchar            *gettext_domain);
+void          gp_module_set_gettext_domain  (GpModule               *module,
+                                             const gchar            *gettext_domain);
 
-void          gp_module_set_id             (GpModule               *module,
-                                            const gchar            *id);
+void          gp_module_set_id              (GpModule               *module,
+                                             const gchar            *id);
 
-void          gp_module_set_version        (GpModule               *module,
-                                            const gchar            *version);
+void          gp_module_set_version         (GpModule               *module,
+                                             const gchar            *version);
 
-void          gp_module_set_applet_ids     (GpModule               *module,
-                                            ...);
+void          gp_module_set_applet_ids      (GpModule               *module,
+                                             ...);
 
-void          gp_module_set_compatibility  (GpModule               *module,
-                                            GetAppletIdFromIidFunc  func);
+void          gp_module_set_get_applet_info (GpModule               *module,
+                                             GpGetAppletInfoFunc     func);
+
+void          gp_module_set_compatibility   (GpModule               *module,
+                                             GetAppletIdFromIidFunc  func);
 
 /**
  * gp_module_load:
@@ -84,15 +83,7 @@ void          gp_module_set_compatibility  (GpModule               *module,
  * used to setup all required module info. As minimum gp_module_set_id() and
  * gp_module_set_abi_version() should be called.
  */
-void          gp_module_load               (GpModule    *module);
-
-/**
- * gp_module_get_applet_vtable:
- * @vtable: (out caller-allocates): return location for the #GpAppletVTable
- *
- * Required API for GNOME Panel modules to implement.
- */
-void          gp_module_get_applet_vtable (GpAppletVTable *vtable);
+void          gp_module_load                (GpModule               *module);
 
 G_END_DECLS
 
