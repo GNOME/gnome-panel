@@ -32,6 +32,7 @@ clock_get_applet_info (const gchar *applet)
   info = gp_applet_info_new (_("Clock"), description, "gnome-panel-clock");
 
   gp_applet_info_set_backends (info, "x11");
+  gp_applet_info_set_help_uri (info, "help:clock");
 
   return info;
 }
