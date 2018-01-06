@@ -27,7 +27,14 @@ dnl **************************************************************************
 dnl Set release policy
 dnl **************************************************************************
 
-AX_IS_RELEASE([git-directory])
+m4_ifdef([AX_IS_RELEASE], [
+  AX_IS_RELEASE([git-directory])
+], [
+  AC_MSG_ERROR([m4_normalize([
+    could not find AX_IS_RELEASE macro. Please install the
+    'autoconf-archive' package.
+  ])])
+])
 
 dnl **************************************************************************
 dnl Enable debug
