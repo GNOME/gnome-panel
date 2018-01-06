@@ -39,7 +39,8 @@
  *
  *   if (g_strcmp0 (applet, "example1") == 0)
  *     {
- *       info = gp_applet_info_new (_("Example 1 name"),
+ *       info = gp_applet_info_new (example1_get_type,
+ *                                  _("Example 1 name"),
  *                                  _("Example 1 description"),
  *                                  "example1-icon");
  *
@@ -48,7 +49,8 @@
  *     }
  *   else if (g_strcmp0 (applet, "example2") == 0)
  *     {
- *       info = gp_applet_info_new (_("Example 2 name"),
+ *       info = gp_applet_info_new (example2_get_type,
+ *                                  _("Example 2 name"),
  *                                  _("Example 2 description"),
  *                                  "example2-icon");
  *
@@ -60,21 +62,6 @@
  *     }
  *
  *   return info;
- * }
- *
- * static GType
- * example_get_applet_type (const gchar *applet)
- * {
- *   if (g_strcmp0 (applet, "example1") == 0)
- *     {
- *       return EXAMPLE_TYPE_EXAMPLE1;
- *     }
- *   else if (g_strcmp0 (applet, "example2") == 0)
- *     {
- *       return EXAMPLE_TYPE_EXAMPLE2;
- *     }
- *
- *   return G_TYPE_NONE;
  * }
  *
  * static const gchar *
@@ -113,8 +100,7 @@
  * gp_module_get_applet_vtable (GpAppletVTable *vtable)
  * {
  *   *vtable = (GpAppletVTable) {
- *     example_get_applet_info,
- *     example_get_applet_type,
+ *     example_get_applet_info
  *   };
  * }
  * ]|
@@ -627,7 +613,7 @@ gp_module_applet_new (GpModule         *module,
       return NULL;
     }
 
-  type = module->applet_vtable.get_applet_type (applet);
+  type = info->get_applet_type_func ();
   if (type == G_TYPE_NONE)
     {
       g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_INFO,

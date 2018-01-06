@@ -25,15 +25,18 @@
 static GpAppletInfo *
 separator_get_applet_info (const gchar *applet)
 {
-  return gp_applet_info_new (_("Separator"),
-                             _("A separator to organize the panel items"),
-                             "gnome-panel-separator");
-}
+  const gchar *name;
+  const gchar *description;
+  const gchar *icon;
+  GpAppletInfo *info;
 
-static GType
-separator_get_applet_type (const gchar *applet)
-{
-  return SEPARATOR_TYPE_APPLET;
+  name = _("Separator");
+  description = _("A separator to organize the panel items");
+  icon = "gnome-panel-separator";
+
+  info = gp_applet_info_new (separator_applet_get_type, name, description, icon);
+
+  return info;
 }
 
 static const gchar *
@@ -67,7 +70,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    separator_get_applet_info,
-    separator_get_applet_type
+    separator_get_applet_info
   };
 }

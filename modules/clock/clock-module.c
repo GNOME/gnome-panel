@@ -25,22 +25,21 @@
 static GpAppletInfo *
 clock_get_applet_info (const gchar *applet)
 {
+  const gchar *name;
   const gchar *description;
+  const gchar *icon;
   GpAppletInfo *info;
 
+  name = _("Clock");
   description = _("Get the current time and date");
-  info = gp_applet_info_new (_("Clock"), description, "gnome-panel-clock");
+  icon = "gnome-panel-clock";
+
+  info = gp_applet_info_new (clock_applet_get_type, name, description, icon);
 
   gp_applet_info_set_backends (info, "x11");
   gp_applet_info_set_help_uri (info, "help:clock");
 
   return info;
-}
-
-static GType
-clock_get_applet_type (const gchar *applet)
-{
-  return CLOCK_TYPE_APPLET;
 }
 
 static const gchar *
@@ -74,7 +73,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    clock_get_applet_info,
-    clock_get_applet_type
+    clock_get_applet_info
   };
 }

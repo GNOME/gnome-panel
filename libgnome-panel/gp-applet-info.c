@@ -30,6 +30,7 @@
 
 /**
  * gp_applet_info_new:
+ * @func: the function to call to get #GType of this applet
  * @name: the name of this applet
  * @description: the description of this applet
  * @icon_name: the icon name for this applet
@@ -39,13 +40,16 @@
  * Returns: (transfer full): a newly created #GpAppletInfo.
  */
 GpAppletInfo *
-gp_applet_info_new (const gchar *name,
-                    const gchar *description,
-                    const gchar *icon_name)
+gp_applet_info_new (GpGetAppletTypeFunc  func,
+                    const gchar         *name,
+                    const gchar         *description,
+                    const gchar         *icon_name)
 {
   GpAppletInfo *info;
 
   info = g_new0 (GpAppletInfo, 1);
+
+  info->get_applet_type_func = func;
 
   info->name = g_strdup (name);
   info->description = g_strdup (description);

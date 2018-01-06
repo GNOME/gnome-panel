@@ -29,6 +29,7 @@
 static GpAppletInfo *
 wncklet_get_applet_info (const gchar *applet)
 {
+  GpGetAppletTypeFunc type_func;
   const gchar *name;
   const gchar *description;
   const gchar *icon;
@@ -36,24 +37,28 @@ wncklet_get_applet_info (const gchar *applet)
 
   if (g_strcmp0 (applet, "show-desktop") == 0)
     {
+      type_func = show_desktop_applet_get_type;
       name = _("Show Desktop");
       description = _("Hide application windows and show the desktop");
       icon = "user-desktop";
     }
   else if (g_strcmp0 (applet, "window-list") == 0)
     {
+      type_func = window_list_applet_get_type;
       name = _("Window List");
       description = _("Switch between open windows using buttons");
       icon = "gnome-panel-window-list";
     }
   else if (g_strcmp0 (applet, "window-menu") == 0)
     {
+      type_func = window_menu_applet_get_type;
       name = _("Window Selector");
       description = _("Switch between open windows using a menu");
       icon = "gnome-panel-window-menu";
     }
   else if (g_strcmp0 (applet, "workspace-switcher") == 0)
     {
+      type_func = workspace_switcher_applet_get_type;
       name = _("Workspace Switcher");
       description = _("Switch between workspaces");
       icon = "gnome-panel-workspace-switcher";
@@ -64,35 +69,11 @@ wncklet_get_applet_info (const gchar *applet)
       return NULL;
     }
 
-  info = gp_applet_info_new (name, description, icon);
+  info = gp_applet_info_new (type_func, name, description, icon);
 
   gp_applet_info_set_backends (info, "x11");
 
   return info;
-}
-
-static GType
-wncklet_get_applet_type (const gchar *applet)
-{
-  if (g_strcmp0 (applet, "show-desktop") == 0)
-    {
-      return SHOW_DESKTOP_TYPE_APPLET;
-    }
-  else if (g_strcmp0 (applet, "window-list") == 0)
-    {
-      return WINDOW_LIST_TYPE_APPLET;
-    }
-  else if (g_strcmp0 (applet, "window-menu") == 0)
-    {
-      return WINDOW_MENU_TYPE_APPLET;
-    }
-  else if (g_strcmp0 (applet, "workspace-switcher") == 0)
-    {
-      return WORKSPACE_SWITCHER_TYPE_APPLET;
-    }
-
-  g_assert_not_reached ();
-  return G_TYPE_NONE;
 }
 
 static const gchar *
@@ -139,7 +120,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    wncklet_get_applet_info,
-    wncklet_get_applet_type
+    wncklet_get_applet_info
   };
 }

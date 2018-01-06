@@ -25,20 +25,18 @@
 static GpAppletInfo *
 sn_get_applet_info (const gchar *applet)
 {
+  const gchar *name;
   const gchar *description;
+  const gchar *icon;
   GpAppletInfo *info;
 
+  name = _("Status Notifier Host");
   description = _("Display all Status Notifier Items");
-  info = gp_applet_info_new (_("Status Notifier Host"), description,
-                             "gnome-panel-notification-area");
+  icon = "gnome-panel-notification-area";
+
+  info = gp_applet_info_new (sn_applet_get_type, name, description, icon);
 
   return info;
-}
-
-static GType
-sn_get_applet_type (const gchar *applet)
-{
-  return SN_TYPE_APPLET;
 }
 
 static const gchar *
@@ -71,7 +69,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    sn_get_applet_info,
-    sn_get_applet_type
+    sn_get_applet_info
   };
 }

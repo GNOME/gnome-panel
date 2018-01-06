@@ -24,6 +24,8 @@ G_BEGIN_DECLS
 
 struct _GpAppletInfo
 {
+  GpGetAppletTypeFunc     get_applet_type_func;
+
   gchar                  *name;
   gchar                  *description;
   gchar                  *icon_name;

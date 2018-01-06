@@ -25,22 +25,21 @@
 static GpAppletInfo *
 fish_get_applet_info (const gchar *applet)
 {
+  const gchar *name;
   const gchar *description;
+  const gchar *icon;
   GpAppletInfo *info;
 
+  name = _("Fish");
   description = _("Display a swimming fish or another animated creature");
-  info = gp_applet_info_new (_("Fish"), description, "gnome-panel-fish");
+  icon = "gnome-panel-fish";
+
+  info = gp_applet_info_new (fish_applet_get_type, name, description, icon);
 
   gp_applet_info_set_backends (info, "x11");
   gp_applet_info_set_help_uri (info, "help:fish");
 
   return info;
-}
-
-static GType
-fish_get_applet_type (const gchar *applet)
-{
-  return FISH_TYPE_APPLET;
 }
 
 static const gchar *
@@ -74,7 +73,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    fish_get_applet_info,
-    fish_get_applet_type
+    fish_get_applet_info
   };
 }

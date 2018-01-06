@@ -31,14 +31,24 @@ G_BEGIN_DECLS
 typedef struct _GpAppletInfo GpAppletInfo;
 
 /**
+ * GpGetAppletTypeFunc:
+ *
+ * Function for getting #GType of applet.
+ *
+ * Returns: the #GType of applet.
+ */
+typedef GType (* GpGetAppletTypeFunc)    (void);
+
+/**
  * GpSetupAboutDialogFunc:
  * @dialog: a #GtkAboutDialog
  *
  * Function for setting up about dialog.
  */
-typedef void (* GpSetupAboutDialogFunc) (GtkAboutDialog *dialog);
+typedef void  (* GpSetupAboutDialogFunc) (GtkAboutDialog *dialog);
 
-GpAppletInfo *gp_applet_info_new              (const gchar            *name,
+GpAppletInfo *gp_applet_info_new              (GpGetAppletTypeFunc     func,
+                                               const gchar            *name,
                                                const gchar            *description,
                                                const gchar            *icon_name);
 

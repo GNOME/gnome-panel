@@ -25,21 +25,20 @@
 static GpAppletInfo *
 na_get_applet_info (const gchar *applet)
 {
+  const gchar *name;
+  const gchar *description;
+  const gchar *icon;
   GpAppletInfo *info;
 
-  info = gp_applet_info_new (_("Notification Area"),
-                             _("Area where notification icons appear"),
-                             "gnome-panel-notification-area");
+  name = _("Notification Area");
+  description = _("Area where notification icons appear");
+  icon = "gnome-panel-notification-area";
+
+  info = gp_applet_info_new (na_applet_get_type, name, description, icon);
 
   gp_applet_info_set_backends (info, "x11");
 
   return info;
-}
-
-static GType
-na_get_applet_type (const gchar *applet)
-{
-  return NA_TYPE_APPLET;
 }
 
 static const gchar *
@@ -73,7 +72,6 @@ void
 gp_module_get_applet_vtable (GpAppletVTable *vtable)
 {
   *vtable = (GpAppletVTable) {
-    na_get_applet_info,
-    na_get_applet_type
+    na_get_applet_info
   };
 }
