@@ -106,6 +106,10 @@ gnome_panel_SOURCES =			\
 	$(BUILT_SOURCES) \
 	$(NULL)
 
+gnome_panel_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"gnome-panel\" \
+	$(NULL)
+
 gnome_panel_CFLAGS = \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
