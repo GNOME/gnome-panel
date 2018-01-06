@@ -3,6 +3,7 @@ NULL =
 SUBDIRS = \
 	clock \
 	fish \
+	menu \
 	notification-area \
 	separator \
 	status-notifier \
