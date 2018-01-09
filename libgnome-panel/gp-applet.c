@@ -91,7 +91,6 @@ static GParamSpec *properties[LAST_PROP] = { NULL };
 
 enum
 {
-  LOCKED_DOWN_CHANGED,
   PLACEMENT_CHANGED,
 
   FLAGS_CHANGED,
@@ -438,7 +437,7 @@ install_properties (GObjectClass *object_class)
     g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
                           FALSE,
                           G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
-                          G_PARAM_STATIC_STRINGS);
+                          G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
   /**
    * GpApplet:orientation:
@@ -468,19 +467,6 @@ install_properties (GObjectClass *object_class)
 static void
 install_signals (void)
 {
-  /**
-   * GpApplet::locked-down-changed:
-   * @applet: the object on which the signal is emitted
-   * @locked_down: the new locked down value
-   *
-   * Signal is emmited when the locked down property of applet has
-   * changed.
-   */
-  signals[LOCKED_DOWN_CHANGED] =
-    g_signal_new ("locked-down-changed", GP_TYPE_APPLET, G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (GpAppletClass, locked_down_changed),
-                  NULL, NULL, NULL, G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-
   /**
    * GpApplet::placement-changed:
    * @applet: the object on which the signal is emitted
@@ -589,7 +575,7 @@ gp_applet_set_locked_down (GpApplet *applet,
 
   priv->locked_down = locked_down;
 
-  g_signal_emit (applet, signals[LOCKED_DOWN_CHANGED], 0, locked_down);
+  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_LOCKED_DOWN]);
 }
 
 /**
