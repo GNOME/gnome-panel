@@ -1216,6 +1216,10 @@ set_tooltip (FishApplet *fish)
 	desc = g_markup_printf_escaped (_("%s the Fish, the fortune teller"), fish->name);
 	gtk_widget_set_tooltip_markup (GTK_WIDGET (fish), desc);
 	g_free (desc);
+
+	g_object_bind_property (fish, "enable-tooltips",
+	                        fish, "has-tooltip",
+	                        G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 }
 
 static void
