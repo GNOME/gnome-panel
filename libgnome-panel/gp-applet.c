@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2001 Sun Microsystems, Inc.
  * Copyright (c) 2010 Carlos Garcia Campos
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -71,6 +71,9 @@ typedef struct
   GpSizeHints        *size_hints;
 
   guint               size_hints_idle;
+
+  GSettings          *general_settings;
+  gboolean            enable_tooltips;
 } GpAppletPrivate;
 
 enum
@@ -83,6 +86,8 @@ enum
   PROP_LOCKED_DOWN,
   PROP_ORIENTATION,
   PROP_POSITION,
+
+  PROP_ENABLE_TOOLTIPS,
 
   LAST_PROP
 };
@@ -102,6 +107,26 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX)
+
+static void
+enable_tooltips_cb (GSettings   *settings,
+                    const gchar *key,
+                    GpApplet    *applet)
+{
+  GpAppletPrivate *priv;
+  gboolean enable_tooltips;
+
+  priv = gp_applet_get_instance_private (applet);
+  enable_tooltips = g_settings_get_boolean (settings, "enable-tooltips");
+
+  if (priv->enable_tooltips == enable_tooltips)
+    return;
+
+  priv->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (applet),
+                            properties[PROP_ENABLE_TOOLTIPS]);
+}
 
 static gboolean
 emit_size_hints_changed_cb (gpointer user_data)
@@ -208,6 +233,8 @@ gp_applet_dispose (GObject *object)
       priv->size_hints_idle = 0;
     }
 
+  g_clear_object (&priv->general_settings);
+
   G_OBJECT_CLASS (gp_applet_parent_class)->dispose (object);
 }
 
@@ -266,6 +293,10 @@ gp_applet_get_property (GObject    *object,
         g_value_set_enum (value, priv->position);
         break;
 
+      case PROP_ENABLE_TOOLTIPS:
+        g_value_set_boolean (value, priv->enable_tooltips);
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -311,6 +342,9 @@ gp_applet_set_property (GObject      *object,
 
       case PROP_POSITION:
         gp_applet_set_position (applet, g_value_get_enum (value));
+        break;
+
+      case PROP_ENABLE_TOOLTIPS:
         break;
 
       default:
@@ -461,6 +495,17 @@ install_properties (GObjectClass *object_class)
                        G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
                        G_PARAM_STATIC_STRINGS);
 
+  /**
+   * GpApplet:enable-tooltips:
+   *
+   * Whether the applet should show tooltips.
+   */
+  properties[PROP_ENABLE_TOOLTIPS] =
+    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
+                          FALSE,
+                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
 
@@ -540,6 +585,12 @@ gp_applet_init (GpApplet *applet)
 
   priv->builder = gtk_builder_new ();
   priv->action_group = g_simple_action_group_new ();
+
+  priv->general_settings = g_settings_new ("org.gnome.gnome-panel.general");
+  g_signal_connect (priv->general_settings, "changed::enable-tooltips",
+                    G_CALLBACK (enable_tooltips_cb), applet);
+
+  enable_tooltips_cb (priv->general_settings, "enable-tooltips", applet);
 }
 
 /**
