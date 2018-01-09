@@ -184,6 +184,10 @@ update_button_display (ShowDesktopApplet *sdd)
         }
 
 	gtk_widget_set_tooltip_text (sdd->button, tip);
+
+	g_object_bind_property (sdd, "enable-tooltips",
+	                        sdd->button, "has-tooltip",
+	                        G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 }
 
 static void

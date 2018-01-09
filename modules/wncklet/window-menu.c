@@ -169,6 +169,10 @@ window_menu_applet_fill (GpApplet *applet)
 	gtk_widget_set_name (GTK_WIDGET (window_menu), "window-menu-applet-button");
 	gtk_widget_set_tooltip_text (GTK_WIDGET (window_menu), _("Window Selector"));
 
+	g_object_bind_property (applet, "enable-tooltips",
+	                        window_menu, "has-tooltip",
+	                        G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
 	window_menu->orient = gp_applet_get_orientation (applet);
 
 	window_menu->selector = wnck_selector_new ();
