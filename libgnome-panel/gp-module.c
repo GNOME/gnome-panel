@@ -505,7 +505,7 @@ gp_module_set_get_applet_info (GpModule            *module,
 }
 
 /**
- * gp_module_applet_new:
+ * gp_module_get_applet_info:
  * @module: a #GpModule
  * @applet: the applet id
  * @error: return location for a #GError, or %NULL
@@ -560,9 +560,6 @@ gp_module_get_applet_id_from_iid (GpModule    *module,
  * @module: a #GpModule
  * @applet: the applet id
  * @settings_path: the #GSettings path to the per-instance settings
- * @locked_down: whether applet is on locked down panel
- * @orientation: the orientation of the panel
- * @position: the position of the panel
  * @error: return location for a #GError, or %NULL
  *
  * Returns a newly allocated applet.
@@ -570,13 +567,10 @@ gp_module_get_applet_id_from_iid (GpModule    *module,
  * Returns: (transfer full): a newly created #GpApplet, or %NULL.
  */
 GpApplet *
-gp_module_applet_new (GpModule         *module,
-                      const gchar      *applet,
-                      const gchar      *settings_path,
-                      gboolean          locked_down,
-                      GtkOrientation    orientation,
-                      GtkPositionType   position,
-                      GError          **error)
+gp_module_applet_new (GpModule     *module,
+                      const gchar  *applet,
+                      const gchar  *settings_path,
+                      GError      **error)
 {
   GpAppletInfo *info;
   GType type;
@@ -613,8 +607,5 @@ gp_module_applet_new (GpModule         *module,
                        "id", applet,
                        "settings-path", settings_path,
                        "translation-domain", module->gettext_domain,
-                       "locked-down", locked_down,
-                       "orientation", orientation,
-                       "position", position,
                        NULL);
 }

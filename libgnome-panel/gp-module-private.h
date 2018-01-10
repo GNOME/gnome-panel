@@ -33,28 +33,25 @@ typedef enum
 #define GP_MODULE_ERROR gp_module_error_quark ()
 GQuark gp_module_error_quark (void);
 
-GpModule            *gp_module_new_from_path         (const gchar           *path);
+GpModule            *gp_module_new_from_path         (const gchar   *path);
 
-const gchar         *gp_module_get_id                (GpModule              *module);
+const gchar         *gp_module_get_id                (GpModule      *module);
 
-const gchar         *gp_module_get_version           (GpModule              *module);
+const gchar         *gp_module_get_version           (GpModule      *module);
 
-const gchar * const *gp_module_get_applets           (GpModule              *module);
+const gchar * const *gp_module_get_applets           (GpModule      *module);
 
-GpAppletInfo        *gp_module_get_applet_info       (GpModule              *module,
-                                                      const gchar           *applet,
-                                                      GError               **error);
+GpAppletInfo        *gp_module_get_applet_info       (GpModule      *module,
+                                                      const gchar   *applet,
+                                                      GError       **error);
 
-const gchar         *gp_module_get_applet_id_from_iid (GpModule              *module,
-                                                       const gchar           *old_iid);
+const gchar         *gp_module_get_applet_id_from_iid (GpModule     *module,
+                                                       const gchar  *old_iid);
 
-GpApplet            *gp_module_applet_new             (GpModule              *module,
-                                                       const gchar           *applet,
-                                                       const gchar           *settings_path,
-                                                       gboolean               locked_down,
-                                                       GtkOrientation         orientation,
-                                                       GtkPositionType        position,
-                                                       GError               **error);
+GpApplet            *gp_module_applet_new             (GpModule     *module,
+                                                       const gchar  *applet,
+                                                       const gchar  *settings_path,
+                                                       GError      **error);
 
 G_END_DECLS
 

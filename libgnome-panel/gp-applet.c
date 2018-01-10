@@ -470,8 +470,8 @@ install_properties (GObjectClass *object_class)
   properties[PROP_LOCKED_DOWN] =
     g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
                           FALSE,
-                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
-                          G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
+                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
 
   /**
    * GpApplet:orientation:
@@ -481,7 +481,7 @@ install_properties (GObjectClass *object_class)
   properties[PROP_ORIENTATION] =
     g_param_spec_enum ("orientation", "Orientation", "Orientation",
                        GTK_TYPE_ORIENTATION, GTK_ORIENTATION_HORIZONTAL,
-                       G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
+                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
                        G_PARAM_STATIC_STRINGS);
 
   /**
@@ -492,7 +492,7 @@ install_properties (GObjectClass *object_class)
   properties[PROP_POSITION] =
     g_param_spec_enum ("position", "Position", "Position",
                        GTK_TYPE_POSITION_TYPE, GTK_POS_TOP,
-                       G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
+                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
                        G_PARAM_STATIC_STRINGS);
 
   /**
@@ -502,7 +502,7 @@ install_properties (GObjectClass *object_class)
    */
   properties[PROP_ENABLE_TOOLTIPS] =
     g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
-                          FALSE,
+                          TRUE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
                           G_PARAM_STATIC_STRINGS);
 
@@ -663,6 +663,8 @@ gp_applet_set_orientation (GpApplet       *applet,
                  orientation, priv->position);
 
   priv->orientation = orientation;
+
+  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_ORIENTATION]);
 }
 
 /**
@@ -699,6 +701,8 @@ gp_applet_set_position (GpApplet        *applet,
                  priv->orientation, position);
 
   priv->position = position;
+
+  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_POSITION]);
 }
 
 /**

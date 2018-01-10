@@ -239,9 +239,7 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
     }
 
   error = NULL;
-  applet = gp_module_applet_new (module, applet_id, settings_path, locked_down,
-                                 orientation, position, &error);
-
+  applet = gp_module_applet_new (module, applet_id, settings_path, &error);
   g_free (settings_path);
 
   if (!applet)
@@ -251,6 +249,10 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
 
       return FALSE;
     }
+
+  gp_applet_set_locked_down (applet, locked_down);
+  gp_applet_set_orientation (applet, orientation);
+  gp_applet_set_position (applet, position);
 
   frame = g_object_new (GP_TYPE_APPLET_FRAME, NULL);
   gp_applet_frame_set_applet (frame, applet);
