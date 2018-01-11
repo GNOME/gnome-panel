@@ -458,7 +458,10 @@ clock_map_size_allocate (GtkWidget *this, GtkAllocation *allocation)
 }
 
 static void
-clock_map_mark (ClockMap *this, gfloat latitude, gfloat longitude, gint mark)
+clock_map_mark (ClockMap *this,
+                gdouble   latitude,
+                gdouble   longitude,
+                gint      mark)
 {
         ClockMapPrivate *priv = PRIVATE (this);
         GdkPixbuf *marker = priv->location_marker_pixbuf[mark];

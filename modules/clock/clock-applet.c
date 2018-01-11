@@ -1352,11 +1352,13 @@ run_prefs_edit_save (GtkButton   *button,
 }
 
 static void
-update_coords_helper (gfloat value, GtkWidget *entry, GtkWidget *combo)
+update_coords_helper (gdouble    value,
+                      GtkWidget *entry,
+                      GtkWidget *combo)
 {
         gchar *tmp;
 
-        tmp = g_strdup_printf ("%f", fabsf (value));
+        tmp = g_strdup_printf ("%f", fabs (value));
         gtk_entry_set_text (GTK_ENTRY (entry), tmp);
         g_free (tmp);
 
@@ -1370,8 +1372,8 @@ update_coords_helper (gfloat value, GtkWidget *entry, GtkWidget *combo)
 static void
 update_coords (ClockApplet *cd,
                gboolean     valid,
-               gfloat       lat,
-               gfloat       lon)
+               gdouble      lat,
+               gdouble      lon)
 {
         GtkWidget *lat_entry = _clock_get_widget (cd, "edit-location-latitude-entry");
         GtkWidget *lon_entry = _clock_get_widget (cd, "edit-location-longitude-entry");
@@ -1665,7 +1667,7 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
 
         fill_timezone_combo_from_location (cd, loc);
 
-        tmp = g_strdup_printf ("%f", fabsf(lat));
+        tmp = g_strdup_printf ("%f", fabs (lat));
         gtk_entry_set_text (GTK_ENTRY (lat_entry), tmp);
         g_free (tmp);
 
@@ -1675,7 +1677,7 @@ edit_tree_row (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpoint
                 gtk_combo_box_set_active (GTK_COMBO_BOX (lat_combo), 1);
         }
 
-        tmp = g_strdup_printf ("%f", fabsf(lon));
+        tmp = g_strdup_printf ("%f", fabs (lon));
         gtk_entry_set_text (GTK_ENTRY (lon_entry), tmp);
         g_free (tmp);
 
