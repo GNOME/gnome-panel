@@ -7,18 +7,22 @@ panel-toplevel {
 }
 
 .gnome-panel-menu-bar,
-panel-applet > menubar {
+panel-applet > menubar,
+gp-applet > menubar {
   background: transparent;
   box-shadow: none;
 }
 
 .gnome-panel-menu-bar menuitem:hover,
-panel-applet > menubar menuitem:hover {
+panel-applet > menubar menuitem:hover,
+gp-applet > menubar menuitem:hover {
   background-color: #215d9c;
 }
 
 .gnome-panel-menu-bar > menuitem > label,
 panel-applet > menubar > menuitem > label,
+gp-applet > menubar > menuitem > label,
+gp-applet > menubar > menuitem > box > label,
 gp-calendar-window label,
 #clock-applet-button label,
 #showdesktop-button label {
