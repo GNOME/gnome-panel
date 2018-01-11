@@ -14,6 +14,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 
+#include <libgnome-panel/gp-main-menu-private.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-show.h>
 
@@ -887,6 +888,34 @@ panel_applet_get_by_type (PanelObjectType object_type, GdkScreen *screen)
 	}
 
 	return NULL;
+}
+
+gboolean
+panel_applet_activate_main_menu (guint32 activate_time)
+{
+  GSList *l;
+
+  for (l = registered_applets; l != NULL; l = l->next)
+    {
+      AppletInfo *info;
+      GtkWidget *applet;
+
+      info = l->data;
+      if (info->type != PANEL_OBJECT_APPLET)
+        continue;
+
+      applet = gtk_bin_get_child (GTK_BIN (info->widget));
+      if (applet == NULL)
+        continue;
+
+      if (!g_type_is_a (G_TYPE_FROM_INSTANCE (applet), GP_TYPE_MAIN_MENU))
+        continue;
+
+      if (gp_main_menu_activate (GP_MAIN_MENU (applet), activate_time))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 AppletInfo *

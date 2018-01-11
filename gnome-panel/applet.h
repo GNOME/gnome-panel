@@ -57,6 +57,8 @@ const char *panel_applet_get_id_by_widget (GtkWidget       *widget);
 AppletInfo *panel_applet_get_by_id        (const char      *id);
 AppletInfo *panel_applet_get_by_type      (PanelObjectType  object_type, GdkScreen *screen);
 
+gboolean    panel_applet_activate_main_menu (guint32 activate_time);
+
 GSList     *panel_applet_list_applets (void);
 
 void        panel_applet_clean        (AppletInfo    *info);
