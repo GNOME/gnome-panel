@@ -3,15 +3,18 @@ NULL =
 noinst_LTLIBRARIES = libgnome-panel.la
 
 libgnome_panel_la_SOURCES = \
-	gp-applet.c \
-	gp-applet.h \
+	gp-applet-info-private.h \
 	gp-applet-info.c \
 	gp-applet-info.h \
-	gp-applet-info-private.h \
 	gp-applet-private.h \
+	gp-applet.c \
+	gp-applet.h \
+	gp-main-menu-private.h \
+	gp-main-menu.c \
+	gp-main-menu.h \
+	gp-module-private.h \
 	gp-module.c \
 	gp-module.h \
-	gp-module-private.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
