@@ -121,7 +121,9 @@ get_image_path (FishApplet *fish)
 }
 
 static void
-show_help (FishApplet *fish, const char *link_id)
+show_help (FishApplet  *fish,
+           const gchar *link_id,
+           GtkWindow   *parent)
 {
 	GError *error = NULL;
 	char   *uri;
@@ -132,9 +134,7 @@ show_help (FishApplet *fish, const char *link_id)
 	else
 		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
 
-	gtk_show_uri (gtk_widget_get_screen (GTK_WIDGET (fish)), uri,
-		      gtk_get_current_event_time (), &error);
-
+	gtk_show_uri_on_window (parent, uri, gtk_get_current_event_time (), &error);
 	g_free (uri);
 
 	if (error &&
@@ -235,7 +235,7 @@ handle_response (GtkWidget  *widget,
 		 FishApplet *fish)
 {
 	if (id == GTK_RESPONSE_HELP) {
-		show_help (fish, "fish-settings");
+		show_help (fish, "fish-settings", GTK_WINDOW (fish->preferences_dialog));
 		return;
 	}
 
