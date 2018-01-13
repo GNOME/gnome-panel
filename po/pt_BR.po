@@ -1,5 +1,5 @@
 # Brazilian Portuguese translation of gnome-panel.
-# Copyright (C) 2017 Free Software Foundation, Inc.
+# Copyright (C) 2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 # Elvis Pfützenreuter <epx@netville.com.br>
 # Sandro Nunes Henrique <sandro@conectiva.com.br>
@@ -20,23 +20,23 @@
 # Henrique P. Machado <hpmachado@gnome.org>, 2010.
 # Jonh Wendell <jwendell@gnome.org>, 2010.
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2016.
 # Enrico Nicoletto <liverig@gmail.com>, 2014, 2017.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2016, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-18 22:01+0000\n"
-"PO-Revision-Date: 2017-02-06 10:28-0200\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
+"POT-Creation-Date: 2018-01-08 13:28+0000\n"
+"PO-Revision-Date: 2018-01-13 12:28-0200\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 "X-Project-Style: gnome\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -894,11 +894,11 @@ msgstr "Propriedades do diretório"
 msgid "Launcher Properties"
 msgstr "Propriedades do lançador"
 
-#: gnome-panel/gnome-panel.desktop.in.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
 msgid "Panel"
 msgstr "Painel"
 
-#: gnome-panel/gnome-panel.desktop.in.in:5
+#: gnome-panel/gnome-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -907,9 +907,32 @@ msgstr ""
 "mostrar a hora, etc."
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in.in:7
+#: gnome-panel/gnome-panel.desktop.in:7
 msgid "gnome-panel"
 msgstr "gnome-panel"
+
+#: gnome-panel/gp-add-applet-window.c:137
+#| msgid "_Help"
+msgid "Help"
+msgstr "Ajuda"
+
+#: gnome-panel/gp-add-applet-window.c:148
+msgid "About"
+msgstr "Sobre"
+
+#: gnome-panel/gp-add-applet-window.c:193
+#| msgid "_Add"
+msgid "Add"
+msgstr "Adicionar"
+
+#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+msgid "Add to Panel"
+msgstr "Adicionar ao painel"
+
+#: gnome-panel/gp-add-applet-window.c:553
+#| msgid "Icon not found"
+msgid "No applets found"
+msgstr "Nenhum miniaplicativo localizado"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -976,8 +999,8 @@ msgstr "Mostrar _botões de ocultação"
 msgid "Arro_ws on hide buttons"
 msgstr "Mostrar _setas nos botões de ocultação"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/external/clock/clock.ui:629
-#: modules/external/fish/fish.ui:91
+#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Geral"
 
@@ -1043,7 +1066,7 @@ msgstr ""
 msgid "_Launch"
 msgstr "_Lançar"
 
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:170
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
 #: gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Propriedades"
@@ -1076,7 +1099,7 @@ msgstr "Escolha um ícone"
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/external/clock/clock.ui:67
+#: modules/clock/clock.ui:67
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -1107,123 +1130,107 @@ msgstr "Substituir o painel atualmente em execução"
 msgid "Print version"
 msgstr "Exibe a versão"
 
-#: gnome-panel/panel-action-button.c:160
+#: gnome-panel/panel-action-button.c:159
 msgid "_Lock Screen"
 msgstr "Blo_quear tela"
 
-#: gnome-panel/panel-action-button.c:165
+#: gnome-panel/panel-action-button.c:164
 msgid "_Activate Screensaver"
 msgstr "_Ativar proteção de tela"
 
-#: gnome-panel/panel-action-button.c:345
-msgid "Connect to server"
-msgstr "Conectar ao servidor"
-
-#: gnome-panel/panel-action-button.c:369
-msgid "Could not connect to server"
-msgstr "Não foi possível se conectar ao servidor"
-
-#: gnome-panel/panel-action-button.c:399
+#: gnome-panel/panel-action-button.c:356
 msgid "Lock Screen"
 msgstr "Bloquear tela"
 
-#: gnome-panel/panel-action-button.c:400
+#: gnome-panel/panel-action-button.c:357
 msgid "Protect your computer from unauthorized use"
 msgstr "Proteja seu computador de uso não autorizado"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:413
+#: gnome-panel/panel-action-button.c:370
 msgid "Log Out"
 msgstr "Encerrar sessão"
 
-#: gnome-panel/panel-action-button.c:414
+#: gnome-panel/panel-action-button.c:371
 msgid "Log out of this session to log in as a different user"
 msgstr "Encerre essa sessão para entrar como um usuário diferente"
 
-#: gnome-panel/panel-action-button.c:422
+#: gnome-panel/panel-action-button.c:379
 msgid "Run Application..."
 msgstr "Executar aplicativo…"
 
-#: gnome-panel/panel-action-button.c:423
+#: gnome-panel/panel-action-button.c:380
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Execute um aplicativo digitando um comando ou escolhendo de uma lista"
 
-#: gnome-panel/panel-action-button.c:431
+#: gnome-panel/panel-action-button.c:388
 msgid "Search for Files..."
 msgstr "Pesquisar arquivos…"
 
-#: gnome-panel/panel-action-button.c:432
+#: gnome-panel/panel-action-button.c:389
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Localize documentos e pastas neste computador por nome ou conteúdo"
 
-#: gnome-panel/panel-action-button.c:439 gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "Fechar forçado"
 
-#: gnome-panel/panel-action-button.c:440
+#: gnome-panel/panel-action-button.c:397
 msgid "Force a misbehaving application to quit"
 msgstr "Force um aplicativo mal comportado a sair"
 
-#. FIXME icon
-#: gnome-panel/panel-action-button.c:448
-msgid "Connect to Server..."
-msgstr "Conectar ao servidor…"
-
-#: gnome-panel/panel-action-button.c:449
-msgid "Connect to a remote computer or shared disk"
-msgstr "Conecte-se a um servidor remoto ou disco partilhado"
-
-#: gnome-panel/panel-action-button.c:456
+#: gnome-panel/panel-action-button.c:405
 msgid "Hibernate"
 msgstr "Hibernar"
 
-#: gnome-panel/panel-action-button.c:465
+#: gnome-panel/panel-action-button.c:414
 msgid "Suspend"
 msgstr "Suspender"
 
-#: gnome-panel/panel-action-button.c:474
+#: gnome-panel/panel-action-button.c:423
 msgid "Hybrid sleep"
 msgstr "Dormir"
 
-#: gnome-panel/panel-action-button.c:483
+#: gnome-panel/panel-action-button.c:432
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: gnome-panel/panel-action-button.c:484
+#: gnome-panel/panel-action-button.c:433
 msgid "Restart the computer"
 msgstr "Reinicia o computador"
 
-#: gnome-panel/panel-action-button.c:492
+#: gnome-panel/panel-action-button.c:441
 msgid "Power Off"
 msgstr "Desligar"
 
-#: gnome-panel/panel-action-button.c:493
+#: gnome-panel/panel-action-button.c:442
 msgid "Power off the computer"
 msgstr "Desligue o computador"
 
-#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:958
+#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:953
+#: modules/menu/menu-module.c:39
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: gnome-panel/panel-addto-dialog.c:141
+#: gnome-panel/panel-addto-dialog.c:141 modules/menu/menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "O menu principal do GNOME"
 
-#: gnome-panel/panel-addto-dialog.c:149
+#: gnome-panel/panel-addto-dialog.c:149 modules/menu/menu-module.c:46
 msgid "Menu Bar"
 msgstr "Barra de menu"
 
-#: gnome-panel/panel-addto-dialog.c:150
+#: gnome-panel/panel-addto-dialog.c:150 modules/menu/menu-module.c:47
 msgid "A custom menu bar"
 msgstr "Um barra de menus personalizada"
 
-#: gnome-panel/panel-addto-dialog.c:158
+#: gnome-panel/panel-addto-dialog.c:158 modules/menu/menu-module.c:53
 msgid "User menu"
 msgstr "Menu de usuário"
 
-#: gnome-panel/panel-addto-dialog.c:159
+#: gnome-panel/panel-addto-dialog.c:159 modules/menu/menu-module.c:54
 msgid "Menu to change your settings and log out"
 msgstr "Menu para mudar suas configurações e encerrar sessão"
 
@@ -1261,13 +1268,9 @@ msgid "_Forward"
 msgstr "_Avançar"
 
 #: gnome-panel/panel-addto-dialog.c:1040 gnome-panel/panel-addto-dialog.ui:158
-#: modules/external/clock/clock.ui:682
+#: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Adicionar"
-
-#: gnome-panel/panel-addto-dialog.ui:16
-msgid "Add to Panel"
-msgstr "Adicionar ao painel"
 
 #: gnome-panel/panel-addto-dialog.ui:38
 msgid "Find an item to add to the panel:"
@@ -1278,9 +1281,9 @@ msgid "_Back"
 msgstr "_Voltar"
 
 #: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
-#: modules/external/clock/clock.ui:406 modules/external/fish/fish-applet.c:622
-#: modules/external/fish/fish.ui:51 modules/external/wncklet/window-list.ui:285
-#: modules/external/wncklet/workspace-switcher.ui:37
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
+#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
+#: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "Fe_char"
 
@@ -1311,7 +1314,7 @@ msgid "Open URL: %s"
 msgstr "Abre o URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:563
+#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:517
 #, c-format
 msgid "Open '%s'"
 msgstr "Abre “%s”"
@@ -1319,30 +1322,30 @@ msgstr "Abre “%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1117
+#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1071
 msgid "Open your personal folder"
 msgstr "Abre sua pasta pessoal"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1146
+#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1100
 msgid "Computer"
 msgstr "Computador"
 
 #. name
-#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1147
+#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1101
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "Navega em todos os discos e pastas locais e remotas deste computador"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1156
+#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1110
 msgid "Network"
 msgstr "Rede"
 
 #. name
-#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1157
+#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1111
 msgid "Browse bookmarked and local network locations"
 msgstr "Navega nos locais favoritos e locais da rede"
 
@@ -1414,7 +1417,7 @@ msgid "_Revert"
 msgstr "_Reverter"
 
 #: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
-#: modules/external/clock/clock.ui:82
+#: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
@@ -1493,59 +1496,59 @@ msgstr "Acesse documentos, pastas e locais da rede"
 msgid "Applications"
 msgstr "Aplicativos"
 
-#: gnome-panel/panel-menu-bar.c:230 gnome-panel/panel-menu-button.c:557
+#: gnome-panel/panel-menu-bar.c:226 gnome-panel/panel-menu-button.c:552
 msgid "_Edit Menus"
 msgstr "_Editar menus"
 
-#: gnome-panel/panel-menu-items.c:409
+#: gnome-panel/panel-menu-items.c:363
 msgid "Switch User"
 msgstr "Alternar usuário"
 
-#: gnome-panel/panel-menu-items.c:539
+#: gnome-panel/panel-menu-items.c:493
 msgid "Bookmarks"
 msgstr "Marcadores"
 
-#: gnome-panel/panel-menu-items.c:634
+#: gnome-panel/panel-menu-items.c:588
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Não foi possível varrer %s por alterações na mídia"
 
-#: gnome-panel/panel-menu-items.c:676
+#: gnome-panel/panel-menu-items.c:630
 #, c-format
 msgid "Rescan %s"
 msgstr "Varrer novamente %s"
 
-#: gnome-panel/panel-menu-items.c:713
+#: gnome-panel/panel-menu-items.c:667
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Não foi possível montar %s"
 
-#: gnome-panel/panel-menu-items.c:775
+#: gnome-panel/panel-menu-items.c:729
 #, c-format
 msgid "Mount %s"
 msgstr "Montar %s"
 
-#: gnome-panel/panel-menu-items.c:983
+#: gnome-panel/panel-menu-items.c:937
 msgid "Removable Media"
 msgstr "Mídia removível"
 
-#: gnome-panel/panel-menu-items.c:1074
+#: gnome-panel/panel-menu-items.c:1028
 msgid "Network Places"
 msgstr "Locais de rede"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: gnome-panel/panel-menu-items.c:1134
+#: gnome-panel/panel-menu-items.c:1088
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Mostrar área de trabalho"
 
-#: gnome-panel/panel-menu-items.c:1135
+#: gnome-panel/panel-menu-items.c:1089
 msgid "Open the contents of your desktop in a folder"
 msgstr "Abra a área de trabalho como uma pasta"
 
-#: gnome-panel/panel-menu-items.c:1440
+#: gnome-panel/panel-menu-items.c:1384
 msgid "Places"
 msgstr "Locais"
 
@@ -1797,14 +1800,6 @@ msgstr "Pesquisar"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: modules/builtin/separator/separator-module.c:45
-msgid "Separator"
-msgstr "Separador"
-
-#: modules/builtin/separator/separator-module.c:46
-msgid "A separator to organize the panel items"
-msgstr "Um separador para organizar itens do painel"
-
 # Usuário escolheu 12h sem segundos.
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1815,8 +1810,7 @@ msgstr "Um separador para organizar itens do painel"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/external/clock/calendar-window.c:271
-#: modules/external/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1832,9 +1826,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/external/clock/calendar-window.c:277
-#: modules/external/clock/clock-location-tile.c:453
-#: modules/external/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
+#: modules/clock/clock-location-tile.c:497
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1842,143 +1835,140 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/external/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:284
 msgid "%b %d"
 msgstr "%d %b"
 
-#: modules/external/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:789
 msgid "Tasks"
 msgstr "Tarefas"
 
-#: modules/external/clock/calendar-window.c:789
-#: modules/external/clock/calendar-window.c:972
-#: modules/external/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
+#: modules/clock/calendar-window.c:1563
 msgid "Edit"
 msgstr "Editar"
 
-#: modules/external/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:912
 msgid "All Day"
 msgstr "O dia todo"
 
-#: modules/external/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1056
 msgid "Appointments"
 msgstr "Compromissos"
 
-#: modules/external/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1081
 msgid "Birthdays and Anniversaries"
 msgstr "Aniversários e datas especiais"
 
-#: modules/external/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1106
 msgid "Weather Information"
 msgstr "Informações meteorológicas"
 
-#: modules/external/clock/calendar-window.c:1563
-#: modules/external/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Locais"
 
-#: modules/external/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1824
 msgid "Calendar"
 msgstr "Calendário"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/external/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
 msgstr "%A %d %B (%Z)"
 
-#: modules/external/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
 msgstr "Clique para ocultar seus compromissos e tarefas"
 
-#: modules/external/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:238
 msgid "Click to view your appointments and tasks"
 msgstr "Clique para ver os seus compromissos e tarefas"
 
-#: modules/external/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:242
 msgid "Click to hide month calendar"
 msgstr "Clique para ocultar o calendário do mês"
 
-#: modules/external/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:245
 msgid "Click to view month calendar"
 msgstr "Clique para ver o calendário do mês"
 
 #. Done!
-#: modules/external/clock/clock-applet.c:847
+#: modules/clock/clock-applet.c:847
 msgid "Computer Clock"
 msgstr "Relógio do computador"
 
-#: modules/external/clock/clock-applet.c:980
+#: modules/clock/clock-applet.c:980
 msgid "Failed to open the time settings"
 msgstr "Falha ao abrir definições de hora"
 
-#: modules/external/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1554
 msgid "Choose Location"
 msgstr "Escolher local"
 
-#: modules/external/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1633
 msgid "Edit Location"
 msgstr "Editar local"
 
-#: modules/external/clock/clock-applet.c:1669
-#: modules/external/clock/clock-applet.c:1677
+#: modules/clock/clock-applet.c:1669 modules/clock/clock-applet.c:1677
 msgid "Default"
 msgstr "Padrão"
 
-#: modules/external/clock/clock-applet.c:1670
+#: modules/clock/clock-applet.c:1670
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/external/clock/clock-applet.c:1671
+#: modules/clock/clock-applet.c:1671
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/external/clock/clock-applet.c:1672
+#: modules/clock/clock-applet.c:1672
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/external/clock/clock-applet.c:1678
+#: modules/clock/clock-applet.c:1678
 msgid "Meters per second (m/s)"
 msgstr "Metros por segundo (m/s)"
 
-#: modules/external/clock/clock-applet.c:1679
+#: modules/clock/clock-applet.c:1679
 msgid "Kilometers per hour (kph)"
 msgstr "Quilômetros por hora (qph)"
 
-#: modules/external/clock/clock-applet.c:1680
+#: modules/clock/clock-applet.c:1680
 msgid "Miles per hour (mph)"
 msgstr "Milhas por hora (mph)"
 
-#: modules/external/clock/clock-applet.c:1681
+#: modules/clock/clock-applet.c:1681
 msgid "Knots"
 msgstr "Nós"
 
-#: modules/external/clock/clock-applet.c:1682
+#: modules/clock/clock-applet.c:1682
 msgid "Beaufort scale"
 msgstr "Escala Beaufort"
 
-#: modules/external/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1735
 msgid "City Name"
 msgstr "Nome da cidade"
 
-#: modules/external/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1739
 msgid "City Time Zone"
 msgstr "Fuso horário da cidade"
 
-#: modules/external/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:174
 msgid "Failed to set the system timezone"
 msgstr "Falha ao definir o fuso horário do sistema"
 
-#: modules/external/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:222
 msgid "<small>Set...</small>"
 msgstr "<small>Definir…</small>"
 
-#: modules/external/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:223
 msgid "<small>Set</small>"
 msgstr "<small>Definir</small>"
 
-#: modules/external/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:298
 msgid "Set location as current location and use its timezone for this computer"
 msgstr "Define o local como atual e usa seu fuso horário para este computador"
 
@@ -1988,7 +1978,7 @@ msgstr "Define o local como atual e usa seu fuso horário para este computador"
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:430
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -1997,7 +1987,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/external/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:438
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -2005,180 +1995,177 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:447
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/external/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/external/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:610
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, sensação térmica %s"
 
-#: modules/external/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:631
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Amanhecer: %s / anoitecer: %s"
 
-#: modules/external/clock/clock-module.c:47
-msgid "Get the current time and date"
-msgstr "Obtenha hora e data atuais"
-
-#: modules/external/clock/clock-module.c:48
+#: modules/clock/clock-module.c:33
 msgid "Clock"
 msgstr "Relógio"
 
-#: modules/external/clock/clock-menu.ui:5
+#: modules/clock/clock-module.c:34
+msgid "Get the current time and date"
+msgstr "Obtenha hora e data atuais"
+
+#: modules/clock/clock-menu.ui:5
 msgid "Copy Date and _Time"
 msgstr "Copiar Data e _hora"
 
-#: modules/external/clock/clock-menu.ui:11
+#: modules/clock/clock-menu.ui:11
 msgid "Ad_just Date & Time"
 msgstr "A_justar data e hora"
 
-#: modules/external/clock/clock-menu.ui:15
-#: modules/external/wncklet/window-list-menu.ui:5
-#: modules/external/wncklet/workspace-switcher-menu.ui:5
+#: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
+#: modules/wncklet/workspace-switcher-menu.ui:5
 msgid "_Preferences"
 msgstr "_Preferências"
 
-#: modules/external/clock/clock.ui:30
+#: modules/clock/clock.ui:30
 msgid "East"
 msgstr "Leste"
 
-#: modules/external/clock/clock.ui:33
+#: modules/clock/clock.ui:33
 msgid "West"
 msgstr "Oeste"
 
-#: modules/external/clock/clock.ui:44
+#: modules/clock/clock.ui:44
 msgid "North"
 msgstr "Norte"
 
-#: modules/external/clock/clock.ui:47
+#: modules/clock/clock.ui:47
 msgid "South"
 msgstr "Sul"
 
-#: modules/external/clock/clock.ui:206 modules/external/clock/clock.ui:221
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
 msgid "(optional)"
 msgstr "(opcional)"
 
-#: modules/external/clock/clock.ui:265
+#: modules/clock/clock.ui:265
 msgid "_Location Name:"
 msgstr "Nome do _local:"
 
-#: modules/external/clock/clock.ui:278
+#: modules/clock/clock.ui:278
 msgid "L_atitude:"
 msgstr "L_atitude:"
 
-#: modules/external/clock/clock.ui:292
+#: modules/clock/clock.ui:292
 msgid "L_ongitude:"
 msgstr "L_ongitude:"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/external/clock/clock.ui:308
+#: modules/clock/clock.ui:308
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Digite um nome de cidade, região ou país e então selecione uma "
 "correspondência do pop-up."
 
-#: modules/external/clock/clock.ui:325
+#: modules/clock/clock.ui:325
 msgid "_Timezone:"
 msgstr "_Fuso horário:"
 
-#: modules/external/clock/clock.ui:360
+#: modules/clock/clock.ui:360
 msgid "Clock Preferences"
 msgstr "Preferências do relógio"
 
-#: modules/external/clock/clock.ui:376 modules/external/fish/fish.ui:36
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "A_juda"
 
-#: modules/external/clock/clock.ui:391
+#: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "_Configurar hora"
 
-#: modules/external/clock/clock.ui:451
+#: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Formato do relógio"
 
-#: modules/external/clock/clock.ui:470
+#: modules/clock/clock.ui:470
 msgid "_12 hour format"
 msgstr "Formato _12 horas"
 
-#: modules/external/clock/clock.ui:487
+#: modules/clock/clock.ui:487
 msgid "_24 hour format"
 msgstr "Formato _24 horas"
 
-#: modules/external/clock/clock.ui:527
+#: modules/clock/clock.ui:527
 msgid "Panel Display"
 msgstr "Exibição do painel"
 
-#: modules/external/clock/clock.ui:547
+#: modules/clock/clock.ui:547
 msgid "Show the _date"
 msgstr "Mostrar a _data"
 
-#: modules/external/clock/clock.ui:563
+#: modules/clock/clock.ui:563
 msgid "Show seco_nds"
 msgstr "Mostrar segu_ndos"
 
-#: modules/external/clock/clock.ui:579
+#: modules/clock/clock.ui:579
 msgid "Show _weather"
 msgstr "Mostrar _meteorologia"
 
-#: modules/external/clock/clock.ui:595
+#: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Mostrar _temperatura"
 
-#: modules/external/clock/clock.ui:697
+#: modules/clock/clock.ui:697
 msgid "_Edit"
 msgstr "_Editar"
 
-#: modules/external/clock/clock.ui:712
+#: modules/clock/clock.ui:712
 msgid "_Remove"
 msgstr "_Remover"
 
-#: modules/external/clock/clock.ui:773
+#: modules/clock/clock.ui:773
 msgid "Display"
 msgstr "Exibição"
 
-#: modules/external/clock/clock.ui:805
+#: modules/clock/clock.ui:805
 msgid "_Visibility unit:"
 msgstr "Unidade de _visibilidade:"
 
-#: modules/external/clock/clock.ui:828
+#: modules/clock/clock.ui:828
 msgid "_Pressure unit:"
 msgstr "Unidade de _pressão:"
 
-#: modules/external/clock/clock.ui:864
+#: modules/clock/clock.ui:864
 msgid "_Temperature unit:"
 msgstr "Unidade de _temperatura:"
 
-#: modules/external/clock/clock.ui:878
+#: modules/clock/clock.ui:878
 msgid "_Wind speed unit:"
 msgstr "Unidade de velocidade do _vento"
 
-#: modules/external/clock/clock.ui:910
+#: modules/clock/clock.ui:910
 msgid "Weather"
 msgstr "Meteorologia"
 
-#: modules/external/clock/clock-utils.c:91
-#: modules/external/fish/fish-applet.c:148
+#: modules/clock/clock-utils.c:91 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Não foi possível exibir o documento de ajuda “%s”"
 
-#: modules/external/clock/clock-utils.c:120
-#: modules/external/fish/fish-applet.c:174
+#: modules/clock/clock-utils.c:120 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Não foi possível exibir o documento de ajuda"
 
-#: modules/external/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:203
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -2191,27 +2178,26 @@ msgstr ""
 "Nós enfaticamente não recomendamos o uso de %s para qualquer\n"
 "coisa que possa tornar o miniaplicativo “prático” ou útil."
 
-#: modules/external/fish/fish-applet.c:365
-#: modules/external/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s o Peixe"
 
-#: modules/external/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:369
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s o Peixe, um oráculo moderno"
 
-#: modules/external/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:427
 msgid "Unable to locate the command to execute"
 msgstr "Não foi possível localizar o comando a ser executado"
 
-#: modules/external/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:476
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s o Peixe diz:"
 
-#: modules/external/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:545
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2222,16 +2208,16 @@ msgstr ""
 "\n"
 "Detalhes: %s"
 
-#: modules/external/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:621
 msgid "_Speak again"
 msgstr "_Falar novamente"
 
-#: modules/external/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:693
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "O comando configurado não está funcionando e foi substituído por: %s"
 
-#: modules/external/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:722
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2242,7 +2228,7 @@ msgstr ""
 "\n"
 "Detalhes: %s"
 
-#: modules/external/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:738
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2253,102 +2239,110 @@ msgstr ""
 "\n"
 "Detalhes: %s"
 
-#: modules/external/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1120
 msgid "The water needs changing"
 msgstr "A água precisa ser trocada"
 
-#: modules/external/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1122
 msgid "Look at today's date!"
 msgstr "Veja a data de hoje!"
 
-#: modules/external/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1216
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s o Peixe, o adivinho"
 
-#: modules/external/fish/fish-module.c:47
-msgid "Display a swimming fish or another animated creature"
-msgstr "Exiba um peixe nadando ou uma outra criatura animada"
-
-#: modules/external/fish/fish-module.c:48
+#: modules/fish/fish-module.c:33
 msgid "Fish"
 msgstr "Peixe"
 
-#: modules/external/fish/fish-menu.ui:5
+#: modules/fish/fish-module.c:34
+msgid "Display a swimming fish or another animated creature"
+msgstr "Exiba um peixe nadando ou uma outra criatura animada"
+
+#: modules/fish/fish-menu.ui:5
 msgid "Preferences"
 msgstr "Preferências"
 
-#: modules/external/fish/fish.ui:22
+#: modules/fish/fish.ui:22
 msgid "Fish Preferences"
 msgstr "Preferências do Peixe"
 
-#: modules/external/fish/fish.ui:134
+#: modules/fish/fish.ui:134
 msgid "_Name of fish:"
 msgstr "_Nome do peixe:"
 
-#: modules/external/fish/fish.ui:174
+#: modules/fish/fish.ui:174
 msgid "Co_mmand to run when clicked:"
 msgstr "Co_mando para executar quando clicado:"
 
-#: modules/external/fish/fish.ui:240
+#: modules/fish/fish.ui:240
 msgid "Animation:"
 msgstr "Animação:"
 
-#: modules/external/fish/fish.ui:277
+#: modules/fish/fish.ui:277
 msgid "    "
 msgstr "    "
 
-#: modules/external/fish/fish.ui:301
+#: modules/fish/fish.ui:301
 msgid "_Pause per frame:"
 msgstr "_Pausa por quadro:"
 
-#: modules/external/fish/fish.ui:332
+#: modules/fish/fish.ui:332
 msgid "seconds"
 msgstr "segundos"
 
-#: modules/external/fish/fish.ui:349
+#: modules/fish/fish.ui:349
 msgid "_Rotate on vertical panels"
 msgstr "_Rotacionar em painéis verticais"
 
-#: modules/external/notification-area/na-applet.c:155
+#: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
 msgstr "Área de notificação do painel"
 
-#: modules/external/notification-area/na-module.c:46
+#: modules/notification-area/na-module.c:33
 msgid "Notification Area"
 msgstr "Área de notificação"
 
-#: modules/external/notification-area/na-module.c:47
+#: modules/notification-area/na-module.c:34
 msgid "Area where notification icons appear"
 msgstr "Área onde os ícones de notificação aparecem"
 
-#: modules/external/status-notifier/sn-module.c:47
-msgid "Display all Status Notifier Items"
-msgstr "Exibir todos os itens de notificação de status"
+#: modules/separator/separator-module.c:33
+msgid "Separator"
+msgstr "Separador"
 
-#: modules/external/status-notifier/sn-module.c:48
+#: modules/separator/separator-module.c:34
+msgid "A separator to organize the panel items"
+msgstr "Um separador para organizar itens do painel"
+
+#: modules/status-notifier/sn-module.c:33
 msgid "Status Notifier Host"
 msgstr "Máquina de notificação de status"
 
-#: modules/external/wncklet/showdesktop.c:100
+#: modules/status-notifier/sn-module.c:34
+msgid "Display all Status Notifier Items"
+msgstr "Exibir todos os itens de notificação de status"
+
+#: modules/wncklet/showdesktop.c:100
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Falha ao carregar %s: %s\n"
 
-#: modules/external/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:101
 msgid "Icon not found"
 msgstr "Ícone não localizado"
 
-#: modules/external/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:181
 msgid "Click here to restore hidden windows."
 msgstr "Clique aqui para mostrar as janelas que foram ocultadas."
 
-#: modules/external/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:183
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Clique aqui para ocultar todas as janelas e mostrar a área de trabalho."
 
-#: modules/external/wncklet/showdesktop.c:210
+#: modules/wncklet/showdesktop.c:210
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2356,138 +2350,149 @@ msgstr ""
 "Seu gerenciador de janelas não suporta o botão mostrar área de trabalho, ou "
 "você não está executando um gerenciador de janelas."
 
-#: modules/external/wncklet/showdesktop.c:407
+#: modules/wncklet/showdesktop.c:407
 msgid "Show Desktop Button"
 msgstr "Botão Mostrar área de trabalho"
 
-#: modules/external/wncklet/window-list.ui:8
+#: modules/wncklet/window-list.ui:8
 msgid "Window List Preferences"
 msgstr "Preferências da lista de janelas"
 
-#: modules/external/wncklet/window-list.ui:35
+#: modules/wncklet/window-list.ui:35
 msgid "Window List Content"
 msgstr "Conteúdo da Lista de janelas"
 
-#: modules/external/wncklet/window-list.ui:55
+#: modules/wncklet/window-list.ui:55
 msgid "Sh_ow windows from current workspace"
 msgstr "M_ostrar janelas do espaço de trabalho atual"
 
-#: modules/external/wncklet/window-list.ui:72
+#: modules/wncklet/window-list.ui:72
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrar janelas de _todos os espaços de trabalho"
 
-#: modules/external/wncklet/window-list.ui:112
+#: modules/wncklet/window-list.ui:112
 msgid "Window Grouping"
 msgstr "Agrupamento de janelas"
 
-#: modules/external/wncklet/window-list.ui:132
+#: modules/wncklet/window-list.ui:132
 msgid "_Never group windows"
 msgstr "_Nunca agrupar janelas"
 
-#: modules/external/wncklet/window-list.ui:149
+#: modules/wncklet/window-list.ui:149
 msgid "Group windows when _space is limited"
 msgstr "Agrupar janelas quando o _espaço for limitado"
 
-#: modules/external/wncklet/window-list.ui:166
+#: modules/wncklet/window-list.ui:166
 msgid "_Always group windows"
 msgstr "_Sempre agrupar janelas"
 
-#: modules/external/wncklet/window-list.ui:206
+#: modules/wncklet/window-list.ui:206
 msgid "Restoring Minimized Windows"
 msgstr "Restauração de janelas minimizadas"
 
-#: modules/external/wncklet/window-list.ui:226
+#: modules/wncklet/window-list.ui:226
 msgid "Restore to current _workspace"
 msgstr "Restaurar no espaço de trabalho _atual"
 
-#: modules/external/wncklet/window-list.ui:243
+#: modules/wncklet/window-list.ui:243
 msgid "Restore to na_tive workspace"
 msgstr "Restaurar no espaço de trabalho _original"
 
-#: modules/external/wncklet/window-menu.c:170
-#: modules/external/wncklet/wncklet-module.c:72
+#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr "Seletor de janelas"
 
-#: modules/external/wncklet/wncklet-module.c:60
+#: modules/wncklet/wncklet-module.c:41
 msgid "Show Desktop"
 msgstr "Mostrar área de trabalho"
 
-#: modules/external/wncklet/wncklet-module.c:61
+#: modules/wncklet/wncklet-module.c:42
 msgid "Hide application windows and show the desktop"
 msgstr "Ocultar todas as janelas e mostrar a área de trabalho."
 
-#: modules/external/wncklet/wncklet-module.c:66
+#: modules/wncklet/wncklet-module.c:48
 msgid "Window List"
 msgstr "Lista de janelas"
 
-#: modules/external/wncklet/wncklet-module.c:67
+#: modules/wncklet/wncklet-module.c:49
 msgid "Switch between open windows using buttons"
 msgstr "Alterne entre janelas abertas usando botões"
 
-#: modules/external/wncklet/wncklet-module.c:73
+#: modules/wncklet/wncklet-module.c:56
 msgid "Switch between open windows using a menu"
 msgstr "Alterna entre janelas abertas usando um menu"
 
-#: modules/external/wncklet/wncklet-module.c:78
+#: modules/wncklet/wncklet-module.c:62
 msgid "Workspace Switcher"
 msgstr "Alternador de áreas de trabalho"
 
-#: modules/external/wncklet/wncklet-module.c:79
+#: modules/wncklet/wncklet-module.c:63
 msgid "Switch between workspaces"
 msgstr "Alterne entre espaços de trabalho"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
-#: modules/external/wncklet/workspace-switcher.ui:145
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "linhas"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
 msgid "columns"
 msgstr "colunas"
 
-#: modules/external/wncklet/workspace-switcher.ui:22
+#: modules/wncklet/workspace-switcher.ui:22
 msgid "Workspace Switcher Preferences"
 msgstr "Preferências do Alternador de espaços de trabalho"
 
-#: modules/external/wncklet/workspace-switcher.ui:82
+#: modules/wncklet/workspace-switcher.ui:82
 msgid "Show _only the current workspace"
 msgstr "Mostrar _apenas o espaço de trabalho atual"
 
-#: modules/external/wncklet/workspace-switcher.ui:104
+#: modules/wncklet/workspace-switcher.ui:104
 msgid "Show _all workspaces in:"
 msgstr "Mostrar _todos os espaços de trabalho em:"
 
-#: modules/external/wncklet/workspace-switcher.ui:128
-#: modules/external/wncklet/workspace-switcher.ui:228
+#: modules/wncklet/workspace-switcher.ui:128
+#: modules/wncklet/workspace-switcher.ui:228
 msgid "1"
 msgstr "1"
 
-#: modules/external/wncklet/workspace-switcher.ui:176
+#: modules/wncklet/workspace-switcher.ui:176
 msgid "Switcher"
 msgstr "Alternador"
 
-#: modules/external/wncklet/workspace-switcher.ui:213
+#: modules/wncklet/workspace-switcher.ui:213
 msgid "Number of _workspaces:"
 msgstr "Número de _espaços de trabalho:"
 
-#: modules/external/wncklet/workspace-switcher.ui:252
+#: modules/wncklet/workspace-switcher.ui:252
 msgid "Workspace na_mes:"
 msgstr "No_mes dos espaços de trabalho:"
 
-#: modules/external/wncklet/workspace-switcher.ui:272
+#: modules/wncklet/workspace-switcher.ui:272
 msgid "Workspace Names"
 msgstr "Nomes dos Espaços de trabalho"
 
-#: modules/external/wncklet/workspace-switcher.ui:288
+#: modules/wncklet/workspace-switcher.ui:288
 msgid "Show workspace _names in switcher"
 msgstr "Mostrar os _nomes dos espaços de trabalho no alternador"
 
-#: modules/external/wncklet/workspace-switcher.ui:309
+#: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Espaços de trabalho"
+
+#~ msgid "Connect to server"
+#~ msgstr "Conectar ao servidor"
+
+#~ msgid "Could not connect to server"
+#~ msgstr "Não foi possível se conectar ao servidor"
+
+#~ msgid "Connect to Server..."
+#~ msgstr "Conectar ao servidor…"
+
+#~ msgid "Connect to a remote computer or shared disk"
+#~ msgstr "Conecte-se a um servidor remoto ou disco partilhado"
 
 #~ msgid "Clock Applet Factory"
 #~ msgstr "Fábrica de miniaplicativo do relógio"
