@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2018 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,81 @@
 
 #include "config.h"
 
+#include <libgnome-panel/gp-image-menu-item.h>
+
 #include "sn-dbus-menu-item.h"
-#include "sn-image-menu-item.h"
+
+static void
+set_image_from_icon_name (GpImageMenuItem *item,
+                          const gchar     *icon_name)
+{
+  GtkWidget *image;
+
+  image = gtk_image_new ();
+
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 16);
+
+  gp_image_menu_item_set_image (item, image);
+}
+
+static GdkPixbuf *
+get_pixbuf_at_size (GdkPixbuf *pixbuf,
+                    gint       size)
+{
+  gint width;
+  gint height;
+
+  width = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
+
+  if (width != size || height != size)
+    {
+      GdkPixbuf *scaled;
+
+      scaled = gdk_pixbuf_scale_simple (pixbuf, size, size,
+                                        GDK_INTERP_BILINEAR);
+
+      if (scaled != NULL)
+        return scaled;
+    }
+
+  return g_object_ref (pixbuf);
+}
+
+static void
+set_image_from_pixbuf (GpImageMenuItem *item,
+                       GdkPixbuf       *pixbuf)
+{
+  GtkWidget *image;
+  GdkPixbuf *tmp;
+
+  image = gtk_image_new ();
+
+  tmp = get_pixbuf_at_size (pixbuf, 16);
+  gtk_image_set_from_pixbuf (GTK_IMAGE (image), tmp);
+  g_object_unref (tmp);
+
+  gp_image_menu_item_set_image (item, image);
+}
+
+static void
+update_icon (SnDBusMenuItem *item)
+{
+  GpImageMenuItem *menu_item;
+
+  if (!GP_IS_IMAGE_MENU_ITEM (item->item))
+    return;
+
+  menu_item = GP_IMAGE_MENU_ITEM (item->item);
+
+  if (item->icon_name)
+    set_image_from_icon_name (menu_item, item->icon_name);
+  else if (item->icon_data)
+    set_image_from_pixbuf (menu_item, item->icon_data);
+  else
+    gp_image_menu_item_set_image (menu_item, NULL);
+}
 
 static GdkPixbuf *
 pxibuf_new (GVariant *variant)
@@ -193,21 +266,9 @@ sn_dbus_menu_item_new (GVariant *props)
         }
       else
         {
-          SnImageMenuItem *image_item;
+          item->item = gp_image_menu_item_new ();
 
-          item->item = sn_image_menu_item_new ();
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
-
-          if (item->icon_name)
-            {
-              sn_image_menu_item_set_image_from_icon_name (image_item,
-                                                           item->icon_name);
-            }
-          else if (item->icon_data)
-            {
-              sn_image_menu_item_set_image_from_icon_pixbuf (image_item,
-                                                             item->icon_data);
-            }
+          update_icon (item);
         }
 
       if (g_strcmp0 (item->children_display, "submenu") == 0)
@@ -222,6 +283,7 @@ sn_dbus_menu_item_new (GVariant *props)
         }
 
       gtk_menu_item_set_label (GTK_MENU_ITEM (item->item), item->label);
+      gtk_menu_item_set_use_underline (GTK_MENU_ITEM (item->item), TRUE);
 
       if (item->shortcuts)
         {
@@ -311,41 +373,17 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
         }
       else if (g_strcmp0 (prop, "icon-name") == 0)
         {
-          SnImageMenuItem *image_item;
-
           g_free (item->icon_name);
           item->icon_name = g_variant_dup_string (value, NULL);
 
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
-
-          if (item->icon_name)
-            {
-              sn_image_menu_item_set_image_from_icon_name (image_item,
-                                                           item->icon_name);
-            }
-          else
-            {
-              sn_image_menu_item_unset_image (image_item);
-            }
+          update_icon (item);
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
-          SnImageMenuItem *image_item;
-
           g_clear_object (&item->icon_data);
           item->icon_data = pxibuf_new (value);
 
-          image_item = SN_IMAGE_MENU_ITEM (item->item);
-
-          if (item->icon_data)
-            {
-              sn_image_menu_item_set_image_from_icon_pixbuf (image_item,
-                                                             item->icon_data);
-            }
-          else
-            {
-              sn_image_menu_item_unset_image (image_item);
-            }
+          update_icon (item);
         }
       else if (g_strcmp0 (prop, "label") == 0)
         {
@@ -434,14 +472,12 @@ sn_dbus_menu_item_remove_props (SnDBusMenuItem *item,
       else if (g_strcmp0 (prop, "icon-name") == 0)
         {
           g_clear_pointer (&item->icon_name, g_free);
-          if (SN_IS_IMAGE_MENU_ITEM (item->item))
-            sn_image_menu_item_unset_image (SN_IMAGE_MENU_ITEM (item->item));
+          update_icon (item);
         }
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
           g_clear_object (&item->icon_data);
-          if (SN_IS_IMAGE_MENU_ITEM (item->item))
-            sn_image_menu_item_unset_image (SN_IMAGE_MENU_ITEM (item->item));
+          update_icon (item);
         }
       else if (g_strcmp0 (prop, "label") == 0)
         {
