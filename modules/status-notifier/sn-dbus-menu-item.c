@@ -94,7 +94,7 @@ update_icon (SnDBusMenuItem *item)
 }
 
 static GdkPixbuf *
-pxibuf_new (GVariant *variant)
+pixbuf_new (GVariant *variant)
 {
   gsize length;
   const guchar *data;
@@ -223,7 +223,7 @@ sn_dbus_menu_item_new (GVariant *props)
       else if (g_strcmp0 (prop, "icon-name") == 0)
         item->icon_name = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (prop, "icon-data") == 0)
-        item->icon_data = pxibuf_new (value);
+        item->icon_data = pixbuf_new (value);
       else if (g_strcmp0 (prop, "label") == 0)
         item->label = g_variant_dup_string (value, NULL);
       else if (g_strcmp0 (prop, "shortcut") == 0)
@@ -381,7 +381,7 @@ sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
       else if (g_strcmp0 (prop, "icon-data") == 0)
         {
           g_clear_object (&item->icon_data);
-          item->icon_data = pxibuf_new (value);
+          item->icon_data = pixbuf_new (value);
 
           update_icon (item);
         }
