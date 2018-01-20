@@ -9,6 +9,8 @@ libgnome_panel_la_SOURCES = \
 	gp-applet-private.h \
 	gp-applet.c \
 	gp-applet.h \
+	gp-image-menu-item.c \
+	gp-image-menu-item.h \
 	gp-main-menu-private.h \
 	gp-main-menu.c \
 	gp-main-menu.h \
