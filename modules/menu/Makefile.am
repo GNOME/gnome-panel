@@ -5,6 +5,7 @@ menu_lib_LTLIBRARIES = menu.la
 
 menu_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DG_LOG_DOMAIN=\""menu"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
 	-I$(top_srcdir) \
@@ -19,6 +20,8 @@ menu_la_CFLAGS = \
 	$(NULL)
 
 menu_la_SOURCES = \
+	gp-menu.c \
+	gp-menu.h \
 	main-menu-applet.c \
 	main-menu-applet.h \
 	menu-bar-applet.c \
