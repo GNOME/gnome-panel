@@ -270,6 +270,11 @@ update (SnItemV0 *v0)
 
       gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), markup);
       g_free (markup);
+
+      g_object_bind_property (v0, "enable-tooltips",
+                              v0, "has-tooltip",
+                              G_BINDING_DEFAULT |
+                              G_BINDING_SYNC_CREATE);
     }
   else
     {
