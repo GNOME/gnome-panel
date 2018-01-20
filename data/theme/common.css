@@ -1,0 +1,32 @@
+menuitem image {
+  min-height: 16px;
+  min-width: 16px;
+}
+
+menuitem image:dir(ltr) {
+  margin-right: 7px;
+}
+
+menuitem image:dir(rtl) {
+  margin-left: 7px;
+}
+
+panel-toplevel.left gp-applet > menubar > menuitem > image:dir(ltr) {
+  margin-right: 0px;
+  margin-top: 7px;
+}
+
+panel-toplevel.left gp-applet > menubar > menuitem > image:dir(rtl) {
+  margin-left: 0px;
+  margin-bottom: 7px;
+}
+
+panel-toplevel.right gp-applet > menubar > menuitem > image:dir(ltr) {
+  margin-right: 0px;
+  margin-bottom: 7px;
+}
+
+panel-toplevel.right gp-applet > menubar > menuitem > image:dir(rtl) {
+  margin-left: 0px;
+  margin-top: 7px;
+}
