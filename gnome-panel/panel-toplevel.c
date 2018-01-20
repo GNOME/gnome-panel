@@ -255,6 +255,46 @@ static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 						 int            monitor,
 						 gboolean       force_resize);
 
+static void
+update_style_classes (PanelToplevel *toplevel)
+{
+	GtkStyleContext *context;
+
+	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
+
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_RIGHT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_LEFT);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_TOP);
+	gtk_style_context_remove_class (context, GTK_STYLE_CLASS_BOTTOM);
+
+	switch (toplevel->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_TOP);
+		break;
+
+	case PANEL_ORIENTATION_LEFT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_LEFT);
+		break;
+
+	case PANEL_ORIENTATION_BOTTOM:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_BOTTOM);
+		break;
+
+	case PANEL_ORIENTATION_RIGHT:
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
+		gtk_style_context_add_class (context, GTK_STYLE_CLASS_RIGHT);
+		break;
+
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
 
 GSList *
 panel_toplevel_list_toplevels (void)
@@ -4024,7 +4064,6 @@ static void
 panel_toplevel_init (PanelToplevel *toplevel)
 {
 	GtkWidget *widget;
-	GtkStyleContext *context;
 
 	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
@@ -4115,7 +4154,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
 	panel_toplevel_update_gtk_settings (toplevel);
-	
+
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
 
 	/* Prevent the window from being deleted via Alt+F4 by accident.  This
@@ -4126,8 +4165,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	                  G_CALLBACK (gtk_true),
 	                  NULL);
 
-	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
-	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
+	update_style_classes (toplevel);
 }
 
 PanelWidget *
@@ -4466,7 +4504,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	gboolean   rotate;
 	int        monitor_width;
 	int        monitor_height;
-	GtkStyleContext *context;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -4534,15 +4571,8 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	}
 
 	toplevel->priv->orientation = orientation;
+	update_style_classes (toplevel);
 
-	context = gtk_widget_get_style_context (GTK_WIDGET (toplevel));
-	if (orientation & PANEL_HORIZONTAL_MASK) {
-		gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_VERTICAL);
-	} else {
-		gtk_style_context_add_class (context, GTK_STYLE_CLASS_VERTICAL);
-		gtk_style_context_remove_class (context, GTK_STYLE_CLASS_HORIZONTAL);
-	}
 	gtk_widget_reset_style (GTK_WIDGET (toplevel));
 
 	panel_toplevel_update_hide_buttons (toplevel);
