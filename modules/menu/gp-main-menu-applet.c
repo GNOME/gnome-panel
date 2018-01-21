@@ -16,21 +16,21 @@
  */
 
 #include "config.h"
-#include "menu-bar-applet.h"
+#include "gp-main-menu-applet.h"
 
-struct _MenuBarApplet
+struct _MainMenuApplet
 {
   GpApplet parent;
 };
 
-G_DEFINE_TYPE (MenuBarApplet, menu_bar_applet, GP_TYPE_APPLET)
+G_DEFINE_TYPE (MainMenuApplet, main_menu_applet, GP_TYPE_APPLET)
 
 static void
-menu_bar_applet_class_init (MenuBarAppletClass *menu_bar_class)
+main_menu_applet_class_init (MainMenuAppletClass *main_menu_class)
 {
 }
 
 static void
-menu_bar_applet_init (MenuBarApplet *menu_bar)
+main_menu_applet_init (MainMenuApplet *main_menu)
 {
 }

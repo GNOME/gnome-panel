@@ -20,15 +20,15 @@ menu_la_CFLAGS = \
 	$(NULL)
 
 menu_la_SOURCES = \
+	gp-main-menu-applet.c \
+	gp-main-menu-applet.h \
+	gp-menu-bar-applet.c \
+	gp-menu-bar-applet.h \
+	gp-menu-module.c \
 	gp-menu.c \
 	gp-menu.h \
-	main-menu-applet.c \
-	main-menu-applet.h \
-	menu-bar-applet.c \
-	menu-bar-applet.h \
-	menu-module.c \
-	user-menu-applet.c \
-	user-menu-applet.h \
+	gp-user-menu-applet.c \
+	gp-user-menu-applet.h \
 	$(NULL)
 
 menu_la_LIBADD = \

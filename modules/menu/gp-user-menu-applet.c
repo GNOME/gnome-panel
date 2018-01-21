@@ -16,7 +16,7 @@
  */
 
 #include "config.h"
-#include "user-menu-applet.h"
+#include "gp-user-menu-applet.h"
 
 struct _UserMenuApplet
 {

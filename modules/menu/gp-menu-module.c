@@ -20,9 +20,9 @@
 #include <glib/gi18n-lib.h>
 #include <libgnome-panel/gp-module.h>
 
-#include "main-menu-applet.h"
-#include "menu-bar-applet.h"
-#include "user-menu-applet.h"
+#include "gp-main-menu-applet.h"
+#include "gp-menu-bar-applet.h"
+#include "gp-user-menu-applet.h"
 
 static GpAppletInfo *
 menu_get_applet_info (const gchar *id)
