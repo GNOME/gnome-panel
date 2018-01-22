@@ -16,27 +16,25 @@
  */
 
 #include "config.h"
-#include "gp-main-menu-private.h"
+#include "gp-action-private.h"
 
-G_DEFINE_INTERFACE (GpMainMenu, gp_main_menu, G_TYPE_OBJECT)
+G_DEFINE_INTERFACE (GpAction, gp_action, G_TYPE_OBJECT)
 
 static void
-gp_main_menu_default_init (GpMainMenuInterface *iface)
+gp_action_default_init (GpActionInterface *iface)
 {
 }
 
 gboolean
-gp_main_menu_activate (GpMainMenu *main_menu,
-                       guint32     time)
+gp_action_main_menu (GpAction *action,
+                     guint32   time)
 {
-  GpMainMenuInterface *iface;
+  GpActionInterface *iface;
 
-  iface = GP_MAIN_MENU_GET_IFACE (main_menu);
+  iface = GP_ACTION_GET_IFACE (action);
 
-  if (iface->activate == NULL)
+  if (iface->main_menu == NULL)
     return FALSE;
 
-  iface->activate (main_menu, time);
-
-  return TRUE;
+  return iface->main_menu (action, time);
 }

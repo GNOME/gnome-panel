@@ -3,6 +3,9 @@ NULL =
 noinst_LTLIBRARIES = libgnome-panel.la
 
 libgnome_panel_la_SOURCES = \
+	gp-action-private.h \
+	gp-action.c \
+	gp-action.h \
 	gp-applet-info-private.h \
 	gp-applet-info.c \
 	gp-applet-info.h \
@@ -11,9 +14,6 @@ libgnome_panel_la_SOURCES = \
 	gp-applet.h \
 	gp-image-menu-item.c \
 	gp-image-menu-item.h \
-	gp-main-menu-private.h \
-	gp-main-menu.c \
-	gp-main-menu.h \
 	gp-module-private.h \
 	gp-module.c \
 	gp-module.h \

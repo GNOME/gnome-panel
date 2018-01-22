@@ -14,7 +14,7 @@
 #include <glib/gi18n.h>
 #include <gdk/gdkx.h>
 
-#include <libgnome-panel/gp-main-menu-private.h>
+#include <libgnome-panel/gp-action-private.h>
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-show.h>
 
@@ -908,10 +908,10 @@ panel_applet_activate_main_menu (guint32 activate_time)
       if (applet == NULL)
         continue;
 
-      if (!g_type_is_a (G_TYPE_FROM_INSTANCE (applet), GP_TYPE_MAIN_MENU))
+      if (!g_type_is_a (G_TYPE_FROM_INSTANCE (applet), GP_TYPE_ACTION))
         continue;
 
-      if (gp_main_menu_activate (GP_MAIN_MENU (applet), activate_time))
+      if (gp_action_main_menu (GP_ACTION (applet), activate_time))
         return TRUE;
     }
 

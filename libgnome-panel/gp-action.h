@@ -15,15 +15,26 @@
  * along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GP_MAIN_MENU_PRIVATE_H
-#define GP_MAIN_MENU_PRIVATE_H
+#ifndef GP_ACTION_H
+#define GP_ACTION_H
 
-#include <libgnome-panel/gp-main-menu.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
-gboolean gp_main_menu_activate (GpMainMenu *main_menu,
-                                guint32     time);
+#define GP_TYPE_ACTION (gp_action_get_type ())
+G_DECLARE_INTERFACE (GpAction, gp_action, GP, ACTION, GObject)
+
+struct _GpActionInterface
+{
+  GTypeInterface parent;
+
+  gboolean (* main_menu) (GpAction *action,
+                          guint32   time);
+
+  /*< private >*/
+  gpointer padding[10];
+};
 
 G_END_DECLS
 
