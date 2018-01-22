@@ -111,9 +111,6 @@ void             gp_applet_setup_menu_from_resource (GpApplet           *applet,
 GAction         *gp_applet_menu_lookup_action       (GpApplet           *applet,
                                                      const gchar        *action_name);
 
-void             gp_applet_add_text_class           (GpApplet           *applet,
-                                                     GtkWidget          *widget);
-
 G_END_DECLS
 
 #endif

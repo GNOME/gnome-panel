@@ -1071,22 +1071,3 @@ gp_applet_get_menu (GpApplet *applet)
 
   return gtk_menu_new_from_model (G_MENU_MODEL (object));
 }
-
-/**
- * gp_applet_add_text_class:
- * @applet: a #GpApplet
- * @widget: a #GtkWidget
- *
- * Use this function to add css class to widgets that are visible on panel
- * and shows text.
- */
-void
-gp_applet_add_text_class (GpApplet  *applet,
-                          GtkWidget *widget)
-{
-  GtkStyleContext *context;
-
-  context = gtk_widget_get_style_context (widget);
-
-  gtk_style_context_add_class (context, "gp-text-color");
-}
