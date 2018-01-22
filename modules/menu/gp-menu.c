@@ -17,11 +17,11 @@
 
 #include "config.h"
 
-#include <glib/gi18n-lib.h>
 #include <gio/gdesktopappinfo.h>
 #include <gmenu-tree.h>
 #include <libgnome-panel/gp-image-menu-item.h>
 
+#include "gp-menu-utils.h"
 #include "gp-menu.h"
 
 struct _GpMenu
@@ -55,49 +55,10 @@ static void directory_to_menu_items (GMenuTreeDirectory *directory,
                                      GpMenu             *menu);
 
 static void
-pid_cb (GDesktopAppInfo *info,
-        GPid             pid,
-        gpointer         user_data)
-{
-  g_child_watch_add (pid, (GChildWatchFunc) g_spawn_close_pid, NULL);
-}
-
-static void
 activate_cb (GtkWidget       *item,
              GDesktopAppInfo *info)
 {
-  GSpawnFlags flags;
-  GError *error;
-  gboolean ret;
-
-  flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
-  error = NULL;
-
-  ret = g_desktop_app_info_launch_uris_as_manager (info, NULL, NULL,
-                                                   flags, NULL, NULL,
-                                                   pid_cb, NULL,
-                                                   &error);
-
-  if (ret == FALSE)
-    {
-      const gchar *display_name;
-      GtkWidget *dialog;
-
-      display_name = g_app_info_get_display_name (G_APP_INFO (info));
-      dialog = gtk_message_dialog_new (NULL, 0,
-                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-                                       _("Could not launch '%s'"),
-                                       display_name);
-
-      if (error != NULL)
-        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                  "%s", error->message);
-
-      g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
-
-  g_clear_error (&error);
+  gp_menu_launch_app_info (info);
 }
 
 static void
