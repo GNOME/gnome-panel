@@ -18,14 +18,15 @@
 #ifndef GP_MENU_H
 #define GP_MENU_H
 
-#include <gtk/gtk.h>
+#include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_MENU (gp_menu_get_type ())
 G_DECLARE_FINAL_TYPE (GpMenu, gp_menu, GP, MENU, GtkMenu)
 
-GtkWidget *gp_menu_new_from_name (const gchar *name);
+GtkWidget *gp_menu_new (GpApplet    *applet,
+                        const gchar *name);
 
 G_END_DECLS
 

@@ -29,7 +29,7 @@ struct _GpMenu
   GtkMenu    parent;
 
   gchar     *name;
-  gboolean   enable_tooltips;
+  GpApplet  *applet;
 
   GMenuTree *tree;
 
@@ -41,7 +41,7 @@ enum
   PROP_0,
 
   PROP_NAME,
-  PROP_ENABLE_TOOLTIPS,
+  PROP_APPLET,
 
   LAST_PROP
 };
@@ -143,7 +143,7 @@ append_entry (GtkMenuShell  *shell,
     {
       gtk_widget_set_tooltip_text (item, description);
 
-      g_object_bind_property (menu, "enable-tooltips",
+      g_object_bind_property (menu->applet, "enable-tooltips",
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
@@ -291,6 +291,8 @@ gp_menu_dispose (GObject *object)
 
   menu = GP_MENU (object);
 
+  menu->applet = NULL;
+
   g_clear_object (&menu->tree);
 
   if (menu->load_id != 0)
@@ -320,18 +322,14 @@ gp_menu_get_property (GObject    *object,
                       GValue     *value,
                       GParamSpec *pspec)
 {
-  GpMenu *menu;
-
-  menu = GP_MENU (object);
-
   switch (property_id)
     {
       case PROP_NAME:
-        g_value_set_string (value, menu->name);
+        g_assert_not_reached ();
         break;
 
-      case PROP_ENABLE_TOOLTIPS:
-        g_value_set_boolean (value, menu->enable_tooltips);
+      case PROP_APPLET:
+        g_assert_not_reached ();
         break;
 
       default:
@@ -357,8 +355,9 @@ gp_menu_set_property (GObject      *object,
         menu->name = g_value_dup_string (value);
         break;
 
-      case PROP_ENABLE_TOOLTIPS:
-        menu->enable_tooltips = g_value_get_boolean (value);
+      case PROP_APPLET:
+        g_assert (menu->applet == NULL);
+        menu->applet = g_value_get_object (value);
         break;
 
       default:
@@ -373,14 +372,14 @@ install_properties (GObjectClass *object_class)
   menu_properties[PROP_NAME] =
     g_param_spec_string ("name", "Name", "Name",
                          NULL,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
                          G_PARAM_STATIC_STRINGS);
 
-  menu_properties[PROP_ENABLE_TOOLTIPS] =
-    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
-                          TRUE,
-                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
-                          G_PARAM_STATIC_STRINGS);
+  menu_properties[PROP_APPLET] =
+    g_param_spec_object ("applet", "Applet", "Applet",
+                         GP_TYPE_APPLET,
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                         G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP, menu_properties);
 }
@@ -407,7 +406,11 @@ gp_menu_init (GpMenu *menu)
 }
 
 GtkWidget *
-gp_menu_new_from_name (const gchar *name)
+gp_menu_new (GpApplet    *applet,
+             const gchar *name)
 {
-  return g_object_new (GP_TYPE_MENU, "name", name, NULL);
+  return g_object_new (GP_TYPE_MENU,
+                       "applet", applet,
+                       "name", name,
+                       NULL);
 }
