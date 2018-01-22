@@ -35,7 +35,7 @@ menu_get_applet_info (const gchar *id)
 
   if (g_strcmp0 (id, "main-menu") == 0)
     {
-      type_func = main_menu_applet_get_type;
+      type_func = gp_main_menu_applet_get_type;
       name = _("Main Menu");
       description = _("The main GNOME menu");
       icon = "start-here";

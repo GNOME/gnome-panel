@@ -15,16 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MAIN_MENU_APPLET_H
-#define MAIN_MENU_APPLET_H
+#ifndef GP_MAIN_MENU_APPLET_H
+#define GP_MAIN_MENU_APPLET_H
 
 #include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
 
-#define MAIN_MENU_TYPE_APPLET (main_menu_applet_get_type ())
-G_DECLARE_FINAL_TYPE (MainMenuApplet, main_menu_applet,
-                      MAIN_MENU, APPLET, GpApplet)
+#define GP_MAIN_MENU_TYPE_APPLET (gp_main_menu_applet_get_type ())
+G_DECLARE_FINAL_TYPE (GpMainMenuApplet, gp_main_menu_applet,
+                      GP, MAIN_MENU_APPLET, GpApplet)
 
 G_END_DECLS
 

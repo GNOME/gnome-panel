@@ -22,7 +22,10 @@
 
 #include "gp-menu-bar-applet.h"
 #include "gp-menu-bar.h"
+#include "gp-menu-utils.h"
 #include "gp-menu.h"
+
+#define RESOURCE_PATH "/org/gnome/gnome-panel/modules/menu"
 
 struct _GpMenuBarApplet
 {
@@ -87,6 +90,60 @@ append_applications_item (GpMenuBarApplet *applet)
 }
 
 static void
+edit_menus_cb (GSimpleAction *action,
+               GVariant      *parameter,
+               gpointer       user_data)
+{
+  const gchar *application;
+  GDesktopAppInfo *app_info;
+
+  application = "alacarte.desktop";
+  app_info = g_desktop_app_info_new (application);
+
+  if (app_info == NULL)
+    {
+      GtkWidget *dialog;
+
+      dialog = gtk_message_dialog_new (NULL, 0,
+                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+                                       _("Please install the '%s' application."),
+                                       application);
+
+      g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
+      gtk_window_present (GTK_WINDOW (dialog));
+
+      return;
+    }
+
+  gp_menu_launch_app_info (app_info);
+}
+
+static const GActionEntry menu_bar_menu_actions[] =
+  {
+    { "edit-menus", edit_menus_cb, NULL, NULL, NULL },
+    { NULL }
+  };
+
+static void
+setup_menu (GpMenuBarApplet *menu_bar)
+{
+  GpApplet *applet;
+  const gchar *resource;
+  GAction *action;
+  GBindingFlags flags;
+
+  applet = GP_APPLET (menu_bar);
+
+  resource = RESOURCE_PATH "/menu-bar-menu.ui";
+  gp_applet_setup_menu_from_resource (applet, resource, menu_bar_menu_actions);
+
+  action = gp_applet_menu_lookup_action (applet, "edit-menus");
+  flags = G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN | G_BINDING_SYNC_CREATE;
+
+  g_object_bind_property (applet, "locked-down", action, "enabled", flags);
+}
+
+static void
 gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
 {
   menu_bar->menu_bar = gp_menu_bar_new ();
@@ -102,6 +159,8 @@ gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   append_applications_item (menu_bar);
+
+  setup_menu (menu_bar);
 }
 
 static void
