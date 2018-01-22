@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
+#include <libgnome-panel/gp-action.h>
 
 #include "gp-main-menu-applet.h"
 #include "gp-menu-utils.h"
@@ -29,7 +30,23 @@ struct _GpMainMenuApplet
   GpApplet parent;
 };
 
-G_DEFINE_TYPE (GpMainMenuApplet, gp_main_menu_applet, GP_TYPE_APPLET)
+static void gp_action_interface_init (GpActionInterface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (GpMainMenuApplet, gp_main_menu_applet, GP_TYPE_APPLET,
+                         G_IMPLEMENT_INTERFACE (GP_TYPE_ACTION, gp_action_interface_init))
+
+static gboolean
+gp_main_menu_applet_main_menu (GpAction *action,
+                               guint32   time)
+{
+  return FALSE;
+}
+
+static void
+gp_action_interface_init (GpActionInterface *iface)
+{
+  iface->main_menu = gp_main_menu_applet_main_menu;
+}
 
 static void
 edit_menus_cb (GSimpleAction *action,

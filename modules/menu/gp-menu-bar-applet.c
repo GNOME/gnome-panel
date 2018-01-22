@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
+#include <libgnome-panel/gp-action.h>
 #include <libgnome-panel/gp-image-menu-item.h>
 
 #include "gp-menu-bar-applet.h"
@@ -37,7 +38,30 @@ struct _GpMenuBarApplet
   GtkWidget *applications_menu;
 };
 
-G_DEFINE_TYPE (GpMenuBarApplet, gp_menu_bar_applet, GP_TYPE_APPLET)
+static void gp_action_interface_init (GpActionInterface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (GpMenuBarApplet, gp_menu_bar_applet, GP_TYPE_APPLET,
+                         G_IMPLEMENT_INTERFACE (GP_TYPE_ACTION, gp_action_interface_init))
+
+static gboolean
+gp_menu_bar_applet_main_menu (GpAction *action,
+                              guint32   time)
+{
+  GpMenuBarApplet *applet;
+
+  applet = GP_MENU_BAR_APPLET (action);
+
+  gtk_menu_shell_select_item (GTK_MENU_SHELL (applet->menu_bar),
+                              applet->applications_item);
+
+  return TRUE;
+}
+
+static void
+gp_action_interface_init (GpActionInterface *iface)
+{
+  iface->main_menu = gp_menu_bar_applet_main_menu;
+}
 
 static gboolean
 button_press_event_cb (GtkWidget      *widget,
