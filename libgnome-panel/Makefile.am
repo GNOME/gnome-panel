@@ -17,6 +17,8 @@ libgnome_panel_la_SOURCES = \
 	gp-module-private.h \
 	gp-module.c \
 	gp-module.h \
+	gp-utils.c \
+	gp-utils.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
