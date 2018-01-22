@@ -50,6 +50,7 @@
 #define GNOME_DESKTOP_USE_UNSTABLE_API
 #include <libgnome-desktop/gnome-wall-clock.h>
 
+#include <libgnome-panel/gp-utils.h>
 #include <libgweather/gweather.h>
 
 #include "clock-applet.h"
@@ -743,7 +744,7 @@ create_main_clock_label (ClockApplet *cd)
 			  G_CALLBACK (clock_update_text_gravity),
 			  NULL);
 
-        gp_applet_add_text_class (GP_APPLET (cd), label);
+        gp_add_text_color_class (label);
 
         return label;
 }
@@ -836,6 +837,8 @@ create_clock_widget (ClockApplet *cd)
         gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_temperature_label, FALSE, FALSE, 0);
         g_settings_bind (cd->applet_settings, "show-temperature", cd->panel_temperature_label, "visible",
                          G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
+
+        gp_add_text_color_class (cd->panel_temperature_label);
 
         /* Main label for time display */
 	cd->clockw = create_main_clock_label (cd);
