@@ -16,17 +16,75 @@
  */
 
 #include "config.h"
+
+#include <glib/gi18n-lib.h>
+#include <libgnome-panel/gp-image-menu-item.h>
+
 #include "gp-menu-bar-applet.h"
 #include "gp-menu-bar.h"
+#include "gp-menu.h"
 
 struct _GpMenuBarApplet
 {
   GpApplet   parent;
 
   GtkWidget *menu_bar;
+
+  GtkWidget *applications_item;
+  GtkWidget *applications_menu;
 };
 
 G_DEFINE_TYPE (GpMenuBarApplet, gp_menu_bar_applet, GP_TYPE_APPLET)
+
+static gboolean
+button_press_event_cb (GtkWidget      *widget,
+                       GdkEventButton *event,
+                       gpointer        user_data)
+{
+  return TRUE;
+}
+
+static gchar *
+get_applications_menu (void)
+{
+  const gchar *xdg_menu_prefx;
+
+  xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+  if (!xdg_menu_prefx || *xdg_menu_prefx == '\0')
+    return g_strdup ("gnome-applications.menu");
+
+  return g_strdup_printf ("%sapplications.menu", xdg_menu_prefx);
+}
+
+static void
+append_applications_item (GpMenuBarApplet *applet)
+{
+  GtkWidget *icon;
+  const gchar *tooltip;
+  gchar *menu;
+
+  icon = gtk_image_new_from_icon_name ("start-here", GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), 16);
+
+  applet->applications_item = gp_image_menu_item_new_with_label (_("Applications"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (applet->menu_bar), applet->applications_item);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (applet->applications_item), icon);
+  gtk_widget_show (applet->applications_item);
+
+  tooltip = _("Browse and run installed applications");
+  gtk_widget_set_tooltip_text (applet->applications_item, tooltip);
+
+  menu = get_applications_menu ();
+
+  applet->applications_menu = gp_menu_new_from_name (menu);
+  g_free (menu);
+
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->applications_item),
+                             applet->applications_menu);
+
+  g_signal_connect (applet->applications_menu, "button-press-event",
+                    G_CALLBACK (button_press_event_cb), NULL);
+}
 
 static void
 gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
@@ -42,6 +100,8 @@ gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
   g_object_bind_property (menu_bar, "position",
                           menu_bar->menu_bar, "position",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  append_applications_item (menu_bar);
 }
 
 static void

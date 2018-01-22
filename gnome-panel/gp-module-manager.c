@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <libgnome-panel/gp-image-menu-item.h>
 #include <libgnome-panel/gp-module-private.h>
 
 #include "gp-module-manager.h"
@@ -93,6 +94,8 @@ gp_module_manager_class_init (GpModuleManagerClass *manager_class)
   object_class = G_OBJECT_CLASS (manager_class);
 
   object_class->finalize = gp_module_manager_finalize;
+
+  g_type_ensure (GP_TYPE_IMAGE_MENU_ITEM);
 }
 
 static void
