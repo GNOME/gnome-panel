@@ -42,14 +42,14 @@ menu_get_applet_info (const gchar *id)
     }
   else if (g_strcmp0 (id, "menu-bar") == 0)
     {
-      type_func = menu_bar_applet_get_type;
+      type_func = gp_menu_bar_applet_get_type;
       name = _("Menu Bar");
       description = _("A custom menu bar");
       icon = "start-here";
     }
   else if (g_strcmp0 (id, "user-menu") == 0)
     {
-      type_func = user_menu_applet_get_type;
+      type_func = gp_user_menu_applet_get_type;
       name = _("User menu");
       description = _("Menu to change your settings and log out");
       icon = "computer";

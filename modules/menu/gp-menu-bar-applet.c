@@ -17,20 +17,56 @@
 
 #include "config.h"
 #include "gp-menu-bar-applet.h"
+#include "gp-menu-bar.h"
 
-struct _MenuBarApplet
+struct _GpMenuBarApplet
 {
-  GpApplet parent;
+  GpApplet   parent;
+
+  GtkWidget *menu_bar;
 };
 
-G_DEFINE_TYPE (MenuBarApplet, menu_bar_applet, GP_TYPE_APPLET)
+G_DEFINE_TYPE (GpMenuBarApplet, gp_menu_bar_applet, GP_TYPE_APPLET)
 
 static void
-menu_bar_applet_class_init (MenuBarAppletClass *menu_bar_class)
+gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
 {
+  menu_bar->menu_bar = gp_menu_bar_new ();
+  gtk_container_add (GTK_CONTAINER (menu_bar), menu_bar->menu_bar);
+  gtk_widget_show (menu_bar->menu_bar);
+
+  g_object_bind_property (menu_bar, "enable-tooltips",
+                          menu_bar->menu_bar, "enable-tooltips",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_bar, "position",
+                          menu_bar->menu_bar, "position",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 }
 
 static void
-menu_bar_applet_init (MenuBarApplet *menu_bar)
+gp_menu_bar_applet_constructed (GObject *object)
 {
+  G_OBJECT_CLASS (gp_menu_bar_applet_parent_class)->constructed (object);
+  gp_menu_bar_applet_setup (GP_MENU_BAR_APPLET (object));
+}
+
+static void
+gp_menu_bar_applet_class_init (GpMenuBarAppletClass *menu_bar_class)
+{
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (menu_bar_class);
+
+  object_class->constructed = gp_menu_bar_applet_constructed;
+}
+
+static void
+gp_menu_bar_applet_init (GpMenuBarApplet *menu_bar)
+{
+  GpApplet *applet;
+
+  applet = GP_APPLET (menu_bar);
+
+  gp_applet_set_flags (applet, GP_APPLET_FLAGS_EXPAND_MINOR);
 }
