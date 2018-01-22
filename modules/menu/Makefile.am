@@ -24,6 +24,8 @@ menu_la_SOURCES = \
 	gp-main-menu-applet.h \
 	gp-menu-bar-applet.c \
 	gp-menu-bar-applet.h \
+	gp-menu-bar.c \
+	gp-menu-bar.h \
 	gp-menu-module.c \
 	gp-menu.c \
 	gp-menu.h \
