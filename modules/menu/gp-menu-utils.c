@@ -19,8 +19,35 @@
 
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
+#include <systemd/sd-journal.h>
 
 #include "gp-menu-utils.h"
+
+static void
+child_setup (gpointer user_data)
+{
+  GAppInfo *info;
+  const gchar *id;
+  gint stdout_fd;
+  gint stderr_fd;
+
+  info = G_APP_INFO (user_data);
+  id = g_app_info_get_id (info);
+
+  stdout_fd = sd_journal_stream_fd (id, LOG_INFO, FALSE);
+  if (stdout_fd >= 0)
+    {
+      dup2 (stdout_fd, STDOUT_FILENO);
+      close (stdout_fd);
+    }
+
+  stderr_fd = sd_journal_stream_fd (id, LOG_WARNING, FALSE);
+  if (stderr_fd >= 0)
+    {
+      dup2 (stderr_fd, STDERR_FILENO);
+      close (stderr_fd);
+    }
+}
 
 static void
 pid_cb (GDesktopAppInfo *info,
@@ -41,7 +68,7 @@ gp_menu_launch_app_info (GDesktopAppInfo *app_info)
   error = NULL;
 
   ret = g_desktop_app_info_launch_uris_as_manager (app_info, NULL, NULL,
-                                                   flags, NULL, NULL,
+                                                   flags, child_setup, app_info,
                                                    pid_cb, NULL,
                                                    &error);
 
