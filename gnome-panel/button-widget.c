@@ -422,6 +422,11 @@ button_widget_get_preferred_width (GtkWidget *widget,
 	GtkWidget *parent;
 	int size;
 
+	GTK_WIDGET_CLASS (button_widget_parent_class)->get_preferred_width (widget,
+	                                                                    minimal_width,
+	                                                                    natural_width);
+
+
 	*minimal_width = *natural_width = 0;
 
 	parent = gtk_widget_get_parent (widget);
@@ -451,6 +456,10 @@ button_widget_get_preferred_height (GtkWidget *widget,
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 	GtkWidget *parent;
 	int size;
+
+	GTK_WIDGET_CLASS (button_widget_parent_class)->get_preferred_height (widget,
+	                                                                     minimal_height,
+	                                                                     natural_height);
 
 	*minimal_height = *natural_height = 0;
 
