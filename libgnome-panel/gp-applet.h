@@ -111,6 +111,10 @@ void             gp_applet_setup_menu_from_resource (GpApplet           *applet,
 GAction         *gp_applet_menu_lookup_action       (GpApplet           *applet,
                                                      const gchar        *action_name);
 
+guint            gp_applet_get_panel_icon_size      (GpApplet           *applet);
+
+guint            gp_applet_get_menu_icon_size       (GpApplet           *applet);
+
 G_END_DECLS
 
 #endif

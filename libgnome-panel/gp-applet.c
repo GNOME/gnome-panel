@@ -73,7 +73,11 @@ typedef struct
   guint               size_hints_idle;
 
   GSettings          *general_settings;
+
   gboolean            enable_tooltips;
+
+  guint               panel_icon_size;
+  guint               menu_icon_size;
 } GpAppletPrivate;
 
 enum
@@ -88,6 +92,9 @@ enum
   PROP_POSITION,
 
   PROP_ENABLE_TOOLTIPS,
+
+  PROP_PANEL_ICON_SIZE,
+  PROP_MENU_ICON_SIZE,
 
   LAST_PROP
 };
@@ -109,15 +116,14 @@ static guint signals[LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE_WITH_PRIVATE (GpApplet, gp_applet, GTK_TYPE_EVENT_BOX)
 
 static void
-enable_tooltips_cb (GSettings   *settings,
-                    const gchar *key,
-                    GpApplet    *applet)
+update_enable_tooltips (GpApplet *applet)
 {
   GpAppletPrivate *priv;
   gboolean enable_tooltips;
 
   priv = gp_applet_get_instance_private (applet);
-  enable_tooltips = g_settings_get_boolean (settings, "enable-tooltips");
+  enable_tooltips = g_settings_get_boolean (priv->general_settings,
+                                            "enable-tooltips");
 
   if (priv->enable_tooltips == enable_tooltips)
     return;
@@ -126,6 +132,94 @@ enable_tooltips_cb (GSettings   *settings,
 
   g_object_notify_by_pspec (G_OBJECT (applet),
                             properties[PROP_ENABLE_TOOLTIPS]);
+}
+
+static void
+update_menu_icon_size (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+  guint menu_icon_size;
+
+  priv = gp_applet_get_instance_private (applet);
+  menu_icon_size = g_settings_get_enum (priv->general_settings,
+                                        "menu-icon-size");
+
+  if (priv->menu_icon_size == menu_icon_size)
+    return;
+
+  priv->menu_icon_size = menu_icon_size;
+
+  g_object_notify_by_pspec (G_OBJECT (applet),
+                            properties[PROP_MENU_ICON_SIZE]);
+}
+
+static void
+update_panel_icon_size (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+  guint panel_max_icon_size;
+  GtkAllocation allocation;
+  guint panel_size;
+  guint spacing;
+  guint panel_icon_size;
+
+  priv = gp_applet_get_instance_private (applet);
+  panel_max_icon_size = g_settings_get_enum (priv->general_settings,
+                                             "panel-max-icon-size");
+
+  gtk_widget_get_allocation (GTK_WIDGET (applet), &allocation);
+
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+    panel_size = allocation.height;
+  else if (priv->orientation == GTK_ORIENTATION_VERTICAL)
+    panel_size = allocation.width;
+  else
+    g_assert_not_reached ();
+
+  spacing = 4;
+
+  if (panel_size <= panel_max_icon_size + spacing)
+    {
+      if (panel_size < 22 + spacing)
+        panel_icon_size = 16;
+      else if (panel_size < 24 + spacing)
+        panel_icon_size = 22;
+      else if (panel_size < 32 + spacing)
+        panel_icon_size = 24;
+      else if (panel_size < 48 + spacing)
+        panel_icon_size = 32;
+      else if (panel_size < 64 + spacing)
+        panel_icon_size = 48;
+      else
+        panel_icon_size = 64;
+    }
+  else
+    {
+      panel_icon_size = panel_max_icon_size;
+    }
+
+  if (priv->panel_icon_size == panel_icon_size)
+    return;
+
+  priv->panel_icon_size = panel_icon_size;
+
+  g_object_notify_by_pspec (G_OBJECT (applet),
+                            properties[PROP_PANEL_ICON_SIZE]);
+}
+
+static void
+general_settings_changed_cb (GSettings   *settings,
+                             const gchar *key,
+                             GpApplet    *applet)
+{
+  if (key == NULL || g_strcmp0 (key, "enable-tooltips") == 0)
+    update_enable_tooltips (applet);
+
+  if (key == NULL || g_strcmp0 (key, "menu-icon-size") == 0)
+    update_menu_icon_size (applet);
+
+  if (key == NULL || g_strcmp0 (key, "panel-max-icon-size") == 0)
+    update_panel_icon_size (applet);
 }
 
 static gboolean
@@ -297,6 +391,14 @@ gp_applet_get_property (GObject    *object,
         g_value_set_boolean (value, priv->enable_tooltips);
         break;
 
+      case PROP_PANEL_ICON_SIZE:
+        g_value_set_uint (value, priv->panel_icon_size);
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        g_value_set_uint (value, priv->menu_icon_size);
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -345,6 +447,12 @@ gp_applet_set_property (GObject      *object,
         break;
 
       case PROP_ENABLE_TOOLTIPS:
+        break;
+
+      case PROP_PANEL_ICON_SIZE:
+        break;
+
+      case PROP_MENU_ICON_SIZE:
         break;
 
       default:
@@ -428,6 +536,19 @@ gp_applet_get_request_mode (GtkWidget *widget)
 }
 
 static void
+gp_applet_size_allocate (GtkWidget     *widget,
+                         GtkAllocation *allocation)
+{
+  GpApplet *applet;
+
+  applet = GP_APPLET (widget);
+
+  GTK_WIDGET_CLASS (gp_applet_parent_class)->size_allocate (widget, allocation);
+
+  update_panel_icon_size (applet);
+}
+
+static void
 install_properties (GObjectClass *object_class)
 {
   /**
@@ -506,6 +627,28 @@ install_properties (GObjectClass *object_class)
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
                           G_PARAM_STATIC_STRINGS);
 
+  /**
+   * GpApplet:panel-icon-size:
+   *
+   * The size of icons in panels.
+   */
+  properties[PROP_PANEL_ICON_SIZE] =
+    g_param_spec_uint ("panel-icon-size", "Panel Icon Size", "Panel Icon Size",
+                       16, 64, 16,
+                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
+
+  /**
+   * GpApplet:menu-icon-size:
+   *
+   * The size of icons in panels.
+   */
+  properties[PROP_MENU_ICON_SIZE] =
+    g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
+                       16, 24, 16,
+                       G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
+
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }
 
@@ -569,6 +712,7 @@ gp_applet_class_init (GpAppletClass *applet_class)
   widget_class->draw = gp_applet_draw;
   widget_class->focus = gp_applet_focus;
   widget_class->get_request_mode = gp_applet_get_request_mode;
+  widget_class->size_allocate = gp_applet_size_allocate;
 
   install_properties (object_class);
   install_signals ();
@@ -587,10 +731,11 @@ gp_applet_init (GpApplet *applet)
   priv->action_group = g_simple_action_group_new ();
 
   priv->general_settings = g_settings_new ("org.gnome.gnome-panel.general");
-  g_signal_connect (priv->general_settings, "changed::enable-tooltips",
-                    G_CALLBACK (enable_tooltips_cb), applet);
 
-  enable_tooltips_cb (priv->general_settings, "enable-tooltips", applet);
+  g_signal_connect (priv->general_settings, "changed",
+                    G_CALLBACK (general_settings_changed_cb), applet);
+
+  general_settings_changed_cb (priv->general_settings, NULL, applet);
 }
 
 /**
@@ -1070,4 +1215,42 @@ gp_applet_get_menu (GpApplet *applet)
     return NULL;
 
   return gtk_menu_new_from_model (G_MENU_MODEL (object));
+}
+
+/**
+ * gp_applet_get_panel_icon_size:
+ * @applet: a #GpApplet
+ *
+ * Returns the panel icon size.
+ *
+ * Returns: the panel icon size.
+ */
+guint
+gp_applet_get_panel_icon_size (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+
+  g_return_val_if_fail (GP_IS_APPLET (applet), 16);
+  priv = gp_applet_get_instance_private (applet);
+
+  return priv->panel_icon_size;
+}
+
+/**
+ * gp_applet_get_menu_icon_size:
+ * @applet: a #GpApplet
+ *
+ * Returns the menu icon size.
+ *
+ * Returns: the menu icon size.
+ */
+guint
+gp_applet_get_menu_icon_size (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+
+  g_return_val_if_fail (GP_IS_APPLET (applet), 16);
+  priv = gp_applet_get_instance_private (applet);
+
+  return priv->menu_icon_size;
 }
