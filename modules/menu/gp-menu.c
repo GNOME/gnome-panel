@@ -34,6 +34,8 @@ struct _GpMenu
   GMenuTree *tree;
 
   guint      load_id;
+
+  gulong     menu_icon_size_id;
 };
 
 enum
@@ -88,11 +90,13 @@ append_directory (GtkMenuShell  *shell,
   if (icon != NULL)
     {
       GtkWidget *image;
+      guint icon_size;
 
       image = gtk_image_new ();
+      icon_size = gp_applet_get_menu_icon_size (menu->applet);
 
       gtk_image_set_from_gicon (GTK_IMAGE (image), icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), 16);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
 
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
     }
@@ -127,11 +131,13 @@ append_entry (GtkMenuShell  *shell,
   if (icon != NULL)
     {
       GtkWidget *image;
+      guint icon_size;
 
       image = gtk_image_new ();
+      icon_size = gp_applet_get_menu_icon_size (menu->applet);
 
       gtk_image_set_from_gicon (GTK_IMAGE (image), icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), 16);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
 
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
     }
@@ -266,6 +272,14 @@ menu_tree_changed_cb (GMenuTree *tree,
 }
 
 static void
+menu_icon_size_cb (GpApplet   *applet,
+                   GParamSpec *pspec,
+                   GpMenu     *menu)
+{
+  menu_tree_changed_cb (menu->tree, menu);
+}
+
+static void
 gp_menu_constructed (GObject *object)
 {
   GpMenu *menu;
@@ -281,6 +295,11 @@ gp_menu_constructed (GObject *object)
   g_signal_connect (menu->tree, "changed",
                     G_CALLBACK (menu_tree_changed_cb), menu);
 
+  menu->menu_icon_size_id = g_signal_connect (menu->applet,
+                                              "notify::menu-icon-size",
+                                              G_CALLBACK (menu_icon_size_cb),
+                                              menu);
+
   menu_tree_changed_cb (menu->tree, menu);
 }
 
@@ -291,8 +310,6 @@ gp_menu_dispose (GObject *object)
 
   menu = GP_MENU (object);
 
-  menu->applet = NULL;
-
   g_clear_object (&menu->tree);
 
   if (menu->load_id != 0)
@@ -300,6 +317,14 @@ gp_menu_dispose (GObject *object)
       g_source_remove (menu->load_id);
       menu->load_id = 0;
     }
+
+  if (menu->menu_icon_size_id != 0)
+    {
+      g_signal_handler_disconnect (menu->applet, menu->menu_icon_size_id);
+      menu->menu_icon_size_id = 0;
+    }
+
+  menu->applet = NULL;
 
   G_OBJECT_CLASS (gp_menu_parent_class)->dispose (object);
 }
