@@ -7,6 +7,21 @@
     <child name="run-dialog" schema="org.gnome.gnome-panel.run-dialog"/>
   </schema>
 
+  <enum id='org.gnome.gnome-panel.menu-icon-size'>
+    <value nick='16px' value='16'/>
+    <value nick='22px' value='22'/>
+    <value nick='24px' value='24'/>
+  </enum>
+
+  <enum id='org.gnome.gnome-panel.panel-max-icon-size'>
+    <value nick='16px' value='16'/>
+    <value nick='22px' value='22'/>
+    <value nick='24px' value='24'/>
+    <value nick='32px' value='32'/>
+    <value nick='48px' value='48'/>
+    <value nick='64px' value='64'/>
+  </enum>
+
   <enum id='org.gnome.gnome-panel.icon-size'>
     <value nick='16px' value='1'/>
     <value nick='24px' value='3'/>
@@ -25,6 +40,19 @@
       <summary>Confirm panel removal</summary>
       <description>If true, a dialog is shown asking for confirmation if the user wants to remove a panel.</description>
     </key>
+
+    <key name="menu-icon-size" enum="org.gnome.gnome-panel.menu-icon-size">
+      <default>'24px'</default>
+      <summary>Icon size in menus</summary>
+      <description>The size of icons in menus.</description>
+    </key>
+
+    <key name="panel-max-icon-size" enum="org.gnome.gnome-panel.panel-max-icon-size">
+      <default>'48px'</default>
+      <summary>Maximum icon size in panels</summary>
+      <description>The maximum size of icons in panels.</description>
+    </key>
+
     <key name="panel-menu" enum="org.gnome.gnome-panel.icon-size">
       <default>'24px'</default>
       <summary>Icon size in the menus</summary>
