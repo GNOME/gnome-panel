@@ -19,6 +19,7 @@
 #define SN_ITEM_H
 
 #include <gtk/gtk.h>
+#include "sn-applet.h"
 
 G_BEGIN_DECLS
 
@@ -73,6 +74,8 @@ const gchar    *sn_item_get_id          (SnItem *item);
 SnItemCategory  sn_item_get_category    (SnItem *item);
 
 GtkMenu        *sn_item_get_menu        (SnItem *item);
+
+SnApplet       *sn_item_get_applet      (SnItem *item);
 
 const gchar    *sn_item_get_bus_name    (SnItem *item);
 const gchar    *sn_item_get_object_path (SnItem *item);

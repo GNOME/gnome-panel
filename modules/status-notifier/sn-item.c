@@ -22,6 +22,8 @@
 
 typedef struct
 {
+  SnApplet       *applet;
+
   gchar          *bus_name;
   gchar          *object_path;
 
@@ -35,6 +37,8 @@ typedef struct
 enum
 {
   PROP_0,
+
+  PROP_APPLET,
 
   PROP_BUS_NAME,
   PROP_OBJECT_PATH,
@@ -67,6 +71,8 @@ sn_item_dispose (GObject *object)
 
   item = SN_ITEM (object);
   priv = sn_item_get_instance_private (item);
+
+  priv->applet = NULL;
 
   g_clear_object (&priv->menu);
 
@@ -102,6 +108,10 @@ sn_item_get_property (GObject    *object,
 
   switch (property_id)
     {
+      case PROP_APPLET:
+        g_assert_not_reached ();
+        break;
+
       case PROP_BUS_NAME:
         g_value_set_string (value, priv->bus_name);
         break;
@@ -138,6 +148,11 @@ sn_item_set_property (GObject      *object,
 
   switch (property_id)
     {
+      case PROP_APPLET:
+        g_assert (priv->applet == NULL);
+        priv->applet = g_value_get_object (value);
+        break;
+
       case PROP_BUS_NAME:
         priv->bus_name = g_value_dup_string (value);
         break;
@@ -252,6 +267,12 @@ sn_item_ready (SnItem *item)
 static void
 install_properties (GObjectClass *object_class)
 {
+  properties[PROP_APPLET] =
+    g_param_spec_object ("applet", "Applet", "Applet",
+                         SN_TYPE_APPLET,
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                         G_PARAM_STATIC_STRINGS);
+
   properties[PROP_BUS_NAME] =
     g_param_spec_string ("bus-name", "bus-name", "bus-name", NULL,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
@@ -347,6 +368,16 @@ sn_item_get_menu (SnItem *item)
   priv = sn_item_get_instance_private (item);
 
   return priv->menu;
+}
+
+SnApplet *
+sn_item_get_applet (SnItem *item)
+{
+  SnItemPrivate *priv;
+
+  priv = sn_item_get_instance_private (item);
+
+  return priv->applet;
 }
 
 const gchar *

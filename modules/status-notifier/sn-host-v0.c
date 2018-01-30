@@ -120,7 +120,7 @@ add_registered_item (SnHostV0    *v0,
 
   get_bus_name_and_object_path (service, &bus_name, &object_path);
 
-  item = sn_item_v0_new (bus_name, object_path);
+  item = sn_item_v0_new (v0->applet, bus_name, object_path);
   g_object_ref_sink (item);
 
   v0->items = g_slist_prepend (v0->items, item);

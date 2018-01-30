@@ -1286,10 +1286,12 @@ sn_item_v0_init (SnItemV0 *v0)
 }
 
 SnItem *
-sn_item_v0_new (const gchar *bus_name,
+sn_item_v0_new (SnApplet    *applet,
+                const gchar *bus_name,
                 const gchar *object_path)
 {
   return g_object_new (SN_TYPE_ITEM_V0,
+                       "applet", applet,
                        "bus-name", bus_name,
                        "object-path", object_path,
                        NULL);
