@@ -84,14 +84,30 @@ get_applications_menu (void)
 }
 
 static void
+panel_icon_size_cb (GpApplet   *applet,
+                    GParamSpec *pspec,
+                    GtkWidget  *icon)
+{
+  guint icon_size;
+
+  icon_size = gp_applet_get_panel_icon_size (applet);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+}
+
+static void
 append_applications_item (GpMenuBarApplet *applet)
 {
+  guint icon_size;
   GtkWidget *icon;
   const gchar *tooltip;
   gchar *menu;
 
+  icon_size = gp_applet_get_panel_icon_size (GP_APPLET (applet));
   icon = gtk_image_new_from_icon_name ("start-here", GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), 16);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+
+  g_signal_connect (applet, "notify::panel-icon-size",
+                    G_CALLBACK (panel_icon_size_cb), icon);
 
   applet->applications_item = gp_image_menu_item_new_with_label (_("Applications"));
   gtk_menu_shell_append (GTK_MENU_SHELL (applet->menu_bar), applet->applications_item);
