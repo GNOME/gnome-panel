@@ -31,6 +31,8 @@ struct _SnHostV0
 {
   SnHostV0GenSkeleton  parent;
 
+  SnApplet            *applet;
+
   gchar               *bus_name;
   gchar               *object_path;
   guint                bus_name_id;
@@ -41,6 +43,15 @@ struct _SnHostV0
   SnWatcherV0Gen      *watcher;
 
   GSList              *items;
+};
+
+enum
+{
+  PROP_0,
+
+  PROP_APPLET,
+
+  LAST_PROP
 };
 
 static void sn_host_v0_gen_init (SnHostV0GenIface *iface);
@@ -324,11 +335,28 @@ bus_acquired_cb (GDBusConnection *connection,
 }
 
 static void
+sn_host_v0_constructed (GObject *object)
+{
+  SnHostV0 *v0;
+  GBusNameOwnerFlags flags;
+
+  G_OBJECT_CLASS (sn_host_v0_parent_class)->constructed (object);
+
+  v0 = SN_HOST_V0 (object);
+  flags = G_BUS_NAME_OWNER_FLAGS_NONE;
+
+  v0->bus_name_id = g_bus_own_name (G_BUS_TYPE_SESSION, v0->bus_name, flags,
+                                    bus_acquired_cb, NULL, NULL, v0, NULL);
+}
+
+static void
 sn_host_v0_dispose (GObject *object)
 {
   SnHostV0 *v0;
 
   v0 = SN_HOST_V0 (object);
+
+  v0->applet = NULL;
 
   if (v0->bus_name_id > 0)
     {
@@ -371,34 +399,56 @@ sn_host_v0_finalize (GObject *object)
 }
 
 static void
+sn_host_v0_set_property (GObject      *object,
+                         guint         property_id,
+                         const GValue *value,
+                         GParamSpec   *pspec)
+{
+  SnHostV0 *v0;
+
+  v0 = SN_HOST_V0 (object);
+
+  switch (property_id)
+    {
+      case PROP_APPLET:
+        g_assert (v0->applet == NULL);
+        v0->applet = g_value_get_object (value);
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
+}
+
+static void
 sn_host_v0_class_init (SnHostV0Class *v0_class)
 {
   GObjectClass *object_class;
 
   object_class = G_OBJECT_CLASS (v0_class);
 
+  object_class->constructed = sn_host_v0_constructed;
   object_class->dispose = sn_host_v0_dispose;
   object_class->finalize = sn_host_v0_finalize;
+  object_class->set_property = sn_host_v0_set_property;
+
+  g_object_class_override_property (object_class, PROP_APPLET, "applet");
 }
 
 static void
 sn_host_v0_init (SnHostV0 *v0)
 {
-  GBusNameOwnerFlags flags;
   static guint id;
 
-  flags = G_BUS_NAME_OWNER_FLAGS_NONE;
   id++;
 
   v0->bus_name = g_strdup_printf ("%s-%d-%d", SN_HOST_BUS_NAME, getpid (), id);
-  v0->object_path = g_strdup_printf ("%s/%d", SN_HOST_OBJECT_PATH,id);
-
-  v0->bus_name_id = g_bus_own_name (G_BUS_TYPE_SESSION, v0->bus_name, flags,
-                                    bus_acquired_cb, NULL, NULL, v0, NULL);
+  v0->object_path = g_strdup_printf ("%s/%d", SN_HOST_OBJECT_PATH, id);
 }
 
 SnHost *
-sn_host_v0_new (void)
+sn_host_v0_new (SnApplet *applet)
 {
-  return g_object_new (SN_TYPE_HOST_V0, NULL);
+  return g_object_new (SN_TYPE_HOST_V0, "applet", applet, NULL);
 }

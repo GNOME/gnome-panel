@@ -272,7 +272,7 @@ sn_applet_constructed (GObject *object)
   G_OBJECT_CLASS (sn_applet_parent_class)->constructed (object);
   sn = SN_APPLET (object);
 
-  host = sn_host_v0_new ();
+  host = sn_host_v0_new (sn);
   sn->hosts = g_slist_prepend (sn->hosts, host);
 
   g_signal_connect (host, "item-added", G_CALLBACK (item_added_cb), sn);

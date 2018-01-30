@@ -18,6 +18,7 @@
 #ifndef SN_HOST_V0_H
 #define SN_HOST_V0_H
 
+#include "sn-applet.h"
 #include "sn-host.h"
 #include "sn-host-v0-gen.h"
 
@@ -26,7 +27,7 @@ G_BEGIN_DECLS
 #define SN_TYPE_HOST_V0 sn_host_v0_get_type ()
 G_DECLARE_FINAL_TYPE (SnHostV0, sn_host_v0, SN, HOST_V0, SnHostV0GenSkeleton)
 
-SnHost *sn_host_v0_new (void);
+SnHost *sn_host_v0_new (SnApplet *applet);
 
 G_END_DECLS
 

@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include "sn-applet.h"
 #include "sn-host.h"
 #include "sn-item.h"
 
@@ -35,6 +36,15 @@ G_DEFINE_INTERFACE (SnHost, sn_host, G_TYPE_OBJECT)
 static void
 sn_host_default_init (SnHostInterface *iface)
 {
+  GParamSpec *spec;
+
+  spec = g_param_spec_object ("applet", "Applet", "Applet",
+                              SN_TYPE_APPLET,
+                              G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                              G_PARAM_STATIC_STRINGS);
+
+  g_object_interface_install_property (iface, spec);
+
   signals[SIGNAL_ITEM_ADDED] =
     g_signal_new ("item-added", G_TYPE_FROM_INTERFACE (iface),
                   G_SIGNAL_RUN_LAST, 0, NULL, NULL, NULL,
