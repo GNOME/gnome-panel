@@ -45,7 +45,6 @@ struct _SnItemV0
   SnItem         parent;
 
   GtkWidget     *image;
-  gint           size;
 
   GCancellable  *cancellable;
   SnItemV0Gen   *proxy;
@@ -69,6 +68,8 @@ struct _SnItemV0
   gboolean       item_is_menu;
 
   guint          update_id;
+
+  gulong         panel_icon_size_id;
 };
 
 G_DEFINE_TYPE (SnItemV0, sn_item_v0, SN_TYPE_ITEM)
@@ -217,10 +218,15 @@ static void
 update (SnItemV0 *v0)
 {
   GtkImage *image;
+  SnApplet *applet;
+  guint icon_size;
   SnTooltip *tip;
   gboolean visible;
 
   image = GTK_IMAGE (v0->image);
+
+  applet = sn_item_get_applet (SN_ITEM (v0));
+  icon_size = gp_applet_get_panel_icon_size (GP_APPLET (applet));
 
   if (v0->icon_name != NULL && *v0->icon_name != '\0')
     {
@@ -230,20 +236,20 @@ update (SnItemV0 *v0)
 
       gtk_icon_theme_rescan_if_needed (icon_theme);
       gtk_image_set_from_icon_name (image, v0->icon_name, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (image, v0->size);
+      gtk_image_set_pixel_size (image, icon_size);
     }
   else if (v0->icon_pixmap != NULL && v0->icon_pixmap[0] != NULL)
     {
       cairo_surface_t *surface;
 
-      surface = get_surface (v0, sn_item_get_orientation (SN_ITEM (v0)), v0->size);
+      surface = get_surface (v0, sn_item_get_orientation (SN_ITEM (v0)), icon_size);
       gtk_image_set_from_surface (image, surface);
       cairo_surface_destroy (surface);
     }
   else
     {
       gtk_image_set_from_icon_name (image, "image-missing", GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (image, v0->size);
+      gtk_image_set_pixel_size (image, icon_size);
     }
 
   tip = v0->tooltip;
@@ -273,9 +279,6 @@ update (SnItemV0 *v0)
 
       if (markup != NULL)
         {
-          SnApplet *applet;
-
-          applet = sn_item_get_applet (SN_ITEM (v0));
           g_object_bind_property (applet, "enable-tooltips",
                                   v0, "has-tooltip",
                                   G_BINDING_DEFAULT |
@@ -861,6 +864,14 @@ g_signal_cb (GDBusProxy *proxy,
 }
 
 static void
+panel_icon_size_cb (GpApplet   *applet,
+                    GParamSpec *pspec,
+                    SnItemV0   *v0)
+{
+  queue_update (v0);
+}
+
+static void
 get_all_cb (GObject      *source_object,
             GAsyncResult *res,
             gpointer      user_data)
@@ -871,6 +882,7 @@ get_all_cb (GObject      *source_object,
   GVariantIter *iter;
   gchar *key;
   GVariant *value;
+  SnApplet *applet;
 
   error = NULL;
   properties = g_dbus_connection_call_finish (G_DBUS_CONNECTION (source_object),
@@ -972,6 +984,10 @@ get_all_cb (GObject      *source_object,
   g_signal_connect (v0->proxy, "g-signal",
                     G_CALLBACK (g_signal_cb), v0);
 
+  applet = sn_item_get_applet (SN_ITEM (v0));
+  v0->panel_icon_size_id = g_signal_connect (applet, "notify::panel-icon-size",
+                                             G_CALLBACK (panel_icon_size_cb), v0);
+
   update (v0);
   sn_item_emit_ready (SN_ITEM (v0));
 }
@@ -1051,6 +1067,16 @@ sn_item_v0_dispose (GObject *object)
       v0->update_id = 0;
     }
 
+  if (v0->panel_icon_size_id != 0)
+    {
+      SnApplet *applet;
+
+      applet = sn_item_get_applet (SN_ITEM (v0));
+
+      g_signal_handler_disconnect (applet, v0->panel_icon_size_id);
+      v0->panel_icon_size_id = 0;
+    }
+
   G_OBJECT_CLASS (sn_item_v0_parent_class)->dispose (object);
 }
 
@@ -1078,38 +1104,6 @@ sn_item_v0_finalize (GObject *object)
   g_clear_pointer (&v0->menu, g_free);
 
   G_OBJECT_CLASS (sn_item_v0_parent_class)->finalize (object);
-}
-
-static void
-sn_item_v0_size_allocate (GtkWidget     *widget,
-                          GtkAllocation *allocation)
-{
-  SnItemV0 *v0;
-  GtkStyleContext *context;
-  GtkStateFlags flags;
-  GtkBorder padding;
-  gint size;
-
-  v0 = SN_ITEM_V0 (widget);
-  context = gtk_widget_get_style_context (widget);
-  flags = gtk_style_context_get_state (context);
-
-  GTK_WIDGET_CLASS (sn_item_v0_parent_class)->size_allocate (widget, allocation);
-
-  gtk_style_context_get_padding (context, flags, &padding);
-
-  if (sn_item_get_orientation (SN_ITEM (v0)) == GTK_ORIENTATION_HORIZONTAL)
-    size = allocation->height - padding.top - padding.bottom;
-  else
-    size = allocation->width - padding.left - padding.right;
-
-  size = MAX (size, 16);
-  if (v0->size == size)
-    return;
-
-  v0->size = size;
-
-  queue_update (v0);
 }
 
 static const gchar *
@@ -1268,8 +1262,6 @@ sn_item_v0_class_init (SnItemV0Class *v0_class)
   object_class->constructed = sn_item_v0_constructed;
   object_class->dispose = sn_item_v0_dispose;
   object_class->finalize = sn_item_v0_finalize;
-
-  widget_class->size_allocate = sn_item_v0_size_allocate;
 
   item_class->get_id = sn_item_v0_get_id;
   item_class->get_category = sn_item_v0_get_category;
