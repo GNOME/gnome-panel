@@ -31,6 +31,8 @@ menu_la_SOURCES = \
 	gp-menu-utils.h \
 	gp-menu.c \
 	gp-menu.h \
+	gp-places-menu.c \
+	gp-places-menu.h \
 	gp-user-menu-applet.c \
 	gp-user-menu-applet.h \
 	$(BUILT_SOURCES) \
