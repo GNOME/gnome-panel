@@ -19,6 +19,7 @@
 #define SN_DUBS_MENU_ITEM_H
 
 #include <gtk/gtk.h>
+#include "sn-applet.h"
 
 G_BEGIN_DECLS
 
@@ -30,6 +31,8 @@ typedef struct
 
 typedef struct
 {
+  SnApplet    *applet;
+
   gchar       *accessible_desc;
   gchar       *children_display;
   gchar       *disposition;
@@ -47,9 +50,12 @@ typedef struct
   GtkMenu     *submenu;
 
   gulong       activate_id;
+
+  gulong       menu_icon_size_id;
 } SnDBusMenuItem;
 
-SnDBusMenuItem *sn_dbus_menu_item_new          (GVariant       *props);
+SnDBusMenuItem *sn_dbus_menu_item_new          (SnApplet       *applet,
+                                                GVariant       *props);
 
 void            sn_dubs_menu_item_free         (gpointer        data);
 

@@ -19,13 +19,15 @@
 #define SN_DBUS_MENU_H
 
 #include <gtk/gtk.h>
+#include "sn-applet.h"
 
 G_BEGIN_DECLS
 
 #define SN_TYPE_DBUS_MENU sn_dbus_menu_get_type ()
 G_DECLARE_FINAL_TYPE (SnDBusMenu, sn_dbus_menu, SN, DBUS_MENU, GtkMenu)
 
-GtkMenu *sn_dbus_menu_new (const gchar *bus_name,
+GtkMenu *sn_dbus_menu_new (SnApplet    *applet,
+                           const gchar *bus_name,
                            const gchar *object_path);
 
 G_END_DECLS

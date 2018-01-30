@@ -248,7 +248,7 @@ sn_item_ready (SnItem *item)
     return;
 
   priv = sn_item_get_instance_private (item);
-  priv->menu = sn_dbus_menu_new (priv->bus_name, menu);
+  priv->menu = sn_dbus_menu_new (priv->applet, priv->bus_name, menu);
   g_object_ref_sink (priv->menu);
 }
 

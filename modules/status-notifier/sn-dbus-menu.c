@@ -25,6 +25,8 @@ struct _SnDBusMenu
 {
   GtkMenu        parent;
 
+  SnApplet      *applet;
+
   GHashTable    *items;
 
   GCancellable  *cancellable;
@@ -39,6 +41,8 @@ struct _SnDBusMenu
 enum
 {
   PROP_0,
+
+  PROP_APPLET,
 
   PROP_BUS_NAME,
   PROP_OBJECT_PATH,
@@ -97,7 +101,7 @@ layout_update_item (SnDBusMenu *menu,
 
   if (item == NULL)
     {
-      item = sn_dbus_menu_item_new (props);
+      item = sn_dbus_menu_item_new (menu->applet, props);
 
       g_object_set_data (G_OBJECT (item->item), "item-id", GUINT_TO_POINTER (id));
       gtk_menu_shell_append (GTK_MENU_SHELL (gtk_menu), item->item);
@@ -378,6 +382,8 @@ sn_dbus_menu_dispose (GObject *object)
 
   menu = SN_DBUS_MENU (object);
 
+  menu->applet = NULL;
+
   if (menu->name_id > 0)
     {
       g_bus_unwatch_name (menu->name_id);
@@ -418,6 +424,11 @@ sn_dbus_menu_set_property (GObject      *object,
 
   switch (property_id)
     {
+      case PROP_APPLET:
+        g_assert (menu->applet == NULL);
+        menu->applet = g_value_get_object (value);
+        break;
+
       case PROP_BUS_NAME:
         menu->bus_name = g_value_dup_string (value);
         break;
@@ -435,6 +446,12 @@ sn_dbus_menu_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
+  properties[PROP_APPLET] =
+    g_param_spec_object ("applet", "Applet", "Applet",
+                         SN_TYPE_APPLET,
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                         G_PARAM_STATIC_STRINGS);
+
   properties[PROP_BUS_NAME] =
     g_param_spec_string ("bus-name", "bus-name", "bus-name", NULL,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
@@ -471,10 +488,12 @@ sn_dbus_menu_init (SnDBusMenu *menu)
 }
 
 GtkMenu *
-sn_dbus_menu_new (const gchar *bus_name,
+sn_dbus_menu_new (SnApplet    *applet,
+                  const gchar *bus_name,
                   const gchar *object_path)
 {
   return g_object_new (SN_TYPE_DBUS_MENU,
+                       "applet", applet,
                        "bus-name", bus_name,
                        "object-path", object_path,
                        NULL);

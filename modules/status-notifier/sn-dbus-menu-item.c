@@ -23,14 +23,15 @@
 
 static void
 set_image_from_icon_name (GpImageMenuItem *item,
-                          const gchar     *icon_name)
+                          const gchar     *icon_name,
+                          guint            icon_size)
 {
   GtkWidget *image;
 
   image = gtk_image_new ();
 
   gtk_image_set_from_icon_name (GTK_IMAGE (image), icon_name, GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 16);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
 
   gp_image_menu_item_set_image (item, image);
 }
@@ -61,14 +62,15 @@ get_pixbuf_at_size (GdkPixbuf *pixbuf,
 
 static void
 set_image_from_pixbuf (GpImageMenuItem *item,
-                       GdkPixbuf       *pixbuf)
+                       GdkPixbuf       *pixbuf,
+                       guint            icon_size)
 {
   GtkWidget *image;
   GdkPixbuf *tmp;
 
   image = gtk_image_new ();
 
-  tmp = get_pixbuf_at_size (pixbuf, 16);
+  tmp = get_pixbuf_at_size (pixbuf, icon_size);
   gtk_image_set_from_pixbuf (GTK_IMAGE (image), tmp);
   g_object_unref (tmp);
 
@@ -79,16 +81,18 @@ static void
 update_icon (SnDBusMenuItem *item)
 {
   GpImageMenuItem *menu_item;
+  guint icon_size;
 
   if (!GP_IS_IMAGE_MENU_ITEM (item->item))
     return;
 
   menu_item = GP_IMAGE_MENU_ITEM (item->item);
+  icon_size = gp_applet_get_menu_icon_size (GP_APPLET (item->applet));
 
   if (item->icon_name)
-    set_image_from_icon_name (menu_item, item->icon_name);
+    set_image_from_icon_name (menu_item, item->icon_name, icon_size);
   else if (item->icon_data)
-    set_image_from_pixbuf (menu_item, item->icon_data);
+    set_image_from_pixbuf (menu_item, item->icon_data, icon_size);
   else
     gp_image_menu_item_set_image (menu_item, NULL);
 }
@@ -195,8 +199,17 @@ sn_shortcuts_free (SnShortcut **shortcuts)
   g_free (shortcuts);
 }
 
+static void
+menu_icon_size_cb (GpApplet       *applet,
+                   GParamSpec     *pspec,
+                   SnDBusMenuItem *item)
+{
+  update_icon (item);
+}
+
 SnDBusMenuItem *
-sn_dbus_menu_item_new (GVariant *props)
+sn_dbus_menu_item_new (SnApplet *applet,
+                       GVariant *props)
 {
   SnDBusMenuItem *item;
   GVariantIter iter;
@@ -204,6 +217,8 @@ sn_dbus_menu_item_new (GVariant *props)
   GVariant *value;
 
   item = g_new0 (SnDBusMenuItem, 1);
+
+  item->applet = applet;
 
   item->enabled = TRUE;
   item->toggle_state = -1;
@@ -268,6 +283,11 @@ sn_dbus_menu_item_new (GVariant *props)
         {
           item->item = gp_image_menu_item_new ();
 
+          item->menu_icon_size_id = g_signal_connect (item->applet,
+                                                      "notify::menu-icon-size",
+                                                      G_CALLBACK (menu_icon_size_cb),
+                                                      item);
+
           update_icon (item);
         }
 
@@ -322,6 +342,12 @@ sn_dubs_menu_item_free (gpointer data)
   item = (SnDBusMenuItem *) data;
   if (item == NULL)
     return;
+
+  if (item->menu_icon_size_id != 0)
+    {
+      g_signal_handler_disconnect (item->applet, item->menu_icon_size_id);
+      item->menu_icon_size_id = 0;
+    }
 
   g_clear_pointer (&item->accessible_desc, g_free);
   g_clear_pointer (&item->children_display, g_free);
