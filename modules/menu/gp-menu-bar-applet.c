@@ -25,6 +25,7 @@
 #include "gp-menu-bar.h"
 #include "gp-menu-utils.h"
 #include "gp-menu.h"
+#include "gp-places-menu.h"
 
 #define RESOURCE_PATH "/org/gnome/gnome-panel/modules/menu"
 
@@ -36,6 +37,9 @@ struct _GpMenuBarApplet
 
   GtkWidget *applications_item;
   GtkWidget *applications_menu;
+
+  GtkWidget *places_item;
+  GtkWidget *places_menu;
 };
 
 static void gp_action_interface_init (GpActionInterface *iface);
@@ -130,6 +134,26 @@ append_applications_item (GpMenuBarApplet *applet)
 }
 
 static void
+append_places_item (GpMenuBarApplet *applet)
+{
+  const gchar *tooltip;
+
+  applet->places_item = gtk_menu_item_new_with_label (_("Places"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (applet->menu_bar), applet->places_item);
+  gtk_widget_show (applet->places_item);
+
+  tooltip = _("Access documents, folders and network places");
+  gtk_widget_set_tooltip_text (applet->places_item, tooltip);
+
+  applet->places_menu = gp_places_menu_new (GP_APPLET (applet));
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->places_item),
+                             applet->places_menu);
+
+  g_signal_connect (applet->places_menu, "button-press-event",
+                    G_CALLBACK (button_press_event_cb), NULL);
+}
+
+static void
 edit_menus_cb (GSimpleAction *action,
                GVariant      *parameter,
                gpointer       user_data)
@@ -199,6 +223,7 @@ gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   append_applications_item (menu_bar);
+  append_places_item (menu_bar);
 
   setup_menu (menu_bar);
 }
