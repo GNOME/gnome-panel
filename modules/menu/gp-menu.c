@@ -35,6 +35,7 @@ struct _GpMenu
 
   guint      load_id;
 
+  gulong     locked_down_id;
   gulong     menu_icon_size_id;
 };
 
@@ -105,6 +106,33 @@ append_directory (GtkMenuShell  *shell,
 }
 
 static void
+drag_data_get_cb (GtkWidget        *widget,
+                  GdkDragContext   *context,
+                  GtkSelectionData *selection_data,
+                  guint             info,
+                  guint             time,
+                  GDesktopAppInfo  *app_info)
+{
+  const gchar *filename;
+  gchar *uris[2];
+
+  filename = g_desktop_app_info_get_filename (app_info);
+  if (filename == NULL)
+    return;
+
+  uris[0] = g_filename_to_uri (filename, NULL, NULL);
+  uris[1] = NULL;
+
+  gtk_selection_data_set_uris (selection_data, uris);
+  g_free (uris[0]);
+}
+
+static const GtkTargetEntry drag_targets[] =
+  {
+    { (gchar *) "text/uri-list", 0, 0 }
+  };
+
+static void
 append_entry (GtkMenuShell  *shell,
               GMenuTreeIter *iter,
               GpMenu        *menu)
@@ -153,6 +181,22 @@ append_entry (GtkMenuShell  *shell,
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
+    }
+
+  if (!gp_applet_get_locked_down (menu->applet))
+    {
+      gtk_drag_source_set (item, GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                           drag_targets, G_N_ELEMENTS (drag_targets),
+                           GDK_ACTION_COPY);
+
+      if (icon != NULL)
+        gtk_drag_source_set_icon_gicon (item, icon);
+
+      g_signal_connect_data (item, "drag-data-get",
+                             G_CALLBACK (drag_data_get_cb),
+                             g_object_ref (info),
+                             (GClosureNotify) g_object_unref,
+                             0);
     }
 
   g_signal_connect (item, "activate", G_CALLBACK (activate_cb), info);
@@ -272,6 +316,14 @@ menu_tree_changed_cb (GMenuTree *tree,
 }
 
 static void
+locked_down_cb (GpApplet   *applet,
+                GParamSpec *pspec,
+                GpMenu     *menu)
+{
+  menu_tree_changed_cb (menu->tree, menu);
+}
+
+static void
 menu_icon_size_cb (GpApplet   *applet,
                    GParamSpec *pspec,
                    GpMenu     *menu)
@@ -295,6 +347,9 @@ gp_menu_constructed (GObject *object)
   g_signal_connect (menu->tree, "changed",
                     G_CALLBACK (menu_tree_changed_cb), menu);
 
+  menu->locked_down_id = g_signal_connect (menu->applet, "notify::locked-down",
+                                           G_CALLBACK (locked_down_cb), menu);
+
   menu->menu_icon_size_id = g_signal_connect (menu->applet,
                                               "notify::menu-icon-size",
                                               G_CALLBACK (menu_icon_size_cb),
@@ -316,6 +371,12 @@ gp_menu_dispose (GObject *object)
     {
       g_source_remove (menu->load_id);
       menu->load_id = 0;
+    }
+
+  if (menu->locked_down_id != 0)
+    {
+      g_signal_handler_disconnect (menu->applet, menu->locked_down_id);
+      menu->locked_down_id = 0;
     }
 
   if (menu->menu_icon_size_id != 0)
