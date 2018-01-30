@@ -29,8 +29,6 @@ typedef struct
 
   GtkOrientation  orientation;
 
-  gboolean        enable_tooltips;
-
   GtkMenu        *menu;
 } SnItemPrivate;
 
@@ -44,8 +42,6 @@ enum
   PROP_OBJECT_PATH,
 
   PROP_ORIENTATION,
-
-  PROP_ENABLE_TOOLTIPS,
 
   LAST_PROP
 };
@@ -124,10 +120,6 @@ sn_item_get_property (GObject    *object,
         g_value_set_enum (value, priv->orientation);
         break;
 
-      case PROP_ENABLE_TOOLTIPS:
-        g_value_set_boolean (value, priv->enable_tooltips);
-        break;
-
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -163,10 +155,6 @@ sn_item_set_property (GObject      *object,
 
       case PROP_ORIENTATION:
         priv->orientation = g_value_get_enum (value);
-        break;
-
-      case PROP_ENABLE_TOOLTIPS:
-        priv->enable_tooltips = g_value_get_boolean (value);
         break;
 
       default:
@@ -287,12 +275,6 @@ install_properties (GObjectClass *object_class)
     g_param_spec_enum ("orientation", "orientation", "orientation",
                        GTK_TYPE_ORIENTATION, GTK_ORIENTATION_HORIZONTAL,
                        G_PARAM_WRITABLE | G_PARAM_STATIC_STRINGS);
-
-  properties[PROP_ENABLE_TOOLTIPS] =
-    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
-                          TRUE,
-                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
-                          G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP, properties);
 }

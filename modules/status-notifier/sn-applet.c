@@ -244,11 +244,6 @@ item_added_cb (SnHost   *host,
   g_signal_connect (item, "clicked",
                     G_CALLBACK (clicked_cb), sn);
 
-  g_object_bind_property (sn, "enable-tooltips",
-                          item, "enable-tooltips",
-                          G_BINDING_DEFAULT |
-                          G_BINDING_SYNC_CREATE);
-
   g_object_bind_property (sn->box, "orientation",
                           item, "orientation",
                           G_BINDING_DEFAULT);
