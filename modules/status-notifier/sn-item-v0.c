@@ -270,6 +270,17 @@ update (SnItemV0 *v0)
 
       gtk_widget_set_tooltip_markup (GTK_WIDGET (v0), markup);
       g_free (markup);
+
+      if (markup != NULL)
+        {
+          SnApplet *applet;
+
+          applet = sn_item_get_applet (SN_ITEM (v0));
+          g_object_bind_property (applet, "enable-tooltips",
+                                  v0, "has-tooltip",
+                                  G_BINDING_DEFAULT |
+                                  G_BINDING_SYNC_CREATE);
+        }
     }
   else
     {
