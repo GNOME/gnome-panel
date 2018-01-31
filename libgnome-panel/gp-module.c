@@ -606,6 +606,6 @@ gp_module_applet_new (GpModule     *module,
   return g_object_new (type,
                        "id", applet,
                        "settings-path", settings_path,
-                       "translation-domain", module->gettext_domain,
+                       "gettext-domain", module->gettext_domain,
                        NULL);
 }

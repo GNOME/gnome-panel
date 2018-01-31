@@ -62,7 +62,7 @@ typedef struct
 
   gchar              *id;
   gchar              *settings_path;
-  gchar              *translation_domain;
+  gchar              *gettext_domain;
   gboolean            locked_down;
   GtkOrientation      orientation;
   GtkPositionType     position;
@@ -86,7 +86,7 @@ enum
 
   PROP_ID,
   PROP_SETTINGS_PATH,
-  PROP_TRANSLATION_DOMAIN,
+  PROP_GETTEXT_DOMAIN,
   PROP_LOCKED_DOWN,
   PROP_ORIENTATION,
   PROP_POSITION,
@@ -300,7 +300,7 @@ gp_applet_constructed (GObject *object)
   applet = GP_APPLET (object);
   priv = gp_applet_get_instance_private (applet);
 
-  gtk_builder_set_translation_domain (priv->builder, priv->translation_domain);
+  gtk_builder_set_translation_domain (priv->builder, priv->gettext_domain);
 
   group = G_ACTION_GROUP (priv->action_group);
   gtk_widget_insert_action_group (GTK_WIDGET (applet), priv->id, group);
@@ -343,7 +343,7 @@ gp_applet_finalize (GObject *object)
 
   g_clear_pointer (&priv->id, g_free);
   g_clear_pointer (&priv->settings_path, g_free);
-  g_clear_pointer (&priv->translation_domain, g_free);
+  g_clear_pointer (&priv->gettext_domain, g_free);
   g_clear_pointer (&priv->size_hints, gp_size_hints_free);
 
   G_OBJECT_CLASS (gp_applet_parent_class)->finalize (object);
@@ -371,8 +371,8 @@ gp_applet_get_property (GObject    *object,
         g_value_set_string (value, priv->settings_path);
         break;
 
-      case PROP_TRANSLATION_DOMAIN:
-        g_value_set_string (value, priv->translation_domain);
+      case PROP_GETTEXT_DOMAIN:
+        g_value_set_string (value, priv->gettext_domain);
         break;
 
       case PROP_LOCKED_DOWN:
@@ -429,9 +429,9 @@ gp_applet_set_property (GObject      *object,
         priv->settings_path = g_value_dup_string (value);
         break;
 
-      case PROP_TRANSLATION_DOMAIN:
-        g_assert (priv->translation_domain == NULL);
-        priv->translation_domain = g_value_dup_string (value);
+      case PROP_GETTEXT_DOMAIN:
+        g_assert (priv->gettext_domain == NULL);
+        priv->gettext_domain = g_value_dup_string (value);
         break;
 
       case PROP_LOCKED_DOWN:
@@ -573,13 +573,13 @@ install_properties (GObjectClass *object_class)
                          G_PARAM_STATIC_STRINGS);
 
   /**
-   * GpApplet:translation-domain:
+   * GpApplet:gettext-domain:
    *
-   * The translation domain.
+   * The gettext domain.
    */
-  properties[PROP_TRANSLATION_DOMAIN] =
-    g_param_spec_string ("translation-domain", "Translation Domain",
-                         "Translation Domain", NULL,
+  properties[PROP_GETTEXT_DOMAIN] =
+    g_param_spec_string ("gettext-domain", "Gettext Domain",
+                         "Gettext Domain", NULL,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE |
                          G_PARAM_STATIC_STRINGS);
 
