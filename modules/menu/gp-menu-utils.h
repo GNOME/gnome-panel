@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-void gp_menu_launch_app_info (GDesktopAppInfo *app_info);
+void gp_menu_utils_launch_app_info (GDesktopAppInfo *app_info);
 
 G_END_DECLS
 
