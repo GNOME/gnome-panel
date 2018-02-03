@@ -23,6 +23,69 @@
 
 #include "gp-menu-utils.h"
 
+static GFile *
+get_file_root (GFile *file)
+{
+  GFile *parent;
+
+  g_object_ref (file);
+  while ((parent = g_file_get_parent (file)) != NULL)
+    {
+      g_object_unref (file);
+      file = parent;
+    }
+
+  return file;
+}
+
+static GIcon *
+get_icon_if_mount (GFile *file)
+{
+  GMount *mount;
+  GIcon *icon;
+
+  mount = g_file_find_enclosing_mount (file, NULL, NULL);
+  if (mount == NULL)
+    return NULL;
+
+  icon = g_mount_get_icon (mount);
+  g_object_unref (mount);
+
+  return icon;
+}
+
+static GIcon *
+get_icon_if_trash (GFile *file)
+{
+  gchar *uri;
+  gboolean is_trash;
+  GFile *root;
+  GFileQueryInfoFlags flags;
+  GFileInfo *info;
+  GIcon *icon;
+
+  uri = g_file_get_uri (file);
+  is_trash = g_str_has_prefix (uri, "trash:");
+  g_free (uri);
+
+  if (!is_trash)
+    return NULL;
+
+  root = get_file_root (file);
+  flags = G_FILE_QUERY_INFO_NONE;
+
+  info = g_file_query_info (root, "standard::icon", flags, NULL, NULL);
+  g_object_unref (root);
+
+  if (info == NULL)
+    return NULL;
+
+  icon = g_object_ref (g_file_info_get_icon (info));
+  g_object_unref (info);
+
+  return icon;
+}
+
 static void
 child_setup (gpointer user_data)
 {
@@ -92,4 +155,31 @@ gp_menu_utils_launch_app_info (GDesktopAppInfo *app_info)
     }
 
   g_clear_error (&error);
+}
+
+GIcon *
+gp_menu_utils_get_icon_for_file (GFile *file)
+{
+  GIcon *icon;
+  GFileQueryInfoFlags flags;
+  GFileInfo *info;
+
+  icon = get_icon_if_mount (file);
+  if (icon != NULL)
+    return icon;
+
+  icon = get_icon_if_trash (file);
+  if (icon != NULL)
+    return icon;
+
+  flags = G_FILE_QUERY_INFO_NONE;
+  info = g_file_query_info (file, "standard::icon", flags, NULL, NULL);
+
+  if (info == NULL)
+    return NULL;
+
+  icon = g_object_ref (g_file_info_get_icon (info));
+  g_object_unref (info);
+
+  return icon;
 }

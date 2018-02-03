@@ -22,7 +22,9 @@
 
 G_BEGIN_DECLS
 
-void gp_menu_utils_launch_app_info (GDesktopAppInfo *app_info);
+void   gp_menu_utils_launch_app_info   (GDesktopAppInfo *app_info);
+
+GIcon *gp_menu_utils_get_icon_for_file (GFile           *file);
 
 G_END_DECLS
 
