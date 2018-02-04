@@ -40,6 +40,9 @@ struct _GpMenuBarApplet
 
   GtkWidget *places_item;
   GtkWidget *places_menu;
+
+  GtkWidget *system_item;
+  GtkWidget *system_menu;
 };
 
 static void gp_action_interface_init (GpActionInterface *iface);
@@ -85,6 +88,18 @@ get_applications_menu (void)
     return g_strdup ("gnome-applications.menu");
 
   return g_strdup_printf ("%sapplications.menu", xdg_menu_prefx);
+}
+
+static gchar *
+get_settings_menu (void)
+{
+  const gchar *xdg_menu_prefx;
+
+  xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+  if (!xdg_menu_prefx || *xdg_menu_prefx == '\0')
+    return NULL;
+
+  return g_strdup_printf ("%ssettings.menu", xdg_menu_prefx);
 }
 
 static void
@@ -150,6 +165,38 @@ append_places_item (GpMenuBarApplet *applet)
                              applet->places_menu);
 
   g_signal_connect (applet->places_menu, "button-press-event",
+                    G_CALLBACK (button_press_event_cb), NULL);
+}
+
+static void
+append_system_item (GpMenuBarApplet *applet)
+{
+  gchar *menu;
+  const gchar *tooltip;
+
+  menu = get_settings_menu ();
+  if (menu == NULL)
+    return;
+
+  applet->system_item = gtk_menu_item_new_with_label (_("System"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (applet->menu_bar), applet->system_item);
+  gtk_widget_show (applet->system_item);
+
+  tooltip = _("Change system appearance and behavior, or get help");
+  gtk_widget_set_tooltip_text (applet->system_item, tooltip);
+
+  applet->system_menu = gp_menu_new (GP_APPLET (applet), menu, FALSE);
+  g_free (menu);
+
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->system_item),
+                             applet->system_menu);
+
+  g_object_bind_property (applet->system_menu, "empty",
+                          applet->system_item, "visible",
+                          G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN |
+                          G_BINDING_SYNC_CREATE);
+
+  g_signal_connect (applet->system_menu, "button-press-event",
                     G_CALLBACK (button_press_event_cb), NULL);
 }
 
@@ -224,6 +271,7 @@ gp_menu_bar_applet_setup (GpMenuBarApplet *menu_bar)
 
   append_applications_item (menu_bar);
   append_places_item (menu_bar);
+  append_system_item (menu_bar);
 
   setup_menu (menu_bar);
 }
