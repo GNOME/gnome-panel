@@ -127,11 +127,6 @@ drag_data_get_cb (GtkWidget        *widget,
   g_free (uris[0]);
 }
 
-static const GtkTargetEntry drag_targets[] =
-  {
-    { (gchar *) "text/uri-list", 0, 0 }
-  };
-
 static void
 append_entry (GtkMenuShell  *shell,
               GMenuTreeIter *iter,
@@ -185,6 +180,11 @@ append_entry (GtkMenuShell  *shell,
 
   if (!gp_applet_get_locked_down (menu->applet))
     {
+      static const GtkTargetEntry drag_targets[] =
+        {
+          { (gchar *) "text/uri-list", 0, 0 }
+        };
+
       gtk_drag_source_set (item, GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                            drag_targets, G_N_ELEMENTS (drag_targets),
                            GDK_ACTION_COPY);
@@ -199,7 +199,11 @@ append_entry (GtkMenuShell  *shell,
                              0);
     }
 
-  g_signal_connect (item, "activate", G_CALLBACK (activate_cb), info);
+  g_signal_connect_data (item, "activate",
+                         G_CALLBACK (activate_cb),
+                         g_object_ref (info),
+                         (GClosureNotify) g_object_unref,
+                         0);
 }
 
 static void
