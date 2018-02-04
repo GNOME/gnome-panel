@@ -67,9 +67,6 @@
 #define PANEL_MENU_BUTTON_CUSTOM_ICON_KEY "custom-icon"
 #define PANEL_MENU_BUTTON_MENU_PATH_KEY   "menu-path"
 
-#define GNOME_NAUTILUS_DESKTOP_SCHEMA             "org.gnome.nautilus.desktop"
-#define GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY "home-icon-name"
-
 #define GNOME_DESKTOP_WM_KEYBINDINGS_SCHEMA                    "org.gnome.desktop.wm.keybindings"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_ACTIVATE_WINDOW_MENU_KEY  "activate-window-menu"
 #define GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_MAXIMIZED_KEY      "toggle-maximized"

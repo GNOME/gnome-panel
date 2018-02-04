@@ -719,18 +719,8 @@ panel_util_get_file_display_for_common_files (GFile *file)
 
 	compare = g_file_new_for_path (g_get_home_dir ());
 	if (g_file_equal (file, compare)) {
-		GSettings *settings = g_settings_new (GNOME_NAUTILUS_DESKTOP_SCHEMA);
-		char *home_foler_name = g_settings_get_string (settings, GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY);
-
 		g_object_unref (compare);
-		g_object_unref (settings);
-
-		if (PANEL_GLIB_STR_EMPTY (home_foler_name)) {
-			g_free (home_foler_name);
-			return g_strdup (_("Home Folder"));
-		} else {
-			return home_foler_name;
-		}
+		return g_strdup (_("Home"));
 	}
 	g_object_unref (compare);
 

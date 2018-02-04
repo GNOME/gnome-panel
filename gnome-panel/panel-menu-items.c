@@ -69,7 +69,6 @@ G_DEFINE_TYPE (PanelDesktopMenuItem, panel_desktop_menu_item, PANEL_TYPE_IMAGE_M
 
 struct _PanelPlaceMenuItemPrivate {
 	GtkWidget   *menu;
-	GSettings   *settings;
 
 	GtkRecentManager *recent_manager;
 
@@ -1138,12 +1137,6 @@ panel_place_menu_item_recreate_menu (GtkWidget *widget)
 }
 
 static void
-panel_place_menu_item_key_changed (GSettings *settings, const gchar *key, GtkWidget *place_item)
-{
-	panel_place_menu_item_recreate_menu (place_item);
-}
-
-static void
 panel_place_menu_item_gtk_bookmarks_changed (GFileMonitor *handle,
 					     GFile        *file,
 					     GFile        *other_file,
@@ -1202,8 +1195,6 @@ static void
 panel_place_menu_item_dispose (GObject *object)
 {
   PanelPlaceMenuItem *menuitem = (PanelPlaceMenuItem *) object;
-
-  g_clear_object (&menuitem->priv->settings);
 
   if (menuitem->priv->bookmarks_monitor != NULL)
     {
@@ -1268,16 +1259,8 @@ panel_place_menu_item_init (PanelPlaceMenuItem *menuitem)
 	GFile *bookmark;
 	char  *bookmarks_filename;
 	GError *error;
-	GSettings *settings;
 
 	menuitem->priv = PANEL_PLACE_MENU_ITEM_GET_PRIVATE (menuitem);
-
-	settings = g_settings_new (GNOME_NAUTILUS_DESKTOP_SCHEMA);
-
-	menuitem->priv->settings = settings;
-
-	g_signal_connect (settings, "changed::" GNOME_NAUTILUS_DESKTOP_HOME_ICON_NAME_KEY,
-	                  G_CALLBACK (panel_place_menu_item_key_changed), menuitem);
 
 	menuitem->priv->recent_manager = gtk_recent_manager_get_default ();
 
