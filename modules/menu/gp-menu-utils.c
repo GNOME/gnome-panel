@@ -23,6 +23,57 @@
 
 #include "gp-menu-utils.h"
 
+static gchar *
+get_file_description (GFile *file)
+{
+  GFileInfo *info;
+  GFileQueryInfoFlags flags;
+  const gchar *attribute;
+  gchar *description;
+
+  flags = G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS;
+  info = g_file_query_info (file, "standard::description", flags, NULL, NULL);
+
+  if (info == NULL)
+    return NULL;
+
+  attribute = G_FILE_ATTRIBUTE_STANDARD_DESCRIPTION;
+  description = g_strdup (g_file_info_get_attribute_string (info, attribute));
+  g_object_unref (info);
+
+  return description;
+}
+
+static gchar *
+get_file_display_name (GFile    *file,
+                       gboolean  use_fallback)
+{
+  GFileInfo *info;
+  GFileQueryInfoFlags flags;
+  gchar *description;
+
+  flags = G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS;
+  info = g_file_query_info (file, "standard::display-name", flags, NULL, NULL);
+  description = NULL;
+
+  if (info != NULL)
+    {
+      description = g_strdup (g_file_info_get_display_name (info));
+      g_object_unref (info);
+    }
+
+  if (description == NULL && use_fallback)
+    {
+      gchar *basename;
+
+      basename = g_file_get_basename (file);
+      description = g_filename_display_name (basename);
+      g_free (basename);
+    }
+
+  return description;
+}
+
 static GFile *
 get_file_root (GFile *file)
 {
@@ -36,6 +87,44 @@ get_file_root (GFile *file)
     }
 
   return file;
+}
+
+static gchar *
+get_root_label (GFile *file)
+{
+  GFile *root;
+  gchar *label;
+  gboolean is_equal;
+  gchar *display_name;
+  gchar *ret;
+
+  root = get_file_root (file);
+  label = get_file_description (root);
+
+  if (label == NULL)
+    label = get_file_display_name (root, FALSE);
+
+  if (label == NULL)
+    label = g_file_get_uri_scheme (root);
+
+  is_equal = g_file_equal (file, root);
+  g_object_unref (root);
+
+  if (is_equal)
+    return label;
+
+  display_name = get_file_display_name (file, TRUE);
+
+  /* Translators: the first string is the name of a gvfs method, and the
+   * second string is a path. For example, "Trash: some-directory". It
+   * means that the directory called "some-directory" is in the trash.
+   */
+  ret = g_strdup_printf (_("%1$s: %2$s"), label, display_name);
+
+  g_free (display_name);
+  g_free (label);
+
+  return ret;
 }
 
 static GIcon *
@@ -52,6 +141,22 @@ get_icon_if_mount (GFile *file)
   g_object_unref (mount);
 
   return icon;
+}
+
+static gchar *
+get_label_if_mount (GFile *file)
+{
+  GMount *mount;
+  gchar *label;
+
+  mount = g_file_find_enclosing_mount (file, NULL, NULL);
+  if (mount == NULL)
+    return NULL;
+
+  label = g_mount_get_name (mount);
+  g_object_unref (mount);
+
+  return label;
 }
 
 static GIcon *
@@ -84,6 +189,68 @@ get_icon_if_trash (GFile *file)
   g_object_unref (info);
 
   return icon;
+}
+
+static gchar *
+get_label_if_home_dir (GFile *file)
+{
+  GFile *compare;
+  gboolean is_home_dir;
+
+  compare = g_file_new_for_path (g_get_home_dir ());
+  is_home_dir = g_file_equal (file, compare);
+  g_object_unref (compare);
+
+  if (!is_home_dir)
+    return NULL;
+
+  return g_strdup (_("Home"));
+}
+
+static gchar *
+get_label_if_root_dir (GFile *file)
+{
+  GFile *compare;
+  gboolean is_root_dir;
+
+  compare = g_file_new_for_path ("/");
+  is_root_dir = g_file_equal (file, compare);
+  g_object_unref (compare);
+
+  if (!is_root_dir)
+    return NULL;
+
+  /* Translators: this is the same string as the one found in nautilus */
+  return g_strdup (_("File System"));
+}
+
+static gchar *
+get_label_if_file (GFile *file)
+{
+  gchar *uri;
+  gboolean is_file;
+  gchar *label;
+
+  uri = g_file_get_uri (file);
+  is_file = g_str_has_prefix (uri, "file:");
+  g_free (uri);
+
+  if (!is_file)
+    return NULL;
+
+  label = get_label_if_home_dir (file);
+  if (label != NULL)
+    return label;
+
+  label = get_label_if_root_dir (file);
+  if (label != NULL)
+    return label;
+
+  label = get_file_description (file);
+  if (label != NULL)
+    return label;
+
+  return get_file_display_name (file, TRUE);
 }
 
 static void
@@ -182,4 +349,24 @@ gp_menu_utils_get_icon_for_file (GFile *file)
   g_object_unref (info);
 
   return icon;
+}
+
+gchar *
+gp_menu_utils_get_label_for_file (GFile *file)
+{
+  gchar *label;
+
+  label = get_label_if_mount (file);
+  if (label != NULL)
+    return label;
+
+  label = get_label_if_file (file);
+  if (label != NULL)
+    return label;
+
+  label = get_file_description (file);
+  if (label != NULL)
+    return label;
+
+  return get_root_label (file);
 }
