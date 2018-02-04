@@ -143,35 +143,6 @@ _panel_show_handle_error (const gchar  *uri,
 	return FALSE;
 }
 
-static gboolean
-panel_show_nautilus_search_uri (GdkScreen    *screen,
-				const gchar  *uri,
-				guint32       timestamp,
-				GError      **error)
-{
-	char            *desktopfile;
-	GDesktopAppInfo *appinfo = NULL;
-	gboolean         ret;
-
-	desktopfile = panel_g_lookup_in_applications_dirs ("nautilus-folder-handler.desktop");
-	if (desktopfile) {
-		appinfo = g_desktop_app_info_new_from_filename (desktopfile);
-		g_free (desktopfile);
-	}
-
-	if (!appinfo) {
-		_panel_show_error_dialog (uri, screen,
-					  _("No application to handle search folders is installed."));
-		return FALSE;
-	}
-
-	ret = panel_app_info_launch_uri ((GAppInfo *) appinfo,
-					 uri, screen, timestamp, error);
-	g_object_unref (appinfo);
-
-	return ret;
-}
-
 gboolean
 panel_show_uri (GdkScreen    *screen,
 		const gchar  *uri,
@@ -183,11 +154,6 @@ panel_show_uri (GdkScreen    *screen,
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	if (g_str_has_prefix (uri, "x-nautilus-search:")) {
-		return panel_show_nautilus_search_uri (screen, uri,
-						       timestamp, error);
-	}
 
 	gtk_show_uri (screen, uri, timestamp, &local_error);
 

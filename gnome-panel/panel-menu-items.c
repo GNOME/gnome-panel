@@ -453,9 +453,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 			keep = FALSE;
 
-			if (g_str_has_prefix (line, "x-nautilus-search:"))
-				keep = TRUE;
-
 			if (!keep) {
 				file = g_file_new_for_uri (line);
 				keep = !g_file_is_native (file) ||
@@ -547,7 +544,6 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 
 		gicon = g_themed_icon_new_with_default_fallbacks (icon);
 
-		//FIXME: drag and drop will be broken for x-nautilus-search uris
 		menu_item = panel_menu_item_uri_new (bookmark->full_uri,
 						     icon, gicon,
 						     label,

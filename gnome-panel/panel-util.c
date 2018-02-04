@@ -896,7 +896,6 @@ panel_util_get_label_for_uri (const char *text_uri)
 	char  *root_display;
 
 	/* Here's what we do:
-	 *  + x-nautilus-search: URI
 	 *  + check if the URI is a mount
 	 *  + if file: URI:
 	 *   - check for known file: URI
@@ -909,10 +908,6 @@ panel_util_get_label_for_uri (const char *text_uri)
 	 */
 
 	label = NULL;
-
-	//FIXME: see nautilus_query_to_readable_string() to have a nice name
-	if (g_str_has_prefix (text_uri, "x-nautilus-search:"))
-		return g_strdup (_("Search"));
 
 	file = g_file_new_for_uri (text_uri);
 
@@ -984,7 +979,6 @@ panel_util_get_icon_for_uri (const char *text_uri)
 
 	/* Here's what we do:
 	 *  + check for known file: URI
-	 *  + x-nautilus-search: URI
 	 *  + override burn: URI icon
 	 *  + check if the URI is a mount
 	 *  + override trash: URI icon for subfolders
@@ -998,8 +992,6 @@ panel_util_get_icon_for_uri (const char *text_uri)
 	if (icon)
 		return g_strdup (icon);
 
-	if (g_str_has_prefix (text_uri, "x-nautilus-search:"))
-		return g_strdup (PANEL_ICON_SAVED_SEARCH);
 	/* gvfs doesn't give us a nice icon, so overriding */
 	if (g_str_has_prefix (text_uri, "burn:"))
 		return g_strdup (PANEL_ICON_BURNER);
