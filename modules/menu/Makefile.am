@@ -20,6 +20,8 @@ menu_la_CFLAGS = \
 	$(NULL)
 
 menu_la_SOURCES = \
+	gp-bookmarks.c \
+	gp-bookmarks.h \
 	gp-main-menu-applet.c \
 	gp-main-menu-applet.h \
 	gp-menu-bar-applet.c \
