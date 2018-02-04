@@ -268,6 +268,26 @@ append_computer (GpPlacesMenu *menu)
 }
 
 static void
+append_network (GpPlacesMenu *menu)
+{
+  GFile *file;
+  const gchar *label;
+  const gchar *tooltip;
+  GtkWidget *item;
+
+  file = g_file_new_for_uri ("network://");
+
+  label = _("Network");
+  tooltip = _("Browse bookmarked and local network locations");
+
+  item = create_menu_item (menu, file, NULL, "network-workgroup", label, tooltip);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
+}
+
+static void
 remove_item (GtkWidget *widget,
              gpointer   user_data)
 {
@@ -286,6 +306,9 @@ menu_reload (GpPlacesMenu *menu)
 
   append_separator (menu);
   append_computer (menu);
+
+  append_separator (menu);
+  append_network (menu);
 }
 
 static gboolean
