@@ -55,19 +55,19 @@ static GParamSpec *menu_properties[LAST_PROP] = { NULL };
 G_DEFINE_TYPE (GpPlacesMenu, gp_places_menu, GTK_TYPE_MENU)
 
 static void
-bookmark_activate_cb (GtkWidget   *item,
-                      const gchar *uri)
+uri_activate_cb (GtkWidget   *item,
+                 const gchar *uri)
 {
   gp_menu_utils_show_uri (uri, NULL, GDK_CURRENT_TIME);
 }
 
 static void
-bookmark_drag_data_get_cb (GtkWidget        *widget,
-                           GdkDragContext   *context,
-                           GtkSelectionData *selection_data,
-                           guint             info,
-                           guint             time,
-                           const gchar      *uri)
+uri_drag_data_get_cb (GtkWidget        *widget,
+                      GdkDragContext   *context,
+                      GtkSelectionData *selection_data,
+                      guint             info,
+                      guint             time,
+                      const gchar      *uri)
 {
   gchar *uris[2];
 
@@ -77,34 +77,36 @@ bookmark_drag_data_get_cb (GtkWidget        *widget,
   gtk_selection_data_set_uris (selection_data, uris);
 }
 
-static void
-append_bookmark (GpBookmarks  *bookmarks,
-                 GpBookmark   *bookmark,
-                 GpPlacesMenu *menu)
+static GtkWidget *
+create_menu_item (GpPlacesMenu *menu,
+                  GFile        *file,
+                  GIcon        *icon,
+                  const gchar  *icon_name,
+                  const gchar  *label,
+                  const gchar  *tooltip)
 {
-  GtkWidget *add_menu;
+  GtkWidget *image;
   guint icon_size;
-  GtkWidget *icon;
   GtkWidget *item;
 
-  add_menu = menu->bookmarks_menu ? menu->bookmarks_menu : GTK_WIDGET (menu);
+  g_assert (file != NULL);
+  g_assert (icon != NULL || icon_name != NULL);
+  g_assert (label != NULL);
 
-  if (bookmark->icon != NULL)
-    icon = gtk_image_new_from_gicon (bookmark->icon, GTK_ICON_SIZE_MENU);
+  if (icon != NULL)
+    image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
   else
-    icon = gtk_image_new_from_icon_name ("folder", GTK_ICON_SIZE_MENU);
+    image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 
   icon_size = gp_applet_get_menu_icon_size (menu->applet);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
 
-  item = gp_image_menu_item_new_with_label (bookmark->label);
-  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
-  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
-  gtk_widget_show (item);
+  item = gp_image_menu_item_new_with_label (label);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
 
-  if (bookmark->tooltip != NULL)
+  if (tooltip != NULL)
     {
-      gtk_widget_set_tooltip_text (item, bookmark->tooltip);
+      gtk_widget_set_tooltip_text (item, tooltip);
 
       g_object_bind_property (menu->applet, "enable-tooltips",
                               item, "has-tooltip",
@@ -123,21 +125,86 @@ append_bookmark (GpBookmarks  *bookmarks,
                            drag_targets, G_N_ELEMENTS (drag_targets),
                            GDK_ACTION_COPY);
 
-      if (bookmark->icon != NULL)
-        gtk_drag_source_set_icon_gicon (item, bookmark->icon);
+      if (icon != NULL)
+        gtk_drag_source_set_icon_gicon (item, icon);
+      else
+        gtk_drag_source_set_icon_name (item, icon_name);
 
       g_signal_connect_data (item, "drag-data-get",
-                             G_CALLBACK (bookmark_drag_data_get_cb),
-                             g_file_get_uri (bookmark->file),
+                             G_CALLBACK (uri_drag_data_get_cb),
+                             g_file_get_uri (file),
                              (GClosureNotify) g_free,
                              0);
     }
 
   g_signal_connect_data (item, "activate",
-                         G_CALLBACK (bookmark_activate_cb),
-                         g_file_get_uri (bookmark->file),
+                         G_CALLBACK (uri_activate_cb),
+                         g_file_get_uri (file),
                          (GClosureNotify) g_free,
                          0);
+
+  return item;
+}
+
+static void
+append_bookmark (GpBookmarks  *bookmarks,
+                 GpBookmark   *bookmark,
+                 GpPlacesMenu *menu)
+{
+  GtkWidget *add_menu;
+  GtkWidget *item;
+
+  add_menu = menu->bookmarks_menu ? menu->bookmarks_menu : GTK_WIDGET (menu);
+
+  item = create_menu_item (menu, bookmark->file, bookmark->icon, "folder",
+                           bookmark->label, bookmark->tooltip);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+  gtk_widget_show (item);
+}
+
+static void
+append_home_dir (GpPlacesMenu *menu)
+{
+  GFile *file;
+  gchar *label;
+  const gchar *tooltip;
+  GtkWidget *item;
+
+  file = g_file_new_for_path (g_get_home_dir ());
+
+  label = gp_menu_utils_get_label_for_file (file);
+  tooltip = _("Open your personal folder");
+
+  item = create_menu_item (menu, file, NULL, "user-home", label, tooltip);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
+  g_free (label);
+}
+
+static void
+append_desktop_dir (GpPlacesMenu *menu)
+{
+  GFile *file;
+  const gchar *label;
+  const gchar *tooltip;
+  GtkWidget *item;
+
+  file = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DESKTOP));
+
+  /* Translators: Desktop is used here as in "Desktop Folder"
+   * (this is not the Desktop environment).
+   */
+  label = C_("Desktop Folder", "Desktop");
+  tooltip = _("Open the contents of your desktop in a folder");
+
+  item = create_menu_item (menu, file, NULL, "user-desktop", label, tooltip);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
 }
 
 static void
@@ -181,6 +248,8 @@ menu_reload (GpPlacesMenu *menu)
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
   g_assert (menu->bookmarks_menu == NULL);
 
+  append_home_dir (menu);
+  append_desktop_dir (menu);
   append_bookmarks (menu);
 }
 
