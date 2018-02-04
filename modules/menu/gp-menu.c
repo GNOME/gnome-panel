@@ -30,8 +30,11 @@ struct _GpMenu
 
   gchar     *name;
   GpApplet  *applet;
+  gboolean   required;
 
   GMenuTree *tree;
+
+  gboolean   empty;
 
   guint      reload_id;
 
@@ -45,6 +48,9 @@ enum
 
   PROP_NAME,
   PROP_APPLET,
+  PROP_REQUIRED,
+
+  PROP_EMPTY,
 
   LAST_PROP
 };
@@ -274,22 +280,42 @@ static void
 menu_reload (GpMenu *menu)
 {
   GError *error;
-  GMenuTreeDirectory *directory;
+  gboolean loaded;
+  GList *children;
+  gboolean empty;
 
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
 
   error = NULL;
-  if (!gmenu_tree_load_sync (menu->tree, &error))
-    {
-      g_warning ("Failed to load menu: %s", error->message);
-      g_clear_error (&error);
+  loaded = gmenu_tree_load_sync (menu->tree, &error);
 
-      return;
+  if (error != NULL)
+    {
+      if (menu->required)
+        g_warning ("%s", error->message);
+
+      g_clear_error (&error);
     }
 
-  directory = gmenu_tree_get_directory_from_path (menu->tree, "/");
-  directory_to_menu_items (directory, GTK_WIDGET (menu), menu);
-  gmenu_tree_item_unref (directory);
+  if (loaded)
+    {
+      GMenuTreeDirectory *directory;
+
+      directory = gmenu_tree_get_directory_from_path (menu->tree, "/");
+      directory_to_menu_items (directory, GTK_WIDGET (menu), menu);
+      gmenu_tree_item_unref (directory);
+    }
+
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+  empty = g_list_length (children) == 0;
+  g_list_free (children);
+
+  if (menu->empty == empty)
+    return;
+
+  menu->empty = empty;
+
+  g_object_notify_by_pspec (G_OBJECT (menu), menu_properties[PROP_EMPTY]);
 }
 
 static gboolean
@@ -418,6 +444,10 @@ gp_menu_get_property (GObject    *object,
                       GValue     *value,
                       GParamSpec *pspec)
 {
+  GpMenu *menu;
+
+  menu = GP_MENU (object);
+
   switch (property_id)
     {
       case PROP_NAME:
@@ -426,6 +456,14 @@ gp_menu_get_property (GObject    *object,
 
       case PROP_APPLET:
         g_assert_not_reached ();
+        break;
+
+      case PROP_REQUIRED:
+        g_assert_not_reached ();
+        break;
+
+      case PROP_EMPTY:
+        g_value_set_boolean (value, menu->empty);
         break;
 
       default:
@@ -456,6 +494,14 @@ gp_menu_set_property (GObject      *object,
         menu->applet = g_value_get_object (value);
         break;
 
+      case PROP_REQUIRED:
+        menu->required = g_value_get_boolean (value);
+        break;
+
+      case PROP_EMPTY:
+        g_assert_not_reached ();
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -476,6 +522,18 @@ install_properties (GObjectClass *object_class)
                          GP_TYPE_APPLET,
                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_REQUIRED] =
+    g_param_spec_boolean ("required", "Required", "Required",
+                          TRUE,
+                          G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_EMPTY] =
+    g_param_spec_boolean ("empty", "Empty", "Empty",
+                          TRUE,
+                          G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP, menu_properties);
 }
@@ -503,10 +561,12 @@ gp_menu_init (GpMenu *menu)
 
 GtkWidget *
 gp_menu_new (GpApplet    *applet,
-             const gchar *name)
+             const gchar *name,
+             gboolean     required)
 {
   return g_object_new (GP_TYPE_MENU,
                        "applet", applet,
                        "name", name,
+                       "required", required,
                        NULL);
 }

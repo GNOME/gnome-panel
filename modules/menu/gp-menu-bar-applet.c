@@ -123,7 +123,7 @@ append_applications_item (GpMenuBarApplet *applet)
 
   menu = get_applications_menu ();
 
-  applet->applications_menu = gp_menu_new (GP_APPLET (applet), menu);
+  applet->applications_menu = gp_menu_new (GP_APPLET (applet), menu, TRUE);
   g_free (menu);
 
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->applications_item),

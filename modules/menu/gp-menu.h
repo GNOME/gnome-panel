@@ -26,7 +26,8 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GpMenu, gp_menu, GP, MENU, GtkMenu)
 
 GtkWidget *gp_menu_new (GpApplet    *applet,
-                        const gchar *name);
+                        const gchar *name,
+                        gboolean     required);
 
 G_END_DECLS
 
