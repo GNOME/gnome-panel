@@ -236,6 +236,38 @@ append_bookmarks (GpPlacesMenu *menu)
 }
 
 static void
+append_separator (GpPlacesMenu *menu)
+{
+  GtkWidget *item;
+
+  item = gtk_separator_menu_item_new ();
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  gtk_widget_set_sensitive (item, FALSE);
+}
+
+static void
+append_computer (GpPlacesMenu *menu)
+{
+  GFile *file;
+  const gchar *label;
+  const gchar *tooltip;
+  GtkWidget *item;
+
+  file = g_file_new_for_uri ("computer://");
+
+  label = _("Computer");
+  tooltip = _("Browse all local and remote disks and folders accessible from this computer");
+
+  item = create_menu_item (menu, file, NULL, "computer", label, tooltip);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
+}
+
+static void
 remove_item (GtkWidget *widget,
              gpointer   user_data)
 {
@@ -251,6 +283,9 @@ menu_reload (GpPlacesMenu *menu)
   append_home_dir (menu);
   append_desktop_dir (menu);
   append_bookmarks (menu);
+
+  append_separator (menu);
+  append_computer (menu);
 }
 
 static gboolean
