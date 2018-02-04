@@ -534,7 +534,7 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 		panel_launcher_create_from_info (panel->toplevel,
 						 pack_type, pack_index,
 						 TRUE, /* is_exec? */
-						 "nautilus --no-desktop", /* exec */
+						 "nautilus", /* exec */
 						 name, /* name */
 						 _("Open your personal folder"), /* comment */
 						 PANEL_ICON_HOME); /* icon name */
@@ -544,7 +544,7 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 		panel_launcher_create_from_info (panel->toplevel,
 						 pack_type, pack_index,
 						 TRUE, /* is_exec? */
-						 "nautilus --no-desktop computer://", /* exec */
+						 "nautilus computer://", /* exec */
 						 _("Computer"), /* name */
 						 _("Browse all local and remote disks and folders accessible from this computer"), /* comment */
 						 PANEL_ICON_COMPUTER); /* icon name */
@@ -552,7 +552,7 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 		panel_launcher_create_from_info (panel->toplevel,
 						 pack_type, pack_index,
 						 TRUE, /* is_exec? */
-						 "nautilus --no-desktop network://", /* exec */
+						 "nautilus network://", /* exec */
 						 _("Network"), /* name */
 						 _("Browse bookmarked and local network locations"), /* comment */
 						 PANEL_ICON_NETWORK); /* icon name */
