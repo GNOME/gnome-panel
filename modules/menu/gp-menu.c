@@ -33,7 +33,7 @@ struct _GpMenu
 
   GMenuTree *tree;
 
-  guint      load_id;
+  guint      reload_id;
 
   gulong     locked_down_id;
   gulong     menu_icon_size_id;
@@ -267,7 +267,7 @@ remove_item (GtkWidget *widget,
 }
 
 static void
-menu_tree_load (GpMenu *menu)
+menu_reload (GpMenu *menu)
 {
   GError *error;
   GMenuTreeDirectory *directory;
@@ -289,30 +289,36 @@ menu_tree_load (GpMenu *menu)
 }
 
 static gboolean
-menu_tree_load_cb (gpointer user_data)
+reload_cb (gpointer user_data)
 {
   GpMenu *menu;
 
   menu = GP_MENU (user_data);
 
-  menu_tree_load (menu);
-  menu->load_id = 0;
+  menu_reload (menu);
+  menu->reload_id = 0;
 
   return G_SOURCE_REMOVE;
+}
+
+static void
+queue_reload (GpMenu *menu)
+{
+  if (menu->reload_id != 0)
+    return;
+
+  menu->reload_id = g_timeout_add_full (G_PRIORITY_LOW, 200,
+                                        reload_cb, menu,
+                                        NULL);
+
+  g_source_set_name_by_id (menu->reload_id, "[menu] reload_cb");
 }
 
 static void
 menu_tree_changed_cb (GMenuTree *tree,
                       GpMenu    *menu)
 {
-  if (menu->load_id != 0)
-    return;
-
-  menu->load_id = g_timeout_add_full (G_PRIORITY_LOW, 200,
-                                      menu_tree_load_cb, menu,
-                                      NULL);
-
-  g_source_set_name_by_id (menu->load_id, "[menu] menu_tree_load_cb");
+  queue_reload (menu);
 }
 
 static void
@@ -320,7 +326,7 @@ locked_down_cb (GpApplet   *applet,
                 GParamSpec *pspec,
                 GpMenu     *menu)
 {
-  menu_tree_changed_cb (menu->tree, menu);
+  queue_reload (menu);
 }
 
 static void
@@ -328,7 +334,7 @@ menu_icon_size_cb (GpApplet   *applet,
                    GParamSpec *pspec,
                    GpMenu     *menu)
 {
-  menu_tree_changed_cb (menu->tree, menu);
+  queue_reload (menu);
 }
 
 static void
@@ -355,7 +361,7 @@ gp_menu_constructed (GObject *object)
                                               G_CALLBACK (menu_icon_size_cb),
                                               menu);
 
-  menu_tree_changed_cb (menu->tree, menu);
+  queue_reload (menu);
 }
 
 static void
@@ -367,10 +373,10 @@ gp_menu_dispose (GObject *object)
 
   g_clear_object (&menu->tree);
 
-  if (menu->load_id != 0)
+  if (menu->reload_id != 0)
     {
-      g_source_remove (menu->load_id);
-      menu->load_id = 0;
+      g_source_remove (menu->reload_id);
+      menu->reload_id = 0;
     }
 
   if (menu->locked_down_id != 0)
