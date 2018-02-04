@@ -324,6 +324,33 @@ gp_menu_utils_launch_app_info (GDesktopAppInfo *app_info)
   g_clear_error (&error);
 }
 
+void
+gp_menu_utils_show_uri (const gchar *uri,
+                        GtkWindow   *parent,
+                        guint32      timestamp)
+{
+  GError *error;
+  GtkWidget *dialog;
+
+  error = NULL;
+  if (gtk_show_uri_on_window (parent, uri, timestamp, &error))
+    return;
+
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+                                   _("Could not open location '%s'"),
+                                   uri);
+
+  if (error != NULL)
+    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s", error->message);
+
+  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
+  gtk_window_present (GTK_WINDOW (dialog));
+
+  g_clear_error (&error);
+}
+
 GIcon *
 gp_menu_utils_get_icon_for_file (GFile *file)
 {
