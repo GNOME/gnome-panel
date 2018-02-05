@@ -226,7 +226,7 @@ edit_menus_cb (GSimpleAction *action,
       return;
     }
 
-  gp_menu_utils_launch_app_info (app_info);
+  gp_menu_utils_app_info_launch (app_info);
 }
 
 static const GActionEntry menu_bar_menu_actions[] =

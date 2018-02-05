@@ -67,7 +67,7 @@ static void
 activate_cb (GtkWidget       *item,
              GDesktopAppInfo *info)
 {
-  gp_menu_utils_launch_app_info (info);
+  gp_menu_utils_app_info_launch (info);
 }
 
 static void

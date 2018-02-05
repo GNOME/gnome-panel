@@ -23,7 +23,7 @@
 
 G_BEGIN_DECLS
 
-void   gp_menu_utils_launch_app_info    (GDesktopAppInfo *app_info);
+void   gp_menu_utils_app_info_launch    (GDesktopAppInfo *app_info);
 
 void   gp_menu_utils_show_uri           (const gchar     *uri,
                                          GtkWindow       *parent,

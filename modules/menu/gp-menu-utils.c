@@ -288,7 +288,7 @@ pid_cb (GDesktopAppInfo *info,
 }
 
 void
-gp_menu_utils_launch_app_info (GDesktopAppInfo *app_info)
+gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
 {
   GSpawnFlags flags;
   GError *error;
