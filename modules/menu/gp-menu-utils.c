@@ -304,6 +304,32 @@ app_info_launch_uris (GDesktopAppInfo  *info,
   return ret;
 }
 
+static GAppInfo *
+get_app_info_for_uri (const gchar  *uri,
+                      GError      **error)
+{
+  GAppInfo *app_info;
+  gchar *scheme;
+  GFile *file;
+
+  app_info = NULL;
+  scheme = g_uri_parse_scheme (uri);
+
+  if (scheme && scheme[0] != '\0')
+    app_info = g_app_info_get_default_for_uri_scheme (scheme);
+
+  g_free (scheme);
+
+  if (app_info != NULL)
+    return app_info;
+
+  file = g_file_new_for_uri (uri);
+  app_info = g_file_query_default_handler (file, NULL, error);
+  g_object_unref (file);
+
+  return app_info;
+}
+
 void
 gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
 {
@@ -335,11 +361,27 @@ void
 gp_menu_utils_launch_uri (const gchar *uri)
 {
   GError *error;
+  GAppInfo *app_info;
   GtkWidget *dialog;
 
   error = NULL;
-  if (gtk_show_uri_on_window (NULL, uri, GDK_CURRENT_TIME, &error))
-    return;
+  app_info = get_app_info_for_uri (uri, &error);
+
+  if (app_info != NULL)
+    {
+      GList *uris;
+      gboolean success;
+
+      uris = g_list_append (NULL, (gchar *) uri);
+      success = app_info_launch_uris (G_DESKTOP_APP_INFO (app_info),
+                                      uris, &error);
+
+      g_object_unref (app_info);
+      g_list_free (uris);
+
+      if (success)
+        return;
+    }
 
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
