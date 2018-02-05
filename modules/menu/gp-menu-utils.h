@@ -30,6 +30,9 @@ GIcon *gp_menu_utils_get_icon_for_file  (GFile           *file);
 
 gchar *gp_menu_utils_get_label_for_file (GFile           *file);
 
+void   gp_menu_utils_show_error_dialog  (const gchar     *message,
+                                         GError          *error);
+
 G_END_DECLS
 
 #endif

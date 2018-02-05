@@ -335,26 +335,19 @@ gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
 {
   GError *error;
   const gchar *display_name;
-  GtkWidget *dialog;
+  gchar *message;
 
   error = NULL;
   if (app_info_launch_uris (app_info, NULL, &error))
     return;
 
   display_name = g_app_info_get_display_name (G_APP_INFO (app_info));
-  dialog = gtk_message_dialog_new (NULL, 0,
-                                   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-                                   _("Could not launch '%s'"),
-                                   display_name);
+  message = g_strdup_printf (_("Could not launch '%s'"), display_name);
 
-  if (error != NULL)
-    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s", error->message);
-
-  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
-  gtk_window_present (GTK_WINDOW (dialog));
+  gp_menu_utils_show_error_dialog (message, error);
 
   g_clear_error (&error);
+  g_free (message);
 }
 
 void
@@ -362,7 +355,7 @@ gp_menu_utils_launch_uri (const gchar *uri)
 {
   GError *error;
   GAppInfo *app_info;
-  GtkWidget *dialog;
+  gchar *message;
 
   error = NULL;
   app_info = get_app_info_for_uri (uri, &error);
@@ -383,19 +376,12 @@ gp_menu_utils_launch_uri (const gchar *uri)
         return;
     }
 
-  dialog = gtk_message_dialog_new (NULL, 0,
-                                   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-                                   _("Could not open location '%s'"),
-                                   uri);
+  message = g_strdup_printf (_("Could not open location '%s'"), uri);
 
-  if (error != NULL)
-    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s", error->message);
-
-  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
-  gtk_window_present (GTK_WINDOW (dialog));
+  gp_menu_utils_show_error_dialog (message, error);
 
   g_clear_error (&error);
+  g_free (message);
 }
 
 GIcon *
@@ -443,4 +429,22 @@ gp_menu_utils_get_label_for_file (GFile *file)
     return label;
 
   return get_root_label (file);
+}
+
+void
+gp_menu_utils_show_error_dialog (const gchar *message,
+                                 GError      *error)
+{
+  GtkWidget *dialog;
+
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+                                   "%s", message);
+
+  if (error != NULL)
+    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s", error->message);
+
+  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
+  gtk_window_present (GTK_WINDOW (dialog));
 }
