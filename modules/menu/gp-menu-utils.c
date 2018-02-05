@@ -287,39 +287,46 @@ pid_cb (GDesktopAppInfo *info,
   g_child_watch_add (pid, (GChildWatchFunc) g_spawn_close_pid, NULL);
 }
 
-void
-gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
+static gboolean
+app_info_launch_uris (GDesktopAppInfo  *info,
+                      GList            *uris,
+                      GError          **error)
 {
   GSpawnFlags flags;
-  GError *error;
   gboolean ret;
 
   flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
-  error = NULL;
-
-  ret = g_desktop_app_info_launch_uris_as_manager (app_info, NULL, NULL,
-                                                   flags, child_setup, app_info,
+  ret = g_desktop_app_info_launch_uris_as_manager (info, uris, NULL,
+                                                   flags, child_setup, info,
                                                    pid_cb, NULL,
-                                                   &error);
+                                                   error);
 
-  if (ret == FALSE)
-    {
-      const gchar *display_name;
-      GtkWidget *dialog;
+  return ret;
+}
 
-      display_name = g_app_info_get_display_name (G_APP_INFO (app_info));
-      dialog = gtk_message_dialog_new (NULL, 0,
-                                       GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
-                                       _("Could not launch '%s'"),
-                                       display_name);
+void
+gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
+{
+  GError *error;
+  const gchar *display_name;
+  GtkWidget *dialog;
 
-      if (error != NULL)
-        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                  "%s", error->message);
+  error = NULL;
+  if (app_info_launch_uris (app_info, NULL, &error))
+    return;
 
-      g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  display_name = g_app_info_get_display_name (G_APP_INFO (app_info));
+  dialog = gtk_message_dialog_new (NULL, 0,
+                                   GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+                                   _("Could not launch '%s'"),
+                                   display_name);
+
+  if (error != NULL)
+    gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                              "%s", error->message);
+
+  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
+  gtk_window_present (GTK_WINDOW (dialog));
 
   g_clear_error (&error);
 }
