@@ -23,6 +23,7 @@
 #include "gp-bookmarks.h"
 #include "gp-menu-utils.h"
 #include "gp-places-menu.h"
+#include "gp-volumes.h"
 
 #define MAX_ITEMS_OR_SUBMENU 8
 
@@ -36,6 +37,10 @@ struct _GpPlacesMenu
 
   GpBookmarks *bookmarks;
   GtkWidget   *bookmarks_menu;
+
+  GpVolumes   *volumes;
+  GtkWidget   *volumes_local_menu;
+  GtkWidget   *volumes_remote_menu;
 
   gulong       locked_down_id;
   gulong       menu_icon_size_id;
@@ -53,6 +58,99 @@ enum
 static GParamSpec *menu_properties[LAST_PROP] = { NULL };
 
 G_DEFINE_TYPE (GpPlacesMenu, gp_places_menu, GTK_TYPE_MENU)
+
+static void
+poll_for_media_cb (GObject      *object,
+                   GAsyncResult *res,
+                   gpointer      user_data)
+{
+  GError *error;
+
+  error = NULL;
+  if (!g_drive_poll_for_media_finish (G_DRIVE (object), res, &error))
+    {
+      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_FAILED_HANDLED))
+        {
+          gchar *name;
+          gchar *message;
+
+          name = g_drive_get_name (G_DRIVE (object));
+          message = g_strdup_printf (_("Unable to scan %s for media changes"), name);
+          g_free (name);
+
+          gp_menu_utils_show_error_dialog (message, error);
+          g_free (message);
+        }
+    }
+
+  g_clear_error (&error);
+}
+
+static void
+drive_activate_cb (GtkWidget *item,
+                   GDrive    *drive)
+{
+  g_drive_poll_for_media (drive, NULL, poll_for_media_cb, NULL);
+}
+
+static void
+mount_cb (GObject         *object,
+          GAsyncResult    *res,
+          GMountOperation *operation)
+{
+  GError *error;
+
+  error = NULL;
+  if (g_volume_mount_finish (G_VOLUME (object), res, &error))
+    {
+      GMount *mount;
+      GFile *root;
+      gchar *uri;
+
+      mount = g_volume_get_mount (G_VOLUME (object));
+      root = g_mount_get_root (mount);
+      g_object_unref (mount);
+
+      uri = g_file_get_uri (root);
+      g_object_unref (root);
+
+      gp_menu_utils_launch_uri (uri);
+      g_free (uri);
+    }
+  else
+    {
+      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_FAILED_HANDLED))
+        {
+          gchar *name;
+          gchar *message;
+
+          name = g_volume_get_name (G_VOLUME (object));
+          message = g_strdup_printf (_("Unable to mount %s"), name);
+          g_free (name);
+
+          gp_menu_utils_show_error_dialog (message, error);
+          g_free (message);
+        }
+    }
+
+  g_object_unref (operation);
+  g_clear_error (&error);
+}
+
+static void
+volume_activate_cb (GtkWidget *item,
+                    GVolume   *volume)
+{
+  GMountMountFlags flags;
+  GMountOperation *operation;
+
+  flags = G_MOUNT_MOUNT_NONE;
+  operation = gtk_mount_operation_new (NULL);
+
+  g_volume_mount (volume, flags, operation, NULL,
+                  (GAsyncReadyCallback) mount_cb,
+                  operation);
+}
 
 static void
 uri_activate_cb (GtkWidget   *item,
@@ -164,6 +262,144 @@ append_bookmark (GpBookmarks  *bookmarks,
 }
 
 static void
+append_local_drive (GpVolumes    *volumes,
+                    GDrive       *drive,
+                    GpPlacesMenu *menu)
+{
+  GIcon *icon;
+  gchar *label;
+  gchar *tooltip;
+  guint icon_size;
+  GtkWidget *image;
+  GtkWidget *item;
+  GtkWidget *add_menu;
+
+  icon = g_drive_get_icon (drive);
+  label = g_drive_get_name (drive);
+  tooltip = g_strdup_printf (_("Rescan %s"), label);
+
+  icon_size = gp_applet_get_menu_icon_size (menu->applet);
+  image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+
+  item = gp_image_menu_item_new_with_label (label);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
+
+  gtk_widget_set_tooltip_text (item, tooltip);
+  g_object_bind_property (menu->applet, "enable-tooltips", item, "has-tooltip",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  g_object_unref (icon);
+  g_free (tooltip);
+  g_free (label);
+
+  add_menu = menu->volumes_local_menu ? menu->volumes_local_menu : GTK_WIDGET (menu);
+  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+  gtk_widget_show (item);
+
+  g_signal_connect_data (item, "activate",
+                         G_CALLBACK (drive_activate_cb),
+                         g_object_ref (drive),
+                         (GClosureNotify) g_object_unref,
+                         0);
+}
+
+static void
+append_local_volume (GpVolumes    *volumes,
+                     GVolume      *volume,
+                     GpPlacesMenu *menu)
+{
+  GIcon *icon;
+  gchar *label;
+  gchar *tooltip;
+  guint icon_size;
+  GtkWidget *image;
+  GtkWidget *item;
+  GtkWidget *add_menu;
+
+  icon = g_volume_get_icon (volume);
+  label = g_volume_get_name (volume);
+  tooltip = g_strdup_printf (_("Mount %s"), label);
+
+  icon_size = gp_applet_get_menu_icon_size (menu->applet);
+  image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+
+  item = gp_image_menu_item_new_with_label (label);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
+
+  gtk_widget_set_tooltip_text (item, tooltip);
+  g_object_bind_property (menu->applet, "enable-tooltips", item, "has-tooltip",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  g_object_unref (icon);
+  g_free (tooltip);
+  g_free (label);
+
+  add_menu = menu->volumes_local_menu ? menu->volumes_local_menu : GTK_WIDGET (menu);
+  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+  gtk_widget_show (item);
+
+  g_signal_connect_data (item, "activate",
+                         G_CALLBACK (volume_activate_cb),
+                         g_object_ref (volume),
+                         (GClosureNotify) g_object_unref,
+                         0);
+}
+
+static void
+append_local_mount (GpVolumes    *volumes,
+                    GMount       *mount,
+                    GpPlacesMenu *menu)
+{
+  GFile *file;
+  GIcon *icon;
+  gchar *label;
+  GtkWidget *item;
+  GtkWidget *add_menu;
+
+  file = g_mount_get_root (mount);
+  icon = g_mount_get_icon (mount);
+  label = g_mount_get_name (mount);
+
+  item = create_menu_item (menu, file, icon, NULL, label, NULL);
+
+  add_menu = menu->volumes_local_menu ? menu->volumes_local_menu : GTK_WIDGET (menu);
+  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
+  g_object_unref (icon);
+  g_free (label);
+}
+
+static void
+append_remote_mount (GpVolumes    *volumes,
+                    GMount       *mount,
+                    GpPlacesMenu *menu)
+{
+  GFile *file;
+  GIcon *icon;
+  gchar *label;
+  GtkWidget *item;
+  GtkWidget *add_menu;
+
+  file = g_mount_get_root (mount);
+  icon = g_mount_get_icon (mount);
+  label = g_mount_get_name (mount);
+
+  item = create_menu_item (menu, file, icon, NULL, label, NULL);
+
+  add_menu = menu->volumes_remote_menu ? menu->volumes_remote_menu : GTK_WIDGET (menu);
+  gtk_menu_shell_append (GTK_MENU_SHELL (add_menu), item);
+  gtk_widget_show (item);
+
+  g_object_unref (file);
+  g_object_unref (icon);
+  g_free (label);
+}
+
+static void
 append_home_dir (GpPlacesMenu *menu)
 {
   GFile *file;
@@ -268,6 +504,42 @@ append_computer (GpPlacesMenu *menu)
 }
 
 static void
+append_local_volumes (GpPlacesMenu *menu)
+{
+  if (gp_volumes_get_local_count (menu->volumes) > MAX_ITEMS_OR_SUBMENU)
+    {
+      guint icon_size;
+      GtkWidget *icon;
+      GtkWidget *item;
+
+      icon_size = gp_applet_get_menu_icon_size (menu->applet);
+      icon = gtk_image_new_from_icon_name ("drive-removable-media", GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+
+      item = gp_image_menu_item_new_with_label (_("Removable Media"));
+      gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+      gtk_widget_show (item);
+
+      menu->volumes_local_menu = gtk_menu_new ();
+      g_object_add_weak_pointer (G_OBJECT (item), (gpointer *) &menu->volumes_local_menu);
+      gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu->volumes_local_menu);
+    }
+
+  gp_volumes_foreach_local_drives (menu->volumes,
+                                   (GpVolumesForeachDrivesFunc) append_local_drive,
+                                   menu);
+
+  gp_volumes_foreach_local_volumes (menu->volumes,
+                                    (GpVolumesForeachVolumesFunc) append_local_volume,
+                                    menu);
+
+  gp_volumes_foreach_local_mounts (menu->volumes,
+                                   (GpVolumesForeachMountsFunc) append_local_mount,
+                                   menu);
+}
+
+static void
 append_network (GpPlacesMenu *menu)
 {
   GFile *file;
@@ -288,6 +560,34 @@ append_network (GpPlacesMenu *menu)
 }
 
 static void
+append_remote_volumes (GpPlacesMenu *menu)
+{
+  if (gp_volumes_get_remote_count (menu->volumes) > MAX_ITEMS_OR_SUBMENU)
+    {
+      guint icon_size;
+      GtkWidget *icon;
+      GtkWidget *item;
+
+      icon_size = gp_applet_get_menu_icon_size (menu->applet);
+      icon = gtk_image_new_from_icon_name ("network-server", GTK_ICON_SIZE_MENU);
+      gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+
+      item = gp_image_menu_item_new_with_label (_("Network Places"));
+      gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+      gtk_widget_show (item);
+
+      menu->volumes_remote_menu = gtk_menu_new ();
+      g_object_add_weak_pointer (G_OBJECT (item), (gpointer *) &menu->volumes_remote_menu);
+      gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu->volumes_remote_menu);
+    }
+
+  gp_volumes_foreach_remote_mounts (menu->volumes,
+                                    (GpVolumesForeachMountsFunc) append_remote_mount,
+                                    menu);
+}
+
+static void
 remove_item (GtkWidget *widget,
              gpointer   user_data)
 {
@@ -298,7 +598,10 @@ static void
 menu_reload (GpPlacesMenu *menu)
 {
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
+
   g_assert (menu->bookmarks_menu == NULL);
+  g_assert (menu->volumes_local_menu == NULL);
+  g_assert (menu->volumes_remote_menu == NULL);
 
   append_home_dir (menu);
   append_desktop_dir (menu);
@@ -306,9 +609,11 @@ menu_reload (GpPlacesMenu *menu)
 
   append_separator (menu);
   append_computer (menu);
+  append_local_volumes (menu);
 
   append_separator (menu);
   append_network (menu);
+  append_remote_volumes (menu);
 }
 
 static gboolean
@@ -345,6 +650,13 @@ bookmarks_changed_cb (GpBookmarks  *bookmarks,
 }
 
 static void
+volumes_changed_cb (GpVolumes    *volumes,
+                    GpPlacesMenu *menu)
+{
+  queue_reload (menu);
+}
+
+static void
 locked_down_cb (GpApplet     *applet,
                 GParamSpec   *pspec,
                 GpPlacesMenu *menu)
@@ -372,6 +684,10 @@ gp_places_menu_constructed (GObject *object)
   menu->bookmarks = gp_bookmarks_new ();
   g_signal_connect (menu->bookmarks, "changed",
                     G_CALLBACK (bookmarks_changed_cb), menu);
+
+  menu->volumes = gp_volumes_new ();
+  g_signal_connect (menu->volumes, "changed",
+                    G_CALLBACK (volumes_changed_cb), menu);
 
   menu->locked_down_id = g_signal_connect (menu->applet, "notify::locked-down",
                                            G_CALLBACK (locked_down_cb), menu);
@@ -410,6 +726,7 @@ gp_places_menu_dispose (GObject *object)
     }
 
   g_clear_object (&menu->bookmarks);
+  g_clear_object (&menu->volumes);
 
   menu->applet = NULL;
 
