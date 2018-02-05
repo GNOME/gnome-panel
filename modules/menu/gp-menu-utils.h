@@ -19,15 +19,12 @@
 #define GP_MENU_UTILS_H
 
 #include <gio/gdesktopappinfo.h>
-#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 void   gp_menu_utils_app_info_launch    (GDesktopAppInfo *app_info);
 
-void   gp_menu_utils_show_uri           (const gchar     *uri,
-                                         GtkWindow       *parent,
-                                         guint32          timestamp);
+void   gp_menu_utils_launch_uri         (const gchar     *uri);
 
 GIcon *gp_menu_utils_get_icon_for_file  (GFile           *file);
 

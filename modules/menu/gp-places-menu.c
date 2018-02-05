@@ -58,7 +58,7 @@ static void
 uri_activate_cb (GtkWidget   *item,
                  const gchar *uri)
 {
-  gp_menu_utils_show_uri (uri, NULL, GDK_CURRENT_TIME);
+  gp_menu_utils_launch_uri (uri);
 }
 
 static void

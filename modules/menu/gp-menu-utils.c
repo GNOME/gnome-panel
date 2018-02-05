@@ -325,15 +325,13 @@ gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
 }
 
 void
-gp_menu_utils_show_uri (const gchar *uri,
-                        GtkWindow   *parent,
-                        guint32      timestamp)
+gp_menu_utils_launch_uri (const gchar *uri)
 {
   GError *error;
   GtkWidget *dialog;
 
   error = NULL;
-  if (gtk_show_uri_on_window (parent, uri, timestamp, &error))
+  if (gtk_show_uri_on_window (NULL, uri, GDK_CURRENT_TIME, &error))
     return;
 
   dialog = gtk_message_dialog_new (NULL, 0,
