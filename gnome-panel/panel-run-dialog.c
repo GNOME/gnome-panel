@@ -1760,9 +1760,9 @@ static void
 panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 			      GtkBuilder     *gui)
 {
-	GdkScreen             *screen;
-	int                    width_request;
 	GtkWidget             *entry;
+	GdkRectangle           geometry;
+	GdkMonitor            *monitor;
 	
 	dialog->combobox = PANEL_GTK_BUILDER_GET (gui, "comboboxentry");
 
@@ -1774,13 +1774,17 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 	gtk_combo_box_set_entry_text_column
 		(GTK_COMBO_BOX (dialog->combobox), 0);
 
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
+	monitor = gdk_display_get_primary_monitor (gdk_display_get_default ());
 
-        /* 1/4 the width of the first monitor should be a good value */
-	width_request = panel_multiscreen_width (screen, 0) / 4;
-	g_object_set (G_OBJECT (dialog->combobox),
-		      "width_request", width_request,
-		      NULL);
+	if (!monitor)
+		monitor = gdk_display_get_monitor (gdk_display_get_default (), 0);
+
+	g_assert (monitor != NULL);
+
+	gdk_monitor_get_geometry (monitor, &geometry);
+
+	/* 1/4 the width of the monitor should be a good value */
+	gtk_widget_set_size_request (dialog->combobox, geometry.width / 4, -1);
 
         g_signal_connect (entry, "key-press-event",
 			  G_CALLBACK (entry_event), dialog);
