@@ -341,6 +341,8 @@ gp_module_new_from_path (const gchar *path)
   module->path = g_strdup (path);
   module->library = g_module_open (path, flags);
 
+  g_debug("Loading module (path): %s", path);
+
   if (module->library == NULL)
     {
       g_warning ("Failed to load module '%s': %s", path, g_module_error ());

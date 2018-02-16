@@ -99,6 +99,7 @@ load_external_modules (GpAppletManager *manager)
 
       g_hash_table_insert (manager->modules, g_strdup (id), module);
       get_applet_infos (manager, id, module);
+      g_debug("Loading module id: %s", id);
     }
 
   g_dir_close (dir);

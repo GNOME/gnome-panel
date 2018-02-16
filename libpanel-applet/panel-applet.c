@@ -160,15 +160,25 @@ G_DEFINE_TYPE_WITH_PRIVATE (PanelApplet, panel_applet, GTK_TYPE_EVENT_BOX)
  **/
 GSettings *
 panel_applet_settings_new (PanelApplet *applet,
-			   const char  *schema)
+			   const char  *schema_id)
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
-	g_return_val_if_fail (schema != NULL, NULL);
+	g_return_val_if_fail (schema_id != NULL, NULL);
 
 	if (!applet->priv->settings_path)
 		return NULL;
 
-	return g_settings_new_with_path (schema, applet->priv->settings_path);
+        printf("new\n");
+
+	GSettingsSchemaSource *schema_source = g_settings_schema_source_get_default ();
+
+	GSettingsSchema *schema = g_settings_schema_source_lookup (schema_source,
+								   schema_id, FALSE);
+
+	if (!schema)
+		return NULL;
+
+	return g_settings_new_with_path (schema_id, applet->priv->settings_path);
 }
 
 static void

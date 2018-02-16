@@ -196,6 +196,8 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 			skip = panel_struts_allocation_overlapped (
 				strut, overlap, &geometry, &moved_down, skip);
 
+		// TODO: shouldn't there be some assignment for x values and width here?
+
 		if (strut->orientation & PANEL_VERTICAL_MASK) {
 			if (geometry.y < monitor_geometry.y) {
 				geometry.height = geometry.y + geometry.height - monitor_geometry.y;

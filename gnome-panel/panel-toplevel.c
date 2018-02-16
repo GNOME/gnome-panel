@@ -4176,6 +4176,8 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	                  G_CALLBACK (gtk_true),
 	                  NULL);
 
+	//todo: listen to monitor-changed signal and redraw our self
+
 	update_style_classes (toplevel);
 }
 
