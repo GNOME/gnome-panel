@@ -342,11 +342,16 @@ panel_toplevel_find_empty_spot (GdkScreen        *screen,
 	GSList   *li;
 	int       i;
 	gboolean  found_a_spot = FALSE;
+	GdkDisplay *display;
+	gint n_monitors;
 
 	*monitor = 0;
 	*orientation = PANEL_ORIENTATION_TOP;
 
-	filled_spots = g_new0 (int, panel_multiscreen_monitors (screen));
+	display = gdk_display_get_default ();
+	n_monitors = gdk_display_get_n_monitors (display);
+
+	filled_spots = g_new0 (int, n_monitors);
 
 	for (li = panel_toplevel_list_toplevels (); li != NULL; li = li->next) {
 		PanelToplevel *toplevel = li->data;
@@ -360,7 +365,7 @@ panel_toplevel_find_empty_spot (GdkScreen        *screen,
 		filled_spots[toplevel_monitor] |= panel_toplevel_get_orientation (toplevel);
 	}
 
-	for (i = 0; i < panel_multiscreen_monitors (screen); i++) {
+	for (i = 0; i < n_monitors; i++) {
 		/* These are ordered based on "priority" of the
 		   orientation when picking it */
 		if ( ! (filled_spots[i] & PANEL_ORIENTATION_TOP)) {
@@ -4796,20 +4801,20 @@ panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_monitor (PanelToplevel *toplevel)
 {
-	GdkScreen *screen;
+	GdkDisplay *display;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	display = gdk_display_get_default ();
 
 	/* If we were not using the configured monitor, can we use it now? */
 	if ((toplevel->priv->configured_monitor != -1) &&
 	    (toplevel->priv->configured_monitor != toplevel->priv->monitor) &&
-	    toplevel->priv->configured_monitor < panel_multiscreen_monitors (screen)) {
+	    toplevel->priv->configured_monitor < gdk_display_get_n_monitors (display)) {
 		panel_toplevel_set_monitor_internal (toplevel,
 						     toplevel->priv->configured_monitor,
 						     FALSE);
 
 	/* else, can we still use the monitor we were using? */
-	} else if (toplevel->priv->monitor >= panel_multiscreen_monitors (screen)) {
+	} else if (toplevel->priv->monitor >= gdk_display_get_n_monitors (display)) {
 		panel_toplevel_set_monitor_internal (toplevel,
 						     0,
 						     FALSE);
@@ -4820,7 +4825,7 @@ void
 panel_toplevel_set_monitor (PanelToplevel *toplevel,
 			    int            monitor)
 {
-	GdkScreen *screen;
+	GdkDisplay *display;
 
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
@@ -4834,8 +4839,9 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 	 * when logging in after having used a multiscreen environment.
 	 * We will put the panel on the monitor 0 for this session, and it will
 	 * move back to the right monitor next time. */
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	if (monitor < panel_multiscreen_monitors (screen))
+	display = gdk_display_get_default ();
+
+	if (monitor < gdk_display_get_n_monitors (display))
 		panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
 	panel_toplevel_apply_delayed_settings_queue (toplevel);
