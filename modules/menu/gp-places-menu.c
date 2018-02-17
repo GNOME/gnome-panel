@@ -23,6 +23,7 @@
 #include "gp-bookmarks.h"
 #include "gp-menu-utils.h"
 #include "gp-places-menu.h"
+#include "gp-recent-menu.h"
 #include "gp-volumes.h"
 
 #define MAX_ITEMS_OR_SUBMENU 8
@@ -588,6 +589,32 @@ append_remote_volumes (GpPlacesMenu *menu)
 }
 
 static void
+append_recent_menu (GpPlacesMenu *menu)
+{
+  guint icon_size;
+  GtkWidget *icon;
+  GtkWidget *item;
+  GtkWidget *recent_menu;
+
+  icon_size = gp_applet_get_menu_icon_size (menu->applet);
+  icon = gtk_image_new_from_icon_name ("document-open-recent", GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+
+  item = gp_image_menu_item_new_with_label (_("Recent Documents"));
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gtk_widget_show (item);
+
+  recent_menu = gp_recent_menu_new (menu->applet);
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), recent_menu);
+
+  g_object_bind_property (recent_menu, "empty",
+                          item, "sensitive",
+                          G_BINDING_DEFAULT | G_BINDING_INVERT_BOOLEAN |
+                          G_BINDING_SYNC_CREATE);
+}
+
+static void
 remove_item (GtkWidget *widget,
              gpointer   user_data)
 {
@@ -614,6 +641,9 @@ menu_reload (GpPlacesMenu *menu)
   append_separator (menu);
   append_network (menu);
   append_remote_volumes (menu);
+
+  append_separator (menu);
+  append_recent_menu (menu);
 }
 
 static gboolean
