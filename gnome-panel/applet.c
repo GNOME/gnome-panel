@@ -24,7 +24,6 @@
 #include "panel-bindings.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
-#include "panel-menu-bar.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-menu-button.h"
@@ -64,7 +63,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		panel_action_button_set_dnd_enabled (PANEL_ACTION_BUTTON (info->widget),
 						     dnd_enabled);
 		break;
-	case PANEL_OBJECT_MENU_BAR:
 	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:
@@ -179,10 +177,6 @@ applet_callback_callback (GtkWidget      *widget,
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_invoke_menu (
 			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
-		break;
-	case PANEL_OBJECT_MENU_BAR:
-		panel_menu_bar_invoke_menu (
-			PANEL_MENU_BAR (menu->info->widget), menu->name);
 		break;
 
 	case PANEL_OBJECT_APPLET:

@@ -39,7 +39,6 @@
 #include "launcher.h"
 #include "panel-action-button.h"
 #include "panel-applet-frame.h"
-#include "panel-menu-bar.h"
 #include "panel-menu-button.h"
 #include "panel-user-menu.h"
 
@@ -219,11 +218,6 @@ panel_object_loader_idle_handler (gpointer dummy)
                                           object->settings,
                                           object_type_detail);
                 break;
-        case PANEL_OBJECT_MENU_BAR:
-                panel_menu_bar_load (panel_widget,
-                                     object->id,
-                                     object->settings);
-                break;
         case PANEL_OBJECT_USER_MENU:
                 panel_user_menu_load (panel_widget,
                                       object->id,
@@ -364,7 +358,6 @@ static struct {
         gboolean         has_detail;
 } panel_object_iid_map[] = {
         { PANEL_OBJECT_ACTION,    "ActionButton" , TRUE  },
-        { PANEL_OBJECT_MENU_BAR,  "MenuBar"      , FALSE },
         { PANEL_OBJECT_MENU,      "MenuButton"   , FALSE },
         { PANEL_OBJECT_LAUNCHER,  "Launcher"     , FALSE },
         { PANEL_OBJECT_USER_MENU, "UserMenu"     , FALSE }

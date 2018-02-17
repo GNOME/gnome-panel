@@ -36,7 +36,6 @@
 #include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
-#include "panel-menu-bar.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
 #include "panel-layout.h"
@@ -88,7 +87,6 @@ typedef enum {
 	PANEL_ADDTO_LAUNCHER,
 	PANEL_ADDTO_LAUNCHER_NEW,
 	PANEL_ADDTO_MENU,
-	PANEL_ADDTO_MENUBAR,
 	PANEL_ADDTO_USER_MENU
 } PanelAddtoItemType;
 
@@ -142,15 +140,6 @@ prepend_internal_applets (GSList *list)
 	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
 	internal->action_type = PANEL_ACTION_NONE;
 	internal->iid = g_strdup ("MENU:MAIN");
-	list = g_slist_prepend (list, internal);
-	
-	internal = g_new0 (PanelAddtoItemInfo, 1);
-	internal->type = PANEL_ADDTO_MENUBAR;
-	internal->name = g_strdup (_("Menu Bar"));
-	internal->description = g_strdup (_("A custom menu bar"));
-	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
-	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = g_strdup ("MENUBAR:NEW");
 	list = g_slist_prepend (list, internal);
 
 	internal = g_new0 (PanelAddtoItemInfo, 1);
@@ -751,11 +740,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 					  item_info->menu_filename,
 					  item_info->menu_path,
 					  item_info->name);
-		break;
-	case PANEL_ADDTO_MENUBAR:
-		panel_menu_bar_create (dialog->panel_widget->toplevel,
-				       dialog->insert_pack_type,
-				       pack_index);
 		break;
 	case PANEL_ADDTO_USER_MENU:
 		panel_user_menu_create (dialog->panel_widget->toplevel,

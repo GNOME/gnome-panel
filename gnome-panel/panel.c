@@ -32,7 +32,6 @@
 #include "panel-util.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
-#include "panel-menu-bar.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
@@ -82,7 +81,6 @@ orientation_change (AppletInfo  *info,
 	case PANEL_OBJECT_ACTION:
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
-	case PANEL_OBJECT_MENU_BAR:
 	case PANEL_OBJECT_USER_MENU:
 		panel_menu_bar_object_set_orientation (PANEL_MENU_BAR_OBJECT (info->widget), orientation);
 		break;
@@ -829,15 +827,6 @@ drop_internal_applet (PanelWidget         *panel,
 							pack_type, pack_index,
 							applet_type,
 							&applet_index);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
-
-	} else if (!strcmp (applet_type, "MENUBAR:NEW")) {
-		if (panel_layout_is_writable ()) {
-			panel_menu_bar_create (panel->toplevel,
-					       pack_type, pack_index);
 			success = TRUE;
 		} else {
 			success = FALSE;
