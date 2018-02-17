@@ -17,7 +17,11 @@
 
 #include "config.h"
 #include "gp-menu-bar.h"
+#include "gp-menu-utils.h"
 #include "gp-user-menu-applet.h"
+#include "gp-user-menu.h"
+
+#include <libgnome-panel/gp-image-menu-item.h>
 
 struct _GpUserMenuApplet
 {
@@ -27,6 +31,56 @@ struct _GpUserMenuApplet
 };
 
 G_DEFINE_TYPE (GpUserMenuApplet, gp_user_menu_applet, GP_TYPE_APPLET)
+
+static gboolean
+button_press_event_cb (GtkWidget      *widget,
+                       GdkEventButton *event,
+                       gpointer        user_data)
+{
+  return TRUE;
+}
+
+static void
+panel_icon_size_cb (GpApplet   *applet,
+                    GParamSpec *pspec,
+                    GtkWidget  *icon)
+{
+  guint icon_size;
+
+  icon_size = gp_applet_get_panel_icon_size (applet);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+}
+
+static void
+append_user_item (GpUserMenuApplet *applet)
+{
+  guint icon_size;
+  GtkWidget *icon;
+  gchar *user_name;
+  GtkWidget *item;
+  GtkWidget *menu;
+
+  icon_size = gp_applet_get_panel_icon_size (GP_APPLET (applet));
+  icon = gtk_image_new_from_icon_name ("computer", GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+
+  g_signal_connect (applet, "notify::panel-icon-size",
+                    G_CALLBACK (panel_icon_size_cb), icon);
+
+  user_name = gp_menu_utils_get_user_name ();
+  item = gp_image_menu_item_new_with_label (user_name);
+  g_free (user_name);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (applet->menu_bar), item);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+  gtk_widget_show (item);
+
+  menu = gp_user_menu_new (GP_APPLET (applet));
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
+
+  g_signal_connect (menu, "button-press-event",
+                    G_CALLBACK (button_press_event_cb), NULL);
+}
 
 static void
 gp_user_menu_applet_setup (GpUserMenuApplet *user_menu)
@@ -42,6 +96,8 @@ gp_user_menu_applet_setup (GpUserMenuApplet *user_menu)
   g_object_bind_property (user_menu, "position",
                           user_menu->menu_bar, "position",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
+
+  append_user_item (user_menu);
 }
 
 static void
