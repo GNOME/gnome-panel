@@ -35,6 +35,8 @@ menu_la_SOURCES = \
 	gp-menu.h \
 	gp-places-menu.c \
 	gp-places-menu.h \
+	gp-recent-menu.c \
+	gp-recent-menu.h \
 	gp-user-menu-applet.c \
 	gp-user-menu-applet.h \
 	gp-volumes.c \
