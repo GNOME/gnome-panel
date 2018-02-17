@@ -324,6 +324,8 @@ gp_image_menu_item_class_init (GpImageMenuItemClass *item_class)
   container_class->remove = gp_image_menu_item_remove;
 
   menu_item_class->toggle_size_request = gp_image_menu_item_toggle_size_request;
+
+  gtk_container_class_handle_border_width (container_class);
 }
 
 static void
