@@ -26,20 +26,23 @@
 
 struct _GpMenu
 {
-  GtkMenu    parent;
+  GtkMenu                parent;
 
-  gchar     *name;
-  GpApplet  *applet;
-  gboolean   required;
+  gchar                 *name;
+  GpApplet              *applet;
+  gboolean               required;
 
-  GMenuTree *tree;
+  GMenuTree             *tree;
 
-  gboolean   empty;
+  gboolean               empty;
 
-  guint      reload_id;
+  GpAppendMenuItemsFunc  append_func;
+  gpointer               append_data;
 
-  gulong     locked_down_id;
-  gulong     menu_icon_size_id;
+  guint                  reload_id;
+
+  gulong                 locked_down_id;
+  gulong                 menu_icon_size_id;
 };
 
 enum
@@ -304,6 +307,9 @@ menu_reload (GpMenu *menu)
       directory = gmenu_tree_get_directory_from_path (menu->tree, "/");
       directory_to_menu_items (directory, GTK_WIDGET (menu), menu);
       gmenu_tree_item_unref (directory);
+
+      if (menu->append_func != NULL)
+        menu->append_func (GTK_MENU (menu), menu->append_data);
     }
 
   children = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -569,4 +575,15 @@ gp_menu_new (GpApplet    *applet,
                        "name", name,
                        "required", required,
                        NULL);
+}
+
+void
+gp_menu_set_append_func (GpMenu                *menu,
+                         GpAppendMenuItemsFunc  append_func,
+                         gpointer               user_data)
+{
+  menu->append_func = append_func;
+  menu->append_data = user_data;
+
+  queue_reload (menu);
 }

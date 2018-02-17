@@ -19,8 +19,12 @@
 #define GP_MENU_UTILS_H
 
 #include <gio/gdesktopappinfo.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
+
+typedef void (* GpAppendMenuItemsFunc) (GtkMenu  *menu,
+                                        gpointer  user_data);
 
 void   gp_menu_utils_app_info_launch    (GDesktopAppInfo *app_info);
 

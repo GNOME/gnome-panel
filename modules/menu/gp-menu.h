@@ -18,6 +18,7 @@
 #ifndef GP_MENU_H
 #define GP_MENU_H
 
+#include "gp-menu-utils.h"
 #include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
@@ -25,9 +26,13 @@ G_BEGIN_DECLS
 #define GP_TYPE_MENU (gp_menu_get_type ())
 G_DECLARE_FINAL_TYPE (GpMenu, gp_menu, GP, MENU, GtkMenu)
 
-GtkWidget *gp_menu_new (GpApplet    *applet,
-                        const gchar *name,
-                        gboolean     required);
+GtkWidget *gp_menu_new             (GpApplet              *applet,
+                                    const gchar           *name,
+                                    gboolean               required);
+
+void       gp_menu_set_append_func (GpMenu                *menu,
+                                    GpAppendMenuItemsFunc  append_func,
+                                    gpointer               user_data);
 
 G_END_DECLS
 
