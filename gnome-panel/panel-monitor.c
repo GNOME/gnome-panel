@@ -17,6 +17,25 @@
 
 #include "panel-monitor.h"
 
+void
+panel_monitor_get_geometry (int monitor_index,
+                            int *x,
+                            int *y,
+                            int *height,
+                            int *width)
+{
+  GdkMonitor *monitor = gdk_display_get_monitor (gdk_display_get_default (), monitor_index);
+
+  GdkRectangle geometry;
+
+  gdk_monitor_get_geometry (monitor, &geometry);
+
+  if (x) *x = geometry.x;
+  if (y) *y = geometry.y;
+  if (height) *height = geometry.height;
+  if (width) *width = geometry.width;
+}
+
 guint
 panel_monitor_get_index (GdkMonitor *monitor)
 {

@@ -20,6 +20,12 @@
 
 #include <gtk/gtk.h>
 
+void panel_monitor_get_geometry (int monitor_index,
+                                 int *x,
+                                 int *y,
+                                 int *height,
+                                 int *width);
+
 guint panel_monitor_get_index (GdkMonitor *monitor);
 
 #endif //PANEL_MONITOR_H
