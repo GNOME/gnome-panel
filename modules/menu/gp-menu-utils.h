@@ -33,6 +33,8 @@ gchar *gp_menu_utils_get_label_for_file (GFile           *file);
 void   gp_menu_utils_show_error_dialog  (const gchar     *message,
                                          GError          *error);
 
+gchar *gp_menu_utils_get_user_name      (void);
+
 G_END_DECLS
 
 #endif

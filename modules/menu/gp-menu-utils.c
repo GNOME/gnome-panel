@@ -448,3 +448,23 @@ gp_menu_utils_show_error_dialog (const gchar *message,
   g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
   gtk_window_present (GTK_WINDOW (dialog));
 }
+
+gchar *
+gp_menu_utils_get_user_name (void)
+{
+  const gchar *name;
+  gchar *user_name;
+
+  name = g_get_real_name ();
+  if (name == NULL || *name == '\0' || g_strcmp0 (name, "Unknown") == 0)
+    name = g_get_user_name ();
+
+  user_name = NULL;
+  if (name != NULL)
+    user_name = g_locale_to_utf8 (name, -1, NULL, NULL, NULL);
+
+  if (user_name == NULL)
+    user_name = g_strdup (name != NULL ? name : "Unknown");
+
+  return user_name;
+}
