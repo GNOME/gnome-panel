@@ -65,6 +65,15 @@ menu_get_applet_info (const gchar *id)
   return info;
 }
 
+static const gchar *
+menu_get_applet_id_from_iid (const gchar *iid)
+{
+  if (g_strcmp0 (iid, "PanelInternalFactory::MenuBar") == 0)
+    return "menu-bar";
+
+  return NULL;
+}
+
 void
 gp_module_load (GpModule *module)
 {
@@ -80,4 +89,5 @@ gp_module_load (GpModule *module)
   gp_module_set_applet_ids (module, "main-menu", "menu-bar", "user-menu", NULL);
 
   gp_module_set_get_applet_info (module, menu_get_applet_info);
+  gp_module_set_compatibility (module, menu_get_applet_id_from_iid);
 }
