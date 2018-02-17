@@ -23,16 +23,19 @@
 
 struct _GpUserMenu
 {
-  GtkMenu   parent;
+  GtkMenu                parent;
 
-  GpApplet *applet;
+  GpApplet              *applet;
 
-  gboolean  empty;
+  gboolean               empty;
 
-  guint     reload_id;
+  GpAppendMenuItemsFunc  append_func;
+  gpointer               append_data;
 
-  gulong    locked_down_id;
-  gulong    menu_icon_size_id;
+  guint                  reload_id;
+
+  gulong                 locked_down_id;
+  gulong                 menu_icon_size_id;
 };
 
 enum
@@ -180,6 +183,9 @@ menu_reload (GpUserMenu *menu)
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
 
   append_control_center (menu);
+
+  if (menu->append_func != NULL)
+    menu->append_func (GTK_MENU (menu), menu->append_data);
 
   count = 0;
   gtk_container_foreach (GTK_CONTAINER (menu), count_visible_item, &count);
@@ -378,4 +384,15 @@ gp_user_menu_new (GpApplet *applet)
   return g_object_new (GP_TYPE_USER_MENU,
                        "applet", applet,
                        NULL);
+}
+
+void
+gp_user_menu_set_append_func (GpUserMenu            *user_menu,
+                              GpAppendMenuItemsFunc  append_func,
+                              gpointer               user_data)
+{
+  user_menu->append_func = append_func;
+  user_menu->append_data = user_data;
+
+  queue_reload (user_menu);
 }

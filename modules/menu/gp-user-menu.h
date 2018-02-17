@@ -18,6 +18,7 @@
 #ifndef GP_USER_MENU_H
 #define GP_USER_MENU_H
 
+#include "gp-menu-utils.h"
 #include <libgnome-panel/gp-applet.h>
 
 G_BEGIN_DECLS
@@ -25,7 +26,11 @@ G_BEGIN_DECLS
 #define GP_TYPE_USER_MENU (gp_user_menu_get_type ())
 G_DECLARE_FINAL_TYPE (GpUserMenu, gp_user_menu, GP, USER_MENU, GtkMenu)
 
-GtkWidget *gp_user_menu_new (GpApplet *applet);
+GtkWidget *gp_user_menu_new             (GpApplet              *applet);
+
+void       gp_user_menu_set_append_func (GpUserMenu            *user_menu,
+                                         GpAppendMenuItemsFunc  append_func,
+                                         gpointer               user_data);
 
 G_END_DECLS
 
