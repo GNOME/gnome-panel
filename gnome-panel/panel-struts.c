@@ -143,8 +143,13 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 			*moved_down = TRUE;
 			break;
 		case PANEL_ORIENTATION_BOTTOM:
-			if (!*moved_down)
+			if (!*moved_down) {
 				geometry->y = overlap_y1 - geometry->height;
+				if (geometry->y < 0) {
+					geometry->height += geometry->y;
+					geometry->y = 0;
+				}
+			}
 			else if (overlap_y1 > geometry->y)
 				geometry->height = overlap_y1 - geometry->y;
 			else
