@@ -244,6 +244,91 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 	return toplevel_changed;
 }
 
+typedef struct {
+  int x0;
+  int y0;
+  int x1;
+  int y1;
+} MonitorBounds;
+
+static inline void
+get_monitor_bounds (GdkMonitor    *monitor,
+		    MonitorBounds *bounds)
+{
+	GdkRectangle geometry;
+
+	g_assert (bounds != NULL);
+
+	gdk_monitor_get_geometry (monitor,
+				  &geometry);
+
+	bounds->x0 = geometry.x;
+	bounds->y0 = geometry.y;
+	bounds->x1 = bounds->x0 + geometry.width;
+	bounds->y1 = bounds->y0 + geometry.height;
+}
+
+/* Determines whether a given monitor is along the visible
+ * edge of the logical screen.
+ */
+static void
+find_logical_monitor_edges (GdkMonitor *monitor,
+			    gboolean   *leftmost,
+			    gboolean   *rightmost,
+			    gboolean   *topmost,
+			    gboolean   *bottommost)
+{
+	GdkDisplay *display;
+	MonitorBounds bounds = { 0 };
+	int i, n_monitors;
+
+	g_return_if_fail (monitor != NULL);
+
+	display = gdk_display_get_default ();
+
+	n_monitors = gdk_display_get_n_monitors (display);
+
+	*leftmost   = TRUE;
+	*rightmost  = TRUE;
+	*topmost    = TRUE;
+	*bottommost = TRUE;
+
+	get_monitor_bounds (monitor, &bounds);
+
+	/* go through each monitor and try to find one either right,
+	 * below, above, or left of the specified monitor
+	 */
+	for (i = 0; i < n_monitors; i++) {
+		MonitorBounds iter;
+		GdkMonitor *currentMonitor;
+
+		currentMonitor = gdk_display_get_monitor (display, i);
+
+		if (monitor == currentMonitor)
+			continue;
+
+		get_monitor_bounds (currentMonitor, &iter);
+
+		if ((iter.y0 >= bounds.y0 && iter.y0 <  bounds.y1) ||
+		    (iter.y1 >  bounds.y0 && iter.y1 <= bounds.y1))
+		{
+			if (iter.x0 < bounds.x0)
+				*leftmost = FALSE;
+			if (iter.x1 > bounds.x1)
+				*rightmost = FALSE;
+		}
+
+		if ((iter.x0 >= bounds.x0 && iter.x0 <  bounds.x1) ||
+		    (iter.x1 >  bounds.x0 && iter.x1 <= bounds.x1))
+		{
+			if (iter.y0 < bounds.y0)
+				*topmost = FALSE;
+			if (iter.y1 > bounds.y1)
+				*bottommost = FALSE;
+		}
+	}
+}
+
 void
 panel_struts_set_window_hint (PanelToplevel *toplevel)
 {
@@ -276,12 +361,11 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 					   &monitor_width,
 					   &monitor_height);
 
-        panel_multiscreen_is_at_visible_extreme (strut->screen,
-                                                 strut->monitor,
-                                                 &leftmost,
-                                                 &rightmost,
-                                                 &topmost,
-                                                 &bottommost);
+	find_logical_monitor_edges (strut->monitor,
+	                            &leftmost,
+	                            &rightmost,
+	                            &topmost,
+	                            &bottommost);
 
 	switch (strut->orientation) {
 	case PANEL_ORIENTATION_TOP:
