@@ -12,10 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-01-18 22:01+0000\n"
-"PO-Revision-Date: 2017-02-17 22:57+0700\n"
+"POT-Creation-Date: 2018-02-17 20:31+0000\n"
+"PO-Revision-Date: 2018-03-16 10:31+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -251,11 +251,11 @@ msgstr ""
 "pengalih area kerja. Kunci ini berlaku bila kunci display_all_workspaces "
 "bernilai benar (true)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:20
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid "Enable tooltips"
 msgstr "Mengaktifkan pesan pembantu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:21
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -264,11 +264,11 @@ msgstr ""
 "petunjuk dapat dimatikan bagi seluruh desktop melalui properti gtk-enable-"
 "tooltips di GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:25
+#: data/org.gnome.gnome-panel.gschema.xml:40
 msgid "Confirm panel removal"
 msgstr "Konfirmasi penghapusan panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:26
+#: data/org.gnome.gnome-panel.gschema.xml:41
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -276,23 +276,39 @@ msgstr ""
 "Jika dipilih maka akan muncul sebuah dialog konfirmasi yang akan menanyakan "
 "apakah benar ingin menghapus panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:30
+#: data/org.gnome.gnome-panel.gschema.xml:46
+msgid "Icon size in menus"
+msgstr "Ukuran ikon dalam menu"
+
+#: data/org.gnome.gnome-panel.gschema.xml:47
+msgid "The size of icons in menus."
+msgstr "Ukuran ikon dalam menu."
+
+#: data/org.gnome.gnome-panel.gschema.xml:52
+msgid "Maximum icon size in panels"
+msgstr "Ukuran maksimal ikon dalam panel"
+
+#: data/org.gnome.gnome-panel.gschema.xml:53
+msgid "The maximum size of icons in panels."
+msgstr "Ukuran maksimal ikon dalam panel."
+
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "Icon size in the menus"
 msgstr "Ukuran ikon dalam menu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:62
 msgid "Icon size for only Applications item in the Menu Bar applet"
 msgstr "Ukuran ikon untuk hanya butir Aplikasi dalam aplet Bilah Menu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:38
+#: data/org.gnome.gnome-panel.gschema.xml:66
 msgid "Which theme variant to use"
 msgstr "Varian tema mana yang akan dipakai"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:73
 msgid "Panel ID list"
 msgstr "Daftar ID panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:74
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -300,11 +316,11 @@ msgstr ""
 "Daftar ID panel. Tiap-tiap ID adalah identitas milik masing-masing panel "
 "utama. Pengaturan panel-panel ini disimpan pada /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:50
+#: data/org.gnome.gnome-panel.gschema.xml:78
 msgid "Panel object ID list"
 msgstr "Daftar ID objek panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -314,11 +330,11 @@ msgstr ""
 "objek panel (mis. aplet, peluncur, tombol aksi, atau tombol/bilah menu). "
 "Pengaturan setiap objek ini disimpan pada /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:86
 msgid "Complete panel lockdown"
 msgstr "Kunci panel seluruhnya"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:87
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -328,11 +344,11 @@ msgstr ""
 "panel. Tiap-tiap applet yang ada perlu dikunci sendiri-sendiri. Agar "
 "konfigurasi ini berlaku, panel harus dijalankan ulang."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:91
 msgid "Applet IIDs to disable from loading"
 msgstr "IID Applet yang akan dinonaktifkan"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -344,11 +360,11 @@ msgstr ""
 "applet mini-commander, silakan tambahkan 'OAFIID:GNOME_MiniCommanderApplet' "
 "pada daftar ini. Setelah itu restart panel agar pengaturan ini dapat berlaku."
 
-#: data/org.gnome.gnome-panel.gschema.xml:68
+#: data/org.gnome.gnome-panel.gschema.xml:96
 msgid "Disable Force Quit"
 msgstr "Menonaktifkan Tutup Paksa"
 
-#: data/org.gnome.gnome-panel.gschema.xml:69
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -356,21 +372,21 @@ msgstr ""
 "Jika dipilih, panel tidak akan mengizinkan pemakai untuk menutup paksa "
 "aplikasi."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:104
 msgid "History of \"Run Application\" dialog"
 msgstr "Riwayat dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:105
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Daftar perintah yang pernah dijalankan lewat dialog \"Jalankan Aplikasi\"."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:109
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Aktifkan daftar program pada kotak dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -380,11 +396,11 @@ msgstr ""
 "Aplikasi\" akan diaktifkan. Pengaturan berikutnya mengenai dibuka atau "
 "tidaknya daftar tersebut, dapat Anda atur pada show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:114
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Buka daftar program pada kotak dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:87
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -395,13 +411,13 @@ msgstr ""
 "dibuka. Kunci ini hanya berfungsi apabila kunsi enable_program_list bernilai "
 "benar (true)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:119
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Aktifkan fasilitas pelengkapan otomatis pada kotak dialog \"Jalankan Aplikasi"
 "\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:92
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -834,17 +850,17 @@ msgstr "Gunakan warna teks ubahan"
 msgid "Text Color"
 msgstr "Warna Teks"
 
-#: gnome-panel/applet.c:342
+#: gnome-panel/applet.c:337
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:480
+#: gnome-panel/applet.c:475
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Pindahkan"
 
-#: gnome-panel/applet.c:487
+#: gnome-panel/applet.c:482
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
@@ -876,11 +892,11 @@ msgstr "Properti Direktori"
 msgid "Launcher Properties"
 msgstr "Properti Peluncur"
 
-#: gnome-panel/gnome-panel.desktop.in.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
 msgid "Panel"
 msgstr "Panel"
 
-#: gnome-panel/gnome-panel.desktop.in.in:5
+#: gnome-panel/gnome-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -889,9 +905,29 @@ msgstr ""
 "mengatur jendela, menunjukkan waktu, dsb."
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in.in:7
+#: gnome-panel/gnome-panel.desktop.in:7
 msgid "gnome-panel"
 msgstr "gnome-panel"
+
+#: gnome-panel/gp-add-applet-window.c:137
+msgid "Help"
+msgstr "Bantuan"
+
+#: gnome-panel/gp-add-applet-window.c:148
+msgid "About"
+msgstr "Ihwal"
+
+#: gnome-panel/gp-add-applet-window.c:193
+msgid "Add"
+msgstr "Tambah"
+
+#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+msgid "Add to Panel"
+msgstr "Tambah ke Panel"
+
+#: gnome-panel/gp-add-applet-window.c:553
+msgid "No applets found"
+msgstr "Aplet tidak ditemukan"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -940,7 +976,7 @@ msgstr "piksel"
 
 #: gnome-panel/gp-properties-dialog.ui:191
 msgid "Miscellaneous:"
-msgstr "Rupa-rupa"
+msgstr "Rupa-rupa:"
 
 #: gnome-panel/gp-properties-dialog.ui:210
 msgid "E_xpand"
@@ -958,8 +994,8 @@ msgstr "Tom_bol penyembunyi"
 msgid "Arro_ws on hide buttons"
 msgstr "Panah pada tombo_l"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/external/clock/clock.ui:629
-#: modules/external/fish/fish.ui:91
+#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Umum"
 
@@ -1024,7 +1060,7 @@ msgstr "Berkas desktop %s untuk panel peluncur%s%s tidak dapat dibuka\n"
 msgid "_Launch"
 msgstr "_Luncurkan"
 
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:170
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
 #: gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Properti"
@@ -1052,11 +1088,11 @@ msgstr "Galat"
 msgid "Choose an icon"
 msgstr "Pilih ikon"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1275
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1264
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/external/clock/clock.ui:67
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -1065,19 +1101,15 @@ msgstr "_Batal"
 msgid "_Open"
 msgstr "B_uka"
 
-#: gnome-panel/libpanel-util/panel-launch.c:47
+#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:345
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Tidak dapat menjalankan '%s'"
 
-#: gnome-panel/libpanel-util/panel-show.c:46
+#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:379
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Tidak dapat membuka lokasi '%s'"
-
-#: gnome-panel/libpanel-util/panel-show.c:164
-msgid "No application to handle search folders is installed."
-msgstr "Aplikasi untuk menangani pencarian folder tidak terpasang."
 
 #: gnome-panel/main.c:37
 msgid "Replace a currently running panel"
@@ -1087,171 +1119,143 @@ msgstr "Menggantikan panel yang sedang berjalan"
 msgid "Print version"
 msgstr "Cetak versi"
 
-#: gnome-panel/panel-action-button.c:160
+#: gnome-panel/panel-action-button.c:159
 msgid "_Lock Screen"
 msgstr "Kunci _Layar"
 
-#: gnome-panel/panel-action-button.c:165
+#: gnome-panel/panel-action-button.c:164
 msgid "_Activate Screensaver"
 msgstr "_Aktifkan Pengaman Layar"
 
-#: gnome-panel/panel-action-button.c:345
-msgid "Connect to server"
-msgstr "Terhubung ke server"
-
-#: gnome-panel/panel-action-button.c:369
-msgid "Could not connect to server"
-msgstr "Tidak dapat terhubung ke server"
-
-#: gnome-panel/panel-action-button.c:399
+#: gnome-panel/panel-action-button.c:356
 msgid "Lock Screen"
 msgstr "Kunci Layar"
 
-#: gnome-panel/panel-action-button.c:400
+#: gnome-panel/panel-action-button.c:357
 msgid "Protect your computer from unauthorized use"
 msgstr "Mengunci komputer Anda dari orang yang tidak berhak"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:413
+#: gnome-panel/panel-action-button.c:370
 msgid "Log Out"
 msgstr "Log Keluar"
 
-#: gnome-panel/panel-action-button.c:414
+#: gnome-panel/panel-action-button.c:371
 msgid "Log out of this session to log in as a different user"
 msgstr "Keluar dari sesi ini untuk masuk sebagai pengguna lain"
 
-#: gnome-panel/panel-action-button.c:422
+#: gnome-panel/panel-action-button.c:379
 msgid "Run Application..."
 msgstr "Jalankan Aplikasi..."
 
-#: gnome-panel/panel-action-button.c:423
+#: gnome-panel/panel-action-button.c:380
 msgid "Run an application by typing a command or choosing from a list"
 msgstr ""
 "Menjalankan aplikasi dengan mengetik atau memilih perintah dari daftar yang "
 "ada"
 
-#: gnome-panel/panel-action-button.c:431
+#: gnome-panel/panel-action-button.c:388
 msgid "Search for Files..."
 msgstr "Cari Berkas..."
 
-#: gnome-panel/panel-action-button.c:432
+#: gnome-panel/panel-action-button.c:389
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "Mencari dokumen atau folder yang terdapat dalam komputer ini berdasarkan "
 "nama atau isinya"
 
-#: gnome-panel/panel-action-button.c:439 gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "Tutup Paksa"
 
-#: gnome-panel/panel-action-button.c:440
+#: gnome-panel/panel-action-button.c:397
 msgid "Force a misbehaving application to quit"
 msgstr "Menutup paksa aplikasi yang macet"
 
-#. FIXME icon
-#: gnome-panel/panel-action-button.c:448
-msgid "Connect to Server..."
-msgstr "Terhubung ke Server..."
-
-#: gnome-panel/panel-action-button.c:449
-msgid "Connect to a remote computer or shared disk"
-msgstr "Terhubung ke komputer lain atau diska yang dipakai bersama"
-
-#: gnome-panel/panel-action-button.c:456
+#: gnome-panel/panel-action-button.c:405
 msgid "Hibernate"
 msgstr "Hibernasi"
 
-#: gnome-panel/panel-action-button.c:465
+#: gnome-panel/panel-action-button.c:414
 msgid "Suspend"
 msgstr "Suspensi"
 
-#: gnome-panel/panel-action-button.c:474
+#: gnome-panel/panel-action-button.c:423
 msgid "Hybrid sleep"
 msgstr "Tidur hibrida"
 
-#: gnome-panel/panel-action-button.c:483
+#: gnome-panel/panel-action-button.c:432
 msgid "Restart"
 msgstr "Nyalakan Ulang"
 
-#: gnome-panel/panel-action-button.c:484
+#: gnome-panel/panel-action-button.c:433
 msgid "Restart the computer"
 msgstr "Jalankan ulang komputer"
 
-#: gnome-panel/panel-action-button.c:492
+#: gnome-panel/panel-action-button.c:441
 msgid "Power Off"
 msgstr "Matikan Daya"
 
-#: gnome-panel/panel-action-button.c:493
+#: gnome-panel/panel-action-button.c:442
 msgid "Power off the computer"
 msgstr "Mematikan komputer"
 
-#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:958
+#: gnome-panel/panel-addto-dialog.c:138 gnome-panel/panel-menu-button.c:953
+#: modules/menu/gp-menu-module.c:39
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: gnome-panel/panel-addto-dialog.c:141
+#: gnome-panel/panel-addto-dialog.c:139 modules/menu/gp-menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "Menu utama GNOME"
 
-#: gnome-panel/panel-addto-dialog.c:149
-msgid "Menu Bar"
-msgstr "Baris Menu"
-
-#: gnome-panel/panel-addto-dialog.c:150
-msgid "A custom menu bar"
-msgstr "Baris menu pribadi"
-
-#: gnome-panel/panel-addto-dialog.c:158
+#: gnome-panel/panel-addto-dialog.c:147 modules/menu/gp-menu-module.c:53
 msgid "User menu"
 msgstr "Menu pengguna"
 
-#: gnome-panel/panel-addto-dialog.c:159
+#: gnome-panel/panel-addto-dialog.c:148 modules/menu/gp-menu-module.c:54
 msgid "Menu to change your settings and log out"
 msgstr "Menu untuk mengubah pengaturan Anda dan log keluar"
 
-#: gnome-panel/panel-addto-dialog.c:207
+#: gnome-panel/panel-addto-dialog.c:196
 msgid "(empty)"
 msgstr "(kosong)"
 
-#: gnome-panel/panel-addto-dialog.c:406
+#: gnome-panel/panel-addto-dialog.c:395
 msgid "Custom Application Launcher"
 msgstr "Peluncur Aplikasi Pribadi"
 
-#: gnome-panel/panel-addto-dialog.c:407
+#: gnome-panel/panel-addto-dialog.c:396
 msgid "Create a new launcher"
 msgstr "Membuat peluncur program"
 
-#: gnome-panel/panel-addto-dialog.c:416
+#: gnome-panel/panel-addto-dialog.c:405
 msgid "Application Launcher..."
 msgstr "Peluncur Aplikasi..."
 
-#: gnome-panel/panel-addto-dialog.c:417
+#: gnome-panel/panel-addto-dialog.c:406
 msgid "Copy a launcher from the applications menu"
 msgstr "Menyalin peluncur dari menu aplikasi"
 
-#: gnome-panel/panel-addto-dialog.c:911
+#: gnome-panel/panel-addto-dialog.c:895
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Cari objek untuk d_itambahkan ke \"%s\":"
 
-#: gnome-panel/panel-addto-dialog.c:915
+#: gnome-panel/panel-addto-dialog.c:899
 msgid "Find an _item to add to the panel:"
 msgstr "Cari objek untuk d_itambahkan ke panel:"
 
-#: gnome-panel/panel-addto-dialog.c:1037
+#: gnome-panel/panel-addto-dialog.c:1021
 msgid "_Forward"
 msgstr "_Maju"
 
-#: gnome-panel/panel-addto-dialog.c:1040 gnome-panel/panel-addto-dialog.ui:158
-#: modules/external/clock/clock.ui:682
+#: gnome-panel/panel-addto-dialog.c:1024 gnome-panel/panel-addto-dialog.ui:158
+#: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "T_ambah"
-
-#: gnome-panel/panel-addto-dialog.ui:16
-msgid "Add to Panel"
-msgstr "Tambah ke Panel"
 
 #: gnome-panel/panel-addto-dialog.ui:38
 msgid "Find an item to add to the panel:"
@@ -1262,9 +1266,9 @@ msgid "_Back"
 msgstr "Kem_bali"
 
 #: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
-#: modules/external/clock/clock.ui:406 modules/external/fish/fish-applet.c:622
-#: modules/external/fish/fish.ui:51 modules/external/wncklet/window-list.ui:285
-#: modules/external/wncklet/workspace-switcher.ui:37
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
+#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
+#: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "_Tutup"
 
@@ -1285,17 +1289,18 @@ msgstr "Apakah Anda ingin menghapus aplet dari konfigurasi Anda?"
 msgid "D_on't Delete"
 msgstr "_Jangan Hapus"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1265
 msgid "_Delete"
 msgstr "Ha_pus"
 
-#: gnome-panel/panel.c:422
+#: gnome-panel/panel.c:420
 #, c-format
 msgid "Open URL: %s"
 msgstr "Membuka URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:563
+#: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
 #, c-format
 msgid "Open '%s'"
 msgstr "Membuka '%s'"
@@ -1303,18 +1308,21 @@ msgstr "Membuka '%s'"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1117
+#: gnome-panel/panel.c:537 gnome-panel/panel-menu-items.c:1066
+#: modules/menu/gp-places-menu.c:414
 msgid "Open your personal folder"
 msgstr "Membuka folder pribadi Anda"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1146
+#: gnome-panel/panel.c:546 gnome-panel/panel-menu-items.c:1095
+#: modules/menu/gp-places-menu.c:497
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1147
+#: gnome-panel/panel.c:547 gnome-panel/panel-menu-items.c:1096
+#: modules/menu/gp-places-menu.c:498
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1323,20 +1331,22 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1156
+#: gnome-panel/panel.c:554 gnome-panel/panel-menu-items.c:1105
+#: modules/menu/gp-places-menu.c:553
 msgid "Network"
 msgstr "Jaringan"
 
 #. name
-#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1157
+#: gnome-panel/panel.c:555 gnome-panel/panel-menu-items.c:1106
+#: modules/menu/gp-places-menu.c:554
 msgid "Browse bookmarked and local network locations"
 msgstr "Menelusuri lokasi jaringan lokal maupun yang telah ditandai"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1256
 msgid "Delete this panel?"
 msgstr "Hapus panel Ini?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1260
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1398,7 +1408,7 @@ msgid "_Revert"
 msgstr "_Pulihkan"
 
 #: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
-#: modules/external/clock/clock.ui:82
+#: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
@@ -1461,75 +1471,67 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Tutup paksa"
 
-#: gnome-panel/panel-layout.c:1105 gnome-panel/panel-layout.c:1119
+#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
 msgid "Cannot create initial panel layout.\n"
 msgstr "Tak bisa membuat tata letak awal panel.\n"
 
-#: gnome-panel/panel-menu-bar.c:88
-msgid "Browse and run installed applications"
-msgstr "Mencari dan menjalankan aplikasi yang telah dipasang"
-
-#: gnome-panel/panel-menu-bar.c:90
-msgid "Access documents, folders and network places"
-msgstr "Mengakses dokumen, folder, serta jaringan"
-
-#: gnome-panel/panel-menu-bar.c:128
-msgid "Applications"
-msgstr "Aplikasi"
-
-#: gnome-panel/panel-menu-bar.c:230 gnome-panel/panel-menu-button.c:557
+#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
+#: modules/menu/menu-bar-menu.ui:5
 msgid "_Edit Menus"
 msgstr "Sunting M_enu"
 
-#: gnome-panel/panel-menu-items.c:409
+#: gnome-panel/panel-menu-items.c:362
 msgid "Switch User"
 msgstr "Ganti Pengguna"
 
-#: gnome-panel/panel-menu-items.c:539
+#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:460
 msgid "Bookmarks"
 msgstr "Penanda Tautan"
 
-#: gnome-panel/panel-menu-items.c:634
+#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:79
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Tidak dapat memindai %s untuk perubahan media"
 
-#: gnome-panel/panel-menu-items.c:676
+#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:280
 #, c-format
 msgid "Rescan %s"
 msgstr "Pindai ulang %s"
 
-#: gnome-panel/panel-menu-items.c:713
+#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:129
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Tidak dapat mengaitkan %s"
 
-#: gnome-panel/panel-menu-items.c:775
+#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:323
 #, c-format
 msgid "Mount %s"
 msgstr "Kait %s"
 
-#: gnome-panel/panel-menu-items.c:983
+#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:520
 msgid "Removable Media"
 msgstr "Media Lepasan"
 
-#: gnome-panel/panel-menu-items.c:1074
+#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:576
 msgid "Network Places"
 msgstr "Lokasi Jaringan"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: gnome-panel/panel-menu-items.c:1134
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:437
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/panel-menu-items.c:1135
+#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:438
 msgid "Open the contents of your desktop in a folder"
 msgstr "Membuka isi desktop Anda di dalam sebuah folder"
 
-#: gnome-panel/panel-menu-items.c:1440
+#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
 msgid "Places"
 msgstr "Lokasi"
 
@@ -1559,11 +1561,11 @@ msgstr "Tidak dapat membuka dokumen \"%s\" yang baru-baru ini dipakai"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Kesalahan tidak diketahui muncul ketika membuka \"%s\"."
 
-#: gnome-panel/panel-recent.c:145
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
 msgid "Clear the Recent Documents list?"
 msgstr "Bersihkan daftar?"
 
-#: gnome-panel/panel-recent.c:147
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1575,7 +1577,7 @@ msgstr ""
 "• Semua item dari daftar dokumen yang baru-baru ini digunakan dari semua "
 "aplikasi."
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
 msgid "C_lear"
 msgstr "_Hapus"
 
@@ -1584,15 +1586,15 @@ msgstr "_Hapus"
 msgid "Clear Recent Documents"
 msgstr "Bersihkan Daftar"
 
-#: gnome-panel/panel-recent.c:194
+#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:603
 msgid "Recent Documents"
 msgstr "Dokumen Baru-baru Ini"
 
-#: gnome-panel/panel-recent.c:232
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
 msgid "Clear Recent Documents..."
 msgstr "Bersihkan Daftar..."
 
-#: gnome-panel/panel-recent.c:234
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
 msgid "Clear all items from the recent documents list"
 msgstr "Menghapus semua objek dari daftar dokumen yang baru-baru ini dibuka"
 
@@ -1686,67 +1688,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Atas"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Centered Panel"
 msgstr "Panel Tengah Atas"
 
-#: gnome-panel/panel-toplevel.c:1522
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Top Floating Panel"
 msgstr "Panel Mengambang Atas"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Top Edge Panel"
 msgstr "Panel Tepi Atas"
 
-#: gnome-panel/panel-toplevel.c:1527
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Bawah"
 
-#: gnome-panel/panel-toplevel.c:1528
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Centered Panel"
 msgstr "Panel Tengah Bawah"
 
-#: gnome-panel/panel-toplevel.c:1529
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Bottom Floating Panel"
 msgstr "Panel Mengambang Bawah"
 
-#: gnome-panel/panel-toplevel.c:1530
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Bottom Edge Panel"
 msgstr "Panel Tepi Bawah"
 
-#: gnome-panel/panel-toplevel.c:1534
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kiri"
 
-#: gnome-panel/panel-toplevel.c:1535
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Centered Panel"
 msgstr "Panel Tengah Kiri"
 
-#: gnome-panel/panel-toplevel.c:1536
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Left Floating Panel"
 msgstr "Panel Mengambang Kiri"
 
-#: gnome-panel/panel-toplevel.c:1537
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Left Edge Panel"
 msgstr "Panel Tepi Kiri"
 
-#: gnome-panel/panel-toplevel.c:1541
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kanan"
 
-#: gnome-panel/panel-toplevel.c:1542
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Centered Panel"
 msgstr "Panel Tengah Kanan"
 
-#: gnome-panel/panel-toplevel.c:1543
+#: gnome-panel/panel-toplevel.c:1588
 msgid "Right Floating Panel"
 msgstr "Panel Mengambang Kanan"
 
-#: gnome-panel/panel-toplevel.c:1544
+#: gnome-panel/panel-toplevel.c:1589
 msgid "Right Edge Panel"
 msgstr "Panel Tepi Kanan"
 
@@ -1759,37 +1761,30 @@ msgstr "Tidak menemukan ikon '%s'"
 msgid "file"
 msgstr "berkas"
 
-#: gnome-panel/panel-util.c:730
-msgid "Home Folder"
-msgstr "Folder Rumah"
+#: gnome-panel/panel-util.c:723 modules/menu/gp-menu-utils.c:207
+msgid "Home"
+msgstr "Rumah"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: gnome-panel/panel-util.c:742
+#. Translators: this is the same string as the one found in nautilus
+#: gnome-panel/panel-util.c:732 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Sistem Berkas"
-
-#: gnome-panel/panel-util.c:915
-msgid "Search"
-msgstr "Cari"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:961
+#. Translators: the first string is the name of a gvfs method, and the
+#. * second string is a path. For example, "Trash: some-directory". It
+#. * means that the directory called "some-directory" is in the trash.
+#.
+#: gnome-panel/panel-util.c:946 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
-
-#: modules/builtin/separator/separator-module.c:45
-msgid "Separator"
-msgstr "Pemisah"
-
-#: modules/builtin/separator/separator-module.c:46
-msgid "A separator to organize the panel items"
-msgstr "Pemisah untuk mengelompokkan objek-objek pada panel"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1800,8 +1795,7 @@ msgstr "Pemisah untuk mengelompokkan objek-objek pada panel"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/external/clock/calendar-window.c:271
-#: modules/external/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1816,9 +1810,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/external/clock/calendar-window.c:277
-#: modules/external/clock/clock-location-tile.c:453
-#: modules/external/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
+#: modules/clock/clock-location-tile.c:497
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1826,144 +1819,149 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/external/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:284
 msgid "%b %d"
 msgstr "%d %b"
 
-#: modules/external/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:789
 msgid "Tasks"
 msgstr "Tugas"
 
-#: modules/external/clock/calendar-window.c:789
-#: modules/external/clock/calendar-window.c:972
-#: modules/external/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
+#: modules/clock/calendar-window.c:1563
 msgid "Edit"
 msgstr "Sunting"
 
-#: modules/external/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:912
 msgid "All Day"
 msgstr "Sehari Penuh"
 
-#: modules/external/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1056
 msgid "Appointments"
 msgstr "Janji"
 
-#: modules/external/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1081
 msgid "Birthdays and Anniversaries"
 msgstr "Ulang Tahun dan Perayaan"
 
-#: modules/external/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1106
 msgid "Weather Information"
 msgstr "Informasi Cuaca"
 
-#: modules/external/clock/calendar-window.c:1563
-#: modules/external/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Lokasi"
 
-#: modules/external/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1824
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/external/clock/clock-applet.c:226
-#| msgid "%A %B %d (%%s)"
+#: modules/clock/clock-applet.c:227
 msgid "%A %B %d (%Z)"
 msgstr "%A %d %B (%Z)"
 
-#: modules/external/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:236
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik untuk menyembunyikan janji dan tugas"
 
-#: modules/external/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:239
 msgid "Click to view your appointments and tasks"
 msgstr "Klik untuk melihat daftar tugas dan janji"
 
-#: modules/external/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:243
 msgid "Click to hide month calendar"
 msgstr "Klik untuk menyembunyikan kalender bulan"
 
-#: modules/external/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:246
 msgid "Click to view month calendar"
 msgstr "Klik untuk melihat kalender bulanan"
 
 #. Done!
-#: modules/external/clock/clock-applet.c:847
+#: modules/clock/clock-applet.c:850
 msgid "Computer Clock"
 msgstr "Jam Komputer"
 
-#: modules/external/clock/clock-applet.c:980
+#: modules/clock/clock-applet.c:983
 msgid "Failed to open the time settings"
 msgstr "Gagal membuka pengaturan waktu"
 
-#: modules/external/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Tidak dapat membuka dokumen bantuan '%s'"
+
+#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+msgid "Error displaying help document"
+msgstr "Galat sewaktu membuka dokumen bantuan"
+
+#: modules/clock/clock-applet.c:1621
 msgid "Choose Location"
 msgstr "Pilih Lokasi"
 
-#: modules/external/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1700
 msgid "Edit Location"
 msgstr "Sunting Lokasi"
 
-#: modules/external/clock/clock-applet.c:1669
-#: modules/external/clock/clock-applet.c:1677
+#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
 msgid "Default"
 msgstr "Baku"
 
-#: modules/external/clock/clock-applet.c:1670
+#: modules/clock/clock-applet.c:1737
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/external/clock/clock-applet.c:1671
+#: modules/clock/clock-applet.c:1738
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/external/clock/clock-applet.c:1672
+#: modules/clock/clock-applet.c:1739
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/external/clock/clock-applet.c:1678
+#: modules/clock/clock-applet.c:1745
 msgid "Meters per second (m/s)"
 msgstr "Meter per detik (m/s)"
 
-#: modules/external/clock/clock-applet.c:1679
+#: modules/clock/clock-applet.c:1746
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per jam (km/j)"
 
-#: modules/external/clock/clock-applet.c:1680
+#: modules/clock/clock-applet.c:1747
 msgid "Miles per hour (mph)"
 msgstr "Mil per jam (mil/j)"
 
-#: modules/external/clock/clock-applet.c:1681
+#: modules/clock/clock-applet.c:1748
 msgid "Knots"
 msgstr "Knot"
 
-#: modules/external/clock/clock-applet.c:1682
+#: modules/clock/clock-applet.c:1749
 msgid "Beaufort scale"
 msgstr "Skala Beaufort"
 
-#: modules/external/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1802
 msgid "City Name"
 msgstr "Nama Kota"
 
-#: modules/external/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1806
 msgid "City Time Zone"
 msgstr "Zona Waktu Kota"
 
-#: modules/external/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:174
 msgid "Failed to set the system timezone"
 msgstr "Gagal menyetel zona waktu sistem"
 
-#: modules/external/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:222
 msgid "<small>Set...</small>"
 msgstr "<small>Setel...</small>"
 
-#: modules/external/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:223
 msgid "<small>Set</small>"
 msgstr "<small>Setel</small>"
 
-#: modules/external/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:298
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Menjadikan lokasi sebagai lokasi sekarang serta memakai zona waktunya untuk "
@@ -1975,7 +1973,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:430
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -1984,7 +1982,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/external/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:438
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1992,180 +1990,168 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:447
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/external/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:597
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/external/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:610
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, rasanya seperti %s"
 
-#: modules/external/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:631
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Matahari Terbit: %s / Matahari Terbenam: %s"
 
-#: modules/external/clock/clock-module.c:47
-msgid "Get the current time and date"
-msgstr "Ambil waktu dan tanggal sekarang"
-
-#: modules/external/clock/clock-module.c:48
+#: modules/clock/clock-module.c:33
 msgid "Clock"
 msgstr "Jam"
 
-#: modules/external/clock/clock-menu.ui:5
+#: modules/clock/clock-module.c:34
+msgid "Get the current time and date"
+msgstr "Ambil waktu dan tanggal sekarang"
+
+#: modules/clock/clock-menu.ui:5
 msgid "Copy Date and _Time"
 msgstr "Salin _Tanggal dan Waktu"
 
-#: modules/external/clock/clock-menu.ui:11
+#: modules/clock/clock-menu.ui:11
 msgid "Ad_just Date & Time"
 msgstr "Setel Tanggal & _Waktu"
 
-#: modules/external/clock/clock-menu.ui:15
-#: modules/external/wncklet/window-list-menu.ui:5
-#: modules/external/wncklet/workspace-switcher-menu.ui:5
+#: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
+#: modules/wncklet/workspace-switcher-menu.ui:5
 msgid "_Preferences"
 msgstr "_Preferensi"
 
-#: modules/external/clock/clock.ui:30
+#: modules/clock/clock.ui:30
 msgid "East"
 msgstr "Timur"
 
-#: modules/external/clock/clock.ui:33
+#: modules/clock/clock.ui:33
 msgid "West"
 msgstr "Barat"
 
-#: modules/external/clock/clock.ui:44
+#: modules/clock/clock.ui:44
 msgid "North"
 msgstr "Utara"
 
-#: modules/external/clock/clock.ui:47
+#: modules/clock/clock.ui:47
 msgid "South"
 msgstr "Selatan"
 
-#: modules/external/clock/clock.ui:206 modules/external/clock/clock.ui:221
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
 msgid "(optional)"
 msgstr "(opsional)"
 
-#: modules/external/clock/clock.ui:265
+#: modules/clock/clock.ui:265
 msgid "_Location Name:"
 msgstr "Nama _Lokasi:"
 
-#: modules/external/clock/clock.ui:278
+#: modules/clock/clock.ui:278
 msgid "L_atitude:"
 msgstr "Lint_ang:"
 
-#: modules/external/clock/clock.ui:292
+#: modules/clock/clock.ui:292
 msgid "L_ongitude:"
 msgstr "B_ujur:"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/external/clock/clock.ui:308
+#: modules/clock/clock.ui:308
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Ketik nama kota, daerah, atau negara, kemudian pilih salah satu yang cocok "
 "dari menu yang muncul."
 
-#: modules/external/clock/clock.ui:325
+#: modules/clock/clock.ui:325
 msgid "_Timezone:"
 msgstr "Zona Wak_tu:"
 
-#: modules/external/clock/clock.ui:360
+#: modules/clock/clock.ui:360
 msgid "Clock Preferences"
 msgstr "Preferensi Jam"
 
-#: modules/external/clock/clock.ui:376 modules/external/fish/fish.ui:36
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "Ba_ntuan"
 
-#: modules/external/clock/clock.ui:391
+#: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "Pengaturan _Waktu"
 
-#: modules/external/clock/clock.ui:451
+#: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Format Jam"
 
-#: modules/external/clock/clock.ui:470
+#: modules/clock/clock.ui:470
 msgid "_12 hour format"
 msgstr "Format _12 jam"
 
-#: modules/external/clock/clock.ui:487
+#: modules/clock/clock.ui:487
 msgid "_24 hour format"
 msgstr "Format _24 jam"
 
-#: modules/external/clock/clock.ui:527
+#: modules/clock/clock.ui:527
 msgid "Panel Display"
 msgstr "Tampilan Panel"
 
-#: modules/external/clock/clock.ui:547
+#: modules/clock/clock.ui:547
 msgid "Show the _date"
 msgstr "Tampilkan tan_ggal"
 
-#: modules/external/clock/clock.ui:563
+#: modules/clock/clock.ui:563
 msgid "Show seco_nds"
 msgstr "Tampilka_n detik"
 
-#: modules/external/clock/clock.ui:579
+#: modules/clock/clock.ui:579
 msgid "Show _weather"
 msgstr "Tampilkan _cuaca"
 
-#: modules/external/clock/clock.ui:595
+#: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Tampilkan _temperatur"
 
-#: modules/external/clock/clock.ui:697
+#: modules/clock/clock.ui:697
 msgid "_Edit"
 msgstr "_Sunting"
 
-#: modules/external/clock/clock.ui:712
+#: modules/clock/clock.ui:712
 msgid "_Remove"
 msgstr "_Hapus"
 
-#: modules/external/clock/clock.ui:773
+#: modules/clock/clock.ui:773
 msgid "Display"
 msgstr "Tampilan"
 
-#: modules/external/clock/clock.ui:805
+#: modules/clock/clock.ui:805
 msgid "_Visibility unit:"
 msgstr "Satuan jarak _pandang:"
 
-#: modules/external/clock/clock.ui:828
+#: modules/clock/clock.ui:828
 msgid "_Pressure unit:"
 msgstr "Sat_uan tekanan:"
 
-#: modules/external/clock/clock.ui:864
+#: modules/clock/clock.ui:864
 msgid "_Temperature unit:"
 msgstr "Satuan _temperatur:"
 
-#: modules/external/clock/clock.ui:878
+#: modules/clock/clock.ui:878
 msgid "_Wind speed unit:"
 msgstr "Satuan kecepatan _angin:"
 
-#: modules/external/clock/clock.ui:910
+#: modules/clock/clock.ui:910
 msgid "Weather"
 msgstr "Cuaca"
 
-#: modules/external/clock/clock-utils.c:91
-#: modules/external/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Tidak dapat membuka dokumen bantuan '%s'"
-
-#: modules/external/clock/clock-utils.c:120
-#: modules/external/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Galat sewaktu membuka dokumen bantuan"
-
-#: modules/external/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:203
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -2180,27 +2166,26 @@ msgstr ""
 "sesuatu\n"
 "yang mungkin membuat aplet ini \"praktis\" atau berguna."
 
-#: modules/external/fish/fish-applet.c:365
-#: modules/external/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s si Ikan"
 
-#: modules/external/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:369
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s si Ikan, peramal kontemporer"
 
-#: modules/external/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:427
 msgid "Unable to locate the command to execute"
 msgstr "Tidak menemukan perintah yang akan dieksekusi"
 
-#: modules/external/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:476
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s si Ikan Berkata:"
 
-#: modules/external/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:545
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2211,18 +2196,18 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/external/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:621
 msgid "_Speak again"
 msgstr "_Bicara lagi"
 
-#: modules/external/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:693
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Perintah yang diberikan tidak dapat bekerja sebagaimana mestinya, oleh "
 "karena itu diganti dengan: %s"
 
-#: modules/external/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:722
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2233,7 +2218,7 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/external/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:738
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2244,101 +2229,142 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/external/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1120
 msgid "The water needs changing"
 msgstr "Airnya perlu diganti"
 
-#: modules/external/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1122
 msgid "Look at today's date!"
 msgstr "Lihatlah tanggal hari ini!"
 
-#: modules/external/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1216
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s si Ikan, sang peramal"
 
-#: modules/external/fish/fish-module.c:47
-msgid "Display a swimming fish or another animated creature"
-msgstr "Menampilkan seekor ikan sedang berenang atau mahluk teranimasi lainnya"
-
-#: modules/external/fish/fish-module.c:48
+#: modules/fish/fish-module.c:33
 msgid "Fish"
 msgstr "Fish"
 
-#: modules/external/fish/fish-menu.ui:5
+#: modules/fish/fish-module.c:34
+msgid "Display a swimming fish or another animated creature"
+msgstr "Menampilkan seekor ikan sedang berenang atau mahluk teranimasi lainnya"
+
+#: modules/fish/fish-menu.ui:5
 msgid "Preferences"
 msgstr "Preferensi"
 
-#: modules/external/fish/fish.ui:22
+#: modules/fish/fish.ui:22
 msgid "Fish Preferences"
 msgstr "Preferensi Fish"
 
-#: modules/external/fish/fish.ui:134
+#: modules/fish/fish.ui:134
 msgid "_Name of fish:"
 msgstr "_Nama ikan:"
 
-#: modules/external/fish/fish.ui:174
+#: modules/fish/fish.ui:174
 msgid "Co_mmand to run when clicked:"
 msgstr "_Perintah untuk dijalankan saat diklik:"
 
-#: modules/external/fish/fish.ui:240
+#: modules/fish/fish.ui:240
 msgid "Animation:"
 msgstr "Animasi:"
 
-#: modules/external/fish/fish.ui:277
+#: modules/fish/fish.ui:277
 msgid "    "
 msgstr "    "
 
-#: modules/external/fish/fish.ui:301
+#: modules/fish/fish.ui:301
 msgid "_Pause per frame:"
-msgstr "Jeda _per gambar-"
+msgstr "Jeda _per bingkai:"
 
-#: modules/external/fish/fish.ui:332
+#: modules/fish/fish.ui:332
 msgid "seconds"
 msgstr "detik"
 
-#: modules/external/fish/fish.ui:349
+#: modules/fish/fish.ui:349
 msgid "_Rotate on vertical panels"
 msgstr "Puta_r pada panel vertikal"
 
-#: modules/external/notification-area/na-applet.c:155
+#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
+#, c-format
+msgid "Please install the '%s' application."
+msgstr "Mohon pasang aplikasi '%s'."
+
+#: modules/menu/gp-menu-bar-applet.c:131
+msgid "Applications"
+msgstr "Aplikasi"
+
+#: modules/menu/gp-menu-bar-applet.c:136
+msgid "Browse and run installed applications"
+msgstr "Mencari dan menjalankan aplikasi yang telah dipasang"
+
+#: modules/menu/gp-menu-bar-applet.c:160
+msgid "Access documents, folders and network places"
+msgstr "Mengakses dokumen, folder, serta jaringan"
+
+#: modules/menu/gp-menu-bar-applet.c:181
+msgid "System"
+msgstr "Sistem"
+
+#: modules/menu/gp-menu-bar-applet.c:185
+msgid "Change system appearance and behavior, or get help"
+msgstr "Ubah penampilan dan perilaku sistem, atau mendapatkan bantuan"
+
+#: modules/menu/gp-menu-module.c:46
+msgid "Menu Bar"
+msgstr "Baris Menu"
+
+#: modules/menu/gp-menu-module.c:47
+msgid "A custom menu bar"
+msgstr "Baris menu pribadi"
+
+#: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
 msgstr "Panel Area Notifikasi"
 
-#: modules/external/notification-area/na-module.c:46
+#: modules/notification-area/na-module.c:33
 msgid "Notification Area"
 msgstr "Area Notifikasi"
 
-#: modules/external/notification-area/na-module.c:47
+#: modules/notification-area/na-module.c:34
 msgid "Area where notification icons appear"
 msgstr "Area dimana ikon pemberitahuan muncul"
 
-#: modules/external/status-notifier/sn-module.c:47
-msgid "Display all Status Notifier Items"
-msgstr "Tampilkan semua Butir Pemberitahu Status"
+#: modules/separator/separator-module.c:33
+msgid "Separator"
+msgstr "Pemisah"
 
-#: modules/external/status-notifier/sn-module.c:48
+#: modules/separator/separator-module.c:34
+msgid "A separator to organize the panel items"
+msgstr "Pemisah untuk mengelompokkan objek-objek pada panel"
+
+#: modules/status-notifier/sn-module.c:33
 msgid "Status Notifier Host"
 msgstr "Host Pemberitahu Status"
 
-#: modules/external/wncklet/showdesktop.c:100
+#: modules/status-notifier/sn-module.c:34
+msgid "Display all Status Notifier Items"
+msgstr "Tampilkan semua Butir Pemberitahu Status"
+
+#: modules/wncklet/showdesktop.c:100
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Gagal memuat %s: %s\n"
 
-#: modules/external/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:101
 msgid "Icon not found"
 msgstr "Ikon tidak ditemukan"
 
-#: modules/external/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:181
 msgid "Click here to restore hidden windows."
 msgstr "Klik di sini untuk membuka kembali jendela yang disembunyikan."
 
-#: modules/external/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:183
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik di sini untuk menyembunyikan semua jendela."
 
-#: modules/external/wncklet/showdesktop.c:210
+#: modules/wncklet/showdesktop.c:214
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2346,262 +2372,134 @@ msgstr ""
 "Manajer jendela Anda tidak mendukung tombol \"tampilkan desktop\", atau Anda "
 "sama sekali tidak menjalankan manajer jendela."
 
-#: modules/external/wncklet/showdesktop.c:407
+#: modules/wncklet/showdesktop.c:411
 msgid "Show Desktop Button"
 msgstr "Tombol Tampilkan Desktop"
 
-#: modules/external/wncklet/window-list.ui:8
+#: modules/wncklet/window-list.ui:8
 msgid "Window List Preferences"
 msgstr "Preferensi Daftar Jendela"
 
-#: modules/external/wncklet/window-list.ui:35
+#: modules/wncklet/window-list.ui:35
 msgid "Window List Content"
 msgstr "Isi Daftar Jendela"
 
-#: modules/external/wncklet/window-list.ui:55
+#: modules/wncklet/window-list.ui:55
 msgid "Sh_ow windows from current workspace"
 msgstr "_Hanya untuk area kerja yang sedang aktif"
 
-#: modules/external/wncklet/window-list.ui:72
+#: modules/wncklet/window-list.ui:72
 msgid "Show windows from a_ll workspaces"
 msgstr "Jende_la dari semua area kerja"
 
-#: modules/external/wncklet/window-list.ui:112
+#: modules/wncklet/window-list.ui:112
 msgid "Window Grouping"
 msgstr "Pengelompokan Jendela"
 
-#: modules/external/wncklet/window-list.ui:132
+#: modules/wncklet/window-list.ui:132
 msgid "_Never group windows"
 msgstr "Janga_n kelompokkan jendela"
 
-#: modules/external/wncklet/window-list.ui:149
+#: modules/wncklet/window-list.ui:149
 msgid "Group windows when _space is limited"
 msgstr "Kelompokkan jendela bila ruang _sudah tidak cukup"
 
-#: modules/external/wncklet/window-list.ui:166
+#: modules/wncklet/window-list.ui:166
 msgid "_Always group windows"
 msgstr "Sel_alu kelompokkan jendela"
 
-#: modules/external/wncklet/window-list.ui:206
+#: modules/wncklet/window-list.ui:206
 msgid "Restoring Minimized Windows"
 msgstr "Mengembalikan Jendela dari Ukuran Kecil"
 
-#: modules/external/wncklet/window-list.ui:226
+#: modules/wncklet/window-list.ui:226
 msgid "Restore to current _workspace"
 msgstr "Kembali ke area _kerja aktif"
 
-#: modules/external/wncklet/window-list.ui:243
+#: modules/wncklet/window-list.ui:243
 msgid "Restore to na_tive workspace"
 msgstr "_Kembali ke area kerja asal"
 
-#: modules/external/wncklet/window-menu.c:170
-#: modules/external/wncklet/wncklet-module.c:72
+#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr "Pemilih Jendela"
 
-#: modules/external/wncklet/wncklet-module.c:60
+#: modules/wncklet/wncklet-module.c:41
 msgid "Show Desktop"
 msgstr "Tampilkan Desktop"
 
-#: modules/external/wncklet/wncklet-module.c:61
+#: modules/wncklet/wncklet-module.c:42
 msgid "Hide application windows and show the desktop"
 msgstr "Sembunyikan jendela aplikasi dan tampilkan desktop"
 
-#: modules/external/wncklet/wncklet-module.c:66
+#: modules/wncklet/wncklet-module.c:48
 msgid "Window List"
 msgstr "Daftar Jendela"
 
-#: modules/external/wncklet/wncklet-module.c:67
+#: modules/wncklet/wncklet-module.c:49
 msgid "Switch between open windows using buttons"
 msgstr "Berpindah antar jendela yang terbuka memakai tombol"
 
-#: modules/external/wncklet/wncklet-module.c:73
+#: modules/wncklet/wncklet-module.c:56
 msgid "Switch between open windows using a menu"
 msgstr "Berpindah antar jendela yang terbuka memakai menu"
 
-#: modules/external/wncklet/wncklet-module.c:78
+#: modules/wncklet/wncklet-module.c:62
 msgid "Workspace Switcher"
 msgstr "Pengalih Area Kerja"
 
-#: modules/external/wncklet/wncklet-module.c:79
+#: modules/wncklet/wncklet-module.c:63
 msgid "Switch between workspaces"
 msgstr "Bertukar antar area kerja"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
-#: modules/external/wncklet/workspace-switcher.ui:145
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "baris"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
 msgid "columns"
 msgstr "kolom"
 
-#: modules/external/wncklet/workspace-switcher.ui:22
+#: modules/wncklet/workspace-switcher.ui:22
 msgid "Workspace Switcher Preferences"
 msgstr "Preferensi Pengalih Area Kerja"
 
-#: modules/external/wncklet/workspace-switcher.ui:82
+#: modules/wncklet/workspace-switcher.ui:82
 msgid "Show _only the current workspace"
 msgstr "Tampilkan _hanya area kerja sekarang"
 
-#: modules/external/wncklet/workspace-switcher.ui:104
+#: modules/wncklet/workspace-switcher.ui:104
 msgid "Show _all workspaces in:"
 msgstr "T_ampilkan semua area kerja dalam:"
 
-#: modules/external/wncklet/workspace-switcher.ui:128
-#: modules/external/wncklet/workspace-switcher.ui:228
+#: modules/wncklet/workspace-switcher.ui:128
+#: modules/wncklet/workspace-switcher.ui:228
 msgid "1"
 msgstr "1"
 
-#: modules/external/wncklet/workspace-switcher.ui:176
+#: modules/wncklet/workspace-switcher.ui:176
 msgid "Switcher"
 msgstr "Pengalih"
 
-#: modules/external/wncklet/workspace-switcher.ui:213
+#: modules/wncklet/workspace-switcher.ui:213
 msgid "Number of _workspaces:"
 msgstr "Jumlah _area kerja:"
 
-#: modules/external/wncklet/workspace-switcher.ui:252
+#: modules/wncklet/workspace-switcher.ui:252
 msgid "Workspace na_mes:"
 msgstr "Na_ma area kerja:"
 
-#: modules/external/wncklet/workspace-switcher.ui:272
+#: modules/wncklet/workspace-switcher.ui:272
 msgid "Workspace Names"
 msgstr "Nama Area Kerja"
 
-#: modules/external/wncklet/workspace-switcher.ui:288
+#: modules/wncklet/workspace-switcher.ui:288
 msgid "Show workspace _names in switcher"
 msgstr "Tampilkan _nama area kerja dalam pengalih"
 
-#: modules/external/wncklet/workspace-switcher.ui:309
+#: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Area Kerja"
-
-#~ msgid "Clock Applet Factory"
-#~ msgstr "Pabrik Aplet Jam"
-
-#~ msgid "Factory for clock applet"
-#~ msgstr "Pabrik untuk aplet jam"
-
-#~ msgid "Wanda Factory"
-#~ msgstr "Pabrik Wanda"
-
-#~ msgid "From Whence That Stupid Fish Came"
-#~ msgstr "From Whence That Stupid Fish Came"
-
-#~ msgid "Notification Area Factory"
-#~ msgstr "Pabrik Area Pemberitahuan"
-
-#~ msgid "Factory for notification area"
-#~ msgstr "Pabrik untuk area pemberitahuan"
-
-#~ msgid "Status Notifier Host Applet Factory"
-#~ msgstr "Pabrik Aplet Host Pemberitahu Status"
-
-#~ msgid "Factory for status notifier host applet"
-#~ msgstr "Pabrik untuk aplet host pemberitahu status"
-
-#~ msgid "Window Navigation Applet Factory"
-#~ msgstr "Pabrik Aplet Navigasi Jendela"
-
-#~ msgid "Factory for the window navigation related applets"
-#~ msgstr "Pabrik bagi aplet terkait navigasi jendela"
-
-#~ msgid "Background type"
-#~ msgstr "Jenis latar belakang"
-
-#~ msgid ""
-#~ "Which type of background should be used for this panel. Possible values "
-#~ "are \"none\" - the default GTK+ widget background will be used, \"color\" "
-#~ "- the color key will be used as background color or \"image\" - the image "
-#~ "specified by the image key will be used as background."
-#~ msgstr ""
-#~ "Tipe latar yang mana yang akan digunakan pada panel ini. Nilai yang "
-#~ "mungkin adalah \"none\" - latar widget GTK+ bawaan akan digunakan, \"color"
-#~ "\" - kunci warna akan digunakan sebagai warna latar atau \"image\" - "
-#~ "gambar yang dinyatakan dalam kunci image akan digunakan sebagai latar."
-
-#~ msgid "Specifies the background color for the panel in #RGB format."
-#~ msgstr "Menentukan warna latar belakang panel dalam format #RGB."
-
-#~ msgid "\"%s\" has quit unexpectedly"
-#~ msgstr "\"%s\" mati mendadak"
-
-#~ msgid "Panel object has quit unexpectedly"
-#~ msgstr "Objek panel ini mati mendadak"
-
-#~ msgid ""
-#~ "If you reload a panel object, it will automatically be added back to the "
-#~ "panel."
-#~ msgstr ""
-#~ "Bila Anda membuka ulang objek panel, maka ia akan dimasukkan kembali ke "
-#~ "dalam panel secara otomatis"
-
-#~ msgid "D_elete"
-#~ msgstr "_Hapus"
-
-#~ msgid "_Don't Reload"
-#~ msgstr "_Jangan Muat Ulang"
-
-#~ msgid "_Reload"
-#~ msgstr "_Muat Ulang"
-
-#~ msgid "_None (use system theme)"
-#~ msgstr "_Nihil (gunakan tema sistem)"
-
-#~ msgid "Solid c_olor"
-#~ msgstr "_Warna:"
-
-#~ msgid "Pick a color"
-#~ msgstr "Pilih warna"
-
-#~ msgid "Select background"
-#~ msgstr "Pilih latar belakang"
-
-#~ msgid "Background"
-#~ msgstr "Latar Belakang"
-
-#~ msgid "Image Background Details"
-#~ msgstr "Detail Latar Belakang"
-
-#~ msgid "_Scale"
-#~ msgstr "_Skala"
-
-#~ msgid "Rotate image when panel is _vertical"
-#~ msgstr "Putar gambar pada panel _vertikal"
-
-#~ msgid "Specify an applet IID to load"
-#~ msgstr "Tentukan IID applet untuk dibuka"
-
-#~ msgid ""
-#~ "Specify the initial orientation of the applet (top, bottom, left or right)"
-#~ msgstr "Tentukan orientasi awal untuk applet (atas, bawah, kiri atau kanan)"
-
-#~ msgid "Failed to load applet %s"
-#~ msgstr "Gagal memuat aplet %s"
-
-#~ msgid "Test applet utility"
-#~ msgstr "Utilitas pengujian aplet"
-
-#~ msgid "Execute"
-#~ msgstr "Jalankan"
-
-#~ msgid "Close"
-#~ msgstr "Tutup"
-
-#~ msgid "_Applet:"
-#~ msgstr "_Aplet:"
-
-#~ msgid "Test DBus Applet Factory"
-#~ msgstr "Pabrik Aplet DBus Uji"
-
-#~ msgid "Factory for Test DBus Applet"
-#~ msgstr "Pabrik untuk Aplet DBus Uji"
-
-#~ msgid "Test DBus Applet"
-#~ msgstr "Aplet DBus Uji"
-
-#~ msgid "A simple applet for testing the GNOME panel"
-#~ msgstr "Aplet sederhana untuk menguji panel GNOME"
