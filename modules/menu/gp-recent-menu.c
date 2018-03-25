@@ -99,6 +99,7 @@ append_recent_items (GpRecentMenu *menu)
       GtkWidget *image;
       const gchar *label;
       GtkWidget *item;
+      GtkWidget *child;
       gchar *uri_display;
 
       info = l->data;
@@ -111,6 +112,13 @@ append_recent_items (GpRecentMenu *menu)
       label = gtk_recent_info_get_display_name (info);
       item = gp_image_menu_item_new_with_label (label);
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
+
+      child = gtk_bin_get_child (GTK_BIN (item));
+      if (GTK_IS_LABEL (child))
+        {
+          gtk_label_set_ellipsize (GTK_LABEL (child), PANGO_ELLIPSIZE_END);
+          gtk_label_set_max_width_chars (GTK_LABEL (child), 30);
+        }
 
       uri_display = gtk_recent_info_get_uri_display (info);
       if (uri_display != NULL)
