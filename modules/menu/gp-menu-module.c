@@ -86,7 +86,7 @@ gp_module_load (GpModule *module)
   gp_module_set_id (module, "org.gnome.gnome-panel.menu");
   gp_module_set_version (module, PACKAGE_VERSION);
 
-  gp_module_set_applet_ids (module, "main-menu", "menu-bar", "user-menu", NULL);
+  gp_module_set_applet_ids (module, "menu-bar", NULL);
 
   gp_module_set_get_applet_info (module, menu_get_applet_info);
   gp_module_set_compatibility (module, menu_get_applet_id_from_iid);
