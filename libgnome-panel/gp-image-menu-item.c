@@ -331,6 +331,10 @@ gp_image_menu_item_class_init (GpImageMenuItemClass *item_class)
 static void
 gp_image_menu_item_init (GpImageMenuItem *item)
 {
+  GtkStyleContext *context;
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (item));
+  gtk_style_context_add_class (context, "gp-image-menu-item");
 }
 
 /**
