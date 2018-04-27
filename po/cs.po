@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-06 01:19+0000\n"
-"PO-Revision-Date: 2018-02-07 09:04+0100\n"
+"POT-Creation-Date: 2018-04-23 09:07+0000\n"
+"PO-Revision-Date: 2018-04-27 08:40+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -494,11 +494,11 @@ msgstr "Pozice objektu na panelu"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"Pozice tohoto objektu panelu. Pozice je určena počtem pixelů od levého "
-"okraje panelu (nebo horního, je-li svislý)."
+"Index tohoto objektu panelu v rámci jiného objektu se stejným typem balení, "
+"od levého okraje panelu (nebo horního, je-li svislý)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -833,17 +833,17 @@ msgstr "Používat vlastní barvu textu"
 msgid "Text Color"
 msgstr "Barva textu"
 
-#: gnome-panel/applet.c:343
+#: gnome-panel/applet.c:337
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:481
+#: gnome-panel/applet.c:475
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/applet.c:488
+#: gnome-panel/applet.c:482
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
@@ -875,7 +875,7 @@ msgstr "Vlastnosti adresáře"
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
@@ -1071,11 +1071,11 @@ msgstr "Chyba"
 msgid "Choose an icon"
 msgstr "Vyberte ikonu"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1275
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1264
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:199
 msgid "_Cancel"
 msgstr "_Zrušit"
 
@@ -1182,65 +1182,57 @@ msgstr "Vypnout"
 msgid "Power off the computer"
 msgstr "Vypnout počítač"
 
-#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:953
+#: gnome-panel/panel-addto-dialog.c:138 gnome-panel/panel-menu-button.c:953
 #: modules/menu/gp-menu-module.c:39
 msgid "Main Menu"
 msgstr "Hlavní nabídka"
 
-#: gnome-panel/panel-addto-dialog.c:141 modules/menu/gp-menu-module.c:40
+#: gnome-panel/panel-addto-dialog.c:139 modules/menu/gp-menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "Hlavní nabídka GNOME"
 
-#: gnome-panel/panel-addto-dialog.c:149 modules/menu/gp-menu-module.c:46
-msgid "Menu Bar"
-msgstr "Lišta nabídky"
-
-#: gnome-panel/panel-addto-dialog.c:150 modules/menu/gp-menu-module.c:47
-msgid "A custom menu bar"
-msgstr "Vlastní lišta nabídky"
-
-#: gnome-panel/panel-addto-dialog.c:158 modules/menu/gp-menu-module.c:53
+#: gnome-panel/panel-addto-dialog.c:147 modules/menu/gp-menu-module.c:53
 msgid "User menu"
 msgstr "Uživatelská nabídka"
 
-#: gnome-panel/panel-addto-dialog.c:159 modules/menu/gp-menu-module.c:54
+#: gnome-panel/panel-addto-dialog.c:148 modules/menu/gp-menu-module.c:54
 msgid "Menu to change your settings and log out"
 msgstr "Nabídka pro změnu vašeho nastavení a odhlášení"
 
-#: gnome-panel/panel-addto-dialog.c:207
+#: gnome-panel/panel-addto-dialog.c:196
 msgid "(empty)"
 msgstr "(prázdné)"
 
-#: gnome-panel/panel-addto-dialog.c:406
+#: gnome-panel/panel-addto-dialog.c:395
 msgid "Custom Application Launcher"
 msgstr "Vlastní spouštěč aplikace"
 
-#: gnome-panel/panel-addto-dialog.c:407
+#: gnome-panel/panel-addto-dialog.c:396
 msgid "Create a new launcher"
 msgstr "Vytvořit nový spouštěč"
 
-#: gnome-panel/panel-addto-dialog.c:416
+#: gnome-panel/panel-addto-dialog.c:405
 msgid "Application Launcher..."
 msgstr "Spouštěč aplikace…"
 
-#: gnome-panel/panel-addto-dialog.c:417
+#: gnome-panel/panel-addto-dialog.c:406
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopírovat spouštěč z nabídky aplikací"
 
-#: gnome-panel/panel-addto-dialog.c:911
+#: gnome-panel/panel-addto-dialog.c:895
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Vy_hledat položku, kterou přidat do „%s“:"
 
-#: gnome-panel/panel-addto-dialog.c:915
+#: gnome-panel/panel-addto-dialog.c:899
 msgid "Find an _item to add to the panel:"
 msgstr "Vy_hledat položku, kterou přidat na panel:"
 
-#: gnome-panel/panel-addto-dialog.c:1037
+#: gnome-panel/panel-addto-dialog.c:1021
 msgid "_Forward"
 msgstr "V_před"
 
-#: gnome-panel/panel-addto-dialog.c:1040 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1024 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "Přid_at"
@@ -1277,18 +1269,18 @@ msgstr "Chcete tento applet odstranit ze svého nastavení?"
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1265
 msgid "_Delete"
 msgstr "O_dstranit"
 
-#: gnome-panel/panel.c:422
+#: gnome-panel/panel.c:420
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:128
 #, c-format
 msgid "Open '%s'"
 msgstr "Otevře „%s“"
@@ -1296,21 +1288,21 @@ msgstr "Otevře „%s“"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1066
-#: modules/menu/gp-places-menu.c:413
+#: gnome-panel/panel.c:537 gnome-panel/panel-menu-items.c:1066
+#: modules/menu/gp-places-menu.c:414
 msgid "Open your personal folder"
 msgstr "Otevře osobní složku"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1095
-#: modules/menu/gp-places-menu.c:496
+#: gnome-panel/panel.c:546 gnome-panel/panel-menu-items.c:1095
+#: modules/menu/gp-places-menu.c:497
 msgid "Computer"
 msgstr "Počítač"
 
 #. name
-#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1096
-#: modules/menu/gp-places-menu.c:497
+#: gnome-panel/panel.c:547 gnome-panel/panel-menu-items.c:1096
+#: modules/menu/gp-places-menu.c:498
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1319,22 +1311,22 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1105
-#: modules/menu/gp-places-menu.c:552
+#: gnome-panel/panel.c:554 gnome-panel/panel-menu-items.c:1105
+#: modules/menu/gp-places-menu.c:553
 msgid "Network"
 msgstr "Síť"
 
 #. name
-#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1106
-#: modules/menu/gp-places-menu.c:553
+#: gnome-panel/panel.c:555 gnome-panel/panel-menu-items.c:1106
+#: modules/menu/gp-places-menu.c:554
 msgid "Browse bookmarked and local network locations"
 msgstr "Procházet poznačená a místní síťová umístění"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1256
 msgid "Delete this panel?"
 msgstr "Odstranit tento panel?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1260
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1460,24 +1452,12 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Vynutit ukončení"
 
-#: gnome-panel/panel-layout.c:1105 gnome-panel/panel-layout.c:1119
+#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nelze vytvořit počáteční rozložení panelu.\n"
 
-#: gnome-panel/panel-menu-bar.c:88 modules/menu/gp-menu-bar-applet.c:136
-msgid "Browse and run installed applications"
-msgstr "Umožňuje procházet a spouštět nainstalované aplikace"
-
-#: gnome-panel/panel-menu-bar.c:90 modules/menu/gp-menu-bar-applet.c:160
-msgid "Access documents, folders and network places"
-msgstr "Umožňuje přistupovat k dokumentům, složkám a místům v síti"
-
-#: gnome-panel/panel-menu-bar.c:128 modules/menu/gp-menu-bar-applet.c:131
-msgid "Applications"
-msgstr "Aplikace"
-
-#: gnome-panel/panel-menu-bar.c:226 gnome-panel/panel-menu-button.c:552
-#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
+#: modules/menu/menu-bar-menu.ui:5
 msgid "_Edit Menus"
 msgstr "_Upravit nabídky"
 
@@ -1485,35 +1465,35 @@ msgstr "_Upravit nabídky"
 msgid "Switch User"
 msgstr "Přepnout uživatele"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:459
+#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:460
 msgid "Bookmarks"
 msgstr "Záložky"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:78
+#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:79
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s nelze prohledat na změny médií"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:279
+#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:280
 #, c-format
 msgid "Rescan %s"
 msgstr "Znovu prohledat %s"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:128
+#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:129
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nelze připojit %s"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:322
+#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:323
 #, c-format
 msgid "Mount %s"
 msgstr "Připojit %s"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:519
+#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:520
 msgid "Removable Media"
 msgstr "Výměnná média"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:575
+#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:576
 msgid "Network Places"
 msgstr "Místa v síti"
 
@@ -1523,12 +1503,12 @@ msgstr "Místa v síti"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:436
+#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:437
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Pracovní plocha"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:437
+#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:438
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otevře obsah pracovní plochy ve složce"
 
@@ -1562,11 +1542,11 @@ msgstr "Nelze otevřít nedávno použitý dokument „%s“"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Při pokusu otevřít „%s“ došlo k neznámé chybě."
 
-#: gnome-panel/panel-recent.c:145
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:187
 msgid "Clear the Recent Documents list?"
 msgstr "Vymazat seznam nedávných dokumentů?"
 
-#: gnome-panel/panel-recent.c:147
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:192
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1576,7 +1556,7 @@ msgstr ""
 "• Všechny položky z nabídky Místa → Nedávné dokumenty.\n"
 "• Všechny položky ze seznamu nedávných dokumentů ve všech aplikacích."
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:200
 msgid "C_lear"
 msgstr "_Vymazat"
 
@@ -1584,15 +1564,15 @@ msgstr "_Vymazat"
 msgid "Clear Recent Documents"
 msgstr "Vymazat nedávné dokumenty"
 
-#: gnome-panel/panel-recent.c:194
+#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:603
 msgid "Recent Documents"
 msgstr "Nedávné dokumenty"
 
-#: gnome-panel/panel-recent.c:232
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:232
 msgid "Clear Recent Documents..."
 msgstr "Vymazat nedávné dokumenty…"
 
-#: gnome-panel/panel-recent.c:234
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Vymaže všechny položky ze seznamu nedávných dokumentů"
 
@@ -1684,67 +1664,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1560
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Expanded Edge Panel"
 msgstr "Rozpínací hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1561
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Centered Panel"
 msgstr "Panel nahoře uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1562
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Top Floating Panel"
 msgstr "Plovoucí panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Top Edge Panel"
 msgstr "Hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rozpínací hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Centered Panel"
 msgstr "Panel dole uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1569
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Bottom Floating Panel"
 msgstr "Plovoucí panel dole"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Bottom Edge Panel"
 msgstr "Hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Centered Panel"
 msgstr "Panel vlevo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1576
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Left Floating Panel"
 msgstr "Plovoucí panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Left Edge Panel"
 msgstr "Hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Centered Panel"
 msgstr "Panel vpravo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1583
+#: gnome-panel/panel-toplevel.c:1588
 msgid "Right Floating Panel"
 msgstr "Plovoucí panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1584
+#: gnome-panel/panel-toplevel.c:1589
 msgid "Right Edge Panel"
 msgstr "Hranový panel vpravo"
 
@@ -2283,6 +2263,18 @@ msgstr "N_a svislém panelu otočit"
 msgid "Please install the '%s' application."
 msgstr "Nainstalujte prosím aplikaci „%s“"
 
+#: modules/menu/gp-menu-bar-applet.c:131
+msgid "Applications"
+msgstr "Aplikace"
+
+#: modules/menu/gp-menu-bar-applet.c:136
+msgid "Browse and run installed applications"
+msgstr "Umožňuje procházet a spouštět nainstalované aplikace"
+
+#: modules/menu/gp-menu-bar-applet.c:160
+msgid "Access documents, folders and network places"
+msgstr "Umožňuje přistupovat k dokumentům, složkám a místům v síti"
+
 #: modules/menu/gp-menu-bar-applet.c:181
 msgid "System"
 msgstr "Systém"
@@ -2290,6 +2282,14 @@ msgstr "Systém"
 #: modules/menu/gp-menu-bar-applet.c:185
 msgid "Change system appearance and behavior, or get help"
 msgstr "Změnit vzhled a chování systému nebo získat nápovědu"
+
+#: modules/menu/gp-menu-module.c:46
+msgid "Menu Bar"
+msgstr "Lišta nabídky"
+
+#: modules/menu/gp-menu-module.c:47
+msgid "A custom menu bar"
+msgstr "Vlastní lišta nabídky"
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
