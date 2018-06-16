@@ -32,6 +32,7 @@
 
 static Atom net_wm_strut              = None;
 static Atom net_wm_strut_partial      = None;
+static Atom gnome_wm_strut_area       = None;
 
 enum {
 	STRUT_LEFT = 0,
@@ -53,12 +54,14 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 			PanelOrientation  orientation,
 			guint32           strut,
 			guint32           strut_start,
-			guint32           strut_end)
+			guint32           strut_end,
+			GdkRectangle     *rect)
 {
 	GdkDisplay *display;
 	Display *xdisplay;
 	Window xwindow;
 	gulong struts [12] = { 0, };
+	gulong area[4] = { 0, };
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
@@ -70,6 +73,8 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 		net_wm_strut = XInternAtom (xdisplay, "_NET_WM_STRUT", False);
 	if (net_wm_strut_partial == None)
 		net_wm_strut_partial = XInternAtom (xdisplay, "_NET_WM_STRUT_PARTIAL", False);
+	if (gnome_wm_strut_area == None)
+		gnome_wm_strut_area = XInternAtom (xdisplay, "_GNOME_WM_STRUT_AREA", False);
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_LEFT:
@@ -97,6 +102,13 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 		break;
 	}
 
+	if (rect != NULL) {
+		area[0] = rect->x;
+		area[1] = rect->y;
+		area[2] = rect->width;
+		area[3] = rect->height;
+	}
+
 	gdk_x11_display_error_trap_push (display);
 	XChangeProperty (xdisplay, xwindow, net_wm_strut,
 			 XA_CARDINAL, 32, PropModeReplace,
@@ -104,6 +116,9 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 	XChangeProperty (xdisplay, xwindow, net_wm_strut_partial,
 			 XA_CARDINAL, 32, PropModeReplace,
 			 (guchar *) &struts, 12);
+	XChangeProperty (xdisplay, xwindow, gnome_wm_strut_area,
+			 XA_CARDINAL, 32, PropModeReplace,
+			 (guchar *) &area, 4);
 	gdk_x11_display_error_trap_pop_ignored (display);
 }
 
