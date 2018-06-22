@@ -20,10 +20,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-17 20:36+0000\n"
-"PO-Revision-Date: 2018-02-22 13:20+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-06-10 17:09+0000\n"
+"PO-Revision-Date: 2018-06-22 09:43+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -289,22 +288,20 @@ msgstr ""
 "usuario quiere quitar un panel."
 
 #: data/org.gnome.gnome-panel.gschema.xml:46
-#| msgid "Icon size in the menus"
 msgid "Icon size in menus"
 msgstr "Tamaño de los iconos en los menús"
 
 #: data/org.gnome.gnome-panel.gschema.xml:47
-#| msgid "Icon size in the menus"
 msgid "The size of icons in menus."
 msgstr "El tamaño de los iconos en los menús"
 
 #: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "Maximum icon size in panels"
-msgstr ""
+msgstr "Tamaño máximo de los iconos en los paneles"
 
 #: data/org.gnome.gnome-panel.gschema.xml:53
 msgid "The maximum size of icons in panels."
-msgstr ""
+msgstr "El tamaño máximo de los iconos en los paneles."
 
 #: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "Icon size in the menus"
@@ -522,13 +519,15 @@ msgid "Object's position on the panel"
 msgstr "La posición del objeto en el panel"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
+#| msgid ""
+#| "The position of this panel object. The position is specified by the "
+#| "number of pixels from the left (or top if vertical) panel edge."
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"La posición de este objeto del panel. La posición se especifica por la "
-"cantidad de píxeles desde la borde izquierdo (o desde arriba, si es "
-"vertical) del panel."
+"El índice de este objeto del panel con los otros objetos del mismo tipo de "
+"paquete, desde el borde izquierdo del panel (o desde arriba si es vertical)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -918,7 +917,7 @@ msgstr "Propiedades de la carpeta"
 msgid "Launcher Properties"
 msgstr "Propiedades del lanzador"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
@@ -936,17 +935,14 @@ msgid "gnome-panel"
 msgstr "gnome-panel"
 
 #: gnome-panel/gp-add-applet-window.c:137
-#| msgid "_Help"
 msgid "Help"
 msgstr "Ayuda"
 
 #: gnome-panel/gp-add-applet-window.c:148
-#| msgid "_About"
 msgid "About"
 msgstr "Acerca de"
 
 #: gnome-panel/gp-add-applet-window.c:193
-#| msgid "_Add"
 msgid "Add"
 msgstr "Añadir"
 
@@ -955,7 +951,6 @@ msgid "Add to Panel"
 msgstr "Añadir al panel"
 
 #: gnome-panel/gp-add-applet-window.c:553
-#| msgid "Icon not found"
 msgid "No applets found"
 msgstr "No se han encontrado miniaplicaciones"
 
@@ -1127,7 +1122,7 @@ msgstr "Elegir un icono"
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:199
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -1333,7 +1328,7 @@ msgstr "Abrir URL: %s"
 
 #. Translators: %s is a URI
 #: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:128
 #, c-format
 msgid "Open '%s'"
 msgstr "Abrir «%s»"
@@ -1596,11 +1591,11 @@ msgstr "No se pudo abrir el documento usado recientemente «%s»"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Ocurrió un error desconocido al intentar abrir «%s»."
 
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:187
 msgid "Clear the Recent Documents list?"
 msgstr "¿Quiere vaciar la lista de documentos recientes?"
 
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:192
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1611,7 +1606,7 @@ msgstr ""
 "• Todos los elementos de la lista de documentos recientes en todas las "
 "aplicaciones."
 
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:200
 msgid "C_lear"
 msgstr "_Vaciar"
 
@@ -1623,11 +1618,11 @@ msgstr "Vaciar documentos recientes"
 msgid "Recent Documents"
 msgstr "Documentos recientes"
 
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:232
 msgid "Clear Recent Documents..."
 msgstr "Vaciar documentos recientes…"
 
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Vaciar todos los elementos de la lista de documentos recientes"
 
@@ -2324,7 +2319,6 @@ msgstr "_Rotar en los paneles verticales"
 
 #: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
-#| msgid "Browse and run installed applications"
 msgid "Please install the '%s' application."
 msgstr "Instale la aplicación «%s»."
 
@@ -2345,7 +2339,6 @@ msgid "System"
 msgstr "Sistema"
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#| msgid "Change desktop appearance and behavior, get help, or log out"
 msgid "Change system appearance and behavior, or get help"
 msgstr "Cambie la apariencia y comportamiento del escritorio u obtenga ayuda"
 
