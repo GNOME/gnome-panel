@@ -22,21 +22,21 @@
 # Rodrigo Padula de Oliveira <contato@rodrigopadula.com>, 2011.
 # Enrico Nicoletto <liverig@gmail.com>, 2014, 2017.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013, 2016, 2018.
+# Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-17 20:36+0000\n"
-"PO-Revision-Date: 2018-03-11 03:00-0200\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-06-22 10:12+0000\n"
+"PO-Revision-Date: 2018-07-09 15:34-0300\n"
+"Last-Translator: Bruno Lopes da Silva <brunolopesbldsb@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Virtaal 1.0.0-beta1\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Project-Style: gnome\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -288,12 +288,10 @@ msgstr ""
 "realmente deseja remover um painel."
 
 #: data/org.gnome.gnome-panel.gschema.xml:46
-#| msgid "Icon size in the menus"
 msgid "Icon size in menus"
 msgstr "Tamanho do ícone em menus"
 
 #: data/org.gnome.gnome-panel.gschema.xml:47
-#| msgid "Icon size in the menus"
 msgid "The size of icons in menus."
 msgstr "O tamanho do ícone em menus."
 
@@ -526,11 +524,11 @@ msgstr "Posição do objeto no painel"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"A posição desse objeto de painel. A posição é especificada pelo número de "
-"pixels do canto esquerdo (ou superior) do painel."
+"O índice desse objeto de painel dentro de outros objetos no mesmo tipo de "
+"pacote, da borda do painel esquerdo (ou superior se estiver em vertical)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -912,7 +910,7 @@ msgstr "Propriedades do diretório"
 msgid "Launcher Properties"
 msgstr "Propriedades do lançador"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Painel"
 
@@ -1114,7 +1112,7 @@ msgstr "Escolha um ícone"
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:199
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -1318,7 +1316,7 @@ msgstr "Abre o URL: %s"
 
 #. Translators: %s is a URI
 #: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:128
 #, c-format
 msgid "Open '%s'"
 msgstr "Abre “%s”"
@@ -1579,11 +1577,11 @@ msgstr "Não foi possível abrir o documento “%s” usado recentemente"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Um erro desconhecido ocorreu ao tentar abrir “%s”."
 
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:187
 msgid "Clear the Recent Documents list?"
 msgstr "Limpar a lista de Documentos recentes?"
 
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:192
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1593,7 +1591,7 @@ msgstr ""
 "• Todos os itens de Locais → item de menu de documentos recentes.\n"
 "• Todos os itens da lista de documentos recentes de todos os aplicativos."
 
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:200
 msgid "C_lear"
 msgstr "_Limpar"
 
@@ -1605,11 +1603,11 @@ msgstr "Limpar documentos recentes"
 msgid "Recent Documents"
 msgstr "Documentos recentes"
 
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:232
 msgid "Clear Recent Documents..."
 msgstr "Limpar documentos recentes…"
 
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Limpa todos os itens da lista de documentos recentes"
 
@@ -2300,7 +2298,6 @@ msgstr "_Rotacionar em painéis verticais"
 
 #: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
-#| msgid "Browse and run installed applications"
 msgid "Please install the '%s' application."
 msgstr "Por favor, instale o aplicativo “%s”."
 
@@ -2317,7 +2314,6 @@ msgid "Access documents, folders and network places"
 msgstr "Acesse documentos, pastas e locais da rede"
 
 #: modules/menu/gp-menu-bar-applet.c:181
-#| msgid "File System"
 msgid "System"
 msgstr "Sistema"
 
