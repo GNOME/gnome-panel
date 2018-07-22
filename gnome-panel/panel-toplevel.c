@@ -2141,7 +2141,8 @@ calculate_minimum_height (GtkWidget        *widget,
 					     pango_context_get_language (pango_context));
 	ascent  = pango_font_metrics_get_ascent  (metrics);
 	descent = pango_font_metrics_get_descent (metrics);
-  
+
+	pango_font_description_free (font_desc);
 	pango_font_metrics_unref (metrics);
 
 	gtk_style_context_get_padding (style_context, state, &padding);
