@@ -592,7 +592,7 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	}
 
 	frame->priv->panel = frame_act->panel;
-	gtk_widget_show_all (GTK_WIDGET (frame));
+	gtk_widget_show (GTK_WIDGET (frame));
 
 	info = panel_applet_register (GTK_WIDGET (frame), frame->priv->panel,
 				      PANEL_OBJECT_APPLET, frame_act->id,
