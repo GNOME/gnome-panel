@@ -61,6 +61,20 @@ static GParamSpec *menu_properties[LAST_PROP] = { NULL };
 G_DEFINE_TYPE (GpPlacesMenu, gp_places_menu, GTK_TYPE_MENU)
 
 static void
+free_uri (gchar    *uri,
+          GClosure *closure)
+{
+  g_free (uri);
+}
+
+static void
+unref_object (GObject  *object,
+              GClosure *closure)
+{
+  g_object_unref (object);
+}
+
+static void
 poll_for_media_cb (GObject      *object,
                    GAsyncResult *res,
                    gpointer      user_data)
@@ -232,14 +246,14 @@ create_menu_item (GpPlacesMenu *menu,
       g_signal_connect_data (item, "drag-data-get",
                              G_CALLBACK (uri_drag_data_get_cb),
                              g_file_get_uri (file),
-                             (GClosureNotify) g_free,
+                             (GClosureNotify) free_uri,
                              0);
     }
 
   g_signal_connect_data (item, "activate",
                          G_CALLBACK (uri_activate_cb),
                          g_file_get_uri (file),
-                         (GClosureNotify) g_free,
+                         (GClosureNotify) free_uri,
                          0);
 
   return item;
@@ -301,7 +315,7 @@ append_local_drive (GpVolumes    *volumes,
   g_signal_connect_data (item, "activate",
                          G_CALLBACK (drive_activate_cb),
                          g_object_ref (drive),
-                         (GClosureNotify) g_object_unref,
+                         (GClosureNotify) unref_object,
                          0);
 }
 
@@ -344,7 +358,7 @@ append_local_volume (GpVolumes    *volumes,
   g_signal_connect_data (item, "activate",
                          G_CALLBACK (volume_activate_cb),
                          g_object_ref (volume),
-                         (GClosureNotify) g_object_unref,
+                         (GClosureNotify) unref_object,
                          0);
 }
 

@@ -67,6 +67,13 @@ static void directory_to_menu_items (GMenuTreeDirectory *directory,
                                      GpMenu             *menu);
 
 static void
+unref_object (GObject  *object,
+              GClosure *closure)
+{
+  g_object_unref (object);
+}
+
+static void
 activate_cb (GtkWidget       *item,
              GDesktopAppInfo *info)
 {
@@ -204,14 +211,14 @@ append_entry (GtkMenuShell  *shell,
       g_signal_connect_data (item, "drag-data-get",
                              G_CALLBACK (drag_data_get_cb),
                              g_object_ref (info),
-                             (GClosureNotify) g_object_unref,
+                             (GClosureNotify) unref_object,
                              0);
     }
 
   g_signal_connect_data (item, "activate",
                          G_CALLBACK (activate_cb),
                          g_object_ref (info),
-                         (GClosureNotify) g_object_unref,
+                         (GClosureNotify) unref_object,
                          0);
 }
 

@@ -58,6 +58,13 @@ static GParamSpec *menu_properties[LAST_PROP] = { NULL };
 G_DEFINE_TYPE (GpRecentMenu, gp_recent_menu, GTK_TYPE_MENU)
 
 static void
+unref_recent_info (GtkRecentInfo *info,
+                   GClosure      *closure)
+{
+  gtk_recent_info_unref (info);
+}
+
+static void
 activate_cb (GtkWidget     *item,
              GtkRecentInfo *info)
 {
@@ -142,7 +149,7 @@ append_recent_items (GpRecentMenu *menu)
       g_signal_connect_data (item, "activate",
                              G_CALLBACK (activate_cb),
                              gtk_recent_info_ref (info),
-                             (GClosureNotify) gtk_recent_info_unref,
+                             (GClosureNotify) unref_recent_info,
                              0);
 
       if (++count == 10)

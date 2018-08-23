@@ -53,6 +53,13 @@ static GParamSpec *menu_properties[LAST_PROP] = { NULL };
 G_DEFINE_TYPE (GpUserMenu, gp_user_menu, GTK_TYPE_MENU)
 
 static void
+unref_object (GObject  *object,
+              GClosure *closure)
+{
+  g_object_unref (object);
+}
+
+static void
 activate_cb (GtkWidget       *item,
              GDesktopAppInfo *info)
 {
@@ -144,14 +151,14 @@ append_control_center (GpUserMenu *menu)
       g_signal_connect_data (item, "drag-data-get",
                              G_CALLBACK (drag_data_get_cb),
                              g_object_ref (info),
-                             (GClosureNotify) g_object_unref,
+                             (GClosureNotify) unref_object,
                              0);
     }
 
   g_signal_connect_data (item, "activate",
                          G_CALLBACK (activate_cb),
                          g_object_ref (info),
-                         (GClosureNotify) g_object_unref,
+                         (GClosureNotify) unref_object,
                          0);
 
   g_object_unref (info);

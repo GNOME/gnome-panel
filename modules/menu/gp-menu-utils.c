@@ -280,11 +280,19 @@ child_setup (gpointer user_data)
 }
 
 static void
+close_pid (GPid     pid,
+           gint     status,
+           gpointer user_data)
+{
+  g_spawn_close_pid (pid);
+}
+
+static void
 pid_cb (GDesktopAppInfo *info,
         GPid             pid,
         gpointer         user_data)
 {
-  g_child_watch_add (pid, (GChildWatchFunc) g_spawn_close_pid, NULL);
+  g_child_watch_add (pid, close_pid, NULL);
 }
 
 static gboolean
