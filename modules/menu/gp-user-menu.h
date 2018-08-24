@@ -32,6 +32,8 @@ void       gp_user_menu_set_append_func (GpUserMenu            *user_menu,
                                          GpAppendMenuItemsFunc  append_func,
                                          gpointer               user_data);
 
+void       gp_user_menu_reload          (GpUserMenu            *user_menu);
+
 G_END_DECLS
 
 #endif

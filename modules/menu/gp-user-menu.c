@@ -403,3 +403,9 @@ gp_user_menu_set_append_func (GpUserMenu            *user_menu,
 
   queue_reload (user_menu);
 }
+
+void
+gp_user_menu_reload (GpUserMenu *user_menu)
+{
+  menu_reload (user_menu);
+}
