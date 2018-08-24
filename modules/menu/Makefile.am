@@ -22,6 +22,8 @@ menu_la_CFLAGS = \
 menu_la_SOURCES = \
 	gp-bookmarks.c \
 	gp-bookmarks.h \
+	gp-lock-logout.c \
+	gp-lock-logout.h \
 	gp-main-menu-applet.c \
 	gp-main-menu-applet.h \
 	gp-menu-bar-applet.c \
@@ -72,13 +74,49 @@ menu-resources.h: $(srcdir)/menu.gresource.xml $(menu_resources)
 		--sourcedir=$(srcdir) --generate-header --c-name menu \
 		$(srcdir)/menu.gresource.xml
 
+gp-dm-seat-gen.h:
+gp-dm-seat-gen.c: org.freedesktop.DisplayManager.Seat.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Gp \
+		--generate-c-code gp-dm-seat-gen \
+		$(srcdir)/org.freedesktop.DisplayManager.Seat.xml
+
+gp-login1-manager-gen.h:
+gp-login1-manager-gen.c: org.freedesktop.login1.Manager.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Gp \
+		--generate-c-code gp-login1-manager-gen \
+		$(srcdir)/org.freedesktop.login1.Manager.xml
+
+gp-screensaver-gen.h:
+gp-screensaver-gen.c: org.gnome.ScreenSaver.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Gp \
+		--generate-c-code gp-screensaver-gen \
+		$(srcdir)/org.gnome.ScreenSaver.xml
+
+gp-session-manager-gen.h:
+gp-session-manager-gen.c: org.gnome.SessionManager.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Gp \
+		--generate-c-code gp-session-manager-gen \
+		$(srcdir)/org.gnome.SessionManager.xml
+
 BUILT_SOURCES = \
 	menu-resources.c \
 	menu-resources.h \
+	gp-dm-seat-gen.c \
+	gp-dm-seat-gen.h \
+	gp-login1-manager-gen.c \
+	gp-login1-manager-gen.h \
+	gp-screensaver-gen.c \
+	gp-screensaver-gen.h \
+	gp-session-manager-gen.c \
+	gp-session-manager-gen.h \
 	$(NULL)
 
 EXTRA_DIST = \
 	menu.gresource.xml \
+	org.freedesktop.DisplayManager.Seat.xml \
+	org.freedesktop.login1.Manager.xml \
+	org.gnome.ScreenSaver.xml \
+	org.gnome.SessionManager.xml \
 	$(menu_resources) \
 	$(NULL)
 
