@@ -12,11 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-17 20:31+0000\n"
-"PO-Revision-Date: 2018-03-16 10:31+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-06-10 17:09+0000\n"
+"PO-Revision-Date: 2018-07-06 13:41+0700\n"
+"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -504,11 +503,11 @@ msgstr "Posisi objek pada panel"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"Position objek panel. Position ditentukan oleh jumlah pixel dari sudut panel "
-"kiri (atau atas jika vertikal)."
+"Indeks objek panel ini dalam objek lain dengan jenis paket yang sama, dari "
+"tepi panel kiri (atau atas jika vertikal)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -892,7 +891,7 @@ msgstr "Properti Direktori"
 msgid "Launcher Properties"
 msgstr "Properti Peluncur"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
@@ -1092,7 +1091,7 @@ msgstr "Pilih ikon"
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:199
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -1300,7 +1299,7 @@ msgstr "Membuka URL: %s"
 
 #. Translators: %s is a URI
 #: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:128
 #, c-format
 msgid "Open '%s'"
 msgstr "Membuka '%s'"
@@ -1561,11 +1560,11 @@ msgstr "Tidak dapat membuka dokumen \"%s\" yang baru-baru ini dipakai"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Kesalahan tidak diketahui muncul ketika membuka \"%s\"."
 
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:187
 msgid "Clear the Recent Documents list?"
 msgstr "Bersihkan daftar?"
 
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:192
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1577,7 +1576,7 @@ msgstr ""
 "• Semua item dari daftar dokumen yang baru-baru ini digunakan dari semua "
 "aplikasi."
 
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:200
 msgid "C_lear"
 msgstr "_Hapus"
 
@@ -1590,11 +1589,11 @@ msgstr "Bersihkan Daftar"
 msgid "Recent Documents"
 msgstr "Dokumen Baru-baru Ini"
 
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:232
 msgid "Clear Recent Documents..."
 msgstr "Bersihkan Daftar..."
 
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:237
 msgid "Clear all items from the recent documents list"
 msgstr "Menghapus semua objek dari daftar dokumen yang baru-baru ini dibuka"
 
