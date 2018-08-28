@@ -63,8 +63,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		panel_action_button_set_dnd_enabled (PANEL_ACTION_BUTTON (info->widget),
 						     dnd_enabled);
 		break;
-	case PANEL_OBJECT_USER_MENU:
-		break;
 	default:
 		g_assert_not_reached ();
 		break;
@@ -183,8 +181,6 @@ applet_callback_callback (GtkWidget      *widget,
 		/*
 		 * Applet's menu's are handled differently
 		 */
-		break;
-	case PANEL_OBJECT_USER_MENU:
 		break;
 	default:
 		g_assert_not_reached ();

@@ -54,7 +54,6 @@ panel_sources =			\
 	panel-ditem-editor.c	\
 	panel-layout.c		\
 	panel-object-loader.c	\
-	panel-user-menu.c	\
 	panel-applet-info.c
 
 panel_headers =			\
@@ -95,7 +94,6 @@ panel_headers =			\
 	panel-layout.h		\
 	panel-object-loader.h	\
 	panel-schemas.h		\
-	panel-user-menu.h	\
 	panel-applet-info.h
 
 gnome_panel_SOURCES =			\

@@ -43,7 +43,6 @@
 #include "panel-util.h"
 #include "panel-addto-dialog.h"
 #include "panel-icon-names.h"
-#include "panel-user-menu.h"
 
 struct _PanelAddtoDialog
 {
@@ -86,8 +85,7 @@ typedef enum {
 	PANEL_ADDTO_LAUNCHER_MENU,
 	PANEL_ADDTO_LAUNCHER,
 	PANEL_ADDTO_LAUNCHER_NEW,
-	PANEL_ADDTO_MENU,
-	PANEL_ADDTO_USER_MENU
+	PANEL_ADDTO_MENU
 } PanelAddtoItemType;
 
 typedef struct {
@@ -140,15 +138,6 @@ prepend_internal_applets (GSList *list)
 	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
 	internal->action_type = PANEL_ACTION_NONE;
 	internal->iid = g_strdup ("MENU:MAIN");
-	list = g_slist_prepend (list, internal);
-
-	internal = g_new0 (PanelAddtoItemInfo, 1);
-	internal->type = PANEL_ADDTO_USER_MENU;
-	internal->name = g_strdup (_("User menu"));
-	internal->description = g_strdup (_("Menu to change your settings and log out"));
-	internal->icon = g_themed_icon_new (PANEL_ICON_COMPUTER);
-	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = g_strdup ("USERMENU:NEW");
 	list = g_slist_prepend (list, internal);
 
 	return list;
@@ -740,11 +729,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 					  item_info->menu_filename,
 					  item_info->menu_path,
 					  item_info->name);
-		break;
-	case PANEL_ADDTO_USER_MENU:
-		panel_user_menu_create (dialog->panel_widget->toplevel,
-					dialog->insert_pack_type,
-					pack_index);
 		break;
 	default:
 		break;

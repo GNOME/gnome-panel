@@ -39,7 +39,6 @@
 #include "panel-icon-names.h"
 #include "panel-layout.h"
 #include "panel-schemas.h"
-#include "panel-user-menu.h"
 
 typedef struct _PanelData PanelData;
 struct _PanelData {
@@ -80,9 +79,6 @@ orientation_change (AppletInfo  *info,
 	case PANEL_OBJECT_LAUNCHER:
 	case PANEL_OBJECT_ACTION:
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
-		break;
-	case PANEL_OBJECT_USER_MENU:
-		panel_menu_bar_object_set_orientation (PANEL_MENU_BAR_OBJECT (info->widget), orientation);
 		break;
 	default:
 		break;
@@ -827,15 +823,6 @@ drop_internal_applet (PanelWidget         *panel,
 							pack_type, pack_index,
 							applet_type,
 							&applet_index);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
-
-	} else if (!strcmp (applet_type, "USERMENU:NEW")) {
-		if (panel_layout_is_writable ()) {
-			panel_user_menu_create (panel->toplevel,
-						pack_type, pack_index);
 			success = TRUE;
 		} else {
 			success = FALSE;
