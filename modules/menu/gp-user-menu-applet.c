@@ -16,6 +16,7 @@
  */
 
 #include "config.h"
+#include "gp-lock-logout.h"
 #include "gp-menu-bar.h"
 #include "gp-menu-utils.h"
 #include "gp-user-menu-applet.h"
@@ -25,12 +26,21 @@
 
 struct _GpUserMenuApplet
 {
-  GpApplet   parent;
+  GpApplet      parent;
 
-  GtkWidget *menu_bar;
+  GtkWidget    *menu_bar;
+
+  GpLockLogout *lock_logout;
 };
 
 G_DEFINE_TYPE (GpUserMenuApplet, gp_user_menu_applet, GP_TYPE_APPLET)
+
+static void
+append_lock_logout (GtkMenu          *menu,
+                    GpUserMenuApplet *applet)
+{
+  gp_lock_logout_append_to_menu (applet->lock_logout, menu);
+}
 
 static gboolean
 button_press_event_cb (GtkWidget      *widget,
@@ -78,6 +88,15 @@ append_user_item (GpUserMenuApplet *applet)
   menu = gp_user_menu_new (GP_APPLET (applet));
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
+  applet->lock_logout = gp_lock_logout_new (GP_APPLET (applet));
+
+  g_signal_connect_swapped (applet->lock_logout, "changed",
+                            G_CALLBACK (gp_user_menu_reload), menu);
+
+  gp_user_menu_set_append_func (GP_USER_MENU (menu),
+                                (GpAppendMenuItemsFunc) append_lock_logout,
+                                applet);
+
   g_signal_connect (menu, "button-press-event",
                     G_CALLBACK (button_press_event_cb), NULL);
 }
@@ -108,6 +127,18 @@ gp_user_menu_applet_constructed (GObject *object)
 }
 
 static void
+gp_user_menu_applet_dispose (GObject *object)
+{
+  GpUserMenuApplet *user_menu;
+
+  user_menu = GP_USER_MENU_APPLET (object);
+
+  g_clear_object (&user_menu->lock_logout);
+
+  G_OBJECT_CLASS (gp_user_menu_applet_parent_class)->dispose (object);
+}
+
+static void
 gp_user_menu_applet_class_init (GpUserMenuAppletClass *user_menu_class)
 {
   GObjectClass *object_class;
@@ -115,6 +146,7 @@ gp_user_menu_applet_class_init (GpUserMenuAppletClass *user_menu_class)
   object_class = G_OBJECT_CLASS (user_menu_class);
 
   object_class->constructed = gp_user_menu_applet_constructed;
+  object_class->dispose = gp_user_menu_applet_dispose;
 }
 
 static void
