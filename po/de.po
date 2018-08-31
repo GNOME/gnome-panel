@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-06-10 17:09+0000\n"
-"PO-Revision-Date: 2018-08-03 11:30+0200\n"
+"POT-Creation-Date: 2018-08-28 23:10+0000\n"
+"PO-Revision-Date: 2018-08-31 21:07+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -901,17 +901,17 @@ msgstr "Benutzerdefinierte Textfarbe verwenden"
 msgid "Text Color"
 msgstr "Textfarbe"
 
-#: gnome-panel/applet.c:337
+#: gnome-panel/applet.c:333
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:475
+#: gnome-panel/applet.c:471
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Verschieben"
 
-#: gnome-panel/applet.c:482
+#: gnome-panel/applet.c:478
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
@@ -1141,11 +1141,11 @@ msgstr "Fehler"
 msgid "Choose an icon"
 msgstr "Wählen Sie ein Symbol"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1264
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1251
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:199
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:206
 msgid "_Cancel"
 msgstr "Abbre_chen"
 
@@ -1154,12 +1154,12 @@ msgstr "Abbre_chen"
 msgid "_Open"
 msgstr "Ö_ffnen"
 
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:345
+#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "»%s« konnte nicht gestartet werden"
 
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:379
+#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Speicherort »%s« konnte nicht angezeigt werden"
@@ -1180,22 +1180,22 @@ msgstr "Bildschirm _sperren"
 msgid "_Activate Screensaver"
 msgstr "Bildschirmschoner _aktivieren"
 
-#: gnome-panel/panel-action-button.c:356
+#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/panel-action-button.c:357
+#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
 msgid "Protect your computer from unauthorized use"
 msgstr "Den Rechner vor unbefugtem Zugriff schützen"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370
+#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
 msgid "Log Out"
 msgstr "Abmelden"
 
-#: gnome-panel/panel-action-button.c:371
+#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden"
@@ -1229,11 +1229,11 @@ msgstr "Beenden erzwingen"
 msgid "Force a misbehaving application to quit"
 msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
 
-#: gnome-panel/panel-action-button.c:405
+#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
 msgid "Hibernate"
 msgstr "Ruhezustand"
 
-#: gnome-panel/panel-action-button.c:414
+#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
 msgid "Suspend"
 msgstr "Bereitschaft"
 
@@ -1241,73 +1241,65 @@ msgstr "Bereitschaft"
 msgid "Hybrid sleep"
 msgstr "Hybrid-Ruhezustand"
 
-#: gnome-panel/panel-action-button.c:432
+#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
 msgid "Restart"
 msgstr "Neu starten"
 
-#: gnome-panel/panel-action-button.c:433
+#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
 msgid "Restart the computer"
 msgstr "Den Rechner neustarten"
 
-#: gnome-panel/panel-action-button.c:441
+#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
 msgid "Power Off"
 msgstr "Ausschalten"
 
-#: gnome-panel/panel-action-button.c:442
+#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
 msgid "Power off the computer"
 msgstr "Den Rechner ausschalten"
 
-#: gnome-panel/panel-addto-dialog.c:138 gnome-panel/panel-menu-button.c:953
+#: gnome-panel/panel-addto-dialog.c:136 gnome-panel/panel-menu-button.c:953
 #: modules/menu/gp-menu-module.c:39
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: gnome-panel/panel-addto-dialog.c:139 modules/menu/gp-menu-module.c:40
+#: gnome-panel/panel-addto-dialog.c:137 modules/menu/gp-menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "Das GNOME-Hauptmenü"
 
-#: gnome-panel/panel-addto-dialog.c:147 modules/menu/gp-menu-module.c:53
-msgid "User menu"
-msgstr "Benutzermenü"
-
-#: gnome-panel/panel-addto-dialog.c:148 modules/menu/gp-menu-module.c:54
-msgid "Menu to change your settings and log out"
-msgstr "Menü zum Ändern Ihrer Einstellungen und zum Abmelden"
-
-#: gnome-panel/panel-addto-dialog.c:196
+#: gnome-panel/panel-addto-dialog.c:185
 msgid "(empty)"
 msgstr "(leer)"
 
-#: gnome-panel/panel-addto-dialog.c:395
+#: gnome-panel/panel-addto-dialog.c:384
 msgid "Custom Application Launcher"
 msgstr "Benutzerdefinierter Anwendungsstarter"
 
-#: gnome-panel/panel-addto-dialog.c:396
+#: gnome-panel/panel-addto-dialog.c:385
 msgid "Create a new launcher"
 msgstr "Einen neuen Starter anlegen"
 
-#: gnome-panel/panel-addto-dialog.c:405
+#: gnome-panel/panel-addto-dialog.c:394
 msgid "Application Launcher..."
 msgstr "Anwendungsstarter …"
 
-#: gnome-panel/panel-addto-dialog.c:406
+#: gnome-panel/panel-addto-dialog.c:395
 msgid "Copy a launcher from the applications menu"
 msgstr "Einen Anwendungsstarter aus dem Anwendungsmenü kopieren"
 
-#: gnome-panel/panel-addto-dialog.c:895
+#: gnome-panel/panel-addto-dialog.c:879
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Wählen Sie ein _Objekt, das zu »%s« hinzugefügt werden soll:"
 
-#: gnome-panel/panel-addto-dialog.c:899
+#: gnome-panel/panel-addto-dialog.c:883
 msgid "Find an _item to add to the panel:"
 msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
 
-#: gnome-panel/panel-addto-dialog.c:1021
+#: gnome-panel/panel-addto-dialog.c:1005
 msgid "_Forward"
 msgstr "_Weiter"
 
-#: gnome-panel/panel-addto-dialog.c:1024 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1008 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Hinzufügen"
@@ -1344,18 +1336,18 @@ msgstr "Wollen Sie das Applet aus Ihrer Konfiguration löschen?"
 msgid "D_on't Delete"
 msgstr "_Nicht löschen"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1265
+#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1252
 msgid "_Delete"
 msgstr "Lö_schen"
 
-#: gnome-panel/panel.c:420
+#: gnome-panel/panel.c:416
 #, c-format
 msgid "Open URL: %s"
 msgstr "Adresse öffnen: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:128
+#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
 msgstr "»%s« öffnen"
@@ -1363,21 +1355,21 @@ msgstr "»%s« öffnen"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:537 gnome-panel/panel-menu-items.c:1066
-#: modules/menu/gp-places-menu.c:414
+#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:546 gnome-panel/panel-menu-items.c:1095
-#: modules/menu/gp-places-menu.c:497
+#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Rechner"
 
 #. name
-#: gnome-panel/panel.c:547 gnome-panel/panel-menu-items.c:1096
-#: modules/menu/gp-places-menu.c:498
+#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1386,22 +1378,22 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:554 gnome-panel/panel-menu-items.c:1105
-#: modules/menu/gp-places-menu.c:553
+#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Netzwerk"
 
 #. name
-#: gnome-panel/panel.c:555 gnome-panel/panel-menu-items.c:1106
-#: modules/menu/gp-places-menu.c:554
+#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Lokale und als Lesezeichen gespeicherte Orte durchsuchen"
 
-#: gnome-panel/panel.c:1256
+#: gnome-panel/panel.c:1243
 msgid "Delete this panel?"
 msgstr "Dieses Panel löschen?"
 
-#: gnome-panel/panel.c:1260
+#: gnome-panel/panel.c:1247
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1540,39 +1532,39 @@ msgstr "Initiale Panel-Anordnung konnte nicht erstellt werden.\n"
 msgid "_Edit Menus"
 msgstr "Menüs _bearbeiten"
 
-#: gnome-panel/panel-menu-items.c:362
+#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
 msgid "Switch User"
 msgstr "Benutzer wechseln"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:460
+#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:79
+#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s konnte nicht auf Medienwechsel überprüft werden"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:280
+#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "%s neu einlesen"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:129
+#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s konnte nicht eingehängt werden"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:323
+#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "%s einhängen"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:520
+#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Wechselmedium"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:576
+#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Netzwerkorte"
 
@@ -1582,12 +1574,12 @@ msgstr "Netzwerkorte"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:437
+#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Arbeitsfläche"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:438
+#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Die Arbeitsfläche in einem Ordner öffnen"
 
@@ -1621,11 +1613,11 @@ msgstr "Zuletzt geöffnetes Dokument »%s« konnte nicht geöffnet werden"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Beim Versuch, »%s« zu öffnen, ist ein unbekannter Fehler aufgetreten."
 
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:187
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:194
 msgid "Clear the Recent Documents list?"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen?"
 
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:192
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:199
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1635,7 +1627,7 @@ msgstr ""
 "• Alle Einträge im Menü Orte → Zuletzt geöffnete Dokumente.\n"
 "• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:200
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:207
 msgid "C_lear"
 msgstr "_Löschen"
 
@@ -1643,15 +1635,15 @@ msgstr "_Löschen"
 msgid "Clear Recent Documents"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
-#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:603
+#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:617
 msgid "Recent Documents"
 msgstr "Zuletzt geöffnete Dokumente"
 
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:232
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:239
 msgid "Clear Recent Documents..."
 msgstr "Liste der zuletzt geöffneten Dokumente löschen …"
 
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:237
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
@@ -2345,6 +2337,10 @@ msgstr "Sekunden"
 msgid "_Rotate on vertical panels"
 msgstr "Auf vertikalen Panels _drehen"
 
+#: modules/menu/gp-lock-logout.c:1042
+msgid "Hybrid Sleep"
+msgstr "Hybrid-Ruhezustand"
+
 #: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
 msgid "Please install the '%s' application."
@@ -2377,6 +2373,14 @@ msgstr "Menüleiste"
 #: modules/menu/gp-menu-module.c:47
 msgid "A custom menu bar"
 msgstr "Eine benutzerdefinierte Menüleiste"
+
+#: modules/menu/gp-menu-module.c:53
+msgid "User menu"
+msgstr "Benutzermenü"
+
+#: modules/menu/gp-menu-module.c:54
+msgid "Menu to change your settings and log out"
+msgstr "Menü zum Ändern Ihrer Einstellungen und zum Abmelden"
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
