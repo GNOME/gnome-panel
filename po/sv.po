@@ -13,10 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-17 20:36+0000\n"
-"PO-Revision-Date: 2018-03-11 18:33+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-08-28 23:10+0000\n"
+"PO-Revision-Date: 2018-09-03 14:33+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -24,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -495,10 +494,10 @@ msgstr "Objektets position på panelen"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"Positionen för detta panelobjekt. Positionen anges som antalet bildpunkter "
+"Index för detta panelobjekt bland de andra objekten med samma pack-type, "
 "från vänstra (eller översta om vertikal) panelkanten."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
@@ -841,17 +840,17 @@ msgstr "Använd anpassad textfärg"
 msgid "Text Color"
 msgstr "Textfärg"
 
-#: gnome-panel/applet.c:337
+#: gnome-panel/applet.c:333
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:475
+#: gnome-panel/applet.c:471
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:482
+#: gnome-panel/applet.c:478
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
@@ -883,7 +882,7 @@ msgstr "Katalogegenskaper"
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
@@ -1080,11 +1079,11 @@ msgstr "Fel"
 msgid "Choose an icon"
 msgstr "Välj en ikon"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1264
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1251
 #: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
 #: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:191
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:206
 msgid "_Cancel"
 msgstr "A_vbryt"
 
@@ -1093,12 +1092,12 @@ msgstr "A_vbryt"
 msgid "_Open"
 msgstr "Ö_ppna"
 
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:345
+#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Kunde inte starta ”%s”"
 
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:379
+#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kunde inte öppna platsen ”%s”"
@@ -1119,22 +1118,22 @@ msgstr "_Lås skärmen"
 msgid "_Activate Screensaver"
 msgstr "_Aktivera skärmsläckare"
 
-#: gnome-panel/panel-action-button.c:356
+#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:357
+#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370
+#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: gnome-panel/panel-action-button.c:371
+#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
 msgid "Log out of this session to log in as a different user"
 msgstr "Logga ut från denna session för att logga in som en annan användare"
 
@@ -1163,11 +1162,11 @@ msgstr "Tvinga avslut"
 msgid "Force a misbehaving application to quit"
 msgstr "Tvinga ett program som beter sig fel att avsluta"
 
-#: gnome-panel/panel-action-button.c:405
+#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: gnome-panel/panel-action-button.c:414
+#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
 msgid "Suspend"
 msgstr "Vänteläge"
 
@@ -1175,73 +1174,65 @@ msgstr "Vänteläge"
 msgid "Hybrid sleep"
 msgstr "Hybridvila"
 
-#: gnome-panel/panel-action-button.c:432
+#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
 msgid "Restart"
 msgstr "Starta om"
 
-#: gnome-panel/panel-action-button.c:433
+#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
 msgid "Restart the computer"
 msgstr "Starta om datorn"
 
-#: gnome-panel/panel-action-button.c:441
+#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
 msgid "Power Off"
 msgstr "Stäng av"
 
-#: gnome-panel/panel-action-button.c:442
+#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
 msgid "Power off the computer"
 msgstr "Stäng av datorn"
 
-#: gnome-panel/panel-addto-dialog.c:138 gnome-panel/panel-menu-button.c:953
+#: gnome-panel/panel-addto-dialog.c:136 gnome-panel/panel-menu-button.c:953
 #: modules/menu/gp-menu-module.c:39
 msgid "Main Menu"
 msgstr "Huvudmeny"
 
-#: gnome-panel/panel-addto-dialog.c:139 modules/menu/gp-menu-module.c:40
+#: gnome-panel/panel-addto-dialog.c:137 modules/menu/gp-menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "GNOME-huvudmenyn"
 
-#: gnome-panel/panel-addto-dialog.c:147 modules/menu/gp-menu-module.c:53
-msgid "User menu"
-msgstr "Användarmeny"
-
-#: gnome-panel/panel-addto-dialog.c:148 modules/menu/gp-menu-module.c:54
-msgid "Menu to change your settings and log out"
-msgstr "Meny för att ändra dina inställningar och logga ut."
-
-#: gnome-panel/panel-addto-dialog.c:196
+#: gnome-panel/panel-addto-dialog.c:185
 msgid "(empty)"
 msgstr "(tom)"
 
-#: gnome-panel/panel-addto-dialog.c:395
+#: gnome-panel/panel-addto-dialog.c:384
 msgid "Custom Application Launcher"
 msgstr "Anpassad programstartare"
 
-#: gnome-panel/panel-addto-dialog.c:396
+#: gnome-panel/panel-addto-dialog.c:385
 msgid "Create a new launcher"
 msgstr "Skapa en ny programstartare"
 
-#: gnome-panel/panel-addto-dialog.c:405
+#: gnome-panel/panel-addto-dialog.c:394
 msgid "Application Launcher..."
 msgstr "Programstartare…"
 
-#: gnome-panel/panel-addto-dialog.c:406
+#: gnome-panel/panel-addto-dialog.c:395
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiera en programstartare från programmenyn"
 
-#: gnome-panel/panel-addto-dialog.c:895
+#: gnome-panel/panel-addto-dialog.c:879
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Sök ett _objekt att lägga till i ”%s”:"
 
-#: gnome-panel/panel-addto-dialog.c:899
+#: gnome-panel/panel-addto-dialog.c:883
 msgid "Find an _item to add to the panel:"
 msgstr "Sök ett _objekt att lägga till i panelen:"
 
-#: gnome-panel/panel-addto-dialog.c:1021
+#: gnome-panel/panel-addto-dialog.c:1005
 msgid "_Forward"
 msgstr "_Framåt"
 
-#: gnome-panel/panel-addto-dialog.c:1024 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1008 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Lägg till"
@@ -1278,18 +1269,18 @@ msgstr "Vill du ta bort miniprogrammet från din konfiguration?"
 msgid "D_on't Delete"
 msgstr "Ta i_nte bort"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1265
+#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1252
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: gnome-panel/panel.c:420
+#: gnome-panel/panel.c:416
 #, c-format
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:489 gnome-panel/panel-menu-items.c:513
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:120
+#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
 msgstr "Öppna ”%s”"
@@ -1297,21 +1288,21 @@ msgstr "Öppna ”%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:537 gnome-panel/panel-menu-items.c:1066
-#: modules/menu/gp-places-menu.c:414
+#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Öppna din personliga mapp"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:546 gnome-panel/panel-menu-items.c:1095
-#: modules/menu/gp-places-menu.c:497
+#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Dator"
 
 #. name
-#: gnome-panel/panel.c:547 gnome-panel/panel-menu-items.c:1096
-#: modules/menu/gp-places-menu.c:498
+#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1320,14 +1311,14 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:554 gnome-panel/panel-menu-items.c:1105
-#: modules/menu/gp-places-menu.c:553
+#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Nätverk"
 
 #. name
-#: gnome-panel/panel.c:555 gnome-panel/panel-menu-items.c:1106
-#: modules/menu/gp-places-menu.c:554
+#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 
@@ -1336,11 +1327,11 @@ msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/panel.c:1256
+#: gnome-panel/panel.c:1243
 msgid "Delete this panel?"
 msgstr "Ta bort denna panel?"
 
-#: gnome-panel/panel.c:1260
+#: gnome-panel/panel.c:1247
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1481,39 +1472,39 @@ msgstr "Kan inte skapa initial panellayout.\n"
 msgid "_Edit Menus"
 msgstr "_Redigera menyer"
 
-#: gnome-panel/panel-menu-items.c:362
+#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
 msgid "Switch User"
 msgstr "Växla användare"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:460
+#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Bokmärken"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:79
+#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kunde inte söka av %s efter mediabyten"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:280
+#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "Sök av %s igen"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:129
+#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kunde inte montera %s"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:323
+#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "Montera %s"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:520
+#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Flyttbara media"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:576
+#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Nätverksplatser"
 
@@ -1523,12 +1514,12 @@ msgstr "Nätverksplatser"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:437
+#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:438
+#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Öppna innehållet på ditt skrivbord in en mapp"
 
@@ -1562,11 +1553,11 @@ msgstr "Kunde inte öppna tidigare använda dokumentet ”%s”"
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "Ett okänt fel inträffade vid försök att öppna ”%s”."
 
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:179
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:194
 msgid "Clear the Recent Documents list?"
 msgstr "Töm listan över senaste dokument?"
 
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:184
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:199
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -1576,7 +1567,7 @@ msgstr ""
 "• Alla objekt från menyobjektet Platser → Senaste dokument.\n"
 "• Alla objekt från listan över senaste dokument i alla program."
 
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:192
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:207
 msgid "C_lear"
 msgstr "T_öm"
 
@@ -1584,15 +1575,15 @@ msgstr "T_öm"
 msgid "Clear Recent Documents"
 msgstr "Töm senaste dokument"
 
-#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:603
+#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:617
 msgid "Recent Documents"
 msgstr "Senaste dokument"
 
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:224
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:239
 msgid "Clear Recent Documents..."
 msgstr "Töm senaste dokument…"
 
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:229
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "Töm alla objekt i listan över senaste dokument"
 
@@ -2279,6 +2270,10 @@ msgstr "sekunder"
 msgid "_Rotate on vertical panels"
 msgstr "_Rotera i vertikala paneler"
 
+#: modules/menu/gp-lock-logout.c:1042
+msgid "Hybrid Sleep"
+msgstr "Hybridvila"
+
 #: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
 msgid "Please install the '%s' application."
@@ -2311,6 +2306,14 @@ msgstr "Menyrad"
 #: modules/menu/gp-menu-module.c:47
 msgid "A custom menu bar"
 msgstr "En anpassad menyrad"
+
+#: modules/menu/gp-menu-module.c:53
+msgid "User menu"
+msgstr "Användarmeny"
+
+#: modules/menu/gp-menu-module.c:54
+msgid "Menu to change your settings and log out"
+msgstr "Meny för att ändra dina inställningar och logga ut."
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
