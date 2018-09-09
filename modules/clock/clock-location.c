@@ -477,11 +477,7 @@ setup_weather_updates (ClockLocation *loc)
 		priv->weather_timeout = 0;
 	}
 
-#if GWEATHER_CHECK_VERSION (3, 27, 2)
 	priv->weather_info = gweather_info_new (priv->loc);
-#else
-	priv->weather_info = gweather_info_new (priv->loc, GWEATHER_FORECAST_LIST);
-#endif
 
 	g_signal_connect (priv->weather_info, "updated",
 			  G_CALLBACK (weather_info_updated), loc);
