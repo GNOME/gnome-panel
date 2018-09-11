@@ -1285,6 +1285,13 @@ constrain_list_size (GtkWidget      *widget,
 }
 
 static void
+constraint_data_free (ConstraintData *constraint,
+                      GClosure       *closure)
+{
+  g_free (constraint);
+}
+
+static void
 setup_list_size_constraint (GtkWidget *widget,
                             GtkWidget *calendar,
                             GtkWidget *tree)
@@ -1297,7 +1304,7 @@ setup_list_size_constraint (GtkWidget *widget,
 
         g_signal_connect_data (widget, "size-allocate",
                                G_CALLBACK (constrain_list_size), constraint,
-                               (GClosureNotify) g_free, 0);
+                               (GClosureNotify) constraint_data_free, 0);
 }
 
 #endif /* HAVE_EDS */
