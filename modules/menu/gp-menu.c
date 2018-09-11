@@ -34,6 +34,7 @@ struct _GpMenu
 
   GMenuTree             *tree;
 
+  gboolean               loaded;
   gboolean               empty;
 
   GpAppendMenuItemsFunc  append_func;
@@ -46,6 +47,15 @@ struct _GpMenu
 
   gchar                 *path;
 };
+
+enum
+{
+  LOADED,
+
+  LAST_SIGNAL
+};
+
+static guint menu_signals[LAST_SIGNAL] = { 0 };
 
 enum
 {
@@ -292,14 +302,13 @@ static void
 menu_reload (GpMenu *menu)
 {
   GError *error;
-  gboolean loaded;
   GList *children;
   gboolean empty;
 
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
 
   error = NULL;
-  loaded = gmenu_tree_load_sync (menu->tree, &error);
+  menu->loaded = gmenu_tree_load_sync (menu->tree, &error);
 
   if (error != NULL)
     {
@@ -309,7 +318,7 @@ menu_reload (GpMenu *menu)
       g_clear_error (&error);
     }
 
-  if (loaded)
+  if (menu->loaded)
     {
       const gchar *path;
       GMenuTreeDirectory *directory;
@@ -328,6 +337,8 @@ menu_reload (GpMenu *menu)
 
       if (menu->append_func != NULL)
         menu->append_func (GTK_MENU (menu), menu->append_data);
+
+      g_signal_emit (menu, menu_signals[LOADED], 0);
     }
 
   children = gtk_container_get_children (GTK_CONTAINER (menu));
@@ -563,6 +574,14 @@ install_properties (GObjectClass *object_class)
 }
 
 static void
+install_signals (void)
+{
+  menu_signals[LOADED] =
+    g_signal_new ("loaded", GP_TYPE_MENU, G_SIGNAL_RUN_LAST,
+                  0, NULL, NULL, NULL, G_TYPE_NONE, 0);
+}
+
+static void
 gp_menu_class_init (GpMenuClass *menu_class)
 {
   GObjectClass *object_class;
@@ -576,6 +595,7 @@ gp_menu_class_init (GpMenuClass *menu_class)
   object_class->set_property = gp_menu_set_property;
 
   install_properties (object_class);
+  install_signals ();
 }
 
 static void
