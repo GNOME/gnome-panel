@@ -30,6 +30,9 @@ GtkWidget *gp_menu_new             (GpApplet              *applet,
                                     const gchar           *name,
                                     gboolean               required);
 
+void       gp_menu_set_path        (GpMenu                *menu,
+                                    const gchar           *path);
+
 void       gp_menu_set_append_func (GpMenu                *menu,
                                     GpAppendMenuItemsFunc  append_func,
                                     gpointer               user_data);

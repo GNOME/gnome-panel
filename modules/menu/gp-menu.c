@@ -43,6 +43,8 @@ struct _GpMenu
 
   gulong                 locked_down_id;
   gulong                 menu_icon_size_id;
+
+  gchar                 *path;
 };
 
 enum
@@ -309,9 +311,18 @@ menu_reload (GpMenu *menu)
 
   if (loaded)
     {
+      const gchar *path;
       GMenuTreeDirectory *directory;
 
-      directory = gmenu_tree_get_directory_from_path (menu->tree, "/");
+      path = menu->path && *menu->path != '\0' ? menu->path : "/";
+      directory = gmenu_tree_get_directory_from_path (menu->tree, path);
+
+      if (directory == NULL)
+        {
+          g_warning ("Menu path '%s' does not exist!", path);
+          directory = gmenu_tree_get_directory_from_path (menu->tree, "/");
+        }
+
       directory_to_menu_items (directory, GTK_WIDGET (menu), menu);
       gmenu_tree_item_unref (directory);
 
@@ -582,6 +593,16 @@ gp_menu_new (GpApplet    *applet,
                        "name", name,
                        "required", required,
                        NULL);
+}
+
+void
+gp_menu_set_path (GpMenu      *menu,
+                  const gchar *path)
+{
+  g_free (menu->path);
+  menu->path = g_strdup (path);
+
+  queue_reload (menu);
 }
 
 void
