@@ -625,6 +625,36 @@ gp_menu_set_path (GpMenu      *menu,
   queue_reload (menu);
 }
 
+GIcon *
+gp_menu_get_icon (GpMenu *menu)
+{
+  const gchar *path;
+  GMenuTreeDirectory *directory;
+  GIcon *icon;
+
+  if (!menu->loaded)
+    return NULL;
+
+  path = menu->path && *menu->path != '\0' ? menu->path : "/";
+  directory = gmenu_tree_get_directory_from_path (menu->tree, path);
+
+  if (directory == NULL)
+    return NULL;
+
+  icon = gmenu_tree_directory_get_icon (directory);
+
+  if (icon == NULL)
+    {
+      gmenu_tree_item_unref (directory);
+      return NULL;
+    }
+
+  g_object_ref (icon);
+  gmenu_tree_item_unref (directory);
+
+  return icon;
+}
+
 void
 gp_menu_set_append_func (GpMenu                *menu,
                          GpAppendMenuItemsFunc  append_func,
