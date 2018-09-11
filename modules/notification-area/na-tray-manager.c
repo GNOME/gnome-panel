@@ -621,6 +621,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
   visual_atom = gdk_x11_get_xatom_by_name_for_display (display,
 						       "_NET_SYSTEM_TRAY_VISUAL");
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   if (gdk_screen_get_rgba_visual (manager->screen) != NULL &&
       gdk_display_supports_composite (display))
     xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_rgba_visual (manager->screen));
@@ -632,6 +633,7 @@ na_tray_manager_set_visual_property (NaTrayManager *manager)
        */
       xvisual = GDK_VISUAL_XVISUAL (gdk_screen_get_system_visual (manager->screen));
     }
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   data[0] = XVisualIDFromVisual (xvisual);
 

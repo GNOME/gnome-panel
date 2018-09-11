@@ -51,10 +51,12 @@ na_tray_child_realize (GtkWidget *widget)
        * extension. */
 
       /* Set a transparent background */
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       cairo_pattern_t *transparent = cairo_pattern_create_rgba (0, 0, 0, 0);
       gdk_window_set_background_pattern (window, transparent);
       gdk_window_set_composited (window, TRUE);
       cairo_pattern_destroy (transparent);
+      G_GNUC_END_IGNORE_DEPRECATIONS
 
       child->parent_relative_bg = FALSE;
     }
@@ -62,7 +64,9 @@ na_tray_child_realize (GtkWidget *widget)
     {
       /* Otherwise, if the visual matches the visual of the parent window, we
        * can use a parent-relative background and fake transparency. */
+      G_GNUC_BEGIN_IGNORE_DEPRECATIONS
       gdk_window_set_background_pattern (window, NULL);
+      G_GNUC_END_IGNORE_DEPRECATIONS
 
       child->parent_relative_bg = TRUE;
     }
@@ -72,7 +76,9 @@ na_tray_child_realize (GtkWidget *widget)
       child->parent_relative_bg = FALSE;
     }
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gdk_window_set_composited (window, child->composited);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   gtk_widget_set_app_paintable (GTK_WIDGET (child),
                                 child->parent_relative_bg || child->has_alpha);
@@ -81,8 +87,10 @@ na_tray_child_realize (GtkWidget *widget)
    * transparency, since the double-buffer code doesn't know how to fill in the
    * background of the double-buffer correctly.
    */
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gtk_widget_set_double_buffered (GTK_WIDGET (child),
                                   child->parent_relative_bg);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
@@ -289,9 +297,11 @@ na_tray_child_new (GdkScreen *screen,
   gdk_visual_get_blue_pixel_details (visual, NULL, NULL, &blue_prec);
   depth = gdk_visual_get_depth (visual);
 
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   visual_has_alpha = red_prec + blue_prec + green_prec < depth;
   child->has_alpha = (visual_has_alpha &&
                       gdk_display_supports_composite (display));
+  G_GNUC_END_IGNORE_DEPRECATIONS
 
   child->composited = child->has_alpha;
 
@@ -392,9 +402,12 @@ na_tray_child_set_composited (NaTrayChild *child,
     return;
 
   child->composited = composited;
+
+  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   if (gtk_widget_get_realized (GTK_WIDGET (child)))
     gdk_window_set_composited (gtk_widget_get_window (GTK_WIDGET (child)),
                                composited);
+  G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 /* If we are faking transparency with a window-relative background, force a
