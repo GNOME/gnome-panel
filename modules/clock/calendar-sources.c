@@ -41,8 +41,6 @@
 #define N_(x) x
 #endif
 
-#define CALENDAR_SOURCES_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_SOURCES, CalendarSourcesPrivate))
-
 typedef struct _ClientData ClientData;
 typedef struct _CalendarSourceData CalendarSourceData;
 
@@ -77,8 +75,6 @@ struct _CalendarSourcesPrivate
   CalendarSourceData  task_sources;
 };
 
-static void calendar_sources_class_init (CalendarSourcesClass *klass);
-static void calendar_sources_init       (CalendarSources      *sources);
 static void calendar_sources_finalize   (GObject             *object);
 
 static void backend_died_cb (ECal *client, CalendarSourceData *source_data);
@@ -97,7 +93,6 @@ enum
 };
 static guint signals [LAST_SIGNAL] = { 0, };
 
-static GObjectClass    *parent_class = NULL;
 static CalendarSources *calendar_sources_singleton = NULL;
 
 static void
@@ -108,44 +103,14 @@ client_data_free (ClientData *data)
   g_slice_free (ClientData, data);
 }
 
-GType
-calendar_sources_get_type (void)
-{
-  static GType sources_type = 0;
-  
-  if (!sources_type)
-    {
-      static const GTypeInfo sources_info =
-      {
-	sizeof (CalendarSourcesClass),
-	NULL,		/* base_init */
-	NULL,		/* base_finalize */
-	(GClassInitFunc) calendar_sources_class_init,
-	NULL,           /* class_finalize */
-	NULL,		/* class_data */
-	sizeof (CalendarSources),
-	0,		/* n_preallocs */
-	(GInstanceInitFunc) calendar_sources_init,
-      };
-      
-      sources_type = g_type_register_static (G_TYPE_OBJECT,
-					     "CalendarSources",
-					     &sources_info, 0);
-    }
-  
-  return sources_type;
-}
+G_DEFINE_TYPE_WITH_PRIVATE (CalendarSources, calendar_sources, G_TYPE_OBJECT)
 
 static void
 calendar_sources_class_init (CalendarSourcesClass *klass)
 {
   GObjectClass *gobject_class = (GObjectClass *) klass;
 
-  parent_class = g_type_class_peek_parent (klass);
-
   gobject_class->finalize = calendar_sources_finalize;
-
-  g_type_class_add_private (klass, sizeof (CalendarSourcesPrivate));
 
   signals [APPOINTMENT_SOURCES_CHANGED] =
     g_signal_new ("appointment-sources-changed",
@@ -177,7 +142,7 @@ calendar_sources_init (CalendarSources *sources)
 {
   GError *error = NULL;
 
-  sources->priv = CALENDAR_SOURCES_GET_PRIVATE (sources);
+  sources->priv = calendar_sources_get_instance_private (sources);
 
   /* XXX Not sure what to do if this fails.
    *     Should this class implement GInitable or pass the
@@ -259,8 +224,7 @@ calendar_sources_finalize (GObject *object)
   calendar_sources_finalize_source_data (sources, &sources->priv->appointment_sources);
   calendar_sources_finalize_source_data (sources, &sources->priv->task_sources);
 
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (calendar_sources_parent_class)->finalize (object);
 }
 
 CalendarSources *

@@ -43,8 +43,6 @@
 #define N_(x) x
 #endif
 
-#define CALENDAR_CLIENT_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_CLIENT, CalendarClientPrivate))
-
 typedef struct _CalendarClientQuery  CalendarClientQuery;
 typedef struct _CalendarClientSource CalendarClientSource;
 
@@ -85,8 +83,6 @@ struct _CalendarClientPrivate
   guint                year;
 };
 
-static void calendar_client_class_init   (CalendarClientClass *klass);
-static void calendar_client_init         (CalendarClient      *client);
 static void calendar_client_finalize     (GObject             *object);
 static void calendar_client_set_property (GObject             *object,
 					  guint                prop_id,
@@ -134,49 +130,18 @@ enum
   LAST_SIGNAL
 };
 
-static GObjectClass *parent_class = NULL;
 static guint         signals [LAST_SIGNAL] = { 0, };
 
-GType
-calendar_client_get_type (void)
-{
-  static GType client_type = 0;
-  
-  if (!client_type)
-    {
-      static const GTypeInfo client_info =
-      {
-	sizeof (CalendarClientClass),
-	NULL,		/* base_init */
-	NULL,		/* base_finalize */
-	(GClassInitFunc) calendar_client_class_init,
-	NULL,           /* class_finalize */
-	NULL,		/* class_data */
-	sizeof (CalendarClient),
-	0,		/* n_preallocs */
-	(GInstanceInitFunc) calendar_client_init,
-      };
-      
-      client_type = g_type_register_static (G_TYPE_OBJECT,
-					    "CalendarClient",
-					    &client_info, 0);
-    }
-  
-  return client_type;
-}
+G_DEFINE_TYPE_WITH_PRIVATE (CalendarClient, calendar_client, G_TYPE_OBJECT)
 
 static void
 calendar_client_class_init (CalendarClientClass *klass)
 {
   GObjectClass *gobject_class = (GObjectClass *) klass;
 
-  parent_class = g_type_class_peek_parent (klass);
-
   gobject_class->finalize     = calendar_client_finalize;
   gobject_class->set_property = calendar_client_set_property;
   gobject_class->get_property = calendar_client_get_property;
-
-  g_type_class_add_private (klass, sizeof (CalendarClientPrivate));
 
   g_object_class_install_property (gobject_class,
 				   PROP_DAY,
@@ -359,7 +324,7 @@ calendar_client_init (CalendarClient *client)
   GSettingsSchemaSource *schema_source;
   const gchar *evolution_calendar_schema;
 
-  client->priv = CALENDAR_CLIENT_GET_PRIVATE (client);
+  client->priv = calendar_client_get_instance_private (client);
 
   client->priv->calendar_sources = calendar_sources_get ();
 
@@ -440,8 +405,7 @@ calendar_client_finalize (GObject *object)
     g_object_unref (client->priv->calendar_sources);
   client->priv->calendar_sources = NULL;
 
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (calendar_client_parent_class)->finalize (object);
 }
 
 static void

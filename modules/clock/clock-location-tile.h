@@ -16,9 +16,13 @@ G_BEGIN_DECLS
 #define IS_CLOCK_LOCATION_TILE_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), CLOCK_LOCATION_TILE_TYPE))
 #define CLOCK_LOCATION_TILE_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), CLOCK_LOCATION_TILE_TYPE, ClockLocationTileClass))
 
+typedef struct _ClockLocationTilePrivate ClockLocationTilePrivate;
+
 typedef struct
 {
         GtkBin parent;
+
+        ClockLocationTilePrivate *priv;
 } ClockLocationTile;
 
 typedef struct

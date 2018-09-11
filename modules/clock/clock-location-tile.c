@@ -15,8 +15,6 @@
 #include "clock-utils.h"
 #include "set-timezone.h"
 
-G_DEFINE_TYPE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
-
 enum {
 	TILE_PRESSED,
 	NEED_CLOCK_FORMAT,
@@ -25,7 +23,7 @@ enum {
 
 static guint signals[LAST_SIGNAL];
 
-typedef struct {
+struct _ClockLocationTilePrivate {
         ClockLocation *location;
 
         GDateTime *last_refresh;
@@ -46,11 +44,11 @@ typedef struct {
         GtkWidget *weather_icon;
 
 	gulong location_weather_updated_id;
-} ClockLocationTilePrivate;
+};
+
+G_DEFINE_TYPE_WITH_PRIVATE (ClockLocationTile, clock_location_tile, GTK_TYPE_BIN)
 
 static void clock_location_tile_finalize (GObject *);
-
-#define PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CLOCK_LOCATION_TILE_TYPE, ClockLocationTilePrivate))
 
 static void clock_location_tile_fill (ClockLocationTile *this);
 static void update_weather_icon (ClockLocation *loc, GWeatherInfo *info, gpointer data);
@@ -68,7 +66,7 @@ clock_location_tile_new (ClockLocation *loc,
         ClockLocationTilePrivate *priv;
 
         this = g_object_new (CLOCK_LOCATION_TILE_TYPE, NULL);
-        priv = PRIVATE (this);
+        priv = this->priv;
 
         priv->location = g_object_ref (loc);
         priv->size = size;
@@ -93,8 +91,6 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 
         g_obj_class->finalize = clock_location_tile_finalize;
 
-        g_type_class_add_private (this_class, sizeof (ClockLocationTilePrivate));
-
 	signals[TILE_PRESSED] = g_signal_new ("tile-pressed",
 					      G_TYPE_FROM_CLASS (g_obj_class),
 					      G_SIGNAL_RUN_FIRST,
@@ -116,7 +112,10 @@ clock_location_tile_class_init (ClockLocationTileClass *this_class)
 static void
 clock_location_tile_init (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv;
+
+        this->priv = clock_location_tile_get_instance_private (this);
+        priv = this->priv;
 
         priv->location = NULL;
 
@@ -133,7 +132,11 @@ clock_location_tile_init (ClockLocationTile *this)
 static void
 clock_location_tile_finalize (GObject *g_obj)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (g_obj);
+        ClockLocationTile *tile;
+        ClockLocationTilePrivate *priv;
+
+        tile = CLOCK_LOCATION_TILE (g_obj);
+        priv = tile->priv;
 
 	if (priv->last_refresh) {
 		g_date_time_unref (priv->last_refresh);
@@ -184,9 +187,7 @@ make_current_cb (gpointer data, GError *error)
 static void
 make_current (GtkWidget *widget, ClockLocationTile *tile)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
-
-	clock_location_make_current (priv->location,
+	clock_location_make_current (tile->priv->location,
 				     (GFunc)make_current_cb, tile, NULL);
 }
 
@@ -195,7 +196,9 @@ enter_or_leave_tile (GtkWidget             *widget,
                      GdkEventCrossing      *event,
                      ClockLocationTile *tile)
 {
-	ClockLocationTilePrivate *priv = PRIVATE (tile);
+	ClockLocationTilePrivate *priv;
+
+	priv = tile->priv;
 
 	if (event->mode != GDK_CROSSING_NORMAL) {
 		return TRUE;
@@ -245,7 +248,7 @@ enter_or_leave_tile (GtkWidget             *widget,
 static void
 clock_location_tile_fill (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv;
         GtkWidget *strut;
         GtkWidget *box;
         GtkWidget *tile;
@@ -253,6 +256,7 @@ clock_location_tile_fill (ClockLocationTile *this)
         GtkSizeGroup *current_group;
         GtkSizeGroup *button_group;
 
+        priv = this->priv;
         priv->box = gtk_event_box_new ();
 
         gtk_widget_add_events (priv->box, GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
@@ -349,9 +353,11 @@ clock_location_tile_fill (ClockLocationTile *this)
 static gboolean
 clock_needs_face_refresh (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv;
         GDateTime *now;
 	gboolean retval;
+
+	priv = this->priv;
 
 	if (!priv->last_refresh)
 		return TRUE;
@@ -379,10 +385,12 @@ clock_needs_face_refresh (ClockLocationTile *this)
 static gboolean
 clock_needs_label_refresh (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv;
 	GDateTime *now;
 	long offset;
 	gboolean retval;
+
+	priv = this->priv;
 
 	if (!priv->last_refresh)
 		return TRUE;
@@ -514,7 +522,7 @@ convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *t
 void
 clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 {
-        ClockLocationTilePrivate *priv = PRIVATE (this);
+        ClockLocationTilePrivate *priv;
         gchar *tmp;
 	const char *tzname;
 	GDateTime *now;
@@ -522,6 +530,8 @@ clock_location_tile_refresh (ClockLocationTile *this, gboolean force_refresh)
 	int format;
 
 	g_return_if_fail (IS_CLOCK_LOCATION_TILE (this));
+
+	priv = this->priv;
 
         if (clock_location_is_current (priv->location)) {
 		gtk_widget_hide (priv->current_spacer);
@@ -651,7 +661,7 @@ weather_tooltip (GtkWidget  *widget,
 		 gpointer    data)
 {
         ClockLocationTile *tile = data;
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTilePrivate *priv = tile->priv;
 	GWeatherInfo *info;
 	int clock_format;
 
@@ -671,7 +681,7 @@ static void
 update_weather_icon (ClockLocation *loc, GWeatherInfo *info, gpointer data)
 {
         ClockLocationTile *tile = data;
-        ClockLocationTilePrivate *priv = PRIVATE (tile);
+        ClockLocationTilePrivate *priv = tile->priv;
         GdkPixbuf *pixbuf = NULL;
         GtkIconTheme *theme = NULL;
         const gchar *icon_name;
@@ -693,11 +703,7 @@ update_weather_icon (ClockLocation *loc, GWeatherInfo *info, gpointer data)
 ClockLocation *
 clock_location_tile_get_location (ClockLocationTile *this)
 {
-        ClockLocationTilePrivate *priv;
-
 	g_return_val_if_fail (IS_CLOCK_LOCATION_TILE (this), NULL);
 
-	priv = PRIVATE (this);
-
-	return g_object_ref (priv->location);
+	return g_object_ref (this->priv->location);
 }

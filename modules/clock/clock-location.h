@@ -15,9 +15,13 @@ G_BEGIN_DECLS
 #define IS_CLOCK_LOCATION_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), CLOCK_LOCATION_TYPE))
 #define CLOCK_LOCATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), CLOCK_LOCATION_TYPE, ClockLocationClass))
 
+typedef struct _ClockLocationPrivate ClockLocationPrivate;
+
 typedef struct
 {
         GObject g_object;
+
+        ClockLocationPrivate *priv;
 } ClockLocation;
 
 typedef struct

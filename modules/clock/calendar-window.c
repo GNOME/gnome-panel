@@ -49,8 +49,6 @@
 #include "calendar-client.h"
 #endif
 
-#define CALENDAR_WINDOW_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), CALENDAR_TYPE_WINDOW, CalendarWindowPrivate))
-
 #define KEY_LOCATIONS_EXPANDED      "expand-locations"
 #ifdef HAVE_EDS
 #  define KEY_APPOINTMENTS_EXPANDED "expand-appointments"
@@ -103,7 +101,7 @@ struct _CalendarWindowPrivate {
 #endif /* HAVE_EDS */
 };
 
-G_DEFINE_TYPE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE_WITH_PRIVATE (CalendarWindow, calendar_window, GTK_TYPE_WINDOW)
 
 enum {
 	PROP_0,
@@ -1759,8 +1757,6 @@ calendar_window_class_init (CalendarWindowClass *klass)
         gobject_class->set_property = calendar_window_set_property;
 	gobject_class->dispose = calendar_window_dispose;
 
-	g_type_class_add_private (klass, sizeof (CalendarWindowPrivate));
-
 	signals[EDIT_LOCATIONS] = g_signal_new ("edit-locations",
 						G_TYPE_FROM_CLASS (gobject_class),
 						G_SIGNAL_RUN_FIRST,
@@ -1814,7 +1810,7 @@ calendar_window_init (CalendarWindow *calwin)
 {
 	GtkWindow *window;
 
-	calwin->priv = CALENDAR_WINDOW_GET_PRIVATE (calwin);
+	calwin->priv = calendar_window_get_instance_private (calwin);
 
 	window = GTK_WINDOW (calwin);
 	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DOCK);

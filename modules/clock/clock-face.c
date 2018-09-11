@@ -22,8 +22,6 @@
 
 static GHashTable *pixbuf_cache = NULL;
 
-G_DEFINE_TYPE (ClockFace, clock_face, GTK_TYPE_WIDGET)
-
 static void     clock_face_finalize             (GObject *);
 static gboolean clock_face_draw                 (GtkWidget     *clock,
                                                  cairo_t       *cr);
@@ -61,6 +59,8 @@ struct _ClockFacePrivate
         GtkWidget *size_widget;
 };
 
+G_DEFINE_TYPE_WITH_PRIVATE (ClockFace, clock_face, GTK_TYPE_WIDGET)
+
 static void
 clock_face_class_init (ClockFaceClass *class)
 {
@@ -78,8 +78,6 @@ clock_face_class_init (ClockFaceClass *class)
 
         /* GObject signals */
         obj_class->finalize = clock_face_finalize;
-
-        g_type_class_add_private (obj_class, sizeof (ClockFacePrivate));
 }
 
 static void
@@ -87,7 +85,7 @@ clock_face_init (ClockFace *this)
 {
         ClockFacePrivate *priv;
 
-        priv = this->priv = G_TYPE_INSTANCE_GET_PRIVATE (this, INTL_TYPE_CLOCK_FACE, ClockFacePrivate);
+        priv = this->priv = clock_face_get_instance_private (this);
 
         priv->size = CLOCK_FACE_SMALL;
         priv->timeofday = CLOCK_FACE_INVALID;

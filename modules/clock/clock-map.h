@@ -14,9 +14,13 @@ G_BEGIN_DECLS
 #define IS_CLOCK_MAP_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), CLOCK_MAP_TYPE))
 #define CLOCK_MAP_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), CLOCK_MAP_TYPE, ClockMapClass))
 
+typedef struct _ClockMapPrivate ClockMapPrivate;
+
 typedef struct
 {
         GtkWidget parent;
+
+        ClockMapPrivate *priv;
 } ClockMap;
 
 typedef struct
