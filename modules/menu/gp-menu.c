@@ -594,3 +594,9 @@ gp_menu_set_append_func (GpMenu                *menu,
 
   queue_reload (menu);
 }
+
+void
+gp_menu_reload (GpMenu *menu)
+{
+  menu_reload (menu);
+}
