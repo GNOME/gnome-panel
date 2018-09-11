@@ -52,7 +52,6 @@
 #include "panel-action-button.h"
 #include "panel-icon-names.h"
 #include "panel-lockdown.h"
-#include "panel-menu-bar-object.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 #include "panel-util.h"
@@ -90,6 +89,45 @@ struct _PanelDesktopMenuItemPrivate {
 	GtkWidget   *menu;
 	GtkIconSize  icon_size;
 };
+
+/* themeable size - "panel-menu-bar" -- This is only used for the icon of the
+ * Applications item in the menu bar. To set it, use this in gtk+'s
+ * settings.ini: "gtk-icon-sizes = panel-menu-bar=16,16" */
+#define PANEL_DEFAULT_MENU_BAR_OBJECT_ICON_SIZE       16
+
+static GtkIconSize panel_menu_bar_object_icon_size = 0;
+
+static GtkIconSize
+panel_menu_bar_object_icon_get_size (void)
+{
+	if (panel_menu_bar_object_icon_size == 0) {
+		GSettings *settings = g_settings_new ("org.gnome.gnome-panel.general");
+		panel_menu_bar_object_icon_size = (GtkIconSize) g_settings_get_enum (settings, "panel-menu-bar");
+		g_object_unref (settings);
+	}
+
+	return panel_menu_bar_object_icon_size;
+}
+
+static int
+panel_menu_bar_object_icon_get_pixel_size (GtkIconSize size)
+{
+  switch (size)
+  {
+    case GTK_ICON_SIZE_DIALOG:
+      return 48;
+    case GTK_ICON_SIZE_DND:
+      return 32;
+    case GTK_ICON_SIZE_LARGE_TOOLBAR:
+      return 24;
+    case GTK_ICON_SIZE_SMALL_TOOLBAR:
+    case GTK_ICON_SIZE_BUTTON:
+    case GTK_ICON_SIZE_MENU:
+    case GTK_ICON_SIZE_INVALID:
+    default:
+      return 16;
+  }
+}
 
 static void
 activate_uri_on_screen (const char *uri,
