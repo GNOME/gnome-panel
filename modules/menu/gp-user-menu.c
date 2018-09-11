@@ -172,19 +172,9 @@ remove_item (GtkWidget *widget,
 }
 
 static void
-count_visible_item (GtkWidget *widget,
-                    gpointer   user_data)
-{
-  gint *count = user_data;
-
-  if (gtk_widget_is_visible (widget))
-    (*count)++;
-}
-
-static void
 menu_reload (GpUserMenu *menu)
 {
-  gint count;
+  GList *children;
   gboolean empty;
 
   gtk_container_foreach (GTK_CONTAINER (menu), remove_item, NULL);
@@ -194,9 +184,9 @@ menu_reload (GpUserMenu *menu)
   if (menu->append_func != NULL)
     menu->append_func (GTK_MENU (menu), menu->append_data);
 
-  count = 0;
-  gtk_container_foreach (GTK_CONTAINER (menu), count_visible_item, &count);
-  empty = count == 0;
+  children = gtk_container_get_children (GTK_CONTAINER (menu));
+  empty = g_list_length (children) == 0;
+  g_list_free (children);
 
   if (menu->empty == empty)
     return;
