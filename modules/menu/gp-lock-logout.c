@@ -20,6 +20,7 @@
 
 #include "gp-dm-seat-gen.h"
 #include "gp-login1-manager-gen.h"
+#include "gp-menu-utils.h"
 #include "gp-screensaver-gen.h"
 #include "gp-session-manager-gen.h"
 
@@ -725,34 +726,6 @@ create_menu_item (GpApplet    *applet,
     }
 
   return item;
-}
-
-static void
-append_separator_if_needed (GtkMenu *menu)
-{
-  GList *children;
-  GList *last;
-  GtkWidget *item;
-
-  children = gtk_container_get_children (GTK_CONTAINER (menu));
-  last = g_list_last (children);
-
-  if (last == NULL)
-    return;
-
-  if (GTK_IS_SEPARATOR_MENU_ITEM (last->data))
-    {
-      g_list_free (children);
-      return;
-    }
-
-  g_list_free (children);
-
-  item = gtk_separator_menu_item_new ();
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_show (item);
-
-  gtk_widget_set_sensitive (item, FALSE);
 }
 
 static void

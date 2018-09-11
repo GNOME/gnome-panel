@@ -39,6 +39,8 @@ void   gp_menu_utils_show_error_dialog  (const gchar     *message,
 
 gchar *gp_menu_utils_get_user_name      (void);
 
+void   append_separator_if_needed       (GtkMenu         *menu);
+
 G_END_DECLS
 
 #endif
