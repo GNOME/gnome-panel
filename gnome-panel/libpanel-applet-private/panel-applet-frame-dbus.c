@@ -34,15 +34,15 @@
 
 #include "panel-applet-frame-dbus.h"
 
-G_DEFINE_TYPE (PanelAppletFrameDBus,
-	       panel_applet_frame_dbus,
-	       PANEL_TYPE_APPLET_FRAME)
-
 struct _PanelAppletFrameDBusPrivate
 {
 	PanelAppletContainer *container;
 	GCancellable         *bg_cancellable;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelAppletFrameDBus,
+	                    panel_applet_frame_dbus,
+	                    PANEL_TYPE_APPLET_FRAME)
 
 /* Keep in sync with panel-applet.h. Uggh. */
 typedef enum {
@@ -279,9 +279,7 @@ panel_applet_frame_dbus_init (PanelAppletFrameDBus *frame)
 {
 	GtkWidget *container;
 
-	frame->priv = G_TYPE_INSTANCE_GET_PRIVATE (frame,
-						   PANEL_TYPE_APPLET_FRAME_DBUS,
-						   PanelAppletFrameDBusPrivate);
+	frame->priv = panel_applet_frame_dbus_get_instance_private (frame);
 
 	container = panel_applet_container_new ();
 	gtk_widget_show (container);
@@ -315,8 +313,6 @@ panel_applet_frame_dbus_class_init (PanelAppletFrameDBusClass *class)
 	frame_class->popup_menu = panel_applet_frame_dbus_popup_menu;
 	frame_class->popup_edit_menu = panel_applet_frame_dbus_popup_edit_menu;
 	frame_class->change_orientation = panel_applet_frame_dbus_change_orientation;
-
-	g_type_class_add_private (class, sizeof (PanelAppletFrameDBusPrivate));
 }
 
 static void
