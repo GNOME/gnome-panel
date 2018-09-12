@@ -30,13 +30,11 @@ struct _PanelScreensaverPrivate {
 	GDBusProxy *proxy;
 };
 
-G_DEFINE_TYPE (PanelScreensaver, panel_screensaver, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (PanelScreensaver, panel_screensaver, G_TYPE_OBJECT)
 
 static void
 panel_screensaver_class_init (PanelScreensaverClass *klass)
 {
-	g_type_class_add_private (klass,
-				  sizeof (PanelScreensaverPrivate));
 }
 
 static void
@@ -44,9 +42,7 @@ panel_screensaver_init (PanelScreensaver *screensaver)
 {
 	GError *error;
 
-	screensaver->priv = G_TYPE_INSTANCE_GET_PRIVATE (screensaver,
-							 PANEL_TYPE_SCREENSAVER,
-							 PanelScreensaverPrivate);
+	screensaver->priv = panel_screensaver_get_instance_private (screensaver);
 
 	error = NULL;
 	screensaver->priv->proxy = g_dbus_proxy_new_for_bus_sync (
