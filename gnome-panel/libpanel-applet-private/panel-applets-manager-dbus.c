@@ -69,10 +69,7 @@ panel_applet_factory_info_free (PanelAppletFactoryInfo *info)
 
 	g_free (info->id);
 	g_free (info->location);
-	g_list_foreach (info->applet_list,
-			(GFunc) panel_applet_info_free,
-			NULL);
-	g_list_free (info->applet_list);
+	g_list_free_full (info->applet_list, (GDestroyNotify) panel_applet_info_free);
 	info->applet_list = NULL;
 	g_free (info->srcdir);
 
@@ -285,8 +282,7 @@ applets_directory_changed (GFileMonitor     *monitor,
         }
     }
 
-  g_slist_foreach (dirs, (GFunc) g_free, NULL);
-  g_slist_free (dirs);
+  g_slist_free_full (dirs, g_free);
 }
 
 static void
@@ -553,8 +549,7 @@ panel_applets_manager_dbus_finalize (GObject *object)
 	PanelAppletsManagerDBus *manager = PANEL_APPLETS_MANAGER_DBUS (object);
 
 	if (manager->priv->monitors) {
-		g_list_foreach (manager->priv->monitors, (GFunc) g_object_unref, NULL);
-		g_list_free (manager->priv->monitors);
+		g_list_free_full (manager->priv->monitors, g_object_unref);
 		manager->priv->monitors = NULL;
 	}
 
