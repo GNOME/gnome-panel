@@ -59,9 +59,7 @@ enum {
 
 static guint panel_icon_chooser_signals[LAST_SIGNAL] = { 0 };
 
-#define PANEL_ICON_CHOOSER_GET_PRIVATE(o)  (PANEL_ICON_CHOOSER (o)->priv)
-
-G_DEFINE_TYPE (PanelIconChooser, panel_icon_chooser, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (PanelIconChooser, panel_icon_chooser, GTK_TYPE_BUTTON)
 
 static void _panel_icon_chooser_clicked (GtkButton *button);
 static void _panel_icon_chooser_style_set (GtkWidget *widget,
@@ -189,9 +187,6 @@ panel_icon_chooser_class_init (PanelIconChooserClass *class)
 
 	gtkbutton_class->clicked = _panel_icon_chooser_clicked;
 
-	g_type_class_add_private (class,
-				  sizeof (PanelIconChooserPrivate));
-
 	panel_icon_chooser_signals[CHANGED] =
 		g_signal_new ("changed",
 			      G_TYPE_FROM_CLASS (gobject_class),
@@ -228,9 +223,7 @@ panel_icon_chooser_init (PanelIconChooser *chooser)
 {
 	PanelIconChooserPrivate *priv;
 
-	priv = G_TYPE_INSTANCE_GET_PRIVATE (chooser,
-					    PANEL_TYPE_ICON_CHOOSER,
-					    PanelIconChooserPrivate);
+	priv = panel_icon_chooser_get_instance_private (chooser);
 
 	chooser->priv = priv;
 
