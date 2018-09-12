@@ -2123,7 +2123,7 @@ calculate_minimum_height (GtkWidget        *widget,
 {
 	GtkStateFlags     state;
 	GtkStyleContext  *style_context;
-        const PangoFontDescription *font_desc;
+	PangoFontDescription *font_desc;
 	PangoContext     *pango_context;
 	PangoFontMetrics *metrics;
 	GtkBorder         padding;
