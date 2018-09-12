@@ -30,13 +30,11 @@ struct _PanelSessionManagerPrivate {
 	GDBusProxy *session_proxy;
 };
 
-G_DEFINE_TYPE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (PanelSessionManager, panel_session_manager, G_TYPE_OBJECT)
 
 static void
 panel_session_manager_class_init (PanelSessionManagerClass *klass)
 {
-	g_type_class_add_private (klass,
-				  sizeof (PanelSessionManagerPrivate));
 }
 
 static void
@@ -44,9 +42,7 @@ panel_session_manager_init (PanelSessionManager *manager)
 {
 	GError *error;
 
-	manager->priv = G_TYPE_INSTANCE_GET_PRIVATE (manager,
-						     PANEL_TYPE_SESSION_MANAGER,
-						     PanelSessionManagerPrivate);
+	manager->priv = panel_session_manager_get_instance_private (manager);
 
 	error = NULL;
 	manager->priv->session_proxy = g_dbus_proxy_new_for_bus_sync (
