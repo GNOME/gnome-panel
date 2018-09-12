@@ -196,6 +196,7 @@ AC_CHECK_FUNCS(nl_langinfo)
 PKG_CHECK_MODULES([CLOCK], [
   dconf >= $DCONF_REQUIRED
   gio-2.0 >= $GLIB_REQUIRED
+  gio-unix-2.0 >= $GLIB_REQUIRED
   glib-2.0 >= $GLIB_REQUIRED
   gnome-desktop-3.0 >= $LIBGNOME_DESKTOP_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
