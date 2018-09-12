@@ -30,6 +30,8 @@ menu_la_SOURCES = \
 	gp-menu-bar-applet.h \
 	gp-menu-bar.c \
 	gp-menu-bar.h \
+	gp-menu-button.c \
+	gp-menu-button.h \
 	gp-menu-module.c \
 	gp-menu-utils.c \
 	gp-menu-utils.h \
@@ -59,6 +61,12 @@ menu_la_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
+
+gsettings_SCHEMAS = \
+	org.gnome.gnome-panel.applet.main-menu.gschema.xml \
+	$(NULL)
+
+@GSETTINGS_RULES@
 
 menu_resources := $(shell $(GLIB_COMPILE_RESOURCES) \
 	--sourcedir=$(srcdir) --generate-dependencies \
@@ -117,10 +125,12 @@ EXTRA_DIST = \
 	org.freedesktop.login1.Manager.xml \
 	org.gnome.ScreenSaver.xml \
 	org.gnome.SessionManager.xml \
+	$(gsettings_SCHEMAS) \
 	$(menu_resources) \
 	$(NULL)
 
 CLEANFILES = \
+	*.gschema.valid \
 	$(BUILT_SOURCES) \
 	$(NULL)
 

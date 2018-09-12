@@ -1,0 +1,26 @@
+<schemalist gettext-domain="gnome-panel">
+  <schema id="org.gnome.gnome-panel.applet.main-menu">
+    <key name="custom-icon" type="s">
+      <default>''</default>
+      <summary>Icon used for button</summary>
+      <description>The location of the image file used as the icon for the object's button. If empty, the default icon for the menu will be used.</description>
+    </key>
+
+    <key name="menu-path" type="s">
+      <default>''</default>
+      <summary>Menu content path</summary>
+      <description>The path from which the menu contents is constructed. If empty, the menu will be the default applications menu.</description>
+    </key>
+
+    <key name="show-arrow" type="b">
+      <default>true</default>
+      <summary>Show arrow on menu icon</summary>
+    </key>
+
+    <key name="tooltip" type="s">
+      <default>''</default>
+      <summary>Tooltip displayed for menu</summary>
+      <description>The text to display in a tooltip for this menu.</description>
+    </key>
+  </schema>
+</schemalist>
