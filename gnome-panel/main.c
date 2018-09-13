@@ -127,6 +127,7 @@ int
 main (int argc, char **argv)
 {
 	GOptionContext *context;
+	GdkDisplay     *display;
 	GError         *error;
 	PanelSession   *session;
 	GSList         *toplevels_to_destroy;
@@ -145,7 +146,8 @@ main (int argc, char **argv)
 	gtk_init (&argc, &argv);
 
 	/* FIXME: High dpi scaling does not work... */
-	gdk_x11_display_set_window_scale (gdk_display_get_default (), 1);
+	display = gdk_display_get_default ();
+	gdk_x11_display_set_window_scale (display, 1);
 
 	g_unix_signal_add (SIGTERM, on_term_signal, NULL);
 	g_unix_signal_add (SIGINT, on_int_signal, NULL);
@@ -183,7 +185,7 @@ main (int argc, char **argv)
 
 	/* Flush to make sure our struts are seen by everyone starting
 	 * immediate after (eg, the nautilus desktop). */
-	gdk_flush ();
+	gdk_display_flush (display);
 
 	/* Do this at the end, to be sure that we're really ready when
 	 * connecting to the session manager */
