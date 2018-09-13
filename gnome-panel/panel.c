@@ -232,8 +232,7 @@ make_popup_panel_menu (PanelWidget *panel_widget)
 
 static gboolean
 panel_popup_menu (PanelToplevel *toplevel,
-		  guint          button,
-		  guint32        activate_time)
+                  GdkEvent      *event)
 {
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
@@ -247,7 +246,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, button, activate_time);
+	gtk_menu_popup_at_pointer (GTK_MENU (menu), event);
 
 	return TRUE;
 }
@@ -264,7 +263,7 @@ panel_button_press_event (PanelToplevel  *toplevel,
 	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
-		return panel_popup_menu (toplevel, event->button, event->time);
+		return panel_popup_menu (toplevel, (GdkEvent *) event);
 
 	return FALSE;
 }
@@ -283,7 +282,7 @@ panel_key_press_event (PanelToplevel *toplevel,
 		panel_util_key_event_is_popup_panel (event, &is_popup, NULL);
 
 	if (is_popup)
-		return panel_popup_menu (toplevel, 3, event->time);
+		return panel_popup_menu (toplevel, (GdkEvent *) event);
 
 	return FALSE;
 }
