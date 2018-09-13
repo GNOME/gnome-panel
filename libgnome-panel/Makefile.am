@@ -14,6 +14,9 @@ libgnome_panel_la_SOURCES = \
 	gp-applet.h \
 	gp-image-menu-item.c \
 	gp-image-menu-item.h \
+	gp-initial-setup-dialog-private.h \
+	gp-initial-setup-dialog.c \
+	gp-initial-setup-dialog.h \
 	gp-module-private.h \
 	gp-module.c \
 	gp-module.h \
