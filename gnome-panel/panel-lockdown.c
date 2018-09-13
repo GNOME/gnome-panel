@@ -53,7 +53,7 @@ enum {
         PROP_DISABLE_FORCE_QUIT
 };
 
-G_DEFINE_TYPE (PanelLockdown, panel_lockdown, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE (PanelLockdown, panel_lockdown, G_TYPE_OBJECT)
 
 static void
 _panel_lockdown_disabled_applets_changed (GSettings     *settings,
@@ -264,9 +264,7 @@ panel_lockdown_dispose (GObject *object)
 static void
 panel_lockdown_init (PanelLockdown *lockdown)
 {
-        lockdown->priv = G_TYPE_INSTANCE_GET_PRIVATE (lockdown,
-                                                      PANEL_TYPE_LOCKDOWN,
-                                                      PanelLockdownPrivate);
+        lockdown->priv = panel_lockdown_get_instance_private (lockdown);
 }
 
 static void
@@ -340,9 +338,6 @@ panel_lockdown_class_init (PanelLockdownClass *lockdown_class)
                         "Whether force quit is disabled or not",
                         TRUE,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-        g_type_class_add_private (lockdown_class,
-                                  sizeof (PanelLockdownPrivate));
 }
 
 gboolean
