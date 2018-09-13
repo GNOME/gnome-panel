@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-08-28 23:10+0000\n"
-"PO-Revision-Date: 2018-08-31 21:07+0200\n"
+"POT-Creation-Date: 2018-09-12 23:19+0000\n"
+"PO-Revision-Date: 2018-09-13 21:59+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -469,18 +469,22 @@ msgstr ""
 "»object_type« »launcher-object« ist."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:22
 msgid "Tooltip displayed for menu"
 msgstr "Für Menü anzuzeigende Minihilfe"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:23
 msgid "The text to display in a tooltip for this menu."
 msgstr "Der für dieses Menü in einer Minihilfe anzuzeigende Text."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:5
 msgid "Icon used for button"
 msgstr "Für Knopf verwendetes Symbol"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:6
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
@@ -489,10 +493,12 @@ msgstr ""
 "werden soll. Falls leer, wird das Standardsymbol für das Menü verwendet."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:11
 msgid "Menu content path"
 msgstr "Pfad zum Menüinhalt"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:12
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
@@ -1180,22 +1186,22 @@ msgstr "Bildschirm _sperren"
 msgid "_Activate Screensaver"
 msgstr "Bildschirmschoner _aktivieren"
 
-#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
+#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:939
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
+#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:940
 msgid "Protect your computer from unauthorized use"
 msgstr "Den Rechner vor unbefugtem Zugriff schützen"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
+#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:922
 msgid "Log Out"
 msgstr "Abmelden"
 
-#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
+#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:923
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden"
@@ -1229,11 +1235,11 @@ msgstr "Beenden erzwingen"
 msgid "Force a misbehaving application to quit"
 msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
 
-#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
+#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:981
 msgid "Hibernate"
 msgstr "Ruhezustand"
 
-#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
+#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:998
 msgid "Suspend"
 msgstr "Bereitschaft"
 
@@ -1241,19 +1247,19 @@ msgstr "Bereitschaft"
 msgid "Hybrid sleep"
 msgstr "Hybrid-Ruhezustand"
 
-#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
+#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1034
 msgid "Restart"
 msgstr "Neu starten"
 
-#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
+#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1035
 msgid "Restart the computer"
 msgstr "Den Rechner neustarten"
 
-#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
+#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1051
 msgid "Power Off"
 msgstr "Ausschalten"
 
-#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
+#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1052
 msgid "Power off the computer"
 msgstr "Den Rechner ausschalten"
 
@@ -1346,7 +1352,7 @@ msgid "Open URL: %s"
 msgstr "Adresse öffnen: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:551
 #: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
@@ -1355,20 +1361,20 @@ msgstr "»%s« öffnen"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1104
 #: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1133
 #: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Rechner"
 
 #. name
-#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1134
 #: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
@@ -1378,13 +1384,13 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1143
 #: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Netzwerk"
 
 #. name
-#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1144
 #: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Lokale und als Lesezeichen gespeicherte Orte durchsuchen"
@@ -1532,39 +1538,39 @@ msgstr "Initiale Panel-Anordnung konnte nicht erstellt werden.\n"
 msgid "_Edit Menus"
 msgstr "Menüs _bearbeiten"
 
-#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
+#: gnome-panel/panel-menu-items.c:400 modules/menu/gp-lock-logout.c:905
 msgid "Switch User"
 msgstr "Benutzer wechseln"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
+#: gnome-panel/panel-menu-items.c:527 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
+#: gnome-panel/panel-menu-items.c:621 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "%s konnte nicht auf Medienwechsel überprüft werden"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
+#: gnome-panel/panel-menu-items.c:663 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "%s neu einlesen"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
+#: gnome-panel/panel-menu-items.c:700 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s konnte nicht eingehängt werden"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
+#: gnome-panel/panel-menu-items.c:762 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "%s einhängen"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
+#: gnome-panel/panel-menu-items.c:970 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Wechselmedium"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
+#: gnome-panel/panel-menu-items.c:1061 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Netzwerkorte"
 
@@ -1574,16 +1580,17 @@ msgstr "Netzwerkorte"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
+#: gnome-panel/panel-menu-items.c:1121 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Arbeitsfläche"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
+#: gnome-panel/panel-menu-items.c:1122 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Die Arbeitsfläche in einem Ordner öffnen"
 
-#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
+#: gnome-panel/panel-menu-items.c:1401 modules/menu/gp-main-menu-applet.c:267
+#: modules/menu/gp-menu-bar-applet.c:156
 msgid "Places"
 msgstr "Orte"
 
@@ -1847,7 +1854,7 @@ msgstr "%1$s: %2$s"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
@@ -1862,8 +1869,8 @@ msgstr "%I:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
-#: modules/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1871,40 +1878,40 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%d. %b"
 
-#: modules/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
-#: modules/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: modules/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Ganztägig"
 
-#: modules/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Termine"
 
-#: modules/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Geburts- und Jahrestage"
 
-#: modules/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Wetterinformationen"
 
-#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Orte"
 
-#: modules/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -2001,19 +2008,19 @@ msgstr "Stadtname"
 msgid "City Time Zone"
 msgstr "Stadt-Zeitzone"
 
-#: modules/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Systemzeitzone konnte nicht gesetzt werden"
 
-#: modules/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Einstellen …</small>"
 
-#: modules/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Einstellen</small>"
 
-#: modules/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Ort als aktuellen Ort festlegen und dessen Zeitzone für diesen Rechner "
@@ -2025,7 +2032,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -2034,7 +2041,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -2042,22 +2049,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:607
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, gefühlt wie %s"
 
-#: modules/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:641
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Sonnenaufgang: %s / Sonnenuntergang: %s"
@@ -2337,11 +2344,11 @@ msgstr "Sekunden"
 msgid "_Rotate on vertical panels"
 msgstr "Auf vertikalen Panels _drehen"
 
-#: modules/menu/gp-lock-logout.c:1042
+#: modules/menu/gp-lock-logout.c:1015
 msgid "Hybrid Sleep"
 msgstr "Hybrid-Ruhezustand"
 
-#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
+#: modules/menu/gp-main-menu-applet.c:472 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Bitte installieren Sie die Anwendung »%s«."
@@ -2381,6 +2388,10 @@ msgstr "Benutzermenü"
 #: modules/menu/gp-menu-module.c:54
 msgid "Menu to change your settings and log out"
 msgstr "Menü zum Ändern Ihrer Einstellungen und zum Abmelden"
+
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Pfeil am Menüsymbol anzeigen"
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
