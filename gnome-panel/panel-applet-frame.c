@@ -62,10 +62,6 @@ struct _PanelAppletFrameActivating {
 
 /* PanelAppletFrame implementation */
 
-G_DEFINE_TYPE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX)
-
-#define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
-
 #define HANDLE_SIZE 10
 
 struct _PanelAppletFramePrivate {
@@ -90,6 +86,8 @@ enum {
 };
 
 static guint panel_applet_frame_signals [LAST_SIGNAL];
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelAppletFrame, panel_applet_frame, GTK_TYPE_EVENT_BOX)
 
 static gboolean
 panel_applet_frame_draw (GtkWidget *widget,
@@ -483,8 +481,6 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass)
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK, GTK_DIR_TAB_FORWARD);
 	add_tab_bindings (binding_set, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
-
-	g_type_class_add_private (klass, sizeof (PanelAppletFramePrivate));
 }
 
 static void
@@ -492,7 +488,7 @@ panel_applet_frame_init (PanelAppletFrame *frame)
 {
 	GtkStyleContext *context;
 
-	frame->priv = PANEL_APPLET_FRAME_GET_PRIVATE (frame);
+	frame->priv = panel_applet_frame_get_instance_private (frame);
 
 	frame->priv->panel       = NULL;
 	frame->priv->orientation = PANEL_ORIENTATION_TOP;
