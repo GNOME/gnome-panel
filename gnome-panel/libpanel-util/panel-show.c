@@ -155,7 +155,7 @@ panel_show_uri (GdkScreen    *screen,
 	g_return_val_if_fail (uri != NULL, FALSE);
 	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-	gtk_show_uri (screen, uri, timestamp, &local_error);
+	gtk_show_uri_on_window (NULL, uri, timestamp, &local_error);
 
 	return _panel_show_handle_error (uri, screen, local_error, error);
 }
