@@ -92,6 +92,9 @@ panel_xutils_set_strut (GdkWindow        *gdk_window,
 		struts [STRUT_BOTTOM_START] = strut_start;
 		struts [STRUT_BOTTOM_END] = strut_end;
 		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
 	gdk_x11_display_error_trap_push (display);
