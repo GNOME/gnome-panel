@@ -504,20 +504,20 @@ panel_applet_position_menu (GtkMenu   *menu,
 	GtkRequisition  requisition;
 	GdkSeat        *seat;
 	GdkDevice      *device;
-	GdkScreen      *screen;
+	GdkDisplay     *display;
 	GtkWidget      *parent;
 	int             menu_x = 0;
 	int             menu_y = 0;
 	int             pointer_x;
 	int             pointer_y;
-	int             monitor_num;
+	GdkMonitor     *monitor;
 	GdkRectangle    monitor_rect;
 
 	parent = gtk_widget_get_parent (applet);
 
 	g_return_if_fail (PANEL_IS_WIDGET (parent));
 
-	screen = gtk_widget_get_screen (applet);
+	display = gtk_widget_get_display (applet);
 
 	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
@@ -534,8 +534,8 @@ panel_applet_position_menu (GtkMenu   *menu,
 		menu_y += allocation.y;
 	}
 
-	monitor_num = gdk_screen_get_monitor_at_point (screen,menu_x,menu_y);
-	gdk_screen_get_monitor_geometry (screen, monitor_num, &monitor_rect);
+	monitor = gdk_display_get_monitor_at_point (display, menu_x, menu_y);
+	gdk_monitor_get_geometry (monitor, &monitor_rect);
 
 	if (PANEL_WIDGET (parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
