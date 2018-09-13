@@ -47,10 +47,6 @@
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
 
-G_DEFINE_TYPE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
-
-#define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
-
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    1
 #define DEFAULT_HIDE_DELAY        300
@@ -237,6 +233,8 @@ enum {
 
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
 static GSList       *toplevel_list = NULL;
+
+G_DEFINE_TYPE_WITH_PRIVATE (PanelToplevel, panel_toplevel, GTK_TYPE_WINDOW)
 
 static void panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel);
 
@@ -3697,8 +3695,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
 
-	g_type_class_add_private (klass, sizeof (PanelToplevelPrivate));
-
 	g_object_class_install_property (
 		gobject_class,
 		PROP_TOPLEVEL_ID,
@@ -4071,7 +4067,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 {
 	GtkWidget *widget;
 
-	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
+	toplevel->priv = panel_toplevel_get_instance_private (toplevel);
 
 	toplevel->priv->toplevel_id      = NULL;
 
