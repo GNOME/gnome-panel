@@ -338,6 +338,13 @@ add_module (GpAddAppletWindow *window,
 }
 
 static void
+destroy_module_cb (GtkWidget *widget,
+                    gpointer   user_data)
+{
+  gtk_widget_destroy (widget);
+}
+
+static void
 rebuild_modules_list (GpAddAppletWindow *window)
 {
   GtkContainer *modules_box;
@@ -345,7 +352,7 @@ rebuild_modules_list (GpAddAppletWindow *window)
   GList *children;
 
   modules_box = GTK_CONTAINER (window->modules_box);
-  gtk_container_foreach (modules_box, (GtkCallback) gtk_widget_destroy, NULL);
+  gtk_container_foreach (modules_box, destroy_module_cb, NULL);
 
   modules = gp_module_manager_get_modules (window->module_manager);
 
