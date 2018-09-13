@@ -127,28 +127,9 @@ panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
 }
 
 static GSList *
-prepend_internal_applets (GSList *list)
-{
-	PanelAddtoItemInfo *internal;
-
-	internal = g_new0 (PanelAddtoItemInfo, 1);
-	internal->type = PANEL_ADDTO_MENU;
-	internal->name = g_strdup (_("Main Menu"));
-	internal->description = g_strdup (_("The main GNOME menu"));
-	internal->icon = g_themed_icon_new (PANEL_ICON_MAIN_MENU);
-	internal->action_type = PANEL_ACTION_NONE;
-	internal->iid = g_strdup ("MENU:MAIN");
-	list = g_slist_prepend (list, internal);
-
-	return list;
-}
-
-static GSList *
 panel_addto_prepend_internal_applets (GSList *list)
 {
 	int i;
-
-	list = prepend_internal_applets (list);
 
 	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
 		PanelAddtoItemInfo *info;
