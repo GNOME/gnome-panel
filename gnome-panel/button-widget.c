@@ -13,8 +13,6 @@
 #include "panel-util.h"
 #include "panel-typebuiltins.h"
 
-#define BUTTON_WIDGET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), BUTTON_TYPE_WIDGET, ButtonWidgetPrivate))
-
 struct _ButtonWidgetPrivate {
 	GtkIconTheme     *icon_theme;
 	GdkPixbuf        *pixbuf;
@@ -45,7 +43,7 @@ enum {
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
 
-G_DEFINE_TYPE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (ButtonWidget, button_widget, GTK_TYPE_BUTTON)
 
 /* colorshift a pixbuf */
 static void
@@ -595,7 +593,7 @@ button_widget_init (ButtonWidget *button)
 {
 	GtkStyleContext *context;
 
-	button->priv = BUTTON_WIDGET_GET_PRIVATE (button);
+	button->priv = button_widget_get_instance_private (button);
 
 	button->priv->icon_theme = NULL;
 	button->priv->pixbuf     = NULL;
@@ -625,8 +623,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	gobject_class->get_property = button_widget_get_property;
 	gobject_class->set_property = button_widget_set_property;
 
-	g_type_class_add_private (klass, sizeof (ButtonWidgetPrivate));
-	  
 	widget_class->realize              = button_widget_realize;
 	widget_class->unrealize            = button_widget_unrealize;
 	widget_class->size_allocate        = button_widget_size_allocate;
