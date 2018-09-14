@@ -18,6 +18,8 @@
 #ifndef GP_APPLET_INFO_H
 #define GP_APPLET_INFO_H
 
+#include "gp-initial-setup-dialog.h"
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -40,26 +42,37 @@ typedef struct _GpAppletInfo GpAppletInfo;
 typedef GType (* GpGetAppletTypeFunc)    (void);
 
 /**
- * GpSetupAboutDialogFunc:
+ * GpInitialSetupDialogFunc:
+ * @dialog: a #GtkAboutDialog
+ *
+ * Function for setting up initial setup dialog.
+ */
+typedef void  (* GpInitialSetupDialogFunc) (GpInitialSetupDialog *dialog);
+
+/**
+ * GpAboutDialogFunc:
  * @dialog: a #GtkAboutDialog
  *
  * Function for setting up about dialog.
  */
-typedef void  (* GpSetupAboutDialogFunc) (GtkAboutDialog *dialog);
+typedef void  (* GpAboutDialogFunc) (GtkAboutDialog *dialog);
 
-GpAppletInfo *gp_applet_info_new              (GpGetAppletTypeFunc     func,
-                                               const gchar            *name,
-                                               const gchar            *description,
-                                               const gchar            *icon_name);
+GpAppletInfo *gp_applet_info_new                      (GpGetAppletTypeFunc       func,
+                                                       const gchar              *name,
+                                                       const gchar              *description,
+                                                       const gchar              *icon_name);
 
-void          gp_applet_info_set_help_uri     (GpAppletInfo           *info,
-                                               const gchar            *help_uri);
+void          gp_applet_info_set_initial_setup_dialog (GpAppletInfo             *info,
+                                                       GpInitialSetupDialogFunc  func);
 
-void          gp_applet_info_set_about_dialog (GpAppletInfo           *info,
-                                               GpSetupAboutDialogFunc  func);
+void          gp_applet_info_set_help_uri             (GpAppletInfo             *info,
+                                                       const gchar              *help_uri);
 
-void          gp_applet_info_set_backends     (GpAppletInfo           *info,
-                                               const gchar            *backends);
+void          gp_applet_info_set_about_dialog         (GpAppletInfo             *info,
+                                                       GpAboutDialogFunc         func);
+
+void          gp_applet_info_set_backends             (GpAppletInfo             *info,
+                                                       const gchar              *backends);
 
 G_END_DECLS
 

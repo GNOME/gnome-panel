@@ -24,16 +24,18 @@ G_BEGIN_DECLS
 
 struct _GpAppletInfo
 {
-  GpGetAppletTypeFunc     get_applet_type_func;
+  GpGetAppletTypeFunc       get_applet_type_func;
 
-  gchar                  *name;
-  gchar                  *description;
-  gchar                  *icon_name;
+  gchar                    *name;
+  gchar                    *description;
+  gchar                    *icon_name;
 
-  gchar                  *help_uri;
-  GpSetupAboutDialogFunc  about_dialog_func;
+  GpInitialSetupDialogFunc  initial_setup_dialog_func;
 
-  gchar                  *backends;
+  gchar                    *help_uri;
+  GpAboutDialogFunc         about_dialog_func;
+
+  gchar                    *backends;
 };
 
 void gp_applet_info_free (GpAppletInfo *info);

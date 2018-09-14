@@ -55,12 +55,28 @@ gp_applet_info_new (GpGetAppletTypeFunc  func,
   info->description = g_strdup (description);
   info->icon_name = g_strdup (icon_name);
 
+  info->initial_setup_dialog_func = NULL;
+
   info->help_uri = NULL;
   info->about_dialog_func = NULL;
 
   info->backends = NULL;
 
   return info;
+}
+
+/**
+ * gp_applet_info_set_initial_setup_dialog:
+ * @info: a #GpAppletInfo
+ * @func: the function to call to setup initial setup dialog
+ *
+ * Specifies a function to be used to setup initial setup dialog.
+ */
+void
+gp_applet_info_set_initial_setup_dialog (GpAppletInfo             *info,
+                                         GpInitialSetupDialogFunc  func)
+{
+  info->initial_setup_dialog_func = func;
 }
 
 /**
@@ -86,8 +102,8 @@ gp_applet_info_set_help_uri (GpAppletInfo *info,
  * Specifies a function to be used to setup about dialog.
  */
 void
-gp_applet_info_set_about_dialog (GpAppletInfo           *info,
-                                 GpSetupAboutDialogFunc  func)
+gp_applet_info_set_about_dialog (GpAppletInfo      *info,
+                                 GpAboutDialogFunc  func)
 {
   info->about_dialog_func = func;
 }
