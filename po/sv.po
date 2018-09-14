@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-08-28 23:10+0000\n"
-"PO-Revision-Date: 2018-09-03 14:33+0200\n"
+"POT-Creation-Date: 2018-09-12 23:19+0000\n"
+"PO-Revision-Date: 2018-09-14 10:18+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -27,11 +27,11 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
-msgstr "Visa datum som verktygstips"
+msgstr "Visa datum som inforuta"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:6
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Om true visas datum i ett verktygstips när muspekaren är över klockan."
+msgstr "Om true visas datum i en inforuta när muspekaren är över klockan."
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:10
 msgid "Show weather in clock"
@@ -241,14 +241,14 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.gschema.xml:35
 msgid "Enable tooltips"
-msgstr "Aktivera verktygstips"
+msgstr "Aktivera inforutor"
 
 #: data/org.gnome.gnome-panel.gschema.xml:36
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
-"Om true kommer verktygstips att visas för objekt i paneler. Verktygstips kan "
+"Om true kommer inforutor att visas för objekt i paneler. Inforutor kan "
 "inaktiveras för hela skrivbordet med egenskapen gtk-enable-tooltips i GTK+."
 
 #: data/org.gnome.gnome-panel.gschema.xml:40
@@ -426,18 +426,22 @@ msgstr ""
 "\" (startarobjekt)."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:22
 msgid "Tooltip displayed for menu"
-msgstr "Verktygstips som visas för meny"
+msgstr "Inforuta som visas för meny"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:23
 msgid "The text to display in a tooltip for this menu."
-msgstr "Texten att visa i ett verktygstips för denna meny."
+msgstr "Texten att visa i en inforuta för denna meny."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:5
 msgid "Icon used for button"
 msgstr "Ikon som används för knapp"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:6
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
@@ -446,10 +450,12 @@ msgstr ""
 "kommer standardikonen för menyn att användas."
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:11
 msgid "Menu content path"
 msgstr "Sökväg för menyinnehåll"
 
 #: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:12
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
@@ -1118,22 +1124,22 @@ msgstr "_Lås skärmen"
 msgid "_Activate Screensaver"
 msgstr "_Aktivera skärmsläckare"
 
-#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
+#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:939
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
+#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:940
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
+#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:922
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
+#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:923
 msgid "Log out of this session to log in as a different user"
 msgstr "Logga ut från denna session för att logga in som en annan användare"
 
@@ -1162,11 +1168,11 @@ msgstr "Tvinga avslut"
 msgid "Force a misbehaving application to quit"
 msgstr "Tvinga ett program som beter sig fel att avsluta"
 
-#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
+#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:981
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
+#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:998
 msgid "Suspend"
 msgstr "Vänteläge"
 
@@ -1174,19 +1180,19 @@ msgstr "Vänteläge"
 msgid "Hybrid sleep"
 msgstr "Hybridvila"
 
-#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
+#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1034
 msgid "Restart"
 msgstr "Starta om"
 
-#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
+#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1035
 msgid "Restart the computer"
 msgstr "Starta om datorn"
 
-#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
+#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1051
 msgid "Power Off"
 msgstr "Stäng av"
 
-#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
+#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1052
 msgid "Power off the computer"
 msgstr "Stäng av datorn"
 
@@ -1279,7 +1285,7 @@ msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:551
 #: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
@@ -1288,20 +1294,20 @@ msgstr "Öppna ”%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1104
 #: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Öppna din personliga mapp"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1133
 #: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Dator"
 
 #. name
-#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1134
 #: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
@@ -1311,13 +1317,13 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1143
 #: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Nätverk"
 
 #. name
-#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1144
 #: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
@@ -1472,39 +1478,39 @@ msgstr "Kan inte skapa initial panellayout.\n"
 msgid "_Edit Menus"
 msgstr "_Redigera menyer"
 
-#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
+#: gnome-panel/panel-menu-items.c:400 modules/menu/gp-lock-logout.c:905
 msgid "Switch User"
 msgstr "Växla användare"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
+#: gnome-panel/panel-menu-items.c:527 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Bokmärken"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
+#: gnome-panel/panel-menu-items.c:621 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Kunde inte söka av %s efter mediabyten"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
+#: gnome-panel/panel-menu-items.c:663 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "Sök av %s igen"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
+#: gnome-panel/panel-menu-items.c:700 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Kunde inte montera %s"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
+#: gnome-panel/panel-menu-items.c:762 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "Montera %s"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
+#: gnome-panel/panel-menu-items.c:970 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Flyttbara media"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
+#: gnome-panel/panel-menu-items.c:1061 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Nätverksplatser"
 
@@ -1514,16 +1520,17 @@ msgstr "Nätverksplatser"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
+#: gnome-panel/panel-menu-items.c:1121 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
+#: gnome-panel/panel-menu-items.c:1122 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Öppna innehållet på ditt skrivbord in en mapp"
 
-#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
+#: gnome-panel/panel-menu-items.c:1401 modules/menu/gp-main-menu-applet.c:267
+#: modules/menu/gp-menu-bar-applet.c:156
 msgid "Places"
 msgstr "Platser"
 
@@ -1783,7 +1790,7 @@ msgstr "%1$s: %2$s"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
@@ -1798,8 +1805,8 @@ msgstr "%l:%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
-#: modules/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1807,40 +1814,40 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%d %b"
 
-#: modules/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Uppgifter"
 
-#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
-#: modules/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Redigera"
 
-#: modules/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Hela dagen"
 
-#: modules/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Möten"
 
-#: modules/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Födelsedagar och jubileum"
 
-#: modules/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Väderinformation"
 
-#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Platser"
 
-#: modules/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -1937,19 +1944,19 @@ msgstr "Stadens namn"
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
-#: modules/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Misslyckades med att ställa in systemets tidszon"
 
-#: modules/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Ställ in…</small>"
 
-#: modules/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Ställ in</small>"
 
-#: modules/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Ställ in plats som aktuell plats och använd dess tidszon för denna dator"
@@ -1960,7 +1967,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small> (%A)</small>"
 
@@ -1969,7 +1976,7 @@ msgstr "%l:%M <small> (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1977,22 +1984,22 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:607
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, känns som %s"
 
-#: modules/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:641
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Soluppgång: %s / Solnedgång: %s"
@@ -2270,11 +2277,11 @@ msgstr "sekunder"
 msgid "_Rotate on vertical panels"
 msgstr "_Rotera i vertikala paneler"
 
-#: modules/menu/gp-lock-logout.c:1042
+#: modules/menu/gp-lock-logout.c:1015
 msgid "Hybrid Sleep"
 msgstr "Hybridvila"
 
-#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
+#: modules/menu/gp-main-menu-applet.c:472 modules/menu/gp-menu-bar-applet.c:220
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Installera programmet ”%s”."
@@ -2314,6 +2321,10 @@ msgstr "Användarmeny"
 #: modules/menu/gp-menu-module.c:54
 msgid "Menu to change your settings and log out"
 msgstr "Meny för att ändra dina inställningar och logga ut."
+
+#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Visa pil på menyikon"
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
