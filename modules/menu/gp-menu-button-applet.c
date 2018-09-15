@@ -649,6 +649,22 @@ gp_menu_button_applet_dispose (GObject *object)
 }
 
 static void
+gp_menu_button_applet_initial_setup (GpApplet *applet,
+                                     GVariant *initial_settings)
+{
+  GSettings *settings;
+  const gchar *menu_path;
+
+  settings = gp_applet_settings_new (applet, MENU_BUTTON_SCHEMA);
+
+  menu_path = NULL;
+  if (g_variant_lookup (initial_settings, "menu-path", "&s", &menu_path))
+    g_settings_set_string (settings, "menu-path", menu_path);
+
+  g_object_unref (settings);
+}
+
+static void
 gp_menu_button_applet_placement_changed (GpApplet        *applet,
                                          GtkOrientation   orientation,
                                          GtkPositionType  position)
@@ -672,6 +688,7 @@ gp_menu_button_applet_class_init (GpMenuButtonAppletClass *menu_button_class)
   object_class->constructed = gp_menu_button_applet_constructed;
   object_class->dispose = gp_menu_button_applet_dispose;
 
+  applet_class->initial_setup = gp_menu_button_applet_initial_setup;
   applet_class->placement_changed = gp_menu_button_applet_placement_changed;
 }
 

@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2004 Vincent Untz
  * Copyright (C) 2018 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
@@ -13,16 +14,349 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Authors:
+ *     Alberts Muktupāvels <alberts.muktupavels@gmail.com>
+ *     Vincent Untz <vincent@vuntz.net>
  */
 
 #include "config.h"
 
 #include <glib/gi18n-lib.h>
+#include <gmenu-tree.h>
 #include <libgnome-panel/gp-module.h>
 
 #include "gp-main-menu-applet.h"
 #include "gp-menu-bar-applet.h"
+#include "gp-menu-button-applet.h"
+#include "gp-menu-utils.h"
 #include "gp-user-menu-applet.h"
+
+typedef struct
+{
+  gchar              *filename;
+  gchar              *menu_path;
+
+  GIcon              *icon;
+  gchar              *text;
+} DirectroyData;
+
+static gchar *
+make_text (const gchar *name,
+           const gchar *desc)
+{
+  const gchar *real_name;
+  gchar *result;
+
+  real_name = name ? name : _("(empty)");
+
+  if (desc != NULL && *desc != '\0')
+    result = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>\n%s",
+                                      real_name, desc);
+  else
+    result = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>",
+                                      real_name);
+
+  return result;
+}
+
+static DirectroyData *
+directory_data_new (GMenuTreeDirectory *directory,
+                    const gchar        *filename,
+                    const gchar        *text)
+{
+  DirectroyData *data;
+  GIcon *icon;
+
+  data = g_new0 (DirectroyData, 1);
+
+  data->filename = g_strdup (filename);
+  data->menu_path = gmenu_tree_directory_make_path (directory, NULL);
+
+  icon = gmenu_tree_directory_get_icon (directory);
+  data->icon = icon ? g_object_ref (icon) : NULL;
+  data->text = make_text (gmenu_tree_directory_get_name (directory),
+                          gmenu_tree_directory_get_comment (directory));
+
+  return data;
+}
+
+static void
+directory_data_free (gpointer user_data)
+{
+  DirectroyData *data;
+
+  data = (DirectroyData *) user_data;
+
+  g_free (data->filename);
+  g_free (data->menu_path);
+
+  g_clear_object (&data->icon);
+  g_free (data->text);
+
+  g_free (data);
+}
+
+typedef struct
+{
+  GpInitialSetupDialog *dialog;
+
+  GtkTreeStore         *store;
+  GSList               *directories;
+} MenuButtonData;
+
+static MenuButtonData *
+menu_button_data_new (GpInitialSetupDialog *dialog)
+{
+  MenuButtonData *data;
+
+  data = g_new0 (MenuButtonData, 1);
+
+  data->dialog = dialog;
+
+  data->store = NULL;
+  data->directories = NULL;
+
+  return data;
+}
+
+static void
+menu_button_data_free (gpointer user_data)
+{
+  MenuButtonData *data;
+
+  data = (MenuButtonData *) user_data;
+
+  g_clear_object (&data->store);
+  g_slist_free_full (data->directories, directory_data_free);
+
+  g_free (data);
+}
+
+static void
+populate_from_root (GtkTreeStore       *store,
+                    GtkTreeIter        *parent,
+                    GMenuTreeDirectory *directory,
+                    const gchar        *menu,
+                    MenuButtonData     *data);
+
+static void
+append_directory (GtkTreeStore       *store,
+                  GtkTreeIter        *parent,
+                  GMenuTreeDirectory *directory,
+                  const gchar        *menu,
+                  MenuButtonData     *data)
+{
+  gchar *text;
+  DirectroyData *dir_data;
+  GtkTreeIter iter;
+
+  text = make_text (gmenu_tree_directory_get_name (directory),
+                    gmenu_tree_directory_get_comment (directory));
+
+  dir_data = directory_data_new (directory, menu, text);
+  data->directories = g_slist_prepend (data->directories, dir_data);
+  g_free (text);
+
+  gtk_tree_store_append (store, &iter, parent);
+  gtk_tree_store_set (store, &iter,
+                      0, dir_data->icon,
+                      1, dir_data->text,
+                      2, dir_data,
+                      -1);
+
+  populate_from_root (store, &iter, directory, menu, data);
+}
+
+static void
+populate_from_root (GtkTreeStore       *store,
+                    GtkTreeIter        *parent,
+                    GMenuTreeDirectory *directory,
+                    const gchar        *menu,
+                    MenuButtonData     *data)
+{
+  GMenuTreeIter *iter;
+  GMenuTreeItemType next_type;
+
+  iter = gmenu_tree_directory_iter (directory);
+
+  next_type = gmenu_tree_iter_next (iter);
+  while (next_type != GMENU_TREE_ITEM_INVALID)
+    {
+      if (next_type == GMENU_TREE_ITEM_DIRECTORY)
+        {
+          GMenuTreeDirectory *dir;
+
+          dir = gmenu_tree_iter_get_directory (iter);
+          append_directory (store, parent, dir, menu, data);
+          gmenu_tree_item_unref (dir);
+        }
+
+      next_type = gmenu_tree_iter_next (iter);
+    }
+
+  gmenu_tree_iter_unref (iter);
+}
+
+static void
+populate_model_from_menu (GtkTreeStore   *store,
+                          const gchar    *menu,
+                          gboolean        separator,
+                          MenuButtonData *data)
+{
+  GMenuTree *tree;
+  GMenuTreeDirectory *root;
+
+  tree = gmenu_tree_new (menu, GMENU_TREE_FLAGS_SORT_DISPLAY_NAME);
+
+  if (!gmenu_tree_load_sync (tree, NULL))
+    {
+      g_object_unref (tree);
+      return;
+    }
+
+  root = gmenu_tree_get_root_directory (tree);
+
+  if (root == NULL)
+    {
+      g_object_unref (tree);
+      return;
+    }
+
+  if (separator)
+    {
+      GtkTreeIter iter;
+
+      gtk_tree_store_append (store, &iter, NULL);
+      gtk_tree_store_set (store, &iter, 0, NULL, 1, NULL, 2, NULL, -1);
+    }
+
+  populate_from_root (store, NULL, root, menu, data);
+  gmenu_tree_item_unref (root);
+  g_object_unref (tree);
+}
+
+static void
+populate_model (GtkTreeStore   *store,
+                MenuButtonData *data)
+{
+  gchar *menu;
+
+  menu = gp_menu_utils_get_applications_menu ();
+  populate_model_from_menu (store, menu, FALSE, data);
+  g_free (menu);
+
+  menu = g_strdup ("gnomecc.menu");
+  populate_model_from_menu (store, menu, TRUE, data);
+  g_free (menu);
+}
+
+static const gchar *
+filename_to_scheme (const gchar *filename)
+{
+  if (g_str_has_suffix (filename, "applications.menu"))
+    return "applications";
+  else if (g_strcmp0 (filename, "gnomecc.menu") == 0)
+    return "gnomecc";
+
+  return NULL;
+}
+
+static void
+selection_changed_cb (GtkTreeSelection *selection,
+                      MenuButtonData   *data)
+{
+  gboolean done;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+
+  done = FALSE;
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      DirectroyData *dir_data;
+
+      dir_data = NULL;
+      gtk_tree_model_get (model, &iter, 2, &dir_data, -1);
+
+      if (dir_data != NULL)
+        {
+          const gchar *scheme;
+          gchar *menu_path;
+          GVariant *variant;
+
+          scheme = filename_to_scheme (dir_data->filename);
+          menu_path = g_strdup_printf ("%s:%s", scheme, dir_data->menu_path);
+
+          variant = g_variant_new_string (menu_path);
+          g_free (menu_path);
+
+          gp_initital_setup_dialog_set_setting (data->dialog, "menu-path", variant);
+          done = TRUE;
+        }
+    }
+
+  gp_initital_setup_dialog_set_done (data->dialog, done);
+}
+
+static void
+menu_button_initial_setup_dialog (GpInitialSetupDialog *dialog)
+{
+  MenuButtonData *data;
+  GtkWidget *scrolled;
+  GtkWidget *tree_view;
+  GtkTreeSelection *selection;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer *renderer;
+
+  data = menu_button_data_new (dialog);
+
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled), GTK_SHADOW_IN);
+  gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled), 460);
+  gtk_scrolled_window_set_min_content_width (GTK_SCROLLED_WINDOW (scrolled), 480);
+  gtk_widget_show (scrolled);
+
+  tree_view = gtk_tree_view_new ();
+  gtk_container_add (GTK_CONTAINER (scrolled), tree_view);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tree_view), FALSE);
+  gtk_widget_show (tree_view);
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+
+  g_signal_connect (selection, "changed",
+                    G_CALLBACK (selection_changed_cb), data);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
+
+  renderer = gtk_cell_renderer_pixbuf_new ();
+  gtk_tree_view_column_pack_start (column, renderer, FALSE);
+  gtk_tree_view_column_add_attribute (column, renderer, "gicon", 0);
+
+  g_object_set (renderer,
+                "stock-size", GTK_ICON_SIZE_DND,
+                "xpad", 4, "ypad", 4,
+                NULL);
+
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_add_attribute (column, renderer, "markup", 1);
+
+  g_object_set (renderer,
+                "ellipsize", PANGO_ELLIPSIZE_END,
+                "xpad", 4, "ypad", 4,
+                NULL);
+
+  data->store = gtk_tree_store_new (3, G_TYPE_ICON, G_TYPE_STRING, G_TYPE_POINTER);
+  populate_model (data->store, data);
+
+  gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view),
+                           GTK_TREE_MODEL (data->store));
+
+  gp_initital_setup_dialog_add_content_widget (dialog, scrolled, data,
+                                               menu_button_data_free);
+}
 
 static GpAppletInfo *
 menu_get_applet_info (const gchar *id)
@@ -31,7 +365,10 @@ menu_get_applet_info (const gchar *id)
   const gchar *name;
   const gchar *description;
   const gchar *icon;
+  GpInitialSetupDialogFunc initial_setup_func;
   GpAppletInfo *info;
+
+  initial_setup_func = NULL;
 
   if (g_strcmp0 (id, "main-menu") == 0)
     {
@@ -39,6 +376,15 @@ menu_get_applet_info (const gchar *id)
       name = _("Main Menu");
       description = _("The main GNOME menu");
       icon = "start-here";
+    }
+  else if (g_strcmp0 (id, "menu-button") == 0)
+    {
+      type_func = gp_menu_button_applet_get_type;
+      name = _("Menu Button");
+      description = _("A custom menu button");
+      icon = "start-here";
+
+      initial_setup_func = menu_button_initial_setup_dialog;
     }
   else if (g_strcmp0 (id, "menu-bar") == 0)
     {
@@ -61,6 +407,9 @@ menu_get_applet_info (const gchar *id)
     }
 
   info = gp_applet_info_new (type_func, name, description, icon);
+
+  if (initial_setup_func != NULL)
+    gp_applet_info_set_initial_setup_dialog (info, initial_setup_func);
 
   return info;
 }
@@ -89,7 +438,8 @@ gp_module_load (GpModule *module)
   gp_module_set_id (module, "org.gnome.gnome-panel.menu");
   gp_module_set_version (module, PACKAGE_VERSION);
 
-  gp_module_set_applet_ids (module, "menu-bar", "main-menu", "user-menu", NULL);
+  gp_module_set_applet_ids (module, "main-menu", "menu-bar",
+                            "menu-button", "user-menu", NULL);
 
   gp_module_set_get_applet_info (module, menu_get_applet_info);
   gp_module_set_compatibility (module, menu_get_applet_id_from_iid);
