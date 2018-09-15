@@ -666,11 +666,70 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 						dialog, NULL);
 }
 
+typedef struct
+{
+	PanelAddtoDialog *dialog;
+	gchar            *iid;
+} InitialSetupData;
+
+static InitialSetupData *
+initial_setup_data_new (PanelAddtoDialog *dialog,
+                        const gchar      *iid)
+{
+	InitialSetupData *data;
+
+	data = g_new0 (InitialSetupData, 1);
+
+	data->dialog = g_object_ref (dialog);
+	data->iid = g_strdup (iid);
+
+	return data;
+}
+
+static void
+initial_setup_data_free (gpointer user_data)
+{
+	InitialSetupData *data;
+
+	data = (InitialSetupData *) user_data;
+
+	g_object_unref (data->dialog);
+	g_free (data->iid);
+	g_free (data);
+}
+
+static void
+initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
+                         gboolean              canceled,
+                         gpointer              user_data)
+{
+	InitialSetupData *data;
+	int pack_index;
+	GVariant *initial_settings;
+
+	data = (InitialSetupData *) user_data;
+
+	if (canceled)
+		return;
+
+	pack_index = panel_widget_get_new_pack_index (data->dialog->panel_widget,
+	                                              data->dialog->insert_pack_type);
+
+	initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+
+	panel_applet_frame_create (data->dialog->panel_widget->toplevel,
+	                           data->dialog->insert_pack_type, pack_index,
+	                           data->iid, initial_settings);
+
+	g_variant_unref (initial_settings);
+}
+
 static void
 panel_addto_add_item (PanelAddtoDialog   *dialog,
 	 	      PanelAddtoItemInfo *item_info)
 {
 	int pack_index;
+	InitialSetupData *data;
 
 	g_assert (item_info != NULL);
 
@@ -679,11 +738,16 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 
 	switch (item_info->type) {
 	case PANEL_ADDTO_APPLET:
-		panel_applet_frame_create (dialog->panel_widget->toplevel,
-					   dialog->insert_pack_type,
-					   pack_index,
-					   item_info->iid,
-					   NULL);
+		data = initial_setup_data_new (dialog, item_info->iid);
+
+		if (!panel_applets_manager_open_initial_setup_dialog (item_info->iid,
+		                                                      GTK_WINDOW (dialog),
+		                                                      initial_setup_dialog_cb,
+		                                                      data, initial_setup_data_free)) {
+			panel_applet_frame_create (dialog->panel_widget->toplevel,
+			                           dialog->insert_pack_type, pack_index,
+			                           item_info->iid, NULL);
+		}
 		break;
 	case PANEL_ADDTO_ACTION:
 		panel_action_button_create (dialog->panel_widget->toplevel,
