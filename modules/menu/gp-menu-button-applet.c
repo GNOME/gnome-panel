@@ -232,18 +232,6 @@ split_menu_uri (const gchar  *menu_uri,
   return g_strdup (p);
 }
 
-static gchar *
-get_applications_menu (void)
-{
-  const gchar *xdg_menu_prefx;
-
-  xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
-  if (!xdg_menu_prefx || *xdg_menu_prefx == '\0')
-    return g_strdup ("gnome-applications.menu");
-
-  return g_strdup_printf ("%sapplications.menu", xdg_menu_prefx);
-}
-
 static void
 menu_icon_size_cb (GpApplet   *applet,
                    GParamSpec *pspec,
@@ -334,7 +322,7 @@ validate_scheme (const gchar  *scheme,
 {
   if (g_strcmp0 (scheme, "applications") == 0)
     {
-      *menu_file = get_applications_menu ();
+      *menu_file = gp_menu_utils_get_applications_menu ();
       return TRUE;
     }
   else if (g_strcmp0 (scheme, "gnomecc") == 0)
@@ -390,7 +378,7 @@ update_menu (GpMenuButtonApplet *menu_button)
     {
       gchar *menu_file;
 
-      menu_file = get_applications_menu ();
+      menu_file = gp_menu_utils_get_applications_menu ();
       priv->menu = gp_menu_new (GP_APPLET (menu_button), menu_file, TRUE);
       g_free (menu_file);
 

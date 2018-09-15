@@ -477,6 +477,18 @@ gp_menu_utils_get_user_name (void)
   return user_name;
 }
 
+gchar *
+gp_menu_utils_get_applications_menu (void)
+{
+  const gchar *xdg_menu_prefx;
+
+  xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+  if (!xdg_menu_prefx || *xdg_menu_prefx == '\0')
+    return g_strdup ("gnome-applications.menu");
+
+  return g_strdup_printf ("%sapplications.menu", xdg_menu_prefx);
+}
+
 void
 append_separator_if_needed (GtkMenu *menu)
 {

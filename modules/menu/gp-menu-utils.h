@@ -26,20 +26,22 @@ G_BEGIN_DECLS
 typedef void (* GpAppendMenuItemsFunc) (GtkMenu  *menu,
                                         gpointer  user_data);
 
-void   gp_menu_utils_app_info_launch    (GDesktopAppInfo *app_info);
+void   gp_menu_utils_app_info_launch       (GDesktopAppInfo *app_info);
 
-void   gp_menu_utils_launch_uri         (const gchar     *uri);
+void   gp_menu_utils_launch_uri            (const gchar     *uri);
 
-GIcon *gp_menu_utils_get_icon_for_file  (GFile           *file);
+GIcon *gp_menu_utils_get_icon_for_file     (GFile           *file);
 
-gchar *gp_menu_utils_get_label_for_file (GFile           *file);
+gchar *gp_menu_utils_get_label_for_file    (GFile           *file);
 
-void   gp_menu_utils_show_error_dialog  (const gchar     *message,
-                                         GError          *error);
+void   gp_menu_utils_show_error_dialog     (const gchar     *message,
+                                            GError          *error);
 
-gchar *gp_menu_utils_get_user_name      (void);
+gchar *gp_menu_utils_get_user_name         (void);
 
-void   append_separator_if_needed       (GtkMenu         *menu);
+gchar *gp_menu_utils_get_applications_menu (void);
+
+void   append_separator_if_needed          (GtkMenu         *menu);
 
 G_END_DECLS
 

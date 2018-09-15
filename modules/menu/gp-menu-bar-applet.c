@@ -79,18 +79,6 @@ button_press_event_cb (GtkWidget      *widget,
 }
 
 static gchar *
-get_applications_menu (void)
-{
-  const gchar *xdg_menu_prefx;
-
-  xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
-  if (!xdg_menu_prefx || *xdg_menu_prefx == '\0')
-    return g_strdup ("gnome-applications.menu");
-
-  return g_strdup_printf ("%sapplications.menu", xdg_menu_prefx);
-}
-
-static gchar *
 get_settings_menu (void)
 {
   const gchar *xdg_menu_prefx;
@@ -136,7 +124,7 @@ append_applications_item (GpMenuBarApplet *applet)
   tooltip = _("Browse and run installed applications");
   gtk_widget_set_tooltip_text (applet->applications_item, tooltip);
 
-  menu = get_applications_menu ();
+  menu = gp_menu_utils_get_applications_menu ();
 
   applet->applications_menu = gp_menu_new (GP_APPLET (applet), menu, TRUE);
   g_free (menu);
