@@ -15,22 +15,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
-#include "gp-main-menu-applet.h"
+#ifndef GP_MENU_BUTTON_APPLET_H
+#define GP_MENU_BUTTON_APPLET_H
 
-struct _GpMainMenuApplet
+#include <libgnome-panel/gp-applet.h>
+
+G_BEGIN_DECLS
+
+#define GP_MENU_BUTTON_TYPE_APPLET (gp_menu_button_applet_get_type ())
+G_DECLARE_DERIVABLE_TYPE (GpMenuButtonApplet, gp_menu_button_applet,
+                          GP, MENU_BUTTON_APPLET, GpApplet)
+
+struct _GpMenuButtonAppletClass
 {
-  GpMenuButtonApplet parent;
+  GpAppletClass parent;
 };
 
-G_DEFINE_TYPE (GpMainMenuApplet, gp_main_menu_applet, GP_MENU_BUTTON_TYPE_APPLET)
+G_END_DECLS
 
-static void
-gp_main_menu_applet_class_init (GpMainMenuAppletClass *menu_button_class)
-{
-}
-
-static void
-gp_main_menu_applet_init (GpMainMenuApplet *menu_button)
-{
-}
+#endif

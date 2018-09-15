@@ -30,6 +30,8 @@ menu_la_SOURCES = \
 	gp-menu-bar-applet.h \
 	gp-menu-bar.c \
 	gp-menu-bar.h \
+	gp-menu-button-applet.c \
+	gp-menu-button-applet.h \
 	gp-menu-button.c \
 	gp-menu-button.h \
 	gp-menu-module.c \
@@ -63,7 +65,7 @@ menu_la_LDFLAGS = \
 	$(NULL)
 
 gsettings_SCHEMAS = \
-	org.gnome.gnome-panel.applet.main-menu.gschema.xml \
+	org.gnome.gnome-panel.applet.menu-button.gschema.xml \
 	$(NULL)
 
 @GSETTINGS_RULES@

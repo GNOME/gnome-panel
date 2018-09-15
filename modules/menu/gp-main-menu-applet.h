@@ -18,13 +18,13 @@
 #ifndef GP_MAIN_MENU_APPLET_H
 #define GP_MAIN_MENU_APPLET_H
 
-#include <libgnome-panel/gp-applet.h>
+#include "gp-menu-button-applet.h"
 
 G_BEGIN_DECLS
 
 #define GP_MAIN_MENU_TYPE_APPLET (gp_main_menu_applet_get_type ())
 G_DECLARE_FINAL_TYPE (GpMainMenuApplet, gp_main_menu_applet,
-                      GP, MAIN_MENU_APPLET, GpApplet)
+                      GP, MAIN_MENU_APPLET, GpMenuButtonApplet)
 
 G_END_DECLS
 
