@@ -95,8 +95,6 @@ typedef struct {
 	GIcon                 *icon;
 	PanelActionButtonType  action_type;
 	char                  *launcher_path;
-	char                  *menu_filename;
-	char                  *menu_path;
 	char                  *iid;
 } PanelAddtoItemInfo;
 
@@ -450,19 +448,9 @@ panel_addto_prepend_directory (GSList             **parent_list,
 	data->item_info.name          = g_strdup (gmenu_tree_directory_get_name (directory));
 	data->item_info.description   = g_strdup (gmenu_tree_directory_get_comment (directory));
 	data->item_info.icon          = icon;
-	data->item_info.menu_filename = g_strdup (filename);
-	data->item_info.menu_path     = gmenu_tree_directory_make_path (directory, NULL);
-
-	/* We should set the iid here to something and do
-	 * iid = g_strdup_printf ("MENU:%s", tfr->name)
-	 * but this means we'd have to free the iid later
-	 * and this would complexify too much the free
-	 * function.
-	 * So the iid is built when we select the row.
-	 */
 
 	*parent_list = g_slist_prepend (*parent_list, data);
-			
+
 	/* We always want to show everything in non-root directories */
 	panel_addto_make_application_list (&data->children, directory,
 					   filename, PANEL_ADDTO_MENU_SHOW_ALL);
@@ -566,15 +554,22 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 	GSList            *app;
 
 	for (app = app_list; app != NULL; app = app->next) {
+		PanelAddtoItemInfo *column_data;
+
 		data = app->data;
 		gtk_tree_store_append (store, &iter, parent);
 
 		text = panel_addto_make_text (data->item_info.name,
 					      data->item_info.description);
+
+		column_data = NULL;
+		if (data->item_info.type != PANEL_ADDTO_MENU)
+			column_data = &data->item_info;
+
 		gtk_tree_store_set (store, &iter,
 				    COLUMN_ICON, data->item_info.icon,
 				    COLUMN_TEXT, text,
-				    COLUMN_DATA, &(data->item_info),
+				    COLUMN_DATA, column_data,
 				    COLUMN_SEARCH, data->item_info.name,
 				    -1);
 
@@ -769,13 +764,6 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 				    dialog->insert_pack_type);
 		break;
 	case PANEL_ADDTO_MENU:
-		panel_menu_button_create (dialog->panel_widget->toplevel,
-					  dialog->insert_pack_type,
-					  pack_index,
-					  item_info->menu_filename,
-					  item_info->menu_path,
-					  item_info->name);
-		break;
 	default:
 		break;
 	}
@@ -884,12 +872,6 @@ panel_addto_dialog_free_item_info (PanelAddtoItemInfo *item_info)
 
 	g_free (item_info->launcher_path);
 	item_info->launcher_path = NULL;
-
-	g_free (item_info->menu_filename);
-	item_info->menu_filename = NULL;
-
-	g_free (item_info->menu_path);
-	item_info->menu_path = NULL;
 }
 
 static void
@@ -1023,7 +1005,6 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 	GtkTreeIter         iter;
 	GtkTreeIter         filter_iter;
 	PanelAddtoItemInfo *data;
-	char               *iid;
 
 	if (!gtk_tree_selection_get_selected (selection,
 					      &filter_model,
@@ -1039,6 +1020,7 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 	gtk_tree_model_get (child_model, &iter, COLUMN_DATA, &data, -1);
 
 	if (!data) {
+		gtk_tree_view_unset_rows_drag_source (GTK_TREE_VIEW (dialog->tree_view));
 		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button),
 					  FALSE);
 		return;
@@ -1065,17 +1047,6 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 		} else if (data->type == PANEL_ADDTO_LAUNCHER_MENU) {
 			gtk_tree_view_unset_rows_drag_source (GTK_TREE_VIEW (dialog->tree_view));
 		} else if (data->type == PANEL_ADDTO_MENU) {
-			/* build the iid for menus other than the main menu */
-			if (data->iid == NULL) {
-				iid = g_strdup_printf ("MENU:%s/%s",
-						       data->menu_filename,
-						       data->menu_path);
-			} else {
-				iid = g_strdup (data->iid);
-			}
-			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
-							        iid);
-			g_free (iid);
 		} else {
 			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
 							        data->iid);
