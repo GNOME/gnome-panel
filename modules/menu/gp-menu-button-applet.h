@@ -31,6 +31,9 @@ struct _GpMenuButtonAppletClass
   GpAppletClass parent;
 };
 
+gboolean gp_menu_button_applet_popup_menu (GpMenuButtonApplet *menu_button,
+                                           GdkEvent           *event);
+
 G_END_DECLS
 
 #endif

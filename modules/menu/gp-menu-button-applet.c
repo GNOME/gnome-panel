@@ -24,7 +24,6 @@
 #include "gp-menu-button-applet.h"
 
 #include <glib/gi18n-lib.h>
-#include <libgnome-panel/gp-action.h>
 #include <libgnome-panel/gp-image-menu-item.h>
 
 #include "gp-lock-logout.h"
@@ -51,78 +50,7 @@ typedef struct
   GpLockLogout *lock_logout;
 } GpMenuButtonAppletPrivate;
 
-static void gp_action_interface_init (GpActionInterface *iface);
-
-G_DEFINE_TYPE_WITH_CODE (GpMenuButtonApplet, gp_menu_button_applet, GP_TYPE_APPLET,
-                         G_IMPLEMENT_INTERFACE (GP_TYPE_ACTION, gp_action_interface_init)
-                         G_ADD_PRIVATE (GpMenuButtonApplet))
-
-static void
-popup_menu (GpMenuButtonApplet *menu_button,
-            GdkEvent           *event)
-{
-  GpMenuButtonAppletPrivate *priv;
-  GdkGravity widget_anchor;
-  GdkGravity menu_anchor;
-
-  priv = gp_menu_button_applet_get_instance_private (menu_button);
-
-  switch (gp_applet_get_position (GP_APPLET (menu_button)))
-    {
-      case GTK_POS_TOP:
-        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_LEFT:
-        widget_anchor = GDK_GRAVITY_NORTH_EAST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_RIGHT:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_EAST;
-        break;
-
-      case GTK_POS_BOTTOM:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
-        break;
-
-      default:
-        g_assert_not_reached ();
-        break;
-    }
-
-  gtk_menu_popup_at_widget (GTK_MENU (priv->menu),
-                            priv->button,
-                            widget_anchor, menu_anchor,
-                            event);
-}
-
-static gboolean
-gp_menu_button_applet_main_menu (GpAction *action,
-                                 guint32   time)
-{
-  GpMenuButtonApplet *menu_button;
-  GpMenuButtonAppletPrivate *priv;
-
-  menu_button = GP_MENU_BUTTON_APPLET (action);
-  priv = gp_menu_button_applet_get_instance_private (menu_button);
-
-  if (priv->menu == NULL)
-    return FALSE;
-
-  popup_menu (menu_button, NULL);
-
-  return TRUE;
-}
-
-static void
-gp_action_interface_init (GpActionInterface *iface)
-{
-  iface->main_menu = gp_menu_button_applet_main_menu;
-}
+G_DEFINE_TYPE_WITH_PRIVATE (GpMenuButtonApplet, gp_menu_button_applet, GP_TYPE_APPLET)
 
 static void
 update_arrow (GpMenuButtonApplet *menu_button,
@@ -529,7 +457,7 @@ button_press_event_cb (GtkWidget          *widget,
   if (button->button == GDK_BUTTON_SECONDARY)
     return FALSE;
 
-  popup_menu (menu_button, event);
+  gp_menu_button_applet_popup_menu (menu_button, event);
 
   return TRUE;
 }
@@ -538,7 +466,7 @@ static void
 clicked_cb (GtkWidget          *widget,
             GpMenuButtonApplet *menu_button)
 {
-  popup_menu (menu_button, NULL);
+  gp_menu_button_applet_popup_menu (menu_button, NULL);
 }
 
 static void
@@ -700,4 +628,52 @@ gp_menu_button_applet_init (GpMenuButtonApplet *menu_button)
   applet = GP_APPLET (menu_button);
 
   gp_applet_set_flags (applet, GP_APPLET_FLAGS_EXPAND_MINOR);
+}
+
+gboolean
+gp_menu_button_applet_popup_menu (GpMenuButtonApplet *menu_button,
+                                  GdkEvent           *event)
+{
+  GpMenuButtonAppletPrivate *priv;
+  GdkGravity widget_anchor;
+  GdkGravity menu_anchor;
+
+  priv = gp_menu_button_applet_get_instance_private (menu_button);
+
+  if (priv->menu == NULL)
+    return FALSE;
+
+  switch (gp_applet_get_position (GP_APPLET (menu_button)))
+    {
+      case GTK_POS_TOP:
+        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_LEFT:
+        widget_anchor = GDK_GRAVITY_NORTH_EAST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_RIGHT:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_EAST;
+        break;
+
+      case GTK_POS_BOTTOM:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
+        break;
+
+      default:
+        g_assert_not_reached ();
+        break;
+    }
+
+  gtk_menu_popup_at_widget (GTK_MENU (priv->menu),
+                            priv->button,
+                            widget_anchor, menu_anchor,
+                            event);
+
+  return TRUE;
 }
