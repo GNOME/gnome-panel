@@ -37,7 +37,6 @@
 #include "panel.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
-#include "panel-menu-button.h"
 #include "panel-menu-items.h"
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"

@@ -35,7 +35,6 @@
 #include "panel-action-button.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
-#include "panel-menu-button.h"
 #include "panel-lockdown.h"
 #include "panel-icon-names.h"
 #include "panel-layout.h"
@@ -76,7 +75,6 @@ orientation_change (AppletInfo  *info,
 		panel_applet_frame_change_orientation (
 				PANEL_APPLET_FRAME (info->widget), orientation);
 		break;
-	case PANEL_OBJECT_MENU:
 	case PANEL_OBJECT_LAUNCHER:
 	case PANEL_OBJECT_ACTION:
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
@@ -433,24 +431,6 @@ drop_url (PanelWidget         *panel,
 }
 
 static gboolean
-drop_menu (PanelWidget         *panel,
-	   PanelObjectPackType  pack_type,
-	   int                  pack_index,
-	   const char          *menu_filename,
-	   const char          *menu_path)
-{
-	if (!panel_layout_is_writable ())
-		return FALSE;
-
-	return panel_menu_button_create (panel->toplevel,
-					 pack_type, pack_index,
-					 menu_filename,
-					 menu_path,
-					 NULL);
-
-}
-
-static gboolean
 drop_uri (PanelWidget         *panel,
 	  PanelObjectPackType  pack_type,
 	  int                  pack_index,
@@ -743,37 +723,6 @@ drop_internal_icon (PanelWidget         *panel,
 }
 
 static gboolean
-move_applet (PanelWidget         *panel,
-	     PanelObjectPackType  pack_type,
-	     int                  pack_index,
-	     int                  applet_index)
-{
-	GSList     *applet_list;
-	AppletInfo *info;
-	GtkWidget  *parent;
-
-	applet_list = panel_applet_list_applets ();
-
-	info = g_slist_nth_data (applet_list, applet_index);
-
-	if (info == NULL || info->widget == NULL ||
-	    !panel_applet_can_freely_move (info))
-		return FALSE;
-
-	parent = gtk_widget_get_parent (info->widget);
-
-	if (parent != NULL &&
-	    PANEL_IS_WIDGET (parent)) {
-		panel_widget_reparent (PANEL_WIDGET (parent),
-				       panel,
-				       info->widget,
-				       pack_type, pack_index);
-	}
-
-	return TRUE;
-}
-
-static gboolean
 drop_internal_applet (PanelWidget         *panel,
 		      PanelObjectPackType  pack_type,
 		      int                  pack_index,
@@ -787,36 +736,7 @@ drop_internal_applet (PanelWidget         *panel,
 	if (applet_type == NULL)
 		return FALSE;
 
-	if (sscanf (applet_type, "MENU:%d", &applet_index) == 1) {
-		if (action != GDK_ACTION_MOVE)
-			g_warning ("Only MOVE supported for menus");
-		success = move_applet (panel, pack_type, pack_index, applet_index);
-
-	} else if (strncmp (applet_type, "MENU:", strlen ("MENU:")) == 0) {
-		const char *menu;
-		const char *menu_path;
-
-		menu = &applet_type[strlen ("MENU:")];
-		menu_path = strchr (menu, '/');
-
-		if (!menu_path) {
-			if (strncmp (menu, "MAIN", strlen ("MAIN")) == 0)
-				success = drop_menu (panel, pack_type, pack_index,
-						     NULL, NULL);
-			else
-				success = drop_menu (panel, pack_type, pack_index,
-						     menu, NULL);
-		} else {
-			char *menu_filename;
-
-			menu_filename = g_strndup (menu, menu_path - menu);
-			menu_path++;
-			success = drop_menu (panel, pack_type, pack_index,
-					     menu_filename, menu_path);
-			g_free (menu_filename);
-		}
-
-	} else if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
+	if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
 		if (panel_layout_is_writable ()) {
 			remove_applet = panel_action_button_load_from_drag (
 							panel->toplevel,

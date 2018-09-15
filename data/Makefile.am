@@ -17,7 +17,6 @@ gsettings_SCHEMAS = \
 	org.gnome.gnome-panel.applet.initial-settings.gschema.xml \
 	org.gnome.gnome-panel.gschema.xml \
 	org.gnome.gnome-panel.launcher.gschema.xml \
-	org.gnome.gnome-panel.menu-button.gschema.xml \
 	org.gnome.gnome-panel.object.gschema.xml \
 	org.gnome.gnome-panel.toplevel.gschema.xml \
 	$(NULL)

@@ -26,7 +26,6 @@
 #include "panel-action-button.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
-#include "panel-menu-button.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-schemas.h"
@@ -50,10 +49,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 			      gboolean    dnd_enabled)
 {
 	switch (info->type) {
-	case PANEL_OBJECT_MENU:
-		panel_menu_button_set_dnd_enabled (PANEL_MENU_BUTTON (info->widget),
-						   dnd_enabled);
-		break;
 	case PANEL_OBJECT_LAUNCHER:
 		panel_launcher_set_dnd_enabled (info->data, dnd_enabled);
 		break;
@@ -167,10 +162,6 @@ applet_callback_callback (GtkWidget      *widget,
 			launcher_launch (menu->info->data, widget);
 		else if (!strcmp (menu->name, "properties"))
 			launcher_properties (menu->info->data);
-		break;
-	case PANEL_OBJECT_MENU:
-		panel_menu_button_invoke_menu (
-			PANEL_MENU_BUTTON (menu->info->widget), menu->name);
 		break;
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_invoke_menu (

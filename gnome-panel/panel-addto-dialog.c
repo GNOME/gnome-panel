@@ -37,7 +37,6 @@
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
 #include "panel-toplevel.h"
-#include "panel-menu-button.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-util.h"

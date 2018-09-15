@@ -34,7 +34,6 @@
 #include "panel-util.h"
 #include "panel-force-quit.h"
 #include "panel-run-dialog.h"
-#include "panel-menu-button.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
@@ -48,17 +47,9 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	GSList      *panels;
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
-	AppletInfo  *info;
 
 	if (panel_applet_activate_main_menu (activate_time))
 		return;
-
-	info = panel_applet_get_by_type (PANEL_OBJECT_MENU, screen);
-	if (info && panel_menu_button_is_main_menu (PANEL_MENU_BUTTON (info->widget))) {
-		panel_menu_button_popup_menu (PANEL_MENU_BUTTON (info->widget),
-					      1, activate_time);
-		return;
-	}
 
 	panels = panel_widget_get_panels ();
 	panel_widget = panels->data;
