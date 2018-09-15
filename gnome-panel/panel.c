@@ -27,6 +27,7 @@
 #include "applet.h"
 #include "button-widget.h"
 #include "launcher.h"
+#include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
 #include "panel-util.h"
@@ -1034,6 +1035,81 @@ drag_leave_cb (GtkWidget	*widget,
 	panel_toplevel_queue_auto_hide (toplevel);
 }
 
+
+typedef struct
+{
+	PanelWidget         *panel;
+
+	GdkDragContext      *context;
+	guint                time;
+
+	PanelObjectPackType  pack_type;
+	int                  pack_index;
+	gchar               *iid;
+} InitialSetupData;
+
+static InitialSetupData *
+initial_setup_data_new (PanelWidget         *panel,
+                        GdkDragContext      *context,
+                        guint                time,
+                        PanelObjectPackType  pack_type,
+                        int                  pack_index,
+                        const gchar         *iid)
+{
+	InitialSetupData *data;
+
+	data = g_new0 (InitialSetupData, 1);
+
+	data->panel = panel;
+
+	data->context = context;
+	data->time = time;
+
+	data->pack_type = pack_type;
+	data->pack_index = pack_index;
+	data->iid = g_strdup (iid);
+
+	return data;
+}
+
+static void
+initial_setup_data_free (gpointer user_data)
+{
+	InitialSetupData *data;
+
+	data = (InitialSetupData *) user_data;
+
+	g_free (data->iid);
+	g_free (data);
+}
+
+static void
+initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
+                         gboolean              canceled,
+                         gpointer              user_data)
+{
+	InitialSetupData *data;
+	GVariant *initial_settings;
+
+	data = (InitialSetupData *) user_data;
+
+	if (canceled) {
+		gtk_drag_finish (data->context, FALSE, FALSE, data->time);
+		return;
+	}
+
+	initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+
+	panel_applet_frame_create (data->panel->toplevel,
+	                           data->pack_type,
+	                           data->pack_index,
+	                           data->iid,
+	                           initial_settings);
+
+	gtk_drag_finish (data->context, TRUE, FALSE, data->time);
+	g_variant_unref (initial_settings);
+}
+
 static void
 panel_receive_dnd_data (PanelWidget         *panel,
 			guint                info,
@@ -1079,10 +1155,25 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			return;
 		}
 		if (panel_layout_is_writable ()) {
-			panel_applet_frame_create (panel->toplevel,
-						   pack_type, pack_index,
-						   (char *) data, NULL);
-			success = TRUE;
+			InitialSetupData *initial_setup_data;
+
+			initial_setup_data = initial_setup_data_new (panel, context, time_,
+			                                             pack_type, pack_index,
+			                                             (char *) data);
+
+			if (!panel_applets_manager_open_initial_setup_dialog ((char *) data,
+			                                                      NULL,
+			                                                      initial_setup_dialog_cb,
+			                                                      initial_setup_data,
+			                                                      initial_setup_data_free)) {
+				panel_applet_frame_create (panel->toplevel,
+				                           pack_type, pack_index,
+				                           (char *) data, NULL);
+
+				success = TRUE;
+			} else {
+				return;
+			}
 		} else {
 			success = FALSE;
 		}
