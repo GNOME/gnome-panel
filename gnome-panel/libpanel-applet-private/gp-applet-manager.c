@@ -34,6 +34,37 @@ struct _GpAppletManager
 
 G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, PANEL_TYPE_APPLETS_MANAGER)
 
+static GVariant *
+get_initial_settings (PanelAppletFrameActivating *frame_act)
+{
+  gchar *path;
+  GSettings *settings;
+  GVariant *initial_settings;
+
+  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
+  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
+  g_free (path);
+
+  initial_settings = g_settings_get_user_value (settings, "settings");
+  g_object_unref (settings);
+
+  return initial_settings;
+}
+
+static void
+remove_initial_settings (PanelAppletFrameActivating *frame_act)
+{
+  gchar *path;
+  GSettings *settings;
+
+  path = panel_applet_frame_activating_get_initial_settings_path (frame_act);
+  settings = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
+  g_free (path);
+
+  g_settings_reset (settings, "settings");
+  g_object_unref (settings);
+}
+
 static void
 get_applet_infos (GpAppletManager *manager,
                   const gchar     *id,
@@ -239,7 +270,7 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
         break;
     }
 
-  initial_settings = NULL;
+  initial_settings = get_initial_settings (frame_act);
 
   error = NULL;
   applet = gp_module_applet_new (module, applet_id, settings_path,
@@ -255,6 +286,8 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
 
       return FALSE;
     }
+
+  remove_initial_settings (frame_act);
 
   gp_applet_set_locked_down (applet, locked_down);
   gp_applet_set_orientation (applet, orientation);

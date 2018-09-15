@@ -41,7 +41,8 @@ void  panel_layout_object_create        (PanelObjectType       type,
                                          const char           *type_detail,
                                          const char           *toplevel_id,
                                          PanelObjectPackType   pack_type,
-                                         int                   pack_index);
+                                         int                   pack_index,
+                                         GVariant             *initial_settings);
 
 char      *panel_layout_object_get_gconf_path (const char *object_id);
 GSettings *panel_layout_get_instance_settings (GSettings  *settings_object,
@@ -52,6 +53,7 @@ char *panel_layout_object_create_start  (PanelObjectType       type,
                                          const char           *toplevel_id,
                                          PanelObjectPackType   pack_type,
                                          int                   pack_index,
+                                         GVariant             *initial_settings,
                                          GSettings           **settings);
 void  panel_layout_object_create_finish (const char           *object_id);
 

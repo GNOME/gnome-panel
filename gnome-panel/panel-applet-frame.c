@@ -716,6 +716,19 @@ panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *fra
 	return path_instance;
 }
 
+gchar *
+panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivating *frame_act)
+{
+        char *path;
+        char *path_instance;
+
+        g_object_get (frame_act->settings, "path", &path, NULL);
+        path_instance = g_strdup_printf ("%sinitial-settings/", path);
+        g_free (path);
+
+        return path_instance;
+}
+
 static void
 panel_applet_frame_loading_failed_response (GtkWidget *dialog,
 					    guint      response,
@@ -865,14 +878,16 @@ void
 panel_applet_frame_create (PanelToplevel       *toplevel,
 			   PanelObjectPackType  pack_type,
 			   int                  pack_index,
-			   const char          *iid)
+			   const char          *iid,
+			   GVariant            *initial_settings)
 {
 	g_return_if_fail (iid != NULL);
 
 	panel_layout_object_create (PANEL_OBJECT_APPLET,
 				    iid,
 				    panel_toplevel_get_id (toplevel),
-				    pack_type, pack_index);
+				    pack_type, pack_index,
+				    initial_settings);
 }
 
 gboolean

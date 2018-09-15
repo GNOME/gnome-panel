@@ -14,6 +14,7 @@ gsettings_SCHEMAS = \
 	org.gnome.gnome-panel.applet.window-list.gschema.xml \
 	org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml \
 	org.gnome.gnome-panel.applet.clock.gschema.xml \
+	org.gnome.gnome-panel.applet.initial-settings.gschema.xml \
 	org.gnome.gnome-panel.gschema.xml \
 	org.gnome.gnome-panel.launcher.gschema.xml \
 	org.gnome.gnome-panel.menu-button.gschema.xml \

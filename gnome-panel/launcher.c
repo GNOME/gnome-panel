@@ -1188,7 +1188,7 @@ panel_launcher_create_with_id (const char          *toplevel_id,
 	id = panel_layout_object_create_start (PANEL_OBJECT_LAUNCHER,
 					       NULL,
 					       toplevel_id, pack_type, pack_index,
-					       &settings);
+					       NULL, &settings);
 
 	no_uri = NULL;
 	/* if we have an URI, it might contain escaped characters (? : etc)

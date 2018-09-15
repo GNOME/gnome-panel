@@ -732,7 +732,8 @@ panel_action_button_create (PanelToplevel         *toplevel,
 	panel_layout_object_create (PANEL_OBJECT_ACTION,
 				    panel_enum_to_string (type),
 				    panel_toplevel_get_id (toplevel),
-				    pack_type, pack_index);
+				    pack_type, pack_index,
+				    NULL);
 }
 
 void

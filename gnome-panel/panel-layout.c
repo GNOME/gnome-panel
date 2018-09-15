@@ -646,13 +646,14 @@ panel_layout_object_create (PanelObjectType      type,
                             const char          *type_detail,
                             const char          *toplevel_id,
                             PanelObjectPackType  pack_type,
-                            int                  pack_index)
+                            int                  pack_index,
+                            GVariant            *initial_settings)
 {
         char *id;
 
         id = panel_layout_object_create_start (type, type_detail,
                                                toplevel_id, pack_type, pack_index,
-                                               NULL);
+                                               initial_settings, NULL);
 
         if (!id)
                 return;
@@ -719,6 +720,7 @@ panel_layout_object_create_start (PanelObjectType       type,
                                   const char           *toplevel_id,
                                   PanelObjectPackType   pack_type,
                                   int                   pack_index,
+                                  GVariant             *initial_settings,
                                   GSettings           **settings)
 {
         char      *unique_id;
@@ -756,6 +758,17 @@ panel_layout_object_create_start (PanelObjectType       type,
         g_settings_set_int (settings_object,
                             PANEL_OBJECT_PACK_INDEX_KEY,
                             pack_index);
+
+        if (initial_settings != NULL) {
+                GSettings *tmp;
+
+                path = g_strdup_printf ("%s%s/initial-settings/", PANEL_LAYOUT_OBJECT_PATH, unique_id);
+                tmp = g_settings_new_with_path ("org.gnome.gnome-panel.applet.initial-settings", path);
+                g_free (path);
+
+                g_settings_set_value (tmp, "settings", initial_settings);
+                g_object_unref (tmp);
+        }
 
         g_free (try_id);
         g_free (iid);

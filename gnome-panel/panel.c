@@ -512,7 +512,7 @@ drop_nautilus_desktop_uri (PanelWidget         *panel,
 
 	if (strncmp (basename, "trash", strlen ("trash")) == 0)
 		panel_applet_frame_create (panel->toplevel, pack_type, pack_index,
-					   "OAFIID:GNOME_Panel_TrashApplet");
+		                           "OAFIID:GNOME_Panel_TrashApplet", NULL);
 	else if (strncmp (basename, "home", strlen ("home")) == 0) {
 		char  *name;
 		char  *uri_tmp;
@@ -1081,7 +1081,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 		if (panel_layout_is_writable ()) {
 			panel_applet_frame_create (panel->toplevel,
 						   pack_type, pack_index,
-						   (char *) data);
+						   (char *) data, NULL);
 			success = TRUE;
 		} else {
 			success = FALSE;

@@ -682,7 +682,8 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		panel_applet_frame_create (dialog->panel_widget->toplevel,
 					   dialog->insert_pack_type,
 					   pack_index,
-					   item_info->iid);
+					   item_info->iid,
+					   NULL);
 		break;
 	case PANEL_ADDTO_ACTION:
 		panel_action_button_create (dialog->panel_widget->toplevel,

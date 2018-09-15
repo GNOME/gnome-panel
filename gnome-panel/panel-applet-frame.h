@@ -79,7 +79,8 @@ GType panel_applet_frame_get_type           (void) G_GNUC_CONST;
 void  panel_applet_frame_create             (PanelToplevel       *toplevel,
 					     PanelObjectPackType  pack_type,
 					     int                  pack_index,
-					     const char          *iid);
+					     const char          *iid,
+					     GVariant            *initial_settings);
 
 void  panel_applet_frame_load               (PanelWidget         *panel_widget,
 					     const char          *id,
@@ -99,6 +100,7 @@ typedef struct _PanelAppletFrameActivating        PanelAppletFrameActivating;
 PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFrameActivating *frame_act);
 gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act);
+gchar            *panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivating *frame_act);
 
 void  _panel_applet_frame_set_iid               (PanelAppletFrame           *frame,
 						 const gchar                *iid);
