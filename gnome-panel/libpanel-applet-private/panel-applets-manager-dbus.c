@@ -543,6 +543,17 @@ panel_applets_manager_dbus_get_new_iid (PanelAppletsManager *manager,
 	return NULL;
 }
 
+static gboolean
+panel_applets_manager_dbus_open_initial_setup_dialog (PanelAppletsManager    *manager,
+                                                      const gchar            *iid,
+                                                      GtkWindow              *parent,
+                                                      GpInitialSetupCallback  callback,
+                                                      gpointer                user_data,
+                                                      GDestroyNotify          free_func)
+{
+  return FALSE;
+}
+
 static void
 panel_applets_manager_dbus_finalize (GObject *object)
 {
@@ -589,4 +600,5 @@ panel_applets_manager_dbus_class_init (PanelAppletsManagerDBusClass *class)
 	manager_class->load_applet = panel_applets_manager_dbus_load_applet;
 	manager_class->get_applet_widget = panel_applets_manager_dbus_get_applet_widget;
 	manager_class->get_new_iid = panel_applets_manager_dbus_get_new_iid;
+	manager_class->open_initial_setup_dialog = panel_applets_manager_dbus_open_initial_setup_dialog;
 }

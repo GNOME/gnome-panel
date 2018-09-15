@@ -22,6 +22,7 @@
 #include "gp-applet-frame.h"
 #include "gp-applet-manager.h"
 #include "libgnome-panel/gp-applet-info-private.h"
+#include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "libgnome-panel/gp-module-private.h"
 
 struct _GpAppletManager
@@ -351,6 +352,63 @@ gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
   return new_iid;
 }
 
+static gboolean
+gp_applet_manager_open_initial_setup_dialog (PanelAppletsManager    *manager,
+                                             const gchar            *iid,
+                                             GtkWindow              *parent,
+                                             GpInitialSetupCallback  callback,
+                                             gpointer                user_data,
+                                             GDestroyNotify          free_func)
+{
+  GpAppletManager *applet_manager;
+  const gchar *applet_id;
+  gchar *module_id;
+  GpModule *module;
+  GpAppletInfo *info;
+  GpInitialSetupDialog *dialog;
+
+  g_return_val_if_fail (iid != NULL, FALSE);
+
+  applet_manager = GP_APPLET_MANAGER (manager);
+
+  applet_id = g_strrstr (iid, "::");
+  if (!applet_id)
+    return FALSE;
+
+  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+  module = g_hash_table_lookup (applet_manager->modules, module_id);
+  g_free (module_id);
+
+  if (!module)
+    return FALSE;
+
+  applet_id += 2;
+  info = gp_module_get_applet_info (module, applet_id, NULL);
+
+  if (!info || !info->initial_setup_dialog_func)
+    return FALSE;
+
+  dialog = gp_initital_setup_dialog_new ();
+  gp_initital_setup_dialog_add_callback (dialog, callback, user_data, free_func);
+
+  info->initial_setup_dialog_func (dialog);
+
+  if (parent)
+    {
+      gtk_window_set_transient_for (GTK_WINDOW (dialog), parent);
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER_ON_PARENT);
+    }
+  else
+    {
+      gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+    }
+
+
+  gtk_widget_show (GTK_WIDGET (dialog));
+
+  return TRUE;
+}
+
 static void
 gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
 {
@@ -369,6 +427,7 @@ gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
   applets_manager_class->load_applet = gp_applet_manager_load_applet;
   applets_manager_class->get_applet_widget = gp_applet_manager_get_applet_widget;
   applets_manager_class->get_new_iid = gp_applet_manager_get_new_iid;
+  applets_manager_class->open_initial_setup_dialog = gp_applet_manager_open_initial_setup_dialog;
 }
 
 static void

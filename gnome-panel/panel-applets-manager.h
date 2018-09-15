@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "panel-applet-frame.h"
 #include "panel-applet-info.h"
 
@@ -63,6 +64,13 @@ struct _PanelAppletsManagerClass {
 
 	gchar            * (*get_new_iid)           (PanelAppletsManager         *manager,
 	                                             const gchar                 *old_iid);
+
+	gboolean           (*open_initial_setup_dialog) (PanelAppletsManager         *manager,
+	                                                 const gchar                 *iid,
+	                                                 GtkWindow                   *parent,
+	                                                 GpInitialSetupCallback       callback,
+	                                                 gpointer                     user_data,
+	                                                 GDestroyNotify               free_func);
 };
 
 struct _PanelAppletsManager {
@@ -85,6 +93,12 @@ GtkWidget        *panel_applets_manager_get_applet_widget           (const gchar
                                                                      guint            uid);
 
 gchar            *panel_applets_manager_get_new_iid                 (const gchar     *old_iid);
+
+gboolean          panel_applets_manager_open_initial_setup_dialog   (const gchar            *iid,
+                                                                     GtkWindow              *parent,
+                                                                     GpInitialSetupCallback  callback,
+                                                                     gpointer                user_data,
+                                                                     GDestroyNotify          free_func);
 
 G_END_DECLS
 

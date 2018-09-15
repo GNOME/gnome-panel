@@ -201,3 +201,39 @@ panel_applets_manager_get_new_iid (const gchar *old_iid)
 
 	return NULL;
 }
+
+gboolean
+panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
+                                                 GtkWindow              *parent,
+                                                 GpInitialSetupCallback  callback,
+                                                 gpointer                user_data,
+                                                 GDestroyNotify          free_func)
+{
+	GSList *l;
+	gboolean ret;
+
+	_panel_applets_managers_ensure_loaded ();
+
+	ret = FALSE;
+	for (l = panel_applets_managers; l != NULL; l = l->next) {
+		PanelAppletsManager *manager = PANEL_APPLETS_MANAGER (l->data);
+
+		if (!PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid))
+			continue;
+
+		ret = PANEL_APPLETS_MANAGER_GET_CLASS (manager)->open_initial_setup_dialog (manager,
+		                                                                            iid,
+		                                                                            parent,
+		                                                                            callback,
+		                                                                            user_data,
+		                                                                            free_func);
+
+		if (ret)
+			break;
+	}
+
+	if (!ret && user_data != NULL && free_func != NULL)
+		free_func (user_data);
+
+	return ret;
+}
