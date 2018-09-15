@@ -51,6 +51,7 @@ const gchar         *gp_module_get_applet_id_from_iid (GpModule     *module,
 GpApplet            *gp_module_applet_new             (GpModule     *module,
                                                        const gchar  *applet,
                                                        const gchar  *settings_path,
+                                                       GVariant     *initial_settings,
                                                        GError      **error);
 
 G_END_DECLS

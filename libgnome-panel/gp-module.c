@@ -560,6 +560,7 @@ gp_module_get_applet_id_from_iid (GpModule    *module,
  * @module: a #GpModule
  * @applet: the applet id
  * @settings_path: the #GSettings path to the per-instance settings
+ * @initial_settings: initial settings
  * @error: return location for a #GError, or %NULL
  *
  * Returns a newly allocated applet.
@@ -570,6 +571,7 @@ GpApplet *
 gp_module_applet_new (GpModule     *module,
                       const gchar  *applet,
                       const gchar  *settings_path,
+                      GVariant     *initial_settings,
                       GError      **error)
 {
   GpAppletInfo *info;
@@ -606,6 +608,7 @@ gp_module_applet_new (GpModule     *module,
   return g_object_new (type,
                        "id", applet,
                        "settings-path", settings_path,
+                       "initial-settings", initial_settings,
                        "gettext-domain", module->gettext_domain,
                        NULL);
 }

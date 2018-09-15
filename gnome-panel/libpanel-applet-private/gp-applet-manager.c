@@ -190,6 +190,7 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
   PanelOrientation panel_orientation;
   GtkOrientation orientation;
   GtkPositionType position;
+  GVariant *initial_settings;
   GError *error;
   GpApplet *applet;
   GpAppletFrame *frame;
@@ -238,8 +239,13 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
         break;
     }
 
+  initial_settings = NULL;
+
   error = NULL;
-  applet = gp_module_applet_new (module, applet_id, settings_path, &error);
+  applet = gp_module_applet_new (module, applet_id, settings_path,
+                                 initial_settings, &error);
+
+  g_clear_pointer (&initial_settings, g_variant_unref);
   g_free (settings_path);
 
   if (!applet)

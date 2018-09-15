@@ -59,6 +59,7 @@ typedef enum
 /**
  * GpAppletClass:
  * @parent_class: The parent class.
+ * @initial_setup: virtual method called when applet has initial settings
  * @placement_changed: Signal is emitted when the orientation or position
  *     properties of applet has changed.
  *
@@ -67,6 +68,9 @@ typedef enum
 struct _GpAppletClass
 {
   GtkEventBoxClass parent_class;
+
+  void (* initial_setup)       (GpApplet        *applet,
+                                GVariant        *initial_settings);
 
   void (* placement_changed)   (GpApplet        *applet,
                                 GtkOrientation   orientation,
