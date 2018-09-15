@@ -420,6 +420,9 @@ menu_get_applet_id_from_iid (const gchar *iid)
   if (g_strcmp0 (iid, "PanelInternalFactory::MenuBar") == 0)
     return "menu-bar";
 
+  if (g_strcmp0 (iid, "PanelInternalFactory::MenuButton") == 0)
+    return "menu-button";
+
   if (g_strcmp0 (iid, "PanelInternalFactory::UserMenu") == 0)
     return "user-menu";
 
