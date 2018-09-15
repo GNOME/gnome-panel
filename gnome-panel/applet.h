@@ -82,11 +82,6 @@ GSettings  *panel_applet_get_settings    (AppletInfo *applet);
    (position, toplevel_id, panel_right_stick) */
 gboolean    panel_applet_can_freely_move (AppletInfo *applet);
 
-void panel_applet_position_menu (GtkMenu   *menu,
-				 int       *x,
-				 int       *y,
-				 gboolean  *push_in,
-				 GtkWidget *applet);
 G_END_DECLS
 
 #endif

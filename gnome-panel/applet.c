@@ -484,7 +484,7 @@ panel_applet_get_edit_menu (AppletInfo *info)
 	return info->edit_menu;
 }
 
-void
+static void
 panel_applet_position_menu (GtkMenu   *menu,
 			    int       *x,
 			    int       *y,
