@@ -32,7 +32,9 @@ struct _GpPlacesMenu
 {
   GtkMenu      parent;
 
-  GpApplet    *applet;
+  gboolean     enable_tooltips;
+  gboolean     locked_down;
+  guint        menu_icon_size;
 
   guint        reload_id;
 
@@ -42,16 +44,15 @@ struct _GpPlacesMenu
   GpVolumes   *volumes;
   GtkWidget   *volumes_local_menu;
   GtkWidget   *volumes_remote_menu;
-
-  gulong       locked_down_id;
-  gulong       menu_icon_size_id;
 };
 
 enum
 {
   PROP_0,
 
-  PROP_APPLET,
+  PROP_ENABLE_TOOLTIPS,
+  PROP_LOCKED_DOWN,
+  PROP_MENU_ICON_SIZE,
 
   LAST_PROP
 };
@@ -199,7 +200,6 @@ create_menu_item (GpPlacesMenu *menu,
                   const gchar  *tooltip)
 {
   GtkWidget *image;
-  guint icon_size;
   GtkWidget *item;
 
   g_assert (file != NULL);
@@ -211,8 +211,7 @@ create_menu_item (GpPlacesMenu *menu,
   else
     image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
 
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (label);
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
@@ -221,13 +220,13 @@ create_menu_item (GpPlacesMenu *menu,
     {
       gtk_widget_set_tooltip_text (item, tooltip);
 
-      g_object_bind_property (menu->applet, "enable-tooltips",
+      g_object_bind_property (menu, "enable-tooltips",
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
     }
 
-  if (!gp_applet_get_locked_down (menu->applet))
+  if (!menu->locked_down)
     {
       static const GtkTargetEntry drag_targets[] =
         {
@@ -284,7 +283,6 @@ append_local_drive (GpVolumes    *volumes,
   GIcon *icon;
   gchar *label;
   gchar *tooltip;
-  guint icon_size;
   GtkWidget *image;
   GtkWidget *item;
   GtkWidget *add_menu;
@@ -293,15 +291,14 @@ append_local_drive (GpVolumes    *volumes,
   label = g_drive_get_name (drive);
   tooltip = g_strdup_printf (_("Rescan %s"), label);
 
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
   image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (label);
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
 
   gtk_widget_set_tooltip_text (item, tooltip);
-  g_object_bind_property (menu->applet, "enable-tooltips", item, "has-tooltip",
+  g_object_bind_property (menu, "enable-tooltips", item, "has-tooltip",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   g_object_unref (icon);
@@ -327,7 +324,6 @@ append_local_volume (GpVolumes    *volumes,
   GIcon *icon;
   gchar *label;
   gchar *tooltip;
-  guint icon_size;
   GtkWidget *image;
   GtkWidget *item;
   GtkWidget *add_menu;
@@ -336,15 +332,14 @@ append_local_volume (GpVolumes    *volumes,
   label = g_volume_get_name (volume);
   tooltip = g_strdup_printf (_("Mount %s"), label);
 
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
   image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (label);
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
 
   gtk_widget_set_tooltip_text (item, tooltip);
-  g_object_bind_property (menu->applet, "enable-tooltips", item, "has-tooltip",
+  g_object_bind_property (menu, "enable-tooltips", item, "has-tooltip",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   g_object_unref (icon);
@@ -463,13 +458,11 @@ append_bookmarks (GpPlacesMenu *menu)
 {
   if (gp_bookmarks_get_count (menu->bookmarks) > MAX_ITEMS_OR_SUBMENU)
     {
-      guint icon_size;
       GtkWidget *icon;
       GtkWidget *item;
 
-      icon_size = gp_applet_get_menu_icon_size (menu->applet);
       icon = gtk_image_new_from_icon_name ("user-bookmarks", GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+      gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
       item = gp_image_menu_item_new_with_label (_("Bookmarks"));
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
@@ -523,13 +516,11 @@ append_local_volumes (GpPlacesMenu *menu)
 {
   if (gp_volumes_get_local_count (menu->volumes) > MAX_ITEMS_OR_SUBMENU)
     {
-      guint icon_size;
       GtkWidget *icon;
       GtkWidget *item;
 
-      icon_size = gp_applet_get_menu_icon_size (menu->applet);
       icon = gtk_image_new_from_icon_name ("drive-removable-media", GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+      gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
       item = gp_image_menu_item_new_with_label (_("Removable Media"));
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
@@ -579,13 +570,11 @@ append_remote_volumes (GpPlacesMenu *menu)
 {
   if (gp_volumes_get_remote_count (menu->volumes) > MAX_ITEMS_OR_SUBMENU)
     {
-      guint icon_size;
       GtkWidget *icon;
       GtkWidget *item;
 
-      icon_size = gp_applet_get_menu_icon_size (menu->applet);
       icon = gtk_image_new_from_icon_name ("network-server", GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+      gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
       item = gp_image_menu_item_new_with_label (_("Network Places"));
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
@@ -605,22 +594,30 @@ append_remote_volumes (GpPlacesMenu *menu)
 static void
 append_recent_menu (GpPlacesMenu *menu)
 {
-  guint icon_size;
   GtkWidget *icon;
   GtkWidget *item;
   GtkWidget *recent_menu;
 
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
   icon = gtk_image_new_from_icon_name ("document-open-recent", GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (_("Recent Documents"));
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   gtk_widget_show (item);
 
-  recent_menu = gp_recent_menu_new (menu->applet);
+  recent_menu = gp_recent_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), recent_menu);
+
+  g_object_bind_property (menu, "enable-tooltips",
+                          recent_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu, "menu-icon-size",
+                          recent_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   g_object_bind_property (recent_menu, "empty",
                           item, "sensitive",
@@ -701,22 +698,6 @@ volumes_changed_cb (GpVolumes    *volumes,
 }
 
 static void
-locked_down_cb (GpApplet     *applet,
-                GParamSpec   *pspec,
-                GpPlacesMenu *menu)
-{
-  queue_reload (menu);
-}
-
-static void
-menu_icon_size_cb (GpApplet     *applet,
-                   GParamSpec   *pspec,
-                   GpPlacesMenu *menu)
-{
-  queue_reload (menu);
-}
-
-static void
 gp_places_menu_constructed (GObject *object)
 {
   GpPlacesMenu *menu;
@@ -732,14 +713,6 @@ gp_places_menu_constructed (GObject *object)
   menu->volumes = gp_volumes_new ();
   g_signal_connect (menu->volumes, "changed",
                     G_CALLBACK (volumes_changed_cb), menu);
-
-  menu->locked_down_id = g_signal_connect (menu->applet, "notify::locked-down",
-                                           G_CALLBACK (locked_down_cb), menu);
-
-  menu->menu_icon_size_id = g_signal_connect (menu->applet,
-                                              "notify::menu-icon-size",
-                                              G_CALLBACK (menu_icon_size_cb),
-                                              menu);
 
   queue_reload (menu);
 }
@@ -757,24 +730,75 @@ gp_places_menu_dispose (GObject *object)
       menu->reload_id = 0;
     }
 
-  if (menu->locked_down_id != 0)
-    {
-      g_signal_handler_disconnect (menu->applet, menu->locked_down_id);
-      menu->locked_down_id = 0;
-    }
-
-  if (menu->menu_icon_size_id != 0)
-    {
-      g_signal_handler_disconnect (menu->applet, menu->menu_icon_size_id);
-      menu->menu_icon_size_id = 0;
-    }
-
   g_clear_object (&menu->bookmarks);
   g_clear_object (&menu->volumes);
 
-  menu->applet = NULL;
-
   G_OBJECT_CLASS (gp_places_menu_parent_class)->dispose (object);
+}
+
+static void
+gp_places_menu_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GpPlacesMenu *menu;
+
+  menu = GP_PLACES_MENU (object);
+
+  switch (property_id)
+    {
+      case PROP_LOCKED_DOWN:
+        g_assert_not_reached ();
+        break;
+
+      case PROP_ENABLE_TOOLTIPS:
+        g_value_set_boolean (value, menu->enable_tooltips);
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        g_value_set_uint (value, menu->menu_icon_size);
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
+}
+
+static void
+set_enable_tooltips (GpPlacesMenu *menu,
+                     gboolean      enable_tooltips)
+{
+  if (menu->enable_tooltips == enable_tooltips)
+    return;
+
+  menu->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (menu),
+                            menu_properties[PROP_ENABLE_TOOLTIPS]);
+}
+
+static void
+set_locked_down (GpPlacesMenu *menu,
+                 gboolean      locked_down)
+{
+  if (menu->locked_down == locked_down)
+    return;
+
+  menu->locked_down = locked_down;
+  queue_reload (menu);
+}
+
+static void
+set_menu_icon_size (GpPlacesMenu *menu,
+                    guint         menu_icon_size)
+{
+  if (menu->menu_icon_size == menu_icon_size)
+    return;
+
+  menu->menu_icon_size = menu_icon_size;
+  queue_reload (menu);
 }
 
 static void
@@ -789,9 +813,16 @@ gp_places_menu_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
-        g_assert (menu->applet == NULL);
-        menu->applet = g_value_get_object (value);
+      case PROP_ENABLE_TOOLTIPS:
+        set_enable_tooltips (menu, g_value_get_boolean (value));
+        break;
+
+      case PROP_LOCKED_DOWN:
+        set_locked_down (menu, g_value_get_boolean (value));
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        set_menu_icon_size (menu, g_value_get_uint (value));
         break;
 
       default:
@@ -803,11 +834,26 @@ gp_places_menu_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
-  menu_properties[PROP_APPLET] =
-    g_param_spec_object ("applet", "Applet", "Applet",
-                         GP_TYPE_APPLET,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
-                         G_PARAM_STATIC_STRINGS);
+  menu_properties[PROP_ENABLE_TOOLTIPS] =
+    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
+                          TRUE,
+                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_LOCKED_DOWN] =
+    g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
+                          FALSE,
+                          G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_MENU_ICON_SIZE] =
+    g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
+                       16, 24, 16,
+                       G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
+                       G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP, menu_properties);
 }
@@ -821,6 +867,7 @@ gp_places_menu_class_init (GpPlacesMenuClass *menu_class)
 
   object_class->constructed = gp_places_menu_constructed;
   object_class->dispose = gp_places_menu_dispose;
+  object_class->get_property = gp_places_menu_get_property;
   object_class->set_property = gp_places_menu_set_property;
 
   install_properties (object_class);
@@ -832,9 +879,8 @@ gp_places_menu_init (GpPlacesMenu *menu)
 }
 
 GtkWidget *
-gp_places_menu_new (GpApplet *applet)
+gp_places_menu_new (void)
 {
   return g_object_new (GP_TYPE_PLACES_MENU,
-                       "applet", applet,
                        NULL);
 }

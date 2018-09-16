@@ -18,14 +18,14 @@
 #ifndef GP_PLACES_MENU_H
 #define GP_PLACES_MENU_H
 
-#include <libgnome-panel/gp-applet.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_PLACES_MENU (gp_places_menu_get_type ())
 G_DECLARE_FINAL_TYPE (GpPlacesMenu, gp_places_menu, GP, PLACES_MENU, GtkMenu)
 
-GtkWidget *gp_places_menu_new (GpApplet *applet);
+GtkWidget *gp_places_menu_new (void);
 
 G_END_DECLS
 

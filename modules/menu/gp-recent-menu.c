@@ -31,7 +31,8 @@ struct _GpRecentMenu
 {
   GtkMenu    parent;
 
-  GpApplet  *applet;
+  gboolean   enable_tooltips;
+  guint      menu_icon_size;
 
   gboolean   empty;
 
@@ -40,14 +41,15 @@ struct _GpRecentMenu
   guint      reload_id;
 
   gulong     changed_id;
-  gulong     menu_icon_size_id;
 };
 
 enum
 {
   PROP_0,
 
-  PROP_APPLET,
+  PROP_ENABLE_TOOLTIPS,
+  PROP_MENU_ICON_SIZE,
+
   PROP_EMPTY,
 
   LAST_PROP
@@ -87,7 +89,6 @@ append_recent_items (GpRecentMenu *menu)
 {
   GtkRecentManager *manager;
   GList *items;
-  guint icon_size;
   gint count;
   GList *l;
 
@@ -95,8 +96,6 @@ append_recent_items (GpRecentMenu *menu)
 
   items = gtk_recent_manager_get_items (manager);
   items = g_list_sort (items, (GCompareFunc) items_sort_func);
-
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
   count = 0;
 
   for (l = items; l != NULL; l = l->next)
@@ -113,7 +112,7 @@ append_recent_items (GpRecentMenu *menu)
 
       icon = gtk_recent_info_get_gicon (info);
       image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
       g_clear_object (&icon);
 
       label = gtk_recent_info_get_display_name (info);
@@ -138,7 +137,7 @@ append_recent_items (GpRecentMenu *menu)
           gtk_widget_set_tooltip_text (item, tooltip);
           g_free (tooltip);
 
-          g_object_bind_property (menu->applet, "enable-tooltips",
+          g_object_bind_property (menu, "enable-tooltips",
                                   item, "has-tooltip",
                                   G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
         }
@@ -223,7 +222,6 @@ static void
 append_clear (GpRecentMenu *menu)
 {
   GtkWidget *item;
-  guint icon_size;
   GtkWidget *icon;
   const gchar *tooltip;
 
@@ -232,9 +230,8 @@ append_clear (GpRecentMenu *menu)
   gtk_widget_set_sensitive (item, FALSE);
   gtk_widget_show (item);
 
-  icon_size = gp_applet_get_menu_icon_size (menu->applet);
   icon = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), menu->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (_("Clear Recent Documents..."));
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
@@ -244,7 +241,7 @@ append_clear (GpRecentMenu *menu)
   tooltip = _("Clear all items from the recent documents list");
   gtk_widget_set_tooltip_text (item, tooltip);
 
-  g_object_bind_property (menu->applet, "enable-tooltips", item, "has-tooltip",
+  g_object_bind_property (menu, "enable-tooltips", item, "has-tooltip",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE);
 
   g_signal_connect (item, "activate", G_CALLBACK (clear_cb), menu);
@@ -314,14 +311,6 @@ changed_cb (GtkRecentManager *manager,
 }
 
 static void
-menu_icon_size_cb (GpApplet     *applet,
-                   GParamSpec   *pspec,
-                   GpRecentMenu *menu)
-{
-  queue_reload (menu);
-}
-
-static void
 gp_recent_menu_constructed (GObject *object)
 {
   GpRecentMenu *menu;
@@ -334,11 +323,6 @@ gp_recent_menu_constructed (GObject *object)
   manager = gtk_recent_manager_get_default ();
   menu->changed_id = g_signal_connect (manager, "changed",
                                        G_CALLBACK (changed_cb), menu);
-
-  menu->menu_icon_size_id = g_signal_connect (menu->applet,
-                                              "notify::menu-icon-size",
-                                              G_CALLBACK (menu_icon_size_cb),
-                                              menu);
 
   queue_reload (menu);
 }
@@ -366,15 +350,7 @@ gp_recent_menu_dispose (GObject *object)
       menu->changed_id = 0;
     }
 
-  if (menu->menu_icon_size_id != 0)
-    {
-      g_signal_handler_disconnect (menu->applet, menu->menu_icon_size_id);
-      menu->menu_icon_size_id = 0;
-    }
-
   g_clear_pointer (&menu->clear_dialog, gtk_widget_destroy);
-
-  menu->applet = NULL;
 
   G_OBJECT_CLASS (gp_recent_menu_parent_class)->dispose (object);
 }
@@ -391,8 +367,12 @@ gp_recent_menu_get_property (GObject    *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
+      case PROP_MENU_ICON_SIZE:
         g_assert_not_reached ();
+        break;
+
+      case PROP_ENABLE_TOOLTIPS:
+        g_value_set_boolean (value, menu->enable_tooltips);
         break;
 
       case PROP_EMPTY:
@@ -403,6 +383,30 @@ gp_recent_menu_get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
+}
+
+static void
+set_enable_tooltips (GpRecentMenu *menu,
+                     gboolean      enable_tooltips)
+{
+  if (menu->enable_tooltips == enable_tooltips)
+    return;
+
+  menu->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (menu),
+                            menu_properties[PROP_ENABLE_TOOLTIPS]);
+}
+
+static void
+set_menu_icon_size (GpRecentMenu *menu,
+                    guint         menu_icon_size)
+{
+  if (menu->menu_icon_size == menu_icon_size)
+    return;
+
+  menu->menu_icon_size = menu_icon_size;
+  queue_reload (menu);
 }
 
 static void
@@ -417,9 +421,16 @@ gp_recent_menu_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
-        g_assert (menu->applet == NULL);
-        menu->applet = g_value_get_object (value);
+      case PROP_ENABLE_TOOLTIPS:
+        set_enable_tooltips (menu, g_value_get_boolean (value));
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        set_menu_icon_size (menu, g_value_get_uint (value));
+        break;
+
+      case PROP_EMPTY:
+        g_assert_not_reached ();
         break;
 
       default:
@@ -431,11 +442,19 @@ gp_recent_menu_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
-  menu_properties[PROP_APPLET] =
-    g_param_spec_object ("applet", "Applet", "Applet",
-                         GP_TYPE_APPLET,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
-                         G_PARAM_STATIC_STRINGS);
+  menu_properties[PROP_ENABLE_TOOLTIPS] =
+    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
+                          TRUE,
+                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_MENU_ICON_SIZE] =
+    g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
+                       16, 24, 16,
+                       G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                       G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
 
   menu_properties[PROP_EMPTY] =
     g_param_spec_boolean ("empty", "Empty", "Empty",
@@ -467,9 +486,8 @@ gp_recent_menu_init (GpRecentMenu *menu)
 }
 
 GtkWidget *
-gp_recent_menu_new (GpApplet *applet)
+gp_recent_menu_new (void)
 {
   return g_object_new (GP_TYPE_RECENT_MENU,
-                       "applet", applet,
                        NULL);
 }

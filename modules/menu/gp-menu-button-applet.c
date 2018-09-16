@@ -192,8 +192,23 @@ append_places_item (GpMenuButtonApplet *menu_button,
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
   gtk_widget_show (item);
 
-  places_menu = gp_places_menu_new (GP_APPLET (menu_button));
+  places_menu = gp_places_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), places_menu);
+
+  g_object_bind_property (menu_button, "enable-tooltips",
+                          places_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "locked-down",
+                          places_menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "menu-icon-size",
+                          places_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 }
 
 static void

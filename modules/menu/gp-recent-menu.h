@@ -18,14 +18,14 @@
 #ifndef GP_RECENT_MENU_H
 #define GP_RECENT_MENU_H
 
-#include <libgnome-panel/gp-applet.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_RECENT_MENU (gp_recent_menu_get_type ())
 G_DECLARE_FINAL_TYPE (GpRecentMenu, gp_recent_menu, GP, RECENT_MENU, GtkMenu)
 
-GtkWidget *gp_recent_menu_new (GpApplet *applet);
+GtkWidget *gp_recent_menu_new (void);
 
 G_END_DECLS
 

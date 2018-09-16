@@ -163,9 +163,24 @@ append_places_item (GpMenuBarApplet *applet)
   tooltip = _("Access documents, folders and network places");
   gtk_widget_set_tooltip_text (applet->places_item, tooltip);
 
-  applet->places_menu = gp_places_menu_new (GP_APPLET (applet));
+  applet->places_menu = gp_places_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->places_item),
                              applet->places_menu);
+
+  g_object_bind_property (applet, "enable-tooltips",
+                          applet->places_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "locked-down",
+                          applet->places_menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "menu-icon-size",
+                          applet->places_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   g_signal_connect (applet->places_menu, "button-press-event",
                     G_CALLBACK (button_press_event_cb), NULL);
