@@ -33,7 +33,9 @@ struct _GpLockLogout
 {
   GObject              parent;
 
-  GpApplet            *applet;
+  gboolean             enable_tooltips;
+  gboolean             locked_down;
+  guint                menu_icon_size;
 
   GSettings           *lockdown;
 
@@ -50,7 +52,9 @@ enum
 {
   PROP_0,
 
-  PROP_APPLET,
+  PROP_ENABLE_TOOLTIPS,
+  PROP_LOCKED_DOWN,
+  PROP_MENU_ICON_SIZE,
 
   LAST_PROP
 };
@@ -676,19 +680,17 @@ free_drag_id (gchar    *drag_id,
 }
 
 static GtkWidget *
-create_menu_item (GpApplet    *applet,
-                  const gchar *icon_name,
-                  const gchar *label,
-                  const gchar *tooltip,
-                  const gchar *drag_id)
+create_menu_item (GpLockLogout *lock_logout,
+                  const gchar  *icon_name,
+                  const gchar  *label,
+                  const gchar  *tooltip,
+                  const gchar  *drag_id)
 {
-  guint icon_size;
   GtkWidget *image;
   GtkWidget *item;
 
-  icon_size = gp_applet_get_menu_icon_size (applet);
   image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), lock_logout->menu_icon_size);
 
   item = gp_image_menu_item_new_with_label (label);
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
@@ -698,13 +700,13 @@ create_menu_item (GpApplet    *applet,
     {
       gtk_widget_set_tooltip_text (item, tooltip);
 
-      g_object_bind_property (applet, "enable-tooltips",
+      g_object_bind_property (lock_logout, "enable-tooltips",
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
     }
 
-  if (drag_id != NULL && !gp_applet_get_locked_down (applet))
+  if (drag_id != NULL && !lock_logout->locked_down)
     {
       static const GtkTargetEntry drag_targets[] =
         {
@@ -793,9 +795,47 @@ gp_lock_logout_dispose (GObject *object)
   g_clear_object (&lock_logout->screensaver);
   g_clear_object (&lock_logout->seat);
 
-  lock_logout->applet = NULL;
-
   G_OBJECT_CLASS (gp_lock_logout_parent_class)->dispose (object);
+}
+
+static void
+gp_lock_logout_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GpLockLogout *lock_logout;
+
+  lock_logout = GP_LOCK_LOGOUT (object);
+
+  switch (property_id)
+    {
+      case PROP_LOCKED_DOWN:
+      case PROP_MENU_ICON_SIZE:
+        g_assert_not_reached ();
+        break;
+
+      case PROP_ENABLE_TOOLTIPS:
+        g_value_set_boolean (value, lock_logout->enable_tooltips);
+        break;
+
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+        break;
+    }
+}
+
+static void
+set_enable_tooltips (GpLockLogout *lock_logout,
+                     gboolean      enable_tooltips)
+{
+  if (lock_logout->enable_tooltips == enable_tooltips)
+    return;
+
+  lock_logout->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (lock_logout),
+                            lock_logout_properties[PROP_ENABLE_TOOLTIPS]);
 }
 
 static void
@@ -810,9 +850,16 @@ gp_lock_logout_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
-        g_assert (lock_logout->applet == NULL);
-        lock_logout->applet = g_value_get_object (value);
+      case PROP_ENABLE_TOOLTIPS:
+        set_enable_tooltips (lock_logout, g_value_get_boolean (value));
+        break;
+
+      case PROP_LOCKED_DOWN:
+        lock_logout->locked_down = g_value_get_boolean (value);
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        lock_logout->menu_icon_size = g_value_get_uint (value);
         break;
 
       default:
@@ -824,11 +871,26 @@ gp_lock_logout_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
-  lock_logout_properties[PROP_APPLET] =
-    g_param_spec_object ("applet", "Applet", "Applet",
-                         GP_TYPE_APPLET,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
-                         G_PARAM_STATIC_STRINGS);
+  lock_logout_properties[PROP_ENABLE_TOOLTIPS] =
+    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
+                          TRUE,
+                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  lock_logout_properties[PROP_LOCKED_DOWN] =
+    g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
+                          FALSE,
+                          G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  lock_logout_properties[PROP_MENU_ICON_SIZE] =
+    g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
+                       16, 24, 16,
+                       G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                       G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
 
   g_object_class_install_properties (object_class, LAST_PROP,
                                      lock_logout_properties);
@@ -851,6 +913,7 @@ gp_lock_logout_class_init (GpLockLogoutClass *lock_logout_class)
 
   object_class->constructed = gp_lock_logout_constructed;
   object_class->dispose = gp_lock_logout_dispose;
+  object_class->get_property = gp_lock_logout_get_property;
   object_class->set_property = gp_lock_logout_set_property;
 
   install_properties (object_class);
@@ -863,10 +926,9 @@ gp_lock_logout_init (GpLockLogout *lock_logout)
 }
 
 GpLockLogout *
-gp_lock_logout_new (GpApplet *applet)
+gp_lock_logout_new (void)
 {
   return g_object_new (GP_TYPE_LOCK_LOGOUT,
-                       "applet", applet,
                        NULL);
 }
 
@@ -906,7 +968,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = NULL;
       drag_id = NULL;
 
-      switch_user = create_menu_item (lock_logout->applet,
+      switch_user = create_menu_item (lock_logout,
                                       "system-users",
                                       label, tooltip,
                                       drag_id);
@@ -923,7 +985,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = _("Log out of this session to log in as a different user");
       drag_id = "ACTION:logout:NEW";
 
-      logout = create_menu_item (lock_logout->applet,
+      logout = create_menu_item (lock_logout,
                                  "system-log-out",
                                  label, tooltip,
                                  drag_id);
@@ -940,7 +1002,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = _("Protect your computer from unauthorized use");
       drag_id = "ACTION:lock:NEW";
 
-      lock_screen = create_menu_item (lock_logout->applet,
+      lock_screen = create_menu_item (lock_logout,
                                       "system-lock-screen",
                                       label, tooltip,
                                       drag_id);
@@ -982,7 +1044,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = NULL;
       drag_id = "ACTION:hibernate:NEW";
 
-      hibernate = create_menu_item (lock_logout->applet,
+      hibernate = create_menu_item (lock_logout,
                                     "gnome-panel-hibernate",
                                     label, tooltip,
                                     drag_id);
@@ -999,7 +1061,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = NULL;
       drag_id = "ACTION:suspend:NEW";
 
-      suspend = create_menu_item (lock_logout->applet,
+      suspend = create_menu_item (lock_logout,
                                   "gnome-panel-suspend",
                                   label, tooltip,
                                   drag_id);
@@ -1016,7 +1078,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = NULL;
       drag_id = "ACTION:hybrid-sleep:NEW";
 
-      hybrid_sleep = create_menu_item (lock_logout->applet,
+      hybrid_sleep = create_menu_item (lock_logout,
                                        "gnome-panel-suspend",
                                        label, tooltip,
                                        drag_id);
@@ -1035,7 +1097,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = _("Restart the computer");
       drag_id = "ACTION:reboot:NEW";
 
-      reboot = create_menu_item (lock_logout->applet,
+      reboot = create_menu_item (lock_logout,
                                  "view-refresh",
                                  label, tooltip,
                                  drag_id);
@@ -1052,7 +1114,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
       tooltip = _("Power off the computer");
       drag_id = "ACTION:shutdown:NEW";
 
-      shutdown = create_menu_item (lock_logout->applet,
+      shutdown = create_menu_item (lock_logout,
                                    "system-shutdown",
                                    label, tooltip,
                                    drag_id);

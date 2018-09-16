@@ -18,14 +18,14 @@
 #ifndef GP_LOCK_LOGOUT_H
 #define GP_LOCK_LOGOUT_H
 
-#include <libgnome-panel/gp-applet.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_LOCK_LOGOUT (gp_lock_logout_get_type ())
 G_DECLARE_FINAL_TYPE (GpLockLogout, gp_lock_logout, GP, LOCK_LOGOUT, GObject)
 
-GpLockLogout *gp_lock_logout_new            (GpApplet     *applet);
+GpLockLogout *gp_lock_logout_new            (void);
 
 void          gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
                                              GtkMenu      *menu);

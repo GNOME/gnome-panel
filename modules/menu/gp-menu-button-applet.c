@@ -311,7 +311,22 @@ update_menu (GpMenuButtonApplet *menu_button)
       g_free (menu_file);
 
       g_assert (priv->lock_logout == NULL);
-      priv->lock_logout = gp_lock_logout_new (GP_APPLET (menu_button));
+      priv->lock_logout = gp_lock_logout_new ();
+
+      g_object_bind_property (menu_button, "enable-tooltips",
+                              priv->lock_logout, "enable-tooltips",
+                              G_BINDING_DEFAULT |
+                              G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (menu_button, "locked-down",
+                              priv->lock_logout, "locked-down",
+                              G_BINDING_DEFAULT |
+                              G_BINDING_SYNC_CREATE);
+
+      g_object_bind_property (menu_button, "menu-icon-size",
+                              priv->lock_logout, "menu-icon-size",
+                              G_BINDING_DEFAULT |
+                              G_BINDING_SYNC_CREATE);
 
       g_signal_connect_swapped (priv->lock_logout, "changed",
                                 G_CALLBACK (gp_menu_reload), priv->menu);

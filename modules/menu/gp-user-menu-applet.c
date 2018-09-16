@@ -88,7 +88,22 @@ append_user_item (GpUserMenuApplet *applet)
   menu = gp_user_menu_new (GP_APPLET (applet));
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
-  applet->lock_logout = gp_lock_logout_new (GP_APPLET (applet));
+  applet->lock_logout = gp_lock_logout_new ();
+
+  g_object_bind_property (applet, "enable-tooltips",
+                          applet->lock_logout, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "locked-down",
+                          applet->lock_logout, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "menu-icon-size",
+                          applet->lock_logout, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   g_signal_connect_swapped (applet->lock_logout, "changed",
                             G_CALLBACK (gp_user_menu_reload), menu);
