@@ -7,7 +7,6 @@ SUBDIRS = \
 
 bin_PROGRAMS = \
 	gnome-panel \
-	gnome-desktop-item-edit \
 	$(NULL)
 
 panel_sources =			\
@@ -126,33 +125,6 @@ gnome_panel_LDADD =		\
 
 gnome_panel_LDFLAGS = \
 	-export-dynamic \
-	$(WARN_LDFLAGS) \
-	$(AM_LDFLAGS) \
-	$(NULL)
-
-gnome_desktop_item_edit_SOURCES =	\
-	gnome-desktop-item-edit.c	\
-	panel-ditem-editor.c		\
-	panel-util.c			\
-	$(NULL)
-
-gnome_desktop_item_edit_CFLAGS = \
-	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
-	-DGNOMELOCALEDIR=\""$(localedir)"\" \
-	-I$(srcdir) \
-	-I$(top_builddir)/gnome-panel \
-	-I$(top_builddir)/gnome-panel/libpanel-util \
-	$(PANEL_CFLAGS) \
-	$(WARN_CFLAGS) \
-	$(AM_CFLAGS) \
-	$(NULL)
-
-gnome_desktop_item_edit_LDADD = 	\
-	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la	\
-	$(PANEL_LIBS)							\
-	$(NULL)
-
-gnome_desktop_item_edit_LDFLAGS = \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
