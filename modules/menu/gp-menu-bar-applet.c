@@ -126,8 +126,23 @@ append_applications_item (GpMenuBarApplet *applet)
 
   menu = gp_menu_utils_get_applications_menu ();
 
-  applet->applications_menu = gp_menu_new (GP_APPLET (applet), menu, TRUE);
+  applet->applications_menu = gp_menu_new (menu, TRUE);
   g_free (menu);
+
+  g_object_bind_property (applet, "enable-tooltips",
+                          applet->applications_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "locked-down",
+                          applet->applications_menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "menu-icon-size",
+                          applet->applications_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->applications_item),
                              applet->applications_menu);
@@ -173,8 +188,23 @@ append_system_item (GpMenuBarApplet *applet)
   tooltip = _("Change system appearance and behavior, or get help");
   gtk_widget_set_tooltip_text (applet->system_item, tooltip);
 
-  applet->system_menu = gp_menu_new (GP_APPLET (applet), menu, FALSE);
+  applet->system_menu = gp_menu_new (menu, FALSE);
   g_free (menu);
+
+  g_object_bind_property (applet, "enable-tooltips",
+                          applet->system_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "locked-down",
+                          applet->system_menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "menu-icon-size",
+                          applet->system_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (applet->system_item),
                              applet->system_menu);

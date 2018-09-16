@@ -288,7 +288,7 @@ update_menu (GpMenuButtonApplet *menu_button)
       menu_file = NULL;
       if (validate_scheme (scheme, &menu_file))
         {
-          priv->menu = gp_menu_new (GP_APPLET (menu_button), menu_file, TRUE);
+          priv->menu = gp_menu_new (menu_file, TRUE);
           gp_menu_set_path (GP_MENU (priv->menu), path);
 
           priv->custom_menu = TRUE;
@@ -307,7 +307,7 @@ update_menu (GpMenuButtonApplet *menu_button)
       gchar *menu_file;
 
       menu_file = gp_menu_utils_get_applications_menu ();
-      priv->menu = gp_menu_new (GP_APPLET (menu_button), menu_file, TRUE);
+      priv->menu = gp_menu_new (menu_file, TRUE);
       g_free (menu_file);
 
       g_assert (priv->lock_logout == NULL);
@@ -322,6 +322,21 @@ update_menu (GpMenuButtonApplet *menu_button)
 
       priv->custom_menu = FALSE;
     }
+
+  g_object_bind_property (menu_button, "enable-tooltips",
+                          priv->menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "locked-down",
+                          priv->menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "menu-icon-size",
+                          priv->menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   g_object_ref_sink (priv->menu);
 }
