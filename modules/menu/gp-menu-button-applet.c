@@ -221,8 +221,23 @@ append_user_item (GpMenuButtonApplet *menu_button,
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
   gtk_widget_show (item);
 
-  user_menu = gp_user_menu_new (GP_APPLET (menu_button));
+  user_menu = gp_user_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), user_menu);
+
+  g_object_bind_property (menu_button, "enable-tooltips",
+                          user_menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "locked-down",
+                          user_menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (menu_button, "menu-icon-size",
+                          user_menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   g_object_bind_property (user_menu, "empty", item, "visible",
                           G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |

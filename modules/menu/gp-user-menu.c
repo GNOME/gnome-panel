@@ -25,7 +25,9 @@ struct _GpUserMenu
 {
   GtkMenu                parent;
 
-  GpApplet              *applet;
+  gboolean               enable_tooltips;
+  gboolean               locked_down;
+  guint                  menu_icon_size;
 
   gboolean               empty;
 
@@ -33,16 +35,16 @@ struct _GpUserMenu
   gpointer               append_data;
 
   guint                  reload_id;
-
-  gulong                 locked_down_id;
-  gulong                 menu_icon_size_id;
 };
 
 enum
 {
   PROP_0,
 
-  PROP_APPLET,
+  PROP_ENABLE_TOOLTIPS,
+  PROP_LOCKED_DOWN,
+  PROP_MENU_ICON_SIZE,
+
   PROP_EMPTY,
 
   LAST_PROP
@@ -114,12 +116,10 @@ append_control_center (GpUserMenu *menu)
 
   if (icon != NULL)
     {
-      guint icon_size;
       GtkWidget *image;
 
-      icon_size = gp_applet_get_menu_icon_size (menu->applet);
       image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_MENU);
-      gtk_image_set_pixel_size (GTK_IMAGE (image), icon_size);
+      gtk_image_set_pixel_size (GTK_IMAGE (image), menu->menu_icon_size);
 
       gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), image);
     }
@@ -128,13 +128,13 @@ append_control_center (GpUserMenu *menu)
     {
       gtk_widget_set_tooltip_text (item, description);
 
-      g_object_bind_property (menu->applet, "enable-tooltips",
+      g_object_bind_property (menu, "enable-tooltips",
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
     }
 
-  if (!gp_applet_get_locked_down (menu->applet))
+  if (!menu->locked_down)
     {
       static const GtkTargetEntry drag_targets[] =
         {
@@ -223,22 +223,6 @@ queue_reload (GpUserMenu *menu)
 }
 
 static void
-locked_down_cb (GpApplet   *applet,
-                GParamSpec *pspec,
-                GpUserMenu *menu)
-{
-  queue_reload (menu);
-}
-
-static void
-menu_icon_size_cb (GpApplet   *applet,
-                   GParamSpec *pspec,
-                   GpUserMenu *menu)
-{
-  queue_reload (menu);
-}
-
-static void
 gp_user_menu_constructed (GObject *object)
 {
   GpUserMenu *menu;
@@ -246,14 +230,6 @@ gp_user_menu_constructed (GObject *object)
   menu = GP_USER_MENU (object);
 
   G_OBJECT_CLASS (gp_user_menu_parent_class)->constructed (object);
-
-  menu->locked_down_id = g_signal_connect (menu->applet, "notify::locked-down",
-                                           G_CALLBACK (locked_down_cb), menu);
-
-  menu->menu_icon_size_id = g_signal_connect (menu->applet,
-                                              "notify::menu-icon-size",
-                                              G_CALLBACK (menu_icon_size_cb),
-                                              menu);
 
   queue_reload (menu);
 }
@@ -271,20 +247,6 @@ gp_user_menu_dispose (GObject *object)
       menu->reload_id = 0;
     }
 
-  if (menu->locked_down_id != 0)
-    {
-      g_signal_handler_disconnect (menu->applet, menu->locked_down_id);
-      menu->locked_down_id = 0;
-    }
-
-  if (menu->menu_icon_size_id != 0)
-    {
-      g_signal_handler_disconnect (menu->applet, menu->menu_icon_size_id);
-      menu->menu_icon_size_id = 0;
-    }
-
-  menu->applet = NULL;
-
   G_OBJECT_CLASS (gp_user_menu_parent_class)->dispose (object);
 }
 
@@ -300,8 +262,13 @@ gp_user_menu_get_property (GObject    *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
+      case PROP_LOCKED_DOWN:
+      case PROP_MENU_ICON_SIZE:
         g_assert_not_reached ();
+        break;
+
+      case PROP_ENABLE_TOOLTIPS:
+        g_value_set_boolean (value, menu->enable_tooltips);
         break;
 
       case PROP_EMPTY:
@@ -312,6 +279,41 @@ gp_user_menu_get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
+}
+
+static void
+set_enable_tooltips (GpUserMenu *menu,
+                     gboolean    enable_tooltips)
+{
+  if (menu->enable_tooltips == enable_tooltips)
+    return;
+
+  menu->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (menu),
+                            menu_properties[PROP_ENABLE_TOOLTIPS]);
+}
+
+static void
+set_locked_down (GpUserMenu *menu,
+                 gboolean   locked_down)
+{
+  if (menu->locked_down == locked_down)
+    return;
+
+  menu->locked_down = locked_down;
+  queue_reload (menu);
+}
+
+static void
+set_menu_icon_size (GpUserMenu *menu,
+                    guint       menu_icon_size)
+{
+  if (menu->menu_icon_size == menu_icon_size)
+    return;
+
+  menu->menu_icon_size = menu_icon_size;
+  queue_reload (menu);
 }
 
 static void
@@ -326,9 +328,21 @@ gp_user_menu_set_property (GObject      *object,
 
   switch (property_id)
     {
-      case PROP_APPLET:
-        g_assert (menu->applet == NULL);
-        menu->applet = g_value_get_object (value);
+
+      case PROP_ENABLE_TOOLTIPS:
+        set_enable_tooltips (menu, g_value_get_boolean (value));
+        break;
+
+      case PROP_LOCKED_DOWN:
+        set_locked_down (menu, g_value_get_boolean (value));
+        break;
+
+      case PROP_MENU_ICON_SIZE:
+        set_menu_icon_size (menu, g_value_get_uint (value));
+        break;
+
+      case PROP_EMPTY:
+        g_assert_not_reached ();
         break;
 
       default:
@@ -340,11 +354,26 @@ gp_user_menu_set_property (GObject      *object,
 static void
 install_properties (GObjectClass *object_class)
 {
-  menu_properties[PROP_APPLET] =
-    g_param_spec_object ("applet", "Applet", "Applet",
-                         GP_TYPE_APPLET,
-                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
-                         G_PARAM_STATIC_STRINGS);
+  menu_properties[PROP_ENABLE_TOOLTIPS] =
+    g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
+                          TRUE,
+                          G_PARAM_CONSTRUCT | G_PARAM_READWRITE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_LOCKED_DOWN] =
+    g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
+                          FALSE,
+                          G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                          G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  menu_properties[PROP_MENU_ICON_SIZE] =
+    g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",
+                       16, 24, 16,
+                       G_PARAM_CONSTRUCT | G_PARAM_WRITABLE |
+                       G_PARAM_EXPLICIT_NOTIFY |
+                       G_PARAM_STATIC_STRINGS);
 
   menu_properties[PROP_EMPTY] =
     g_param_spec_boolean ("empty", "Empty", "Empty",
@@ -376,10 +405,9 @@ gp_user_menu_init (GpUserMenu *menu)
 }
 
 GtkWidget *
-gp_user_menu_new (GpApplet *applet)
+gp_user_menu_new (void)
 {
   return g_object_new (GP_TYPE_USER_MENU,
-                       "applet", applet,
                        NULL);
 }
 

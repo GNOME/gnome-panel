@@ -85,8 +85,23 @@ append_user_item (GpUserMenuApplet *applet)
   gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
   gtk_widget_show (item);
 
-  menu = gp_user_menu_new (GP_APPLET (applet));
+  menu = gp_user_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
+
+  g_object_bind_property (applet, "enable-tooltips",
+                          menu, "enable-tooltips",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "locked-down",
+                          menu, "locked-down",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (applet, "menu-icon-size",
+                          menu, "menu-icon-size",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
 
   applet->lock_logout = gp_lock_logout_new ();
 
