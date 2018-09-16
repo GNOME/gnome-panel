@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-08-28 23:10+0000\n"
-"PO-Revision-Date: 2018-09-01 19:42+0200\n"
+"POT-Creation-Date: 2018-09-16 09:57+0000\n"
+"PO-Revision-Date: 2018-09-16 17:24+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -424,38 +424,6 @@ msgstr ""
 "Położenie pliku .desktop opisującego aktywator. Ta opcja ma sens tylko dla "
 "obiektów typu „launcher-object”."
 
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
-msgid "Tooltip displayed for menu"
-msgstr "Podpowiedź wyświetlana dla menu"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
-msgid "The text to display in a tooltip for this menu."
-msgstr "Tekst do wyświetlenia w podpowiedzi dla tego menu."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
-msgid "Icon used for button"
-msgstr "Ikona przycisku"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
-msgid ""
-"The location of the image file used as the icon for the object's button. If "
-"empty, the default icon for the menu will be used."
-msgstr ""
-"Położenie pliku obrazu zawierającego ikonę przycisku obiektu. Jeśli "
-"ustawiona zostanie pusta wartość, to zostanie użyta domyślna ikona dla menu."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
-msgid "Menu content path"
-msgstr "Ścieżka zawartości menu"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
-msgid ""
-"The path from which the menu contents is constructed. If empty, the menu "
-"will be the default applications menu."
-msgstr ""
-"Ścieżka, na podstawie której konstruowana jest treść menu. Jeśli ustawiona "
-"zostanie pusta wartość, to menu będzie domyślnym menu programów."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "IID obiektu"
@@ -840,49 +808,23 @@ msgstr "Niestandardowy kolor tekstu"
 msgid "Text Color"
 msgstr "Kolor tekstu"
 
-#: gnome-panel/applet.c:333
+#: gnome-panel/applet.c:324
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:471
+#: gnome-panel/applet.c:462
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Przesuń"
 
-#: gnome-panel/applet.c:478
+#: gnome-panel/applet.c:469
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
 msgstr "U_suń z panelu"
 
-#: gnome-panel/gnome-desktop-item-edit.c:27
-msgid "Create new file in the given directory"
-msgstr "Tworzy nowy plik w podanym katalogu"
-
-#: gnome-panel/gnome-desktop-item-edit.c:28
-msgid "[FILE...]"
-msgstr "[PLIK…]"
-
-#: gnome-panel/gnome-desktop-item-edit.c:106
-msgid "- Edit .desktop files"
-msgstr "— modyfikowanie plików .desktop"
-
-#: gnome-panel/gnome-desktop-item-edit.c:144
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Nowy aktywator"
-
-#: gnome-panel/gnome-desktop-item-edit.c:169
-#: gnome-panel/gnome-desktop-item-edit.c:192
-msgid "Directory Properties"
-msgstr "Właściwości katalogu"
-
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Właściwości aktywatora"
-
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
 msgid "Panel"
 msgstr "Panel"
 
@@ -911,11 +853,11 @@ msgstr "O programie"
 msgid "Add"
 msgstr "Dodaj"
 
-#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
 msgid "Add to Panel"
 msgstr "Dodawanie do panelu"
 
-#: gnome-panel/gp-add-applet-window.c:553
+#: gnome-panel/gp-add-applet-window.c:560
 msgid "No applets found"
 msgstr "Nie odnaleziono żadnych apletów"
 
@@ -1046,11 +988,15 @@ msgstr "Dla pliku aktywatora panelu nie określono adresu URI\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nie można otworzyć pliku %s z aktywatorem panelu%s%s\n"
 
+#: gnome-panel/launcher.c:935
+msgid "Launcher Properties"
+msgstr "Właściwości aktywatora"
+
 #: gnome-panel/launcher.c:1000
 msgid "_Launch"
 msgstr "_Uruchom"
 
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
 #: gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Właściwości"
@@ -1059,8 +1005,12 @@ msgstr "_Właściwości"
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "Położenie aktywatora nie jest ustawione, nie można go wczytać\n"
 
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
-#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
+#: gnome-panel/launcher.c:1095
+msgid "Create Launcher"
+msgstr "Nowy aktywator"
+
+#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
+#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
 msgid "Could not save launcher"
 msgstr "Nie można zapisać aktywatora"
 
@@ -1070,24 +1020,24 @@ msgstr "Nie można zapisać aktywatora"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:800
+#: gnome-panel/panel-applet-frame.c:809
 msgid "Error"
 msgstr "Błąd"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
 msgid "Choose an icon"
 msgstr "Wybór ikony"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1251
-#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
-#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
+#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-recent.c:152
 #: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
 #: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:206
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: gnome-panel/panel-ditem-editor.c:999
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: gnome-panel/panel-ditem-editor.c:994
 msgid "_Open"
 msgstr "_Otwórz"
 
@@ -1109,129 +1059,120 @@ msgstr "Zamienia obecnie uruchomiony panel"
 msgid "Print version"
 msgstr "Wyświetla wersję"
 
-#: gnome-panel/panel-action-button.c:159
+#: gnome-panel/panel-action-button.c:157
 msgid "_Lock Screen"
 msgstr "Za_blokuj ekran"
 
-#: gnome-panel/panel-action-button.c:164
+#: gnome-panel/panel-action-button.c:162
 msgid "_Activate Screensaver"
 msgstr "Włącz wyg_aszacz ekranu"
 
-#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
+#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:939
 msgid "Lock Screen"
 msgstr "Zablokuj ekran"
 
-#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
+#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:940
 msgid "Protect your computer from unauthorized use"
 msgstr "Zabezpiecza komputer przed nieupoważnionym dostępem"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
+#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:922
 msgid "Log Out"
 msgstr "Wyloguj się"
 
-#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
+#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:923
 msgid "Log out of this session to log in as a different user"
 msgstr ""
 "Kończy bieżącą sesję, pozwalając na zalogowanie się innemu użytkownikowi"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:377
 msgid "Run Application..."
 msgstr "Uruchom program…"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:378
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Uruchamia program wybrany z listy lub wprowadzone polecenie"
 
-#: gnome-panel/panel-action-button.c:388
+#: gnome-panel/panel-action-button.c:386
 msgid "Search for Files..."
 msgstr "Wyszukaj pliki…"
 
-#: gnome-panel/panel-action-button.c:389
+#: gnome-panel/panel-action-button.c:387
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Wyszukuje dokumenty i katalogi według nazwy lub zawartości"
 
-#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Wymuś zamknięcie"
 
-#: gnome-panel/panel-action-button.c:397
+#: gnome-panel/panel-action-button.c:395
 msgid "Force a misbehaving application to quit"
 msgstr "Wymusza zakończenie źle działającego programu"
 
-#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
+#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:981
 msgid "Hibernate"
 msgstr "Hibernuj"
 
-#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
+#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:998
 msgid "Suspend"
 msgstr "Uśpij"
 
-#: gnome-panel/panel-action-button.c:423
+#: gnome-panel/panel-action-button.c:421
 msgid "Hybrid sleep"
 msgstr "Uśpij hybrydowo"
 
-#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
+#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1034
 msgid "Restart"
 msgstr "Uruchom ponownie"
 
-#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
+#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1035
 msgid "Restart the computer"
 msgstr "Ponownie uruchamia komputer"
 
-#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
+#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1051
 msgid "Power Off"
 msgstr "Wyłącz komputer"
 
-#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
+#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1052
 msgid "Power off the computer"
 msgstr "Wyłącza komputer"
 
-#: gnome-panel/panel-addto-dialog.c:136 gnome-panel/panel-menu-button.c:953
-#: modules/menu/gp-menu-module.c:39
-msgid "Main Menu"
-msgstr "Menu główne"
-
-#: gnome-panel/panel-addto-dialog.c:137 modules/menu/gp-menu-module.c:40
-msgid "The main GNOME menu"
-msgstr "Menu główne GNOME"
-
-#: gnome-panel/panel-addto-dialog.c:185
+#: gnome-panel/panel-addto-dialog.c:163 modules/menu/gp-menu-module.c:51
 msgid "(empty)"
 msgstr "(puste)"
 
-#: gnome-panel/panel-addto-dialog.c:384
+#: gnome-panel/panel-addto-dialog.c:362
 msgid "Custom Application Launcher"
 msgstr "Niestandardowy aktywator programu"
 
-#: gnome-panel/panel-addto-dialog.c:385
+#: gnome-panel/panel-addto-dialog.c:363
 msgid "Create a new launcher"
 msgstr "Tworzy nowy aktywator"
 
-#: gnome-panel/panel-addto-dialog.c:394
+#: gnome-panel/panel-addto-dialog.c:372
 msgid "Application Launcher..."
 msgstr "Aktywator programu…"
 
-#: gnome-panel/panel-addto-dialog.c:395
+#: gnome-panel/panel-addto-dialog.c:373
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiuje aktywator z menu programu"
 
-#: gnome-panel/panel-addto-dialog.c:879
+#: gnome-panel/panel-addto-dialog.c:906
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Wy_szukiwany element do dodania do „%s”:"
 
-#: gnome-panel/panel-addto-dialog.c:883
+#: gnome-panel/panel-addto-dialog.c:910
 msgid "Find an _item to add to the panel:"
 msgstr "_Wyszukiwany element do dodania do panelu:"
 
-#: gnome-panel/panel-addto-dialog.c:1005
+#: gnome-panel/panel-addto-dialog.c:1032
 msgid "_Forward"
 msgstr "_Dalej"
 
-#: gnome-panel/panel-addto-dialog.c:1008 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1035 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Dodaj"
@@ -1244,41 +1185,41 @@ msgstr "Wyszukiwany element do dodania do panelu:"
 msgid "_Back"
 msgstr "_Wstecz"
 
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
+#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
 #: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
 #: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
 #: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "Za_mknij"
 
-#: gnome-panel/panel-applet-frame.c:763
+#: gnome-panel/panel-applet-frame.c:772
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Wystąpił problem podczas wczytywania „%s”."
 
-#: gnome-panel/panel-applet-frame.c:775
+#: gnome-panel/panel-applet-frame.c:784
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:779
+#: gnome-panel/panel-applet-frame.c:788
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Usunąć aplet z konfiguracji?"
 
-#: gnome-panel/panel-applet-frame.c:782
+#: gnome-panel/panel-applet-frame.c:791
 msgid "D_on't Delete"
 msgstr "_Nie usuwaj"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1252
+#: gnome-panel/panel-applet-frame.c:792 gnome-panel/panel.c:1262
 msgid "_Delete"
 msgstr "_Usuń"
 
-#: gnome-panel/panel.c:416
+#: gnome-panel/panel.c:414
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otwarcie adresu URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: gnome-panel/panel.c:465 gnome-panel/panel-menu-items.c:551
 #: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
@@ -1287,20 +1228,20 @@ msgstr "Otwiera „%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: gnome-panel/panel.c:513 gnome-panel/panel-menu-items.c:1104
 #: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Otwiera katalog osobisty użytkownika"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: gnome-panel/panel.c:522 gnome-panel/panel-menu-items.c:1133
 #: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: gnome-panel/panel.c:523 gnome-panel/panel-menu-items.c:1134
 #: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
@@ -1310,22 +1251,22 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: gnome-panel/panel.c:530 gnome-panel/panel-menu-items.c:1143
 #: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Sieć"
 
 #. name
-#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: gnome-panel/panel.c:531 gnome-panel/panel-menu-items.c:1144
 #: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Przegląda zakładki i lokalne położenia sieciowe"
 
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1253
 msgid "Delete this panel?"
 msgstr "Usunąć ten panel?"
 
-#: gnome-panel/panel.c:1247
+#: gnome-panel/panel.c:1257
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1366,66 +1307,66 @@ msgid "Location"
 msgstr "Położenie"
 
 #. Type
-#: gnome-panel/panel-ditem-editor.c:600
+#: gnome-panel/panel-ditem-editor.c:595
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: gnome-panel/panel-ditem-editor.c:607
+#: gnome-panel/panel-ditem-editor.c:602
 msgid "_Name:"
 msgstr "_Nazwa:"
 
-#: gnome-panel/panel-ditem-editor.c:632
+#: gnome-panel/panel-ditem-editor.c:627
 msgid "_Browse..."
 msgstr "P_rzeglądaj…"
 
 #. Comment
-#: gnome-panel/panel-ditem-editor.c:639
+#: gnome-panel/panel-ditem-editor.c:634
 msgid "Co_mment:"
 msgstr "_Komentarz:"
 
-#: gnome-panel/panel-ditem-editor.c:646
+#: gnome-panel/panel-ditem-editor.c:641
 msgid "_Revert"
 msgstr "_Przywróć"
 
-#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1278
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
-#: gnome-panel/panel-ditem-editor.c:966
+#: gnome-panel/panel-ditem-editor.c:961
 msgid "Choose an application..."
 msgstr "Wybór programu…"
 
-#: gnome-panel/panel-ditem-editor.c:970
+#: gnome-panel/panel-ditem-editor.c:965
 msgid "Choose a file..."
 msgstr "Wybór pliku…"
 
-#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
+#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
 msgid "Comm_and:"
 msgstr "P_olecenie:"
 
-#: gnome-panel/panel-ditem-editor.c:1153
+#: gnome-panel/panel-ditem-editor.c:1146
 msgid "_Location:"
 msgstr "_Położenie:"
 
-#: gnome-panel/panel-ditem-editor.c:1316
+#: gnome-panel/panel-ditem-editor.c:1309
 msgid "The name of the launcher is not set."
 msgstr "Nie określono nazwy aktywatora."
 
-#: gnome-panel/panel-ditem-editor.c:1320
+#: gnome-panel/panel-ditem-editor.c:1313
 msgid "Could not save directory properties"
 msgstr "Nie można zapisać właściwości katalogu"
 
-#: gnome-panel/panel-ditem-editor.c:1321
+#: gnome-panel/panel-ditem-editor.c:1314
 msgid "The name of the directory is not set."
 msgstr "Nie określono nazwy katalogu."
 
-#: gnome-panel/panel-ditem-editor.c:1337
+#: gnome-panel/panel-ditem-editor.c:1330
 msgid "The command of the launcher is not set."
 msgstr "Nie określono polecenia aktywatora."
 
-#: gnome-panel/panel-ditem-editor.c:1340
+#: gnome-panel/panel-ditem-editor.c:1333
 msgid "The location of the launcher is not set."
 msgstr "Nie określono położenia aktywatora."
 
@@ -1434,11 +1375,11 @@ msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "Kliknięcie okna wymusi zakończenie programu. Klawisz <Esc> anuluje."
 
-#: gnome-panel/panel-force-quit.c:220
+#: gnome-panel/panel-force-quit.c:223
 msgid "Force this application to exit?"
 msgstr "Wymusić zakończenie programu?"
 
-#: gnome-panel/panel-force-quit.c:223
+#: gnome-panel/panel-force-quit.c:226
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -1446,52 +1387,47 @@ msgstr ""
 "Jeśli wymusi się zakończenie programu, to wszystkie niezapisane zmiany "
 "w otwartych dokumentach zostaną utracone."
 
-#: gnome-panel/panel-force-quit.c:230
+#: gnome-panel/panel-force-quit.c:233
 msgid "_Force quit"
 msgstr "_Wymuś zamknięcie"
 
-#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
+#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nie można utworzyć początkowego układu panelu.\n"
 
-#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
-#: modules/menu/menu-bar-menu.ui:5
-msgid "_Edit Menus"
-msgstr "_Modyfikuj menu"
-
-#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
+#: gnome-panel/panel-menu-items.c:400 modules/menu/gp-lock-logout.c:905
 msgid "Switch User"
 msgstr "Przełącz użytkownika"
 
-#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
+#: gnome-panel/panel-menu-items.c:527 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Zakładki"
 
-#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
+#: gnome-panel/panel-menu-items.c:621 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Nie można skanować %s w poszukiwaniu zmian nośników"
 
-#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
+#: gnome-panel/panel-menu-items.c:663 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "Skanuj %s ponownie"
 
-#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
+#: gnome-panel/panel-menu-items.c:700 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "Nie można zamontować %s"
 
-#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
+#: gnome-panel/panel-menu-items.c:762 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "Montuje %s"
 
-#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
+#: gnome-panel/panel-menu-items.c:970 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Nośniki wymienne"
 
-#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
+#: gnome-panel/panel-menu-items.c:1061 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Miejsca sieciowe"
 
@@ -1501,16 +1437,17 @@ msgstr "Miejsca sieciowe"
 #. Translators: Desktop is used here as in "Desktop Folder"
 #. * (this is not the Desktop environment).
 #.
-#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
+#: gnome-panel/panel-menu-items.c:1121 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Pulpit"
 
-#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
+#: gnome-panel/panel-menu-items.c:1122 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Otwiera pulpit jako katalog"
 
-#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
+#: gnome-panel/panel-menu-items.c:1401 modules/menu/gp-menu-bar-applet.c:144
+#: modules/menu/gp-menu-button-applet.c:190
 msgid "Places"
 msgstr "Miejsca"
 
@@ -1664,87 +1601,87 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Expanded Edge Panel"
 msgstr "Górny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1564
 msgid "Top Centered Panel"
 msgstr "Górny panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Floating Panel"
 msgstr "Górny panel oderwany"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Edge Panel"
 msgstr "Górny panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1571
 msgid "Bottom Centered Panel"
 msgstr "Dolny panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Floating Panel"
 msgstr "Dolny panel oderwany"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Edge Panel"
 msgstr "Dolny panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Expanded Edge Panel"
 msgstr "Dolny rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1578
 msgid "Left Centered Panel"
 msgstr "Lewy panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Floating Panel"
 msgstr "Lewy panel oderwany"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Edge Panel"
 msgstr "Lewy panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Expanded Edge Panel"
 msgstr "Prawy rozwijany panel krawędziowy"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1585
 msgid "Right Centered Panel"
 msgstr "Prawy panel wyśrodkowany"
 
-#: gnome-panel/panel-toplevel.c:1588
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Floating Panel"
 msgstr "Prawy panel oderwany"
 
-#: gnome-panel/panel-toplevel.c:1589
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Edge Panel"
 msgstr "Prawy panel krawędziowy"
 
-#: gnome-panel/panel-util.c:312
+#: gnome-panel/panel-util.c:316
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Nie odnaleziono ikony „%s”"
 
-#: gnome-panel/panel-util.c:555
+#: gnome-panel/panel-util.c:559
 msgid "file"
 msgstr "plik"
 
-#: gnome-panel/panel-util.c:723 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:727 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Katalog domowy"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:732 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:736 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "System plików"
 
@@ -1757,10 +1694,22 @@ msgstr "System plików"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:946 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:950 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:128
+msgid "Initial Setup"
+msgstr "Początkowa konfiguracja"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:132
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:136
+msgid "Done"
+msgstr "Gotowe"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1771,7 +1720,7 @@ msgstr "%1$s: %2$s"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%-l∶%M %p"
 
@@ -1786,8 +1735,8 @@ msgstr "%-l∶%M %p"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
-#: modules/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H∶%M"
 
@@ -1795,40 +1744,40 @@ msgstr "%H∶%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%-d %b"
 
-#: modules/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Zadania"
 
-#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
-#: modules/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Modyfikuj"
 
-#: modules/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Cały dzień"
 
-#: modules/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Spotkania"
 
-#: modules/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Urodziny i rocznice"
 
-#: modules/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Prognoza pogody"
 
-#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Położenia"
 
-#: modules/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Kalendarz"
 
@@ -1925,19 +1874,19 @@ msgstr "Nazwa miasta"
 msgid "City Time Zone"
 msgstr "Strefa czasowa miasta"
 
-#: modules/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Ustawienie strefy czasowej systemu się nie powiodło"
 
-#: modules/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Ustaw…</small>"
 
-#: modules/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Ustaw</small>"
 
-#: modules/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Ustawia położenie jako bieżące i używa jego strefy czasowej dla tego "
@@ -1949,7 +1898,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%-l∶%M <small>%p (%A)</small>"
 
@@ -1958,7 +1907,7 @@ msgstr "%-l∶%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H∶%M <small>(%A)</small>"
 
@@ -1966,22 +1915,22 @@ msgstr "%H∶%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%-l∶%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:607
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, odczuwalna %s"
 
-#: modules/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:641
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Wschód słońca: %s, zachód słońca: %s"
@@ -2259,50 +2208,107 @@ msgstr "s"
 msgid "_Rotate on vertical panels"
 msgstr "_Obracanie przy pionowym ułożeniu panelu"
 
-#: modules/menu/gp-lock-logout.c:1042
+#: modules/menu/gp-lock-logout.c:1015
 msgid "Hybrid Sleep"
 msgstr "Uśpij hybrydowo"
 
-#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
+#: modules/menu/gp-menu-bar-applet.c:119
+msgid "Applications"
+msgstr "Programy"
+
+#: modules/menu/gp-menu-bar-applet.c:124
+msgid "Browse and run installed applications"
+msgstr "Przeglądanie i uruchamianie zainstalowanych programów"
+
+#: modules/menu/gp-menu-bar-applet.c:148
+msgid "Access documents, folders and network places"
+msgstr "Dostęp do dokumentów, katalogów i miejsc sieciowych"
+
+#: modules/menu/gp-menu-bar-applet.c:169
+msgid "System"
+msgstr "System"
+
+#: modules/menu/gp-menu-bar-applet.c:173
+msgid "Change system appearance and behavior, or get help"
+msgstr "Zmiana wyglądu i zachowania systemu oraz pomoc"
+
+#: modules/menu/gp-menu-bar-applet.c:208
+#: modules/menu/gp-menu-button-applet.c:409
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Proszę zainstalować program „%s”."
 
-#: modules/menu/gp-menu-bar-applet.c:131
-msgid "Applications"
-msgstr "Programy"
+#: modules/menu/gp-menu-module.c:376
+msgid "Main Menu"
+msgstr "Menu główne"
 
-#: modules/menu/gp-menu-bar-applet.c:136
-msgid "Browse and run installed applications"
-msgstr "Przeglądanie i uruchamianie zainstalowanych programów"
+#: modules/menu/gp-menu-module.c:377
+msgid "The main GNOME menu"
+msgstr "Menu główne GNOME"
 
-#: modules/menu/gp-menu-bar-applet.c:160
-msgid "Access documents, folders and network places"
-msgstr "Dostęp do dokumentów, katalogów i miejsc sieciowych"
+#: modules/menu/gp-menu-module.c:383
+msgid "Menu Button"
+msgstr "Przycisk menu"
 
-#: modules/menu/gp-menu-bar-applet.c:181
-msgid "System"
-msgstr "System"
+#: modules/menu/gp-menu-module.c:384
+msgid "A custom menu button"
+msgstr "Niestandardowy przycisk menu"
 
-#: modules/menu/gp-menu-bar-applet.c:185
-msgid "Change system appearance and behavior, or get help"
-msgstr "Zmiana wyglądu i zachowania systemu oraz pomoc"
-
-#: modules/menu/gp-menu-module.c:46
+#: modules/menu/gp-menu-module.c:392
 msgid "Menu Bar"
 msgstr "Pasek menu"
 
-#: modules/menu/gp-menu-module.c:47
+#: modules/menu/gp-menu-module.c:393
 msgid "A custom menu bar"
 msgstr "Niestandardowy pasek menu"
 
-#: modules/menu/gp-menu-module.c:53
+#: modules/menu/gp-menu-module.c:399
 msgid "User menu"
 msgstr "Menu użytkownika"
 
-#: modules/menu/gp-menu-module.c:54
+#: modules/menu/gp-menu-module.c:400
 msgid "Menu to change your settings and log out"
 msgstr "Menu do zmieniania ustawień i wylogowywania"
+
+#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+msgid "_Edit Menus"
+msgstr "_Modyfikuj menu"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:5
+msgid "Icon used for button"
+msgstr "Ikona przycisku"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:6
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Położenie pliku obrazu zawierającego ikonę przycisku obiektu. Jeśli "
+"ustawiona zostanie pusta wartość, to zostanie użyta domyślna ikona dla menu."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:11
+msgid "Menu content path"
+msgstr "Ścieżka zawartości menu"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
+msgid ""
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
+msgstr ""
+"Ścieżka, na podstawie której konstruowana jest treść menu. Jeśli ustawiona "
+"zostanie pusta wartość, to menu będzie domyślnym menu programów."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Strzałka na ikonie menu"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
+msgid "Tooltip displayed for menu"
+msgstr "Podpowiedź wyświetlana dla menu"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:23
+msgid "The text to display in a tooltip for this menu."
+msgstr "Tekst do wyświetlenia w podpowiedzi dla tego menu."
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
