@@ -117,6 +117,19 @@ present_properties_dialog (GtkWidget     *widget,
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
+static GtkWidget *
+add_menu_separator (GtkWidget *menu)
+{
+	GtkWidget *menuitem;
+
+	menuitem = gtk_separator_menu_item_new ();
+	gtk_widget_set_sensitive (menuitem, FALSE);
+	gtk_widget_show (menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	return menuitem;
+}
+
 static void
 panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
@@ -159,6 +172,46 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 			  NULL);
 	gtk_widget_set_sensitive (menuitem, 
 				  panel_layout_is_writable ());
+}
+
+static GtkWidget *
+panel_create_menu (void)
+{
+	GtkWidget       *retval;
+	GtkStyleContext *context;
+
+	retval = gtk_menu_new ();
+	gtk_widget_set_name (retval, "gnome-panel-main-menu");
+
+	context = gtk_widget_get_style_context (retval);
+	gtk_style_context_add_class (context, "gnome-panel-main-menu");
+
+	return retval;
+}
+
+static gboolean
+menu_dummy_button_press_event (GtkWidget      *menuitem,
+			       GdkEventButton *event)
+{
+	if (event->button == 3)
+		return TRUE;
+
+	return FALSE;
+}
+
+static GtkWidget *
+create_empty_menu (void)
+{
+	GtkWidget *retval;
+
+	retval = panel_create_menu ();
+
+	/* intercept all right button clicks makes sure they don't
+	   go to the object itself */
+	g_signal_connect (retval, "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
+	return retval;
 }
 
 GtkWidget *

@@ -31,7 +31,6 @@
 #include <libpanel-util/panel-glib.h>
 
 #include "launcher.h"
-#include "menu.h"
 #include "panel.h"
 #include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
@@ -579,6 +578,14 @@ panel_addto_populate_application_model (GtkTreeStore *store,
 								&iter,
 								data->children);
 	}
+}
+
+static gchar *
+get_applications_menu (void)
+{
+	const gchar *xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+	return g_strdup_printf ("%sapplications.menu",
+	                        !PANEL_GLIB_STR_EMPTY (xdg_menu_prefx) ? xdg_menu_prefx : "gnome-");
 }
 
 static void

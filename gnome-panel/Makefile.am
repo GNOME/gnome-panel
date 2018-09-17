@@ -28,16 +28,11 @@ panel_sources =			\
 	applet.c		\
 	panel-util.c		\
 	panel-run-dialog.c	\
-	menu.c			\
 	panel-context-menu.c	\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
-	panel-stock-icons.c	\
 	panel-action-button.c	\
-	panel-image-menu-item.c \
-	panel-menu-items.c	\
-	panel-recent.c		\
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
 	panel-struts.c		\
@@ -62,16 +57,11 @@ panel_headers =			\
 	applet.h		\
 	panel-util.h		\
 	panel-run-dialog.h	\
-	menu.h			\
 	panel-context-menu.h	\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
-	panel-stock-icons.h	\
 	panel-action-button.h	\
-	panel-image-menu-item.h \
-	panel-menu-items.h	\
-	panel-recent.h		\
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
 	panel-struts.h		\

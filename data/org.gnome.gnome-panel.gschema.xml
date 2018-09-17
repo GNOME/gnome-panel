@@ -22,13 +22,6 @@
     <value nick='64px' value='64'/>
   </enum>
 
-  <enum id='org.gnome.gnome-panel.icon-size'>
-    <value nick='16px' value='1'/>
-    <value nick='24px' value='3'/>
-    <value nick='32px' value='5'/>
-    <value nick='48px' value='6'/>
-  </enum>
-
   <schema id="org.gnome.gnome-panel.general" path="/org/gnome/gnome-panel/general/">
     <key name="enable-tooltips" type="b">
       <default>true</default>
@@ -53,14 +46,6 @@
       <description>The maximum size of icons in panels.</description>
     </key>
 
-    <key name="panel-menu" enum="org.gnome.gnome-panel.icon-size">
-      <default>'24px'</default>
-      <summary>Icon size in the menus</summary>
-    </key>
-    <key name="panel-menu-bar" enum="org.gnome.gnome-panel.icon-size">
-      <default>'16px'</default>
-      <summary>Icon size for only Applications item in the Menu Bar applet</summary>
-    </key>
     <key name="theme-variant" enum="org.gnome.gnome-panel.PanelThemeVariant">
       <default>'system'</default>
       <summary>Which theme variant to use</summary>

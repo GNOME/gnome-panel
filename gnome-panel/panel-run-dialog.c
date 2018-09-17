@@ -51,9 +51,7 @@
 
 #include "panel-util.h"
 #include "panel-enums.h"
-#include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
-#include "menu.h"
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
 #include "panel-icon-names.h"
@@ -890,6 +888,14 @@ get_all_applications_from_dir (GMenuTreeDirectory *directory,
 	gmenu_tree_iter_unref (iter);
 
 	return list;
+}
+
+static gchar *
+get_applications_menu (void)
+{
+	const gchar *xdg_menu_prefx = g_getenv ("XDG_MENU_PREFIX");
+	return g_strdup_printf ("%sapplications.menu",
+	                        !PANEL_GLIB_STR_EMPTY (xdg_menu_prefx) ? xdg_menu_prefx : "gnome-");
 }
 
 static GSList *

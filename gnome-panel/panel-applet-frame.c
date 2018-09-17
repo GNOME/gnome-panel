@@ -39,7 +39,6 @@
 #include "panel-lockdown.h"
 #include "panel-object-loader.h"
 #include "panel-schemas.h"
-#include "panel-stock-icons.h"
 
 #include <libpanel-applet-private/panel-applet-frame-dbus.h>
 #include "panel-applet-frame.h"
