@@ -812,63 +812,10 @@ panel_applet_get_id (AppletInfo *info)
 	return info->id;
 }
 
-const char *
-panel_applet_get_id_by_widget (GtkWidget *applet_widget)
-{
-	GSList *l;
-
-	if (!applet_widget)
-		return NULL;
-
-	for (l = registered_applets; l; l = l->next) {
-		AppletInfo *info = l->data;
-
-		if (info->widget == applet_widget)
-			return info->id;
-	}
-
-	return NULL;
-}
-
-AppletInfo *
-panel_applet_get_by_id (const char *id)
-{
-	GSList *l;
-
-	for (l = registered_applets; l; l = l->next) {
-		AppletInfo *info = l->data;
-
-		if (!strcmp (info->id, id))
-			return info;
-	}
-
-	return NULL;
-}
-
 GSList *
 panel_applet_list_applets (void)
 {
 	return registered_applets;
-}
-
-AppletInfo *
-panel_applet_get_by_type (PanelObjectType object_type, GdkScreen *screen)
-{
-	GSList *l;
-
-	for (l = registered_applets; l; l = l->next) {
-		AppletInfo *info = l->data;
-
-		if (info->type == object_type) {
-			if (screen) {
-				if (screen == gtk_widget_get_screen (info->widget))
-					return info;
-			} else
-				return info;
-		}
-	}
-
-	return NULL;
 }
 
 gboolean
@@ -969,14 +916,6 @@ panel_applet_register (GtkWidget       *applet,
 		gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
 
 	return info;
-}
-
-GSettings *
-panel_applet_get_settings (AppletInfo *applet)
-{
-	g_return_val_if_fail (applet != NULL, NULL);
-
-	return applet->settings;
 }
 
 gboolean

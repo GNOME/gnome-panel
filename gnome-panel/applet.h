@@ -9,7 +9,6 @@
 
 G_BEGIN_DECLS
 
-
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -53,9 +52,6 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      GDestroyNotify   data_destroy);
 
 const char *panel_applet_get_id           (AppletInfo      *info);
-const char *panel_applet_get_id_by_widget (GtkWidget       *widget);
-AppletInfo *panel_applet_get_by_id        (const char      *id);
-AppletInfo *panel_applet_get_by_type      (PanelObjectType  object_type, GdkScreen *screen);
 
 gboolean    panel_applet_activate_main_menu (guint32 activate_time);
 
@@ -71,12 +67,9 @@ void            panel_applet_add_callback    (AppletInfo          *info,
 AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 
-
 void        panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *id,
 						  gboolean    immediate);
-
-GSettings  *panel_applet_get_settings    (AppletInfo *applet);
 
 /* True if all the keys relevant to moving are writable
    (position, toplevel_id, panel_right_stick) */
