@@ -24,13 +24,18 @@
 
 #include <glib/gi18n-lib.h>
 #include <gmenu-tree.h>
+#include <libgnome-panel/gp-image-menu-item.h>
 #include <libgnome-panel/gp-module.h>
 
+#include "gp-lock-logout.h"
 #include "gp-main-menu-applet.h"
 #include "gp-menu-bar-applet.h"
 #include "gp-menu-button-applet.h"
 #include "gp-menu-utils.h"
+#include "gp-menu.h"
 #include "gp-user-menu-applet.h"
+#include "gp-user-menu.h"
+#include "gp-places-menu.h"
 
 typedef struct
 {
@@ -429,6 +434,140 @@ menu_get_applet_id_from_iid (const gchar *iid)
   return NULL;
 }
 
+typedef struct
+{
+  gboolean      enable_tooltips;
+  gboolean      locked_down;
+  guint         menu_icon_size;
+
+  GpLockLogout *lock_logout;
+} StandaloneMenuData;
+
+static void
+standalone_menu_data_free (gpointer user_data)
+{
+  StandaloneMenuData *data;
+
+  data = (StandaloneMenuData *) user_data;
+
+  g_object_unref (data->lock_logout);
+  g_free (data);
+}
+
+static void
+append_places_item (StandaloneMenuData *data,
+                    GtkMenu            *menu)
+{
+  GtkWidget *icon;
+  GtkWidget *item;
+  GtkWidget *places_menu;
+
+  icon = gtk_image_new_from_icon_name ("folder", GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), data->menu_icon_size);
+
+  item = gp_image_menu_item_new_with_label (_("Places"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+  gtk_widget_show (item);
+
+  places_menu = gp_places_menu_new ();
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), places_menu);
+
+  g_object_set (places_menu,
+                "enable-tooltips", data->enable_tooltips,
+                "locked-down", data->locked_down,
+                "menu-icon-size", data->menu_icon_size,
+                NULL);
+}
+
+static void
+append_user_item (StandaloneMenuData *data,
+                  GtkMenu            *menu)
+{
+
+  GtkWidget *icon;
+  gchar *user_name;
+  GtkWidget *item;
+  GtkWidget *user_menu;
+
+  icon = gtk_image_new_from_icon_name ("computer", GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), data->menu_icon_size);
+
+  user_name = gp_menu_utils_get_user_name ();
+  item = gp_image_menu_item_new_with_label (user_name);
+  g_free (user_name);
+
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+  gp_image_menu_item_set_image (GP_IMAGE_MENU_ITEM (item), icon);
+  gtk_widget_show (item);
+
+  user_menu = gp_user_menu_new ();
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), user_menu);
+
+  g_object_set (user_menu,
+                "enable-tooltips", data->enable_tooltips,
+                "locked-down", data->locked_down,
+                "menu-icon-size", data->menu_icon_size,
+                NULL);
+
+  g_object_bind_property (user_menu, "empty", item, "visible",
+                          G_BINDING_DEFAULT | G_BINDING_SYNC_CREATE |
+                          G_BINDING_INVERT_BOOLEAN);
+}
+
+static void
+append_menu_items_cb (GtkMenu            *menu,
+                      StandaloneMenuData *data)
+{
+  append_separator_if_needed (GTK_MENU (menu));
+  append_places_item (data, menu);
+  append_user_item (data, menu);
+
+  gp_lock_logout_append_to_menu (data->lock_logout, GTK_MENU (menu));
+}
+
+static GtkWidget *
+menu_get_standalone_menu (gboolean enable_tooltips,
+                          gboolean locked_down,
+                          guint    menu_icon_size)
+{
+  StandaloneMenuData *data;
+  gchar *filename;
+  GtkWidget *menu;
+
+  data = g_new0 (StandaloneMenuData, 1);
+
+  data->enable_tooltips = enable_tooltips;
+  data->locked_down = locked_down;
+  data->menu_icon_size = menu_icon_size;
+
+  filename = gp_menu_utils_get_applications_menu ();
+
+  menu = g_object_new (GP_TYPE_MENU,
+                       "name", filename,
+                       "required", TRUE,
+                       "enable-tooltips", data->enable_tooltips,
+                       "locked-down", data->locked_down,
+                       "menu-icon-size", data->menu_icon_size,
+                       NULL);
+
+  data->lock_logout = g_object_new (GP_TYPE_LOCK_LOGOUT,
+                                    "enable-tooltips", data->enable_tooltips,
+                                    "locked-down", data->locked_down,
+                                    "menu-icon-size", data->menu_icon_size,
+                                    NULL);
+
+  gp_menu_set_append_func (GP_MENU (menu),
+                           (GpAppendMenuItemsFunc) append_menu_items_cb,
+                           data);
+
+  g_object_set_data_full (G_OBJECT (menu), "data", data,
+                          standalone_menu_data_free);
+  g_free (filename);
+
+  return menu;
+}
+
 void
 gp_module_load (GpModule *module)
 {
@@ -446,4 +585,6 @@ gp_module_load (GpModule *module)
 
   gp_module_set_get_applet_info (module, menu_get_applet_info);
   gp_module_set_compatibility (module, menu_get_applet_id_from_iid);
+
+  gp_module_set_standalone_menu (module, menu_get_standalone_menu);
 }
