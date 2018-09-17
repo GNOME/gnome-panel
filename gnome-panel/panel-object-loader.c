@@ -353,7 +353,7 @@ char *
 panel_object_type_to_iid (PanelObjectType  type,
                           const char      *detail)
 {
-        int i;
+        guint i;
 
         if (type == PANEL_OBJECT_APPLET)
                 return g_strdup (detail);
@@ -387,8 +387,8 @@ panel_object_iid_to_type (const char       *iid,
 {
 	const char *instance_id;
 	char       *factory_id;
-	gboolean    is_applet;;
-        int         i;
+	gboolean    is_applet;
+	guint       i;
 
         if (detail)
                 *detail = NULL;
