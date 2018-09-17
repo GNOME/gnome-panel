@@ -47,8 +47,7 @@ static GSList *panel_applets_managers = NULL;
 static void
 _panel_applets_manager_cleanup (gpointer data)
 {
-	g_slist_foreach (panel_applets_managers, (GFunc) g_object_unref, NULL);
-	g_slist_free (panel_applets_managers);
+	g_slist_free_full (panel_applets_managers, g_object_unref);
 	panel_applets_managers = NULL;
 }
 
