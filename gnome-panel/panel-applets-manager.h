@@ -71,6 +71,8 @@ struct _PanelAppletsManagerClass {
 	                                                 GpInitialSetupCallback       callback,
 	                                                 gpointer                     user_data,
 	                                                 GDestroyNotify               free_func);
+
+	GtkWidget        * (*get_standalone_menu)   (PanelAppletsManager         *manager);
 };
 
 struct _PanelAppletsManager {
@@ -99,6 +101,8 @@ gboolean          panel_applets_manager_open_initial_setup_dialog   (const gchar
                                                                      GpInitialSetupCallback  callback,
                                                                      gpointer                user_data,
                                                                      GDestroyNotify          free_func);
+
+GtkWidget        *panel_applets_manager_get_standalone_menu         (void);
 
 G_END_DECLS
 

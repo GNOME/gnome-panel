@@ -24,6 +24,7 @@
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "libgnome-panel/gp-module-private.h"
+#include "panel-lockdown.h"
 
 struct _GpAppletManager
 {
@@ -409,6 +410,49 @@ gp_applet_manager_open_initial_setup_dialog (PanelAppletsManager    *manager,
   return TRUE;
 }
 
+static GtkWidget *
+gp_applet_manager_get_standalone_menu (PanelAppletsManager *manager)
+{
+  GpAppletManager *applet_manager;
+  GSettings *general_settings;
+  gboolean enable_tooltips;
+  gboolean locked_down;
+  guint menu_icon_size;
+  GList *modules;
+  GList *l;
+  GtkWidget *menu;
+
+  applet_manager = GP_APPLET_MANAGER (manager);
+
+  general_settings = g_settings_new ("org.gnome.gnome-panel.general");
+
+  enable_tooltips = g_settings_get_boolean (general_settings, "enable-tooltips");
+  locked_down = panel_lockdown_get_panels_locked_down_s ();
+  menu_icon_size = g_settings_get_enum (general_settings, "menu-icon-size");
+
+  g_object_unref (general_settings);
+
+  modules = g_hash_table_get_values (applet_manager->modules);
+  menu = NULL;
+
+  for (l = modules; l != NULL; l = l->next)
+    {
+      GpModule *module;
+
+      module = GP_MODULE (l->data);
+
+      menu = gp_module_get_standalone_menu (module, enable_tooltips,
+                                            locked_down, menu_icon_size);
+
+      if (menu != NULL)
+        break;
+    }
+
+  g_list_free (modules);
+
+  return menu;
+}
+
 static void
 gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
 {
@@ -428,6 +472,7 @@ gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
   applets_manager_class->get_applet_widget = gp_applet_manager_get_applet_widget;
   applets_manager_class->get_new_iid = gp_applet_manager_get_new_iid;
   applets_manager_class->open_initial_setup_dialog = gp_applet_manager_open_initial_setup_dialog;
+  applets_manager_class->get_standalone_menu = gp_applet_manager_get_standalone_menu;
 }
 
 static void

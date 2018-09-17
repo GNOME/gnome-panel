@@ -237,3 +237,24 @@ panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
 
 	return ret;
 }
+
+GtkWidget *
+panel_applets_manager_get_standalone_menu (void)
+{
+	GSList *l;
+	PanelAppletsManager *manager;
+	GtkWidget *menu;
+
+	_panel_applets_managers_ensure_loaded ();
+
+	for (l = panel_applets_managers; l != NULL; l = l->next) {
+		manager = PANEL_APPLETS_MANAGER (l->data);
+
+		menu = PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_standalone_menu (manager);
+
+		if (menu != NULL)
+			return menu;
+	}
+
+	return NULL;
+}
