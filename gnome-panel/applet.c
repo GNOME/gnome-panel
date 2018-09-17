@@ -485,93 +485,14 @@ panel_applet_get_edit_menu (AppletInfo *info)
 }
 
 static void
-panel_applet_position_menu (GtkMenu   *menu,
-			    int       *x,
-			    int       *y,
-			    gboolean  *push_in,
-			    GtkWidget *applet)
-{
-	GtkAllocation   allocation;
-	GtkRequisition  requisition;
-	GdkSeat        *seat;
-	GdkDevice      *device;
-	GdkDisplay     *display;
-	GtkWidget      *parent;
-	int             menu_x = 0;
-	int             menu_y = 0;
-	int             pointer_x;
-	int             pointer_y;
-	GdkMonitor     *monitor;
-	GdkRectangle    monitor_rect;
-
-	parent = gtk_widget_get_parent (applet);
-
-	g_return_if_fail (PANEL_IS_WIDGET (parent));
-
-	display = gtk_widget_get_display (applet);
-
-	gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
-	gdk_window_get_origin (gtk_widget_get_window (applet), &menu_x, &menu_y);
-
-	seat = gdk_display_get_default_seat (gtk_widget_get_display (applet));
-	device = gdk_seat_get_pointer (seat);
-
-	gdk_window_get_device_position(gtk_widget_get_window (applet), device, &pointer_x, &pointer_y, NULL);
-
-	gtk_widget_get_allocation (applet, &allocation);
-
-	if (!gtk_widget_get_has_window (applet)) {
-		menu_x += allocation.x;
-		menu_y += allocation.y;
-	}
-
-	monitor = gdk_display_get_monitor_at_point (display, menu_x, menu_y);
-	gdk_monitor_get_geometry (monitor, &monitor_rect);
-
-	if (PANEL_WIDGET (parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
-		if (gtk_widget_get_direction (GTK_WIDGET (menu)) != GTK_TEXT_DIR_RTL) {
-			if (pointer_x < allocation.width &&
-			    requisition.width < pointer_x)
-				menu_x += MIN (pointer_x,
-					       allocation.width - requisition.width);
-		} else {
-			menu_x += allocation.width - requisition.width;
-			if (pointer_x > 0 && pointer_x < allocation.width &&
-			    pointer_x < allocation.width - requisition.width) {
-				menu_x -= MIN (allocation.width - pointer_x,
-					       allocation.width - requisition.width);
-			}
-		}
-		menu_x = MIN (menu_x, monitor_rect.x + monitor_rect.width - requisition.width);
-
-		if (menu_y > monitor_rect.y + (monitor_rect.height / 2))
-			menu_y -= requisition.height;
-		else
-			menu_y += allocation.height;
-	} else {
-		if (pointer_y < allocation.height &&
-		    requisition.height < pointer_y)
-			menu_y += MIN (pointer_y, allocation.height - requisition.height);
-		menu_y = MIN (menu_y, monitor_rect.y +monitor_rect.height - requisition.height);
-
-		if (menu_x > monitor_rect.x + (monitor_rect.width / 2))
-			menu_x -= requisition.width;
-		else
-			menu_x += allocation.width;
-	}
-
-	*x = menu_x;
-	*y = menu_y;
-	*push_in = FALSE;
-}
-
-static void
-applet_show_menu (AppletInfo     *info,
-		  GtkWidget      *menu,
-		  gboolean        custom_position,
-		  GdkEventButton *event)
+applet_show_menu (AppletInfo *info,
+                  GtkWidget  *menu,
+                  GdkEvent   *event)
 {
 	PanelWidget *panel_widget;
+	PanelOrientation orientation;
+	GdkGravity widget_anchor;
+	GdkGravity menu_anchor;
 
 	g_return_if_fail (info != NULL);
 
@@ -579,21 +500,27 @@ applet_show_menu (AppletInfo     *info,
 		return;
 
 	panel_widget = panel_applet_get_panel_widget (info);
+	orientation = panel_widget_get_applet_orientation (panel_widget);
 
-	gtk_menu_set_screen (GTK_MENU (menu),
-			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
+	if (orientation == PANEL_ORIENTATION_TOP) {
+		widget_anchor = GDK_GRAVITY_SOUTH_WEST;
+		menu_anchor = GDK_GRAVITY_NORTH_WEST;
+	} else if (orientation == PANEL_ORIENTATION_LEFT) {
+		widget_anchor = GDK_GRAVITY_NORTH_EAST;
+		menu_anchor = GDK_GRAVITY_NORTH_WEST;
+	} else if (orientation == PANEL_ORIENTATION_RIGHT) {
+		widget_anchor = GDK_GRAVITY_NORTH_WEST;
+		menu_anchor = GDK_GRAVITY_NORTH_EAST;
+	} else if (orientation == PANEL_ORIENTATION_BOTTOM) {
+		widget_anchor = GDK_GRAVITY_NORTH_WEST;
+		menu_anchor = GDK_GRAVITY_SOUTH_WEST;
+	} else {
+		g_assert_not_reached ();
+	}
 
-	if (!gtk_widget_get_realized (menu))
-		gtk_widget_show (menu);
-
-	gtk_menu_popup (GTK_MENU (menu),
-			NULL,
-			NULL,
-			custom_position ?
-				(GtkMenuPositionFunc) panel_applet_position_menu : NULL,
-			info->widget,
-			event->button,
-			event->time);
+	gtk_menu_popup_at_widget (GTK_MENU (menu), info->widget,
+	                          widget_anchor, menu_anchor,
+	                          event);
 }
 
 static gboolean
@@ -624,9 +551,9 @@ applet_button_press (GtkWidget      *widget,
 	modifiers = event->state & gtk_accelerator_get_default_mod_mask ();
 
 	if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
-		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, event);
+		applet_show_menu (info, panel_applet_get_edit_menu (info), (GdkEvent *) event);
 	else
-		applet_show_menu (info, panel_applet_get_menu (info), TRUE, event);
+		applet_show_menu (info, panel_applet_get_menu (info), (GdkEvent *) event);
 
 	return TRUE;
 }
@@ -655,9 +582,9 @@ applet_key_press (GtkWidget   *widget,
 	panel_util_key_event_is_popup (event, &is_popup, &is_edit_popup);
 
 	if (is_edit_popup)
-		applet_show_menu (info, panel_applet_get_edit_menu (info), FALSE, &eventbutton);
+		applet_show_menu (info, panel_applet_get_edit_menu (info), (GdkEvent *) &eventbutton);
 	else if (is_popup)
-		applet_show_menu (info, panel_applet_get_menu (info), TRUE, &eventbutton);
+		applet_show_menu (info, panel_applet_get_menu (info), (GdkEvent *) &eventbutton);
 
 	return (is_popup || is_edit_popup);
 }
