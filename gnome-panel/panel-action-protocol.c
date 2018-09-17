@@ -23,6 +23,7 @@
 #include <config.h>
 
 #include "panel-action-protocol.h"
+#include "panel-applets-manager.h"
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
@@ -41,25 +42,60 @@ static Atom atom_gnome_panel_action_run_dialog = None;
 static Atom atom_gnome_panel_action_kill_dialog = None;
 
 static void
+menu_destroy_cb (GtkWidget   *widget,
+                 PanelWidget *panel_widget)
+{
+	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
+}
+
+static void
+menu_loaded_cb (GtkWidget   *widget,
+                PanelWidget *panel_widget)
+{
+	GdkWindow *window;
+	GdkRectangle rect;
+	GdkDisplay *display;
+	GdkSeat *seat;
+	GdkDevice *device;
+
+	g_signal_connect (widget, "destroy", G_CALLBACK (menu_destroy_cb), panel_widget);
+	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
+
+	window = gtk_widget_get_window (GTK_WIDGET (panel_widget));
+
+	rect.x = 0;
+	rect.y = 0;
+	rect.width = 1;
+	rect.height = 1;
+
+	display = gdk_display_get_default ();
+	seat = gdk_display_get_default_seat (display);
+	device = gdk_seat_get_pointer (seat);
+
+	gdk_window_get_device_position (window, device,
+	                                &rect.x, &rect.y,
+	                                NULL);
+
+	gtk_menu_popup_at_rect (GTK_MENU (widget), window, &rect,
+	                        GDK_GRAVITY_SOUTH_EAST,
+	                        GDK_GRAVITY_NORTH_WEST,
+	                        NULL);
+}
+
+static void
 panel_action_protocol_main_menu (GdkScreen *screen,
 				 guint32    activate_time)
 {
-	GSList      *panels;
-	PanelWidget *panel_widget;
-	GtkWidget   *menu;
+	GSList *panels;
+	GtkWidget *menu;
 
 	if (panel_applet_activate_main_menu (activate_time))
 		return;
 
 	panels = panel_widget_get_panels ();
-	panel_widget = panels->data;
-	menu = create_main_menu (panel_widget);
+	menu = panel_applets_manager_get_standalone_menu ();
 
-	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
-
-	gtk_menu_set_screen (GTK_MENU (menu), screen);
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-			NULL, NULL, 0, activate_time);
+	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), panels->data);
 }
 
 static void
