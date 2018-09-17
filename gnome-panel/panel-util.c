@@ -144,18 +144,6 @@ panel_pop_window_busy (GtkWidget *window)
 	}
 }
 
-gboolean
-panel_is_program_in_path (const char *program)
-{
-	char *tmp = g_find_program_in_path (program);
-	if (tmp != NULL) {
-		g_free (tmp);
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-}
-
 static gboolean
 panel_ensure_dir (const char *dirname)
 {
@@ -194,46 +182,6 @@ panel_ensure_dir (const char *dirname)
 
 	g_free (parsed);
 	return TRUE;
-}
-
-gboolean
-panel_is_uri_writable (const char *uri)
-{
-	GFile     *file;
-	GFileInfo *info;
-	gboolean   retval;
-
-	g_return_val_if_fail (uri != NULL, FALSE);
-
-	retval = FALSE;
-
-	file = g_file_new_for_uri (uri);
-
-	if (!g_file_query_exists (file, NULL)) {
-		GFile *parent;
-
-		parent = g_file_get_parent (file);
-		g_object_unref (file);
-
-		if (!g_file_query_exists (parent, NULL)) {
-			g_object_unref (parent);
-			return FALSE;
-		}
-
-		file = parent;
-	}
-
-	info = g_file_query_info (file, "access::*",
-				  G_FILE_QUERY_INFO_NONE, NULL, NULL);
-	g_object_unref (file);
-
-	if (info) {
-		retval = g_file_info_get_attribute_boolean (info,
-							    G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE);
-		g_object_unref (info);
-	}
-
-	return retval;
 }
 
 gboolean
@@ -566,62 +514,6 @@ panel_make_unique_desktop_uri (const char *dir,
 	g_free (path);
 
 	return uri;
-}
-
-GdkPixbuf *
-panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
-				    int            width,
-				    int            height)
-{
-	GdkPixbuf     *retval;
-	unsigned char *dstptr;
-	unsigned char *srcptr;
-	int            align;
-
-	g_assert (width > 0 && height > 0);
-
-	if (!data)
-		return NULL;
-
-	retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, width, height);
-	if (!retval)
-		return NULL;
-
-	dstptr = gdk_pixbuf_get_pixels (retval);
-	srcptr = data;
-	align  = gdk_pixbuf_get_rowstride (retval) - (width * 3);
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-/* cairo == 00RRGGBB */
-#define CAIRO_RED 2
-#define CAIRO_GREEN 1
-#define CAIRO_BLUE 0
-#else
-/* cairo == BBGGRR00 */
-#define CAIRO_RED 1
-#define CAIRO_GREEN 2
-#define CAIRO_BLUE 3
-#endif
-
-	while (height--) {
-		int x = width;
-		while (x--) {
-			/* pixbuf == BBGGRR */
-			dstptr[0] = srcptr[CAIRO_RED];
-			dstptr[1] = srcptr[CAIRO_GREEN];
-			dstptr[2] = srcptr[CAIRO_BLUE];
-
-			dstptr += 3;
-			srcptr += 4;
-		}
-
-		dstptr += align;
-	}
-#undef CAIRO_RED
-#undef CAIRO_GREEN
-#undef CAIRO_BLUE
-
-	return retval;
 }
 
 char *
@@ -1166,22 +1058,4 @@ panel_util_key_event_is_popup_panel (GdkEventKey *event,
 {
 	panel_util_key_event_is_binding (event, PANEL_TYPE_TOPLEVEL, "popup-panel-menu",
 					 is_popup, is_popup_modifier);
-}
-
-char *
-panel_util_get_user_name (void)
-{
-	char *name;
-
-	name = g_locale_to_utf8 (g_get_real_name (), -1, NULL, NULL, NULL);
-
-	if (PANEL_GLIB_STR_EMPTY (name) || g_strcmp0 (name, "Unknown") == 0) {
-		g_free (name);
-		name = g_locale_to_utf8 (g_get_user_name (), -1 , NULL, NULL, NULL);
-	}
-
-	if (!name)
-		name = g_strdup (g_get_user_name ());
-
-	return name;
 }

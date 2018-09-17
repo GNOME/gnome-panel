@@ -15,9 +15,6 @@ int		panel_find_applet_index	(GtkWidget *widget);
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
 
-gboolean	panel_is_program_in_path (const char *program);
-
-gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 
 char *          panel_find_icon         (GtkIconTheme  *icon_theme,
@@ -44,10 +41,6 @@ char *panel_make_unique_desktop_path_from_name (const char *dir,
 char *panel_make_unique_desktop_uri (const char *dir,
 				     const char *source);
 
-GdkPixbuf *panel_util_cairo_rgbdata_to_pixbuf (unsigned char *data,
-					       int            width,
-					       int            height);
-
 char *panel_util_get_icon_name_from_g_icon (GIcon *gicon);
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 			    GKeyFile     *key_file);
@@ -68,8 +61,6 @@ void panel_util_key_event_is_popup (GdkEventKey *event,
 void panel_util_key_event_is_popup_panel (GdkEventKey *event,
 					  gboolean    *is_popup,
 					  gboolean    *is_popup_modifier);
-
-char *panel_util_get_user_name (void);
 
 G_END_DECLS
 
