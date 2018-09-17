@@ -121,6 +121,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	GdkScreen *screen;
 	GdkDisplay *display;
 	XEvent    *xevent = (XEvent *) gdk_xevent;
+	Atom       atom;
 
 	if (xevent->type != ClientMessage)
 		return GDK_FILTER_CONTINUE;
@@ -137,11 +138,13 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (window != gdk_screen_get_root_window (screen))
 		return GDK_FILTER_CONTINUE;
 
-	if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
+	atom = xevent->xclient.data.l[0];
+
+	if (atom == atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
-	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
+	else if (atom == atom_gnome_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
-	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_kill_dialog)
+	else if (atom == atom_gnome_panel_action_kill_dialog)
 		panel_action_protocol_kill_dialog (screen, xevent->xclient.data.l [1]);
 	else
 		return GDK_FILTER_CONTINUE;
