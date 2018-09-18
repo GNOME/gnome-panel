@@ -29,7 +29,6 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
-#include "menu.h"
 #include "applet.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"

@@ -37,7 +37,6 @@
 
 #include "panel-util.h"
 #include "panel.h"
-#include "menu.h"
 #include "gp-properties-dialog.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
