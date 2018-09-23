@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-09-12 23:19+0000\n"
-"PO-Revision-Date: 2018-09-14 10:18+0200\n"
+"POT-Creation-Date: 2018-09-22 08:14+0000\n"
+"PO-Revision-Date: 2018-09-23 19:08+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -239,11 +239,11 @@ msgstr ""
 "(för vertikal layout) som arbetsyteväxlaren visar arbetsytorna i. Denna "
 "nyckel är endast relevant om nyckeln display_all_workspaces är sann."
 
-#: data/org.gnome.gnome-panel.gschema.xml:35
+#: data/org.gnome.gnome-panel.gschema.xml:28
 msgid "Enable tooltips"
 msgstr "Aktivera inforutor"
 
-#: data/org.gnome.gnome-panel.gschema.xml:36
+#: data/org.gnome.gnome-panel.gschema.xml:29
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -251,11 +251,11 @@ msgstr ""
 "Om true kommer inforutor att visas för objekt i paneler. Inforutor kan "
 "inaktiveras för hela skrivbordet med egenskapen gtk-enable-tooltips i GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:33
 msgid "Confirm panel removal"
 msgstr "Bekräfta borttagning av panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:41
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -263,39 +263,31 @@ msgstr ""
 "Om true visas en dialogruta som frågar efter bekräftelse när användaren vill "
 "ta bort en panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:39
 msgid "Icon size in menus"
 msgstr "Ikonstorlek i menyer"
 
-#: data/org.gnome.gnome-panel.gschema.xml:47
+#: data/org.gnome.gnome-panel.gschema.xml:40
 msgid "The size of icons in menus."
 msgstr "Storleken på ikoner i menyer."
 
-#: data/org.gnome.gnome-panel.gschema.xml:52
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Maximum icon size in panels"
 msgstr "Maximal ikonstorlek i paneler"
 
-#: data/org.gnome.gnome-panel.gschema.xml:53
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid "The maximum size of icons in panels."
 msgstr "Den maximala ikonstorleken i paneler."
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
-msgid "Icon size in the menus"
-msgstr "Ikonstorlek i menyerna"
-
-#: data/org.gnome.gnome-panel.gschema.xml:62
-msgid "Icon size for only Applications item in the Menu Bar applet"
-msgstr "Ikonstorlek endast för objektet Program i menyradsminiprogrammet"
-
-#: data/org.gnome.gnome-panel.gschema.xml:66
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Which theme variant to use"
 msgstr "Den temavariant som ska användas"
 
-#: data/org.gnome.gnome-panel.gschema.xml:73
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "Panel ID list"
 msgstr "Lista med panel-id"
 
-#: data/org.gnome.gnome-panel.gschema.xml:74
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -304,11 +296,11 @@ msgstr ""
 "Inställningarna för var och en av dessa paneler lagras i /apps/panel/"
 "toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:78
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Panel object ID list"
 msgstr "Lista med panelobjekt-id"
 
-#: data/org.gnome.gnome-panel.gschema.xml:79
+#: data/org.gnome.gnome-panel.gschema.xml:64
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -319,11 +311,11 @@ msgstr ""
 "menyknapp/menyrad). Inställningarna för vart och ett av dessa objekt lagras "
 "i /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid "Complete panel lockdown"
 msgstr "Lås panelen helt"
 
-#: data/org.gnome.gnome-panel.gschema.xml:87
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -333,11 +325,11 @@ msgstr ""
 "panelen. Enskilda miniprogram måste däremot låsas separat. Panelen måste "
 "startas om för att detta ska börja gälla."
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid "Applet IIDs to disable from loading"
 msgstr "Miniprograms-IID att förhindra från inläsning"
 
-#: data/org.gnome.gnome-panel.gschema.xml:92
+#: data/org.gnome.gnome-panel.gschema.xml:77
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -350,11 +342,11 @@ msgstr ""
 "commander\" kan du lägga till \"OAFIID:GNOME_MiniCommanderApplet\" i denna "
 "lista. Panelen måste startas om för att detta ska börja gälla."
 
-#: data/org.gnome.gnome-panel.gschema.xml:96
+#: data/org.gnome.gnome-panel.gschema.xml:81
 msgid "Disable Force Quit"
 msgstr "Inaktivera framtvingat avslut"
 
-#: data/org.gnome.gnome-panel.gschema.xml:97
+#: data/org.gnome.gnome-panel.gschema.xml:82
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -362,22 +354,22 @@ msgstr ""
 "Om true kommer panelen inte att tillåta att en användare tvingar ett program "
 "att avsluta genom att ta bort åtkomsten till knappen tvinga avslutande."
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid "History of \"Run Application\" dialog"
 msgstr "Historik för dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:90
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Lista över kommandon som tidigare har använts i dialogfönstret \"Kör program"
 "\"."
 
-#: data/org.gnome.gnome-panel.gschema.xml:109
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Aktivera programlista i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:110
+#: data/org.gnome.gnome-panel.gschema.xml:95
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -387,11 +379,11 @@ msgstr ""
 "tillgänglig. Huruvida listan fälls ut eller inte när dialogfönstret visas "
 "styrs av nyckeln show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:114
+#: data/org.gnome.gnome-panel.gschema.xml:99
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Fäll ut programlista i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:115
+#: data/org.gnome.gnome-panel.gschema.xml:100
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -401,11 +393,11 @@ msgstr ""
 "när dialogfönstret öppnas. Denna nyckel är endast relevant om nyckeln "
 "enable_program_list är true."
 
-#: data/org.gnome.gnome-panel.gschema.xml:119
+#: data/org.gnome.gnome-panel.gschema.xml:104
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Aktivera automatisk komplettering i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:120
+#: data/org.gnome.gnome-panel.gschema.xml:105
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -424,44 +416,6 @@ msgstr ""
 "Platsen för den .desktop-fil som beskriver programstartaren. Denna nyckel är "
 "endast relevant om nyckeln object_type är \"launcher-object"
 "\" (startarobjekt)."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:22
-msgid "Tooltip displayed for menu"
-msgstr "Inforuta som visas för meny"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:23
-msgid "The text to display in a tooltip for this menu."
-msgstr "Texten att visa i en inforuta för denna meny."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:5
-msgid "Icon used for button"
-msgstr "Ikon som används för knapp"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:6
-msgid ""
-"The location of the image file used as the icon for the object's button. If "
-"empty, the default icon for the menu will be used."
-msgstr ""
-"Platsen för den bildfil som används som ikon för objektets knapp. Om tom "
-"kommer standardikonen för menyn att användas."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:11
-msgid "Menu content path"
-msgstr "Sökväg för menyinnehåll"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:12
-msgid ""
-"The path from which the menu contents is constructed. If empty, the menu "
-"will be the default applications menu."
-msgstr ""
-"Sökvägen från vilken menyinnehållet konstrueras. Om tom kommer menyn att "
-"vara standardmenyn för program."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
@@ -846,49 +800,23 @@ msgstr "Använd anpassad textfärg"
 msgid "Text Color"
 msgstr "Textfärg"
 
-#: gnome-panel/applet.c:333
+#: gnome-panel/applet.c:324
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:471
+#: gnome-panel/applet.c:462
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:478
+#: gnome-panel/applet.c:469
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/gnome-desktop-item-edit.c:27
-msgid "Create new file in the given directory"
-msgstr "Skapa ny fil i den angivna katalogen"
-
-#: gnome-panel/gnome-desktop-item-edit.c:28
-msgid "[FILE...]"
-msgstr "[FIL…]"
-
-#: gnome-panel/gnome-desktop-item-edit.c:106
-msgid "- Edit .desktop files"
-msgstr "- Redigera .desktop-filer"
-
-#: gnome-panel/gnome-desktop-item-edit.c:144
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Skapa programstartare"
-
-#: gnome-panel/gnome-desktop-item-edit.c:169
-#: gnome-panel/gnome-desktop-item-edit.c:192
-msgid "Directory Properties"
-msgstr "Katalogegenskaper"
-
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Egenskaper för programstartaren"
-
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
 msgid "Panel"
 msgstr "Panel"
 
@@ -917,11 +845,11 @@ msgstr "Om"
 msgid "Add"
 msgstr "Lägg till"
 
-#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
 msgid "Add to Panel"
 msgstr "Lägg till i panel"
 
-#: gnome-panel/gp-add-applet-window.c:553
+#: gnome-panel/gp-add-applet-window.c:560
 msgid "No applets found"
 msgstr "Inga miniprogram hittades"
 
@@ -1052,12 +980,16 @@ msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
+#: gnome-panel/launcher.c:935
+msgid "Launcher Properties"
+msgstr "Egenskaper för programstartaren"
+
 #: gnome-panel/launcher.c:1000
 msgid "_Launch"
 msgstr "_Starta"
 
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
-#: gnome-panel/panel-context-menu.c:135
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
+#: gnome-panel/panel-context-menu.c:147
 msgid "_Properties"
 msgstr "_Egenskaper"
 
@@ -1066,8 +998,12 @@ msgid "Launcher location is not set, cannot load launcher\n"
 msgstr ""
 "Programstartarens plats är inte inställd. Kan inte läsa in programstartare\n"
 
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
-#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
+#: gnome-panel/launcher.c:1095
+msgid "Create Launcher"
+msgstr "Skapa programstartare"
+
+#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
+#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
 msgid "Could not save launcher"
 msgstr "Kunde inte spara programstartare"
 
@@ -1077,24 +1013,24 @@ msgstr "Kunde inte spara programstartare"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:800
+#: gnome-panel/panel-applet-frame.c:808
 msgid "Error"
 msgstr "Fel"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
 msgid "Choose an icon"
 msgstr "Välj en ikon"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1251
-#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
-#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
-#: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:206
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
+#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
+#: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
 msgstr "A_vbryt"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: gnome-panel/panel-ditem-editor.c:999
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: gnome-panel/panel-ditem-editor.c:994
 msgid "_Open"
 msgstr "Ö_ppna"
 
@@ -1116,129 +1052,120 @@ msgstr "Ersätt en för närvarande körande panel"
 msgid "Print version"
 msgstr "Skriv ut version"
 
-#: gnome-panel/panel-action-button.c:159
+#: gnome-panel/panel-action-button.c:157
 msgid "_Lock Screen"
 msgstr "_Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:164
+#: gnome-panel/panel-action-button.c:162
 msgid "_Activate Screensaver"
 msgstr "_Aktivera skärmsläckare"
 
-#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:939
+#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:940
+#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:922
+#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:923
+#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
 msgid "Log out of this session to log in as a different user"
 msgstr "Logga ut från denna session för att logga in som en annan användare"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:377
 msgid "Run Application..."
 msgstr "Kör program…"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:378
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Kör ett program genom att ange ett kommando eller välj från en lista"
 
-#: gnome-panel/panel-action-button.c:388
+#: gnome-panel/panel-action-button.c:386
 msgid "Search for Files..."
 msgstr "Sök filer…"
 
-#: gnome-panel/panel-action-button.c:389
+#: gnome-panel/panel-action-button.c:387
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "Sök efter dokument och mappar på den här datorn efter namn eller innehåll"
 
-#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Tvinga avslut"
 
-#: gnome-panel/panel-action-button.c:397
+#: gnome-panel/panel-action-button.c:395
 msgid "Force a misbehaving application to quit"
 msgstr "Tvinga ett program som beter sig fel att avsluta"
 
-#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:981
+#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:998
+#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
 msgid "Suspend"
 msgstr "Vänteläge"
 
-#: gnome-panel/panel-action-button.c:423
+#: gnome-panel/panel-action-button.c:421
 msgid "Hybrid sleep"
 msgstr "Hybridvila"
 
-#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1034
+#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
 msgid "Restart"
 msgstr "Starta om"
 
-#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1035
+#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
 msgid "Restart the computer"
 msgstr "Starta om datorn"
 
-#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1051
+#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
 msgid "Power Off"
 msgstr "Stäng av"
 
-#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1052
+#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
 msgid "Power off the computer"
 msgstr "Stäng av datorn"
 
-#: gnome-panel/panel-addto-dialog.c:136 gnome-panel/panel-menu-button.c:953
-#: modules/menu/gp-menu-module.c:39
-msgid "Main Menu"
-msgstr "Huvudmeny"
-
-#: gnome-panel/panel-addto-dialog.c:137 modules/menu/gp-menu-module.c:40
-msgid "The main GNOME menu"
-msgstr "GNOME-huvudmenyn"
-
-#: gnome-panel/panel-addto-dialog.c:185
+#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
 msgstr "(tom)"
 
-#: gnome-panel/panel-addto-dialog.c:384
+#: gnome-panel/panel-addto-dialog.c:361
 msgid "Custom Application Launcher"
 msgstr "Anpassad programstartare"
 
-#: gnome-panel/panel-addto-dialog.c:385
+#: gnome-panel/panel-addto-dialog.c:362
 msgid "Create a new launcher"
 msgstr "Skapa en ny programstartare"
 
-#: gnome-panel/panel-addto-dialog.c:394
+#: gnome-panel/panel-addto-dialog.c:371
 msgid "Application Launcher..."
 msgstr "Programstartare…"
 
-#: gnome-panel/panel-addto-dialog.c:395
+#: gnome-panel/panel-addto-dialog.c:372
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiera en programstartare från programmenyn"
 
-#: gnome-panel/panel-addto-dialog.c:879
+#: gnome-panel/panel-addto-dialog.c:913
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Sök ett _objekt att lägga till i ”%s”:"
 
-#: gnome-panel/panel-addto-dialog.c:883
+#: gnome-panel/panel-addto-dialog.c:917
 msgid "Find an _item to add to the panel:"
 msgstr "Sök ett _objekt att lägga till i panelen:"
 
-#: gnome-panel/panel-addto-dialog.c:1005
+#: gnome-panel/panel-addto-dialog.c:1039
 msgid "_Forward"
 msgstr "_Framåt"
 
-#: gnome-panel/panel-addto-dialog.c:1008 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Lägg till"
@@ -1251,42 +1178,42 @@ msgstr "Sök ett objekt att lägga till i panelen:"
 msgid "_Back"
 msgstr "_Bakåt"
 
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
+#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
 #: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
 #: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
 #: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "S_täng"
 
-#: gnome-panel/panel-applet-frame.c:763
+#: gnome-panel/panel-applet-frame.c:771
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det uppstod ett problem i panelen vid inläsning av ”%s”."
 
-#: gnome-panel/panel-applet-frame.c:775
+#: gnome-panel/panel-applet-frame.c:783
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:779
+#: gnome-panel/panel-applet-frame.c:787
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vill du ta bort miniprogrammet från din konfiguration?"
 
-#: gnome-panel/panel-applet-frame.c:782
+#: gnome-panel/panel-applet-frame.c:790
 msgid "D_on't Delete"
 msgstr "Ta i_nte bort"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1252
+#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: gnome-panel/panel.c:416
+#: gnome-panel/panel.c:414
 #, c-format
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:551
-#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
+#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
 msgstr "Öppna ”%s”"
@@ -1294,21 +1221,18 @@ msgstr "Öppna ”%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1104
-#: modules/menu/gp-places-menu.c:428
+#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Öppna din personliga mapp"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1133
-#: modules/menu/gp-places-menu.c:511
+#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Dator"
 
 #. name
-#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1134
-#: modules/menu/gp-places-menu.c:512
+#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1317,14 +1241,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1143
-#: modules/menu/gp-places-menu.c:567
+#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Nätverk"
 
 #. name
-#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1144
-#: modules/menu/gp-places-menu.c:568
+#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 
@@ -1333,11 +1255,11 @@ msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1253
 msgid "Delete this panel?"
 msgstr "Ta bort denna panel?"
 
-#: gnome-panel/panel.c:1247
+#: gnome-panel/panel.c:1257
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1345,15 +1267,15 @@ msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
 "inställningar."
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:59
 msgid "Cannot delete this panel"
 msgstr "Kan inte ta bort denna panel"
 
-#: gnome-panel/panel-context-menu.c:61
+#: gnome-panel/panel-context-menu.c:60
 msgid "You must always have at least one panel."
 msgstr "Du måste alltid ha åtminstone en panel."
 
-#: gnome-panel/panel-context-menu.c:126
+#: gnome-panel/panel-context-menu.c:138
 msgid "_Add to Panel..."
 msgstr "_Lägg till i panelen…"
 
@@ -1362,11 +1284,11 @@ msgstr "_Lägg till i panelen…"
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/panel-context-menu.c:142
+#: gnome-panel/panel-context-menu.c:154
 msgid "_Delete This Panel"
 msgstr "_Ta bort denna panel"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:166
 msgid "_New Panel"
 msgstr "_Ny panel"
 
@@ -1383,66 +1305,66 @@ msgid "Location"
 msgstr "Plats"
 
 #. Type
-#: gnome-panel/panel-ditem-editor.c:600
+#: gnome-panel/panel-ditem-editor.c:595
 msgid "_Type:"
 msgstr "_Typ:"
 
 #. Name
-#: gnome-panel/panel-ditem-editor.c:607
+#: gnome-panel/panel-ditem-editor.c:602
 msgid "_Name:"
 msgstr "_Namn:"
 
-#: gnome-panel/panel-ditem-editor.c:632
+#: gnome-panel/panel-ditem-editor.c:627
 msgid "_Browse..."
 msgstr "_Bläddra…"
 
 #. Comment
-#: gnome-panel/panel-ditem-editor.c:639
+#: gnome-panel/panel-ditem-editor.c:634
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: gnome-panel/panel-ditem-editor.c:646
+#: gnome-panel/panel-ditem-editor.c:641
 msgid "_Revert"
 msgstr "Åte_rställ"
 
-#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
-#: gnome-panel/panel-ditem-editor.c:966
+#: gnome-panel/panel-ditem-editor.c:961
 msgid "Choose an application..."
 msgstr "Välj ett program…"
 
-#: gnome-panel/panel-ditem-editor.c:970
+#: gnome-panel/panel-ditem-editor.c:965
 msgid "Choose a file..."
 msgstr "Välj en fil…"
 
-#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
+#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
 msgid "Comm_and:"
 msgstr "Komm_ando:"
 
-#: gnome-panel/panel-ditem-editor.c:1153
+#: gnome-panel/panel-ditem-editor.c:1146
 msgid "_Location:"
 msgstr "_Plats:"
 
-#: gnome-panel/panel-ditem-editor.c:1316
+#: gnome-panel/panel-ditem-editor.c:1309
 msgid "The name of the launcher is not set."
 msgstr "Namnet på programstartaren är inte inställt."
 
-#: gnome-panel/panel-ditem-editor.c:1320
+#: gnome-panel/panel-ditem-editor.c:1313
 msgid "Could not save directory properties"
 msgstr "Kunde inte spara katalogegenskaper"
 
-#: gnome-panel/panel-ditem-editor.c:1321
+#: gnome-panel/panel-ditem-editor.c:1314
 msgid "The name of the directory is not set."
 msgstr "Namnet på katalogen är inte inställt."
 
-#: gnome-panel/panel-ditem-editor.c:1337
+#: gnome-panel/panel-ditem-editor.c:1330
 msgid "The command of the launcher is not set."
 msgstr "Kommandot för programstartaren är inte inställt."
 
-#: gnome-panel/panel-ditem-editor.c:1340
+#: gnome-panel/panel-ditem-editor.c:1333
 msgid "The location of the launcher is not set."
 msgstr "Platsen för programstartaren är inte inställt."
 
@@ -1453,11 +1375,11 @@ msgstr ""
 "Klicka på ett fönster för att tvinga programmet att avsluta. För att avbryta "
 "trycker du <ESC>."
 
-#: gnome-panel/panel-force-quit.c:220
+#: gnome-panel/panel-force-quit.c:223
 msgid "Force this application to exit?"
 msgstr "Tvinga programmet att avsluta?"
 
-#: gnome-panel/panel-force-quit.c:223
+#: gnome-panel/panel-force-quit.c:226
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -1465,164 +1387,43 @@ msgstr ""
 "Om du väljer att tvinga ett program att avsluta så kan osparade ändringar i "
 "öppnade dokument gå förlorade."
 
-#: gnome-panel/panel-force-quit.c:230
+#: gnome-panel/panel-force-quit.c:233
 msgid "_Force quit"
 msgstr "_Tvinga avslut"
 
-#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
+#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan inte skapa initial panellayout.\n"
 
-#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
-#: modules/menu/menu-bar-menu.ui:5
-msgid "_Edit Menus"
-msgstr "_Redigera menyer"
-
-#: gnome-panel/panel-menu-items.c:400 modules/menu/gp-lock-logout.c:905
-msgid "Switch User"
-msgstr "Växla användare"
-
-#: gnome-panel/panel-menu-items.c:527 modules/menu/gp-places-menu.c:474
-msgid "Bookmarks"
-msgstr "Bokmärken"
-
-#: gnome-panel/panel-menu-items.c:621 modules/menu/gp-places-menu.c:93
-#, c-format
-msgid "Unable to scan %s for media changes"
-msgstr "Kunde inte söka av %s efter mediabyten"
-
-#: gnome-panel/panel-menu-items.c:663 modules/menu/gp-places-menu.c:294
-#, c-format
-msgid "Rescan %s"
-msgstr "Sök av %s igen"
-
-#: gnome-panel/panel-menu-items.c:700 modules/menu/gp-places-menu.c:143
-#, c-format
-msgid "Unable to mount %s"
-msgstr "Kunde inte montera %s"
-
-#: gnome-panel/panel-menu-items.c:762 modules/menu/gp-places-menu.c:337
-#, c-format
-msgid "Mount %s"
-msgstr "Montera %s"
-
-#: gnome-panel/panel-menu-items.c:970 modules/menu/gp-places-menu.c:534
-msgid "Removable Media"
-msgstr "Flyttbara media"
-
-#: gnome-panel/panel-menu-items.c:1061 modules/menu/gp-places-menu.c:590
-msgid "Network Places"
-msgstr "Nätverksplatser"
-
-#. Translators: Desktop is used here as in
-#. * "Desktop Folder" (this is not the Desktop
-#. * environment).
-#. Translators: Desktop is used here as in "Desktop Folder"
-#. * (this is not the Desktop environment).
-#.
-#: gnome-panel/panel-menu-items.c:1121 modules/menu/gp-places-menu.c:451
-msgctxt "Desktop Folder"
-msgid "Desktop"
-msgstr "Skrivbord"
-
-#: gnome-panel/panel-menu-items.c:1122 modules/menu/gp-places-menu.c:452
-msgid "Open the contents of your desktop in a folder"
-msgstr "Öppna innehållet på ditt skrivbord in en mapp"
-
-#: gnome-panel/panel-menu-items.c:1401 modules/menu/gp-main-menu-applet.c:267
-#: modules/menu/gp-menu-bar-applet.c:156
-msgid "Places"
-msgstr "Platser"
-
-#: gnome-panel/panel-image-menu-item.c:125
-msgid "Image widget"
-msgstr "Bildkomponent"
-
-#: gnome-panel/panel-image-menu-item.c:126
-msgid "Child widget to appear next to the menu text"
-msgstr "Barnkomponent att visa vid sidan om menytexten"
-
-#: gnome-panel/panel-image-menu-item.c:133
-msgid "Always show image"
-msgstr "Visa alltid bild"
-
-#: gnome-panel/panel-image-menu-item.c:134
-msgid "Whether the image will always be shown"
-msgstr "Huruvida bilden alltid ska visas"
-
-#: gnome-panel/panel-recent.c:76 gnome-panel/panel-recent.c:86
-#, c-format
-msgid "Could not open recently used document \"%s\""
-msgstr "Kunde inte öppna tidigare använda dokumentet ”%s”"
-
-#: gnome-panel/panel-recent.c:88
-#, c-format
-msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Ett okänt fel inträffade vid försök att öppna ”%s”."
-
-#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:194
-msgid "Clear the Recent Documents list?"
-msgstr "Töm listan över senaste dokument?"
-
-#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:199
-msgid ""
-"If you clear the Recent Documents list, you clear the following:\n"
-"• All items from the Places → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
-msgstr ""
-"Om du tömmer listan över senaste dokument, tömmer du följande:\n"
-"• Alla objekt från menyobjektet Platser → Senaste dokument.\n"
-"• Alla objekt från listan över senaste dokument i alla program."
-
-#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:207
-msgid "C_lear"
-msgstr "T_öm"
-
-#: gnome-panel/panel-recent.c:159
-msgid "Clear Recent Documents"
-msgstr "Töm senaste dokument"
-
-#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:617
-msgid "Recent Documents"
-msgstr "Senaste dokument"
-
-#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:239
-msgid "Clear Recent Documents..."
-msgstr "Töm senaste dokument…"
-
-#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:244
-msgid "Clear all items from the recent documents list"
-msgstr "Töm alla objekt i listan över senaste dokument"
-
-#: gnome-panel/panel-run-dialog.c:426
+#: gnome-panel/panel-run-dialog.c:424
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Kan inte hitta en terminal, använder xterm, även om det kanske inte fungerar"
 
-#: gnome-panel/panel-run-dialog.c:490
+#: gnome-panel/panel-run-dialog.c:488
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kunde inte köra kommandot ”%s”"
 
-#: gnome-panel/panel-run-dialog.c:531
+#: gnome-panel/panel-run-dialog.c:529
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunde inte konvertera ”%s” från UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1274
+#: gnome-panel/panel-run-dialog.c:1280
 msgid "Choose a file to append to the command..."
 msgstr "Välj en fil att lägga till efter kommandot…"
 
-#: gnome-panel/panel-run-dialog.c:1657 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
-#: gnome-panel/panel-run-dialog.c:1695
+#: gnome-panel/panel-run-dialog.c:1701
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: ”%s”"
 
-#: gnome-panel/panel-run-dialog.c:1728
+#: gnome-panel/panel-run-dialog.c:1734
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1683,87 +1484,87 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Expanded Edge Panel"
 msgstr "Utfälld överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1564
 msgid "Top Centered Panel"
 msgstr "Centrerad överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Floating Panel"
 msgstr "Flytande överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Edge Panel"
 msgstr "Överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Expanded Edge Panel"
 msgstr "Utfälld nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1571
 msgid "Bottom Centered Panel"
 msgstr "Centrerad nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Floating Panel"
 msgstr "Flytande nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Edge Panel"
 msgstr "Nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Expanded Edge Panel"
 msgstr "Utfälld vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1578
 msgid "Left Centered Panel"
 msgstr "Centrerad vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Floating Panel"
 msgstr "Flytande vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Edge Panel"
 msgstr "Vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Expanded Edge Panel"
 msgstr "Utfälld högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1585
 msgid "Right Centered Panel"
 msgstr "Centrerad högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1588
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Floating Panel"
 msgstr "Flytande högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1589
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Edge Panel"
 msgstr "Högerkantspanel"
 
-#: gnome-panel/panel-util.c:312
+#: gnome-panel/panel-util.c:264
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikonen ”%s” hittades inte"
 
-#: gnome-panel/panel-util.c:555
+#: gnome-panel/panel-util.c:507
 msgid "file"
 msgstr "fil"
 
-#: gnome-panel/panel-util.c:723 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Hem"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:732 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Filsystem"
 
@@ -1776,10 +1577,22 @@ msgstr "Filsystem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:946 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:128
+msgid "Initial Setup"
+msgstr "Initial konfiguration"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:132
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:136
+msgid "Done"
+msgstr "Färdig"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -2277,54 +2090,190 @@ msgstr "sekunder"
 msgid "_Rotate on vertical panels"
 msgstr "_Rotera i vertikala paneler"
 
-#: modules/menu/gp-lock-logout.c:1015
+#: modules/menu/gp-lock-logout.c:967
+msgid "Switch User"
+msgstr "Växla användare"
+
+#: modules/menu/gp-lock-logout.c:1077
 msgid "Hybrid Sleep"
 msgstr "Hybridvila"
 
-#: modules/menu/gp-main-menu-applet.c:472 modules/menu/gp-menu-bar-applet.c:220
+#: modules/menu/gp-menu-bar-applet.c:119
+msgid "Applications"
+msgstr "Program"
+
+#: modules/menu/gp-menu-bar-applet.c:124
+msgid "Browse and run installed applications"
+msgstr "Bläddra och kör installerade program"
+
+#: modules/menu/gp-menu-bar-applet.c:159
+#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+msgid "Places"
+msgstr "Platser"
+
+#: modules/menu/gp-menu-bar-applet.c:163
+msgid "Access documents, folders and network places"
+msgstr "Kom åt dokument, mappar och nätverksplatser"
+
+#: modules/menu/gp-menu-bar-applet.c:199
+msgid "System"
+msgstr "System"
+
+#: modules/menu/gp-menu-bar-applet.c:203
+msgid "Change system appearance and behavior, or get help"
+msgstr "Ändra systemets utseende och beteende, eller få hjälp"
+
+#: modules/menu/gp-menu-bar-applet.c:253
+#: modules/menu/gp-menu-button-applet.c:469
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Installera programmet ”%s”."
 
-#: modules/menu/gp-menu-bar-applet.c:131
-msgid "Applications"
-msgstr "Program"
+#: modules/menu/gp-menu-module.c:381
+msgid "Main Menu"
+msgstr "Huvudmeny"
 
-#: modules/menu/gp-menu-bar-applet.c:136
-msgid "Browse and run installed applications"
-msgstr "Bläddra och kör installerade program"
+#: modules/menu/gp-menu-module.c:382
+msgid "The main GNOME menu"
+msgstr "GNOME-huvudmenyn"
 
-#: modules/menu/gp-menu-bar-applet.c:160
-msgid "Access documents, folders and network places"
-msgstr "Kom åt dokument, mappar och nätverksplatser"
+#: modules/menu/gp-menu-module.c:388
+msgid "Menu Button"
+msgstr "Menyknapp"
 
-#: modules/menu/gp-menu-bar-applet.c:181
-msgid "System"
-msgstr "System"
+#: modules/menu/gp-menu-module.c:389
+msgid "A custom menu button"
+msgstr "En anpassad menyknapp"
 
-#: modules/menu/gp-menu-bar-applet.c:185
-msgid "Change system appearance and behavior, or get help"
-msgstr "Ändra systemets utseende och beteende, eller få hjälp"
-
-#: modules/menu/gp-menu-module.c:46
+#: modules/menu/gp-menu-module.c:397
 msgid "Menu Bar"
 msgstr "Menyrad"
 
-#: modules/menu/gp-menu-module.c:47
+#: modules/menu/gp-menu-module.c:398
 msgid "A custom menu bar"
 msgstr "En anpassad menyrad"
 
-#: modules/menu/gp-menu-module.c:53
+#: modules/menu/gp-menu-module.c:404
 msgid "User menu"
 msgstr "Användarmeny"
 
-#: modules/menu/gp-menu-module.c:54
+#: modules/menu/gp-menu-module.c:405
 msgid "Menu to change your settings and log out"
 msgstr "Meny för att ändra dina inställningar och logga ut."
 
-#: modules/menu/org.gnome.gnome-panel.applet.main-menu.gschema.xml:17
+#: modules/menu/gp-places-menu.c:94
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Kunde inte söka av %s efter mediabyten"
+
+#: modules/menu/gp-places-menu.c:144
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Kunde inte montera %s"
+
+#: modules/menu/gp-places-menu.c:292
+#, c-format
+msgid "Rescan %s"
+msgstr "Sök av %s igen"
+
+#: modules/menu/gp-places-menu.c:333
+#, c-format
+msgid "Mount %s"
+msgstr "Montera %s"
+
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: modules/menu/gp-places-menu.c:446
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Skrivbord"
+
+#: modules/menu/gp-places-menu.c:447
+msgid "Open the contents of your desktop in a folder"
+msgstr "Öppna innehållet på ditt skrivbord in en mapp"
+
+#: modules/menu/gp-places-menu.c:467
+msgid "Bookmarks"
+msgstr "Bokmärken"
+
+#: modules/menu/gp-places-menu.c:525
+msgid "Removable Media"
+msgstr "Flyttbara media"
+
+#: modules/menu/gp-places-menu.c:579
+msgid "Network Places"
+msgstr "Nätverksplatser"
+
+#: modules/menu/gp-places-menu.c:604
+msgid "Recent Documents"
+msgstr "Senaste dokument"
+
+#: modules/menu/gp-recent-menu.c:193
+msgid "Clear the Recent Documents list?"
+msgstr "Töm listan över senaste dokument?"
+
+#: modules/menu/gp-recent-menu.c:198
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Om du tömmer listan över senaste dokument, tömmer du följande:\n"
+"• Alla objekt från menyobjektet Platser → Senaste dokument.\n"
+"• Alla objekt från listan över senaste dokument i alla program."
+
+#: modules/menu/gp-recent-menu.c:206
+msgid "C_lear"
+msgstr "T_öm"
+
+#: modules/menu/gp-recent-menu.c:236
+msgid "Clear Recent Documents..."
+msgstr "Töm senaste dokument…"
+
+#: modules/menu/gp-recent-menu.c:241
+msgid "Clear all items from the recent documents list"
+msgstr "Töm alla objekt i listan över senaste dokument"
+
+#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+msgid "_Edit Menus"
+msgstr "_Redigera menyer"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:5
+msgid "Icon used for button"
+msgstr "Ikon som används för knapp"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:6
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Platsen för den bildfil som används som ikon för objektets knapp. Om tom "
+"kommer standardikonen för menyn att användas."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:11
+msgid "Menu content path"
+msgstr "Sökväg för menyinnehåll"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
+msgid ""
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
+msgstr ""
+"Sökvägen från vilken menyinnehållet konstrueras. Om tom kommer menyn att "
+"vara standardmenyn för program."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
 msgid "Show arrow on menu icon"
 msgstr "Visa pil på menyikon"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
+msgid "Tooltip displayed for menu"
+msgstr "Inforuta som visas för meny"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:23
+msgid "The text to display in a tooltip for this menu."
+msgstr "Texten att visa i en inforuta för denna meny."
 
 #: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
@@ -2510,6 +2459,45 @@ msgstr "Visa _namn på arbetsytor i växlaren"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Arbetsytor"
+
+#~ msgid "Icon size in the menus"
+#~ msgstr "Ikonstorlek i menyerna"
+
+#~ msgid "Icon size for only Applications item in the Menu Bar applet"
+#~ msgstr "Ikonstorlek endast för objektet Program i menyradsminiprogrammet"
+
+#~ msgid "Create new file in the given directory"
+#~ msgstr "Skapa ny fil i den angivna katalogen"
+
+#~ msgid "[FILE...]"
+#~ msgstr "[FIL…]"
+
+#~ msgid "- Edit .desktop files"
+#~ msgstr "- Redigera .desktop-filer"
+
+#~ msgid "Directory Properties"
+#~ msgstr "Katalogegenskaper"
+
+#~ msgid "Image widget"
+#~ msgstr "Bildkomponent"
+
+#~ msgid "Child widget to appear next to the menu text"
+#~ msgstr "Barnkomponent att visa vid sidan om menytexten"
+
+#~ msgid "Always show image"
+#~ msgstr "Visa alltid bild"
+
+#~ msgid "Whether the image will always be shown"
+#~ msgstr "Huruvida bilden alltid ska visas"
+
+#~ msgid "Could not open recently used document \"%s\""
+#~ msgstr "Kunde inte öppna tidigare använda dokumentet ”%s”"
+
+#~ msgid "An unknown error occurred while trying to open \"%s\"."
+#~ msgstr "Ett okänt fel inträffade vid försök att öppna ”%s”."
+
+#~ msgid "Clear Recent Documents"
+#~ msgstr "Töm senaste dokument"
 
 #~ msgid "No application to handle search folders is installed."
 #~ msgstr "Inget program för att hantera sökmappar är installerat."
