@@ -1,5 +1,5 @@
 # Danish translation of gnome-panel.
-# Copyright (C) 1998-99, 2000-10, 2012, 2016 Free Software Foundation, Inc.
+# Copyright (C) 1998-99, 2000-10, 2012, 2016, 2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Kenneth Christiansen <kenneth@ripen.dk>, 1998-2000.
@@ -11,6 +11,7 @@
 # flemming christensen <fc@stromata.dk>, 2011.
 # Joe Hansen <joedalton2@yahoo.dk>, 2013.
 # Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 08, 09, 10, 12, 16.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018.
 #
 # Konventioner:
 #
@@ -24,22 +25,21 @@
 #   URL -> adresse
 #
 # Se i øvrigt po-filen til gnome-applets.
-# Husk at tilføje dig i credit-listen (besked id "translator-credits")
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-06-11 11:24+0000\n"
-"PO-Revision-Date: 2016-12-08 22:49+0100\n"
-"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-09-17 14:57+0000\n"
+"PO-Revision-Date: 2018-11-06 15:07+0100\n"
+"Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -253,11 +253,11 @@ msgstr ""
 "arbejdsområderne i. Nøglen er kun relevant hvis display_all_workspaces er "
 "sand."
 
-#: data/org.gnome.gnome-panel.gschema.xml:20
+#: data/org.gnome.gnome-panel.gschema.xml:28
 msgid "Enable tooltips"
 msgstr "Aktivér værktøjstip"
 
-#: data/org.gnome.gnome-panel.gschema.xml:21
+#: data/org.gnome.gnome-panel.gschema.xml:29
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -265,11 +265,11 @@ msgstr ""
 "Hvis sand, vises værktøjstip for objekter i paneler. Værktøjstip kan slås "
 "fra for hele skrivebordet med egenskaben gtk-enable-tooltips i GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:25
+#: data/org.gnome.gnome-panel.gschema.xml:33
 msgid "Confirm panel removal"
 msgstr "Bekræft panelfjernelse"
 
-#: data/org.gnome.gnome-panel.gschema.xml:26
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -277,24 +277,31 @@ msgstr ""
 "Om et vindue der spørger efter bekræftelse hvis brugeren ønsker at fjerne et "
 "panel, skal vises."
 
-#: data/org.gnome.gnome-panel.gschema.xml:30
-msgid "Icon size in the menus"
+#: data/org.gnome.gnome-panel.gschema.xml:39
+msgid "Icon size in menus"
 msgstr "Ikonstørrelse i menuerne"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
-msgid "Icon size for only Applications item in the Menu Bar applet"
-msgstr ""
-"Ikonstørrelse blot for elementet Programmer i menubjælke-panelprogrammet"
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "The size of icons in menus."
+msgstr "Ikonstørrelsen i menuerne."
 
-#: data/org.gnome.gnome-panel.gschema.xml:38
+#: data/org.gnome.gnome-panel.gschema.xml:45
+msgid "Maximum icon size in panels"
+msgstr "Maksimale ikonstørrelse i panelerne"
+
+#: data/org.gnome.gnome-panel.gschema.xml:46
+msgid "The maximum size of icons in panels."
+msgstr "Den maksimale ikonstørrelse i panelerne."
+
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Which theme variant to use"
 msgstr "Temavarianten der skal bruges"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "Panel ID list"
 msgstr "Panel-id-liste"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:59
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -302,11 +309,11 @@ msgstr ""
 "En liste af panel-id'er. Hvert id identificerer et enkelt topniveau-panel. "
 "Opsætningen for hver af disse paneler er gemt i /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:50
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Panel object ID list"
 msgstr "Panelobjekt-id-liste"
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:64
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -317,11 +324,11 @@ msgstr ""
 "linje). Opsætningen for hver af disse objekter er gemt i /apps/panel/objects/"
 "$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid "Complete panel lockdown"
 msgstr "Lås panelet fuldstændigt"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:72
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -331,11 +338,11 @@ msgstr ""
 "panelet. Individuelle panelprogrammer skal dog muligvis låses ned separat. "
 "Panel skal genstartes før dette træder i kraft."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid "Applet IIDs to disable from loading"
 msgstr "Panelprogram-iid'er som ikke skal indlæses"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:77
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -348,11 +355,11 @@ msgstr ""
 "commander, skal “OAFIID:GNOME_MiniCommanderApplet” føjes til denne liste. "
 "Panelet skal genstartes før dette træder i kraft."
 
-#: data/org.gnome.gnome-panel.gschema.xml:68
+#: data/org.gnome.gnome-panel.gschema.xml:81
 msgid "Disable Force Quit"
 msgstr "Deaktiver gennemtving afslutning"
 
-#: data/org.gnome.gnome-panel.gschema.xml:69
+#: data/org.gnome.gnome-panel.gschema.xml:82
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -360,22 +367,22 @@ msgstr ""
 "Hvis sand vil panelet ikke tillade en bruger at gennemtvinge at et program "
 "afslutter (ved at fjerne tilgangen til knappen tving afslut)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid "History of \"Run Application\" dialog"
 msgstr "Historik for dialogvinduet “Kør program”"
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:90
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "En liste af kommandoer der tidligere er blevet brugt i dialogvinduet “Kør "
 "program”."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Aktivér programlisten i “Kør program”-vinduet"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:95
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -385,11 +392,11 @@ msgstr ""
 "synlig. Om listen er udvidet når vinduet er vist, kontrolleres af "
 "“show_program_list”-nøglen."
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:99
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Udvid programlisten i “Kør program”-vinduet"
 
-#: data/org.gnome.gnome-panel.gschema.xml:87
+#: data/org.gnome.gnome-panel.gschema.xml:100
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -399,11 +406,11 @@ msgstr ""
 "vinduet åbnes. Denne nøgle er kun relevant hvis nøglen enable_program_list "
 "er sand."
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:104
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Aktivér autofuldførelse i “Kør program”-vinduet"
 
-#: data/org.gnome.gnome-panel.gschema.xml:92
+#: data/org.gnome.gnome-panel.gschema.xml:105
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -420,38 +427,6 @@ msgid ""
 msgstr ""
 "Placeringen af .desktop-filen som beskriver genvejen. Denne nøgle er kun "
 "relevant hvis nøglen object_type er “launcher-object”."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
-msgid "Tooltip displayed for menu"
-msgstr "Værktøjstip som vises for menuen"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
-msgid "The text to display in a tooltip for this menu."
-msgstr "Teksten der skal vises i et værktøjstip for denne menu."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
-msgid "Icon used for button"
-msgstr "Ikon som benyttes til knappen"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
-msgid ""
-"The location of the image file used as the icon for the object's button. If "
-"empty, the default icon for the menu will be used."
-msgstr ""
-"Placeringen af billedfilen som skal bruges som ikon for objektets knap. Hvis "
-"tom, bruges menuens standardikon."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
-msgid "Menu content path"
-msgstr "Menuindholdssti"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
-msgid ""
-"The path from which the menu contents is constructed. If empty, the menu "
-"will be the default applications menu."
-msgstr ""
-"Stien som menuindholdet konstrueres ud fra. Hvis tom vil menuen være "
-"standardmenuen Programmer."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
@@ -491,11 +466,11 @@ msgstr "Objektets placering på panelet"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
-"Placeringen af dette panelobjekt. Placeringen er angivet som antallet af "
-"punkter fra venstre panelkant (eller øverste hvis lodret)."
+"Dette panelobjekts indeks blandt andre objekter med samme pakketype, fra "
+"venstre panelkant (eller øverste hvis lodret)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -828,53 +803,27 @@ msgstr "Anvend brugertilpasset tekstfarve"
 msgid "Text Color"
 msgstr "Tekstfarve"
 
-#: gnome-panel/applet.c:342
+#: gnome-panel/applet.c:324
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:480
+#: gnome-panel/applet.c:462
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Flyt"
 
-#: gnome-panel/applet.c:487
+#: gnome-panel/applet.c:469
 #: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
 #: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
 msgstr "F_jern fra panel"
 
-#: gnome-panel/gnome-desktop-item-edit.c:27
-msgid "Create new file in the given directory"
-msgstr "Opret en ny fil i den givne mappe"
-
-#: gnome-panel/gnome-desktop-item-edit.c:28
-msgid "[FILE...]"
-msgstr "[FIL …]"
-
-#: gnome-panel/gnome-desktop-item-edit.c:106
-msgid "- Edit .desktop files"
-msgstr "- Redigér .desktop-filer"
-
-#: gnome-panel/gnome-desktop-item-edit.c:144
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Opret genvej"
-
-#: gnome-panel/gnome-desktop-item-edit.c:169
-#: gnome-panel/gnome-desktop-item-edit.c:192
-msgid "Directory Properties"
-msgstr "Mappe-egenskaber"
-
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Egenskaber for genvej"
-
-#: gnome-panel/gnome-panel.desktop.in.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
 msgid "Panel"
 msgstr "Panel"
 
-#: gnome-panel/gnome-panel.desktop.in.in:5
+#: gnome-panel/gnome-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -883,9 +832,29 @@ msgstr ""
 "at vise hvad klokken er, osv."
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in.in:7
+#: gnome-panel/gnome-panel.desktop.in:7
 msgid "gnome-panel"
 msgstr "gnome-panel"
+
+#: gnome-panel/gp-add-applet-window.c:137
+msgid "Help"
+msgstr "Hjælp"
+
+#: gnome-panel/gp-add-applet-window.c:148
+msgid "About"
+msgstr "Om"
+
+#: gnome-panel/gp-add-applet-window.c:193
+msgid "Add"
+msgstr "Tilføj"
+
+#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+msgid "Add to Panel"
+msgstr "Tilføj til panel"
+
+#: gnome-panel/gp-add-applet-window.c:560
+msgid "No applets found"
+msgstr "Ingen panelprogrammer fundet"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -952,8 +921,8 @@ msgstr "Vis skjule_knapper"
 msgid "Arro_ws on hide buttons"
 msgstr "Vis _pile på skjuleknapper"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/external/clock/clock.ui:629
-#: modules/external/fish/fish.ui:91
+#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Generelt"
 
@@ -1014,12 +983,16 @@ msgstr "Ingen URI angivet for skrivebordsfil til panelgenvej\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan ikke åbne skrivebordsfilen %s til panelgenveje%s%s\n"
 
+#: gnome-panel/launcher.c:935
+msgid "Launcher Properties"
+msgstr "Egenskaber for genvej"
+
 #: gnome-panel/launcher.c:1000
 msgid "_Launch"
 msgstr "_Start"
 
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
-#: gnome-panel/panel-context-menu.c:135
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
+#: gnome-panel/panel-context-menu.c:148
 msgid "_Properties"
 msgstr "_Indstillinger"
 
@@ -1029,8 +1002,12 @@ msgstr ""
 "Placeringen for programstarteren er ikke givet - kan ikke indlæse "
 "programstarter\n"
 
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
-#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
+#: gnome-panel/launcher.c:1095
+msgid "Create Launcher"
+msgstr "Opret genvej"
+
+#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
+#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
 msgid "Could not save launcher"
 msgstr "Kunne ikke gemme genvej"
 
@@ -1040,40 +1017,36 @@ msgstr "Kunne ikke gemme genvej"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:800
+#: gnome-panel/panel-applet-frame.c:808
 msgid "Error"
 msgstr "Fejl"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
 msgid "Choose an icon"
 msgstr "Vælg et ikon"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1275
-#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
-#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
-#: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/external/clock/clock.ui:67
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
+#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
+#: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
 msgstr "_Annullér"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: gnome-panel/panel-ditem-editor.c:999
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
+#: gnome-panel/panel-ditem-editor.c:994
 msgid "_Open"
 msgstr "_Åbn"
 
-#: gnome-panel/libpanel-util/panel-launch.c:47
+#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Kunne ikke starte “%s”"
 
-#: gnome-panel/libpanel-util/panel-show.c:46
+#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kunne ikke vise stedet “%s”"
-
-#: gnome-panel/libpanel-util/panel-show.c:164
-msgid "No application to handle search folders is installed."
-msgstr "Der er ikke installeret noget program til at håndtere søgemapper."
 
 #: gnome-panel/main.c:37
 msgid "Replace a currently running panel"
@@ -1083,150 +1056,122 @@ msgstr "Erstat et nu kørende panel"
 msgid "Print version"
 msgstr "Udskriv version"
 
-#: gnome-panel/panel-action-button.c:159
+#: gnome-panel/panel-action-button.c:157
 msgid "_Lock Screen"
 msgstr "_Lås skærm"
 
-#: gnome-panel/panel-action-button.c:164
+#: gnome-panel/panel-action-button.c:162
 msgid "_Activate Screensaver"
 msgstr "_Aktivér pauseskærm"
 
-#: gnome-panel/panel-action-button.c:356
+#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
 msgid "Lock Screen"
 msgstr "Lås skærm"
 
-#: gnome-panel/panel-action-button.c:357
+#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
 msgid "Protect your computer from unauthorized use"
 msgstr "Beskyt computeren mod uautoriseret brug"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:370
+#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
 msgid "Log Out"
 msgstr "Log ud"
 
-#: gnome-panel/panel-action-button.c:371
+#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
 msgid "Log out of this session to log in as a different user"
 msgstr "Afslut denne session for at logge på som en anden bruger"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:377
 msgid "Run Application..."
 msgstr "Kør program …"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:378
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Kør et program ved at indtaste en kommando eller vælge fra en liste"
 
-#: gnome-panel/panel-action-button.c:388
+#: gnome-panel/panel-action-button.c:386
 msgid "Search for Files..."
 msgstr "Søg efter filer …"
 
-#: gnome-panel/panel-action-button.c:389
+#: gnome-panel/panel-action-button.c:387
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Find dokumenter og mapper på denne computer ved navn eller indhold"
 
-#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
 msgid "Force Quit"
 msgstr "Gennemtving afslutning"
 
-#: gnome-panel/panel-action-button.c:397
+#: gnome-panel/panel-action-button.c:395
 msgid "Force a misbehaving application to quit"
 msgstr "Tving et program der opfører sig forkert, til at slutte"
 
-#: gnome-panel/panel-action-button.c:405
+#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
 msgid "Hibernate"
 msgstr "Dvale"
 
-#: gnome-panel/panel-action-button.c:414
+#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
 msgid "Suspend"
 msgstr "Hvile"
 
-#: gnome-panel/panel-action-button.c:423
+#: gnome-panel/panel-action-button.c:421
 msgid "Hybrid sleep"
 msgstr "Hybridhvile"
 
-#: gnome-panel/panel-action-button.c:432
+#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
 msgid "Restart"
 msgstr "Genstart"
 
-#: gnome-panel/panel-action-button.c:433
+#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
 msgid "Restart the computer"
 msgstr "Genstart maskinen"
 
-#: gnome-panel/panel-action-button.c:441
+#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
 msgid "Power Off"
 msgstr "Sluk"
 
-#: gnome-panel/panel-action-button.c:442
+#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
 msgid "Power off the computer"
 msgstr "Sluk maskinen"
 
-#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:953
-msgid "Main Menu"
-msgstr "Hovedmenu"
-
-#: gnome-panel/panel-addto-dialog.c:141
-msgid "The main GNOME menu"
-msgstr "Hovedmenuen til Gnome"
-
-#: gnome-panel/panel-addto-dialog.c:149
-msgid "Menu Bar"
-msgstr "Menulinje"
-
-#: gnome-panel/panel-addto-dialog.c:150
-msgid "A custom menu bar"
-msgstr "En brugerdefineret menulinje"
-
-#: gnome-panel/panel-addto-dialog.c:158
-msgid "User menu"
-msgstr "Brugermenu"
-
-#: gnome-panel/panel-addto-dialog.c:159
-msgid "Menu to change your settings and log out"
-msgstr "Menu til at ændre dine indstillinger og logge ud"
-
-#: gnome-panel/panel-addto-dialog.c:207
+#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
 msgstr "(tom)"
 
-#: gnome-panel/panel-addto-dialog.c:406
+#: gnome-panel/panel-addto-dialog.c:361
 msgid "Custom Application Launcher"
 msgstr "Brugerdefineret programgenvej"
 
-#: gnome-panel/panel-addto-dialog.c:407
+#: gnome-panel/panel-addto-dialog.c:362
 msgid "Create a new launcher"
 msgstr "Opret genvej"
 
-#: gnome-panel/panel-addto-dialog.c:416
+#: gnome-panel/panel-addto-dialog.c:371
 msgid "Application Launcher..."
 msgstr "Programgenvej …"
 
-#: gnome-panel/panel-addto-dialog.c:417
+#: gnome-panel/panel-addto-dialog.c:372
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiér en genvej fra programmenuen"
 
-#: gnome-panel/panel-addto-dialog.c:911
+#: gnome-panel/panel-addto-dialog.c:913
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Find et _element at tilføje til “%s”:"
 
-#: gnome-panel/panel-addto-dialog.c:915
+#: gnome-panel/panel-addto-dialog.c:917
 msgid "Find an _item to add to the panel:"
 msgstr "Find et _element at tilføje til panelet:"
 
-#: gnome-panel/panel-addto-dialog.c:1037
+#: gnome-panel/panel-addto-dialog.c:1039
 msgid "_Forward"
 msgstr "_Fremad"
 
-#: gnome-panel/panel-addto-dialog.c:1040 gnome-panel/panel-addto-dialog.ui:158
-#: modules/external/clock/clock.ui:682
+#: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
+#: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Tilføj"
-
-#: gnome-panel/panel-addto-dialog.ui:16
-msgid "Add to Panel"
-msgstr "Tilføj til panel"
 
 #: gnome-panel/panel-addto-dialog.ui:38
 msgid "Find an item to add to the panel:"
@@ -1236,43 +1181,44 @@ msgstr "Find et element at tilføje til panelet:"
 msgid "_Back"
 msgstr "_Tilbage"
 
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
-#: modules/external/clock/clock.ui:406 modules/external/fish/fish-applet.c:622
-#: modules/external/fish/fish.ui:51 modules/external/wncklet/window-list.ui:285
-#: modules/external/wncklet/workspace-switcher.ui:37
+#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
+#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
+#: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
 msgstr "_Luk"
 
 # knapperne siger "slet"/"slet ikke"
-#: gnome-panel/panel-applet-frame.c:763
+#: gnome-panel/panel-applet-frame.c:771
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panelet stødte ind i et problem under indlæsning af “%s”."
 
-#: gnome-panel/panel-applet-frame.c:775
+#: gnome-panel/panel-applet-frame.c:783
 msgid "OK"
 msgstr "OK"
 
 # knapperne siger "slet"/"slet ikke"
-#: gnome-panel/panel-applet-frame.c:779
+#: gnome-panel/panel-applet-frame.c:787
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vil du slette panelprogrammet fra din konfiguration?"
 
-#: gnome-panel/panel-applet-frame.c:782
+#: gnome-panel/panel-applet-frame.c:790
 msgid "D_on't Delete"
 msgstr "Slet _ikke"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
 msgid "_Delete"
 msgstr "_Slet"
 
-#: gnome-panel/panel.c:422
+#: gnome-panel/panel.c:414
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åbn adresse: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:517
+#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
 msgstr "Åbn “%s”"
@@ -1280,18 +1226,18 @@ msgstr "Åbn “%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1071
+#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Åbn din personlige mappe"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1100
+#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Computer"
 
 #. name
-#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1101
+#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1300,20 +1246,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1110
+#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Netværk"
 
 #. name
-#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1111
+#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Gennemse bogmærkede og lokale netværkssteder"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1253
 msgid "Delete this panel?"
 msgstr "Fjern dette panel?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1257
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1329,15 +1275,15 @@ msgstr "Kan ikke fjerne dette panel"
 msgid "You must always have at least one panel."
 msgstr "Du skal altid mindst have ét panel."
 
-#: gnome-panel/panel-context-menu.c:126
+#: gnome-panel/panel-context-menu.c:139
 msgid "_Add to Panel..."
 msgstr "_Tilføj til panel …"
 
-#: gnome-panel/panel-context-menu.c:142
+#: gnome-panel/panel-context-menu.c:155
 msgid "_Delete This Panel"
 msgstr "_Fjern dette panel"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:167
 msgid "_New Panel"
 msgstr "_Nyt panel"
 
@@ -1354,66 +1300,66 @@ msgid "Location"
 msgstr "Sted"
 
 #. Type
-#: gnome-panel/panel-ditem-editor.c:600
+#: gnome-panel/panel-ditem-editor.c:595
 msgid "_Type:"
 msgstr "_Type:"
 
 #. Name
-#: gnome-panel/panel-ditem-editor.c:607
+#: gnome-panel/panel-ditem-editor.c:602
 msgid "_Name:"
 msgstr "_Navn:"
 
-#: gnome-panel/panel-ditem-editor.c:632
+#: gnome-panel/panel-ditem-editor.c:627
 msgid "_Browse..."
 msgstr "_Gennemse …"
 
 #. Comment
-#: gnome-panel/panel-ditem-editor.c:639
+#: gnome-panel/panel-ditem-editor.c:634
 msgid "Co_mment:"
 msgstr "Ko_mmentar:"
 
-#: gnome-panel/panel-ditem-editor.c:646
+#: gnome-panel/panel-ditem-editor.c:641
 msgid "_Revert"
 msgstr "_Forkast"
 
-#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
-#: modules/external/clock/clock.ui:82
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
 
-#: gnome-panel/panel-ditem-editor.c:966
+#: gnome-panel/panel-ditem-editor.c:961
 msgid "Choose an application..."
 msgstr "Vælg et program …"
 
-#: gnome-panel/panel-ditem-editor.c:970
+#: gnome-panel/panel-ditem-editor.c:965
 msgid "Choose a file..."
 msgstr "Vælg en fil …"
 
-#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
+#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
 msgid "Comm_and:"
 msgstr "Komm_ando:"
 
-#: gnome-panel/panel-ditem-editor.c:1153
+#: gnome-panel/panel-ditem-editor.c:1146
 msgid "_Location:"
 msgstr "_Sted:"
 
-#: gnome-panel/panel-ditem-editor.c:1316
+#: gnome-panel/panel-ditem-editor.c:1309
 msgid "The name of the launcher is not set."
 msgstr "Navnet på genvejen er ikke angivet."
 
-#: gnome-panel/panel-ditem-editor.c:1320
+#: gnome-panel/panel-ditem-editor.c:1313
 msgid "Could not save directory properties"
 msgstr "Kunne ikke gemme mappeegenskaber"
 
-#: gnome-panel/panel-ditem-editor.c:1321
+#: gnome-panel/panel-ditem-editor.c:1314
 msgid "The name of the directory is not set."
 msgstr "Navnet på mappen er ikke angivet."
 
-#: gnome-panel/panel-ditem-editor.c:1337
+#: gnome-panel/panel-ditem-editor.c:1330
 msgid "The command of the launcher is not set."
 msgstr "Kommandoen for genvejen er ikke angivet."
 
-#: gnome-panel/panel-ditem-editor.c:1340
+#: gnome-panel/panel-ditem-editor.c:1333
 msgid "The location of the launcher is not set."
 msgstr "Placeringen af genvejen er ikke angivet."
 
@@ -1424,11 +1370,11 @@ msgstr ""
 "Klik på et vindue for at tvinge programmet til at afslutte. Tryk <ESC> for "
 "at annullere."
 
-#: gnome-panel/panel-force-quit.c:220
+#: gnome-panel/panel-force-quit.c:223
 msgid "Force this application to exit?"
 msgstr "Tving dette program til at afslutte?"
 
-#: gnome-panel/panel-force-quit.c:223
+#: gnome-panel/panel-force-quit.c:226
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -1436,171 +1382,43 @@ msgstr ""
 "Tvinger du et program til at afslutte, så kan ugemte dokumenter i programmet "
 "gå tabt."
 
-#: gnome-panel/panel-force-quit.c:230
+#: gnome-panel/panel-force-quit.c:233
 msgid "_Force quit"
 msgstr "_Tving afslutning"
 
-#: gnome-panel/panel-layout.c:1105 gnome-panel/panel-layout.c:1119
+#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan ikke oprette panelets startlayout.\n"
 
-#: gnome-panel/panel-menu-bar.c:88
-msgid "Browse and run installed applications"
-msgstr "Gennemse og kør installerede programmer"
-
-#: gnome-panel/panel-menu-bar.c:90
-msgid "Access documents, folders and network places"
-msgstr "Tilgå dokumenter, mapper og steder på netværket"
-
-#: gnome-panel/panel-menu-bar.c:128
-msgid "Applications"
-msgstr "Programmer"
-
-#: gnome-panel/panel-menu-bar.c:226 gnome-panel/panel-menu-button.c:552
-msgid "_Edit Menus"
-msgstr "_Redigér menuer"
-
-#: gnome-panel/panel-menu-items.c:363
-msgid "Switch User"
-msgstr "Skift bruger"
-
-#: gnome-panel/panel-menu-items.c:493
-msgid "Bookmarks"
-msgstr "Bogmærker"
-
-#: gnome-panel/panel-menu-items.c:588
-#, c-format
-msgid "Unable to scan %s for media changes"
-msgstr "Kan ikke skanne %s for medieændringer"
-
-#: gnome-panel/panel-menu-items.c:630
-#, c-format
-msgid "Rescan %s"
-msgstr "Omskan %s"
-
-#: gnome-panel/panel-menu-items.c:667
-#, c-format
-msgid "Unable to mount %s"
-msgstr "Kan ikke montere %s"
-
-#: gnome-panel/panel-menu-items.c:729
-#, c-format
-msgid "Mount %s"
-msgstr "Montér %s"
-
-#: gnome-panel/panel-menu-items.c:937
-msgid "Removable Media"
-msgstr "Flytbart medie"
-
-#: gnome-panel/panel-menu-items.c:1028
-msgid "Network Places"
-msgstr "Netværkssteder"
-
-#. Translators: Desktop is used here as in
-#. * "Desktop Folder" (this is not the Desktop
-#. * environment).
-#: gnome-panel/panel-menu-items.c:1088
-msgctxt "Desktop Folder"
-msgid "Desktop"
-msgstr "Skrivebord"
-
-#: gnome-panel/panel-menu-items.c:1089
-msgid "Open the contents of your desktop in a folder"
-msgstr "Åben indholdet af dit skrivebord i en mappe"
-
-#: gnome-panel/panel-menu-items.c:1384
-msgid "Places"
-msgstr "Steder"
-
-#: gnome-panel/panel-image-menu-item.c:125
-msgid "Image widget"
-msgstr "Billedkontrol"
-
-#: gnome-panel/panel-image-menu-item.c:126
-msgid "Child widget to appear next to the menu text"
-msgstr "Underkontrol der skal vises ved siden af menuteksten"
-
-#: gnome-panel/panel-image-menu-item.c:133
-msgid "Always show image"
-msgstr "Vis altid billede"
-
-#: gnome-panel/panel-image-menu-item.c:134
-msgid "Whether the image will always be shown"
-msgstr "Om billedet altid vises"
-
-#: gnome-panel/panel-recent.c:76 gnome-panel/panel-recent.c:86
-#, c-format
-msgid "Could not open recently used document \"%s\""
-msgstr "Kunne ikke åbne nyligt benyttet dokument “%s”"
-
-#: gnome-panel/panel-recent.c:88
-#, c-format
-msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "En ukendt fejl opstod under forsøg på at åbne “%s”."
-
-#: gnome-panel/panel-recent.c:145
-msgid "Clear the Recent Documents list?"
-msgstr "Ryd listen over seneste dokumenter?"
-
-#: gnome-panel/panel-recent.c:147
-msgid ""
-"If you clear the Recent Documents list, you clear the following:\n"
-"• All items from the Places → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
-msgstr ""
-"Hvis du rydder listen over seneste dokumenter, rydder du følgende:\n"
-"• Alle elementerne fra menupunktet Steder → Seneste dokumenter.\n"
-"• Alle elementerne fra listen over seneste dokumenter i alle programmer."
-
-#: gnome-panel/panel-recent.c:153
-msgid "C_lear"
-msgstr "_Ryd"
-
-#: gnome-panel/panel-recent.c:159
-msgid "Clear Recent Documents"
-msgstr "Ryd seneste dokumenter"
-
-#: gnome-panel/panel-recent.c:194
-msgid "Recent Documents"
-msgstr "Seneste dokumenter"
-
-#: gnome-panel/panel-recent.c:232
-msgid "Clear Recent Documents..."
-msgstr "Ryd seneste dokumenter …"
-
-#: gnome-panel/panel-recent.c:234
-msgid "Clear all items from the recent documents list"
-msgstr "Ryd listen over seneste dokumenter"
-
-#: gnome-panel/panel-run-dialog.c:426
+#: gnome-panel/panel-run-dialog.c:424
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Kan ikke finde en terminal, bruger xterm, selvom den måske ikke fungerer"
 
-#: gnome-panel/panel-run-dialog.c:490
+#: gnome-panel/panel-run-dialog.c:488
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Kunne ikke udføre kommandoen “%s”"
 
-#: gnome-panel/panel-run-dialog.c:531
+#: gnome-panel/panel-run-dialog.c:529
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunne ikke konvertere “%s” fra UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1274
+#: gnome-panel/panel-run-dialog.c:1280
 msgid "Choose a file to append to the command..."
 msgstr "Vælg en fil af tilføje til kommandoen …"
 
-#: gnome-panel/panel-run-dialog.c:1657 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Vælg et program for et se dets beskrivelse."
 
-#: gnome-panel/panel-run-dialog.c:1695
+#: gnome-panel/panel-run-dialog.c:1701
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Vil køre kommando: “%s”"
 
-#: gnome-panel/panel-run-dialog.c:1728
+#: gnome-panel/panel-run-dialog.c:1734
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1657,110 +1475,115 @@ msgstr "Kør det valgte program eller kommandoen i kommandoindtastningsfeltet."
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Expanded Edge Panel"
 msgstr "Top-udvidet kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1564
 msgid "Top Centered Panel"
 msgstr "Top-centreret panel"
 
-#: gnome-panel/panel-toplevel.c:1522
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Floating Panel"
 msgstr "Top-flydende panel"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Edge Panel"
 msgstr "Top-kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1527
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bund-udvidet kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1528
+#: gnome-panel/panel-toplevel.c:1571
 msgid "Bottom Centered Panel"
 msgstr "Bund-centreret panel"
 
-#: gnome-panel/panel-toplevel.c:1529
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Floating Panel"
 msgstr "Bund-flydende panel"
 
-#: gnome-panel/panel-toplevel.c:1530
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Edge Panel"
 msgstr "Bundkantpanel"
 
-#: gnome-panel/panel-toplevel.c:1534
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Expanded Edge Panel"
 msgstr "Venstre-udvidet kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1535
+#: gnome-panel/panel-toplevel.c:1578
 msgid "Left Centered Panel"
 msgstr "Venstre-centreret panel"
 
-#: gnome-panel/panel-toplevel.c:1536
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Floating Panel"
 msgstr "Venstre-flydende panel"
 
-#: gnome-panel/panel-toplevel.c:1537
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Edge Panel"
 msgstr "Venstre kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1541
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Expanded Edge Panel"
 msgstr "Højre-udvidet kantpanel"
 
-#: gnome-panel/panel-toplevel.c:1542
+#: gnome-panel/panel-toplevel.c:1585
 msgid "Right Centered Panel"
 msgstr "Højre-centreret panel"
 
-#: gnome-panel/panel-toplevel.c:1543
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Floating Panel"
 msgstr "Højre-flydende panel"
 
-#: gnome-panel/panel-toplevel.c:1544
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Edge Panel"
 msgstr "Højre kantpanel"
 
-#: gnome-panel/panel-util.c:312
+#: gnome-panel/panel-util.c:316
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "Ikonet “%s” ikke fundet"
 
-#: gnome-panel/panel-util.c:555
+#: gnome-panel/panel-util.c:559
 msgid "file"
 msgstr "fil"
 
-#: gnome-panel/panel-util.c:730
-msgid "Home Folder"
-msgstr "Hjemmemappe"
+#: gnome-panel/panel-util.c:727 modules/menu/gp-menu-utils.c:207
+msgid "Home"
+msgstr "Hjem"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: gnome-panel/panel-util.c:742
+#. Translators: this is the same string as the one found in nautilus
+#: gnome-panel/panel-util.c:736 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Filsystem"
-
-#: gnome-panel/panel-util.c:915
-msgid "Search"
-msgstr "Søg"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:961
+#. Translators: the first string is the name of a gvfs method, and the
+#. * second string is a path. For example, "Trash: some-directory". It
+#. * means that the directory called "some-directory" is in the trash.
+#.
+#: gnome-panel/panel-util.c:950 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: modules/builtin/separator/separator-module.c:45
-msgid "Separator"
-msgstr "Adskiller"
+#: libgnome-panel/gp-initial-setup-dialog.c:128
+msgid "Initial Setup"
+msgstr "Indledende opsætning"
 
-#: modules/builtin/separator/separator-module.c:46
-msgid "A separator to organize the panel items"
-msgstr "En adskiller til at organisere panel-elementerne"
+#: libgnome-panel/gp-initial-setup-dialog.c:132
+msgid "Cancel"
+msgstr "Annullér"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:136
+msgid "Done"
+msgstr "Færdig"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1771,8 +1594,7 @@ msgstr "En adskiller til at organisere panel-elementerne"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/external/clock/calendar-window.c:271
-#: modules/external/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%l:%M"
 
@@ -1787,9 +1609,8 @@ msgstr "%l:%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/external/clock/calendar-window.c:277
-#: modules/external/clock/clock-location-tile.c:453
-#: modules/external/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1797,42 +1618,40 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/external/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%b %d"
 
-#: modules/external/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Opgaver"
 
-#: modules/external/clock/calendar-window.c:789
-#: modules/external/clock/calendar-window.c:972
-#: modules/external/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Redigér"
 
-#: modules/external/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: modules/external/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Aftaler"
 
-#: modules/external/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Fødselsdage og årsdage"
 
-#: modules/external/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Vejrinformation"
 
-#: modules/external/clock/calendar-window.c:1563
-#: modules/external/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Steder"
 
-#: modules/external/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -1840,101 +1659,109 @@ msgstr "Kalender"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/external/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:227
 msgid "%A %B %d (%Z)"
 msgstr "%A den %d. %B (%Z)"
 
-#: modules/external/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:236
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik for at skjule dine aftaler og opgaver"
 
-#: modules/external/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:239
 msgid "Click to view your appointments and tasks"
 msgstr "Klik for at vise dine aftaler og opgaver"
 
-#: modules/external/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:243
 msgid "Click to hide month calendar"
 msgstr "Klik for at skjule månedskalenderen"
 
-#: modules/external/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:246
 msgid "Click to view month calendar"
 msgstr "Klik for at vise din månedskalender"
 
 #. Done!
-#: modules/external/clock/clock-applet.c:847
+#: modules/clock/clock-applet.c:850
 msgid "Computer Clock"
 msgstr "Computer-ur"
 
-#: modules/external/clock/clock-applet.c:980
+#: modules/clock/clock-applet.c:983
 msgid "Failed to open the time settings"
 msgstr "Kunne ikke åbne tidsindstillingerne"
 
-#: modules/external/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Kunne ikke vise hjælpedokumentet “%s”"
+
+#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+msgid "Error displaying help document"
+msgstr "Fejl ved visning af hjælpedokument"
+
+#: modules/clock/clock-applet.c:1621
 msgid "Choose Location"
 msgstr "Vælg sted"
 
-#: modules/external/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1700
 msgid "Edit Location"
 msgstr "Redigér sted"
 
-#: modules/external/clock/clock-applet.c:1669
-#: modules/external/clock/clock-applet.c:1677
+#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
 msgid "Default"
 msgstr "Standard"
 
-#: modules/external/clock/clock-applet.c:1670
+#: modules/clock/clock-applet.c:1737
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/external/clock/clock-applet.c:1671
+#: modules/clock/clock-applet.c:1738
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/external/clock/clock-applet.c:1672
+#: modules/clock/clock-applet.c:1739
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/external/clock/clock-applet.c:1678
+#: modules/clock/clock-applet.c:1745
 msgid "Meters per second (m/s)"
 msgstr "Meter per sekund (m/s)"
 
-#: modules/external/clock/clock-applet.c:1679
+#: modules/clock/clock-applet.c:1746
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer i timen (km/h)"
 
-#: modules/external/clock/clock-applet.c:1680
+#: modules/clock/clock-applet.c:1747
 msgid "Miles per hour (mph)"
 msgstr "Miles i timen (mph)"
 
-#: modules/external/clock/clock-applet.c:1681
+#: modules/clock/clock-applet.c:1748
 msgid "Knots"
 msgstr "Knob"
 
-#: modules/external/clock/clock-applet.c:1682
+#: modules/clock/clock-applet.c:1749
 msgid "Beaufort scale"
 msgstr "Beaufort-skala"
 
-#: modules/external/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1802
 msgid "City Name"
 msgstr "Bynavn"
 
-#: modules/external/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1806
 msgid "City Time Zone"
 msgstr "Byens tidszone"
 
-#: modules/external/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Kunne ikke ændre systemets tidszone"
 
-#: modules/external/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Indstil …</small>"
 
-#: modules/external/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Indstil</small>"
 
-#: modules/external/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Indstil lokalitet til nuværende lokalitet og brug dens tidszone for denne "
@@ -1946,7 +1773,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%l:%M <small>%p (%A)</small>"
 
@@ -1955,7 +1782,7 @@ msgstr "%l:%M <small>%p (%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/external/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1963,180 +1790,168 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/external/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:607
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/external/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, føles som %s"
 
-#: modules/external/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:641
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Solopgang: %s / Solnedgang: %s"
 
-#: modules/external/clock/clock-module.c:47
-msgid "Get the current time and date"
-msgstr "Vis det aktuelle tidspunkt og datoen"
-
-#: modules/external/clock/clock-module.c:48
+#: modules/clock/clock-module.c:33
 msgid "Clock"
 msgstr "Ur"
 
-#: modules/external/clock/clock-menu.ui:5
+#: modules/clock/clock-module.c:34
+msgid "Get the current time and date"
+msgstr "Vis det aktuelle tidspunkt og datoen"
+
+#: modules/clock/clock-menu.ui:5
 msgid "Copy Date and _Time"
 msgstr "Kopiér dato og _klokkeslæt"
 
-#: modules/external/clock/clock-menu.ui:11
+#: modules/clock/clock-menu.ui:11
 msgid "Ad_just Date & Time"
 msgstr "_Justér dato og tid"
 
-#: modules/external/clock/clock-menu.ui:15
-#: modules/external/wncklet/window-list-menu.ui:5
-#: modules/external/wncklet/workspace-switcher-menu.ui:5
+#: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
+#: modules/wncklet/workspace-switcher-menu.ui:5
 msgid "_Preferences"
 msgstr "_Indstillinger"
 
-#: modules/external/clock/clock.ui:30
+#: modules/clock/clock.ui:30
 msgid "East"
 msgstr "Øst"
 
-#: modules/external/clock/clock.ui:33
+#: modules/clock/clock.ui:33
 msgid "West"
 msgstr "Vest"
 
-#: modules/external/clock/clock.ui:44
+#: modules/clock/clock.ui:44
 msgid "North"
 msgstr "Nord"
 
-#: modules/external/clock/clock.ui:47
+#: modules/clock/clock.ui:47
 msgid "South"
 msgstr "Syd"
 
-#: modules/external/clock/clock.ui:206 modules/external/clock/clock.ui:221
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
 msgid "(optional)"
 msgstr "(valgfri)"
 
-#: modules/external/clock/clock.ui:265
+#: modules/clock/clock.ui:265
 msgid "_Location Name:"
 msgstr "_Stednavn:"
 
-#: modules/external/clock/clock.ui:278
+#: modules/clock/clock.ui:278
 msgid "L_atitude:"
 msgstr "_Breddegrad:"
 
-#: modules/external/clock/clock.ui:292
+#: modules/clock/clock.ui:292
 msgid "L_ongitude:"
 msgstr "_Længdegrad:"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/external/clock/clock.ui:308
+#: modules/clock/clock.ui:308
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Skriv navnet på en by, en region eller et land, og vælg på passende vis i "
 "pop op-dialogen."
 
-#: modules/external/clock/clock.ui:325
+#: modules/clock/clock.ui:325
 msgid "_Timezone:"
 msgstr "_Tidszone:"
 
-#: modules/external/clock/clock.ui:360
+#: modules/clock/clock.ui:360
 msgid "Clock Preferences"
 msgstr "Indstillinger for ur"
 
-#: modules/external/clock/clock.ui:376 modules/external/fish/fish.ui:36
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "_Hjælp"
 
-#: modules/external/clock/clock.ui:391
+#: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "Tids_indstillinger"
 
-#: modules/external/clock/clock.ui:451
+#: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Urformat"
 
-#: modules/external/clock/clock.ui:470
+#: modules/clock/clock.ui:470
 msgid "_12 hour format"
 msgstr "_12-timersformat"
 
-#: modules/external/clock/clock.ui:487
+#: modules/clock/clock.ui:487
 msgid "_24 hour format"
 msgstr "_24-timersformat"
 
-#: modules/external/clock/clock.ui:527
+#: modules/clock/clock.ui:527
 msgid "Panel Display"
 msgstr "Panelindikator"
 
-#: modules/external/clock/clock.ui:547
+#: modules/clock/clock.ui:547
 msgid "Show the _date"
 msgstr "Vis _dato"
 
-#: modules/external/clock/clock.ui:563
+#: modules/clock/clock.ui:563
 msgid "Show seco_nds"
 msgstr "Vis sek_under"
 
-#: modules/external/clock/clock.ui:579
+#: modules/clock/clock.ui:579
 msgid "Show _weather"
 msgstr "Vis _vejr"
 
-#: modules/external/clock/clock.ui:595
+#: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Vis _temperatur"
 
-#: modules/external/clock/clock.ui:697
+#: modules/clock/clock.ui:697
 msgid "_Edit"
 msgstr "_Redigér"
 
-#: modules/external/clock/clock.ui:712
+#: modules/clock/clock.ui:712
 msgid "_Remove"
 msgstr "_Fjern"
 
-#: modules/external/clock/clock.ui:773
+#: modules/clock/clock.ui:773
 msgid "Display"
 msgstr "Visning"
 
-#: modules/external/clock/clock.ui:805
+#: modules/clock/clock.ui:805
 msgid "_Visibility unit:"
 msgstr "_Synlighedsenhed:"
 
-#: modules/external/clock/clock.ui:828
+#: modules/clock/clock.ui:828
 msgid "_Pressure unit:"
 msgstr "_Trykenhed:"
 
-#: modules/external/clock/clock.ui:864
+#: modules/clock/clock.ui:864
 msgid "_Temperature unit:"
 msgstr "_Temperaturenhed:"
 
-#: modules/external/clock/clock.ui:878
+#: modules/clock/clock.ui:878
 msgid "_Wind speed unit:"
 msgstr "_Vindhastighedsenhed:"
 
-#: modules/external/clock/clock.ui:910
+#: modules/clock/clock.ui:910
 msgid "Weather"
 msgstr "Vejr"
 
-#: modules/external/clock/clock-utils.c:91
-#: modules/external/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Kunne ikke vise hjælpedokumentet “%s”"
-
-#: modules/external/clock/clock-utils.c:120
-#: modules/external/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Fejl ved visning af hjælpedokument"
-
-#: modules/external/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:203
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -2149,27 +1964,26 @@ msgstr ""
 "Vi advarer på det kraftigste mod at anvende %s til noget,\n"
 "som ville gøre panelprogrammet “praktisk” eller brugbart."
 
-#: modules/external/fish/fish-applet.c:365
-#: modules/external/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
 
-#: modules/external/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:369
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Fisken %s, et nutidigt orakel"
 
-#: modules/external/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:427
 msgid "Unable to locate the command to execute"
 msgstr "Kan ikke lokalisere den kommando der skal udføres"
 
-#: modules/external/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:476
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Fisken %s siger:"
 
-#: modules/external/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:545
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2180,16 +1994,16 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/external/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:621
 msgid "_Speak again"
 msgstr "_Tal igen"
 
-#: modules/external/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:693
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Den konfigurerede kommando virker ikke og er udskiftet med: %s"
 
-#: modules/external/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:722
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2200,7 +2014,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/external/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:738
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2211,105 +2025,298 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/external/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1120
 msgid "The water needs changing"
 msgstr "Vandet skal skiftes"
 
-#: modules/external/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1122
 msgid "Look at today's date!"
 msgstr "Se på dags dato!"
 
-#: modules/external/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1216
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, lykkespåersken"
 
-#: modules/external/fish/fish-module.c:47
-msgid "Display a swimming fish or another animated creature"
-msgstr "Vis en svømmende fisk eller et andet animeret dyr"
-
-#: modules/external/fish/fish-module.c:48
+#: modules/fish/fish-module.c:33
 msgid "Fish"
 msgstr "Fisk"
 
-#: modules/external/fish/fish-menu.ui:5
+#: modules/fish/fish-module.c:34
+msgid "Display a swimming fish or another animated creature"
+msgstr "Vis en svømmende fisk eller et andet animeret dyr"
+
+#: modules/fish/fish-menu.ui:5
 msgid "Preferences"
 msgstr "Indstillinger"
 
-#: modules/external/fish/fish.ui:22
+#: modules/fish/fish.ui:22
 msgid "Fish Preferences"
 msgstr "Indstillinger for fisk"
 
-#: modules/external/fish/fish.ui:134
+#: modules/fish/fish.ui:134
 msgid "_Name of fish:"
 msgstr "_Navnet på fisken:"
 
-#: modules/external/fish/fish.ui:174
+#: modules/fish/fish.ui:174
 msgid "Co_mmand to run when clicked:"
 msgstr "_Kommando som udføres når der klikkes:"
 
-#: modules/external/fish/fish.ui:240
+#: modules/fish/fish.ui:240
 msgid "Animation:"
 msgstr "Animation:"
 
-#: modules/external/fish/fish.ui:277
+#: modules/fish/fish.ui:277
 msgid "    "
 msgstr "    "
 
-#: modules/external/fish/fish.ui:301
+#: modules/fish/fish.ui:301
 msgid "_Pause per frame:"
 msgstr "_Pause pr. billede:"
 
-#: modules/external/fish/fish.ui:332
+#: modules/fish/fish.ui:332
 msgid "seconds"
 msgstr "sekunder"
 
-#: modules/external/fish/fish.ui:349
+#: modules/fish/fish.ui:349
 msgid "_Rotate on vertical panels"
 msgstr "_Vend om på lodrette paneler"
 
-#: modules/external/notification-area/na-applet.c:155
+#: modules/menu/gp-lock-logout.c:967
+msgid "Switch User"
+msgstr "Skift bruger"
+
+#: modules/menu/gp-lock-logout.c:1077
+msgid "Hybrid Sleep"
+msgstr "Hybridhvile"
+
+#: modules/menu/gp-menu-bar-applet.c:119
+msgid "Applications"
+msgstr "Programmer"
+
+#: modules/menu/gp-menu-bar-applet.c:124
+msgid "Browse and run installed applications"
+msgstr "Gennemse og kør installerede programmer"
+
+#: modules/menu/gp-menu-bar-applet.c:159
+#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+msgid "Places"
+msgstr "Steder"
+
+#: modules/menu/gp-menu-bar-applet.c:163
+msgid "Access documents, folders and network places"
+msgstr "Tilgå dokumenter, mapper og steder på netværket"
+
+#: modules/menu/gp-menu-bar-applet.c:199
+msgid "System"
+msgstr "System"
+
+#: modules/menu/gp-menu-bar-applet.c:203
+msgid "Change system appearance and behavior, or get help"
+msgstr "Ændr systemets udseende eller opførsel eller få hjælp"
+
+#: modules/menu/gp-menu-bar-applet.c:253
+#: modules/menu/gp-menu-button-applet.c:469
+#, c-format
+msgid "Please install the '%s' application."
+msgstr "Installér programmet “%s”"
+
+#: modules/menu/gp-menu-module.c:381
+msgid "Main Menu"
+msgstr "Hovedmenu"
+
+#: modules/menu/gp-menu-module.c:382
+msgid "The main GNOME menu"
+msgstr "Hovedmenuen til Gnome"
+
+#: modules/menu/gp-menu-module.c:388
+msgid "Menu Button"
+msgstr "Menuknap"
+
+#: modules/menu/gp-menu-module.c:389
+msgid "A custom menu button"
+msgstr "En brugerdefineret menuknap"
+
+#: modules/menu/gp-menu-module.c:397
+msgid "Menu Bar"
+msgstr "Menulinje"
+
+#: modules/menu/gp-menu-module.c:398
+msgid "A custom menu bar"
+msgstr "En brugerdefineret menulinje"
+
+#: modules/menu/gp-menu-module.c:404
+msgid "User menu"
+msgstr "Brugermenu"
+
+#: modules/menu/gp-menu-module.c:405
+msgid "Menu to change your settings and log out"
+msgstr "Menu til at ændre dine indstillinger og logge ud"
+
+#: modules/menu/gp-places-menu.c:94
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Kan ikke skanne %s for medieændringer"
+
+#: modules/menu/gp-places-menu.c:144
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Kan ikke montere %s"
+
+#: modules/menu/gp-places-menu.c:292
+#, c-format
+msgid "Rescan %s"
+msgstr "Omskan %s"
+
+#: modules/menu/gp-places-menu.c:333
+#, c-format
+msgid "Mount %s"
+msgstr "Montér %s"
+
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: modules/menu/gp-places-menu.c:446
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Skrivebord"
+
+#: modules/menu/gp-places-menu.c:447
+msgid "Open the contents of your desktop in a folder"
+msgstr "Åben indholdet af dit skrivebord i en mappe"
+
+#: modules/menu/gp-places-menu.c:467
+msgid "Bookmarks"
+msgstr "Bogmærker"
+
+#: modules/menu/gp-places-menu.c:525
+msgid "Removable Media"
+msgstr "Flytbart medie"
+
+#: modules/menu/gp-places-menu.c:579
+msgid "Network Places"
+msgstr "Netværkssteder"
+
+#: modules/menu/gp-places-menu.c:604
+msgid "Recent Documents"
+msgstr "Seneste dokumenter"
+
+#: modules/menu/gp-recent-menu.c:193
+msgid "Clear the Recent Documents list?"
+msgstr "Ryd listen over seneste dokumenter?"
+
+#: modules/menu/gp-recent-menu.c:198
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Hvis du rydder listen over seneste dokumenter, rydder du følgende:\n"
+"• Alle elementerne fra menupunktet Steder → Seneste dokumenter.\n"
+"• Alle elementerne fra listen over seneste dokumenter i alle programmer."
+
+#: modules/menu/gp-recent-menu.c:206
+msgid "C_lear"
+msgstr "_Ryd"
+
+#: modules/menu/gp-recent-menu.c:236
+msgid "Clear Recent Documents..."
+msgstr "Ryd seneste dokumenter …"
+
+#: modules/menu/gp-recent-menu.c:241
+msgid "Clear all items from the recent documents list"
+msgstr "Ryd listen over seneste dokumenter"
+
+#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+msgid "_Edit Menus"
+msgstr "_Redigér menuer"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:5
+msgid "Icon used for button"
+msgstr "Ikon som benyttes til knappen"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:6
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Placeringen af billedfilen som skal bruges som ikon for objektets knap. Hvis "
+"tom, bruges menuens standardikon."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:11
+msgid "Menu content path"
+msgstr "Menuindholdssti"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
+msgid ""
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
+msgstr ""
+"Stien som menuindholdet konstrueres ud fra. Hvis tom vil menuen være "
+"standardmenuen Programmer."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Vis pil på menuikonet"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
+msgid "Tooltip displayed for menu"
+msgstr "Værktøjstip som vises for menuen"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:23
+msgid "The text to display in a tooltip for this menu."
+msgstr "Teksten der skal vises i et værktøjstip for denne menu."
+
+#: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
 msgstr "Panelstatusfelt"
 
-#: modules/external/notification-area/na-module.c:46
+#: modules/notification-area/na-module.c:33
 msgid "Notification Area"
 msgstr "Statusfelt"
 
-#: modules/external/notification-area/na-module.c:47
+#: modules/notification-area/na-module.c:34
 msgid "Area where notification icons appear"
 msgstr "Område hvor statusikoner dukker op"
 
-#: modules/external/status-notifier/sn-module.c:47
-msgid "Display all Status Notifier Items"
-msgstr "Vis alle elementer for programmet Statuspåmindelse"
+#: modules/separator/separator-module.c:33
+msgid "Separator"
+msgstr "Adskiller"
+
+#: modules/separator/separator-module.c:34
+msgid "A separator to organize the panel items"
+msgstr "En adskiller til at organisere panel-elementerne"
 
 # Status Notifier bruges mere eller mindre kun her i gnome-panel så vidt
 # jeg kan se.
 #
 # gnome-flashback har dog en status notifier watcher.
-#: modules/external/status-notifier/sn-module.c:48
+#: modules/status-notifier/sn-module.c:33
 msgid "Status Notifier Host"
 msgstr "Vært for programmet Statuspåmindelse"
 
-#: modules/external/wncklet/showdesktop.c:100
+#: modules/status-notifier/sn-module.c:34
+msgid "Display all Status Notifier Items"
+msgstr "Vis alle elementer for programmet Statuspåmindelse"
+
+#: modules/wncklet/showdesktop.c:100
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kunne ikke indlæse %s: %s\n"
 
-#: modules/external/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:101
 msgid "Icon not found"
 msgstr "Ikon ikke fundet"
 
-#: modules/external/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:181
 msgid "Click here to restore hidden windows."
 msgstr "Klik her for at gendanne skjulte vinduer."
 
-#: modules/external/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:183
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik her for at skjule alle vinduer og vise skrivebordet."
 
-#: modules/external/wncklet/showdesktop.c:210
+#: modules/wncklet/showdesktop.c:214
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2317,138 +2324,183 @@ msgstr ""
 "Din vindueshåndtering understøtter ikke knappen til at vise skrivebordet, "
 "eller også kører du ikke en vindueshåndtering."
 
-#: modules/external/wncklet/showdesktop.c:407
+#: modules/wncklet/showdesktop.c:411
 msgid "Show Desktop Button"
 msgstr "Vis skrivebord-knap"
 
-#: modules/external/wncklet/window-list.ui:8
+#: modules/wncklet/window-list.ui:8
 msgid "Window List Preferences"
 msgstr "Indstillinger for vinduesliste"
 
-#: modules/external/wncklet/window-list.ui:35
+#: modules/wncklet/window-list.ui:35
 msgid "Window List Content"
 msgstr "Indhold af vinduesliste"
 
-#: modules/external/wncklet/window-list.ui:55
+#: modules/wncklet/window-list.ui:55
 msgid "Sh_ow windows from current workspace"
 msgstr "Vis vinduer fra a_ktivt arbejdsområde"
 
-#: modules/external/wncklet/window-list.ui:72
+#: modules/wncklet/window-list.ui:72
 msgid "Show windows from a_ll workspaces"
 msgstr "Vis vinduer fra a_lle arbejdsområder"
 
-#: modules/external/wncklet/window-list.ui:112
+#: modules/wncklet/window-list.ui:112
 msgid "Window Grouping"
 msgstr "Vinduesgruppering"
 
-#: modules/external/wncklet/window-list.ui:132
+#: modules/wncklet/window-list.ui:132
 msgid "_Never group windows"
 msgstr "Gruppér al_drig vinduer"
 
-#: modules/external/wncklet/window-list.ui:149
+#: modules/wncklet/window-list.ui:149
 msgid "Group windows when _space is limited"
 msgstr "Gruppér vinduer når _pladsen er begrænset"
 
-#: modules/external/wncklet/window-list.ui:166
+#: modules/wncklet/window-list.ui:166
 msgid "_Always group windows"
 msgstr "Gruppér _altid vinduer"
 
-#: modules/external/wncklet/window-list.ui:206
+#: modules/wncklet/window-list.ui:206
 msgid "Restoring Minimized Windows"
 msgstr "Gendannelse af minimerede vinduer"
 
-#: modules/external/wncklet/window-list.ui:226
+#: modules/wncklet/window-list.ui:226
 msgid "Restore to current _workspace"
 msgstr "Gendan til aktivt _arbejdsområde"
 
-#: modules/external/wncklet/window-list.ui:243
+#: modules/wncklet/window-list.ui:243
 msgid "Restore to na_tive workspace"
 msgstr "Gendan til _oprindeligt arbejdsområde"
 
-#: modules/external/wncklet/window-menu.c:170
-#: modules/external/wncklet/wncklet-module.c:72
+#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr "Vinduesvælger"
 
-#: modules/external/wncklet/wncklet-module.c:60
+#: modules/wncklet/wncklet-module.c:41
 msgid "Show Desktop"
 msgstr "Vis skrivebordet"
 
-#: modules/external/wncklet/wncklet-module.c:61
+#: modules/wncklet/wncklet-module.c:42
 msgid "Hide application windows and show the desktop"
 msgstr "Skjul vinduer og vis skrivebordet"
 
-#: modules/external/wncklet/wncklet-module.c:66
+#: modules/wncklet/wncklet-module.c:48
 msgid "Window List"
 msgstr "Vinduesliste"
 
-#: modules/external/wncklet/wncklet-module.c:67
+#: modules/wncklet/wncklet-module.c:49
 msgid "Switch between open windows using buttons"
 msgstr "Skift mellem åbne vinduer vha. knapper"
 
-#: modules/external/wncklet/wncklet-module.c:73
+#: modules/wncklet/wncklet-module.c:56
 msgid "Switch between open windows using a menu"
 msgstr "Skift mellem åbne vinduer vha. en menu"
 
-#: modules/external/wncklet/wncklet-module.c:78
+#: modules/wncklet/wncklet-module.c:62
 msgid "Workspace Switcher"
 msgstr "Arbejdsområdeskifter"
 
-#: modules/external/wncklet/wncklet-module.c:79
+#: modules/wncklet/wncklet-module.c:63
 msgid "Switch between workspaces"
 msgstr "Skift mellem arbejdsområder"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
-#: modules/external/wncklet/workspace-switcher.ui:145
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "rækker"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
 msgid "columns"
 msgstr "kolonner"
 
-#: modules/external/wncklet/workspace-switcher.ui:22
+#: modules/wncklet/workspace-switcher.ui:22
 msgid "Workspace Switcher Preferences"
 msgstr "Indstillinger for arbejdsområdeskifter"
 
-#: modules/external/wncklet/workspace-switcher.ui:82
+#: modules/wncklet/workspace-switcher.ui:82
 msgid "Show _only the current workspace"
 msgstr "Vis kun det a_ktive arbejdområde"
 
-#: modules/external/wncklet/workspace-switcher.ui:104
+#: modules/wncklet/workspace-switcher.ui:104
 msgid "Show _all workspaces in:"
 msgstr "Vis _alle arbejdsområder i:"
 
-#: modules/external/wncklet/workspace-switcher.ui:128
-#: modules/external/wncklet/workspace-switcher.ui:228
+#: modules/wncklet/workspace-switcher.ui:128
+#: modules/wncklet/workspace-switcher.ui:228
 msgid "1"
 msgstr "1"
 
-#: modules/external/wncklet/workspace-switcher.ui:176
+#: modules/wncklet/workspace-switcher.ui:176
 msgid "Switcher"
 msgstr "Skifter"
 
-#: modules/external/wncklet/workspace-switcher.ui:213
+#: modules/wncklet/workspace-switcher.ui:213
 msgid "Number of _workspaces:"
 msgstr "Antal arbejds_områder:"
 
-#: modules/external/wncklet/workspace-switcher.ui:252
+#: modules/wncklet/workspace-switcher.ui:252
 msgid "Workspace na_mes:"
 msgstr "Arbejdsområdena_vne:"
 
-#: modules/external/wncklet/workspace-switcher.ui:272
+#: modules/wncklet/workspace-switcher.ui:272
 msgid "Workspace Names"
 msgstr "Arbejdsområdenavne"
 
-#: modules/external/wncklet/workspace-switcher.ui:288
+#: modules/wncklet/workspace-switcher.ui:288
 msgid "Show workspace _names in switcher"
 msgstr "Vis arbejdsområde_navne i skifteren"
 
-#: modules/external/wncklet/workspace-switcher.ui:309
+#: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Arbejdsområder"
+
+#~ msgid "Icon size for only Applications item in the Menu Bar applet"
+#~ msgstr ""
+#~ "Ikonstørrelse blot for elementet Programmer i menubjælke-panelprogrammet"
+
+#~ msgid "Create new file in the given directory"
+#~ msgstr "Opret en ny fil i den givne mappe"
+
+#~ msgid "[FILE...]"
+#~ msgstr "[FIL …]"
+
+#~ msgid "- Edit .desktop files"
+#~ msgstr "- Redigér .desktop-filer"
+
+#~ msgid "Directory Properties"
+#~ msgstr "Mappe-egenskaber"
+
+#~ msgid "No application to handle search folders is installed."
+#~ msgstr "Der er ikke installeret noget program til at håndtere søgemapper."
+
+#~ msgid "Image widget"
+#~ msgstr "Billedkontrol"
+
+#~ msgid "Child widget to appear next to the menu text"
+#~ msgstr "Underkontrol der skal vises ved siden af menuteksten"
+
+#~ msgid "Always show image"
+#~ msgstr "Vis altid billede"
+
+#~ msgid "Whether the image will always be shown"
+#~ msgstr "Om billedet altid vises"
+
+#~ msgid "Could not open recently used document \"%s\""
+#~ msgstr "Kunne ikke åbne nyligt benyttet dokument “%s”"
+
+#~ msgid "An unknown error occurred while trying to open \"%s\"."
+#~ msgstr "En ukendt fejl opstod under forsøg på at åbne “%s”."
+
+#~ msgid "Clear Recent Documents"
+#~ msgstr "Ryd seneste dokumenter"
+
+#~ msgid "Home Folder"
+#~ msgstr "Hjemmemappe"
+
+#~ msgid "Search"
+#~ msgstr "Søg"
 
 #~ msgid "Connect to server"
 #~ msgstr "Tilslut server"
