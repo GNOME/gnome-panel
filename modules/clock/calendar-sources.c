@@ -46,22 +46,22 @@ typedef struct _CalendarSourceData CalendarSourceData;
 
 struct _ClientData
 {
-  ECal *client;
-  gulong backend_died_id;
+  ECalClient *client;
+  gulong      backend_died_id;
 };
 
 struct _CalendarSourceData
 {
-  ECalSourceType   source_type;
-  CalendarSources *sources;
-  guint            changed_signal;
+  ECalClientSourceType  source_type;
+  CalendarSources      *sources;
+  guint                 changed_signal;
 
   /* ESource -> EClient */
-  GHashTable      *clients;
+  GHashTable           *clients;
 
-  guint            timeout_id;
+  guint                 timeout_id;
 
-  guint            loaded : 1;
+  guint                 loaded : 1;
 };
 
 struct _CalendarSourcesPrivate
@@ -77,7 +77,7 @@ struct _CalendarSourcesPrivate
 
 static void calendar_sources_finalize   (GObject             *object);
 
-static void backend_died_cb (ECal *client, CalendarSourceData *source_data);
+static void backend_died_cb (EClient *client, CalendarSourceData *source_data);
 static void calendar_sources_registry_source_changed_cb (ESourceRegistry *registry,
                                                          ESource         *source,
                                                          CalendarSources *sources);
@@ -166,7 +166,7 @@ calendar_sources_init (CalendarSources *sources)
                                                        G_CALLBACK (calendar_sources_registry_source_removed_cb),
                                                        sources);
 
-  sources->priv->appointment_sources.source_type    = E_CAL_SOURCE_TYPE_EVENT;
+  sources->priv->appointment_sources.source_type    = E_CAL_CLIENT_SOURCE_TYPE_EVENTS;
   sources->priv->appointment_sources.sources        = sources;
   sources->priv->appointment_sources.changed_signal = signals [APPOINTMENT_SOURCES_CHANGED];
   sources->priv->appointment_sources.clients        = g_hash_table_new_full ((GHashFunc) e_source_hash,
@@ -175,7 +175,7 @@ calendar_sources_init (CalendarSources *sources)
                                                                              (GDestroyNotify) client_data_free);
   sources->priv->appointment_sources.timeout_id     = 0;
 
-  sources->priv->task_sources.source_type    = E_CAL_SOURCE_TYPE_TODO;
+  sources->priv->task_sources.source_type    = E_CAL_CLIENT_SOURCE_TYPE_TASKS;
   sources->priv->task_sources.sources        = sources;
   sources->priv->task_sources.changed_signal = signals [TASK_SOURCES_CHANGED];
   sources->priv->task_sources.clients        = g_hash_table_new_full ((GHashFunc) e_source_hash,
@@ -244,26 +244,32 @@ calendar_sources_get (void)
 
 /* The clients are just created here but not loaded */
 static void
-create_client_for_source (ESource            *source,
-		          ECalSourceType      source_type,
-		          CalendarSourceData *source_data)
+create_client_for_source (ESource              *source,
+                          ECalClientSourceType  source_type,
+                          CalendarSourceData   *source_data)
 {
   ClientData *data;
-  ECal *client;
+  GError *error;
+  EClient *client;
 
   client = g_hash_table_lookup (source_data->clients, source);
   g_return_if_fail (client == NULL);
 
-  client = e_cal_new (source, source_type);
+  error = NULL;
+  client = e_cal_client_connect_sync (source, source_type, -1, NULL, &error);
+
   if (!client)
     {
-      g_warning ("Could not load source '%s'\n",
-		 e_source_get_uid (source));
+      g_warning ("Could not load source '%s': %s",
+                 e_source_get_uid (source),
+                 error->message);
+
+      g_clear_error (&error);
       return;
     }
 
   data = g_slice_new0 (ClientData);
-  data->client = client;  /* takes ownership */
+  data->client = E_CAL_CLIENT (client); /* takes ownership */
   data->backend_died_id = g_signal_connect (client,
                                             "backend-died",
                                             G_CALLBACK (backend_died_cb),
@@ -311,12 +317,12 @@ backend_restart (gpointer data)
 }
 
 static void
-backend_died_cb (ECal *client, CalendarSourceData *source_data)
+backend_died_cb (EClient *client, CalendarSourceData *source_data)
 {
   ESource *source;
   const char *display_name;
 
-  source = e_cal_get_source (client);
+  source = e_client_get_source (client);
   display_name = e_source_get_display_name (source);
   g_warning ("The calendar backend for '%s' has crashed.", display_name);
   g_hash_table_remove (source_data->clients, source);
@@ -340,14 +346,14 @@ calendar_sources_load_esource_list (ESourceRegistry *registry,
 
   switch (source_data->source_type)
     {
-      case E_CAL_SOURCE_TYPE_EVENT:
+      case E_CAL_CLIENT_SOURCE_TYPE_EVENTS:
         extension_name = E_SOURCE_EXTENSION_CALENDAR;
         break;
-      case E_CAL_SOURCE_TYPE_TODO:
+      case E_CAL_CLIENT_SOURCE_TYPE_TASKS:
         extension_name = E_SOURCE_EXTENSION_TASK_LIST;
         break;
-      case E_CAL_SOURCE_TYPE_JOURNAL:
-      case E_CAL_SOURCE_TYPE_LAST:
+      case E_CAL_CLIENT_SOURCE_TYPE_MEMOS:
+      case E_CAL_CLIENT_SOURCE_TYPE_LAST:
       default:
         g_return_if_reached ();
     }
