@@ -142,6 +142,7 @@ PKG_CHECK_MODULES([PANEL], [
   libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
   dconf >= $DCONF_REQUIRED
   x11
+  xi
   xrandr >= $XRANDR_REQUIRED
 ])
 
