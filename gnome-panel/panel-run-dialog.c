@@ -1021,40 +1021,48 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 }
 
 static char *
-remove_parameters (const char *exec)
+remove_field_codes (const char *exec)
 {
-	GString *str;
-	char    *retval, *p;
+	char *retval;
+	char *p;
 
-	str = g_string_new (exec);
+	if (exec == NULL || *exec == '\0')
+		return g_strdup ("");
 
-	while ((p = strstr (str->str, "%"))) {
-		switch (p [1]) {
+	retval = g_new0 (char, strlen (exec) + 1);
+	p = retval;
+
+	while (*exec != '\0') {
+		if (*exec != '%') {
+			*p++ = *exec++;
+			continue;
+		}
+
+		switch (exec[1]) {
 		case '%':
-			g_string_erase (str, p - str->str, 1);
+			*p++ = *exec++;
+			exec++;
 			break;
-		case 'U':
-		case 'F':
-		case 'N':
-		case 'D':
 		case 'f':
+		case 'F':
 		case 'u':
+		case 'U':
 		case 'd':
+		case 'D':
 		case 'n':
-		case 'm':
+		case 'N':
 		case 'i':
 		case 'c':
 		case 'k':
 		case 'v':
-			g_string_erase (str, p - str->str, 2);
+		case 'm':
+			exec += 2;
 			break;
 		default:
+			*p++ = *exec++;
 			break;
 		}
 	}
-
-	retval = str->str;
-	g_string_free (str, FALSE);
 
 	return retval;
 }
@@ -1113,7 +1121,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 	entry = gtk_bin_get_child (GTK_BIN (dialog->combobox));
 	temp = panel_key_file_get_string (key_file, "Exec");
 	if (temp) {
-		stripped = remove_parameters (temp);
+		stripped = remove_field_codes (temp);
 		gtk_entry_set_text (GTK_ENTRY (entry), stripped);
 		g_free (stripped);
 	} else {
