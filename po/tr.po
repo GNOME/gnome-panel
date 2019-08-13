@@ -13,846 +13,98 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-17 19:17+0000\n"
-"PO-Revision-Date: 2016-03-19 14:27+0200\n"
-"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2018-09-11 19:35+0000\n"
+"PO-Revision-Date: 2019-02-26 06:22+0300\n"
+"Last-Translator: Serdar Sağlam <teknomobil@yandex.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-POOTLE-MTIME: 1429372407.000000\n"
 
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am). The %p expands to
-#. * am/pm.
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format (eg, like
-#. * in the US: 8:10 am). The %p expands to am/pm.
-#.
-#: ../applets/clock/calendar-window.c:269
-#: ../applets/clock/clock-location-tile.c:494
-msgid "%l:%M %p"
-msgstr "%l:%M %p"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10).
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format (eg, like
-#. * in France: 20:10).
-#.
-#: ../applets/clock/calendar-window.c:274
-#: ../applets/clock/clock-location-tile.c:457
-#: ../applets/clock/clock-location-tile.c:501
-msgid "%H:%M"
-msgstr "%H:%M"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the start date of an appointment, in
-#. * the most abbreviated way possible.
-#: ../applets/clock/calendar-window.c:280
-msgid "%b %d"
-msgstr "%b %d"
-
-#: ../applets/clock/calendar-window.c:788
-msgid "Tasks"
-msgstr "İşler"
-
-#: ../applets/clock/calendar-window.c:788
-#: ../applets/clock/calendar-window.c:971
-#: ../applets/clock/calendar-window.c:1546
-msgid "Edit"
-msgstr "Düzenle"
-
-#: ../applets/clock/calendar-window.c:911
-msgid "All Day"
-msgstr "Tüm Gün"
-
-#: ../applets/clock/calendar-window.c:1055
-msgid "Appointments"
-msgstr "Randevular"
-
-#: ../applets/clock/calendar-window.c:1080
-msgid "Birthdays and Anniversaries"
-msgstr "Doğumgünleri ve Yıldönümleri"
-
-#: ../applets/clock/calendar-window.c:1105
-msgid "Weather Information"
-msgstr "Hava Durumu Bilgisi"
-
-#: ../applets/clock/calendar-window.c:1546 ../applets/clock/clock.ui.h:30
-msgid "Locations"
-msgstr "Konumlar"
-
-#: ../applets/clock/calendar-window.c:1801
-msgid "Calendar"
-msgstr "Takvim"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display a date. Please leave "%%s" as it is:
-#. * it will be used to insert the timezone name later.
-#: ../applets/clock/clock.c:292
-msgid "%A %B %d (%%s)"
-msgstr "%A, %d %B (%%s)"
-
-#: ../applets/clock/clock.c:304
-msgid "Click to hide your appointments and tasks"
-msgstr "Randevuları ve görevleri gizlemek için tıklayın"
-
-#: ../applets/clock/clock.c:307
-msgid "Click to view your appointments and tasks"
-msgstr "Randevuları ve görevleri görüntülemek için tıklayın"
-
-#: ../applets/clock/clock.c:311
-msgid "Click to hide month calendar"
-msgstr "Ay takvimini gizlemek için tıklayın"
-
-#: ../applets/clock/clock.c:314
-msgid "Click to view month calendar"
-msgstr "Ay takvimini görüntülemek için tıklayın"
-
-#: ../applets/clock/clock.c:924
-msgid "Computer Clock"
-msgstr "Bilgisayar Saati"
-
-#: ../applets/clock/clock.c:1090
-msgid "Failed to open the time settings"
-msgstr "Zaman ayarlarını açma başarısız oldu"
-
-#: ../applets/clock/clock.c:1683
-msgid "Choose Location"
-msgstr "Konum Seç"
-
-#: ../applets/clock/clock.c:1762
-msgid "Edit Location"
-msgstr "Konumu Düzenle"
-
-#: ../applets/clock/clock.c:1796 ../applets/clock/clock.c:1804
-msgid "Default"
-msgstr "Öntanımlı"
-
-#: ../applets/clock/clock.c:1797
-msgid "Kelvin"
-msgstr "Kelvin"
-
-#: ../applets/clock/clock.c:1798
-msgid "Celsius"
-msgstr "Santigrat"
-
-#: ../applets/clock/clock.c:1799
-msgid "Fahrenheit"
-msgstr "Fahrenhayt"
-
-#: ../applets/clock/clock.c:1805
-msgid "Meters per second (m/s)"
-msgstr "Saniyedeki metre (m/s)"
-
-#: ../applets/clock/clock.c:1806
-msgid "Kilometers per hour (kph)"
-msgstr "Saatteki kilometre (kph)"
-
-#: ../applets/clock/clock.c:1807
-msgid "Miles per hour (mph)"
-msgstr "Saatteki mil (mph)"
-
-#: ../applets/clock/clock.c:1808
-msgid "Knots"
-msgstr "Knot"
-
-#: ../applets/clock/clock.c:1809
-msgid "Beaufort scale"
-msgstr "Beaufort ölçeği"
-
-#: ../applets/clock/clock.c:1862
-msgid "City Name"
-msgstr "Şehir İsmi"
-
-#: ../applets/clock/clock.c:1866
-msgid "City Time Zone"
-msgstr "Şehir Saat Dilimi"
-
-#: ../applets/clock/clock-location-tile.c:176
-msgid "Failed to set the system timezone"
-msgstr "Sistem saat dilimi atanırken başarısız olundu"
-
-#: ../applets/clock/clock-location-tile.c:224
-msgid "<small>Set...</small>"
-msgstr "<small>Ayarla...</small>"
-
-#: ../applets/clock/clock-location-tile.c:225
-msgid "<small>Set</small>"
-msgstr "<small>Ayarla</small>"
-
-#: ../applets/clock/clock-location-tile.c:300
-msgid "Set location as current location and use its timezone for this computer"
-msgstr ""
-"Konumu mevcut konum olarak ata ve bu bilgisayar için onun zaman dilimini "
-"kullan"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:434
-msgid "%l:%M <small>%p (%A)</small>"
-msgstr "%l:%M <small>%p (%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 24-hours format
-#. * (eg, like in France: 20:10), when the local
-#. * weekday differs from the weekday at the location
-#. * (the %A expands to the weekday).
-#: ../applets/clock/clock-location-tile.c:442
-msgid "%H:%M <small>(%A)</small>"
-msgstr "%H:%M <small>(%A)</small>"
-
-#. Translators: This is a strftime format string.
-#. * It is used to display the time in 12-hours format
-#. * (eg, like in the US: 8:10 am). The %p expands to
-#. * am/pm.
-#: ../applets/clock/clock-location-tile.c:451
-msgid "%l:%M <small>%p</small>"
-msgstr "%l:%M <small>%p</small>"
-
-#: ../applets/clock/clock-location-tile.c:601
-#, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#. Translators: The two strings are temperatures.
-#: ../applets/clock/clock-location-tile.c:614
-#, c-format
-msgid "%s, feels like %s"
-msgstr "%s, hissedilen %s"
-
-#: ../applets/clock/clock-location-tile.c:635
-#, c-format
-msgid "Sunrise: %s / Sunset: %s"
-msgstr "Gün doğumu: %s / Gün batımı: %s"
-
-#: ../applets/clock/clock-menu.xml.h:1
-msgid "Copy Date and _Time"
-msgstr "_Tarih ve Saati Kopyala"
-
-#: ../applets/clock/clock-menu.xml.h:2
-msgid "Ad_just Date & Time"
-msgstr "Tarihi ve Zamanı _Ayarla"
-
-#: ../applets/clock/clock-menu.xml.h:3
-#: ../applets/wncklet/window-list-menu.xml.h:1
-#: ../applets/wncklet/workspace-switcher-menu.xml.h:1
-msgid "_Preferences"
-msgstr "Ter_cihler"
-
-#: ../applets/clock/clock.ui.h:1
-msgid "East"
-msgstr "Doğu"
-
-#: ../applets/clock/clock.ui.h:2
-msgid "West"
-msgstr "Batı"
-
-#: ../applets/clock/clock.ui.h:3
-msgid "North"
-msgstr "Kuzey"
-
-#: ../applets/clock/clock.ui.h:4
-msgid "South"
-msgstr "Kuzey"
-
-#: ../applets/clock/clock.ui.h:5
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:386
-#: ../gnome-panel/panel.c:1378 ../gnome-panel/panel-ditem-editor.c:656
-#: ../gnome-panel/panel-ditem-editor.c:998
-#: ../gnome-panel/panel-force-quit.c:228 ../gnome-panel/panel-recent.c:153
-#: ../gnome-panel/panel-run-dialog.c:1293
-#: ../gnome-panel/panel-run-dialog.ui.h:11
-msgid "_Cancel"
-msgstr "_İptal"
-
-#: ../applets/clock/clock.ui.h:6 ../gnome-panel/panel-ditem-editor.c:659
-#: ../gnome-panel/panel-run-dialog.c:1294
-msgid "_OK"
-msgstr "_Tamam"
-
-#: ../applets/clock/clock.ui.h:7
-msgid "(optional)"
-msgstr "(isteğe bağlı)"
-
-#: ../applets/clock/clock.ui.h:8
-msgid "_Location Name:"
-msgstr "_Konum İsmi:"
-
-#: ../applets/clock/clock.ui.h:9
-msgid "L_atitude:"
-msgstr "_Enlem:"
-
-#: ../applets/clock/clock.ui.h:10
-msgid "L_ongitude:"
-msgstr "_Boylam:"
-
-#. Languages that have a single word that translates as either
-#: ../applets/clock/clock.ui.h:12
-msgid ""
-"Type a city, region, or country name and then select a match from the pop-up."
-msgstr ""
-"Bir şehir, bölge veya ülke adı girin ve açılan pencereden bir eşleşme seçin."
-
-#: ../applets/clock/clock.ui.h:13
-msgid "_Timezone:"
-msgstr "_Saat Dilimi:"
-
-#: ../applets/clock/clock.ui.h:14
-msgid "Clock Preferences"
-msgstr "Saat Tercihleri"
-
-#: ../applets/clock/clock.ui.h:15 ../applets/fish/fish.ui.h:2
-msgid "_Help"
-msgstr "_Yardım"
-
-#: ../applets/clock/clock.ui.h:16
-msgid "Time _Settings"
-msgstr "Zaman _Ayarları"
-
-#: ../applets/clock/clock.ui.h:17 ../applets/fish/fish.c:640
-#: ../applets/fish/fish.ui.h:3 ../applets/wncklet/window-list.ui.h:12
-#: ../applets/wncklet/workspace-switcher.ui.h:2
-#: ../gnome-panel/panel-addto-dialog.ui.h:6
-#: ../gnome-panel/panel-ditem-editor.c:653
-#: ../gnome-panel/panel-properties-dialog.ui.h:2
-msgid "_Close"
-msgstr "_Kapat"
-
-#: ../applets/clock/clock.ui.h:18
-msgid "Clock Format"
-msgstr "Saat Biçimi"
-
-#: ../applets/clock/clock.ui.h:19
-msgid "_12 hour format"
-msgstr "_12 saat biçimi"
-
-#: ../applets/clock/clock.ui.h:20
-msgid "_24 hour format"
-msgstr "_24 saat biçimi"
-
-#: ../applets/clock/clock.ui.h:21
-msgid "Panel Display"
-msgstr "Panel Ekranı"
-
-#: ../applets/clock/clock.ui.h:22
-msgid "Show the _date"
-msgstr "_Tarihi göster"
-
-#: ../applets/clock/clock.ui.h:23
-msgid "Show seco_nds"
-msgstr "_Saniyeleri göster"
-
-#: ../applets/clock/clock.ui.h:24
-msgid "Show _weather"
-msgstr "_Hava durumunu göster"
-
-#: ../applets/clock/clock.ui.h:25
-msgid "Show _temperature"
-msgstr "Sıcaklığı _göster"
-
-#: ../applets/clock/clock.ui.h:26 ../applets/fish/fish.ui.h:4
-#: ../gnome-panel/panel-properties-dialog.ui.h:11
-msgid "General"
-msgstr "Genel"
-
-#: ../applets/clock/clock.ui.h:27 ../gnome-panel/panel-addto-dialog.c:1080
-#: ../gnome-panel/panel-addto-dialog.ui.h:5
-msgid "_Add"
-msgstr "_Ekle"
-
-#: ../applets/clock/clock.ui.h:28
-msgid "_Edit"
-msgstr "D_üzenle"
-
-#: ../applets/clock/clock.ui.h:29
-msgid "_Remove"
-msgstr "_Kaldır"
-
-#: ../applets/clock/clock.ui.h:31
-msgid "Display"
-msgstr "Görüntü"
-
-#: ../applets/clock/clock.ui.h:32
-msgid "_Visibility unit:"
-msgstr "_Görüş mesafesi birimi:"
-
-#: ../applets/clock/clock.ui.h:33
-msgid "_Pressure unit:"
-msgstr "_Basınç birimi:"
-
-#: ../applets/clock/clock.ui.h:34
-msgid "_Temperature unit:"
-msgstr "_Sıcaklık birimi:"
-
-#: ../applets/clock/clock.ui.h:35
-msgid "_Wind speed unit:"
-msgstr "_Rüzgar hızı birimi:"
-
-#: ../applets/clock/clock.ui.h:36
-msgid "Weather"
-msgstr "Hava Durumu"
-
-#: ../applets/clock/clock-utils.c:94 ../applets/fish/fish.c:159
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Yardım belgesi '%s' görüntülenemedi"
-
-#: ../applets/clock/clock-utils.c:123 ../applets/fish/fish.c:185
-msgid "Error displaying help document"
-msgstr "Yardım belgesi görüntülenirken hata"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:1
-msgid "Clock Applet Factory"
-msgstr "Saat Uygulamacığı Üreticisi"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:2
-msgid "Factory for clock applet"
-msgstr "Saat uygulamacığı için üreteç"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:3
-msgid "Clock"
-msgstr "Saat"
-
-#: ../applets/clock/org.gnome.panel.ClockApplet.panel-applet.in.in.h:4
-msgid "Get the current time and date"
-msgstr "Şu anki zamanı ve tarihi al"
-
-#: ../applets/fish/fish.c:213
-#, c-format
-msgid ""
-"Warning:  The command appears to be something actually useful.\n"
-"Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against using %s for anything\n"
-"which would make the applet \"practical\" or useful."
-msgstr ""
-"Uyarı:  Bu komut kullanışlı gibi gözüküyor.\n"
-"Bu uygulamacık gereksiz olduğu için, bunu yapmak istemeyebilirsiniz.\n"
-"Uygulamacığı \"pratik\" veya kullanışlı \n"
-"bir hale çevirmemek için %s komutunu kullanmamanızı tavsiye ederiz."
-
-#: ../applets/fish/fish.c:372 ../applets/fish/fish.c:488
-#, no-c-format
-msgid "%s the Fish"
-msgstr "%s Balığı"
-
-#: ../applets/fish/fish.c:373
-#, c-format
-msgid "%s the Fish, a contemporary oracle"
-msgstr "Çağdaş Kahin %s Balığı"
-
-#: ../applets/fish/fish.c:444
-msgid "Unable to locate the command to execute"
-msgstr "Çalıştırılacak komutun konumuna ulaşılamıyor"
-
-#: ../applets/fish/fish.c:493
-#, no-c-format
-msgid "%s the Fish Says:"
-msgstr "%s Balığı Diyor ki:"
-
-#: ../applets/fish/fish.c:562
-#, c-format
-msgid ""
-"Unable to read output from command\n"
-"\n"
-"Details: %s"
-msgstr ""
-"Komutun çıktısı okunamadı\n"
-"\n"
-"Ayrıntılar: %s"
-
-#: ../applets/fish/fish.c:639
-msgid "_Speak again"
-msgstr "Tek_rar konuş"
-
-#: ../applets/fish/fish.c:720
-#, c-format
-msgid "The configured command is not working and has been replaced by: %s"
-msgstr "Ayarlanmış komut çalışmadığı için '%s' ile değiştirilmiştir."
-
-#: ../applets/fish/fish.c:754
-#, c-format
-msgid ""
-"Unable to execute '%s'\n"
-"\n"
-"Details: %s"
-msgstr ""
-"'%s' çalıştırılamadı\n"
-"\n"
-"Ayrıntılar: %s"
-
-#: ../applets/fish/fish.c:770
-#, c-format
-msgid ""
-"Unable to read from '%s'\n"
-"\n"
-"Details: %s"
-msgstr ""
-"'%s' uygulamasından okunamadı\n"
-"\n"
-"Ayrıntılar: %s"
-
-#: ../applets/fish/fish.c:1170
-msgid "The water needs changing"
-msgstr "Suyun değiştirilmesi lazım"
-
-#: ../applets/fish/fish.c:1172
-msgid "Look at today's date!"
-msgstr "Bugünün tarihine bakın!"
-
-#: ../applets/fish/fish.c:1265
-#, c-format
-msgid "%s the Fish, the fortune teller"
-msgstr "Falcı %s Balığı"
-
-#: ../applets/fish/fish-menu.xml.h:1
-msgid "Preferences"
-msgstr "Tercihler"
-
-#: ../applets/fish/fish.ui.h:1
-msgid "Fish Preferences"
-msgstr "Balık Tercihleri"
-
-#: ../applets/fish/fish.ui.h:5
-msgid "_Name of fish:"
-msgstr "_Balığın adı:"
-
-#: ../applets/fish/fish.ui.h:6
-msgid "Co_mmand to run when clicked:"
-msgstr "_Tıklandığında çalıştırılacak olan komut:"
-
-#: ../applets/fish/fish.ui.h:7
-msgid "Animation:"
-msgstr "Canlandırma:"
-
-#: ../applets/fish/fish.ui.h:8
-msgid "    "
-msgstr "    "
-
-#: ../applets/fish/fish.ui.h:9
-msgid "_Pause per frame:"
-msgstr "_Çerçeve başına bekleme (sn):"
-
-#: ../applets/fish/fish.ui.h:10
-msgid "seconds"
-msgstr "saniye"
-
-#: ../applets/fish/fish.ui.h:11
-msgid "_Rotate on vertical panels"
-msgstr "_Dikey panellerde döndür"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:1
-msgid "Wanda Factory"
-msgstr "Wanda Üreticisi"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:2
-msgid "From Whence That Stupid Fish Came"
-msgstr "Bu Aptal Balığın Geldiği Yerden"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:3
-msgid "Fish"
-msgstr "Balık"
-
-#: ../applets/fish/org.gnome.panel.FishApplet.panel-applet.in.in.h:4
-msgid "Display a swimming fish or another animated creature"
-msgstr "Yüzen balığı veya diğer canlandırılmış yaratıklardan birini göster"
-
-#: ../applets/notification_area/main.c:210
-msgid "Panel Notification Area"
-msgstr "Panel Uyarı Alanı"
-
-#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:1
-msgid "Notification Area Factory"
-msgstr "Uyarı Alanı Üreteci"
-
-#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:2
-msgid "Factory for notification area"
-msgstr "Bildirim alanı için üreteç"
-
-#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:3
-msgid "Notification Area"
-msgstr "Uyarı Alanı"
-
-#: ../applets/notification_area/org.gnome.panel.NotificationAreaApplet.panel-applet.in.in.h:4
-msgid "Area where notification icons appear"
-msgstr "Uyarı simgelerinin belireceği alan"
-
-#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:1
-#, fuzzy
-#| msgid "Test DBus Applet Factory"
-msgid "Status Notifier Host Applet Factory"
-msgstr "DBus Uygulama Fabrikası Test Et"
-
-#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:2
-#, fuzzy
-msgid "Factory for status notifier host applet"
-msgstr "DBus Uygulaması için Fabrikayı Test Et"
-
-#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:3
-msgid "Status Notifier Host"
-msgstr ""
-
-#: ../applets/status-notifier/org.gnome.panel.SnApplet.panel-applet.in.in.h:4
-msgid "Display all Status Notifier Items"
-msgstr ""
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:1
-msgid "Window Navigation Applet Factory"
-msgstr "Pencere Dolaşımı Uygulamacıkları Üreteci"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:2
-msgid "Factory for the window navigation related applets"
-msgstr "Pencere dolaşımı ile ilgili uygulamacıklar için üreteç"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:3
-#: ../applets/wncklet/window-menu.c:181
-msgid "Window Selector"
-msgstr "Pencere Seçici"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:4
-msgid "Switch between open windows using a menu"
-msgstr "Bir menü kullanarak açık pencereler arasında geçiş yap"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:5
-msgid "Workspace Switcher"
-msgstr "Çalışma Alanı Geçişi"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:6
-msgid "Switch between workspaces"
-msgstr "Çalışma alanları arasında geçiş yap"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:7
-msgid "Window List"
-msgstr "Pencere Listesi"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:8
-msgid "Switch between open windows using buttons"
-msgstr "Düğmeler kullanarak açık pencereler arasında geçiş yap"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:9
-msgid "Show Desktop"
-msgstr "Masaüstünü Göster"
-
-#: ../applets/wncklet/org.gnome.panel.Wncklet.panel-applet.in.in.h:10
-msgid "Hide application windows and show the desktop"
-msgstr "Uygulama pencerelerini gizle ve masaüstünü göster"
-
-#: ../applets/wncklet/showdesktop.c:175
-#, c-format
-msgid "Failed to load %s: %s\n"
-msgstr "%s: %s yüklenirken hata oluştu\n"
-
-#: ../applets/wncklet/showdesktop.c:176
-msgid "Icon not found"
-msgstr "Simge bulunamadı"
-
-#: ../applets/wncklet/showdesktop.c:230
-msgid "Click here to restore hidden windows."
-msgstr "Gizli pencereleri görüntülemek için buraya tıklayın."
-
-#: ../applets/wncklet/showdesktop.c:232
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-"Bütün pencereleri gizleyip masaüstünü görüntülemek için buraya tıklayın."
-
-#: ../applets/wncklet/showdesktop.c:426
-msgid "Show Desktop Button"
-msgstr "Masaüstünü Gösterme Düğmesi"
-
-#: ../applets/wncklet/showdesktop.c:491
-msgid ""
-"Your window manager does not support the show desktop button, or you are not "
-"running a window manager."
-msgstr ""
-"Pencere yöneticiniz masaüstünü gösterme düğmesini desteklemiyor, veya bir "
-"pencere yöneticisi çalıştırmıyorsunuz."
-
-#: ../applets/wncklet/window-list.ui.h:1
-msgid "Window List Preferences"
-msgstr "Pencere Listesi Tercihleri"
-
-#: ../applets/wncklet/window-list.ui.h:2
-msgid "Window List Content"
-msgstr "Pencere Listesi İçeriği"
-
-#: ../applets/wncklet/window-list.ui.h:3
-msgid "Sh_ow windows from current workspace"
-msgstr "Şu anki çalışma alanındaki pencereleri _göster"
-
-#: ../applets/wncklet/window-list.ui.h:4
-msgid "Show windows from a_ll workspaces"
-msgstr "_Bütün çalışma alanlarındaki pencereleri göster"
-
-#: ../applets/wncklet/window-list.ui.h:5
-msgid "Window Grouping"
-msgstr "Pencere Gruplaması"
-
-#: ../applets/wncklet/window-list.ui.h:6
-msgid "_Never group windows"
-msgstr "Pencereleri _hiçbir zaman gruplama"
-
-#: ../applets/wncklet/window-list.ui.h:7
-msgid "Group windows when _space is limited"
-msgstr "_Yer kısıtlı olduğunda pencereleri grupla"
-
-#: ../applets/wncklet/window-list.ui.h:8
-msgid "_Always group windows"
-msgstr "_Pencereleri her zaman grupla"
-
-#: ../applets/wncklet/window-list.ui.h:9
-msgid "Restoring Minimized Windows"
-msgstr "Küçültülmüş Pencereleri Eski Boyutuna Getiriliyor"
-
-#: ../applets/wncklet/window-list.ui.h:10
-msgid "Restore to current _workspace"
-msgstr "Şu anki _kullanım alanını geri yükle"
-
-#: ../applets/wncklet/window-list.ui.h:11
-msgid "Restore to na_tive workspace"
-msgstr "_Kendi çalışma alanına geri al"
-
-#: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:716
-#: ../applets/wncklet/workspace-switcher.ui.h:6
-msgid "rows"
-msgstr "satır"
-
-#: ../applets/wncklet/workspace-switcher.c:198
-#: ../applets/wncklet/workspace-switcher.c:716
-msgid "columns"
-msgstr "sütun"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:1
-msgid "Workspace Switcher Preferences"
-msgstr "Çalışma Alanı Değiştiricisi Tercihleri"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:3
-msgid "Show _only the current workspace"
-msgstr "_Sadece şu anki çalışma anlanını göster"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:4
-msgid "Show _all workspaces in:"
-msgstr "_Bütün çalışma alanlarını buraya taşı:"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:5
-msgid "1"
-msgstr "1"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:7
-msgid "Switcher"
-msgstr "Değiştirici"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:8
-msgid "Number of _workspaces:"
-msgstr "_Çalışma alanı sayısı:"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:9
-msgid "Workspace na_mes:"
-msgstr "Çalışma alanı _isimleri:"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:10
-msgid "Workspace Names"
-msgstr "Çalışma Alanı İsimleri"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:11
-msgid "Show workspace _names in switcher"
-msgstr "Çalışma alanı _isimlerini değiştiricide göster"
-
-#: ../applets/wncklet/workspace-switcher.ui.h:12
-msgid "Workspaces"
-msgstr "Çalışma Alanları"
-
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
 msgstr "Balon içinde tarihi göster"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:6
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Eğer seçiliyse, imleç saatin üzerine getirildiğinde balonda tarihi göster."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:10
 msgid "Show weather in clock"
 msgstr "Saat içinde hava durumunu göster"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:11
 msgid "If true, display a weather icon."
 msgstr "Eğer seçiliyse, bir hava durumu simgesi gösterir."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:15
 msgid "Show temperature in clock"
 msgstr "Saat içinde sıcaklığı göster"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:16
 msgid "If true, show the temperature next to the weather icon."
 msgstr "Eğer seçiliyse, hava durumu simgesinin yanında sıcaklığı gösterir."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:7
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:20
 msgid "Show week numbers in calendar"
 msgstr "Takvimde kaçıncı hafta olduğunu göster"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:8
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:21
 msgid "If true, show week numbers in the calendar."
 msgstr "Eğer seçiliyse, takvimde kaçıncı hafta olduğunu göster."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:9
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:25
 msgid "Expand list of appointments"
 msgstr "Randevuların listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:10
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:26
 msgid "If true, expand the list of appointments in the calendar window."
 msgstr "Eğer seçiliyse, takvim penceresinde rendevuların listesi açılır."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:11
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:30
 msgid "Expand list of birthdays"
 msgstr "Doğum günlerinin listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:12
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:31
 msgid "If true, expand the list of birthdays in the calendar window."
 msgstr "Eğer seçiliyse, takvim penceresinde doğum günlerinin listesi açılır."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:13
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:35
 msgid "Expand list of tasks"
 msgstr "Görevlerin listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:14
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:36
 msgid "If true, expand the list of tasks in the calendar window."
 msgstr "Eğer seçiliyse, takvim penceresinde görevlerin listesi açılır."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:15
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:40
 msgid "Expand list of weather information"
 msgstr "Hava durumu bilgisi listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:16
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:41
 msgid "If true, expand the list of weather information in the calendar window."
 msgstr ""
 "Eğer seçiliyse, takvim penceresinde hava durumu bilgisininn listesi açılır."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:17
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:45
 msgid "Expand list of locations"
 msgstr "Konumların listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:18
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:46
 msgid "If true, expand the list of locations in the calendar window."
 msgstr "Eğer seçiliyse, takvim penceresinde konumların listesi açılır."
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:19
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:50
 msgid "List of locations"
 msgstr "Konumların listesi"
 
-#: ../data/org.gnome.gnome-panel.applet.clock.gschema.xml.in.in.h:20
+#: data/org.gnome.gnome-panel.applet.clock.gschema.xml:51
 msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
@@ -860,11 +112,11 @@ msgstr ""
 "Takvim penceresinde gösterilecek olan konumların bir listesi. Her bir konum, "
 "görüntü adı, METAR kodu ve koordinatlardan oluşan bir tüptür."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:5
 msgid "The fish's name"
 msgstr "Balığın adı"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:6
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
@@ -872,11 +124,11 @@ msgstr ""
 "Adsız bir balık, çok boş bir balıktır. Balığınıza bir isim takarak ona hayat "
 "verin."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:10
 msgid "The fish's animation pixmap"
 msgstr "Balık canlandımasının benekeşlemi"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:11
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
@@ -884,38 +136,38 @@ msgstr ""
 "Bu anahtar balık canlandırmasının gösterimindekullanılacak resmin benekeşlem "
 "dizinine göre dosya adını belirtir."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:15
 msgid "Command to execute on click"
 msgstr "Tıklandığı zaman çalıştırılacak uygulama"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:16
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
 msgstr "Bu anahtar balığa tıklandığında çalıştırılacak komutu belirtir."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:7
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:21
 msgid "Pause per frame"
 msgstr "Çervece başına bekleme"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:8
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:22
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr "Bu anahtar her çerçevenin kaç saniye boyunca gösterileciğini belirtir."
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:9
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:26
 msgid "Rotate on vertical panels"
 msgstr "Dikey panellerde döndür"
 
-#: ../data/org.gnome.gnome-panel.applet.fish.gschema.xml.in.in.h:10
+#: data/org.gnome.gnome-panel.applet.fish.gschema.xml:27
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Eger seçiliyse, balığın canlandırması dikey panelde döndürülecek."
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:11
 msgid "Show windows from all workspaces"
 msgstr "Bütün çalışma alanlarındaki pencereleri göster"
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:12
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
@@ -924,11 +176,11 @@ msgstr ""
 "gösterecektir. Aksi halde sadece o an kullanılan çalışma alanındaki "
 "pencereleri gösterir."
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:16
 msgid "When to group windows"
 msgstr "Pencerelerin ne zaman gruplanacağı"
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:17
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
@@ -936,11 +188,11 @@ msgstr ""
 "Pencere listesinde aynı uygulamaların ne zaman gruplanacağına karar verir. "
 "Geçerli değerler  \"hiçbir zaman\", \"otomatik\" ve \"herzaman\" dır."
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:21
 msgid "Move windows to current workspace when unminimized"
 msgstr "Büyütülen pencereleri o anki çalışma alanına taşı"
 
-#: ../data/org.gnome.gnome-panel.applet.window-list.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.applet.window-list.gschema.xml:22
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
@@ -948,11 +200,11 @@ msgstr ""
 "Eğer seçiliyse, pencereyi büyülttüğünüzde o anki çalışma alanına gelecektir. "
 "Aksi halde, büyütülen pencerenin çalışma alanına geçilecektir."
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:5
 msgid "Display workspace names"
 msgstr "Çalışma alanlarının isimlerini göster"
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:6
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace. "
@@ -962,11 +214,11 @@ msgstr ""
 "isimlerini gösterir. Aksi halde, çalışma alanlarındaki pencereleri gösterir. "
 "Bu özellik sadece pencere yöneticisi Metacity olduğunda çalışır."
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:10
 msgid "Display all workspaces"
 msgstr "Bütün çalışma alanlarını göster"
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:11
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
@@ -974,11 +226,11 @@ msgstr ""
 "Eğer seçiliyse, çalışma alanı değiştiricisi bütün çalışma alanlarını "
 "gösterir. Aksi halde sadece o anki çalışma alanını gösterir."
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:16
 msgid "Rows in workspace switcher"
 msgstr "Çalışma alanı değiştiricisindeki satır sayısı"
 
-#: ../data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:17
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
@@ -988,11 +240,11 @@ msgstr ""
 "düzen için), veya sütun (dikey düzen için) içinde göstereceğini belirtir. Bu "
 "anahtar sadece tüm çalışma alanları görüntüleniyorsa anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid "Enable tooltips"
 msgstr "Balonları etkinleştir"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.gschema.xml:36
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -1000,11 +252,11 @@ msgstr ""
 "Eğer seçiliyse, nesneler için ipuçları panelde gösterilir. İpuçları GTK"
 "+'daki gtk-enable-tooltips özelliğine sahip masaüstünde pasif bırakılabilir."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.gschema.xml:40
 msgid "Confirm panel removal"
 msgstr "Panel silmeyi onayla"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.gschema.xml:41
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -1012,23 +264,39 @@ msgstr ""
 "Eğer seçiliyse, kullanıcı paneli silmek istediğinde onayının sorulduğu bir "
 "pencere gösterilir."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.gschema.xml:46
+msgid "Icon size in menus"
+msgstr "Menülerdeki simge boyutu"
+
+#: data/org.gnome.gnome-panel.gschema.xml:47
+msgid "The size of icons in menus."
+msgstr "Menülerdeki simge boyutu."
+
+#: data/org.gnome.gnome-panel.gschema.xml:52
+msgid "Maximum icon size in panels"
+msgstr "Panellerdeki en yüksek simge boyutu"
+
+#: data/org.gnome.gnome-panel.gschema.xml:53
+msgid "The maximum size of icons in panels."
+msgstr "Panellerdeki en yüksek simge boyutu."
+
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "Icon size in the menus"
 msgstr "Menülerdeki simge boyutu"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.gschema.xml:62
 msgid "Icon size for only Applications item in the Menu Bar applet"
 msgstr "Menü Çubuğu uygulamasındaki sadece Uygulamalar öğesi için simge boyutu"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:7
+#: data/org.gnome.gnome-panel.gschema.xml:66
 msgid "Which theme variant to use"
-msgstr ""
+msgstr "Hangi tema değişkeni kullanılacak"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:8
+#: data/org.gnome.gnome-panel.gschema.xml:73
 msgid "Panel ID list"
 msgstr "Panel numara listesi"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:9
+#: data/org.gnome.gnome-panel.gschema.xml:74
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -1037,11 +305,11 @@ msgstr ""
 "tanımlar. Bu panellerin her biri için ayarlar /apps/panel/toplevels/$(id) "
 "içerisinde saklanır."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:10
+#: data/org.gnome.gnome-panel.gschema.xml:78
 msgid "Panel object ID list"
 msgstr "Panel nesnesi numara listesi"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:11
+#: data/org.gnome.gnome-panel.gschema.xml:79
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -1052,11 +320,11 @@ msgstr ""
 "nesnelerin her biri için ayarlar /apps/panel/objects/$(id) içerisinde "
 "saklanır."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:12
+#: data/org.gnome.gnome-panel.gschema.xml:86
 msgid "Complete panel lockdown"
 msgstr "Panelin tamamını kilitleme"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:13
+#: data/org.gnome.gnome-panel.gschema.xml:87
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -1066,11 +334,11 @@ msgstr ""
 "vermeyecektir. Ancak uygulamacıklar ayrıca kilitlenme ihtiyacı duyabilirler. "
 "Bunun etkili olabilmesi için panelin tekrar başlatılması gerekmektedir."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:14
+#: data/org.gnome.gnome-panel.gschema.xml:91
 msgid "Applet IIDs to disable from loading"
 msgstr "Yüklenmesi engellenecek uygulamacık IIDleri"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:15
+#: data/org.gnome.gnome-panel.gschema.xml:92
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -1083,11 +351,11 @@ msgstr ""
 "bırakmak için 'OAFIID:GNOME_MiniCommanderApplet'i bu listeye ekleyin. Bunun "
 "etkili olması için paleli yeniden başlatmanız gerekiyor."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:16
+#: data/org.gnome.gnome-panel.gschema.xml:96
 msgid "Disable Force Quit"
 msgstr "Zorla Çık'ı Etkisizleştir"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:17
+#: data/org.gnome.gnome-panel.gschema.xml:97
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -1095,21 +363,21 @@ msgstr ""
 "Eğer seçiliyse, panel, bir uygulama kapatılırken zorla çıkış yapılmasını "
 "Sonlandır düğmesine erişimi keserek engeller."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:18
+#: data/org.gnome.gnome-panel.gschema.xml:104
 msgid "History of \"Run Application\" dialog"
 msgstr "\"Uygulama Çalıştır\" iletişim penceresinin geçmişi"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:19
+#: data/org.gnome.gnome-panel.gschema.xml:105
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "\"Uygulama Çalıştır\" penceresinde kendiliğinden tamamlamayı etkinleştir"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:20
+#: data/org.gnome.gnome-panel.gschema.xml:109
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "\"Uygulama Çalıştır\" penceresinde program listesini etkinleştir"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:21
+#: data/org.gnome.gnome-panel.gschema.xml:110
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1119,11 +387,11 @@ msgstr ""
 "listesi kullanılabilir olur. Listenin genişletilmiş olup "
 "olmamasıshow_program_list anahtarı ile kontrol edilir."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:22
+#: data/org.gnome.gnome-panel.gschema.xml:114
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "\"Uygulama Çalıştır\" penceresindeki program listesini genişlet"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:23
+#: data/org.gnome.gnome-panel.gschema.xml:115
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1133,23 +401,23 @@ msgstr ""
 "listesi, pencere açıldığında genişlemiş olarak başlar. Bu anahtar sadece "
 "enable_program_list anahtarı seçili ise anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:24
+#: data/org.gnome.gnome-panel.gschema.xml:119
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "\"Uygulama Çalıştır\" penceresinde kendiliğinden tamamlamayı etkinleştir"
 
-#: ../data/org.gnome.gnome-panel.gschema.xml.in.in.h:25
+#: data/org.gnome.gnome-panel.gschema.xml:120
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "Eğer seçiliyse, \"Uygulama Çalıştır\" penceresinde kendiliğinden tamamlama "
 "etkin olur."
 
-#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
 msgid "Launcher location"
 msgstr "Başlatıcı konumu"
 
-#: ../data/org.gnome.gnome-panel.launcher.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
@@ -1157,90 +425,85 @@ msgstr ""
 "Başlatıcıyı tanımlayan .desktop dosyasının konumu. Bu anahatar sadece "
 "object_type anahtarı \"launce-object\" ise anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
 msgid "Tooltip displayed for menu"
 msgstr "Menü veya çekmece için gösterilecek balon"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
 msgid "The text to display in a tooltip for this menu."
-msgstr "Bu menü için ipucunda gösterilecek metin"
+msgstr "Bu menü için ipucunda gösterilecek metin."
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
 msgid "Icon used for button"
 msgstr "Düğme için kullanılan simge"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:4
-#, fuzzy
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
 msgid ""
 "The location of the image file used as the icon for the object's button. If "
 "empty, the default icon for the menu will be used."
 msgstr ""
-"Nesnenin düğmesinde kullanılacak resim dosyasının konumu. Bu anahtar sadece "
-"object_type \"drawer-object\" veya \"menu-object\" ise ve use_custom_icon "
-"anahtarı seçiliyse anlamlıdır."
+"Nesnenin düğmesinde kullanılacak resim dosyasının konumu. Eğer boşsa, "
+"menünün varsayılan simgesi kullanılacaktır."
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
 msgid "Menu content path"
 msgstr "Menü içeriği yolu"
 
-#: ../data/org.gnome.gnome-panel.menu-button.gschema.xml.in.in.h:6
-#, fuzzy
+#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
 msgstr ""
-"Menü içeriğinin oluşmasında kullanılacak yol. Bu anahtar sacede "
-"use_menu_path_key seçiliyse ve object_type anahtarı \"menu-object\" ise "
-"anlamlıdır."
+"Menü içeriğinin oluşmasında kullanılacak yol. Eğer boşsa, menü varsayılan "
+"uygulamalar menüsü olacaktır."
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "Nesne Kimliği"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.object.gschema.xml:6
 msgid ""
 "The implementation ID of the object - e.g. \"ClockAppletFactory::ClockApplet"
 "\"."
 msgstr "Nesnenin tanımlama kimliği - ö.r. \"ClockAppletFactory::ClockApplet\"."
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.object.gschema.xml:10
 msgid "Toplevel panel containing object"
 msgstr "Nesneyi barındıran üst seviye paneli"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.object.gschema.xml:11
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr "Bu nesneyi barındıran üst seviye panelinin belirteci."
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.object.gschema.xml:15
 msgid "Interpret position relative to bottom/right edge"
 msgstr "Pozisyonu alt/sağ kenara göre uygula"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:6
-#, fuzzy
+#: data/org.gnome.gnome-panel.object.gschema.xml:16
 msgid ""
 "If set to 'end', the position of the object is interpreted relative to the "
 "right (or bottom if vertical) edge of the panel."
 msgstr ""
-"Eğer seçiliyse, nesnenin pozisyonu panelin sağ (eğer dikeyse aşağıya göre) "
+"Eğer 'son' seçiliyse, nesnenin pozisyonu panelin sağ (eğer dikey ise alt) "
 "kenarına göre uygulanır."
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:7
+#: data/org.gnome.gnome-panel.object.gschema.xml:20
 msgid "Object's position on the panel"
 msgstr "Nesnenin paneldeki konumu"
 
-#: ../data/org.gnome.gnome-panel.object.gschema.xml.in.in.h:8
+#: data/org.gnome.gnome-panel.object.gschema.xml:21
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr ""
 "Panel nesnesinin konumu. Bu pozisyon panelin sol (veya dikeyse üst) "
 "kenarından benek sayısı olarak belirtilmiştir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:1
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
 msgstr "Panelin belirtmek için adı"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:2
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:6
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -1250,11 +513,11 @@ msgstr ""
 "Bunun asıl amacı paneller arasında dolaşırken panellerin pencere başlığı "
 "olarak kullanılmasıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:3
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:10
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Panelin görüntüleneceği Xinerama ekranı"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:4
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:11
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -1262,11 +525,11 @@ msgstr ""
 "Xinerama ayarında, her ekranda panel bulundurabilirsiniz. Bu anahtar panelin "
 "gösterileceği mevcut ekranı belirtir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:5
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:15
 msgid "Expand to occupy entire screen width"
 msgstr "Tüm ekran genişliğini kaplaması için genişlet"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:6
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:16
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -1278,11 +541,11 @@ msgstr ""
 "konumlandırılabilir. Eğer seçili değilse; panel sadece uygulamacıkları, "
 "başlatıcıları ve düğmeleri barındırabilecek büyüklükte olacak."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:7
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:20
 msgid "Panel orientation"
 msgstr "Panelin konumu"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:8
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:21
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -1301,11 +564,11 @@ msgstr ""
 "Örneğin \"top\" panelinde menü düğmesi menünün altında menü gösterir ancak "
 "\"bottom\" panelde menü panelin üstünde oluşur."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:9
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
 msgid "Panel size"
 msgstr "Panel boyutu"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:10
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -1317,11 +580,11 @@ msgstr ""
 "Azami boyut ekranın yükseliğinin (ya da genişliğinin) dörtte birine "
 "sabitlenir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:11
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "X co-ordinate of panel"
 msgstr "Panelin X kordinatı"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:12
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1331,11 +594,11 @@ msgstr ""
 "kipte değilken anlamlıdır. Kenarı kaplayan kipte, bu anahtar yoksayılır ve "
 "panel orientation anahtarının belirtildiği şekilde kenara yerleştirilir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:13
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:35
 msgid "Y co-ordinate of panel"
 msgstr "Panelin Y kordinatı"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:14
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -1345,11 +608,11 @@ msgstr ""
 "kipte değilken anlamlıdır. Kenarı kaplayan kipte, bu anahtar yoksayılır ve "
 "panel orientation anahtarının belirtildiği şekilde kenara yerleştirilir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:15
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "X co-ordinate of panel, starting from the right of the screen"
 msgstr "Panelin X kordinatı, ekranın sağından başlayarak"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:16
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
 "The location of the panel along the x-axis, starting from the right of the "
 "screen. If set to -1, the value is ignored and the value of the x key is "
@@ -1365,11 +628,11 @@ msgstr ""
 "yoksayılır ve panel orientation anahtarının belirtildiği şekilde kenara "
 "yerleştirilir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:17
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
 msgstr "Panelin Y kordinatı, ekranın altından başlayarak"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:18
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
 msgid ""
 "The location of the panel along the y-axis, starting from the bottom of the "
 "screen. If set to -1, the value is ignored and the value of the y key is "
@@ -1385,11 +648,11 @@ msgstr ""
 "yoksayılır ve panel orientation anahtarının belirtildiği şekilde kenara "
 "yerleştirilir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:19
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
 msgid "Center panel on x-axis"
 msgstr "X ekseninde paneli ortala"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:20
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
 msgid ""
 "If true, the x and x_right keys are ignored and the panel is placed at the "
 "center of the x-axis of the screen. If the panel is resized it will remain "
@@ -1401,11 +664,11 @@ msgstr ""
 "panel bu pozisyonda kalır - örn. panel her iki yöne de uzar. Eğer seçili "
 "değilse, x ve x_rightanahtarları panelin konumunu belirler."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:21
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
 msgid "Center panel on y-axis"
 msgstr "Y ekseninde paneli ortala"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:22
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -1417,11 +680,11 @@ msgstr ""
 "panel bu pozisyonda kalır - örn. panel her iki yöne de uzar. Eğer seçili "
 "değilse, y ve y_bottom anahtarları panelin konumunu belirler."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:23
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
 msgstr "Paneli kendiliğinden köşeye gizle"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:24
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:61
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -1431,11 +694,11 @@ msgstr ""
 "ekranın köşesine gizlenecek. İmlecin köşeye tekrar getirilmesi panelin "
 "görünmesini sağlayacak."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:25
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
 msgid "Enable hide buttons"
 msgstr "Gizleme düğmelerini etkinleştir"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:26
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:66
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -1443,11 +706,11 @@ msgstr ""
 "Eğer seçiliyse, panelin her iki tarafına, paneli ekranın kenarlarına sadece "
 "düğme gözükür şekle getiren düğmeler yerleştirilecek."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:27
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
 msgid "Enable arrows on hide buttons"
 msgstr "Gizleme düğmelerinde oklar görünsün"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:28
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:71
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -1455,11 +718,11 @@ msgstr ""
 "Eğer seçiliyse, gizleme düğmelerine oklar yerleştirilecek. Bu anahtar sadece "
 "enable_buttons anahtarı seçiliyse anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:29
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
 msgid "Panel autohide delay"
 msgstr "Panel otomatik gizleme gecikmesi"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:30
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:77
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -1469,11 +732,11 @@ msgstr ""
 "kaç milisaniye olacağını belirtir. Bu anahtar sadece auto_hide anahtarı "
 "seçiliyse anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:31
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:82
 msgid "Panel autounhide delay"
 msgstr "Panel otomatik gösterme gecikmesi"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:32
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -1483,11 +746,11 @@ msgstr ""
 "beklemenin kaç milisaniye olacağını belirtir. Bu anahtar sadece auto_hide "
 "anahtarı seçiliyse anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:33
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Visible pixels when hidden"
 msgstr "Gizliyken görünecek benekler"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:34
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -1495,11 +758,11 @@ msgstr ""
 "Panel köşede kendiliğinden gizlendiğinde kaç beneğin görünür olacağını "
 "belirtir. Bu anahtar sadece auto_hide anahtarı seçiliyse anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:35
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Animation speed"
 msgstr "Canlandırma hızı"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:36
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -1509,36 +772,23 @@ msgstr ""
 "\"slow\", \"medium\" ve \"fast\"dır. Bu anahtar sadece enable_animations "
 "anahtarı seçiliyse anlamlıdır."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:37
-msgid "Background type"
-msgstr "Arkaplan türü"
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
+msgid "Use custom background color"
+msgstr "Özel bir arkaplan rengi kullan"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:38
-#, fuzzy
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"none\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
-msgstr ""
-"Bu panel için kullanılcak arkaplan tipi. Geçerli değerler \"gtk\" - "
-"öntanımlı GTK+ parçacığı arkaplanı kullanılacak, \"color\" - bir renk "
-"arkaplan rengi olarak kullanılacak veya \"image\" - image anahtarı "
-"tarafından belirtilen resim arkaplan resmi olarak kullanılacak."
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
+msgid "Background Color"
+msgstr "Arkaplan Rengi"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:39
-msgid "Background color"
-msgstr "Arkaplan rengi"
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
+msgid "Use custom background image"
+msgstr "Özel arkaplan resmi kullan"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:40
-msgid "Specifies the background color for the panel in #RGB format."
-msgstr "#RGB biçiminde panelin arkaplan rengini belirtir."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:41
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
 msgid "Background image"
 msgstr "Arkaplan resmi"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:42
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -1547,22 +797,11 @@ msgstr ""
 "Arkaplan resmi olarak kullanılacak dosyayı belirtir. Eğer resim alfa kanalı "
 "bulunduruyorsa masaüstü arkaplan resmi ile birleştirilir."
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:43
-msgid "Rotate image on vertical panels"
-msgstr "Dikey panellerde resmi döndür"
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:44
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
-msgstr ""
-"Eğer seçiliyse; arkaplan resmi, panel dikey konumlandırıldığında çevirilecek."
-
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:45
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
 msgid "Image options"
 msgstr "Resim seçenekleri"
 
-#: ../data/org.gnome.gnome-panel.toplevel.gschema.xml.in.in.h:46
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:125
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -1576,49 +815,72 @@ msgstr ""
 "\" ile resim (görüş alanı korunarak) panelin boyuna göre ölçeklendirilir."
 "(yataysa)"
 
-#: ../gnome-panel/applet.c:347
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
+msgid "Rotate image on vertical panels"
+msgstr "Dikey panellerde resmi döndür"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Eğer seçiliyse; arkaplan resmi, panel dikey konumlandırıldığında çevirilecek."
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
+msgid "Use custom text color"
+msgstr "Özel metin rengi kullan"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:141
+msgid "Text Color"
+msgstr "Metin Rengi"
+
+#: gnome-panel/applet.c:333
 msgid "???"
 msgstr "???"
 
-#: ../gnome-panel/applet.c:485 ../libpanel-applet/panel-applet.c:1740
+#: gnome-panel/applet.c:471
+#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
+#: libpanel-applet/panel-applet.c:1200
 msgid "_Move"
 msgstr "_Taşı"
 
-#: ../gnome-panel/applet.c:492 ../libpanel-applet/panel-applet.c:1740
+#: gnome-panel/applet.c:478
+#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
+#: libpanel-applet/panel-applet.c:1200
 msgid "_Remove From Panel"
 msgstr "Panelden _Sil"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:27
+#: gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
 msgstr "Belirtilen dizinde yeni dosya oluştur"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:28
+#: gnome-panel/gnome-desktop-item-edit.c:28
 msgid "[FILE...]"
 msgstr "[DOSYA...]"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:106
+#: gnome-panel/gnome-desktop-item-edit.c:106
 msgid "- Edit .desktop files"
 msgstr "- .desktop dosyalarını düzenle"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:144
-#: ../gnome-panel/gnome-desktop-item-edit.c:198 ../gnome-panel/launcher.c:892
+#: gnome-panel/gnome-desktop-item-edit.c:144
+#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
 msgid "Create Launcher"
 msgstr "Başlatıcı Oluştur"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:169
-#: ../gnome-panel/gnome-desktop-item-edit.c:192
+#: gnome-panel/gnome-desktop-item-edit.c:169
+#: gnome-panel/gnome-desktop-item-edit.c:192
 msgid "Directory Properties"
 msgstr "Dizin Özellikleri"
 
-#: ../gnome-panel/gnome-desktop-item-edit.c:175 ../gnome-panel/launcher.c:732
+#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
 msgid "Launcher Properties"
 msgstr "Başlatıcı Özellikleri"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:1 ../gnome-panel/main.c:173
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:173
 msgid "Panel"
 msgstr "Panel"
 
-#: ../gnome-panel/gnome-panel.desktop.in.in.h:2
+#: gnome-panel/gnome-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -1626,54 +888,173 @@ msgstr ""
 "Diğer uygulamaları başlatır ve pencereleri yönetmek, zamanı göstermek vb. "
 "gibi amaçlar için çeşitli araçlar sağlar."
 
-#: ../gnome-panel/gp-arrow-button.c:120
+#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+#: gnome-panel/gnome-panel.desktop.in:7
+msgid "gnome-panel"
+msgstr "gnome-panel"
+
+#: gnome-panel/gp-add-applet-window.c:137
+msgid "Help"
+msgstr "Yardım"
+
+#: gnome-panel/gp-add-applet-window.c:148
+msgid "About"
+msgstr "Hakkında"
+
+#: gnome-panel/gp-add-applet-window.c:193
+msgid "Add"
+msgstr "Ekle"
+
+#: gnome-panel/gp-add-applet-window.c:380 gnome-panel/panel-addto-dialog.ui:16
+msgid "Add to Panel"
+msgstr "Panele Ekle"
+
+#: gnome-panel/gp-add-applet-window.c:553
+msgid "No applets found"
+msgstr "Uygulamacık bulunamadı"
+
+#: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Paneli Gizle"
 
-#: ../gnome-panel/launcher.c:136
+#: gnome-panel/gp-properties-dialog.c:213
+msgctxt "Orientation"
+msgid "Top"
+msgstr "Üst"
+
+#: gnome-panel/gp-properties-dialog.c:214
+msgctxt "Orientation"
+msgid "Bottom"
+msgstr "Alt"
+
+#: gnome-panel/gp-properties-dialog.c:215
+msgctxt "Orientation"
+msgid "Left"
+msgstr "Sol"
+
+#: gnome-panel/gp-properties-dialog.c:216
+msgctxt "Orientation"
+msgid "Right"
+msgstr "Sağ"
+
+#: gnome-panel/gp-properties-dialog.ui:15
+msgid "Panel Properties"
+msgstr "Panel Özellikleri"
+
+#: gnome-panel/gp-properties-dialog.ui:53
+#: gnome-panel/gp-properties-dialog.ui:323
+msgid "Some of these properties are locked down"
+msgstr "Bu özelliklerin bazıları kilitli"
+
+#: gnome-panel/gp-properties-dialog.ui:79
+msgid "_Orientation:"
+msgstr "_Yerleşim:"
+
+#: gnome-panel/gp-properties-dialog.ui:122
+msgid "_Size:"
+msgstr "B_oyut:"
+
+#: gnome-panel/gp-properties-dialog.ui:158
+msgid "pixels"
+msgstr "benek"
+
+#: gnome-panel/gp-properties-dialog.ui:191
+msgid "Miscellaneous:"
+msgstr "Çeşitli:"
+
+#: gnome-panel/gp-properties-dialog.ui:210
+msgid "E_xpand"
+msgstr "_Genişlet"
+
+#: gnome-panel/gp-properties-dialog.ui:225
+msgid "_Autohide"
+msgstr "Otomatik _gizle"
+
+#: gnome-panel/gp-properties-dialog.ui:240
+msgid "Show hide _buttons"
+msgstr "Gizleme _düğmelerini göster"
+
+#: gnome-panel/gp-properties-dialog.ui:255
+msgid "Arro_ws on hide buttons"
+msgstr "Gizleme düğmelerinde _oklar"
+
+#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: modules/fish/fish.ui:91
+msgid "General"
+msgstr "Genel"
+
+#: gnome-panel/gp-properties-dialog.ui:355
+msgid "Background color:"
+msgstr "Arkaplan rengi:"
+
+#: gnome-panel/gp-properties-dialog.ui:418
+msgid "Background image:"
+msgstr "Arkaplan resmi:"
+
+#: gnome-panel/gp-properties-dialog.ui:457
+msgid "Tile"
+msgstr "Döşe"
+
+#: gnome-panel/gp-properties-dialog.ui:472
+msgid "Stretch"
+msgstr "Esnet"
+
+#: gnome-panel/gp-properties-dialog.ui:487
+msgid "Fit"
+msgstr "Sığdır"
+
+#: gnome-panel/gp-properties-dialog.ui:509
+msgid "Rotate image on vertical panel"
+msgstr "Dikey panelde resmi döndür"
+
+#: gnome-panel/gp-properties-dialog.ui:552
+msgid "Text color:"
+msgstr "Metin rengi:"
+
+#: gnome-panel/gp-properties-dialog.ui:607
+msgid "Theme"
+msgstr "Tema"
+
+#: gnome-panel/launcher.c:339
 msgid "Could not show this URL"
 msgstr "Bu URL gösterilemedi"
 
-#: ../gnome-panel/launcher.c:137
+#: gnome-panel/launcher.c:340
 msgid "No URL was specified."
 msgstr "Hiçbir URL belirtilmedi."
 
-#: ../gnome-panel/launcher.c:175
-#: ../gnome-panel/libpanel-util/panel-launch.c:50
+#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
 msgid "Could not launch application"
 msgstr "Uygulama başlatılamadı"
 
-#: ../gnome-panel/launcher.c:219
+#: gnome-panel/launcher.c:422
 msgid "Could not use dropped item"
 msgstr "Bırakılan öğe kullanılamadı"
 
-#: ../gnome-panel/launcher.c:417
-#, c-format
+#: gnome-panel/launcher.c:620
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Panel başlatıcısı masaüstü dosyası için URI belirtilmemiş\n"
 
-#: ../gnome-panel/launcher.c:462
+#: gnome-panel/launcher.c:665
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "%2$s%3$s panal başlatıcısı için %1$s masaüstü dosyası açılamadı\n"
 
-#: ../gnome-panel/launcher.c:797
+#: gnome-panel/launcher.c:1000
 msgid "_Launch"
 msgstr "Baş_lat"
 
-#: ../gnome-panel/launcher.c:802 ../gnome-panel/panel-action-button.c:172
-#: ../gnome-panel/panel-context-menu.c:128
+#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:169
+#: gnome-panel/panel-context-menu.c:135
 msgid "_Properties"
 msgstr "_Özellikler"
 
-#: ../gnome-panel/launcher.c:833
-#, c-format
+#: gnome-panel/launcher.c:1036
 msgid "Launcher location is not set, cannot load launcher\n"
 msgstr "Başlatıcı konumu belirlenmemiş, başlatıcı yüklenemiyor\n"
 
-#: ../gnome-panel/launcher.c:963 ../gnome-panel/panel-ditem-editor.c:1316
-#: ../gnome-panel/panel-ditem-editor.c:1350
-#: ../gnome-panel/panel-ditem-editor.c:1381
+#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
+#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
 msgid "Could not save launcher"
 msgstr "Başlatıcı kaydedilemedi"
 
@@ -1682,295 +1063,218 @@ msgstr "Başlatıcı kaydedilemedi"
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
-#: ../gnome-panel/libpanel-util/panel-error.c:78
-#: ../gnome-panel/panel-applet-frame.c:761
-#: ../gnome-panel/panel-applet-frame.c:921
+#: gnome-panel/libpanel-util/panel-error.c:78
+#: gnome-panel/panel-applet-frame.c:800
 msgid "Error"
 msgstr "Hata"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:383
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
 msgid "Choose an icon"
 msgstr "Simge seç"
 
-#: ../gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: ../gnome-panel/panel-ditem-editor.c:1000
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1251
+#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
+#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
+#: modules/clock/clock.ui:67 modules/menu/gp-recent-menu.c:206
+msgid "_Cancel"
+msgstr "_İptal"
+
+#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
+#: gnome-panel/panel-ditem-editor.c:999
 msgid "_Open"
 msgstr "_Aç"
 
-#: ../gnome-panel/libpanel-util/panel-launch.c:47
+#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "'%s' başlatılamadı"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:46
+#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "'%s' konumu açılamadı"
 
-#: ../gnome-panel/libpanel-util/panel-show.c:164
-msgid "No application to handle search folders is installed."
-msgstr "Arama klasörlerini işlemek için hiçbir uygulama yüklü değil."
-
-#: ../gnome-panel/main.c:41
+#: gnome-panel/main.c:37
 msgid "Replace a currently running panel"
 msgstr "Şu an çalışan bir panel ile yer değiştir"
 
-#: ../gnome-panel/main.c:42
+#: gnome-panel/main.c:38
 msgid "Print version"
-msgstr ""
+msgstr "Sürüm yazdır"
 
-#: ../gnome-panel/panel-action-button.c:162
+#: gnome-panel/panel-action-button.c:159
 msgid "_Lock Screen"
 msgstr "Ekranı _Kilitle"
 
-#: ../gnome-panel/panel-action-button.c:167
+#: gnome-panel/panel-action-button.c:164
 msgid "_Activate Screensaver"
 msgstr "Ekran _Koruyucuyu Etkinleştir"
 
-#: ../gnome-panel/panel-action-button.c:347
-msgid "Connect to server"
-msgstr "Sunucuya bağlan"
-
-#: ../gnome-panel/panel-action-button.c:371
-msgid "Could not connect to server"
-msgstr "Sunucuya bağlanılamadı"
-
-#: ../gnome-panel/panel-action-button.c:401
+#: gnome-panel/panel-action-button.c:356 modules/menu/gp-lock-logout.c:966
 msgid "Lock Screen"
 msgstr "Ekranı Kilitle"
 
-#: ../gnome-panel/panel-action-button.c:402
+#: gnome-panel/panel-action-button.c:357 modules/menu/gp-lock-logout.c:967
 msgid "Protect your computer from unauthorized use"
 msgstr "Bilgisayarınızı yetkisiz kullanımdan koruyun"
 
 #. when changing one of those two strings, don't forget to
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
-#: ../gnome-panel/panel-action-button.c:415
+#: gnome-panel/panel-action-button.c:370 modules/menu/gp-lock-logout.c:949
 msgid "Log Out"
 msgstr "Oturumu Kapat"
 
-#: ../gnome-panel/panel-action-button.c:416
+#: gnome-panel/panel-action-button.c:371 modules/menu/gp-lock-logout.c:950
 msgid "Log out of this session to log in as a different user"
 msgstr "Farklı bir kullanıcı ile giriş yapmak için bu oturumu kapat"
 
-#: ../gnome-panel/panel-action-button.c:424
+#: gnome-panel/panel-action-button.c:379
 msgid "Run Application..."
 msgstr "Uygulama Çalıştır..."
 
-#: ../gnome-panel/panel-action-button.c:425
+#: gnome-panel/panel-action-button.c:380
 msgid "Run an application by typing a command or choosing from a list"
 msgstr "Bir komut girerek ya da listeden seçerek bir uygulama çalıştırın"
 
-#: ../gnome-panel/panel-action-button.c:433
+#: gnome-panel/panel-action-button.c:388
 msgid "Search for Files..."
 msgstr "Dosya Ara..."
 
-#: ../gnome-panel/panel-action-button.c:434
+#: gnome-panel/panel-action-button.c:389
 msgid "Locate documents and folders on this computer by name or content"
 msgstr ""
 "Bu bilgisayar üzerindeki belgeleri ve klasörler ismiyle ya da içeriğiyle "
 "konumlandırın"
 
-#: ../gnome-panel/panel-action-button.c:441
-#: ../gnome-panel/panel-force-quit.c:237
+#: gnome-panel/panel-action-button.c:396 gnome-panel/panel-force-quit.c:237
 msgid "Force Quit"
 msgstr "Sonlandır"
 
-#: ../gnome-panel/panel-action-button.c:442
+#: gnome-panel/panel-action-button.c:397
 msgid "Force a misbehaving application to quit"
 msgstr "Geçersiz işlem yapan uygulamayı zorla kapat"
 
-#. FIXME icon
-#: ../gnome-panel/panel-action-button.c:450
-msgid "Connect to Server..."
-msgstr "Sunucuya Bağlan..."
-
-#: ../gnome-panel/panel-action-button.c:451
-msgid "Connect to a remote computer or shared disk"
-msgstr "Uzaktaki bilgisayara ya da paylaşılan bir diske bağlanın"
-
-#: ../gnome-panel/panel-action-button.c:458
-#, fuzzy
-#| msgid "_Hibernate"
+#: gnome-panel/panel-action-button.c:405 modules/menu/gp-lock-logout.c:1008
 msgid "Hibernate"
-msgstr "_Uyku Kipi"
+msgstr "Uyku Kipi"
 
-#: ../gnome-panel/panel-action-button.c:467
-#, fuzzy
-#| msgid "S_uspend"
+#: gnome-panel/panel-action-button.c:414 modules/menu/gp-lock-logout.c:1025
 msgid "Suspend"
-msgstr "_Bekleme Kipi"
+msgstr "Bekleme Kipi"
 
-#: ../gnome-panel/panel-action-button.c:476
+#: gnome-panel/panel-action-button.c:423
 msgid "Hybrid sleep"
-msgstr ""
+msgstr "Melez uyku"
 
-#: ../gnome-panel/panel-action-button.c:485
+#: gnome-panel/panel-action-button.c:432 modules/menu/gp-lock-logout.c:1061
 msgid "Restart"
 msgstr "Yeniden Başlat"
 
-#: ../gnome-panel/panel-action-button.c:486
+#: gnome-panel/panel-action-button.c:433 modules/menu/gp-lock-logout.c:1062
 msgid "Restart the computer"
 msgstr "Bilgisayarı yeniden başlat"
 
-#: ../gnome-panel/panel-action-button.c:494
+#: gnome-panel/panel-action-button.c:441 modules/menu/gp-lock-logout.c:1078
 msgid "Power Off"
 msgstr "Kapat"
 
-#: ../gnome-panel/panel-action-button.c:495
+#: gnome-panel/panel-action-button.c:442 modules/menu/gp-lock-logout.c:1079
 msgid "Power off the computer"
 msgstr "Bilgisayarı kapat"
 
-#: ../gnome-panel/panel-addto-dialog.c:143
-#: ../gnome-panel/panel-menu-button.c:976
+#: gnome-panel/panel-addto-dialog.c:136 gnome-panel/panel-menu-button.c:953
+#: modules/menu/gp-menu-module.c:39
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: ../gnome-panel/panel-addto-dialog.c:144
+#: gnome-panel/panel-addto-dialog.c:137 modules/menu/gp-menu-module.c:40
 msgid "The main GNOME menu"
 msgstr "Ana GNOME menüsü"
 
-#: ../gnome-panel/panel-addto-dialog.c:153
-msgid "Menu Bar"
-msgstr "Menü Çubuğu"
-
-#: ../gnome-panel/panel-addto-dialog.c:154
-msgid "A custom menu bar"
-msgstr "Özel menü çubuğu"
-
-#: ../gnome-panel/panel-addto-dialog.c:163
-msgid "Separator"
-msgstr "Ayraç"
-
-#: ../gnome-panel/panel-addto-dialog.c:164
-msgid "A separator to organize the panel items"
-msgstr "Panel öğelerini düzenlemek için bir ayraç"
-
-#: ../gnome-panel/panel-addto-dialog.c:173
-msgid "User menu"
-msgstr "Kullanıcı menüsü"
-
-#: ../gnome-panel/panel-addto-dialog.c:174
-#, fuzzy
-#| msgid "Menu to change your settings and your online status"
-msgid "Menu to change your settings and log out"
-msgstr "Ayarlarınızı ve çevrimiçi durumunuzu değiştirme menüsü"
-
-#: ../gnome-panel/panel-addto-dialog.c:224
+#: gnome-panel/panel-addto-dialog.c:185
 msgid "(empty)"
 msgstr "(boş)"
 
-#: ../gnome-panel/panel-addto-dialog.c:424
+#: gnome-panel/panel-addto-dialog.c:384
 msgid "Custom Application Launcher"
 msgstr "Özel Uygulama Başlatıcı"
 
-#: ../gnome-panel/panel-addto-dialog.c:425
+#: gnome-panel/panel-addto-dialog.c:385
 msgid "Create a new launcher"
 msgstr "Yeni başlatıcı oluştur"
 
-#: ../gnome-panel/panel-addto-dialog.c:435
+#: gnome-panel/panel-addto-dialog.c:394
 msgid "Application Launcher..."
 msgstr "Uygulama Başlatıcı..."
 
-#: ../gnome-panel/panel-addto-dialog.c:436
+#: gnome-panel/panel-addto-dialog.c:395
 msgid "Copy a launcher from the applications menu"
 msgstr "Bir başlatıcıyı uygulamalar menüsünden kopyalayın"
 
-#: ../gnome-panel/panel-addto-dialog.c:951
+#: gnome-panel/panel-addto-dialog.c:879
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "\"%s\" içine eklemek için bir öğe _bul:"
 
-#: ../gnome-panel/panel-addto-dialog.c:955
+#: gnome-panel/panel-addto-dialog.c:883
 msgid "Find an _item to add to the panel:"
 msgstr "Panele eklemek için bir öğe _bul:"
 
-#: ../gnome-panel/panel-addto-dialog.c:1077
+#: gnome-panel/panel-addto-dialog.c:1005
 msgid "_Forward"
 msgstr "_İleri"
 
-#: ../gnome-panel/panel-addto-dialog.ui.h:1
-msgid "Add to Panel"
-msgstr "Panele Ekle"
+#: gnome-panel/panel-addto-dialog.c:1008 gnome-panel/panel-addto-dialog.ui:158
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Ekle"
 
-#: ../gnome-panel/panel-addto-dialog.ui.h:2
-#, fuzzy
-#| msgid "Find an _item to add to the panel:"
+#: gnome-panel/panel-addto-dialog.ui:38
 msgid "Find an item to add to the panel:"
-msgstr "Panele eklemek için bir öğe _bul:"
+msgstr "Panele eklemek için bir öge bul:"
 
-#: ../gnome-panel/panel-addto-dialog.ui.h:3
-#, fuzzy
-#| msgid "columns"
-msgid "column"
-msgstr "sütun"
-
-#: ../gnome-panel/panel-addto-dialog.ui.h:4
+#: gnome-panel/panel-addto-dialog.ui:142
 msgid "_Back"
 msgstr "_Geri"
 
-#: ../gnome-panel/panel-applet-frame.c:722
-#, c-format
-msgid "\"%s\" has quit unexpectedly"
-msgstr "\"%s\" beklenmedik bir şekilde kapandı"
+#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
+#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
+#: modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "_Kapat"
 
-#: ../gnome-panel/panel-applet-frame.c:724
-msgid "Panel object has quit unexpectedly"
-msgstr "Panel nesnesi beklenmedik bir şekilde kapandı"
-
-#: ../gnome-panel/panel-applet-frame.c:731
-msgid ""
-"If you reload a panel object, it will automatically be added back to the "
-"panel."
-msgstr ""
-"Eğer bir panel nesnesini yeniden yüklerseniz, o nesne kendiliğinden panele "
-"tekrar eklenecektir."
-
-#: ../gnome-panel/panel-applet-frame.c:738
-#, fuzzy
-#| msgid "_Delete"
-msgid "D_elete"
-msgstr "_Sil"
-
-#: ../gnome-panel/panel-applet-frame.c:739
-#: ../gnome-panel/panel-applet-frame.c:744
-msgid "_Don't Reload"
-msgstr "Tekrar Yükle_me"
-
-#: ../gnome-panel/panel-applet-frame.c:740
-#: ../gnome-panel/panel-applet-frame.c:745
-msgid "_Reload"
-msgstr "Tekrar _Yükle"
-
-#: ../gnome-panel/panel-applet-frame.c:884
+#: gnome-panel/panel-applet-frame.c:763
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" yüklenirken panelde bir sorunla karşılaşıldı."
 
-#: ../gnome-panel/panel-applet-frame.c:896
+#: gnome-panel/panel-applet-frame.c:775
 msgid "OK"
 msgstr "Tamam"
 
-#: ../gnome-panel/panel-applet-frame.c:900
+#: gnome-panel/panel-applet-frame.c:779
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Bu uygulamacığı ayarlarınızdan silmek istiyormusunuz?"
 
-#: ../gnome-panel/panel-applet-frame.c:903
+#: gnome-panel/panel-applet-frame.c:782
 msgid "D_on't Delete"
 msgstr "Sil_me"
 
-#: ../gnome-panel/panel-applet-frame.c:904 ../gnome-panel/panel.c:1379
+#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1252
 msgid "_Delete"
 msgstr "_Sil"
 
-#: ../gnome-panel/panel.c:507
+#: gnome-panel/panel.c:416
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL Aç: %s"
 
 #. Translators: %s is a URI
-#: ../gnome-panel/panel.c:576 ../gnome-panel/panel-menu-items.c:578
+#: gnome-panel/panel.c:485 gnome-panel/panel-menu-items.c:513
+#: modules/menu/gp-bookmarks.c:101 modules/menu/gp-recent-menu.c:135
 #, c-format
 msgid "Open '%s'"
 msgstr "URL Aç: '%s'"
@@ -1978,38 +1282,43 @@ msgstr "URL Aç: '%s'"
 #. is_exec?
 #. exec
 #. name
-#: ../gnome-panel/panel.c:624 ../gnome-panel/panel-menu-items.c:1132
+#: gnome-panel/panel.c:533 gnome-panel/panel-menu-items.c:1066
+#: modules/menu/gp-places-menu.c:428
 msgid "Open your personal folder"
 msgstr "Kişisel klasörünüzü açın"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:633 ../gnome-panel/panel-menu-items.c:1161
+#: gnome-panel/panel.c:542 gnome-panel/panel-menu-items.c:1095
+#: modules/menu/gp-places-menu.c:511
 msgid "Computer"
 msgstr "Bilgisayar"
 
 #. name
-#: ../gnome-panel/panel.c:634 ../gnome-panel/panel-menu-items.c:1162
+#: gnome-panel/panel.c:543 gnome-panel/panel-menu-items.c:1096
+#: modules/menu/gp-places-menu.c:512
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "Bu bilgisayardan tüm yerel ve uzaktaki disklere ve klasörlere göz atın"
 
 #. is_exec?
 #. exec
-#: ../gnome-panel/panel.c:641 ../gnome-panel/panel-menu-items.c:1171
+#: gnome-panel/panel.c:550 gnome-panel/panel-menu-items.c:1105
+#: modules/menu/gp-places-menu.c:567
 msgid "Network"
 msgstr "Ağ"
 
 #. name
-#: ../gnome-panel/panel.c:642 ../gnome-panel/panel-menu-items.c:1172
+#: gnome-panel/panel.c:551 gnome-panel/panel-menu-items.c:1106
+#: modules/menu/gp-places-menu.c:568
 msgid "Browse bookmarked and local network locations"
 msgstr "Yer imi oluşturulmuş ve yerel ağ konumlarına göz at"
 
-#: ../gnome-panel/panel.c:1370
+#: gnome-panel/panel.c:1243
 msgid "Delete this panel?"
 msgstr "Bu panel silinsin mi?"
 
-#: ../gnome-panel/panel.c:1374
+#: gnome-panel/panel.c:1247
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2017,110 +1326,114 @@ msgstr ""
 "Bir panel silinince, panel ve panelin\n"
 "ayarları kaybolacaktır."
 
-#: ../gnome-panel/panel-context-menu.c:61
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Bu panel silinemedi"
 
-#: ../gnome-panel/panel-context-menu.c:62
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "Her zaman en az bir paneliniz olması gerekiyor."
 
-#: ../gnome-panel/panel-context-menu.c:119
+#: gnome-panel/panel-context-menu.c:126
 msgid "_Add to Panel..."
 msgstr "Panele _Ekle..."
 
-#: ../gnome-panel/panel-context-menu.c:135
+#: gnome-panel/panel-context-menu.c:142
 msgid "_Delete This Panel"
 msgstr "Bu Paneli _Sil"
 
-#: ../gnome-panel/panel-context-menu.c:147
+#: gnome-panel/panel-context-menu.c:154
 msgid "_New Panel"
 msgstr "_Yeni Panel"
 
-#: ../gnome-panel/panel-ditem-editor.c:111
+#: gnome-panel/panel-ditem-editor.c:110
 msgid "Application"
 msgstr "Uygulama"
 
-#: ../gnome-panel/panel-ditem-editor.c:113
+#: gnome-panel/panel-ditem-editor.c:112
 msgid "Application in Terminal"
 msgstr "Uçbirim içindee Uygulama"
 
-#: ../gnome-panel/panel-ditem-editor.c:115
+#: gnome-panel/panel-ditem-editor.c:114
 msgid "Location"
 msgstr "Konum"
 
 #. Type
-#: ../gnome-panel/panel-ditem-editor.c:601
+#: gnome-panel/panel-ditem-editor.c:600
 msgid "_Type:"
 msgstr "_Tür:"
 
 #. Name
-#: ../gnome-panel/panel-ditem-editor.c:608
+#: gnome-panel/panel-ditem-editor.c:607
 msgid "_Name:"
 msgstr "İ_sim:"
 
-#: ../gnome-panel/panel-ditem-editor.c:633
+#: gnome-panel/panel-ditem-editor.c:632
 msgid "_Browse..."
 msgstr "_Göz at..."
 
 #. Comment
-#: ../gnome-panel/panel-ditem-editor.c:640
+#: gnome-panel/panel-ditem-editor.c:639
 msgid "Co_mment:"
 msgstr "_Açıklama:"
 
-#: ../gnome-panel/panel-ditem-editor.c:647
+#: gnome-panel/panel-ditem-editor.c:646
 msgid "_Revert"
-msgstr ""
+msgstr "_Döndür"
 
-#: ../gnome-panel/panel-ditem-editor.c:967
+#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
+#: modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_Tamam"
+
+#: gnome-panel/panel-ditem-editor.c:966
 msgid "Choose an application..."
 msgstr "Bir uygulama seçin..."
 
-#: ../gnome-panel/panel-ditem-editor.c:971
+#: gnome-panel/panel-ditem-editor.c:970
 msgid "Choose a file..."
 msgstr "Bir dosya seçin..."
 
-#: ../gnome-panel/panel-ditem-editor.c:1136
-#: ../gnome-panel/panel-ditem-editor.c:1145
+#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
 msgid "Comm_and:"
 msgstr "_Komut:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1154
+#: gnome-panel/panel-ditem-editor.c:1153
 msgid "_Location:"
 msgstr "_Konum:"
 
-#: ../gnome-panel/panel-ditem-editor.c:1317
+#: gnome-panel/panel-ditem-editor.c:1316
 msgid "The name of the launcher is not set."
 msgstr "Başlatıcının ismi atanmamış."
 
-#: ../gnome-panel/panel-ditem-editor.c:1321
+#: gnome-panel/panel-ditem-editor.c:1320
 msgid "Could not save directory properties"
 msgstr "Dizin seçenekleri kaydedilemedi"
 
-#: ../gnome-panel/panel-ditem-editor.c:1322
+#: gnome-panel/panel-ditem-editor.c:1321
 msgid "The name of the directory is not set."
 msgstr "Dizinin ismi atanmamış."
 
-#: ../gnome-panel/panel-ditem-editor.c:1338
+#: gnome-panel/panel-ditem-editor.c:1337
 msgid "The command of the launcher is not set."
 msgstr "Başlatıcının komutu atanmamış."
 
-#: ../gnome-panel/panel-ditem-editor.c:1341
+#: gnome-panel/panel-ditem-editor.c:1340
 msgid "The location of the launcher is not set."
 msgstr "Başlatıcının konumu atanmamış."
 
-#: ../gnome-panel/panel-force-quit.c:75
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Uygulamayı çıkmaya zorlamak için bir pencereye tıklayın. İptal etmek için "
 "<ESC> tuşuna basın."
 
-#: ../gnome-panel/panel-force-quit.c:220
+#: gnome-panel/panel-force-quit.c:220
 msgid "Force this application to exit?"
 msgstr "Bu uygulama çıkmaya zorlansın mı?"
 
-#: ../gnome-panel/panel-force-quit.c:223
+#: gnome-panel/panel-force-quit.c:223
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -2128,219 +1441,105 @@ msgstr ""
 "Eğer bir uygulamayı çıkmaya zorlarsanız, açık olan tüm belgelerdeki "
 "kaydedilmemiş değişiklikler kaybolacak."
 
-#: ../gnome-panel/panel-force-quit.c:230
+#: gnome-panel/panel-force-quit.c:230
 msgid "_Force quit"
 msgstr "_Sonlandır"
 
-#: ../gnome-panel/panel-layout.c:1105 ../gnome-panel/panel-layout.c:1119
-#, fuzzy, c-format
+#: gnome-panel/panel-layout.c:1095 gnome-panel/panel-layout.c:1110
 msgid "Cannot create initial panel layout.\n"
-msgstr "Bu panel silinemedi"
+msgstr "Başlangıç panel düzeni oluşturulamıyor.\n"
 
-#: ../gnome-panel/panel-menu-bar.c:88
-msgid "Browse and run installed applications"
-msgstr "Kurulmuş uygulamlara göz at ve onları çalıştır"
-
-#: ../gnome-panel/panel-menu-bar.c:90
-msgid "Access documents, folders and network places"
-msgstr "Belgelere, klasörlere ve ağ yerlerine erişim"
-
-#: ../gnome-panel/panel-menu-bar.c:126
-msgid "Applications"
-msgstr "Uygulamalar"
-
-#: ../gnome-panel/panel-menu-bar.c:228 ../gnome-panel/panel-menu-button.c:575
+#: gnome-panel/panel-menu-button.c:552 modules/menu/main-menu-menu.ui:5
+#: modules/menu/menu-bar-menu.ui:5
 msgid "_Edit Menus"
 msgstr "_Menüleri Düzenle"
 
-#: ../gnome-panel/panel-menu-items.c:424
+#: gnome-panel/panel-menu-items.c:362 modules/menu/gp-lock-logout.c:932
 msgid "Switch User"
 msgstr "Kullanıcı Değiştir"
 
-#: ../gnome-panel/panel-menu-items.c:554
+#: gnome-panel/panel-menu-items.c:489 modules/menu/gp-places-menu.c:474
 msgid "Bookmarks"
 msgstr "Yer İmleri"
 
-#: ../gnome-panel/panel-menu-items.c:649
+#: gnome-panel/panel-menu-items.c:583 modules/menu/gp-places-menu.c:93
 #, c-format
 msgid "Unable to scan %s for media changes"
 msgstr "Ortam değişiklikleri için %s taranamadı"
 
-#: ../gnome-panel/panel-menu-items.c:691
+#: gnome-panel/panel-menu-items.c:625 modules/menu/gp-places-menu.c:294
 #, c-format
 msgid "Rescan %s"
 msgstr "Tekrar Tara %s"
 
-#: ../gnome-panel/panel-menu-items.c:728
+#: gnome-panel/panel-menu-items.c:662 modules/menu/gp-places-menu.c:143
 #, c-format
 msgid "Unable to mount %s"
 msgstr "%s bağlanamadı"
 
-#: ../gnome-panel/panel-menu-items.c:790
+#: gnome-panel/panel-menu-items.c:724 modules/menu/gp-places-menu.c:337
 #, c-format
 msgid "Mount %s"
 msgstr "Bağla %s"
 
-#: ../gnome-panel/panel-menu-items.c:998
+#: gnome-panel/panel-menu-items.c:932 modules/menu/gp-places-menu.c:534
 msgid "Removable Media"
 msgstr "Çıkarılabilir Araçlar"
 
-#: ../gnome-panel/panel-menu-items.c:1089
+#: gnome-panel/panel-menu-items.c:1023 modules/menu/gp-places-menu.c:590
 msgid "Network Places"
 msgstr "Ağ Bağlantıları"
 
 #. Translators: Desktop is used here as in
 #. * "Desktop Folder" (this is not the Desktop
 #. * environment).
-#: ../gnome-panel/panel-menu-items.c:1149
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: gnome-panel/panel-menu-items.c:1083 modules/menu/gp-places-menu.c:451
 msgctxt "Desktop Folder"
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: ../gnome-panel/panel-menu-items.c:1150
+#: gnome-panel/panel-menu-items.c:1084 modules/menu/gp-places-menu.c:452
 msgid "Open the contents of your desktop in a folder"
 msgstr "Masaüstünüzün içeriğini bir klasör içerisinde açın"
 
-#: ../gnome-panel/panel-menu-items.c:1454
+#: gnome-panel/panel-menu-items.c:1363 modules/menu/gp-menu-bar-applet.c:156
 msgid "Places"
 msgstr "Yerler"
 
-#: ../gnome-panel/panel-image-menu-item.c:125
+#: gnome-panel/panel-image-menu-item.c:125
 msgid "Image widget"
 msgstr "Resim Pencereciği"
 
-#: ../gnome-panel/panel-image-menu-item.c:126
+#: gnome-panel/panel-image-menu-item.c:126
 msgid "Child widget to appear next to the menu text"
 msgstr "Menü metninden sonra görünecek alt parçacık"
 
-#: ../gnome-panel/panel-image-menu-item.c:133
+#: gnome-panel/panel-image-menu-item.c:133
 msgid "Always show image"
 msgstr "Görüntüyü her zaman göster"
 
-#: ../gnome-panel/panel-image-menu-item.c:134
+#: gnome-panel/panel-image-menu-item.c:134
 msgid "Whether the image will always be shown"
 msgstr "Görüntünün her zaman gösterilip gösterilmeyeceği"
 
-#: ../gnome-panel/panel-properties-dialog.c:76
-#: ../gnome-panel/panel-test-applets.c:48
-msgctxt "Orientation"
-msgid "Top"
-msgstr "Üst"
-
-#: ../gnome-panel/panel-properties-dialog.c:77
-#: ../gnome-panel/panel-test-applets.c:49
-msgctxt "Orientation"
-msgid "Bottom"
-msgstr "Alt"
-
-#: ../gnome-panel/panel-properties-dialog.c:78
-#: ../gnome-panel/panel-test-applets.c:50
-msgctxt "Orientation"
-msgid "Left"
-msgstr "Sol"
-
-#: ../gnome-panel/panel-properties-dialog.c:79
-#: ../gnome-panel/panel-test-applets.c:51
-msgctxt "Orientation"
-msgid "Right"
-msgstr "Sağ"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:1
-msgid "Panel Properties"
-msgstr "Panel Özellikleri"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:3
-msgid "Some of these properties are locked down"
-msgstr "Bu özelliklerin bazıları kilitli"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:4
-msgid "pixels"
-msgstr "benek"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:5
-#: ../gnome-panel/panel-test-applets.ui.h:6
-msgid "_Orientation:"
-msgstr "_Yerleşim:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:6
-msgid "_Size:"
-msgstr "B_oyut:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:7
-msgid "E_xpand"
-msgstr "_Genişlet"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:8
-msgid "_Autohide"
-msgstr "Otomatik _gizle"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:9
-msgid "Show hide _buttons"
-msgstr "Gizleme _düğmelerini göster"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:10
-msgid "Arro_ws on hide buttons"
-msgstr "Gizleme düğmelerinde _oklar"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:12
-msgid "_None (use system theme)"
-msgstr "_Yok (sistem temasını kullan)"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:13
-msgid "Solid c_olor"
-msgstr "Sabit _renk"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:14
-msgid "Pick a color"
-msgstr "Bir renk seçiniz"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:15
-msgid "Background _image:"
-msgstr "_Arkaplan resmi:"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:16
-msgid "Select background"
-msgstr "Arkaplan seç"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:17
-msgid "Background"
-msgstr "Arkaplan"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:18
-msgid "Image Background Details"
-msgstr "Resim Arkaplan Detayları"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:19
-msgid "_Tile"
-msgstr "D_öşe"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:20
-msgid "_Scale"
-msgstr "Öl_çekle"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:21
-msgid "St_retch"
-msgstr "E_snet"
-
-#: ../gnome-panel/panel-properties-dialog.ui.h:22
-msgid "Rotate image when panel is _vertical"
-msgstr "Panel dik_ey olduğu zaman resmi döndür"
-
-#: ../gnome-panel/panel-recent.c:77 ../gnome-panel/panel-recent.c:87
+#: gnome-panel/panel-recent.c:76 gnome-panel/panel-recent.c:86
 #, c-format
 msgid "Could not open recently used document \"%s\""
 msgstr "Son kullanılan belge \"%s\" açılamadı"
 
-#: ../gnome-panel/panel-recent.c:89
+#: gnome-panel/panel-recent.c:88
 #, c-format
 msgid "An unknown error occurred while trying to open \"%s\"."
 msgstr "\"%s\" açmaya çalışırken bilinmeyen bir hata oluştu."
 
-#: ../gnome-panel/panel-recent.c:146
+#: gnome-panel/panel-recent.c:145 modules/menu/gp-recent-menu.c:194
 msgid "Clear the Recent Documents list?"
 msgstr "Son Kullanılan Belgeler listesi temizlensin mi?"
 
-#: ../gnome-panel/panel-recent.c:148
+#: gnome-panel/panel-recent.c:147 modules/menu/gp-recent-menu.c:199
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "• All items from the Places → Recent Documents menu item.\n"
@@ -2351,105 +1550,104 @@ msgstr ""
 "• Yerler → Son Kullanılan Belgeler menüsündeki tüm öğeler.\n"
 "• Tüm uygulamalardaki son kullanılan belgeler listeleri."
 
-#: ../gnome-panel/panel-recent.c:154
+#: gnome-panel/panel-recent.c:153 modules/menu/gp-recent-menu.c:207
 msgid "C_lear"
 msgstr "_Temizle"
 
-#: ../gnome-panel/panel-recent.c:160
+#: gnome-panel/panel-recent.c:159
 msgid "Clear Recent Documents"
 msgstr "Son Kullanılan Belgeleri Temizle"
 
-#: ../gnome-panel/panel-recent.c:195
+#: gnome-panel/panel-recent.c:194 modules/menu/gp-places-menu.c:617
 msgid "Recent Documents"
 msgstr "Son Kullanılan Belgeler"
 
-#: ../gnome-panel/panel-recent.c:233
+#: gnome-panel/panel-recent.c:232 modules/menu/gp-recent-menu.c:239
 msgid "Clear Recent Documents..."
 msgstr "Son Kullanılan Belgeleri Temizle..."
 
-#: ../gnome-panel/panel-recent.c:235
+#: gnome-panel/panel-recent.c:234 modules/menu/gp-recent-menu.c:244
 msgid "Clear all items from the recent documents list"
 msgstr "Son kullanılan belgeler listesini temizle"
 
-#: ../gnome-panel/panel-run-dialog.c:427
+#: gnome-panel/panel-run-dialog.c:426
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr "Terminal bulunamadı, xterm kullanılıyor, ancak çalışmayabilir"
 
-#: ../gnome-panel/panel-run-dialog.c:491
+#: gnome-panel/panel-run-dialog.c:490
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "'%s' komutu çalıştırılamadı"
 
-#: ../gnome-panel/panel-run-dialog.c:547
+#: gnome-panel/panel-run-dialog.c:531
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "'%s' UTF-8'den çevirilemedi"
 
-#: ../gnome-panel/panel-run-dialog.c:1290
+#: gnome-panel/panel-run-dialog.c:1274
 msgid "Choose a file to append to the command..."
 msgstr "Komuta eklenecek bir dosya seçin..."
 
-#: ../gnome-panel/panel-run-dialog.c:1673
-#: ../gnome-panel/panel-run-dialog.ui.h:9
+#: gnome-panel/panel-run-dialog.c:1657 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Açıklamasını görüntülemek için bir uygulama seçin."
 
-#: ../gnome-panel/panel-run-dialog.c:1711
+#: gnome-panel/panel-run-dialog.c:1695
 #, c-format
 msgid "Will run command: '%s'"
-msgstr "çalıştıracak komut: '%s'"
+msgstr "Çalıştıracak komut: '%s'"
 
-#: ../gnome-panel/panel-run-dialog.c:1744
+#: gnome-panel/panel-run-dialog.c:1728
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "Çalıştırma penceresine sürüklenen URI listesinin biçimi (%d) veya uzunluğu "
 "(%d) hatalıydı.\n"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:1
+#: gnome-panel/panel-run-dialog.ui:8
 msgid "Run Application"
 msgstr "Uygulama Çalıştır"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:2
+#: gnome-panel/panel-run-dialog.ui:45
 msgid "Command icon"
 msgstr "Komut simgesi"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:3
+#: gnome-panel/panel-run-dialog.ui:46
 msgid "The icon of the command to be run."
 msgstr "Çalıştırılacak komutun simgesi."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:4
+#: gnome-panel/panel-run-dialog.ui:89
 msgid "Run in _terminal"
 msgstr "_Terminalde çalıştır"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:5
+#: gnome-panel/panel-run-dialog.ui:98
 msgid "Select this box to run the command in a terminal window."
 msgstr "Komutu terminal penceresinde çalıştırmak için bu kutuyu seçin."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:6
+#: gnome-panel/panel-run-dialog.ui:110
 msgid "Run with _file..."
 msgstr "Dosya _ile çalıştır..."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:7
+#: gnome-panel/panel-run-dialog.ui:117
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
 "İsmi komut satırına eklenecek dosyaya göz atmak için bu düğmeye tıklayın."
 
-#: ../gnome-panel/panel-run-dialog.ui.h:8
+#: gnome-panel/panel-run-dialog.ui:176
 msgid "List of known applications"
 msgstr "Bilinen uygulamaların listesi"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:10
+#: gnome-panel/panel-run-dialog.ui:212
 msgid "Show list of known _applications"
 msgstr "_Bilinen uygulamaların listesini göster"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:12
+#: gnome-panel/panel-run-dialog.ui:251
 msgid "_Run"
 msgstr "_Çalıştır"
 
-#: ../gnome-panel/panel-run-dialog.ui.h:13
+#: gnome-panel/panel-run-dialog.ui:260
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2457,152 +1655,991 @@ msgstr ""
 "Komut girişi alanındaki komutu veya uygulamayı çalıştırmak için bu düğmeye "
 "tıklayın."
 
-#: ../gnome-panel/panel-test-applets.c:31
-msgid "Specify an applet IID to load"
-msgstr "Yüklenecek uygulamacık IIDsi belirtin"
-
-#: ../gnome-panel/panel-test-applets.c:32
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr ""
-"Uygulamacığın başlangıç konumunu belirtin (yukarı, aşağı, sol veya sağ)"
-
-#: ../gnome-panel/panel-test-applets.c:109
-#, c-format
-msgid "Failed to load applet %s"
-msgstr "Uygulamacık yüklenemedi: %s"
-
-#. This is an utility to easily test various applets
-#: ../gnome-panel/panel-test-applets.ui.h:2
-msgid "Test applet utility"
-msgstr "Uygulamacık test etme aleti"
-
-#: ../gnome-panel/panel-test-applets.ui.h:3
-msgid "Execute"
-msgstr "Çalıştır"
-
-#: ../gnome-panel/panel-test-applets.ui.h:4
-msgid "Close"
-msgstr "Kapat"
-
-#: ../gnome-panel/panel-test-applets.ui.h:5
-msgid "_Applet:"
-msgstr "_Uygulamacık:"
-
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: ../gnome-panel/panel-toplevel.c:1594
+#: gnome-panel/panel-toplevel.c:1565
 msgid "Top Expanded Edge Panel"
 msgstr "Tepede Kenarı Kaplayan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1595
+#: gnome-panel/panel-toplevel.c:1566
 msgid "Top Centered Panel"
 msgstr "Tepede Ortalanmış Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1596
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Top Floating Panel"
 msgstr "Tepede Yüzen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1597
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Top Edge Panel"
 msgstr "Tepede Kenar Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1601
+#: gnome-panel/panel-toplevel.c:1572
 msgid "Bottom Expanded Edge Panel"
 msgstr "Altta Kenarı Kaplayan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1602
+#: gnome-panel/panel-toplevel.c:1573
 msgid "Bottom Centered Panel"
 msgstr "Altta Ortalanmış Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1603
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Bottom Floating Panel"
 msgstr "Altta Yüzen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1604
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Bottom Edge Panel"
 msgstr "Altta Kenar Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1608
+#: gnome-panel/panel-toplevel.c:1579
 msgid "Left Expanded Edge Panel"
 msgstr "Sol Kenarı Kaplayan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1609
+#: gnome-panel/panel-toplevel.c:1580
 msgid "Left Centered Panel"
 msgstr "Solda Ortalanmış Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1610
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Left Floating Panel"
 msgstr "Solda Yüzen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1611
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Left Edge Panel"
 msgstr "Sol Kenar Paneli"
 
-#: ../gnome-panel/panel-toplevel.c:1615
+#: gnome-panel/panel-toplevel.c:1586
 msgid "Right Expanded Edge Panel"
 msgstr "Sağ Kenarı Kaplayan Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1616
+#: gnome-panel/panel-toplevel.c:1587
 msgid "Right Centered Panel"
 msgstr "Sağda Ortalanmış Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1617
+#: gnome-panel/panel-toplevel.c:1588
 msgid "Right Floating Panel"
 msgstr "Sağda Yüzen Panel"
 
-#: ../gnome-panel/panel-toplevel.c:1618
+#: gnome-panel/panel-toplevel.c:1589
 msgid "Right Edge Panel"
 msgstr "Sağ Kenar Paneli"
 
-#: ../gnome-panel/panel-util.c:314
+#: gnome-panel/panel-util.c:312
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "'%s' simgesi bulunamadı"
 
-#: ../gnome-panel/panel-util.c:557
+#: gnome-panel/panel-util.c:555
 msgid "file"
 msgstr "dosya"
 
-#: ../gnome-panel/panel-util.c:732
-msgid "Home Folder"
-msgstr "Başlangıç Klasörü"
+#: gnome-panel/panel-util.c:723 modules/menu/gp-menu-utils.c:207
+msgid "Home"
+msgstr "Başlangıç"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: ../gnome-panel/panel-util.c:744
+#. Translators: this is the same string as the one found in nautilus
+#: gnome-panel/panel-util.c:732 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Dosya Sistemi"
-
-#: ../gnome-panel/panel-util.c:917
-msgid "Search"
-msgstr "Arama"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: ../gnome-panel/panel-util.c:963
+#. Translators: the first string is the name of a gvfs method, and the
+#. * second string is a path. For example, "Trash: some-directory". It
+#. * means that the directory called "some-directory" is in the trash.
+#.
+#: gnome-panel/panel-util.c:946 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:1
-msgid "Test DBus Applet Factory"
-msgstr "DBus Sınama Uygulaması Fabrikası"
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format (eg, like
+#. * in the US: 8:10 am). The %p expands to am/pm.
+#.
+#: modules/clock/calendar-window.c:271 modules/clock/clock-location-tile.c:490
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:2
-msgid "Factory for Test DBus Applet"
-msgstr "DBus Sınama Uygulaması için Fabrika"
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#.
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10).
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format (eg, like
+#. * in France: 20:10).
+#.
+#: modules/clock/calendar-window.c:277 modules/clock/clock-location-tile.c:453
+#: modules/clock/clock-location-tile.c:497
+msgid "%H:%M"
+msgstr "%H:%M"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:3
-msgid "Test DBus Applet"
-msgstr "DBus Sınama Uygulaması"
+#. Translators: This is a strftime format string.
+#. * It is used to display the start date of an appointment, in
+#. * the most abbreviated way possible.
+#.
+#: modules/clock/calendar-window.c:284
+msgid "%b %d"
+msgstr "%b %d"
 
-#: ../libpanel-applet/org.gnome.panel.TestApplet.panel-applet.in.h:4
-msgid "A simple applet for testing the GNOME panel"
-msgstr "GNOME panelini sınamak için basit bir uygulama"
+#: modules/clock/calendar-window.c:789
+msgid "Tasks"
+msgstr "İşler"
+
+#: modules/clock/calendar-window.c:789 modules/clock/calendar-window.c:972
+#: modules/clock/calendar-window.c:1563
+msgid "Edit"
+msgstr "Düzenle"
+
+#: modules/clock/calendar-window.c:912
+msgid "All Day"
+msgstr "Tüm Gün"
+
+#: modules/clock/calendar-window.c:1056
+msgid "Appointments"
+msgstr "Randevular"
+
+#: modules/clock/calendar-window.c:1081
+msgid "Birthdays and Anniversaries"
+msgstr "Doğumgünleri ve Yıldönümleri"
+
+#: modules/clock/calendar-window.c:1106
+msgid "Weather Information"
+msgstr "Hava Durumu Bilgisi"
+
+#: modules/clock/calendar-window.c:1563 modules/clock/clock.ui:748
+msgid "Locations"
+msgstr "Konumlar"
+
+#: modules/clock/calendar-window.c:1824
+msgid "Calendar"
+msgstr "Takvim"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display a date.
+#.
+#: modules/clock/clock-applet.c:227
+msgid "%A %B %d (%Z)"
+msgstr "%A %B %d (%Z)"
+
+#: modules/clock/clock-applet.c:236
+msgid "Click to hide your appointments and tasks"
+msgstr "Randevuları ve görevleri gizlemek için tıklayın"
+
+#: modules/clock/clock-applet.c:239
+msgid "Click to view your appointments and tasks"
+msgstr "Randevuları ve görevleri görüntülemek için tıklayın"
+
+#: modules/clock/clock-applet.c:243
+msgid "Click to hide month calendar"
+msgstr "Ay takvimini gizlemek için tıklayın"
+
+#: modules/clock/clock-applet.c:246
+msgid "Click to view month calendar"
+msgstr "Ay takvimini görüntülemek için tıklayın"
+
+#. Done!
+#: modules/clock/clock-applet.c:850
+msgid "Computer Clock"
+msgstr "Bilgisayar Saati"
+
+#: modules/clock/clock-applet.c:983
+msgid "Failed to open the time settings"
+msgstr "Zaman ayarlarını açma başarısız oldu"
+
+#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Yardım belgesi '%s' görüntülenemedi"
+
+#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+msgid "Error displaying help document"
+msgstr "Yardım belgesi görüntülenirken hata"
+
+#: modules/clock/clock-applet.c:1621
+msgid "Choose Location"
+msgstr "Konum Seç"
+
+#: modules/clock/clock-applet.c:1700
+msgid "Edit Location"
+msgstr "Konumu Düzenle"
+
+#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+msgid "Default"
+msgstr "Öntanımlı"
+
+#: modules/clock/clock-applet.c:1737
+msgid "Kelvin"
+msgstr "Kelvin"
+
+#: modules/clock/clock-applet.c:1738
+msgid "Celsius"
+msgstr "Santigrat"
+
+#: modules/clock/clock-applet.c:1739
+msgid "Fahrenheit"
+msgstr "Fahrenhayt"
+
+#: modules/clock/clock-applet.c:1745
+msgid "Meters per second (m/s)"
+msgstr "Saniyedeki metre (m/s)"
+
+#: modules/clock/clock-applet.c:1746
+msgid "Kilometers per hour (kph)"
+msgstr "Saatteki kilometre (kph)"
+
+#: modules/clock/clock-applet.c:1747
+msgid "Miles per hour (mph)"
+msgstr "Saatteki mil (mph)"
+
+#: modules/clock/clock-applet.c:1748
+msgid "Knots"
+msgstr "Knot"
+
+#: modules/clock/clock-applet.c:1749
+msgid "Beaufort scale"
+msgstr "Beaufort ölçeği"
+
+#: modules/clock/clock-applet.c:1802
+msgid "City Name"
+msgstr "Şehir İsmi"
+
+#: modules/clock/clock-applet.c:1806
+msgid "City Time Zone"
+msgstr "Şehir Saat Dilimi"
+
+#: modules/clock/clock-location-tile.c:174
+msgid "Failed to set the system timezone"
+msgstr "Sistem saat dilimi atanırken başarısız olundu"
+
+#: modules/clock/clock-location-tile.c:222
+msgid "<small>Set...</small>"
+msgstr "<small>Ayarla...</small>"
+
+#: modules/clock/clock-location-tile.c:223
+msgid "<small>Set</small>"
+msgstr "<small>Ayarla</small>"
+
+#: modules/clock/clock-location-tile.c:298
+msgid "Set location as current location and use its timezone for this computer"
+msgstr ""
+"Konumu mevcut konum olarak ata ve bu bilgisayar için onun zaman dilimini "
+"kullan"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday). The %p expands to
+#. * am/pm.
+#: modules/clock/clock-location-tile.c:430
+msgid "%l:%M <small>%p (%A)</small>"
+msgstr "%l:%M <small>%p (%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 24-hours format
+#. * (eg, like in France: 20:10), when the local
+#. * weekday differs from the weekday at the location
+#. * (the %A expands to the weekday).
+#: modules/clock/clock-location-tile.c:438
+msgid "%H:%M <small>(%A)</small>"
+msgstr "%H:%M <small>(%A)</small>"
+
+#. Translators: This is a strftime format string.
+#. * It is used to display the time in 12-hours format
+#. * (eg, like in the US: 8:10 am). The %p expands to
+#. * am/pm.
+#: modules/clock/clock-location-tile.c:447
+msgid "%l:%M <small>%p</small>"
+msgstr "%l:%M <small>%p</small>"
+
+#: modules/clock/clock-location-tile.c:597
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#. Translators: The two strings are temperatures.
+#: modules/clock/clock-location-tile.c:610
+#, c-format
+msgid "%s, feels like %s"
+msgstr "%s, hissedilen %s"
+
+#: modules/clock/clock-location-tile.c:631
+#, c-format
+msgid "Sunrise: %s / Sunset: %s"
+msgstr "Gün doğumu: %s / Gün batımı: %s"
+
+#: modules/clock/clock-module.c:33
+msgid "Clock"
+msgstr "Saat"
+
+#: modules/clock/clock-module.c:34
+msgid "Get the current time and date"
+msgstr "Şu anki zamanı ve tarihi al"
+
+#: modules/clock/clock-menu.ui:5
+msgid "Copy Date and _Time"
+msgstr "_Tarih ve Saati Kopyala"
+
+#: modules/clock/clock-menu.ui:11
+msgid "Ad_just Date & Time"
+msgstr "Tarihi ve Zamanı _Ayarla"
+
+#: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
+#: modules/wncklet/workspace-switcher-menu.ui:5
+msgid "_Preferences"
+msgstr "Ter_cihler"
+
+#: modules/clock/clock.ui:30
+msgid "East"
+msgstr "Doğu"
+
+#: modules/clock/clock.ui:33
+msgid "West"
+msgstr "Batı"
+
+#: modules/clock/clock.ui:44
+msgid "North"
+msgstr "Kuzey"
+
+#: modules/clock/clock.ui:47
+msgid "South"
+msgstr "Kuzey"
+
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
+msgid "(optional)"
+msgstr "(isteğe bağlı)"
+
+#: modules/clock/clock.ui:265
+msgid "_Location Name:"
+msgstr "_Konum İsmi:"
+
+#: modules/clock/clock.ui:278
+msgid "L_atitude:"
+msgstr "_Enlem:"
+
+#: modules/clock/clock.ui:292
+msgid "L_ongitude:"
+msgstr "_Boylam:"
+
+#. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
+#: modules/clock/clock.ui:308
+msgid ""
+"Type a city, region, or country name and then select a match from the pop-up."
+msgstr ""
+"Bir şehir, bölge veya ülke adı girin ve açılan pencereden bir eşleşme seçin."
+
+#: modules/clock/clock.ui:325
+msgid "_Timezone:"
+msgstr "_Saat Dilimi:"
+
+#: modules/clock/clock.ui:360
+msgid "Clock Preferences"
+msgstr "Saat Tercihleri"
+
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
+msgid "_Help"
+msgstr "_Yardım"
+
+#: modules/clock/clock.ui:391
+msgid "Time _Settings"
+msgstr "Zaman _Ayarları"
+
+#: modules/clock/clock.ui:451
+msgid "Clock Format"
+msgstr "Saat Biçimi"
+
+#: modules/clock/clock.ui:470
+msgid "_12 hour format"
+msgstr "_12 saat biçimi"
+
+#: modules/clock/clock.ui:487
+msgid "_24 hour format"
+msgstr "_24 saat biçimi"
+
+#: modules/clock/clock.ui:527
+msgid "Panel Display"
+msgstr "Panel Ekranı"
+
+#: modules/clock/clock.ui:547
+msgid "Show the _date"
+msgstr "_Tarihi göster"
+
+#: modules/clock/clock.ui:563
+msgid "Show seco_nds"
+msgstr "_Saniyeleri göster"
+
+#: modules/clock/clock.ui:579
+msgid "Show _weather"
+msgstr "_Hava durumunu göster"
+
+#: modules/clock/clock.ui:595
+msgid "Show _temperature"
+msgstr "Sıcaklığı _göster"
+
+#: modules/clock/clock.ui:697
+msgid "_Edit"
+msgstr "D_üzenle"
+
+#: modules/clock/clock.ui:712
+msgid "_Remove"
+msgstr "_Kaldır"
+
+#: modules/clock/clock.ui:773
+msgid "Display"
+msgstr "Görüntü"
+
+#: modules/clock/clock.ui:805
+msgid "_Visibility unit:"
+msgstr "_Görüş mesafesi birimi:"
+
+#: modules/clock/clock.ui:828
+msgid "_Pressure unit:"
+msgstr "_Basınç birimi:"
+
+#: modules/clock/clock.ui:864
+msgid "_Temperature unit:"
+msgstr "_Sıcaklık birimi:"
+
+#: modules/clock/clock.ui:878
+msgid "_Wind speed unit:"
+msgstr "_Rüzgar hızı birimi:"
+
+#: modules/clock/clock.ui:910
+msgid "Weather"
+msgstr "Hava Durumu"
+
+#: modules/fish/fish-applet.c:203
+#, c-format
+msgid ""
+"Warning: The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"Uyarı: Bu komut kullanışlı gibi gözüküyor.\n"
+"Bu uygulamacık gereksiz olduğu için, bunu yapmak istemeyebilirsiniz.\n"
+"Uygulamacığı \"pratik\" veya kullanışlı \n"
+"bir hale çevirmemek için %s komutunu kullanmamanızı tavsiye ederiz."
+
+#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s Balığı"
+
+#: modules/fish/fish-applet.c:369
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "Çağdaş Kahin %s Balığı"
+
+#: modules/fish/fish-applet.c:427
+msgid "Unable to locate the command to execute"
+msgstr "Çalıştırılacak komutun konumuna ulaşılamıyor"
+
+#: modules/fish/fish-applet.c:476
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "%s Balığı Diyor ki:"
+
+#: modules/fish/fish-applet.c:545
+#, c-format
+msgid ""
+"Unable to read output from command\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Komutun çıktısı okunamadı\n"
+"\n"
+"Ayrıntılar: %s"
+
+#: modules/fish/fish-applet.c:621
+msgid "_Speak again"
+msgstr "Tek_rar konuş"
+
+#: modules/fish/fish-applet.c:693
+#, c-format
+msgid "The configured command is not working and has been replaced by: %s"
+msgstr "Ayarlanmış komut çalışmadığı için '%s' ile değiştirilmiştir"
+
+#: modules/fish/fish-applet.c:722
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"'%s' çalıştırılamadı\n"
+"\n"
+"Ayrıntılar: %s"
+
+#: modules/fish/fish-applet.c:738
+#, c-format
+msgid ""
+"Unable to read from '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"'%s' uygulamasından okunamadı\n"
+"\n"
+"Ayrıntılar: %s"
+
+#: modules/fish/fish-applet.c:1120
+msgid "The water needs changing"
+msgstr "Suyun değiştirilmesi lazım"
+
+#: modules/fish/fish-applet.c:1122
+msgid "Look at today's date!"
+msgstr "Bugünün tarihine bakın!"
+
+#: modules/fish/fish-applet.c:1216
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "Falcı %s Balığı"
+
+#: modules/fish/fish-module.c:33
+msgid "Fish"
+msgstr "Balık"
+
+#: modules/fish/fish-module.c:34
+msgid "Display a swimming fish or another animated creature"
+msgstr "Yüzen balığı veya diğer canlandırılmış yaratıklardan birini göster"
+
+#: modules/fish/fish-menu.ui:5
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: modules/fish/fish.ui:22
+msgid "Fish Preferences"
+msgstr "Balık Tercihleri"
+
+#: modules/fish/fish.ui:134
+msgid "_Name of fish:"
+msgstr "_Balığın adı:"
+
+#: modules/fish/fish.ui:174
+msgid "Co_mmand to run when clicked:"
+msgstr "_Tıklandığında çalıştırılacak olan komut:"
+
+#: modules/fish/fish.ui:240
+msgid "Animation:"
+msgstr "Canlandırma:"
+
+#: modules/fish/fish.ui:277
+msgid "    "
+msgstr "    "
+
+#: modules/fish/fish.ui:301
+msgid "_Pause per frame:"
+msgstr "_Çerçeve başına bekleme (sn):"
+
+#: modules/fish/fish.ui:332
+msgid "seconds"
+msgstr "saniye"
+
+#: modules/fish/fish.ui:349
+msgid "_Rotate on vertical panels"
+msgstr "_Dikey panellerde döndür"
+
+#: modules/menu/gp-lock-logout.c:1042
+msgid "Hybrid Sleep"
+msgstr "Melez Uyku"
+
+#: modules/menu/gp-main-menu-applet.c:68 modules/menu/gp-menu-bar-applet.c:220
+#, c-format
+msgid "Please install the '%s' application."
+msgstr "Lütfen '%s' uygulamasını kur."
+
+#: modules/menu/gp-menu-bar-applet.c:131
+msgid "Applications"
+msgstr "Uygulamalar"
+
+#: modules/menu/gp-menu-bar-applet.c:136
+msgid "Browse and run installed applications"
+msgstr "Kurulmuş uygulamlara göz at ve onları çalıştır"
+
+#: modules/menu/gp-menu-bar-applet.c:160
+msgid "Access documents, folders and network places"
+msgstr "Belgelere, klasörlere ve ağ yerlerine erişim"
+
+#: modules/menu/gp-menu-bar-applet.c:181
+msgid "System"
+msgstr "Sistem"
+
+#: modules/menu/gp-menu-bar-applet.c:185
+msgid "Change system appearance and behavior, or get help"
+msgstr "Masaüstü görünümünü ve davranışını değiştir, ya da yardım al"
+
+#: modules/menu/gp-menu-module.c:46
+msgid "Menu Bar"
+msgstr "Menü Çubuğu"
+
+#: modules/menu/gp-menu-module.c:47
+msgid "A custom menu bar"
+msgstr "Özel menü çubuğu"
+
+#: modules/menu/gp-menu-module.c:53
+msgid "User menu"
+msgstr "Kullanıcı menüsü"
+
+#: modules/menu/gp-menu-module.c:54
+msgid "Menu to change your settings and log out"
+msgstr "Ayarlarınızı değiştirme ve çıkış yapma menüsü"
+
+#: modules/notification-area/na-applet.c:155
+msgid "Panel Notification Area"
+msgstr "Panel Uyarı Alanı"
+
+#: modules/notification-area/na-module.c:33
+msgid "Notification Area"
+msgstr "Uyarı Alanı"
+
+#: modules/notification-area/na-module.c:34
+msgid "Area where notification icons appear"
+msgstr "Uyarı simgelerinin belireceği alan"
+
+#: modules/separator/separator-module.c:33
+msgid "Separator"
+msgstr "Ayraç"
+
+#: modules/separator/separator-module.c:34
+msgid "A separator to organize the panel items"
+msgstr "Panel öğelerini düzenlemek için bir ayraç"
+
+#: modules/status-notifier/sn-module.c:33
+msgid "Status Notifier Host"
+msgstr "Durum Bildirici Ana Bilgisayarı"
+
+#: modules/status-notifier/sn-module.c:34
+msgid "Display all Status Notifier Items"
+msgstr "Tüm Durum Bildirici Ögelerini Göster"
+
+#: modules/wncklet/showdesktop.c:100
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "%s: %s yüklenirken hata oluştu\n"
+
+#: modules/wncklet/showdesktop.c:101
+msgid "Icon not found"
+msgstr "Simge bulunamadı"
+
+#: modules/wncklet/showdesktop.c:181
+msgid "Click here to restore hidden windows."
+msgstr "Gizli pencereleri görüntülemek için buraya tıklayın."
+
+#: modules/wncklet/showdesktop.c:183
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+"Bütün pencereleri gizleyip masaüstünü görüntülemek için buraya tıklayın."
+
+#: modules/wncklet/showdesktop.c:214
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Pencere yöneticiniz masaüstünü gösterme düğmesini desteklemiyor, veya bir "
+"pencere yöneticisi çalıştırmıyorsunuz."
+
+#: modules/wncklet/showdesktop.c:411
+msgid "Show Desktop Button"
+msgstr "Masaüstünü Gösterme Düğmesi"
+
+#: modules/wncklet/window-list.ui:8
+msgid "Window List Preferences"
+msgstr "Pencere Listesi Tercihleri"
+
+#: modules/wncklet/window-list.ui:35
+msgid "Window List Content"
+msgstr "Pencere Listesi İçeriği"
+
+#: modules/wncklet/window-list.ui:55
+msgid "Sh_ow windows from current workspace"
+msgstr "Şu anki çalışma alanındaki pencereleri _göster"
+
+#: modules/wncklet/window-list.ui:72
+msgid "Show windows from a_ll workspaces"
+msgstr "_Bütün çalışma alanlarındaki pencereleri göster"
+
+#: modules/wncklet/window-list.ui:112
+msgid "Window Grouping"
+msgstr "Pencere Gruplaması"
+
+#: modules/wncklet/window-list.ui:132
+msgid "_Never group windows"
+msgstr "Pencereleri _hiçbir zaman gruplama"
+
+#: modules/wncklet/window-list.ui:149
+msgid "Group windows when _space is limited"
+msgstr "_Yer kısıtlı olduğunda pencereleri grupla"
+
+#: modules/wncklet/window-list.ui:166
+msgid "_Always group windows"
+msgstr "_Pencereleri her zaman grupla"
+
+#: modules/wncklet/window-list.ui:206
+msgid "Restoring Minimized Windows"
+msgstr "Küçültülmüş Pencereleri Eski Boyutuna Getiriliyor"
+
+#: modules/wncklet/window-list.ui:226
+msgid "Restore to current _workspace"
+msgstr "Şu anki _kullanım alanını geri yükle"
+
+#: modules/wncklet/window-list.ui:243
+msgid "Restore to na_tive workspace"
+msgstr "_Kendi çalışma alanına geri al"
+
+#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
+msgid "Window Selector"
+msgstr "Pencere Seçici"
+
+#: modules/wncklet/wncklet-module.c:41
+msgid "Show Desktop"
+msgstr "Masaüstünü Göster"
+
+#: modules/wncklet/wncklet-module.c:42
+msgid "Hide application windows and show the desktop"
+msgstr "Uygulama pencerelerini gizle ve masaüstünü göster"
+
+#: modules/wncklet/wncklet-module.c:48
+msgid "Window List"
+msgstr "Pencere Listesi"
+
+#: modules/wncklet/wncklet-module.c:49
+msgid "Switch between open windows using buttons"
+msgstr "Düğmeler kullanarak açık pencereler arasında geçiş yap"
+
+#: modules/wncklet/wncklet-module.c:56
+msgid "Switch between open windows using a menu"
+msgstr "Bir menü kullanarak açık pencereler arasında geçiş yap"
+
+#: modules/wncklet/wncklet-module.c:62
+msgid "Workspace Switcher"
+msgstr "Çalışma Alanı Geçişi"
+
+#: modules/wncklet/wncklet-module.c:63
+msgid "Switch between workspaces"
+msgstr "Çalışma alanları arasında geçiş yap"
+
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.ui:145
+msgid "rows"
+msgstr "satır"
+
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+msgid "columns"
+msgstr "sütun"
+
+#: modules/wncklet/workspace-switcher.ui:22
+msgid "Workspace Switcher Preferences"
+msgstr "Çalışma Alanı Değiştiricisi Tercihleri"
+
+#: modules/wncklet/workspace-switcher.ui:82
+msgid "Show _only the current workspace"
+msgstr "_Sadece şu anki çalışma anlanını göster"
+
+#: modules/wncklet/workspace-switcher.ui:104
+msgid "Show _all workspaces in:"
+msgstr "_Bütün çalışma alanlarını buraya taşı:"
+
+#: modules/wncklet/workspace-switcher.ui:128
+#: modules/wncklet/workspace-switcher.ui:228
+msgid "1"
+msgstr "1"
+
+#: modules/wncklet/workspace-switcher.ui:176
+msgid "Switcher"
+msgstr "Değiştirici"
+
+#: modules/wncklet/workspace-switcher.ui:213
+msgid "Number of _workspaces:"
+msgstr "_Çalışma alanı sayısı:"
+
+#: modules/wncklet/workspace-switcher.ui:252
+msgid "Workspace na_mes:"
+msgstr "Çalışma alanı _isimleri:"
+
+#: modules/wncklet/workspace-switcher.ui:272
+msgid "Workspace Names"
+msgstr "Çalışma Alanı İsimleri"
+
+#: modules/wncklet/workspace-switcher.ui:288
+msgid "Show workspace _names in switcher"
+msgstr "Çalışma alanı _isimlerini değiştiricide göster"
+
+#: modules/wncklet/workspace-switcher.ui:309
+msgid "Workspaces"
+msgstr "Çalışma Alanları"
+
+#~ msgid "Clock Applet Factory"
+#~ msgstr "Saat Uygulamacığı Üreticisi"
+
+#~ msgid "Factory for clock applet"
+#~ msgstr "Saat uygulamacığı için üreteç"
+
+#~ msgid "Wanda Factory"
+#~ msgstr "Wanda Üreticisi"
+
+#~ msgid "From Whence That Stupid Fish Came"
+#~ msgstr "Bu Aptal Balığın Geldiği Yerden"
+
+#~ msgid "Notification Area Factory"
+#~ msgstr "Uyarı Alanı Üreteci"
+
+#~ msgid "Factory for notification area"
+#~ msgstr "Bildirim alanı için üreteç"
+
+#, fuzzy
+#~| msgid "Test DBus Applet Factory"
+#~ msgid "Status Notifier Host Applet Factory"
+#~ msgstr "DBus Uygulama Fabrikası Test Et"
+
+#, fuzzy
+#~ msgid "Factory for status notifier host applet"
+#~ msgstr "DBus Uygulaması için Fabrikayı Test Et"
+
+#~ msgid "Window Navigation Applet Factory"
+#~ msgstr "Pencere Dolaşımı Uygulamacıkları Üreteci"
+
+#~ msgid "Factory for the window navigation related applets"
+#~ msgstr "Pencere dolaşımı ile ilgili uygulamacıklar için üreteç"
+
+#~ msgid "Background type"
+#~ msgstr "Arkaplan türü"
+
+#, fuzzy
+#~ msgid ""
+#~ "Which type of background should be used for this panel. Possible values "
+#~ "are \"none\" - the default GTK+ widget background will be used, \"color\" "
+#~ "- the color key will be used as background color or \"image\" - the image "
+#~ "specified by the image key will be used as background."
+#~ msgstr ""
+#~ "Bu panel için kullanılcak arkaplan tipi. Geçerli değerler \"gtk\" - "
+#~ "öntanımlı GTK+ parçacığı arkaplanı kullanılacak, \"color\" - bir renk "
+#~ "arkaplan rengi olarak kullanılacak veya \"image\" - image anahtarı "
+#~ "tarafından belirtilen resim arkaplan resmi olarak kullanılacak."
+
+#~ msgid "Specifies the background color for the panel in #RGB format."
+#~ msgstr "#RGB biçiminde panelin arkaplan rengini belirtir."
+
+#~ msgid "No application to handle search folders is installed."
+#~ msgstr "Arama klasörlerini işlemek için hiçbir uygulama yüklü değil."
+
+#~ msgid "Connect to server"
+#~ msgstr "Sunucuya bağlan"
+
+#~ msgid "Could not connect to server"
+#~ msgstr "Sunucuya bağlanılamadı"
+
+#~ msgid "Connect to Server..."
+#~ msgstr "Sunucuya Bağlan..."
+
+#~ msgid "Connect to a remote computer or shared disk"
+#~ msgstr "Uzaktaki bilgisayara ya da paylaşılan bir diske bağlanın"
+
+#, fuzzy
+#~| msgid "columns"
+#~ msgid "column"
+#~ msgstr "sütun"
+
+#~ msgid "\"%s\" has quit unexpectedly"
+#~ msgstr "\"%s\" beklenmedik bir şekilde kapandı"
+
+#~ msgid "Panel object has quit unexpectedly"
+#~ msgstr "Panel nesnesi beklenmedik bir şekilde kapandı"
+
+#~ msgid ""
+#~ "If you reload a panel object, it will automatically be added back to the "
+#~ "panel."
+#~ msgstr ""
+#~ "Eğer bir panel nesnesini yeniden yüklerseniz, o nesne kendiliğinden "
+#~ "panele tekrar eklenecektir."
+
+#, fuzzy
+#~| msgid "_Delete"
+#~ msgid "D_elete"
+#~ msgstr "_Sil"
+
+#~ msgid "_Don't Reload"
+#~ msgstr "Tekrar Yükle_me"
+
+#~ msgid "_Reload"
+#~ msgstr "Tekrar _Yükle"
+
+#~ msgid "_None (use system theme)"
+#~ msgstr "_Yok (sistem temasını kullan)"
+
+#~ msgid "Solid c_olor"
+#~ msgstr "Sabit _renk"
+
+#~ msgid "Pick a color"
+#~ msgstr "Bir renk seçiniz"
+
+#~ msgid "Select background"
+#~ msgstr "Arkaplan seç"
+
+#~ msgid "Background"
+#~ msgstr "Arkaplan"
+
+#~ msgid "Image Background Details"
+#~ msgstr "Resim Arkaplan Detayları"
+
+#~ msgid "_Scale"
+#~ msgstr "Öl_çekle"
+
+#~ msgid "Rotate image when panel is _vertical"
+#~ msgstr "Panel dik_ey olduğu zaman resmi döndür"
+
+#~ msgid "Specify an applet IID to load"
+#~ msgstr "Yüklenecek uygulamacık IIDsi belirtin"
+
+#~ msgid ""
+#~ "Specify the initial orientation of the applet (top, bottom, left or right)"
+#~ msgstr ""
+#~ "Uygulamacığın başlangıç konumunu belirtin (yukarı, aşağı, sol veya sağ)"
+
+#~ msgid "Failed to load applet %s"
+#~ msgstr "Uygulamacık yüklenemedi: %s"
+
+#~ msgid "Test applet utility"
+#~ msgstr "Uygulamacık test etme aleti"
+
+#~ msgid "Execute"
+#~ msgstr "Çalıştır"
+
+#~ msgid "Close"
+#~ msgstr "Kapat"
+
+#~ msgid "_Applet:"
+#~ msgstr "_Uygulamacık:"
+
+#~ msgid "Home Folder"
+#~ msgstr "Başlangıç Klasörü"
+
+#~ msgid "Search"
+#~ msgstr "Arama"
+
+#~ msgid "Test DBus Applet Factory"
+#~ msgstr "DBus Sınama Uygulaması Fabrikası"
+
+#~ msgid "Factory for Test DBus Applet"
+#~ msgstr "DBus Sınama Uygulaması için Fabrika"
+
+#~ msgid "Test DBus Applet"
+#~ msgstr "DBus Sınama Uygulaması"
+
+#~ msgid "A simple applet for testing the GNOME panel"
+#~ msgstr "GNOME panelini sınamak için basit bir uygulama"
 
 #~ msgid "Available"
 #~ msgstr "Uygun"
@@ -2894,9 +2931,6 @@ msgstr "GNOME panelini sınamak için basit bir uygulama"
 
 #~ msgid "Could not display run dialog"
 #~ msgstr "Çalıştır penceresi gösterilemedi"
-
-#~ msgid "_About"
-#~ msgstr "_Hakkında"
 
 #~ msgid "Set System Time..."
 #~ msgstr "Sistem Zamanını Ayarla..."
@@ -3199,13 +3233,6 @@ msgstr "GNOME panelini sınamak için basit bir uygulama"
 #~ "Bu anahtar tam bir sabitleme uygulamak için kullanılamadığı için "
 #~ "kullanılmamaktadır. /desktop/gnome/lockdown/disable_lock_screen anahtarı "
 #~ "bunun yerine kullanılmalıdır."
-
-#~ msgid "Change desktop appearance and behavior, get help, or log out"
-#~ msgstr ""
-#~ "Masaüstü görünümünü ve davranışını değiştir, yardım al, ya da çıkış yap"
-
-#~ msgid "System"
-#~ msgstr "Sistem"
 
 #~ msgid "Log Out %s..."
 #~ msgstr "Çıkış %s..."
