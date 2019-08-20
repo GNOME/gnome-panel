@@ -102,8 +102,6 @@ gp_module_load (GpModule *module)
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   gp_module_set_gettext_domain (module, GETTEXT_PACKAGE);
 
-  wnck_set_client_type (WNCK_CLIENT_TYPE_PAGER);
-
   gp_module_set_abi_version (module, GP_MODULE_ABI_VERSION);
 
   gp_module_set_id (module, "org.gnome.gnome-panel.wncklet");

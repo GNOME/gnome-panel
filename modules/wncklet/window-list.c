@@ -34,6 +34,7 @@ struct _WindowListApplet
 {
 	GpApplet parent;
 
+	WnckHandle *handle;
 	GtkWidget *tasklist;
 
 	gboolean include_all_workspaces;
@@ -448,7 +449,8 @@ window_list_applet_fill (GpApplet *applet)
 
 	tasklist->orientation = gp_applet_get_orientation (applet);
 
-	tasklist->tasklist = wnck_tasklist_new ();
+	tasklist->handle = wnck_handle_new (WNCK_CLIENT_TYPE_PAGER);
+	tasklist->tasklist = wnck_tasklist_new_with_handle (tasklist->handle);
 	tasklist->icon_theme = gtk_icon_theme_get_default ();
 
 	wnck_tasklist_set_orientation (WNCK_TASKLIST (tasklist->tasklist), tasklist->orientation);
@@ -483,6 +485,18 @@ window_list_applet_constructed (GObject *object)
 }
 
 static void
+window_list_applet_dispose (GObject *object)
+{
+	WindowListApplet *tasklist;
+
+	tasklist = WINDOW_LIST_APPLET (object);
+
+	g_clear_object (&tasklist->handle);
+
+	G_OBJECT_CLASS (window_list_applet_parent_class)->dispose (object);
+}
+
+static void
 window_list_applet_placement_changed (GpApplet        *applet,
                                       GtkOrientation   orientation,
                                       GtkPositionType  position)
@@ -511,6 +525,7 @@ window_list_applet_class_init (WindowListAppletClass *tasklist_class)
 	applet_class = GP_APPLET_CLASS (tasklist_class);
 
 	object_class->constructed = window_list_applet_constructed;
+	object_class->dispose = window_list_applet_dispose;
 
 	applet_class->placement_changed = window_list_applet_placement_changed;
 }

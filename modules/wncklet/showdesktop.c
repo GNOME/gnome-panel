@@ -34,6 +34,8 @@ struct _ShowDesktopApplet
 {
         GpApplet parent;
 
+        WnckHandle *handle;
+
         GtkWidget *button;
         GtkWidget *image;
 
@@ -291,7 +293,7 @@ show_desktop_applet_realized (GtkWidget         *widget,
 						      theme_changed_callback,
 						      sdd);
 
-	sdd->wnck_screen = wnck_screen_get_default ();
+	sdd->wnck_screen = wnck_handle_get_default_screen (sdd->handle);
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive (sdd->wnck_screen,
@@ -318,6 +320,8 @@ show_desktop_applet_fill (GpApplet *applet)
 	AtkObject       *atk_obj;
 
 	sdd = SHOW_DESKTOP_APPLET (applet);
+
+	sdd->handle = wnck_handle_new (WNCK_CLIENT_TYPE_PAGER);
 
 	sdd->image = gtk_image_new ();
 	sdd->orient = gp_applet_get_orientation (applet);
@@ -371,6 +375,18 @@ show_desktop_applet_constructed (GObject *object)
 }
 
 static void
+show_desktop_applet_dispose (GObject *object)
+{
+	ShowDesktopApplet *sdd;
+
+	sdd = SHOW_DESKTOP_APPLET (object);
+
+	g_clear_object (&sdd->handle);
+
+	G_OBJECT_CLASS (show_desktop_applet_parent_class)->dispose (object);
+}
+
+static void
 show_desktop_applet_placement_changed (GpApplet        *applet,
                                        GtkOrientation   orientation,
                                        GtkPositionType  position)
@@ -397,6 +413,7 @@ show_desktop_applet_class_init (ShowDesktopAppletClass *sdd_class)
 	applet_class = GP_APPLET_CLASS (sdd_class);
 
 	object_class->constructed = show_desktop_applet_constructed;
+	object_class->dispose = show_desktop_applet_dispose;
 
 	applet_class->placement_changed = show_desktop_applet_placement_changed;
 }
