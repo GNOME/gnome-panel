@@ -42,6 +42,7 @@ struct _WorkspaceSwitcherApplet
 {
 	GpApplet parent;
 
+	WnckHandle *handle;
 	GtkWidget *pager;
 
 	WnckScreen *screen;
@@ -153,7 +154,7 @@ static void
 applet_realized (GtkWidget               *widget,
                  WorkspaceSwitcherApplet *pager)
 {
-	pager->screen = wnck_screen_get_default ();
+	pager->screen = wnck_handle_get_default_screen (pager->handle);
 
 	window_manager_changed (pager->screen, pager);
 	wncklet_connect_while_alive (pager->screen, "window_manager_changed",
@@ -695,7 +696,8 @@ workspace_switcher_applet_fill (GpApplet *applet)
 
 	pager->orientation = gp_applet_get_orientation (applet);
 
-	pager->pager = wnck_pager_new ();
+	pager->handle = wnck_handle_new (WNCK_CLIENT_TYPE_PAGER);
+	pager->pager = wnck_pager_new_with_handle (pager->handle);
 	pager->screen = NULL;
 	pager->wm = PAGER_WM_UNKNOWN;
 	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
@@ -736,6 +738,18 @@ workspace_switcher_applet_constructed (GObject *object)
 }
 
 static void
+workspace_switcher_applet_dispose (GObject *object)
+{
+	WorkspaceSwitcherApplet *pager;
+
+	pager = WORKSPACE_SWITCHER_APPLET (object);
+
+	g_clear_object (&pager->handle);
+
+	G_OBJECT_CLASS (workspace_switcher_applet_parent_class)->dispose (object);
+}
+
+static void
 workspace_switcher_applet_placement_changed (GpApplet        *applet,
                                              GtkOrientation   orientation,
                                              GtkPositionType  position)
@@ -764,6 +778,7 @@ workspace_switcher_applet_class_init (WorkspaceSwitcherAppletClass *pager_class)
 	applet_class = GP_APPLET_CLASS (pager_class);
 
 	object_class->constructed = workspace_switcher_applet_constructed;
+	object_class->dispose = workspace_switcher_applet_dispose;
 
 	applet_class->placement_changed = workspace_switcher_applet_placement_changed;
 }
