@@ -1,5 +1,5 @@
 # gnome-panel ja.po.
-# Copyright (C) 1998-2012 Free Software Foundation, Inc.
+# Copyright (C) 1998-2019 Free Software Foundation, Inc.
 # Yukihiro Nakai <Nakai@abricot.co.jp>, 1998.
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999.
 # Eiichiro ITANI <emu@ceres.dti.ne.jp>, 1999.
@@ -15,14 +15,15 @@
 # IWAI, Masaharu <iwaim.sub@gmail.com>, 2010.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2011.
 # Jiro Matsuzawa <jmatsuzawa@src.gnome.org>, 2011.
+# sicklylife <translation@sicklylife.jp>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
 "POT-Creation-Date: 2019-05-05 11:21+0000\n"
-"PO-Revision-Date: 2012-08-19 15:41+0900\n"
-"Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
+"PO-Revision-Date: 2019-09-28 21:49+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -737,22 +738,16 @@ msgstr ""
 "TRUE の場合にのみ機能します。指定可能な値: \"slow\", \"medium\", \"fast\""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
-#, fuzzy
-#| msgid "Background color"
 msgid "Use custom background color"
-msgstr "背景色"
+msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
-#, fuzzy
-#| msgid "Background color"
 msgid "Background Color"
-msgstr "背景色"
+msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
-#, fuzzy
-#| msgid "Background image"
 msgid "Use custom background image"
-msgstr "背景の画像"
+msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
 msgid "Background image"
@@ -832,30 +827,24 @@ msgstr ""
 "ティリティをいろいろ提供します"
 
 #: gnome-panel/gp-add-applet-window.c:137
-#, fuzzy
-#| msgid "_Help"
 msgid "Help"
-msgstr "ヘルプ(_H)"
+msgstr "ヘルプ"
 
 #: gnome-panel/gp-add-applet-window.c:148
-#, fuzzy
-#| msgid "_About"
 msgid "About"
-msgstr "情報(_A)"
+msgstr "情報"
 
 #: gnome-panel/gp-add-applet-window.c:193
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
 msgid "Add to Panel"
 msgstr "パネルへ追加"
 
 #: gnome-panel/gp-add-applet-window.c:560
-#, fuzzy
-#| msgid "Icon not found"
 msgid "No applets found"
-msgstr "アイコンが見つかりません"
+msgstr "アプレットが見つかりません"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -928,46 +917,36 @@ msgid "General"
 msgstr "全般"
 
 #: gnome-panel/gp-properties-dialog.ui:355
-#, fuzzy
-#| msgid "Background color"
 msgid "Background color:"
-msgstr "背景色"
+msgstr "背景色:"
 
 #: gnome-panel/gp-properties-dialog.ui:418
-#, fuzzy
-#| msgid "Background _image:"
 msgid "Background image:"
-msgstr "背景の画像(_I):"
+msgstr "背景の画像:"
 
 #: gnome-panel/gp-properties-dialog.ui:457
-#, fuzzy
-#| msgid "_Tile"
 msgid "Tile"
-msgstr "タイル状(_T)"
+msgstr ""
 
 #: gnome-panel/gp-properties-dialog.ui:472
-#, fuzzy
-#| msgid "St_retch"
 msgid "Stretch"
-msgstr "引き伸ばす(比率を変更)(_R)"
+msgstr ""
 
 #: gnome-panel/gp-properties-dialog.ui:487
 msgid "Fit"
 msgstr ""
 
 #: gnome-panel/gp-properties-dialog.ui:509
-#, fuzzy
-#| msgid "Rotate image on vertical panels"
 msgid "Rotate image on vertical panel"
 msgstr "パネルが縦向きの時は画像も回転する"
 
 #: gnome-panel/gp-properties-dialog.ui:552
 msgid "Text color:"
-msgstr ""
+msgstr "テキストの色:"
 
 #: gnome-panel/gp-properties-dialog.ui:607
 msgid "Theme"
-msgstr ""
+msgstr "テーマ"
 
 #: gnome-panel/launcher.c:339
 msgid "Could not show this URL"
@@ -1040,12 +1019,12 @@ msgstr "アイコンを選択"
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
-msgstr ""
+msgstr "キャンセル(_C)"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:381
 #: gnome-panel/panel-ditem-editor.c:994
 msgid "_Open"
-msgstr ""
+msgstr "開く(_O)"
 
 #: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
 #, c-format
@@ -1063,7 +1042,7 @@ msgstr "現在実行中のパネルを置き換える"
 
 #: gnome-panel/main.c:38
 msgid "Print version"
-msgstr ""
+msgstr "バージョンを表示する"
 
 #: gnome-panel/panel-action-button.c:157
 msgid "_Lock Screen"
@@ -1085,9 +1064,8 @@ msgstr "不正な使用からコンピューターを守ります"
 #. * update the ones in panel-menu-items.c (look for
 #. * "1" (msgctxt: "panel:showusername"))
 #: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-#, fuzzy
 msgid "Log Out"
-msgstr "ログアウト..."
+msgstr "ログアウト"
 
 #: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
 msgid "Log out of this session to log in as a different user"
@@ -1120,19 +1098,19 @@ msgstr "おかしな動作をするアプリを強制的に終了します"
 
 #: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
 msgid "Hibernate"
-msgstr ""
+msgstr "ハイバネート"
 
 #: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
 msgid "Suspend"
-msgstr ""
+msgstr "サスペンド"
 
 #: gnome-panel/panel-action-button.c:421
 msgid "Hybrid sleep"
-msgstr ""
+msgstr "ハイブリッドスリープ"
 
 #: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
 msgid "Restart"
-msgstr ""
+msgstr "再起動"
 
 #: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
 #, fuzzy
@@ -1141,7 +1119,7 @@ msgstr "コンピューターをシャットダウンします"
 
 #: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
 msgid "Power Off"
-msgstr ""
+msgstr "電源オフ"
 
 #: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
 #, fuzzy
@@ -1179,29 +1157,27 @@ msgstr "パネルへ追加するアイテムの検索(_I):"
 
 #: gnome-panel/panel-addto-dialog.c:1039
 msgid "_Forward"
-msgstr ""
+msgstr "次へ(_F)"
 
 #: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
-msgstr ""
+msgstr "追加(_A)"
 
 #: gnome-panel/panel-addto-dialog.ui:38
-#, fuzzy
-#| msgid "Find an _item to add to the panel:"
 msgid "Find an item to add to the panel:"
-msgstr "パネルへ追加するアイテムの検索(_I):"
+msgstr "パネルへ追加するアイテムの検索:"
 
 #: gnome-panel/panel-addto-dialog.ui:142
 msgid "_Back"
-msgstr ""
+msgstr "前へ(_B)"
 
 #: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
 #: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
 #: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
 #: modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
-msgstr ""
+msgstr "閉じる(_C)"
 
 #: gnome-panel/panel-applet-frame.c:771
 #, c-format
@@ -1210,7 +1186,7 @@ msgstr "\"%s\" を読み込む際にパネルで問題が発生しました。"
 
 #: gnome-panel/panel-applet-frame.c:783
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: gnome-panel/panel-applet-frame.c:787
 msgid "Do you want to delete the applet from your configuration?"
@@ -1221,10 +1197,8 @@ msgid "D_on't Delete"
 msgstr "削除しない(_O)"
 
 #: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
-#, fuzzy
-#| msgid "D_on't Delete"
 msgid "_Delete"
-msgstr "削除しない(_O)"
+msgstr "削除(_D)"
 
 #: gnome-panel/panel.c:414
 #, c-format
@@ -1340,7 +1314,7 @@ msgstr ""
 #: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
 #: modules/clock/clock.ui:82
 msgid "_OK"
-msgstr ""
+msgstr "OK(_O)"
 
 #: gnome-panel/panel-ditem-editor.c:961
 msgid "Choose an application..."
@@ -1567,7 +1541,7 @@ msgstr "ファイル"
 
 #: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
 msgid "Home"
-msgstr ""
+msgstr "ホーム"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
@@ -1596,11 +1570,11 @@ msgstr ""
 
 #: libgnome-panel/gp-initial-setup-dialog.c:132
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: libgnome-panel/gp-initial-setup-dialog.c:136
 msgid "Done"
-msgstr ""
+msgstr "完了"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1676,10 +1650,8 @@ msgstr "カレンダー"
 #. * It is used to display a date.
 #.
 #: modules/clock/clock-applet.c:227
-#, fuzzy
-#| msgid "%A %B %d (%%s)"
 msgid "%A %B %d (%Z)"
-msgstr "%B%e日 %A (%%s)"
+msgstr "%B%-e日 %A (%Z)"
 
 #: modules/clock/clock-applet.c:236
 msgid "Click to hide your appointments and tasks"
@@ -1725,7 +1697,7 @@ msgstr "場所を編集"
 
 #: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
 msgid "Default"
-msgstr ""
+msgstr "デフォルト"
 
 #: modules/clock/clock-applet.c:1737
 msgid "Kelvin"
@@ -1938,14 +1910,12 @@ msgid "Show _temperature"
 msgstr "気温を表示する(_T)"
 
 #: modules/clock/clock.ui:697
-#, fuzzy
-#| msgid "Edit"
 msgid "_Edit"
-msgstr "編集"
+msgstr "編集(_E)"
 
 #: modules/clock/clock.ui:712
 msgid "_Remove"
-msgstr ""
+msgstr "削除(_R)"
 
 #: modules/clock/clock.ui:773
 msgid "Display"
@@ -2072,10 +2042,8 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "泳ぐ魚か、何か生き物を表示します"
 
 #: modules/fish/fish-menu.ui:5
-#, fuzzy
-#| msgid "_Preferences"
 msgid "Preferences"
-msgstr "設定(_P)"
+msgstr "設定"
 
 #: modules/fish/fish.ui:22
 msgid "Fish Preferences"
@@ -2090,10 +2058,8 @@ msgid "Co_mmand to run when clicked:"
 msgstr "おさかな君がクリックされた時に実行するコマンド(_M):"
 
 #: modules/fish/fish.ui:240
-#, fuzzy
-#| msgid "Animation"
 msgid "Animation:"
-msgstr "アニメーション"
+msgstr "アニメーション:"
 
 #: modules/fish/fish.ui:277
 msgid "    "
@@ -2141,18 +2107,15 @@ msgid "System"
 msgstr "システム"
 
 #: modules/menu/gp-menu-bar-applet.c:203
-#, fuzzy
-#| msgid "Change desktop appearance and behavior, get help, or log out"
 msgid "Change system appearance and behavior, or get help"
 msgstr ""
-"デスクトップの外観や設定を変更したり、ヘルプを参照したり、ログアウトします"
+"システムの外観や設定を変更したり、ヘルプを参照したりします"
 
 #: modules/menu/gp-menu-bar-applet.c:253
 #: modules/menu/gp-menu-button-applet.c:469
-#, fuzzy, c-format
-#| msgid "Browse and run installed applications"
+#, c-format
 msgid "Please install the '%s' application."
-msgstr "インストールしたアプリケーションを参照したり起動します"
+msgstr "'%s' アプリケーションをインストールしてください。"
 
 #: modules/menu/gp-menu-module.c:381
 msgid "Main Menu"
@@ -2163,16 +2126,12 @@ msgid "The main GNOME menu"
 msgstr "GNOME メインメニューです"
 
 #: modules/menu/gp-menu-module.c:388
-#, fuzzy
-#| msgid "Menu Bar"
 msgid "Menu Button"
-msgstr "メニューバー"
+msgstr "メニューボタン"
 
 #: modules/menu/gp-menu-module.c:389
-#, fuzzy
-#| msgid "A custom menu bar"
 msgid "A custom menu button"
-msgstr "カスタムメニューバーです"
+msgstr "カスタムメニューボタンです"
 
 #: modules/menu/gp-menu-module.c:397
 msgid "Menu Bar"
@@ -2187,10 +2146,8 @@ msgid "User menu"
 msgstr "ユーザーメニュー"
 
 #: modules/menu/gp-menu-module.c:405
-#, fuzzy
-#| msgid "Menu to change your settings and your online status"
 msgid "Menu to change your settings and log out"
-msgstr "設定やオンラインステータスを変更するメニュー"
+msgstr "設定の変更やログアウトをするメニュー"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2472,9 +2429,6 @@ msgstr "すべてのワークスペースを表示する(_A):"
 
 #: modules/wncklet/workspace-switcher.ui:128
 #: modules/wncklet/workspace-switcher.ui:228
-#, fuzzy
-#| msgctxt "panel:showusername"
-#| msgid "1"
 msgid "1"
 msgstr "1"
 
