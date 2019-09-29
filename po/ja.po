@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2019-05-05 11:21+0000\n"
-"PO-Revision-Date: 2019-09-28 21:49+0900\n"
+"POT-Creation-Date: 2019-09-28 12:59+0000\n"
+"PO-Revision-Date: 2019-09-29 22:45+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -893,7 +893,7 @@ msgstr "ピクセル"
 
 #: gnome-panel/gp-properties-dialog.ui:191
 msgid "Miscellaneous:"
-msgstr ""
+msgstr "その他:"
 
 #: gnome-panel/gp-properties-dialog.ui:210
 msgid "E_xpand"
@@ -1015,7 +1015,7 @@ msgstr "アイコンを選択"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
 #: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
@@ -1113,18 +1113,16 @@ msgid "Restart"
 msgstr "再起動"
 
 #: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-#, fuzzy
 msgid "Restart the computer"
-msgstr "コンピューターをシャットダウンします"
+msgstr "コンピューターを再起動します"
 
 #: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
 msgid "Power Off"
 msgstr "電源オフ"
 
 #: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-#, fuzzy
 msgid "Power off the computer"
-msgstr "コンピューターをシャットダウンします"
+msgstr "コンピューターの電源を切ります"
 
 #: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
 msgid "(empty)"
@@ -1311,7 +1309,7 @@ msgstr "コメント(_M):"
 msgid "_Revert"
 msgstr ""
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "OK(_O)"
@@ -1393,20 +1391,20 @@ msgstr "コマンド '%s' を起動できませんでした"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "UTF-8 から '%s' へ変換できませんでした"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1288
 msgid "Choose a file to append to the command..."
 msgstr "コマンドの後ろに続けるファイルを選択してください..."
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "説明を表示するアプリケーションを選択してください"
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1709
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "実行するコマンド: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1742
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1942,12 +1940,7 @@ msgid "Weather"
 msgstr "天気"
 
 #: modules/fish/fish-applet.c:203
-#, fuzzy, c-format
-#| msgid ""
-#| "Warning:  The command appears to be something actually useful.\n"
-#| "Since this is a useless applet, you may not want to do this.\n"
-#| "We strongly advise you against using %s for anything\n"
-#| "which would make the applet \"practical\" or useful."
+#, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -2083,7 +2076,7 @@ msgstr "ユーザーの切り替え"
 
 #: modules/menu/gp-lock-logout.c:1077
 msgid "Hybrid Sleep"
-msgstr ""
+msgstr "ハイブリッドスリープ"
 
 #: modules/menu/gp-menu-bar-applet.c:119
 msgid "Applications"
@@ -2108,8 +2101,7 @@ msgstr "システム"
 
 #: modules/menu/gp-menu-bar-applet.c:203
 msgid "Change system appearance and behavior, or get help"
-msgstr ""
-"システムの外観や設定を変更したり、ヘルプを参照したりします"
+msgstr "システムの外観や設定を変更したり、ヘルプを参照したりします"
 
 #: modules/menu/gp-menu-bar-applet.c:253
 #: modules/menu/gp-menu-button-applet.c:469
@@ -2147,7 +2139,7 @@ msgstr "ユーザーメニュー"
 
 #: modules/menu/gp-menu-module.c:405
 msgid "Menu to change your settings and log out"
-msgstr "設定の変更やログアウトをするメニュー"
+msgstr "設定の変更やログアウトをするメニューです"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2246,10 +2238,6 @@ msgid "Menu content path"
 msgstr "メニュー内容のパス"
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
-#, fuzzy
-#| msgid ""
-#| "The path from which the menu contents is contructed. If empty, the menu "
-#| "will be the default applications menu."
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
