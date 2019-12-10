@@ -1316,6 +1316,11 @@ run_prefs_edit_save (GtkButton   *button,
         }
 
         station_loc = gloc;
+        if (gweather_location_get_level (station_loc) == GWEATHER_LOCATION_DETACHED) {
+                /* According to the documentation, the parent of a detached location is
+                 * the nearest weather station. */
+                station_loc = gweather_location_get_parent (station_loc);
+        }
         while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
                 station_loc = gweather_location_get_children (station_loc)[0];
                 g_assert (station_loc != NULL);
