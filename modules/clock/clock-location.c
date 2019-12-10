@@ -209,12 +209,37 @@ clock_location_get_city (ClockLocation *loc)
         return gweather_location_get_city_name (loc->priv->loc);
 }
 
+GWeatherTimezone *
+clock_location_get_gweather_timezone (ClockLocation *loc)
+{
+	GWeatherTimezone *tz;
+	GWeatherLocation *gloc;
+
+	gloc = loc->priv->loc;
+	tz = gweather_location_get_timezone (gloc);
+
+	if (tz == NULL) {
+		/* Some weather stations do not have timezone information.
+		 * In this case, we need to find the nearest city. */
+		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY)
+			gloc = gweather_location_get_parent (gloc);
+		gloc = gweather_location_find_nearest_city (gloc,
+		                                            loc->priv->latitude,
+		                                            loc->priv->longitude);
+		if (gloc == NULL)
+			return NULL;
+		tz = gweather_location_get_timezone (gloc);
+	}
+
+	return tz;
+}
+
 const gchar *
 clock_location_get_timezone (ClockLocation *loc)
 {
 	GWeatherTimezone *tz;
 
-	tz = gweather_location_get_timezone (loc->priv->loc);
+	tz = clock_location_get_gweather_timezone (loc);
         return gweather_timezone_get_name (tz);
 }
 
@@ -223,7 +248,7 @@ clock_location_get_tzname (ClockLocation *loc)
 {
 	GWeatherTimezone *tz;
 
-	tz = gweather_location_get_timezone (loc->priv->loc);
+	tz = clock_location_get_gweather_timezone (loc);
         return gweather_timezone_get_tzid (tz);
 }
 
@@ -243,7 +268,7 @@ clock_location_localtime (ClockLocation *loc)
 	GTimeZone *tz;
 	GDateTime *dt;
 
-	wtz = gweather_location_get_timezone (loc->priv->loc);
+	wtz = clock_location_get_gweather_timezone (loc);
 
 	tz = g_time_zone_new (gweather_timezone_get_tzid (wtz));
 	dt = g_date_time_new_now (tz);
@@ -258,7 +283,7 @@ clock_location_is_current_timezone (ClockLocation *loc)
 	GWeatherTimezone *wtz;
 	const char *zone;
 
-	wtz = gweather_location_get_timezone (loc->priv->loc);
+	wtz = clock_location_get_gweather_timezone (loc);
 
 	zone = system_timezone_get (loc->priv->systz);
 
@@ -298,7 +323,7 @@ clock_location_get_offset (ClockLocation *loc)
 {
 	GWeatherTimezone *wtz;
 
-	wtz = gweather_location_get_timezone (loc->priv->loc);
+	wtz = clock_location_get_gweather_timezone (loc);
 	return gweather_timezone_get_offset (wtz);
 }
 
@@ -380,7 +405,7 @@ clock_location_make_current (ClockLocation *loc,
 	mcdata->data = data;
 	mcdata->destroy = destroy;
 
-	wtz = gweather_location_get_timezone (loc->priv->loc);
+	wtz = clock_location_get_gweather_timezone (loc);
         set_system_timezone_async (gweather_timezone_get_tzid (wtz),
                                    make_current_cb,
                                    mcdata);
