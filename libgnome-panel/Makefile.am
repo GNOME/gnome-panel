@@ -1,6 +1,6 @@
 NULL =
 
-noinst_LTLIBRARIES = libgnome-panel.la
+lib_LTLIBRARIES = libgnome-panel.la
 
 libgnome_panel_la_SOURCES = \
 	gp-action-private.h \
@@ -39,12 +39,25 @@ libgnome_panel_la_CFLAGS = \
 	$(NULL)
 
 libgnome_panel_la_LDFLAGS = \
+	-version-info $(LIBGNOME_PANEL_LT_VERSION) \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
 
 libgnome_panel_la_LIBADD = \
 	$(LIBGNOME_PANEL_LIBS) \
+	$(NULL)
+
+libgnome_panel_includedir = $(includedir)/gnome-panel/libgnome-panel
+libgnome_panel_include_HEADERS = \
+	gp-action.h \
+	gp-applet.h \
+	gp-applet-info.h \
+	gp-enum-types.h \
+	gp-image-menu-item.h \
+	gp-initial-setup-dialog.h \
+	gp-module.h \
+	gp-utils.h \
 	$(NULL)
 
 ENUM_TYPES = \
