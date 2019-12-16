@@ -94,8 +94,8 @@ gnome_panel_CPPFLAGS = \
 gnome_panel_CFLAGS = \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
+	-DLAYOUTSDIR=\""$(datadir)/gnome-panel/layouts"\" \
 	-DMODULESDIR=\""$(libdir)/gnome-panel/modules"\" \
-	-DPANELDATADIR=\""$(datadir)/gnome-panel"\" \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-I$(srcdir) \
 	-I$(top_builddir)/gnome-panel \

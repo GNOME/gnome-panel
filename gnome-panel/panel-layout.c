@@ -38,7 +38,6 @@
 #include "panel-object-loader.h"
 #include "panel-schemas.h"
 #include "panel-toplevel.h"
-#include "panel-util.h"
 
 #include "panel-layout.h"
 
@@ -1081,14 +1080,18 @@ panel_layout_get_default_layout_file (void)
 {
         char *user_file;
 
-        user_file = panel_util_get_from_personal_path (PANEL_LAYOUT_DEFAULT_LAYOUT_FILE);
+        user_file = g_build_filename (g_get_user_config_dir (),
+                                      "gnome-panel",
+                                      "layouts",
+                                      PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
+                                      NULL);
 
         if (g_file_test (user_file, G_FILE_TEST_IS_REGULAR))
                 return user_file;
 
         g_free (user_file);
 
-        return g_build_filename (PANELDATADIR,
+        return g_build_filename (LAYOUTSDIR,
                                  PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
                                  NULL);
 }
