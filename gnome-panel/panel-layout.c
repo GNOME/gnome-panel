@@ -220,7 +220,6 @@ panel_layout_find_free_id (const char *id_list_key,
                         if (g_strcmp0 (unique_id,
                                        existing_dirs[i]) == 0)
                                 existing = TRUE;
-                                break;
                 }
 
                 if (existing)
