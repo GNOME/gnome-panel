@@ -23,6 +23,12 @@
   </enum>
 
   <schema id="org.gnome.gnome-panel.general" path="/org/gnome/gnome-panel/general/">
+    <key name="default-layout" type="s">
+      <default>'default'</default>
+      <summary>Default panel layout</summary>
+      <description>The default panel layout to use when panels are created.</description>
+    </key>
+
     <key name="enable-tooltips" type="b">
       <default>true</default>
       <summary>Enable tooltips</summary>

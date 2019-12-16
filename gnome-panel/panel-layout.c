@@ -1078,18 +1078,41 @@ panel_layout_load_object (const char *object_id)
 static char *
 panel_layout_get_default_layout_file (void)
 {
-        char *user_file;
+        GSettings *settings;
+        char *default_layout;
+        char *layout_name;
+        char *filename;
 
-        user_file = g_build_filename (g_get_user_config_dir (),
-                                      "gnome-panel",
-                                      "layouts",
-                                      DEFAULT_LAYOUT_FILE,
-                                      NULL);
+        settings = g_settings_new ("org.gnome.gnome-panel.general");
+        default_layout = g_settings_get_string (settings, "default-layout");
+        g_object_unref (settings);
 
-        if (g_file_test (user_file, G_FILE_TEST_IS_REGULAR))
-                return user_file;
+        layout_name = g_strdup_printf ("%s.layout", default_layout);
+        g_free (default_layout);
 
-        g_free (user_file);
+        filename = g_build_filename (g_get_user_config_dir (),
+                                     "gnome-panel",
+                                     "layouts",
+                                     layout_name,
+                                     NULL);
+
+        if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)) {
+                g_free (layout_name);
+                return filename;
+        }
+
+        g_free (filename);
+        filename = g_build_filename (LAYOUTSDIR,
+                                     layout_name,
+                                     NULL);
+
+        if (g_file_test (filename, G_FILE_TEST_IS_REGULAR)) {
+                g_free (layout_name);
+                return filename;
+        }
+
+        g_free (layout_name);
+        g_free (filename);
 
         return g_build_filename (LAYOUTSDIR,
                                  DEFAULT_LAYOUT_FILE,
