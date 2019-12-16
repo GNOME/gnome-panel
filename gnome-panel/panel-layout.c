@@ -322,14 +322,14 @@ panel_layout_maybe_append_object_instance_config (GKeyFile    *keyfile,
 
                 g_strfreev (tokens);
         } else {
-                char *key;
+                char *tmp;
 
-                key = g_strdup_printf ("%s%s/%s%s",
+                tmp = g_strdup_printf ("%s%s/%s%s",
                                        path_prefix, unique_id,
                                        PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX,
                                        keyname);
-                panel_dconf_write_sync (key, variant, NULL);
-                g_free (key);
+                panel_dconf_write_sync (tmp, variant, NULL);
+                g_free (tmp);
         }
 
         g_variant_unref (variant);
