@@ -24,7 +24,7 @@ gsettings_SCHEMAS = \
 @GSETTINGS_RULES@
 
 default_layoutdir   = $(datadir)/gnome-panel/layouts
-default_layout_DATA = panel-default-layout.layout
+default_layout_DATA = default.layout
 
 EXTRA_DIST = \
 	$(gsettings_SCHEMAS) \

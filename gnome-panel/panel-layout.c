@@ -45,7 +45,7 @@ static GSettings *layout_settings = NULL;
 
 #define PANEL_LAYOUT_ERROR panel_layout_error_quark ()
 
-#define PANEL_LAYOUT_DEFAULT_LAYOUT_FILE "panel-default-layout.layout"
+#define DEFAULT_LAYOUT_FILE "default.layout"
 #define PANEL_LAYOUT_INSTANCE_CONFIG_SUBPATH "@instance-config/"
 
 static void panel_layout_load_toplevel    (const char *toplevel_id);
@@ -1083,7 +1083,7 @@ panel_layout_get_default_layout_file (void)
         user_file = g_build_filename (g_get_user_config_dir (),
                                       "gnome-panel",
                                       "layouts",
-                                      PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
+                                      DEFAULT_LAYOUT_FILE,
                                       NULL);
 
         if (g_file_test (user_file, G_FILE_TEST_IS_REGULAR))
@@ -1092,7 +1092,7 @@ panel_layout_get_default_layout_file (void)
         g_free (user_file);
 
         return g_build_filename (LAYOUTSDIR,
-                                 PANEL_LAYOUT_DEFAULT_LAYOUT_FILE,
+                                 DEFAULT_LAYOUT_FILE,
                                  NULL);
 }
 
