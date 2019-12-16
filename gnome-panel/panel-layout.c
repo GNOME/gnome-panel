@@ -543,7 +543,7 @@ panel_layout_append_group (GKeyFile    *keyfile,
         return FALSE;
 }
 
-void
+static void
 panel_layout_append_from_file (const char *layout_file)
 {
         GError    *error = NULL;

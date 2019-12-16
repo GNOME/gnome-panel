@@ -30,8 +30,6 @@
 
 G_BEGIN_DECLS
 
-void panel_layout_append_from_file (const char *layout_file);
-
 gboolean panel_layout_load         (void);
 
 gboolean panel_layout_is_writable  (void);
