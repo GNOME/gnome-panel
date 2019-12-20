@@ -292,6 +292,10 @@ AC_CONFIG_FILES([
   doc/reference/Makefile
   doc/reference/libpanel-applet/Makefile
 
+  docs/Makefile
+  docs/reference/Makefile
+  docs/reference/libgnome-panel/Makefile
+
   help/Makefile
   help/clock/Makefile
   help/fish/Makefile
