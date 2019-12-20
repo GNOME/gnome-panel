@@ -670,7 +670,7 @@ install_properties (GObjectClass *object_class)
   /**
    * GpApplet:menu-icon-size:
    *
-   * The size of icons in panels.
+   * The size of icons in menus.
    */
   properties[PROP_MENU_ICON_SIZE] =
     g_param_spec_uint ("menu-icon-size", "Menu Icon Size", "Menu Icon Size",

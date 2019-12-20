@@ -99,6 +99,13 @@
  * ]|
  */
 
+/**
+ * GpModule:
+ *
+ * #GpModule is an opaque data structure and can only be accessed using
+ * the following functions.
+ */
+
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -462,8 +469,8 @@ gp_module_set_version (GpModule    *module,
 }
 
 /**
- * gp_module_info_set_applets:
- * @info: a #GpModuleInfo
+ * gp_module_set_applet_ids:
+ * @module: a #GpModuleInfo
  * @...: a %NULL-terminated list of applet ids in this module
  *
  * Sets the applets available in this module.

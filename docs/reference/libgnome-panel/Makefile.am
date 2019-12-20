@@ -46,10 +46,16 @@ EXTRA_HFILES =
 # Header files or dirs to ignore when scanning. Use base file/dir names
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h private_code
 IGNORE_HFILES = \
+	gp-action-private.h \
+	gp-action.h \
 	gp-applet-info-private.h \
 	gp-applet-private.h \
 	gp-enum-types.h \
-	gp-module-info-private.h \
+	gp-image-menu-item.h \
+	gp-initial-setup-dialog-private.h \
+	gp-initial-setup-dialog.h \
+	gp-module-private.h \
+	gp-utils.h \
 	$(NULL)
 
 # Images to copy into HTML directory.
