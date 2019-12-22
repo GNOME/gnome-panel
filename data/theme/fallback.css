@@ -3,30 +3,30 @@
   min-width: 16px;
 }
 
-.gp-image-menu-item > image:dir(ltr) {
+.gp-image-menu-item:not(.image-only) > image:dir(ltr) {
   margin-right: 5px;
 }
 
-.gp-image-menu-item > image:dir(rtl) {
+.gp-image-menu-item:not(.image-only) > image:dir(rtl) {
   margin-left: 5px;
 }
 
-panel-toplevel.left gp-applet > menubar > .gp-image-menu-item > image:dir(ltr) {
+panel-toplevel.left gp-applet > menubar > .gp-image-menu-item:not(.image-only) > image:dir(ltr) {
   margin-right: 0px;
   margin-top: 5px;
 }
 
-panel-toplevel.left gp-applet > menubar > .gp-image-menu-item > image:dir(rtl) {
+panel-toplevel.left gp-applet > menubar > .gp-image-menu-item:not(.image-only) > image:dir(rtl) {
   margin-left: 0px;
   margin-bottom: 5px;
 }
 
-panel-toplevel.right gp-applet > menubar > .gp-image-menu-item > image:dir(ltr) {
+panel-toplevel.right gp-applet > menubar > .gp-image-menu-item:not(.image-only) > image:dir(ltr) {
   margin-right: 0px;
   margin-bottom: 5px;
 }
 
-panel-toplevel.right gp-applet > menubar > .gp-image-menu-item > image:dir(rtl) {
+panel-toplevel.right gp-applet > menubar > .gp-image-menu-item:not(.image-only) > image:dir(rtl) {
   margin-left: 0px;
   margin-top: 5px;
 }

@@ -36,6 +36,36 @@ struct _GpImageMenuItem
 
 G_DEFINE_TYPE (GpImageMenuItem, gp_image_menu_item, GTK_TYPE_MENU_ITEM)
 
+static void
+update_css_class (GpImageMenuItem *self)
+{
+  GtkStyleContext *context;
+  const char *label;
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (self));
+
+  if (self->image == NULL)
+    {
+      gtk_style_context_remove_class (context, "image-only");
+      return;
+    }
+
+  label = gtk_menu_item_get_label (GTK_MENU_ITEM (self));
+
+  if (label != NULL && *label != '\0')
+    return;
+
+  gtk_style_context_add_class (context, "image-only");
+}
+
+static void
+notify_label_cb (GpImageMenuItem *self,
+                 GParamSpec      *pspec,
+                 gpointer         user_data)
+{
+  update_css_class (self);
+}
+
 static GtkPackDirection
 get_pack_direction (GpImageMenuItem *item)
 {
@@ -270,6 +300,8 @@ gp_image_menu_item_remove (GtkContainer *container,
 
   item->image = NULL;
 
+  update_css_class (item);
+
   if (image_visible && gtk_widget_get_visible (GTK_WIDGET (container)))
     gtk_widget_queue_resize (GTK_WIDGET (container));
 }
@@ -332,6 +364,8 @@ static void
 gp_image_menu_item_init (GpImageMenuItem *item)
 {
   GtkStyleContext *context;
+
+  g_signal_connect (item, "notify::label", G_CALLBACK (notify_label_cb), NULL);
 
   context = gtk_widget_get_style_context (GTK_WIDGET (item));
   gtk_style_context_add_class (context, "gp-image-menu-item");
@@ -403,6 +437,9 @@ gp_image_menu_item_set_image (GpImageMenuItem *item,
     gtk_container_remove (GTK_CONTAINER (item), item->image);
 
   item->image = image;
+
+  update_css_class (item);
+
   if (image == NULL)
     return;
 
