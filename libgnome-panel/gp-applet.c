@@ -77,6 +77,8 @@ typedef struct
 
   gboolean            enable_tooltips;
 
+  gboolean            prefer_symbolic_icons;
+
   guint               panel_icon_size;
   guint               menu_icon_size;
 } GpAppletPrivate;
@@ -94,6 +96,8 @@ enum
   PROP_POSITION,
 
   PROP_ENABLE_TOOLTIPS,
+
+  PROP_PREFER_SYMBOLIC_ICONS,
 
   PROP_PANEL_ICON_SIZE,
   PROP_MENU_ICON_SIZE,
@@ -134,6 +138,25 @@ update_enable_tooltips (GpApplet *applet)
 
   g_object_notify_by_pspec (G_OBJECT (applet),
                             properties[PROP_ENABLE_TOOLTIPS]);
+}
+
+static void
+update_prefer_symbolic_icons (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+  gboolean prefer_symbolic_icons;
+
+  priv = gp_applet_get_instance_private (applet);
+  prefer_symbolic_icons = g_settings_get_boolean (priv->general_settings,
+                                                  "prefer-symbolic-icons");
+
+  if (priv->prefer_symbolic_icons == prefer_symbolic_icons)
+    return;
+
+  priv->prefer_symbolic_icons = prefer_symbolic_icons;
+
+  g_object_notify_by_pspec (G_OBJECT (applet),
+                            properties[PROP_PREFER_SYMBOLIC_ICONS]);
 }
 
 static void
@@ -216,6 +239,9 @@ general_settings_changed_cb (GSettings   *settings,
 {
   if (key == NULL || g_strcmp0 (key, "enable-tooltips") == 0)
     update_enable_tooltips (applet);
+
+  if (key == NULL || g_strcmp0 (key, "prefer-symbolic-icons") == 0)
+    update_prefer_symbolic_icons (applet);
 
   if (key == NULL || g_strcmp0 (key, "menu-icon-size") == 0)
     update_menu_icon_size (applet);
@@ -404,6 +430,10 @@ gp_applet_get_property (GObject    *object,
         g_value_set_boolean (value, priv->enable_tooltips);
         break;
 
+      case PROP_PREFER_SYMBOLIC_ICONS:
+        g_value_set_boolean (value, priv->prefer_symbolic_icons);
+        break;
+
       case PROP_PANEL_ICON_SIZE:
         g_value_set_uint (value, priv->panel_icon_size);
         break;
@@ -465,6 +495,9 @@ gp_applet_set_property (GObject      *object,
         break;
 
       case PROP_ENABLE_TOOLTIPS:
+        break;
+
+      case PROP_PREFER_SYMBOLIC_ICONS:
         break;
 
       case PROP_PANEL_ICON_SIZE:
@@ -654,6 +687,20 @@ install_properties (GObjectClass *object_class)
     g_param_spec_boolean ("enable-tooltips", "Enable Tooltips", "Enable Tooltips",
                           TRUE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                          G_PARAM_STATIC_STRINGS);
+
+  /**
+   * GpApplet:prefer-symbolic-icons:
+   *
+   * Whether the applet should prefer symbolic icons in panels.
+   */
+  properties[PROP_PREFER_SYMBOLIC_ICONS] =
+    g_param_spec_boolean ("prefer-symbolic-icons",
+                          "Prefer symbolic icons",
+                          "Prefer symbolic icons",
+                          FALSE,
+                          G_PARAM_READABLE |
+                          G_PARAM_EXPLICIT_NOTIFY |
                           G_PARAM_STATIC_STRINGS);
 
   /**
@@ -1244,6 +1291,25 @@ gp_applet_get_menu (GpApplet *applet)
     return NULL;
 
   return gtk_menu_new_from_model (G_MENU_MODEL (object));
+}
+
+/**
+ * gp_applet_get_prefer_symbolic_icons:
+ * @applet: a #GpApplet
+ *
+ * Returns whether the applet should prefer symbolic icons in panels.
+ *
+ * Returns: whether the applet should prefer symbolic icons in panels.
+ */
+gboolean
+gp_applet_get_prefer_symbolic_icons (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+
+  g_return_val_if_fail (GP_IS_APPLET (applet), FALSE);
+  priv = gp_applet_get_instance_private (applet);
+
+  return priv->prefer_symbolic_icons;
 }
 
 /**

@@ -80,44 +80,46 @@ struct _GpAppletClass
   gpointer padding[10];
 };
 
-gboolean         gp_applet_get_locked_down          (GpApplet           *applet);
+gboolean         gp_applet_get_locked_down           (GpApplet           *applet);
 
-GtkOrientation   gp_applet_get_orientation          (GpApplet           *applet);
+GtkOrientation   gp_applet_get_orientation           (GpApplet           *applet);
 
-GtkPositionType  gp_applet_get_position             (GpApplet           *applet);
+GtkPositionType  gp_applet_get_position              (GpApplet           *applet);
 
-void             gp_applet_set_flags                (GpApplet           *applet,
-                                                     GpAppletFlags       flags);
+void             gp_applet_set_flags                 (GpApplet           *applet,
+                                                      GpAppletFlags       flags);
 
-void             gp_applet_set_size_hints           (GpApplet           *applet,
-                                                     const gint         *size_hints,
-                                                     guint               n_elements,
-                                                     gint                base_size);
+void             gp_applet_set_size_hints            (GpApplet           *applet,
+                                                      const gint         *size_hints,
+                                                      guint               n_elements,
+                                                      gint                base_size);
 
-GSettings       *gp_applet_settings_new             (GpApplet           *applet,
-                                                     const gchar        *schema);
+GSettings       *gp_applet_settings_new              (GpApplet           *applet,
+                                                      const gchar        *schema);
 
-void             gp_applet_request_focus            (GpApplet           *applet,
-                                                     guint32             timestamp);
+void             gp_applet_request_focus             (GpApplet           *applet,
+                                                      guint32             timestamp);
 
-void             gp_applet_setup_menu               (GpApplet           *applet,
-                                                     const gchar        *xml,
-                                                     const GActionEntry *entries);
+void             gp_applet_setup_menu                (GpApplet           *applet,
+                                                      const gchar        *xml,
+                                                      const GActionEntry *entries);
 
-void             gp_applet_setup_menu_from_file     (GpApplet           *applet,
-                                                     const gchar        *filename,
-                                                     const GActionEntry *entries);
+void             gp_applet_setup_menu_from_file      (GpApplet           *applet,
+                                                      const gchar        *filename,
+                                                      const GActionEntry *entries);
 
-void             gp_applet_setup_menu_from_resource (GpApplet           *applet,
-                                                     const gchar        *resource_path,
-                                                     const GActionEntry *entries);
+void             gp_applet_setup_menu_from_resource  (GpApplet           *applet,
+                                                      const gchar        *resource_path,
+                                                      const GActionEntry *entries);
 
-GAction         *gp_applet_menu_lookup_action       (GpApplet           *applet,
-                                                     const gchar        *action_name);
+GAction         *gp_applet_menu_lookup_action        (GpApplet           *applet,
+                                                      const gchar        *action_name);
 
-guint            gp_applet_get_panel_icon_size      (GpApplet           *applet);
+gboolean         gp_applet_get_prefer_symbolic_icons (GpApplet           *applet);
 
-guint            gp_applet_get_menu_icon_size       (GpApplet           *applet);
+guint            gp_applet_get_panel_icon_size       (GpApplet           *applet);
+
+guint            gp_applet_get_menu_icon_size        (GpApplet           *applet);
 
 G_END_DECLS
 
