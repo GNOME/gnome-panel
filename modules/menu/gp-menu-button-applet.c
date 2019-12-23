@@ -25,6 +25,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <libgnome-panel/gp-image-menu-item.h>
+#include <libgnome-panel/gp-utils.h>
 
 #include "gp-lock-logout.h"
 #include "gp-menu-button.h"
@@ -118,7 +119,15 @@ update_icon (GpMenuButtonApplet *menu_button)
     icon = gp_menu_get_icon (GP_MENU (priv->menu));
 
   if (icon == NULL)
-    icon = g_themed_icon_new ("start-here");
+    {
+      const char *icon_name;
+
+      icon_name = "start-here";
+      if (gp_applet_get_prefer_symbolic_icons (GP_APPLET (menu_button)))
+        icon_name = "start-here-symbolic";
+
+      icon = g_themed_icon_new (icon_name);
+    }
 
   gtk_image_set_from_gicon (GTK_IMAGE (priv->image), icon, GTK_ICON_SIZE_MENU);
 
@@ -432,6 +441,14 @@ arrow_size_from_icon_size (guint icon_size)
 }
 
 static void
+prefer_symbolic_icons_cb (GpApplet           *applet,
+                          GParamSpec         *pspec,
+                          GpMenuButtonApplet *menu_button)
+{
+  update_icon (menu_button);
+}
+
+static void
 panel_icon_size_cb (GpApplet           *applet,
                     GParamSpec         *pspec,
                     GpMenuButtonApplet *menu_button)
@@ -559,6 +576,7 @@ setup_button (GpMenuButtonApplet *menu_button)
   gtk_widget_show (overlay);
 
   priv->image = gtk_image_new ();
+  gp_add_text_color_class (priv->image);
   gtk_container_add (GTK_CONTAINER (overlay), priv->image);
   gtk_widget_show (priv->image);
 
@@ -605,6 +623,9 @@ gp_menu_button_applet_setup (GpMenuButtonApplet *menu_button)
 
   g_signal_connect (priv->settings, "changed",
                     G_CALLBACK (settings_changed_cb), menu_button);
+
+  g_signal_connect (menu_button, "notify::prefer-symbolic-icons",
+                    G_CALLBACK (prefer_symbolic_icons_cb), menu_button);
 
   g_signal_connect (menu_button, "notify::panel-icon-size",
                     G_CALLBACK (panel_icon_size_cb), menu_button);

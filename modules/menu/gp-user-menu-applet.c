@@ -23,6 +23,7 @@
 #include "gp-user-menu.h"
 
 #include <libgnome-panel/gp-image-menu-item.h>
+#include <libgnome-panel/gp-utils.h>
 
 struct _GpUserMenuApplet
 {
@@ -51,31 +52,56 @@ button_press_event_cb (GtkWidget      *widget,
 }
 
 static void
+update_icon (GpApplet  *applet,
+             GtkWidget *icon)
+{
+  const char *icon_name;
+  guint icon_size;
+
+  icon_name = "computer";
+  if (gp_applet_get_prefer_symbolic_icons (applet))
+    icon_name = "computer-symbolic";
+
+  icon_size = gp_applet_get_panel_icon_size (applet);
+
+  gtk_image_set_from_icon_name (GTK_IMAGE (icon), icon_name, GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+}
+
+static void
+prefer_symbolic_icons_cb (GpApplet   *applet,
+                          GParamSpec *pspec,
+                          GtkWidget  *icon)
+{
+  update_icon (applet, icon);
+}
+
+static void
 panel_icon_size_cb (GpApplet   *applet,
                     GParamSpec *pspec,
                     GtkWidget  *icon)
 {
-  guint icon_size;
-
-  icon_size = gp_applet_get_panel_icon_size (applet);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+  update_icon (applet, icon);
 }
 
 static void
 append_user_item (GpUserMenuApplet *applet)
 {
-  guint icon_size;
   GtkWidget *icon;
   gchar *user_name;
   GtkWidget *item;
   GtkWidget *menu;
 
-  icon_size = gp_applet_get_panel_icon_size (GP_APPLET (applet));
-  icon = gtk_image_new_from_icon_name ("computer", GTK_ICON_SIZE_MENU);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon), icon_size);
+  icon = gtk_image_new ();
+  gp_add_text_color_class (icon);
+
+  g_signal_connect (applet, "notify::prefer-symbolic-icons",
+                    G_CALLBACK (prefer_symbolic_icons_cb), icon);
 
   g_signal_connect (applet, "notify::panel-icon-size",
                     G_CALLBACK (panel_icon_size_cb), icon);
+
+  update_icon (GP_APPLET (applet), icon);
 
   user_name = gp_menu_utils_get_user_name ();
   item = gp_image_menu_item_new_with_label (user_name);
