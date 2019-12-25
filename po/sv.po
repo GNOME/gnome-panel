@@ -1,5 +1,5 @@
 # Swedish messages for gnome-panel.
-# Copyright © 1998-2018 Free Software Foundation, Inc.
+# Copyright © 1998-2019 Free Software Foundation, Inc.
 # Martin Wahlen <mva@sbbs.se>, 1998.
 # Anders Carlsson <anders.carlsson@tordata.se>, 1999.
 # Andreas Hyden  <a.hyden@cyberpoint.se>, 2000.
@@ -7,15 +7,15 @@
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004, 2005.
 # Johan Dahlin <jdahlin@telia.com>, 2002.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019.
 # Josef Andersson <josef.andersson@fripost.org>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-09-22 08:14+0000\n"
-"PO-Revision-Date: 2018-09-23 19:08+0200\n"
+"POT-Creation-Date: 2019-12-23 12:46+0000\n"
+"PO-Revision-Date: 2019-12-25 23:12+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -240,10 +240,18 @@ msgstr ""
 "nyckel är endast relevant om nyckeln display_all_workspaces är sann."
 
 #: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Standardpanellayout"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr "Standardlayouten att använda när paneler skapas"
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Aktivera inforutor"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -251,11 +259,15 @@ msgstr ""
 "Om true kommer inforutor att visas för objekt i paneler. Inforutor kan "
 "inaktiveras för hela skrivbordet med egenskapen gtk-enable-tooltips i GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:33
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr "Föredra symboliska ikoner i paneler"
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Bekräfta borttagning av panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -263,31 +275,31 @@ msgstr ""
 "Om true visas en dialogruta som frågar efter bekräftelse när användaren vill "
 "ta bort en panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:39
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
 msgstr "Ikonstorlek i menyer"
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
 msgstr "Storleken på ikoner i menyer."
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
 msgstr "Maximal ikonstorlek i paneler"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "The maximum size of icons in panels."
 msgstr "Den maximala ikonstorleken i paneler."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Den temavariant som ska användas"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Lista med panel-id"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -296,11 +308,11 @@ msgstr ""
 "Inställningarna för var och en av dessa paneler lagras i /apps/panel/"
 "toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Lista med panelobjekt-id"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -311,11 +323,11 @@ msgstr ""
 "menyknapp/menyrad). Inställningarna för vart och ett av dessa objekt lagras "
 "i /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Lås panelen helt"
 
-#: data/org.gnome.gnome-panel.gschema.xml:72
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -325,11 +337,11 @@ msgstr ""
 "panelen. Enskilda miniprogram måste däremot låsas separat. Panelen måste "
 "startas om för att detta ska börja gälla."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "Miniprograms-IID att förhindra från inläsning"
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -342,11 +354,11 @@ msgstr ""
 "commander\" kan du lägga till \"OAFIID:GNOME_MiniCommanderApplet\" i denna "
 "lista. Panelen måste startas om för att detta ska börja gälla."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Inaktivera framtvingat avslut"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -354,22 +366,22 @@ msgstr ""
 "Om true kommer panelen inte att tillåta att en användare tvingar ett program "
 "att avsluta genom att ta bort åtkomsten till knappen tvinga avslutande."
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:101
 msgid "History of \"Run Application\" dialog"
 msgstr "Historik för dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:90
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Lista över kommandon som tidigare har använts i dialogfönstret \"Kör program"
 "\"."
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Aktivera programlista i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:95
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -379,11 +391,11 @@ msgstr ""
 "tillgänglig. Huruvida listan fälls ut eller inte när dialogfönstret visas "
 "styrs av nyckeln show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:99
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Fäll ut programlista i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:100
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -393,11 +405,11 @@ msgstr ""
 "när dialogfönstret öppnas. Denna nyckel är endast relevant om nyckeln "
 "enable_program_list är true."
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Aktivera automatisk komplettering i dialogfönstret \"Kör program\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -828,11 +840,6 @@ msgstr ""
 "Starta andra program och tillhandahålla olika verktyg för att hantera "
 "fönster, visa tiden, etc."
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
-
 #: gnome-panel/gp-add-applet-window.c:137
 msgid "Help"
 msgstr "Hjälp"
@@ -1023,7 +1030,7 @@ msgstr "Välj en ikon"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
 #: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
@@ -1327,7 +1334,7 @@ msgstr "Ko_mmentar:"
 msgid "_Revert"
 msgstr "Åte_rställ"
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
@@ -1391,7 +1398,7 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Tvinga avslut"
 
-#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
+#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan inte skapa initial panellayout.\n"
 
@@ -1410,20 +1417,20 @@ msgstr "Kunde inte köra kommandot ”%s”"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Kunde inte konvertera ”%s” från UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1288
 msgid "Choose a file to append to the command..."
 msgstr "Välj en fil att lägga till efter kommandot…"
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1709
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: ”%s”"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1742
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1696,64 +1703,64 @@ msgstr "Datorklocka"
 msgid "Failed to open the time settings"
 msgstr "Misslyckades med att öppna tidsinställningarna"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Kunde inte visa hjälpdokumentet ”%s”"
 
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Fel vid visning av hjälpdokumentet"
 
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1626
 msgid "Choose Location"
 msgstr "Välj plats"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1705
 msgid "Edit Location"
 msgstr "Redigera plats"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
 msgid "Default"
 msgstr "Standard"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1742
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1743
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1744
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1750
 msgid "Meters per second (m/s)"
 msgstr "Meter per sekund (m/s)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1751
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per timme (kph)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1752
 msgid "Miles per hour (mph)"
 msgstr "Engelska mil per timme (mph)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1753
 msgid "Knots"
 msgstr "Knop"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1754
 msgid "Beaufort scale"
 msgstr "Beauforts skala"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1807
 msgid "City Name"
 msgstr "Stadens namn"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1811
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
@@ -2098,33 +2105,33 @@ msgstr "Växla användare"
 msgid "Hybrid Sleep"
 msgstr "Hybridvila"
 
-#: modules/menu/gp-menu-bar-applet.c:119
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Program"
 
-#: modules/menu/gp-menu-bar-applet.c:124
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Bläddra och kör installerade program"
 
-#: modules/menu/gp-menu-bar-applet.c:159
-#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
 msgid "Places"
 msgstr "Platser"
 
-#: modules/menu/gp-menu-bar-applet.c:163
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Kom åt dokument, mappar och nätverksplatser"
 
-#: modules/menu/gp-menu-bar-applet.c:199
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "System"
 
-#: modules/menu/gp-menu-bar-applet.c:203
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr "Ändra systemets utseende och beteende, eller få hjälp"
 
-#: modules/menu/gp-menu-bar-applet.c:253
-#: modules/menu/gp-menu-button-applet.c:469
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Installera programmet ”%s”."
@@ -2459,6 +2466,9 @@ msgstr "Visa _namn på arbetsytor i växlaren"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Arbetsytor"
+
+#~ msgid "gnome-panel"
+#~ msgstr "gnome-panel"
 
 #~ msgid "Icon size in the menus"
 #~ msgstr "Ikonstorlek i menyerna"
