@@ -40,7 +40,7 @@ static void
 update_css_class (GpImageMenuItem *self)
 {
   GtkStyleContext *context;
-  const char *label;
+  GtkWidget *child;
 
   context = gtk_widget_get_style_context (GTK_WIDGET (self));
 
@@ -50,10 +50,20 @@ update_css_class (GpImageMenuItem *self)
       return;
     }
 
-  label = gtk_menu_item_get_label (GTK_MENU_ITEM (self));
+  child = gtk_bin_get_child (GTK_BIN (self));
 
-  if (label != NULL && *label != '\0')
-    return;
+  if (child != NULL && GTK_IS_LABEL (child))
+    {
+      const char *text;
+
+      text = gtk_label_get_text (GTK_LABEL (child));
+      if (text != NULL && *text != '\0')
+        return;
+    }
+  else if (child != NULL)
+    {
+      return;
+    }
 
   gtk_style_context_add_class (context, "image-only");
 }
