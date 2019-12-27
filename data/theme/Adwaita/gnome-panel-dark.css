@@ -32,39 +32,21 @@ gp-calendar-window label,
   color: #ffffff;
 }
 
-gp-applet.separator > separator {
-  margin: 2px 4px;
-}
-
-#clock-applet-button,
-#showdesktop-button {
-  padding: 0px 4px;
-  border: 0;
-  border-radius: 0;
+.gnome-panel-menu-bar > menuitem:hover > label,
+panel-applet > menubar > menuitem:hover > label,
+gp-applet > menubar > menuitem:hover > .gp-text-color,
+gp-applet > menubar > menuitem:hover > box > .gp-text-color {
+  font-weight: normal;
+  color: #ffffff;
 }
 
 wnck-pager:selected {
   background-color: #215d9c;
 }
 
-na-tray-applet {
-  -NaTrayApplet-icon-padding: 2;
-  -NaTrayApplet-icon-size: 16;
-}
-
 gp-arrow-button {
-  min-width: 20px;
-  min-height: 0px;
-
   border: 1px solid #1c1f1f;
-  border-radius: 3px;
   background-image: linear-gradient(to bottom, #343a3a, #2f3434 60%, #2a2f2f);
-  margin: 2px;
-}
-
-.vertical gp-arrow-button {
-  min-width: 0px;
-  min-height: 20px;
 }
 
 gp-arrow-button:hover {
@@ -73,14 +55,6 @@ gp-arrow-button:hover {
 
 gp-arrow-button:active {
   background-image: linear-gradient(to bottom, #232727, #2d3232);
-}
-
-.horizontal sn-item {
-  padding: 0px 3px;
-}
-
-.vertical sn-item {
-  padding: 3px 0px;
 }
 
 #tasklist-button,

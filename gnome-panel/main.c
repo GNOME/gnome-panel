@@ -39,13 +39,72 @@ static const GOptionEntry options[] = {
   { NULL }
 };
 
+typedef struct
+{
+  const char *name;
+  const char *dir;
+  const char *variant;
+  gboolean    has_dark_variant;
+} GpSupportedTheme;
+
+static GpSupportedTheme supported_themes[] =
+{
+  { "Adwaita", "Adwaita", NULL, TRUE },
+  { "Adwaita-dark", "Adwaita", "dark", FALSE },
+  { "HighContrast", "HighContrast", NULL, FALSE },
+  { "HighContrastInverse", "HighContrast", "inverse", FALSE },
+  { NULL, NULL, FALSE, FALSE }
+};
+
+static char *
+get_theme_resource (GpSupportedTheme *theme,
+                    gboolean          prefer_dark)
+{
+  char *filename;
+  const char *resource_base;
+  char *resource;
+
+  if (theme->variant != NULL)
+    filename = g_strdup_printf ("gnome-panel-%s.css", theme->variant);
+  else if (theme->has_dark_variant && prefer_dark)
+    filename = g_strdup ("gnome-panel-dark.css");
+  else
+    filename = g_strdup ("gnome-panel.css");
+
+  resource_base = "/org/gnome/gnome-panel/theme";
+  resource = g_strdup_printf ("%s/%s/%s", resource_base, theme->dir, filename);
+  g_free (filename);
+
+  return resource;
+}
+
+static gboolean
+is_theme_supported (const char        *theme_name,
+                    GpSupportedTheme **theme)
+{
+  int i;
+
+  for (i = 0; supported_themes[i].name != NULL; i++)
+    {
+      if (g_strcmp0 (supported_themes[i].name, theme_name) == 0)
+        {
+          *theme = &supported_themes[i];
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 theme_changed (GtkSettings *settings,
+               GParamSpec  *pspec,
                gpointer     user_data)
 {
   GdkScreen *screen;
   gchar *theme_name;
   gboolean dark_theme;
+  GpSupportedTheme *theme;
   guint priority;
   gchar *resource;
   GtkCssProvider *css;
@@ -63,17 +122,15 @@ theme_changed (GtkSettings *settings,
                 "gtk-application-prefer-dark-theme", &dark_theme,
                 NULL);
 
-  if (g_strcmp0 (theme_name, "Adwaita") != 0 &&
-      g_strcmp0 (theme_name, "HighContrast") != 0)
+  if (is_theme_supported (theme_name, &theme))
     {
-      priority = GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
-      resource = g_strdup ("/org/gnome/gnome-panel/theme/fallback.css");
+      resource = get_theme_resource (theme, dark_theme);
+      priority = GTK_STYLE_PROVIDER_PRIORITY_APPLICATION;
     }
   else
     {
-      priority = GTK_STYLE_PROVIDER_PRIORITY_APPLICATION;
-      resource = g_strdup_printf ("/org/gnome/gnome-panel/theme/%s/gnome-panel%s.css",
-                                  theme_name, dark_theme ? "-dark" : "");
+      resource = g_strdup ("/org/gnome/gnome-panel/theme/fallback.css");
+      priority = GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
     }
 
   css = gtk_css_provider_new ();
@@ -106,7 +163,7 @@ theme_variant_changed_cb (GSettings   *settings,
                     variant == PANEL_THEME_VARIANT_DARK, NULL);
     }
 
-  theme_changed (gtk_settings, NULL);
+  theme_changed (gtk_settings, NULL, NULL);
 }
 
 static gboolean
