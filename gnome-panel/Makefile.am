@@ -16,16 +16,17 @@ panel_sources =			\
 	gp-application.h \
 	gp-arrow-button.c \
 	gp-arrow-button.h \
+	gp-main.c \
 	gp-module-manager.c \
 	gp-module-manager.h \
 	gp-properties-dialog.c \
 	gp-properties-dialog.h \
+	gp-session.c \
+	gp-session.h \
 	gp-theme.c \
 	gp-theme.h \
-	main.c			\
 	panel-widget.c		\
 	button-widget.c		\
-	panel-session.c		\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
@@ -54,7 +55,6 @@ panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
 	button-widget.h		\
-	panel-session.h		\
 	panel.h			\
 	applet.h		\
 	panel-util.h		\
