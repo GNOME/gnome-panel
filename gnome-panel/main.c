@@ -30,142 +30,11 @@
 static gboolean  replace = FALSE;
 static gboolean  version = FALSE;
 
-static GSettings *g_settings = NULL;
-static GtkSettings *gtk_settings = NULL;
-static GtkStyleProvider *provider = NULL;
-
 static const GOptionEntry options[] = {
   { "replace", 0, 0, G_OPTION_ARG_NONE, &replace, N_("Replace a currently running panel"), NULL },
   { "version", 0, 0, G_OPTION_ARG_NONE, &version, N_("Print version"), NULL},
   { NULL }
 };
-
-typedef struct
-{
-  const char *name;
-  const char *dir;
-  const char *variant;
-  gboolean    has_dark_variant;
-} GpSupportedTheme;
-
-static GpSupportedTheme supported_themes[] =
-{
-  { "Adwaita", "Adwaita", NULL, TRUE },
-  { "Adwaita-dark", "Adwaita", "dark", FALSE },
-  { "HighContrast", "HighContrast", NULL, FALSE },
-  { "HighContrastInverse", "HighContrast", "inverse", FALSE },
-  { NULL, NULL, FALSE, FALSE }
-};
-
-static char *
-get_theme_resource (GpSupportedTheme *theme,
-                    gboolean          prefer_dark)
-{
-  char *filename;
-  const char *resource_base;
-  char *resource;
-
-  if (theme->variant != NULL)
-    filename = g_strdup_printf ("gnome-panel-%s.css", theme->variant);
-  else if (theme->has_dark_variant && prefer_dark)
-    filename = g_strdup ("gnome-panel-dark.css");
-  else
-    filename = g_strdup ("gnome-panel.css");
-
-  resource_base = "/org/gnome/gnome-panel/theme";
-  resource = g_strdup_printf ("%s/%s/%s", resource_base, theme->dir, filename);
-  g_free (filename);
-
-  return resource;
-}
-
-static gboolean
-is_theme_supported (const char        *theme_name,
-                    GpSupportedTheme **theme)
-{
-  int i;
-
-  for (i = 0; supported_themes[i].name != NULL; i++)
-    {
-      if (g_strcmp0 (supported_themes[i].name, theme_name) == 0)
-        {
-          *theme = &supported_themes[i];
-          return TRUE;
-        }
-    }
-
-  return FALSE;
-}
-
-static void
-theme_changed (GtkSettings *settings,
-               GParamSpec  *pspec,
-               gpointer     user_data)
-{
-  GdkScreen *screen;
-  gchar *theme_name;
-  gboolean dark_theme;
-  GpSupportedTheme *theme;
-  guint priority;
-  gchar *resource;
-  GtkCssProvider *css;
-
-  screen = gdk_screen_get_default ();
-
-  if (provider != NULL)
-    {
-      gtk_style_context_remove_provider_for_screen (screen, provider);
-      g_clear_object (&provider);
-    }
-
-  g_object_get (settings,
-                "gtk-theme-name", &theme_name,
-                "gtk-application-prefer-dark-theme", &dark_theme,
-                NULL);
-
-  if (is_theme_supported (theme_name, &theme))
-    {
-      resource = get_theme_resource (theme, dark_theme);
-      priority = GTK_STYLE_PROVIDER_PRIORITY_APPLICATION;
-    }
-  else
-    {
-      resource = g_strdup ("/org/gnome/gnome-panel/theme/fallback.css");
-      priority = GTK_STYLE_PROVIDER_PRIORITY_FALLBACK;
-    }
-
-  css = gtk_css_provider_new ();
-  provider = GTK_STYLE_PROVIDER (css);
-
-  gtk_css_provider_load_from_resource (css, resource);
-  gtk_style_context_add_provider_for_screen (screen, provider, priority);
-
-  g_free (theme_name);
-  g_free (resource);
-}
-
-static void
-theme_variant_changed_cb (GSettings   *settings,
-                          const gchar *key,
-                          gpointer     user_data)
-{
-  PanelThemeVariant variant;
-
-  variant = g_settings_get_enum (settings, key);
-
-  if (variant == PANEL_THEME_VARIANT_SYSTEM)
-    {
-      gtk_settings_reset_property (gtk_settings,
-                                   "gtk-application-prefer-dark-theme");
-    }
-  else
-    {
-      g_object_set (gtk_settings, "gtk-application-prefer-dark-theme",
-                    variant == PANEL_THEME_VARIANT_DARK, NULL);
-    }
-
-  theme_changed (gtk_settings, NULL, NULL);
-}
 
 static gboolean
 on_term_signal (gpointer user_data)
@@ -250,24 +119,11 @@ main (int argc, char **argv)
 	 * connecting to the session manager */
 	panel_session_register_client (session);
 
-	g_settings = g_settings_new (PANEL_GENERAL_SCHEMA);
-	g_signal_connect (g_settings, "changed::" PANEL_GENERAL_THEME_VARIANT_KEY,
-	                  G_CALLBACK (theme_variant_changed_cb), NULL);
-
-	gtk_settings = gtk_settings_get_default ();
-	g_signal_connect (gtk_settings, "notify::gtk-theme-name",
-	                  G_CALLBACK (theme_changed), NULL);
-	g_signal_connect (gtk_settings, "notify::gtk-application-prefer-dark-theme",
-	                  G_CALLBACK (theme_changed), NULL);
-
-	theme_variant_changed_cb (g_settings, PANEL_GENERAL_THEME_VARIANT_KEY, NULL);
-
 	application = gp_application_new ();
 
 	gtk_main ();
 
 	g_object_unref (application);
-	g_object_unref (g_settings);
 	g_object_unref (session);
 
 	toplevels_to_destroy = g_slist_copy (panel_toplevel_list_toplevels ());
