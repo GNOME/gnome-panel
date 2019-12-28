@@ -18,6 +18,7 @@
 #include <libpanel-util/panel-cleanup.h>
 #include <libpanel-util/panel-glib.h>
 
+#include "gp-application.h"
 #include "panel-toplevel.h"
 #include "panel-multiscreen.h"
 #include "panel-session.h"
@@ -187,6 +188,7 @@ main (int argc, char **argv)
 	GdkDisplay     *display;
 	GError         *error;
 	PanelSession   *session;
+	GpApplication  *application;
 	GSList         *toplevels_to_destroy;
 	GSList         *l;
 
@@ -260,8 +262,11 @@ main (int argc, char **argv)
 
 	theme_variant_changed_cb (g_settings, PANEL_GENERAL_THEME_VARIANT_KEY, NULL);
 
+	application = gp_application_new ();
+
 	gtk_main ();
 
+	g_object_unref (application);
 	g_object_unref (g_settings);
 	g_object_unref (session);
 

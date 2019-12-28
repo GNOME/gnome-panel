@@ -12,6 +12,8 @@ bin_PROGRAMS = \
 panel_sources =			\
 	gp-add-applet-window.c \
 	gp-add-applet-window.h \
+	gp-application.c \
+	gp-application.h \
 	gp-arrow-button.c \
 	gp-arrow-button.h \
 	gp-module-manager.c \
