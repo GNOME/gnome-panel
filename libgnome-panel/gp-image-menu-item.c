@@ -39,16 +39,14 @@ G_DEFINE_TYPE (GpImageMenuItem, gp_image_menu_item, GTK_TYPE_MENU_ITEM)
 static void
 update_css_class (GpImageMenuItem *self)
 {
-  GtkStyleContext *context;
+  gboolean image_only;
   GtkWidget *child;
+  GtkStyleContext *context;
 
-  context = gtk_widget_get_style_context (GTK_WIDGET (self));
+  image_only = TRUE;
 
   if (self->image == NULL)
-    {
-      gtk_style_context_remove_class (context, "image-only");
-      return;
-    }
+    image_only = FALSE;
 
   child = gtk_bin_get_child (GTK_BIN (self));
 
@@ -58,14 +56,19 @@ update_css_class (GpImageMenuItem *self)
 
       text = gtk_label_get_text (GTK_LABEL (child));
       if (text != NULL && *text != '\0')
-        return;
+        image_only = FALSE;
     }
   else if (child != NULL)
     {
-      return;
+      image_only = FALSE;
     }
 
-  gtk_style_context_add_class (context, "image-only");
+  context = gtk_widget_get_style_context (GTK_WIDGET (self));
+
+  if (!image_only)
+    gtk_style_context_remove_class (context, "image-only");
+  else
+    gtk_style_context_add_class (context, "image-only");
 }
 
 static void
@@ -270,6 +273,18 @@ gp_image_menu_item_size_allocate (GtkWidget     *widget,
 }
 
 static void
+gp_image_menu_item_add (GtkContainer *container,
+                        GtkWidget    *widget)
+{
+  GpImageMenuItem *self;
+
+  self = GP_IMAGE_MENU_ITEM (container);
+
+  GTK_CONTAINER_CLASS (gp_image_menu_item_parent_class)->add (container, widget);
+  update_css_class (self);
+}
+
+static void
 gp_image_menu_item_forall (GtkContainer *container,
                            gboolean      include_internals,
                            GtkCallback   callback,
@@ -302,6 +317,7 @@ gp_image_menu_item_remove (GtkContainer *container,
       GTK_CONTAINER_CLASS (gp_image_menu_item_parent_class)->remove (container,
                                                                      widget);
 
+      update_css_class (item);
       return;
     }
 
@@ -310,10 +326,10 @@ gp_image_menu_item_remove (GtkContainer *container,
 
   item->image = NULL;
 
-  update_css_class (item);
-
   if (image_visible && gtk_widget_get_visible (GTK_WIDGET (container)))
     gtk_widget_queue_resize (GTK_WIDGET (container));
+
+  update_css_class (item);
 }
 
 static void
@@ -362,6 +378,7 @@ gp_image_menu_item_class_init (GpImageMenuItemClass *item_class)
   widget_class->get_preferred_width = gp_image_menu_item_get_preferred_width;
   widget_class->size_allocate = gp_image_menu_item_size_allocate;
 
+  container_class->add = gp_image_menu_item_add;
   container_class->forall = gp_image_menu_item_forall;
   container_class->remove = gp_image_menu_item_remove;
 
