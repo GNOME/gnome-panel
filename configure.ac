@@ -278,6 +278,7 @@ AC_CONFIG_FILES([
   data/theme/Makefile
   data/theme/Adwaita/Makefile
   data/theme/HighContrast/Makefile
+  data/theme/Yaru/Makefile
 
   gnome-panel/Makefile
   gnome-panel/libpanel-applet-private/Makefile
