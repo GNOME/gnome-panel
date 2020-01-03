@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2018-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -27,25 +27,27 @@
 #include "config.h"
 #include "gp-image-menu-item.h"
 
-struct _GpImageMenuItem
+typedef struct
 {
-  GtkMenuItem  parent;
+  GtkWidget *image;
+} GpImageMenuItemPrivate;
 
-  GtkWidget   *image;
-};
-
-G_DEFINE_TYPE (GpImageMenuItem, gp_image_menu_item, GTK_TYPE_MENU_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (GpImageMenuItem,
+                            gp_image_menu_item,
+                            GTK_TYPE_MENU_ITEM)
 
 static void
 update_css_class (GpImageMenuItem *self)
 {
+  GpImageMenuItemPrivate *priv;
   gboolean image_only;
   GtkWidget *child;
   GtkStyleContext *context;
 
+  priv = gp_image_menu_item_get_instance_private (self);
   image_only = TRUE;
 
-  if (self->image == NULL)
+  if (priv->image == NULL)
     image_only = FALSE;
 
   child = gtk_bin_get_child (GTK_BIN (self));
@@ -80,11 +82,11 @@ notify_label_cb (GpImageMenuItem *self,
 }
 
 static GtkPackDirection
-get_pack_direction (GpImageMenuItem *item)
+get_pack_direction (GpImageMenuItem *self)
 {
   GtkWidget *parent;
 
-  parent = gtk_widget_get_parent (GTK_WIDGET (item));
+  parent = gtk_widget_get_parent (GTK_WIDGET (self));
 
   if (GTK_IS_MENU_BAR (parent))
     return gtk_menu_bar_get_child_pack_direction (GTK_MENU_BAR (parent));
@@ -95,12 +97,14 @@ get_pack_direction (GpImageMenuItem *item)
 static void
 gp_image_menu_item_destroy (GtkWidget *widget)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
 
-  item = GP_IMAGE_MENU_ITEM (widget);
+  self = GP_IMAGE_MENU_ITEM (widget);
+  priv = gp_image_menu_item_get_instance_private (self);
 
-  if (item->image)
-    gtk_container_remove (GTK_CONTAINER (item), item->image);
+  if (priv->image)
+    gtk_container_remove (GTK_CONTAINER (self), priv->image);
 
   GTK_WIDGET_CLASS (gp_image_menu_item_parent_class)->destroy (widget);
 }
@@ -110,24 +114,26 @@ gp_image_menu_item_get_preferred_height (GtkWidget *widget,
                                          gint      *minimum_height,
                                          gint      *natural_height)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   GtkPackDirection pack_dir;
 
-  item = GP_IMAGE_MENU_ITEM (widget);
+  self = GP_IMAGE_MENU_ITEM (widget);
+  priv = gp_image_menu_item_get_instance_private (self);
 
   GTK_WIDGET_CLASS (gp_image_menu_item_parent_class)->get_preferred_height (widget,
                                                                             minimum_height,
                                                                             natural_height);
 
-  if (!item->image || !gtk_widget_get_visible (item->image))
+  if (!priv->image || !gtk_widget_get_visible (priv->image))
     return;
 
-  pack_dir = get_pack_direction (item);
+  pack_dir = get_pack_direction (self);
   if (pack_dir == GTK_PACK_DIRECTION_RTL || pack_dir == GTK_PACK_DIRECTION_LTR)
     {
       GtkRequisition image_requisition;
 
-      gtk_widget_get_preferred_size (item->image, &image_requisition, NULL);
+      gtk_widget_get_preferred_size (priv->image, &image_requisition, NULL);
 
       *minimum_height = MAX (*minimum_height, image_requisition.height);
       *natural_height = MAX (*natural_height, image_requisition.height);
@@ -140,25 +146,27 @@ gp_image_menu_item_get_preferred_height_for_width (GtkWidget *widget,
                                                    gint      *minimum_height,
                                                    gint      *natural_height)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   GtkPackDirection pack_dir;
 
-  item = GP_IMAGE_MENU_ITEM (widget);
+  self = GP_IMAGE_MENU_ITEM (widget);
+  priv = gp_image_menu_item_get_instance_private (self);
 
   GTK_WIDGET_CLASS (gp_image_menu_item_parent_class)->get_preferred_height_for_width (widget,
                                                                                       width,
                                                                                       minimum_height,
                                                                                       natural_height);
 
-  if (!item->image || !gtk_widget_get_visible (item->image))
+  if (!priv->image || !gtk_widget_get_visible (priv->image))
     return;
 
-  pack_dir = get_pack_direction (item);
+  pack_dir = get_pack_direction (self);
   if (pack_dir == GTK_PACK_DIRECTION_RTL || pack_dir == GTK_PACK_DIRECTION_LTR)
     {
       GtkRequisition image_requisition;
 
-      gtk_widget_get_preferred_size (item->image, &image_requisition, NULL);
+      gtk_widget_get_preferred_size (priv->image, &image_requisition, NULL);
 
       *minimum_height = MAX (*minimum_height, image_requisition.height);
       *natural_height = MAX (*natural_height, image_requisition.height);
@@ -170,25 +178,27 @@ gp_image_menu_item_get_preferred_width (GtkWidget *widget,
                                         gint      *minimum_width,
                                         gint      *natural_width)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   GtkPackDirection pack_dir;
 
-  item = GP_IMAGE_MENU_ITEM (widget);
+  self = GP_IMAGE_MENU_ITEM (widget);
+  priv = gp_image_menu_item_get_instance_private (self);
 
   GTK_WIDGET_CLASS (gp_image_menu_item_parent_class)->get_preferred_width (widget,
                                                                            minimum_width,
                                                                            natural_width);
 
-  if (!item->image || !gtk_widget_get_visible (item->image))
+  if (!priv->image || !gtk_widget_get_visible (priv->image))
     return;
 
-  pack_dir = get_pack_direction (item);
+  pack_dir = get_pack_direction (self);
   if (pack_dir == GTK_PACK_DIRECTION_TTB || pack_dir == GTK_PACK_DIRECTION_BTT)
     {
       gint image_minimum_width;
       gint image_natural_width;
 
-      gtk_widget_get_preferred_width (item->image,
+      gtk_widget_get_preferred_width (priv->image,
                                       &image_minimum_width,
                                       &image_natural_width);
 
@@ -201,7 +211,8 @@ static void
 gp_image_menu_item_size_allocate (GtkWidget     *widget,
                                   GtkAllocation *allocation)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   GtkAllocation widget_allocation;
   GtkRequisition image_requisition;
   GtkPackDirection pack_dir;
@@ -214,25 +225,26 @@ gp_image_menu_item_size_allocate (GtkWidget     *widget,
   gint x;
   gint y;
 
-  item = GP_IMAGE_MENU_ITEM (widget);
+  self = GP_IMAGE_MENU_ITEM (widget);
+  priv = gp_image_menu_item_get_instance_private (self);
 
   GTK_WIDGET_CLASS (gp_image_menu_item_parent_class)->size_allocate (widget,
                                                                      allocation);
 
-  if (!item->image || !gtk_widget_get_visible (item->image))
+  if (!priv->image || !gtk_widget_get_visible (priv->image))
     return;
 
   gtk_widget_get_allocation (widget, &widget_allocation);
-  gtk_widget_get_preferred_size (item->image, &image_requisition, NULL);
+  gtk_widget_get_preferred_size (priv->image, &image_requisition, NULL);
 
   context = gtk_widget_get_style_context (widget);
   state = gtk_style_context_get_state (context);
   gtk_style_context_get_padding (context, state, &padding);
 
   toggle_size = 0;
-  gtk_menu_item_toggle_size_request (GTK_MENU_ITEM (item), &toggle_size);
+  gtk_menu_item_toggle_size_request (GTK_MENU_ITEM (self), &toggle_size);
 
-  pack_dir = get_pack_direction (item);
+  pack_dir = get_pack_direction (self);
   text_dir = gtk_widget_get_direction (widget);
 
   if (pack_dir == GTK_PACK_DIRECTION_LTR || pack_dir == GTK_PACK_DIRECTION_RTL)
@@ -269,7 +281,7 @@ gp_image_menu_item_size_allocate (GtkWidget     *widget,
   image_allocation.width = image_requisition.width;
   image_allocation.height = image_requisition.height;
 
-  gtk_widget_size_allocate (item->image, &image_allocation);
+  gtk_widget_size_allocate (priv->image, &image_allocation);
 }
 
 static void
@@ -290,65 +302,72 @@ gp_image_menu_item_forall (GtkContainer *container,
                            GtkCallback   callback,
                            gpointer      callback_data)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
 
-  item = GP_IMAGE_MENU_ITEM (container);
+  self = GP_IMAGE_MENU_ITEM (container);
+  priv = gp_image_menu_item_get_instance_private (self);
 
   GTK_CONTAINER_CLASS (gp_image_menu_item_parent_class)->forall (container,
                                                                  include_internals,
                                                                  callback,
                                                                  callback_data);
 
-  if (include_internals && item->image)
-    (* callback) (item->image, callback_data);
+  if (include_internals && priv->image)
+    (* callback) (priv->image, callback_data);
 }
 
 static void
 gp_image_menu_item_remove (GtkContainer *container,
                            GtkWidget    *widget)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   gboolean image_visible;
 
-  item = GP_IMAGE_MENU_ITEM (container);
+  self = GP_IMAGE_MENU_ITEM (container);
+  priv = gp_image_menu_item_get_instance_private (self);
 
-  if (item->image != widget)
+  if (priv->image != widget)
     {
       GTK_CONTAINER_CLASS (gp_image_menu_item_parent_class)->remove (container,
                                                                      widget);
 
-      update_css_class (item);
+      update_css_class (self);
       return;
     }
 
   image_visible = gtk_widget_get_visible (widget);
   gtk_widget_unparent (widget);
 
-  item->image = NULL;
+  priv->image = NULL;
 
   if (image_visible && gtk_widget_get_visible (GTK_WIDGET (container)))
     gtk_widget_queue_resize (GTK_WIDGET (container));
 
-  update_css_class (item);
+  update_css_class (self);
 }
 
 static void
 gp_image_menu_item_toggle_size_request (GtkMenuItem *menu_item,
                                         gint        *requisition)
 {
-  GpImageMenuItem *item;
+  GpImageMenuItem *self;
+  GpImageMenuItemPrivate *priv;
   GtkRequisition image_requisition;
   GtkPackDirection pack_dir;
 
-  item = GP_IMAGE_MENU_ITEM (menu_item);
+  self = GP_IMAGE_MENU_ITEM (menu_item);
+  priv = gp_image_menu_item_get_instance_private (self);
+
   *requisition = 0;
 
-  if (!item->image || !gtk_widget_get_visible (item->image))
+  if (!priv->image || !gtk_widget_get_visible (priv->image))
     return;
 
-  gtk_widget_get_preferred_size (item->image, &image_requisition, NULL);
+  gtk_widget_get_preferred_size (priv->image, &image_requisition, NULL);
 
-  pack_dir = get_pack_direction (item);
+  pack_dir = get_pack_direction (self);
   if (pack_dir == GTK_PACK_DIRECTION_LTR || pack_dir == GTK_PACK_DIRECTION_RTL)
     {
       if (image_requisition.width > 0)
@@ -362,15 +381,15 @@ gp_image_menu_item_toggle_size_request (GtkMenuItem *menu_item,
 }
 
 static void
-gp_image_menu_item_class_init (GpImageMenuItemClass *item_class)
+gp_image_menu_item_class_init (GpImageMenuItemClass *self_class)
 {
   GtkWidgetClass *widget_class;
   GtkContainerClass *container_class;
   GtkMenuItemClass *menu_item_class;
 
-  widget_class = GTK_WIDGET_CLASS (item_class);
-  container_class = GTK_CONTAINER_CLASS (item_class);
-  menu_item_class = GTK_MENU_ITEM_CLASS (item_class);
+  widget_class = GTK_WIDGET_CLASS (self_class);
+  container_class = GTK_CONTAINER_CLASS (self_class);
+  menu_item_class = GTK_MENU_ITEM_CLASS (self_class);
 
   widget_class->destroy = gp_image_menu_item_destroy;
   widget_class->get_preferred_height = gp_image_menu_item_get_preferred_height;
@@ -388,13 +407,13 @@ gp_image_menu_item_class_init (GpImageMenuItemClass *item_class)
 }
 
 static void
-gp_image_menu_item_init (GpImageMenuItem *item)
+gp_image_menu_item_init (GpImageMenuItem *self)
 {
   GtkStyleContext *context;
 
-  g_signal_connect (item, "notify::label", G_CALLBACK (notify_label_cb), NULL);
+  g_signal_connect (self, "notify::label", G_CALLBACK (notify_label_cb), NULL);
 
-  context = gtk_widget_get_style_context (GTK_WIDGET (item));
+  context = gtk_widget_get_style_context (GTK_WIDGET (self));
   gtk_style_context_add_class (context, "gp-image-menu-item");
 }
 
@@ -448,28 +467,32 @@ gp_image_menu_item_new_with_mnemonic (const gchar *label)
 
 /**
  * gp_image_menu_item_set_image:
- * @item: a #GpImageMenuItem
+ * @self: a #GpImageMenuItem
  * @image: (allow-none): a widget to set as the image for the menu item
  *
  * Sets the image of @item to the given widget.
  */
 void
-gp_image_menu_item_set_image (GpImageMenuItem *item,
+gp_image_menu_item_set_image (GpImageMenuItem *self,
                               GtkWidget       *image)
 {
-  if (item->image == image)
+  GpImageMenuItemPrivate *priv;
+
+  priv = gp_image_menu_item_get_instance_private (self);
+
+  if (priv->image == image)
     return;
 
-  if (item->image)
-    gtk_container_remove (GTK_CONTAINER (item), item->image);
+  if (priv->image)
+    gtk_container_remove (GTK_CONTAINER (self), priv->image);
 
-  item->image = image;
+  priv->image = image;
 
-  update_css_class (item);
+  update_css_class (self);
 
   if (image == NULL)
     return;
 
-  gtk_widget_set_parent (image, GTK_WIDGET (item));
+  gtk_widget_set_parent (image, GTK_WIDGET (self));
   gtk_widget_show (image);
 }

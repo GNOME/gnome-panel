@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2018-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -15,16 +15,23 @@
  * along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GP_ITEM_MENU_ITEM_H
-#define GP_ITEM_MENU_ITEM_H
+#ifndef GP_IMAGE_MENU_ITEM_H
+#define GP_IMAGE_MENU_ITEM_H
 
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_IMAGE_MENU_ITEM (gp_image_menu_item_get_type ())
-G_DECLARE_FINAL_TYPE (GpImageMenuItem, gp_image_menu_item,
-                      GP, IMAGE_MENU_ITEM, GtkMenuItem)
+G_DECLARE_DERIVABLE_TYPE (GpImageMenuItem, gp_image_menu_item,
+                          GP, IMAGE_MENU_ITEM, GtkMenuItem)
+
+struct _GpImageMenuItemClass
+{
+  GtkMenuItemClass parent_class;
+
+  gpointer         padding[10];
+};
 
 GtkWidget *gp_image_menu_item_new               (void);
 
@@ -32,7 +39,7 @@ GtkWidget *gp_image_menu_item_new_with_label    (const gchar     *label);
 
 GtkWidget *gp_image_menu_item_new_with_mnemonic (const gchar     *label);
 
-void       gp_image_menu_item_set_image         (GpImageMenuItem *item,
+void       gp_image_menu_item_set_image         (GpImageMenuItem *self,
                                                  GtkWidget       *image);
 
 G_END_DECLS
