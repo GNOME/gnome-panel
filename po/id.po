@@ -9,12 +9,13 @@
 # Dirgita <dirgitadevina@gmail.com>, 2010.
 # Dirgita Devina <dirgitadevina@yahoo.co.id>, 2010, 2011, 2012.
 # Andika Triwidada <andika@gmail.com>, 2011, 2013, 2014.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2018, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-09-22 08:14+0000\n"
-"PO-Revision-Date: 2018-09-22 15:16+0700\n"
+"POT-Creation-Date: 2019-12-23 12:46+0000\n"
+"PO-Revision-Date: 2020-01-15 19:26+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -204,10 +205,10 @@ msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"Jika dipilih, maka pada saat suatu jendela program mengembalikan ukuran "
-"jendela kembali menjadi ukuran semula, jendela itu akan ditampilkan pada "
-"area kerja aktif. Jika tidak, maka jendela itu akan ditampilkan pada ruang "
-"kerja asalnya."
+"Jika bernilai benar (true), maka pada saat suatu jendela program "
+"mengembalikan ukuran jendela kembali menjadi ukuran semula, jendela itu akan "
+"ditampilkan pada area kerja aktif. Jika tidak, maka jendela itu akan "
+"ditampilkan pada ruang kerja asalnya."
 
 #: data/org.gnome.gnome-panel.applet.workspace-switcher.gschema.xml:5
 msgid "Display workspace names"
@@ -251,55 +252,67 @@ msgstr ""
 "bernilai benar (true)."
 
 #: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Tata letak panel bawaan"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr "Tata letak panel bawaan untuk digunakan saat panel dibuat."
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Mengaktifkan pesan pembantu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
-"Bila true, balon petunjuk akan ditampilkan bagi objek di panel. Balon "
-"petunjuk dapat dimatikan bagi seluruh desktop melalui properti gtk-enable-"
-"tooltips di GTK+."
+"Jika bernilai benar (true), balon petunjuk akan ditampilkan bagi objek di "
+"panel. Balon petunjuk dapat dimatikan bagi seluruh desktop melalui properti "
+"gtk-enable-tooltips di GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:33
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr "Lebih suka ikon simbolik di panel"
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Konfirmasi penghapusan panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Jika dipilih maka akan muncul sebuah dialog konfirmasi yang akan menanyakan "
-"apakah benar ingin menghapus panel."
+"Jika bernilai benar (true), maka akan muncul sebuah dialog konfirmasi yang "
+"akan menanyakan apakah benar ingin menghapus panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:39
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
 msgstr "Ukuran ikon dalam menu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
 msgstr "Ukuran ikon dalam menu."
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
 msgstr "Ukuran maksimal ikon dalam panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "The maximum size of icons in panels."
 msgstr "Ukuran maksimal ikon dalam panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Varian tema mana yang akan dipakai"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Daftar ID panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -307,11 +320,11 @@ msgstr ""
 "Daftar ID panel. Tiap-tiap ID adalah identitas milik masing-masing panel "
 "utama. Pengaturan panel-panel ini disimpan pada /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Daftar ID objek panel"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -321,25 +334,25 @@ msgstr ""
 "objek panel (mis. aplet, peluncur, tombol aksi, atau tombol/bilah menu). "
 "Pengaturan setiap objek ini disimpan pada /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Kunci panel seluruhnya"
 
-#: data/org.gnome.gnome-panel.gschema.xml:72
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Jika dipilih, panel tidak akan mengizinkan adanya perubahan konfigurasi "
-"panel. Tiap-tiap applet yang ada perlu dikunci sendiri-sendiri. Agar "
-"konfigurasi ini berlaku, panel harus dijalankan ulang."
+"Jika bernilai benar (true), panel tidak akan mengizinkan adanya perubahan "
+"konfigurasi panel. Tiap-tiap applet yang ada perlu dikunci sendiri-sendiri. "
+"Agar konfigurasi ini berlaku, panel harus dijalankan ulang."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "IID Applet yang akan dinonaktifkan"
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -351,47 +364,47 @@ msgstr ""
 "applet mini-commander, silakan tambahkan 'OAFIID:GNOME_MiniCommanderApplet' "
 "pada daftar ini. Setelah itu restart panel agar pengaturan ini dapat berlaku."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Menonaktifkan Tutup Paksa"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Jika dipilih, panel tidak akan mengizinkan pemakai untuk menutup paksa "
-"aplikasi."
+"Jika bernilai benar (true), panel tidak akan mengizinkan pemakai untuk "
+"menutup paksa aplikasi."
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:101
 msgid "History of \"Run Application\" dialog"
 msgstr "Riwayat dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:90
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Daftar perintah yang pernah dijalankan lewat dialog \"Jalankan Aplikasi\"."
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Aktifkan daftar program pada kotak dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:95
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Jika dipilih maka daftar \"Aplikasi Terdaftar\" pada kotak dialog \"Jalankan "
-"Aplikasi\" akan diaktifkan. Pengaturan berikutnya mengenai dibuka atau "
-"tidaknya daftar tersebut, dapat Anda atur pada show_program_list."
+"Jika bernilai benar (true),  maka daftar \"Aplikasi Terdaftar\" pada kotak "
+"dialog \"Jalankan Aplikasi\" akan diaktifkan. Pengaturan berikutnya mengenai "
+"dibuka atau tidaknya daftar tersebut, dapat Anda atur pada show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:99
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Buka daftar program pada kotak dialog \"Jalankan Aplikasi\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:100
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -402,18 +415,18 @@ msgstr ""
 "dibuka. Kunci ini hanya berfungsi apabila kunsi enable_program_list bernilai "
 "benar (true)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Aktifkan fasilitas pelengkapan otomatis pada kotak dialog \"Jalankan Aplikasi"
 "\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
-"Jika diisi, fasilitas pelengkapan otomatis pada dialog \"Jalankan Aplikasi\" "
-"akan diaktifkan"
+"Jika bernilai benar (true), fasilitas pelengkapan otomatis pada dialog "
+"\"Jalankan Aplikasi\" akan diaktifkan."
 
 #: data/org.gnome.gnome-panel.launcher.gschema.xml:5
 msgid "Launcher location"
@@ -506,10 +519,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Jika benar, panel akan menempati seluruh lebar layar (tinggi layar jika ini "
-"adalah panel vertikal). Kemudian panel hanya dapat ditempatkan di sudut "
-"layar. Jika salah, panel hanya cukup lebar untuk mengakomodasi applet, "
-"launcher dan tombol pada panel."
+"Jika bernilai benar (true), panel akan menempati seluruh lebar layar (tinggi "
+"layar jika ini adalah panel vertikal). Kemudian panel hanya dapat "
+"ditempatkan di sudut layar. Jika salah, panel hanya cukup lebar untuk "
+"mengakomodasi applet, launcher dan tombol pada panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:20
 msgid "Panel orientation"
@@ -629,10 +642,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
-"Jika benar, kunci x dan x_right akan diabaikan dan panel ditempatkan pada "
-"pusat x-axis pada layar. Jika panel diubah ukurannya akan ditempatkan pada "
-"posisi tersebut - yaitu panel akan membesar di kedua sisi. Jika salah, kunci "
-"x dan x_right menunjukkan lokasi dari panel."
+"Jika bernilai benar (true), kunci x dan x_right akan diabaikan dan panel "
+"ditempatkan pada pusat x-axis pada layar. Jika panel diubah ukurannya akan "
+"ditempatkan pada posisi tersebut - yaitu panel akan membesar di kedua sisi. "
+"Jika salah, kunci x dan x_right menunjukkan lokasi dari panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
 msgid "Center panel on y-axis"
@@ -645,10 +658,10 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
-"Jika benar, kunci y dan y_bottom diabaikan dan panel ditempatkan pada pusat "
-"sumbu-y pada layar. Jika panel diubah ukurannya akan ditempatkan pada posisi "
-"tersebut - yaitu panel akan membesar pada kedua sisi. Jika salah, kunci y "
-"dan y_bottom menunjukkan lokasi dari panel."
+"Jika bernilai benar (true), kunci y dan y_bottom diabaikan dan panel "
+"ditempatkan pada pusat sumbu-y pada layar. Jika panel diubah ukurannya akan "
+"ditempatkan pada posisi tersebut - yaitu panel akan membesar pada kedua "
+"sisi. Jika salah, kunci y dan y_bottom menunjukkan lokasi dari panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
@@ -660,9 +673,9 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
-"Jika benar, ketika pointer meninggalkan area panel, panel akan disembunyikan "
-"otomatis di pojok layar. Bila mouse diarahkan ke pojok akan menyebabkan "
-"panel muncul kembali."
+"Jika bernilai benar (true), ketika pointer meninggalkan area panel, panel "
+"akan disembunyikan otomatis di pojok layar. Bila mouse diarahkan ke pojok "
+"akan menyebabkan panel muncul kembali."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
 msgid "Enable hide buttons"
@@ -673,9 +686,9 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Jika benar, tombol akan diletakkan pada tiap sisi panel yang akan digunakan "
-"untuk memindahkan panel ke sudut layar, hanya meninggalkan tombol untuk "
-"dimunculkan."
+"Jika bernilai benar (true), tombol akan diletakkan pada tiap sisi panel yang "
+"akan digunakan untuk memindahkan panel ke sudut layar, hanya meninggalkan "
+"tombol untuk dimunculkan."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
 msgid "Enable arrows on hide buttons"
@@ -686,8 +699,8 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Apabila bernilai benar (true), maka lambang panah akan ditampilkan pada "
-"tombol untuk menyembunyikan panel. Kunci ini hanya berlaku apabila kunci "
+"Jika bernilai benar (true), maka lambang panah akan ditampilkan pada tombol "
+"untuk menyembunyikan panel. Kunci ini hanya berlaku apabila kunci "
 "enable_buttons bernilai benar (true)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
@@ -798,8 +811,8 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"Apabila bernilai benar (true), maka gambar latar belakang akan diputar "
-"ketika panel berubah arah menjadi vertikal."
+"Jika bernilai benar (true), maka gambar latar belakang akan diputar ketika "
+"panel berubah arah menjadi vertikal."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
 msgid "Use custom text color"
@@ -836,11 +849,6 @@ msgid ""
 msgstr ""
 "Jalankan aplikasi lainnya dan menyediakan berbagai macam peralatan untuk "
 "mengatur jendela, menunjukkan waktu, dsb."
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
 
 #: gnome-panel/gp-add-applet-window.c:137
 msgid "Help"
@@ -1031,7 +1039,7 @@ msgstr "Pilih ikon"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
 #: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
@@ -1326,7 +1334,7 @@ msgstr "Ko_mentar:"
 msgid "_Revert"
 msgstr "_Pulihkan"
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
@@ -1383,14 +1391,14 @@ msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
 msgstr ""
-"Apabila Anda memilih untuk menutup paksa aplikasi ini, perubahan dokumen "
-"yang belum disimpan oleh aplikasi tersebut akan hilang."
+"Jika Anda memilih untuk menutup paksa aplikasi ini, perubahan dokumen yang "
+"belum disimpan oleh aplikasi tersebut akan hilang."
 
 #: gnome-panel/panel-force-quit.c:233
 msgid "_Force quit"
 msgstr "_Tutup paksa"
 
-#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
+#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
 msgid "Cannot create initial panel layout.\n"
 msgstr "Tak bisa membuat tata letak awal panel.\n"
 
@@ -1410,20 +1418,20 @@ msgstr "Tidak dapat menjalankan perintah '%s'"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Tidak dapat mengonversi '%s' menjadi UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1288
 msgid "Choose a file to append to the command..."
 msgstr "Pilihlah berkas yang akan dibuka program ini..."
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Pilihlah aplikasi di atas untuk melihat keterangannya."
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1709
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Akan menjalankan perintah: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1742
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1696,64 +1704,64 @@ msgstr "Jam Komputer"
 msgid "Failed to open the time settings"
 msgstr "Gagal membuka pengaturan waktu"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Tidak dapat membuka dokumen bantuan '%s'"
 
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Galat sewaktu membuka dokumen bantuan"
 
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1626
 msgid "Choose Location"
 msgstr "Pilih Lokasi"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1705
 msgid "Edit Location"
 msgstr "Sunting Lokasi"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
 msgid "Default"
 msgstr "Baku"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1742
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1743
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1744
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1750
 msgid "Meters per second (m/s)"
 msgstr "Meter per detik (m/s)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1751
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per jam (km/j)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1752
 msgid "Miles per hour (mph)"
 msgstr "Mil per jam (mil/j)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1753
 msgid "Knots"
 msgstr "Knot"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1754
 msgid "Beaufort scale"
 msgstr "Skala Beaufort"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1807
 msgid "City Name"
 msgstr "Nama Kota"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1811
 msgid "City Time Zone"
 msgstr "Zona Waktu Kota"
 
@@ -2102,33 +2110,33 @@ msgstr "Ganti Pengguna"
 msgid "Hybrid Sleep"
 msgstr "Tidur Hibrida"
 
-#: modules/menu/gp-menu-bar-applet.c:119
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Aplikasi"
 
-#: modules/menu/gp-menu-bar-applet.c:124
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Mencari dan menjalankan aplikasi yang telah dipasang"
 
-#: modules/menu/gp-menu-bar-applet.c:159
-#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
 msgid "Places"
 msgstr "Lokasi"
 
-#: modules/menu/gp-menu-bar-applet.c:163
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Mengakses dokumen, folder, serta jaringan"
 
-#: modules/menu/gp-menu-bar-applet.c:199
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "Sistem"
 
-#: modules/menu/gp-menu-bar-applet.c:203
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr "Ubah penampilan dan perilaku sistem, atau mendapatkan bantuan"
 
-#: modules/menu/gp-menu-bar-applet.c:253
-#: modules/menu/gp-menu-button-applet.c:469
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Mohon pasang aplikasi '%s'."
@@ -2465,6 +2473,9 @@ msgstr "Tampilkan _nama area kerja dalam pengalih"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Area Kerja"
+
+#~ msgid "gnome-panel"
+#~ msgstr "gnome-panel"
 
 #~ msgid "Icon size in the menus"
 #~ msgstr "Ukuran ikon dalam menu"
