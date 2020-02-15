@@ -1649,9 +1649,7 @@ panel_toplevel_update_description (PanelToplevel *toplevel)
 static void
 panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 				       int           *x,
-				       int           *y,
-				       int           *w,
-				       int           *h)
+				       int           *y)
 {
 	int        monitor_width, monitor_height;
 	int        width, height;
@@ -1704,7 +1702,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	g_assert (x != NULL && y != NULL);
 
 	if (toplevel->priv->floating) {
-		panel_toplevel_update_normal_position (toplevel, x, y, w, h);
+		panel_toplevel_update_normal_position (toplevel, x, y);
 		return;
 	}
 
@@ -2094,7 +2092,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	w = h = -1;
 
 	if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_update_normal_position (toplevel, &x, &y, &w, &h);
+		panel_toplevel_update_normal_position (toplevel, &x, &y);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
 		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h, FALSE);
@@ -2917,9 +2915,7 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 	     !toplevel->priv->auto_hide))
 		panel_toplevel_update_normal_position (toplevel,
 						       &toplevel->priv->animation_end_x,
-						       &toplevel->priv->animation_end_y,
-						       &toplevel->priv->animation_end_width,
-						       &toplevel->priv->animation_end_height);
+						       &toplevel->priv->animation_end_y);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
 		panel_toplevel_update_auto_hide_position (toplevel,
