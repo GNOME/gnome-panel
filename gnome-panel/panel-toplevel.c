@@ -1770,9 +1770,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 				       int           *x,
-				       int           *y,
-				       int           *w,
-				       int           *h)
+				       int           *y)
 {
 	int width, height;
 	int min_hide_size;
@@ -2098,7 +2096,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h, FALSE);
 
 	else 
-		panel_toplevel_update_hidden_position (toplevel, &x, &y, &w, &h);
+		panel_toplevel_update_hidden_position (toplevel, &x, &y);
 
 	if (w != -1)
 		toplevel->priv->geometry.width = w;
@@ -2927,9 +2925,7 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 	else
 		panel_toplevel_update_hidden_position (toplevel,
 						       &toplevel->priv->animation_end_x,
-						       &toplevel->priv->animation_end_y,
-						       &toplevel->priv->animation_end_width,
-						       &toplevel->priv->animation_end_height);
+						       &toplevel->priv->animation_end_y);
 }
 
 static void
