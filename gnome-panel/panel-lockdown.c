@@ -57,7 +57,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (PanelLockdown, panel_lockdown, G_TYPE_OBJECT)
 
 static void
 _panel_lockdown_disabled_applets_changed (GSettings     *settings,
-                                          char          *key,
+                                          const char    *key,
                                           PanelLockdown *lockdown)
 {
         if (lockdown->priv->disabled_applets)
