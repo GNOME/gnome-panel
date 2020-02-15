@@ -1690,8 +1690,6 @@ static void
 panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 					  int           *x,
 					  int           *y,
-					  int           *w,
-					  int           *h,
 					  gboolean       for_end_position)
 {
 	int width, height;
@@ -2014,7 +2012,6 @@ static void
 panel_toplevel_update_position (PanelToplevel *toplevel)
 {
 	int        x, y;
-	int        w, h;
 	int        monitor_width, monitor_height;
 	GdkScreen *screen;
 
@@ -2087,21 +2084,14 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			y = (monitor_height - toplevel->priv->geometry.height) / 2;
 	}
 
-	w = h = -1;
-
 	if (toplevel->priv->state == PANEL_STATE_NORMAL)
 		panel_toplevel_update_normal_position (toplevel, &x, &y);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
-		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h, FALSE);
+		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, FALSE);
 
 	else 
 		panel_toplevel_update_hidden_position (toplevel, &x, &y);
-
-	if (w != -1)
-		toplevel->priv->geometry.width = w;
-	if (h != -1)
-		toplevel->priv->geometry.height = h;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
@@ -2919,8 +2909,6 @@ panel_toplevel_calculate_animation_end_geometry (PanelToplevel *toplevel)
 		panel_toplevel_update_auto_hide_position (toplevel,
 							  &toplevel->priv->animation_end_x,
 							  &toplevel->priv->animation_end_y,
-							  &toplevel->priv->animation_end_width,
-							  &toplevel->priv->animation_end_height,
 							  TRUE);
 	else
 		panel_toplevel_update_hidden_position (toplevel,
