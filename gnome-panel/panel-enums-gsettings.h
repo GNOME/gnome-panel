@@ -41,6 +41,13 @@ typedef enum { /*< flags=0 >*/
 } PanelOrientation;
 
 typedef enum {
+	PANEL_ALIGNMENT_FILL = 0,
+	PANEL_ALIGNMENT_START = 1,
+	PANEL_ALIGNMENT_CENTER = 2,
+	PANEL_ALIGNMENT_END = 3
+} PanelAlignment;
+
+typedef enum {
 	PANEL_ANIMATION_SLOW   = 0,
 	PANEL_ANIMATION_MEDIUM = 1,
 	PANEL_ANIMATION_FAST   = 2
