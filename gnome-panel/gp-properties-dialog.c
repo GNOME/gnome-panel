@@ -34,8 +34,8 @@ struct _GpPropertiesDialog
   GtkWidget *theme_writable;
 
   GtkWidget *orientation;
+  GtkWidget *alignment;
   GtkWidget *size;
-  GtkWidget *expand;
   GtkWidget *auto_hide;
   GtkWidget *enable_buttons;
   GtkWidget *enable_arrows;
@@ -215,16 +215,23 @@ setup_toplevel_bindings (GpPropertiesDialog *dialog)
   gtk_combo_box_text_append (text, "left", NC_("Orientation", "Left"));
   gtk_combo_box_text_append (text, "right", NC_("Orientation", "Right"));
 
+  text = GTK_COMBO_BOX_TEXT (dialog->alignment);
+
+  gtk_combo_box_text_append (text, "fill", NC_("Alignment", "Fill"));
+  gtk_combo_box_text_append (text, "start", NC_("Alignment", "Start"));
+  gtk_combo_box_text_append (text, "center", NC_("Alignment", "Center"));
+  gtk_combo_box_text_append (text, "end", NC_("Alignment", "End"));
+
   g_settings_bind (dialog->toplevel, "orientation",
                    dialog->orientation, "active-id",
                    G_SETTINGS_BIND_DEFAULT);
 
-  g_settings_bind (dialog->toplevel, "size",
-                   dialog->size, "value",
+  g_settings_bind (dialog->toplevel, "alignment",
+                   dialog->alignment, "active-id",
                    G_SETTINGS_BIND_DEFAULT);
 
-  g_settings_bind (dialog->toplevel, "expand",
-                   dialog->expand, "active",
+  g_settings_bind (dialog->toplevel, "size",
+                   dialog->size, "value",
                    G_SETTINGS_BIND_DEFAULT);
 
   g_settings_bind (dialog->toplevel, "auto-hide",
@@ -326,7 +333,7 @@ toplevel_writable_change_event_cb (GSettings          *settings,
                                    GpPropertiesDialog *dialog)
 {
   const gchar *toplevel[] = {
-    "orientation", "size", "expand", "auto-hide",
+    "orientation", "alignment", "size", "auto-hide",
     "enable-buttons", "enable-arrows", NULL
   };
   gboolean writable;
@@ -472,8 +479,8 @@ bind_template (GtkWidgetClass *widget_class)
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, theme_writable);
 
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, orientation);
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, alignment);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, size);
-  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, expand);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, auto_hide);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, enable_buttons);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, enable_arrows);

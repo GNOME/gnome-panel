@@ -468,9 +468,7 @@ panel_struts_unregister_strut (PanelToplevel *toplevel)
 gboolean
 panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 				       int           *x,
-				       int           *y,
-				       int           *width,
-				       int           *height)
+				       int           *y)
 {
 	PanelStrut *strut;
 
@@ -482,11 +480,6 @@ panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 
 	*x += strut->allocated_geometry.x - strut->geometry.x;
 	*y += strut->allocated_geometry.y - strut->geometry.y;
-
-	if (width != NULL && *width != -1)
-		*width  += strut->allocated_geometry.width  - strut->geometry.width;
-	if (height != NULL && *height != -1)
-		*height += strut->allocated_geometry.height - strut->geometry.height;
 
 	return TRUE;
 }
