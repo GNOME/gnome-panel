@@ -41,9 +41,7 @@ void     panel_struts_unset_window_hint        (PanelToplevel    *toplevel);
 
 gboolean panel_struts_update_toplevel_geometry (PanelToplevel    *toplevel,
 						int              *x,
-						int              *y,
-						int              *w,
-						int              *h);
+						int              *y);
 
 G_END_DECLS
 
