@@ -196,9 +196,6 @@ enum {
 	HIDE_SIGNAL,
 	UNHIDE_SIGNAL,
 	POPUP_PANEL_MENU_SIGNAL,
-	TOGGLE_EXPAND_SIGNAL,
-	EXPAND_SIGNAL,
-	UNEXPAND_SIGNAL,
 	TOGGLE_HIDDEN_SIGNAL,
 	BEGIN_MOVE_SIGNAL,
 	BEGIN_RESIZE_SIGNAL,
@@ -2317,30 +2314,6 @@ panel_toplevel_popup_panel_menu (PanelToplevel *toplevel)
 }
 
 static gboolean
-panel_toplevel_toggle_expand (PanelToplevel *toplevel)
-{
-	panel_toplevel_set_expand (toplevel, !toplevel->priv->expand);
-
-	return TRUE;
-}
-
-static gboolean
-panel_toplevel_expand (PanelToplevel *toplevel)
-{
-	panel_toplevel_set_expand (toplevel, TRUE);
-
-	return TRUE;
-}
-
-static gboolean
-panel_toplevel_unexpand (PanelToplevel *toplevel)
-{
-	panel_toplevel_set_expand (toplevel, FALSE);
-
-	return TRUE;
-}
-
-static gboolean
 panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
 {
 	GtkDirectionType dir;
@@ -3623,9 +3596,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->hiding           = NULL;
 	klass->unhiding         = NULL;
 	klass->popup_panel_menu = panel_toplevel_popup_panel_menu;
-	klass->toggle_expand    = panel_toplevel_toggle_expand;
-	klass->expand           = panel_toplevel_expand;
-	klass->unexpand         = panel_toplevel_unexpand;
 	klass->toggle_hidden    = panel_toplevel_toggle_hidden;
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
@@ -3878,39 +3848,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_TYPE_FROM_CLASS (gobject_class),
 			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
 			      G_STRUCT_OFFSET (PanelToplevelClass, popup_panel_menu),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_BOOLEAN,
-			      0);
-
-	toplevel_signals [TOGGLE_EXPAND_SIGNAL] =
-		g_signal_new ("toggle-expand",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_expand),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_BOOLEAN,
-			      0);
-
-	toplevel_signals [EXPAND_SIGNAL] =
-		g_signal_new ("expand",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, expand),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_BOOLEAN,
-			      0);
-
-	toplevel_signals [UNEXPAND_SIGNAL] =
-		g_signal_new ("unexpand",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, unexpand),
 			      NULL,
 			      NULL,
 			      NULL,
