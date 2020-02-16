@@ -1358,7 +1358,6 @@ panel_toplevel_get_effective_auto_hide_size (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation)
 {
-	PanelOrientation  orientation;
 	GdkScreen        *screen;
 	gboolean          geometry_changed = FALSE;
 	int               strut, strut_start, strut_end;
@@ -1403,16 +1402,12 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		height = toplevel->priv->geometry.height;
 	}
 
-	orientation = toplevel->priv->orientation;
-
 	strut = strut_start = strut_end = 0;
 
-	if (orientation & PANEL_HORIZONTAL_MASK) {
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		if (y <= monitor_y) {
-			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_y;
 		} else if (y >= monitor_y + monitor_height - height) {
-			orientation = PANEL_ORIENTATION_BOTTOM;
 			strut = monitor_y + monitor_height - y;
 		}
 
@@ -1422,10 +1417,8 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		}
 	} else {
 		if (x <= monitor_x) {
-			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_x;
 		} else if (x >= monitor_x + monitor_width - width) {
-			orientation = PANEL_ORIENTATION_RIGHT;
 			strut = monitor_x + monitor_width - x;
 		}
 
@@ -1435,18 +1428,13 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 		}
 	}
 
-	if (orientation != toplevel->priv->orientation) {
-		toplevel->priv->orientation = orientation;
-		g_object_notify (G_OBJECT (toplevel), "orientation");
-	}
-
 	if (toplevel->priv->auto_hide && strut > 0)
 		strut = panel_toplevel_get_effective_auto_hide_size (toplevel);
 
 	if (strut > 0)
 		geometry_changed = panel_struts_register_strut (toplevel,
 								toplevel->priv->monitor,
-								orientation,
+								toplevel->priv->orientation,
 								strut,
 								strut_start,
 								strut_end);
