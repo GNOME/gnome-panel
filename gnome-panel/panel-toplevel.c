@@ -1144,13 +1144,16 @@ panel_toplevel_handle_grab_op_key_event (PanelToplevel *toplevel,
 		break;
 	case GDK_KEY_Escape:
 		panel_toplevel_cancel_grab_op (toplevel, event->time);
-	case GDK_KEY_Return: /* drop through*/
+		panel_toplevel_end_grab_op (toplevel, event->time);
+		retval = TRUE;
+		break;
+	case GDK_KEY_Return:
 	case GDK_KEY_KP_Enter:
 	case GDK_KEY_space:
 	case GDK_KEY_KP_Space:
+	default:
 		panel_toplevel_end_grab_op (toplevel, event->time);
 		retval = TRUE;
-	default: /* drop through*/
 		break;
 	}
 
