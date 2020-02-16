@@ -76,9 +76,6 @@ void                 panel_toplevel_set_name               (PanelToplevel       
 							    const char          *name);
 const char          *panel_toplevel_get_name               (PanelToplevel       *toplevel);
 const char          *panel_toplevel_get_description        (PanelToplevel       *toplevel);
-void                 panel_toplevel_set_expand             (PanelToplevel       *toplevel,
-							    gboolean             expand);
-gboolean             panel_toplevel_get_expand             (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_orientation        (PanelToplevel       *toplevel,
 							    PanelOrientation     orientation);
 PanelOrientation     panel_toplevel_get_orientation        (PanelToplevel       *toplevel);
@@ -90,14 +87,6 @@ void                 panel_toplevel_set_monitor            (PanelToplevel       
 int                  panel_toplevel_get_monitor            (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_auto_hide_size     (PanelToplevel       *toplevel,
 							    int                  autohide_size);
-void                 panel_toplevel_set_x                  (PanelToplevel       *toplevel,
-							    int                  x,
-							    int                  x_right,
-							    gboolean             x_centered);
-void                 panel_toplevel_set_y                  (PanelToplevel       *toplevel,
-							    int                  y,
-							    int                  y_bottom,
-							    gboolean             y_centered);
 
 gboolean             panel_toplevel_get_is_hidden          (PanelToplevel       *toplevel);
 
