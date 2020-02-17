@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Szabolcs Ban <shooby at gnome dot hu>, 1998, 1999, 2000, 2001.
@@ -11,20 +11,20 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2018.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015, 2016, 2017, 2019.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-09-17 14:57+0000\n"
-"PO-Revision-Date: 2019-01-27 18:29+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2019-12-23 12:46+0000\n"
+"PO-Revision-Date: 2020-02-17 23:21+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Lokalize 19.04.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -246,10 +246,18 @@ msgstr ""
 "jeleníti meg a munkaterületeket."
 
 #: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Alapértelmezett panelelrendezés"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr "A panelek létrehozásakor használandó alapértelmezett panelelrendezés."
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Buboréksúgók engedélyezése"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -258,11 +266,15 @@ msgstr ""
 "buboréksúgók letilthatók az egész asztali környezetben a GTK+ gtk-enable-"
 "tooltips tulajdonságával."
 
-#: data/org.gnome.gnome-panel.gschema.xml:33
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr "Szimbolikus ikonok előnyben részesítése a paneleken"
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Megerősítés a panel eltávolítása előtt"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -270,31 +282,31 @@ msgstr ""
 "Ha be van állítva, megjelenik egy megerősítési ablak ha a felhasználó el "
 "akarja távolítani a panelt."
 
-#: data/org.gnome.gnome-panel.gschema.xml:39
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
 msgstr "Ikonméret a menükben"
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
 msgstr "Az ikonok mérete a menükben."
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
 msgstr "Maximális ikonméret a paneleken"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "The maximum size of icons in panels."
 msgstr "Az ikonok maximális mérete a paneleken."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Melyik témaváltozatot kell használni"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Panelazonosító-lista"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -303,11 +315,11 @@ msgstr ""
 "azonosít. Minden egyes ilyen panel beállításai az /apps/panel/toplevels/"
 "$(id) alatt tárolódnak."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Panelobjektum-azonosító lista"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -318,11 +330,11 @@ msgstr ""
 "menügombot/sávot) azonosít. Minden egyes ilyen objektum beállításai az /apps/"
 "panel/objects/$(id) alatt tárolódnak."
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Panel teljes zárolása"
 
-#: data/org.gnome.gnome-panel.gschema.xml:72
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -332,11 +344,11 @@ msgstr ""
 "megváltoztatását. Egyes kisalkalmazásokat azonban szükséges lehet külön "
 "zárolni. A panelt újra kell indítani ezen beállítás érvényesítéséhez."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "A be nem tölthető kisalkalmazások azonosítói"
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -349,11 +361,11 @@ msgstr ""
 "ezt: „OAFIID:GNOME_MiniCommanderApplet”. A panelt újra kell indítani ezen "
 "beállítás életbe lépéséhez."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Erőltetett kilépés tiltása"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -362,22 +374,22 @@ msgstr ""
 "kilépésre kényszerítését, az erőltetett kilépés gombhoz való hozzáférés "
 "megvonásával."
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:101
 msgid "History of \"Run Application\" dialog"
 msgstr "Az „Alkalmazás futtatása” párbeszédablak előzményei"
 
-#: data/org.gnome.gnome-panel.gschema.xml:90
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Az „Alkalmazás futtatása” párbeszédablakban korábban használt parancsok "
 "listája."
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Programlista bekapcsolása az „Alkalmazás futtatása” párbeszédablakban"
 
-#: data/org.gnome.gnome-panel.gschema.xml:95
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -387,11 +399,11 @@ msgstr ""
 "párbeszédablakban elérhető. Hogy a lista kinyíljon-e vagy sem a "
 "párbeszédablak megnyitásakor, a show_program_list kulccsal ellenőrizhető."
 
-#: data/org.gnome.gnome-panel.gschema.xml:99
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Programlista kibontása az „Alkalmazás futtatása” párbeszédablakban"
 
-#: data/org.gnome.gnome-panel.gschema.xml:100
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -401,13 +413,13 @@ msgstr ""
 "párbeszédablakban kinyílik a párbeszédablak megnyitásakor. Ez a kulcs csak "
 "akkor lényeges, ha az enable_program_list kulcs be van állítva."
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr ""
 "Automatikus kiegészítés bekapcsolása az „Alkalmazás futtatása” "
 "párbeszédablakban"
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -838,11 +850,6 @@ msgstr ""
 "Más alkalmazások indítása és különböző segédprogramok biztosítása ablakok "
 "kezeléséhez, az idő megjelenítéséhez, stb."
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
-
 #: gnome-panel/gp-add-applet-window.c:137
 msgid "Help"
 msgstr "Súgó"
@@ -999,7 +1006,7 @@ msgid "_Launch"
 msgstr "I_ndítás"
 
 #: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:148
+#: gnome-panel/panel-context-menu.c:147
 msgid "_Properties"
 msgstr "T_ulajdonságok"
 
@@ -1032,7 +1039,7 @@ msgstr "Válasszon ikont"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
 #: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
@@ -1268,23 +1275,23 @@ msgid ""
 "settings are lost."
 msgstr "A panel törlésekor a panel és annak beállításai elvesznek."
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:59
 msgid "Cannot delete this panel"
 msgstr "Ez a panel nem törölhető"
 
-#: gnome-panel/panel-context-menu.c:61
+#: gnome-panel/panel-context-menu.c:60
 msgid "You must always have at least one panel."
 msgstr "Mindig rendelkeznie kell legalább egy panellel."
 
-#: gnome-panel/panel-context-menu.c:139
+#: gnome-panel/panel-context-menu.c:138
 msgid "_Add to Panel..."
 msgstr "Hozzá_adás a panelhez…"
 
-#: gnome-panel/panel-context-menu.c:155
+#: gnome-panel/panel-context-menu.c:154
 msgid "_Delete This Panel"
 msgstr "Panel _törlése"
 
-#: gnome-panel/panel-context-menu.c:167
+#: gnome-panel/panel-context-menu.c:166
 msgid "_New Panel"
 msgstr "Új _panel"
 
@@ -1323,7 +1330,7 @@ msgstr "_Megjegyzés:"
 msgid "_Revert"
 msgstr "_Visszaállítás"
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_OK"
@@ -1387,7 +1394,7 @@ msgstr ""
 msgid "_Force quit"
 msgstr "_Erőltetett kilépés"
 
-#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
+#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
 msgid "Cannot create initial panel layout.\n"
 msgstr "A kiinduló panelelrendezés nem hozható létre.\n"
 
@@ -1407,20 +1414,20 @@ msgstr "A(z) „%s” parancs nem futtatható"
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nem alakítható át UTF-8-ból a következő: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1288
 msgid "Choose a file to append to the command..."
 msgstr "Válassza ki a parancshoz hozzáfűzendő fájlt…"
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Válasszon ki egy alkalmazást a leírásának megtekintéséhez."
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1709
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1742
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1544,23 +1551,23 @@ msgstr "Jobb oldali úszópanel"
 msgid "Right Edge Panel"
 msgstr "Jobb oldali élpanel"
 
-#: gnome-panel/panel-util.c:316
+#: gnome-panel/panel-util.c:264
 #, c-format
 msgid "Icon '%s' not found"
 msgstr "A(z) „%s” ikon nem található"
 
-#: gnome-panel/panel-util.c:559
+#: gnome-panel/panel-util.c:507
 msgid "file"
 msgstr "fájl"
 
-#: gnome-panel/panel-util.c:727 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Saját mappa"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:736 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Fájlrendszer"
 
@@ -1573,7 +1580,7 @@ msgstr "Fájlrendszer"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:950 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s, %2$s"
@@ -1692,64 +1699,64 @@ msgstr "Számítógép óra"
 msgid "Failed to open the time settings"
 msgstr "Az időbeállítások megnyitása meghiúsult"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "A súgódokumentum nem jeleníthető meg: „%s”"
 
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Hiba a súgódokumentum megjelenítésekor"
 
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1626
 msgid "Choose Location"
 msgstr "Válasszon helyet"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1705
 msgid "Edit Location"
 msgstr "Hely szerkesztése"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1742
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1743
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1744
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1750
 msgid "Meters per second (m/s)"
 msgstr "Méter per másodperc (m/s)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1751
 msgid "Kilometers per hour (kph)"
 msgstr "Kilométer per óra (kph)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1752
 msgid "Miles per hour (mph)"
 msgstr "Mérföld per óra (mph)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1753
 msgid "Knots"
 msgstr "Csomó"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1754
 msgid "Beaufort scale"
 msgstr "Beaufort skála"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1807
 msgid "City Name"
 msgstr "Város neve"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1811
 msgid "City Time Zone"
 msgstr "Város időzónája"
 
@@ -2095,34 +2102,34 @@ msgstr "Felhasználóváltás"
 msgid "Hybrid Sleep"
 msgstr "Hibrid alvás"
 
-#: modules/menu/gp-menu-bar-applet.c:119
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Alkalmazások"
 
-#: modules/menu/gp-menu-bar-applet.c:124
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Telepített alkalmazások böngészése és futtatása"
 
-#: modules/menu/gp-menu-bar-applet.c:159
-#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
 msgid "Places"
 msgstr "Helyek"
 
-#: modules/menu/gp-menu-bar-applet.c:163
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Dokumentumok, mappák és hálózati helyek elérése"
 
-#: modules/menu/gp-menu-bar-applet.c:199
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "Rendszer"
 
-#: modules/menu/gp-menu-bar-applet.c:203
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr ""
 "Rendszermegjelenés és -viselkedés módosítása, vagy a súgó megjelenítése"
 
-#: modules/menu/gp-menu-bar-applet.c:253
-#: modules/menu/gp-menu-button-applet.c:469
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Telepítse a(z) „%s” alkalmazást."
@@ -2457,4 +2464,3 @@ msgstr "_Munkaterületek neveinek megjelenítése a kisalkalmazásban"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Munkaterületek"
-
