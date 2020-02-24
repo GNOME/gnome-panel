@@ -215,6 +215,13 @@ panel_addto_drag_begin_cb (GtkWidget      *widget,
 }
 
 static void
+free_drag_text (gpointer  data,
+                GClosure *closure)
+{
+	g_free (data);
+}
+
+static void
 panel_addto_setup_drag (GtkTreeView          *tree_view,
 			const GtkTargetEntry *target,
 			const char           *text)
@@ -229,7 +236,7 @@ panel_addto_setup_drag (GtkTreeView          *tree_view,
 	g_signal_connect_data (G_OBJECT (tree_view), "drag_data_get",
 			       G_CALLBACK (panel_addto_drag_data_get_cb),
 			       g_strdup (text),
-			       (GClosureNotify) g_free,
+			       free_drag_text,
 			       0 /* connect_flags */);
 	g_signal_connect_after (G_OBJECT (tree_view), "drag-begin",
 	                        G_CALLBACK (panel_addto_drag_begin_cb),
