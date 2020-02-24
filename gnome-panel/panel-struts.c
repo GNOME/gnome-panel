@@ -281,8 +281,7 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 					   &monitor_width,
 					   &monitor_height);
 
-        panel_multiscreen_is_at_visible_extreme (screen,
-                                                 strut->monitor,
+        panel_multiscreen_is_at_visible_extreme (strut->monitor,
                                                  &leftmost,
                                                  &rightmost,
                                                  &topmost,
