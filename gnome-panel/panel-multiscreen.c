@@ -35,7 +35,7 @@
 #include <string.h>
 
 static int            monitors    = 1;
-static GdkRectangle  *geometries  = NULL;
+static GdkRectangle  *monitor_geometries  = NULL;
 static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static gboolean       have_randr_1_3 = FALSE;
@@ -91,7 +91,7 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 	Window              xroot;
 	XRRScreenResources *resources;
 	RROutput            primary;
-	GArray             *geometries;
+	GArray             *geometry_array;
 	int                 i;
 	gboolean            driver_is_pre_randr_1_2;
 
@@ -145,7 +145,7 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 	if (have_randr_1_3)
 		primary = XRRGetOutputPrimary (xdisplay, xroot);
 
-	geometries = g_array_sized_new (FALSE, FALSE,
+	geometry_array = g_array_sized_new (FALSE, FALSE,
 					sizeof (GdkRectangle),
 					resources->noutput);
 
@@ -180,9 +180,9 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 			if (_panel_multiscreen_output_should_be_first (xdisplay,
 								       resources->outputs[i],
 								       output, primary))
-				g_array_prepend_vals (geometries, &rect, 1);
+				g_array_prepend_vals (geometry_array, &rect, 1);
 			else
-				g_array_append_vals (geometries, &rect, 1);
+				g_array_append_vals (geometry_array, &rect, 1);
 		}
 
 		XRRFreeOutputInfo (output);
@@ -193,23 +193,23 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 	if (driver_is_pre_randr_1_2) {
 		/* Drivers before RANDR 1.2 don't provide useful info about
 		 * outputs */
-		g_array_free (geometries, TRUE);
+		g_array_free (geometry_array, TRUE);
 		return FALSE;
 	}
 
-	if (geometries->len == 0) {
+	if (geometry_array->len == 0) {
 		/* This can happen in at least one case:
 		 * https://bugzilla.novell.com/show_bug.cgi?id=543876 where all
 		 * monitors appear disconnected (possibly because the  screen
 		 * is behing a KVM switch) -- see comment #8.
 		 * There might be other cases too, so we stay on the safe side.
 		 */
-		g_array_free (geometries, TRUE);
+		g_array_free (geometry_array, TRUE);
 		return FALSE;
 	}
 
-	*monitors_ret = geometries->len;
-	*geometries_ret = (GdkRectangle *) g_array_free (geometries, FALSE);
+	*monitors_ret = geometry_array->len;
+	*geometries_ret = (GdkRectangle *) g_array_free (geometry_array, FALSE);
 
 	return TRUE;
 }
@@ -441,7 +441,7 @@ panel_multiscreen_init (void)
 	g_signal_connect (screen, "monitors-changed",
 			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
-	panel_multiscreen_get_monitors_for_screen (&monitors, &geometries);
+	panel_multiscreen_get_monitors_for_screen (&monitors, &monitor_geometries);
 
 	initialized = TRUE;
 }
@@ -452,8 +452,8 @@ panel_multiscreen_reinit (void)
 	GdkScreen *screen;
 	GList     *toplevels, *l;
 
-	if (geometries) {
-		g_free (geometries);
+	if (monitor_geometries) {
+		g_free (monitor_geometries);
 	}
 
 	screen = gdk_screen_get_default ();
@@ -476,7 +476,7 @@ panel_multiscreen_x (GdkScreen *screen,
 {
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return geometries [monitor].x;
+	return monitor_geometries [monitor].x;
 }
 
 int
@@ -485,7 +485,7 @@ panel_multiscreen_y (GdkScreen *screen,
 {
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return geometries [monitor].y;
+	return monitor_geometries [monitor].y;
 }
 
 int
@@ -494,7 +494,7 @@ panel_multiscreen_width (GdkScreen *screen,
 {
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return geometries [monitor].width;
+	return monitor_geometries [monitor].width;
 }
 
 int
@@ -503,7 +503,7 @@ panel_multiscreen_height (GdkScreen *screen,
 {
 	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return geometries [monitor].height;
+	return monitor_geometries [monitor].height;
 }
 
 int
@@ -550,8 +550,8 @@ panel_multiscreen_get_monitor_at_point (int        x,
 		int dist_x, dist_y;
 		int dist_squared;
 
-		dist_x = axis_distance (x, geometries[i].x, geometries[i].width);
-		dist_y = axis_distance (y, geometries[i].y, geometries[i].height);
+		dist_x = axis_distance (x, monitor_geometries[i].x, monitor_geometries[i].width);
+		dist_y = axis_distance (y, monitor_geometries[i].y, monitor_geometries[i].height);
 
 		if (dist_x == 0 && dist_y == 0)
 			return i;
@@ -581,10 +581,10 @@ get_monitor_bounds (int            n_monitor,
 	g_assert (n_monitor >= 0 || n_monitor < monitors);
 	g_assert (bounds != NULL);
 
-	bounds->x0 = geometries [n_monitor].x;
-	bounds->y0 = geometries [n_monitor].y;
-	bounds->x1 = bounds->x0 + geometries [n_monitor].width;
-	bounds->y1 = bounds->y0 + geometries [n_monitor].height;
+	bounds->x0 = monitor_geometries [n_monitor].x;
+	bounds->y0 = monitor_geometries [n_monitor].y;
+	bounds->x1 = bounds->x0 + monitor_geometries [n_monitor].width;
+	bounds->y1 = bounds->y0 + monitor_geometries [n_monitor].height;
 }
 
 /* determines whether a given monitor is along the visible
