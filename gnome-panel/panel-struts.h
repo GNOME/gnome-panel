@@ -27,7 +27,6 @@
 G_BEGIN_DECLS
 
 gboolean panel_struts_register_strut           (PanelToplevel    *toplevel,
-						GdkScreen        *screen,
 						int               monitor,
 						PanelOrientation  orientation,
 						int               strut_size,
