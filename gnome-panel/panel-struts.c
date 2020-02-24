@@ -436,6 +436,9 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 		strut->geometry.width  = strut->strut_size;
 		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
 		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
 	if (new_strut)
