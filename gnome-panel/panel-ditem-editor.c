@@ -871,6 +871,8 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 		panel_key_file_set_string (dialog->priv->key_file, "URL",
 					   exec_or_uri);
 		break;
+  case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
+  case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		panel_key_file_remove_key (dialog->priv->key_file, "Exec");
 		panel_key_file_remove_key (dialog->priv->key_file, "URL");
@@ -932,6 +934,8 @@ command_browse_chooser_response (GtkFileChooser   *chooser,
 		case PANEL_DITEM_EDITOR_TYPE_LINK:
 			uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (chooser));
 			break;
+    case PANEL_DITEM_EDITOR_TYPE_NULL:
+    case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 		default:
 			g_assert_not_reached ();
 		}
@@ -965,6 +969,8 @@ update_chooser_for_type (PanelDItemEditor *dialog)
 		title = _("Choose a file...");
 		local_only = FALSE;
 		break;
+  case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
+  case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		g_assert_not_reached ();
 	}
@@ -1157,6 +1163,7 @@ type_combo_changed (PanelDItemEditor *dialog)
 						   "Type", "Directory");
 		}
 		return;
+  case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		g_assert_not_reached ();
 	}
@@ -1332,6 +1339,8 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 		case PANEL_DITEM_EDITOR_TYPE_LINK:
 			err = _("The location of the launcher is not set.");
 			break;
+    case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
+    case PANEL_DITEM_EDITOR_TYPE_NULL:
 		default:
 			g_assert_not_reached ();
 		}
