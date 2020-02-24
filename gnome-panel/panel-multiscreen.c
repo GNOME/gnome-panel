@@ -34,9 +34,8 @@
 
 #include <string.h>
 
-static int            screens     = 0;
-static int           *monitors    = NULL;
-static GdkRectangle **geometries  = NULL;
+static int            monitors    = 1;
+static GdkRectangle  *geometries  = NULL;
 static gboolean       initialized = FALSE;
 static gboolean       have_randr  = FALSE;
 static gboolean       have_randr_1_3 = FALSE;
@@ -84,10 +83,10 @@ _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 }
 
 static gboolean
-panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
-						 int           *monitors_ret,
+panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 						 GdkRectangle **geometries_ret)
 {
+	GdkScreen          *screen;
 	Display            *xdisplay;
 	Window              xroot;
 	XRRScreenResources *resources;
@@ -122,6 +121,7 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 	 * long-term solution.
 	 */
 
+	screen = gdk_screen_get_default ();
 	xdisplay = GDK_SCREEN_XDISPLAY (screen);
 	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
 
@@ -215,27 +215,30 @@ panel_multiscreen_get_randr_monitors_for_screen (GdkScreen     *screen,
 }
 
 static void
-panel_multiscreen_get_gdk_monitors_for_screen (GdkScreen     *screen,
-					       int           *monitors_ret,
+panel_multiscreen_get_gdk_monitors_for_screen (int           *monitors_ret,
 					       GdkRectangle **geometries_ret)
 {
+	GdkDisplay   *display;
 	int           num_monitors;
 	GdkRectangle *geometries;
 	int           i;
 
-	num_monitors = gdk_screen_get_n_monitors (screen);
+	display = gdk_display_get_default ();
+	num_monitors = gdk_display_get_n_monitors (display);
 	geometries = g_new (GdkRectangle, num_monitors);
 
 	for (i = 0; i < num_monitors; i++)
-		gdk_screen_get_monitor_geometry (screen, i, &(geometries[i]));
+	  GdkMonitor * monitor;
+
+	  monitor = gdk_display_get_monitor (display, i);
+	  gdk_monitor_get_geometry (monitor, &(geometries[i]));
 
 	*monitors_ret = num_monitors;
 	*geometries_ret = geometries;
 }
 
 static void
-panel_multiscreen_get_raw_monitors_for_screen (GdkScreen     *screen,
-					       int           *monitors_ret,
+panel_multiscreen_get_raw_monitors_for_screen (int           *monitors_ret,
 					       GdkRectangle **geometries_ret)
 {
 	gboolean res;
@@ -243,14 +246,12 @@ panel_multiscreen_get_raw_monitors_for_screen (GdkScreen     *screen,
 	*monitors_ret = 0;
 	*geometries_ret = NULL;
 
-	res = panel_multiscreen_get_randr_monitors_for_screen (screen,
-							       monitors_ret,
+	res = panel_multiscreen_get_randr_monitors_for_screen (monitors_ret,
 							       geometries_ret);
 	if (res && *monitors_ret > 0)
 		return;
 
-	panel_multiscreen_get_gdk_monitors_for_screen (screen,
-						       monitors_ret,
+	panel_multiscreen_get_gdk_monitors_for_screen (monitors_ret,
 						       geometries_ret);
 }
 
@@ -361,12 +362,10 @@ panel_multiscreen_compress_overlapping_monitors (int           *num_monitors_ino
 }
 
 static void
-panel_multiscreen_get_monitors_for_screen (GdkScreen     *screen,
-					   int           *monitors_ret,
+panel_multiscreen_get_monitors_for_screen (int           *monitors_ret,
 					   GdkRectangle **geometries_ret)
 {
-	panel_multiscreen_get_raw_monitors_for_screen (screen,
-						       monitors_ret,
+	panel_multiscreen_get_raw_monitors_for_screen (monitors_ret,
 						       geometries_ret);
 	panel_multiscreen_compress_overlapping_monitors (monitors_ret,
 							 geometries_ret);
@@ -421,37 +420,27 @@ void
 panel_multiscreen_init (void)
 {
 	GdkDisplay *display;
-	int         i;
+	GdkScreen *screen;
 
 	if (initialized)
 		return;
 
 	display = gdk_display_get_default ();
-	screens = 1;
 
 	panel_multiscreen_init_randr (display);
 
-	monitors   = g_new0 (int, screens);
-	geometries = g_new0 (GdkRectangle *, screens);
+	screen = gdk_screen_get_default ();
 
-	for (i = 0; i < screens; i++) {
-		GdkScreen *screen;
+	/* We connect to both signals to be on the safe side, but in
+	 * theory, it should be enough to only connect to
+	 * monitors-changed. Since we'll likely get two signals, we do
+	 * the real callback in the idle loop. */
+	g_signal_connect (screen, "size-changed",
+			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+	g_signal_connect (screen, "monitors-changed",
+			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
-		screen = gdk_display_get_screen (display, i);
-
-		/* We connect to both signals to be on the safe side, but in
-		 * theory, it should be enough to only connect to
-		 * monitors-changed. Since we'll likely get two signals, we do
-		 * the real callback in the idle loop. */
-		g_signal_connect (screen, "size-changed",
-				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
-		g_signal_connect (screen, "monitors-changed",
-				  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
-
-		panel_multiscreen_get_monitors_for_screen (screen,
-							   &(monitors[i]),
-							   &(geometries[i]));
-	}
+	panel_multiscreen_get_monitors_for_screen (&monitors), &geometries);
 
 	initialized = TRUE;
 }
@@ -462,14 +451,7 @@ panel_multiscreen_reinit (void)
 	GdkScreen *screen;
 	GList     *toplevels, *l;
 
-	if (monitors)
-		g_free (monitors);
-
 	if (geometries) {
-		int j;
-
-		for (j = 0; j < screens; j++)
-			g_free (geometries[j]);
 		g_free (geometries);
 	}
 
@@ -486,79 +468,41 @@ panel_multiscreen_reinit (void)
 
 	g_list_free (toplevels);
 }
-	
-int
-panel_multiscreen_screens (void)
-{
-	return screens;
-}
-
-int
-panel_multiscreen_monitors (GdkScreen *screen)
-{
-	int n_screen;
-
-	n_screen = gdk_screen_get_number (screen);
-
-	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 1);
-
-	return monitors [n_screen];
-}
 
 int
 panel_multiscreen_x (GdkScreen *screen,
 		     int        monitor)
 {
-	int n_screen;
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	n_screen = gdk_screen_get_number (screen);
-
-	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
-
-	return geometries [n_screen][monitor].x;
+	return geometries [monitor].x;
 }
 
 int
 panel_multiscreen_y (GdkScreen *screen,
 		     int        monitor)
 {
-	int n_screen;
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	n_screen = gdk_screen_get_number (screen);
-
-	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
-
-	return geometries [n_screen][monitor].y;
+	return geometries [monitor].y;
 }
 
 int
 panel_multiscreen_width (GdkScreen *screen,
 			 int        monitor)
 {
-	int n_screen;
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	n_screen = gdk_screen_get_number (screen);
-
-	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
-
-	return geometries [n_screen][monitor].width;
+	return geometries [monitor].width;
 }
 
 int
 panel_multiscreen_height (GdkScreen *screen,
 			  int        monitor)
 {
-	int n_screen;
+	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	n_screen = gdk_screen_get_number (screen);
-
-	g_return_val_if_fail (n_screen >= 0 && n_screen < screens, 0);
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors [n_screen], 0);
-
-	return geometries [n_screen][monitor].height;
+	return geometries [monitor].height;
 }
 
 int
@@ -591,34 +535,25 @@ axis_distance (int p, int axis_start, int axis_size)
  * view of which monitors are present. Look at get_monitors_for_screen() above
  * to see why. */
 int
-panel_multiscreen_get_monitor_at_point (GdkScreen *screen,
-					int        x,
+panel_multiscreen_get_monitor_at_point (int        x,
 					int        y)
 {
-	int n_screen;
 	int i;
-	int n_monitors;
-	GdkRectangle *geoms;
 	int min_dist_squared;
 	int closest_monitor;
 
 	/* not -1 as callers expect a real monitor */
 	g_return_val_if_fail (GDK_IS_SCREEN (screen), 0);
 
-	n_screen = gdk_screen_get_number (screen);
-
-	n_monitors = monitors[n_screen];
-	geoms = geometries[n_screen];
-
 	min_dist_squared = G_MAXINT32;
 	closest_monitor = 0;
 
-	for (i = 0; i < n_monitors; i++) {
+	for (i = 0; i < monitors; i++) {
 		int dist_x, dist_y;
 		int dist_squared;
 
-		dist_x = axis_distance (x, geoms[i].x, geoms[i].width);
-		dist_y = axis_distance (y, geoms[i].y, geoms[i].height);
+		dist_x = axis_distance (x, geometries[i].x, geometries[i].width);
+		dist_y = axis_distance (y, geometries[i].y, geometries[i].height);
 
 		if (dist_x == 0 && dist_y == 0)
 			return i;
@@ -642,56 +577,50 @@ typedef struct {
 } MonitorBounds;
 
 static inline void
-get_monitor_bounds (int            n_screen,
-		    int            n_monitor,
+get_monitor_bounds (int            n_monitor,
 		    MonitorBounds *bounds)
 {
-	g_assert (n_screen >= 0 && n_screen < screens);
-	g_assert (n_monitor >= 0 || n_monitor < monitors [n_screen]);
+	g_assert (n_monitor >= 0 || n_monitor < monitors);
 	g_assert (bounds != NULL);
 
-	bounds->x0 = geometries [n_screen][n_monitor].x;
-	bounds->y0 = geometries [n_screen][n_monitor].y;
-	bounds->x1 = bounds->x0 + geometries [n_screen][n_monitor].width;
-	bounds->y1 = bounds->y0 + geometries [n_screen][n_monitor].height;
+	bounds->x0 = geometries [n_monitor].x;
+	bounds->y0 = geometries [n_monitor].y;
+	bounds->x1 = bounds->x0 + geometries [n_monitor].width;
+	bounds->y1 = bounds->y0 + geometries [n_monitor].height;
 }
 
 /* determines whether a given monitor is along the visible
  * edge of the logical screen.
  */
 void
-panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
-					 int        n_monitor,
+panel_multiscreen_is_at_visible_extreme (int        n_monitor,
 					 gboolean  *leftmost,
 					 gboolean  *rightmost,
 					 gboolean  *topmost,
 					 gboolean  *bottommost)
 {
 	MonitorBounds monitor;
-	int           n_screen, i;
-
-	n_screen = gdk_screen_get_number (screen);
+	int i;
 
 	*leftmost   = TRUE;
 	*rightmost  = TRUE;
 	*topmost    = TRUE;
 	*bottommost = TRUE;
 
-	g_return_if_fail (n_screen >= 0 && n_screen < screens);
-	g_return_if_fail (n_monitor >= 0 && n_monitor < monitors [n_screen]);
+	g_return_if_fail (n_monitor >= 0 && n_monitor < monitors);
 
-	get_monitor_bounds (n_screen, n_monitor, &monitor);
+	get_monitor_bounds (n_monitor, &monitor);
 	
 	/* go through each monitor and try to find one either right,
 	 * below, above, or left of the specified monitor
 	 */
 
-	for (i = 0; i < monitors [n_screen]; i++) {
+	for (i = 0; i < monitors; i++) {
 		MonitorBounds iter;
 
 		if (i == n_monitor) continue;
 
-		get_monitor_bounds (n_screen, i, &iter);
+		get_monitor_bounds (i, &iter);
 
 		if ((iter.y0 >= monitor.y0 && iter.y0 <  monitor.y1) ||
 		    (iter.y1 >  monitor.y0 && iter.y1 <= monitor.y1)) {
