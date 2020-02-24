@@ -165,6 +165,8 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 			else
 				return ++skip;
 			break;
+    case PANEL_ORIENTATION_LEFT:
+    case PANEL_ORIENTATION_RIGHT:
 		default:
 			g_assert_not_reached ();
 			break;
