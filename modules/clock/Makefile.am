@@ -72,7 +72,7 @@ clock_la_LDFLAGS = \
 	$(NULL)
 
 clock_enum_headers = \
-	clock-utils.h \
+	$(srcdir)/clock-utils.h \
 	$(NULL)
 
 clock-typebuiltins.c: $(clock_enum_headers)
