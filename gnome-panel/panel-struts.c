@@ -30,7 +30,6 @@
 typedef struct {
         PanelToplevel    *toplevel;
 
-	GdkScreen        *screen;
 	int               monitor;
 	
         PanelOrientation  orientation;
@@ -65,13 +64,16 @@ panel_struts_find_strut (PanelToplevel *toplevel)
 }
 
 static void
-panel_struts_get_monitor_geometry (GdkScreen *screen,
-				   int        monitor,
+panel_struts_get_monitor_geometry (int        monitor,
 				   int       *x,
 				   int       *y,
 				   int       *width,
 				   int       *height)
 {
+        GdkScreen * screen;
+
+        screen = gdk_screen_get_default ();
+
         *x      = panel_multiscreen_x      (screen, monitor);
         *y      = panel_multiscreen_y      (screen, monitor);
         *width  = panel_multiscreen_width  (screen, monitor);
@@ -181,7 +183,6 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 
 static gboolean
 panel_struts_allocate_struts (PanelToplevel *toplevel,
-			      GdkScreen     *screen,
 			      int            monitor)
 {
 	GSList   *allocated = NULL;
@@ -197,10 +198,10 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 		gboolean      moved_down;
 		int           skip;
 
-		if (strut->screen != screen || strut->monitor != monitor)
+		if (strut->monitor != monitor)
 			continue;
 
-		panel_struts_get_monitor_geometry (strut->screen, strut->monitor,
+		panel_struts_get_monitor_geometry (strut->monitor,
 						   &monitor_x, &monitor_y,
 						   &monitor_width, &monitor_height);
 
@@ -249,6 +250,7 @@ panel_struts_allocate_struts (PanelToplevel *toplevel,
 void
 panel_struts_set_window_hint (PanelToplevel *toplevel)
 {
+	GdkScreen  *screen;
 	GtkWidget  *widget;
 	PanelStrut *strut;
 	int         strut_size;
@@ -268,18 +270,18 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	strut_size = strut->allocated_strut_size;
 
-	screen_width  = gdk_screen_get_width  (strut->screen);
-	screen_height = gdk_screen_get_height (strut->screen);
+	screen = gdk_screen_get_default ();
 
-	panel_struts_get_monitor_geometry (strut->screen,
-					   strut->monitor,
+	screen_width  = gdk_screen_get_width  (screen);
+	screen_height = gdk_screen_get_height (screen);
+
+	panel_struts_get_monitor_geometry (strut->monitor,
 					   &monitor_x,
 					   &monitor_y,
 					   &monitor_width,
 					   &monitor_height);
 
-        panel_multiscreen_is_at_visible_extreme (strut->screen,
-                                                 strut->monitor,
+        panel_multiscreen_is_at_visible_extreme (strut->monitor,
                                                  &leftmost,
                                                  &rightmost,
                                                  &topmost,
@@ -347,20 +349,15 @@ orientation_to_order (PanelOrientation orientation)
 }
 
 /* Sort in order of
- *   1) screen
- *   2) monitor
- *   3) top, bottom, left, right
- *   4) strut_start ascending
- *   5) strut_end descending
+ *   1) monitor
+ *   2) top, bottom, left, right
+ *   3) strut_start ascending
+ *   4) strut_end descending
  */
 static int
 panel_struts_compare (const PanelStrut *s1,
 		      const PanelStrut *s2)
 {
-	if (s1->screen != s2->screen)
-		return gdk_screen_get_number (s1->screen) -
-			gdk_screen_get_number (s2->screen);
-
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;
 
@@ -379,7 +376,6 @@ panel_struts_compare (const PanelStrut *s1,
 
 gboolean
 panel_struts_register_strut (PanelToplevel    *toplevel,
-			     GdkScreen        *screen,
 			     int               monitor,
 			     PanelOrientation  orientation,
 			     int               strut_size,
@@ -396,7 +392,6 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 
 	} else if (strut->toplevel    == toplevel    &&
 		   strut->orientation == orientation &&
-		   strut->screen      == screen      &&
 		   strut->monitor     == monitor     &&
 		   strut->strut_size  == strut_size  &&
 		   strut->strut_start == strut_start &&
@@ -405,13 +400,12 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 
 	strut->toplevel    = toplevel;
 	strut->orientation = orientation;
-	strut->screen      = screen;
 	strut->monitor     = monitor;
 	strut->strut_size  = strut_size;
 	strut->strut_start = strut_start;
 	strut->strut_end   = strut_end;
 	
-	panel_struts_get_monitor_geometry (screen, monitor,
+	panel_struts_get_monitor_geometry (monitor,
 					   &monitor_x, &monitor_y,
 					   &monitor_width, &monitor_height);
 
@@ -451,26 +445,24 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	panel_struts_list = g_slist_sort (panel_struts_list,
 					  (GCompareFunc) panel_struts_compare);
 
-	return panel_struts_allocate_struts (toplevel, screen, monitor);
+	return panel_struts_allocate_struts (toplevel, monitor);
 }
 
 void
 panel_struts_unregister_strut (PanelToplevel *toplevel)
 {
 	PanelStrut *strut;
-	GdkScreen  *screen;
 	int         monitor;
 
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return;
 
-	screen  = strut->screen;
 	monitor = strut->monitor;
 
 	panel_struts_list = g_slist_remove (panel_struts_list, strut);
 	g_free (strut);
 
-	panel_struts_allocate_struts (toplevel, screen, monitor);
+	panel_struts_allocate_struts (toplevel, monitor);
 }
 
 gboolean
