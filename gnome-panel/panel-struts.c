@@ -357,10 +357,6 @@ static int
 panel_struts_compare (const PanelStrut *s1,
 		      const PanelStrut *s2)
 {
-	if (s1->screen != s2->screen)
-		return gdk_screen_get_number (s1->screen) -
-			gdk_screen_get_number (s2->screen);
-
 	if (s1->monitor != s2->monitor)
 		return s1->monitor - s2->monitor;
 
