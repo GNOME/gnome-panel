@@ -41,6 +41,8 @@ static gboolean       have_randr  = FALSE;
 static gboolean       have_randr_1_3 = FALSE;
 static guint          reinit_id   = 0;
 
+static void panel_multiscreen_reinit (void);
+
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
 					   RROutput       output,
@@ -446,7 +448,7 @@ panel_multiscreen_init (void)
 	initialized = TRUE;
 }
 
-void
+static void
 panel_multiscreen_reinit (void)
 {
 	GdkScreen *screen;
