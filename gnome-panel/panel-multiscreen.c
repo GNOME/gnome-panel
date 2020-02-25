@@ -384,12 +384,12 @@ panel_multiscreen_compress_overlapping_monitors (int           *num_monitors_ino
 
 static void
 panel_multiscreen_get_monitors_for_screen (int           *monitors_ret,
-					   GdkRectangle **geometries_ret)
+                                           GdkRectangle **geometries_ret)
 {
-	panel_multiscreen_get_raw_monitors_for_screen (monitors_ret,
-						       geometries_ret);
-	panel_multiscreen_compress_overlapping_monitors (monitors_ret,
-							 geometries_ret);
+  panel_multiscreen_get_raw_monitors_for_screen (monitors_ret,
+                                                 geometries_ret);
+  panel_multiscreen_compress_overlapping_monitors (monitors_ret,
+                                                   geometries_ret);
 }
 
 static gboolean
