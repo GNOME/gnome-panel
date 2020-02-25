@@ -559,34 +559,36 @@ axis_distance (int p, int axis_start, int axis_size)
  * to see why. */
 int
 panel_multiscreen_get_monitor_at_point (int        x,
-					int        y)
+                                        int        y)
 {
-	int i;
-	int min_dist_squared;
-	int closest_monitor;
+  int i;
+  int min_dist_squared;
+  int closest_monitor;
 
-	min_dist_squared = G_MAXINT32;
-	closest_monitor = 0;
+  min_dist_squared = G_MAXINT32;
+  closest_monitor = 0;
 
-	for (i = 0; i < monitors; i++) {
-		int dist_x, dist_y;
-		int dist_squared;
+  for (i = 0; i < monitors; i++)
+    {
+      int dist_x, dist_y;
+      int dist_squared;
 
-		dist_x = axis_distance (x, geometries[i].x, geometries[i].width);
-		dist_y = axis_distance (y, geometries[i].y, geometries[i].height);
+      dist_x = axis_distance (x, geometries[i].x, geometries[i].width);
+      dist_y = axis_distance (y, geometries[i].y, geometries[i].height);
 
-		if (dist_x == 0 && dist_y == 0)
-			return i;
+      if (dist_x == 0 && dist_y == 0)
+        return i;
 
-		dist_squared = dist_x * dist_x + dist_y * dist_y;
+      dist_squared = dist_x * dist_x + dist_y * dist_y;
 
-		if (dist_squared < min_dist_squared) {
-			min_dist_squared = dist_squared;
-			closest_monitor = i;
-		}
-	}
+      if (dist_squared < min_dist_squared)
+        {
+          min_dist_squared = dist_squared;
+          closest_monitor = i;
+        }
+    }
 
-	return closest_monitor;
+  return closest_monitor;
 }
 
 typedef struct {
