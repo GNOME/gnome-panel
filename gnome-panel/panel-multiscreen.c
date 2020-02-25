@@ -273,108 +273,113 @@ panel_multiscreen_get_raw_monitors_for_screen (int           *monitors_ret,
 
 static inline gboolean
 rectangle_overlaps (GdkRectangle *a,
-		    GdkRectangle *b)
+                    GdkRectangle *b)
 {
-	return gdk_rectangle_intersect (a, b, NULL);
+  return gdk_rectangle_intersect (a, b, NULL);
 }
 
 static long
 pixels_in_rectangle (GdkRectangle *r)
 {
-	return (long) (r->width * r->height);
+  return (long) (r->width * r->height);
 }
 
 static void
 panel_multiscreen_compress_overlapping_monitors (int           *num_monitors_inout,
-						 GdkRectangle **geometries_inout)
+                                                 GdkRectangle **geometries_inout)
 {
-	int           num_monitors;
-	GdkRectangle *geometries;
-	int           i;
+  int           num_monitors;
+  GdkRectangle *geometries;
+  int           i;
 
-	num_monitors = *num_monitors_inout;
-	geometries = *geometries_inout;
+  num_monitors = *num_monitors_inout;
+  geometries = *geometries_inout;
 
-	/* http://bugzilla.gnome.org/show_bug.cgi?id=530969
-	 * https://bugzilla.novell.com/show_bug.cgi?id=310208
-	 * and many other such bugs...
-	 *
-	 * RANDR sometimes gives us monitors that overlap (i.e. outputs whose
-	 * bounding rectangles overlap). This is sometimes right and sometimes
-	 * wrong:
-	 *
-	 *   * Right - two 1024x768 outputs at the same offset (0, 0) that show
-	 *     the same thing.  Think "laptop plus projector with the same
-	 *     resolution".
-	 *
-	 *   * Wrong - one 1280x1024 output ("laptop internal LCD") and another
-	 *     1024x768 output ("external monitor"), both at offset (0, 0).
-	 *     There is no way for the monitor with the small resolution to
-	 *     show the complete image from the laptop's LCD, unless one uses
-	 *     panning (but nobody wants panning, right!?).
-	 *
-	 * With overlapping monitors, we may end up placing the panel with
-	 * respect to the "wrong" one.  This is always wrong, as the panel
-	 * appears "in the middle of the screen" of the monitor with the
-	 * smaller resolution, instead of at the edge.
-	 *
-	 * Our strategy is to find the subsets of overlapping monitors, and
-	 * "compress" each such set to being like if there were a single
-	 * monitor with the biggest resolution of each of that set's monitors.
-	 * Say we have four monitors
-	 *
-	 *      A, B, C, D
-	 *
-	 * where B and D overlap.  In that case, we'll generate a new list that
-	 * looks like
-	 *
-	 *      A, MAX(B, D), C
-	 *
-	 * with three monitors.
-	 *
-	 * NOTE FOR THE FUTURE: We could avoid most of this mess if we had a
-	 * concept of a "primary monitor". Also, we could look at each
-	 * output's name or properties to see if it is the built-in LCD in a
-	 * laptop. However, with GTK+ 2.14.x we don't get output names, since
-	 * it gets the list outputs from Xinerama, not RANDR (and Xinerama
-	 * doesn't provide output names).
-	 */
+  /* http://bugzilla.gnome.org/show_bug.cgi?id=530969
+   * https://bugzilla.novell.com/show_bug.cgi?id=310208
+   * and many other such bugs...
+   *
+   * RANDR sometimes gives us monitors that overlap (i.e. outputs whose
+   * bounding rectangles overlap). This is sometimes right and sometimes
+   * wrong:
+   *
+   *   * Right - two 1024x768 outputs at the same offset (0, 0) that show
+   *     the same thing.  Think "laptop plus projector with the same
+   *     resolution".
+   *
+   *   * Wrong - one 1280x1024 output ("laptop internal LCD") and another
+   *     1024x768 output ("external monitor"), both at offset (0, 0).
+   *     There is no way for the monitor with the small resolution to
+   *     show the complete image from the laptop's LCD, unless one uses
+   *     panning (but nobody wants panning, right!?).
+   *
+   * With overlapping monitors, we may end up placing the panel with
+   * respect to the "wrong" one.  This is always wrong, as the panel
+   * appears "in the middle of the screen" of the monitor with the
+   * smaller resolution, instead of at the edge.
+   *
+   * Our strategy is to find the subsets of overlapping monitors, and
+   * "compress" each such set to being like if there were a single
+   * monitor with the biggest resolution of each of that set's monitors.
+   * Say we have four monitors
+   *
+   *      A, B, C, D
+   *
+   * where B and D overlap.  In that case, we'll generate a new list that
+   * looks like
+   *
+   *      A, MAX(B, D), C
+   *
+   * with three monitors.
+   *
+   * NOTE FOR THE FUTURE: We could avoid most of this mess if we had a
+   * concept of a "primary monitor". Also, we could look at each
+   * output's name or properties to see if it is the built-in LCD in a
+   * laptop. However, with GTK+ 2.14.x we don't get output names, since
+   * it gets the list outputs from Xinerama, not RANDR (and Xinerama
+   * doesn't provide output names).
+   */
 
-	for (i = 0; i < num_monitors; i++) {
-		long max_pixels;
-		int  j;
+  for (i = 0; i < num_monitors; i++)
+    {
+      long max_pixels;
+      int  j;
 
-		max_pixels = pixels_in_rectangle (&geometries[i]);
+      max_pixels = pixels_in_rectangle (&geometries[i]);
 
-		j = i + 1;
+      j = i + 1;
 
-		while (j < num_monitors) {
-			if (rectangle_overlaps (&geometries[i],
-						&geometries[j])) {
-				long pixels;
+      while (j < num_monitors)
+        {
+          if (rectangle_overlaps (&geometries[i],
+                                  &geometries[j]))
+            {
+              long pixels;
 
-				pixels = pixels_in_rectangle (&geometries[j]);
-				if (pixels > max_pixels) {
-					max_pixels = pixels;
-					/* keep the maximum */
-					geometries[i] = geometries[j];
-				}
+              pixels = pixels_in_rectangle (&geometries[j]);
 
-				/* Shift the remaining monitors to the left */
-				if (num_monitors - j - 1 > 0)
-					memmove (&geometries[j],
-						 &geometries[j + 1],
-						 sizeof (geometries[0]) * (num_monitors - j - 1));
+              if (pixels > max_pixels)
+                {
+                  max_pixels = pixels;
+                  /* keep the maximum */
+                  geometries[i] = geometries[j];
+                }
 
-				num_monitors--;
-				g_assert (num_monitors > 0);
-			} else
-				j++;
-		}
-	}
+              /* Shift the remaining monitors to the left */
+              if (num_monitors - j - 1 > 0)
+                memmove (&geometries[j],
+                         &geometries[j + 1],
+                         sizeof (geometries[0]) * (num_monitors - j - 1));
 
-	*num_monitors_inout = num_monitors;
-	*geometries_inout = geometries;
+              num_monitors--;
+              g_assert (num_monitors > 0);
+            } else
+              j++;
+        }
+    }
+
+  *num_monitors_inout = num_monitors;
+  *geometries_inout = geometries;
 }
 
 static void
