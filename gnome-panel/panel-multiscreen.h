@@ -31,8 +31,6 @@
 void	panel_multiscreen_init                  (void);
 void	panel_multiscreen_reinit                (void);
 
-int	panel_multiscreen_monitors              (GdkScreen *screen);
-
 int	panel_multiscreen_x                     (GdkScreen *screen,
 						 int        monitor);
 int	panel_multiscreen_y                     (GdkScreen *screen,
