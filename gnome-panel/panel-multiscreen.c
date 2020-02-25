@@ -462,7 +462,7 @@ panel_multiscreen_init (void)
   g_signal_connect (screen, "monitors-changed",
                     G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
-	panel_multiscreen_get_monitors_for_screen (&monitors, &monitor_geometries);
+  panel_multiscreen_get_monitors_for_screen (&monitors, &monitor_geometries);
 
   initialized = TRUE;
 }
