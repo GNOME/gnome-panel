@@ -616,48 +616,51 @@ get_monitor_bounds (int            n_monitor,
  */
 void
 panel_multiscreen_is_at_visible_extreme (int        n_monitor,
-					 gboolean  *leftmost,
-					 gboolean  *rightmost,
-					 gboolean  *topmost,
-					 gboolean  *bottommost)
+                                         gboolean  *leftmost,
+                                         gboolean  *rightmost,
+                                         gboolean  *topmost,
+                                         gboolean  *bottommost)
 {
-	MonitorBounds monitor;
-	int i;
+  MonitorBounds monitor;
+  int i;
 
-	*leftmost   = TRUE;
-	*rightmost  = TRUE;
-	*topmost    = TRUE;
-	*bottommost = TRUE;
+  *leftmost   = TRUE;
+  *rightmost  = TRUE;
+  *topmost    = TRUE;
+  *bottommost = TRUE;
 
-	g_return_if_fail (n_monitor >= 0 && n_monitor < monitors);
+  g_return_if_fail (n_monitor >= 0 && n_monitor < monitors);
 
-	get_monitor_bounds (n_monitor, &monitor);
-	
-	/* go through each monitor and try to find one either right,
-	 * below, above, or left of the specified monitor
-	 */
+  get_monitor_bounds (n_monitor, &monitor);
 
-	for (i = 0; i < monitors; i++) {
-		MonitorBounds iter;
+  /* go through each monitor and try to find one either right,
+   * below, above, or left of the specified monitor
+   */
 
-		if (i == n_monitor) continue;
+  for (i = 0; i < monitors; i++)
+  {
+    MonitorBounds iter;
 
-		get_monitor_bounds (i, &iter);
+    if (i == n_monitor) continue;
 
-		if ((iter.y0 >= monitor.y0 && iter.y0 <  monitor.y1) ||
-		    (iter.y1 >  monitor.y0 && iter.y1 <= monitor.y1)) {
-			if (iter.x0 < monitor.x0)
-				*leftmost = FALSE;
-			if (iter.x1 > monitor.x1)
-				*rightmost = FALSE;
-		}
+    get_monitor_bounds (i, &iter);
 
-		if ((iter.x0 >= monitor.x0 && iter.x0 <  monitor.x1) ||
-		    (iter.x1 >  monitor.x0 && iter.x1 <= monitor.x1)) {
-			if (iter.y0 < monitor.y0)
-				*topmost = FALSE;
-			if (iter.y1 > monitor.y1)
-				*bottommost = FALSE;
-		}
-	}
+    if ((iter.y0 >= monitor.y0 && iter.y0 <  monitor.y1) ||
+       (iter.y1 >  monitor.y0 && iter.y1 <= monitor.y1))
+      {
+        if (iter.x0 < monitor.x0)
+          *leftmost = FALSE;
+        if (iter.x1 > monitor.x1)
+          *rightmost = FALSE;
+      }
+
+    if ((iter.x0 >= monitor.x0 && iter.x0 <  monitor.x1) ||
+       (iter.x1 >  monitor.x0 && iter.x1 <= monitor.x1))
+      {
+        if (iter.y0 < monitor.y0)
+          *topmost = FALSE;
+        if (iter.y1 > monitor.y1)
+          *bottommost = FALSE;
+      }
+  }
 }
