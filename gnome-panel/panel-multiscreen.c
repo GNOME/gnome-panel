@@ -42,44 +42,48 @@ static gboolean       have_randr_1_3 = FALSE;
 static guint          reinit_id      = 0;
 
 static gboolean
-_panel_multiscreen_output_should_be_first (Display       *xdisplay,
-					   RROutput       output,
-					   XRROutputInfo *info,
-					   RROutput       primary)
+panel_multiscreen_output_should_be_first (Display       *xdisplay,
+                                          RROutput       output,
+                                          XRROutputInfo *info,
+                                          RROutput       primary)
 {
-	if (primary)
-		return output == primary;
+  if (primary)
+    return output == primary;
 
-	if (have_randr_1_3) {
-		Atom           connector_type_atom;
-		Atom           actual_type;
-		int            actual_format;
-		unsigned long  nitems;
-		unsigned long  bytes_after;
-		unsigned char *prop;
-		char          *connector_type;
-		gboolean       retval;
+  if (have_randr_1_3)
+    {
+      Atom           connector_type_atom;
+      Atom           actual_type;
+      int            actual_format;
+      unsigned long  nitems;
+      unsigned long  bytes_after;
+      unsigned char *prop;
+      char          *connector_type;
+      gboolean       retval;
 
-		connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
+      connector_type_atom = XInternAtom (xdisplay, "ConnectorType", False);
 
-		if (XRRGetOutputProperty (xdisplay, output, connector_type_atom,
-					  0, 100, False, False, None,
-					  &actual_type, &actual_format,
-					  &nitems, &bytes_after, &prop) == Success) {
-			if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32) {
-				connector_type = XGetAtomName (xdisplay, prop[0]);
-				retval = g_strcmp0 (connector_type, "Panel") == 0;
-				XFree (connector_type);
-				return retval;
-			}
-		}
-	}
+      if (XRRGetOutputProperty (xdisplay, output, connector_type_atom,
+                                0, 100, False, False, None,
+                                &actual_type, &actual_format,
+                                &nitems, &bytes_after, &prop) == Success)
+        {
+          if (actual_type == XA_ATOM && nitems == 1 && actual_format == 32)
+            {
+              connector_type = XGetAtomName (xdisplay, prop[0]);
+              retval = g_strcmp0 (connector_type, "Panel") == 0;
+              XFree (connector_type);
 
-	/* Pre-1.3 fallback:
-	 * "LVDS" is the oh-so-intuitive name that X gives to laptop LCDs.
-	 * It can actually be LVDS0, LVDS-0, Lvds, etc.
-	 */
-	return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
+              return retval;
+            }
+        }
+    }
+
+  /* Pre-1.3 fallback:
+   * "LVDS" is the oh-so-intuitive name that X gives to laptop LCDs.
+   * It can actually be LVDS0, LVDS-0, Lvds, etc.
+   */
+  return (g_ascii_strncasecmp (info->name, "LVDS", strlen ("LVDS")) == 0);
 }
 
 static gboolean
@@ -177,9 +181,9 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 
 			XRRFreeCrtcInfo (crtc);
 
-			if (_panel_multiscreen_output_should_be_first (xdisplay,
-								       resources->outputs[i],
-								       output, primary))
+			if (panel_multiscreen_output_should_be_first (xdisplay,
+								      resources->outputs[i],
+								      output, primary))
 				g_array_prepend_vals (geometry_array, &rect, 1);
 			else
 				g_array_append_vals (geometry_array, &rect, 1);
