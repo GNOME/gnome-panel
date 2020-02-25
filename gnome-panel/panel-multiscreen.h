@@ -40,11 +40,9 @@ int	panel_multiscreen_width                 (GdkScreen *screen,
 int	panel_multiscreen_height                (GdkScreen *screen,
 						 int        monitor);
 int	panel_multiscreen_locate_widget_monitor (GtkWidget *widget);
-int     panel_multiscreen_get_monitor_at_point  (GdkScreen *screen,
-						 int        x,
+int     panel_multiscreen_get_monitor_at_point  (int        x,
 						 int        y);
-void    panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
-						 int        monitor,
+void    panel_multiscreen_is_at_visible_extreme (int        monitor,
 						 gboolean  *leftmost,
 						 gboolean  *rightmost,
 						 gboolean  *topmost,
