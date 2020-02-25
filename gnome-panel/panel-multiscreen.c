@@ -90,134 +90,141 @@ panel_multiscreen_output_should_be_first (Display       *xdisplay,
 
 static gboolean
 panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
-						 GdkRectangle **geometries_ret)
+                                                 GdkRectangle **geometries_ret)
 {
-	GdkScreen          *screen;
-	Display            *xdisplay;
-	Window              xroot;
-	XRRScreenResources *resources;
-	RROutput            primary;
-	GArray             *geometry_array;
-	int                 i;
-	gboolean            driver_is_pre_randr_1_2;
+  GdkScreen          *screen;
+  Display            *xdisplay;
+  Window              xroot;
+  XRRScreenResources *resources;
+  RROutput            primary;
+  GArray             *geometry_array;
+  int                 i;
+  gboolean            driver_is_pre_randr_1_2;
 
-	if (!have_randr)
-		return FALSE;
+  if (!have_randr)
+    return FALSE;
 
-	/* GTK+ 2.14.x uses the Xinerama API, instead of RANDR, to get the
-	 * monitor geometries. It does this to avoid calling
-	 * XRRGetScreenResources(), which is slow as it re-detects all the
-	 * monitors --- note that XRRGetScreenResourcesCurrent() had not been
-	 * introduced yet.  Using Xinerama in GTK+ has the bad side effect that
-	 * gdk_screen_get_monitor_plug_name() will return NULL, as Xinerama
-	 * does not provide that information, unlike RANDR.
-	 *
-	 * Here we need to identify the output names, so that we can put the
-	 * built-in LCD in a laptop *before* all other outputs.  This is so
-	 * that gnome-panel will normally prefer to appear on the "native"
-	 * display rather than on an external monitor.
-	 *
-	 * To get the output names and geometries, we will not use
-	 * gdk_screen_get_n_monitors() and friends, but rather we will call
-	 * XRR*() directly.
-	 *
-	 * See https://bugzilla.novell.com/show_bug.cgi?id=479684 for this
-	 * particular bug, and and
-	 * http://bugzilla.gnome.org/show_bug.cgi?id=562944 for a more
-	 * long-term solution.
-	 */
+  /* GTK+ 2.14.x uses the Xinerama API, instead of RANDR, to get the
+   * monitor geometries. It does this to avoid calling
+   * XRRGetScreenResources(), which is slow as it re-detects all the
+   * monitors --- note that XRRGetScreenResourcesCurrent() had not been
+   * introduced yet.  Using Xinerama in GTK+ has the bad side effect that
+   * gdk_screen_get_monitor_plug_name() will return NULL, as Xinerama
+   * does not provide that information, unlike RANDR.
+   *
+   * Here we need to identify the output names, so that we can put the
+   * built-in LCD in a laptop *before* all other outputs.  This is so
+   * that gnome-panel will normally prefer to appear on the "native"
+   * display rather than on an external monitor.
+   *
+   * To get the output names and geometries, we will not use
+   * gdk_screen_get_n_monitors() and friends, but rather we will call
+   * XRR*() directly.
+   *
+   * See https://bugzilla.novell.com/show_bug.cgi?id=479684 for this
+   * particular bug, and and
+   * http://bugzilla.gnome.org/show_bug.cgi?id=562944 for a more
+   * long-term solution.
+   */
 
-	screen = gdk_screen_get_default ();
-	xdisplay = GDK_SCREEN_XDISPLAY (screen);
-	xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
+  screen = gdk_screen_get_default ();
+  xdisplay = GDK_SCREEN_XDISPLAY (screen);
+  xroot = GDK_WINDOW_XID (gdk_screen_get_root_window (screen));
 
-	if (have_randr_1_3) {
-		resources = XRRGetScreenResourcesCurrent (xdisplay, xroot);
-		if (resources->noutput == 0) {
-			/* This might happen if nothing tried to get randr
-			 * resources from the server before, so we need an
-			 * active probe. See comment #27 in
-			 * https://bugzilla.gnome.org/show_bug.cgi?id=597101 */
-			XRRFreeScreenResources (resources);
-			resources = XRRGetScreenResources (xdisplay, xroot);
-		}
-	} else
-		resources = XRRGetScreenResources (xdisplay, xroot);
+  if (have_randr_1_3)
+    {
+      resources = XRRGetScreenResourcesCurrent (xdisplay, xroot);
+      if (resources->noutput == 0)
+        {
+          /* This might happen if nothing tried to get randr
+           * resources from the server before, so we need an
+           * active probe. See comment #27 in
+           * https://bugzilla.gnome.org/show_bug.cgi?id=597101 */
+          XRRFreeScreenResources (resources);
+          resources = XRRGetScreenResources (xdisplay, xroot);
+        }
+    } else
+      resources = XRRGetScreenResources (xdisplay, xroot);
 
-	if (!resources)
-		return FALSE;
+  if (!resources)
+    return FALSE;
 
-	primary = None;
-	if (have_randr_1_3)
-		primary = XRRGetOutputPrimary (xdisplay, xroot);
+  primary = None;
 
-	geometry_array = g_array_sized_new (FALSE, FALSE,
-					sizeof (GdkRectangle),
-					resources->noutput);
+  if (have_randr_1_3)
+    primary = XRRGetOutputPrimary (xdisplay, xroot);
 
-	driver_is_pre_randr_1_2 = FALSE;
+  geometry_array = g_array_sized_new (FALSE, FALSE,
+                                      sizeof (GdkRectangle),
+                                      resources->noutput);
 
-	for (i = 0; i < resources->noutput; i++) {
-		XRROutputInfo *output;
+  driver_is_pre_randr_1_2 = FALSE;
 
-		output = XRRGetOutputInfo (xdisplay, resources,
-					   resources->outputs[i]);
+  for (i = 0; i < resources->noutput; i++) {
+    XRROutputInfo *output;
 
-		/* Drivers before RANDR 1.2 return "default" for the output
-		 * name */
-		if (g_strcmp0 (output->name, "default") == 0)
-			driver_is_pre_randr_1_2 = TRUE;
+    output = XRRGetOutputInfo (xdisplay, resources,
+                               resources->outputs[i]);
 
-		if (output->connection != RR_Disconnected &&
-		    output->crtc != 0) {
-			XRRCrtcInfo  *crtc;
-			GdkRectangle  rect;
+    /* Drivers before RANDR 1.2 return "default" for the output
+     * name */
+    if (g_strcmp0 (output->name, "default") == 0)
+      driver_is_pre_randr_1_2 = TRUE;
 
-			crtc = XRRGetCrtcInfo (xdisplay, resources,
-					       output->crtc);
+    if (output->connection != RR_Disconnected &&
+        output->crtc != 0)
+      {
+        XRRCrtcInfo  *crtc;
+        GdkRectangle  rect;
 
-			rect.x	    = crtc->x;
-			rect.y	    = crtc->y;
-			rect.width  = crtc->width;
-			rect.height = crtc->height;
+        crtc = XRRGetCrtcInfo (xdisplay, resources,
+                               output->crtc);
 
-			XRRFreeCrtcInfo (crtc);
+        rect.x      = crtc->x;
+        rect.y      = crtc->y;
+        rect.width  = crtc->width;
+        rect.height = crtc->height;
 
-			if (panel_multiscreen_output_should_be_first (xdisplay,
-								      resources->outputs[i],
-								      output, primary))
-				g_array_prepend_vals (geometry_array, &rect, 1);
-			else
-				g_array_append_vals (geometry_array, &rect, 1);
-		}
+        XRRFreeCrtcInfo (crtc);
 
-		XRRFreeOutputInfo (output);
-	}
+        if (panel_multiscreen_output_should_be_first (xdisplay,
+                                                      resources->outputs[i],
+                                                      output, primary))
+          g_array_prepend_vals (geometry_array, &rect, 1);
+        else
+          g_array_append_vals (geometry_array, &rect, 1);
+      }
 
-	XRRFreeScreenResources (resources);
+    XRRFreeOutputInfo (output);
+  }
 
-	if (driver_is_pre_randr_1_2) {
-		/* Drivers before RANDR 1.2 don't provide useful info about
-		 * outputs */
-		g_array_free (geometry_array, TRUE);
-		return FALSE;
-	}
+  XRRFreeScreenResources (resources);
 
-	if (geometry_array->len == 0) {
-		/* This can happen in at least one case:
-		 * https://bugzilla.novell.com/show_bug.cgi?id=543876 where all
-		 * monitors appear disconnected (possibly because the  screen
-		 * is behing a KVM switch) -- see comment #8.
-		 * There might be other cases too, so we stay on the safe side.
-		 */
-		g_array_free (geometry_array, TRUE);
-		return FALSE;
-	}
+  if (driver_is_pre_randr_1_2)
+    {
+      /* Drivers before RANDR 1.2 don't provide useful info about
+       * outputs */
+      g_array_free (geometry_array, TRUE);
+      return FALSE;
+    }
 
-	*monitors_ret = geometry_array->len;
-	*geometries_ret = (GdkRectangle *) g_array_free (geometry_array, FALSE);
+  if (geometry_array->len == 0)
+    {
+      /* This can happen in at least one case:
+       * https://bugzilla.novell.com/show_bug.cgi?id=543876 where all
+       * monitors appear disconnected (possibly because the  screen
+       * is behing a KVM switch) -- see comment #8.
+       * There might be other cases too, so we stay on the safe side.
+       */
+      g_array_free (geometry_array, TRUE);
 
-	return TRUE;
+      return FALSE;
+    }
+
+  *monitors_ret = geometry_array->len;
+  *geometries_ret = (GdkRectangle *) g_array_free (geometry_array, FALSE);
+
+  return TRUE;
 }
 
 static void
