@@ -229,26 +229,27 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
 
 static void
 panel_multiscreen_get_gdk_monitors_for_screen (int           *monitors_ret,
-					       GdkRectangle **geometries_ret)
+                                               GdkRectangle **geometries_ret)
 {
-	GdkDisplay   *display;
-	int           num_monitors;
-	GdkRectangle *monitor_geometries;
-	int           i;
+  GdkDisplay   *display;
+  int           num_monitors;
+  GdkRectangle *monitor_geometries;
+  int           i;
 
-	display = gdk_display_get_default ();
-	num_monitors = gdk_display_get_n_monitors (display);
-	monitor_geometries = g_new (GdkRectangle, num_monitors);
+  display = gdk_display_get_default ();
+  num_monitors = gdk_display_get_n_monitors (display);
+  monitor_geometries = g_new (GdkRectangle, num_monitors);
 
-	for (i = 0; i < num_monitors; i++) {
-	  GdkMonitor * monitor;
+  for (i = 0; i < num_monitors; i++)
+    {
+      GdkMonitor * monitor;
 
-	  monitor = gdk_display_get_monitor (display, i);
-	  gdk_monitor_get_geometry (monitor, &(monitor_geometries[i]));
-	}
+      monitor = gdk_display_get_monitor (display, i);
+      gdk_monitor_get_geometry (monitor, &(monitor_geometries[i]));
+    }
 
-	*monitors_ret = num_monitors;
-	*geometries_ret = monitor_geometries;
+  *monitors_ret = num_monitors;
+  *geometries_ret = monitor_geometries;
 }
 
 static void
