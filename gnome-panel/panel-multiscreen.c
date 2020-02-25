@@ -546,12 +546,12 @@ panel_multiscreen_locate_widget_monitor (GtkWidget *widget)
 static int
 axis_distance (int p, int axis_start, int axis_size)
 {
-	if (p >= axis_start && p < axis_start + axis_size)
-		return 0;
-	else if (p < axis_start)
-		return (axis_start - p);
-	else
-		return (p - (axis_start + axis_size - 1));
+  if (p >= axis_start && p < axis_start + axis_size)
+    return 0;
+  else if (p < axis_start)
+    return (axis_start - p);
+  else
+    return (p - (axis_start + axis_size - 1));
 }
 
 /* The panel can't use gdk_screen_get_monitor_at_point() since it has its own
