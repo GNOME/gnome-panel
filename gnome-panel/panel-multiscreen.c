@@ -464,30 +464,30 @@ panel_multiscreen_init_randr (GdkDisplay *display)
 void
 panel_multiscreen_init (void)
 {
-	GdkDisplay *display;
-	GdkScreen *screen;
+  GdkDisplay *display;
+  GdkScreen *screen;
 
-	if (initialized)
-		return;
+  if (initialized)
+    return;
 
-	display = gdk_display_get_default ();
+  display = gdk_display_get_default ();
 
-	panel_multiscreen_init_randr (display);
+  panel_multiscreen_init_randr (display);
 
-	screen = gdk_screen_get_default ();
+  screen = gdk_screen_get_default ();
 
-	/* We connect to both signals to be on the safe side, but in
-	 * theory, it should be enough to only connect to
-	 * monitors-changed. Since we'll likely get two signals, we do
-	 * the real callback in the idle loop. */
-	g_signal_connect (screen, "size-changed",
-			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
-	g_signal_connect (screen, "monitors-changed",
-			  G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+  /* We connect to both signals to be on the safe side, but in
+   * theory, it should be enough to only connect to
+   * monitors-changed. Since we'll likely get two signals, we do
+   * the real callback in the idle loop. */
+  g_signal_connect (screen, "size-changed",
+                    G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
+  g_signal_connect (screen, "monitors-changed",
+                    G_CALLBACK (panel_multiscreen_queue_reinit), NULL);
 
-	panel_multiscreen_get_monitors_for_screen (&monitors, &geometries);
+  panel_multiscreen_get_monitors_for_screen (&monitors, &geometries);
 
-	initialized = TRUE;
+  initialized = TRUE;
 }
 
 int
