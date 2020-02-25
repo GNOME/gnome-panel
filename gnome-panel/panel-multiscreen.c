@@ -477,7 +477,7 @@ static void
 panel_multiscreen_reinit (void)
 {
   GdkScreen *screen;
-  GList *toplevels, *l;
+  GList *toplevels, *toplevel;
 
   if (monitor_geometries)
     {
@@ -492,8 +492,8 @@ panel_multiscreen_reinit (void)
 
   toplevels = gtk_window_list_toplevels ();
 
-  for (l = toplevels; l; l = l->next)
-    gtk_widget_queue_resize (l->data);
+  for (toplevel = toplevels; toplevel; toplevel = toplevel->next)
+    gtk_widget_queue_resize (toplevel->data);
 
   g_list_free (toplevels);
 }
