@@ -592,23 +592,23 @@ panel_multiscreen_get_monitor_at_point (int        x,
 }
 
 typedef struct {
-	int x0;
-	int y0;
-	int x1;
-	int y1;
+  int x0;
+  int y0;
+  int x1;
+  int y1;
 } MonitorBounds;
 
 static inline void
 get_monitor_bounds (int            n_monitor,
-		    MonitorBounds *bounds)
+                    MonitorBounds *bounds)
 {
-	g_assert (n_monitor >= 0 || n_monitor < monitors);
-	g_assert (bounds != NULL);
+  g_assert (n_monitor >= 0 || n_monitor < monitors);
+  g_assert (bounds != NULL);
 
-	bounds->x0 = monitor_geometries [n_monitor].x;
-	bounds->y0 = monitor_geometries [n_monitor].y;
-	bounds->x1 = bounds->x0 + monitor_geometries [n_monitor].width;
-	bounds->y1 = bounds->y0 + monitor_geometries [n_monitor].height;
+  bounds->x0 = monitor_geometries [n_monitor].x;
+  bounds->y0 = monitor_geometries [n_monitor].y;
+  bounds->x1 = bounds->x0 + monitor_geometries [n_monitor].width;
+  bounds->y1 = bounds->y0 + monitor_geometries [n_monitor].height;
 }
 
 /* determines whether a given monitor is along the visible
