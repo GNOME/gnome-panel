@@ -493,38 +493,38 @@ panel_multiscreen_reinit (void)
 
 int
 panel_multiscreen_x (GdkScreen *screen,
-		     int        monitor)
+                     int        monitor)
 {
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
+  g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return monitor_geometries [monitor].x;
+  return monitor_geometries [monitor].x;
 }
 
 int
 panel_multiscreen_y (GdkScreen *screen,
-		     int        monitor)
+                     int        monitor)
 {
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
+  g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return monitor_geometries [monitor].y;
+  return monitor_geometries [monitor].y;
 }
 
 int
 panel_multiscreen_width (GdkScreen *screen,
-			 int        monitor)
+                         int        monitor)
 {
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
+  g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return monitor_geometries [monitor].width;
+  return monitor_geometries [monitor].width;
 }
 
 int
 panel_multiscreen_height (GdkScreen *screen,
-			  int        monitor)
+                          int        monitor)
 {
-	g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
+  g_return_val_if_fail (monitor >= 0 && monitor < monitors, 0);
 
-	return monitor_geometries [monitor].height;
+  return monitor_geometries [monitor].height;
 }
 
 int
