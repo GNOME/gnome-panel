@@ -34,12 +34,12 @@
 
 #include <string.h>
 
-static int            monitors    = 1;
-static GdkRectangle  *geometries  = NULL;
-static gboolean       initialized = FALSE;
-static gboolean       have_randr  = FALSE;
+static int            monitors       = 1;
+static GdkRectangle  *geometries     = NULL;
+static gboolean       initialized    = FALSE;
+static gboolean       have_randr     = FALSE;
 static gboolean       have_randr_1_3 = FALSE;
-static guint          reinit_id   = 0;
+static guint          reinit_id      = 0;
 
 static gboolean
 _panel_multiscreen_output_should_be_first (Display       *xdisplay,
