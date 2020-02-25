@@ -418,19 +418,19 @@ panel_multiscreen_reinit (void)
 static gboolean
 panel_multiscreen_reinit_idle (gpointer data)
 {
-	panel_multiscreen_reinit ();
-	reinit_id = 0;
+  panel_multiscreen_reinit ();
+  reinit_id = 0;
 
-	return FALSE;
+  return FALSE;
 }
 
 static void
 panel_multiscreen_queue_reinit (void)
 {
-	if (reinit_id)
-		return;
+  if (reinit_id)
+    return;
 
-	reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
+  reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
 }
 
 static void
