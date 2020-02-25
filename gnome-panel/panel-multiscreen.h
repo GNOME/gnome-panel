@@ -29,7 +29,6 @@
 #include <gtk/gtk.h>
 
 void	panel_multiscreen_init                  (void);
-void	panel_multiscreen_reinit                (void);
 
 int	panel_multiscreen_x                     (GdkScreen *screen,
 						 int        monitor);
