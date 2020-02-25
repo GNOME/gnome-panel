@@ -372,6 +372,33 @@ panel_multiscreen_get_monitors_for_screen (int           *monitors_ret,
 							 geometries_ret);
 }
 
+static void
+panel_multiscreen_reinit (void)
+{
+  GdkScreen *screen;
+  GList     *toplevels, *toplevel;
+
+  if (geometries)
+    {
+      g_free (geometries);
+    }
+
+  screen = gdk_screen_get_default ();
+
+  g_signal_handlers_disconnect_by_func (screen, panel_multiscreen_queue_reinit,
+                                        NULL);
+
+  initialized = FALSE;
+  panel_multiscreen_init ();
+
+  toplevels = gtk_window_list_toplevels ();
+
+  for (toplevel = toplevels; toplevel; toplevel = toplevel->next)
+    gtk_widget_queue_resize (toplevel->data);
+
+  g_list_free (toplevels);
+}
+
 static gboolean
 panel_multiscreen_reinit_idle (gpointer data)
 {
@@ -444,30 +471,6 @@ panel_multiscreen_init (void)
 	panel_multiscreen_get_monitors_for_screen (&monitors, &geometries);
 
 	initialized = TRUE;
-}
-
-void
-panel_multiscreen_reinit (void)
-{
-	GdkScreen *screen;
-	GList     *toplevels, *l;
-
-	if (geometries) {
-		g_free (geometries);
-	}
-
-	screen = gdk_screen_get_default ();
-	g_signal_handlers_disconnect_by_func (screen, panel_multiscreen_queue_reinit, NULL);
-
-	initialized = FALSE;
-	panel_multiscreen_init ();
-
-	toplevels = gtk_window_list_toplevels ();
-
-	for (l = toplevels; l; l = l->next)
-		gtk_widget_queue_resize (l->data);
-
-	g_list_free (toplevels);
 }
 
 int
