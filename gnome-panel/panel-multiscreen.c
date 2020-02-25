@@ -438,28 +438,29 @@ panel_multiscreen_queue_reinit (void)
 static void
 panel_multiscreen_init_randr (GdkDisplay *display)
 {
-	Display *xdisplay;
-	int      event_base, error_base;
+  Display *xdisplay;
+  int      event_base, error_base;
 
-	have_randr = FALSE;
-	have_randr_1_3 = FALSE;
+  have_randr = FALSE;
+  have_randr_1_3 = FALSE;
 
-	xdisplay = GDK_DISPLAY_XDISPLAY (display);
+  xdisplay = GDK_DISPLAY_XDISPLAY (display);
 
-	/* We don't remember the event/error bases, as we expect to get "screen
-	 * changed" events from GdkScreen instead.
-	 */
+  /* We don't remember the event/error bases, as we expect to get "screen
+   * changed" events from GdkScreen instead.
+   */
+  if (XRRQueryExtension (xdisplay, &event_base, &error_base))
+    {
+      int major, minor;
 
-	if (XRRQueryExtension (xdisplay, &event_base, &error_base)) {
-		int major, minor;
+      XRRQueryVersion (xdisplay, &major, &minor);
 
-		XRRQueryVersion (xdisplay, &major, &minor);
-		if ((major == 1 && minor >= 2) || major > 1)
-			have_randr = TRUE;
+      if ((major == 1 && minor >= 2) || major > 1)
+        have_randr = TRUE;
 
-		if ((major == 1 && minor >= 3) || major > 1)
-			have_randr_1_3 = TRUE;
-	}
+      if ((major == 1 && minor >= 3) || major > 1)
+        have_randr_1_3 = TRUE;
+    }
 }
 
 void
