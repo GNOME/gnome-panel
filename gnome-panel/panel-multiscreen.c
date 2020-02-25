@@ -470,25 +470,26 @@ panel_multiscreen_init (void)
 static void
 panel_multiscreen_reinit (void)
 {
-	GdkScreen *screen;
-	GList     *toplevels, *l;
+  GdkScreen *screen;
+  GList     *toplevels, *l;
 
-	if (monitor_geometries) {
-		g_free (monitor_geometries);
-	}
+  if (monitor_geometries)
+    {
+      g_free (monitor_geometries);
+    }
 
-	screen = gdk_screen_get_default ();
-	g_signal_handlers_disconnect_by_func (screen, panel_multiscreen_queue_reinit, NULL);
+  screen = gdk_screen_get_default ();
+  g_signal_handlers_disconnect_by_func (screen, panel_multiscreen_queue_reinit, NULL);
 
-	initialized = FALSE;
-	panel_multiscreen_init ();
+  initialized = FALSE;
+  panel_multiscreen_init ();
 
-	toplevels = gtk_window_list_toplevels ();
+  toplevels = gtk_window_list_toplevels ();
 
-	for (l = toplevels; l; l = l->next)
-		gtk_widget_queue_resize (l->data);
+  for (l = toplevels; l; l = l->next)
+    gtk_widget_queue_resize (l->data);
 
-	g_list_free (toplevels);
+  g_list_free (toplevels);
 }
 
 int
