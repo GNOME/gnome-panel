@@ -255,20 +255,20 @@ panel_multiscreen_get_gdk_monitors_for_screen (int           *monitors_ret,
 
 static void
 panel_multiscreen_get_raw_monitors_for_screen (int           *monitors_ret,
-					       GdkRectangle **geometries_ret)
+                                               GdkRectangle **geometries_ret)
 {
-	gboolean res;
+  gboolean res;
 
-	*monitors_ret = 0;
-	*geometries_ret = NULL;
+  *monitors_ret = 0;
+  *geometries_ret = NULL;
 
-	res = panel_multiscreen_get_randr_monitors_for_screen (monitors_ret,
-							       geometries_ret);
-	if (res && *monitors_ret > 0)
-		return;
+  res = panel_multiscreen_get_randr_monitors_for_screen (monitors_ret,
+                                                         geometries_ret);
+  if (res && *monitors_ret > 0)
+    return;
 
-	panel_multiscreen_get_gdk_monitors_for_screen (monitors_ret,
-						       geometries_ret);
+  panel_multiscreen_get_gdk_monitors_for_screen (monitors_ret,
+                                                 geometries_ret);
 }
 
 static inline gboolean
