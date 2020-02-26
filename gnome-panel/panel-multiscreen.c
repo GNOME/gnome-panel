@@ -534,21 +534,6 @@ panel_multiscreen_height (GdkScreen *screen,
   return monitor_geometries[monitor].height;
 }
 
-int
-panel_multiscreen_locate_widget_monitor (GtkWidget *widget)
-{
-  GtkWidget *toplevel;
-  int retval = -1;
-
-  toplevel = gtk_widget_get_toplevel (widget);
-  if (!toplevel)
-    return -1;
-
-  g_object_get (toplevel, "monitor", &retval, NULL);
-
-  return retval;
-}
-
 static int
 axis_distance (int p, int axis_start, int axis_size)
 {
