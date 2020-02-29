@@ -16,7 +16,7 @@
  */
 
 #ifndef SN_DBUS_MENU_ITEM_H
-#define SN_DUBS_MENU_ITEM_H
+#define SN_DBUS_MENU_ITEM_H
 
 #include <gtk/gtk.h>
 #include "sn-applet.h"
@@ -57,7 +57,7 @@ typedef struct
 SnDBusMenuItem *sn_dbus_menu_item_new          (SnApplet       *applet,
                                                 GVariant       *props);
 
-void            sn_dubs_menu_item_free         (gpointer        data);
+void            sn_dbus_menu_item_free         (gpointer        data);
 
 void            sn_dbus_menu_item_update_props (SnDBusMenuItem *item,
                                                 GVariant       *props);
