@@ -50,9 +50,9 @@ static GpSupportedTheme supported_themes[] =
   { "Adwaita-dark", "Adwaita", "dark", FALSE },
   { "HighContrast", "HighContrast", NULL, FALSE },
   { "HighContrastInverse", "HighContrast", "inverse", FALSE },
-  { "Yaru", "Yaru", NULL, FALSE },
+  { "Yaru", "Yaru", NULL, TRUE },
   { "Yaru-light", "Yaru", NULL, FALSE },
-  { "Yaru-dark", "Yaru", NULL, FALSE },
+  { "Yaru-dark", "Yaru", "dark", FALSE },
   { NULL, NULL, FALSE, FALSE }
 };
 
