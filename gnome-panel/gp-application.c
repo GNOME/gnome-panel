@@ -52,7 +52,7 @@ static GpSupportedTheme supported_themes[] =
   { "HighContrastInverse", "HighContrast", "inverse", FALSE },
   { "Yaru", "Yaru", NULL, FALSE },
   { "Yaru-light", "Yaru", NULL, FALSE },
-  { "Yaru-dark", "Yaru", NULL, FALSE },
+  { "Yaru-dark", "Yaru", "dark", FALSE },
   { NULL, NULL, FALSE, FALSE }
 };
 
