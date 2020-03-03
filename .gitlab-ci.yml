@@ -4,6 +4,8 @@ stages:
 build-ubuntu:
   image: ubuntu:devel
   stage: build
+  except:
+    - tags
   before_script:
     - export DEBIAN_FRONTEND=noninteractive
     - apt-get update
