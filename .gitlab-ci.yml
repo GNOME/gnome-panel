@@ -1,5 +1,6 @@
 stages:
   - build
+  - analysis
 
 build-ubuntu:
   image: ubuntu:devel
@@ -44,3 +45,60 @@ build-ubuntu:
     - ./autogen.sh --disable-Werror
     - make
     - make distcheck
+
+coverity:
+  image: ubuntu:devel
+  stage: analysis
+  when: manual
+  before_script:
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get update
+    - apt-get install -q -y --no-install-recommends
+                      autoconf-archive
+                      automake
+                      autopoint
+                      build-essential
+                      ca-certificates
+                      clang
+                      curl
+                      evolution-data-server-dev
+                      gettext
+                      gtk-doc-tools
+                      libcairo2-dev
+                      libdconf-dev
+                      libecal2.0-dev
+                      libedataserver1.2-dev
+                      libgdk-pixbuf2.0-dev
+                      libgdm-dev
+                      libglib2.0-dev
+                      libgnome-desktop-3-dev
+                      libgnome-menu-3-dev
+                      libgtk-3-dev
+                      libgweather-3-dev
+                      libpango1.0-dev
+                      libpolkit-gobject-1-dev
+                      libsm-dev
+                      libsystemd-dev
+                      libtool
+                      libwnck-3-dev
+                      libx11-dev
+                      libxau-dev
+                      libxi-dev
+                      libxrandr-dev
+                      pkg-config
+                      yelp-tools
+  script:
+    - curl https://scan.coverity.com/download/linux64
+      --data "token=$COVERITY_TOKEN&project=gnome-panel"
+      --output /tmp/coverity_tool.tgz
+    - tar zxf /tmp/coverity_tool.tgz
+    - CC=clang ./autogen.sh --disable-Werror
+    - ./cov-analysis-linux64-*/bin/cov-build --dir cov-int make
+    - tar czf cov-int.tar.gz cov-int
+    - curl --form token=$COVERITY_TOKEN
+      --form email=alberts.muktupavels@gmail.com
+      --form file=@cov-int.tar.gz
+      --form version="$(autoconf --trace='AC_INIT:$2')-$CI_COMMIT_SHORT_SHA"
+      https://scan.coverity.com/builds?project=gnome-panel
+  only:
+    - master
