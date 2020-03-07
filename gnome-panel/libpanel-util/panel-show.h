@@ -32,12 +32,6 @@ gboolean panel_show_uri (GdkScreen    *screen,
 			 guint32       timestamp,
 			 GError      **error);
 
-gboolean panel_show_uri_force_mime_type (GdkScreen    *screen,
-					 const gchar  *uri,
-					 const gchar  *mime_type,
-					 guint32       timestamp,
-					 GError      **error);
-
 G_END_DECLS
 
 #endif /* PANEL_SHOW_H */

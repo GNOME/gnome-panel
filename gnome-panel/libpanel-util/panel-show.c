@@ -159,36 +159,3 @@ panel_show_uri (GdkScreen    *screen,
 
 	return _panel_show_handle_error (uri, screen, local_error, error);
 }
-
-gboolean
-panel_show_uri_force_mime_type (GdkScreen    *screen,
-				const gchar  *uri,
-				const gchar  *mime_type,
-				guint32       timestamp,
-				GError      **error)
-{
-	GFile    *file;
-	GAppInfo *app;
-	gboolean  ret;
-
-	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
-	g_return_val_if_fail (uri != NULL, FALSE);
-	g_return_val_if_fail (mime_type != NULL, FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	file = g_file_new_for_uri (uri);
-	app = g_app_info_get_default_for_type (mime_type,
-					       !g_file_is_native (file));
-	g_object_unref (file);
-
-	if (app == NULL) {
-		/* no application for the mime type, so let's fallback on
-		 * automatic detection */
-		return panel_show_uri (screen, uri, timestamp, error);
-	}
-
-	ret = panel_app_info_launch_uri (app, uri, screen, timestamp, error);
-	g_object_unref (app);
-
-	return ret;
-}
