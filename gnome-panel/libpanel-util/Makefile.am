@@ -44,8 +44,6 @@ libpanel_util_la_SOURCES =		\
 	panel-keyfile.h			\
 	panel-launch.c			\
 	panel-launch.h			\
-	panel-list.c			\
-	panel-list.h			\
 	panel-screensaver.c		\
 	panel-screensaver.h		\
 	panel-session-manager.c		\

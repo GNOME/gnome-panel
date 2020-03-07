@@ -13,8 +13,6 @@
 #include <gtk/gtk.h>
 #include <gtk/gtkx.h>
 
-#include <libpanel-util/panel-list.h>
-
 #include "applet.h"
 #include "panel-widget.h"
 #include "button-widget.h"
@@ -883,6 +881,35 @@ panel_widget_move_to_pack (PanelWidget         *panel,
  * Switch move
  */
 
+static GList *
+panel_g_list_swap_next (GList *list,
+                        GList *dl)
+{
+	GList *t;
+
+	if (!dl)
+		return list;
+
+	if (!dl->next)
+		return list;
+
+	if (dl->prev)
+		dl->prev->next = dl->next;
+	t = dl->prev;
+	dl->prev = dl->next;
+	dl->next->prev = t;
+	if (dl->next->next)
+		dl->next->next->prev = dl;
+	t = dl->next->next;
+	dl->next->next = dl;
+	dl->next = t;
+
+	if (list == dl)
+		return dl->prev;
+
+	return list;
+}
+
 /* if force_switch is set, moveby will be ignored */
 static gboolean
 panel_widget_switch_applet_right (PanelWidget *panel,
@@ -947,6 +974,35 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 	}
 
 	return FALSE;
+}
+
+static GList *
+panel_g_list_swap_prev (GList *list,
+                        GList *dl)
+{
+	GList *t;
+
+	if (!dl)
+		return list;
+
+	if (!dl->prev)
+		return list;
+
+	if (dl->next)
+		dl->next->prev = dl->prev;
+	t = dl->next;
+	dl->next = dl->prev;
+	dl->prev->next = t;
+	if (dl->prev->prev)
+		dl->prev->prev->next = dl;
+	t = dl->prev->prev;
+	dl->prev->prev = dl;
+	dl->prev = t;
+
+	if (list == dl->next)
+		return dl;
+
+	return list;
 }
 
 /* if force_switch is set, moveby will be ignored */
