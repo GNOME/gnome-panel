@@ -1241,7 +1241,10 @@ panel_addto_present (GtkMenuItem *item,
 	PanelObjectPackType insert_pack_type;
 	GdkEvent *current_event;
 	GdkScreen *screen;
-	gint screen_height;
+	GdkDisplay *display;
+	GdkWindow *window;
+	GdkMonitor *monitor;
+	GdkRectangle workarea;
 	gint height;
 
 	toplevel = panel_widget->toplevel;
@@ -1254,8 +1257,11 @@ panel_addto_present (GtkMenuItem *item,
 				     panel_addto_dialog_quark);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	screen_height = gdk_screen_get_height (screen);
-	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (screen_height / 4));
+	display = gdk_screen_get_display (screen);
+	window = gtk_widget_get_window (GTK_WIDGET (panel_widget));
+	monitor = gdk_display_get_monitor_at_window (display, window);
+	gdk_monitor_get_workarea (monitor, &workarea);
+	height = MIN (MAX_ADDTOPANEL_HEIGHT, 3 * (workarea.height / 4));
 
 	if (!dialog) {
 		dialog = panel_addto_dialog_new (panel_widget);
