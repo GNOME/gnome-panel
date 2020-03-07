@@ -66,8 +66,7 @@ panel_binding_set_from_string (PanelBinding *binding, const char *str)
 	KeyBinding *tmp;
 
 	if (!str || !str [0] || !strcmp (str, "disabled")) {
-		g_slist_foreach (binding->list, (GFunc)g_free, NULL);
-		g_slist_free (binding->list);
+		g_slist_free_full (binding->list, g_free);
 		binding->list = NULL;
 		return;
 	}
@@ -118,8 +117,7 @@ panel_binding_clear_entry (PanelBinding *binding, GtkBindingSet *binding_set)
 		gtk_binding_entry_remove (binding_set, b->keyval, b->modifiers);
 	}
 
-	g_slist_foreach (binding->list, (GFunc)g_free, NULL);
-	g_slist_free (binding->list);
+	g_slist_free_full (binding->list, g_free);
 	binding->list = NULL;
 }
 
