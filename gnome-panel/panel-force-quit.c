@@ -120,8 +120,9 @@ remove_popup (GtkWidget *popup)
 }
 
 static gboolean
-wm_state_set (Display *display,
-	      Window   window)
+wm_state_set (GdkDisplay *display,
+              Display    *xdisplay,
+              Window      window)
 {
 	gulong  nitems;
 	gulong  bytes_after;
@@ -130,13 +131,13 @@ wm_state_set (Display *display,
 	int     ret_format;
 	int     result;
 
-	gdk_error_trap_push ();
-	result = XGetWindowProperty (display, window, wm_state_atom,
+	gdk_x11_display_error_trap_push (display);
+	result = XGetWindowProperty (xdisplay, window, wm_state_atom,
 				     0, G_MAXLONG, False, wm_state_atom,
 				     &ret_type, &ret_format, &nitems,
 				     &bytes_after, (gpointer) &prop);
 
-	if (gdk_error_trap_pop ())
+	if (gdk_x11_display_error_trap_pop (display))
 		return FALSE;
 
 	if (result != Success)
@@ -151,8 +152,9 @@ wm_state_set (Display *display,
 }
 
 static Window 
-find_managed_window (Display *display,
-		     Window   window)
+find_managed_window (GdkDisplay *display,
+                     Display    *xdisplay,
+                     Window      window)
 {
 	Window  root;
 	Window  parent;
@@ -162,23 +164,23 @@ find_managed_window (Display *display,
 	guint   i;
 	int     result;
 
-	if (wm_state_set (display, window))
+	if (wm_state_set (display, xdisplay, window))
 		return window;
 
-	gdk_error_trap_push ();
-	result = XQueryTree (display, window, &root, &parent, &kids, &nkids);
-	if (gdk_error_trap_pop () || !result)
+	gdk_x11_display_error_trap_push (display);
+	result = XQueryTree (xdisplay, window, &root, &parent, &kids, &nkids);
+	if (gdk_x11_display_error_trap_pop (display) || !result)
 		return None;
 
 	retval = None;
 
 	for (i = 0; i < nkids; i++) {
-		if (wm_state_set (display, kids [i])) {
+		if (wm_state_set (display, xdisplay, kids [i])) {
 			retval = kids [i];
 			break;
 		}
 
-		retval = find_managed_window (display, kids [i]);
+		retval = find_managed_window (display, xdisplay, kids [i]);
 		if (retval != None)
 			break;
 	}
@@ -248,10 +250,13 @@ kill_window_question (gpointer window)
 
 static void 
 handle_button_press_event (GtkWidget *popup,
-			   Display *display,
-			   Window subwindow)
+                           Display   *xdisplay,
+                           Window     subwindow)
 {
+	GdkDisplay *display;
 	Window window;
+
+	display = gtk_widget_get_display (popup);
 
 	remove_popup (popup);
 
@@ -259,12 +264,12 @@ handle_button_press_event (GtkWidget *popup,
 		return;
 
 	if (wm_state_atom == None)
-		wm_state_atom = XInternAtom (display, "WM_STATE", FALSE);
+		wm_state_atom = XInternAtom (xdisplay, "WM_STATE", FALSE);
 
-	window = find_managed_window (display, subwindow);
+	window = find_managed_window (display, xdisplay, subwindow);
 
 	if (window != None) {
-		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (display), window))
+		if (!gdk_x11_window_lookup_for_display (gdk_x11_lookup_xdisplay (xdisplay), window))
 			kill_window_question ((gpointer) window);
 	}
 }
