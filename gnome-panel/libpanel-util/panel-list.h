@@ -38,10 +38,6 @@ GList *panel_g_list_swap_next     (GList        *list,
 GList *panel_g_list_swap_prev     (GList        *list,
 				   GList        *dl);
 
-GSList *panel_g_slist_make_unique (GSList       *list,
-				   GCompareFunc  compare,
-				   gboolean      free_data);
-
 G_END_DECLS
 
 #endif /* PANEL_LIST_H */
