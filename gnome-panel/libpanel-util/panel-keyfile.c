@@ -273,39 +273,6 @@ panel_key_file_set_locale_string (GKeyFile    *keyfile,
 }
 
 void
-panel_key_file_remove_locale_key (GKeyFile    *keyfile,
-				  const gchar *key)
-{
-	const char * const *langs_pointer;
-	int                 i;
-	char               *locale_key;
-
-	locale_key = NULL;
-	langs_pointer = g_get_language_names ();
-	for (i = 0; langs_pointer[i] != NULL; i++) {
-		/* find first without encoding  */
-		if (strchr (langs_pointer[i], '.') == NULL) {
-			locale_key = g_strdup_printf ("%s[%s]",
-						      key, langs_pointer[i]);
-			if (g_key_file_has_key (keyfile, G_KEY_FILE_DESKTOP_GROUP,
-						locale_key, NULL))
-				break;
-
-			g_free (locale_key);
-			locale_key = NULL;
-		}
-	}
-
-	if (locale_key) {
-		g_key_file_remove_key (keyfile, G_KEY_FILE_DESKTOP_GROUP,
-				       locale_key, NULL);
-		g_free (locale_key);
-	} else
-		g_key_file_remove_key (keyfile, G_KEY_FILE_DESKTOP_GROUP,
-				       key, NULL);
-}
-
-void
 panel_key_file_remove_all_locale_key (GKeyFile    *keyfile,
 				      const gchar *key)
 {

@@ -61,8 +61,6 @@ void    panel_key_file_set_locale_string (GKeyFile    *keyfile,
 
 #define panel_key_file_remove_key(key_file, key) \
 	g_key_file_remove_key (key_file, G_KEY_FILE_DESKTOP_GROUP, key, NULL)
-void panel_key_file_remove_locale_key (GKeyFile    *keyfile,
-				       const gchar *key);
 void panel_key_file_remove_all_locale_key (GKeyFile    *keyfile,
 					   const gchar *key);
 void panel_key_file_ensure_C_key      (GKeyFile   *keyfile,
