@@ -300,7 +300,10 @@ size_hints_changed (GpAppletPrivate *priv,
 {
   guint i;
 
-  if ((!priv->size_hints && size_hints) || (priv->size_hints && !size_hints))
+  if (priv->size_hints == NULL && size_hints == NULL)
+    return FALSE;
+
+  if (priv->size_hints == NULL || size_hints == NULL)
     return TRUE;
 
   if (priv->size_hints->n_elements != n_elements)
