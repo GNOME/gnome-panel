@@ -1527,6 +1527,7 @@ entry_event (GtkEditable    *entry,
 	char             *nprefix;
 	char             *temp;
 	int               pos, tmp;
+	int               text_len;
 
 	if (event->type != GDK_KEY_PRESS)
 		return FALSE;
@@ -1540,6 +1541,8 @@ entry_event (GtkEditable    *entry,
 				     PANEL_RUN_ENABLE_COMPLETION_KEY))
 		return FALSE;
 
+	text_len = strlen (gtk_entry_get_text (GTK_ENTRY (entry)));
+
 	/* tab completion */
 	if (event->keyval == GDK_KEY_Tab) {
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
@@ -1547,7 +1550,7 @@ entry_event (GtkEditable    *entry,
 		if (dialog->completion_started &&
 		    pos != tmp &&
 		    pos != 1 &&
-		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+		    tmp == text_len) {
 	    		gtk_editable_select_region (entry, 0, 0);		
 			gtk_editable_set_position (entry, -1);
 			
@@ -1560,12 +1563,12 @@ entry_event (GtkEditable    *entry,
 		if (dialog->completion_started &&
 		    pos != tmp &&
 		    pos != 0 &&
-		    tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+		    tmp == text_len) {
 			temp = gtk_editable_get_chars (entry, 0, pos);
 			prefix = g_strconcat (temp, event->string, NULL);
 			g_free (temp);
 		} else if (pos == tmp &&
-			   tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
+			   tmp == text_len) {
 			prefix = g_strconcat (gtk_entry_get_text (GTK_ENTRY (entry)),
 					      event->string, NULL);
 		} else {
