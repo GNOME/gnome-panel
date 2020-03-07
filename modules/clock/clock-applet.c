@@ -47,7 +47,6 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkx.h>
 
-#define GNOME_DESKTOP_USE_UNSTABLE_API
 #include <libgnome-desktop/gnome-wall-clock.h>
 
 #include <libgnome-panel/gp-utils.h>
@@ -803,7 +802,6 @@ create_clock_widget (ClockApplet *cd)
 
         orientation = gp_applet_get_orientation (GP_APPLET (cd));
 
-        cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
         g_signal_connect (cd->wall_clock, "notify::clock",
                           G_CALLBACK (update_clock), cd);
 
@@ -1133,7 +1131,8 @@ load_cities (ClockApplet *cd)
                                     &latitude, &longitude)) {
                 ClockLocation *loc;
 
-                loc = clock_location_new (cd->world,
+                loc = clock_location_new (cd->wall_clock,
+                                          cd->world,
                                           name, code,
                                           latlon_override, latitude, longitude);
 
@@ -1161,6 +1160,8 @@ fill_clock_applet (ClockApplet *cd)
                           G_CALLBACK (show_week_changed), cd);
         g_signal_connect (cd->applet_settings, "changed::cities",
                           G_CALLBACK (locations_changed), cd);
+
+        cd->wall_clock = g_object_new (GNOME_TYPE_WALL_CLOCK, NULL);
 
         cd->world = gweather_location_get_world ();
         load_cities (cd);
@@ -1342,7 +1343,13 @@ run_prefs_edit_save (GtkButton   *button,
                 lon = -lon;
         }
 
-        loc = clock_location_new (cd->world, name, weather_code, TRUE, lat, lon);
+        loc = clock_location_new (cd->wall_clock,
+                                  cd->world,
+                                  name,
+                                  weather_code,
+                                  TRUE,
+                                  lat,
+                                  lon);
         /* has the side-effect of setting the current location if
          * there's none and this one can be considered as a current one
          */

@@ -35,8 +35,6 @@ clock_la_SOURCES = \
 	clock-utils.h \
 	set-timezone.c \
 	set-timezone.h \
-	system-timezone.c \
-	system-timezone.h \
 	$(BUILT_SOURCES) \
 	$(CALENDAR_SOURCES) \
 	$(NULL)
@@ -45,6 +43,7 @@ clock_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DEDS_DISABLE_DEPRECATED \
+	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DGWEATHER_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(top_srcdir) \
 	$(AM_CPPFLAGS) \

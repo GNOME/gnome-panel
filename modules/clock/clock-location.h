@@ -5,6 +5,7 @@
 #include <glib.h>
 #include <glib-object.h>
 #include <libgweather/gweather.h>
+#include <libgnome-desktop/gnome-wall-clock.h>
 
 G_BEGIN_DECLS
 
@@ -35,12 +36,13 @@ typedef struct
 
 GType clock_location_get_type (void);
 
-ClockLocation *clock_location_new (GWeatherLocation *world,
-				   const gchar *name,
-				   const gchar *metar_code,
-				   gboolean override_latlon,
-				   gdouble  latitude,
-				   gdouble  longitude);
+ClockLocation *clock_location_new (GnomeWallClock   *wall_clock,
+                                   GWeatherLocation *world,
+                                   const gchar      *name,
+                                   const gchar      *metar_code,
+                                   gboolean          override_latlon,
+                                   gdouble           latitude,
+                                   gdouble           longitude);
 
 const gchar *clock_location_get_tzname (ClockLocation *loc);
 

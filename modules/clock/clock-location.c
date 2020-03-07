@@ -18,15 +18,14 @@
 
 #include "clock-location.h"
 #include "set-timezone.h"
-#include "system-timezone.h"
 
 struct _ClockLocationPrivate {
         gchar *name;
 
+	GnomeWallClock   *wall_clock;
+
 	GWeatherLocation *world;
 	GWeatherLocation *loc;
-
-        SystemTimezone *systz;
 
         gdouble latitude;
         gdouble longitude;
@@ -55,12 +54,13 @@ static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
 
 ClockLocation *
-clock_location_new (GWeatherLocation *world,
-		    const char       *name,
-		    const char       *metar_code,
-		    gboolean          override_latlon,
-		    gdouble           latitude,
-		    gdouble           longitude)
+clock_location_new (GnomeWallClock   *wall_clock,
+                    GWeatherLocation *world,
+                    const char       *name,
+                    const char       *metar_code,
+                    gboolean          override_latlon,
+                    gdouble           latitude,
+                    gdouble           longitude)
 {
         ClockLocation *this;
         ClockLocationPrivate *priv;
@@ -68,6 +68,7 @@ clock_location_new (GWeatherLocation *world,
         this = g_object_new (CLOCK_LOCATION_TYPE, NULL);
         priv = this->priv;
 
+	priv->wall_clock = g_object_ref (wall_clock);
 	priv->world = gweather_location_ref (world);
 	priv->loc = gweather_location_find_by_station_code (priv->world,
 							    metar_code);
@@ -136,7 +137,6 @@ clock_location_init (ClockLocation *this)
         GNetworkMonitor *monitor;
 
         priv = this->priv = clock_location_get_instance_private (this);
-        priv->systz = system_timezone_new ();
 
         priv->latitude = 0;
         priv->longitude = 0;
@@ -163,16 +163,13 @@ clock_location_finalize (GObject *g_obj)
 
 	g_free (priv->name);
 
+	g_object_unref (priv->wall_clock);
+
 	gweather_location_unref (priv->world);
 	gweather_location_unref (priv->loc);
 
 	if (priv->weather_timeout)
 		g_source_remove (priv->weather_timeout);
-
-        if (priv->systz) {
-                g_object_unref (priv->systz);
-                priv->systz = NULL;
-        }
 
         if (priv->weather_info) {
                 g_object_unref (priv->weather_info);
@@ -284,11 +281,13 @@ gboolean
 clock_location_is_current_timezone (ClockLocation *loc)
 {
 	GWeatherTimezone *wtz;
+	GTimeZone *timezone;
 	const char *zone;
 
 	wtz = clock_location_get_gweather_timezone (loc);
 
-	zone = system_timezone_get (loc->priv->systz);
+	timezone = gnome_wall_clock_get_timezone (loc->priv->wall_clock);
+	zone = g_time_zone_get_identifier (timezone);
 
 	if (zone)
 		return strcmp (zone, gweather_timezone_get_tzid (wtz)) == 0;
