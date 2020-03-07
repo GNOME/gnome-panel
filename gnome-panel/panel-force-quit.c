@@ -289,6 +289,8 @@ popup_filter (GdkXEvent *gdk_xevent,
 		case XI_ButtonPress:
 			handle_button_press_event (popup, xidev->display, xidev->child);
 			return GDK_FILTER_REMOVE;
+		default:
+			break;
 		}
 		break;
 	default:
