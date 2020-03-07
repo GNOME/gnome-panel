@@ -844,6 +844,12 @@ get_all_applications_from_alias (GMenuTreeAlias *alias,
 		break;
 	}
 
+	case GMENU_TREE_ITEM_SEPARATOR:
+	case GMENU_TREE_ITEM_HEADER:
+	case GMENU_TREE_ITEM_ALIAS:
+		break;
+
+	case GMENU_TREE_ITEM_INVALID:
 	default:
 		break;
 	}
@@ -880,6 +886,11 @@ get_all_applications_from_dir (GMenuTreeDirectory *directory,
 			break;
 		}
 
+		case GMENU_TREE_ITEM_SEPARATOR:
+		case GMENU_TREE_ITEM_HEADER:
+			break;
+
+		case GMENU_TREE_ITEM_INVALID:
 		default:
 			break;
 		}
