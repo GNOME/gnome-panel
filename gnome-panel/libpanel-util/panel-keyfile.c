@@ -204,30 +204,6 @@ panel_key_file_load_from_uri (GKeyFile       *keyfile,
 }
 
 gboolean
-panel_key_file_copy_and_mark_trusted (const char  *source_path,
-				      const char  *target_path,
-				      GError     **error)
-{
-	GKeyFile *key_file;
-	gboolean  res = FALSE;
-
-	key_file = g_key_file_new ();
-	res = g_key_file_load_from_file (key_file, source_path, 
-					 G_KEY_FILE_KEEP_COMMENTS|G_KEY_FILE_KEEP_TRANSLATIONS,
-					 error);
-	if (!res) {
-		g_key_file_free (key_file);
-		return FALSE;
-	}
-
-	res = panel_key_file_to_file (key_file, target_path, error);
-
-	g_key_file_free (key_file);
-
-	return res;
-}
-
-gboolean
 panel_key_file_get_boolean (GKeyFile    *keyfile,
 			    const gchar *key,
 			    gboolean     default_value)
