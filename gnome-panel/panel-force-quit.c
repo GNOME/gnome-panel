@@ -48,10 +48,9 @@ display_popup_window (GdkScreen *screen)
 	GtkWidget     *image;
 	GtkWidget     *frame;
 	GtkWidget     *label;
-	int            screen_width, screen_height;
-	GtkAllocation  allocation;
 
 	retval = gtk_window_new (GTK_WINDOW_POPUP);
+	gtk_window_set_position (GTK_WINDOW (retval), GTK_WIN_POS_CENTER);
 	atk_object_set_role (gtk_widget_get_accessible (retval), ATK_ROLE_ALERT);
 	gtk_window_set_screen (GTK_WINDOW (retval), screen);
 	gtk_window_stick (GTK_WINDOW (retval));
@@ -78,17 +77,6 @@ display_popup_window (GdkScreen *screen)
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
 	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 4);
 	gtk_widget_show (label);
-
-	gtk_widget_realize (retval);
-
-	screen_width  = gdk_screen_get_width  (screen);
-	screen_height = gdk_screen_get_height (screen);
-
-	gtk_widget_get_allocation (retval, &allocation);
-
-	gtk_window_move (GTK_WINDOW (retval),
-			 (screen_width  - allocation.width) / 2,
-			 (screen_height - allocation.height) / 2);
 
 	gtk_widget_show (GTK_WIDGET (retval));
 
