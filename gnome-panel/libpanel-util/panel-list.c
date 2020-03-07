@@ -29,40 +29,6 @@
 #include "panel-list.h"
 
 GList *
-panel_g_list_insert_before (GList *list,
-			    GList *sibling,
-			    GList *link)
-{
-	if (!list) {
-		g_return_val_if_fail (sibling == NULL, list);
-		return link;
-	} else if (sibling) {
-		if (sibling->prev) {
-			link->prev = sibling->prev;
-			link->prev->next = link;
-			link->next = sibling;
-			sibling->prev = link;
-			return list;
-		} else {
-			link->next = sibling;
-			sibling->prev = link;
-			g_return_val_if_fail (sibling == list, link);
-			return link;
-		}
-	} else {
-		GList *last;
-
-		last = list;
-		while (last->next)
-			last = last->next;
-
-		last->next = link;
-		link->prev = last;
-		return list;
-	}
-}
-
-GList *
 panel_g_list_swap_next (GList *list,
 			GList *dl)
 {
