@@ -34,12 +34,6 @@ gboolean panel_app_info_launch_uris (GAppInfo   *appinfo,
 				     guint32     timestamp,
 				     GError    **error);
 
-gboolean panel_app_info_launch_uri (GAppInfo     *appinfo,
-				    const gchar  *uri,
-				    GdkScreen    *screen,
-				    guint32       timestamp,
-				    GError      **error);
-
 gboolean panel_launch_key_file (GKeyFile   *keyfile,
 				GList      *uri_list,
 				GdkScreen  *screen,

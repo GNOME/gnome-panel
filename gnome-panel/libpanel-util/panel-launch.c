@@ -133,32 +133,6 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 }
 
 gboolean
-panel_app_info_launch_uri (GAppInfo     *appinfo,
-			   const gchar  *uri,
-			   GdkScreen    *screen,
-			   guint32       timestamp,
-			   GError      **error)
-{
-	GList    *uris;
-	gboolean  retval;
-
-	g_return_val_if_fail (G_IS_APP_INFO (appinfo), FALSE);
-	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	uris = NULL;
-	if (uri)
-		uris = g_list_prepend (uris, (gpointer) uri);
-
-	retval = panel_app_info_launch_uris (appinfo, uris,
-					     screen, timestamp, error);
-
-	g_list_free (uris);
-
-	return retval;
-}
-
-gboolean
 panel_launch_key_file (GKeyFile   *keyfile,
 		       GList      *uri_list,
 		       GdkScreen  *screen,
