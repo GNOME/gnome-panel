@@ -159,7 +159,8 @@ find_managed_window (Display *display,
 	Window *kids = NULL;
 	Window  retval;
 	guint   nkids;
-	int     i, result;
+	guint   i;
+	int     result;
 
 	if (wm_state_set (display, window))
 		return window;
