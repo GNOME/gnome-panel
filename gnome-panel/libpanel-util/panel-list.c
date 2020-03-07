@@ -63,34 +63,6 @@ panel_g_list_insert_before (GList *list,
 }
 
 GList *
-panel_g_list_insert_after (GList *list,
-			   GList *sibling,
-			   GList *link)
-{
-	if (!list) {
-		g_return_val_if_fail (sibling == NULL, link);
-		return link;
-	} else if (sibling) {
-		if (sibling->next) {
-			link->next = sibling->next;
-			link->next->prev = link;
-			link->prev = sibling;
-			sibling->next = link;
-			return list;
-		} else {
-			sibling->next = link;
-			link->prev = sibling;
-			return list;
-		}
-			
-	} else {
-		link->next = list;
-		list->prev = link;
-		return link;
-	}
-}
-
-GList *
 panel_g_list_swap_next (GList *list,
 			GList *dl)
 {

@@ -30,9 +30,6 @@ G_BEGIN_DECLS
 GList *panel_g_list_insert_before (GList        *list,
 				   GList        *sibling,
 				   GList        *link);
-GList *panel_g_list_insert_after  (GList        *list,
-				   GList        *sibling,
-				   GList        *link);
 GList *panel_g_list_swap_next     (GList        *list,
 				   GList        *dl);
 GList *panel_g_list_swap_prev     (GList        *list,
