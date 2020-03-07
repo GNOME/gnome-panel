@@ -148,35 +148,6 @@ panel_g_list_swap_prev (GList *list,
 	return list;
 }
 
-/*maybe this should be a glib function?
- it resorts a single item in the list*/
-GList *
-panel_g_list_resort_item (GList        *list,
-			  gpointer      data,
-			  GCompareFunc  func)
-{
-	GList *dl;
-
-	g_return_val_if_fail (func != NULL, list);
-
-	if (!list)
-		return NULL;
-
-	dl = g_list_find (list, data);
-
-	if (dl != NULL)
-		return list;
-
-	while (dl->next &&
-	       (*func)(dl->data, dl->next->data) > 0)
-		list = panel_g_list_swap_next (list, dl);
-	while (dl->prev &&
-	       (*func) (dl->data, dl->prev->data) < 0)
-		list = panel_g_list_swap_prev (list, dl);
-
-	return list;
-}
-
 GSList *
 panel_g_slist_make_unique (GSList       *list,
 			   GCompareFunc  compare,

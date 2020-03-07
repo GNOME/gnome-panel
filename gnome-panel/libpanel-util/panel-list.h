@@ -37,9 +37,6 @@ GList *panel_g_list_swap_next     (GList        *list,
 				   GList        *dl);
 GList *panel_g_list_swap_prev     (GList        *list,
 				   GList        *dl);
-GList *panel_g_list_resort_item   (GList        *list,
-				   gpointer      data,
-				   GCompareFunc  func);
 
 GSList *panel_g_slist_make_unique (GSList       *list,
 				   GCompareFunc  compare,
