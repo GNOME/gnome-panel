@@ -308,9 +308,13 @@ command_is_executable (const char   *command,
  * Set the DISPLAY variable, to be use by g_spawn_async.
  */
 static void
-set_environment (gpointer display)
+set_environment (gpointer user_data)
 {
-  g_setenv ("DISPLAY", display, TRUE);
+  GdkDisplay *display;
+
+  display = gdk_display_get_default ();
+
+  g_setenv ("DISPLAY", gdk_display_get_name (display), TRUE);
 }
 
 static void
@@ -457,30 +461,24 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				 const char     *command,
 				 const char     *locale_command)
 {
-	GdkScreen  *screen;
 	gboolean    result;
 	GError     *error = NULL;
 	char      **argv;
 	int         argc;
-	char       *display;
 	GPid        pid;
 
 	if (!command_is_executable (locale_command, &argc, &argv))
 		return FALSE;
 
-	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
-
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
 		panel_run_dialog_prepend_terminal_to_vector (&argc, &argv);
-
-	display = gdk_screen_make_display_name (screen);
 
 	result = g_spawn_async (NULL, /* working directory */
 				argv,
 				NULL, /* envp */
 				G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD,
 				set_environment,
-				display,
+				NULL,
 				&pid,
 				&error);
 
@@ -499,7 +497,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 		g_child_watch_add (pid, dummy_child_watch, NULL);
 	}
 
-	g_free (display);
 	g_strfreev (argv);
 
 	return result;
