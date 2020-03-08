@@ -42,7 +42,7 @@ build-ubuntu:
                       pkg-config
                       yelp-tools
   script:
-    - ./autogen.sh --disable-Werror
+    - ./autogen.sh
     - make
     - make distcheck
 
