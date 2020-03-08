@@ -68,33 +68,6 @@ panel_cleanup_register (PanelCleanFunc func,
 }
 
 void
-panel_cleanup_unregister (PanelCleanFunc func,
-			  gpointer       data)
-{
-	GSList *l, *next;
-	PanelClean *clean;
-
-	g_return_if_fail (func != NULL);
-
-	if (!cleaner)
-		return;
-
-	l = cleaner;
-
-	do {
-		next = l->next;
-
-		clean = l->data;
-		if (clean->func == func && clean->data == data) {
-			g_slice_free (PanelClean, clean);
-			cleaner = g_slist_delete_link (cleaner, l);
-		}
-
-		l = next;
-	} while (l);
-}
-
-void
 panel_cleanup_unref_and_nullify (gpointer data)
 {
 	GObject **obj;

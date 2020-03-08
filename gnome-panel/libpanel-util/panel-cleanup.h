@@ -37,8 +37,6 @@ void panel_cleanup_do         (void);
 
 void panel_cleanup_register   (PanelCleanFunc func,
 			       gpointer       data);
-void panel_cleanup_unregister (PanelCleanFunc func,
-			       gpointer       data);
 
 G_END_DECLS
 
