@@ -1899,7 +1899,6 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 	int        monitor_width, monitor_height;
-	int        screen_width, screen_height;
 	int        monitor_x, monitor_y;
 	int        x, y;
 	int        x_right, y_bottom;
@@ -1908,9 +1907,7 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 	if (!toplevel->priv->expand)
 		return;
 
-	screen = panel_toplevel_get_screen_geometry (toplevel,
-						     &screen_width,
-						     &screen_height);
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
 	panel_toplevel_get_monitor_geometry (toplevel, &monitor_x, &monitor_y,
 					     &monitor_width, &monitor_height);
