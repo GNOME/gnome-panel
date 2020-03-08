@@ -1346,9 +1346,8 @@ fill_files_from (const char *dirname,
 		char       *file;
 		char       *item;
 		const char *suffix;
-		
-		if (!dent->d_name ||
-		    dent->d_name [0] != prefix)
+
+		if (dent->d_name [0] != prefix)
 			continue;
 
 		file = g_build_filename (dirname, dent->d_name, NULL);
