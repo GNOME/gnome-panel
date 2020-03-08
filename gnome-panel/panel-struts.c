@@ -26,6 +26,7 @@
 #include "panel-multiscreen.h"
 #include "panel-xutils.h"
 
+#include <gdk/gdkx.h>
 
 typedef struct {
         PanelToplevel    *toplevel;
@@ -251,6 +252,7 @@ void
 panel_struts_set_window_hint (PanelToplevel *toplevel)
 {
 	GdkScreen  *screen;
+	Screen     *xscreen;
 	GtkWidget  *widget;
 	PanelStrut *strut;
 	int         strut_size;
@@ -271,9 +273,10 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 	strut_size = strut->allocated_strut_size;
 
 	screen = gdk_screen_get_default ();
+	xscreen = gdk_x11_screen_get_xscreen (screen);
 
-	screen_width  = gdk_screen_get_width  (screen);
-	screen_height = gdk_screen_get_height (screen);
+	screen_width = WidthOfScreen (xscreen);
+	screen_height = HeightOfScreen (xscreen);
 
 	panel_struts_get_monitor_geometry (strut->monitor,
 					   &monitor_x,
