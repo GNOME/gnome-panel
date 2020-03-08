@@ -376,6 +376,7 @@ panel_run_dialog_prepend_terminal_to_vector (int *argc, char ***argv)
 	if (terminal) {
 		gchar *command_line;
 		gchar *exec_flag;
+		GError *error;
 
 		exec_flag = g_settings_get_string (settings, "exec-arg");
 
@@ -385,10 +386,11 @@ panel_run_dialog_prepend_terminal_to_vector (int *argc, char ***argv)
 			command_line = g_strdup_printf ("%s %s", terminal,
 							exec_flag);
 
-		g_shell_parse_argv (command_line,
-				    &term_argc,
-				    &term_argv,
-				    NULL /* error */);
+		error = NULL;
+		if (!g_shell_parse_argv (command_line, &term_argc, &term_argv, &error)) {
+			g_warning ("%s", error->message);
+			g_error_free (error);
+		}
 
 		g_free (command_line);
 		g_free (exec_flag);
