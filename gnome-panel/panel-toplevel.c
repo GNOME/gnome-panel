@@ -31,6 +31,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkx.h>
 #include <glib/gi18n.h>
 
 #include <libpanel-util/panel-glib.h>
@@ -398,14 +399,16 @@ panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,
 				    int           *height)
 {
 	GdkScreen *screen;
+	Screen *xscreen;
 
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 	g_return_val_if_fail (width != NULL && height != NULL, NULL);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	xscreen = gdk_x11_screen_get_xscreen (screen);
 
-	*width  = gdk_screen_get_width (screen);
-	*height = gdk_screen_get_height (screen);
+	*width = WidthOfScreen (xscreen);
+	*height = HeightOfScreen (xscreen);
 
 	return screen;
 }
