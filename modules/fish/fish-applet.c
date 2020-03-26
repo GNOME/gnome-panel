@@ -1051,7 +1051,8 @@ fish_applet_draw (GtkWidget  *widget,
 	int width, height;
 	int src_x, src_y;
 
-	g_return_val_if_fail (fish->surface != NULL, FALSE);
+	if (fish->surface == NULL)
+		return GDK_EVENT_PROPAGATE;
 
 	g_assert (fish->n_frames > 0);
 
