@@ -121,6 +121,9 @@ load_external_modules (GpAppletManager *manager)
       GpModule *module;
       const gchar *id;
 
+      if (!g_str_has_suffix (name, ".so"))
+        continue;
+
       path = g_build_filename (MODULESDIR, name, NULL);
       module = gp_module_new_from_path (path);
       g_free (path);
