@@ -413,7 +413,10 @@ panel_multiscreen_queue_reinit (void)
   if (reinit_id)
     return;
 
-  reinit_id = g_idle_add (panel_multiscreen_reinit_idle, NULL);
+  reinit_id = g_idle_add_full (G_PRIORITY_HIGH_IDLE,
+                               panel_multiscreen_reinit_idle,
+                               NULL,
+                               NULL);
 }
 
 static void
