@@ -87,10 +87,11 @@ gp-arrow-button:active {
 #tasklist-button:active > box,
 #tasklist-button:checked > box {
   outline-color: rgba(46, 52, 54, 0.3);
-  border-color: #b6b6b3;
-  background-image: none;
-  background-color: #ccccca; /* was #d9d9d7 in Adwaita */
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0);
+  border-color: #868683;
+  border-bottom-color: #91918c;
+  background-color: #bcbcba; /* was #d9d9d7 in Adwaita */
+  background-image: linear-gradient(to bottom, alpha(#a8a8a5, 0.8), alpha(#b8b8b7, 0.8) 60%, alpha(#cececd, 0.8));
+  box-shadow: inset 0px 1px 0px rgba(224, 224, 224, 0.8);
   text-shadow: none;
   transition-duration: 50ms;
   -gtk-icon-effect: highlight;
