@@ -76,13 +76,13 @@ gp-arrow-button:active {
   outline-color: rgba(238, 238, 236, 0.3);
   border-color: #1b1f20;
   border-bottom-color: #0b0c0c;
-  background-image: linear-gradient(to bottom, #2e3436, #2a2e30 60%, #25292b);
+  background-image: linear-gradient(to bottom, alpha(#2e3436, 0.8), alpha(#2a2e30, 0.8) 60%, alpha(#25292b, 0.8));
   text-shadow: 0 -1px rgba(0, 0, 0, 0.82745);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
 }
 
 #tasklist-button:hover > box {
-  background-image: linear-gradient(to bottom, #353c3e, #2e3436 60%, #2a2e30);
+  background-image: linear-gradient(to bottom, alpha(#353c3e, 0.8), alpha(#2e3436, 0.8) 60%, alpha(#2a2e30, 0.8));
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
   -gtk-icon-effect: highlight;
 }
@@ -107,4 +107,9 @@ gp-arrow-button:active {
 #tasklist-button:active label,
 #tasklist-button:checked label {
   color: #eeeeec;
+}
+
+#showdesktop-button {
+  background: none;
+  box-shadow: none;
 }
