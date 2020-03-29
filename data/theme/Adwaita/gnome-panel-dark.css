@@ -1,11 +1,45 @@
 @import url("resource:///org/gnome/gnome-panel/theme/common.css");
 
+@define-color gp_bg_color #393f3f;
+@define-color gp_fg_color #ffffff;
+@define-color gp_hover_color #215d9c;
+@define-color gp_selected_color #215d9c;
+
+@define-color gp_border_color #1c1f1f;
+
+@define-color gp_arrow_color #343a3a;
+@define-color gp_arrow_dark #2f3434;
+@define-color gp_arrow_darker #2a2f2f;
+
+@define-color gp_arrow_hover_color #3b4242;
+@define-color gp_arrow_hover_dark_color #343a3a;
+@define-color gp_arrow_hover_darker_color #2f3434;
+
+@define-color gp_arrow_active_color #232727;
+@define-color gp_arrow_active_ligh_color #2d3232;
+
+@define-color gp_tasklist_bg_color #2e3436;
+@define-color gp_tasklist_bg_dark_color #2a2e30;
+@define-color gp_tasklist_bg_darker_color #25292b;
+
+@define-color gp_tasklist_bg_hover_color #353c3e;
+@define-color gp_tasklist_bg_hover_dark_color #2e3436;
+@define-color gp_tasklist_bg_hover_darker_color #2a2e30;
+
+@define-color gp_tasklist_border_color #1b1f20;
+@define-color gp_tasklist_border_dark_color #0b0c0c;
+
+@define-color gp_tasklist_bg_darker #25292b;
+
+@define-color gp_tasklist_label_fg_color #919494;
+@define-color gp_tasklist_label_fg_lighter_color #eeeeec;
+
 panel-toplevel {
-  background-color: #393f3f;
+  background-color: @gp_bg_color;
 }
 
 .gp-text-color {
-  color: #ffffff;
+  color: @gp_fg_color;
 }
 
 .gnome-panel-menu-bar,
@@ -18,7 +52,7 @@ gp-applet > menubar {
 .gnome-panel-menu-bar menuitem:hover,
 panel-applet > menubar menuitem:hover,
 gp-applet > menubar menuitem:hover {
-  background-color: #215d9c;
+  background-color: @gp_hover_color;
 }
 
 .gnome-panel-menu-bar > menuitem > label,
@@ -29,7 +63,7 @@ gp-calendar-window label,
 #clock-applet-button label,
 #showdesktop-button label {
   font-weight: normal;
-  color: #ffffff;
+  color: @gp_fg_color;
 }
 
 .gnome-panel-menu-bar > menuitem:hover > label,
@@ -37,24 +71,24 @@ panel-applet > menubar > menuitem:hover > label,
 gp-applet > menubar > menuitem:hover > .gp-text-color,
 gp-applet > menubar > menuitem:hover > box > .gp-text-color {
   font-weight: normal;
-  color: #ffffff;
+  color: @gp_fg_color;
 }
 
 wnck-pager:selected {
-  background-color: #215d9c;
+  background-color: @gp_selected_color;
 }
 
 gp-arrow-button {
-  border: 1px solid #1c1f1f;
-  background-image: linear-gradient(to bottom, #343a3a, #2f3434 60%, #2a2f2f);
+  border: 1px solid @gp_border_color;
+  background-image: linear-gradient(to bottom, @gp_arrow_color, @gp_arrow_dark 60%, @gp_arrow_darker);
 }
 
 gp-arrow-button:hover {
-  background-image: linear-gradient(to bottom, #3b4242, #343a3a 60%, #2f3434);
+  background-image: linear-gradient(to bottom, @gp_arrow_hover_color, @gp_arrow_hover_dark_color 60%, @gp_arrow_hover_darker_color);
 }
 
 gp-arrow-button:active {
-  background-image: linear-gradient(to bottom, #232727, #2d3232);
+  background-image: linear-gradient(to bottom, @gp_arrow_active_color, @gp_arrow_active_ligh_color);
 }
 
 #tasklist-button,
@@ -74,15 +108,15 @@ gp-arrow-button:active {
   border-radius: 3px;
   transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   outline-color: rgba(238, 238, 236, 0.3);
-  border-color: #1b1f20;
-  border-bottom-color: #0b0c0c;
-  background-image: linear-gradient(to bottom, alpha(#2e3436, 0.8), alpha(#2a2e30, 0.8) 60%, alpha(#25292b, 0.8));
+  border-color: @gp_tasklist_border_color;
+  border-bottom-color: @gp_tasklist_border_dark_color;
+  background-image: linear-gradient(to bottom, alpha(@gp_tasklist_bg_color, 0.8), alpha(@gp_tasklist_bg_dark_color, 0.8) 60%, alpha(@gp_tasklist_bg_darker_color, 0.8));
   text-shadow: 0 -1px rgba(0, 0, 0, 0.82745);
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
 }
 
 #tasklist-button:hover > box {
-  background-image: linear-gradient(to bottom, alpha(#353c3e, 0.8), alpha(#2e3436, 0.8) 60%, alpha(#2a2e30, 0.8));
+  background-image: linear-gradient(to bottom, alpha(@gp_tasklist_bg_hover_color, 0.8), alpha(@gp_tasklist_bg_hover_dark_color, 0.8) 60%, alpha(@gp_tasklist_bg_hover_darker_color, 0.8));
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
   -gtk-icon-effect: highlight;
 }
@@ -90,9 +124,9 @@ gp-arrow-button:active {
 #tasklist-button:active > box,
 #tasklist-button:checked > box {
   outline-color: rgba(238, 238, 236, 0.3);
-  border-color: #1b1f20;
+  border-color: @gp_tasklist_border_color;
   background-image: none;
-  background-color: #25292b;
+  background-color: @gp_tasklist_bg_darker;
   box-shadow: inset 0 1px rgba(255, 255, 255, 0);
   text-shadow: none;
   transition-duration: 50ms;
@@ -100,13 +134,13 @@ gp-arrow-button:active {
 }
 
 #tasklist-button label {
-  color: #919494;
+  color: @gp_tasklist_label_fg_color;
 }
 
 #tasklist-button:hover label,
 #tasklist-button:active label,
 #tasklist-button:checked label {
-  color: #eeeeec;
+  color: @gp_tasklist_label_fg_lighter_color;
 }
 
 #showdesktop-button {
