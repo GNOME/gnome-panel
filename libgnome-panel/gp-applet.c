@@ -45,9 +45,10 @@
  */
 
 #include "config.h"
-
 #include "gp-applet-private.h"
+
 #include "gp-enum-types.h"
+#include "gp-module.h"
 
 typedef struct
  {
@@ -59,6 +60,8 @@ typedef struct
 {
   GtkBuilder         *builder;
   GSimpleActionGroup *action_group;
+
+  GpModule           *module;
 
   gchar              *id;
   gchar              *settings_path;
@@ -86,6 +89,8 @@ typedef struct
 enum
 {
   PROP_0,
+
+  PROP_MODULE,
 
   PROP_ID,
   PROP_SETTINGS_PATH,
@@ -358,6 +363,8 @@ gp_applet_dispose (GObject *object)
   g_clear_object (&priv->builder);
   g_clear_object (&priv->action_group);
 
+  g_clear_object (&priv->module);
+
   if (priv->size_hints_idle != 0)
     {
       g_source_remove (priv->size_hints_idle);
@@ -401,6 +408,9 @@ gp_applet_get_property (GObject    *object,
 
   switch (property_id)
     {
+      case PROP_MODULE:
+        break;
+
       case PROP_ID:
         g_value_set_string (value, priv->id);
         break;
@@ -465,6 +475,11 @@ gp_applet_set_property (GObject      *object,
 
   switch (property_id)
     {
+      case PROP_MODULE:
+        g_assert (priv->module == NULL);
+        priv->module = g_value_dup_object (value);
+        break;
+
       case PROP_ID:
         g_assert (priv->id == NULL);
         priv->id = g_value_dup_string (value);
@@ -605,6 +620,19 @@ gp_applet_size_allocate (GtkWidget     *widget,
 static void
 install_properties (GObjectClass *object_class)
 {
+  /**
+   * GpApplet:module:
+   *
+   * The applet module.
+   */
+  properties[PROP_MODULE] =
+    g_param_spec_object ("module",
+                         "Module",
+                         "Module",
+                         GP_TYPE_MODULE,
+                         G_PARAM_CONSTRUCT_ONLY | G_PARAM_WRITABLE |
+                         G_PARAM_STATIC_STRINGS);
+
   /**
    * GpApplet:id:
    *

@@ -643,6 +643,7 @@ gp_module_applet_new (GpModule     *module,
     }
 
   return g_object_new (type,
+                       "module", module,
                        "id", applet,
                        "settings-path", settings_path,
                        "initial-settings", initial_settings,
