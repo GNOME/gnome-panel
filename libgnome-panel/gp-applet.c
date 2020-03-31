@@ -1382,6 +1382,24 @@ gp_applet_get_menu_icon_size (GpApplet *applet)
 }
 
 /**
+ * gp_applet_show_about:
+ * @applet: a #GpApplet
+ *
+ * Show about dialog. #GpAboutDialogFunc must be set with
+ * gp_applet_info_set_about_dialog().
+ */
+void
+gp_applet_show_about (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+
+  g_return_if_fail (GP_IS_APPLET (applet));
+  priv = gp_applet_get_instance_private (applet);
+
+  gp_module_show_about (priv->module, NULL, priv->id);
+}
+
+/**
  * gp_applet_show_help:
  * @applet: a #GpApplet
  * @page: the optional page identifier
