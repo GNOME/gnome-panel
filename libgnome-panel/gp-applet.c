@@ -48,7 +48,7 @@
 #include "gp-applet-private.h"
 
 #include "gp-enum-types.h"
-#include "gp-module.h"
+#include "gp-module-private.h"
 
 typedef struct
  {
@@ -1379,4 +1379,23 @@ gp_applet_get_menu_icon_size (GpApplet *applet)
   priv = gp_applet_get_instance_private (applet);
 
   return priv->menu_icon_size;
+}
+
+/**
+ * gp_applet_show_help:
+ * @applet: a #GpApplet
+ * @section: the name of optional section
+ *
+ * Show help. Help URI must be set with gp_applet_info_set_help_uri().
+ */
+void
+gp_applet_show_help (GpApplet   *applet,
+                     const char *section)
+{
+  GpAppletPrivate *priv;
+
+  g_return_if_fail (GP_IS_APPLET (applet));
+  priv = gp_applet_get_instance_private (applet);
+
+  gp_module_show_help (priv->module, NULL, priv->id, section);
 }
