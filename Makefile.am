@@ -4,8 +4,6 @@ SUBDIRS = \
 	libgnome-panel \
 	modules \
 	gnome-panel \
-	libpanel-applet \
-	doc \
 	docs \
 	help \
 	data \
