@@ -100,9 +100,6 @@ GLIB_GSETTINGS
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIB_PANEL_APPLET_LT_VERSION=3:0:0
-AC_SUBST(LIB_PANEL_APPLET_LT_VERSION)
-
 LIBGNOME_PANEL_LT_VERSION=0:0:0
 AC_SUBST([LIBGNOME_PANEL_LT_VERSION])
 
@@ -151,15 +148,6 @@ PKG_CHECK_MODULES([LIBGNOME_PANEL], [
   gio-2.0 >= $GLIB_REQUIRED
   gmodule-2.0 >= $GLIB_REQUIRED
   gtk+-3.0 >= $GTK_REQUIRED
-])
-
-PKG_CHECK_MODULES([LIBPANEL_APPLET], [
-  gtk+-3.0 >= $GTK_REQUIRED
-  cairo-xlib
-  cairo-gobject
-  gio-2.0 >= $GLIB_REQUIRED
-  gio-unix-2.0 >= $GLIB_REQUIRED
-  x11
 ])
 
 PKG_CHECK_MODULES(FISH, gtk+-3.0 >= $GTK_REQUIRED cairo >= $CAIRO_REQUIRED)
@@ -240,10 +228,6 @@ dnl **************************************************************************
 
 AC_STRUCT_DIRENT_D_TYPE
 
-dnl Applets dir
-AC_SUBST([appletsdir],"\$(datadir)/gnome-panel/applets")
-AC_SUBST([appletsdir_pkgconfig],"\${datadir}/gnome-panel/applets")
-
 dnl gtk-doc stuff
 
 GTK_DOC_CHECK([1.25], [--flavour no-tmpl])
@@ -280,13 +264,6 @@ AC_CONFIG_FILES([
   gnome-panel/libpanel-util/Makefile
 
   libgnome-panel/Makefile
-
-  libpanel-applet/Makefile
-  libpanel-applet/libpanel-applet.pc
-
-  doc/Makefile
-  doc/reference/Makefile
-  doc/reference/libpanel-applet/Makefile
 
   docs/Makefile
   docs/reference/Makefile
