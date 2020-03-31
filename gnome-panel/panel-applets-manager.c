@@ -23,7 +23,6 @@
 #include <gio/gio.h>
 
 #include <libpanel-applet-private/gp-applet-manager.h>
-#include <libpanel-applet-private/panel-applets-manager-dbus.h>
 #include <libpanel-util/panel-cleanup.h>
 
 #include "panel-applets-manager.h"
@@ -60,9 +59,6 @@ _panel_applets_managers_ensure_loaded (void)
 		return;
 
 	panel_cleanup_register (PANEL_CLEAN_FUNC (_panel_applets_manager_cleanup), NULL);
-
-	manager = g_object_new (PANEL_TYPE_APPLETS_MANAGER_DBUS, NULL);
-	panel_applets_managers = g_slist_append (panel_applets_managers, manager);
 
 	manager = g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
 	panel_applets_managers = g_slist_append (panel_applets_managers, manager);
@@ -158,26 +154,6 @@ panel_applets_manager_load_applet (const gchar                *iid,
 	}
 
 	return FALSE;
-}
-
-GtkWidget *
-panel_applets_manager_get_applet_widget (const gchar *iid,
-                                         guint        uid)
-{
-	GSList *l;
-
-	_panel_applets_managers_ensure_loaded ();
-
-	for (l = panel_applets_managers; l != NULL; l = l->next) {
-		PanelAppletsManager *manager = PANEL_APPLETS_MANAGER (l->data);
-
-		if (!PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_info (manager, iid))
-			continue;
-
-		return PANEL_APPLETS_MANAGER_GET_CLASS (manager)->get_applet_widget (manager, iid, uid);
-	}
-
-	return NULL;
 }
 
 gchar *

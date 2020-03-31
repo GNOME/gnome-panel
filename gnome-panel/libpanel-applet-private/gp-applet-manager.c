@@ -314,14 +314,6 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
   return TRUE;
 }
 
-static GtkWidget *
-gp_applet_manager_get_applet_widget (PanelAppletsManager *manager,
-                                     const gchar         *iid,
-                                     guint                uid)
-{
-  return NULL;
-}
-
 static gchar *
 gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
                                const gchar         *old_iid)
@@ -472,7 +464,6 @@ gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
   applets_manager_class->factory_deactivate = gp_applet_manager_factory_deactivate;
   applets_manager_class->get_applet_info = gp_applet_manager_get_applet_info;
   applets_manager_class->load_applet = gp_applet_manager_load_applet;
-  applets_manager_class->get_applet_widget = gp_applet_manager_get_applet_widget;
   applets_manager_class->get_new_iid = gp_applet_manager_get_new_iid;
   applets_manager_class->open_initial_setup_dialog = gp_applet_manager_open_initial_setup_dialog;
   applets_manager_class->get_standalone_menu = gp_applet_manager_get_standalone_menu;
