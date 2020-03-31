@@ -121,6 +121,8 @@ guint            gp_applet_get_panel_icon_size       (GpApplet           *applet
 
 guint            gp_applet_get_menu_icon_size        (GpApplet           *applet);
 
+void             gp_applet_show_about                (GpApplet           *applet);
+
 void             gp_applet_show_help                 (GpApplet           *applet,
                                                       const char         *section);
 
