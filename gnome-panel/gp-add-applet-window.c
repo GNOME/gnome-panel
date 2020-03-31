@@ -183,6 +183,7 @@ add_applet (GpAddAppletWindow *window,
   gtk_widget_show (row_box);
 
   icon_image = gtk_image_new_from_icon_name (info->icon_name, GTK_ICON_SIZE_DND);
+  gtk_image_set_pixel_size (GTK_IMAGE (icon_image), 32);
   gtk_box_pack_start (GTK_BOX (row_box), icon_image, FALSE, FALSE, 0);
   gtk_widget_show (icon_image);
 
