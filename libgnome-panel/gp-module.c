@@ -653,6 +653,26 @@ gp_module_applet_new (GpModule     *module,
 }
 
 void
+gp_module_show_about (GpModule   *module,
+                      GtkWindow  *parent,
+                      const char *applet)
+{
+  GpAppletInfo *info;
+  GtkWidget *dialog;
+
+  info = get_applet_info (module, applet, NULL);
+  g_assert (info != NULL);
+
+  if (info->about_dialog_func == NULL)
+    return;
+
+  dialog = gtk_about_dialog_new ();
+
+  info->about_dialog_func (GTK_ABOUT_DIALOG (dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
 gp_module_show_help (GpModule   *module,
                      GtkWindow  *parent,
                      const char *applet,
