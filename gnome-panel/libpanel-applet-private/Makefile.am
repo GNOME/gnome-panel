@@ -6,8 +6,6 @@ noinst_LTLIBRARIES = \
 
 libpanel_applet_private_la_CFLAGS = \
 	-DMODULESDIR=\""$(libdir)/gnome-panel/modules"\" \
-	-DDATADIR=\""$(datadir)"\" \
-	-DPANEL_APPLETS_DIR=\"$(appletsdir)\" \
 	-I$(srcdir) \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/gnome-panel \
@@ -24,12 +22,6 @@ libpanel_applet_private_la_SOURCES =	\
 	gp-applet-frame.h \
 	gp-applet-manager.c \
 	gp-applet-manager.h \
-	panel-applets-manager-dbus.c	\
-	panel-applets-manager-dbus.h	\
-	panel-applet-container.c	\
-	panel-applet-container.h	\
-	panel-applet-frame-dbus.c	\
-	panel-applet-frame-dbus.h \
 	$(NULL)
 
 libpanel_applet_private_la_LIBADD = \
