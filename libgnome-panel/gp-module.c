@@ -45,7 +45,7 @@
  *                                  "example1-icon");
  *
  *       gp_applet_info_set_about_dialog (info, example1_setup_about);
- *       gp_applet_info_set_help_uri (info, "help:example/example1");
+ *       gp_applet_info_set_help_uri (info, "help:example");
  *     }
  *   else if (g_strcmp0 (id, "example2") == 0)
  *     {
