@@ -121,63 +121,6 @@ get_image_path (FishApplet *fish)
 }
 
 static void
-show_help (FishApplet  *fish,
-           const gchar *link_id,
-           GtkWindow   *parent)
-{
-	GError *error = NULL;
-	char   *uri;
-#define FISH_HELP_DOC "fish"
-
-	if (link_id)
-		uri = g_strdup_printf ("help:%s/%s", FISH_HELP_DOC, link_id);
-	else
-		uri = g_strdup_printf ("help:%s", FISH_HELP_DOC);
-
-	gtk_show_uri_on_window (parent, uri, gtk_get_current_event_time (), &error);
-	g_free (uri);
-
-	if (error &&
-	    g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
-		g_error_free (error);
-	else if (error) {
-		GtkWidget *dialog;
-		char      *primary;
-
-		primary = g_markup_printf_escaped (
-				_("Could not display help document '%s'"),
-				FISH_HELP_DOC);
-		dialog = gtk_message_dialog_new (
-				NULL,
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_CLOSE,
-				"%s", primary);
-
-		gtk_message_dialog_format_secondary_text (
-					GTK_MESSAGE_DIALOG (dialog),
-					"%s", error->message);
-
-		g_error_free (error);
-		g_free (primary);
-
-		g_signal_connect (dialog, "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-
-		gtk_window_set_icon_name (GTK_WINDOW (dialog), FISH_ICON);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (GTK_WIDGET (fish)));
-		/* we have no parent window */
-		gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_title (GTK_WINDOW (dialog),
-				      _("Error displaying help document"));
-
-		gtk_widget_show (dialog);
-	}
-}
-
-static void
 command_value_changed (GtkEntry   *entry,
 		       FishApplet *fish)
 {
@@ -235,7 +178,7 @@ handle_response (GtkWidget  *widget,
 		 FishApplet *fish)
 {
 	if (id == GTK_RESPONSE_HELP) {
-		show_help (fish, "fish-settings", GTK_WINDOW (fish->preferences_dialog));
+		gp_applet_show_help (GP_APPLET (fish), "fish-settings");
 		return;
 	}
 

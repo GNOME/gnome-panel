@@ -45,7 +45,7 @@
  *                                  "example1-icon");
  *
  *       gp_applet_info_set_about_dialog (info, example1_setup_about);
- *       gp_applet_info_set_help_uri (info, "help:example/example1");
+ *       gp_applet_info_set_help_uri (info, "help:example");
  *     }
  *   else if (g_strcmp0 (id, "example2") == 0)
  *     {
@@ -108,6 +108,7 @@
 
 #include "config.h"
 
+#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <stdarg.h>
 
@@ -643,9 +644,100 @@ gp_module_applet_new (GpModule     *module,
     }
 
   return g_object_new (type,
+                       "module", module,
                        "id", applet,
                        "settings-path", settings_path,
                        "initial-settings", initial_settings,
                        "gettext-domain", module->gettext_domain,
                        NULL);
+}
+
+void
+gp_module_show_about (GpModule   *module,
+                      GtkWindow  *parent,
+                      const char *applet)
+{
+  GpAppletInfo *info;
+  GtkWidget *dialog;
+
+  info = get_applet_info (module, applet, NULL);
+  g_assert (info != NULL);
+
+  if (info->about_dialog_func == NULL)
+    return;
+
+  dialog = gtk_about_dialog_new ();
+
+  info->about_dialog_func (GTK_ABOUT_DIALOG (dialog));
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+void
+gp_module_show_help (GpModule   *module,
+                     GtkWindow  *parent,
+                     const char *applet,
+                     const char *page)
+{
+  GpAppletInfo *info;
+  char *help_uri;
+  guint32 timestamp;
+  GError *error;
+  char *message;
+  GtkWidget *dialog;
+
+  info = get_applet_info (module, applet, NULL);
+  g_assert (info != NULL);
+
+  if (info->help_uri == NULL || *info->help_uri == '\0')
+    return;
+
+  if (page != NULL && *page != '\0')
+    help_uri = g_strdup_printf ("%s/%s", info->help_uri, page);
+  else
+    help_uri = g_strdup (info->help_uri);
+
+  timestamp = gtk_get_current_event_time ();
+
+  error = NULL;
+  gtk_show_uri_on_window (parent, help_uri, timestamp, &error);
+
+  if (error == NULL)
+    {
+      g_free (help_uri);
+      return;
+    }
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      g_free (help_uri);
+      return;
+    }
+
+  message = g_markup_printf_escaped (_("Could not display help document '%s'"),
+                                     help_uri);
+
+  dialog = gtk_message_dialog_new (parent,
+                                   GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   GTK_MESSAGE_ERROR,
+                                   GTK_BUTTONS_CLOSE,
+                                   "%s",
+                                   message);
+
+  gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                            "%s",
+                                            error->message);
+
+  g_signal_connect (dialog, "response", G_CALLBACK (gtk_widget_destroy), NULL);
+
+  gtk_window_set_title (GTK_WINDOW (dialog),
+                        _("Error displaying help document"));
+
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gtk_widget_show (dialog);
+
+  g_error_free (error);
+
+  g_free (help_uri);
+  g_free (message);
 }

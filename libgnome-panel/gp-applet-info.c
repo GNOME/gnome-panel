@@ -84,7 +84,8 @@ gp_applet_info_set_initial_setup_dialog (GpAppletInfo             *info,
  * @info: a #GpAppletInfo
  * @help_uri: the help uri
  *
- * Sets the help uri.
+ * Sets the help uri. Must be in `help:<document>` format. Optional page
+ * identifier with options and anchor can be passed to gp_applet_show_help().
  */
 void
 gp_applet_info_set_help_uri (GpAppletInfo *info,
