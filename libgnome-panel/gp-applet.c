@@ -84,6 +84,8 @@ typedef struct
 
   guint               panel_icon_size;
   guint               menu_icon_size;
+
+  GtkWidget          *about_dialog;
 } GpAppletPrivate;
 
 enum
@@ -373,6 +375,8 @@ gp_applet_dispose (GObject *object)
 
   g_clear_pointer (&priv->initial_settings, g_variant_unref);
   g_clear_object (&priv->general_settings);
+
+  g_clear_pointer (&priv->about_dialog, gtk_widget_destroy);
 
   G_OBJECT_CLASS (gp_applet_parent_class)->dispose (object);
 }
@@ -1396,7 +1400,23 @@ gp_applet_show_about (GpApplet *applet)
   g_return_if_fail (GP_IS_APPLET (applet));
   priv = gp_applet_get_instance_private (applet);
 
-  gp_module_show_about (priv->module, NULL, priv->id);
+  if (priv->about_dialog != NULL)
+    {
+      gtk_window_present (GTK_WINDOW (priv->about_dialog));
+      return;
+    }
+
+  priv->about_dialog = gp_module_create_about_dialog (priv->module,
+                                                      NULL,
+                                                      priv->id);
+
+  if (priv->about_dialog == NULL)
+    return;
+
+  g_object_add_weak_pointer (G_OBJECT (priv->about_dialog),
+                             (gpointer *) &priv->about_dialog);
+
+  gtk_window_present (GTK_WINDOW (priv->about_dialog));
 }
 
 /**

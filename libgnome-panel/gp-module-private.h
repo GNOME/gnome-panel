@@ -59,11 +59,11 @@ GpApplet            *gp_module_applet_new             (GpModule     *module,
                                                        GVariant     *initial_settings,
                                                        GError      **error);
 
-void                gp_module_show_about              (GpModule     *module,
+GtkWidget           *gp_module_create_about_dialog    (GpModule     *module,
                                                        GtkWindow    *parent,
                                                        const char   *applet);
 
-void                gp_module_show_help               (GpModule     *module,
+void                 gp_module_show_help              (GpModule     *module,
                                                        GtkWindow    *parent,
                                                        const char   *applet,
                                                        const char   *page);

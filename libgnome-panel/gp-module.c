@@ -652,10 +652,10 @@ gp_module_applet_new (GpModule     *module,
                        NULL);
 }
 
-void
-gp_module_show_about (GpModule   *module,
-                      GtkWindow  *parent,
-                      const char *applet)
+GtkWidget *
+gp_module_create_about_dialog (GpModule   *module,
+                               GtkWindow  *parent,
+                               const char *applet)
 {
   GpAppletInfo *info;
   GtkAboutDialog *dialog;
@@ -664,7 +664,7 @@ gp_module_show_about (GpModule   *module,
   g_assert (info != NULL);
 
   if (info->about_dialog_func == NULL)
-    return;
+    return NULL;
 
   dialog = GTK_ABOUT_DIALOG (gtk_about_dialog_new ());
 
@@ -672,9 +672,9 @@ gp_module_show_about (GpModule   *module,
   gtk_about_dialog_set_comments (dialog, info->description);
   gtk_about_dialog_set_logo_icon_name (dialog, info->icon_name);
   gtk_about_dialog_set_version (dialog, module->version);
-
   info->about_dialog_func (dialog);
-  gtk_window_present (GTK_WINDOW (dialog));
+
+  return GTK_WIDGET (dialog);
 }
 
 void
