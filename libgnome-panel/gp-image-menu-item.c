@@ -24,6 +24,13 @@
  * A #GpImageMenuItem is a menu item which has an icon next to the text label.
  */
 
+/**
+ * GpImageMenuItem:
+ *
+ * #GpImageMenuItem is an opaque data structure and can only be accessed using
+ * the following functions.
+ */
+
 #include "config.h"
 #include "gp-image-menu-item.h"
 

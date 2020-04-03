@@ -22,6 +22,11 @@
 
 G_BEGIN_DECLS
 
+/**
+ * GP_TYPE_IMAGE_MENU_ITEM:
+ *
+ * The type for GpImageMenuItem.
+ */
 #define GP_TYPE_IMAGE_MENU_ITEM (gp_image_menu_item_get_type ())
 G_DECLARE_DERIVABLE_TYPE (GpImageMenuItem, gp_image_menu_item,
                           GP, IMAGE_MENU_ITEM, GtkMenuItem)
