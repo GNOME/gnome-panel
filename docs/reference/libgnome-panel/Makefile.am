@@ -51,7 +51,6 @@ IGNORE_HFILES = \
 	gp-applet-info-private.h \
 	gp-applet-private.h \
 	gp-enum-types.h \
-	gp-image-menu-item.h \
 	gp-initial-setup-dialog-private.h \
 	gp-initial-setup-dialog.h \
 	gp-module-private.h \

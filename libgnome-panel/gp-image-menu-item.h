@@ -26,10 +26,17 @@ G_BEGIN_DECLS
 G_DECLARE_DERIVABLE_TYPE (GpImageMenuItem, gp_image_menu_item,
                           GP, IMAGE_MENU_ITEM, GtkMenuItem)
 
+/**
+ * GpImageMenuItemClass:
+ * @parent_class: The parent class.
+ *
+ * The class structure for the #GpImageMenuItem class.
+ */
 struct _GpImageMenuItemClass
 {
   GtkMenuItemClass parent_class;
 
+  /*< private >*/
   gpointer         padding[10];
 };
 
