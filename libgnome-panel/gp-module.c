@@ -658,7 +658,7 @@ gp_module_show_about (GpModule   *module,
                       const char *applet)
 {
   GpAppletInfo *info;
-  GtkWidget *dialog;
+  GtkAboutDialog *dialog;
 
   info = get_applet_info (module, applet, NULL);
   g_assert (info != NULL);
@@ -666,9 +666,14 @@ gp_module_show_about (GpModule   *module,
   if (info->about_dialog_func == NULL)
     return;
 
-  dialog = gtk_about_dialog_new ();
+  dialog = GTK_ABOUT_DIALOG (gtk_about_dialog_new ());
 
-  info->about_dialog_func (GTK_ABOUT_DIALOG (dialog));
+  gtk_about_dialog_set_program_name (dialog, info->name);
+  gtk_about_dialog_set_comments (dialog, info->description);
+  gtk_about_dialog_set_logo_icon_name (dialog, info->icon_name);
+  gtk_about_dialog_set_version (dialog, module->version);
+
+  info->about_dialog_func (dialog);
   gtk_window_present (GTK_WINDOW (dialog));
 }
 

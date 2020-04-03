@@ -54,6 +54,12 @@ typedef void  (* GpInitialSetupDialogFunc) (GpInitialSetupDialog *dialog);
  * @dialog: a #GtkAboutDialog
  *
  * Function for setting up about dialog.
+ *
+ * The dialog will be already filled in with following information - version
+ * program name, comments and logo icon name.
+ *
+ * Version will be same that was set with gp_module_set_version(). Other
+ * three fields are information from gp_applet_info_new().
  */
 typedef void  (* GpAboutDialogFunc) (GtkAboutDialog *dialog);
 
