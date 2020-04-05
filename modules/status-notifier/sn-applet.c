@@ -109,47 +109,6 @@ get_popup_position (SnApplet *sn,
     }
 }
 
-static void
-popup_menu_at_item (SnApplet *sn,
-                    GtkMenu  *menu,
-                    SnItem   *item,
-                    GdkEvent *event)
-{
-  GdkGravity widget_anchor;
-  GdkGravity menu_anchor;
-
-  switch (gp_applet_get_position (GP_APPLET (sn)))
-    {
-      case GTK_POS_TOP:
-        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_LEFT:
-        widget_anchor = GDK_GRAVITY_NORTH_EAST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_RIGHT:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_EAST;
-        break;
-
-      case GTK_POS_BOTTOM:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
-        break;
-
-      default:
-        g_assert_not_reached ();
-        break;
-    }
-
-  gtk_menu_popup_at_widget (menu, GTK_WIDGET (item),
-                            widget_anchor, menu_anchor,
-                            event);
-}
-
 static gboolean
 button_press_event_cb (GtkWidget      *widget,
                        GdkEventButton *event,
@@ -173,7 +132,11 @@ button_press_event_cb (GtkWidget      *widget,
 
       if (menu != NULL)
         {
-          popup_menu_at_item (sn, menu, item, (GdkEvent *) event);
+          gp_applet_popup_menu_at_widget (GP_APPLET (sn),
+                                           menu,
+                                           GTK_WIDGET (item),
+                                           (GdkEvent *) event);
+
           return GDK_EVENT_STOP;
         }
       else
@@ -198,7 +161,10 @@ popup_menu_cb (GtkWidget *widget,
 
   if (menu != NULL)
     {
-      popup_menu_at_item (sn, menu, item, NULL);
+      gp_applet_popup_menu_at_widget (GP_APPLET (sn),
+                                      menu,
+                                      GTK_WIDGET (item),
+                                      NULL);
     }
   else
     {
