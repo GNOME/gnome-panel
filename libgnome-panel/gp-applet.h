@@ -126,6 +126,10 @@ void             gp_applet_show_about                (GpApplet           *applet
 void             gp_applet_show_help                 (GpApplet           *applet,
                                                       const char         *page);
 
+void             gp_applet_popup_menu_for_widget     (GpApplet           *applet,
+                                                      GtkMenu            *menu,
+                                                      GtkWidget          *widegt);
+
 G_END_DECLS
 
 #endif
