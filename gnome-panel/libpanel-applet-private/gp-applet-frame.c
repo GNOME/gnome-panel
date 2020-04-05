@@ -35,51 +35,12 @@ static void
 popup_menu (GtkMenu  *menu,
             GpApplet *applet)
 {
-  GtkOrientation orientation;
-  GtkPositionType position;
-  GdkGravity widget_anchor;
-  GdkGravity menu_anchor;
-
-  orientation = gp_applet_get_orientation (applet);
-  position = gp_applet_get_position (applet);
-
-  widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-  menu_anchor = GDK_GRAVITY_NORTH_WEST;
-
-  if (orientation == GTK_ORIENTATION_HORIZONTAL)
-    {
-      if (position == GTK_POS_TOP)
-        {
-          widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-          menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        }
-      else if (position == GTK_POS_BOTTOM)
-        {
-          widget_anchor = GDK_GRAVITY_NORTH_WEST;
-          menu_anchor = GDK_GRAVITY_SOUTH_WEST;
-        }
-      else
-        g_assert_not_reached ();
-    }
-  else
-    {
-      if (position == GTK_POS_LEFT)
-        {
-          widget_anchor = GDK_GRAVITY_NORTH_EAST;
-          menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        }
-      else if (position == GTK_POS_RIGHT)
-        {
-          widget_anchor = GDK_GRAVITY_NORTH_WEST;
-          menu_anchor = GDK_GRAVITY_NORTH_EAST;
-        }
-      else
-        g_assert_not_reached ();
-    }
-
   gtk_menu_attach_to_widget (menu, GTK_WIDGET (applet), NULL);
-  gtk_menu_popup_at_widget (menu, GTK_WIDGET (applet),
-                            widget_anchor, menu_anchor, NULL);
+
+  gp_applet_popup_menu_at_widget (applet,
+                                  menu,
+                                  GTK_WIDGET (applet),
+                                  NULL);
 }
 
 static void

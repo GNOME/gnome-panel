@@ -716,45 +716,16 @@ gp_menu_button_applet_popup_menu (GpMenuButtonApplet *menu_button,
                                   GdkEvent           *event)
 {
   GpMenuButtonAppletPrivate *priv;
-  GdkGravity widget_anchor;
-  GdkGravity menu_anchor;
 
   priv = gp_menu_button_applet_get_instance_private (menu_button);
 
   if (priv->menu == NULL)
     return FALSE;
 
-  switch (gp_applet_get_position (GP_APPLET (menu_button)))
-    {
-      case GTK_POS_TOP:
-        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_LEFT:
-        widget_anchor = GDK_GRAVITY_NORTH_EAST;
-        menu_anchor = GDK_GRAVITY_NORTH_WEST;
-        break;
-
-      case GTK_POS_RIGHT:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_NORTH_EAST;
-        break;
-
-      case GTK_POS_BOTTOM:
-        widget_anchor = GDK_GRAVITY_NORTH_WEST;
-        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
-        break;
-
-      default:
-        g_assert_not_reached ();
-        break;
-    }
-
-  gtk_menu_popup_at_widget (GTK_MENU (priv->menu),
-                            priv->button,
-                            widget_anchor, menu_anchor,
-                            event);
+  gp_applet_popup_menu_at_widget (GP_APPLET (menu_button),
+                                  GTK_MENU (priv->menu),
+                                  priv->button,
+                                  event);
 
   return TRUE;
 }
