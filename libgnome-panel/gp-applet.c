@@ -1439,3 +1439,55 @@ gp_applet_show_help (GpApplet   *applet,
 
   gp_module_show_help (priv->module, NULL, priv->id, page);
 }
+
+/**
+ * gp_applet_popup_menu_for_widget:
+ * @applet: a #GpApplet
+ * @menu: the #GtkMenu to pop up.
+ * @widget: the #GtkWidget to align menu with.
+ * @event: the #GdkEvent that initiated this request or NULL if it's the current event.
+ *
+ * Displays menu and makes it available for selection. This is convenience function
+ * around gtk_menu_popup_at_widget() that automatically computes the widget_anchor and
+ * menu_anchor parameters based on the current applet position.
+ */
+void
+gp_applet_popup_menu_for_widget (GpApplet           *applet,
+                                 GtkMenu            *menu,
+                                 GtkWidget          *widget,
+                                 GdkEvent           *event)
+{
+  GdkGravity widget_anchor;
+  GdkGravity menu_anchor;
+
+  switch (gp_applet_get_position (GP_APPLET (applet)))
+    {
+      case GTK_POS_TOP:
+        widget_anchor = GDK_GRAVITY_SOUTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_LEFT:
+        widget_anchor = GDK_GRAVITY_NORTH_EAST;
+        menu_anchor = GDK_GRAVITY_NORTH_WEST;
+        break;
+
+      case GTK_POS_RIGHT:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_NORTH_EAST;
+        break;
+
+      case GTK_POS_BOTTOM:
+        widget_anchor = GDK_GRAVITY_NORTH_WEST;
+        menu_anchor = GDK_GRAVITY_SOUTH_WEST;
+        break;
+
+      default:
+        g_assert_not_reached ();
+        break;
+    }
+
+  gtk_menu_popup_at_widget (menu, GTK_WIDGET (widget),
+                            widget_anchor, menu_anchor,
+                            event);
+}
