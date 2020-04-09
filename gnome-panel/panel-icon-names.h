@@ -30,7 +30,6 @@
 #define PANEL_ICON_REMOTE		"applications-internet"
 #define PANEL_ICON_REMOVABLE_MEDIA	"drive-removable-media"
 #define PANEL_ICON_RUN			"system-run"
-#define PANEL_ICON_SEARCHTOOL		"system-search"
 #define PANEL_ICON_SHUTDOWN		"system-shutdown"
 #define PANEL_ICON_SUSPEND		"gnome-panel-suspend"
 #define PANEL_ICON_THEME		"preferences-desktop-theme"

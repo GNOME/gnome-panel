@@ -73,7 +73,6 @@ static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_LOCK,           "lock"           },
 	{ PANEL_ACTION_LOGOUT,         "logout"         },
 	{ PANEL_ACTION_RUN,            "run"            },
-	{ PANEL_ACTION_SEARCH,         "search"         },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_HIBERNATE,      "hibernate"      },
 	{ PANEL_ACTION_SUSPEND,        "suspend"        },
@@ -305,19 +304,6 @@ panel_action_run_program (GtkWidget *widget)
 				  gtk_get_current_event_time ());
 }
 
-/* Search For Files
- */
-static void
-panel_action_search (GtkWidget *widget)
-{
-	GdkScreen *screen;
-
-	screen = gtk_widget_get_screen (widget);
-	panel_launch_desktop_file_with_fallback ("gnome-search-tool.desktop",
-						 "gnome-search-tool",
-						 screen, NULL);
-}
-
 /* Force Quit
  */
 static void
@@ -379,14 +365,6 @@ static PanelAction actions [] = {
 		"ACTION:run:NEW",
 		panel_action_run_program, NULL, NULL,
 		panel_lockdown_get_disable_command_line_s
-	},
-	{
-		PANEL_ACTION_SEARCH,
-		PANEL_ICON_SEARCHTOOL,
-		N_("Search for Files..."),
-		N_("Locate documents and folders on this computer by name or content"),
-		"ACTION:search:NEW",
-		panel_action_search, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT,
