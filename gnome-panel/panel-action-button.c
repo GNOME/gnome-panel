@@ -129,7 +129,7 @@ screensaver_properties_enabled (void)
 	    panel_lockdown_get_disable_lock_screen_s ())
 		return FALSE;
 
-	desktop = panel_g_lookup_in_applications_dirs ("gnome-screen-panel.desktop");
+	desktop = panel_g_lookup_in_applications_dirs ("gnome-lock-panel.desktop");
 	found = (desktop != NULL);
 	g_free (desktop);
 
@@ -179,7 +179,7 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 	else if (g_strcmp0 (callback_name, "activate") == 0)
 		panel_screensaver_activate (panel_screensaver_get ());
 	else if (g_strcmp0 (callback_name, "prefs") == 0)
-		panel_launch_desktop_file ("gnome-screen-panel.desktop",
+		panel_launch_desktop_file ("gnome-lock-panel.desktop",
 					   gtk_widget_get_screen (GTK_WIDGET (button)),
 					   NULL);
 	else
