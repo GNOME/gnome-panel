@@ -4,14 +4,14 @@
 #
 # Andraž Tori <andraz.tori1@guest.arnes.si>, 2002.
 # Matic Žgur <mr.zgur@gmail.com>, 2006.
-# Matej Urbančič <mateju@svn.gnome.org>, 2007–2018.
+# Matej Urbančič <mateju@svn.gnome.org>, 2007–2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2018-10-04 20:28+0000\n"
-"PO-Revision-Date: 2018-10-19 18:06+0200\n"
+"POT-Creation-Date: 2020-03-29 13:06+0000\n"
+"PO-Revision-Date: 2020-04-06 20:53+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -238,10 +238,18 @@ msgstr ""
 "odvisna od možnosti prikaži vse delovne površine."
 
 #: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Privzeta postavitev pulta"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr "Privzeta postavitev pulta, ko je ta ustvarjen."
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Omogoči namige"
 
-#: data/org.gnome.gnome-panel.gschema.xml:29
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
@@ -250,11 +258,15 @@ msgstr ""
 "pladnja. Orodne namige je mogoče onemogočiti za celotno namizje s "
 "spreminjanjem lastnosti gtk-enable-tooltips med nastavitvami GTK+."
 
-#: data/org.gnome.gnome-panel.gschema.xml:33
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr "Prednostno uporabi simbolne ikone v pultih"
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Potrdi odstranitev pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -262,31 +274,31 @@ msgstr ""
 "Izbrana možnost onemogoča prikaz pogovornega okna, ki vpraša ali je "
 "uporabnik prepričan o odstranitvi pulta."
 
-#: data/org.gnome.gnome-panel.gschema.xml:39
+#: data/org.gnome.gnome-panel.gschema.xml:51
 msgid "Icon size in menus"
 msgstr "Velikost ikon v meniju"
 
-#: data/org.gnome.gnome-panel.gschema.xml:40
+#: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
 msgstr "Velikost ikon v meniju."
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
 msgstr "Največja velikost ikone na pladnju"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:58
 msgid "The maximum size of icons in panels."
 msgstr "Največja sprejemljiva velikost ikone na pladnju."
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Katera različica teme naj bo v uporabi"
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Seznam ID številk pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -294,11 +306,11 @@ msgstr ""
 "Seznam ID številk pultov. Vsak ID predstavlja samostojen vrhnji pult. "
 "Nastavitve vsakega pulta posebej so shranjene v /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Seznam ID številk predmetov pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:76
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
@@ -308,11 +320,11 @@ msgstr ""
 "pulta (npr.: zaganjalnik, gumb dejanja ali gumb menija). Nastavitve vsakega "
 "izmed predmetov so shranjene v /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:71
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Popolno zaklepanje pulta"
 
-#: data/org.gnome.gnome-panel.gschema.xml:72
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -321,11 +333,11 @@ msgstr ""
 "Izbrana možnost onemogoča spreminjanje nastavitev pulta. Nekateri apleti "
 "morajo biti zaklenjeni posebej. Po izbiri je treba pult ponovno zagnati."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "IID številke apletov, ki naj se jim prepreči nalaganje"
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -337,11 +349,11 @@ msgstr ""
 "preprečite vstavek mini-poveljnik v ta seznam dodajte 'OAFIID:"
 "GNOME_MiniCommanderApplet'. Možnost zahteva ponovni zagon pulta."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Onemogoči vsiljeno končanje"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -349,21 +361,21 @@ msgstr ""
 "Izbrana možnost onemogoča uporabniku vsiljeno končanje programov tako, da "
 "odstrani možnost iz menija."
 
-#: data/org.gnome.gnome-panel.gschema.xml:89
+#: data/org.gnome.gnome-panel.gschema.xml:101
 msgid "History of \"Run Application\" dialog"
 msgstr "Zgodovina pogovornega okna »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:90
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr ""
 "Seznam ukazov, ki so bili uporabljeni v pogovornem oknu »Zaženi program«."
 
-#: data/org.gnome.gnome-panel.gschema.xml:94
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Omogoči seznam programov v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:95
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -373,11 +385,11 @@ msgstr ""
 "pogovornega okna »Zaženi program«. Oblika prikaza seznama je podana s "
 "ključem show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:99
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Razširi seznam programov v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:100
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -387,11 +399,11 @@ msgstr ""
 "»Zaženi program« razširi ob odprtju pogovornega okna. Možnost je odvisna od "
 "uporabe možnosti omogoči seznam programov."
 
-#: data/org.gnome.gnome-panel.gschema.xml:104
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Omogoči samodejno dopolnjevanje v pogovornem oknu »Zaženi program«"
 
-#: data/org.gnome.gnome-panel.gschema.xml:105
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
@@ -791,7 +803,7 @@ msgstr "_Premakni"
 msgid "_Remove From Panel"
 msgstr "_Odstrani s pulta"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Pult"
 
@@ -802,11 +814,6 @@ msgid ""
 msgstr ""
 "Zagon drugih programov in podpora pri različnih pripomočkih za upravljanje z "
 "okni, časom ..."
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
 
 #: gnome-panel/gp-add-applet-window.c:137
 msgid "Help"
@@ -831,6 +838,14 @@ msgstr "Ni najdenih apletov"
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Skrij pult"
+
+#: gnome-panel/gp-main.c:50
+msgid "Replace a currently running panel"
+msgstr "Zamenjaj trenutno zagnan pult"
+
+#: gnome-panel/gp-main.c:56
+msgid "Print version"
+msgstr "Izpiši različico"
 
 #: gnome-panel/gp-properties-dialog.c:213
 msgctxt "Orientation"
@@ -977,7 +992,7 @@ msgid "Create Launcher"
 msgstr "Ustvari zaganjalnik"
 
 #: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
+#: gnome-panel/panel-ditem-editor.c:1344 gnome-panel/panel-ditem-editor.c:1375
 msgid "Could not save launcher"
 msgstr "Ni mogoče shraniti zaganjalnika"
 
@@ -996,15 +1011,15 @@ msgid "Choose an icon"
 msgstr "Izbor ikone"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1283
+#: gnome-panel/panel-ditem-editor.c:656 gnome-panel/panel-ditem-editor.c:991
+#: gnome-panel/panel-force-quit.c:217 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
 #: modules/menu/gp-recent-menu.c:205
 msgid "_Cancel"
 msgstr "_Prekliči"
 
 #: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:994
+#: gnome-panel/panel-ditem-editor.c:993
 msgid "_Open"
 msgstr "_Odpri"
 
@@ -1017,14 +1032,6 @@ msgstr "Ni mogoče zagnati »%s«"
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Ni mogoče odpreti mesta »%s«"
-
-#: gnome-panel/main.c:37
-msgid "Replace a currently running panel"
-msgstr "Zamenjaj trenutno zagnan pult"
-
-#: gnome-panel/main.c:38
-msgid "Print version"
-msgstr "Izpiši različico"
 
 #: gnome-panel/panel-action-button.c:157
 msgid "_Lock Screen"
@@ -1069,7 +1076,7 @@ msgstr "Poišči datoteke ..."
 msgid "Locate documents and folders on this computer by name or content"
 msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
 
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:226
 msgid "Force Quit"
 msgstr "Vsili končanje"
 
@@ -1109,36 +1116,36 @@ msgstr "Izklopi računalnik"
 msgid "(empty)"
 msgstr "(prazno)"
 
-#: gnome-panel/panel-addto-dialog.c:361
+#: gnome-panel/panel-addto-dialog.c:368
 msgid "Custom Application Launcher"
 msgstr "Zagon programov po meri"
 
-#: gnome-panel/panel-addto-dialog.c:362
+#: gnome-panel/panel-addto-dialog.c:369
 msgid "Create a new launcher"
 msgstr "Ustvari nov zaganjalnik"
 
-#: gnome-panel/panel-addto-dialog.c:371
+#: gnome-panel/panel-addto-dialog.c:378
 msgid "Application Launcher..."
 msgstr "Zaganjalnik programa ..."
 
-#: gnome-panel/panel-addto-dialog.c:372
+#: gnome-panel/panel-addto-dialog.c:379
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiraj zaganjalnik iz menija programov"
 
-#: gnome-panel/panel-addto-dialog.c:913
+#: gnome-panel/panel-addto-dialog.c:920
 #, c-format
 msgid "Find an _item to add to \"%s\":"
 msgstr "Najdi _predmet za dodajanje na »%s«:"
 
-#: gnome-panel/panel-addto-dialog.c:917
+#: gnome-panel/panel-addto-dialog.c:924
 msgid "Find an _item to add to the panel:"
 msgstr "Najdi _predmet za dodajanje na pult:"
 
-#: gnome-panel/panel-addto-dialog.c:1039
+#: gnome-panel/panel-addto-dialog.c:1046
 msgid "_Forward"
 msgstr "_Naprej"
 
-#: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
+#: gnome-panel/panel-addto-dialog.c:1049 gnome-panel/panel-addto-dialog.ui:158
 #: modules/clock/clock.ui:682
 msgid "_Add"
 msgstr "_Dodaj"
@@ -1151,7 +1158,7 @@ msgstr "Najdi predmet za dodajanje na pult:"
 msgid "_Back"
 msgstr "_Nazaj"
 
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
+#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:653
 #: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
 #: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
 #: modules/wncklet/workspace-switcher.ui:37
@@ -1266,46 +1273,46 @@ msgid "Location"
 msgstr "Mesto"
 
 #. Type
-#: gnome-panel/panel-ditem-editor.c:595
+#: gnome-panel/panel-ditem-editor.c:608
 msgid "_Type:"
 msgstr "_Vrsta:"
 
 #. Name
-#: gnome-panel/panel-ditem-editor.c:602
+#: gnome-panel/panel-ditem-editor.c:615
 msgid "_Name:"
 msgstr "_Ime:"
 
-#: gnome-panel/panel-ditem-editor.c:627
+#: gnome-panel/panel-ditem-editor.c:633
 msgid "_Browse..."
 msgstr "_Prebrskaj ..."
 
 #. Comment
-#: gnome-panel/panel-ditem-editor.c:634
+#: gnome-panel/panel-ditem-editor.c:640
 msgid "Co_mment:"
 msgstr "_Opomba:"
 
-#: gnome-panel/panel-ditem-editor.c:641
+#: gnome-panel/panel-ditem-editor.c:647
 msgid "_Revert"
 msgstr "_Povrni"
 
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1284
+#: gnome-panel/panel-ditem-editor.c:659 gnome-panel/panel-run-dialog.c:1302
 #: modules/clock/clock.ui:82
 msgid "_OK"
 msgstr "_V redu"
 
-#: gnome-panel/panel-ditem-editor.c:961
+#: gnome-panel/panel-ditem-editor.c:958
 msgid "Choose an application..."
 msgstr "Izbor programa ..."
 
-#: gnome-panel/panel-ditem-editor.c:965
+#: gnome-panel/panel-ditem-editor.c:962
 msgid "Choose a file..."
 msgstr "Izbor datoteke ..."
 
-#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
+#: gnome-panel/panel-ditem-editor.c:1127 gnome-panel/panel-ditem-editor.c:1136
 msgid "Comm_and:"
 msgstr "_Ukaz:"
 
-#: gnome-panel/panel-ditem-editor.c:1146
+#: gnome-panel/panel-ditem-editor.c:1145
 msgid "_Location:"
 msgstr "_Mesto:"
 
@@ -1329,18 +1336,18 @@ msgstr "Ukaz zaganjalnika ni nastavljen."
 msgid "The location of the launcher is not set."
 msgstr "Mesto zaganjalnika ni določeno."
 
-#: gnome-panel/panel-force-quit.c:75
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite "
 "tipko escape."
 
-#: gnome-panel/panel-force-quit.c:223
+#: gnome-panel/panel-force-quit.c:209
 msgid "Force this application to exit?"
 msgstr "Ali naj bo program vsiljeno končan?"
 
-#: gnome-panel/panel-force-quit.c:226
+#: gnome-panel/panel-force-quit.c:212
 msgid ""
 "If you choose to force an application to exit, unsaved changes in any open "
 "documents in it might get lost."
@@ -1348,15 +1355,15 @@ msgstr ""
 "V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
 "dokumenti programa."
 
-#: gnome-panel/panel-force-quit.c:233
+#: gnome-panel/panel-force-quit.c:219
 msgid "_Force quit"
 msgstr "_Vsili končanje"
 
-#: gnome-panel/panel-layout.c:1108 gnome-panel/panel-layout.c:1123
+#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
 msgid "Cannot create initial panel layout.\n"
 msgstr "Ni mogoče ustvariti začetne razvrstitve pulta.\n"
 
-#: gnome-panel/panel-run-dialog.c:424
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr "Terminala ni mogoče najti, uporabljen bo xterm, četudi morda ne deluje"
 
@@ -1365,25 +1372,25 @@ msgstr "Terminala ni mogoče najti, uporabljen bo xterm, četudi morda ne deluje
 msgid "Could not run command '%s'"
 msgstr "Ni mogoče izvesti ukaza »%s«"
 
-#: gnome-panel/panel-run-dialog.c:529
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Ni mogoče pretvoriti »%s« iz UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1280
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Izbor datoteke, ki naj se pripne ukazu ..."
 
-#: gnome-panel/panel-run-dialog.c:1663 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Izbor programa za pregled opisa"
 
-#: gnome-panel/panel-run-dialog.c:1701
+#: gnome-panel/panel-run-dialog.c:1727
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izveden bo ukaz »%s«"
 
-#: gnome-panel/panel-run-dialog.c:1734
+#: gnome-panel/panel-run-dialog.c:1760
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "Seznam naslovov URI ima napačno obliko (%d) ali dolžino (%d)\n"
@@ -1439,67 +1446,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1560
 msgid "Top Expanded Edge Panel"
 msgstr "Zgornji razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1564
+#: gnome-panel/panel-toplevel.c:1561
 msgid "Top Centered Panel"
 msgstr "Zgornji središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1562
 msgid "Top Floating Panel"
 msgstr "Zgornji lebdeč pult"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Edge Panel"
 msgstr "Zgornji robni pult"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Expanded Edge Panel"
 msgstr "Spodnji razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1571
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Centered Panel"
 msgstr "Spodnji središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Floating Panel"
 msgstr "Spodnji lebdeč pult"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Edge Panel"
 msgstr "Spodnji robni pult"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Left Expanded Edge Panel"
 msgstr "Levi razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1578
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Left Centered Panel"
 msgstr "Levi središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Left Floating Panel"
 msgstr "Levi lebdeč pult"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Edge Panel"
 msgstr "Levi robni pult"
 
-#: gnome-panel/panel-toplevel.c:1584
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Right Expanded Edge Panel"
 msgstr "Desni razširjeni robni pult"
 
-#: gnome-panel/panel-toplevel.c:1585
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Right Centered Panel"
 msgstr "Desni središčni pult"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Right Floating Panel"
 msgstr "Desni lebdeč pult"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Edge Panel"
 msgstr "Desni robni pult"
 
@@ -1622,93 +1629,93 @@ msgstr "Koledar"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:227
+#: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
 msgstr "%A %B %d (%Z)"
 
-#: modules/clock/clock-applet.c:236
+#: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknite za skrivanje sestankov in nalog"
 
-#: modules/clock/clock-applet.c:239
+#: modules/clock/clock-applet.c:238
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknite za ogled sestankov in opravil"
 
-#: modules/clock/clock-applet.c:243
+#: modules/clock/clock-applet.c:242
 msgid "Click to hide month calendar"
 msgstr "Kliknite za skrivanje mesečnega koledarja"
 
-#: modules/clock/clock-applet.c:246
+#: modules/clock/clock-applet.c:245
 msgid "Click to view month calendar"
 msgstr "Kliknite za ogled mesečnega koledarja"
 
 #. Done!
-#: modules/clock/clock-applet.c:850
+#: modules/clock/clock-applet.c:848
 msgid "Computer Clock"
 msgstr "Računalniška ura"
 
-#: modules/clock/clock-applet.c:983
+#: modules/clock/clock-applet.c:981
 msgid "Failed to open the time settings"
 msgstr "Napaka med odpiranjem okna nastavitev sistemskega časa"
 
-#: modules/clock/clock-applet.c:1543 modules/fish/fish-applet.c:148
+#: modules/clock/clock-applet.c:1555 modules/fish/fish-applet.c:148
 #, c-format
 msgid "Could not display help document '%s'"
 msgstr "Ni mogoče prikazati dokumenta pomoči »%s«"
 
-#: modules/clock/clock-applet.c:1572 modules/fish/fish-applet.c:174
+#: modules/clock/clock-applet.c:1584 modules/fish/fish-applet.c:174
 msgid "Error displaying help document"
 msgstr "Napaka med prikazovanjem dokumenta pomoči"
 
-#: modules/clock/clock-applet.c:1621
+#: modules/clock/clock-applet.c:1633
 msgid "Choose Location"
 msgstr "Izbor mesta"
 
-#: modules/clock/clock-applet.c:1700
+#: modules/clock/clock-applet.c:1712
 msgid "Edit Location"
 msgstr "Urejanje mesta"
 
-#: modules/clock/clock-applet.c:1736 modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1748 modules/clock/clock-applet.c:1756
 msgid "Default"
 msgstr "Privzeto"
 
-#: modules/clock/clock-applet.c:1737
+#: modules/clock/clock-applet.c:1749
 msgid "Kelvin"
 msgstr "Kelvini"
 
-#: modules/clock/clock-applet.c:1738
+#: modules/clock/clock-applet.c:1750
 msgid "Celsius"
 msgstr "Celziji"
 
-#: modules/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1751
 msgid "Fahrenheit"
 msgstr "Fahrenheiti"
 
-#: modules/clock/clock-applet.c:1745
+#: modules/clock/clock-applet.c:1757
 msgid "Meters per second (m/s)"
 msgstr "Metri na sekundo (m/s)"
 
-#: modules/clock/clock-applet.c:1746
+#: modules/clock/clock-applet.c:1758
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometri na uro (km/h)"
 
-#: modules/clock/clock-applet.c:1747
+#: modules/clock/clock-applet.c:1759
 msgid "Miles per hour (mph)"
 msgstr "Milje na uro (mi/h)"
 
-#: modules/clock/clock-applet.c:1748
+#: modules/clock/clock-applet.c:1760
 msgid "Knots"
 msgstr "Vozli"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1761
 msgid "Beaufort scale"
 msgstr "Beaufortova skala"
 
-#: modules/clock/clock-applet.c:1802
+#: modules/clock/clock-applet.c:1814
 msgid "City Name"
 msgstr "Ime mesta"
 
-#: modules/clock/clock-applet.c:1806
+#: modules/clock/clock-applet.c:1818
 msgid "City Time Zone"
 msgstr "Časovno območje mesta"
 
@@ -1988,15 +1995,15 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1121
 msgid "The water needs changing"
 msgstr "Treba bo zamenjati vodo"
 
-#: modules/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1123
 msgid "Look at today's date!"
 msgstr "Poglejte današnji datum!"
 
-#: modules/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1217
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba %s, prerokovalka"
@@ -2053,33 +2060,33 @@ msgstr "Preklopi uporabnika"
 msgid "Hybrid Sleep"
 msgstr "V pripravljenost"
 
-#: modules/menu/gp-menu-bar-applet.c:119
+#: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
 msgstr "Programi"
 
-#: modules/menu/gp-menu-bar-applet.c:124
+#: modules/menu/gp-menu-bar-applet.c:150
 msgid "Browse and run installed applications"
 msgstr "Pregled in zaganjanje nameščenih programov."
 
-#: modules/menu/gp-menu-bar-applet.c:159
-#: modules/menu/gp-menu-button-applet.c:190 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
 msgid "Places"
 msgstr "Mesta"
 
-#: modules/menu/gp-menu-bar-applet.c:163
+#: modules/menu/gp-menu-bar-applet.c:189
 msgid "Access documents, folders and network places"
 msgstr "Dostop do dokumentov, map in omrežnih mest."
 
-#: modules/menu/gp-menu-bar-applet.c:199
+#: modules/menu/gp-menu-bar-applet.c:225
 msgid "System"
 msgstr "Sistem"
 
-#: modules/menu/gp-menu-bar-applet.c:203
+#: modules/menu/gp-menu-bar-applet.c:229
 msgid "Change system appearance and behavior, or get help"
 msgstr "Spreminjanje videza in obnašanja sistema oziroma iskanje pomoči"
 
-#: modules/menu/gp-menu-bar-applet.c:253
-#: modules/menu/gp-menu-button-applet.c:469
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
 #, c-format
 msgid "Please install the '%s' application."
 msgstr "Namestiti je treba program »%s«."
@@ -2434,6 +2441,9 @@ msgstr "Delovne površine"
 
 #~ msgid "Directory Properties"
 #~ msgstr "Lastnosti imenika"
+
+#~ msgid "gnome-panel"
+#~ msgstr "gnome-panel"
 
 #~ msgid "Image widget"
 #~ msgstr "Gradnik slike"
