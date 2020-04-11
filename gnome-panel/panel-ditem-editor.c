@@ -52,7 +52,6 @@ struct _PanelDItemEditorPrivate
 	guint     save_timeout;
 
 	char     *uri; /* file location */
-	gboolean  type_directory;
 	gboolean  new_file;
 	gboolean  combo_setuped;
 
@@ -90,8 +89,7 @@ typedef enum {
 	PANEL_DITEM_EDITOR_TYPE_NULL,
 	PANEL_DITEM_EDITOR_TYPE_APPLICATION,
 	PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION,
-	PANEL_DITEM_EDITOR_TYPE_LINK,
-	PANEL_DITEM_EDITOR_TYPE_DIRECTORY
+	PANEL_DITEM_EDITOR_TYPE_LINK
 } PanelDItemEditorType;
 
 enum {
@@ -112,11 +110,7 @@ static ComboItem type_items [] = {
 	{ N_("Application in Terminal"), "Application",
 	  PANEL_DITEM_EDITOR_TYPE_TERMINAL_APPLICATION },
 	{ N_("Location"),                "Link",
-	  PANEL_DITEM_EDITOR_TYPE_LINK                 },
-	/* FIXME: hack hack hack: we will remove this item from the combo
-	 * box if we show it */
-	{ NULL,                          "Directory",
-	  PANEL_DITEM_EDITOR_TYPE_DIRECTORY            }
+	  PANEL_DITEM_EDITOR_TYPE_LINK                 }
 };
 
 typedef struct {
@@ -157,8 +151,7 @@ enum {
 enum {
 	PROP_0,
 	PROP_KEYFILE,
-	PROP_URI,
-	PROP_TYPEDIRECTORY
+	PROP_URI
 };
 
 static guint ditem_edit_signals[LAST_SIGNAL] = { 0 };
@@ -187,11 +180,6 @@ static gboolean panel_ditem_editor_load_uri (PanelDItemEditor  *dialog,
 static void panel_ditem_editor_set_key_file (PanelDItemEditor *dialog,
 					     GKeyFile         *key_file);
 
-static gboolean panel_ditem_editor_get_type_directory (PanelDItemEditor *dialog);
-static void panel_ditem_editor_set_type_directory (PanelDItemEditor *dialog,
-						   gboolean          type_directory);
-
-
 static PanelDItemEditorType
 map_type_from_desktop_item (const char *type,
 			    gboolean    terminal)
@@ -205,8 +193,6 @@ map_type_from_desktop_item (const char *type,
 			return PANEL_DITEM_EDITOR_TYPE_APPLICATION;
 	} else if (!strcmp (type, "Link"))
 		return PANEL_DITEM_EDITOR_TYPE_LINK;
-	else if (!strcmp (type, "Directory"))
-		return PANEL_DITEM_EDITOR_TYPE_DIRECTORY;
 	else
 		return PANEL_DITEM_EDITOR_TYPE_NULL;
 }
@@ -220,7 +206,6 @@ panel_ditem_editor_constructor (GType                  type,
 	PanelDItemEditor *dialog;
 	GFile            *file;
 	gboolean          loaded;
-	char             *desktop_type;
 
 	obj = G_OBJECT_CLASS (panel_ditem_editor_parent_class)->constructor (type,
 									     n_construct_properties,
@@ -235,9 +220,6 @@ panel_ditem_editor_constructor (GType                  type,
 		loaded = TRUE;
 	} else {
 		dialog->priv->key_file = panel_key_file_new_desktop ();
-		if (dialog->priv->type_directory)
-			panel_key_file_set_string (dialog->priv->key_file,
-						   "Type", "Directory");
 		dialog->priv->free_key_file = TRUE;
 		loaded = FALSE;
 	}
@@ -257,12 +239,6 @@ panel_ditem_editor_constructor (GType                  type,
 	}
 
 	dialog->priv->dirty = FALSE;
-
-	desktop_type = panel_key_file_get_string (dialog->priv->key_file,
-						  "Type");
-	if (desktop_type && !strcmp (desktop_type, "Directory"))
-		dialog->priv->type_directory = TRUE;
-	g_free (desktop_type);
 
 	panel_ditem_editor_setup_ui (dialog);
 
@@ -291,9 +267,6 @@ panel_ditem_editor_get_property (GObject    *object,
 	case PROP_URI:
 		g_value_set_string (value, panel_ditem_editor_get_uri (dialog));
 		break;
-	case PROP_TYPEDIRECTORY:
-		g_value_set_boolean (value, panel_ditem_editor_get_type_directory (dialog));
-		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -320,10 +293,6 @@ panel_ditem_editor_set_property (GObject       *object,
 	case PROP_URI:
 		panel_ditem_editor_set_uri (dialog,
 					    g_value_get_string (value));
-		break;
-	case PROP_TYPEDIRECTORY:
-		panel_ditem_editor_set_type_directory (dialog,
-						       g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -471,15 +440,6 @@ panel_ditem_editor_class_init (PanelDItemEditorClass *class)
 				     "The URI of the .desktop file",
 				     NULL,
 				     G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	g_object_class_install_property (
-		gobject_class,
-		PROP_TYPEDIRECTORY,
-		g_param_spec_boolean ("type-directory",
-				      "Type Directory",
-				      "Whether the edited file is a .directory file or not",
-				      FALSE,
-				      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 static GtkWidget *
@@ -557,9 +517,6 @@ panel_ditem_editor_get_item_type (PanelDItemEditor *dialog)
 	GtkTreeIter           iter;
 	GtkTreeModel         *model;
 	PanelDItemEditorType  type;
-
-	if (dialog->priv->type_directory)
-		return PANEL_DITEM_EDITOR_TYPE_DIRECTORY;
 
 	if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (dialog->priv->type_combo),
 					    &iter))
@@ -689,9 +646,8 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 
 		gtk_combo_box_set_active (GTK_COMBO_BOX (priv->type_combo), 0);
 
-		show_combo = !priv->type_directory;
+		show_combo = TRUE;
 	} else {
-
 		gtk_widget_show (priv->revert_button);
 		gtk_widget_show (priv->close_button);
 		gtk_widget_hide (priv->cancel_button);
@@ -699,15 +655,10 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 		gtk_dialog_set_default_response (GTK_DIALOG (dialog),
 						 GTK_RESPONSE_CLOSE);
 
-		show_combo = (type != PANEL_DITEM_EDITOR_TYPE_LINK) &&
-			     (type != PANEL_DITEM_EDITOR_TYPE_DIRECTORY);
+		show_combo = (type != PANEL_DITEM_EDITOR_TYPE_LINK);
 	}
 
 	if (show_combo) {
-		GtkTreeIter           iter;
-		GtkTreeModel         *model;
-		PanelDItemEditorType  buf_type;
-
 		grid_attach_label (GTK_GRID (priv->grid), priv->type_label, 1, 0, 1, 1);
 		grid_attach_entry (GTK_GRID (priv->grid), priv->type_combo, 2, 0, 1, 1);
 
@@ -719,26 +670,6 @@ panel_ditem_editor_setup_ui (PanelDItemEditor *dialog)
 
 		grid_attach_label (GTK_GRID (priv->grid), priv->comment_label, 1, 3, 1, 1);
 		grid_attach_entry (GTK_GRID (priv->grid), priv->comment_entry, 2, 3, 1, 1);
-
-		/* FIXME: hack hack hack */
-		model = gtk_combo_box_get_model (GTK_COMBO_BOX (priv->type_combo));
-		if (!gtk_tree_model_get_iter_first (model, &iter))
-			g_assert_not_reached ();
-		do {
-			gtk_tree_model_get (model, &iter,
-					    COLUMN_TYPE, &buf_type, -1);
-			if (buf_type == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
-				gtk_list_store_remove (GTK_LIST_STORE (model),
-						       &iter);
-				break;
-			}
-		} while (gtk_tree_model_iter_next (model, &iter));
-	} else if (type == PANEL_DITEM_EDITOR_TYPE_DIRECTORY) {
-		grid_attach_label (GTK_GRID (priv->grid), priv->name_label, 1, 0, 1, 1);
-		grid_attach_entry (GTK_GRID (priv->grid), priv->name_entry, 2, 0, 1, 1);
-
-		grid_attach_label (GTK_GRID (priv->grid), priv->comment_label, 1, 1, 1, 1);
-		grid_attach_entry (GTK_GRID (priv->grid), priv->comment_entry, 2, 1, 1, 1);
 	} else {
 		grid_attach_label (GTK_GRID (priv->grid), priv->name_label, 1, 0, 1, 1);
 		grid_attach_entry (GTK_GRID (priv->grid), priv->name_entry, 2, 0, 1, 1);
@@ -864,7 +795,6 @@ panel_ditem_editor_command_changed (PanelDItemEditor *dialog)
 		panel_key_file_set_string (dialog->priv->key_file, "URL",
 					   exec_or_uri);
 		break;
-	case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 	case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		panel_key_file_remove_key (dialog->priv->key_file, "Exec");
@@ -928,7 +858,6 @@ command_browse_chooser_response (GtkFileChooser   *chooser,
 			uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (chooser));
 			break;
 		case PANEL_DITEM_EDITOR_TYPE_NULL:
-		case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 		default:
 			g_assert_not_reached ();
 		}
@@ -962,7 +891,6 @@ update_chooser_for_type (PanelDItemEditor *dialog)
 		title = _("Choose a file...");
 		local_only = FALSE;
 		break;
-	case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 	case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		g_assert_not_reached ();
@@ -1105,7 +1033,6 @@ panel_ditem_editor_init (PanelDItemEditor *dialog)
 	priv->dirty = FALSE;
 	priv->save_timeout = 0;
 	priv->uri = NULL;
-	priv->type_directory = FALSE;
 	priv->new_file = TRUE;
 	priv->save_uri = NULL;
 	priv->save_uri_data = NULL;
@@ -1150,12 +1077,6 @@ type_combo_changed (PanelDItemEditor *dialog)
 						   "Terminal");
 		}
 		break;
-	case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
-		if (dialog->priv->combo_setuped) {
-			panel_key_file_set_string (dialog->priv->key_file,
-						   "Type", "Directory");
-		}
-		return;
 	case PANEL_DITEM_EDITOR_TYPE_NULL:
 	default:
 		g_assert_not_reached ();
@@ -1179,11 +1100,7 @@ setup_icon_chooser (PanelDItemEditor *dialog,
 	char *buffer;
 
 	if (!icon_name || icon_name[0] == '\0') {
-		if (dialog->priv->type_directory) {
-			buffer = g_strdup (PANEL_ICON_FOLDER);
-		} else {
-			buffer = g_strdup (PANEL_ICON_LAUNCHER);
-		}
+		buffer = g_strdup (PANEL_ICON_LAUNCHER);
 	} else {
 		buffer = g_strdup (icon_name);
 	}
@@ -1302,23 +1219,16 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 	const_buf = gtk_entry_get_text (GTK_ENTRY (dialog->priv->name_entry));
 	if (const_buf == NULL || const_buf [0] == '\0') {
 		if (report_errors) {
-			if (!dialog->priv->type_directory)
-				g_signal_emit (G_OBJECT (dialog),
-					       ditem_edit_signals[ERROR_REPORTED], 0,
-					       _("Could not save launcher"),
-					       _("The name of the launcher is not set."));
-			else
-				g_signal_emit (G_OBJECT (dialog),
-					       ditem_edit_signals[ERROR_REPORTED], 0,
-					       _("Could not save directory properties"),
-					       _("The name of the directory is not set."));
+			g_signal_emit (G_OBJECT (dialog),
+			               ditem_edit_signals[ERROR_REPORTED], 0,
+			               _("Could not save launcher"),
+			               _("The name of the launcher is not set."));
 		}
 		return FALSE;
 	}
 
 	const_buf = gtk_entry_get_text (GTK_ENTRY (dialog->priv->command_entry));
-	if (!dialog->priv->type_directory &&
-	    (const_buf == NULL || const_buf [0] == '\0')) {
+	if (const_buf == NULL || const_buf [0] == '\0') {
 		PanelDItemEditorType  type;
 		char                 *err;
 
@@ -1332,7 +1242,6 @@ panel_ditem_editor_save (PanelDItemEditor *dialog,
 		case PANEL_DITEM_EDITOR_TYPE_LINK:
 			err = _("The location of the launcher is not set.");
 			break;
-		case PANEL_DITEM_EDITOR_TYPE_DIRECTORY:
 		case PANEL_DITEM_EDITOR_TYPE_NULL:
 		default:
 			g_assert_not_reached ();
@@ -1607,8 +1516,7 @@ static GtkWidget *
 panel_ditem_editor_new_full (GtkWindow   *parent,
 			     GKeyFile    *key_file,
 			     const char  *uri,
-			     const char  *title,
-			     gboolean     type_directory)
+			     const char  *title)
 {
 	GtkWidget *dialog;
 
@@ -1616,7 +1524,6 @@ panel_ditem_editor_new_full (GtkWindow   *parent,
 			       "title", title,
 			       "keyfile", key_file,
 			       "uri", uri,
-			       "type-directory", type_directory,
 			       NULL);
 
 	if (parent)
@@ -1632,17 +1539,7 @@ panel_ditem_editor_new (GtkWindow   *parent,
 			const char  *title)
 {
 	return panel_ditem_editor_new_full (parent, key_file, uri,
-					    title, FALSE);
-}
-
-GtkWidget *
-panel_ditem_editor_new_directory (GtkWindow   *parent,
-				  GKeyFile    *key_file,
-				  const char  *uri,
-				  const char  *title)
-{
-	return panel_ditem_editor_new_full (parent, key_file, uri,
-					    title, TRUE);
+					    title);
 }
 
 static void
@@ -1684,20 +1581,6 @@ panel_ditem_editor_set_uri (PanelDItemEditor *dialog,
 	g_object_notify (G_OBJECT (dialog), "uri");
 }
 
-static void
-panel_ditem_editor_set_type_directory (PanelDItemEditor *dialog,
-				       gboolean          type_directory)
-{
-	g_return_if_fail (PANEL_IS_DITEM_EDITOR (dialog));
-
-	if (dialog->priv->type_directory == type_directory)
-		return;
-
-	dialog->priv->type_directory = type_directory;
-
-	g_object_notify (G_OBJECT (dialog), "type-directory");
-}
-
 GKeyFile *
 panel_ditem_editor_get_key_file (PanelDItemEditor *dialog)
 {
@@ -1720,14 +1603,6 @@ panel_ditem_editor_get_uri (PanelDItemEditor *dialog)
 	g_return_val_if_fail (PANEL_IS_DITEM_EDITOR (dialog), NULL);
 
 	return dialog->priv->uri;
-}
-
-static gboolean
-panel_ditem_editor_get_type_directory (PanelDItemEditor *dialog)
-{
-	g_return_val_if_fail (PANEL_IS_DITEM_EDITOR (dialog), FALSE);
-
-	return dialog->priv->type_directory;
 }
 
 void
