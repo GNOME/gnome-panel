@@ -569,10 +569,8 @@ drag_drop_cb (GtkWidget	        *widget,
 }
 
 enum {
-	TARGET_ICON_INTERNAL,
 	TARGET_URI_LIST
 };
-
 
 static void  
 drag_data_get_cb (GtkWidget        *widget,
@@ -597,12 +595,7 @@ drag_data_get_cb (GtkWidget        *widget,
 		gtk_selection_data_set_uris (selection_data, uri);
 
 		g_free (uri[0]);
-	} else if (info == TARGET_ICON_INTERNAL)
-		gtk_selection_data_set (selection_data,
-					gtk_selection_data_get_target (selection_data), 8,
-					(unsigned char *) location,
-					strlen (location));
-
+	}
 }
 
 static Launcher *
@@ -1227,65 +1220,6 @@ panel_launcher_create (PanelToplevel       *toplevel,
 				       location);
 }
 
-gboolean
-panel_launcher_create_copy (PanelToplevel       *toplevel,
-			    PanelObjectPackType  pack_type,
-			    int                  pack_index,
-			    const char          *location)
-{
-	char       *new_location;
-	GFile      *source;
-	GFile      *dest;
-	gboolean    copied;
-	const char *filename;
-
-	new_location = panel_make_unique_desktop_uri (NULL, location);
-
-	source = panel_launcher_get_gfile (location);
-	dest = g_file_new_for_uri (new_location);
-
-	copied = g_file_copy (source, dest, G_FILE_COPY_OVERWRITE,
-			      NULL, NULL, NULL, NULL);
-	
-	if (!copied) {
-		g_free (new_location);
-		return FALSE;
-	}
-
-	filename = panel_launcher_get_filename (new_location);
-	panel_launcher_create (toplevel, pack_type, pack_index, filename);
-	g_free (new_location);
-
-	return TRUE;
-}
-
-Launcher *
-find_launcher (const char *path)
-{
-	GSList *l;
-
-	g_return_val_if_fail (path != NULL, NULL);
-
-	for (l = panel_applet_list_applets (); l; l = l->next) {
-		AppletInfo *info = l->data;
-		Launcher *launcher;
-
-		if (info->type != PANEL_OBJECT_LAUNCHER)
-			continue;
-
-		launcher = info->data;
-
-		if (launcher->key_file == NULL)
-			continue;
-
-		if (launcher->location != NULL &&
-		    strcmp (launcher->location, path) == 0)
-			return launcher;
-	}
-
-	return NULL;
-}
-
 void
 panel_launcher_set_dnd_enabled (Launcher *launcher,
 				gboolean  dnd_enabled)
@@ -1294,7 +1228,6 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 
 	if (dnd_enabled) {
 		static GtkTargetEntry dnd_targets[] = {
-			{ (gchar *) "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
 			{ (gchar *) "text/uri-list", 0, TARGET_URI_LIST }
 		};
 
@@ -1311,8 +1244,6 @@ panel_launcher_set_dnd_enabled (Launcher *launcher,
 			g_object_unref (pixbuf);
 		}
 		gtk_widget_set_has_window (launcher->button, FALSE);
-	
-
 	} else
 		gtk_drag_source_unset (launcher->button);
 }
