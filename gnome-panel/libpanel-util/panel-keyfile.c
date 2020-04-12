@@ -153,57 +153,6 @@ panel_key_file_to_file (GKeyFile     *keyfile,
 }
 
 gboolean
-panel_key_file_load_from_uri (GKeyFile       *keyfile,
-			      const gchar    *uri,
-			      GKeyFileFlags   flags,
-			      GError        **error)
-{
-	char     *scheme;
-	gboolean  is_local;
-	gboolean  result;
-
-	g_return_val_if_fail (keyfile != NULL, FALSE);
-	g_return_val_if_fail (uri != NULL, FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	scheme = g_uri_parse_scheme (uri);
-	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
-	g_free (scheme);
-
-	if (is_local) {
-		char *path;
-
-		if (g_path_is_absolute (uri))
-			path = g_filename_from_utf8 (uri, -1, NULL, NULL, NULL);
-		else
-			path = g_filename_from_uri (uri, NULL, NULL);
-		result = g_key_file_load_from_file (keyfile, path,
-						    flags, error);
-		g_free (path);
-	} else {
-		GFile   *file;
-		char	*contents;
-		gsize    size;
-		gboolean ret;
-
-		file = g_file_new_for_uri (uri);
-		ret = g_file_load_contents (file, NULL, &contents, &size,
-					    NULL, NULL);
-		g_object_unref (file);
-		
-		if (!ret)
-			return FALSE;
-
-		result = g_key_file_load_from_data (keyfile, contents, size,
-						    flags, error);
-
-		g_free (contents);
-	}
-
-	return result;
-}
-
-gboolean
 panel_key_file_get_boolean (GKeyFile    *keyfile,
 			    const gchar *key,
 			    gboolean     default_value)
