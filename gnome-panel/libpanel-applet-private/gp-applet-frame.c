@@ -54,6 +54,12 @@ static void
 remove_cb (GtkMenuItem      *menuitem,
            PanelAppletFrame *applet_frame)
 {
+  GpAppletFrame *frame;
+
+  frame = GP_APPLET_FRAME (applet_frame);
+
+  gp_applet_remove_from_panel (frame->applet);
+
   _panel_applet_frame_applet_remove (applet_frame);
 }
 
