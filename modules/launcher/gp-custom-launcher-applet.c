@@ -208,6 +208,7 @@ gp_custom_launcher_applet_initial_setup_dialog (GpInitialSetupDialog *dialog)
 {
   GtkWidget *editor;
   LauncherData *data;
+  GVariant *variant;
 
   editor = gp_editor_new (FALSE);
 
@@ -219,6 +220,13 @@ gp_custom_launcher_applet_initial_setup_dialog (GpInitialSetupDialog *dialog)
   g_signal_connect (editor, "name-changed", G_CALLBACK (name_changed_cb), data);
   g_signal_connect (editor, "command-changed", G_CALLBACK (command_changed_cb), data);
   g_signal_connect (editor, "comment-changed", G_CALLBACK (comment_changed_cb), data);
+
+  variant = gp_initital_setup_dialog_get_setting (dialog, "command");
+  if (variant != NULL)
+    {
+      gp_editor_set_command (GP_EDITOR (editor),
+                             g_variant_get_string (variant, NULL));
+    }
 
   icon_changed_cb (data->editor, data);
   type_changed_cb (data->editor, data);

@@ -64,9 +64,6 @@ void            panel_applet_add_callback    (AppletInfo          *info,
 					      const gchar         *menuitem_text,
 					      CallbackEnabledFunc  is_enabled_func);
 
-AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
-					      const gchar *name);
-
 void        panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *id,
 						  gboolean    immediate);
