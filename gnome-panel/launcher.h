@@ -22,11 +22,6 @@ typedef struct {
 
 	char              *location;
 	GKeyFile          *key_file;
-
-	GtkWidget         *prop_dialog;
-	GSList 		  *error_dialogs;
-
-	gulong             destroy_handler;
 } Launcher;
 
 void panel_launcher_create           (PanelToplevel       *toplevel,
@@ -46,28 +41,11 @@ void panel_launcher_create_from_info (PanelToplevel       *toplevel,
 				      const char          *comment,
 				      const char          *icon);
 
-void		launcher_launch    		(Launcher  *launcher,
-						 GtkWidget *widget);
-
-void		launcher_properties		(Launcher  *launcher);
-
-void            launcher_load                   (PanelWidget *panel_widget,
-						 const char  *id,
-						 GSettings   *settings);
-
-void            panel_launcher_delete           (Launcher *launcher);
-
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
 						 PanelObjectPackType pack_type);
 
 Launcher *	find_launcher			(const char *path);
-
-void            launcher_properties_destroy     (Launcher *launcher);
-
-void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
-						 gboolean  dnd_enabled);
-
 
 G_END_DECLS
 

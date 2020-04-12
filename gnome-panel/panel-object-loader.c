@@ -201,9 +201,6 @@ panel_object_loader_idle_handler (gpointer dummy)
                                          object->settings);
                 break;
         case PANEL_OBJECT_LAUNCHER:
-                launcher_load (panel_widget,
-                               object->id,
-                               object->settings);
                 break;
         case PANEL_OBJECT_ACTION:
                 panel_action_button_load (panel_widget,
@@ -344,9 +341,10 @@ static struct {
         PanelObjectType  type;
         const char      *id;
         gboolean         has_detail;
+        gboolean         load;
 } panel_object_iid_map[] = {
-        { PANEL_OBJECT_ACTION,    "ActionButton" , TRUE  },
-        { PANEL_OBJECT_LAUNCHER,  "Launcher"     , FALSE }
+        { PANEL_OBJECT_ACTION, "ActionButton", TRUE, TRUE },
+        { PANEL_OBJECT_LAUNCHER, "Launcher", FALSE, FALSE }
 };
 
 char *
@@ -409,6 +407,9 @@ panel_object_iid_to_type (const char       *iid,
 	instance_id += 2;
 
         for (i = 0; i < G_N_ELEMENTS (panel_object_iid_map); i++) {
+                if (!panel_object_iid_map[i].load)
+                        continue;
+
                 if (!panel_object_iid_map[i].has_detail &&
                     g_strcmp0 (panel_object_iid_map[i].id,
                                instance_id) == 0) {
