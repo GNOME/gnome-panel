@@ -690,8 +690,6 @@ drop_internal_applet (PanelWidget         *panel,
 		      const char          *applet_type,
 		      int                  action)
 {
-	int applet_index = -1;
-	gboolean remove_applet = FALSE;
 	gboolean success = FALSE;
 
 	if (applet_type == NULL)
@@ -699,16 +697,14 @@ drop_internal_applet (PanelWidget         *panel,
 
 	if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
 		if (panel_layout_is_writable ()) {
-			remove_applet = panel_action_button_load_from_drag (
-							panel->toplevel,
-							pack_type, pack_index,
-							applet_type,
-							&applet_index);
+			panel_action_button_load_from_drag (panel->toplevel,
+			                                    pack_type,
+			                                    pack_index,
+			                                    applet_type);
 			success = TRUE;
 		} else {
 			success = FALSE;
 		}
-
 	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
 		if (panel_layout_is_writable ()) {
 			ask_about_launcher (NULL, panel, pack_type);
@@ -716,19 +712,6 @@ drop_internal_applet (PanelWidget         *panel,
 		} else {
 			success = FALSE;
 		}
-	}
-
-	if (remove_applet &&
-	    action == GDK_ACTION_MOVE) {
-		AppletInfo *info;
-		GSList     *applet_list;
-
-		applet_list = panel_applet_list_applets ();
-
-		info = g_slist_nth_data (applet_list, applet_index);
-
-		if (info)
-			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
 	return success;

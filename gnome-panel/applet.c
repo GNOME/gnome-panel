@@ -45,25 +45,6 @@ panel_applet_get_panel_widget (AppletInfo *info)
 }
 
 static void
-panel_applet_set_dnd_enabled (AppletInfo *info,
-			      gboolean    dnd_enabled)
-{
-	switch (info->type) {
-	case PANEL_OBJECT_LAUNCHER:
-		break;
-	case PANEL_OBJECT_APPLET:
-		break;
-	case PANEL_OBJECT_ACTION:
-		panel_action_button_set_dnd_enabled (PANEL_ACTION_BUTTON (info->widget),
-						     dnd_enabled);
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-
-static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)
 {
 	GtkWidget   *parent;
@@ -828,8 +809,6 @@ panel_applet_register (GtkWidget       *applet,
 	g_signal_connect (applet, "destroy",
 			  G_CALLBACK (panel_applet_destroy),
 			  info);
-
-	panel_applet_set_dnd_enabled (info, TRUE);
 
 	gtk_widget_show (applet);
 
