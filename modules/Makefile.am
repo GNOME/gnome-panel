@@ -3,6 +3,7 @@ NULL =
 SUBDIRS = \
 	clock \
 	fish \
+	launcher \
 	menu \
 	notification-area \
 	separator \
