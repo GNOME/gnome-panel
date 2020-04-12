@@ -747,14 +747,6 @@ drop_internal_applet (PanelWidget         *panel,
 		} else {
 			success = FALSE;
 		}
-
-	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
-		if (panel_layout_is_writable ()) {
-			ask_about_launcher (NULL, panel, pack_type);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
 	}
 
 	if (remove_applet &&
