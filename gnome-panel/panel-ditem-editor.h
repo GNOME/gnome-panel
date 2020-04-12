@@ -43,31 +43,6 @@ typedef struct _PanelDItemEditorPrivate PanelDItemEditorPrivate;
 struct _PanelDItemEditorClass
 {
 	GtkDialogClass parent_class;
-
-	/* File has been saved */
-	void (* saved)           (PanelDItemEditor *dialog);
-
-	/* Any information changed */
-	void (* changed)         (PanelDItemEditor *dialog);
-
-	/* These more specific signals are provided since they 
-	 * will likely require a display update */
-	/* The name of the item has changed. */
-	void (* name_changed)    (PanelDItemEditor *dialog,
-				  const char       *name);
-	/* The command of the item has changed. */
-	void (* command_changed) (PanelDItemEditor *dialog,
-				  const char       *command);
-	/* The comment of the item has changed. */
-	void (* comment_changed) (PanelDItemEditor *dialog,
-				  const char       *comment);
-	/* The icon in particular has changed. */
-	void (* icon_changed)    (PanelDItemEditor *dialog,
-				  const char       *icon);
-
-	/* An error is reported. */
-	void (* error_reported)  (PanelDItemEditor *dialog,
-				  const char       *error);
 };
 
 struct _PanelDItemEditor
@@ -81,15 +56,11 @@ typedef char * (*PanelDitemSaveUri) (PanelDItemEditor *dialog, gpointer data);
 
 GType      panel_ditem_editor_get_type (void);
 
-GtkWidget *panel_ditem_editor_new (GtkWindow   *parent,
-				   GKeyFile    *key_file,
-				   const char  *uri,
-				   const char  *title);
+GtkWidget *panel_ditem_editor_new (const char *title);
 
 void panel_ditem_editor_sync_display (PanelDItemEditor *dialog);
 
 GKeyFile *panel_ditem_editor_get_key_file        (PanelDItemEditor *dialog);
-GKeyFile *panel_ditem_editor_get_revert_key_file (PanelDItemEditor *dialog);
 
 void panel_ditem_editor_set_uri (PanelDItemEditor *dialog,
 				 const char       *uri);

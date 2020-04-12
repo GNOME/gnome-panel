@@ -13,11 +13,6 @@ char *          panel_util_make_exec_uri_for_desktop (const char *exec);
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
 
-gboolean	panel_uri_exists	(const char *uri);
-
-char *          panel_find_icon         (GtkIconTheme  *icon_theme,
-					 const char    *icon_name,
-					 int            size);
 GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 const char    *icon_name,
 					 int            size,
@@ -25,17 +20,10 @@ GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
 					 int            desired_height,
 					 char         **error_msg);
 
-char       *panel_util_get_from_personal_path  (const char *file);
-
-GFile      *panel_launcher_get_gfile           (const char *location);
-char       *panel_launcher_get_uri             (const char *location);
 char       *panel_launcher_get_filename        (const char *location);
-gboolean    panel_launcher_is_in_personal_path (const char *location);
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);
-char *panel_make_unique_desktop_path_from_name (const char *dir,
-						const char *name);
 char *panel_make_unique_desktop_uri (const char *dir,
 				     const char *source);
 
@@ -43,7 +31,6 @@ char *panel_util_get_icon_name_from_g_icon (GIcon *gicon);
 char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 			    GKeyFile     *key_file);
 
-const char *panel_util_get_vfs_method_display_name (const char *method);
 char *panel_util_get_label_for_uri (const char *text_uri);
 char *panel_util_get_icon_for_uri (const char *text_uri);
 
