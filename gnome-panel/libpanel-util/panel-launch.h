@@ -28,17 +28,6 @@
 
 G_BEGIN_DECLS
 
-gboolean panel_app_info_launch_uris (GAppInfo   *appinfo,
-				     GList      *uris,
-				     GdkScreen  *screen,
-				     guint32     timestamp,
-				     GError    **error);
-
-gboolean panel_launch_key_file (GKeyFile   *keyfile,
-				GList      *uri_list,
-				GdkScreen  *screen,
-				GError    **error);
-
 gboolean panel_launch_desktop_file (const char  *desktop_file,
 				    GdkScreen   *screen,
 				    GError     **error);
