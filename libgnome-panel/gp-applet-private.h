@@ -27,21 +27,23 @@
 
 G_BEGIN_DECLS
 
-void           gp_applet_set_locked_down (GpApplet        *applet,
-                                          gboolean         locked_down);
+void           gp_applet_set_locked_down   (GpApplet        *applet,
+                                            gboolean         locked_down);
 
-void           gp_applet_set_orientation (GpApplet        *applet,
-                                          GtkOrientation   orientation);
+void           gp_applet_set_orientation   (GpApplet        *applet,
+                                            GtkOrientation   orientation);
 
-void           gp_applet_set_position    (GpApplet        *applet,
-                                          GtkPositionType  position);
+void           gp_applet_set_position      (GpApplet        *applet,
+                                            GtkPositionType  position);
 
-GpAppletFlags  gp_applet_get_flags       (GpApplet        *applet);
+GpAppletFlags  gp_applet_get_flags         (GpApplet        *applet);
 
-gint          *gp_applet_get_size_hints  (GpApplet        *applet,
-                                          guint           *n_elements);
+gint          *gp_applet_get_size_hints    (GpApplet        *applet,
+                                            guint           *n_elements);
 
-GtkWidget     *gp_applet_get_menu        (GpApplet        *applet);
+GtkWidget     *gp_applet_get_menu          (GpApplet        *applet);
+
+void           gp_applet_remove_from_panel (GpApplet        *self);
 
 G_END_DECLS
 
