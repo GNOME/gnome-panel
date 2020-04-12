@@ -59,9 +59,6 @@ void		ask_about_launcher		(const char *file,
 
 void            launcher_properties_destroy     (Launcher *launcher);
 
-void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
-						 gboolean  dnd_enabled);
-
 G_END_DECLS
 
 #endif

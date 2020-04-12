@@ -568,36 +568,6 @@ drag_drop_cb (GtkWidget	        *widget,
 	return TRUE;
 }
 
-enum {
-	TARGET_URI_LIST
-};
-
-static void  
-drag_data_get_cb (GtkWidget        *widget,
-		  GdkDragContext   *context,
-		  GtkSelectionData *selection_data,
-		  guint             info,
-		  guint             time,
-		  Launcher         *launcher)
-{
-	char *location;
-	
-	g_return_if_fail (launcher != NULL);
-
-	location = launcher->location;
-
-	if (info == TARGET_URI_LIST) {
-		char *uri[2];
-
-		uri[0] = panel_launcher_get_uri (location);
-		uri[1] = NULL;
-
-		gtk_selection_data_set_uris (selection_data, uri);
-
-		g_free (uri[0]);
-	}
-}
-
 static Launcher *
 create_launcher (const char *location)
 {
@@ -686,15 +656,9 @@ create_launcher (const char *location)
 
 	gtk_widget_show (launcher->button);
 
-	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
-			   GTK_DEST_DEFAULT_ALL,
-			   dnd_targets, 2,
-			   GDK_ACTION_COPY);*/
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
 
-	g_signal_connect (launcher->button, "drag_data_get",
-			   G_CALLBACK (drag_data_get_cb), launcher);
 	g_signal_connect (launcher->button, "drag_data_received",
 			   G_CALLBACK (drag_data_received_cb), launcher);
 	g_signal_connect (launcher->button, "drag_motion",
@@ -1218,32 +1182,4 @@ panel_launcher_create (PanelToplevel       *toplevel,
 	panel_launcher_create_with_id (panel_toplevel_get_id (toplevel),
 				       pack_type, pack_index,
 				       location);
-}
-
-void
-panel_launcher_set_dnd_enabled (Launcher *launcher,
-				gboolean  dnd_enabled)
-{
-	GdkPixbuf *pixbuf;
-
-	if (dnd_enabled) {
-		static GtkTargetEntry dnd_targets[] = {
-			{ (gchar *) "text/uri-list", 0, TARGET_URI_LIST }
-		};
-
-		gtk_widget_set_has_window (launcher->button, TRUE);
-		gtk_drag_source_set (launcher->button,
-				     GDK_BUTTON1_MASK,
-				     dnd_targets, 2,
-				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		//FIXME: this doesn't work since the pixbuf isn't loaded yet
-		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (launcher->button));
-		if (pixbuf) {
-			gtk_drag_source_set_icon_pixbuf (launcher->button,
-							 pixbuf);
-			g_object_unref (pixbuf);
-		}
-		gtk_widget_set_has_window (launcher->button, FALSE);
-	} else
-		gtk_drag_source_unset (launcher->button);
 }

@@ -50,7 +50,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 {
 	switch (info->type) {
 	case PANEL_OBJECT_LAUNCHER:
-		panel_launcher_set_dnd_enabled (info->data, dnd_enabled);
 		break;
 	case PANEL_OBJECT_APPLET:
 		break;
@@ -62,7 +61,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		g_assert_not_reached ();
 		break;
 	}
-
 }
 
 static void
