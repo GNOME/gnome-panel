@@ -31,15 +31,18 @@ panel-toplevel.right gp-applet > menubar > .gp-image-menu-item:not(.image-only) 
   margin-top: 5px;
 }
 
-gp-menu-button:hover .icon {
+gp-menu-button:hover .icon,
+gp-launcher-button:hover image {
   -gtk-icon-effect: highlight;
 }
 
-panel-toplevel.horizontal gp-menu-button {
+panel-toplevel.horizontal gp-menu-button,
+panel-toplevel.horizontal gp-launcher-button  {
   padding: 0 2px;
 }
 
-panel-toplevel.vertical gp-menu-button {
+panel-toplevel.vertical gp-menu-button,
+panel-toplevel.vertical gp-launcher-button {
   padding: 2px 0;
 }
 
@@ -86,4 +89,8 @@ gp-arrow-button {
 .vertical gp-arrow-button {
   min-width: 0px;
   min-height: 20px;
+}
+
+.context-row {
+  padding: 4px 10px;
 }
