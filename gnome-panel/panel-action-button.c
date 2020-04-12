@@ -50,15 +50,12 @@
 
 enum {
 	PROP_0,
-	PROP_ACTION_TYPE,
-	PROP_DND_ENABLED
+	PROP_ACTION_TYPE
 };
 
 struct _PanelActionButtonPrivate {
 	PanelActionButtonType  type;
 	AppletInfo            *info;
-
-	guint                  dnd_enabled : 1;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (PanelActionButton, panel_action_button, BUTTON_TYPE_WIDGET)
@@ -513,9 +510,6 @@ panel_action_button_get_property (GObject    *object,
 	case PROP_ACTION_TYPE:
 		g_value_set_enum (value, button->priv->type);
 		break;
-	case PROP_DND_ENABLED:
-		g_value_set_boolean (value, button->priv->dnd_enabled);
-		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -539,39 +533,10 @@ panel_action_button_set_property (GObject      *object,
 		panel_action_button_set_type (button,
 					      g_value_get_enum (value));
 		break;
-	case PROP_DND_ENABLED:
-		panel_action_button_set_dnd_enabled (button,
-						     g_value_get_boolean (value));
-		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
 	}
-}
-
-static void
-panel_action_button_drag_data_get (GtkWidget          *widget,
-				   GdkDragContext     *context,
-				   GtkSelectionData   *selection_data,
-				   guint               info,
-				   guint               time)
-{
-	PanelActionButton *button;
-	char              *drag_data;
-
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (widget));
-
-	button = PANEL_ACTION_BUTTON (widget);
-
-	drag_data = g_strdup_printf ("ACTION:%s:%d", 
-				     panel_enum_to_string (button->priv->type),
-				     panel_find_applet_index (widget));
-
-	gtk_selection_data_set (
-		selection_data, gtk_selection_data_get_target (selection_data),
-		8, (guchar *) drag_data, strlen (drag_data));
-
-	g_free (drag_data);
 }
 
 static void
@@ -594,14 +559,11 @@ static void
 panel_action_button_class_init (PanelActionButtonClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
-	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 	GtkButtonClass *button_class  = (GtkButtonClass *) klass;
 
 	gobject_class->finalize     = panel_action_button_finalize;
 	gobject_class->get_property = panel_action_button_get_property;
 	gobject_class->set_property = panel_action_button_set_property;
-
-	widget_class->drag_data_get = panel_action_button_drag_data_get;
 
 	button_class->clicked       = panel_action_button_clicked;
 
@@ -614,15 +576,6 @@ panel_action_button_class_init (PanelActionButtonClass *klass)
 					   PANEL_TYPE_ACTION_BUTTON_TYPE,
 					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_DND_ENABLED,
-			g_param_spec_boolean ("dnd-enabled",
-					      "Drag and drop enabled",
-					      "Whether or not drag and drop is enabled on the widget",
-					      TRUE,
-					      G_PARAM_READWRITE));
 }
 
 static void
@@ -632,8 +585,6 @@ panel_action_button_init (PanelActionButton *button)
 
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;
-
-	button->priv->dnd_enabled  = FALSE;
 }
 
 void
@@ -793,39 +744,4 @@ panel_action_button_load_from_drag (PanelToplevel       *toplevel,
 	panel_action_button_create (toplevel, pack_type, pack_index, type);
 
 	return retval;
-}
-
-void
-panel_action_button_set_dnd_enabled (PanelActionButton *button,
-				     gboolean           enabled)
-{
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-
-	if (!button->priv->type)
-		return; /* wait until we know what type it is */
-
-	enabled = enabled != FALSE;
-
-	if (button->priv->dnd_enabled == enabled)
-		return;
-
-	if (enabled) {
-		static GtkTargetEntry dnd_targets [] = {
-			{ (gchar *) "application/x-panel-applet-internal", 0, 0 }
-		};
-
-		gtk_widget_set_has_window (GTK_WIDGET (button), TRUE);
-		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
-				     dnd_targets, 1,
-				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		if (actions [button->priv->type].icon_name != NULL)
-			gtk_drag_source_set_icon_name (GTK_WIDGET (button),
-						       actions [button->priv->type].icon_name);
-		gtk_widget_set_has_window (GTK_WIDGET (button), FALSE);
-	} else
-		gtk_drag_source_unset (GTK_WIDGET (button));
-
-	button->priv->dnd_enabled = enabled;
-
-	g_object_notify (G_OBJECT (button), "dnd-enabled");
 }
