@@ -54,7 +54,6 @@ enum {
 	TARGET_COLOR,
 	TARGET_APPLET,
 	TARGET_APPLET_INTERNAL,
-	TARGET_ICON_INTERNAL,
 	TARGET_BGIMAGE,
 	TARGET_BACKGROUND_RESET
 };
@@ -685,52 +684,12 @@ drop_urilist (PanelWidget         *panel,
 }
 
 static gboolean
-drop_internal_icon (PanelWidget         *panel,
-		    PanelObjectPackType  pack_type,
-		    int                  pack_index,
-		    const char          *icon_name,
-		    int                  action)
-{
-	Launcher *old_launcher = NULL;
-
-	if (!icon_name)
-		return FALSE;
-
-	if (!panel_layout_is_writable ())
-		return FALSE;
-
-	if (action == GDK_ACTION_MOVE)
-		old_launcher = find_launcher (icon_name);
-	
-	if (!panel_launcher_create_copy (panel->toplevel, pack_type, pack_index,
-					 icon_name))
-		return FALSE;
-
-	if (old_launcher && old_launcher->button) {
-		const char *object_id;
-
-		if (old_launcher->prop_dialog) {
-			g_signal_handler_disconnect (old_launcher->button,
-						     old_launcher->destroy_handler);
-			launcher_properties_destroy (old_launcher);
-		}
-
-		object_id = panel_applet_get_id (old_launcher->info);
-		panel_layout_delete_object (object_id);
-	}
-
-	return TRUE;
-}
-
-static gboolean
 drop_internal_applet (PanelWidget         *panel,
 		      PanelObjectPackType  pack_type,
 		      int                  pack_index,
 		      const char          *applet_type,
 		      int                  action)
 {
-	int applet_index = -1;
-	gboolean remove_applet = FALSE;
 	gboolean success = FALSE;
 
 	if (applet_type == NULL)
@@ -738,16 +697,14 @@ drop_internal_applet (PanelWidget         *panel,
 
 	if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
 		if (panel_layout_is_writable ()) {
-			remove_applet = panel_action_button_load_from_drag (
-							panel->toplevel,
-							pack_type, pack_index,
-							applet_type,
-							&applet_index);
+			panel_action_button_load_from_drag (panel->toplevel,
+			                                    pack_type,
+			                                    pack_index,
+			                                    applet_type);
 			success = TRUE;
 		} else {
 			success = FALSE;
 		}
-
 	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
 		if (panel_layout_is_writable ()) {
 			ask_about_launcher (NULL, panel, pack_type);
@@ -755,19 +712,6 @@ drop_internal_applet (PanelWidget         *panel,
 		} else {
 			success = FALSE;
 		}
-	}
-
-	if (remove_applet &&
-	    action == GDK_ACTION_MOVE) {
-		AppletInfo *info;
-		GSList     *applet_list;
-
-		applet_list = panel_applet_list_applets ();
-
-		info = g_slist_nth_data (applet_list, applet_index);
-
-		if (info)
-			panel_layout_delete_object (panel_applet_get_id (info));
 	}
 
 	return success;
@@ -784,7 +728,6 @@ get_target_list (void)
 		{ (gchar *) "application/x-panel-directory",       0, TARGET_DIRECTORY },
 		{ (gchar *) "application/x-panel-applet-iid",      0, TARGET_APPLET },
 		{ (gchar *) "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
-		{ (gchar *) "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
 		{ (gchar *) "application/x-color",                 0, TARGET_COLOR },
 		{ (gchar *) "property/bgimage",                    0, TARGET_BGIMAGE },
 		{ (gchar *) "x-special/gnome-reset-background",    0, TARGET_BACKGROUND_RESET },
@@ -874,8 +817,7 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 	if (panel_lockdown_get_panels_locked_down_s ())
 		return FALSE;
 
-	if (info == TARGET_ICON_INTERNAL ||
-	    info == TARGET_APPLET_INTERNAL) {
+	if (info == TARGET_APPLET_INTERNAL) {
 		if (gdk_drag_context_get_actions (context) & GDK_ACTION_MOVE)
 			gdk_drag_status (context, GDK_ACTION_MOVE, time_);
 		else
@@ -891,7 +833,6 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 				 time_);
 
 	return TRUE;
-
 }
 
 static gboolean
@@ -1102,11 +1043,6 @@ panel_receive_dnd_data (PanelWidget         *panel,
 		success = drop_internal_applet (panel, pack_type, pack_index,
 						(char *)data,
 						gdk_drag_context_get_selected_action (context));
-		break;
-	case TARGET_ICON_INTERNAL:
-		success = drop_internal_icon (panel, pack_type, pack_index,
-					      (char *)data,
-					      gdk_drag_context_get_selected_action (context));
 		break;
 	default:
 		gtk_drag_finish (context, FALSE, FALSE, time_);

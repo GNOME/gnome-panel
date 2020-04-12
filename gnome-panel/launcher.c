@@ -568,43 +568,6 @@ drag_drop_cb (GtkWidget	        *widget,
 	return TRUE;
 }
 
-enum {
-	TARGET_ICON_INTERNAL,
-	TARGET_URI_LIST
-};
-
-
-static void  
-drag_data_get_cb (GtkWidget        *widget,
-		  GdkDragContext   *context,
-		  GtkSelectionData *selection_data,
-		  guint             info,
-		  guint             time,
-		  Launcher         *launcher)
-{
-	char *location;
-	
-	g_return_if_fail (launcher != NULL);
-
-	location = launcher->location;
-
-	if (info == TARGET_URI_LIST) {
-		char *uri[2];
-
-		uri[0] = panel_launcher_get_uri (location);
-		uri[1] = NULL;
-
-		gtk_selection_data_set_uris (selection_data, uri);
-
-		g_free (uri[0]);
-	} else if (info == TARGET_ICON_INTERNAL)
-		gtk_selection_data_set (selection_data,
-					gtk_selection_data_get_target (selection_data), 8,
-					(unsigned char *) location,
-					strlen (location));
-
-}
-
 static Launcher *
 create_launcher (const char *location)
 {
@@ -688,20 +651,13 @@ create_launcher (const char *location)
 
 	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
-					      FALSE,
 					      PANEL_ORIENTATION_TOP);
 
 	gtk_widget_show (launcher->button);
 
-	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
-			   GTK_DEST_DEFAULT_ALL,
-			   dnd_targets, 2,
-			   GDK_ACTION_COPY);*/
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
 
-	g_signal_connect (launcher->button, "drag_data_get",
-			   G_CALLBACK (drag_data_get_cb), launcher);
 	g_signal_connect (launcher->button, "drag_data_received",
 			   G_CALLBACK (drag_data_received_cb), launcher);
 	g_signal_connect (launcher->button, "drag_motion",
@@ -1225,94 +1181,4 @@ panel_launcher_create (PanelToplevel       *toplevel,
 	panel_launcher_create_with_id (panel_toplevel_get_id (toplevel),
 				       pack_type, pack_index,
 				       location);
-}
-
-gboolean
-panel_launcher_create_copy (PanelToplevel       *toplevel,
-			    PanelObjectPackType  pack_type,
-			    int                  pack_index,
-			    const char          *location)
-{
-	char       *new_location;
-	GFile      *source;
-	GFile      *dest;
-	gboolean    copied;
-	const char *filename;
-
-	new_location = panel_make_unique_desktop_uri (NULL, location);
-
-	source = panel_launcher_get_gfile (location);
-	dest = g_file_new_for_uri (new_location);
-
-	copied = g_file_copy (source, dest, G_FILE_COPY_OVERWRITE,
-			      NULL, NULL, NULL, NULL);
-	
-	if (!copied) {
-		g_free (new_location);
-		return FALSE;
-	}
-
-	filename = panel_launcher_get_filename (new_location);
-	panel_launcher_create (toplevel, pack_type, pack_index, filename);
-	g_free (new_location);
-
-	return TRUE;
-}
-
-Launcher *
-find_launcher (const char *path)
-{
-	GSList *l;
-
-	g_return_val_if_fail (path != NULL, NULL);
-
-	for (l = panel_applet_list_applets (); l; l = l->next) {
-		AppletInfo *info = l->data;
-		Launcher *launcher;
-
-		if (info->type != PANEL_OBJECT_LAUNCHER)
-			continue;
-
-		launcher = info->data;
-
-		if (launcher->key_file == NULL)
-			continue;
-
-		if (launcher->location != NULL &&
-		    strcmp (launcher->location, path) == 0)
-			return launcher;
-	}
-
-	return NULL;
-}
-
-void
-panel_launcher_set_dnd_enabled (Launcher *launcher,
-				gboolean  dnd_enabled)
-{
-	GdkPixbuf *pixbuf;
-
-	if (dnd_enabled) {
-		static GtkTargetEntry dnd_targets[] = {
-			{ (gchar *) "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
-			{ (gchar *) "text/uri-list", 0, TARGET_URI_LIST }
-		};
-
-		gtk_widget_set_has_window (launcher->button, TRUE);
-		gtk_drag_source_set (launcher->button,
-				     GDK_BUTTON1_MASK,
-				     dnd_targets, 2,
-				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		//FIXME: this doesn't work since the pixbuf isn't loaded yet
-		pixbuf = button_widget_get_pixbuf (BUTTON_WIDGET (launcher->button));
-		if (pixbuf) {
-			gtk_drag_source_set_icon_pixbuf (launcher->button,
-							 pixbuf);
-			g_object_unref (pixbuf);
-		}
-		gtk_widget_set_has_window (launcher->button, FALSE);
-	
-
-	} else
-		gtk_drag_source_unset (launcher->button);
 }

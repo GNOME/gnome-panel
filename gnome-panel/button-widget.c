@@ -25,7 +25,6 @@ struct _ButtonWidgetPrivate {
 	int               size;
 
 	guint             activatable   : 1;
-	guint             arrow         : 1;
 	guint             dnd_highlight : 1;
 };
 
@@ -35,7 +34,6 @@ static void button_widget_reload_pixbuf (ButtonWidget *button);
 enum {
 	PROP_0,
 	PROP_ACTIVATABLE,
-	PROP_HAS_ARROW,
 	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
 	PROP_ICON_NAME
@@ -215,9 +213,6 @@ button_widget_get_property (GObject    *object,
 	case PROP_ACTIVATABLE:
 		g_value_set_boolean (value, button->priv->activatable);
 		break;
-	case PROP_HAS_ARROW:
-		g_value_set_boolean (value, button->priv->arrow);
-		break;
 	case PROP_DND_HIGHLIGHT:
 		g_value_set_boolean (value, button->priv->dnd_highlight);
 		break;
@@ -247,9 +242,6 @@ button_widget_set_property (GObject      *object,
 	case PROP_ACTIVATABLE:
 		button_widget_set_activatable (button, g_value_get_boolean (value));
 		break;
-	case PROP_HAS_ARROW:
-		button_widget_set_has_arrow (button, g_value_get_boolean (value));
-		break;
 	case PROP_DND_HIGHLIGHT:
 		button_widget_set_dnd_highlight (button, g_value_get_boolean (value));
 		break;
@@ -263,55 +255,6 @@ button_widget_set_property (GObject      *object,
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
 	}
-}
-
-static GtkArrowType
-calc_arrow (PanelOrientation  orientation,
-	    int               button_width,
-	    int               button_height,
-	    int              *x,
-	    int              *y,
-            gdouble          *angle,
-	    gdouble          *size)
-{
-	GtkArrowType retval = GTK_ARROW_UP;
-	double scale;
-
-	scale = (orientation & PANEL_HORIZONTAL_MASK ? button_height : button_width) / 48.0;
-
-        *size = 12 * scale;
-        *angle = 0;
-
-	switch (orientation) {
-	case PANEL_ORIENTATION_TOP:
-		*x     = scale * 3;
-		*y     = scale * (48 - 13);
-                *angle = G_PI;
-		retval = GTK_ARROW_DOWN;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		*x     = scale * (48 - 13);
-		*y     = scale * 1;
-                *angle = 0;
-		retval = GTK_ARROW_UP;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		*x     = scale * (48 - 13);
-		*y     = scale * 3;
-                *angle = G_PI / 2;
-		retval = GTK_ARROW_RIGHT;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		*x     = scale * 1;
-		*y     = scale * 3;
-                *angle = 3 * (G_PI / 2);
-		retval = GTK_ARROW_LEFT;
-		break;
-	default:
-		break;
-	}
-
-	return retval;
 }
 
 static gboolean
@@ -369,24 +312,6 @@ button_widget_draw (GtkWidget *widget,
 	g_object_unref (pb);
 
         context = gtk_widget_get_style_context (widget);
-
-	if (button_widget->priv->arrow) {
-                gdouble angle, size;
-
-                gtk_style_context_save (context);
-                gtk_style_context_set_state (context, state_flags);
-
-		calc_arrow (button_widget->priv->orientation,
-			    width, height,
-			    &x, &y,
-			    &angle, &size);
-
-                cairo_save (cr);
-		gtk_render_arrow (context, cr, angle, x, y, size);
-                cairo_restore (cr);
-
-                gtk_style_context_restore (context);
-	}
 
 	if (button_widget->priv->dnd_highlight) {
                 cairo_save (cr);
@@ -608,7 +533,6 @@ button_widget_init (ButtonWidget *button)
 	button->priv->size = 0;
 	
 	button->priv->activatable   = FALSE;
-	button->priv->arrow         = FALSE;
 	button->priv->dnd_highlight = FALSE;
 }
 
@@ -643,15 +567,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      "Whether the button is activatable",
 					      TRUE,
 					      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_HAS_ARROW,
-			g_param_spec_boolean ("has-arrow",
-					      "Has Arrow",
-					      "Whether or not to draw an arrow indicator",
-					      FALSE,
-					      G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -692,14 +607,12 @@ button_widget_class_init (ButtonWidgetClass *klass)
 
 GtkWidget *
 button_widget_new (const char       *filename,
-		   gboolean          arrow,
 		   PanelOrientation  orientation)
 {
 	GtkWidget *retval;
 
 	retval = g_object_new (
 			BUTTON_TYPE_WIDGET,
-			"has-arrow", arrow,
 			"orientation", orientation,
 			"icon-name", filename,
 			NULL);
@@ -781,24 +694,6 @@ button_widget_get_orientation (ButtonWidget *button)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), 0);
 
 	return button->priv->orientation;
-}
-
-void
-button_widget_set_has_arrow (ButtonWidget *button,
-			     gboolean      has_arrow)
-{
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	has_arrow = has_arrow != FALSE;
-
-	if (button->priv->arrow == has_arrow)
-		return;
-
-	button->priv->arrow = has_arrow;
-
-	gtk_widget_queue_draw (GTK_WIDGET (button));
-
-	g_object_notify (G_OBJECT (button), "has-arrow");
 }
 
 void

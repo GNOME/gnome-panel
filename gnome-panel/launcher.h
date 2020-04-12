@@ -33,10 +33,6 @@ void panel_launcher_create           (PanelToplevel       *toplevel,
 				      PanelObjectPackType  pack_type,
 				      int                  pack_index,
 				      const char          *location);
-gboolean panel_launcher_create_copy  (PanelToplevel       *toplevel,
-				      PanelObjectPackType  pack_type,
-				      int                  pack_index,
-				      const char          *location);
 void panel_launcher_create_from_info (PanelToplevel       *toplevel,
 				      PanelObjectPackType  pack_type,
 				      int                  pack_index,
@@ -61,13 +57,7 @@ void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
 						 PanelObjectPackType pack_type);
 
-Launcher *	find_launcher			(const char *path);
-
 void            launcher_properties_destroy     (Launcher *launcher);
-
-void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
-						 gboolean  dnd_enabled);
-
 
 G_END_DECLS
 

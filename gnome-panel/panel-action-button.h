@@ -70,14 +70,10 @@ void       panel_action_button_load             (PanelWidget            *panel,
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,
 						 const char             *callback_name);
 
-void       panel_action_button_set_dnd_enabled  (PanelActionButton      *button,
-						 gboolean                dnd_enabled);
-
-gboolean   panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
+void       panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
 						 PanelObjectPackType     pack_type,
 						 int                     pack_index,
-						 const char             *drag_string,
-						 int                    *old_applet_idx);
+						 const char             *drag_string);
 
 gboolean             panel_action_get_is_disabled (PanelActionButtonType type);
 GCallback            panel_action_get_invoke      (PanelActionButtonType type);
