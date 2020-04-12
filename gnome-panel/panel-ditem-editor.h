@@ -89,7 +89,6 @@ GtkWidget *panel_ditem_editor_new (GtkWindow   *parent,
 void panel_ditem_editor_sync_display (PanelDItemEditor *dialog);
 
 GKeyFile *panel_ditem_editor_get_key_file        (PanelDItemEditor *dialog);
-GKeyFile *panel_ditem_editor_get_revert_key_file (PanelDItemEditor *dialog);
 
 void panel_ditem_editor_set_uri (PanelDItemEditor *dialog,
 				 const char       *uri);

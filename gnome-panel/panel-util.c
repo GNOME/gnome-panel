@@ -278,31 +278,6 @@ panel_launcher_get_personal_path (void)
 	return panel_util_get_from_personal_path ("launchers");
 }
 
-gboolean
-panel_launcher_is_in_personal_path (const char *location)
-{
-	GFile    *file;
-	GFile    *launchers_dir;
-	char     *launchers_path;
-	gboolean  retval;
-
-	if (!location)
-		return FALSE;
-
-	launchers_path = panel_launcher_get_personal_path ();
-	launchers_dir = g_file_new_for_path (launchers_path);
-	g_free (launchers_path);
-
-	file = panel_launcher_get_gfile (location);
-
-	retval = g_file_has_prefix (file, launchers_dir);
-
-	g_object_unref (file);
-	g_object_unref (launchers_dir);
-
-	return retval;
-}
-
 GFile *
 panel_launcher_get_gfile (const char *location)
 {

@@ -30,7 +30,6 @@ char       *panel_util_get_from_personal_path  (const char *file);
 GFile      *panel_launcher_get_gfile           (const char *location);
 char       *panel_launcher_get_uri             (const char *location);
 char       *panel_launcher_get_filename        (const char *location);
-gboolean    panel_launcher_is_in_personal_path (const char *location);
 
 char *panel_make_full_path   (const char *dir,
 			      const char *filename);
