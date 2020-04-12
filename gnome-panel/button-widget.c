@@ -690,23 +690,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
-GtkWidget *
-button_widget_new (const char       *filename,
-		   gboolean          arrow,
-		   PanelOrientation  orientation)
-{
-	GtkWidget *retval;
-
-	retval = g_object_new (
-			BUTTON_TYPE_WIDGET,
-			"has-arrow", arrow,
-			"orientation", orientation,
-			"icon-name", filename,
-			NULL);
-	
-	return retval;
-}
-
 void
 button_widget_set_activatable (ButtonWidget *button,
 			       gboolean      activatable)
@@ -775,14 +758,6 @@ button_widget_set_orientation (ButtonWidget     *button,
 	g_object_notify (G_OBJECT (button), "orientation");
 }
 
-PanelOrientation
-button_widget_get_orientation (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), 0);
-
-	return button->priv->orientation;
-}
-
 void
 button_widget_set_has_arrow (ButtonWidget *button,
 			     gboolean      has_arrow)
@@ -825,15 +800,4 @@ button_widget_get_icon_theme (ButtonWidget *button)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
 	return button->priv->icon_theme;
-}
-
-GdkPixbuf *
-button_widget_get_pixbuf (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
-
-	if (!button->priv->pixbuf)
-		return NULL;
-
-	return g_object_ref (button->priv->pixbuf);
 }

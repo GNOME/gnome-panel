@@ -50,7 +50,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 {
 	switch (info->type) {
 	case PANEL_OBJECT_LAUNCHER:
-		panel_launcher_set_dnd_enabled (info->data, dnd_enabled);
 		break;
 	case PANEL_OBJECT_APPLET:
 		break;
@@ -62,7 +61,6 @@ panel_applet_set_dnd_enabled (AppletInfo *info,
 		g_assert_not_reached ();
 		break;
 	}
-
 }
 
 static void
@@ -92,9 +90,6 @@ void
 panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
-
-	if (info->type == PANEL_OBJECT_LAUNCHER)
-		panel_launcher_delete (info->data);
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
@@ -158,10 +153,6 @@ applet_callback_callback (GtkWidget      *widget,
 
 	switch (menu->info->type) {
 	case PANEL_OBJECT_LAUNCHER:
-		if (!strcmp (menu->name, "launch"))
-			launcher_launch (menu->info->data, widget);
-		else if (!strcmp (menu->name, "properties"))
-			launcher_properties (menu->info->data);
 		break;
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_invoke_menu (

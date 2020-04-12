@@ -1589,14 +1589,6 @@ panel_ditem_editor_get_key_file (PanelDItemEditor *dialog)
 	return dialog->priv->key_file;
 }
 
-GKeyFile *
-panel_ditem_editor_get_revert_key_file (PanelDItemEditor *dialog)
-{
-	g_return_val_if_fail (PANEL_IS_DITEM_EDITOR (dialog), NULL);
-
-	return dialog->priv->revert_key_file;
-}
-
 const char *
 panel_ditem_editor_get_uri (PanelDItemEditor *dialog)
 {

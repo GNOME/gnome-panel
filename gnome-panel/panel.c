@@ -709,12 +709,6 @@ drop_internal_icon (PanelWidget         *panel,
 	if (old_launcher && old_launcher->button) {
 		const char *object_id;
 
-		if (old_launcher->prop_dialog) {
-			g_signal_handler_disconnect (old_launcher->button,
-						     old_launcher->destroy_handler);
-			launcher_properties_destroy (old_launcher);
-		}
-
 		object_id = panel_applet_get_id (old_launcher->info);
 		panel_layout_delete_object (object_id);
 	}

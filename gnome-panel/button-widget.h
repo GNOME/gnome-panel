@@ -27,22 +27,17 @@ struct _ButtonWidgetClass {
 };
 
 GType            button_widget_get_type          (void) G_GNUC_CONST;
-GtkWidget *      button_widget_new               (const char       *pixmap,
-						  gboolean          arrow,
-						  PanelOrientation  orientation);
 void             button_widget_set_activatable   (ButtonWidget     *button,
 						  gboolean          activatable);
 void             button_widget_set_icon_name     (ButtonWidget     *button,
 						  const char       *icon_name);
 void             button_widget_set_orientation   (ButtonWidget     *button,
 						  PanelOrientation  orientation);
-PanelOrientation button_widget_get_orientation   (ButtonWidget     *button);
 void             button_widget_set_has_arrow     (ButtonWidget     *button,
 						  gboolean          has_arrow);
 void             button_widget_set_dnd_highlight (ButtonWidget     *button,
 						  gboolean          dnd_highlight);
 GtkIconTheme    *button_widget_get_icon_theme    (ButtonWidget     *button);
-GdkPixbuf       *button_widget_get_pixbuf        (ButtonWidget     *button);
 
 G_END_DECLS
 
