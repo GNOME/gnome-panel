@@ -1328,6 +1328,15 @@ gp_applet_get_menu (GpApplet *applet)
   return gtk_menu_new_from_model (G_MENU_MODEL (object));
 }
 
+void
+gp_applet_remove_from_panel (GpApplet *self)
+{
+  if (GP_APPLET_GET_CLASS (self)->remove_from_panel == NULL)
+    return;
+
+  GP_APPLET_GET_CLASS (self)->remove_from_panel (self);
+}
+
 /**
  * gp_applet_get_prefer_symbolic_icons:
  * @applet: a #GpApplet

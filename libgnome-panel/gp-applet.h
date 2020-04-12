@@ -62,6 +62,8 @@ typedef enum
  * @initial_setup: virtual method called when applet has initial settings
  * @placement_changed: Signal is emitted when the orientation or position
  *     properties of applet has changed.
+ * @remove_from_panel: virtual method called when applet is removed from
+ *     panel.
  *
  * The class structure for the #GpApplet class.
  */
@@ -76,8 +78,10 @@ struct _GpAppletClass
                                 GtkOrientation   orientation,
                                 GtkPositionType  position);
 
+  void (* remove_from_panel)   (GpApplet        *self);
+
   /*< private >*/
-  gpointer padding[10];
+  gpointer padding[9];
 };
 
 gboolean         gp_applet_get_locked_down           (GpApplet           *applet);
