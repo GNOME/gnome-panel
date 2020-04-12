@@ -33,7 +33,6 @@ panel_sources =			\
 	panel-util.c		\
 	panel-run-dialog.c	\
 	panel-context-menu.c	\
-	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
 	panel-action-button.c	\
@@ -61,7 +60,6 @@ panel_headers =			\
 	panel-util.h		\
 	panel-run-dialog.h	\
 	panel-context-menu.h	\
-	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
 	panel-action-button.h	\

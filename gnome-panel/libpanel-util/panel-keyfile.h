@@ -34,10 +34,6 @@ GKeyFile *panel_key_file_new_desktop  (void);
 gboolean  panel_key_file_to_file      (GKeyFile       *keyfile,
 				       const gchar    *file,
 				       GError        **error);
-gboolean panel_key_file_load_from_uri (GKeyFile       *keyfile,
-				       const gchar    *uri,
-				       GKeyFileFlags   flags,
-				       GError        **error);
 
 gboolean panel_key_file_get_boolean   (GKeyFile       *keyfile,
 				       const gchar    *key,
