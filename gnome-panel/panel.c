@@ -528,9 +528,8 @@ ask_about_launcher (const char          *file,
   settings = g_variant_builder_end (&builder);
   g_variant_ref_sink (settings);
 
-  // FIXME: pass initial data to inital dialog :D
-
   panel_applets_manager_open_initial_setup_dialog (iid,
+			                                             settings,
 			                                             NULL,
 			                                             initial_setup_dialog_cb,
 			                                             initial_setup_data,
@@ -1147,6 +1146,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 			                                             (char *) data);
 
 			if (!panel_applets_manager_open_initial_setup_dialog ((char *) data,
+			                                                      NULL,
 			                                                      NULL,
 			                                                      initial_setup_dialog_cb,
 			                                                      initial_setup_data,

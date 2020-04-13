@@ -435,6 +435,7 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 		data = initial_setup_data_new (dialog, item_info->iid);
 
 		if (!panel_applets_manager_open_initial_setup_dialog (item_info->iid,
+		                                                      NULL,
 		                                                      GTK_WINDOW (dialog),
 		                                                      initial_setup_dialog_cb,
 		                                                      data, initial_setup_data_free)) {

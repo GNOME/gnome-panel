@@ -63,6 +63,7 @@ struct _PanelAppletsManagerClass {
 
 	gboolean           (*open_initial_setup_dialog) (PanelAppletsManager         *manager,
 	                                                 const gchar                 *iid,
+	                                                 GVariant                    *settings,
 	                                                 GtkWindow                   *parent,
 	                                                 GpInitialSetupCallback       callback,
 	                                                 gpointer                     user_data,
@@ -90,6 +91,7 @@ gboolean          panel_applets_manager_load_applet                 (const gchar
 gchar            *panel_applets_manager_get_new_iid                 (const gchar     *old_iid);
 
 gboolean          panel_applets_manager_open_initial_setup_dialog   (const gchar            *iid,
+                                                                     GVariant               *settings,
                                                                      GtkWindow              *parent,
                                                                      GpInitialSetupCallback  callback,
                                                                      gpointer                user_data,
