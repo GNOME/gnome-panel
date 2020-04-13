@@ -533,3 +533,39 @@ panel_lockdown_get_disable_force_quit_s (void)
 {
         return panel_lockdown_get_disable_force_quit (panel_lockdown_get ());
 }
+
+GpLockdownFlags
+panel_lockdown_get_lockdown_flags (PanelLockdown *lockdown)
+{
+        GpLockdownFlags lockdown_flags;
+
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), GP_LOCKDOWN_FLAGS_NONE);
+
+        lockdown_flags = GP_LOCKDOWN_FLAGS_NONE;
+
+        if (lockdown->priv->disable_force_quit)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_FORCE_QUIT;
+
+        if (lockdown->priv->panels_locked_down)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_LOCKED_DOWN;
+
+        if (lockdown->priv->disable_command_line)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_COMMAND_LINE;
+
+        if (lockdown->priv->disable_lock_screen)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_LOCK_SCREEN;
+
+        if (lockdown->priv->disable_log_out)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_LOG_OUT;
+
+        if (lockdown->priv->disable_switch_user)
+                lockdown_flags |= GP_LOCKDOWN_FLAGS_USER_SWITCHING;
+
+        return lockdown_flags;
+}
+
+GpLockdownFlags
+panel_lockdown_get_lockdown_flags_s (void)
+{
+        return panel_lockdown_get_lockdown_flags (panel_lockdown_get ());
+}

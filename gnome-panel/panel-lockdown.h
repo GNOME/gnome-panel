@@ -26,6 +26,8 @@
 
 #include <gio/gio.h>
 
+#include "libgnome-panel/gp-module.h"
+
 G_BEGIN_DECLS
 
 #define PANEL_TYPE_LOCKDOWN            (panel_lockdown_get_type ())
@@ -80,6 +82,9 @@ gboolean panel_lockdown_get_disable_lock_screen_s    (void);
 gboolean panel_lockdown_get_disable_log_out_s        (void);
 gboolean panel_lockdown_get_disable_switch_user_s    (void);
 gboolean panel_lockdown_get_disable_force_quit_s     (void);
+
+GpLockdownFlags panel_lockdown_get_lockdown_flags   (PanelLockdown *lockdown);
+GpLockdownFlags panel_lockdown_get_lockdown_flags_s (void);
 
 G_END_DECLS
 
