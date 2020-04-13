@@ -46,7 +46,6 @@ panel_sources =			\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto-dialog.c	\
-	panel-ditem-editor.c	\
 	panel-layout.c		\
 	panel-object-loader.c	\
 	panel-applet-info.c
@@ -75,7 +74,6 @@ panel_headers =			\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto-dialog.h	\
-	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-layout.h		\
 	panel-object-loader.h	\

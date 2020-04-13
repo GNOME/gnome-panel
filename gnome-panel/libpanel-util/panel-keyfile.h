@@ -29,7 +29,6 @@
 
 G_BEGIN_DECLS
 
-
 GKeyFile *panel_key_file_new_desktop  (void);
 gboolean  panel_key_file_to_file      (GKeyFile       *keyfile,
 				       const gchar    *file,
@@ -50,13 +49,6 @@ gboolean panel_key_file_get_boolean   (GKeyFile       *keyfile,
 void    panel_key_file_set_locale_string (GKeyFile    *keyfile,
 					  const gchar *key,
 					  const gchar *value);
-
-#define panel_key_file_remove_key(key_file, key) \
-	g_key_file_remove_key (key_file, G_KEY_FILE_DESKTOP_GROUP, key, NULL)
-void panel_key_file_remove_all_locale_key (GKeyFile    *keyfile,
-					   const gchar *key);
-void panel_key_file_ensure_C_key      (GKeyFile   *keyfile,
-				       const char *key);
 
 G_END_DECLS
 
