@@ -20,6 +20,8 @@
 #include <glib/gi18n.h>
 
 #include "gp-properties-dialog.h"
+#include "panel-schemas.h"
+#include "applet.h"
 
 struct _GpPropertiesDialog
 {
@@ -55,6 +57,8 @@ struct _GpPropertiesDialog
   GtkWidget *custom_fg_color;
   GtkWidget *fg_color_box;
   GtkWidget *fg_color;
+
+  GtkWidget *applet_box;
 };
 
 enum
@@ -305,6 +309,35 @@ setup_theme_bindings (GpPropertiesDialog *dialog)
   bg_image_changed_cb (dialog->theme, "bg-image", dialog);
 }
 
+static void
+setup_applet_box (GpPropertiesDialog  *dialog)
+{
+  GSList * applets;
+  GSList * item;
+
+  applets = panel_applet_list_applets ();
+
+  for (item = applets; item; item = item->next)
+    {
+      AppletInfo *info = item->data;
+      const char * applet_toplevel_id;
+      GtkWidget *label;
+
+      applet_toplevel_id = panel_applet_get_toplevel_id (info);
+
+      if (g_strcmp0 (applet_toplevel_id, dialog->toplevel_id) != 0)
+        {
+          continue;
+        }
+
+      label = gtk_label_new (g_strdup_printf ("Applet Id: %s", info->id));
+
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box), label);
+    }
+
+  gtk_widget_show_all(dialog->applet_box);
+}
+
 static gboolean
 all_keys_writable (GSettings    *settings,
                    const gchar **keys)
@@ -399,6 +432,7 @@ gp_properties_dialog_constructed (GObject *object)
 
   setup_writability (dialog);
   setup_bindings (dialog);
+  setup_applet_box (dialog);
 }
 
 static void
@@ -497,6 +531,8 @@ bind_template (GtkWidgetClass *widget_class)
   gtk_widget_class_bind_template_callback (widget_class, custom_fg_color_toggled_cb);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, fg_color_box);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, fg_color);
+
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box);
 }
 
 static void
