@@ -22,6 +22,7 @@
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
 #include "applet.h"
+#include "panel-applets-manager.h"
 
 struct _GpPropertiesDialog
 {
@@ -309,6 +310,65 @@ setup_theme_bindings (GpPropertiesDialog *dialog)
   bg_image_changed_cb (dialog->theme, "bg-image", dialog);
 }
 
+static char *
+get_applet_iid (AppletInfo *applet) {
+  return g_settings_get_string (applet->settings, PANEL_OBJECT_IID_KEY);
+}
+
+static GtkWidget *
+create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
+{
+  PanelAppletInfo *panel_applet_info;
+  GtkWidget *id_label;
+  GtkWidget *name_label;
+  GtkWidget *description_label;
+  GtkWidget *entry;
+  GtkWidget *entryDetails;
+  GtkWidget *image;
+
+  const char *name;
+  const char *description;
+  const char *icon_name;
+
+  GIcon *icon;
+
+  panel_applet_info = panel_applets_manager_get_applet_info (get_applet_iid (info));
+
+  if (!panel_applet_info)
+    {
+      g_debug ("No panel applet info for id: %s", info->id);
+      return NULL;
+    }
+
+  entry = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+  entryDetails = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
+
+  id_label = gtk_label_new (g_strdup_printf ("Applet Id: %s", info->id));
+
+  name = panel_applet_info_get_name (panel_applet_info);
+  name_label = gtk_label_new (g_strdup_printf ("Applet Name: %s", name));
+
+  description = panel_applet_info_get_description (panel_applet_info);
+  description_label = gtk_label_new (g_strdup_printf ("Applet Description: %s", description));
+
+  icon_name = panel_applet_info_get_icon (panel_applet_info);
+
+  if (icon_name)
+    {
+      icon = g_themed_icon_new (icon_name);
+      image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
+    }
+
+  gtk_container_add (GTK_CONTAINER (entryDetails), id_label);
+  gtk_container_add (GTK_CONTAINER (entryDetails), name_label);
+  gtk_container_add (GTK_CONTAINER (entryDetails), description_label);
+
+  gtk_container_add (GTK_CONTAINER (entry), image);
+  gtk_container_add (GTK_CONTAINER (entry), entryDetails);
+
+  return entry;
+}
+
 static void
 setup_applet_box (GpPropertiesDialog  *dialog)
 {
@@ -319,20 +379,26 @@ setup_applet_box (GpPropertiesDialog  *dialog)
 
   for (item = applets; item; item = item->next)
     {
-      AppletInfo *info = item->data;
+      AppletInfo *info;
+      GtkWidget *applet_entry;
+
       const char * applet_toplevel_id;
-      GtkWidget *label;
+
+      info = item->data;
 
       applet_toplevel_id = panel_applet_get_toplevel_id (info);
 
       if (g_strcmp0 (applet_toplevel_id, dialog->toplevel_id) != 0)
+        continue;
+
+      applet_entry = create_applet_entry (dialog, info);
+
+      if (!applet_entry)
         {
           continue;
         }
 
-      label = gtk_label_new (g_strdup_printf ("Applet Id: %s", info->id));
-
-      gtk_container_add (GTK_CONTAINER (dialog->applet_box), label);
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box), applet_entry);
     }
 
   gtk_widget_show_all(dialog->applet_box);
