@@ -62,6 +62,7 @@ libgnome_panel_include_HEADERS = \
 
 ENUM_TYPES = \
 	$(srcdir)/gp-applet.h \
+	$(srcdir)/gp-module.h \
 	$(NULL)
 
 gp-enum-types.c: gp-enum-types.c.in gp-enum-types.h $(ENUM_TYPES)

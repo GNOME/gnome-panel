@@ -33,40 +33,45 @@ typedef enum
 #define GP_MODULE_ERROR gp_module_error_quark ()
 GQuark gp_module_error_quark (void);
 
-GpModule            *gp_module_new_from_path         (const gchar   *path);
+GpModule            *gp_module_new_from_path         (const gchar       *path);
 
-const gchar         *gp_module_get_id                (GpModule      *module);
+const gchar         *gp_module_get_id                (GpModule          *module);
 
-const gchar         *gp_module_get_version           (GpModule      *module);
+const gchar         *gp_module_get_version           (GpModule          *module);
 
-const gchar * const *gp_module_get_applets           (GpModule      *module);
+const gchar * const *gp_module_get_applets           (GpModule          *module);
 
-GpAppletInfo        *gp_module_get_applet_info       (GpModule      *module,
-                                                      const gchar   *applet,
-                                                      GError       **error);
+GpAppletInfo        *gp_module_get_applet_info       (GpModule          *module,
+                                                      const gchar       *applet,
+                                                      GError           **error);
 
-const gchar         *gp_module_get_applet_id_from_iid (GpModule     *module,
-                                                       const gchar  *old_iid);
+const gchar         *gp_module_get_applet_id_from_iid (GpModule         *module,
+                                                       const gchar      *old_iid);
 
-GtkWidget           *gp_module_get_standalone_menu    (GpModule     *module,
-                                                       gboolean      enable_tooltips,
-                                                       gboolean      locked_down,
-                                                       guint         menu_icon_size);
+GtkWidget           *gp_module_get_standalone_menu    (GpModule         *module,
+                                                       gboolean          enable_tooltips,
+                                                       gboolean          locked_down,
+                                                       guint             menu_icon_size);
 
-GpApplet            *gp_module_applet_new             (GpModule     *module,
-                                                       const gchar  *applet,
-                                                       const gchar  *settings_path,
-                                                       GVariant     *initial_settings,
-                                                       GError      **error);
+GpApplet            *gp_module_applet_new             (GpModule         *module,
+                                                       const gchar      *applet,
+                                                       const gchar      *settings_path,
+                                                       GVariant         *initial_settings,
+                                                       GError          **error);
 
-GtkWidget           *gp_module_create_about_dialog    (GpModule     *module,
-                                                       GtkWindow    *parent,
-                                                       const char   *applet);
+GtkWidget           *gp_module_create_about_dialog    (GpModule         *module,
+                                                       GtkWindow        *parent,
+                                                       const char       *applet);
 
-void                 gp_module_show_help              (GpModule     *module,
-                                                       GtkWindow    *parent,
-                                                       const char   *applet,
-                                                       const char   *page);
+void                 gp_module_show_help              (GpModule         *module,
+                                                       GtkWindow        *parent,
+                                                       const char       *applet,
+                                                       const char       *page);
+
+gboolean             gp_module_is_applet_available    (GpModule         *module,
+                                                       const char       *applet,
+                                                       GpLockdownFlags   flags,
+                                                       char            **reason);
 
 G_END_DECLS
 

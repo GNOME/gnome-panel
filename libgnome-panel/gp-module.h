@@ -31,6 +31,31 @@ G_BEGIN_DECLS
 #define GP_MODULE_ABI_VERSION 0x0001
 
 /**
+ * GpLockdownFlags:
+ * @GP_LOCKDOWN_FLAGS_NONE: No flags set.
+ * @GP_LOCKDOWN_FLAGS_FORCE_QUIT: Force quit is disabled.
+ * @GP_LOCKDOWN_FLAGS_LOCKED_DOWN: Complete panel lockdown is enabled.
+ * @GP_LOCKDOWN_FLAGS_COMMAND_LINE: Command line is disabled.
+ * @GP_LOCKDOWN_FLAGS_LOCK_SCREEN: Lock screen is disabled.
+ * @GP_LOCKDOWN_FLAGS_LOG_OUT: Log out is disabled.
+ * @GP_LOCKDOWN_FLAGS_USER_SWITCHING: User switching is disabled.
+ *
+ * Flags indicating active lockdowns.
+ */
+typedef enum
+{
+  GP_LOCKDOWN_FLAGS_NONE = 0,
+
+  GP_LOCKDOWN_FLAGS_FORCE_QUIT = 1 << 0,
+  GP_LOCKDOWN_FLAGS_LOCKED_DOWN = 1 << 1,
+
+  GP_LOCKDOWN_FLAGS_COMMAND_LINE = 1 << 2,
+  GP_LOCKDOWN_FLAGS_LOCK_SCREEN = 1 << 3,
+  GP_LOCKDOWN_FLAGS_LOG_OUT = 1 << 4,
+  GP_LOCKDOWN_FLAGS_USER_SWITCHING = 1 << 5
+} GpLockdownFlags;
+
+/**
  * GpGetAppletInfoFunc:
  * @id: the applet id
  *
@@ -38,7 +63,7 @@ G_BEGIN_DECLS
  *
  * Returns: (transfer full): returns a #GpAppletInfo.
  */
-typedef GpAppletInfo * (* GpGetAppletInfoFunc)    (const gchar *id);
+typedef GpAppletInfo * (* GpGetAppletInfoFunc)     (const gchar *id);
 
 /**
  * GetAppletIdFromIidFunc:
@@ -49,7 +74,7 @@ typedef GpAppletInfo * (* GpGetAppletInfoFunc)    (const gchar *id);
  *
  * Returns: (transfer none): the applet id, or %NULL.
  */
-typedef const gchar  * (* GetAppletIdFromIidFunc) (const gchar *iid);
+typedef const gchar  * (* GetAppletIdFromIidFunc)  (const gchar *iid);
 
 /**
  * GetStandaloneMenuFunc:
@@ -62,9 +87,26 @@ typedef const gchar  * (* GetAppletIdFromIidFunc) (const gchar *iid);
  *
  * Returns: (transfer full): returns a #GtkMenu.
  */
-typedef GtkWidget    * (* GetStandaloneMenuFunc)  (gboolean     enable_tooltips,
-                                                   gboolean     locked_down,
-                                                   guint        menu_icon_size);
+typedef GtkWidget    * (* GetStandaloneMenuFunc)   (gboolean     enable_tooltips,
+                                                    gboolean     locked_down,
+                                                    guint        menu_icon_size);
+
+/**
+ * GpIsAppletAvailableFunc:
+ * @id: the applet id
+ * @flags: a #GpLockdownFlags with active lockdowns
+ * @reason: (out) (transfer full) (allow-none): return location for reason, or %NULL
+ * @user_data: user data that was passed to gp_module_set_available_func()
+ *
+ * Returns a #TRUE if applet can be added to panel. If @reason is non-%NULL
+ * this function must provide reason why applet is not available.
+ *
+ * Returns: returns a #TRUE if applet can be added to panel.
+ */
+typedef gboolean       (* GpIsAppletAvailableFunc) (const char       *id,
+                                                    GpLockdownFlags   flags,
+                                                    char            **reason,
+                                                    gpointer          user_data);
 
 /**
  * GP_TYPE_MODULE:
@@ -74,29 +116,34 @@ typedef GtkWidget    * (* GetStandaloneMenuFunc)  (gboolean     enable_tooltips,
 #define GP_TYPE_MODULE (gp_module_get_type ())
 G_DECLARE_FINAL_TYPE (GpModule, gp_module, GP, MODULE, GObject)
 
-void          gp_module_set_abi_version     (GpModule               *module,
-                                             guint32                 abi_version);
+void          gp_module_set_abi_version     (GpModule                *module,
+                                             guint32                  abi_version);
 
-void          gp_module_set_gettext_domain  (GpModule               *module,
-                                             const gchar            *gettext_domain);
+void          gp_module_set_gettext_domain  (GpModule                *module,
+                                             const gchar             *gettext_domain);
 
-void          gp_module_set_id              (GpModule               *module,
-                                             const gchar            *id);
+void          gp_module_set_id              (GpModule                *module,
+                                             const gchar             *id);
 
-void          gp_module_set_version         (GpModule               *module,
-                                             const gchar            *version);
+void          gp_module_set_version         (GpModule                *module,
+                                             const gchar             *version);
 
-void          gp_module_set_applet_ids      (GpModule               *module,
+void          gp_module_set_applet_ids      (GpModule                *module,
                                              ...);
 
-void          gp_module_set_get_applet_info (GpModule               *module,
-                                             GpGetAppletInfoFunc     func);
+void          gp_module_set_get_applet_info (GpModule                *module,
+                                             GpGetAppletInfoFunc      func);
 
-void          gp_module_set_compatibility   (GpModule               *module,
-                                             GetAppletIdFromIidFunc  func);
+void          gp_module_set_compatibility   (GpModule                *module,
+                                             GetAppletIdFromIidFunc   func);
 
-void          gp_module_set_standalone_menu (GpModule               *module,
-                                             GetStandaloneMenuFunc   func);
+void          gp_module_set_standalone_menu (GpModule                *module,
+                                             GetStandaloneMenuFunc    func);
+
+void          gp_module_set_available_func  (GpModule                *module,
+                                             GpIsAppletAvailableFunc  func,
+                                             gpointer                 user_data,
+                                             GDestroyNotify           destroy_func);
 
 /**
  * gp_module_load:

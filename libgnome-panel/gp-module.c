@@ -127,27 +127,31 @@ typedef void (* LoadFunc) (GpModule *module);
 
 struct _GpModule
 {
-  GObject                  parent;
+  GObject                   parent;
 
-  gchar                   *path;
-  GModule                 *library;
+  gchar                    *path;
+  GModule                  *library;
 
-  guint32                  abi_version;
+  guint32                   abi_version;
 
-  gchar                   *id;
-  gchar                   *version;
+  gchar                    *id;
+  gchar                    *version;
 
-  gchar                   *gettext_domain;
+  gchar                    *gettext_domain;
 
-  gchar                  **applet_ids;
+  gchar                   **applet_ids;
 
-  GpGetAppletInfoFunc      get_applet_info_func;
+  GpGetAppletInfoFunc       get_applet_info_func;
 
-  GetAppletIdFromIidFunc   compatibility_func;
+  GetAppletIdFromIidFunc    compatibility_func;
 
-  GetStandaloneMenuFunc    standalone_menu_func;
+  GetStandaloneMenuFunc     standalone_menu_func;
 
-  GHashTable              *applets;
+  GpIsAppletAvailableFunc   available_func;
+  gpointer                  available_func_user_data;
+  GDestroyNotify            available_func_destroy_func;
+
+  GHashTable               *applets;
 };
 
 G_DEFINE_TYPE (GpModule, gp_module, G_TYPE_OBJECT)
@@ -307,6 +311,14 @@ gp_module_finalize (GObject *object)
   g_clear_pointer (&module->gettext_domain, g_free);
   g_clear_pointer (&module->applet_ids, g_strfreev);
   g_clear_pointer (&module->applets, g_hash_table_destroy);
+
+  if (module->available_func_destroy_func != NULL)
+    {
+      module->available_func_destroy_func (module->available_func_user_data);
+
+      module->available_func_user_data = NULL;
+      module->available_func = NULL;
+    }
 
   G_OBJECT_CLASS (gp_module_parent_class)->finalize (object);
 }
@@ -579,6 +591,26 @@ gp_module_set_standalone_menu (GpModule              *module,
   module->standalone_menu_func = func;
 }
 
+/**
+ * gp_module_set_available_func:
+ * @module: a #GpModule
+ * @func: the function to call to create a menu
+ * @user_data: user data for @func
+ * @destroy_func: destroy notify for @user_data
+ *
+ * Specifies a function to be used to check if applet can be added to panel.
+ */
+void
+gp_module_set_available_func (GpModule                *module,
+                              GpIsAppletAvailableFunc  func,
+                              gpointer                 user_data,
+                              GDestroyNotify           destroy_func)
+{
+  module->available_func = func;
+  module->available_func_user_data = user_data;
+  module->available_func_destroy_func = destroy_func;
+}
+
 GtkWidget *
 gp_module_get_standalone_menu (GpModule *module,
                                gboolean  enable_tooltips,
@@ -745,4 +777,20 @@ gp_module_show_help (GpModule   *module,
 
   g_free (help_uri);
   g_free (message);
+}
+
+gboolean
+gp_module_is_applet_available (GpModule         *module,
+                               const char       *applet,
+                               GpLockdownFlags   flags,
+                               char            **reason)
+{
+  gpointer user_data;
+
+  if (module->available_func == NULL)
+    return TRUE;
+
+  user_data = module->available_func_user_data;
+
+  return module->available_func (applet, flags, reason, user_data);
 }
