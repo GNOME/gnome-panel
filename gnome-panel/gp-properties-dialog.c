@@ -20,6 +20,9 @@
 #include <glib/gi18n.h>
 
 #include "gp-properties-dialog.h"
+#include "panel-schemas.h"
+#include "applet.h"
+#include "panel-applets-manager.h"
 
 struct _GpPropertiesDialog
 {
@@ -55,6 +58,8 @@ struct _GpPropertiesDialog
   GtkWidget *custom_fg_color;
   GtkWidget *fg_color_box;
   GtkWidget *fg_color;
+
+  GtkWidget *applet_box;
 };
 
 enum
@@ -305,6 +310,100 @@ setup_theme_bindings (GpPropertiesDialog *dialog)
   bg_image_changed_cb (dialog->theme, "bg-image", dialog);
 }
 
+static char *
+get_applet_iid (AppletInfo *applet) {
+  return g_settings_get_string (applet->settings, PANEL_OBJECT_IID_KEY);
+}
+
+static GtkWidget *
+create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
+{
+  PanelAppletInfo *panel_applet_info;
+
+  GtkWidget *name_label;
+  GtkWidget *description_label;
+  GtkWidget *entry;
+  GtkWidget *entryDetails;
+  GtkWidget *image;
+
+  const char *name;
+  const char *description;
+  const char *icon_name;
+
+  GIcon *icon;
+
+  panel_applet_info = panel_applets_manager_get_applet_info (get_applet_iid (info));
+
+  if (!panel_applet_info)
+    {
+      g_debug ("No panel applet info for id: %s", info->id);
+      return NULL;
+    }
+
+  entry = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+  entryDetails = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
+
+  name = panel_applet_info_get_name (panel_applet_info);
+  name_label = gtk_label_new (NULL);
+  gtk_label_set_markup(GTK_LABEL (name_label), g_strdup_printf ("<b>Applet Name: %s</b>", name));
+  gtk_widget_set_halign (name_label, GTK_ALIGN_START);
+
+  description = panel_applet_info_get_description (panel_applet_info);
+  description_label = gtk_label_new (g_strdup_printf ("Applet Description: %s", description));
+  gtk_widget_set_halign (description_label, GTK_ALIGN_START);
+
+  icon_name = panel_applet_info_get_icon (panel_applet_info);
+
+  if (icon_name)
+    {
+      icon = g_themed_icon_new (icon_name);
+      image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
+    }
+
+  gtk_container_add (GTK_CONTAINER (entryDetails), name_label);
+  gtk_container_add (GTK_CONTAINER (entryDetails), description_label);
+
+  gtk_container_add (GTK_CONTAINER (entry), image);
+  gtk_container_add (GTK_CONTAINER (entry), entryDetails);
+
+  return entry;
+}
+
+static void
+setup_applet_box (GpPropertiesDialog  *dialog)
+{
+  GSList * applets;
+  GSList * item;
+
+  applets = panel_applet_list_applets ();
+
+  for (item = applets; item; item = item->next)
+    {
+      AppletInfo *info;
+      GtkWidget *applet_entry;
+
+      const char * applet_toplevel_id;
+
+      info = item->data;
+
+      applet_toplevel_id = panel_applet_get_toplevel_id (info);
+
+      if (g_strcmp0 (applet_toplevel_id, dialog->toplevel_id) != 0)
+        continue;
+
+      applet_entry = create_applet_entry (dialog, info);
+
+      if (!applet_entry)
+        {
+          continue;
+        }
+
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box), applet_entry);
+    }
+
+  gtk_widget_show_all(dialog->applet_box);
+}
+
 static gboolean
 all_keys_writable (GSettings    *settings,
                    const gchar **keys)
@@ -399,6 +498,7 @@ gp_properties_dialog_constructed (GObject *object)
 
   setup_writability (dialog);
   setup_bindings (dialog);
+  setup_applet_box (dialog);
 }
 
 static void
@@ -497,6 +597,8 @@ bind_template (GtkWidgetClass *widget_class)
   gtk_widget_class_bind_template_callback (widget_class, custom_fg_color_toggled_cb);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, fg_color_box);
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, fg_color);
+
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box);
 }
 
 static void
