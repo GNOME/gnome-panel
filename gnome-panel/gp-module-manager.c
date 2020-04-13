@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2018-2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ sort_modules (gconstpointer a,
 }
 
 static void
-load_modules (GpModuleManager *manager)
+load_modules (GpModuleManager *self)
 {
   GDir *dir;
   const gchar *name;
@@ -71,7 +71,7 @@ load_modules (GpModuleManager *manager)
         continue;
 
       id = gp_module_get_id (module);
-      g_hash_table_insert (manager->modules, g_strdup (id), module);
+      g_hash_table_insert (self->modules, g_strdup (id), module);
     }
 
   g_dir_close (dir);
@@ -80,21 +80,21 @@ load_modules (GpModuleManager *manager)
 static void
 gp_module_manager_finalize (GObject *object)
 {
-  GpModuleManager *manager;
+  GpModuleManager *self;
 
-  manager = GP_MODULE_MANAGER (object);
+  self = GP_MODULE_MANAGER (object);
 
-  g_clear_pointer (&manager->modules, g_hash_table_destroy);
+  g_clear_pointer (&self->modules, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_module_manager_parent_class)->finalize (object);
 }
 
 static void
-gp_module_manager_class_init (GpModuleManagerClass *manager_class)
+gp_module_manager_class_init (GpModuleManagerClass *self_class)
 {
   GObjectClass *object_class;
 
-  object_class = G_OBJECT_CLASS (manager_class);
+  object_class = G_OBJECT_CLASS (self_class);
 
   object_class->finalize = gp_module_manager_finalize;
 
@@ -102,12 +102,14 @@ gp_module_manager_class_init (GpModuleManagerClass *manager_class)
 }
 
 static void
-gp_module_manager_init (GpModuleManager *manager)
+gp_module_manager_init (GpModuleManager *self)
 {
-  manager->modules = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                            g_free, g_object_unref);
+  self->modules = g_hash_table_new_full (g_str_hash,
+                                         g_str_equal,
+                                         g_free,
+                                         g_object_unref);
 
-  load_modules (manager);
+  load_modules (self);
 }
 
 GpModuleManager *
@@ -117,12 +119,19 @@ gp_module_manager_new (void)
 }
 
 GList *
-gp_module_manager_get_modules (GpModuleManager *manager)
+gp_module_manager_get_modules (GpModuleManager *self)
 {
   GList *modules;
 
-  modules = g_hash_table_get_values (manager->modules);
+  modules = g_hash_table_get_values (self->modules);
   modules = g_list_sort (modules, sort_modules);
 
   return modules;
+}
+
+GpModule *
+gp_module_manager_get_module (GpModuleManager *self,
+                              const char      *id)
+{
+  return g_hash_table_lookup (self->modules, id);
 }
