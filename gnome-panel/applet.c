@@ -75,7 +75,7 @@ panel_applet_destroy (GtkWidget  *widget,
 	g_free (info);
 }
 
-static const char *
+const char *
 panel_applet_get_toplevel_id (AppletInfo *applet)
 {
 	PanelWidget *panel_widget;
