@@ -2,6 +2,7 @@
  * panel-applet-frame.h: panel side container for applets
  *
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ * Copyright (C) 2016 - 2020 Alberts Muktupāvels
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -25,6 +26,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgnome-panel/gp-applet-private.h"
 #include "panel-widget.h"
 #include "applet.h"
 
@@ -45,24 +47,6 @@ G_DEFINE_AUTOPTR_CLEANUP_FUNC (PanelAppletFrame, g_object_unref)
 
 struct _PanelAppletFrameClass {
         GtkEventBoxClass parent_class;
-
-	void     (*init_properties)       (PanelAppletFrame    *frame);
-
-	void     (*sync_menu_state)       (PanelAppletFrame    *frame,
-					   gboolean             movable,
-					   gboolean             removable,
-					   gboolean             locked_down);
-
-	void     (*popup_menu)            (PanelAppletFrame    *frame,
-					   guint                button,
-					   guint32              timestamp);
-
-	void     (*popup_edit_menu)       (PanelAppletFrame    *frame,
-					   guint                button,
-					   guint32              timestamp);
-
-	void     (*change_orientation)    (PanelAppletFrame    *frame,
-					   PanelOrientation     orientation);
 
 	void (*move_focus_out_of_applet) (PanelAppletFrame *frame,
 	                                  GtkDirectionType  direction);
@@ -101,6 +85,9 @@ PanelOrientation  panel_applet_frame_activating_get_orientation (PanelAppletFram
 gboolean          panel_applet_frame_activating_get_locked_down (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_settings_path (PanelAppletFrameActivating *frame_act);
 gchar            *panel_applet_frame_activating_get_initial_settings_path (PanelAppletFrameActivating *frame_act);
+
+void  _panel_applet_frame_set_applet            (PanelAppletFrame           *self,
+                                                 GpApplet                   *applet);
 
 void  _panel_applet_frame_set_iid               (PanelAppletFrame           *frame,
 						 const gchar                *iid);

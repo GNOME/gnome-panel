@@ -4,6 +4,7 @@
  *
  * Copyright (C) 2010 Carlos Garcia Campos <carlosgc@gnome.org>
  * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ * Copyright (C) 2016 - 2020 Alberts Muktupāvels
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -67,6 +68,8 @@ struct _PanelAppletFramePrivate {
 	AppletInfo      *applet_info;
 
 	PanelOrientation orientation;
+
+	GpApplet        *applet;
 
 	gchar           *iid;
 
@@ -326,6 +329,81 @@ button_event_in_rect (GdkEventButton *event,
 	return FALSE;
 }
 
+static void
+popup_menu (GtkMenu  *menu,
+            GpApplet *applet)
+{
+  gtk_menu_attach_to_widget (menu, GTK_WIDGET (applet), NULL);
+
+  gp_applet_popup_menu_at_widget (applet,
+                                  menu,
+                                  GTK_WIDGET (applet),
+                                  NULL);
+}
+
+static void
+move_cb (GtkMenuItem      *menuitem,
+         PanelAppletFrame *self)
+{
+  _panel_applet_frame_applet_move (self);
+}
+
+static void
+remove_cb (GtkMenuItem      *menuitem,
+           PanelAppletFrame *self)
+{
+  gp_applet_remove_from_panel (self->priv->applet);
+
+  _panel_applet_frame_applet_remove (self);
+}
+
+static void
+frame_popup_edit_menu (PanelAppletFrame *self,
+                       guint             button,
+                       guint32           timestamp)
+{
+  GtkWidget *menu;
+  GtkWidget *menuitem;
+  gboolean movable;
+  gboolean removable;
+
+  menu = gtk_menu_new ();
+
+  movable = _panel_applet_frame_get_can_move (self);
+  removable = panel_layout_is_writable ();
+
+  menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  gtk_widget_show (menuitem);
+
+  g_signal_connect (menuitem, "activate", G_CALLBACK (move_cb), self);
+  gtk_widget_set_sensitive (menuitem, movable);
+
+  menuitem = gtk_menu_item_new_with_mnemonic (_("_Remove From Panel"));
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+  gtk_widget_show (menuitem);
+
+  g_signal_connect (menuitem, "activate", G_CALLBACK (remove_cb), self);
+  gtk_widget_set_sensitive (menuitem, removable);
+
+  popup_menu (GTK_MENU (menu), self->priv->applet);
+}
+
+static void
+frame_popup_menu (PanelAppletFrame *self,
+                  guint             button,
+                  guint32           timestamp)
+{
+  GtkWidget *menu;
+
+  menu = gp_applet_get_menu (self->priv->applet);
+
+  if (menu == NULL)
+    return;
+
+  popup_menu (GTK_MENU (menu), self->priv->applet);
+}
+
 static gboolean
 panel_applet_frame_button_changed (GtkWidget      *widget,
 				   GdkEventButton *event)
@@ -365,13 +443,9 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 			gdk_seat_ungrab (seat);
 
 			if (modifiers == panel_bindings_get_mouse_button_modifier_keymask ())
-				PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_edit_menu (frame,
-										       event->button,
-										       event->time);
+				frame_popup_edit_menu (frame, event->button, event->time);
 			else
-				PANEL_APPLET_FRAME_GET_CLASS (frame)->popup_menu (frame,
-										  event->button,
-										  event->time);
+				frame_popup_menu (frame, event->button, event->time);
 
 			return TRUE;
 		} else if (event->type == GDK_BUTTON_RELEASE)
@@ -490,9 +564,47 @@ panel_applet_frame_init (PanelAppletFrame *frame)
 }
 
 static void
-panel_applet_frame_init_properties (PanelAppletFrame *frame)
+update_flags (PanelAppletFrame *self)
 {
-	PANEL_APPLET_FRAME_GET_CLASS (frame)->init_properties (frame);
+  GpAppletFlags flags;
+  gboolean major;
+  gboolean minor;
+  gboolean has_handle;
+
+  flags = gp_applet_get_flags (self->priv->applet);
+
+  major = (flags & GP_APPLET_FLAGS_EXPAND_MAJOR) != 0;
+  minor = (flags & GP_APPLET_FLAGS_EXPAND_MINOR) != 0;
+  has_handle = (flags & GP_APPLET_FLAGS_HAS_HANDLE) != 0;
+
+  _panel_applet_frame_update_flags (self, major, minor, has_handle);
+}
+
+static void
+update_size_hints (PanelAppletFrame *self)
+{
+  guint n_elements;
+  gint *size_hints;
+
+  size_hints = gp_applet_get_size_hints (self->priv->applet, &n_elements);
+
+  _panel_applet_frame_update_size_hints (self, size_hints, n_elements);
+}
+
+static void
+panel_applet_frame_init_properties (PanelAppletFrame *self)
+{
+  update_flags (self);
+  update_size_hints (self);
+}
+
+static void
+frame_sync_menu_state (PanelAppletFrame *self,
+                       gboolean          movable,
+                       gboolean          removable,
+                       gboolean          locked_down)
+{
+  gp_applet_set_locked_down (self->priv->applet, locked_down);
 }
 
 static void
@@ -508,7 +620,41 @@ panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
 	removable = panel_layout_is_writable ();
 	locked_down = panel_lockdown_get_panels_locked_down_s ();
 
-	PANEL_APPLET_FRAME_GET_CLASS (frame)->sync_menu_state (frame, movable, removable, locked_down);
+	frame_sync_menu_state (frame, movable, removable, locked_down);
+}
+
+static void
+frame_change_orientation (PanelAppletFrame *self,
+                          PanelOrientation  panel_orientation)
+{
+  GtkOrientation orientation;
+  GtkPositionType position;
+
+  switch (panel_orientation)
+    {
+      case PANEL_ORIENTATION_BOTTOM:
+        orientation = GTK_ORIENTATION_HORIZONTAL;
+        position = GTK_POS_BOTTOM;
+        break;
+      case PANEL_ORIENTATION_LEFT:
+        orientation = GTK_ORIENTATION_VERTICAL;
+        position = GTK_POS_LEFT;
+        break;
+      case PANEL_ORIENTATION_RIGHT:
+        orientation = GTK_ORIENTATION_VERTICAL;
+        position = GTK_POS_RIGHT;
+        break;
+      case PANEL_ORIENTATION_TOP:
+        orientation = GTK_ORIENTATION_HORIZONTAL;
+        position = GTK_POS_TOP;
+      default:
+        break;
+    }
+
+  gp_applet_set_orientation (self->priv->applet, orientation);
+  gp_applet_set_position (self->priv->applet, position);
+
+  gtk_widget_queue_resize (GTK_WIDGET (self));
 }
 
 void
@@ -532,7 +678,7 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 	}
 	gtk_widget_reset_style (GTK_WIDGET (frame));
 
-	PANEL_APPLET_FRAME_GET_CLASS (frame)->change_orientation (frame, orientation);
+	frame_change_orientation (frame, orientation);
 }
 
 void
@@ -543,6 +689,37 @@ panel_applet_frame_set_panel (PanelAppletFrame *frame,
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
 	frame->priv->panel = panel;
+}
+
+static void
+flags_changed_cb (GpApplet         *applet,
+                  PanelAppletFrame *self)
+{
+  update_flags (self);
+}
+
+static void
+size_hints_changed_cb (GpApplet         *applet,
+                       PanelAppletFrame *self)
+{
+  update_size_hints (self);
+}
+
+void
+_panel_applet_frame_set_applet (PanelAppletFrame *self,
+                                GpApplet         *applet)
+{
+  self->priv->applet = applet;
+
+  g_signal_connect (applet,
+                    "flags-changed",
+                    G_CALLBACK (flags_changed_cb),
+                    self);
+
+  g_signal_connect (applet,
+                    "size-hints-changed",
+                    G_CALLBACK (size_hints_changed_cb),
+                    self);
 }
 
 void
