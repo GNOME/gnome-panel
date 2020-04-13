@@ -19,12 +19,12 @@
 
 #include <string.h>
 
-#include "gp-applet-frame.h"
 #include "gp-applet-manager.h"
 #include "gp-module-manager.h"
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "libgnome-panel/gp-module-private.h"
+#include "panel-applet-frame.h"
 #include "panel-lockdown.h"
 
 struct _GpAppletManager
@@ -224,8 +224,7 @@ gp_applet_manager_load_applet (GpAppletManager            *self,
   GVariant *initial_settings;
   GError *error;
   GpApplet *applet;
-  GpAppletFrame *frame;
-  PanelAppletFrame *applet_frame;
+  PanelAppletFrame *frame;
   GtkWidget *widget;
 
   g_return_val_if_fail (iid != NULL, FALSE);
@@ -291,18 +290,17 @@ gp_applet_manager_load_applet (GpAppletManager            *self,
   gp_applet_set_orientation (applet, orientation);
   gp_applet_set_position (applet, position);
 
-  frame = g_object_new (GP_TYPE_APPLET_FRAME, NULL);
-  gp_applet_frame_set_applet (frame, applet);
+  frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-  applet_frame = PANEL_APPLET_FRAME (frame);
-  _panel_applet_frame_set_iid (applet_frame, iid);
+  _panel_applet_frame_set_applet (frame, applet);
+  _panel_applet_frame_set_iid (frame, iid);
 
   widget = GTK_WIDGET (applet);
 
   gtk_container_add (GTK_CONTAINER (frame), widget);
   gtk_widget_show (widget);
 
-  _panel_applet_frame_activated (applet_frame, frame_act, NULL);
+  _panel_applet_frame_activated (frame, frame_act, NULL);
 
   return TRUE;
 }
