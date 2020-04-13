@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2018-2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #ifndef GP_MODULE_MANAGER_H
 #define GP_MODULE_MANAGER_H
 
+#include "libgnome-panel/gp-module-private.h"
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -28,7 +29,10 @@ G_DECLARE_FINAL_TYPE (GpModuleManager, gp_module_manager,
 
 GpModuleManager *gp_module_manager_new         (void);
 
-GList           *gp_module_manager_get_modules (GpModuleManager *manager);
+GList           *gp_module_manager_get_modules (GpModuleManager *self);
+
+GpModule        *gp_module_manager_get_module  (GpModuleManager *self,
+                                                const char      *id);
 
 G_END_DECLS
 

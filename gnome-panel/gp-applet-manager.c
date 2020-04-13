@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,22 +19,24 @@
 
 #include <string.h>
 
-#include "gp-applet-frame.h"
 #include "gp-applet-manager.h"
+#include "gp-module-manager.h"
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "libgnome-panel/gp-module-private.h"
+#include "panel-applet-frame.h"
 #include "panel-lockdown.h"
 
 struct _GpAppletManager
 {
-  PanelAppletsManager  parent;
+  GObject          parent;
 
-  GHashTable          *modules;
-  GHashTable          *infos;
+  GpModuleManager *manager;
+
+  GHashTable      *infos;
 };
 
-G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, PANEL_TYPE_APPLETS_MANAGER)
+G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, G_TYPE_OBJECT)
 
 static GVariant *
 get_initial_settings (PanelAppletFrameActivating *frame_act)
@@ -106,38 +108,23 @@ get_applet_infos (GpAppletManager *manager,
 }
 
 static void
-load_external_modules (GpAppletManager *manager)
+load_infos (GpAppletManager *self)
 {
-  GDir *dir;
-  const gchar *name;
+  GList *modules;
+  GList *l;
 
-  dir = g_dir_open (MODULESDIR, 0, NULL);
-  if (!dir)
-    return;
+  modules = gp_module_manager_get_modules (self->manager);
 
-  while ((name = g_dir_read_name (dir)) != NULL)
+  for (l = modules; l != NULL; l = l->next)
     {
-      gchar *path;
       GpModule *module;
-      const gchar *id;
 
-      if (!g_str_has_suffix (name, ".so"))
-        continue;
+      module = GP_MODULE (l->data);
 
-      path = g_build_filename (MODULESDIR, name, NULL);
-      module = gp_module_new_from_path (path);
-      g_free (path);
-
-      if (module == NULL)
-        continue;
-
-      id = gp_module_get_id (module);
-
-      g_hash_table_insert (manager->modules, g_strdup (id), module);
-      get_applet_infos (manager, id, module);
+      get_applet_infos (self, gp_module_get_id (module), module);
     }
 
-  g_dir_close (dir);
+  g_list_free (modules);
 }
 
 static void
@@ -153,71 +140,79 @@ applet_info_free (gpointer data)
 static void
 gp_applet_manager_finalize (GObject *object)
 {
-  GpAppletManager *manager;
+  GpAppletManager *self;
 
-  manager = GP_APPLET_MANAGER (object);
+  self = GP_APPLET_MANAGER (object);
 
-  g_clear_pointer (&manager->modules, g_hash_table_destroy);
-  g_clear_pointer (&manager->infos, g_hash_table_destroy);
+  g_clear_object (&self->manager);
+  g_clear_pointer (&self->infos, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_applet_manager_parent_class)->finalize (object);
 }
 
-static GList *
-gp_applet_manager_get_applets (PanelAppletsManager *manager)
+static void
+gp_applet_manager_class_init (GpAppletManagerClass *self_class)
 {
-  GpAppletManager *applet_manager;
+  GObjectClass *object_class;
 
-  applet_manager = GP_APPLET_MANAGER (manager);
+  object_class = G_OBJECT_CLASS (self_class);
 
-  return g_hash_table_get_values (applet_manager->infos);
+  object_class->finalize = gp_applet_manager_finalize;
 }
 
-static gboolean
-gp_applet_manager_factory_activate (PanelAppletsManager *manager,
-                                    const gchar         *iid)
+static void
+gp_applet_manager_init (GpAppletManager *self)
 {
-  GpAppletManager *applet_manager;
+  self->manager = gp_module_manager_new ();
 
-  applet_manager = GP_APPLET_MANAGER (manager);
+  self->infos = g_hash_table_new_full (g_str_hash,
+                                       g_str_equal,
+                                       g_free,
+                                       applet_info_free);
 
-  if (!g_hash_table_lookup (applet_manager->infos, iid))
+  load_infos (self);
+}
+
+GpAppletManager *
+gp_applet_manager_new (void)
+{
+  return g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
+}
+
+GList *
+gp_applet_manager_get_applets (GpAppletManager *self)
+{
+  return g_hash_table_get_values (self->infos);
+}
+
+gboolean
+gp_applet_manager_factory_activate (GpAppletManager *self,
+                                    const char      *iid)
+{
+  if (!g_hash_table_lookup (self->infos, iid))
     return FALSE;
 
   return TRUE;
 }
 
-static gboolean
-gp_applet_manager_factory_deactivate (PanelAppletsManager *manager,
-                                      const gchar         *iid)
+void
+gp_applet_manager_factory_deactivate (GpAppletManager *self,
+                                      const char      *iid)
 {
-  GpAppletManager *applet_manager;
-
-  applet_manager = GP_APPLET_MANAGER (manager);
-
-  if (!g_hash_table_lookup (applet_manager->infos, iid))
-    return FALSE;
-
-  return TRUE;
 }
 
-static PanelAppletInfo *
-gp_applet_manager_get_applet_info (PanelAppletsManager *manager,
-                                   const gchar         *iid)
+PanelAppletInfo *
+gp_applet_manager_get_applet_info (GpAppletManager *self,
+                                   const char      *iid)
 {
-  GpAppletManager *applet_manager;
-
-  applet_manager = GP_APPLET_MANAGER (manager);
-
-  return g_hash_table_lookup (applet_manager->infos, iid);
+  return g_hash_table_lookup (self->infos, iid);
 }
 
-static gboolean
-gp_applet_manager_load_applet (PanelAppletsManager        *manager,
-                               const gchar                *iid,
+gboolean
+gp_applet_manager_load_applet (GpAppletManager            *self,
+                               const char                 *iid,
                                PanelAppletFrameActivating *frame_act)
 {
-  GpAppletManager *applet_manager;
   const gchar *applet_id;
   gchar *module_id;
   GpModule *module;
@@ -229,21 +224,18 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
   GVariant *initial_settings;
   GError *error;
   GpApplet *applet;
-  GpAppletFrame *frame;
-  PanelAppletFrame *applet_frame;
+  PanelAppletFrame *frame;
   GtkWidget *widget;
 
   g_return_val_if_fail (iid != NULL, FALSE);
   g_return_val_if_fail (frame_act != NULL, FALSE);
-
-  applet_manager = GP_APPLET_MANAGER (manager);
 
   applet_id = g_strrstr (iid, "::");
   if (!applet_id)
     return FALSE;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = g_hash_table_lookup (applet_manager->modules, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
@@ -298,34 +290,30 @@ gp_applet_manager_load_applet (PanelAppletsManager        *manager,
   gp_applet_set_orientation (applet, orientation);
   gp_applet_set_position (applet, position);
 
-  frame = g_object_new (GP_TYPE_APPLET_FRAME, NULL);
-  gp_applet_frame_set_applet (frame, applet);
+  frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-  applet_frame = PANEL_APPLET_FRAME (frame);
-  _panel_applet_frame_set_iid (applet_frame, iid);
+  _panel_applet_frame_set_applet (frame, applet);
+  _panel_applet_frame_set_iid (frame, iid);
 
   widget = GTK_WIDGET (applet);
 
   gtk_container_add (GTK_CONTAINER (frame), widget);
   gtk_widget_show (widget);
 
-  _panel_applet_frame_activated (applet_frame, frame_act, NULL);
+  _panel_applet_frame_activated (frame, frame_act, NULL);
 
   return TRUE;
 }
 
-static gchar *
-gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
-                               const gchar         *old_iid)
+char *
+gp_applet_manager_get_new_iid (GpAppletManager *self,
+                               const char      *old_iid)
 {
-  GpAppletManager *applet_manager;
   GList *modules;
   GList *l;
   gchar *new_iid;
 
-  applet_manager = GP_APPLET_MANAGER (manager);
-
-  modules = g_hash_table_get_values (applet_manager->modules);
+  modules = gp_module_manager_get_modules (self->manager);
   new_iid = NULL;
 
   for (l = modules; l != NULL; l = l->next)
@@ -348,15 +336,14 @@ gp_applet_manager_get_new_iid (PanelAppletsManager *manager,
   return new_iid;
 }
 
-static gboolean
-gp_applet_manager_open_initial_setup_dialog (PanelAppletsManager    *manager,
-                                             const gchar            *iid,
+gboolean
+gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
+                                             const char             *iid,
                                              GtkWindow              *parent,
                                              GpInitialSetupCallback  callback,
                                              gpointer                user_data,
                                              GDestroyNotify          free_func)
 {
-  GpAppletManager *applet_manager;
   const gchar *applet_id;
   gchar *module_id;
   GpModule *module;
@@ -365,14 +352,12 @@ gp_applet_manager_open_initial_setup_dialog (PanelAppletsManager    *manager,
 
   g_return_val_if_fail (iid != NULL, FALSE);
 
-  applet_manager = GP_APPLET_MANAGER (manager);
-
   applet_id = g_strrstr (iid, "::");
   if (!applet_id)
     return FALSE;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = g_hash_table_lookup (applet_manager->modules, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
@@ -405,10 +390,9 @@ gp_applet_manager_open_initial_setup_dialog (PanelAppletsManager    *manager,
   return TRUE;
 }
 
-static GtkWidget *
-gp_applet_manager_get_standalone_menu (PanelAppletsManager *manager)
+GtkWidget *
+gp_applet_manager_get_standalone_menu (GpAppletManager *self)
 {
-  GpAppletManager *applet_manager;
   GSettings *general_settings;
   gboolean enable_tooltips;
   gboolean locked_down;
@@ -416,8 +400,6 @@ gp_applet_manager_get_standalone_menu (PanelAppletsManager *manager)
   GList *modules;
   GList *l;
   GtkWidget *menu;
-
-  applet_manager = GP_APPLET_MANAGER (manager);
 
   general_settings = g_settings_new ("org.gnome.gnome-panel.general");
 
@@ -427,7 +409,7 @@ gp_applet_manager_get_standalone_menu (PanelAppletsManager *manager)
 
   g_object_unref (general_settings);
 
-  modules = g_hash_table_get_values (applet_manager->modules);
+  modules = gp_module_manager_get_modules (self->manager);
   menu = NULL;
 
   for (l = modules; l != NULL; l = l->next)
@@ -446,37 +428,4 @@ gp_applet_manager_get_standalone_menu (PanelAppletsManager *manager)
   g_list_free (modules);
 
   return menu;
-}
-
-static void
-gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
-{
-  GObjectClass *object_class;
-  PanelAppletsManagerClass *applets_manager_class;
-
-  object_class = G_OBJECT_CLASS (manager_class);
-  applets_manager_class = PANEL_APPLETS_MANAGER_CLASS (manager_class);
-
-  object_class->finalize = gp_applet_manager_finalize;
-
-  applets_manager_class->get_applets = gp_applet_manager_get_applets;
-  applets_manager_class->factory_activate = gp_applet_manager_factory_activate;
-  applets_manager_class->factory_deactivate = gp_applet_manager_factory_deactivate;
-  applets_manager_class->get_applet_info = gp_applet_manager_get_applet_info;
-  applets_manager_class->load_applet = gp_applet_manager_load_applet;
-  applets_manager_class->get_new_iid = gp_applet_manager_get_new_iid;
-  applets_manager_class->open_initial_setup_dialog = gp_applet_manager_open_initial_setup_dialog;
-  applets_manager_class->get_standalone_menu = gp_applet_manager_get_standalone_menu;
-}
-
-static void
-gp_applet_manager_init (GpAppletManager *manager)
-{
-  manager->modules = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                            g_free, g_object_unref);
-
-  manager->infos = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                          g_free, applet_info_free);
-
-  load_external_modules (manager);
 }

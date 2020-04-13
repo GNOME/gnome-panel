@@ -260,7 +260,6 @@ AC_CONFIG_FILES([
   data/theme/Yaru/Makefile
 
   gnome-panel/Makefile
-  gnome-panel/libpanel-applet-private/Makefile
   gnome-panel/libpanel-util/Makefile
 
   libgnome-panel/Makefile
