@@ -31,7 +31,6 @@
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
-#include "panel-ditem-editor.h"
 #include "panel-util.h"
 #include "panel-applet-frame.h"
 #include "panel-action-button.h"
@@ -433,141 +432,111 @@ create_launcher (PanelToplevel       *toplevel,
   g_variant_unref (settings);
 }
 
-static char *
-panel_launcher_find_writable_uri (const char *launcher_location,
-				  const char *source)
-{
-	char *path;
-	char *uri;
-
-	if (!launcher_location)
-		return panel_make_unique_desktop_uri (NULL, source);
-
-	if (!strchr (launcher_location, G_DIR_SEPARATOR)) {
-		path = panel_make_full_path (NULL, launcher_location);
-		uri = g_filename_to_uri (path, NULL, NULL);
-		g_free (path);
-		return uri;
-	}
-
-	if (panel_launcher_get_filename (launcher_location) != NULL) {
-		/* we have a file in the user directory. We either have a path
-		 * or an URI */
-		if (g_path_is_absolute (launcher_location))
-			return g_filename_to_uri (launcher_location,
-						  NULL, NULL);
-		else
-			return g_strdup (launcher_location);
-	}
-
-	return panel_make_unique_desktop_uri (NULL, source);
-}
-
-static char *
-launcher_save_uri (PanelDItemEditor *dialog,
-		   gpointer          data)
-{
-	GKeyFile   *key_file;
-	char       *type;
-	char       *exec_or_uri;
-	char       *new_uri;
-	const char *uri;
-
-	key_file = panel_ditem_editor_get_key_file (dialog);
-	type = panel_key_file_get_string (key_file, "Type");
-	if (type && !strcmp (type, "Application"))
-		exec_or_uri = panel_key_file_get_string (key_file, "Exec");
-	else if (type && !strcmp (type, "Link"))
-		exec_or_uri = panel_key_file_get_string (key_file, "URL");
-	else
-		exec_or_uri = panel_key_file_get_string (key_file, "Name");
-	g_free (type);
-
-	new_uri = panel_launcher_find_writable_uri (NULL, exec_or_uri);
-
-	g_free (exec_or_uri);
-
-	uri = panel_ditem_editor_get_uri (dialog);
-
-	if (!uri || (new_uri && strcmp (new_uri, uri)))
-		return new_uri;
-
-	g_free (new_uri);
-
-	return NULL;
-}
-
-static void
-launcher_error_reported (GtkWidget  *dialog,
-			 const char *primary,
-			 const char *secondary,
-			 gpointer    data)
-{
-	panel_error_dialog (GTK_WINDOW (dialog), NULL,
-			    "error_editing_launcher", TRUE,
-			    primary, secondary);
-}
-
-static void
-launcher_new_saved (GtkWidget *dialog,
-		    gpointer   data)
+typedef struct
 {
 	PanelWidget         *panel;
+
 	PanelObjectPackType  pack_type;
 	int                  pack_index;
-	const char          *uri;
+	gchar               *iid;
+} InitialSetupData;
 
-	pack_type = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
-				     "pack-type"));
-	panel = g_object_get_data (G_OBJECT (dialog), "panel");
+static InitialSetupData *
+initial_setup_data_new (PanelWidget         *panel,
+                        PanelObjectPackType  pack_type,
+                        int                  pack_index,
+                        const gchar         *iid)
+{
+	InitialSetupData *data;
 
-	pack_index = panel_widget_get_new_pack_index (panel, pack_type);
+	data = g_new0 (InitialSetupData, 1);
 
-	uri = panel_ditem_editor_get_uri (PANEL_DITEM_EDITOR (dialog));
-	if (panel_launcher_get_filename (uri) != NULL)
-		uri = panel_launcher_get_filename (uri);
+	data->panel = panel;
 
-	create_launcher (panel->toplevel, pack_type, pack_index, uri);
+	data->pack_type = pack_type;
+	data->pack_index = pack_index;
+	data->iid = g_strdup (iid);
+
+	return data;
+}
+
+static void
+initial_setup_data_free (gpointer user_data)
+{
+	InitialSetupData *data;
+
+	data = (InitialSetupData *) user_data;
+
+	g_free (data->iid);
+	g_free (data);
+}
+
+static void
+initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
+                         gboolean              canceled,
+                         gpointer              user_data)
+{
+	InitialSetupData *data;
+	GVariant *initial_settings;
+
+	data = (InitialSetupData *) user_data;
+
+	if (canceled)
+		return;
+
+	initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+
+	panel_applet_frame_create (data->panel->toplevel,
+	                           data->pack_type,
+	                           data->pack_index,
+	                           data->iid,
+	                           initial_settings);
+
+	g_variant_unref (initial_settings);
 }
 
 static void
 ask_about_launcher (const char          *file,
-		    PanelWidget         *panel,
-		    PanelObjectPackType  pack_type)
+                    PanelWidget         *panel,
+                    PanelObjectPackType  pack_type)
 {
-	GtkWidget *dialog;
-	GKeyFile  *key_file;
+  int pack_index;
+  const char *iid;
+  InitialSetupData *initial_setup_data;
+  GVariantBuilder builder;
+  GVariant *variant;
+  GVariant *settings;
 
 	if (panel_lockdown_get_disable_command_line_s ())
 		return;
 
-	dialog = panel_ditem_editor_new (_("Create Launcher"));
-	panel_widget_register_open_dialog (panel, dialog);
+  iid = "org.gnome.gnome-panel.launcher::custom-launcher";
+  pack_index = panel_widget_get_new_pack_index (panel, pack_type);
+  initial_setup_data = initial_setup_data_new (panel, pack_type, pack_index, iid);
 
-	key_file = panel_ditem_editor_get_key_file (PANEL_DITEM_EDITOR (dialog));
-	if (file != NULL)
-		panel_key_file_set_string (key_file, "Exec", file);
-	panel_key_file_set_string (key_file, "Type", "Application");
-	panel_ditem_editor_sync_display (PANEL_DITEM_EDITOR (dialog));
+  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 
-	panel_ditem_register_save_uri_func (PANEL_DITEM_EDITOR (dialog),
-					    launcher_save_uri,
-					    NULL);
+  variant = g_variant_new_string ("Application");
+  g_variant_builder_add (&builder, "{sv}", "type", variant);
 
-	g_signal_connect (G_OBJECT (dialog), "saved",
-			  G_CALLBACK (launcher_new_saved), NULL);
+  if (file != NULL)
+    {
+      variant = g_variant_new_string (file);
+      g_variant_builder_add (&builder, "{sv}", "command", variant);
+    }
 
-	g_signal_connect (G_OBJECT (dialog), "error_reported",
-			  G_CALLBACK (launcher_error_reported), NULL);
+  settings = g_variant_builder_end (&builder);
+  g_variant_ref_sink (settings);
 
-	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_widget_get_screen (GTK_WIDGET (panel)));
+  // FIXME: pass initial data to inital dialog :D
 
-	g_object_set_data (G_OBJECT (dialog), "pack-type",
-			   GINT_TO_POINTER (pack_type));
-	g_object_set_data (G_OBJECT (dialog), "panel", panel);
+  panel_applets_manager_open_initial_setup_dialog (iid,
+			                                             NULL,
+			                                             initial_setup_dialog_cb,
+			                                             initial_setup_data,
+			                                             initial_setup_data_free);
 
-	gtk_widget_show (dialog);
+  g_variant_unref (settings);
 }
 
 static void
@@ -1126,80 +1095,6 @@ drag_leave_cb (GtkWidget      *widget,
 	panel_toplevel_queue_auto_hide (toplevel);
 }
 
-typedef struct
-{
-	PanelWidget         *panel;
-
-	GdkDragContext      *context;
-	guint                time;
-
-	PanelObjectPackType  pack_type;
-	int                  pack_index;
-	gchar               *iid;
-} InitialSetupData;
-
-static InitialSetupData *
-initial_setup_data_new (PanelWidget         *panel,
-                        GdkDragContext      *context,
-                        guint                time,
-                        PanelObjectPackType  pack_type,
-                        int                  pack_index,
-                        const gchar         *iid)
-{
-	InitialSetupData *data;
-
-	data = g_new0 (InitialSetupData, 1);
-
-	data->panel = panel;
-
-	data->context = context;
-	data->time = time;
-
-	data->pack_type = pack_type;
-	data->pack_index = pack_index;
-	data->iid = g_strdup (iid);
-
-	return data;
-}
-
-static void
-initial_setup_data_free (gpointer user_data)
-{
-	InitialSetupData *data;
-
-	data = (InitialSetupData *) user_data;
-
-	g_free (data->iid);
-	g_free (data);
-}
-
-static void
-initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
-                         gboolean              canceled,
-                         gpointer              user_data)
-{
-	InitialSetupData *data;
-	GVariant *initial_settings;
-
-	data = (InitialSetupData *) user_data;
-
-	if (canceled) {
-		gtk_drag_finish (data->context, FALSE, FALSE, data->time);
-		return;
-	}
-
-	initial_settings = gp_initital_setup_dialog_get_settings (dialog);
-
-	panel_applet_frame_create (data->panel->toplevel,
-	                           data->pack_type,
-	                           data->pack_index,
-	                           data->iid,
-	                           initial_settings);
-
-	gtk_drag_finish (data->context, TRUE, FALSE, data->time);
-	g_variant_unref (initial_settings);
-}
-
 static void
 panel_receive_dnd_data (PanelWidget         *panel,
 			guint                info,
@@ -1247,7 +1142,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 		if (panel_layout_is_writable ()) {
 			InitialSetupData *initial_setup_data;
 
-			initial_setup_data = initial_setup_data_new (panel, context, time_,
+			initial_setup_data = initial_setup_data_new (panel,
 			                                             pack_type, pack_index,
 			                                             (char *) data);
 
@@ -1259,11 +1154,9 @@ panel_receive_dnd_data (PanelWidget         *panel,
 				panel_applet_frame_create (panel->toplevel,
 				                           pack_type, pack_index,
 				                           (char *) data, NULL);
-
-				success = TRUE;
-			} else {
-				return;
 			}
+
+			success = TRUE;
 		} else {
 			success = FALSE;
 		}

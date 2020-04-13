@@ -39,37 +39,6 @@
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
 
-char *
-panel_util_make_exec_uri_for_desktop (const char *exec)
-{
-	GString    *str;
-	const char *c;
-
-	if (!exec)
-		return g_strdup ("");
-
-	if (!strchr (exec, ' '))
-		return g_strdup (exec);
-
-	str = g_string_new_len (NULL, strlen (exec));
-
-	str = g_string_append_c (str, '"');
-	for (c = exec; *c != '\0'; c++) {
-		/* FIXME: GKeyFile will add an additional backslach so we'll
-		 * end up with toto\\" instead of toto\"
-		 * We could use g_key_file_set_value(), but then we don't
-		 * benefit from the other escaping that glib is doing...
-		 */
-		if (*c == '"')
-			str = g_string_append (str, "\\\"");
-		else
-			str = g_string_append_c (str, *c);
-	}
-	str = g_string_append_c (str, '"');
-
-	return g_string_free (str, FALSE);
-}
-
 void
 panel_push_window_busy (GtkWidget *window)
 {
