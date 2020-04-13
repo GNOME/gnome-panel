@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,13 +18,42 @@
 #ifndef GP_APPLET_MANAGER_H
 #define GP_APPLET_MANAGER_H
 
-#include <panel-applets-manager.h>
+#include "panel-applets-manager.h"
 
 G_BEGIN_DECLS
 
 #define GP_TYPE_APPLET_MANAGER gp_applet_manager_get_type ()
 G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
-                      GP, APPLET_MANAGER, PanelAppletsManager)
+                      GP, APPLET_MANAGER, GObject)
+
+GpAppletManager *gp_applet_manager_new                       (void);
+
+GList           *gp_applet_manager_get_applets               (GpAppletManager            *self);
+
+gboolean         gp_applet_manager_factory_activate          (GpAppletManager            *self,
+                                                              const char                 *iid);
+
+void             gp_applet_manager_factory_deactivate        (GpAppletManager            *self,
+                                                              const char                 *iid);
+
+PanelAppletInfo *gp_applet_manager_get_applet_info           (GpAppletManager            *self,
+                                                              const char                 *iid);
+
+gboolean         gp_applet_manager_load_applet               (GpAppletManager            *self,
+                                                              const char                 *iid,
+                                                              PanelAppletFrameActivating *frame_act);
+
+char            *gp_applet_manager_get_new_iid               (GpAppletManager            *self,
+                                                              const char                 *old_iid);
+
+gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager            *self,
+                                                              const char                 *iid,
+                                                              GtkWindow                  *parent,
+                                                              GpInitialSetupCallback      callback,
+                                                              gpointer                    user_data,
+                                                              GDestroyNotify              free_func);
+
+GtkWidget       *gp_applet_manager_get_standalone_menu       (GpAppletManager            *self);
 
 G_END_DECLS
 
