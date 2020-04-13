@@ -21,6 +21,7 @@
 
 #include "gp-applet-frame.h"
 #include "gp-applet-manager.h"
+#include "gp-module-manager.h"
 #include "libgnome-panel/gp-applet-info-private.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "libgnome-panel/gp-module-private.h"
@@ -28,10 +29,11 @@
 
 struct _GpAppletManager
 {
-  GObject     parent;
+  GObject          parent;
 
-  GHashTable *modules;
-  GHashTable *infos;
+  GpModuleManager *manager;
+
+  GHashTable      *infos;
 };
 
 G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, G_TYPE_OBJECT)
@@ -106,38 +108,23 @@ get_applet_infos (GpAppletManager *manager,
 }
 
 static void
-load_external_modules (GpAppletManager *manager)
+load_infos (GpAppletManager *self)
 {
-  GDir *dir;
-  const gchar *name;
+  GList *modules;
+  GList *l;
 
-  dir = g_dir_open (MODULESDIR, 0, NULL);
-  if (!dir)
-    return;
+  modules = gp_module_manager_get_modules (self->manager);
 
-  while ((name = g_dir_read_name (dir)) != NULL)
+  for (l = modules; l != NULL; l = l->next)
     {
-      gchar *path;
       GpModule *module;
-      const gchar *id;
 
-      if (!g_str_has_suffix (name, ".so"))
-        continue;
+      module = GP_MODULE (l->data);
 
-      path = g_build_filename (MODULESDIR, name, NULL);
-      module = gp_module_new_from_path (path);
-      g_free (path);
-
-      if (module == NULL)
-        continue;
-
-      id = gp_module_get_id (module);
-
-      g_hash_table_insert (manager->modules, g_strdup (id), module);
-      get_applet_infos (manager, id, module);
+      get_applet_infos (self, gp_module_get_id (module), module);
     }
 
-  g_dir_close (dir);
+  g_list_free (modules);
 }
 
 static void
@@ -153,36 +140,37 @@ applet_info_free (gpointer data)
 static void
 gp_applet_manager_finalize (GObject *object)
 {
-  GpAppletManager *manager;
+  GpAppletManager *self;
 
-  manager = GP_APPLET_MANAGER (object);
+  self = GP_APPLET_MANAGER (object);
 
-  g_clear_pointer (&manager->modules, g_hash_table_destroy);
-  g_clear_pointer (&manager->infos, g_hash_table_destroy);
+  g_clear_object (&self->manager);
+  g_clear_pointer (&self->infos, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_applet_manager_parent_class)->finalize (object);
 }
 
 static void
-gp_applet_manager_class_init (GpAppletManagerClass *manager_class)
+gp_applet_manager_class_init (GpAppletManagerClass *self_class)
 {
   GObjectClass *object_class;
 
-  object_class = G_OBJECT_CLASS (manager_class);
+  object_class = G_OBJECT_CLASS (self_class);
 
   object_class->finalize = gp_applet_manager_finalize;
 }
 
 static void
-gp_applet_manager_init (GpAppletManager *manager)
+gp_applet_manager_init (GpAppletManager *self)
 {
-  manager->modules = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                            g_free, g_object_unref);
+  self->manager = gp_module_manager_new ();
 
-  manager->infos = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                          g_free, applet_info_free);
+  self->infos = g_hash_table_new_full (g_str_hash,
+                                       g_str_equal,
+                                       g_free,
+                                       applet_info_free);
 
-  load_external_modules (manager);
+  load_infos (self);
 }
 
 GpAppletManager *
@@ -248,7 +236,7 @@ gp_applet_manager_load_applet (GpAppletManager            *self,
     return FALSE;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = g_hash_table_lookup (self->modules, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
@@ -327,7 +315,7 @@ gp_applet_manager_get_new_iid (GpAppletManager *self,
   GList *l;
   gchar *new_iid;
 
-  modules = g_hash_table_get_values (self->modules);
+  modules = gp_module_manager_get_modules (self->manager);
   new_iid = NULL;
 
   for (l = modules; l != NULL; l = l->next)
@@ -371,7 +359,7 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
     return FALSE;
 
   module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
-  module = g_hash_table_lookup (self->modules, module_id);
+  module = gp_module_manager_get_module (self->manager, module_id);
   g_free (module_id);
 
   if (!module)
@@ -423,7 +411,7 @@ gp_applet_manager_get_standalone_menu (GpAppletManager *self)
 
   g_object_unref (general_settings);
 
-  modules = g_hash_table_get_values (self->modules);
+  modules = gp_module_manager_get_modules (self->manager);
   menu = NULL;
 
   for (l = modules; l != NULL; l = l->next)
