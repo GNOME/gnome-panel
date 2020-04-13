@@ -27,6 +27,8 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 
 const char *panel_applet_get_id           (AppletInfo      *info);
 
+const char *panel_applet_get_toplevel_id    (AppletInfo      *info);
+
 gboolean    panel_applet_activate_main_menu (guint32 activate_time);
 
 GSList     *panel_applet_list_applets (void);
