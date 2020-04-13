@@ -1,4 +1,3 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
  * panel-applet-frame.c: panel side container for applets
  *
@@ -345,16 +344,35 @@ static void
 move_cb (GtkMenuItem      *menuitem,
          PanelAppletFrame *self)
 {
-  _panel_applet_frame_applet_move (self);
+  GtkWidget *widget;
+  GtkWidget *parent;
+
+  widget = GTK_WIDGET (self);
+  parent = gtk_widget_get_parent (widget);
+
+  if (!PANEL_IS_WIDGET (parent))
+    return;
+
+  panel_widget_applet_drag_start (PANEL_WIDGET (parent),
+                                  widget,
+                                  GDK_CURRENT_TIME);
 }
 
 static void
 remove_cb (GtkMenuItem      *menuitem,
            PanelAppletFrame *self)
 {
+  AppletInfo *info;
+
   gp_applet_remove_from_panel (self->priv->applet);
 
-  _panel_applet_frame_applet_remove (self);
+  if (self->priv->applet_info == NULL)
+    return;
+
+  info = self->priv->applet_info;
+  self->priv->applet_info = NULL;
+
+  panel_layout_delete_object (panel_applet_get_id (info));
 }
 
 static void
@@ -369,7 +387,10 @@ frame_popup_edit_menu (PanelAppletFrame *self,
 
   menu = gtk_menu_new ();
 
-  movable = _panel_applet_frame_get_can_move (self);
+  movable = FALSE;
+  if (self->priv->applet_info != NULL)
+    movable = panel_applet_can_freely_move (self->priv->applet_info);
+
   removable = panel_layout_is_writable ();
 
   menuitem = gtk_menu_item_new_with_mnemonic (_("_Move"));
@@ -569,15 +590,18 @@ update_flags (PanelAppletFrame *self)
   GpAppletFlags flags;
   gboolean major;
   gboolean minor;
-  gboolean has_handle;
 
   flags = gp_applet_get_flags (self->priv->applet);
 
   major = (flags & GP_APPLET_FLAGS_EXPAND_MAJOR) != 0;
   minor = (flags & GP_APPLET_FLAGS_EXPAND_MINOR) != 0;
-  has_handle = (flags & GP_APPLET_FLAGS_HAS_HANDLE) != 0;
 
-  _panel_applet_frame_update_flags (self, major, minor, has_handle);
+  self->priv->has_handle = (flags & GP_APPLET_FLAGS_HAS_HANDLE) != 0;
+
+  panel_widget_set_applet_expandable (self->priv->panel,
+                                      GTK_WIDGET (self),
+                                      major,
+                                      minor);
 }
 
 static void
@@ -588,7 +612,22 @@ update_size_hints (PanelAppletFrame *self)
 
   size_hints = gp_applet_get_size_hints (self->priv->applet, &n_elements);
 
-  _panel_applet_frame_update_size_hints (self, size_hints, n_elements);
+  if (self->priv->has_handle)
+    {
+      gint extra_size;
+      guint i;
+
+      extra_size = HANDLE_SIZE + 1;
+
+      for (i = 0; i < n_elements; i++)
+        size_hints[i] += extra_size;
+    }
+
+  /* It takes the ownership of size-hints array */
+  panel_widget_set_applet_size_hints (self->priv->panel,
+                                      GTK_WIDGET (self),
+                                      size_hints,
+                                      n_elements);
 }
 
 static void
@@ -778,66 +817,6 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 
 	panel_object_loader_stop_loading (frame_act->id);
 	panel_applet_frame_activating_free (frame_act);
-}
-
-void
-_panel_applet_frame_update_flags (PanelAppletFrame *frame,
-				  gboolean          major,
-				  gboolean          minor,
-				  gboolean          has_handle)
-{
-	panel_widget_set_applet_expandable (
-		frame->priv->panel, GTK_WIDGET (frame), major, minor);
-
-	frame->priv->has_handle = has_handle;
-}
-
-void
-_panel_applet_frame_update_size_hints (PanelAppletFrame *frame,
-				       gint             *size_hints,
-				       guint             n_elements)
-{
-	if (frame->priv->has_handle) {
-		gint extra_size = HANDLE_SIZE + 1;
-		guint i;
-
-		for (i = 0; i < n_elements; i++)
-			size_hints[i] += extra_size;
-	}
-
-	/* It takes the ownership of size-hints array */
-	panel_widget_set_applet_size_hints (frame->priv->panel,
-					    GTK_WIDGET (frame),
-					    size_hints,
-					    n_elements);
-}
-
-void
-_panel_applet_frame_applet_remove (PanelAppletFrame *frame)
-{
-	AppletInfo *info;
-
-	if (!frame->priv->applet_info)
-		return;
-
-	info = frame->priv->applet_info;
-	frame->priv->applet_info = NULL;
-
-	panel_layout_delete_object (panel_applet_get_id (info));
-}
-
-void
-_panel_applet_frame_applet_move (PanelAppletFrame *frame)
-{
-	GtkWidget *widget = GTK_WIDGET (frame);
-	GtkWidget *parent = gtk_widget_get_parent (widget);
-
-	if (!PANEL_IS_WIDGET (parent))
-		return;
-
-	panel_widget_applet_drag_start (PANEL_WIDGET (parent),
-					widget,
-					GDK_CURRENT_TIME);
 }
 
 /* Generic methods */
@@ -1055,13 +1034,4 @@ panel_applet_frame_create (PanelToplevel       *toplevel,
 				    panel_toplevel_get_id (toplevel),
 				    pack_type, pack_index,
 				    initial_settings);
-}
-
-gboolean
-_panel_applet_frame_get_can_move (PanelAppletFrame *frame)
-{
-	if (!frame->priv->applet_info)
-		return FALSE;
-
-	return panel_applet_can_freely_move (frame->priv->applet_info);
 }

@@ -96,20 +96,6 @@ void  _panel_applet_frame_activated             (PanelAppletFrame           *fra
 						 PanelAppletFrameActivating *frame_act,
 						 GError                     *error);
 
-void  _panel_applet_frame_update_flags          (PanelAppletFrame *frame,
-						 gboolean          major,
-						 gboolean          minor,
-						 gboolean          has_handle);
-
-void  _panel_applet_frame_update_size_hints     (PanelAppletFrame *frame,
-						 gint             *size_hints,
-						 guint             n_elements);
-
-gboolean _panel_applet_frame_get_can_move       (PanelAppletFrame *frame);
-
-void  _panel_applet_frame_applet_remove         (PanelAppletFrame *frame);
-void  _panel_applet_frame_applet_move           (PanelAppletFrame *frame);
-
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */
