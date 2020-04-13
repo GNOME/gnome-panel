@@ -429,3 +429,42 @@ gp_applet_manager_get_standalone_menu (GpAppletManager *self)
 
   return menu;
 }
+
+gboolean
+gp_applet_manager_is_applet_available (GpAppletManager  *self,
+                                       const char       *iid,
+                                       char            **reason)
+{
+  const gchar *applet_id;
+  gchar *module_id;
+  GpModule *module;
+  GpLockdownFlags lockdown_flags;
+
+  g_return_val_if_fail (iid != NULL, FALSE);
+  g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
+
+  applet_id = g_strrstr (iid, "::");
+  if (!applet_id)
+    {
+      g_assert_not_reached ();
+      return FALSE;
+    }
+
+  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+  module = gp_module_manager_get_module (self->manager, module_id);
+  g_free (module_id);
+
+  if (!module)
+    {
+      g_assert_not_reached ();
+      return FALSE;
+    }
+
+  applet_id += 2;
+  lockdown_flags = panel_lockdown_get_lockdown_flags_s ();
+
+  return gp_module_is_applet_available (module,
+                                        applet_id,
+                                        lockdown_flags,
+                                        reason);
+}
