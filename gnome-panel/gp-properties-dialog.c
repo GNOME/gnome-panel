@@ -319,7 +319,7 @@ static GtkWidget *
 create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
 {
   PanelAppletInfo *panel_applet_info;
-  GtkWidget *id_label;
+
   GtkWidget *name_label;
   GtkWidget *description_label;
   GtkWidget *entry;
@@ -343,13 +343,14 @@ create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
   entry = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
   entryDetails = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
 
-  id_label = gtk_label_new (g_strdup_printf ("Applet Id: %s", info->id));
-
   name = panel_applet_info_get_name (panel_applet_info);
-  name_label = gtk_label_new (g_strdup_printf ("Applet Name: %s", name));
+  name_label = gtk_label_new (NULL);
+  gtk_label_set_markup(GTK_LABEL (name_label), g_strdup_printf ("<b>Applet Name: %s</b>", name));
+  gtk_widget_set_halign (name_label, GTK_ALIGN_START);
 
   description = panel_applet_info_get_description (panel_applet_info);
   description_label = gtk_label_new (g_strdup_printf ("Applet Description: %s", description));
+  gtk_widget_set_halign (description_label, GTK_ALIGN_START);
 
   icon_name = panel_applet_info_get_icon (panel_applet_info);
 
@@ -359,7 +360,6 @@ create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
       image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
     }
 
-  gtk_container_add (GTK_CONTAINER (entryDetails), id_label);
   gtk_container_add (GTK_CONTAINER (entryDetails), name_label);
   gtk_container_add (GTK_CONTAINER (entryDetails), description_label);
 
