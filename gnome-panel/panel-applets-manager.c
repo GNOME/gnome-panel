@@ -22,9 +22,9 @@
 
 #include <gio/gio.h>
 
-#include <libpanel-applet-private/gp-applet-manager.h>
 #include <libpanel-util/panel-cleanup.h>
 
+#include "gp-applet-manager.h"
 #include "panel-applets-manager.h"
 
 G_DEFINE_ABSTRACT_TYPE (PanelAppletsManager, panel_applets_manager, G_TYPE_OBJECT)

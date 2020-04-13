@@ -1,7 +1,6 @@
 NULL =
 
 SUBDIRS = \
-	libpanel-applet-private \
 	libpanel-util \
 	$(NULL)
 
@@ -12,6 +11,10 @@ bin_PROGRAMS = \
 panel_sources =			\
 	gp-add-applet-window.c \
 	gp-add-applet-window.h \
+	gp-applet-frame.c \
+	gp-applet-frame.h \
+	gp-applet-manager.c \
+	gp-applet-manager.h \
 	gp-application.c \
 	gp-application.h \
 	gp-arrow-button.c \
@@ -110,7 +113,7 @@ gnome_panel_CFLAGS = \
 	$(NULL)
 
 gnome_panel_LDADD =		\
-	$(top_builddir)/gnome-panel/libpanel-applet-private/libpanel-applet-private.la	\
+	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(top_builddir)/gnome-panel/libpanel-util/libpanel-util.la			\
 	$(PANEL_LIBS)									\
 	$(NULL)
