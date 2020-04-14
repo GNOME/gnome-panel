@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -62,6 +62,8 @@ gp_applet_info_new (GpGetAppletTypeFunc  func,
 
   info->backends = NULL;
 
+  info->is_disabled_func = NULL;
+
   return info;
 }
 
@@ -122,6 +124,20 @@ gp_applet_info_set_backends (GpAppletInfo *info,
 {
   g_free (info->backends);
   info->backends = g_strdup (backends);
+}
+
+/**
+ * gp_applet_info_set_is_disabled:
+ * @info: a #GpAppletInfo
+ * @func: the function to call to check if applet should be disabled
+ *
+ * Specifies a function to be used to check if applet should be disabled.
+ */
+void
+gp_applet_info_set_is_disabled (GpAppletInfo     *info,
+                                GpIsDisabledFunc  func)
+{
+  info->is_disabled_func = func;
 }
 
 void
