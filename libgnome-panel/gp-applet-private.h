@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2001 Sun Microsystems, Inc.
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,9 @@ G_BEGIN_DECLS
 
 void           gp_applet_set_locked_down   (GpApplet        *applet,
                                             gboolean         locked_down);
+
+void           gp_applet_set_lockdowns     (GpApplet        *applet,
+                                            GpLockdownFlags  lockdowns);
 
 void           gp_applet_set_orientation   (GpApplet        *applet,
                                             GtkOrientation   orientation);

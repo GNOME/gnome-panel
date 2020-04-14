@@ -638,28 +638,18 @@ panel_applet_frame_init_properties (PanelAppletFrame *self)
 }
 
 static void
-frame_sync_menu_state (PanelAppletFrame *self,
-                       gboolean          movable,
-                       gboolean          removable,
-                       gboolean          locked_down)
-{
-  gp_applet_set_locked_down (self->priv->applet, locked_down);
-}
-
-static void
 panel_applet_frame_sync_menu_state (PanelLockdown *lockdown,
 				    gpointer       user_data)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (user_data);
 	gboolean          locked_down;
-	gboolean          movable;
-	gboolean          removable;
+	GpLockdownFlags   lockdowns;
 
-	movable = panel_applet_can_freely_move (frame->priv->applet_info);
-	removable = panel_layout_is_writable ();
 	locked_down = panel_lockdown_get_panels_locked_down_s ();
+	lockdowns = panel_lockdown_get_flags_s (frame->priv->iid);
 
-	frame_sync_menu_state (frame, movable, removable, locked_down);
+	gp_applet_set_locked_down (frame->priv->applet, locked_down);
+	gp_applet_set_lockdowns (frame->priv->applet, lockdowns);
 }
 
 static void
