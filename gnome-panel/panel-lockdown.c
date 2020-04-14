@@ -533,3 +533,48 @@ panel_lockdown_get_disable_force_quit_s (void)
 {
         return panel_lockdown_get_disable_force_quit (panel_lockdown_get ());
 }
+
+GpLockdownFlags
+panel_lockdown_get_flags (PanelLockdown *lockdown,
+                          const char    *iid)
+{
+        GpLockdownFlags flags;
+        int i;
+
+        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), GP_LOCKDOWN_FLAGS_NONE);
+
+        flags = GP_LOCKDOWN_FLAGS_NONE;
+
+        for (i = 0; lockdown->priv->disabled_applets[i] != NULL; i++) {
+                if (g_strcmp0 (lockdown->priv->disabled_applets[i], iid) == 0) {
+                        flags |= GP_LOCKDOWN_FLAGS_APPLET;
+                        break;
+                }
+        }
+
+        if (lockdown->priv->disable_force_quit)
+                flags |= GP_LOCKDOWN_FLAGS_FORCE_QUIT;
+
+        if (lockdown->priv->panels_locked_down)
+                flags |= GP_LOCKDOWN_FLAGS_LOCKED_DOWN;
+
+        if (lockdown->priv->disable_command_line)
+                flags |= GP_LOCKDOWN_FLAGS_COMMAND_LINE;
+
+        if (lockdown->priv->disable_lock_screen)
+                flags |= GP_LOCKDOWN_FLAGS_LOCK_SCREEN;
+
+        if (lockdown->priv->disable_log_out)
+                flags |= GP_LOCKDOWN_FLAGS_LOG_OUT;
+
+        if (lockdown->priv->disable_switch_user)
+                flags |= GP_LOCKDOWN_FLAGS_USER_SWITCHING;
+
+        return flags;
+}
+
+GpLockdownFlags
+panel_lockdown_get_flags_s (const char *iid)
+{
+        return panel_lockdown_get_flags (panel_lockdown_get (), iid);
+}
