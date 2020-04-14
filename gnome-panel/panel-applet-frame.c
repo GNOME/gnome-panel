@@ -965,7 +965,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
-	if (panel_lockdown_is_applet_disabled (panel_lockdown_get (), iid)) {
+	if (panel_applets_manager_is_applet_disabled (iid, NULL)) {
 		panel_object_loader_stop_loading (id);
 		return;
 	}
