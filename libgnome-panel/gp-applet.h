@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,7 @@
 #define GP_APPLET_H
 
 #include <gtk/gtk.h>
+#include <libgnome-panel/gp-lockdown.h>
 
 G_BEGIN_DECLS
 
@@ -85,6 +86,8 @@ struct _GpAppletClass
 };
 
 gboolean         gp_applet_get_locked_down           (GpApplet           *applet);
+
+GpLockdownFlags  gp_applet_get_lockdowns             (GpApplet           *applet);
 
 GtkOrientation   gp_applet_get_orientation           (GpApplet           *applet);
 

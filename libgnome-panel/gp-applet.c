@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2001 Sun Microsystems, Inc.
  * Copyright (c) 2010 Carlos Garcia Campos
- * Copyright (C) 2016-2018 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -68,6 +68,7 @@ typedef struct
   GVariant           *initial_settings;
   gchar              *gettext_domain;
   gboolean            locked_down;
+  GpLockdownFlags     lockdowns;
   GtkOrientation      orientation;
   GtkPositionType     position;
 
@@ -99,6 +100,7 @@ enum
   PROP_INITIAL_SETTINGS,
   PROP_GETTEXT_DOMAIN,
   PROP_LOCKED_DOWN,
+  PROP_LOCKDOWNS,
   PROP_ORIENTATION,
   PROP_POSITION,
 
@@ -435,6 +437,10 @@ gp_applet_get_property (GObject    *object,
         g_value_set_boolean (value, priv->locked_down);
         break;
 
+      case PROP_LOCKDOWNS:
+        g_value_set_flags (value, priv->lockdowns);
+        break;
+
       case PROP_ORIENTATION:
         g_value_set_enum (value, priv->orientation);
         break;
@@ -506,6 +512,10 @@ gp_applet_set_property (GObject      *object,
 
       case PROP_LOCKED_DOWN:
         gp_applet_set_locked_down (applet, g_value_get_boolean (value));
+        break;
+
+      case PROP_LOCKDOWNS:
+        gp_applet_set_lockdowns (applet, g_value_get_flags (value));
         break;
 
       case PROP_ORIENTATION:
@@ -684,12 +694,28 @@ install_properties (GObjectClass *object_class)
    * GpApplet:locked-down:
    *
    * Whether the applet is on locked down panel.
+   *
+   * Deprecated: 3.38: Use #GpApplet:lockdowns instead
    */
   properties[PROP_LOCKED_DOWN] =
     g_param_spec_boolean ("locked-down", "Locked Down", "Locked Down",
                           FALSE,
                           G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
-                          G_PARAM_STATIC_STRINGS);
+                          G_PARAM_STATIC_STRINGS | G_PARAM_DEPRECATED);
+
+  /**
+   * GpApplet:lockdowns:
+   *
+   * Active lockdowns.
+   */
+  properties[PROP_LOCKDOWNS] =
+    g_param_spec_flags ("lockdowns",
+                        "Lockdowns",
+                        "Lockdowns",
+                        GP_TYPE_LOCKDOWN_FLAGS,
+                        GP_LOCKDOWN_FLAGS_NONE,
+                        G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY |
+                        G_PARAM_STATIC_STRINGS);
 
   /**
    * GpApplet:orientation:
@@ -883,6 +909,41 @@ gp_applet_set_locked_down (GpApplet *applet,
   priv->locked_down = locked_down;
 
   g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_LOCKED_DOWN]);
+}
+
+/**
+ * gp_applet_get_lockdowns:
+ * @applet: a #GpApplet
+ *
+ * Gets active lockdowns.
+ *
+ * Returns: the #GpLockdownFlags of @applet.
+ */
+GpLockdownFlags
+gp_applet_get_lockdowns (GpApplet *applet)
+{
+  GpAppletPrivate *priv;
+
+  g_return_val_if_fail (GP_IS_APPLET (applet), GP_LOCKDOWN_FLAGS_NONE);
+  priv = gp_applet_get_instance_private (applet);
+
+  return priv->lockdowns;
+}
+
+void
+gp_applet_set_lockdowns (GpApplet        *applet,
+                         GpLockdownFlags  lockdowns)
+{
+  GpAppletPrivate *priv;
+
+  priv = gp_applet_get_instance_private (applet);
+
+  if (priv->lockdowns == lockdowns)
+    return;
+
+  priv->lockdowns = lockdowns;
+
+  g_object_notify_by_pspec (G_OBJECT (applet), properties[PROP_LOCKDOWNS]);
 }
 
 /**
