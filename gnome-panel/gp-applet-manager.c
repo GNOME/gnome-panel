@@ -17,7 +17,17 @@
 
 #include "config.h"
 
+#include <glib/gi18n.h>
+#include <gtk/gtk.h>
 #include <string.h>
+
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
 
 #include "gp-applet-manager.h"
 #include "gp-module-manager.h"
@@ -31,12 +41,30 @@ struct _GpAppletManager
 {
   GObject          parent;
 
+  char            *backend;
+
   GpModuleManager *manager;
 
   GHashTable      *infos;
 };
 
 G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, G_TYPE_OBJECT)
+
+static char *
+get_current_backend (void)
+{
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    return g_strdup ("wayland");
+#endif
+
+#ifdef GDK_WINDOWING_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    return g_strdup ("x11");
+#endif
+
+  return g_strdup ("unknown");
+}
 
 static GVariant *
 get_initial_settings (PanelAppletFrameActivating *frame_act)
@@ -144,6 +172,7 @@ gp_applet_manager_finalize (GObject *object)
 
   self = GP_APPLET_MANAGER (object);
 
+  g_clear_pointer (&self->backend, g_free);
   g_clear_object (&self->manager);
   g_clear_pointer (&self->infos, g_hash_table_destroy);
 
@@ -163,6 +192,8 @@ gp_applet_manager_class_init (GpAppletManagerClass *self_class)
 static void
 gp_applet_manager_init (GpAppletManager *self)
 {
+  self->backend = get_current_backend ();
+
   self->manager = gp_module_manager_new ();
 
   self->infos = g_hash_table_new_full (g_str_hash,
@@ -428,4 +459,49 @@ gp_applet_manager_get_standalone_menu (GpAppletManager *self)
   g_list_free (modules);
 
   return menu;
+}
+
+gboolean
+gp_applet_manager_is_applet_disabled (GpAppletManager  *self,
+                                      const char       *iid,
+                                      char            **reason)
+{
+  const char *applet_id;
+  char *module_id;
+  GpModule *module;
+  GpLockdownFlags lockdowns;
+
+  g_return_val_if_fail (iid != NULL, FALSE);
+  g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
+
+  if (panel_lockdown_is_applet_disabled (panel_lockdown_get (), iid))
+    {
+      if (reason != NULL)
+        *reason = g_strdup (_("Disabled."));
+
+      return TRUE;
+    }
+
+  applet_id = g_strrstr (iid, "::");
+  if (!applet_id)
+    {
+      g_assert_not_reached ();
+      return TRUE;
+    }
+
+  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+  module = gp_module_manager_get_module (self->manager, module_id);
+  g_free (module_id);
+
+  if (!module)
+    return FALSE;
+
+  applet_id += 2;
+  lockdowns = panel_lockdown_get_flags_s (iid);
+
+  return gp_module_is_applet_disabled (module,
+                                       applet_id,
+                                       self->backend,
+                                       lockdowns,
+                                       reason);
 }
