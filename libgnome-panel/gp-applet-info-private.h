@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,8 @@ struct _GpAppletInfo
   GpAboutDialogFunc         about_dialog_func;
 
   gchar                    *backends;
+
+  GpIsDisabledFunc          is_disabled_func;
 };
 
 void gp_applet_info_free (GpAppletInfo *info);

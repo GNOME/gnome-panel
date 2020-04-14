@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2018 Alberts Muktupāvels
+ * Copyright (C) 2016-2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <libgnome-panel/gp-lockdown.h>
 
 G_BEGIN_DECLS
 
@@ -63,6 +64,24 @@ typedef void  (* GpInitialSetupDialogFunc) (GpInitialSetupDialog *dialog);
  */
 typedef void  (* GpAboutDialogFunc) (GtkAboutDialog *dialog);
 
+/**
+ * GpIsDisabledFunc:
+ * @flags: a #GpLockdownFlags with active lockdowns
+ * @reason: (out) (transfer full) (allow-none): return location for reason, or %NULL
+ *
+ * This function must return #TRUE if applet must be fully disabled (applet
+ * will not be loaded not user will be able to add it to panel). Function also
+ * should return reason why applet is disabled if @reason is not %NULL.
+ *
+ * If applet is usable with some active lockdowns it should return %FALSE and
+ * use #GpApplet:lockdows property to adjust behaviour/functionality.
+ *
+ * Returns: #TRUE if applet should be disabled.
+ */
+typedef gboolean (* GpIsDisabledFunc) (GpLockdownFlags   flags,
+                                       char            **reason);
+
+
 GpAppletInfo *gp_applet_info_new                      (GpGetAppletTypeFunc       func,
                                                        const gchar              *name,
                                                        const gchar              *description,
@@ -79,6 +98,9 @@ void          gp_applet_info_set_about_dialog         (GpAppletInfo             
 
 void          gp_applet_info_set_backends             (GpAppletInfo             *info,
                                                        const gchar              *backends);
+
+void          gp_applet_info_set_is_disabled          (GpAppletInfo             *info,
+                                                       GpIsDisabledFunc          func);
 
 G_END_DECLS
 
