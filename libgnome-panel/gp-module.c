@@ -112,14 +112,6 @@
 #include <gtk/gtk.h>
 #include <stdarg.h>
 
-#ifdef GDK_WINDOWING_WAYLAND
-#include <gdk/gdkwayland.h>
-#endif
-
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#endif
-
 #include "gp-applet-info-private.h"
 #include "gp-module-private.h"
 
@@ -165,68 +157,6 @@ get_applets (va_list args)
   g_ptr_array_add (array, NULL);
 
   return (gchar **) g_ptr_array_free (array, FALSE);
-}
-
-static gboolean
-match_backend (GpAppletInfo *info)
-{
-  GdkDisplay *display;
-  gchar **backends;
-  gboolean match;
-  guint i;
-
-  if (info->backends == NULL)
-    return TRUE;
-
-  display = gdk_display_get_default ();
-  backends = g_strsplit (info->backends, ",", -1);
-  match = FALSE;
-
-  for (i = 0; backends[i] != NULL; i++)
-    {
-      if (g_strcmp0 (backends[i], "*") == 0)
-        {
-          match = TRUE;
-          break;
-        }
-
-#ifdef GDK_WINDOWING_WAYLAND
-      if (g_strcmp0 (backends[i], "wayland") == 0 &&
-          GDK_IS_WAYLAND_DISPLAY (display))
-        {
-          match = TRUE;
-          break;
-        }
-#endif
-
-#ifdef GDK_WINDOWING_X11
-      if (g_strcmp0 (backends[i], "x11") == 0 && GDK_IS_X11_DISPLAY (display))
-        {
-          match = TRUE;
-          break;
-        }
-#endif
-    }
-
-  g_strfreev (backends);
-
-  return match;
-}
-
-static const gchar *
-get_current_backend (void)
-{
-#ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-    return "wayland";
-#endif
-
-#ifdef GDK_WINDOWING_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    return "x11";
-#endif
-
-  return "unknown";
 }
 
 static gboolean
@@ -624,15 +554,6 @@ gp_module_applet_new (GpModule     *module,
   if (info == NULL)
     return NULL;
 
-  if (!match_backend (info))
-    {
-      g_set_error (error, GP_MODULE_ERROR, GP_MODULE_ERROR_MISSING_APPLET_TYPE,
-                   "Applet '%s' from module '%s' does not work with current backend '%s'",
-                   applet, module->id, get_current_backend ());
-
-      return NULL;
-    }
-
   type = info->get_applet_type_func ();
   if (type == G_TYPE_NONE)
     {
@@ -745,4 +666,45 @@ gp_module_show_help (GpModule   *module,
 
   g_free (help_uri);
   g_free (message);
+}
+
+gboolean
+gp_module_is_applet_disabled (GpModule         *module,
+                              const char       *applet,
+                              const char       *backend,
+                              GpLockdownFlags   lockdowns,
+                              char            **reason)
+{
+  GpAppletInfo *info;
+
+  g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
+
+  info = get_applet_info (module, applet, NULL);
+  g_assert (info != NULL);
+
+  if (info->is_disabled_func == NULL)
+    return FALSE;
+
+  if (info->backends != NULL)
+    {
+      char **backends;
+
+      backends = g_strsplit (info->backends, ",", -1);
+
+      if (!g_strv_contains ((const char * const *) backends, backend))
+        {
+          if (reason != NULL)
+            {
+              *reason = g_strdup_printf (_("Backend “%s” is not supported."),
+                                         backend);
+            }
+
+          g_strfreev (backends);
+          return TRUE;
+        }
+
+      g_strfreev (backends);
+    }
+
+  return info->is_disabled_func (lockdowns, reason);
 }
