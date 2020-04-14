@@ -28,32 +28,36 @@ G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
 
 GpAppletManager *gp_applet_manager_new                       (void);
 
-GList           *gp_applet_manager_get_applets               (GpAppletManager            *self);
+GList           *gp_applet_manager_get_applets               (GpAppletManager             *self);
 
-gboolean         gp_applet_manager_factory_activate          (GpAppletManager            *self,
-                                                              const char                 *iid);
+gboolean         gp_applet_manager_factory_activate          (GpAppletManager             *self,
+                                                              const char                  *iid);
 
-void             gp_applet_manager_factory_deactivate        (GpAppletManager            *self,
-                                                              const char                 *iid);
+void             gp_applet_manager_factory_deactivate        (GpAppletManager             *self,
+                                                              const char                  *iid);
 
-PanelAppletInfo *gp_applet_manager_get_applet_info           (GpAppletManager            *self,
-                                                              const char                 *iid);
+PanelAppletInfo *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
+                                                              const char                  *iid);
 
-gboolean         gp_applet_manager_load_applet               (GpAppletManager            *self,
-                                                              const char                 *iid,
-                                                              PanelAppletFrameActivating *frame_act);
+gboolean         gp_applet_manager_load_applet               (GpAppletManager             *self,
+                                                              const char                  *iid,
+                                                              PanelAppletFrameActivating  *frame_act);
 
-char            *gp_applet_manager_get_new_iid               (GpAppletManager            *self,
-                                                              const char                 *old_iid);
+char            *gp_applet_manager_get_new_iid               (GpAppletManager             *self,
+                                                              const char                  *old_iid);
 
-gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager            *self,
-                                                              const char                 *iid,
-                                                              GtkWindow                  *parent,
-                                                              GpInitialSetupCallback      callback,
-                                                              gpointer                    user_data,
-                                                              GDestroyNotify              free_func);
+gboolean         gp_applet_manager_open_initial_setup_dialog (GpAppletManager             *self,
+                                                              const char                  *iid,
+                                                              GtkWindow                   *parent,
+                                                              GpInitialSetupCallback       callback,
+                                                              gpointer                     user_data,
+                                                              GDestroyNotify               free_func);
 
-GtkWidget       *gp_applet_manager_get_standalone_menu       (GpAppletManager            *self);
+GtkWidget       *gp_applet_manager_get_standalone_menu       (GpAppletManager             *self);
+
+gboolean         gp_applet_manager_is_applet_disabled        (GpAppletManager             *self,
+                                                              const char                  *iid,
+                                                              char                       **reason);
 
 G_END_DECLS
 
