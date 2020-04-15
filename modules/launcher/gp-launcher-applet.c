@@ -1342,6 +1342,12 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
       char *filename;
       GError *error;
 
+      type = NULL;
+      icon = NULL;
+      name = NULL;
+      command = NULL;
+      comment = NULL;
+
       g_variant_lookup (initial_settings, "type", "&s", &type);
       g_variant_lookup (initial_settings, "icon", "&s", &icon);
       g_variant_lookup (initial_settings, "name", "&s", &name);
@@ -1369,10 +1375,13 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
                              G_KEY_FILE_DESKTOP_KEY_NAME,
                              name);
 
-      g_key_file_set_string (file,
-                             G_KEY_FILE_DESKTOP_GROUP,
-                             G_KEY_FILE_DESKTOP_KEY_COMMENT,
-                             comment);
+      if (comment != NULL)
+        {
+          g_key_file_set_string (file,
+                                 G_KEY_FILE_DESKTOP_GROUP,
+                                 G_KEY_FILE_DESKTOP_KEY_COMMENT,
+                                 comment);
+        }
 
       if (g_strcmp0 (type, "Application") == 0)
         {
