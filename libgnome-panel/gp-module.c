@@ -323,11 +323,8 @@ gp_module_new_from_path (const gchar *path)
       return NULL;
     }
 
-  if (module->applet_ids == NULL || module->applet_ids[0] == NULL)
-    {
-      g_warning ("Module '%s' does not have valid applets", module->path);
-      return NULL;
-    }
+  if (module->applet_ids == NULL)
+    module->applet_ids = g_new0 (char *, 1);
 
   return module;
 }
