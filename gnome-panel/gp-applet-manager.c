@@ -370,6 +370,7 @@ gp_applet_manager_get_new_iid (GpAppletManager *self,
 gboolean
 gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
                                              const char             *iid,
+                                             GVariant               *settings,
                                              GtkWindow              *parent,
                                              GpInitialSetupCallback  callback,
                                              gpointer                user_data,
@@ -401,7 +402,9 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
     return FALSE;
 
   dialog = gp_initital_setup_dialog_new ();
+
   gp_initital_setup_dialog_add_callback (dialog, callback, user_data, free_func);
+  gp_initital_setup_dialog_set_settings (dialog, settings);
 
   info->initial_setup_dialog_func (dialog);
 

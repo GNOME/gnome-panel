@@ -97,6 +97,7 @@ panel_applets_manager_get_new_iid (const gchar *old_iid)
 
 gboolean
 panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
+                                                 GVariant               *settings,
                                                  GtkWindow              *parent,
                                                  GpInitialSetupCallback  callback,
                                                  gpointer                user_data,
@@ -108,6 +109,7 @@ panel_applets_manager_open_initial_setup_dialog (const gchar            *iid,
 
 	ret = gp_applet_manager_open_initial_setup_dialog (manager,
 	                                                   iid,
+	                                                   settings,
 	                                                   parent,
 	                                                   callback,
 	                                                   user_data,

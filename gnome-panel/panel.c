@@ -1024,6 +1024,7 @@ panel_receive_dnd_data (PanelWidget         *panel,
 
 			if (!panel_applets_manager_open_initial_setup_dialog ((char *) data,
 			                                                      NULL,
+			                                                      NULL,
 			                                                      initial_setup_dialog_cb,
 			                                                      initial_setup_data,
 			                                                      initial_setup_data_free)) {
