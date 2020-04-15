@@ -37,6 +37,15 @@ struct _GpInitialSetupDialog
   GHashTable             *settings;
 };
 
+enum
+{
+  CLOSE,
+
+  LAST_SIGNAL
+};
+
+static guint dialog_signals[LAST_SIGNAL] = { 0 };
+
 G_DEFINE_TYPE (GpInitialSetupDialog, gp_initital_setup_dialog, GTK_TYPE_WINDOW)
 
 static void
@@ -55,6 +64,15 @@ done_clicked_cb (GtkButton            *button,
   g_assert (dialog->setup_callback != NULL);
   dialog->setup_callback (dialog, FALSE, dialog->setup_user_data);
   gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
+close_cb (GpInitialSetupDialog *self,
+          gpointer              user_data)
+{
+  g_assert (self->setup_callback != NULL);
+  self->setup_callback (self, TRUE, self->setup_user_data);
+  gtk_widget_destroy (GTK_WIDGET (self));
 }
 
 static void
@@ -100,10 +118,26 @@ gp_initital_setup_dialog_delete_event (GtkWidget   *widget,
 }
 
 static void
+install_signals (void)
+{
+  dialog_signals[CLOSE] =
+    g_signal_new ("close",
+                  GP_TYPE_INITIAL_SETUP_DIALOG,
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  0,
+                  NULL,
+                  NULL,
+                  NULL,
+                  G_TYPE_NONE,
+                  0);
+}
+
+static void
 gp_initital_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
 {
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
+  GtkBindingSet *binding_set;
 
   object_class = G_OBJECT_CLASS (dialog_class);
   widget_class = GTK_WIDGET_CLASS (dialog_class);
@@ -111,6 +145,11 @@ gp_initital_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
   object_class->finalize = gp_initital_setup_dialog_finalize;
 
   widget_class->delete_event = gp_initital_setup_dialog_delete_event;
+
+  install_signals ();
+
+  binding_set = gtk_binding_set_by_class (widget_class);
+  gtk_binding_entry_add_signal (binding_set, GDK_KEY_Escape, 0, "close", 0);
 }
 
 static void
@@ -143,6 +182,8 @@ gp_initital_setup_dialog_init (GpInitialSetupDialog *dialog)
 
   g_signal_connect (cancel, "clicked", G_CALLBACK (cancel_clicked_cb), dialog);
   g_signal_connect (done, "clicked", G_CALLBACK (done_clicked_cb), dialog);
+
+  g_signal_connect (dialog, "close", G_CALLBACK (close_cb), NULL);
 }
 
 GpInitialSetupDialog *
