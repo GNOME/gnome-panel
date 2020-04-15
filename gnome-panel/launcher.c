@@ -1077,56 +1077,6 @@ ask_about_launcher (const char          *file,
 	gtk_widget_show (dialog);
 }
 
-void
-panel_launcher_create_from_info (PanelToplevel       *toplevel,
-				 PanelObjectPackType  pack_type,
-				 int                  pack_index,
-				 gboolean             exec_info,
-				 const char          *exec_or_uri,
-				 const char          *name,
-				 const char          *comment,
-				 const char          *icon)
-{
-	GKeyFile *key_file;
-	char     *location;
-	GError   *error;
-
-	key_file = panel_key_file_new_desktop ();
-
-	/* set current language and the "C" locale to this name,
-	 * this is kind of evil... */
-	panel_key_file_set_string (key_file, "Name", name);
-	panel_key_file_set_string (key_file, "Comment", comment);
-	panel_key_file_set_string (key_file, "Icon", icon);
-	panel_key_file_set_locale_string (key_file, "Name", name);
-	panel_key_file_set_locale_string (key_file, "Comment", comment);
-	panel_key_file_set_locale_string (key_file, "Icon", icon);
-
-	if (exec_info) {
-		panel_key_file_set_string (key_file, "Exec", exec_or_uri);
-		panel_key_file_set_string (key_file, "Type", "Application");
-	} else {
-		panel_key_file_set_string (key_file, "URL", exec_or_uri);
-		panel_key_file_set_string (key_file, "Type", "Link");
-	}
-
-	location = panel_make_unique_desktop_uri (NULL, exec_or_uri);
-
-	error = NULL;
-	if (panel_key_file_to_file (key_file, location, &error)) {
-		panel_launcher_create (toplevel, pack_type, pack_index, location);
-	} else {
-		panel_error_dialog (GTK_WINDOW (toplevel),
-				    gtk_window_get_screen (GTK_WINDOW (toplevel)),
-				    "cannot_save_launcher", TRUE,
-				    _("Could not save launcher"),
-				    error->message);
-		g_error_free (error);
-	}
-
-	g_key_file_free (key_file);
-}
-
 static void
 panel_launcher_create_with_id (const char          *toplevel_id,
 			       PanelObjectPackType  pack_type,

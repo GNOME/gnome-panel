@@ -33,14 +33,6 @@ void panel_launcher_create           (PanelToplevel       *toplevel,
 				      PanelObjectPackType  pack_type,
 				      int                  pack_index,
 				      const char          *location);
-void panel_launcher_create_from_info (PanelToplevel       *toplevel,
-				      PanelObjectPackType  pack_type,
-				      int                  pack_index,
-				      gboolean             exec_info,
-				      const char          *exec_or_uri,
-				      const char          *name,
-				      const char          *comment,
-				      const char          *icon);
 
 void		launcher_launch    		(Launcher  *launcher,
 						 GtkWidget *widget);
