@@ -26,7 +26,6 @@
 
 #include "applet.h"
 #include "button-widget.h"
-#include "launcher.h"
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
@@ -74,7 +73,6 @@ orientation_change (AppletInfo  *info,
 		panel_applet_frame_change_orientation (
 				PANEL_APPLET_FRAME (info->widget), orientation);
 		break;
-	case PANEL_OBJECT_LAUNCHER:
 	case PANEL_OBJECT_ACTION:
 		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
 		break;
@@ -922,13 +920,6 @@ drop_internal_applet (PanelWidget         *panel,
 		} else {
 			success = FALSE;
 		}
-	} else if (!strcmp(applet_type,"LAUNCHER:ASK")) {
-		if (panel_layout_is_writable ()) {
-			ask_about_launcher (NULL, panel, pack_type);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
 	}
 
 	return success;
@@ -1082,12 +1073,12 @@ drag_motion_cb (GtkWidget	   *widget,
 }
 
 static gboolean
-drag_drop_cb (GtkWidget	        *widget,
-	      GdkDragContext    *context,
-	      gint               x,
-	      gint               y,
-	      guint              time,
-	      Launcher          *launcher)
+drag_drop_cb (GtkWidget      *widget,
+              GdkDragContext *context,
+              gint            x,
+              gint            y,
+              guint           time,
+              gpointer        user_data)
 {
 	GdkAtom ret_atom = NULL;
 
@@ -1099,11 +1090,11 @@ drag_drop_cb (GtkWidget	        *widget,
 	return TRUE;
 }
 
-static void  
-drag_leave_cb (GtkWidget	*widget,
-	       GdkDragContext   *context,
-	       guint             time,
-	       Launcher         *launcher)
+static void
+drag_leave_cb (GtkWidget      *widget,
+               GdkDragContext *context,
+               guint           time,
+               gpointer        user_data)
 {
 	PanelToplevel *toplevel;
 

@@ -33,7 +33,6 @@ panel_sources =			\
 	panel-util.c		\
 	panel-run-dialog.c	\
 	panel-context-menu.c	\
-	launcher.c		\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
 	panel-action-button.c	\
@@ -47,7 +46,6 @@ panel_sources =			\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto-dialog.c	\
-	panel-ditem-editor.c	\
 	panel-layout.c		\
 	panel-object-loader.c	\
 	panel-applet-info.c
@@ -61,7 +59,6 @@ panel_headers =			\
 	panel-util.h		\
 	panel-run-dialog.h	\
 	panel-context-menu.h	\
-	launcher.h		\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
 	panel-action-button.h	\
@@ -77,7 +74,6 @@ panel_headers =			\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto-dialog.h	\
-	panel-ditem-editor.h	\
 	panel-icon-names.h	\
 	panel-layout.h		\
 	panel-object-loader.h	\
