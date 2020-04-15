@@ -17,6 +17,8 @@ libgnome_panel_la_SOURCES = \
 	gp-initial-setup-dialog-private.h \
 	gp-initial-setup-dialog.c \
 	gp-initial-setup-dialog.h \
+	gp-lockdown.c \
+	gp-lockdown.h \
 	gp-module-private.h \
 	gp-module.c \
 	gp-module.h \
@@ -56,12 +58,14 @@ libgnome_panel_include_HEADERS = \
 	gp-enum-types.h \
 	gp-image-menu-item.h \
 	gp-initial-setup-dialog.h \
+	gp-lockdown.h \
 	gp-module.h \
 	gp-utils.h \
 	$(NULL)
 
 ENUM_TYPES = \
 	$(srcdir)/gp-applet.h \
+	gp-lockdown.h \
 	$(NULL)
 
 gp-enum-types.c: gp-enum-types.c.in gp-enum-types.h $(ENUM_TYPES)

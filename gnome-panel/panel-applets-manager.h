@@ -29,25 +29,28 @@
 
 G_BEGIN_DECLS
 
-GList            *panel_applets_manager_get_applets                 (void);
+GList           *panel_applets_manager_get_applets               (void);
 
-gboolean          panel_applets_manager_factory_activate            (const gchar     *iid);
-void              panel_applets_manager_factory_deactivate          (const gchar     *iid);
+gboolean         panel_applets_manager_factory_activate          (const gchar                 *iid);
+void             panel_applets_manager_factory_deactivate        (const gchar                 *iid);
 
-PanelAppletInfo  *panel_applets_manager_get_applet_info             (const gchar     *iid);
+PanelAppletInfo *panel_applets_manager_get_applet_info           (const gchar                 *iid);
 
-gboolean          panel_applets_manager_load_applet                 (const gchar                *iid,
-								     PanelAppletFrameActivating *frame_act);
+gboolean         panel_applets_manager_load_applet               (const gchar                 *iid,
+                                                                  PanelAppletFrameActivating  *frame_act);
 
-gchar            *panel_applets_manager_get_new_iid                 (const gchar     *old_iid);
+gchar           *panel_applets_manager_get_new_iid               (const gchar                 *old_iid);
 
-gboolean          panel_applets_manager_open_initial_setup_dialog   (const gchar            *iid,
-                                                                     GtkWindow              *parent,
-                                                                     GpInitialSetupCallback  callback,
-                                                                     gpointer                user_data,
-                                                                     GDestroyNotify          free_func);
+gboolean         panel_applets_manager_open_initial_setup_dialog (const gchar                 *iid,
+                                                                  GtkWindow                   *parent,
+                                                                  GpInitialSetupCallback       callback,
+                                                                  gpointer                     user_data,
+                                                                  GDestroyNotify               free_func);
 
-GtkWidget        *panel_applets_manager_get_standalone_menu         (void);
+GtkWidget       *panel_applets_manager_get_standalone_menu       (void);
+
+gboolean         panel_applets_manager_is_applet_disabled        (const char                  *iid,
+                                                                  char                       **reason);
 
 G_END_DECLS
 

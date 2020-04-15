@@ -126,3 +126,12 @@ panel_applets_manager_get_standalone_menu (void)
 
 	return gp_applet_manager_get_standalone_menu (manager);
 }
+
+gboolean
+panel_applets_manager_is_applet_disabled (const char  *iid,
+                                          char       **reason)
+{
+	_panel_applets_managers_ensure_loaded ();
+
+	return gp_applet_manager_is_applet_disabled (manager, iid, reason);
+}

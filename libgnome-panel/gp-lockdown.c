@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016-2020 Alberts Muktupāvels
+ * Copyright (C) 2020 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -15,33 +15,14 @@
  * along with this library; if not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GP_APPLET_INFO_PRIVATE_H
-#define GP_APPLET_INFO_PRIVATE_H
+#include "config.h"
+#include "gp-lockdown.h"
 
-#include <libgnome-panel/gp-applet-info.h>
-
-G_BEGIN_DECLS
-
-struct _GpAppletInfo
-{
-  GpGetAppletTypeFunc       get_applet_type_func;
-
-  gchar                    *name;
-  gchar                    *description;
-  gchar                    *icon_name;
-
-  GpInitialSetupDialogFunc  initial_setup_dialog_func;
-
-  gchar                    *help_uri;
-  GpAboutDialogFunc         about_dialog_func;
-
-  gchar                    *backends;
-
-  GpIsDisabledFunc          is_disabled_func;
-};
-
-void gp_applet_info_free (GpAppletInfo *info);
-
-G_END_DECLS
-
-#endif
+/**
+ * SECTION: gp-lockdown
+ * @title: GpLockdown
+ * @short_description: lockdown enum
+ * @include: libgnome-panel/gp-lockdown.h
+ *
+ * A #GpLockdownFlags.
+ */
