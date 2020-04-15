@@ -44,7 +44,6 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
-#include <libpanel-util/panel-gtk.h>
 #include <libpanel-util/panel-keyfile.h>
 #include <libpanel-util/panel-show.h>
 #include <libpanel-util/panel-xdg.h>
@@ -56,6 +55,8 @@
 #include "panel-xutils.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
+
+#define PANEL_GTK_BUILDER_GET(builder, name) GTK_WIDGET (gtk_builder_get_object (builder, name))
 
 typedef struct {
 	GtkWidget        *run_dialog;

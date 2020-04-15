@@ -36,8 +36,6 @@ libpanel_util_la_SOURCES =		\
 	panel-glib.h			\
 	panel-gsettings.c		\
 	panel-gsettings.h		\
-	panel-gtk.c			\
-	panel-gtk.h			\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	panel-launch.c			\
