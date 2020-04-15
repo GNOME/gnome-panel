@@ -59,9 +59,6 @@
 #define PANEL_OBJECT_PACK_TYPE_KEY      "pack-type"
 #define PANEL_OBJECT_PACK_INDEX_KEY     "pack-index"
 
-#define PANEL_LAUNCHER_SCHEMA      "org.gnome.gnome-panel.launcher"
-#define PANEL_LOCATION_KEY         "location"
-
 #define PANEL_MENU_BUTTON_SCHEMA          "org.gnome.gnome-panel.menu-button"
 #define PANEL_MENU_BUTTON_TOOLTIP_KEY     "tooltip"
 #define PANEL_MENU_BUTTON_CUSTOM_ICON_KEY "custom-icon"

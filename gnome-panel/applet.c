@@ -19,7 +19,6 @@
 #include <libpanel-util/panel-show.h>
 
 #include "button-widget.h"
-#include "launcher.h"
 #include "panel.h"
 #include "panel-bindings.h"
 #include "panel-applet-frame.h"
@@ -71,9 +70,6 @@ void
 panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
-
-	if (info->type == PANEL_OBJECT_LAUNCHER)
-		panel_launcher_delete (info->data);
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
@@ -136,12 +132,6 @@ applet_callback_callback (GtkWidget      *widget,
 	g_return_if_fail (menu->info != NULL);
 
 	switch (menu->info->type) {
-	case PANEL_OBJECT_LAUNCHER:
-		if (!strcmp (menu->name, "launch"))
-			launcher_launch (menu->info->data, widget);
-		else if (!strcmp (menu->name, "properties"))
-			launcher_properties (menu->info->data);
-		break;
 	case PANEL_OBJECT_ACTION:
 		panel_action_button_invoke_menu (
 			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
@@ -181,7 +171,7 @@ applet_menu_deactivate (GtkWidget *w,
 	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
 }
 
-AppletUserMenu *
+static AppletUserMenu *
 panel_applet_get_callback (GList      *user_menu,
 			   const char *name)
 {

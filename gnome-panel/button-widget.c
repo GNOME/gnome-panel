@@ -25,7 +25,6 @@ struct _ButtonWidgetPrivate {
 	int               size;
 
 	guint             activatable   : 1;
-	guint             dnd_highlight : 1;
 };
 
 static void button_widget_icon_theme_changed (ButtonWidget *button);
@@ -34,7 +33,6 @@ static void button_widget_reload_pixbuf (ButtonWidget *button);
 enum {
 	PROP_0,
 	PROP_ACTIVATABLE,
-	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
 	PROP_ICON_NAME
 };
@@ -213,9 +211,6 @@ button_widget_get_property (GObject    *object,
 	case PROP_ACTIVATABLE:
 		g_value_set_boolean (value, button->priv->activatable);
 		break;
-	case PROP_DND_HIGHLIGHT:
-		g_value_set_boolean (value, button->priv->dnd_highlight);
-		break;
 	case PROP_ORIENTATION:
 		g_value_set_enum (value, button->priv->orientation);
 		break;
@@ -241,9 +236,6 @@ button_widget_set_property (GObject      *object,
 	switch (prop_id) {
 	case PROP_ACTIVATABLE:
 		button_widget_set_activatable (button, g_value_get_boolean (value));
-		break;
-	case PROP_DND_HIGHLIGHT:
-		button_widget_set_dnd_highlight (button, g_value_get_boolean (value));
 		break;
 	case PROP_ORIENTATION:
 		button_widget_set_orientation (button, g_value_get_enum (value));
@@ -312,15 +304,6 @@ button_widget_draw (GtkWidget *widget,
 	g_object_unref (pb);
 
         context = gtk_widget_get_style_context (widget);
-
-	if (button_widget->priv->dnd_highlight) {
-                cairo_save (cr);
-                cairo_set_line_width (cr, 1);
-                cairo_set_source_rgb (cr, 0., 0., 0.);
-                cairo_rectangle (cr, 0.5, 0.5, width - 1, height - 1);
-                cairo_stroke (cr);
-                cairo_restore (cr);
-	}
 
 	if (gtk_widget_has_focus (widget)) {
                 gtk_style_context_save (context);
@@ -525,15 +508,14 @@ button_widget_init (ButtonWidget *button)
 	button->priv->pixbuf_hc  = NULL;
 
 	button->priv->filename   = NULL;
-	
+
 	button->priv->orientation = PANEL_ORIENTATION_TOP;
 	context = gtk_widget_get_style_context (GTK_WIDGET (button));
 	gtk_style_context_add_class (context, GTK_STYLE_CLASS_HORIZONTAL);
 
 	button->priv->size = 0;
-	
+
 	button->priv->activatable   = FALSE;
-	button->priv->dnd_highlight = FALSE;
 }
 
 static void
@@ -570,15 +552,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 
 	g_object_class_install_property (
 			gobject_class,
-			PROP_DND_HIGHLIGHT,
-			g_param_spec_boolean ("dnd-highlight",
-					      "Drag and drop Highlight",
-					      "Whether or not to highlight the icon during drag and drop",
-					      FALSE,
-					      G_PARAM_READWRITE));
-
-	g_object_class_install_property (
-			gobject_class,
 			PROP_ORIENTATION,
 			g_param_spec_enum ("orientation",
 					   "Orientation",
@@ -603,21 +576,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					      "Whether to highlight the button on mouse over",
 					      TRUE,
 					      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
-}
-
-GtkWidget *
-button_widget_new (const char       *filename,
-		   PanelOrientation  orientation)
-{
-	GtkWidget *retval;
-
-	retval = g_object_new (
-			BUTTON_TYPE_WIDGET,
-			"orientation", orientation,
-			"icon-name", filename,
-			NULL);
-	
-	return retval;
 }
 
 void
@@ -686,49 +644,4 @@ button_widget_set_orientation (ButtonWidget     *button,
 	gtk_widget_queue_resize (GTK_WIDGET (button));
 
 	g_object_notify (G_OBJECT (button), "orientation");
-}
-
-PanelOrientation
-button_widget_get_orientation (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), 0);
-
-	return button->priv->orientation;
-}
-
-void
-button_widget_set_dnd_highlight (ButtonWidget *button,
-				 gboolean      dnd_highlight)
-{
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	dnd_highlight = dnd_highlight != FALSE;
-
-	if (button->priv->dnd_highlight == dnd_highlight)
-		return;
-
-	button->priv->dnd_highlight = dnd_highlight;
-
-	gtk_widget_queue_draw (GTK_WIDGET (button));
-
-	g_object_notify (G_OBJECT (button), "dnd-highlight");
-}
-
-GtkIconTheme *
-button_widget_get_icon_theme (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
-
-	return button->priv->icon_theme;
-}
-
-GdkPixbuf *
-button_widget_get_pixbuf (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
-
-	if (!button->priv->pixbuf)
-		return NULL;
-
-	return g_object_ref (button->priv->pixbuf);
 }

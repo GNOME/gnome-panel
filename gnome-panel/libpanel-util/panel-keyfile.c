@@ -153,57 +153,6 @@ panel_key_file_to_file (GKeyFile     *keyfile,
 }
 
 gboolean
-panel_key_file_load_from_uri (GKeyFile       *keyfile,
-			      const gchar    *uri,
-			      GKeyFileFlags   flags,
-			      GError        **error)
-{
-	char     *scheme;
-	gboolean  is_local;
-	gboolean  result;
-
-	g_return_val_if_fail (keyfile != NULL, FALSE);
-	g_return_val_if_fail (uri != NULL, FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	scheme = g_uri_parse_scheme (uri);
-	is_local = (scheme == NULL) || !g_ascii_strcasecmp (scheme, "file");
-	g_free (scheme);
-
-	if (is_local) {
-		char *path;
-
-		if (g_path_is_absolute (uri))
-			path = g_filename_from_utf8 (uri, -1, NULL, NULL, NULL);
-		else
-			path = g_filename_from_uri (uri, NULL, NULL);
-		result = g_key_file_load_from_file (keyfile, path,
-						    flags, error);
-		g_free (path);
-	} else {
-		GFile   *file;
-		char	*contents;
-		gsize    size;
-		gboolean ret;
-
-		file = g_file_new_for_uri (uri);
-		ret = g_file_load_contents (file, NULL, &contents, &size,
-					    NULL, NULL);
-		g_object_unref (file);
-		
-		if (!ret)
-			return FALSE;
-
-		result = g_key_file_load_from_data (keyfile, contents, size,
-						    flags, error);
-
-		g_free (contents);
-	}
-
-	return result;
-}
-
-gboolean
 panel_key_file_get_boolean (GKeyFile    *keyfile,
 			    const gchar *key,
 			    gboolean     default_value)
@@ -246,59 +195,4 @@ panel_key_file_set_locale_string (GKeyFile    *keyfile,
 	else
 		g_key_file_set_string (keyfile, G_KEY_FILE_DESKTOP_GROUP,
 				       key, value);
-}
-
-void
-panel_key_file_remove_all_locale_key (GKeyFile    *keyfile,
-				      const gchar *key)
-{
-	char **keys;
-	int    key_len;
-	int    i;
-
-	if (!key)
-		return;
-
-	keys = g_key_file_get_keys (keyfile, G_KEY_FILE_DESKTOP_GROUP, NULL, NULL);
-	if (!keys)
-		return;
-
-	key_len = strlen (key);
-
-	for (i = 0; keys[i] != NULL; i++) {
-		int len;
-
-		if (strncmp (keys[i], key, key_len))
-			continue;
-
-		len = strlen (keys[i]);
-		if (len == key_len ||
-		    (len > key_len && keys[i][key_len] == '['))
-			g_key_file_remove_key (keyfile, G_KEY_FILE_DESKTOP_GROUP,
-					       keys[i], NULL);
-	}
-
-	g_strfreev (keys);
-}
-
-void
-panel_key_file_ensure_C_key (GKeyFile   *keyfile,
-			     const char *key)
-{
-	char *C_value;
-	char *buffer;
-
-	/* Make sure we set the "C" locale strings to the terms we set here.
-	 * This is so that if the user logs into another locale they get their
-	 * own description there rather then empty. It is not the C locale
-	 * however, but the user created this entry herself so it's OK */
-	C_value = panel_key_file_get_string (keyfile, key);
-	if (C_value == NULL || C_value [0] == '\0') {
-		buffer = panel_key_file_get_locale_string (keyfile, key);
-		if (buffer) {
-			panel_key_file_set_string (keyfile, key, buffer);
-			g_free (buffer);
-		}
-	}
-	g_free (C_value);
 }
