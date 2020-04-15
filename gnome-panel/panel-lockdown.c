@@ -49,22 +49,12 @@ enum {
         PROP_DISABLE_LOCK_SCREEN,
         PROP_DISABLE_LOG_OUT,
         PROP_DISABLE_SWITCH_USER,
+        PROP_DISABLED_APPLETS,
         PROP_PANELS_LOCKED_DOWN,
         PROP_DISABLE_FORCE_QUIT
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (PanelLockdown, panel_lockdown, G_TYPE_OBJECT)
-
-static void
-_panel_lockdown_disabled_applets_changed (GSettings     *settings,
-                                          const char    *key,
-                                          PanelLockdown *lockdown)
-{
-        if (lockdown->priv->disabled_applets)
-                g_strfreev (lockdown->priv->disabled_applets);
-        lockdown->priv->disabled_applets = g_settings_get_strv (lockdown->priv->panel_settings,
-                                                                PANEL_LOCKDOWN_DISABLED_APPLETS_KEY);
-}
 
 static GObject *
 panel_lockdown_constructor (GType                  type,
@@ -108,6 +98,12 @@ panel_lockdown_constructor (GType                  type,
                          G_SETTINGS_BIND_GET);
 
         g_settings_bind (lockdown->priv->panel_settings,
+                         PANEL_LOCKDOWN_DISABLED_APPLETS_KEY,
+                         lockdown,
+                         "disabled-applets",
+                         G_SETTINGS_BIND_GET);
+
+        g_settings_bind (lockdown->priv->panel_settings,
                          PANEL_LOCKDOWN_COMPLETE_LOCKDOWN_KEY,
                          lockdown,
                          "panels-locked-down",
@@ -118,15 +114,6 @@ panel_lockdown_constructor (GType                  type,
                          lockdown,
                          "disable-force-quit",
                          G_SETTINGS_BIND_GET);
-
-        g_signal_connect (lockdown->priv->panel_settings,
-                          "changed::"PANEL_LOCKDOWN_DISABLED_APPLETS_KEY,
-                          G_CALLBACK (_panel_lockdown_disabled_applets_changed),
-                          lockdown);
-
-        _panel_lockdown_disabled_applets_changed (lockdown->priv->panel_settings,
-                                                  PANEL_LOCKDOWN_DISABLED_APPLETS_KEY,
-                                                  lockdown);
 
         return obj;
 }
@@ -184,6 +171,10 @@ panel_lockdown_set_property (GObject      *object,
                                                      value,
                                                      "disable-switch-user");
                 break;
+        case PROP_DISABLED_APPLETS:
+                g_strfreev (lockdown->priv->disabled_applets);
+                lockdown->priv->disabled_applets = g_value_dup_boxed (value);
+                break;
         case PROP_PANELS_LOCKED_DOWN:
                 _panel_lockdown_set_property_helper (lockdown,
                                                      &lockdown->priv->panels_locked_down,
@@ -226,6 +217,9 @@ panel_lockdown_get_property (GObject    *object,
                 break;
         case PROP_DISABLE_SWITCH_USER:
                 g_value_set_boolean (value, lockdown->priv->disable_switch_user);
+                break;
+        case PROP_DISABLED_APPLETS:
+                g_value_set_boxed (value, lockdown->priv->disabled_applets);
                 break;
         case PROP_PANELS_LOCKED_DOWN:
                 g_value_set_boolean (value, lockdown->priv->panels_locked_down);
@@ -317,6 +311,16 @@ panel_lockdown_class_init (PanelLockdownClass *lockdown_class)
                         "Disable user switching",
                         "Whether user switching is disabled or not",
                         TRUE,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+        g_object_class_install_property (
+                gobject_class,
+                PROP_DISABLED_APPLETS,
+                g_param_spec_boxed (
+                        "disabled-applets",
+                        "Disabled applets",
+                        "Applet IIDs to disable from loading",
+                        G_TYPE_STRV,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
         g_object_class_install_property (
