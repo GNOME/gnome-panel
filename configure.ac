@@ -154,6 +154,13 @@ PKG_CHECK_MODULES(FISH, gtk+-3.0 >= $GTK_REQUIRED cairo >= $CAIRO_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
 
+PKG_CHECK_MODULES([LAUNCHER], [
+  gio-unix-2.0 >= $GLIB_REQUIRED
+  gtk+-3.0 >= $GTK_REQUIRED
+  libgnome-menu-3.0 >= $LIBGNOME_MENU_REQUIRED
+  libsystemd >= $LIBSYSTEMD_REQUIRED
+])
+
 PKG_CHECK_MODULES([MENU], [
   gdm
   gio-unix-2.0 >= $GLIB_REQUIRED
@@ -278,6 +285,7 @@ AC_CONFIG_FILES([
   modules/clock/Makefile
   modules/clock/pixmaps/Makefile
   modules/fish/Makefile
+  modules/launcher/Makefile
   modules/menu/Makefile
   modules/notification-area/Makefile
   modules/separator/Makefile

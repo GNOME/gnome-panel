@@ -99,7 +99,7 @@ gather_pid_callback (GDesktopAppInfo   *gapp,
   g_child_watch_add (pid, dummy_child_watch, NULL);
 }
 
-gboolean
+static gboolean
 panel_app_info_launch_uris (GAppInfo   *appinfo,
 			    GList      *uris,
 			    GdkScreen  *screen,
@@ -130,34 +130,6 @@ panel_app_info_launch_uris (GAppInfo   *appinfo,
 
 	return _panel_launch_handle_error (g_app_info_get_name ((GAppInfo*) appinfo),
 					   screen, local_error, error);
-}
-
-gboolean
-panel_launch_key_file (GKeyFile   *keyfile,
-		       GList      *uri_list,
-		       GdkScreen  *screen,
-		       GError    **error)
-{
-	GDesktopAppInfo *appinfo;
-	gboolean         retval;
-
-	g_return_val_if_fail (keyfile != NULL, FALSE);
-	g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
-	g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-	appinfo = g_desktop_app_info_new_from_keyfile (keyfile);
-
-	if (appinfo == NULL)
-		return FALSE;
-
-	retval = panel_app_info_launch_uris (G_APP_INFO (appinfo),
-					     uri_list, screen,
-					     gtk_get_current_event_time (),
-					     error);
-
-	g_object_unref (appinfo);
-
-	return retval;
 }
 
 gboolean

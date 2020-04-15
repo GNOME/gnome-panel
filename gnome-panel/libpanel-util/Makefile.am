@@ -38,8 +38,6 @@ libpanel_util_la_SOURCES =		\
 	panel-gsettings.h		\
 	panel-gtk.c			\
 	panel-gtk.h			\
-	panel-icon-chooser.c		\
-	panel-icon-chooser.h		\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
 	panel-launch.c			\

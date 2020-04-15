@@ -36,7 +36,6 @@
 #include "panel-toplevel.h"
 
 /* Includes for objects we can load */
-#include "launcher.h"
 #include "panel-action-button.h"
 #include "panel-applet-frame.h"
 
@@ -200,11 +199,6 @@ panel_object_loader_idle_handler (gpointer dummy)
                                          object->id,
                                          object->settings);
                 break;
-        case PANEL_OBJECT_LAUNCHER:
-                launcher_load (panel_widget,
-                               object->id,
-                               object->settings);
-                break;
         case PANEL_OBJECT_ACTION:
                 panel_action_button_load (panel_widget,
                                           object->id,
@@ -345,8 +339,7 @@ static struct {
         const char      *id;
         gboolean         has_detail;
 } panel_object_iid_map[] = {
-        { PANEL_OBJECT_ACTION,    "ActionButton" , TRUE  },
-        { PANEL_OBJECT_LAUNCHER,  "Launcher"     , FALSE }
+        { PANEL_OBJECT_ACTION, "ActionButton", TRUE }
 };
 
 char *

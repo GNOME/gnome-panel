@@ -36,40 +36,8 @@
 
 #include "applet.h"
 #include "panel-bindings.h"
-#include "launcher.h"
 #include "panel-icon-names.h"
 #include "panel-schemas.h"
-
-char *
-panel_util_make_exec_uri_for_desktop (const char *exec)
-{
-	GString    *str;
-	const char *c;
-
-	if (!exec)
-		return g_strdup ("");
-
-	if (!strchr (exec, ' '))
-		return g_strdup (exec);
-
-	str = g_string_new_len (NULL, strlen (exec));
-
-	str = g_string_append_c (str, '"');
-	for (c = exec; *c != '\0'; c++) {
-		/* FIXME: GKeyFile will add an additional backslach so we'll
-		 * end up with toto\\" instead of toto\"
-		 * We could use g_key_file_set_value(), but then we don't
-		 * benefit from the other escaping that glib is doing...
-		 */
-		if (*c == '"')
-			str = g_string_append (str, "\\\"");
-		else
-			str = g_string_append_c (str, *c);
-	}
-	str = g_string_append_c (str, '"');
-
-	return g_string_free (str, FALSE);
-}
 
 void
 panel_push_window_busy (GtkWidget *window)
@@ -166,22 +134,7 @@ panel_ensure_dir (const char *dirname)
 	return TRUE;
 }
 
-gboolean
-panel_uri_exists (const char *uri)
-{
-	GFile *suri;
-	gboolean ret;
-
-	g_return_val_if_fail (uri != NULL, FALSE);
-
-	suri = g_file_new_for_uri (uri);
-	ret = g_file_query_exists (suri, NULL);
-	g_object_unref (suri);
-
-	return ret;
-}
-
-char *
+static char *
 panel_find_icon (GtkIconTheme  *icon_theme,
 		 const char    *icon_name,
 		 gint           size)
@@ -265,7 +218,7 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
-char *
+static char *
 panel_util_get_from_personal_path (const char *file)
 {
 	return g_build_filename (g_get_user_config_dir (),
@@ -278,32 +231,7 @@ panel_launcher_get_personal_path (void)
 	return panel_util_get_from_personal_path ("launchers");
 }
 
-gboolean
-panel_launcher_is_in_personal_path (const char *location)
-{
-	GFile    *file;
-	GFile    *launchers_dir;
-	char     *launchers_path;
-	gboolean  retval;
-
-	if (!location)
-		return FALSE;
-
-	launchers_path = panel_launcher_get_personal_path ();
-	launchers_dir = g_file_new_for_path (launchers_path);
-	g_free (launchers_path);
-
-	file = panel_launcher_get_gfile (location);
-
-	retval = g_file_has_prefix (file, launchers_dir);
-
-	g_object_unref (file);
-	g_object_unref (launchers_dir);
-
-	return retval;
-}
-
-GFile *
+static GFile *
 panel_launcher_get_gfile (const char *location)
 {
 	char  *path;
@@ -320,26 +248,6 @@ panel_launcher_get_gfile (const char *location)
 	g_free (path);
 
 	return file;
-}
-
-char *
-panel_launcher_get_uri (const char *location)
-{
-	char *path;
-	char *uri;
-
-	if (!g_ascii_strncasecmp (location, "file:", strlen ("file:")))
-		return g_strdup (location);
-
-	if (!g_path_is_absolute (location))
-		path = panel_make_full_path (NULL, location);
-	else
-		path = g_strdup (location);
-
-	uri = g_filename_to_uri (path, NULL, NULL);
-	g_free (path);
-
-	return uri;
 }
 
 char *
@@ -394,7 +302,7 @@ panel_make_full_path (const char *dir,
 	return retval;
 }
 
-char *
+static char *
 panel_make_unique_desktop_path_from_name (const char *dir,
 					  const char *name)
 {
