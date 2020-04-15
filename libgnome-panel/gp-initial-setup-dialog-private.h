@@ -39,6 +39,9 @@ void                  gp_initital_setup_dialog_add_callback (GpInitialSetupDialo
 
 GVariant             *gp_initital_setup_dialog_get_settings (GpInitialSetupDialog   *dialog);
 
+void                  gp_initital_setup_dialog_set_settings (GpInitialSetupDialog   *dialog,
+                                                             GVariant               *settings);
+
 G_END_DECLS
 
 #endif

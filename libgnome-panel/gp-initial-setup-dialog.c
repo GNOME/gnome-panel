@@ -240,6 +240,27 @@ gp_initital_setup_dialog_get_settings (GpInitialSetupDialog *dialog)
 }
 
 void
+gp_initital_setup_dialog_set_settings (GpInitialSetupDialog *dialog,
+                                       GVariant             *settings)
+{
+  GVariantIter iter;
+  char *key;
+  GVariant *value;
+
+  if (settings == NULL)
+    return;
+
+  g_variant_iter_init (&iter, settings);
+  while (g_variant_iter_next (&iter, "{sv}", &key, &value))
+    {
+      gp_initital_setup_dialog_set_setting (dialog, key, value);
+
+      g_free (key);
+      g_variant_unref (value);
+    }
+}
+
+void
 gp_initital_setup_dialog_set_done (GpInitialSetupDialog *dialog,
                                    gboolean              done)
 {
