@@ -177,6 +177,22 @@ gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
 }
 
 /**
+ * gp_initital_setup_dialog_get_setting:
+ * @dialog: a #GpInitialSetupDialog
+ * @key: the setting key
+ *
+ * Gets a setting for @key.
+ *
+ * Returns: (transfer none): a #GVariant, or %NULL.
+ */
+GVariant *
+gp_initital_setup_dialog_get_setting (GpInitialSetupDialog *dialog,
+                                      const char           *key)
+{
+  return g_hash_table_lookup (dialog->settings, key);
+}
+
+/**
  * gp_initital_setup_dialog_set_setting:
  * @dialog: a #GpInitialSetupDialog
  * @key: the setting key

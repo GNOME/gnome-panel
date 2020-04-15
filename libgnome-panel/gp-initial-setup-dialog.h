@@ -29,17 +29,20 @@ G_BEGIN_DECLS
  */
 typedef struct _GpInitialSetupDialog GpInitialSetupDialog;
 
-void gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
-                                                  GtkWidget            *content,
-                                                  gpointer              user_data,
-                                                  GDestroyNotify        free_func);
+void      gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
+                                                       GtkWidget            *content,
+                                                       gpointer              user_data,
+                                                       GDestroyNotify        free_func);
 
-void gp_initital_setup_dialog_set_setting        (GpInitialSetupDialog *dialog,
-                                                  const gchar          *key,
-                                                  GVariant             *value);
+GVariant *gp_initital_setup_dialog_get_setting        (GpInitialSetupDialog *dialog,
+                                                       const char           *key);
 
-void gp_initital_setup_dialog_set_done           (GpInitialSetupDialog *dialog,
-                                                  gboolean              done);
+void      gp_initital_setup_dialog_set_setting        (GpInitialSetupDialog *dialog,
+                                                       const gchar          *key,
+                                                       GVariant             *value);
+
+void      gp_initital_setup_dialog_set_done           (GpInitialSetupDialog *dialog,
+                                                       gboolean              done);
 
 G_END_DECLS
 
