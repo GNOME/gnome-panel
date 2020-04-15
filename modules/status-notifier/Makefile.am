@@ -1,9 +1,9 @@
 NULL =
 
 status_notifier_libdir = $(libdir)/gnome-panel/modules
-status_notifier_lib_LTLIBRARIES = status-notifier.la
+status_notifier_lib_LTLIBRARIES = org.gnome.gnome-panel.status-notifier.la
 
-status_notifier_la_CPPFLAGS = \
+org_gnome_gnome_panel_status_notifier_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""status-notifier"\" \
 	-DG_LOG_USE_STRUCTURED=1 \
@@ -11,14 +11,14 @@ status_notifier_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-status_notifier_la_CFLAGS = \
+org_gnome_gnome_panel_status_notifier_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(STATUS_NOTIFIER_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-status_notifier_la_SOURCES = \
+org_gnome_gnome_panel_status_notifier_la_SOURCES = \
 	sn-applet.c \
 	sn-applet.h \
 	sn-dbus-menu.c \
@@ -37,14 +37,14 @@ status_notifier_la_SOURCES = \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-status_notifier_la_LIBADD = \
+org_gnome_gnome_panel_status_notifier_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(LIBM) \
 	$(STATUS_NOTIFIER_LIBS) \
 	$(NULL)
 
-status_notifier_la_LDFLAGS = \
+org_gnome_gnome_panel_status_notifier_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

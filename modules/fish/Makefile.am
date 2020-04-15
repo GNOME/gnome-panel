@@ -1,36 +1,36 @@
 NULL =
 
 fish_libdir = $(libdir)/gnome-panel/modules
-fish_lib_LTLIBRARIES = fish.la
+fish_lib_LTLIBRARIES = org.gnome.gnome-panel.fish.la
 
-fish_la_SOURCES = \
+org_gnome_gnome_panel_fish_la_SOURCES = \
 	fish-applet.c \
 	fish-applet.h \
 	fish-module.c \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-fish_la_CPPFLAGS = \
+org_gnome_gnome_panel_fish_la_CPPFLAGS = \
 	-DFISH_ICONDIR=\""$(fishbitmapsdir)"\" \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-I$(top_srcdir) \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-fish_la_CFLAGS = \
+org_gnome_gnome_panel_fish_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(FISH_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-fish_la_LIBADD = \
+org_gnome_gnome_panel_fish_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(FISH_LIBS) \
 	$(NULL)
 
-fish_la_LDFLAGS = \
+org_gnome_gnome_panel_fish_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

@@ -1,9 +1,9 @@
 NULL =
 
 launcher_libdir = $(libdir)/gnome-panel/modules
-launcher_lib_LTLIBRARIES = launcher.la
+launcher_lib_LTLIBRARIES = org.gnome.gnome-panel.launcher.la
 
-launcher_la_CPPFLAGS = \
+org_gnome_gnome_panel_launcher_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DGRESOURCE_PREFIX=\""/org/gnome/gnome-panel/modules/launcher"\" \
@@ -13,14 +13,14 @@ launcher_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-launcher_la_CFLAGS = \
+org_gnome_gnome_panel_launcher_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(LAUNCHER_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-launcher_la_SOURCES = \
+org_gnome_gnome_panel_launcher_la_SOURCES = \
 	gp-custom-launcher-applet.c \
 	gp-custom-launcher-applet.h \
 	gp-editor.c \
@@ -39,13 +39,13 @@ launcher_la_SOURCES = \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-launcher_la_LIBADD = \
+org_gnome_gnome_panel_launcher_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(LAUNCHER_LIBS) \
 	$(NULL)
 
-launcher_la_LDFLAGS = \
+org_gnome_gnome_panel_launcher_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

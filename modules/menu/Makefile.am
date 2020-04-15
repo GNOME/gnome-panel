@@ -1,9 +1,9 @@
 NULL =
 
 menu_libdir = $(libdir)/gnome-panel/modules
-menu_lib_LTLIBRARIES = menu.la
+menu_lib_LTLIBRARIES = org.gnome.gnome-panel.menu.la
 
-menu_la_CPPFLAGS = \
+org_gnome_gnome_panel_menu_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE \
 	-DG_LOG_DOMAIN=\""menu"\" \
@@ -12,14 +12,14 @@ menu_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-menu_la_CFLAGS = \
+org_gnome_gnome_panel_menu_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(MENU_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-menu_la_SOURCES = \
+org_gnome_gnome_panel_menu_la_SOURCES = \
 	gp-bookmarks.c \
 	gp-bookmarks.h \
 	gp-lock-logout.c \
@@ -52,13 +52,13 @@ menu_la_SOURCES = \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-menu_la_LIBADD = \
+org_gnome_gnome_panel_menu_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(MENU_LIBS) \
 	$(NULL)
 
-menu_la_LDFLAGS = \
+org_gnome_gnome_panel_menu_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

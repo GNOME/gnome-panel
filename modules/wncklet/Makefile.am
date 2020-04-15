@@ -1,23 +1,23 @@
 NULL =
 
 wncklet_libdir = $(libdir)/gnome-panel/modules
-wncklet_lib_LTLIBRARIES = wncklet.la
+wncklet_lib_LTLIBRARIES = org.gnome.gnome-panel.wncklet.la
 
-wncklet_la_CPPFLAGS = \
+org_gnome_gnome_panel_wncklet_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE \
 	-I$(top_srcdir) \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-wncklet_la_CFLAGS = \
+org_gnome_gnome_panel_wncklet_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(WNCKLET_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-wncklet_la_SOURCES = \
+org_gnome_gnome_panel_wncklet_la_SOURCES = \
 	wncklet.c \
 	wncklet.h \
 	wncklet-module.c \
@@ -32,13 +32,13 @@ wncklet_la_SOURCES = \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
-wncklet_la_LIBADD = \
+org_gnome_gnome_panel_wncklet_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(WNCKLET_LIBS) \
 	$(NULL)
 
-wncklet_la_LDFLAGS = \
+org_gnome_gnome_panel_wncklet_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

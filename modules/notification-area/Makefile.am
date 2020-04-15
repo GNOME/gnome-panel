@@ -1,23 +1,23 @@
 NULL =
 
 notification_area_libdir = $(libdir)/gnome-panel/modules
-notification_area_lib_LTLIBRARIES = notification-area.la
+notification_area_lib_LTLIBRARIES = org.gnome.gnome-panel.notification-area.la
 
-notification_area_la_CPPFLAGS = \
+org_gnome_gnome_panel_notification_area_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DG_LOG_DOMAIN=\""notification-area"\" \
 	-I$(top_srcdir) \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-notification_area_la_CFLAGS = \
+org_gnome_gnome_panel_notification_area_la_CFLAGS = \
 	$(NOTIFICATION_AREA_CFLAGS) \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(WARN_CFLAGS) \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-notification_area_la_SOURCES = \
+org_gnome_gnome_panel_notification_area_la_SOURCES = \
 	fixedtip.h \
 	fixedtip.c \
 	na-applet.c \
@@ -31,13 +31,13 @@ notification_area_la_SOURCES = \
 	na-tray-manager.h \
 	$(NULL)
 
-notification_area_la_LIBADD = \
+org_gnome_gnome_panel_notification_area_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(NOTIFICATION_AREA_LIBS) \
 	$(LIBGNOME_PANEL_LIBS) \
 	$(NULL)
 
-notification_area_la_LDFLAGS = \
+org_gnome_gnome_panel_notification_area_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \

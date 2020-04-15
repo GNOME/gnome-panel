@@ -3,7 +3,7 @@ NULL =
 SUBDIRS = pixmaps
 
 clock_libdir = $(libdir)/gnome-panel/modules
-clock_lib_LTLIBRARIES = clock.la
+clock_lib_LTLIBRARIES = org.gnome.gnome-panel.clock.la
 
 if ENABLE_EDS
 CALENDAR_SOURCES = \
@@ -15,7 +15,7 @@ CALENDAR_SOURCES = \
 	$(NULL)
 endif
 
-clock_la_SOURCES = \
+org_gnome_gnome_panel_clock_la_SOURCES = \
 	calendar-window.c \
 	calendar-window.h \
 	clock-applet.c \
@@ -39,7 +39,7 @@ clock_la_SOURCES = \
 	$(CALENDAR_SOURCES) \
 	$(NULL)
 
-clock_la_CPPFLAGS = \
+org_gnome_gnome_panel_clock_la_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \
 	-DCLOCK_EDS_ICONDIR="\"$(CLOCK_EDS_ICONDIR)\"" \
 	-DEDS_DISABLE_DEPRECATED \
@@ -49,7 +49,7 @@ clock_la_CPPFLAGS = \
 	$(AM_CPPFLAGS) \
 	$(NULL)
 
-clock_la_CFLAGS = \
+org_gnome_gnome_panel_clock_la_CFLAGS = \
 	$(LIBGNOME_PANEL_CFLAGS) \
 	$(CLOCK_CFLAGS) \
 	$(CLOCK_EDS_CFLAGS) \
@@ -57,7 +57,7 @@ clock_la_CFLAGS = \
 	$(AM_CFLAGS) \
 	$(NULL)
 
-clock_la_LIBADD = \
+org_gnome_gnome_panel_clock_la_LIBADD = \
 	$(top_builddir)/libgnome-panel/libgnome-panel.la \
 	$(CLOCK_LIBS) \
 	$(CLOCK_EDS_LIBS) \
@@ -65,7 +65,7 @@ clock_la_LIBADD = \
 	$(LIBM) \
 	$(NULL)
 
-clock_la_LDFLAGS = \
+org_gnome_gnome_panel_clock_la_LDFLAGS = \
 	-module -avoid-version \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
