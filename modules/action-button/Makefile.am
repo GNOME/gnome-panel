@@ -19,6 +19,8 @@ org_gnome_gnome_panel_action_button_la_CFLAGS = \
 	$(NULL)
 
 org_gnome_gnome_panel_action_button_la_SOURCES = \
+	gp-action-button.c \
+	gp-action-button.h \
 	gp-action-button-module.c \
 	$(NULL)
 
