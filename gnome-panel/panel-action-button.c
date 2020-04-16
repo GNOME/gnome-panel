@@ -32,7 +32,6 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
-#include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
 
 #include "applet.h"
@@ -66,7 +65,6 @@ static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
 	{ PANEL_ACTION_RUN,            "run"            },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
-	{ PANEL_ACTION_SHUTDOWN,       "shutdown"       },
 	{ 0,                           NULL             },
 };
 
@@ -97,28 +95,6 @@ panel_enum_to_string (gint enum_value)
 		++i;
 	}
 	return NULL;
-}
-
-static void
-panel_action_shutdown (GtkWidget *widget)
-{
-	PanelSessionManager *manager;
-
-	manager = panel_session_manager_get ();
-	panel_session_manager_request_shutdown (manager);
-}
-
-static gboolean
-panel_action_shutdown_reboot_is_disabled (void)
-{
-	PanelSessionManager *manager;
-
-	if (panel_lockdown_get_disable_log_out_s ())
-		return TRUE;
-
-	manager = panel_session_manager_get ();
-
-	return (!panel_session_manager_is_shutdown_available (manager));
 }
 
 /* Run Application
@@ -174,15 +150,6 @@ static PanelAction actions [] = {
 		"ACTION:force-quit:NEW",
 		panel_action_force_quit,
 		panel_lockdown_get_disable_force_quit_s
-	},
-	{
-		PANEL_ACTION_SHUTDOWN,
-		PANEL_ICON_SHUTDOWN,
-		N_("Power Off"),
-		N_("Power off the computer"),
-		"ACTION:shutdown:NEW",
-		panel_action_shutdown,
-		panel_action_shutdown_reboot_is_disabled
 	}
 };
 

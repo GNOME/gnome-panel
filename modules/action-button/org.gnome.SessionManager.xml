@@ -5,6 +5,12 @@
   <interface name="org.gnome.SessionManager">
     <annotation name="org.gtk.GDBus.C.Name" value="SessionManagerGen" />
 
+    <method name="Shutdown" />
+
+    <method name="CanShutdown">
+      <arg name="is_available" direction="out" type="b" />
+    </method>
+
     <method name="Logout">
       <arg name="mode" type="u" direction="in" />
     </method>

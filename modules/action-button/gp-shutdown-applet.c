@@ -16,23 +16,25 @@
  */
 
 #include "config.h"
-#include "gp-logout-applet.h"
+#include "gp-shutdown-applet.h"
 
 #include <glib/gi18n-lib.h>
 
 #include "gpab-session-manager-gen.h"
 
-struct _GpLogoutApplet
+struct _GpShutdownApplet
 {
   GpActionButtonApplet   parent;
 
   GpabSessionManagerGen *session_manager;
+
+  gboolean               can_shutdown;
 };
 
-G_DEFINE_TYPE (GpLogoutApplet, gp_logout_applet, GP_TYPE_ACTION_BUTTON_APPLET)
+G_DEFINE_TYPE (GpShutdownApplet, gp_shutdown_applet, GP_TYPE_ACTION_BUTTON_APPLET)
 
 static void
-lockdown_changed (GpLogoutApplet *self)
+lockdown_changed (GpShutdownApplet *self)
 {
   GpLockdownFlags lockdowns;
   gboolean applet_sensitive;
@@ -42,30 +44,31 @@ lockdown_changed (GpLogoutApplet *self)
   applet_sensitive = TRUE;
 
   if ((lockdowns & GP_LOCKDOWN_FLAGS_APPLET) == GP_LOCKDOWN_FLAGS_APPLET ||
-      (lockdowns & GP_LOCKDOWN_FLAGS_LOG_OUT) == GP_LOCKDOWN_FLAGS_LOG_OUT)
+      (lockdowns & GP_LOCKDOWN_FLAGS_LOG_OUT) == GP_LOCKDOWN_FLAGS_LOG_OUT ||
+      !self->can_shutdown)
     applet_sensitive = FALSE;
 
   gtk_widget_set_sensitive (GTK_WIDGET (self), applet_sensitive);
 }
 
 static void
-lockdowns_cb (GpApplet       *applet,
-              GParamSpec     *pspec,
-              GpLogoutApplet *self)
+lockdowns_cb (GpApplet         *applet,
+              GParamSpec       *pspec,
+              GpShutdownApplet *self)
 {
   lockdown_changed (self);
 }
 
 static void
-setup_applet (GpLogoutApplet *self)
+setup_applet (GpShutdownApplet *self)
 {
   const char *text;
   AtkObject *atk;
 
   gp_action_button_applet_set_icon_name (GP_ACTION_BUTTON_APPLET (self),
-                                         "system-log-out");
+                                         "system-shutdown");
 
-  text = _("Log out of this session to log in as a different user");
+  text = _("Power off the computer");
 
   atk = gtk_widget_get_accessible (GTK_WIDGET (self));
   atk_object_set_name (atk, text);
@@ -83,13 +86,50 @@ setup_applet (GpLogoutApplet *self)
 }
 
 static void
+can_shutdown_cb (GObject      *source,
+                 GAsyncResult *res,
+                 gpointer      user_data)
+{
+  gboolean can_shutdown;
+  GError *error;
+  GpShutdownApplet *self;
+
+  can_shutdown = FALSE;
+  error = NULL;
+
+  gpab_session_manager_gen_call_can_shutdown_finish (GPAB_SESSION_MANAGER_GEN (source),
+                                                     &can_shutdown,
+                                                     res,
+                                                     &error);
+
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+    {
+      g_error_free (error);
+      return;
+    }
+
+  self = GP_SHUTDOWN_APPLET (user_data);
+  self->can_shutdown = can_shutdown;
+
+  if (error)
+    {
+      g_warning ("%s", error->message);
+      g_error_free (error);
+
+      return;
+    }
+
+  lockdown_changed (self);
+}
+
+static void
 session_manager_ready_cb (GObject      *source,
                           GAsyncResult *res,
                           gpointer      user_data)
 {
   GError *error;
   GpabSessionManagerGen *session_manager;
-  GpLogoutApplet *self;
+  GpShutdownApplet *self;
 
   error = NULL;
   session_manager = gpab_session_manager_gen_proxy_new_for_bus_finish (res,
@@ -101,7 +141,7 @@ session_manager_ready_cb (GObject      *source,
       return;
     }
 
-  self = GP_LOGOUT_APPLET (user_data);
+  self = GP_SHUTDOWN_APPLET (user_data);
   self->session_manager = session_manager;
 
   if (error)
@@ -111,38 +151,43 @@ session_manager_ready_cb (GObject      *source,
 
       return;
     }
+
+  gpab_session_manager_gen_call_can_shutdown (self->session_manager,
+                                              NULL,
+                                              can_shutdown_cb,
+                                              self);
 }
 
 static void
-gp_logout_applet_constructed (GObject *object)
+gp_shutdown_applet_constructed (GObject *object)
 {
-  G_OBJECT_CLASS (gp_logout_applet_parent_class)->constructed (object);
-  setup_applet (GP_LOGOUT_APPLET (object));
+  G_OBJECT_CLASS (gp_shutdown_applet_parent_class)->constructed (object);
+  setup_applet (GP_SHUTDOWN_APPLET (object));
 }
 
 static void
-gp_logout_applet_dispose (GObject *object)
+gp_shutdown_applet_dispose (GObject *object)
 {
-  GpLogoutApplet *self;
+  GpShutdownApplet *self;
 
-  self = GP_LOGOUT_APPLET (object);
+  self = GP_SHUTDOWN_APPLET (object);
 
   g_clear_object (&self->session_manager);
 
-  G_OBJECT_CLASS (gp_logout_applet_parent_class)->dispose (object);
+  G_OBJECT_CLASS (gp_shutdown_applet_parent_class)->dispose (object);
 }
 
 static void
-logout_cb (GObject      *source,
-           GAsyncResult *res,
-           gpointer      user_data)
+shutdown_cb (GObject      *source,
+             GAsyncResult *res,
+             gpointer      user_data)
 {
   GError *error;
 
   error = NULL;
-  gpab_session_manager_gen_call_logout_finish (GPAB_SESSION_MANAGER_GEN (source),
-                                               res,
-                                               &error);
+  gpab_session_manager_gen_call_shutdown_finish (GPAB_SESSION_MANAGER_GEN (source),
+                                                 res,
+                                                 &error);
 
   if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
     {
@@ -152,7 +197,7 @@ logout_cb (GObject      *source,
 
   if (error)
     {
-      g_warning ("Could not ask session manager to log out: %s",
+      g_warning ("Could not ask session manager to shut down: %s",
                  error->message);
 
       g_error_free (error);
@@ -161,11 +206,11 @@ logout_cb (GObject      *source,
 }
 
 static void
-gp_logout_applet_clicked (GpActionButtonApplet *applet)
+gp_shutdown_applet_clicked (GpActionButtonApplet *applet)
 {
-  GpLogoutApplet *self;
+  GpShutdownApplet *self;
 
-  self = GP_LOGOUT_APPLET (applet);
+  self = GP_SHUTDOWN_APPLET (applet);
 
   if (!self->session_manager)
     {
@@ -173,15 +218,14 @@ gp_logout_applet_clicked (GpActionButtonApplet *applet)
       return;
     }
 
-  gpab_session_manager_gen_call_logout (self->session_manager,
-                                        0 /* normal */,
-                                        NULL,
-                                        logout_cb,
-                                        self);
+  gpab_session_manager_gen_call_shutdown (self->session_manager,
+                                          NULL,
+                                          shutdown_cb,
+                                          self);
 }
 
 static void
-gp_logout_applet_class_init (GpLogoutAppletClass *self_class)
+gp_shutdown_applet_class_init (GpShutdownAppletClass *self_class)
 {
   GObjectClass *object_class;
   GpActionButtonAppletClass *action_button_applet_class;
@@ -189,14 +233,14 @@ gp_logout_applet_class_init (GpLogoutAppletClass *self_class)
   object_class = G_OBJECT_CLASS (self_class);
   action_button_applet_class = GP_ACTION_BUTTON_APPLET_CLASS (self_class);
 
-  object_class->constructed = gp_logout_applet_constructed;
-  object_class->dispose = gp_logout_applet_dispose;
+  object_class->constructed = gp_shutdown_applet_constructed;
+  object_class->dispose = gp_shutdown_applet_dispose;
 
-  action_button_applet_class->clicked = gp_logout_applet_clicked;
+  action_button_applet_class->clicked = gp_shutdown_applet_clicked;
 }
 
 static void
-gp_logout_applet_init (GpLogoutApplet *self)
+gp_shutdown_applet_init (GpShutdownApplet *self)
 {
   gpab_session_manager_gen_proxy_new_for_bus (G_BUS_TYPE_SESSION,
                                               G_DBUS_PROXY_FLAGS_NONE,
@@ -213,8 +257,8 @@ gp_logout_applet_init (GpLogoutApplet *self)
 }
 
 gboolean
-gp_logout_applet_is_disabled (GpLockdownFlags   flags,
-                              char            **reason)
+gp_shutdown_applet_is_disabled (GpLockdownFlags   flags,
+                                char            **reason)
 {
   if ((flags & GP_LOCKDOWN_FLAGS_LOG_OUT) != GP_LOCKDOWN_FLAGS_LOG_OUT)
     return FALSE;

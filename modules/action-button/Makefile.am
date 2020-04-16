@@ -28,6 +28,8 @@ org_gnome_gnome_panel_action_button_la_SOURCES = \
 	gp-lock-screen-applet.h \
 	gp-logout-applet.c \
 	gp-logout-applet.h \
+	gp-shutdown-applet.c \
+	gp-shutdown-applet.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 

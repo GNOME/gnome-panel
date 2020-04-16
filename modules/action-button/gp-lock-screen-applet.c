@@ -436,5 +436,5 @@ gp_lock_screen_applet_is_disabled (GpLockdownFlags   flags,
                           "“org.gnome.desktop.lockdown” GSettings schema is "
                           "set to true."));
 
-  return FALSE;
+  return TRUE;
 }

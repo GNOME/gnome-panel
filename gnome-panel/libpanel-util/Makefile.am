@@ -23,8 +23,6 @@ libpanel_util_la_SOURCES =		\
 	panel-gsettings.h		\
 	panel-keyfile.c			\
 	panel-keyfile.h			\
-	panel-session-manager.c		\
-	panel-session-manager.h		\
 	panel-show.c			\
 	panel-show.h			\
 	panel-xdg.c			\
