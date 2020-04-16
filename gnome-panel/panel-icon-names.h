@@ -1,7 +1,6 @@
 #ifndef PANEL_ICON_NAMES_H
 #define PANEL_ICON_NAMES_H
 
-#define PANEL_ICON_BOOKMARKS		"user-bookmarks"
 #define PANEL_ICON_BURNER		"nautilus-cd-burner"
 #define PANEL_ICON_COMPUTER		"computer"
 #define PANEL_ICON_DESKTOP		"user-desktop"
@@ -14,26 +13,18 @@
 #define PANEL_ICON_FOLDER_PUBLIC_SHARE	"folder-publicshare"
 #define PANEL_ICON_FOLDER_TEMPLATES	"folder-templates"
 #define PANEL_ICON_FOLDER_VIDEOS	"folder-videos"
-#define PANEL_ICON_FONTS		"preferences-desktop-font"
 #define PANEL_ICON_FORCE_QUIT		"gnome-panel-force-quit"
 #define PANEL_ICON_HOME			"user-home"
 #define PANEL_ICON_HIBERNATE		"gnome-panel-hibernate"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_LOGOUT		"system-log-out"
-#define PANEL_ICON_MAIN_MENU		"start-here"
 #define PANEL_ICON_NETWORK		"network-workgroup"
-#define PANEL_ICON_NETWORK_SERVER	"network-server"
 #define PANEL_ICON_PANEL		"gnome-panel"
 #define PANEL_ICON_REBOOT		"view-refresh"
-#define PANEL_ICON_RECENT		"document-open-recent"
 #define PANEL_ICON_REMOTE		"applications-internet"
-#define PANEL_ICON_REMOVABLE_MEDIA	"drive-removable-media"
 #define PANEL_ICON_RUN			"system-run"
 #define PANEL_ICON_SHUTDOWN		"system-shutdown"
 #define PANEL_ICON_SUSPEND		"gnome-panel-suspend"
-#define PANEL_ICON_THEME		"preferences-desktop-theme"
-#define PANEL_ICON_TRASH		"user-trash"
 #define PANEL_ICON_UNKNOWN		"image-missing"
-#define PANEL_ICON_USERS		"system-users"
 
 #endif /* PANEL_ICON_NAMES_H */
