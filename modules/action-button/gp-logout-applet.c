@@ -169,7 +169,7 @@ gp_logout_applet_clicked (GpActionButtonApplet *applet)
 
   if (!self->session_manager)
     {
-      g_warning ("Screensaver service not available.");
+      g_warning ("Session manager service not available.");
       return;
     }
 
@@ -224,5 +224,5 @@ gp_logout_applet_is_disabled (GpLockdownFlags   flags,
                           "“org.gnome.desktop.lockdown” GSettings schema is "
                           "set to true."));
 
-  return FALSE;
+  return TRUE;
 }
