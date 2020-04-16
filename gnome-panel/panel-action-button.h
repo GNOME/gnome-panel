@@ -67,9 +67,6 @@ void       panel_action_button_load             (PanelWidget            *panel,
 						 GSettings              *settings,
 						 const char             *detail);
 
-void       panel_action_button_invoke_menu      (PanelActionButton      *button,
-						 const char             *callback_name);
-
 void       panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
 						 PanelObjectPackType     pack_type,
 						 int                     pack_index,

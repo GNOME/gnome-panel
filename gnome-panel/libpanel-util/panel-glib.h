@@ -30,7 +30,6 @@ G_BEGIN_DECLS
 #define PANEL_GLIB_STR_EMPTY(x) ((x) == NULL || (x)[0] == '\0')
 
 char       *panel_g_lookup_in_data_dirs         (const char *basename);
-char       *panel_g_lookup_in_applications_dirs (const char *basename);
 
 const char *panel_g_utf8_strstrcase             (const char *haystack,
 						 const char *needle);
