@@ -1011,12 +1011,17 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Log Out");
       tooltip = _("Log out of this session to log in as a different user");
-      drag_id = "ACTION:logout:NEW";
+      drag_id = "org.gnome.gnome-panel.action-button::logout";
 
       logout = create_menu_item (lock_logout,
                                  "system-log-out",
                                  label, tooltip,
-                                 drag_id);
+                                 NULL);
+
+      setup_drag_source (lock_logout,
+                         logout,
+                         "system-log-out",
+                         drag_id);
 
       g_signal_connect (logout, "activate",
                         G_CALLBACK (logout_activate_cb),
