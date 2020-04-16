@@ -1080,7 +1080,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Hibernate");
       tooltip = NULL;
-      drag_id = "ACTION:hibernate:NEW";
+      drag_id = NULL;
 
       hibernate = create_menu_item (lock_logout,
                                     "gnome-panel-hibernate",
@@ -1097,7 +1097,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Suspend");
       tooltip = NULL;
-      drag_id = "ACTION:suspend:NEW";
+      drag_id = NULL;
 
       suspend = create_menu_item (lock_logout,
                                   "gnome-panel-suspend",
@@ -1114,7 +1114,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Hybrid Sleep");
       tooltip = NULL;
-      drag_id = "ACTION:hybrid-sleep:NEW";
+      drag_id = NULL;
 
       hybrid_sleep = create_menu_item (lock_logout,
                                        "gnome-panel-suspend",
@@ -1133,7 +1133,7 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Restart");
       tooltip = _("Restart the computer");
-      drag_id = "ACTION:reboot:NEW";
+      drag_id = NULL;
 
       reboot = create_menu_item (lock_logout,
                                  "view-refresh",

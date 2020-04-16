@@ -54,7 +54,6 @@ GType panel_session_manager_get_type (void);
 PanelSessionManager *panel_session_manager_get (void);
 
 void panel_session_manager_request_shutdown (PanelSessionManager *session);
-void panel_session_manager_request_reboot   (PanelSessionManager *session);
 
 gboolean panel_session_manager_is_shutdown_available (PanelSessionManager *session);
 

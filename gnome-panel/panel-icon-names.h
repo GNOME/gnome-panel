@@ -15,15 +15,12 @@
 #define PANEL_ICON_FOLDER_VIDEOS	"folder-videos"
 #define PANEL_ICON_FORCE_QUIT		"gnome-panel-force-quit"
 #define PANEL_ICON_HOME			"user-home"
-#define PANEL_ICON_HIBERNATE		"gnome-panel-hibernate"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_NETWORK		"network-workgroup"
 #define PANEL_ICON_PANEL		"gnome-panel"
-#define PANEL_ICON_REBOOT		"view-refresh"
 #define PANEL_ICON_REMOTE		"applications-internet"
 #define PANEL_ICON_RUN			"system-run"
 #define PANEL_ICON_SHUTDOWN		"system-shutdown"
-#define PANEL_ICON_SUSPEND		"gnome-panel-suspend"
 #define PANEL_ICON_UNKNOWN		"image-missing"
 
 #endif /* PANEL_ICON_NAMES_H */
