@@ -38,13 +38,6 @@ typedef struct _PanelSessionManager		PanelSessionManager;
 typedef struct _PanelSessionManagerClass	PanelSessionManagerClass;
 typedef struct _PanelSessionManagerPrivate	PanelSessionManagerPrivate;
 
-/* Keep in sync with the values defined in gnome-session/session.h */
-typedef enum {
-        PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL = 0,
-        PANEL_SESSION_MANAGER_LOGOUT_MODE_NO_CONFIRMATION,
-        PANEL_SESSION_MANAGER_LOGOUT_MODE_FORCE
-} PanelSessionManagerLogoutType;
-
 struct _PanelSessionManager {
 	GObject parent;
 
@@ -60,8 +53,6 @@ GType panel_session_manager_get_type (void);
 
 PanelSessionManager *panel_session_manager_get (void);
 
-void panel_session_manager_request_logout   (PanelSessionManager           *session,
-					     PanelSessionManagerLogoutType  mode);
 void panel_session_manager_request_shutdown (PanelSessionManager *session);
 void panel_session_manager_request_reboot   (PanelSessionManager *session);
 

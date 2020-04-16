@@ -65,7 +65,6 @@ typedef struct {
 
 static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
-	{ PANEL_ACTION_LOGOUT,         "logout"         },
 	{ PANEL_ACTION_RUN,            "run"            },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ PANEL_ACTION_HIBERNATE,      "hibernate"      },
@@ -103,18 +102,6 @@ panel_enum_to_string (gint enum_value)
 		++i;
 	}
 	return NULL;
-}
-
-/* Log Out
- */
-static void
-panel_action_logout (GtkWidget *widget)
-{
-	/* FIXME: we need to use widget to get the screen for the
-	 * confirmation dialog, see
-	 * http://bugzilla.gnome.org/show_bug.cgi?id=536914 */
-	panel_session_manager_request_logout (panel_session_manager_get (),
-					      PANEL_SESSION_MANAGER_LOGOUT_MODE_NORMAL);
 }
 
 static void
@@ -249,18 +236,6 @@ static PanelAction actions [] = {
 		PANEL_ACTION_NONE,
 		NULL, NULL, NULL, NULL,
 		NULL, NULL
-	},
-	{
-		PANEL_ACTION_LOGOUT,
-		PANEL_ICON_LOGOUT,
-		/* when changing one of those two strings, don't forget to
-		 * update the ones in panel-menu-items.c (look for
-		 * "1" (msgctxt: "panel:showusername")) */
-		N_("Log Out"),
-		N_("Log out of this session to log in as a different user"),
-		"ACTION:logout:NEW",
-		panel_action_logout,
-		panel_lockdown_get_disable_log_out_s
 	},
 	{
 		PANEL_ACTION_RUN,

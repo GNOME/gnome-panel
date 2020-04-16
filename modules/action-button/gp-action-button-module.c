@@ -21,6 +21,7 @@
 #include <libgnome-panel/gp-module.h>
 
 #include "gp-lock-screen-applet.h"
+#include "gp-logout-applet.h"
 
 static GpAppletInfo *
 action_button_get_applet_info (const char *id)
@@ -43,6 +44,15 @@ action_button_get_applet_info (const char *id)
 
       is_disabled_func = gp_lock_screen_applet_is_disabled;
     }
+  else if (g_strcmp0 (id, "logout") == 0)
+    {
+      type_func = gp_logout_applet_get_type;
+      name = _("Log Out");
+      description = _("Log out of this session to log in as a different user");
+      icon = "system-log-out";
+
+      is_disabled_func = gp_logout_applet_is_disabled;
+    }
   else
     {
       g_assert_not_reached ();
@@ -62,6 +72,8 @@ action_button_get_applet_id_from_iid (const char *iid)
 {
   if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:lock") == 0)
     return "lock-screen";
+  else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:logout") == 0)
+    return "logout";
 
   return NULL;
 }
@@ -80,6 +92,7 @@ gp_module_load (GpModule *module)
 
   gp_module_set_applet_ids (module,
                             "lock-screen",
+                            "logout",
                             NULL);
 
   gp_module_set_get_applet_info (module, action_button_get_applet_info);

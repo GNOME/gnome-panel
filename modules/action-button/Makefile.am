@@ -26,6 +26,8 @@ org_gnome_gnome_panel_action_button_la_SOURCES = \
 	gp-action-button-module.c \
 	gp-lock-screen-applet.c \
 	gp-lock-screen-applet.h \
+	gp-logout-applet.c \
+	gp-logout-applet.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 
@@ -67,16 +69,25 @@ gpab-screensaver-gen.c: org.gnome.ScreenSaver.xml
 		--generate-c-code gpab-screensaver-gen \
 		$(srcdir)/org.gnome.ScreenSaver.xml
 
+gpab-session-manager-gen.h:
+gpab-session-manager-gen.c: org.gnome.SessionManager.xml
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --c-namespace Gpab \
+		--generate-c-code gpab-session-manager-gen \
+		$(srcdir)/org.gnome.SessionManager.xml
+
 BUILT_SOURCES = \
 	action-button-resources.c \
 	action-button-resources.h \
 	gpab-screensaver-gen.c \
 	gpab-screensaver-gen.h \
+	gpab-session-manager-gen.c \
+	gpab-session-manager-gen.h \
 	$(NULL)
 
 EXTRA_DIST = \
 	action-button.gresource.xml \
 	org.gnome.ScreenSaver.xml \
+	org.gnome.SessionManager.xml \
 	$(ui_FILES) \
 	$(NULL)
 
