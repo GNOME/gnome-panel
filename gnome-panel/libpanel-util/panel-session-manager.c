@@ -62,47 +62,6 @@ panel_session_manager_init (PanelSessionManager *manager)
 }
 
 static void
-logout_ready_callback (GObject      *source_object,
-                       GAsyncResult *res,
-                       gpointer      user_data)
-{
-	PanelSessionManager *manager = (PanelSessionManager *) user_data;
-	GError *error = NULL;
-	GVariant *ret;
-
-	ret = g_dbus_proxy_call_finish (manager->priv->session_proxy, res, &error);
-	if (ret) {
-		g_variant_unref (ret);
-	}
-
-	if (error) {
-		g_warning ("Could not ask session manager to log out: %s", error->message);
-		g_error_free (error);
-	}
-}
-
-void
-panel_session_manager_request_logout (PanelSessionManager           *manager,
-				      PanelSessionManagerLogoutType  mode)
-{
-	g_return_if_fail (PANEL_IS_SESSION_MANAGER (manager));
-
-	if (!manager->priv->session_proxy) {
-		g_warning ("Session manager service not available.");
-		return;
-	}
-
-	g_dbus_proxy_call (manager->priv->session_proxy,
-	                   "Logout",
-	                   g_variant_new ("(u)", mode),
-	                   G_DBUS_CALL_FLAGS_NONE,
-	                   -1,
-	                   NULL,
-	                   (GAsyncReadyCallback) logout_ready_callback,
-	                   manager);
-}
-
-static void
 shutdown_ready_callback (GObject      *source_object,
                          GAsyncResult *res,
                          gpointer      user_data)
