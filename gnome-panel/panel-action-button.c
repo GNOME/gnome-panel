@@ -32,8 +32,6 @@
 
 #include <libpanel-util/panel-error.h>
 #include <libpanel-util/panel-glib.h>
-#include <libpanel-util/panel-launch.h>
-#include <libpanel-util/panel-screensaver.h>
 #include <libpanel-util/panel-end-session-dialog.h>
 #include <libpanel-util/panel-session-manager.h>
 #include <libpanel-util/panel-show.h>
@@ -67,7 +65,6 @@ typedef struct {
 
 static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
-	{ PANEL_ACTION_LOCK,           "lock"           },
 	{ PANEL_ACTION_LOGOUT,         "logout"         },
 	{ PANEL_ACTION_RUN,            "run"            },
 	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
@@ -106,81 +103,6 @@ panel_enum_to_string (gint enum_value)
 		++i;
 	}
 	return NULL;
-}
-
-/* Lock Screen
- */
-static void
-panel_action_lock_screen (GtkWidget *widget)
-{
-	panel_screensaver_lock (panel_screensaver_get ());
-}
-
-static gboolean
-screensaver_properties_enabled (void)
-{
-	char *desktop;
-	gboolean found;
-
-	if (panel_lockdown_get_panels_locked_down_s () ||
-	    panel_lockdown_get_disable_lock_screen_s ())
-		return FALSE;
-
-	desktop = panel_g_lookup_in_applications_dirs ("gnome-lock-panel.desktop");
-	found = (desktop != NULL);
-	g_free (desktop);
-
-	return found;
-}
-
-static gboolean
-panel_action_lock_is_enabled (void)
-{
-	return !panel_lockdown_get_disable_lock_screen_s ();
-}
-
-static gboolean
-panel_action_lock_is_disabled (void)
-{
-	return !panel_action_lock_is_enabled ();
-}
-
-static void
-panel_action_lock_setup_menu (PanelActionButton *button)
-{
-	panel_applet_add_callback (button->priv->info,
-				   "lock",
-				   _("_Lock Screen"),
-				   panel_action_lock_is_enabled);
-
-	panel_applet_add_callback (button->priv->info,
-				   "activate",
-				   _("_Activate Screensaver"),
-				   NULL);
-
-	panel_applet_add_callback (button->priv->info,
-				   "prefs",
-				   _("_Properties"),
-				   screensaver_properties_enabled);
-}
-
-static void
-panel_action_lock_invoke_menu (PanelActionButton *button,
-			       const char *callback_name)
-{
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-	g_return_if_fail (callback_name != NULL);
-
-	if (g_strcmp0 (callback_name, "lock") == 0)
-		panel_screensaver_lock (panel_screensaver_get ());
-	else if (g_strcmp0 (callback_name, "activate") == 0)
-		panel_screensaver_activate (panel_screensaver_get ());
-	else if (g_strcmp0 (callback_name, "prefs") == 0)
-		panel_launch_desktop_file ("gnome-lock-panel.desktop",
-					   gtk_widget_get_screen (GTK_WIDGET (button)),
-					   NULL);
-	else
-		g_assert_not_reached ();
 }
 
 /* Log Out
@@ -317,9 +239,6 @@ typedef struct {
 	const gchar            *tooltip;
 	const gchar            *drag_id;
 	void                  (*invoke)      (GtkWidget         *widget);
-	void                  (*setup_menu)  (PanelActionButton *button);
-	void                  (*invoke_menu) (PanelActionButton *button,
-					      const char        *callback_name);
 	gboolean              (*is_disabled) (void);
 } PanelAction;
 
@@ -329,18 +248,7 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_NONE,
 		NULL, NULL, NULL, NULL,
-		NULL, NULL, NULL, NULL
-	},
-	{
-		PANEL_ACTION_LOCK,
-		PANEL_ICON_LOCKSCREEN,
-		N_("Lock Screen"),
-		N_("Protect your computer from unauthorized use"),
-		"ACTION:lock:NEW",
-		panel_action_lock_screen,
-		panel_action_lock_setup_menu,
-		panel_action_lock_invoke_menu,
-		panel_action_lock_is_disabled
+		NULL, NULL
 	},
 	{
 		PANEL_ACTION_LOGOUT,
@@ -351,7 +259,7 @@ static PanelAction actions [] = {
 		N_("Log Out"),
 		N_("Log out of this session to log in as a different user"),
 		"ACTION:logout:NEW",
-		panel_action_logout, NULL, NULL,
+		panel_action_logout,
 		panel_lockdown_get_disable_log_out_s
 	},
 	{
@@ -360,7 +268,7 @@ static PanelAction actions [] = {
 		N_("Run Application..."),
 		N_("Run an application by typing a command or choosing from a list"),
 		"ACTION:run:NEW",
-		panel_action_run_program, NULL, NULL,
+		panel_action_run_program,
 		panel_lockdown_get_disable_command_line_s
 	},
 	{
@@ -369,7 +277,7 @@ static PanelAction actions [] = {
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
 		"ACTION:force-quit:NEW",
-		panel_action_force_quit, NULL, NULL,
+		panel_action_force_quit,
 		panel_lockdown_get_disable_force_quit_s
 	},
 	{
@@ -378,7 +286,7 @@ static PanelAction actions [] = {
 		N_("Hibernate"),
 		NULL,
 		"ACTION:hibernate:NEW",
-		panel_action_hibernate, NULL, NULL,
+		panel_action_hibernate,
 		panel_action_hibernate_is_disabled
 	},
 	{
@@ -387,7 +295,7 @@ static PanelAction actions [] = {
 		N_("Suspend"),
 		NULL,
 		"ACTION:suspend:NEW",
-		panel_action_suspend, NULL, NULL,
+		panel_action_suspend,
 		panel_action_suspend_is_disabled
 	},
 	{
@@ -396,7 +304,7 @@ static PanelAction actions [] = {
 		N_("Hybrid sleep"),
 		NULL,
 		"ACTION:hybrid-sleep:NEW",
-		panel_action_hybrid_sleep, NULL, NULL,
+		panel_action_hybrid_sleep,
 		panel_action_hybrid_sleep_is_disabled
 	},
 	{
@@ -405,7 +313,7 @@ static PanelAction actions [] = {
 		N_("Restart"),
 		N_("Restart the computer"),
 		"ACTION:reboot:NEW",
-		panel_action_reboot, NULL, NULL,
+		panel_action_reboot,
 		panel_action_shutdown_reboot_is_disabled
 	},
 	{
@@ -414,7 +322,7 @@ static PanelAction actions [] = {
 		N_("Power Off"),
 		N_("Power off the computer"),
 		"ACTION:shutdown:NEW",
-		panel_action_shutdown, NULL, NULL,
+		panel_action_shutdown,
 		panel_action_shutdown_reboot_is_disabled
 	}
 };
@@ -639,9 +547,6 @@ panel_action_button_load_helper (PanelWidget           *panel,
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
-	if (actions [button->priv->type].setup_menu)
-		actions [button->priv->type].setup_menu (button);
-
 	panel_lockdown_on_notify (panel_lockdown_get (),
 				  NULL,
 				  G_OBJECT (button),
@@ -689,19 +594,6 @@ panel_action_button_load (PanelWidget *panel,
 	}
 
 	panel_action_button_load_helper (panel, id, settings, type);
-}
-
-void
-panel_action_button_invoke_menu (PanelActionButton *button,
-				 const char        *callback_name)
-{
-	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
-	g_return_if_fail (callback_name != NULL);
-	g_return_if_fail (button->priv->type > PANEL_ACTION_NONE &&
-			  button->priv->type < PANEL_ACTION_LAST);
-
-	if (actions [button->priv->type].invoke_menu)
-		actions [button->priv->type].invoke_menu (button, callback_name);
 }
 
 void

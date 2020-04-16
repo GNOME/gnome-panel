@@ -32,7 +32,6 @@
 
 #include "panel-error.h"
 #include "panel-glib.h"
-#include "panel-launch.h"
 
 #include "panel-show.h"
 
