@@ -20,7 +20,6 @@
 #define PANEL_ICON_PANEL		"gnome-panel"
 #define PANEL_ICON_REMOTE		"applications-internet"
 #define PANEL_ICON_RUN			"system-run"
-#define PANEL_ICON_SHUTDOWN		"system-shutdown"
 #define PANEL_ICON_UNKNOWN		"image-missing"
 
 #endif /* PANEL_ICON_NAMES_H */

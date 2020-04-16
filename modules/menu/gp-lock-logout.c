@@ -683,8 +683,7 @@ static GtkWidget *
 create_menu_item (GpLockLogout *lock_logout,
                   const gchar  *icon_name,
                   const gchar  *label,
-                  const gchar  *tooltip,
-                  const gchar  *drag_id)
+                  const gchar  *tooltip)
 {
   GtkWidget *image;
   GtkWidget *item;
@@ -704,27 +703,6 @@ create_menu_item (GpLockLogout *lock_logout,
                               item, "has-tooltip",
                               G_BINDING_DEFAULT |
                               G_BINDING_SYNC_CREATE);
-    }
-
-  if (drag_id != NULL && !lock_logout->locked_down)
-    {
-      static const GtkTargetEntry drag_targets[] =
-        {
-          { (gchar *) "application/x-panel-applet-internal", 0, 0 }
-        };
-
-      gtk_drag_source_set (item, GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                           drag_targets, G_N_ELEMENTS (drag_targets),
-                           GDK_ACTION_COPY);
-
-      if (icon_name != NULL)
-        gtk_drag_source_set_icon_name (item, icon_name);
-
-      g_signal_connect_data (item, "drag-data-get",
-                             G_CALLBACK (drag_data_get_cb),
-                             g_strdup (drag_id),
-                             (GClosureNotify) free_drag_id,
-                             0);
     }
 
   return item;
@@ -968,7 +946,6 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
   gboolean disable_log_out;
   const gchar *label;
   const gchar *tooltip;
-  const gchar *drag_id;
   GtkWidget *switch_user;
   GtkWidget *logout;
   GtkWidget *lock_screen;
@@ -994,12 +971,11 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Switch User");
       tooltip = NULL;
-      drag_id = NULL;
 
       switch_user = create_menu_item (lock_logout,
                                       "system-users",
-                                      label, tooltip,
-                                      drag_id);
+                                      label,
+                                      tooltip);
 
       g_signal_connect (switch_user, "activate",
                         G_CALLBACK (switch_user_activate_cb),
@@ -1011,17 +987,16 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Log Out");
       tooltip = _("Log out of this session to log in as a different user");
-      drag_id = "org.gnome.gnome-panel.action-button::logout";
 
       logout = create_menu_item (lock_logout,
                                  "system-log-out",
-                                 label, tooltip,
-                                 NULL);
+                                 label,
+                                 tooltip);
 
       setup_drag_source (lock_logout,
                          logout,
                          "system-log-out",
-                         drag_id);
+                         "org.gnome.gnome-panel.action-button::logout");
 
       g_signal_connect (logout, "activate",
                         G_CALLBACK (logout_activate_cb),
@@ -1033,17 +1008,16 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Lock Screen");
       tooltip = _("Protect your computer from unauthorized use");
-      drag_id = "org.gnome.gnome-panel.action-button::lock-screen";
 
       lock_screen = create_menu_item (lock_logout,
                                       "system-lock-screen",
-                                      label, tooltip,
-                                      NULL);
+                                      label,
+                                      tooltip);
 
       setup_drag_source (lock_logout,
                          lock_screen,
                          "system-lock-screen",
-                         drag_id);
+                         "org.gnome.gnome-panel.action-button::lock-screen");
 
       g_signal_connect (lock_screen, "activate",
                         G_CALLBACK (lock_screen_activate_cb),
@@ -1080,12 +1054,11 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Hibernate");
       tooltip = NULL;
-      drag_id = NULL;
 
       hibernate = create_menu_item (lock_logout,
                                     "gnome-panel-hibernate",
-                                    label, tooltip,
-                                    drag_id);
+                                    label,
+                                    tooltip);
 
       g_signal_connect (hibernate, "activate",
                         G_CALLBACK (hibernate_activate_cb),
@@ -1097,12 +1070,11 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Suspend");
       tooltip = NULL;
-      drag_id = NULL;
 
       suspend = create_menu_item (lock_logout,
                                   "gnome-panel-suspend",
-                                  label, tooltip,
-                                  drag_id);
+                                  label,
+                                  tooltip);
 
       g_signal_connect (suspend, "activate",
                         G_CALLBACK (suspend_activate_cb),
@@ -1114,12 +1086,11 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Hybrid Sleep");
       tooltip = NULL;
-      drag_id = NULL;
 
       hybrid_sleep = create_menu_item (lock_logout,
                                        "gnome-panel-suspend",
-                                       label, tooltip,
-                                       drag_id);
+                                       label,
+                                       tooltip);
 
       g_signal_connect (hybrid_sleep, "activate",
                         G_CALLBACK (hybrid_sleep_activate_cb),
@@ -1133,12 +1104,11 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Restart");
       tooltip = _("Restart the computer");
-      drag_id = NULL;
 
       reboot = create_menu_item (lock_logout,
                                  "view-refresh",
-                                 label, tooltip,
-                                 drag_id);
+                                 label,
+                                 tooltip);
 
       g_signal_connect (reboot, "activate",
                         G_CALLBACK (reboot_activate_cb),
@@ -1150,12 +1120,16 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Power Off");
       tooltip = _("Power off the computer");
-      drag_id = "ACTION:shutdown:NEW";
 
       shutdown = create_menu_item (lock_logout,
                                    "system-shutdown",
-                                   label, tooltip,
-                                   drag_id);
+                                   label,
+                                   tooltip);
+
+      setup_drag_source (lock_logout,
+                         shutdown,
+                         "system-shutdown",
+                         "org.gnome.gnome-panel.action-button::shutdown");
 
       g_signal_connect (shutdown, "activate",
                         G_CALLBACK (shutdown_activate_cb),

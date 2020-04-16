@@ -40,7 +40,6 @@ typedef enum {
         PANEL_ACTION_NONE = 0,
         PANEL_ACTION_RUN,
 	PANEL_ACTION_FORCE_QUIT,
-	PANEL_ACTION_SHUTDOWN,
         PANEL_ACTION_LAST
 } PanelActionButtonType;
 
