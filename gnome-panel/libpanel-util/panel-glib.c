@@ -49,21 +49,6 @@ _lookup_in_dir (const char *basename,
 }
 
 static char *
-_lookup_in_applications_subdir (const char *basename,
-				const char *dir)
-{
-	char *path;
-
-	path = g_build_filename (dir, "applications", basename, NULL);
-	if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
-		g_free (path);
-		return NULL;
-	}
-
-	return path;
-}
-
-static char *
 _panel_g_lookup_in_data_dirs_internal (const char *basename,
 				       LookupInDir lookup)
 {
@@ -90,13 +75,6 @@ panel_g_lookup_in_data_dirs (const char *basename)
 {
 	return _panel_g_lookup_in_data_dirs_internal (basename,
 						      _lookup_in_dir);
-}
-
-char *
-panel_g_lookup_in_applications_dirs (const char *basename)
-{
-	return _panel_g_lookup_in_data_dirs_internal (basename,
-						      _lookup_in_applications_subdir);
 }
 
 /* Copied from evolution-data-server/libedataserver/e-util.c:

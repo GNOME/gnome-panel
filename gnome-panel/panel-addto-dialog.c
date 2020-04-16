@@ -109,7 +109,7 @@ panel_addto_prepend_internal_applets (GSList *list)
 {
 	int i;
 
-	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
+	for (i = 1; i < PANEL_ACTION_LAST; i++) {
 		PanelAddtoItemInfo *info;
 
 		if (i == PANEL_ACTION_REBOOT || i == PANEL_ACTION_HYBRID_SLEEP

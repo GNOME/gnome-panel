@@ -32,16 +32,19 @@ panel-toplevel.right gp-applet > menubar > .gp-image-menu-item:not(.image-only) 
 }
 
 gp-menu-button:hover .icon,
+gp-action-button:hover image,
 gp-launcher-button:hover image {
   -gtk-icon-effect: highlight;
 }
 
 panel-toplevel.horizontal gp-menu-button,
+panel-toplevel.horizontal gp-action-button,
 panel-toplevel.horizontal gp-launcher-button  {
   padding: 0 2px;
 }
 
 panel-toplevel.vertical gp-menu-button,
+panel-toplevel.vertical gp-action-button,
 panel-toplevel.vertical gp-launcher-button {
   padding: 2px 0;
 }

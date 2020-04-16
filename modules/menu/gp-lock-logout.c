@@ -731,6 +731,34 @@ create_menu_item (GpLockLogout *lock_logout,
 }
 
 static void
+setup_drag_source (GpLockLogout *self,
+                   GtkWidget    *item,
+                   const char   *icon_name,
+                   const char   *iid)
+{
+  static const GtkTargetEntry drag_targets[] =
+    {
+      { (gchar *) "application/x-panel-applet-iid", 0, 0 }
+    };
+
+  if (self->locked_down)
+    return;
+
+  gtk_drag_source_set (item, GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                       drag_targets, G_N_ELEMENTS (drag_targets),
+                       GDK_ACTION_COPY);
+
+  if (icon_name != NULL)
+    gtk_drag_source_set_icon_name (item, icon_name);
+
+  g_signal_connect_data (item, "drag-data-get",
+                         G_CALLBACK (drag_data_get_cb),
+                         g_strdup (iid),
+                         (GClosureNotify) free_drag_id,
+                         0);
+}
+
+static void
 gp_lock_logout_constructed (GObject *object)
 {
   GpLockLogout *lock_logout;
@@ -1000,12 +1028,17 @@ gp_lock_logout_append_to_menu (GpLockLogout *lock_logout,
     {
       label = _("Lock Screen");
       tooltip = _("Protect your computer from unauthorized use");
-      drag_id = "ACTION:lock:NEW";
+      drag_id = "org.gnome.gnome-panel.action-button::lock-screen";
 
       lock_screen = create_menu_item (lock_logout,
                                       "system-lock-screen",
                                       label, tooltip,
-                                      drag_id);
+                                      NULL);
+
+      setup_drag_source (lock_logout,
+                         lock_screen,
+                         "system-lock-screen",
+                         drag_id);
 
       g_signal_connect (lock_screen, "activate",
                         G_CALLBACK (lock_screen_activate_cb),
