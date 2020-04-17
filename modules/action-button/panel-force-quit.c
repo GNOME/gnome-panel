@@ -20,19 +20,16 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-#include <config.h>
-
+#include "config.h"
 #include "panel-force-quit.h"
 
-#include <glib/gi18n.h>
+#include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
 #include <X11/extensions/XInput2.h>
-
-#include "panel-icon-names.h"
 
 static GdkFilterReturn popup_filter (GdkXEvent *gdk_xevent,
 				     GdkEvent  *event,
@@ -66,7 +63,7 @@ display_popup_window (GdkScreen *screen)
 	gtk_container_add (GTK_CONTAINER (frame), vbox);
 	gtk_widget_show (vbox);
 
-	image = gtk_image_new_from_icon_name (PANEL_ICON_FORCE_QUIT,
+	image = gtk_image_new_from_icon_name ("gnome-panel-force-quit",
 					      GTK_ICON_SIZE_DIALOG);
 	gtk_box_pack_start (GTK_BOX (vbox), image, TRUE, TRUE, 4);
 	gtk_widget_show (image);
@@ -316,12 +313,16 @@ panel_force_quit (GdkScreen *screen,
 	GdkCursor     *cross;
 	GtkWidget     *popup;
 	GdkWindow     *root;
+	GdkEventMask   event_mask;
 	GdkDisplay    *display;
 	GdkSeat       *seat;
 
 	popup = display_popup_window (screen);
 
 	root = gdk_screen_get_root_window (screen);
+
+	event_mask = gdk_window_get_events (root);
+	gdk_window_set_events (root, event_mask | GDK_KEY_PRESS_MASK);
 
 	gdk_window_add_filter (root, (GdkFilterFunc) popup_filter, popup);
 

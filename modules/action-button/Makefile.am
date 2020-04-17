@@ -24,12 +24,16 @@ org_gnome_gnome_panel_action_button_la_SOURCES = \
 	gp-action-button.c \
 	gp-action-button.h \
 	gp-action-button-module.c \
+	gp-force-quit-applet.c \
+	gp-force-quit-applet.h \
 	gp-lock-screen-applet.c \
 	gp-lock-screen-applet.h \
 	gp-logout-applet.c \
 	gp-logout-applet.h \
 	gp-shutdown-applet.c \
 	gp-shutdown-applet.h \
+	panel-force-quit.c \
+	panel-force-quit.h \
 	$(BUILT_SOURCES) \
 	$(NULL)
 

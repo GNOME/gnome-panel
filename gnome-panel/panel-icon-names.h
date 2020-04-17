@@ -13,7 +13,6 @@
 #define PANEL_ICON_FOLDER_PUBLIC_SHARE	"folder-publicshare"
 #define PANEL_ICON_FOLDER_TEMPLATES	"folder-templates"
 #define PANEL_ICON_FOLDER_VIDEOS	"folder-videos"
-#define PANEL_ICON_FORCE_QUIT		"gnome-panel-force-quit"
 #define PANEL_ICON_HOME			"user-home"
 #define PANEL_ICON_LAUNCHER		"gnome-panel-launcher"
 #define PANEL_ICON_NETWORK		"network-workgroup"

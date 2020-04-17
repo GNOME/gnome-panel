@@ -425,6 +425,7 @@ panel_object_iid_to_type (const char       *iid,
                                 return FALSE;
 
                         if (g_strcmp0 (d, "lock") == 0 ||
+                            g_strcmp0 (d, "force-quit") == 0 ||
                             g_strcmp0 (d, "shutdown") == 0 ||
                             g_strcmp0 (d, "logout") == 0) {
                                 *type = PANEL_OBJECT_APPLET;

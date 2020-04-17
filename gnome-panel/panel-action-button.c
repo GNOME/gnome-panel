@@ -36,7 +36,6 @@
 
 #include "applet.h"
 #include "panel-typebuiltins.h"
-#include "panel-force-quit.h"
 #include "panel-util.h"
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
@@ -64,7 +63,6 @@ typedef struct {
 static PanelEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_NONE,           "none"           },
 	{ PANEL_ACTION_RUN,            "run"            },
-	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
 	{ 0,                           NULL             },
 };
 
@@ -106,15 +104,6 @@ panel_action_run_program (GtkWidget *widget)
 				  gtk_get_current_event_time ());
 }
 
-/* Force Quit
- */
-static void
-panel_action_force_quit (GtkWidget *widget)
-{
-	panel_force_quit (gtk_widget_get_screen (widget),
-			  gtk_get_current_event_time ());
-}
-
 typedef struct {
 	PanelActionButtonType   type;
 	const gchar            *icon_name;
@@ -141,15 +130,6 @@ static PanelAction actions [] = {
 		"ACTION:run:NEW",
 		panel_action_run_program,
 		panel_lockdown_get_disable_command_line_s
-	},
-	{
-		PANEL_ACTION_FORCE_QUIT,
-		PANEL_ICON_FORCE_QUIT,
-		N_("Force Quit"),
-		N_("Force a misbehaving application to quit"),
-		"ACTION:force-quit:NEW",
-		panel_action_force_quit,
-		panel_lockdown_get_disable_force_quit_s
 	}
 };
 

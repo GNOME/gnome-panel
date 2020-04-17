@@ -21,6 +21,7 @@
 #include <libgnome-panel/gp-module.h>
 
 #include "gp-lock-screen-applet.h"
+#include "gp-force-quit-applet.h"
 #include "gp-logout-applet.h"
 #include "gp-shutdown-applet.h"
 
@@ -36,7 +37,16 @@ action_button_get_applet_info (const char *id)
 
   is_disabled_func = NULL;
 
-  if (g_strcmp0 (id, "lock-screen") == 0)
+  if (g_strcmp0 (id, "force-quit") == 0)
+    {
+      type_func = gp_force_quit_applet_get_type;
+      name = _("Force Quit");
+      description = _("Force a misbehaving application to quit");
+      icon = "gnome-panel-force-quit";
+
+      is_disabled_func = gp_force_quit_applet_is_disabled;
+    }
+  else if (g_strcmp0 (id, "lock-screen") == 0)
     {
       type_func = gp_lock_screen_applet_get_type;
       name = _("Lock Screen");
@@ -80,7 +90,9 @@ action_button_get_applet_info (const char *id)
 static const char *
 action_button_get_applet_id_from_iid (const char *iid)
 {
-  if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:lock") == 0)
+  if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:force-quit") == 0)
+    return "force-quit";
+  else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:lock") == 0)
     return "lock-screen";
   else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:logout") == 0)
     return "logout";
@@ -103,6 +115,7 @@ gp_module_load (GpModule *module)
   gp_module_set_version (module, PACKAGE_VERSION);
 
   gp_module_set_applet_ids (module,
+                            "force-quit",
                             "lock-screen",
                             "logout",
                             "shutdown",

@@ -43,7 +43,6 @@ panel_sources =			\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
 	panel-bindings.c	\
-	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto-dialog.c	\
 	panel-layout.c		\
@@ -71,7 +70,6 @@ panel_headers =			\
 	panel-bindings.h	\
 	panel-enums.h		\
 	panel-enums-gsettings.h	\
-	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto-dialog.h	\
 	panel-icon-names.h	\

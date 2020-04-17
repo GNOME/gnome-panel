@@ -32,13 +32,11 @@
 #include "applet.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
-#include "panel-force-quit.h"
 #include "panel-run-dialog.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
-static Atom atom_gnome_panel_action_kill_dialog = None;
 
 static void
 menu_destroy_cb (GtkWidget   *widget,
@@ -104,13 +102,6 @@ panel_action_protocol_run_dialog (GdkScreen *screen,
 	panel_run_dialog_present (screen, activate_time);
 }
 
-static void
-panel_action_protocol_kill_dialog (GdkScreen *screen,
-				   guint32    activate_time)
-{
-	panel_force_quit (screen, activate_time);
-}
-
 static GdkFilterReturn
 panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 			      GdkEvent  *event,
@@ -143,8 +134,6 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (atom == atom_gnome_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
-	else if (atom == atom_gnome_panel_action_kill_dialog)
-		panel_action_protocol_kill_dialog (screen, xevent->xclient.data.l [1]);
 	else
 		return GDK_FILTER_CONTINUE;
 
@@ -169,10 +158,6 @@ panel_action_protocol_init (void)
 	atom_gnome_panel_action_run_dialog =
 		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
 			     "_GNOME_PANEL_ACTION_RUN_DIALOG",
-			     FALSE);
-	atom_gnome_panel_action_kill_dialog =
-		XInternAtom (GDK_DISPLAY_XDISPLAY (display),
-			     "_GNOME_PANEL_ACTION_KILL_DIALOG",
 			     FALSE);
 
 	/* We'll filter event sent on non-root windows later */
