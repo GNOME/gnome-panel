@@ -368,43 +368,11 @@ panel_lockdown_get_disable_command_line (PanelLockdown *lockdown)
 }
 
 gboolean
-panel_lockdown_get_disable_lock_screen (PanelLockdown *lockdown)
-{
-        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
-
-        return lockdown->priv->disable_lock_screen;
-}
-
-gboolean
-panel_lockdown_get_disable_log_out (PanelLockdown *lockdown)
-{
-        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
-
-        return lockdown->priv->disable_log_out;
-}
-
-gboolean
-panel_lockdown_get_disable_switch_user (PanelLockdown *lockdown)
-{
-        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
-
-        return lockdown->priv->disable_switch_user;
-}
-
-gboolean
 panel_lockdown_get_panels_locked_down (PanelLockdown *lockdown)
 {
         g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
 
         return lockdown->priv->panels_locked_down;
-}
-
-gboolean
-panel_lockdown_get_disable_force_quit (PanelLockdown *lockdown)
-{
-        g_return_val_if_fail (PANEL_IS_LOCKDOWN (lockdown), TRUE);
-
-        return lockdown->priv->disable_force_quit;
 }
 
 typedef struct {
@@ -503,39 +471,9 @@ panel_lockdown_get_disable_command_line_s (void)
 }
 
 gboolean
-panel_lockdown_get_disable_lock_screen_s (void)
-{
-        return panel_lockdown_get_disable_lock_screen (panel_lockdown_get ());
-}
-
-gboolean
-panel_lockdown_get_disable_log_out_s (void)
-{
-        return panel_lockdown_get_disable_log_out (panel_lockdown_get ());
-}
-
-gboolean
-panel_lockdown_get_disable_switch_user_s (void)
-{
-        return panel_lockdown_get_disable_switch_user (panel_lockdown_get ());
-}
-
-gboolean
 panel_lockdown_get_panels_locked_down_s (void)
 {
         return panel_lockdown_get_panels_locked_down (panel_lockdown_get ());
-}
-
-gboolean
-panel_lockdown_get_not_panels_locked_down_s (void)
-{
-        return !panel_lockdown_get_panels_locked_down (panel_lockdown_get ());
-}
-
-gboolean
-panel_lockdown_get_disable_force_quit_s (void)
-{
-        return panel_lockdown_get_disable_force_quit (panel_lockdown_get ());
 }
 
 GpLockdownFlags
