@@ -15,7 +15,6 @@
 
 #include "applet.h"
 #include "panel-widget.h"
-#include "button-widget.h"
 #include "panel.h"
 #include "panel-bindings.h"
 #include "panel-util.h"
@@ -2403,7 +2402,7 @@ panel_widget_reparent (PanelWidget         *old_panel,
 	gtk_container_add (GTK_CONTAINER (new_panel), applet);
 	g_object_unref (applet);
 
-	if (info && info->type == PANEL_OBJECT_APPLET)
+	if (info != NULL)
 		panel_applet_frame_set_panel (PANEL_APPLET_FRAME (ad->applet), new_panel);
 
 	if (gtk_widget_get_can_focus (GTK_WIDGET (new_panel)))

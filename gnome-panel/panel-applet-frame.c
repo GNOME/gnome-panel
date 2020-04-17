@@ -786,15 +786,14 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	frame->priv->panel = frame_act->panel;
 	gtk_widget_show (GTK_WIDGET (frame));
 
-	info = panel_applet_register (GTK_WIDGET (frame), frame->priv->panel,
-				      PANEL_OBJECT_APPLET, frame_act->id,
-				      frame_act->settings,
-				      GTK_WIDGET (frame), NULL);
+	info = panel_applet_register (GTK_WIDGET (frame),
+	                              frame->priv->panel,
+	                              frame_act->id,
+	                              frame_act->settings);
 	frame->priv->applet_info = info;
 
 	panel_widget_set_applet_size_constrained (frame->priv->panel,
 						  GTK_WIDGET (frame), TRUE);
-
 
 	panel_lockdown_on_notify (panel_lockdown_get (),
 				  NULL,
@@ -1019,8 +1018,7 @@ panel_applet_frame_create (PanelToplevel       *toplevel,
 {
 	g_return_if_fail (iid != NULL);
 
-	panel_layout_object_create (PANEL_OBJECT_APPLET,
-				    iid,
+	panel_layout_object_create (iid,
 				    panel_toplevel_get_id (toplevel),
 				    pack_type, pack_index,
 				    initial_settings);

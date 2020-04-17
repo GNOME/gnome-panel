@@ -179,45 +179,6 @@ panel_find_icon (GtkIconTheme  *icon_theme,
 	return retval;
 }
 
-GdkPixbuf *
-panel_load_icon (GtkIconTheme  *icon_theme,
-		 const char    *icon_name,
-		 int            size,
-		 int            desired_width,
-		 int            desired_height,
-		 char         **error_msg)
-{
-	GdkPixbuf *retval;
-	char      *file;
-	GError    *error;
-
-	g_return_val_if_fail (error_msg == NULL || *error_msg == NULL, NULL);
-
-	file = panel_find_icon (icon_theme, icon_name, size);
-	if (!file) {
-		if (error_msg)
-			*error_msg = g_strdup_printf (_("Icon '%s' not found"),
-						      icon_name);
-
-		return NULL;
-	}
-
-	error = NULL;
-	retval = gdk_pixbuf_new_from_file_at_size (file,
-						   desired_width,
-						   desired_height,
-						   &error);
-	if (error) {
-		if (error_msg)
-			*error_msg = g_strdup (error->message);
-		g_error_free (error);
-	}
-
-	g_free (file);
-
-	return retval;
-}
-
 static char *
 panel_util_get_from_personal_path (const char *file)
 {
@@ -800,57 +761,6 @@ panel_util_get_icon_for_uri (const char *text_uri)
 	g_object_unref (info);
 
 	return retval;
-}
-
-static gboolean
-panel_util_query_tooltip_cb (GtkWidget  *widget,
-			     gint        x,
-			     gint        y,
-			     gboolean    keyboard_tip,
-			     GtkTooltip *tooltip,
-			     const char *text)
-{
-	GSettings *gsettings;
-	gboolean   enable_tooltips;
-
-	gsettings = g_settings_new (PANEL_GENERAL_SCHEMA);
-	enable_tooltips = g_settings_get_boolean (gsettings,
-						  PANEL_GENERAL_ENABLE_TOOLTIPS_KEY);
-	g_object_unref (gsettings);
-
-	if (!enable_tooltips)
-		return FALSE;
-
-	gtk_tooltip_set_text (tooltip, text);
-	return TRUE;
-}
-
-static void
-free_tooltip (gchar    *tooltip,
-              GClosure *closure)
-{
-	g_free (tooltip);
-}
-
-void
-panel_util_set_tooltip_text (GtkWidget  *widget,
-			     const char *text)
-{
-        g_signal_handlers_disconnect_matched (widget,
-					      G_SIGNAL_MATCH_FUNC,
-					      0, 0, NULL,
-					      panel_util_query_tooltip_cb,
-					      NULL);
-
-	if (PANEL_GLIB_STR_EMPTY (text)) {
-		g_object_set (widget, "has-tooltip", FALSE, NULL);
-		return;
-	}
-
-	g_object_set (widget, "has-tooltip", TRUE, NULL);
-	g_signal_connect_data (widget, "query-tooltip",
-			       G_CALLBACK (panel_util_query_tooltip_cb),
-			       g_strdup (text), (GClosureNotify) free_tooltip, 0);
 }
 
 /* This is similar to what g_file_new_for_commandline_arg() does, but

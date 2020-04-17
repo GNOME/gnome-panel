@@ -14,23 +14,16 @@ G_BEGIN_DECLS
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 typedef struct {
-	PanelObjectType  type;
 	GtkWidget       *widget;
 	GSettings       *settings;
-
-	gpointer         data;
-	GDestroyNotify   data_destroy;
 
 	char            *id;
 } AppletInfo;
 
 AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      PanelWidget     *panel,
-				      PanelObjectType  type,
 				      const char      *id,
-				      GSettings       *settings,
-				      gpointer         data,
-				      GDestroyNotify   data_destroy);
+				      GSettings       *settings);
 
 const char *panel_applet_get_id           (AppletInfo      *info);
 

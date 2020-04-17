@@ -17,7 +17,6 @@
 #include <libpanel-util/panel-glib.h>
 #include <libpanel-util/panel-show.h>
 
-#include "button-widget.h"
 #include "panel.h"
 #include "panel-bindings.h"
 #include "panel-applet-frame.h"
@@ -65,10 +64,6 @@ panel_applet_destroy (GtkWidget  *widget,
 
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
-
-	if (info->data_destroy)
-		info->data_destroy (info->data);
-	info->data = NULL;
 
 	if (info->settings)
 		g_object_unref (info->settings);
@@ -182,8 +177,6 @@ panel_applet_activate_main_menu (guint32 activate_time)
       GtkWidget *applet;
 
       info = l->data;
-      if (info->type != PANEL_OBJECT_APPLET)
-        continue;
 
       applet = gtk_bin_get_child (GTK_BIN (info->widget));
       if (applet == NULL)
@@ -202,11 +195,8 @@ panel_applet_activate_main_menu (guint32 activate_time)
 AppletInfo *
 panel_applet_register (GtkWidget       *applet,
 		       PanelWidget     *panel,
-		       PanelObjectType  type,
 		       const char      *id,
-		       GSettings       *settings,
-		       gpointer         data,
-		       GDestroyNotify   data_destroy)
+		       GSettings       *settings)
 {
 	AppletInfo          *info;
 	PanelObjectPackType  pack_type;
@@ -221,11 +211,8 @@ panel_applet_register (GtkWidget       *applet,
 					  GDK_POINTER_MOTION_HINT_MASK));
 
 	info = g_new0 (AppletInfo, 1);
-	info->type         = type;
 	info->widget       = applet;
 	info->settings     = g_object_ref (settings);
-	info->data         = data;
-	info->data_destroy = data_destroy;
 	info->id           = g_strdup (id);
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
@@ -247,10 +234,7 @@ panel_applet_register (GtkWidget       *applet,
 
 	orientation_change (info, panel);
 
-	if (type != PANEL_OBJECT_APPLET)
-		gtk_widget_grab_focus (applet);
-	else
-		gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
+	gtk_widget_child_focus (applet, GTK_DIR_TAB_FORWARD);
 
 	return info;
 }

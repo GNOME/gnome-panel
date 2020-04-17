@@ -11,13 +11,6 @@ G_BEGIN_DECLS
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
 
-GdkPixbuf *     panel_load_icon         (GtkIconTheme  *icon_theme,
-					 const char    *icon_name,
-					 int            size,
-					 int            desired_width,
-					 int            desired_height,
-					 char         **error_msg);
-
 char       *panel_launcher_get_filename        (const char *location);
 
 char *panel_make_full_path   (const char *dir,
@@ -31,9 +24,6 @@ char *guess_icon_from_exec (GtkIconTheme *icon_theme,
 
 char *panel_util_get_label_for_uri (const char *text_uri);
 char *panel_util_get_icon_for_uri (const char *text_uri);
-
-void panel_util_set_tooltip_text (GtkWidget  *widget,
-				  const char *text);
 
 GFile *panel_util_get_file_optional_homedir (const char *location);
 

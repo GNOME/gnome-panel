@@ -640,8 +640,7 @@ panel_layout_toplevel_create (GdkScreen *screen)
 }
 
 void
-panel_layout_object_create (PanelObjectType      type,
-                            const char          *type_detail,
+panel_layout_object_create (const char          *iid,
                             const char          *toplevel_id,
                             PanelObjectPackType  pack_type,
                             int                  pack_index,
@@ -649,9 +648,9 @@ panel_layout_object_create (PanelObjectType      type,
 {
         char *id;
 
-        id = panel_layout_object_create_start (type, type_detail,
+        id = panel_layout_object_create_start (iid,
                                                toplevel_id, pack_type, pack_index,
-                                               initial_settings, NULL);
+                                               initial_settings);
 
         if (!id)
                 return;
@@ -659,27 +658,6 @@ panel_layout_object_create (PanelObjectType      type,
         panel_layout_object_create_finish (id);
 
         g_free (id);
-}
-
-GSettings *
-panel_layout_get_instance_settings (GSettings  *settings_object,
-                                    const char *schema)
-{
-        char      *path;
-        char      *path_instance;
-        GSettings *settings_instance;
-
-        g_return_val_if_fail (G_IS_SETTINGS (settings_object), NULL);
-
-        g_object_get (settings_object, "path", &path, NULL);
-        path_instance = g_strdup_printf ("%s%s", path,
-                                         PANEL_LAYOUT_OBJECT_CONFIG_SUFFIX);
-        g_free (path);
-
-        settings_instance = g_settings_new_with_path (schema, path_instance);
-        g_free (path_instance);
-
-        return settings_instance;
 }
 
 static char *
@@ -713,24 +691,17 @@ panel_layout_object_generate_id (const char *iid)
 }
 
 char *
-panel_layout_object_create_start (PanelObjectType       type,
-                                  const char           *type_detail,
+panel_layout_object_create_start (const char           *iid,
                                   const char           *toplevel_id,
                                   PanelObjectPackType   pack_type,
                                   int                   pack_index,
-                                  GVariant             *initial_settings,
-                                  GSettings           **settings)
+                                  GVariant             *initial_settings)
 {
         char      *unique_id;
         char      *path;
         GSettings *settings_object;
-        char      *iid;
         char      *try_id;
 
-        if (settings)
-                *settings = NULL;
-
-        iid = panel_object_type_to_iid (type, type_detail);
         if (!iid)
                 return NULL;
 
@@ -769,12 +740,8 @@ panel_layout_object_create_start (PanelObjectType       type,
         }
 
         g_free (try_id);
-        g_free (iid);
 
-        if (settings)
-                *settings = settings_object;
-        else
-                g_object_unref (settings_object);
+        g_object_unref (settings_object);
 
         return unique_id;
 }

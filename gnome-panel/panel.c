@@ -25,13 +25,11 @@
 #include "panel.h"
 
 #include "applet.h"
-#include "button-widget.h"
 #include "panel-applets-manager.h"
 #include "panel-bindings.h"
 #include "panel-context-menu.h"
 #include "panel-util.h"
 #include "panel-applet-frame.h"
-#include "panel-action-button.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-lockdown.h"
@@ -52,7 +50,6 @@ enum {
 	TARGET_DIRECTORY,
 	TARGET_COLOR,
 	TARGET_APPLET,
-	TARGET_APPLET_INTERNAL,
 	TARGET_BGIMAGE,
 	TARGET_BACKGROUND_RESET
 };
@@ -68,17 +65,8 @@ orientation_change (AppletInfo  *info,
 
 	orientation = panel_widget_get_applet_orientation (panel);
 
-	switch (info->type) {
-	case PANEL_OBJECT_APPLET:
-		panel_applet_frame_change_orientation (
-				PANEL_APPLET_FRAME (info->widget), orientation);
-		break;
-	case PANEL_OBJECT_ACTION:
-		button_widget_set_orientation (BUTTON_WIDGET (info->widget), orientation);
-		break;
-	default:
-		break;
-	}
+	panel_applet_frame_change_orientation (PANEL_APPLET_FRAME (info->widget),
+	                                       orientation);
 }
 
 static void
@@ -898,33 +886,6 @@ drop_urilist (PanelWidget         *panel,
 	return success;
 }
 
-static gboolean
-drop_internal_applet (PanelWidget         *panel,
-		      PanelObjectPackType  pack_type,
-		      int                  pack_index,
-		      const char          *applet_type,
-		      int                  action)
-{
-	gboolean success = FALSE;
-
-	if (applet_type == NULL)
-		return FALSE;
-
-	if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:"))) {
-		if (panel_layout_is_writable ()) {
-			panel_action_button_load_from_drag (panel->toplevel,
-			                                    pack_type,
-			                                    pack_index,
-			                                    applet_type);
-			success = TRUE;
-		} else {
-			success = FALSE;
-		}
-	}
-
-	return success;
-}
-
 static GtkTargetList *
 get_target_list (void)
 {
@@ -935,7 +896,6 @@ get_target_list (void)
 		{ (gchar *) "_NETSCAPE_URL",                       0, TARGET_NETSCAPE_URL },
 		{ (gchar *) "application/x-panel-directory",       0, TARGET_DIRECTORY },
 		{ (gchar *) "application/x-panel-applet-iid",      0, TARGET_APPLET },
-		{ (gchar *) "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
 		{ (gchar *) "application/x-color",                 0, TARGET_COLOR },
 		{ (gchar *) "property/bgimage",                    0, TARGET_BGIMAGE },
 		{ (gchar *) "x-special/gnome-reset-background",    0, TARGET_BACKGROUND_RESET },
@@ -961,8 +921,7 @@ panel_check_dnd_target_data (GtkWidget      *widget,
 
 	g_return_val_if_fail (widget, FALSE);
 
-	if (!PANEL_IS_TOPLEVEL  (widget) &&
-	    !BUTTON_IS_WIDGET (widget))
+	if (!PANEL_IS_TOPLEVEL (widget))
 		return FALSE;
 
 	if (!(gdk_drag_context_get_actions (context) & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
@@ -1025,15 +984,7 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 	if (panel_lockdown_get_panels_locked_down_s ())
 		return FALSE;
 
-	if (info == TARGET_APPLET_INTERNAL) {
-		if (gdk_drag_context_get_actions (context) & GDK_ACTION_MOVE)
-			gdk_drag_status (context, GDK_ACTION_MOVE, time_);
-		else
-			gdk_drag_status (context,
-					 gdk_drag_context_get_suggested_action (context),
-					 time_);
-
-	} else if (gdk_drag_context_get_actions (context) & GDK_ACTION_COPY)
+	if (gdk_drag_context_get_actions (context) & GDK_ACTION_COPY)
 		gdk_drag_status (context, GDK_ACTION_COPY, time_);
 	else
 		gdk_drag_status (context,
@@ -1170,11 +1121,6 @@ panel_receive_dnd_data (PanelWidget         *panel,
 		} else {
 			success = FALSE;
 		}
-		break;
-	case TARGET_APPLET_INTERNAL:
-		success = drop_internal_applet (panel, pack_type, pack_index,
-						(char *)data,
-						gdk_drag_context_get_selected_action (context));
 		break;
 	default:
 		gtk_drag_finish (context, FALSE, FALSE, time_);

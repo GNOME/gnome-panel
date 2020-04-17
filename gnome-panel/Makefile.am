@@ -27,7 +27,6 @@ panel_sources =			\
 	gp-theme.c \
 	gp-theme.h \
 	panel-widget.c		\
-	button-widget.c		\
 	panel.c			\
 	applet.c		\
 	panel-util.c		\
@@ -35,7 +34,6 @@ panel_sources =			\
 	panel-context-menu.c	\
 	panel-applet-frame.c	\
 	panel-applets-manager.c	\
-	panel-action-button.c	\
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
 	panel-struts.c		\
@@ -52,7 +50,6 @@ panel_sources =			\
 panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
-	button-widget.h		\
 	panel.h			\
 	applet.h		\
 	panel-util.h		\
@@ -60,7 +57,6 @@ panel_headers =			\
 	panel-context-menu.h	\
 	panel-applet-frame.h	\
 	panel-applets-manager.h	\
-	panel-action-button.h	\
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
 	panel-struts.h		\
