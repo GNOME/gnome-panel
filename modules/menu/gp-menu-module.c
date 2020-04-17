@@ -67,8 +67,7 @@ make_text (const gchar *name,
 
 static DirectroyData *
 directory_data_new (GMenuTreeDirectory *directory,
-                    const gchar        *filename,
-                    const gchar        *text)
+                    const gchar        *filename)
 {
   DirectroyData *data;
   GIcon *icon;
@@ -152,16 +151,11 @@ append_directory (GtkTreeStore       *store,
                   const gchar        *menu,
                   MenuButtonData     *data)
 {
-  gchar *text;
   DirectroyData *dir_data;
   GtkTreeIter iter;
 
-  text = make_text (gmenu_tree_directory_get_name (directory),
-                    gmenu_tree_directory_get_comment (directory));
-
-  dir_data = directory_data_new (directory, menu, text);
+  dir_data = directory_data_new (directory, menu);
   data->directories = g_slist_prepend (data->directories, dir_data);
-  g_free (text);
 
   gtk_tree_store_append (store, &iter, parent);
   gtk_tree_store_set (store, &iter,
