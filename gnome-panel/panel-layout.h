@@ -35,23 +35,17 @@ gboolean panel_layout_load         (void);
 gboolean panel_layout_is_writable  (void);
 
 void  panel_layout_toplevel_create      (GdkScreen            *screen);
-void  panel_layout_object_create        (PanelObjectType       type,
-                                         const char           *type_detail,
+void  panel_layout_object_create        (const char           *iid,
                                          const char           *toplevel_id,
                                          PanelObjectPackType   pack_type,
                                          int                   pack_index,
                                          GVariant             *initial_settings);
 
-GSettings *panel_layout_get_instance_settings (GSettings  *settings_object,
-                                               const char *schema);
-
-char *panel_layout_object_create_start  (PanelObjectType       type,
-                                         const char           *type_detail,
+char *panel_layout_object_create_start  (const char           *iid,
                                          const char           *toplevel_id,
                                          PanelObjectPackType   pack_type,
                                          int                   pack_index,
-                                         GVariant             *initial_settings,
-                                         GSettings           **settings);
+                                         GVariant             *initial_settings);
 void  panel_layout_object_create_finish (const char           *object_id);
 
 void panel_layout_delete_toplevel (const char *toplevel_id);

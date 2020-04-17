@@ -31,13 +31,11 @@
 #include "panel.h"
 #include "panel-applets-manager.h"
 #include "panel-applet-frame.h"
-#include "panel-action-button.h"
 #include "panel-toplevel.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
 #include "panel-util.h"
 #include "panel-addto-dialog.h"
-#include "panel-icon-names.h"
 
 struct _PanelAddtoDialog
 {
@@ -66,17 +64,10 @@ G_DEFINE_TYPE (PanelAddtoDialog, panel_addto_dialog, GTK_TYPE_WINDOW)
 
 static GQuark panel_addto_dialog_quark = 0;
 
-typedef enum {
-	PANEL_ADDTO_APPLET,
-	PANEL_ADDTO_ACTION
-} PanelAddtoItemType;
-
 typedef struct {
-	PanelAddtoItemType     type;
 	char                  *name;
 	char                  *description;
 	GIcon                 *icon;
-	PanelActionButtonType  action_type;
 	char                  *iid;
 } PanelAddtoItemInfo;
 
@@ -102,32 +93,6 @@ panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
 				   PanelAddtoItemInfo *b)
 {
 	return g_utf8_collate (a->name, b->name);
-}
-
-static GSList *
-panel_addto_prepend_internal_applets (GSList *list)
-{
-	int i;
-
-	for (i = 1; i < PANEL_ACTION_LAST; i++) {
-		PanelAddtoItemInfo *info;
-
-		if (panel_action_get_is_disabled (i))
-			continue;
-
-		info              = g_new0 (PanelAddtoItemInfo, 1);
-		info->type        = PANEL_ADDTO_ACTION;
-		info->action_type = i;
-		info->name        = g_strdup (panel_action_get_text (i));
-		info->description = g_strdup (panel_action_get_tooltip (i));
-		if (panel_action_get_icon_name (i) != NULL)
-			info->icon = g_themed_icon_new (panel_action_get_icon_name (i));
-		info->iid         = g_strdup (panel_action_get_drag_id (i));
-
-		list = g_slist_prepend (list, info);
-	}
-
-        return list;
 }
 
 static char *
@@ -232,17 +197,6 @@ panel_addto_setup_applet_drag (GtkTreeView *tree_view,
 	panel_addto_setup_drag (tree_view, target, iid);
 }
 
-static void
-panel_addto_setup_internal_applet_drag (GtkTreeView *tree_view,
-					const char  *applet_type)
-{
-	static const GtkTargetEntry target[] = {
-		{ (gchar *) "application/x-panel-applet-internal", 0, 0 }
-	};
-
-	panel_addto_setup_drag (tree_view, target, applet_type);
-}
-
 static GSList *
 panel_addto_query_applets (GSList *list)
 {
@@ -267,7 +221,6 @@ panel_addto_query_applets (GSList *list)
 		}
 
 		applet = g_new0 (PanelAddtoItemInfo, 1);
-		applet->type = PANEL_ADDTO_APPLET;
 		applet->name = g_strdup (name);
 		applet->description = g_strdup (description);
 		if (icon)
@@ -326,7 +279,6 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 
 	if (panel_layout_is_writable ()) {
 		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
-		dialog->applet_list = panel_addto_prepend_internal_applets (dialog->applet_list);
 	}
 
 	dialog->applet_list = g_slist_sort (dialog->applet_list,
@@ -424,28 +376,19 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 	pack_index = panel_widget_get_new_pack_index (dialog->panel_widget,
 						      dialog->insert_pack_type);
 
-	switch (item_info->type) {
-	case PANEL_ADDTO_APPLET:
-		data = initial_setup_data_new (dialog, item_info->iid);
+	data = initial_setup_data_new (dialog, item_info->iid);
 
-		if (!panel_applets_manager_open_initial_setup_dialog (item_info->iid,
-		                                                      NULL,
-		                                                      GTK_WINDOW (dialog),
-		                                                      initial_setup_dialog_cb,
-		                                                      data, initial_setup_data_free)) {
-			panel_applet_frame_create (dialog->panel_widget->toplevel,
-			                           dialog->insert_pack_type, pack_index,
-			                           item_info->iid, NULL);
-		}
-		break;
-	case PANEL_ADDTO_ACTION:
-		panel_action_button_create (dialog->panel_widget->toplevel,
-					    dialog->insert_pack_type,
-					    pack_index,
-					    item_info->action_type);
-		break;
-	default:
-		break;
+	if (!panel_applets_manager_open_initial_setup_dialog (item_info->iid,
+	                                                      NULL,
+	                                                      GTK_WINDOW (dialog),
+	                                                      initial_setup_dialog_cb,
+	                                                      data,
+	                                                      initial_setup_data_free)) {
+		panel_applet_frame_create (dialog->panel_widget->toplevel,
+		                           dialog->insert_pack_type,
+		                           pack_index,
+		                           item_info->iid,
+		                           NULL);
 	}
 }
 
@@ -660,13 +603,8 @@ panel_addto_selection_changed (PanelAddtoDialog *dialog,
 
 	/* only allow dragging applets if we can add applets */
 	if (panel_layout_is_writable ()) {
-		if (data->type == PANEL_ADDTO_APPLET) {
-			panel_addto_setup_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
-						       data->iid);
-		} else if (data->type == PANEL_ADDTO_ACTION) {
-			panel_addto_setup_internal_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
-							        data->iid);
-		}
+		panel_addto_setup_applet_drag (GTK_TREE_VIEW (dialog->tree_view),
+		                               data->iid);
 	}
 }
 

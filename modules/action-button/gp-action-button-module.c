@@ -23,6 +23,7 @@
 #include "gp-lock-screen-applet.h"
 #include "gp-force-quit-applet.h"
 #include "gp-logout-applet.h"
+#include "gp-run-applet.h"
 #include "gp-shutdown-applet.h"
 
 static GpAppletInfo *
@@ -64,6 +65,15 @@ action_button_get_applet_info (const char *id)
 
       is_disabled_func = gp_logout_applet_is_disabled;
     }
+  else if (g_strcmp0 (id, "run") == 0)
+    {
+      type_func = gp_run_applet_get_type;
+      name = _("Run Application...");
+      description = _("Run an application by typing a command or choosing from a list");
+      icon = "system-run";
+
+      is_disabled_func = gp_run_applet_is_disabled;
+    }
   else if (g_strcmp0 (id, "shutdown") == 0)
     {
       type_func = gp_shutdown_applet_get_type;
@@ -96,6 +106,8 @@ action_button_get_applet_id_from_iid (const char *iid)
     return "lock-screen";
   else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:logout") == 0)
     return "logout";
+  else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:run") == 0)
+    return "run";
   else if (g_strcmp0 (iid, "PanelInternalFactory::ActionButton:shutdown") == 0)
     return "shutdown";
 
@@ -118,6 +130,7 @@ gp_module_load (GpModule *module)
                             "force-quit",
                             "lock-screen",
                             "logout",
+                            "run",
                             "shutdown",
                             NULL);
 

@@ -35,17 +35,6 @@ void     panel_object_loader_do_load       (gboolean initial_load);
 gboolean panel_object_loader_is_queued     (const char *id);
 void     panel_object_loader_stop_loading  (const char *id);
 
-/*******************************\
- * iid <=> object type mapping *
-\*******************************/
-
-char     *panel_object_type_to_iid (PanelObjectType  type,
-                                    const char      *detail);
-
-gboolean  panel_object_iid_to_type (const char       *iid,
-                                    PanelObjectType  *type,
-                                    char            **detail);
-
 G_END_DECLS
 
 #endif /* __PANEL_OBJECT_LOADER_H__ */

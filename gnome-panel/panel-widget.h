@@ -12,7 +12,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include "button-widget.h"
 #include "panel-types.h"
 #include "panel-toplevel.h"
 
@@ -161,10 +160,6 @@ void            panel_widget_set_size           (PanelWidget    *panel_widget,
 /*draw EVERYTHING (meaning icons)*/
 void		panel_widget_draw_all		(PanelWidget *panel,
 						 GdkRectangle *area);
-/*draw just one icon (applet has to be an icon of course)*/
-void		panel_widget_draw_icon		(PanelWidget *panel,
-						 ButtonWidget *applet);
-
 
 /*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
