@@ -216,12 +216,6 @@ gp_applet_manager_get_module_manager (GpAppletManager *self)
   return self->manager;
 }
 
-GList *
-gp_applet_manager_get_applets (GpAppletManager *self)
-{
-  return g_hash_table_get_values (self->infos);
-}
-
 gboolean
 gp_applet_manager_factory_activate (GpAppletManager *self,
                                     const char      *iid)
