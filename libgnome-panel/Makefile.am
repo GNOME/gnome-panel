@@ -65,14 +65,14 @@ libgnome_panel_include_HEADERS = \
 
 ENUM_TYPES = \
 	$(srcdir)/gp-applet.h \
-	gp-lockdown.h \
+	$(srcdir)/gp-lockdown.h \
 	$(NULL)
 
-gp-enum-types.c: gp-enum-types.c.in gp-enum-types.h $(ENUM_TYPES)
+gp-enum-types.c: gp-enum-types.c.in gp-enum-types.h $(ENUM_TYPES) Makefile.am
 	$(AM_V_GEN) $(GLIB_MKENUMS) --template $(srcdir)/gp-enum-types.c.in $(ENUM_TYPES) > \
 		gp-enum-types.c.tmp && mv gp-enum-types.c.tmp gp-enum-types.c
 
-gp-enum-types.h: gp-enum-types.h.in $(ENUM_TYPES)
+gp-enum-types.h: gp-enum-types.h.in $(ENUM_TYPES) Makefile.am
 	$(AM_V_GEN) $(GLIB_MKENUMS) --template $(srcdir)/gp-enum-types.h.in $(ENUM_TYPES) > \
 		gp-enum-types.h.tmp && mv gp-enum-types.h.tmp gp-enum-types.h
 
