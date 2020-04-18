@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,22 +15,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GP_ADD_APPLET_WINDOW_H
-#define GP_ADD_APPLET_WINDOW_H
+#ifndef GP_APPLET_ROW_H
+#define GP_APPLET_ROW_H
 
-#include <gtk/gtk.h>
-
-#include "gp-module-manager.h"
-#include "panel-toplevel.h"
+#include "libgnome-panel/gp-applet-info-private.h"
+#include "libgnome-panel/gp-module-private.h"
 
 G_BEGIN_DECLS
 
-#define GP_TYPE_ADD_APPLET_WINDOW gp_add_applet_window_get_type ()
-G_DECLARE_FINAL_TYPE (GpAddAppletWindow, gp_add_applet_window,
-                      GP, ADD_APPLET_WINDOW, GtkWindow)
+#define GP_TYPE_APPLET_ROW (gp_applet_row_get_type ())
+G_DECLARE_FINAL_TYPE (GpAppletRow, gp_applet_row, GP, APPLET_ROW, GtkListBoxRow)
 
-GtkWidget *gp_add_applet_window_new (GpModuleManager *manager,
-                                     PanelToplevel   *toplevel);
+GtkWidget    *gp_applet_row_new      (GpModule    *module,
+                                      const char  *applet_id);
+
+GpAppletInfo *gp_applet_row_get_info (GpAppletRow *self);
+
+const char   *gp_applet_row_get_iid  (GpAppletRow *self);
 
 G_END_DECLS
 

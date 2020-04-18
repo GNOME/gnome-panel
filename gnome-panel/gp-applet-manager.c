@@ -210,6 +210,12 @@ gp_applet_manager_new (void)
   return g_object_new (GP_TYPE_APPLET_MANAGER, NULL);
 }
 
+GpModuleManager *
+gp_applet_manager_get_module_manager (GpAppletManager *self)
+{
+  return self->manager;
+}
+
 GList *
 gp_applet_manager_get_applets (GpAppletManager *self)
 {
