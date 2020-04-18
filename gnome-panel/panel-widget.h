@@ -158,8 +158,6 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 void            panel_widget_get_insert_at_cursor (PanelWidget         *widget,
 						   PanelObjectPackType *pack_type,
 						   int                 *pack_index);
-/* get pack type for insertion at the cursor location in panel */
-PanelObjectPackType panel_widget_get_insert_pack_type_at_cursor (PanelWidget *panel);
 /* get index for insertion with pack type */
 int                 panel_widget_get_new_pack_index   (PanelWidget          *panel,
 						       PanelObjectPackType   pack_type);

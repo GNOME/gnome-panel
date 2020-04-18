@@ -1839,18 +1839,6 @@ panel_widget_get_insert_at_cursor (PanelWidget         *widget,
 	*pack_index = panel_widget_get_new_pack_index (widget, *pack_type);
 }
 
-/* get pack type for insertion at the cursor location in panel */
-PanelObjectPackType
-panel_widget_get_insert_pack_type_at_cursor (PanelWidget *panel)
-{
-	PanelObjectPackType ret = PANEL_OBJECT_PACK_START;
-	int                 pack_index = 0;
-
-	panel_widget_get_insert_at_cursor (panel, &ret, &pack_index);
-
-	return ret;
-}
-
 /* get index for insertion with pack type */
 int
 panel_widget_get_new_pack_index (PanelWidget         *panel,
