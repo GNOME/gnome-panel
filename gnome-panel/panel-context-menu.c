@@ -37,10 +37,11 @@
 
 #include "panel-util.h"
 #include "panel.h"
+#include "gp-add-applet-window.h"
 #include "gp-properties-dialog.h"
+#include "panel-applets-manager.h"
 #include "panel-layout.h"
 #include "panel-lockdown.h"
-#include "panel-addto-dialog.h"
 #include "panel-icon-names.h"
 
 static void
@@ -130,6 +131,44 @@ add_menu_separator (GtkWidget *menu)
 }
 
 static void
+add_applet_dialog_destroy_cb (GtkWidget     *dialog,
+                              PanelToplevel *toplevel)
+{
+  panel_toplevel_pop_autohide_disabler (toplevel);
+  g_object_set_data (G_OBJECT (toplevel), "add-applet-dialog", NULL);
+}
+
+static void
+add_to_panel_activate_cb (GtkMenuItem   *menuitem,
+                          PanelToplevel *toplevel)
+{
+  GtkWidget *dialog;
+
+  dialog = g_object_get_data (G_OBJECT (toplevel), "add-applet-dialog");
+
+  if (dialog == NULL)
+    {
+      GpModuleManager *manager;
+
+      manager = panel_applets_maanger_get_module_manager ();
+      dialog = gp_add_applet_window_new (manager, toplevel);
+
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (add_applet_dialog_destroy_cb),
+                        toplevel);
+
+      g_object_set_data_full (G_OBJECT (toplevel),
+                              "add-applet-dialog",
+                              dialog,
+                              (GDestroyNotify) gtk_widget_destroy);
+
+      panel_toplevel_push_autohide_disabler (toplevel);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+static void
 panel_context_menu_build_edition (PanelWidget *panel_widget,
 				  GtkWidget   *menu)
 {
@@ -138,8 +177,10 @@ panel_context_menu_build_edition (PanelWidget *panel_widget,
 	menuitem = gtk_menu_item_new_with_mnemonic (_("_Add to Panel..."));
 	gtk_widget_show (menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-        g_signal_connect (G_OBJECT (menuitem), "activate",
-	      	       	  G_CALLBACK (panel_addto_present), panel_widget);
+	g_signal_connect (menuitem,
+	                  "activate",
+	                  G_CALLBACK (add_to_panel_activate_cb),
+	                  panel_widget->toplevel);
 
 	if (!panel_layout_is_writable ())
 		gtk_widget_set_sensitive (menuitem, FALSE);

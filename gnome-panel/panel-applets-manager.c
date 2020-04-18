@@ -46,6 +46,14 @@ _panel_applets_managers_ensure_loaded (void)
 	manager = gp_applet_manager_new ();
 }
 
+GpModuleManager *
+panel_applets_maanger_get_module_manager (void)
+{
+	_panel_applets_managers_ensure_loaded ();
+
+	return gp_applet_manager_get_module_manager (manager);
+}
+
 GList *
 panel_applets_manager_get_applets (void)
 {
