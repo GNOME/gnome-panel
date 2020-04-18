@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2018 Alberts Muktupāvels
+ * Copyright (C) 2004 Vincent Untz
+ * Copyright (C) 2018-2020 Alberts Muktupāvels
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,17 +19,21 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-#include <libgnome-panel/gp-applet-info-private.h>
-#include <libgnome-panel/gp-module-private.h>
 
 #include "gp-add-applet-window.h"
+#include "gp-applet-row.h"
 #include "gp-module-manager.h"
+#include "libgnome-panel/gp-applet-info-private.h"
+#include "libgnome-panel/gp-module-private.h"
+#include "libpanel-util/panel-glib.h"
+#include "panel-applets-manager.h"
 
 struct _GpAddAppletWindow
 {
   GtkWindow        parent;
 
   GpModuleManager *module_manager;
+  PanelToplevel   *toplevel;
 
   GtkWidget       *header_bar;
   GtkWidget       *search_button;
@@ -45,6 +50,7 @@ enum
   PROP_0,
 
   PROP_MODULE_MANAGER,
+  PROP_TOPLEVEL,
 
   LAST_PROP
 };
@@ -75,145 +81,15 @@ label_make_bold (GtkWidget *label)
 }
 
 static void
-help_cb (GtkMenuItem       *menuitem,
-         GpAddAppletWindow *window)
+header_func_cb (GtkListBoxRow *row,
+                GtkListBoxRow *before,
+                gpointer       user_data)
 {
-  GpAppletInfo *info;
-  GError *error;
+  GtkWidget *separator;
 
-  info = g_object_get_data (G_OBJECT (menuitem), "applet-info");
+  separator = gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
 
-  error = NULL;
-  gtk_show_uri_on_window (GTK_WINDOW (window), info->help_uri,
-                          GDK_CURRENT_TIME, &error);
-
-  if (error != NULL)
-    {
-      g_warning ("%s", error->message);
-      g_error_free (error);
-    }
-}
-
-static void
-about_cb (GtkMenuItem       *menuitem,
-          GpAddAppletWindow *window)
-{
-  GtkWidget *dialog;
-  GpAppletInfo *info;
-
-  dialog = gtk_about_dialog_new ();
-  info = g_object_get_data (G_OBJECT (menuitem), "applet-info");
-
-  info->about_dialog_func (GTK_ABOUT_DIALOG (dialog));
-
-  gtk_window_present (GTK_WINDOW (dialog));
-}
-
-static void
-setup_view_more_button (GtkWidget         *button,
-                        GpAppletInfo      *info,
-                        GpAddAppletWindow *window)
-{
-  GtkWidget *image;
-  GtkWidget *menu;
-  gboolean sensitive;
-  GtkWidget *item;
-
-  image = gtk_image_new_from_icon_name ("view-more-symbolic",
-                                        GTK_ICON_SIZE_MENU);
-
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_image_set_pixel_size (GTK_IMAGE (image), 16);
-
-  menu = gtk_menu_new ();
-  sensitive = FALSE;
-
-  gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), menu);
-  gtk_widget_set_halign (menu, GTK_ALIGN_END);
-
-  if (info->help_uri && info->help_uri[0] != '\0')
-    {
-      sensitive = TRUE;
-      item = gtk_menu_item_new_with_label (_("Help"));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
-
-      g_object_set_data (G_OBJECT (item), "applet-info", info);
-      g_signal_connect (item, "activate", G_CALLBACK (help_cb), window);
-    }
-
-  if (info->about_dialog_func != NULL)
-    {
-      sensitive = TRUE;
-      item = gtk_menu_item_new_with_label (_("About"));
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-      gtk_widget_show (item);
-
-      g_object_set_data (G_OBJECT (item), "applet-info", info);
-      g_signal_connect (item, "activate", G_CALLBACK (about_cb), window);
-    }
-
-  gtk_widget_set_sensitive (button, sensitive);
-}
-
-static void
-add_applet (GpAddAppletWindow *window,
-            GtkListBox        *list_box,
-            GpAppletInfo      *info)
-{
-  GtkWidget *row;
-  GtkWidget *row_box;
-  GtkWidget *icon_image;
-  GtkWidget *info_box;
-  GtkWidget *add_button;
-  GtkWidget *menu_button;
-  GtkWidget *title_label;
-  GtkWidget *description_label;
-
-  row = gtk_list_box_row_new ();
-  g_object_set_data (G_OBJECT (row), "applet-info", info);
-  gtk_list_box_set_selection_mode (list_box, GTK_SELECTION_NONE);
-  gtk_list_box_prepend (list_box, row);
-  gtk_widget_show (row);
-
-  row_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_add (GTK_CONTAINER (row), row_box);
-  g_object_set (row_box, "margin-start", 6, NULL);
-  g_object_set (row_box, "margin-end", 6, NULL);
-  gtk_widget_show (row_box);
-
-  icon_image = gtk_image_new_from_icon_name (info->icon_name, GTK_ICON_SIZE_DND);
-  gtk_image_set_pixel_size (GTK_IMAGE (icon_image), 32);
-  gtk_box_pack_start (GTK_BOX (row_box), icon_image, FALSE, FALSE, 0);
-  gtk_widget_show (icon_image);
-
-  info_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  gtk_box_pack_start (GTK_BOX (row_box), info_box, TRUE, TRUE, 0);
-  gtk_widget_show (info_box);
-
-  add_button = gtk_button_new_with_label (_("Add"));
-  gtk_box_pack_start (GTK_BOX (row_box), add_button, FALSE, FALSE, 0);
-  gtk_widget_set_valign (add_button, GTK_ALIGN_CENTER);
-  gtk_widget_show (add_button);
-
-  menu_button = gtk_menu_button_new ();
-  gtk_box_pack_end (GTK_BOX (row_box), menu_button, FALSE, FALSE, 0);
-  gtk_widget_set_valign (menu_button, GTK_ALIGN_CENTER);
-  setup_view_more_button (menu_button, info, window);
-  gtk_widget_show (menu_button);
-
-  title_label = gtk_label_new (info->name);
-  gtk_box_pack_start (GTK_BOX (info_box), title_label, FALSE, FALSE, 0);
-  gtk_label_set_xalign (GTK_LABEL (title_label), 0);
-  label_make_bold (title_label);
-  gtk_widget_show (title_label);
-
-  description_label = gtk_label_new (info->description);
-  gtk_box_pack_start (GTK_BOX (info_box), description_label, FALSE, FALSE, 0);
-  gtk_label_set_max_width_chars (GTK_LABEL (description_label), 20);
-  gtk_label_set_line_wrap (GTK_LABEL (description_label), TRUE);
-  gtk_label_set_xalign (GTK_LABEL (description_label), 0);
-  gtk_widget_show (description_label);
+  gtk_list_box_row_set_header (row, separator);
 }
 
 static gboolean
@@ -231,7 +107,7 @@ filter_func_cb (GtkListBoxRow *row,
   if (!searching)
     return TRUE;
 
-  info = g_object_get_data (G_OBJECT (row), "applet-info");
+  info = gp_applet_row_get_info (GP_APPLET_ROW (row));
 
   if (!info)
     return FALSE;
@@ -239,10 +115,10 @@ filter_func_cb (GtkListBoxRow *row,
   retval = FALSE;
 
   if (info->name)
-    retval |= strstr (info->name, window->search_text) != NULL;
+    retval |= panel_g_utf8_strstrcase (info->name, window->search_text) != NULL;
 
   if (info->description)
-    retval |= strstr (info->description, window->search_text) != NULL;
+    retval |= panel_g_utf8_strstrcase (info->description, window->search_text) != NULL;
 
   return retval;
 }
@@ -255,13 +131,102 @@ sort_func_cb (GtkListBoxRow *row1,
   GpAppletInfo *info1;
   GpAppletInfo *info2;
 
-  info1 = g_object_get_data (G_OBJECT (row1), "applet-info");
-  info2 = g_object_get_data (G_OBJECT (row2), "applet-info");
+  info1 = gp_applet_row_get_info (GP_APPLET_ROW (row1));
+  info2 = gp_applet_row_get_info (GP_APPLET_ROW (row2));
 
-  if (!info1 || !info2)
-    return 1;
+  return g_utf8_collate (info1->name, info2->name);
+}
 
-  return g_strcmp0 (info1->name, info2->name);
+typedef struct
+{
+  PanelToplevel       *toplevel;
+  PanelObjectPackType  pack_type;
+  int                  pack_index;
+  char                *iid;
+} InitialSetupData;
+
+static InitialSetupData *
+initial_setup_data_new (PanelToplevel       *toplevel,
+                        PanelObjectPackType  pack_type,
+                        int                  pack_index,
+                        const char          *iid)
+{
+  InitialSetupData *data;
+
+  data = g_new0 (InitialSetupData, 1);
+
+  data->toplevel = toplevel;
+  data->pack_type = pack_type;
+  data->pack_index = pack_index;
+  data->iid = g_strdup (iid);
+
+  return data;
+}
+
+static void
+initial_setup_data_free (gpointer user_data)
+{
+  InitialSetupData *data;
+
+  data = (InitialSetupData *) user_data;
+
+  g_free (data->iid);
+  g_free (data);
+}
+
+static void
+initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
+                         gboolean              canceled,
+                         gpointer              user_data)
+{
+  InitialSetupData *data;
+  GVariant *initial_settings;
+
+  if (canceled)
+    return;
+
+  data = (InitialSetupData *) user_data;
+
+  initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+
+  panel_applet_frame_create (data->toplevel,
+                             data->pack_type,
+                             data->pack_index,
+                             data->iid,
+                             initial_settings);
+
+  g_variant_unref (initial_settings);
+}
+
+static void
+row_activated_cb (GtkListBox        *box,
+                  GtkListBoxRow     *row,
+                  GpAddAppletWindow *self)
+{
+  const char *iid;
+  PanelWidget *panel;
+  PanelObjectPackType pack_type;
+  int pack_index;
+  InitialSetupData *data;
+
+  iid = gp_applet_row_get_iid (GP_APPLET_ROW (row));
+
+  pack_type = PANEL_OBJECT_PACK_START;
+
+  panel = panel_toplevel_get_panel_widget (self->toplevel);
+  pack_index = panel_widget_get_new_pack_index (panel, pack_type);
+
+  data = initial_setup_data_new (self->toplevel, pack_type, pack_index, iid);
+
+  if (panel_applets_manager_open_initial_setup_dialog (iid,
+                                                       NULL,
+                                                       GTK_WINDOW (self),
+                                                       initial_setup_dialog_cb,
+                                                       data,
+                                                       initial_setup_data_free))
+    return;
+
+  panel_applet_frame_create (self->toplevel, pack_type, pack_index, iid, NULL);
 }
 
 static void
@@ -305,15 +270,23 @@ add_module (GpAddAppletWindow *window,
   gtk_widget_show (list_frame);
 
   list_box = gtk_list_box_new ();
+  gtk_list_box_set_selection_mode (GTK_LIST_BOX (list_box), GTK_SELECTION_NONE);
+  gtk_list_box_set_activate_on_single_click (GTK_LIST_BOX (list_box), FALSE);
   g_object_set_data (G_OBJECT (module_box), "list-box", list_box);
   gtk_container_add (GTK_CONTAINER (list_frame), list_box);
   gtk_widget_show (list_box);
+
+  g_signal_connect (list_box,
+                    "row-activated",
+                    G_CALLBACK (row_activated_cb),
+                    window);
 
   applets = gp_module_get_applets (module);
   for (i = 0; applets[i] != NULL; i++)
     {
       GError *error;
       GpAppletInfo *info;
+      GtkWidget *row;
 
       error = NULL;
       info = gp_module_get_applet_info (module, applets[i], &error);
@@ -326,8 +299,15 @@ add_module (GpAddAppletWindow *window,
           continue;
         }
 
-      add_applet (window, GTK_LIST_BOX (list_box), info);
+      row = gp_applet_row_new (module, applets[i]);
+      gtk_list_box_prepend (GTK_LIST_BOX (list_box), row);
+      gtk_widget_show (row);
     }
+
+  gtk_list_box_set_header_func (GTK_LIST_BOX (list_box),
+                                header_func_cb,
+                                window,
+                                NULL);
 
   gtk_list_box_set_filter_func (GTK_LIST_BOX (list_box),
                                 filter_func_cb, window,
@@ -565,15 +545,47 @@ setup_window_content (GpAddAppletWindow *window)
 }
 
 static void
+update_subtitle (GpAddAppletWindow *self)
+{
+  const char *name;
+  char *title;
+
+  name = panel_toplevel_get_name (self->toplevel);
+
+  if (name != NULL && *name != '\0')
+    title = g_strdup_printf (_("Find an item to add to “%s”"), name);
+  else
+    title = g_strdup (_("Find an item to add to the panel"));
+
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (self->header_bar), title);
+  g_free (title);
+}
+
+static void
+toplevel_name_changed_cb (GObject           *object,
+                          GParamSpec        *pspec,
+                          GpAddAppletWindow *self)
+{
+  update_subtitle (self);
+}
+
+static void
 gp_add_applet_window_constructed (GObject *object)
 {
-  GpAddAppletWindow *window;
+  GpAddAppletWindow *self;
 
-  window = GP_ADD_APPLET_WINDOW (object);
+  self = GP_ADD_APPLET_WINDOW (object);
 
   G_OBJECT_CLASS (gp_add_applet_window_parent_class)->constructed (object);
 
-  rebuild_modules_list (window);
+  g_signal_connect_object (self->toplevel,
+                           "notify::name",
+                           G_CALLBACK (toplevel_name_changed_cb),
+                           self,
+                           0);
+
+  rebuild_modules_list (self);
+  update_subtitle (self);
 }
 
 static void
@@ -604,6 +616,11 @@ gp_add_applet_window_set_property (GObject      *object,
         window->module_manager = g_value_get_object (value);
         break;
 
+      case PROP_TOPLEVEL:
+        g_assert (window->toplevel == NULL);
+        window->toplevel = g_value_get_object (value);
+        break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
@@ -618,6 +635,15 @@ install_properties (GObjectClass *object_class)
                          "GpModuleManager",
                          "GpModuleManager",
                          GP_TYPE_MODULE_MANAGER,
+                         G_PARAM_WRITABLE |
+                         G_PARAM_CONSTRUCT_ONLY |
+                         G_PARAM_STATIC_STRINGS);
+
+  window_properties[PROP_TOPLEVEL] =
+    g_param_spec_object ("toplevel",
+                         "toplevel",
+                         "toplevel",
+                         PANEL_TYPE_TOPLEVEL,
                          G_PARAM_WRITABLE |
                          G_PARAM_CONSTRUCT_ONLY |
                          G_PARAM_STATIC_STRINGS);
@@ -648,4 +674,14 @@ gp_add_applet_window_init (GpAddAppletWindow *window)
 
   gtk_window_set_default_size (GTK_WINDOW (window), 600, 480);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+}
+
+GtkWidget *
+gp_add_applet_window_new (GpModuleManager *manager,
+                          PanelToplevel   *toplevel)
+{
+  return g_object_new (GP_TYPE_ADD_APPLET_WINDOW,
+                       "module-manager", manager,
+                       "toplevel", toplevel,
+                       NULL);
 }
