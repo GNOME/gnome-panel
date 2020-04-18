@@ -13,6 +13,8 @@ panel_sources =			\
 	gp-add-applet-window.h \
 	gp-applet-manager.c \
 	gp-applet-manager.h \
+	gp-applet-row.c \
+	gp-applet-row.h \
 	gp-application.c \
 	gp-application.h \
 	gp-arrow-button.c \
