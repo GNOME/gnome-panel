@@ -28,6 +28,8 @@ G_DECLARE_FINAL_TYPE (GpAppletManager, gp_applet_manager,
 
 GpAppletManager *gp_applet_manager_new                       (void);
 
+GpModuleManager *gp_applet_manager_get_module_manager        (GpAppletManager             *self);
+
 GList           *gp_applet_manager_get_applets               (GpAppletManager             *self);
 
 gboolean         gp_applet_manager_factory_activate          (GpAppletManager             *self,

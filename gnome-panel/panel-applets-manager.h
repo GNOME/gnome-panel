@@ -23,11 +23,14 @@
 
 #include <glib-object.h>
 
+#include "gp-module-manager.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "panel-applet-frame.h"
 #include "panel-applet-info.h"
 
 G_BEGIN_DECLS
+
+GpModuleManager *panel_applets_maanger_get_module_manager        (void);
 
 GList           *panel_applets_manager_get_applets               (void);
 

@@ -44,7 +44,6 @@ panel_sources =			\
 	panel-a11y.c		\
 	panel-bindings.c	\
 	panel-lockdown.c	\
-	panel-addto-dialog.c	\
 	panel-layout.c		\
 	panel-object-loader.c	\
 	panel-applet-info.c
@@ -69,7 +68,6 @@ panel_headers =			\
 	panel-enums.h		\
 	panel-enums-gsettings.h	\
 	panel-lockdown.h	\
-	panel-addto-dialog.h	\
 	panel-icon-names.h	\
 	panel-layout.h		\
 	panel-object-loader.h	\
@@ -156,7 +154,6 @@ BUILT_SOURCES = \
 
 ui_FILES =					\
 	gp-properties-dialog.ui \
-	panel-addto-dialog.ui \
 	panel-run-dialog.ui
 
 panel-resources.c: panel.gresource.xml $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(srcdir) --generate-dependencies $(srcdir)/panel.gresource.xml)
