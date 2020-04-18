@@ -31,9 +31,7 @@ typedef struct _PanelWidget		PanelWidget;
 
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
-typedef struct _AppletRecord		AppletRecord;
 typedef struct _AppletData		AppletData;
-typedef struct _DNDRecord		DNDRecord;
 
 typedef struct _AppletSizeHints		AppletSizeHints;
 typedef struct _AppletSizeHintsAlloc	AppletSizeHintsAlloc;
@@ -90,8 +88,6 @@ struct _PanelWidget
 	                                  */
 	
 	PanelToplevel  *toplevel;
-	
-	GdkEventKey    *key_event;
 
 	/* helpers to get a good size in packed panels with applets using
 	 * size hints */
@@ -155,10 +151,6 @@ void            panel_widget_set_orientation    (PanelWidget    *panel_widget,
 						 GtkOrientation  orientation);
 void            panel_widget_set_size           (PanelWidget    *panel_widget,
 						 int             size);
-
-/*draw EVERYTHING (meaning icons)*/
-void		panel_widget_draw_all		(PanelWidget *panel,
-						 GdkRectangle *area);
 
 /*get pos of the cursor location in panel coordinates*/
 int		panel_widget_get_cursorloc	(PanelWidget *panel);
