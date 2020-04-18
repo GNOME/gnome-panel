@@ -792,9 +792,6 @@ _panel_applet_frame_activated (PanelAppletFrame           *frame,
 	                              frame_act->settings);
 	frame->priv->applet_info = info;
 
-	panel_widget_set_applet_size_constrained (frame->priv->panel,
-						  GTK_WIDGET (frame), TRUE);
-
 	panel_lockdown_on_notify (panel_lockdown_get (),
 				  NULL,
 				  G_OBJECT (frame),

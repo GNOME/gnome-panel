@@ -64,8 +64,7 @@ struct _AppletData
 	/* Valid size ranges for expanded applets */
 	int *           size_hints; 
 	int             size_hints_len;
-  
-	guint           size_constrained : 1;
+
 	guint           expand_major : 1;
 	guint           expand_minor : 1;
 };
@@ -181,10 +180,6 @@ void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
-
-void     panel_widget_set_applet_size_constrained (PanelWidget *panel,
-						   GtkWidget   *applet,
-						   gboolean     size_constrained);
 void     panel_widget_set_applet_expandable       (PanelWidget *panel,
 						   GtkWidget   *applet,
 						   gboolean     major,
