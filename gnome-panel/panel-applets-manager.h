@@ -26,7 +26,6 @@
 #include "gp-module-manager.h"
 #include "libgnome-panel/gp-initial-setup-dialog-private.h"
 #include "panel-applet-frame.h"
-#include "panel-applet-info.h"
 
 G_BEGIN_DECLS
 
@@ -35,7 +34,7 @@ GpModuleManager *panel_applets_maanger_get_module_manager        (void);
 gboolean         panel_applets_manager_factory_activate          (const gchar                 *iid);
 void             panel_applets_manager_factory_deactivate        (const gchar                 *iid);
 
-PanelAppletInfo *panel_applets_manager_get_applet_info           (const gchar                 *iid);
+GpAppletInfo    *panel_applets_manager_get_applet_info           (const gchar                 *iid);
 
 gboolean         panel_applets_manager_load_applet               (const gchar                 *iid,
                                                                   PanelAppletFrameActivating  *frame_act);

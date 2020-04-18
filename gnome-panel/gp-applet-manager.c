@@ -44,8 +44,6 @@ struct _GpAppletManager
   char            *backend;
 
   GpModuleManager *manager;
-
-  GHashTable      *infos;
 };
 
 G_DEFINE_TYPE (GpAppletManager, gp_applet_manager, G_TYPE_OBJECT)
@@ -98,74 +96,6 @@ remove_initial_settings (PanelAppletFrameActivating *frame_act)
 }
 
 static void
-get_applet_infos (GpAppletManager *manager,
-                  const gchar     *id,
-                  GpModule        *module)
-{
-  const gchar *const *applets;
-  guint i;
-
-  applets = gp_module_get_applets (module);
-
-  for (i = 0; applets[i] != NULL; i++)
-    {
-      GError *error;
-      GpAppletInfo *info;
-      gchar *iid;
-      PanelAppletInfo *applet_info;
-
-      error = NULL;
-      info = gp_module_get_applet_info (module, applets[i], &error);
-
-      if (info == NULL)
-        {
-          g_warning ("%s", error->message);
-          g_error_free (error);
-
-          continue;
-        }
-
-      iid = g_strdup_printf ("%s::%s", id, applets[i]);
-      applet_info = panel_applet_info_new (iid, info->name,
-                                           info->description,
-                                           info->icon_name);
-
-      g_hash_table_insert (manager->infos, g_strdup (iid), applet_info);
-      g_free (iid);
-    }
-}
-
-static void
-load_infos (GpAppletManager *self)
-{
-  GList *modules;
-  GList *l;
-
-  modules = gp_module_manager_get_modules (self->manager);
-
-  for (l = modules; l != NULL; l = l->next)
-    {
-      GpModule *module;
-
-      module = GP_MODULE (l->data);
-
-      get_applet_infos (self, gp_module_get_id (module), module);
-    }
-
-  g_list_free (modules);
-}
-
-static void
-applet_info_free (gpointer data)
-{
-  PanelAppletInfo *info;
-
-  info = (PanelAppletInfo *) data;
-
-  panel_applet_info_free (info);
-}
-
-static void
 gp_applet_manager_finalize (GObject *object)
 {
   GpAppletManager *self;
@@ -174,7 +104,6 @@ gp_applet_manager_finalize (GObject *object)
 
   g_clear_pointer (&self->backend, g_free);
   g_clear_object (&self->manager);
-  g_clear_pointer (&self->infos, g_hash_table_destroy);
 
   G_OBJECT_CLASS (gp_applet_manager_parent_class)->finalize (object);
 }
@@ -195,13 +124,6 @@ gp_applet_manager_init (GpAppletManager *self)
   self->backend = get_current_backend ();
 
   self->manager = gp_module_manager_new ();
-
-  self->infos = g_hash_table_new_full (g_str_hash,
-                                       g_str_equal,
-                                       g_free,
-                                       applet_info_free);
-
-  load_infos (self);
 }
 
 GpAppletManager *
@@ -220,7 +142,11 @@ gboolean
 gp_applet_manager_factory_activate (GpAppletManager *self,
                                     const char      *iid)
 {
-  if (!g_hash_table_lookup (self->infos, iid))
+  GpAppletInfo *info;
+
+  info = gp_applet_manager_get_applet_info (self, iid);
+
+  if (info == NULL)
     return FALSE;
 
   return TRUE;
@@ -232,11 +158,28 @@ gp_applet_manager_factory_deactivate (GpAppletManager *self,
 {
 }
 
-PanelAppletInfo *
+GpAppletInfo *
 gp_applet_manager_get_applet_info (GpAppletManager *self,
                                    const char      *iid)
 {
-  return g_hash_table_lookup (self->infos, iid);
+  const char *applet_id;
+  char *module_id;
+  GpModule *module;
+
+  applet_id = g_strrstr (iid, "::");
+  if (!applet_id)
+    return NULL;
+
+  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+  module = gp_module_manager_get_module (self->manager, module_id);
+  g_free (module_id);
+
+  if (module == NULL)
+    return NULL;
+
+  applet_id += 2;
+
+  return gp_module_get_applet_info (module, applet_id, NULL);
 }
 
 gboolean

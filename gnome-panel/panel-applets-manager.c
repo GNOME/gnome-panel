@@ -70,7 +70,7 @@ panel_applets_manager_factory_deactivate (const gchar *iid)
 	gp_applet_manager_factory_deactivate (manager, iid);
 }
 
-PanelAppletInfo *
+GpAppletInfo *
 panel_applets_manager_get_applet_info (const gchar *iid)
 {
 	_panel_applets_managers_ensure_loaded ();

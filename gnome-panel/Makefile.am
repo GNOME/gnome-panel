@@ -46,7 +46,7 @@ panel_sources =			\
 	panel-lockdown.c	\
 	panel-layout.c		\
 	panel-object-loader.c	\
-	panel-applet-info.c
+	$(NULL)
 
 panel_headers =			\
 	panel-types.h		\
@@ -72,7 +72,7 @@ panel_headers =			\
 	panel-layout.h		\
 	panel-object-loader.h	\
 	panel-schemas.h		\
-	panel-applet-info.h
+	$(NULL)
 
 gnome_panel_SOURCES =			\
 	$(panel_sources)		\

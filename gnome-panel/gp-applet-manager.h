@@ -36,7 +36,7 @@ gboolean         gp_applet_manager_factory_activate          (GpAppletManager   
 void             gp_applet_manager_factory_deactivate        (GpAppletManager             *self,
                                                               const char                  *iid);
 
-PanelAppletInfo *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
+GpAppletInfo    *gp_applet_manager_get_applet_info           (GpAppletManager             *self,
                                                               const char                  *iid);
 
 gboolean         gp_applet_manager_load_applet               (GpAppletManager             *self,
