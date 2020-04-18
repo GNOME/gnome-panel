@@ -21,7 +21,6 @@
 
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
-#include "applet.h"
 #include "panel-applets-manager.h"
 
 struct _GpPropertiesDialog
@@ -60,6 +59,9 @@ struct _GpPropertiesDialog
   GtkWidget *fg_color;
 
   GtkWidget *applet_box;
+  GtkWidget *applet_box_left;
+  GtkWidget *applet_box_center;
+  GtkWidget *applet_box_right;
 };
 
 enum
@@ -315,6 +317,16 @@ get_applet_iid (AppletInfo *applet) {
   return g_settings_get_string (applet->settings, PANEL_OBJECT_IID_KEY);
 }
 
+static PanelObjectPackType
+get_applet_pack_type (AppletInfo *applet) {
+  return g_settings_get_enum (applet->settings, PANEL_OBJECT_PACK_TYPE_KEY);
+}
+
+static int
+get_applet_pack_index (AppletInfo *applet) {
+  return g_settings_get_int (applet->settings, PANEL_OBJECT_PACK_INDEX_KEY);
+}
+
 static GtkWidget *
 create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
 {
@@ -370,6 +382,34 @@ create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
 }
 
 static void
+insert_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info, GtkWidget *applet_entry)
+{
+  PanelObjectPackType pack_type;
+  int pack_index;
+
+  pack_type = get_applet_pack_type (info);
+  pack_index = get_applet_pack_index (info);
+
+  if (pack_type == PANEL_OBJECT_PACK_START)
+    {
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box_left), applet_entry);
+    }
+
+
+  if (pack_type == PANEL_OBJECT_PACK_CENTER)
+    {
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box_center), applet_entry);
+    }
+
+
+  if (pack_type == PANEL_OBJECT_PACK_END)
+    {
+      gtk_container_add (GTK_CONTAINER (dialog->applet_box_right), applet_entry);
+    }
+
+}
+
+static void
 setup_applet_box (GpPropertiesDialog  *dialog)
 {
   GSList * applets;
@@ -398,7 +438,7 @@ setup_applet_box (GpPropertiesDialog  *dialog)
           continue;
         }
 
-      gtk_container_add (GTK_CONTAINER (dialog->applet_box), applet_entry);
+      insert_applet_entry (dialog, info, applet_entry);
     }
 
   gtk_widget_show_all(dialog->applet_box);
@@ -599,6 +639,9 @@ bind_template (GtkWidgetClass *widget_class)
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, fg_color);
 
   gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box);
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box_left);
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box_center);
+  gtk_widget_class_bind_template_child (widget_class, GpPropertiesDialog, applet_box_right);
 }
 
 static void
