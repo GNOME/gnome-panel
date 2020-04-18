@@ -102,6 +102,12 @@ void          gp_applet_info_set_backends             (GpAppletInfo             
 void          gp_applet_info_set_is_disabled          (GpAppletInfo             *info,
                                                        GpIsDisabledFunc          func);
 
+const char *  gp_applet_info_get_name                 (GpAppletInfo             *info);
+
+const char *  gp_applet_info_get_description          (GpAppletInfo             *info);
+
+const char *  gp_applet_info_get_icon_name            (GpAppletInfo             *info);
+
 G_END_DECLS
 
 #endif

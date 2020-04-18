@@ -156,3 +156,21 @@ gp_applet_info_free (GpAppletInfo *info)
 
   g_free (info);
 }
+
+const char *
+gp_applet_info_get_name (GpAppletInfo *info)
+{
+  return info->name;
+}
+
+const char *
+gp_applet_info_get_description (GpAppletInfo *info)
+{
+  return info->description;
+}
+
+const char *
+gp_applet_info_get_icon_name (GpAppletInfo *info)
+{
+  return info->icon_name;
+}
