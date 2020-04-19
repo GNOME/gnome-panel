@@ -47,7 +47,7 @@ _panel_applets_managers_ensure_loaded (void)
 }
 
 GpModuleManager *
-panel_applets_maanger_get_module_manager (void)
+panel_applets_manager_get_module_manager (void)
 {
 	_panel_applets_managers_ensure_loaded ();
 

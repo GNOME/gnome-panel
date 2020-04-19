@@ -150,7 +150,7 @@ add_to_panel_activate_cb (GtkMenuItem   *menuitem,
     {
       GpModuleManager *manager;
 
-      manager = panel_applets_maanger_get_module_manager ();
+      manager = panel_applets_manager_get_module_manager ();
       dialog = gp_add_applet_window_new (manager, toplevel);
 
       g_signal_connect (dialog, "destroy",
