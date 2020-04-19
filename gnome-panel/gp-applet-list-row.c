@@ -53,6 +53,10 @@ enum
 
 static GParamSpec *row_properties[LAST_PROP] = { NULL };
 
+static GtkTargetEntry entries[] = {
+    { "GTK_LIST_BOX_ROW", GTK_TARGET_SAME_APP, 0 }
+};
+
 G_DEFINE_TYPE (GpAppletListRow, gp_applet_list_row, GTK_TYPE_LIST_BOX_ROW)
 
 static void
@@ -139,41 +143,66 @@ drag_data_get_cb (GtkWidget        *widget,
                   GpAppletListRow  *self)
 {
   gtk_selection_data_set (data,
-                          gtk_selection_data_get_target (data),
+                          gdk_atom_intern_static_string ("GTK_LIST_BOX_ROW"),
                           8,
-                          (const guchar *) self->iid,
-                          strlen (self->iid));
+                          (const guchar *)&widget,
+                          sizeof (gpointer));
+}
+
+static void
+drag_data_received_cb (GtkWidget        *target,
+                       GdkDragContext   *context,
+                       gint              x,
+                       gint              y,
+                       GtkSelectionData *selection_data,
+                       guint             info,
+                       guint             time,
+                       gpointer          user_data)
+{
+  gpointer handle;
+  GtkWidget *source;
+  GtkWidget *source_list;
+  GtkWidget *target_list;
+  int position;
+
+  handle = *(gpointer*) gtk_selection_data_get_data (selection_data);
+  source = gtk_widget_get_ancestor (handle, GTK_TYPE_LIST_BOX_ROW);
+
+  if (source == target)
+    return;
+
+  source_list = gtk_widget_get_parent (source);
+  target_list = gtk_widget_get_parent (target);
+  position = gtk_list_box_row_get_index (GTK_LIST_BOX_ROW (target));
+
+  g_object_ref (source);
+
+  gtk_container_remove (GTK_CONTAINER (source_list), source);
+  gtk_list_box_insert (GTK_LIST_BOX (target_list), source, position);
+  g_object_unref (source);
 }
 
 static void
 setup_drag_source (GpAppletListRow *self)
 {
   GpAppletInfo *info;
-  GdkModifierType modifiers;
-  GdkDragAction actions;
-  GtkTargetList *target_list;
-  GdkAtom target;
 
   info = gp_module_get_applet_info (self->module, self->applet_id, NULL);
 
-  modifiers = GDK_BUTTON1_MASK | GDK_BUTTON2_MASK;
-  actions = GDK_ACTION_COPY;
+  gtk_drag_source_set (self->event_box, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
+  gtk_drag_dest_set (GTK_WIDGET (self), GTK_DEST_DEFAULT_ALL, entries, 1, GDK_ACTION_MOVE);
 
-  gtk_drag_source_set (self->event_box, modifiers, NULL, 0, actions);
   gtk_drag_source_set_icon_name (self->event_box, info->icon_name);
-
-  target_list = gtk_target_list_new (NULL, 0);
-
-  target = gdk_atom_intern_static_string ("application/x-panel-applet-iid");
-  gtk_target_list_add (target_list, target, 0, 0);
-
-  gtk_drag_source_set_target_list (self->event_box, target_list);
-  gtk_target_list_unref (target_list);
 
   g_signal_connect (self->event_box,
                     "drag-data-get",
                     G_CALLBACK (drag_data_get_cb),
                     self);
+
+  g_signal_connect (self,
+                    "drag-data-received",
+                    G_CALLBACK (drag_data_received_cb),
+                    NULL);
 }
 
 static void
