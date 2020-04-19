@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "panel-enums.h"
+#include "panel-enums-gsettings.h"
 
 G_BEGIN_DECLS
 

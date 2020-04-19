@@ -4,7 +4,6 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 
-#include "panel-enums.h"
 #include "panel-widget.h"
 
 G_BEGIN_DECLS

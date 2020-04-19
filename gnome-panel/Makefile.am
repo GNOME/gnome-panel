@@ -65,7 +65,6 @@ panel_headers =			\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
 	panel-bindings.h	\
-	panel-enums.h		\
 	panel-enums-gsettings.h	\
 	panel-lockdown.h	\
 	panel-icon-names.h	\
@@ -113,7 +112,6 @@ gnome_panel_LDFLAGS = \
 	$(NULL)
 
 panel_enum_headers =						\
-	$(top_srcdir)/gnome-panel/panel-enums.h			\
 	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
 	$(top_srcdir)/gnome-panel/panel-types.h
 

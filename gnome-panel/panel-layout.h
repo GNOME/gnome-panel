@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <gdk/gdk.h>
 
-#include "panel-enums.h"
+#include "panel-enums-gsettings.h"
 
 G_BEGIN_DECLS
 

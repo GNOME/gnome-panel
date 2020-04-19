@@ -31,7 +31,7 @@
 
 #include <libpanel-util/panel-glib.h>
 
-#include "panel-enums.h"
+#include "panel-enums-gsettings.h"
 #include "panel-schemas.h"
 #include "panel-toplevel.h"
 

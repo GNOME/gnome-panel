@@ -49,7 +49,6 @@
 #include <libpanel-util/panel-xdg.h>
 
 #include "panel-util.h"
-#include "panel-enums.h"
 #include "panel-multiscreen.h"
 #include "panel-lockdown.h"
 #include "panel-xutils.h"
