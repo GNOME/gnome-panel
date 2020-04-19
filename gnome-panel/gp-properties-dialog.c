@@ -18,10 +18,13 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
+#include <libgnome-panel/gp-applet-info.h>
 
 #include "gp-properties-dialog.h"
 #include "panel-schemas.h"
 #include "panel-applets-manager.h"
+#include "gp-applet-list-row.h"
+#include "panel-layout.h"
 
 struct _GpPropertiesDialog
 {
@@ -313,73 +316,111 @@ setup_theme_bindings (GpPropertiesDialog *dialog)
 }
 
 static char *
-get_applet_iid (AppletInfo *applet) {
-  return g_settings_get_string (applet->settings, PANEL_OBJECT_IID_KEY);
+get_applet_iid (AppletInfo *info)
+{
+  return g_settings_get_string (info->settings, PANEL_OBJECT_IID_KEY);
+}
+
+static char *
+get_applet_id (AppletInfo *info)
+{
+  return g_strrstr (get_applet_iid(info), "::") + 2;
 }
 
 static PanelObjectPackType
-get_applet_pack_type (AppletInfo *applet) {
-  return g_settings_get_enum (applet->settings, PANEL_OBJECT_PACK_TYPE_KEY);
+get_applet_pack_type (AppletInfo *info)
+{
+  return g_settings_get_enum (info->settings, PANEL_OBJECT_PACK_TYPE_KEY);
 }
 
 static int
-get_applet_pack_index (AppletInfo *applet) {
-  return g_settings_get_int (applet->settings, PANEL_OBJECT_PACK_INDEX_KEY);
-}
-
-static GtkWidget *
-create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
+get_applet_pack_index (AppletInfo *info)
 {
-  PanelAppletInfo *panel_applet_info;
-
-  GtkWidget *name_label;
-  GtkWidget *description_label;
-  GtkWidget *entry;
-  GtkWidget *entryDetails;
-  GtkWidget *image;
-
-  const char *name;
-  const char *description;
-  const char *icon_name;
-
-  GIcon *icon;
-
-  panel_applet_info = panel_applets_manager_get_applet_info (get_applet_iid (info));
-
-  if (!panel_applet_info)
-    {
-      g_debug ("No panel applet info for id: %s", info->id);
-      return NULL;
-    }
-
-  entry = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
-  entryDetails = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
-
-  name = panel_applet_info_get_name (panel_applet_info);
-  name_label = gtk_label_new (NULL);
-  gtk_label_set_markup(GTK_LABEL (name_label), g_strdup_printf ("<b>Applet Name: %s</b>", name));
-  gtk_widget_set_halign (name_label, GTK_ALIGN_START);
-
-  description = panel_applet_info_get_description (panel_applet_info);
-  description_label = gtk_label_new (g_strdup_printf ("Applet Description: %s", description));
-  gtk_widget_set_halign (description_label, GTK_ALIGN_START);
-
-  icon_name = panel_applet_info_get_icon (panel_applet_info);
-
-  if (icon_name)
-    {
-      icon = g_themed_icon_new (icon_name);
-      image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
-    }
-
-  gtk_container_add (GTK_CONTAINER (entryDetails), name_label);
-  gtk_container_add (GTK_CONTAINER (entryDetails), description_label);
-
-  gtk_container_add (GTK_CONTAINER (entry), image);
-  gtk_container_add (GTK_CONTAINER (entry), entryDetails);
-
-  return entry;
+  return g_settings_get_int (info->settings, PANEL_OBJECT_PACK_INDEX_KEY);
 }
+
+static GpApplet *
+get_applet (AppletInfo *info)
+{
+  return GP_APPLET (gtk_bin_get_child (GTK_BIN (info->widget)));
+}
+
+static GpModule *
+get_module_id (GpModuleManager *manager, char *iid)
+{
+  const gchar *applet_id;
+  gchar *module_id;
+  GpModule *module;
+
+  applet_id = g_strrstr (iid, "::");
+
+  if (!applet_id)
+    return FALSE;
+
+  module_id = g_strndup (iid, strlen (iid) - strlen (applet_id));
+
+  module = gp_module_manager_get_module (manager, module_id);
+  g_free (module_id);
+
+  return module;
+}
+
+//static GtkWidget *
+//create_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info)
+//{
+//  GpAppletInfo *applet_info;
+//
+//  GtkWidget *name_label;
+//  GtkWidget *description_label;
+//  GtkWidget *entry;
+//  GtkWidget *entryDetails;
+//  GtkWidget *image;
+//
+//  char *name;
+//  const char *description;
+//  const char *icon_name;
+//
+//  GIcon *icon;
+//
+//  applet_info = panel_applets_manager_get_applet_info (get_applet_iid (info));
+//
+//  if (!applet_info)
+//    {
+//      g_debug ("No panel applet info for id: %s", info->id);
+//      return NULL;
+//    }
+//
+//  entry = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 5);
+//  entryDetails = gtk_box_new (GTK_ORIENTATION_VERTICAL, 5);
+//
+//  name_label = gtk_label_new (NULL);
+//  name = g_strdup_printf ("<b>%s</b>", gp_applet_info_get_name (applet_info));
+//  gtk_label_set_markup(GTK_LABEL (name_label), name);
+//  gtk_widget_set_halign (name_label, GTK_ALIGN_START);
+//
+//  description = gp_applet_info_get_description (applet_info);
+//  description_label = gtk_label_new (description);
+//  gtk_widget_set_halign (description_label, GTK_ALIGN_START);
+//
+//  icon_name = gp_applet_info_get_icon_name (applet_info);
+//
+//  if (icon_name)
+//    {
+//      icon = g_themed_icon_new (icon_name);
+//      image = gtk_image_new_from_gicon (icon, GTK_ICON_SIZE_DIALOG);
+//    }
+//
+//  gtk_container_add (GTK_CONTAINER (entryDetails), name_label);
+//  gtk_container_add (GTK_CONTAINER (entryDetails), description_label);
+//
+//  gtk_container_add (GTK_CONTAINER (entry), image);
+//  gtk_container_add (GTK_CONTAINER (entry), entryDetails);
+//
+//  g_free (name);
+//  g_clear_object (&icon);
+//
+//  return entry;
+//}
 
 static void
 insert_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info, GtkWidget *applet_entry)
@@ -390,23 +431,70 @@ insert_applet_entry (GpPropertiesDialog *dialog, AppletInfo *info, GtkWidget *ap
   pack_type = get_applet_pack_type (info);
   pack_index = get_applet_pack_index (info);
 
+  g_object_set_data (G_OBJECT (applet_entry), "pack-index", GINT_TO_POINTER (pack_index));
+
+  g_debug ("Id: %s, pack-index: %d", info->id, pack_index);
+
   if (pack_type == PANEL_OBJECT_PACK_START)
     {
       gtk_container_add (GTK_CONTAINER (dialog->applet_box_left), applet_entry);
     }
-
 
   if (pack_type == PANEL_OBJECT_PACK_CENTER)
     {
       gtk_container_add (GTK_CONTAINER (dialog->applet_box_center), applet_entry);
     }
 
-
   if (pack_type == PANEL_OBJECT_PACK_END)
     {
       gtk_container_add (GTK_CONTAINER (dialog->applet_box_right), applet_entry);
     }
 
+}
+
+static gint
+applet_sort_func (GtkListBoxRow *row1,
+                  GtkListBoxRow *row2,
+                  gpointer       user_data)
+{
+  gpointer index_1;
+  gpointer index_2;
+
+  index_1 = g_object_get_data (G_OBJECT (row1), "pack-index");
+  index_2 = g_object_get_data (G_OBJECT (row2), "pack-index");
+
+  return GPOINTER_TO_INT (index_1) - GPOINTER_TO_INT (index_2);
+}
+
+static gint
+applet_sort_func_reverse (GtkListBoxRow *row1,
+                          GtkListBoxRow *row2,
+                          gpointer       user_data)
+{
+  gpointer index_1;
+  gpointer index_2;
+
+  index_1 = g_object_get_data (G_OBJECT (row1), "pack-index");
+  index_2 = g_object_get_data (G_OBJECT (row2), "pack-index");
+
+  return GPOINTER_TO_INT (index_2) - GPOINTER_TO_INT (index_1);
+}
+
+static void
+row_activated_cb (GtkListBox         *box,
+                  GtkListBoxRow      *row,
+                  GpPropertiesDialog *self)
+{
+  AppletInfo *info;
+
+  info = gp_applet_list_row_get_applet_info (GP_APPLET_LIST_ROW (row));
+
+  g_debug ("AppletInfo: %p", info);
+  g_debug ("Deleting applet: %s", panel_applet_get_id (info));
+
+  gtk_container_remove (GTK_CONTAINER (box), GTK_WIDGET (row));
+
+  panel_layout_delete_object (panel_applet_get_id (info));
 }
 
 static void
@@ -417,12 +505,38 @@ setup_applet_box (GpPropertiesDialog  *dialog)
 
   applets = panel_applet_list_applets ();
 
+  gtk_list_box_set_sort_func (GTK_LIST_BOX (dialog->applet_box_left), applet_sort_func, NULL, NULL);
+  gtk_list_box_set_sort_func (GTK_LIST_BOX (dialog->applet_box_center), applet_sort_func, NULL, NULL);
+  gtk_list_box_set_sort_func (GTK_LIST_BOX (dialog->applet_box_right), applet_sort_func_reverse, NULL, NULL);
+
+  gtk_list_box_set_activate_on_single_click(GTK_LIST_BOX (dialog->applet_box_left), FALSE);
+  gtk_list_box_set_activate_on_single_click(GTK_LIST_BOX (dialog->applet_box_center), FALSE);
+  gtk_list_box_set_activate_on_single_click(GTK_LIST_BOX (dialog->applet_box_right), FALSE);
+
+  g_signal_connect (dialog->applet_box_left,
+                    "row-activated",
+                    G_CALLBACK (row_activated_cb),
+                    dialog);
+
+  g_signal_connect (dialog->applet_box_center,
+                    "row-activated",
+                    G_CALLBACK (row_activated_cb),
+                    dialog);
+
+  g_signal_connect (dialog->applet_box_right,
+                    "row-activated",
+                    G_CALLBACK (row_activated_cb),
+                    dialog);
+
+  GpModuleManager * manager = panel_applets_maanger_get_module_manager();
+
   for (item = applets; item; item = item->next)
     {
       AppletInfo *info;
       GtkWidget *applet_entry;
 
       const char * applet_toplevel_id;
+      const char * applet_id;
 
       info = item->data;
 
@@ -431,12 +545,18 @@ setup_applet_box (GpPropertiesDialog  *dialog)
       if (g_strcmp0 (applet_toplevel_id, dialog->toplevel_id) != 0)
         continue;
 
-      applet_entry = create_applet_entry (dialog, info);
+//      applet_entry = create_applet_entry (dialog, info);
+//
+//      if (!applet_entry)
+//        {
+//          continue;
+//        }
 
-      if (!applet_entry)
-        {
-          continue;
-        }
+      GpModule *module = get_module_id (manager, get_applet_iid(info));
+
+      applet_id = get_applet_id (info);
+
+      applet_entry = gp_applet_list_row_new (module, applet_id, info);
 
       insert_applet_entry (dialog, info, applet_entry);
     }
