@@ -38,11 +38,15 @@ static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
 
+static GtkWidget *standalone_menu = NULL;
+
 static void
 menu_destroy_cb (GtkWidget   *widget,
                  PanelWidget *panel_widget)
 {
 	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
+
+	standalone_menu = NULL;
 }
 
 static void
@@ -84,15 +88,16 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 				 guint32    activate_time)
 {
 	GSList *panels;
-	GtkWidget *menu;
 
 	if (panel_applet_activate_main_menu (activate_time))
 		return;
 
 	panels = panel_widget_get_panels ();
-	menu = panel_applets_manager_get_standalone_menu ();
 
-	g_signal_connect (menu, "loaded", G_CALLBACK (menu_loaded_cb), panels->data);
+	if (!standalone_menu)
+	 standalone_menu = panel_applets_manager_get_standalone_menu ();
+
+	g_signal_connect (standalone_menu, "loaded", G_CALLBACK (menu_loaded_cb), panels->data);
 }
 
 static void
