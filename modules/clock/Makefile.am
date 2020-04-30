@@ -75,12 +75,12 @@ clock_enum_headers = \
 	$(srcdir)/clock-utils.h \
 	$(NULL)
 
-clock-typebuiltins.c: $(clock_enum_headers)
+clock-typebuiltins.c: $(clock_enum_headers) Makefile.am
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"clock-typebuiltins.h\"\n\n" \
-			--fprod "\n/* enumerations from \"@filename@\" */" \
-			--fprod "\n#include \"@filename@\"\n" \
+			--fprod "\n/* enumerations from \"@basename@\" */" \
+			--fprod "\n#include \"@basename@\"\n" \
 			--vhead "static const GEnumValue _@enum_name@_values[] = {" \
 			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 			--vtail "  { 0, NULL, NULL }\n};\n\n" \
@@ -91,7 +91,7 @@ clock-typebuiltins.c: $(clock_enum_headers)
 			--vtail "  return type;\n}\n\n" \
 		$(clock_enum_headers) > $@
 
-clock-typebuiltins.h: $(clock_enum_headers)
+clock-typebuiltins.h: $(clock_enum_headers) Makefile.am
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __CLOCK_TYPEBUILTINS_H__\n" \
 			--fhead "#define __CLOCK_TYPEBUILTINS_H__ 1\n\n" \
