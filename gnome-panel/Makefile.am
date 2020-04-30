@@ -115,11 +115,11 @@ panel_enum_headers =						\
 	$(top_srcdir)/gnome-panel/panel-enums-gsettings.h	\
 	$(top_srcdir)/gnome-panel/panel-types.h
 
-panel-typebuiltins.c: $(panel_enum_headers)
+panel-typebuiltins.c: $(panel_enum_headers) Makefile.am
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
-			--fprod "\n/* enumerations from \"@filename@\" */" \
-			--fprod "\n#include \"@filename@\"\n" \
+			--fprod "\n/* enumerations from \"@basename@\" */" \
+			--fprod "\n#include \"@basename@\"\n" \
 			--vhead "static const GEnumValue _@enum_name@_values[] = {" \
 			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 			--vtail "  { 0, NULL, NULL }\n};\n\n" \
@@ -130,7 +130,7 @@ panel-typebuiltins.c: $(panel_enum_headers)
 			--vtail "  return type;\n}\n\n" \
 		$(panel_enum_headers) > $@
 
-panel-typebuiltins.h: $(panel_enum_headers)
+panel-typebuiltins.h: $(panel_enum_headers) Makefile.am
 	$(AM_V_GEN)glib-mkenums \
 			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
