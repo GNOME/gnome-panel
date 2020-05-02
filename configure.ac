@@ -4,7 +4,7 @@ dnl **************************************************************************
 
 m4_define([gp_major_version], [3])
 m4_define([gp_minor_version], [37])
-m4_define([gp_micro_version], [0])
+m4_define([gp_micro_version], [1])
 m4_define([gp_version], [gp_major_version.gp_minor_version.gp_micro_version])
 
 dnl **************************************************************************
@@ -100,7 +100,7 @@ GLIB_GSETTINGS
 #   change to C+1:0:0
 # - If the interface is the same as the previous version, change to C:R+1:A
 
-LIBGNOME_PANEL_LT_VERSION=0:0:0
+LIBGNOME_PANEL_LT_VERSION=1:0:1
 AC_SUBST([LIBGNOME_PANEL_LT_VERSION])
 
 AC_ARG_ENABLE([documentation],
