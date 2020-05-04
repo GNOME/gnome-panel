@@ -41,7 +41,7 @@ libgnome_panel_la_CFLAGS = \
 	$(NULL)
 
 libgnome_panel_la_LDFLAGS = \
-	-version-info $(LIBGNOME_PANEL_LT_VERSION) \
+	-version-info $(LT_VERSION_INFO) \
 	$(WARN_LDFLAGS) \
 	$(AM_LDFLAGS) \
 	$(NULL)
