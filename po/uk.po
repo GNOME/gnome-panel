@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2020-03-29 13:06+0000\n"
-"PO-Revision-Date: 2020-05-30 19:22+0300\n"
+"POT-Creation-Date: 2020-05-30 16:24+0000\n"
+"PO-Revision-Date: 2020-05-30 19:33+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,8 +104,8 @@ msgid ""
 "A list of locations to display in the calendar window. Each location is a "
 "tuple of display name, METAR code and coordinates."
 msgstr ""
-"Список місць для показу у вікні календаря. Кожен запис місця є кортежем із"
-" назви дисплея, коду METAR та координат."
+"Список місць для показу у вікні календаря. Кожен запис місця є кортежем із "
+"назви дисплея, коду METAR та координат."
 
 #: data/org.gnome.gnome-panel.applet.fish.gschema.xml:5
 msgid "The fish's name"
@@ -405,19 +405,6 @@ msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr "Якщо встановлено, у вікні запуску програм доступне автодоповнення."
 
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Положення кнопки запуску"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Розташування файла .desktop, що описує кнопку запуску. Цей параметр має сенс "
-"лише тоді, коли ключ типу об'єкта (object_type) містить \"launcher-object"
-"\"\"\"."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "IID об'єкта "
@@ -453,16 +440,13 @@ msgid "Object's position on the panel"
 msgstr "Положення об'єкта на панелі"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
-#| msgid ""
-#| "The position of this panel object. The position is specified by the "
-#| "number of pixels from the left (or top if vertical) panel edge."
 msgid ""
 "The index of this panel object within the other objects with the same pack-"
 "type, from the left (or top if vertical) panel edge."
 msgstr ""
-"Індекс цього об'єкта на панелі серед інших об'єктів і з тим самим типом"
-" пакування від лівого (або верхнього, якщо орієнтація є вертикальною) краю"
-" панелі."
+"Індекс цього об'єкта на панелі серед інших об'єктів і з тим самим типом "
+"пакування від лівого (або верхнього, якщо орієнтація є вертикальною) краю "
+"панелі."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
 msgid "Name to identify panel"
@@ -742,17 +726,14 @@ msgstr ""
 "зміст лише тоді, коли встановлено параметр enable_animations."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
-#| msgid "Background color"
 msgid "Use custom background color"
 msgstr "Нетиповий колір тла"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
-#| msgid "Background color"
 msgid "Background Color"
 msgstr "Колір тла"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
-#| msgid "Background image"
 msgid "Use custom background image"
 msgstr "Використовувати нетипове зображення тла"
 
@@ -808,22 +789,6 @@ msgstr "Використати нетиповий колір тексту"
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: gnome-panel/applet.c:324
-msgid "???"
-msgstr "без назви"
-
-#: gnome-panel/applet.c:462
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "Пере_містити"
-
-#: gnome-panel/applet.c:469
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "В_илучити з панелі"
-
 #: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Панель"
@@ -836,28 +801,44 @@ msgstr ""
 "Запуск інших програм та різні засобів для керування вікнами, показу часу "
 "тощо."
 
-#: gnome-panel/gp-add-applet-window.c:137
-#| msgid "_Help"
-msgid "Help"
-msgstr "Довідка"
-
-#: gnome-panel/gp-add-applet-window.c:148
-#| msgid "_About"
-msgid "About"
-msgstr "Відомості"
-
-#: gnome-panel/gp-add-applet-window.c:193
-msgid "Add"
-msgstr "Додати"
-
-#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Додати до панелі"
 
-#: gnome-panel/gp-add-applet-window.c:560
-#| msgid "Icon not found"
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Аплетів не знайдено"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, c-format
+#| msgid "Find an _item to add to \"%s\":"
+msgid "Find an item to add to “%s”"
+msgstr "Знайти запис для додавання до «%s»"
+
+#: gnome-panel/gp-add-applet-window.c:558
+#| msgid "Find an item to add to the panel:"
+msgid "Find an item to add to the panel"
+msgstr "Знати об'єкт для додавання до панелі"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+"Вимкнено, оскільки цей аплет є у списку параметра «disabled-applets» у схемі"
+" «org.gnome.gnome-panel.lockdown» GSettings."
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Довідка"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Відомості"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Додати"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -938,22 +919,18 @@ msgid "General"
 msgstr "Загальне"
 
 #: gnome-panel/gp-properties-dialog.ui:355
-#| msgid "Background color"
 msgid "Background color:"
 msgstr "Колір тла:"
 
 #: gnome-panel/gp-properties-dialog.ui:418
-#| msgid "Background _image:"
 msgid "Background image:"
 msgstr "Зображення тла:"
 
 #: gnome-panel/gp-properties-dialog.ui:457
-#| msgid "_Tile"
 msgid "Tile"
 msgstr "Плитка"
 
 #: gnome-panel/gp-properties-dialog.ui:472
-#| msgid "St_retch"
 msgid "Stretch"
 msgstr "Розтягувати"
 
@@ -962,7 +939,6 @@ msgid "Fit"
 msgstr "Вмістити"
 
 #: gnome-panel/gp-properties-dialog.ui:509
-#| msgid "Rotate image on vertical panels"
 msgid "Rotate image on vertical panel"
 msgstr "Повернути зображення на вертикальній панелі"
 
@@ -974,256 +950,57 @@ msgstr "Колір тексту:"
 msgid "Theme"
 msgstr "Тема"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Не вдалось показати цей URL"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Не вказано URL."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Не вдалось запустити програму"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Не вдалось використати розкривний об'єкт"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Не встановлено URI для файла кнопки запуску панелі\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Не вдалось відкрити файл %s для кнопки запуску панелі%s%s\n"
-
-#: gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Властивості кнопки запуску"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Запустити"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:147
-msgid "_Properties"
-msgstr "В_ластивості"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Адресу пускача не вказано, неможливо його запустити\n"
-
-#: gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Створити кнопку запуску"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1344 gnome-panel/panel-ditem-editor.c:1375
-msgid "Could not save launcher"
-msgstr "Не вдалось зберегти кнопку запуску"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:808
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Помилка"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
-msgid "Choose an icon"
-msgstr "Виберіть піктограму"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:656 gnome-panel/panel-ditem-editor.c:991
-#: gnome-panel/panel-force-quit.c:217 gnome-panel/panel-run-dialog.c:1301
-#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
-#: modules/menu/gp-recent-menu.c:205
-msgid "_Cancel"
-msgstr "_Скасувати"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:993
-msgid "_Open"
-msgstr "Від_крити"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "Не вдалось запустити «%s»"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Не вдалось відкрити адресу «%s»"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "_Lock Screen"
-msgstr "_Замкнути екран"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "Пере_містити"
 
-#: gnome-panel/panel-action-button.c:162
-msgid "_Activate Screensaver"
-msgstr "_Активувати зберігач екрану"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "В_илучити з панелі"
 
-#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
-msgid "Lock Screen"
-msgstr "Заблокувати екран"
-
-#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
-msgid "Protect your computer from unauthorized use"
-msgstr "Захистити ваш комп'ютер від несанкційованого використання"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-msgid "Log Out"
-msgstr "Вийти"
-
-#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
-msgid "Log out of this session to log in as a different user"
-msgstr "Вийти з сеансу та зайти під іншим користувачем"
-
-#: gnome-panel/panel-action-button.c:377
-msgid "Run Application..."
-msgstr "Запустити програму…"
-
-#: gnome-panel/panel-action-button.c:378
-msgid "Run an application by typing a command or choosing from a list"
-msgstr "Запуск програми шляхом вводу команди або вибору команду зі списку"
-
-#: gnome-panel/panel-action-button.c:386
-msgid "Search for Files..."
-msgstr "Пошук файлів…"
-
-#: gnome-panel/panel-action-button.c:387
-msgid "Locate documents and folders on this computer by name or content"
-msgstr "Пошук за назвою чи змістом документів та тек на цьому комп'ютері"
-
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:226
-msgid "Force Quit"
-msgstr "Примусове завершення"
-
-#: gnome-panel/panel-action-button.c:395
-msgid "Force a misbehaving application to quit"
-msgstr "Примусово завершити програму, яка поводиться неправильно"
-
-#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
-msgid "Hibernate"
-msgstr "Приспати"
-
-#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
-msgid "Suspend"
-msgstr "Призупинити"
-
-#: gnome-panel/panel-action-button.c:421
-msgid "Hybrid sleep"
-msgstr "Гібридне присипляння"
-
-#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
-msgid "Restart"
-msgstr "Перезапустити"
-
-#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-msgid "Restart the computer"
-msgstr "Перезапустити комп'ютер"
-
-#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
-msgid "Power Off"
-msgstr "Вимкнути"
-
-#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-msgid "Power off the computer"
-msgstr "Вимкнути комп'ютер"
-
-#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
-msgid "(empty)"
-msgstr "(порожньо)"
-
-#: gnome-panel/panel-addto-dialog.c:368
-msgid "Custom Application Launcher"
-msgstr "Власна кнопка запуску"
-
-#: gnome-panel/panel-addto-dialog.c:369
-msgid "Create a new launcher"
-msgstr "Створити кнопку запуску"
-
-#: gnome-panel/panel-addto-dialog.c:378
-msgid "Application Launcher..."
-msgstr "Запуск програм…"
-
-#: gnome-panel/panel-addto-dialog.c:379
-msgid "Copy a launcher from the applications menu"
-msgstr "Скопіювати кнопку запуску з меню програм"
-
-#: gnome-panel/panel-addto-dialog.c:920
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "Знайти _об'єкт для додавання до \"%s\":"
-
-#: gnome-panel/panel-addto-dialog.c:924
-msgid "Find an _item to add to the panel:"
-msgstr "Знати _об'єкт для додавання до панелі:"
-
-#: gnome-panel/panel-addto-dialog.c:1046
-msgid "_Forward"
-msgstr "Д_алі"
-
-#: gnome-panel/panel-addto-dialog.c:1049 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "_Додати"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-#| msgid "Find an _item to add to the panel:"
-msgid "Find an item to add to the panel:"
-msgstr "Знати об'єкт для додавання до панелі:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "_Назад"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:653
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "З_акрити"
-
-#: gnome-panel/panel-applet-frame.c:771
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Виявлено проблему при завантаженні \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "Гаразд"
 
-#: gnome-panel/panel-applet-frame.c:787
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Вилучити аплет з поточними налаштуваннями?"
 
-#: gnome-panel/panel-applet-frame.c:790
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "_Не вилучати"
 
-#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
-#| msgid "D_on't Delete"
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "В_илучити"
 
-#: gnome-panel/panel.c:414
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "Відкрити URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1232,18 +1009,18 @@ msgstr "Відкрити «%s»"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Відкрити особисту теку"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Комп'ютер"
 
 #. name
-#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1251,20 +1028,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Мережа"
 
 #. name
-#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Оглянути закладені й локальні мережеві адреси"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Вилучити цю панель?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1272,134 +1049,50 @@ msgstr ""
 "З вилученням панелі буде втрачено усі параметри\n"
 "цієї панелі."
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Скасувати"
+
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Не вдалось вилучити цю панель"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "У вас завжди має бути хоча б одна панель."
 
-#: gnome-panel/panel-context-menu.c:138
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "Додати д_о панелі…"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "В_ластивості"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "В_илучити цю панель"
 
-#: gnome-panel/panel-context-menu.c:166
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "_Створити панель"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Програма"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Виконати у терміналі…"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Адреса"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:608
-msgid "_Type:"
-msgstr "_Тип:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:615
-msgid "_Name:"
-msgstr "_Назва:"
-
-#: gnome-panel/panel-ditem-editor.c:633
-msgid "_Browse..."
-msgstr "О_гляд…"
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:640
-msgid "Co_mment:"
-msgstr "Ко_ментар:"
-
-#: gnome-panel/panel-ditem-editor.c:647
-msgid "_Revert"
-msgstr "Від_новити"
-
-#: gnome-panel/panel-ditem-editor.c:659 gnome-panel/panel-run-dialog.c:1302
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_Гаразд"
-
-#: gnome-panel/panel-ditem-editor.c:958
-msgid "Choose an application..."
-msgstr "Виберіть програму…"
-
-#: gnome-panel/panel-ditem-editor.c:962
-msgid "Choose a file..."
-msgstr "Виберіть файл…"
-
-#: gnome-panel/panel-ditem-editor.c:1127 gnome-panel/panel-ditem-editor.c:1136
-msgid "Comm_and:"
-msgstr "_Команда:"
-
-#: gnome-panel/panel-ditem-editor.c:1145
-msgid "_Location:"
-msgstr "_Адреса:"
-
-#: gnome-panel/panel-ditem-editor.c:1309
-msgid "The name of the launcher is not set."
-msgstr "Назва кнопки запуску не встановлена."
-
-#: gnome-panel/panel-ditem-editor.c:1313
-msgid "Could not save directory properties"
-msgstr "Не вдалось записати властивості каталогу"
-
-#: gnome-panel/panel-ditem-editor.c:1314
-msgid "The name of the directory is not set."
-msgstr "Назву каталогу не вказано."
-
-#: gnome-panel/panel-ditem-editor.c:1330
-msgid "The command of the launcher is not set."
-msgstr "Не встановлена команда для кнопки запуску."
-
-#: gnome-panel/panel-ditem-editor.c:1333
-msgid "The location of the launcher is not set."
-msgstr "Не встановлена адреса для кнопки запуску."
-
-#: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Клацніть на вікні програми, яке треба примусово завершити. Для скасування "
-"натисніть кнопку \"Esc\"."
-
-#: gnome-panel/panel-force-quit.c:209
-msgid "Force this application to exit?"
-msgstr "Примусово завершити програму?"
-
-#: gnome-panel/panel-force-quit.c:212
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Якщо примусово завершити цю програму, всі зміни у відкритих документах буде "
-"втрачено."
-
-#: gnome-panel/panel-force-quit.c:219
-msgid "_Force quit"
-msgstr "Примусово за_вершити"
-
-#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "Неможливо створити початкове компонування панелі.\n"
 
 #: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
-"Не вдалося знайти термінал, використовуємо xterm, навіть якщо це може не"
-" спрацювати"
+"Не вдалося знайти термінал, використовуємо xterm, навіть якщо це може не "
+"спрацювати"
 
 #: gnome-panel/panel-run-dialog.c:488
 #, c-format
@@ -1414,6 +1107,10 @@ msgstr "Не вдалось перетворити «%s» з UTF-8"
 #: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Вибрати файл, щоб додати його до команди…"
+
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_Гаразд"
 
 #: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
@@ -1549,23 +1246,18 @@ msgstr "Права відірвана панель"
 msgid "Right Edge Panel"
 msgstr "Права бічна панель"
 
-#: gnome-panel/panel-util.c:264
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "піктограми «%s» не знайдено"
-
-#: gnome-panel/panel-util.c:507
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "файл"
 
-#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Домівка"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Файлова система"
 
@@ -1578,22 +1270,160 @@ msgstr "Файлова система"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:128
+#: libgnome-panel/gp-initial-setup-dialog.c:167
 msgid "Initial Setup"
 msgstr "Перший запуск"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:132
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:136
+#: libgnome-panel/gp-initial-setup-dialog.c:175
 msgid "Done"
 msgstr "Виконано"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Не вдалось показати документ довідки «%s»"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "При вивести довідки виникла помилка"
+
+#: libgnome-panel/gp-module.c:695
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr "Підтримки модуля «%s» не передбачено."
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Примусове завершення"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Примусово завершити програму, яка поводиться неправильно"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1009
+msgid "Lock Screen"
+msgstr "Заблокувати екран"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1010
+msgid "Protect your computer from unauthorized use"
+msgstr "Захистити ваш комп'ютер від несанкційованого використання"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:988
+msgid "Log Out"
+msgstr "Вийти"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:989
+msgid "Log out of this session to log in as a different user"
+msgstr "Вийти з сеансу та зайти під іншим користувачем"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Запустити програму…"
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Запуск програми шляхом вводу команди або вибору команду зі списку"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1121
+msgid "Power Off"
+msgstr "Вимкнути"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1122
+msgid "Power off the computer"
+msgstr "Вимкнути комп'ютер"
+
+#: modules/action-button/gp-force-quit-applet.c:135
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Вимкнено, оскільки для параметра «disable-force-quit» у схемі"
+" «org.gnome.gnome-panel.lockdown» GSettings встановлено значення true."
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Не вдалось запустити програму"
+
+#: modules/action-button/gp-lock-screen-applet.c:435
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Вимкнено, оскільки для параметра «disable-lock-screen» у схемі"
+" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "_Замкнути екран"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "_Активувати зберігач екрану"
+
+#: modules/action-button/gp-logout-applet.c:223
+#: modules/action-button/gp-shutdown-applet.c:267
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+"Вимкнено, оскільки для параметра «disable-log-out» у схемі"
+" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+
+#: modules/action-button/gp-run-applet.c:136
+#: modules/launcher/gp-launcher-module.c:34
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Вимкнено, оскільки для параметра «disable-command-line» у схемі"
+" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Клацніть на вікні програми, яке треба примусово завершити. Для скасування "
+"натисніть кнопку \"Esc\"."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Примусово завершити програму?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Якщо примусово завершити цю програму, всі зміни у відкритих документах буде "
+"втрачено."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "Примусово за_вершити"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1669,7 +1499,6 @@ msgstr "Календар"
 #. * It is used to display a date.
 #.
 #: modules/clock/clock-applet.c:226
-#| msgid "%A %B %d (%%s)"
 msgid "%A %B %d (%Z)"
 msgstr "%A, %d %B (%Z)"
 
@@ -1698,64 +1527,55 @@ msgstr "Комп'ютерний годинник"
 msgid "Failed to open the time settings"
 msgstr "Не вдалось відкрити параметри часу"
 
-#: modules/clock/clock-applet.c:1555 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Не вдалось показати документ довідки «%s»"
-
-#: modules/clock/clock-applet.c:1584 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "При вивести довідки виникла помилка"
-
-#: modules/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Виберіть місцевість"
 
-#: modules/clock/clock-applet.c:1712
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Зміна місцевості"
 
-#: modules/clock/clock-applet.c:1748 modules/clock/clock-applet.c:1756
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Типово"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Градуси Кельвіна"
 
-#: modules/clock/clock-applet.c:1750
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Градуси Цельсія"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Градуси Фаренгейта"
 
-#: modules/clock/clock-applet.c:1757
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Метри на секунду (м/с)"
 
-#: modules/clock/clock-applet.c:1758
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Кілометри на годину (км/год)"
 
-#: modules/clock/clock-applet.c:1759
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Милі на годину (миль/год)"
 
-#: modules/clock/clock-applet.c:1760
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Вузли"
 
-#: modules/clock/clock-applet.c:1761
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "За шкалою Бофорта"
 
-#: modules/clock/clock-applet.c:1814
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Назва міста"
 
-#: modules/clock/clock-applet.c:1818
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Часовий пояс міста"
 
@@ -1878,8 +1698,8 @@ msgstr "Д_овгота:"
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
-"Введіть назву міста, області або країни та виберіть відповідник з"
-" контекстного меню."
+"Введіть назву міста, області або країни та виберіть відповідник з "
+"контекстного меню."
 
 #: modules/clock/clock.ui:325
 msgid "_Timezone:"
@@ -1896,6 +1716,12 @@ msgstr "_Довідка"
 #: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "_Параметри часу"
+
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "З_акрити"
 
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
@@ -1929,8 +1755,11 @@ msgstr "Показувати _погоду"
 msgid "Show _temperature"
 msgstr "Показувати т_емпературу"
 
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Додати"
+
 #: modules/clock/clock.ui:697
-#| msgid "Edit"
 msgid "_Edit"
 msgstr "З_міни"
 
@@ -1962,13 +1791,8 @@ msgstr "Одиниці _швидкості вітру:"
 msgid "Weather"
 msgstr "Погода"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
-#| msgid ""
-#| "Warning:  The command appears to be something actually useful.\n"
-#| "Since this is a useless applet, you may not want to do this.\n"
-#| "We strongly advise you against using %s for anything\n"
-#| "which would make the applet \"practical\" or useful."
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -1980,26 +1804,26 @@ msgstr ""
 "робити цього. Ми наполегливо рекомендуємо уникати використання\n"
 "«%s» для будь-чого що може зробити цей аплет «практичним» чи корисним."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Рибка %s"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Рибка %s, сучасний оракул"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Не вдалось знайти команду для виконання"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Рибка %s говорить:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2010,16 +1834,16 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "_Вимовити слова"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Налаштована команда не працює, була замінена на: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2030,7 +1854,7 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2041,15 +1865,15 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:1121
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "Потрібно змінити воду!"
 
-#: modules/fish/fish-applet.c:1123
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Подивіться на сьогоднішню дату"
 
-#: modules/fish/fish-applet.c:1217
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Рибка %s для середовища GNOME"
@@ -2063,7 +1887,6 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Вивести рибку, що пливе, або інше анімаційне створіння"
 
 #: modules/fish/fish-menu.ui:5
-#| msgid "_Preferences"
 msgid "Preferences"
 msgstr "Параметри"
 
@@ -2080,7 +1903,6 @@ msgid "Co_mmand to run when clicked:"
 msgstr "_Команда, що виконується при клацанні:"
 
 #: modules/fish/fish.ui:240
-#| msgid "Animation"
 msgid "Animation:"
 msgstr "Анімація:"
 
@@ -2100,13 +1922,227 @@ msgstr "секунд"
 msgid "_Rotate on vertical panels"
 msgstr "_Розвертати на вертикальних панелях"
 
-#: modules/menu/gp-lock-logout.c:967
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Запустити"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Програма"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Виконати у терміналі…"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Каталог"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Файл"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+#| msgid "Choose a file..."
+msgid "Choose Icon File"
+msgstr "Виберіть файл піктограми"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "Від_крити"
+
+#: modules/launcher/gp-editor.c:347
+#| msgid "Choose an icon"
+msgid "Choose Icon Name"
+msgstr "Виберіть назву піктограми"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Виберіть програму…"
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+#| msgid "Choose a file..."
+msgid "Choose a directory..."
+msgstr "Виберіть каталог…"
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Виберіть файл…"
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "_Команда:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Адреса:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Тип:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Назва:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "О_гляд…"
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "Ко_ментар:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+#| msgid "All Day"
+msgid "All"
+msgstr "Усі"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Виберіть назву піктограми"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Вибрати"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Контексти:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+#| msgid "_Location Name:"
+msgid "Icon Names:"
+msgstr "Назви піктограм:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Показати лише стандартні піктограми"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(порожньо)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr "Не вдалося виконати командний рядок «%s»."
+
+#: modules/launcher/gp-launcher-applet.c:885
+#| msgid "Could not open location '%s'"
+msgid "Could not open location"
+msgstr "Не вдалось відкрити адресу"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+#| msgid "Failed to load %s: %s\n"
+msgid "Failed to load key file “%s”: %s"
+msgstr "Не вдалося завантажити файл ключа «%s»: %s"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Custom Application Launcher"
+msgstr "Власна кнопка запуску"
+
+#: modules/launcher/gp-launcher-module.c:59
+msgid "Create a new launcher"
+msgstr "Створити кнопку запуску"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Application Launcher..."
+msgstr "Запуск програм…"
+
+#: modules/launcher/gp-launcher-module.c:69
+msgid "Copy a launcher from the applications menu"
+msgstr "Скопіювати кнопку запуску з меню програм"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Не вдалось зберегти кнопку запуску"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "Від_новити"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Властивості кнопки запуску"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr "Засіб запуску не запускається із потрібною групою «%s»."
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr "Засіб запуску містить некоректне значення ключа Type «%s»."
+
+#: modules/launcher/gp-launcher-utils.c:156
+#| msgid "The command of the launcher is not set."
+msgid "The icon of the launcher is not set."
+msgstr "Піктограму засобу запуску не встановлено."
+
+#: modules/launcher/gp-launcher-utils.c:164
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher is not set."
+msgstr "Тип засобу запуску не встановлено."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Типом засобу запуску має бути «%s» або «%s»."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Назва кнопки запуску не встановлена."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Не встановлена команда для кнопки запуску."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Не встановлена адреса для кнопки запуску."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Положення кнопки запуску"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+#| msgid ""
+#| "The location of the .desktop file describing the launcher. This key is "
+#| "only relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher."
+msgstr "Розташування файла .desktop, що описує кнопку запуску."
+
+#: modules/menu/gp-lock-logout.c:972
 msgid "Switch User"
 msgstr "Змінити користувача"
 
-#: modules/menu/gp-lock-logout.c:1077
+#: modules/menu/gp-lock-logout.c:1055
+msgid "Hibernate"
+msgstr "Приспати"
+
+#: modules/menu/gp-lock-logout.c:1071
+msgid "Suspend"
+msgstr "Призупинити"
+
+#: modules/menu/gp-lock-logout.c:1087
 msgid "Hybrid Sleep"
 msgstr "Гібридне присипляння"
+
+#: modules/menu/gp-lock-logout.c:1105
+msgid "Restart"
+msgstr "Перезапустити"
+
+#: modules/menu/gp-lock-logout.c:1106
+msgid "Restart the computer"
+msgstr "Перезапустити комп'ютер"
 
 #: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
@@ -2117,7 +2153,7 @@ msgid "Browse and run installed applications"
 msgstr "Перегляд та запуск встановлених програм"
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Місця"
 
@@ -2130,51 +2166,51 @@ msgid "System"
 msgstr "Система"
 
 #: modules/menu/gp-menu-bar-applet.c:229
-#| msgid "Change desktop appearance and behavior, get help, or log out"
 msgid "Change system appearance and behavior, or get help"
 msgstr "Змінити зовнішній вигляд та поведінку або отримати довідку"
 
 #: modules/menu/gp-menu-bar-applet.c:279
 #: modules/menu/gp-menu-button-applet.c:486
 #, c-format
-#| msgid "Browse and run installed applications"
 msgid "Please install the '%s' application."
 msgstr "Будь ласка, встановіть програму «%s»."
 
-#: modules/menu/gp-menu-module.c:381
+#: modules/menu/gp-menu-module.c:375
 msgid "Main Menu"
 msgstr "Головне меню"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:376
 msgid "The main GNOME menu"
 msgstr "Головне меню GNOME"
 
-#: modules/menu/gp-menu-module.c:388
-#| msgid "Menu Bar"
+#: modules/menu/gp-menu-module.c:382
 msgid "Menu Button"
 msgstr "Кнопка меню"
 
-#: modules/menu/gp-menu-module.c:389
-#| msgid "A custom menu bar"
+#: modules/menu/gp-menu-module.c:383
 msgid "A custom menu button"
 msgstr "Користувацька кнопка меню"
 
-#: modules/menu/gp-menu-module.c:397
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Рядок меню"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Користувацький рядок меню"
 
-#: modules/menu/gp-menu-module.c:404
+#: modules/menu/gp-menu-module.c:398
 msgid "User menu"
 msgstr "Меню користувача"
 
-#: modules/menu/gp-menu-module.c:405
-#| msgid "Menu to change your settings and your online status"
+#: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
 msgstr "Меню для зміни налаштувань і виходу"
+
+#: modules/menu/gp-menu-utils.c:353
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Не вдалось запустити «%s»"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2271,9 +2307,6 @@ msgid "Menu content path"
 msgstr "Шлях до вмісту меню"
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
-#| msgid ""
-#| "The path from which the menu contents is contructed. If empty, the menu "
-#| "will be the default applications menu."
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
@@ -2451,8 +2484,6 @@ msgstr "Показувати _всі робочі простори у:"
 
 #: modules/wncklet/workspace-switcher.ui:128
 #: modules/wncklet/workspace-switcher.ui:228
-#| msgctxt "panel:showusername"
-#| msgid "1"
 msgid "1"
 msgstr "1"
 
