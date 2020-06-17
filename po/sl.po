@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2020-03-29 13:06+0000\n"
-"PO-Revision-Date: 2020-04-06 20:53+0200\n"
+"POT-Creation-Date: 2020-05-30 16:35+0000\n"
+"PO-Revision-Date: 2020-06-16 21:40+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -410,18 +410,6 @@ msgstr ""
 "Izbrana možnost omogoča samodejno dopolnjevanje v pogovornem oknu »Zaženi "
 "program«."
 
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Mesto zaganjalnika"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Mesto datoteke .desktop, ki opisuje zaganjalnik. Ključ je uporabljen le, "
-"kadar je ključ object_type nastavljen na »launcher-object«."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "IID predmeta"
@@ -787,22 +775,6 @@ msgstr "Uporabi barvo ozadja po meri"
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: gnome-panel/applet.c:324
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:462
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "_Premakni"
-
-#: gnome-panel/applet.c:469
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "_Odstrani s pulta"
-
 #: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Pult"
@@ -815,25 +787,43 @@ msgstr ""
 "Zagon drugih programov in podpora pri različnih pripomočkih za upravljanje z "
 "okni, časom ..."
 
-#: gnome-panel/gp-add-applet-window.c:137
-msgid "Help"
-msgstr "Pomo_č"
-
-#: gnome-panel/gp-add-applet-window.c:148
-msgid "About"
-msgstr "O programu"
-
-#: gnome-panel/gp-add-applet-window.c:193
-msgid "Add"
-msgstr "_Dodaj"
-
-#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Dodaj pultu"
 
-#: gnome-panel/gp-add-applet-window.c:560
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Ni najdenih apletov"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, fuzzy, c-format
+#| msgid "Find an _item to add to \"%s\":"
+msgid "Find an item to add to “%s”"
+msgstr "Najdi _predmet za dodajanje na »%s«:"
+
+#: gnome-panel/gp-add-applet-window.c:558
+#, fuzzy
+#| msgid "Find an item to add to the panel:"
+msgid "Find an item to add to the panel"
+msgstr "Najdi predmet za dodajanje na pult:"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Pomo_č"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "O programu"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "_Dodaj"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -945,254 +935,57 @@ msgstr "_Barva besedila"
 msgid "Theme"
 msgstr "Tema"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Ni mogoče prikazati naslova URL"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Naslov URL ni naveden."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Programa ni mogoče zagnati"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Ni mogoče uporabiti spuščenega predmeta"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Za datoteko zaganjalnika pulta naslov URI ni naveden\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Ni mogoče odpreti datoteke namizja %s za zaganjalnik%s%s pulta\n"
-
-#: gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Lastnosti zaganjalnika"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Zaženi"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:147
-msgid "_Properties"
-msgstr "_Lastnosti"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Mesto zaganjalnika ni določeno, zato ga ni mogoče zagnati\n"
-
-#: gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Ustvari zaganjalnik"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1344 gnome-panel/panel-ditem-editor.c:1375
-msgid "Could not save launcher"
-msgstr "Ni mogoče shraniti zaganjalnika"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:808
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Napaka"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
-msgid "Choose an icon"
-msgstr "Izbor ikone"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:656 gnome-panel/panel-ditem-editor.c:991
-#: gnome-panel/panel-force-quit.c:217 gnome-panel/panel-run-dialog.c:1301
-#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
-#: modules/menu/gp-recent-menu.c:205
-msgid "_Cancel"
-msgstr "_Prekliči"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:993
-msgid "_Open"
-msgstr "_Odpri"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "Ni mogoče zagnati »%s«"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Ni mogoče odpreti mesta »%s«"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "_Lock Screen"
-msgstr "_Zakleni zaslon"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "_Premakni"
 
-#: gnome-panel/panel-action-button.c:162
-msgid "_Activate Screensaver"
-msgstr "_Omogoči ohranjevalnik zaslona"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "_Odstrani s pulta"
 
-#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
-msgid "Lock Screen"
-msgstr "Zakleni zaslon"
-
-#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
-msgid "Protect your computer from unauthorized use"
-msgstr "Zavaruje računalnik pred neodobreno uporabo"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-msgid "Log Out"
-msgstr "Odjava"
-
-#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
-msgid "Log out of this session to log in as a different user"
-msgstr "Odjava iz trenutne seje in prijava z drugimi uporabniškimi podatki"
-
-#: gnome-panel/panel-action-button.c:377
-msgid "Run Application..."
-msgstr "Zaženi program ..."
-
-#: gnome-panel/panel-action-button.c:378
-msgid "Run an application by typing a command or choosing from a list"
-msgstr "Zagon programa z vpisom ukaza ali izborom iz seznama"
-
-#: gnome-panel/panel-action-button.c:386
-msgid "Search for Files..."
-msgstr "Poišči datoteke ..."
-
-#: gnome-panel/panel-action-button.c:387
-msgid "Locate documents and folders on this computer by name or content"
-msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
-
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:226
-msgid "Force Quit"
-msgstr "Vsili končanje"
-
-#: gnome-panel/panel-action-button.c:395
-msgid "Force a misbehaving application to quit"
-msgstr "Vsiljen konec neodzivnega programa"
-
-#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
-msgid "Hibernate"
-msgstr "V mirovanje"
-
-#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
-msgid "Suspend"
-msgstr "V pripravljenost"
-
-#: gnome-panel/panel-action-button.c:421
-msgid "Hybrid sleep"
-msgstr "V pripravljenost"
-
-#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
-msgid "Restart"
-msgstr "Ponovno zaženi"
-
-#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-msgid "Restart the computer"
-msgstr "Ponovno zaženi računalnik"
-
-#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
-msgid "Power Off"
-msgstr "Izklopi"
-
-#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-msgid "Power off the computer"
-msgstr "Izklopi računalnik"
-
-#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
-msgid "(empty)"
-msgstr "(prazno)"
-
-#: gnome-panel/panel-addto-dialog.c:368
-msgid "Custom Application Launcher"
-msgstr "Zagon programov po meri"
-
-#: gnome-panel/panel-addto-dialog.c:369
-msgid "Create a new launcher"
-msgstr "Ustvari nov zaganjalnik"
-
-#: gnome-panel/panel-addto-dialog.c:378
-msgid "Application Launcher..."
-msgstr "Zaganjalnik programa ..."
-
-#: gnome-panel/panel-addto-dialog.c:379
-msgid "Copy a launcher from the applications menu"
-msgstr "Kopiraj zaganjalnik iz menija programov"
-
-#: gnome-panel/panel-addto-dialog.c:920
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "Najdi _predmet za dodajanje na »%s«:"
-
-#: gnome-panel/panel-addto-dialog.c:924
-msgid "Find an _item to add to the panel:"
-msgstr "Najdi _predmet za dodajanje na pult:"
-
-#: gnome-panel/panel-addto-dialog.c:1046
-msgid "_Forward"
-msgstr "_Naprej"
-
-#: gnome-panel/panel-addto-dialog.c:1049 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "_Dodaj"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "Najdi predmet za dodajanje na pult:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "_Nazaj"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:653
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "_Zapri"
-
-#: gnome-panel/panel-applet-frame.c:771
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Prišlo je do napake med nalaganjem »%s«."
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "V redu"
 
-#: gnome-panel/panel-applet-frame.c:787
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Ali želite izbrisati aplet iz nastavitev?"
 
-#: gnome-panel/panel-applet-frame.c:790
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "_Ne izbriši"
 
-#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: gnome-panel/panel.c:414
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "Odpri naslov URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1201,38 +994,38 @@ msgstr "Odpri »%s«"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Dostop do osebne mape"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Računalnik"
 
 #. name
-#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr "Brskanje po vseh dostopnih krajevnih in oddaljenih diskih in mapah"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Omrežje"
 
 #. name
-#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Brskanje po zaznamovanih in krajevnih omrežnih povezavah"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Ali naj se pult izbriše?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1240,126 +1033,42 @@ msgstr ""
 "Z brisanjem pulta se izbrišejo tudi\n"
 "vse njegove nastavitve."
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Prekliči"
+
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Pulta ni mogoče izbrisati"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "Na namizju mora biti vedno vsaj en pult."
 
-#: gnome-panel/panel-context-menu.c:138
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "_Dodaj na pult ..."
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "_Lastnosti"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "_Izbriši pult"
 
-#: gnome-panel/panel-context-menu.c:166
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "_Nov pult"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Program"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Program terminala"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Mesto"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:608
-msgid "_Type:"
-msgstr "_Vrsta:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:615
-msgid "_Name:"
-msgstr "_Ime:"
-
-#: gnome-panel/panel-ditem-editor.c:633
-msgid "_Browse..."
-msgstr "_Prebrskaj ..."
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:640
-msgid "Co_mment:"
-msgstr "_Opomba:"
-
-#: gnome-panel/panel-ditem-editor.c:647
-msgid "_Revert"
-msgstr "_Povrni"
-
-#: gnome-panel/panel-ditem-editor.c:659 gnome-panel/panel-run-dialog.c:1302
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_V redu"
-
-#: gnome-panel/panel-ditem-editor.c:958
-msgid "Choose an application..."
-msgstr "Izbor programa ..."
-
-#: gnome-panel/panel-ditem-editor.c:962
-msgid "Choose a file..."
-msgstr "Izbor datoteke ..."
-
-#: gnome-panel/panel-ditem-editor.c:1127 gnome-panel/panel-ditem-editor.c:1136
-msgid "Comm_and:"
-msgstr "_Ukaz:"
-
-#: gnome-panel/panel-ditem-editor.c:1145
-msgid "_Location:"
-msgstr "_Mesto:"
-
-#: gnome-panel/panel-ditem-editor.c:1309
-msgid "The name of the launcher is not set."
-msgstr "Ime zaganjalnika ni določeno."
-
-#: gnome-panel/panel-ditem-editor.c:1313
-msgid "Could not save directory properties"
-msgstr "Ni mogoče shraniti lastnosti mape"
-
-#: gnome-panel/panel-ditem-editor.c:1314
-msgid "The name of the directory is not set."
-msgstr "Ime mape ni določeno."
-
-#: gnome-panel/panel-ditem-editor.c:1330
-msgid "The command of the launcher is not set."
-msgstr "Ukaz zaganjalnika ni nastavljen."
-
-#: gnome-panel/panel-ditem-editor.c:1333
-msgid "The location of the launcher is not set."
-msgstr "Mesto zaganjalnika ni določeno."
-
-#: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite "
-"tipko escape."
-
-#: gnome-panel/panel-force-quit.c:209
-msgid "Force this application to exit?"
-msgstr "Ali naj bo program vsiljeno končan?"
-
-#: gnome-panel/panel-force-quit.c:212
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
-"dokumenti programa."
-
-#: gnome-panel/panel-force-quit.c:219
-msgid "_Force quit"
-msgstr "_Vsili končanje"
-
-#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "Ni mogoče ustvariti začetne razvrstitve pulta.\n"
 
@@ -1380,6 +1089,10 @@ msgstr "Ni mogoče pretvoriti »%s« iz UTF-8"
 #: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Izbor datoteke, ki naj se pripne ukazu ..."
+
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_V redu"
 
 #: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
@@ -1510,23 +1223,18 @@ msgstr "Desni lebdeč pult"
 msgid "Right Edge Panel"
 msgstr "Desni robni pult"
 
-#: gnome-panel/panel-util.c:264
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "Ikone »%s« ni mogoče najti"
-
-#: gnome-panel/panel-util.c:507
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "datoteka"
 
-#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Začetek"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Datotečni sistem"
 
@@ -1539,22 +1247,152 @@ msgstr "Datotečni sistem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:128
+#: libgnome-panel/gp-initial-setup-dialog.c:167
 msgid "Initial Setup"
 msgstr "Začetna nastavitev"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:132
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:136
+#: libgnome-panel/gp-initial-setup-dialog.c:175
 msgid "Done"
 msgstr "Končano"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Ni mogoče prikazati dokumenta pomoči »%s«"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Napaka med prikazovanjem dokumenta pomoči"
+
+#: libgnome-panel/gp-module.c:695
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr ""
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Vsili končanje"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Vsiljen konec neodzivnega programa"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1009
+msgid "Lock Screen"
+msgstr "Zakleni zaslon"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1010
+msgid "Protect your computer from unauthorized use"
+msgstr "Zavaruje računalnik pred neodobreno uporabo"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:988
+msgid "Log Out"
+msgstr "Odjava"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:989
+msgid "Log out of this session to log in as a different user"
+msgstr "Odjava iz trenutne seje in prijava z drugimi uporabniškimi podatki"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Zaženi program ..."
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Zagon programa z vpisom ukaza ali izborom iz seznama"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1121
+msgid "Power Off"
+msgstr "Izklopi"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1122
+msgid "Power off the computer"
+msgstr "Izklopi računalnik"
+
+#: modules/action-button/gp-force-quit-applet.c:135
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Programa ni mogoče zagnati"
+
+#: modules/action-button/gp-lock-screen-applet.c:435
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "_Zakleni zaslon"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "_Omogoči ohranjevalnik zaslona"
+
+#: modules/action-button/gp-logout-applet.c:223
+#: modules/action-button/gp-shutdown-applet.c:267
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-run-applet.c:136
+#: modules/launcher/gp-launcher-module.c:34
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kliknite na okno za vsiljen konec programa. Za preklic končanja pritisnite "
+"tipko escape."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Ali naj bo program vsiljeno končan?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"V primeru, da je program vsiljeno končan, bodo izgubljeni vsi odprti "
+"dokumenti programa."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "_Vsili končanje"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1658,64 +1496,55 @@ msgstr "Računalniška ura"
 msgid "Failed to open the time settings"
 msgstr "Napaka med odpiranjem okna nastavitev sistemskega časa"
 
-#: modules/clock/clock-applet.c:1555 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Ni mogoče prikazati dokumenta pomoči »%s«"
-
-#: modules/clock/clock-applet.c:1584 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Napaka med prikazovanjem dokumenta pomoči"
-
-#: modules/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Izbor mesta"
 
-#: modules/clock/clock-applet.c:1712
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Urejanje mesta"
 
-#: modules/clock/clock-applet.c:1748 modules/clock/clock-applet.c:1756
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Privzeto"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Kelvini"
 
-#: modules/clock/clock-applet.c:1750
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Celziji"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Fahrenheiti"
 
-#: modules/clock/clock-applet.c:1757
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Metri na sekundo (m/s)"
 
-#: modules/clock/clock-applet.c:1758
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometri na uro (km/h)"
 
-#: modules/clock/clock-applet.c:1759
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Milje na uro (mi/h)"
 
-#: modules/clock/clock-applet.c:1760
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Vozli"
 
-#: modules/clock/clock-applet.c:1761
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "Beaufortova skala"
 
-#: modules/clock/clock-applet.c:1814
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Ime mesta"
 
-#: modules/clock/clock-applet.c:1818
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Časovno območje mesta"
 
@@ -1857,6 +1686,12 @@ msgstr "Pomo_č"
 msgid "Time _Settings"
 msgstr "Nastavitve _časa"
 
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "_Zapri"
+
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Zapis ure"
@@ -1888,6 +1723,10 @@ msgstr "Pokaži _vreme"
 #: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Pokaži _temperaturo"
+
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Dodaj"
 
 #: modules/clock/clock.ui:697
 msgid "_Edit"
@@ -1921,7 +1760,7 @@ msgstr "Enota hitrosti _vetra:"
 msgid "Weather"
 msgstr "Vreme"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -1934,26 +1773,26 @@ msgstr ""
 "ni najbolj vzpodbudno. Močno odsvetujemo uporabo\n"
 "%s za karkoli, kar bi bilo vsaj teoretično uporabno."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Riba %s"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Riba %s, sodobni orakelj"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Ni mogoče najti ukaza za izvajanje"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Riba %s pravi:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -1964,16 +1803,16 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "_Spregovori znova"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavljen ukaz ne deluje in je bil zamenjan z: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1984,7 +1823,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1995,15 +1834,15 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/fish/fish-applet.c:1121
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "Treba bo zamenjati vodo"
 
-#: modules/fish/fish-applet.c:1123
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Poglejte današnji datum!"
 
-#: modules/fish/fish-applet.c:1217
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba %s, prerokovalka"
@@ -2052,13 +1891,221 @@ msgstr "sekund"
 msgid "_Rotate on vertical panels"
 msgstr "_Zavrti pri navpičnem pultu"
 
-#: modules/menu/gp-lock-logout.c:967
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Zaženi"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Program"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Program terminala"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Mapa"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Datoteka"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+msgid "Choose Icon File"
+msgstr "Izbor datoteke ikone"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "_Odpri"
+
+#: modules/launcher/gp-editor.c:347
+msgid "Choose Icon Name"
+msgstr "Izbor imena ikone"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Izbor programa ..."
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+msgid "Choose a directory..."
+msgstr "Izbor mape ..."
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Izbor datoteke ..."
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "_Ukaz:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Mesto:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Vrsta:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Ime:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Prebrskaj ..."
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "_Opomba:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+msgid "All"
+msgstr "Vse"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Izbor imena ikone"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Izbor"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr ""
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+msgid "Icon Names:"
+msgstr "Imena ikone:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr ""
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(prazno)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr ""
+
+#: modules/launcher/gp-launcher-applet.c:885
+msgid "Could not open location"
+msgstr "Mesta ni mogoče odpreti"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+msgid "Failed to load key file “%s”: %s"
+msgstr "Nalaganje datoteke ključa »%s« je spodletelo: %s"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Custom Application Launcher"
+msgstr "Zagon programov po meri"
+
+#: modules/launcher/gp-launcher-module.c:59
+msgid "Create a new launcher"
+msgstr "Ustvari nov zaganjalnik"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Application Launcher..."
+msgstr "Zaganjalnik programa ..."
+
+#: modules/launcher/gp-launcher-module.c:69
+msgid "Copy a launcher from the applications menu"
+msgstr "Kopiraj zaganjalnik iz menija programov"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Ni mogoče shraniti zaganjalnika"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "_Povrni"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Lastnosti zaganjalnika"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:156
+msgid "The icon of the launcher is not set."
+msgstr "Ikona zaganjalnika ni nastavljena"
+
+#: modules/launcher/gp-launcher-utils.c:164
+msgid "The type of the launcher is not set."
+msgstr "Podatek o vrsti zaganjalnika ni določen"
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, fuzzy, c-format
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Ime zaganjalnika ni določeno."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Ime zaganjalnika ni določeno."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Ukaz zaganjalnika ni nastavljen."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Mesto zaganjalnika ni določeno."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Mesto zaganjalnika"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+#, fuzzy
+#| msgid ""
+#| "The location of the .desktop file describing the launcher. This key is "
+#| "only relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher."
+msgstr ""
+"Mesto datoteke .desktop, ki opisuje zaganjalnik. Ključ je uporabljen le, "
+"kadar je ključ object_type nastavljen na »launcher-object«."
+
+#: modules/menu/gp-lock-logout.c:972
 msgid "Switch User"
 msgstr "Preklopi uporabnika"
 
-#: modules/menu/gp-lock-logout.c:1077
+#: modules/menu/gp-lock-logout.c:1055
+msgid "Hibernate"
+msgstr "V mirovanje"
+
+#: modules/menu/gp-lock-logout.c:1071
+msgid "Suspend"
+msgstr "V pripravljenost"
+
+#: modules/menu/gp-lock-logout.c:1087
 msgid "Hybrid Sleep"
 msgstr "V pripravljenost"
+
+#: modules/menu/gp-lock-logout.c:1105
+msgid "Restart"
+msgstr "Ponovno zaženi"
+
+#: modules/menu/gp-lock-logout.c:1106
+msgid "Restart the computer"
+msgstr "Ponovno zaženi računalnik"
 
 #: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
@@ -2069,7 +2116,7 @@ msgid "Browse and run installed applications"
 msgstr "Pregled in zaganjanje nameščenih programov."
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Mesta"
 
@@ -2091,37 +2138,42 @@ msgstr "Spreminjanje videza in obnašanja sistema oziroma iskanje pomoči"
 msgid "Please install the '%s' application."
 msgstr "Namestiti je treba program »%s«."
 
-#: modules/menu/gp-menu-module.c:381
+#: modules/menu/gp-menu-module.c:375
 msgid "Main Menu"
 msgstr "Glavni meni"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:376
 msgid "The main GNOME menu"
 msgstr "Glavni meni GNOME"
 
-#: modules/menu/gp-menu-module.c:388
+#: modules/menu/gp-menu-module.c:382
 msgid "Menu Button"
 msgstr "Menijski gumb"
 
-#: modules/menu/gp-menu-module.c:389
+#: modules/menu/gp-menu-module.c:383
 msgid "A custom menu button"
 msgstr "Menijski gumb po meri"
 
-#: modules/menu/gp-menu-module.c:397
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Menijska vrstica"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Menijska vrstica po meri"
 
-#: modules/menu/gp-menu-module.c:404
+#: modules/menu/gp-menu-module.c:398
 msgid "User menu"
 msgstr "Uporabniški meni"
 
-#: modules/menu/gp-menu-module.c:405
+#: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
 msgstr "Meni za spreminjanje nastavitev in odjavo"
+
+#: modules/menu/gp-menu-utils.c:353
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Ni mogoče zagnati »%s«"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2424,6 +2476,60 @@ msgstr "V preklopniku pokaži imena _delovnih površin"
 msgid "Workspaces"
 msgstr "Delovne površine"
 
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Could not show this URL"
+#~ msgstr "Ni mogoče prikazati naslova URL"
+
+#~ msgid "No URL was specified."
+#~ msgstr "Naslov URL ni naveden."
+
+#~ msgid "Could not use dropped item"
+#~ msgstr "Ni mogoče uporabiti spuščenega predmeta"
+
+#~ msgid "No URI provided for panel launcher desktop file\n"
+#~ msgstr "Za datoteko zaganjalnika pulta naslov URI ni naveden\n"
+
+#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+#~ msgstr "Ni mogoče odpreti datoteke namizja %s za zaganjalnik%s%s pulta\n"
+
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr "Mesto zaganjalnika ni določeno, zato ga ni mogoče zagnati\n"
+
+#~ msgid "Create Launcher"
+#~ msgstr "Ustvari zaganjalnik"
+
+#~ msgid "Search for Files..."
+#~ msgstr "Poišči datoteke ..."
+
+#~ msgid "Locate documents and folders on this computer by name or content"
+#~ msgstr "Krajevno iskanje dokumentov in map po imenu ali vsebini"
+
+#~ msgid "Hybrid sleep"
+#~ msgstr "V pripravljenost"
+
+#~ msgid "Find an _item to add to the panel:"
+#~ msgstr "Najdi _predmet za dodajanje na pult:"
+
+#~ msgid "_Forward"
+#~ msgstr "_Naprej"
+
+#~ msgid "_Back"
+#~ msgstr "_Nazaj"
+
+#~ msgid "Location"
+#~ msgstr "Mesto"
+
+#~ msgid "Could not save directory properties"
+#~ msgstr "Ni mogoče shraniti lastnosti mape"
+
+#~ msgid "The name of the directory is not set."
+#~ msgstr "Ime mape ni določeno."
+
+#~ msgid "Icon '%s' not found"
+#~ msgstr "Ikone »%s« ni mogoče najti"
+
 #~ msgid "Icon size in the menus"
 #~ msgstr "Velikost ikon v meniju"
 
@@ -2438,9 +2544,6 @@ msgstr "Delovne površine"
 
 #~ msgid "- Edit .desktop files"
 #~ msgstr "– Urejanje datotek .desktop"
-
-#~ msgid "Directory Properties"
-#~ msgstr "Lastnosti imenika"
 
 #~ msgid "gnome-panel"
 #~ msgstr "gnome-panel"
@@ -2643,9 +2746,6 @@ msgstr "Delovne površine"
 
 #~ msgid "S_tyle:"
 #~ msgstr "_Slog:"
-
-#~ msgid "Select background"
-#~ msgstr "Izbor ozadja"
 
 #~ msgid "Background"
 #~ msgstr "Ozadje"
