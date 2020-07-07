@@ -50,9 +50,6 @@ static GSettings *keybindings = NULL;
 
 static PanelBinding bindings [] = {
 	{ GNOME_DESKTOP_WM_KEYBINDINGS_ACTIVATE_WINDOW_MENU_KEY, "popup-panel-menu", NULL },
-	{ GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_MAXIMIZED_KEY,     "toggle-expand",    NULL },
-	{ GNOME_DESKTOP_WM_KEYBINDINGS_MAXIMIZE_KEY,             "expand",           NULL },
-	{ GNOME_DESKTOP_WM_KEYBINDINGS_UNMAXIMIZE_KEY,           "unexpand",         NULL },
 	{ GNOME_DESKTOP_WM_KEYBINDINGS_TOGGLE_SHADED_KEY,        "toggle-hidden",    NULL },
 	{ GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_MOVE_KEY,           "begin-move",       NULL },
 	{ GNOME_DESKTOP_WM_KEYBINDINGS_BEGIN_RESIZE_KEY,         "begin-resize",     NULL },
