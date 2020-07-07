@@ -38,6 +38,7 @@ struct _WindowMenuApplet
 {
 	GpApplet parent;
 
+	WnckHandle   *handle;
 	GtkWidget    *selector;
 	int	      size;
 	GtkOrientation orient;
@@ -175,7 +176,8 @@ window_menu_applet_fill (GpApplet *applet)
 
 	window_menu->orient = gp_applet_get_orientation (applet);
 
-	window_menu->selector = wnck_selector_new ();
+	window_menu->handle = wnck_handle_new (WNCK_CLIENT_TYPE_PAGER);
+	window_menu->selector = wnck_selector_new_with_handle (window_menu->handle);
 	gtk_container_add (GTK_CONTAINER (window_menu),
 			   window_menu->selector);
 
@@ -206,6 +208,18 @@ window_menu_applet_constructed (GObject *object)
 }
 
 static void
+window_menu_applet_dispose (GObject *object)
+{
+	WindowMenuApplet *window_menu;
+
+	window_menu = WINDOW_MENU_APPLET (object);
+
+	g_clear_object (&window_menu->handle);
+
+	G_OBJECT_CLASS (window_menu_applet_parent_class)->dispose (object);
+}
+
+static void
 window_menu_applet_class_init (WindowMenuAppletClass *window_menu_class)
 {
 	GObjectClass *object_class;
@@ -213,6 +227,7 @@ window_menu_applet_class_init (WindowMenuAppletClass *window_menu_class)
 	object_class = G_OBJECT_CLASS (window_menu_class);
 
 	object_class->constructed = window_menu_applet_constructed;
+	object_class->dispose = window_menu_applet_dispose;
 }
 
 static void
