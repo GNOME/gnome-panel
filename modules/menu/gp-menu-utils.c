@@ -338,6 +338,89 @@ get_app_info_for_uri (const gchar  *uri,
   return app_info;
 }
 
+static gboolean
+launch_uri (const char  *uri,
+            GError     **error)
+{
+  GAppInfo *app_info;
+
+  app_info = get_app_info_for_uri (uri, error);
+
+  if (app_info != NULL)
+    {
+      GList *uris;
+      gboolean success;
+
+      uris = g_list_append (NULL, (gchar *) uri);
+      success = app_info_launch_uris (G_DESKTOP_APP_INFO (app_info),
+                                      uris, error);
+
+      g_object_unref (app_info);
+      g_list_free (uris);
+
+      return success;
+    }
+
+  return FALSE;
+}
+
+static void
+launch_uri_show_error_dialog (const char *uri,
+                              GError     *error)
+{
+  char *message;
+
+  message = g_strdup_printf (_("Could not open location '%s'"), uri);
+
+  gp_menu_utils_show_error_dialog (message, error);
+  g_free (message);
+}
+
+static void
+mount_enclosing_volume_cb (GObject      *source_object,
+                           GAsyncResult *res,
+                           gpointer      user_data)
+{
+  GFile *file;
+  GMountOperation *operation;
+  GError *error;
+
+  file = G_FILE (source_object);
+  operation = G_MOUNT_OPERATION (user_data);
+  error = NULL;
+
+  if (g_file_mount_enclosing_volume_finish (file, res, &error))
+    {
+      char *uri;
+
+      uri = g_file_get_uri (file);
+
+      if (!launch_uri (uri, &error))
+        {
+          launch_uri_show_error_dialog (uri, error);
+          g_clear_error (&error);
+        }
+
+      g_free (uri);
+    }
+  else
+    {
+      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_PERMISSION_DENIED) &&
+          !g_error_matches (error, G_IO_ERROR, G_IO_ERROR_FAILED_HANDLED))
+        {
+          char *uri;
+
+          uri = g_file_get_uri (file);
+          launch_uri_show_error_dialog (uri, error);
+          g_free (uri);
+        }
+
+      g_clear_error (&error);
+    }
+
+  g_object_unref (operation);
+}
+
 void
 gp_menu_utils_app_info_launch (GDesktopAppInfo *app_info)
 {
@@ -362,34 +445,34 @@ void
 gp_menu_utils_launch_uri (const gchar *uri)
 {
   GError *error;
-  GAppInfo *app_info;
-  gchar *message;
 
   error = NULL;
-  app_info = get_app_info_for_uri (uri, &error);
+  if (launch_uri (uri, &error))
+    return;
 
-  if (app_info != NULL)
+  if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_MOUNTED))
     {
-      GList *uris;
-      gboolean success;
+      GFile *file;
+      GMountOperation *operation;
 
-      uris = g_list_append (NULL, (gchar *) uri);
-      success = app_info_launch_uris (G_DESKTOP_APP_INFO (app_info),
-                                      uris, &error);
+      file = g_file_new_for_uri (uri);
+      operation = gtk_mount_operation_new (NULL);
 
-      g_object_unref (app_info);
-      g_list_free (uris);
+      g_file_mount_enclosing_volume (file,
+                                     G_MOUNT_MOUNT_NONE,
+                                     operation,
+                                     NULL,
+                                     mount_enclosing_volume_cb,
+                                     operation);
 
-      if (success)
-        return;
+      g_clear_error (&error);
+      g_object_unref (file);
+
+      return;
     }
 
-  message = g_strdup_printf (_("Could not open location '%s'"), uri);
-
-  gp_menu_utils_show_error_dialog (message, error);
-
+  launch_uri_show_error_dialog (uri, error);
   g_clear_error (&error);
-  g_free (message);
 }
 
 GIcon *
