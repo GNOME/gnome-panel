@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2019-12-23 12:46+0000\n"
-"PO-Revision-Date: 2020-01-15 19:26+0700\n"
+"POT-Creation-Date: 2020-07-11 15:40+0000\n"
+"PO-Revision-Date: 2020-07-31 20:04+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.4\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -428,18 +428,6 @@ msgstr ""
 "Jika bernilai benar (true), fasilitas pelengkapan otomatis pada dialog "
 "\"Jalankan Aplikasi\" akan diaktifkan."
 
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Lokasi peluncur"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Lokasi berkas .desktop yang mendeskripsikan launcher. Pengaturan ini hanya "
-"relevan jika object_type adalah \"launcher-object\"."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "IID Objek"
@@ -822,23 +810,7 @@ msgstr "Gunakan warna teks ubahan"
 msgid "Text Color"
 msgstr "Warna Teks"
 
-#: gnome-panel/applet.c:324
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:462
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "_Pindahkan"
-
-#: gnome-panel/applet.c:469
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "Hapus da_ri Panel"
-
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Panel"
 
@@ -850,29 +822,54 @@ msgstr ""
 "Jalankan aplikasi lainnya dan menyediakan berbagai macam peralatan untuk "
 "mengatur jendela, menunjukkan waktu, dsb."
 
-#: gnome-panel/gp-add-applet-window.c:137
-msgid "Help"
-msgstr "Bantuan"
-
-#: gnome-panel/gp-add-applet-window.c:148
-msgid "About"
-msgstr "Ihwal"
-
-#: gnome-panel/gp-add-applet-window.c:193
-msgid "Add"
-msgstr "Tambah"
-
-#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Tambah ke Panel"
 
-#: gnome-panel/gp-add-applet-window.c:560
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Aplet tidak ditemukan"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, c-format
+msgid "Find an item to add to “%s”"
+msgstr "Temukan butir untuk ditambahkan ke “%s”"
+
+#: gnome-panel/gp-add-applet-window.c:558
+msgid "Find an item to add to the panel"
+msgstr "Temukan butir untuk ditambahkan ke panel"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+"Dinonaktifkan karena aplet ini tercantum dalam pengaturan \"disabled-applets"
+"\" di skema GSettings “org.gnome.gnome-panel.lockdown”."
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Bantuan"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Ihwal"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Tambah"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Sembunyikan Panel"
+
+#: gnome-panel/gp-main.c:50
+msgid "Replace a currently running panel"
+msgstr "Menggantikan panel yang sedang berjalan"
+
+#: gnome-panel/gp-main.c:56
+msgid "Print version"
+msgstr "Cetak versi"
 
 #: gnome-panel/gp-properties-dialog.c:213
 msgctxt "Orientation"
@@ -972,266 +969,57 @@ msgstr "Warna teks:"
 msgid "Theme"
 msgstr "Tema"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Tidak bisa menampilkan URL ini"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Tiada URL yang ditentukan."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Tidak dapat menjalankan aplikasi"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Tidak bisa menggunakan objek terjatuh"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "URI untuk berkas desktop peluncur panel tidak ada\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Berkas desktop %s untuk panel peluncur%s%s tidak dapat dibuka\n"
-
-#: gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Properti Peluncur"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Luncurkan"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:147
-msgid "_Properties"
-msgstr "_Properti"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Lokasi peluncur tak diatur, tak bisa memuat peluncur\n"
-
-#: gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Membuat Peluncur Program"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
-msgid "Could not save launcher"
-msgstr "Tidak dapat menyimpan peluncur"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:808
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Galat"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
-msgid "Choose an icon"
-msgstr "Pilih ikon"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
-#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
-#: modules/menu/gp-recent-menu.c:205
-msgid "_Cancel"
-msgstr "_Batal"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:994
-msgid "_Open"
-msgstr "B_uka"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "Tidak dapat menjalankan '%s'"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:373
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Tidak dapat membuka lokasi '%s'"
 
-#: gnome-panel/main.c:37
-msgid "Replace a currently running panel"
-msgstr "Menggantikan panel yang sedang berjalan"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "_Pindahkan"
 
-#: gnome-panel/main.c:38
-msgid "Print version"
-msgstr "Cetak versi"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "Hapus da_ri Panel"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "_Lock Screen"
-msgstr "Kunci _Layar"
-
-#: gnome-panel/panel-action-button.c:162
-msgid "_Activate Screensaver"
-msgstr "_Aktifkan Pengaman Layar"
-
-#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
-msgid "Lock Screen"
-msgstr "Kunci Layar"
-
-#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
-msgid "Protect your computer from unauthorized use"
-msgstr "Mengunci komputer Anda dari orang yang tidak berhak"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-msgid "Log Out"
-msgstr "Log Keluar"
-
-#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
-msgid "Log out of this session to log in as a different user"
-msgstr "Keluar dari sesi ini untuk masuk sebagai pengguna lain"
-
-#: gnome-panel/panel-action-button.c:377
-msgid "Run Application..."
-msgstr "Jalankan Aplikasi..."
-
-#: gnome-panel/panel-action-button.c:378
-msgid "Run an application by typing a command or choosing from a list"
-msgstr ""
-"Menjalankan aplikasi dengan mengetik atau memilih perintah dari daftar yang "
-"ada"
-
-#: gnome-panel/panel-action-button.c:386
-msgid "Search for Files..."
-msgstr "Cari Berkas..."
-
-#: gnome-panel/panel-action-button.c:387
-msgid "Locate documents and folders on this computer by name or content"
-msgstr ""
-"Mencari dokumen atau folder yang terdapat dalam komputer ini berdasarkan "
-"nama atau isinya"
-
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
-msgid "Force Quit"
-msgstr "Tutup Paksa"
-
-#: gnome-panel/panel-action-button.c:395
-msgid "Force a misbehaving application to quit"
-msgstr "Menutup paksa aplikasi yang macet"
-
-#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
-msgid "Hibernate"
-msgstr "Hibernasi"
-
-#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
-msgid "Suspend"
-msgstr "Suspensi"
-
-#: gnome-panel/panel-action-button.c:421
-msgid "Hybrid sleep"
-msgstr "Tidur hibrida"
-
-#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
-msgid "Restart"
-msgstr "Nyalakan Ulang"
-
-#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-msgid "Restart the computer"
-msgstr "Jalankan ulang komputer"
-
-#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
-msgid "Power Off"
-msgstr "Matikan Daya"
-
-#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-msgid "Power off the computer"
-msgstr "Mematikan komputer"
-
-#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
-msgid "(empty)"
-msgstr "(kosong)"
-
-#: gnome-panel/panel-addto-dialog.c:361
-msgid "Custom Application Launcher"
-msgstr "Peluncur Aplikasi Pribadi"
-
-#: gnome-panel/panel-addto-dialog.c:362
-msgid "Create a new launcher"
-msgstr "Membuat peluncur program"
-
-#: gnome-panel/panel-addto-dialog.c:371
-msgid "Application Launcher..."
-msgstr "Peluncur Aplikasi..."
-
-#: gnome-panel/panel-addto-dialog.c:372
-msgid "Copy a launcher from the applications menu"
-msgstr "Menyalin peluncur dari menu aplikasi"
-
-#: gnome-panel/panel-addto-dialog.c:913
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "Cari objek untuk d_itambahkan ke \"%s\":"
-
-#: gnome-panel/panel-addto-dialog.c:917
-msgid "Find an _item to add to the panel:"
-msgstr "Cari objek untuk d_itambahkan ke panel:"
-
-#: gnome-panel/panel-addto-dialog.c:1039
-msgid "_Forward"
-msgstr "_Maju"
-
-#: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "T_ambah"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "Cari butir untuk ditambahkan ke panel:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "Kem_bali"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "_Tutup"
-
-#: gnome-panel/panel-applet-frame.c:771
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Terjadi masalah saat panel mencoba membuka \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:787
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Apakah Anda ingin menghapus aplet dari konfigurasi Anda?"
 
-#: gnome-panel/panel-applet-frame.c:790
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "_Jangan Hapus"
 
-#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "Ha_pus"
 
-#: gnome-panel/panel.c:414
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "Membuka URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1240,18 +1028,18 @@ msgstr "Membuka '%s'"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Membuka folder pribadi Anda"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Komputer"
 
 #. name
-#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1260,149 +1048,65 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Jaringan"
 
 #. name
-#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
-msgstr "Menelusuri lokasi jaringan lokal maupun yang telah ditandai"
+msgstr "Menelusuri lokasi jaringan lokal maupun yang telah dimarkahi"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Hapus panel Ini?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "Menghapus panel juga akan menghapus pengaturannya."
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Batal"
+
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Panel ini tidak dapat dihapus"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "Paling tidak, Anda harus memiliki satu panel."
 
-#: gnome-panel/panel-context-menu.c:138
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "T_ambah ke Panel..."
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "_Properti"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "_Hapus Panel Ini"
 
-#: gnome-panel/panel-context-menu.c:166
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "Pa_nel Baru"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Aplikasi"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Aplikasi pada Terminal"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Lokasi"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:595
-msgid "_Type:"
-msgstr "_Jenis:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:602
-msgid "_Name:"
-msgstr "_Nama:"
-
-#: gnome-panel/panel-ditem-editor.c:627
-msgid "_Browse..."
-msgstr "_Telusur..."
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:634
-msgid "Co_mment:"
-msgstr "Ko_mentar:"
-
-#: gnome-panel/panel-ditem-editor.c:641
-msgid "_Revert"
-msgstr "_Pulihkan"
-
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_OK"
-
-#: gnome-panel/panel-ditem-editor.c:961
-msgid "Choose an application..."
-msgstr "Pilih aplikasi..."
-
-#: gnome-panel/panel-ditem-editor.c:965
-msgid "Choose a file..."
-msgstr "Pilih berkas..."
-
-#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
-msgid "Comm_and:"
-msgstr "Perint_ah:"
-
-#: gnome-panel/panel-ditem-editor.c:1146
-msgid "_Location:"
-msgstr "_Lokasi:"
-
-#: gnome-panel/panel-ditem-editor.c:1309
-msgid "The name of the launcher is not set."
-msgstr "Nama peluncur belum diisi."
-
-#: gnome-panel/panel-ditem-editor.c:1313
-msgid "Could not save directory properties"
-msgstr "Tidak dapat menyimpan properti direktori"
-
-#: gnome-panel/panel-ditem-editor.c:1314
-msgid "The name of the directory is not set."
-msgstr "Nama direktori belum diisi."
-
-#: gnome-panel/panel-ditem-editor.c:1330
-msgid "The command of the launcher is not set."
-msgstr "Perintah yang hendak dipakai belum diisi."
-
-#: gnome-panel/panel-ditem-editor.c:1333
-msgid "The location of the launcher is not set."
-msgstr "Lokasi peluncur belum diisi."
-
-#: gnome-panel/panel-force-quit.c:75
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Klik pada sebuah jendela program untuk memaksanya mati. Tekan <ESC> untuk "
-"jika tidak jadi."
-
-#: gnome-panel/panel-force-quit.c:223
-msgid "Force this application to exit?"
-msgstr "Paksa aplikasi ini untuk ditutup?"
-
-#: gnome-panel/panel-force-quit.c:226
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Jika Anda memilih untuk menutup paksa aplikasi ini, perubahan dokumen yang "
-"belum disimpan oleh aplikasi tersebut akan hilang."
-
-#: gnome-panel/panel-force-quit.c:233
-msgid "_Force quit"
-msgstr "_Tutup paksa"
-
-#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "Tak bisa membuat tata letak awal panel.\n"
 
-#: gnome-panel/panel-run-dialog.c:424
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Tak bisa temukan suatu terminal, memakai xterm, bahkan jika itu mungkin tak "
@@ -1413,25 +1117,29 @@ msgstr ""
 msgid "Could not run command '%s'"
 msgstr "Tidak dapat menjalankan perintah '%s'"
 
-#: gnome-panel/panel-run-dialog.c:529
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Tidak dapat mengonversi '%s' menjadi UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1288
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Pilihlah berkas yang akan dibuka program ini..."
 
-#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_OK"
+
+#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Pilihlah aplikasi di atas untuk melihat keterangannya."
 
-#: gnome-panel/panel-run-dialog.c:1709
+#: gnome-panel/panel-run-dialog.c:1727
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Akan menjalankan perintah: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1742
+#: gnome-panel/panel-run-dialog.c:1760
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1492,87 +1200,82 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1560
 msgid "Top Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Atas"
 
-#: gnome-panel/panel-toplevel.c:1564
+#: gnome-panel/panel-toplevel.c:1561
 msgid "Top Centered Panel"
 msgstr "Panel Tengah Atas"
 
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1562
 msgid "Top Floating Panel"
 msgstr "Panel Mengambang Atas"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Edge Panel"
 msgstr "Panel Tepi Atas"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Bawah"
 
-#: gnome-panel/panel-toplevel.c:1571
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Centered Panel"
 msgstr "Panel Tengah Bawah"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Floating Panel"
 msgstr "Panel Mengambang Bawah"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Edge Panel"
 msgstr "Panel Tepi Bawah"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Left Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kiri"
 
-#: gnome-panel/panel-toplevel.c:1578
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Left Centered Panel"
 msgstr "Panel Tengah Kiri"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Left Floating Panel"
 msgstr "Panel Mengambang Kiri"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Edge Panel"
 msgstr "Panel Tepi Kiri"
 
-#: gnome-panel/panel-toplevel.c:1584
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Right Expanded Edge Panel"
 msgstr "Panel Tepi Terekspansi Kanan"
 
-#: gnome-panel/panel-toplevel.c:1585
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Right Centered Panel"
 msgstr "Panel Tengah Kanan"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Right Floating Panel"
 msgstr "Panel Mengambang Kanan"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Edge Panel"
 msgstr "Panel Tepi Kanan"
 
-#: gnome-panel/panel-util.c:264
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "Tidak menemukan ikon '%s'"
-
-#: gnome-panel/panel-util.c:507
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "berkas"
 
-#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Rumah"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Sistem Berkas"
 
@@ -1585,22 +1288,162 @@ msgstr "Sistem Berkas"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:128
+#: libgnome-panel/gp-initial-setup-dialog.c:167
 msgid "Initial Setup"
 msgstr "Penyiapan Awal"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:132
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
 msgid "Cancel"
 msgstr "Batal"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:136
+#: libgnome-panel/gp-initial-setup-dialog.c:175
 msgid "Done"
 msgstr "Selesai"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Tidak dapat membuka dokumen bantuan '%s'"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Galat sewaktu membuka dokumen bantuan"
+
+#: libgnome-panel/gp-module.c:695
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr "Backend “%s” tidak didukung."
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Tutup Paksa"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Menutup paksa aplikasi yang macet"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1009
+msgid "Lock Screen"
+msgstr "Kunci Layar"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1010
+msgid "Protect your computer from unauthorized use"
+msgstr "Mengunci komputer Anda dari orang yang tidak berhak"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:988
+msgid "Log Out"
+msgstr "Log Keluar"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:989
+msgid "Log out of this session to log in as a different user"
+msgstr "Keluar dari sesi ini untuk masuk sebagai pengguna lain"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Jalankan Aplikasi..."
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr ""
+"Menjalankan aplikasi dengan mengetik atau memilih perintah dari daftar yang "
+"ada"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1121
+msgid "Power Off"
+msgstr "Matikan Daya"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1122
+msgid "Power off the computer"
+msgstr "Mematikan komputer"
+
+#: modules/action-button/gp-force-quit-applet.c:135
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Dinonaktifkan karena pengaturan \"disable-force-quit\" di skema GSettings "
+"“org.gnome.gnome-panel.lockdown” diatur ke true."
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Tidak dapat menjalankan aplikasi"
+
+#: modules/action-button/gp-lock-screen-applet.c:435
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Dinonaktifkan karena pengaturan “disable-lock-screen” di skema GSettings "
+"“org.gnome.desktop.lockdown” diatur ke true."
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "Kunci _Layar"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "_Aktifkan Pengaman Layar"
+
+#: modules/action-button/gp-logout-applet.c:223
+#: modules/action-button/gp-shutdown-applet.c:267
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+"Dinonaktifkan karena pengaturan “disable-lock-out” di skema GSettings “org."
+"gnome.desktop.lockdown” diatur ke true."
+
+#: modules/action-button/gp-run-applet.c:136
+#: modules/launcher/gp-launcher-module.c:34
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Dinonaktifkan karena pengaturan “disable-command-line” di skema GSettings "
+"“org.gnome.desktop.lockdown” diatur ke true."
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Klik pada sebuah jendela program untuk memaksanya mati. Tekan <ESC> untuk "
+"jika tidak jadi."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Paksa aplikasi ini untuk ditutup?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Jika Anda memilih untuk menutup paksa aplikasi ini, perubahan dokumen yang "
+"belum disimpan oleh aplikasi tersebut akan hilang."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "_Tutup paksa"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1675,93 +1518,84 @@ msgstr "Kalender"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:227
+#: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
 msgstr "%A %d %B (%Z)"
 
-#: modules/clock/clock-applet.c:236
+#: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
 msgstr "Klik untuk menyembunyikan janji dan tugas"
 
-#: modules/clock/clock-applet.c:239
+#: modules/clock/clock-applet.c:238
 msgid "Click to view your appointments and tasks"
 msgstr "Klik untuk melihat daftar tugas dan janji"
 
-#: modules/clock/clock-applet.c:243
+#: modules/clock/clock-applet.c:242
 msgid "Click to hide month calendar"
 msgstr "Klik untuk menyembunyikan kalender bulan"
 
-#: modules/clock/clock-applet.c:246
+#: modules/clock/clock-applet.c:245
 msgid "Click to view month calendar"
 msgstr "Klik untuk melihat kalender bulanan"
 
 #. Done!
-#: modules/clock/clock-applet.c:850
+#: modules/clock/clock-applet.c:848
 msgid "Computer Clock"
 msgstr "Jam Komputer"
 
-#: modules/clock/clock-applet.c:983
+#: modules/clock/clock-applet.c:981
 msgid "Failed to open the time settings"
 msgstr "Gagal membuka pengaturan waktu"
 
-#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Tidak dapat membuka dokumen bantuan '%s'"
-
-#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Galat sewaktu membuka dokumen bantuan"
-
-#: modules/clock/clock-applet.c:1626
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Pilih Lokasi"
 
-#: modules/clock/clock-applet.c:1705
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Sunting Lokasi"
 
-#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Baku"
 
-#: modules/clock/clock-applet.c:1742
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1743
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1750
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Meter per detik (m/s)"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per jam (km/j)"
 
-#: modules/clock/clock-applet.c:1752
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Mil per jam (mil/j)"
 
-#: modules/clock/clock-applet.c:1753
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Knot"
 
-#: modules/clock/clock-applet.c:1754
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "Skala Beaufort"
 
-#: modules/clock/clock-applet.c:1807
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Nama Kota"
 
-#: modules/clock/clock-applet.c:1811
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Zona Waktu Kota"
 
@@ -1903,6 +1737,12 @@ msgstr "Ba_ntuan"
 msgid "Time _Settings"
 msgstr "Pengaturan _Waktu"
 
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "_Tutup"
+
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Format Jam"
@@ -1934,6 +1774,10 @@ msgstr "Tampilkan _cuaca"
 #: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Tampilkan _temperatur"
+
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "T_ambah"
 
 #: modules/clock/clock.ui:697
 msgid "_Edit"
@@ -1967,7 +1811,7 @@ msgstr "Satuan kecepatan _angin:"
 msgid "Weather"
 msgstr "Cuaca"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -1982,26 +1826,26 @@ msgstr ""
 "sesuatu\n"
 "yang mungkin membuat aplet ini \"praktis\" atau berguna."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s si Ikan"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s si Ikan, peramal kontemporer"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Tidak menemukan perintah yang akan dieksekusi"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s si Ikan Berkata:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2012,18 +1856,18 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "_Bicara lagi"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Perintah yang diberikan tidak dapat bekerja sebagaimana mestinya, oleh "
 "karena itu diganti dengan: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2034,7 +1878,7 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2045,15 +1889,15 @@ msgstr ""
 "\n"
 "Detail: %s"
 
-#: modules/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "Airnya perlu diganti"
 
-#: modules/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Lihatlah tanggal hari ini!"
 
-#: modules/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s si Ikan, sang peramal"
@@ -2102,13 +1946,214 @@ msgstr "detik"
 msgid "_Rotate on vertical panels"
 msgstr "Puta_r pada panel vertikal"
 
-#: modules/menu/gp-lock-logout.c:967
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Luncurkan"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Aplikasi"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Aplikasi pada Terminal"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Direktori"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Berkas"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+msgid "Choose Icon File"
+msgstr "Pilih Berkas Ikon"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "B_uka"
+
+#: modules/launcher/gp-editor.c:347
+msgid "Choose Icon Name"
+msgstr "Pilih Nama Ikon"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Pilih aplikasi..."
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+msgid "Choose a directory..."
+msgstr "Pilih direktori..."
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Pilih berkas..."
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "Perint_ah:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Lokasi:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Jenis:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Nama:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Telusur..."
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "Ko_mentar:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+msgid "All"
+msgstr "Semua"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Pilih Nama Ikon"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Pilih"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Konteks:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+msgid "Icon Names:"
+msgstr "Nama Ikon:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Hanya tampilkan ikon standar"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(kosong)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr "Tidak dapat mengeksekusi baris perintah \"%s\"."
+
+#: modules/launcher/gp-launcher-applet.c:885
+msgid "Could not open location"
+msgstr "Tidak dapat membuka lokasi"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+msgid "Failed to load key file “%s”: %s"
+msgstr "Gagal memuat berkas kunci “%s”: %s"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Custom Application Launcher"
+msgstr "Peluncur Aplikasi Pribadi"
+
+#: modules/launcher/gp-launcher-module.c:59
+msgid "Create a new launcher"
+msgstr "Membuat peluncur program"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Application Launcher..."
+msgstr "Peluncur Aplikasi..."
+
+#: modules/launcher/gp-launcher-module.c:69
+msgid "Copy a launcher from the applications menu"
+msgstr "Menyalin peluncur dari menu aplikasi"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Tidak dapat menyimpan peluncur"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "_Pulihkan"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Properti Peluncur"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr "Peluncur tidak dimulai dengan grup \"%s\" yang diperlukan."
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr "Peluncur memiliki Jenis nilai kunci \"%s\" yang tidak valid."
+
+#: modules/launcher/gp-launcher-utils.c:156
+msgid "The icon of the launcher is not set."
+msgstr "Ikon peluncur tidak diatur."
+
+#: modules/launcher/gp-launcher-utils.c:164
+msgid "The type of the launcher is not set."
+msgstr "Jenis peluncur tidak diatur."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Jenis peluncur harus \" %s\" atau \" %s\"."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Nama peluncur belum diisi."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Perintah yang hendak dipakai belum diisi."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Lokasi peluncur belum diisi."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Lokasi peluncur"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+msgid "The location of the .desktop file describing the launcher."
+msgstr "Lokasi berkas. desktop yang menjelaskan peluncur."
+
+#: modules/menu/gp-lock-logout.c:972
 msgid "Switch User"
 msgstr "Ganti Pengguna"
 
-#: modules/menu/gp-lock-logout.c:1077
+#: modules/menu/gp-lock-logout.c:1055
+msgid "Hibernate"
+msgstr "Hibernasi"
+
+#: modules/menu/gp-lock-logout.c:1071
+msgid "Suspend"
+msgstr "Suspensi"
+
+#: modules/menu/gp-lock-logout.c:1087
 msgid "Hybrid Sleep"
 msgstr "Tidur Hibrida"
+
+#: modules/menu/gp-lock-logout.c:1105
+msgid "Restart"
+msgstr "Nyalakan Ulang"
+
+#: modules/menu/gp-lock-logout.c:1106
+msgid "Restart the computer"
+msgstr "Jalankan ulang komputer"
 
 #: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
@@ -2119,7 +2164,7 @@ msgid "Browse and run installed applications"
 msgstr "Mencari dan menjalankan aplikasi yang telah dipasang"
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Lokasi"
 
@@ -2141,37 +2186,42 @@ msgstr "Ubah penampilan dan perilaku sistem, atau mendapatkan bantuan"
 msgid "Please install the '%s' application."
 msgstr "Mohon pasang aplikasi '%s'."
 
-#: modules/menu/gp-menu-module.c:381
+#: modules/menu/gp-menu-module.c:375
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:376
 msgid "The main GNOME menu"
 msgstr "Menu utama GNOME"
 
-#: modules/menu/gp-menu-module.c:388
+#: modules/menu/gp-menu-module.c:382
 msgid "Menu Button"
 msgstr "Tombol Menu"
 
-#: modules/menu/gp-menu-module.c:389
+#: modules/menu/gp-menu-module.c:383
 msgid "A custom menu button"
 msgstr "Tombol menu khusus"
 
-#: modules/menu/gp-menu-module.c:397
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Baris Menu"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Baris menu pribadi"
 
-#: modules/menu/gp-menu-module.c:404
+#: modules/menu/gp-menu-module.c:398
 msgid "User menu"
 msgstr "Menu pengguna"
 
-#: modules/menu/gp-menu-module.c:405
+#: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
 msgstr "Menu untuk mengubah pengaturan Anda dan log keluar"
+
+#: modules/menu/gp-menu-utils.c:436
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Tidak dapat menjalankan '%s'"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2207,7 +2257,7 @@ msgstr "Membuka isi desktop Anda di dalam sebuah folder"
 
 #: modules/menu/gp-places-menu.c:467
 msgid "Bookmarks"
-msgstr "Penanda Tautan"
+msgstr "Markah"
 
 #: modules/menu/gp-places-menu.c:525
 msgid "Removable Media"
@@ -2474,6 +2524,62 @@ msgstr "Tampilkan _nama area kerja dalam pengalih"
 msgid "Workspaces"
 msgstr "Area Kerja"
 
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Could not show this URL"
+#~ msgstr "Tidak bisa menampilkan URL ini"
+
+#~ msgid "No URL was specified."
+#~ msgstr "Tiada URL yang ditentukan."
+
+#~ msgid "Could not use dropped item"
+#~ msgstr "Tidak bisa menggunakan objek terjatuh"
+
+#~ msgid "No URI provided for panel launcher desktop file\n"
+#~ msgstr "URI untuk berkas desktop peluncur panel tidak ada\n"
+
+#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+#~ msgstr "Berkas desktop %s untuk panel peluncur%s%s tidak dapat dibuka\n"
+
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr "Lokasi peluncur tak diatur, tak bisa memuat peluncur\n"
+
+#~ msgid "Create Launcher"
+#~ msgstr "Membuat Peluncur Program"
+
+#~ msgid "Search for Files..."
+#~ msgstr "Cari Berkas..."
+
+#~ msgid "Locate documents and folders on this computer by name or content"
+#~ msgstr ""
+#~ "Mencari dokumen atau folder yang terdapat dalam komputer ini berdasarkan "
+#~ "nama atau isinya"
+
+#~ msgid "Hybrid sleep"
+#~ msgstr "Tidur hibrida"
+
+#~ msgid "Find an _item to add to the panel:"
+#~ msgstr "Cari objek untuk d_itambahkan ke panel:"
+
+#~ msgid "_Forward"
+#~ msgstr "_Maju"
+
+#~ msgid "_Back"
+#~ msgstr "Kem_bali"
+
+#~ msgid "Location"
+#~ msgstr "Lokasi"
+
+#~ msgid "Could not save directory properties"
+#~ msgstr "Tidak dapat menyimpan properti direktori"
+
+#~ msgid "The name of the directory is not set."
+#~ msgstr "Nama direktori belum diisi."
+
+#~ msgid "Icon '%s' not found"
+#~ msgstr "Tidak menemukan ikon '%s'"
+
 #~ msgid "gnome-panel"
 #~ msgstr "gnome-panel"
 
@@ -2491,9 +2597,6 @@ msgstr "Area Kerja"
 
 #~ msgid "- Edit .desktop files"
 #~ msgstr "- Menyunting berkas .desktop"
-
-#~ msgid "Directory Properties"
-#~ msgstr "Properti Direktori"
 
 #~ msgid "Image widget"
 #~ msgstr "Widget gambar"
