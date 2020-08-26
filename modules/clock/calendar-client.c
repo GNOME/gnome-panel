@@ -513,7 +513,7 @@ get_component_rid (ICalComponent *component)
   ICalTime *time;
   char *rid;
 
-  prop = i_cal_component_get_first_property (component, ICAL_RECURRENCEID_PROPERTY);
+  prop = i_cal_component_get_first_property (component, I_CAL_RECURRENCEID_PROPERTY);
   if (!prop)
     return NULL;
 
