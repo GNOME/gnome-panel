@@ -243,7 +243,7 @@ gp_application_init (GpApplication *self)
                                            G_CALLBACK (prefer_dark_changed_cb),
                                            self);
 
-  update_theme (self);
+  theme_variant_changed_cb (self->general_settings, "theme-variant", self);
 }
 
 GpApplication *
