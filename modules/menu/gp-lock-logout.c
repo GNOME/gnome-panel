@@ -506,6 +506,10 @@ shutdown_activate_cb (GtkWidget    *item,
 static gboolean
 get_can_switch_user (GpLockLogout *lock_logout)
 {
+  if (lock_logout->seat != NULL &&
+      !gp_dm_seat_gen_get_can_switch (lock_logout->seat))
+    return FALSE;
+
   return TRUE;
 }
 
