@@ -27,7 +27,6 @@
 #include <gdm/gdm-user-switching.h>
 #include <glib/gi18n-lib.h>
 #include <libgnome-panel/gp-image-menu-item.h>
-#include <systemd/sd-login.h>
 
 struct _GpLockLogout
 {
@@ -507,15 +506,6 @@ shutdown_activate_cb (GtkWidget    *item,
 static gboolean
 get_can_switch_user (GpLockLogout *lock_logout)
 {
-  const gchar *xdg_seat;
-
-  xdg_seat = g_getenv ("XDG_SEAT");
-  if (xdg_seat != NULL && *xdg_seat != '\0')
-    {
-      if (sd_seat_can_multi_session (xdg_seat) == 0)
-        return FALSE;
-    }
-
   return TRUE;
 }
 
