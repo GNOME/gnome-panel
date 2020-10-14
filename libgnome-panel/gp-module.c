@@ -673,6 +673,8 @@ gp_module_is_applet_disabled (GpModule         *module,
                               char            **reason)
 {
   GpAppletInfo *info;
+  char *local_reason;
+  gboolean is_disabled;
 
   g_return_val_if_fail (reason == NULL || *reason == NULL, FALSE);
 
@@ -703,5 +705,13 @@ gp_module_is_applet_disabled (GpModule         *module,
       g_strfreev (backends);
     }
 
-  return info->is_disabled_func (lockdowns, reason);
+  local_reason = NULL;
+  is_disabled = info->is_disabled_func (lockdowns, &local_reason);
+
+  if (reason != NULL)
+    *reason = local_reason;
+  else
+    g_free (local_reason);
+
+  return is_disabled;
 }

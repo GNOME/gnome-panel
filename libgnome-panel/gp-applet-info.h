@@ -67,11 +67,11 @@ typedef void  (* GpAboutDialogFunc) (GtkAboutDialog *dialog);
 /**
  * GpIsDisabledFunc:
  * @flags: a #GpLockdownFlags with active lockdowns
- * @reason: (out) (transfer full) (allow-none): return location for reason, or %NULL
+ * @reason: (out) (transfer full): return location for reason
  *
  * This function must return %TRUE if applet must be fully disabled (applet
- * will not be loaded not user will be able to add it to panel). Function also
- * should return reason why applet is disabled if @reason is not %NULL.
+ * will not be loaded nor user will be able to add it to panel). Function also
+ * should return reason why applet is disabled.
  *
  * If applet is usable with some active lockdowns it should return %FALSE and
  * use #GpApplet:lockdows property to adjust behaviour/functionality.
