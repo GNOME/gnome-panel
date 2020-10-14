@@ -961,6 +961,11 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
+	if (panel_applets_manager_get_applet_info (iid) == NULL) {
+		panel_applet_frame_loading_failed (iid, panel, id);
+		return;
+	}
+
 	if (panel_applets_manager_is_applet_disabled (iid, NULL)) {
 		panel_object_loader_stop_loading (id);
 		return;
