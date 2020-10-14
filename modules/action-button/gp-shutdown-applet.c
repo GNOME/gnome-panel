@@ -263,10 +263,9 @@ gp_shutdown_applet_is_disabled (GpLockdownFlags   flags,
   if ((flags & GP_LOCKDOWN_FLAGS_LOG_OUT) != GP_LOCKDOWN_FLAGS_LOG_OUT)
     return FALSE;
 
-  if (reason != NULL)
-    *reason = g_strdup (_("Disabled because “disable-log-out” setting in "
-                          "“org.gnome.desktop.lockdown” GSettings schema is "
-                          "set to true."));
+  *reason = g_strdup (_("Disabled because “disable-log-out” setting in "
+                        "“org.gnome.desktop.lockdown” GSettings schema is "
+                        "set to true."));
 
   return TRUE;
 }

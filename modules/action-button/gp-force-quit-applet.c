@@ -131,10 +131,9 @@ gp_force_quit_applet_is_disabled (GpLockdownFlags   flags,
   if ((flags & GP_LOCKDOWN_FLAGS_FORCE_QUIT) != GP_LOCKDOWN_FLAGS_FORCE_QUIT)
     return FALSE;
 
-  if (reason != NULL)
-    *reason = g_strdup (_("Disabled because “disable-force-quit” setting in "
-                          "“org.gnome.gnome-panel.lockdown” GSettings schema "
-                          "is set to true."));
+  *reason = g_strdup (_("Disabled because “disable-force-quit” setting in "
+                        "“org.gnome.gnome-panel.lockdown” GSettings schema "
+                        "is set to true."));
 
   return TRUE;
 }
