@@ -30,10 +30,9 @@ custom_launcher_is_disabled (GpLockdownFlags   flags,
   if ((flags & GP_LOCKDOWN_FLAGS_COMMAND_LINE) != GP_LOCKDOWN_FLAGS_COMMAND_LINE)
     return FALSE;
 
-  if (reason != NULL)
-    *reason = g_strdup (_("Disabled because “disable-command-line” setting in "
-                          "“org.gnome.desktop.lockdown” GSettings schema is "
-                          "set to true."));
+  *reason = g_strdup (_("Disabled because “disable-command-line” setting in "
+                        "“org.gnome.desktop.lockdown” GSettings schema is "
+                        "set to true."));
 
   return TRUE;
 }
