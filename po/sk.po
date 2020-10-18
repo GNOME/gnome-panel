@@ -11,10 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"panel&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-03-25 20:15+0000\n"
-"PO-Revision-Date: 2017-04-06 22:39+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
+"POT-Creation-Date: 2020-05-30 16:24+0000\n"
+"PO-Revision-Date: 2020-10-18 20:21+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -22,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.4.1\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -235,21 +234,33 @@ msgstr ""
 "rozloženie) a stĺpcov (pre vertikálne rozloženie) sa má zobraziť. Má zmysel "
 "iba pri zapnutí kľúča display_all_workspaces."
 
-#: data/org.gnome.gnome-panel.gschema.xml:20
+#: data/org.gnome.gnome-panel.gschema.xml:28
+msgid "Default panel layout"
+msgstr "Predvolené rozloženie panela"
+
+#: data/org.gnome.gnome-panel.gschema.xml:29
+msgid "The default panel layout to use when panels are created."
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:34
 msgid "Enable tooltips"
 msgstr "Povoliť bublinové popisy"
 
-#: data/org.gnome.gnome-panel.gschema.xml:21
+#: data/org.gnome.gnome-panel.gschema.xml:35
 msgid ""
 "If true, tooltips are shown for objects in panels. Tooltips can be disabled "
 "for the whole desktop with the gtk-enable-tooltips property in GTK+."
 msgstr ""
 
-#: data/org.gnome.gnome-panel.gschema.xml:25
+#: data/org.gnome.gnome-panel.gschema.xml:40
+msgid "Prefer symbolic icons in panels"
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:45
 msgid "Confirm panel removal"
 msgstr "Potvrdiť odstránenie panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:26
+#: data/org.gnome.gnome-panel.gschema.xml:46
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -257,23 +268,31 @@ msgstr ""
 "Ak je toto true, bude sa zobrazovať dialóg na potvrdenie, či sa má odstrániť "
 "panel."
 
-#: data/org.gnome.gnome-panel.gschema.xml:30
-msgid "Icon size in the menus"
-msgstr "Veľkosť ikony v ponukách"
+#: data/org.gnome.gnome-panel.gschema.xml:51
+msgid "Icon size in menus"
+msgstr "Veľkosť ikon v ponukách"
 
-#: data/org.gnome.gnome-panel.gschema.xml:34
-msgid "Icon size for only Applications item in the Menu Bar applet"
-msgstr "Veľkosť ikony iba pre položku aplikácií v aplete panelu ponuky"
+#: data/org.gnome.gnome-panel.gschema.xml:52
+msgid "The size of icons in menus."
+msgstr "Veľkosť ikon v ponukách."
 
-#: data/org.gnome.gnome-panel.gschema.xml:38
+#: data/org.gnome.gnome-panel.gschema.xml:57
+msgid "Maximum icon size in panels"
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:58
+msgid "The maximum size of icons in panels."
+msgstr ""
+
+#: data/org.gnome.gnome-panel.gschema.xml:63
 msgid "Which theme variant to use"
 msgstr "Ktorý variant témy sa má použiť"
 
-#: data/org.gnome.gnome-panel.gschema.xml:45
+#: data/org.gnome.gnome-panel.gschema.xml:70
 msgid "Panel ID list"
 msgstr "Zoznam ID panelov"
 
-#: data/org.gnome.gnome-panel.gschema.xml:46
+#: data/org.gnome.gnome-panel.gschema.xml:71
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
@@ -281,11 +300,11 @@ msgstr ""
 "Zoznam ID panelov. Každé ID určuje jeden panel najvyššej úrovne. Nastavenia "
 "každého z týchto panelov sú uložené v /apps/panel/toplevels/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:50
+#: data/org.gnome.gnome-panel.gschema.xml:75
 msgid "Panel object ID list"
 msgstr "Zoznam ID objektov panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:51
+#: data/org.gnome.gnome-panel.gschema.xml:76
 #, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
@@ -296,11 +315,11 @@ msgstr ""
 "spúšťač, tlačidlo akcie alebo ponuky). Nastavenia každého z týchto objektov "
 "sú uložené v /apps/panel/objects/$(id)."
 
-#: data/org.gnome.gnome-panel.gschema.xml:58
+#: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
 msgstr "Úplné uzamknutie panelu"
 
-#: data/org.gnome.gnome-panel.gschema.xml:59
+#: data/org.gnome.gnome-panel.gschema.xml:84
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -310,11 +329,11 @@ msgstr ""
 "budete musieť jednotlivé aplety zamknúť samostatne. Aby sa zmena tohto "
 "nastavenia prejavila, je nutné panel znovu spustiť."
 
-#: data/org.gnome.gnome-panel.gschema.xml:63
+#: data/org.gnome.gnome-panel.gschema.xml:88
 msgid "Applet IIDs to disable from loading"
 msgstr "IID apletov, ktoré sa nemajú načítavať"
 
-#: data/org.gnome.gnome-panel.gschema.xml:64
+#: data/org.gnome.gnome-panel.gschema.xml:89
 msgid ""
 "A list of applet IIDs that the panel will ignore. This way you can disable "
 "certain applets from loading or showing up in the menu. For example to "
@@ -326,11 +345,11 @@ msgstr ""
 "chcete zakázať mini-commander, pridajte 'OAFIID:GNOME_MiniCommanderApplet'. "
 "Aby sa toto nastavenie prejavilo, je nutné panel znovu spustiť."
 
-#: data/org.gnome.gnome-panel.gschema.xml:68
+#: data/org.gnome.gnome-panel.gschema.xml:93
 msgid "Disable Force Quit"
 msgstr "Neumožniť vynútiť ukončenie"
 
-#: data/org.gnome.gnome-panel.gschema.xml:69
+#: data/org.gnome.gnome-panel.gschema.xml:94
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
@@ -338,21 +357,21 @@ msgstr ""
 "Ak je TRUE, panel neumožní vynútené ukončenie aplikácie tým, že zabráni v "
 "prístupe k danému tlačidlu."
 
-#: data/org.gnome.gnome-panel.gschema.xml:76
+#: data/org.gnome.gnome-panel.gschema.xml:101
 #, fuzzy
 msgid "History of \"Run Application\" dialog"
 msgstr "Povoliť zoznam programov v dialógu \"Spustiť aplikáciu\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:77
+#: data/org.gnome.gnome-panel.gschema.xml:102
 msgid ""
 "The list of commands used in the past in the \"Run Application\" dialog."
 msgstr "Zoznam príkazov v minulosti použitých v dialógu „Spustiť aplikáciu“."
 
-#: data/org.gnome.gnome-panel.gschema.xml:81
+#: data/org.gnome.gnome-panel.gschema.xml:106
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Povoliť zoznam programov v dialógu „Spustiť aplikáciu“"
 
-#: data/org.gnome.gnome-panel.gschema.xml:82
+#: data/org.gnome.gnome-panel.gschema.xml:107
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -362,11 +381,11 @@ msgstr ""
 "bude pri otvorení dialógu k dispozícii. O tom, či bude rozbalený, rozhoduje "
 "kľúč show_program_list."
 
-#: data/org.gnome.gnome-panel.gschema.xml:86
+#: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Rozbaliť zoznam programov v dialógu „Spustiť aplikáciu“"
 
-#: data/org.gnome.gnome-panel.gschema.xml:87
+#: data/org.gnome.gnome-panel.gschema.xml:112
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -376,64 +395,16 @@ msgstr ""
 "\" bude pri otvorení dialógu rozbalený. Tento kľúč má zmysel iba ak "
 "enable_program_list je true."
 
-#: data/org.gnome.gnome-panel.gschema.xml:91
+#: data/org.gnome.gnome-panel.gschema.xml:116
 msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Povoliť automatické dopĺňanie v dialógovom okne \"Spustiť aplikáciu\""
 
-#: data/org.gnome.gnome-panel.gschema.xml:92
+#: data/org.gnome.gnome-panel.gschema.xml:117
 msgid ""
 "If true, autocompletion in the \"Run Application\" dialog is made available."
 msgstr ""
 "Ak je true, automatické dopĺňanie v dialógovom okne \"Spustiť aplikáciu\" "
 "bude dostupné."
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Umiestnenie spúšťača"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Umiestnenie súboru desktop popisujúceho spúšťač. Tento kľúč má zmysel iba ak "
-"má kľúč object_type hodnotu \"launcher-object\"."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:5
-msgid "Tooltip displayed for menu"
-msgstr "Bublinový popis pre ponuku"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:6
-msgid "The text to display in a tooltip for this menu."
-msgstr "Text, ktorý sa zobrazí v bublinovom popise tejto ponuky."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:10
-msgid "Icon used for button"
-msgstr "Ikona použitá pre tlačidlo"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:11
-#, fuzzy
-msgid ""
-"The location of the image file used as the icon for the object's button. If "
-"empty, the default icon for the menu will be used."
-msgstr ""
-"Umiestnenie súboru obrázku pre ikonu tlačidla objektu. Tento kľúč má zmysel "
-"iba ak má kľúč object_type hodnotu \"drawer-object\" alebo \"menu-object\" a "
-"kľúč use_custom_icon má hodnotu true."
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:15
-msgid "Menu content path"
-msgstr "Cesta k obsahu ponuky"
-
-#: data/org.gnome.gnome-panel.menu-button.gschema.xml:16
-#, fuzzy
-msgid ""
-"The path from which the menu contents is constructed. If empty, the menu "
-"will be the default applications menu."
-msgstr ""
-"Cesta, z ktorej sa má vytvoriť obsah ponuky. Tento kľúč má zmysel iba ak má "
-"kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu \"menu-object"
-"\"."
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
@@ -471,9 +442,13 @@ msgid "Object's position on the panel"
 msgstr "Pozícia objektu na paneli"
 
 #: data/org.gnome.gnome-panel.object.gschema.xml:21
+#, fuzzy
+#| msgid ""
+#| "The position of this panel object. The position is specified by the "
+#| "number of pixels from the left (or top if vertical) panel edge."
 msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+"The index of this panel object within the other objects with the same pack-"
+"type, from the left (or top if vertical) panel edge."
 msgstr "Pozícia objektu panelu. Je to počet bodov zľava (pri zvislom odvrchu)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:5
@@ -798,53 +773,11 @@ msgstr "Použiť vlastnú farbu textu"
 msgid "Text Color"
 msgstr "Farba textu"
 
-#: gnome-panel/applet.c:342
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:480
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "P_resunúť"
-
-#: gnome-panel/applet.c:487
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "Odstrániť _z panelu"
-
-#: gnome-panel/gnome-desktop-item-edit.c:27
-msgid "Create new file in the given directory"
-msgstr "Vytvoriť nový súbor v danom priečinku"
-
-#: gnome-panel/gnome-desktop-item-edit.c:28
-msgid "[FILE...]"
-msgstr "[SÚBOR...]"
-
-#: gnome-panel/gnome-desktop-item-edit.c:106
-msgid "- Edit .desktop files"
-msgstr "- Upraviť súbory .desktop"
-
-#: gnome-panel/gnome-desktop-item-edit.c:144
-#: gnome-panel/gnome-desktop-item-edit.c:198 gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Vytvoriť spúšťač"
-
-#: gnome-panel/gnome-desktop-item-edit.c:169
-#: gnome-panel/gnome-desktop-item-edit.c:192
-msgid "Directory Properties"
-msgstr "Vlastnosti adresára"
-
-#: gnome-panel/gnome-desktop-item-edit.c:175 gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Vlastnosti spúšťača"
-
-#: gnome-panel/gnome-panel.desktop.in.in:4 gnome-panel/main.c:172
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Panel"
 
-#: gnome-panel/gnome-panel.desktop.in.in:5
+#: gnome-panel/gnome-panel.desktop.in:5
 msgid ""
 "Launch other applications and provide various utilities to manage windows, "
 "show the time, etc."
@@ -852,14 +785,55 @@ msgstr ""
 "Spúšťať iné aplikácie a ponúknuť viacero nástrojov na správu okien, "
 "zobrazenie času, apod."
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: gnome-panel/gnome-panel.desktop.in.in:7
-msgid "gnome-panel"
-msgstr "gnome-panel"
+#: gnome-panel/gp-add-applet-window.c:368
+msgid "Add to Panel"
+msgstr "Pridať do panelu"
+
+#: gnome-panel/gp-add-applet-window.c:541
+msgid "No applets found"
+msgstr "Nenašiel sa žiadny aplet"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, fuzzy, c-format
+#| msgid "Find an _item to add to \"%s\":"
+msgid "Find an item to add to “%s”"
+msgstr "_Zvoľte položku, ktorú pridať do \"%s\":"
+
+#: gnome-panel/gp-add-applet-window.c:558
+#, fuzzy
+#| msgid "Find an item to add to the panel:"
+msgid "Find an item to add to the panel"
+msgstr "Nájdite položku, ktorá sa má pridať do panelu:"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Pomocník"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "O aplikácii"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Pridať"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Skryť panel"
+
+#: gnome-panel/gp-main.c:50
+msgid "Replace a currently running panel"
+msgstr "Nahradiť aktuálne bežiaci panel"
+
+#: gnome-panel/gp-main.c:56
+msgid "Print version"
+msgstr "Vypíše verziu"
 
 #: gnome-panel/gp-properties-dialog.c:213
 msgctxt "Orientation"
@@ -922,8 +896,8 @@ msgstr "Zobraziť tlačidlá na _skrývanie"
 msgid "Arro_ws on hide buttons"
 msgstr "Šípky na _tlačidlách na skrývanie"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/external/clock/clock.ui:629
-#: modules/external/fish/fish.ui:91
+#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Všeobecné"
 
@@ -959,304 +933,58 @@ msgstr "Farba textu:"
 msgid "Theme"
 msgstr "Téma"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Nepodarilo sa zobraziť toto URL"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Nebolo zadané URL."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Nepodarilo sa spustiť aplikáciu"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Nepodarilo sa použiť pustenú položku"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Pre spúšťač panelu nie je v desktop súbore uvedené URI\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Nepodarilo sa otvoriť súbor desktop %s pre spúšťač %s%s\n"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Spustiť"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:170
-#: gnome-panel/panel-context-menu.c:135
-msgid "_Properties"
-msgstr "Nas_tavenia"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "Umiestnenie spúšťača nie je nastavené. Nedá sa načítať spúšťač.\n"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1315
-#: gnome-panel/panel-ditem-editor.c:1349 gnome-panel/panel-ditem-editor.c:1380
-msgid "Could not save launcher"
-msgstr "Nepodarilo sa uložiť spúšťač"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:800
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Chyba"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:383
-msgid "Choose an icon"
-msgstr "Voľba ikony"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:386 gnome-panel/panel.c:1275
-#: gnome-panel/panel-ditem-editor.c:655 gnome-panel/panel-ditem-editor.c:997
-#: gnome-panel/panel-force-quit.c:228 gnome-panel/panel-recent.c:152
-#: gnome-panel/panel-run-dialog.c:1277 gnome-panel/panel-run-dialog.ui:236
-#: modules/external/clock/clock.ui:67
-msgid "_Cancel"
-msgstr "_Zrušiť"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:388
-#: gnome-panel/panel-ditem-editor.c:999
-msgid "_Open"
-msgstr "_Otvoriť"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "Nepodarilo sa spustiť '%s'"
-
-#: gnome-panel/libpanel-util/panel-show.c:46
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:387
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Nepodarilo sa zobraziť umiestnenie '%s'"
 
-#: gnome-panel/libpanel-util/panel-show.c:164
-msgid "No application to handle search folders is installed."
-msgstr ""
-"Nie je inštalovaná žiadna aplikácia na prezeranie výsledkov vyhľadávania"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "P_resunúť"
 
-#: gnome-panel/main.c:37
-msgid "Replace a currently running panel"
-msgstr "Nahradiť aktuálne bežiaci panel"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "Odstrániť _z panelu"
 
-#: gnome-panel/main.c:38
-msgid "Print version"
-msgstr "Vypíše verziu"
-
-#: gnome-panel/panel-action-button.c:160
-msgid "_Lock Screen"
-msgstr "_Uzamknúť obrazovku"
-
-#: gnome-panel/panel-action-button.c:165
-msgid "_Activate Screensaver"
-msgstr "_Aktivovať šetrič obrazovky"
-
-#: gnome-panel/panel-action-button.c:345
-msgid "Connect to server"
-msgstr "Pripojiť k serveru"
-
-#: gnome-panel/panel-action-button.c:369
-msgid "Could not connect to server"
-msgstr "Nepodarilo sa pripojiť k serveru"
-
-#: gnome-panel/panel-action-button.c:399
-msgid "Lock Screen"
-msgstr "Uzamknúť obrazovku"
-
-#: gnome-panel/panel-action-button.c:400
-msgid "Protect your computer from unauthorized use"
-msgstr "Ochráni váš počítač pred neoprávneným použitím"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:413
-msgid "Log Out"
-msgstr "Odhlásiť sa"
-
-#: gnome-panel/panel-action-button.c:414
-msgid "Log out of this session to log in as a different user"
-msgstr "Ukončiť túto reláciu a prihlásiť sa ako iný používateľ"
-
-#: gnome-panel/panel-action-button.c:422
-msgid "Run Application..."
-msgstr "Spustiť aplikáciu..."
-
-#: gnome-panel/panel-action-button.c:423
-msgid "Run an application by typing a command or choosing from a list"
-msgstr "Spustiť aplikáciu zadaním príkazu alebo zvolením zo zoznamu"
-
-#: gnome-panel/panel-action-button.c:431
-msgid "Search for Files..."
-msgstr "Hľadať súbory..."
-
-#: gnome-panel/panel-action-button.c:432
-msgid "Locate documents and folders on this computer by name or content"
-msgstr "Vyhľadať dokumenty a priečinky na tomto počítači podľa názvu a obsahu"
-
-#: gnome-panel/panel-action-button.c:439 gnome-panel/panel-force-quit.c:237
-msgid "Force Quit"
-msgstr "Vynútiť ukončenie"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "Force a misbehaving application to quit"
-msgstr "Vynútiť ukončenie chybnej aplikácie"
-
-#. FIXME icon
-#: gnome-panel/panel-action-button.c:448
-msgid "Connect to Server..."
-msgstr "Pripojiť k serveru..."
-
-#: gnome-panel/panel-action-button.c:449
-msgid "Connect to a remote computer or shared disk"
-msgstr "Pripojiť k vzdialenému serveru alebo zdieľanému disku"
-
-#: gnome-panel/panel-action-button.c:456
-msgid "Hibernate"
-msgstr "Hibernovať"
-
-#: gnome-panel/panel-action-button.c:465
-msgid "Suspend"
-msgstr "Uspať"
-
-#: gnome-panel/panel-action-button.c:474
-msgid "Hybrid sleep"
-msgstr "Hybridný spánok"
-
-#: gnome-panel/panel-action-button.c:483
-msgid "Restart"
-msgstr "Reštartovať"
-
-#: gnome-panel/panel-action-button.c:484
-msgid "Restart the computer"
-msgstr "Reštartuje počítač"
-
-#: gnome-panel/panel-action-button.c:492
-msgid "Power Off"
-msgstr "Vypnúť"
-
-#: gnome-panel/panel-action-button.c:493
-msgid "Power off the computer"
-msgstr "Vypne počítač"
-
-#: gnome-panel/panel-addto-dialog.c:140 gnome-panel/panel-menu-button.c:958
-msgid "Main Menu"
-msgstr "Hlavná ponuka"
-
-#: gnome-panel/panel-addto-dialog.c:141
-msgid "The main GNOME menu"
-msgstr "Hlavná ponuka GNOME"
-
-#: gnome-panel/panel-addto-dialog.c:149
-msgid "Menu Bar"
-msgstr "Panel ponuky"
-
-#: gnome-panel/panel-addto-dialog.c:150
-msgid "A custom menu bar"
-msgstr "Vlastný panel ponuky"
-
-#: gnome-panel/panel-addto-dialog.c:158
-msgid "User menu"
-msgstr "Ponuka používateľa"
-
-#: gnome-panel/panel-addto-dialog.c:159
-msgid "Menu to change your settings and log out"
-msgstr "Ponuka na zmenu vašich nastavení a odhlásenia"
-
-#: gnome-panel/panel-addto-dialog.c:207
-msgid "(empty)"
-msgstr "(prázdne)"
-
-#: gnome-panel/panel-addto-dialog.c:406
-msgid "Custom Application Launcher"
-msgstr "Vlastný spúšťač aplikácie"
-
-#: gnome-panel/panel-addto-dialog.c:407
-msgid "Create a new launcher"
-msgstr "Vytvoriť nový spúšťač"
-
-#: gnome-panel/panel-addto-dialog.c:416
-msgid "Application Launcher..."
-msgstr "Spúšťač aplikácie..."
-
-#: gnome-panel/panel-addto-dialog.c:417
-msgid "Copy a launcher from the applications menu"
-msgstr "Kopírovať spúšťač z ponuky aplikácií"
-
-#: gnome-panel/panel-addto-dialog.c:911
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "_Zvoľte položku, ktorú pridať do \"%s\":"
-
-#: gnome-panel/panel-addto-dialog.c:915
-msgid "Find an _item to add to the panel:"
-msgstr "_Zvoľte položku, ktorú pridať do panelu:"
-
-#: gnome-panel/panel-addto-dialog.c:1037
-msgid "_Forward"
-msgstr "_Dopredu"
-
-#: gnome-panel/panel-addto-dialog.c:1040 gnome-panel/panel-addto-dialog.ui:158
-#: modules/external/clock/clock.ui:682
-msgid "_Add"
-msgstr "_Pridať"
-
-#: gnome-panel/panel-addto-dialog.ui:16
-msgid "Add to Panel"
-msgstr "Pridať do panelu"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "Nájdite položku, ktorá sa má pridať do panelu:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "_Späť"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:652
-#: modules/external/clock/clock.ui:406 modules/external/fish/fish-applet.c:622
-#: modules/external/fish/fish.ui:51 modules/external/wncklet/window-list.ui:285
-#: modules/external/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "Zav_rieť"
-
-#: gnome-panel/panel-applet-frame.c:763
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pri načítavaní \"%s\" panel narazil na chybu."
 
-#: gnome-panel/panel-applet-frame.c:775
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:779
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstrániť tento aplet z vašej konfigurácie?"
 
-#: gnome-panel/panel-applet-frame.c:782
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "_Neodstraňovať"
 
-#: gnome-panel/panel-applet-frame.c:783 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "O_dstrániť"
 
-#: gnome-panel/panel.c:422
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:491 gnome-panel/panel-menu-items.c:563
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
+#: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
 msgstr "Otvoriť '%s'"
@@ -1264,18 +992,18 @@ msgstr "Otvoriť '%s'"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:539 gnome-panel/panel-menu-items.c:1117
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Otvoriť osobný priečinok"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:548 gnome-panel/panel-menu-items.c:1146
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Počítač"
 
 #. name
-#: gnome-panel/panel.c:549 gnome-panel/panel-menu-items.c:1147
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1284,12 +1012,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:556 gnome-panel/panel-menu-items.c:1156
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Sieť"
 
 #. name
-#: gnome-panel/panel.c:557 gnome-panel/panel-menu-items.c:1157
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Prehliada miestne sieťové umiestnenia a umiestnenia v záložkách"
 
@@ -1305,6 +1033,14 @@ msgstr ""
 "Keď je panel odstránený, stratí sa spolu\n"
 "s nastaveniami."
 
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Zrušiť"
+
 #: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Nemôžete odstrániť tento panel"
@@ -1313,279 +1049,63 @@ msgstr "Nemôžete odstrániť tento panel"
 msgid "You must always have at least one panel."
 msgstr "Vždy musíte mať aspoň jeden panel."
 
-#: gnome-panel/panel-context-menu.c:126
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "Pri_dať do panelu..."
 
-#: gnome-panel/panel-context-menu.c:142
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "Nas_tavenia"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "Od_strániť tento panel"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "_Nový panel"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Aplikácia"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Aplikácia v termináli"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Umiestnenie"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:600
-msgid "_Type:"
-msgstr "_Typ:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:607
-msgid "_Name:"
-msgstr "_Názov:"
-
-#: gnome-panel/panel-ditem-editor.c:632
-msgid "_Browse..."
-msgstr "_Prehliadať..."
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:639
-msgid "Co_mment:"
-msgstr "P_oznámka:"
-
-#: gnome-panel/panel-ditem-editor.c:646
-msgid "_Revert"
-msgstr "Vrá_tiť"
-
-#: gnome-panel/panel-ditem-editor.c:658 gnome-panel/panel-run-dialog.c:1278
-#: modules/external/clock/clock.ui:82
-msgid "_OK"
-msgstr "_OK"
-
-#: gnome-panel/panel-ditem-editor.c:966
-msgid "Choose an application..."
-msgstr "Zvoliť aplikáciu..."
-
-#: gnome-panel/panel-ditem-editor.c:970
-msgid "Choose a file..."
-msgstr "Zvoliť súbor..."
-
-#: gnome-panel/panel-ditem-editor.c:1135 gnome-panel/panel-ditem-editor.c:1144
-msgid "Comm_and:"
-msgstr "Prík_az:"
-
-#: gnome-panel/panel-ditem-editor.c:1153
-msgid "_Location:"
-msgstr "_Umiestnenie:"
-
-#: gnome-panel/panel-ditem-editor.c:1316
-msgid "The name of the launcher is not set."
-msgstr "Názov spúšťača nie je nastavený."
-
-#: gnome-panel/panel-ditem-editor.c:1320
-msgid "Could not save directory properties"
-msgstr "Nepodarilo sa uložiť vlastnosti priečinka"
-
-#: gnome-panel/panel-ditem-editor.c:1321
-msgid "The name of the directory is not set."
-msgstr "Názov priečinka nie je nastavený."
-
-#: gnome-panel/panel-ditem-editor.c:1337
-msgid "The command of the launcher is not set."
-msgstr "Príkaz spúšťača nie je nastavený."
-
-#: gnome-panel/panel-ditem-editor.c:1340
-msgid "The location of the launcher is not set."
-msgstr "Umiestnenie spúšťača nie je nastavené."
-
-#: gnome-panel/panel-force-quit.c:75
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Kliknutím na okno vynútite ukončenie aplikácie. Akciu zrušíte stlačením "
-"<ESC>."
-
-#: gnome-panel/panel-force-quit.c:220
-msgid "Force this application to exit?"
-msgstr "Vynútiť ukončenie tejto aplikácie?"
-
-#: gnome-panel/panel-force-quit.c:223
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Ak sa rozhodnete vynútiť ukončenie aplikácie, všetky neuložené zmeny v ňou "
-"otvorených dokumentoch sa môžu stratiť."
-
-#: gnome-panel/panel-force-quit.c:230
-msgid "_Force quit"
-msgstr "_Vynútiť koniec"
-
-#: gnome-panel/panel-layout.c:1105 gnome-panel/panel-layout.c:1119
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "Nedá sa vytvoriť prvotné rozloženie panela.\n"
 
-#: gnome-panel/panel-menu-bar.c:88
-msgid "Browse and run installed applications"
-msgstr "Prehliadanie a spúšťanie nainštalovaných aplikácií"
-
-#: gnome-panel/panel-menu-bar.c:90
-msgid "Access documents, folders and network places"
-msgstr "Môžete pristupovať k dokumentom, priečinkom a miestam v sieti"
-
-#: gnome-panel/panel-menu-bar.c:128
-msgid "Applications"
-msgstr "Aplikácie"
-
-#: gnome-panel/panel-menu-bar.c:230 gnome-panel/panel-menu-button.c:557
-msgid "_Edit Menus"
-msgstr "_Upraviť ponuky"
-
-#: gnome-panel/panel-menu-items.c:409
-msgid "Switch User"
-msgstr "Prepnúť používateľa"
-
-#: gnome-panel/panel-menu-items.c:539
-msgid "Bookmarks"
-msgstr "Záložky"
-
-#: gnome-panel/panel-menu-items.c:634
-#, c-format
-msgid "Unable to scan %s for media changes"
-msgstr "Nepodarilo sa prezrieť %s na zmeny média"
-
-#: gnome-panel/panel-menu-items.c:676
-#, c-format
-msgid "Rescan %s"
-msgstr "Znovunačítať %s"
-
-#: gnome-panel/panel-menu-items.c:713
-#, c-format
-msgid "Unable to mount %s"
-msgstr "Nepodarilo sa pripojiť %s"
-
-#: gnome-panel/panel-menu-items.c:775
-#, c-format
-msgid "Mount %s"
-msgstr "Pripojiť %s"
-
-#: gnome-panel/panel-menu-items.c:983
-msgid "Removable Media"
-msgstr "Vymeniteľné médiá"
-
-#: gnome-panel/panel-menu-items.c:1074
-msgid "Network Places"
-msgstr "Sieťové miesta"
-
-#. Translators: Desktop is used here as in
-#. * "Desktop Folder" (this is not the Desktop
-#. * environment).
-#: gnome-panel/panel-menu-items.c:1134
-msgctxt "Desktop Folder"
-msgid "Desktop"
-msgstr "Plocha"
-
-#: gnome-panel/panel-menu-items.c:1135
-msgid "Open the contents of your desktop in a folder"
-msgstr "Otvoriť pracovnú plochu ako priečinok"
-
-#: gnome-panel/panel-menu-items.c:1440
-msgid "Places"
-msgstr "Miesta"
-
-#: gnome-panel/panel-image-menu-item.c:125
-msgid "Image widget"
-msgstr "Prvok obrázku"
-
-#: gnome-panel/panel-image-menu-item.c:126
-msgid "Child widget to appear next to the menu text"
-msgstr ""
-
-#: gnome-panel/panel-image-menu-item.c:133
-msgid "Always show image"
-msgstr "Vždy zobraziť obrázok"
-
-#: gnome-panel/panel-image-menu-item.c:134
-msgid "Whether the image will always be shown"
-msgstr "Určuje, či má byť vždy zobrazený obrázok"
-
-#: gnome-panel/panel-recent.c:76 gnome-panel/panel-recent.c:86
-#, c-format
-msgid "Could not open recently used document \"%s\""
-msgstr "Nepodarilo sa nedávno použitý dokument \"%s\""
-
-#: gnome-panel/panel-recent.c:88
-#, c-format
-msgid "An unknown error occurred while trying to open \"%s\"."
-msgstr "Počas pokusu o otvorenie \"%s\" nastala neznáma chyba."
-
-#: gnome-panel/panel-recent.c:145
-msgid "Clear the Recent Documents list?"
-msgstr "Vymazať zoznam Nedávnych dokumentov?"
-
-#: gnome-panel/panel-recent.c:147
-msgid ""
-"If you clear the Recent Documents list, you clear the following:\n"
-"• All items from the Places → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
-msgstr ""
-"Ak vymažete zoznam Nedávnych dokumentov, vymažete nasledujúce:\n"
-"• Všetky položky z položky ponuky Miesta → Nedávne dokumenty.\n"
-"• Všetky položky zo zoznamu nedávnych dokumentov všetkých aplikácií."
-
-#: gnome-panel/panel-recent.c:153
-msgid "C_lear"
-msgstr "Vy_mazať"
-
-#: gnome-panel/panel-recent.c:159
-msgid "Clear Recent Documents"
-msgstr "Vymazať Nedávne dokumenty"
-
-#: gnome-panel/panel-recent.c:194
-msgid "Recent Documents"
-msgstr "Nedávne dokumenty"
-
-#: gnome-panel/panel-recent.c:232
-msgid "Clear Recent Documents..."
-msgstr "Vymazať Nedávne dokumenty..."
-
-#: gnome-panel/panel-recent.c:234
-msgid "Clear all items from the recent documents list"
-msgstr "Vymazať všetky položky zo zoznamu nedávnych dokumentov"
-
-#: gnome-panel/panel-run-dialog.c:426
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Nedá sa nájsť terminál. Použije sa program xterm napriek tomu, že nemusí "
-"fungovať."
+"fungovať"
 
-#: gnome-panel/panel-run-dialog.c:490
+#: gnome-panel/panel-run-dialog.c:488
 #, c-format
 msgid "Could not run command '%s'"
 msgstr "Nepodarilo sa spustiť príkaz '%s'"
 
-#: gnome-panel/panel-run-dialog.c:531
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nie je možné previesť '%s' z UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1274
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte súbor, ktorý sa má odovzdať príkazu..."
 
-#: gnome-panel/panel-run-dialog.c:1657 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_OK"
+
+#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikáciu, ktorej popis chcete zobraziť."
 
-#: gnome-panel/panel-run-dialog.c:1695
+#: gnome-panel/panel-run-dialog.c:1727
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustí príkaz: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1728
+#: gnome-panel/panel-run-dialog.c:1760
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1645,110 +1165,240 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1560
 msgid "Top Expanded Edge Panel"
 msgstr "Horný roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1561
 msgid "Top Centered Panel"
 msgstr "Horný panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1522
+#: gnome-panel/panel-toplevel.c:1562
 msgid "Top Floating Panel"
 msgstr "Horný plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Edge Panel"
 msgstr "Horný okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1527
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolný roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1528
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Centered Panel"
 msgstr "Dolný panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1529
+#: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Floating Panel"
 msgstr "Dolný plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1530
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Edge Panel"
 msgstr "Dolný okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1534
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Left Expanded Edge Panel"
 msgstr "Ľavý roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1535
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Left Centered Panel"
 msgstr "Ľavý panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1536
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Left Floating Panel"
 msgstr "Ľavý plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1537
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Edge Panel"
 msgstr "Ľavý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1541
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Right Expanded Edge Panel"
 msgstr "Pravý roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1542
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Right Centered Panel"
 msgstr "Pravý panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1543
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Right Floating Panel"
 msgstr "Pravý plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1544
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Edge Panel"
 msgstr "Pravý okrajový panel"
 
-#: gnome-panel/panel-util.c:312
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "Ikona '%s' sa nenašla"
-
-#: gnome-panel/panel-util.c:555
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "súbor"
 
-#: gnome-panel/panel-util.c:730
-msgid "Home Folder"
-msgstr "Domovský priečinok"
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
+msgid "Home"
+msgstr "Domov"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
-#: gnome-panel/panel-util.c:742
+#. Translators: this is the same string as the one found in nautilus
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Súborový systém"
-
-#: gnome-panel/panel-util.c:915
-msgid "Search"
-msgstr "Hľadať"
 
 #. Translators: the first string is the name of a gvfs
 #. * method, and the second string is a path. For
 #. * example, "Trash: some-directory". It means that the
 #. * directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:961
+#. Translators: the first string is the name of a gvfs method, and the
+#. * second string is a path. For example, "Trash: some-directory". It
+#. * means that the directory called "some-directory" is in the trash.
+#.
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: modules/builtin/separator/separator-module.c:45
-msgid "Separator"
-msgstr "Oddeľovač"
+#: libgnome-panel/gp-initial-setup-dialog.c:167
+msgid "Initial Setup"
+msgstr "Prvotné nastavenie"
 
-#: modules/builtin/separator/separator-module.c:46
-msgid "A separator to organize the panel items"
-msgstr "Oddeľovač na lepšie usporiadanie položiek na paneli"
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: libgnome-panel/gp-initial-setup-dialog.c:175
+msgid "Done"
+msgstr "Dokončiť"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Nepodarilo sa zobraziť dokument pomocníka '%s'"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Nepodarilo sa zobraziť dokument pomocníka"
+
+#: libgnome-panel/gp-module.c:695
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr ""
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Vynútiť ukončenie"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Vynútiť ukončenie chybnej aplikácie"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1009
+msgid "Lock Screen"
+msgstr "Uzamknúť obrazovku"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1010
+msgid "Protect your computer from unauthorized use"
+msgstr "Ochráni váš počítač pred neoprávneným použitím"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:988
+msgid "Log Out"
+msgstr "Odhlásiť sa"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:989
+msgid "Log out of this session to log in as a different user"
+msgstr "Ukončiť túto reláciu a prihlásiť sa ako iný používateľ"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Spustiť aplikáciu..."
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Spustiť aplikáciu zadaním príkazu alebo zvolením zo zoznamu"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1121
+msgid "Power Off"
+msgstr "Vypnúť"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1122
+msgid "Power off the computer"
+msgstr "Vypne počítač"
+
+#: modules/action-button/gp-force-quit-applet.c:135
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Nepodarilo sa spustiť aplikáciu"
+
+#: modules/action-button/gp-lock-screen-applet.c:435
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "_Uzamknúť obrazovku"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "_Aktivovať šetrič obrazovky"
+
+#: modules/action-button/gp-logout-applet.c:223
+#: modules/action-button/gp-shutdown-applet.c:267
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/gp-run-applet.c:136
+#: modules/launcher/gp-launcher-module.c:34
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kliknutím na okno vynútite ukončenie aplikácie. Akciu zrušíte stlačením "
+"<ESC>."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Vynútiť ukončenie tejto aplikácie?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Ak sa rozhodnete vynútiť ukončenie aplikácie, všetky neuložené zmeny v ňou "
+"otvorených dokumentoch sa môžu stratiť."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "_Vynútiť koniec"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1759,8 +1409,7 @@ msgstr "Oddeľovač na lepšie usporiadanie položiek na paneli"
 #. * It is used to display the time in 12-hours format (eg, like
 #. * in the US: 8:10 am). The %p expands to am/pm.
 #.
-#: modules/external/clock/calendar-window.c:271
-#: modules/external/clock/clock-location-tile.c:490
+#: modules/clock/calendar-window.c:269 modules/clock/clock-location-tile.c:498
 msgid "%l:%M %p"
 msgstr "%H∶%M"
 
@@ -1775,9 +1424,8 @@ msgstr "%H∶%M"
 #. * It is used to display the time in 24-hours format (eg, like
 #. * in France: 20:10).
 #.
-#: modules/external/clock/calendar-window.c:277
-#: modules/external/clock/clock-location-tile.c:453
-#: modules/external/clock/clock-location-tile.c:497
+#: modules/clock/calendar-window.c:275 modules/clock/clock-location-tile.c:461
+#: modules/clock/clock-location-tile.c:505
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -1785,143 +1433,140 @@ msgstr "%H:%M"
 #. * It is used to display the start date of an appointment, in
 #. * the most abbreviated way possible.
 #.
-#: modules/external/clock/calendar-window.c:284
+#: modules/clock/calendar-window.c:282
 msgid "%b %d"
 msgstr "%e.%m."
 
-#: modules/external/clock/calendar-window.c:789
+#: modules/clock/calendar-window.c:787
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: modules/external/clock/calendar-window.c:789
-#: modules/external/clock/calendar-window.c:972
-#: modules/external/clock/calendar-window.c:1563
+#: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
+#: modules/clock/calendar-window.c:1568
 msgid "Edit"
 msgstr "Upraviť"
 
-#: modules/external/clock/calendar-window.c:912
+#: modules/clock/calendar-window.c:910
 msgid "All Day"
 msgstr "Celý deň"
 
-#: modules/external/clock/calendar-window.c:1056
+#: modules/clock/calendar-window.c:1054
 msgid "Appointments"
 msgstr "Schôdzky"
 
-#: modules/external/clock/calendar-window.c:1081
+#: modules/clock/calendar-window.c:1079
 msgid "Birthdays and Anniversaries"
 msgstr "Narodeniny a výročia"
 
-#: modules/external/clock/calendar-window.c:1106
+#: modules/clock/calendar-window.c:1104
 msgid "Weather Information"
 msgstr "Informácie o počasí"
 
-#: modules/external/clock/calendar-window.c:1563
-#: modules/external/clock/clock.ui:748
+#: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
 msgstr "Miesta"
 
-#: modules/external/clock/calendar-window.c:1824
+#: modules/clock/calendar-window.c:1827
 msgid "Calendar"
 msgstr "Kalendár"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/external/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
 msgstr "%A %d. %B (%Z)"
 
-#: modules/external/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
 msgstr "Kliknutím skryjete svoje schôdzky a úlohy"
 
-#: modules/external/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:238
 msgid "Click to view your appointments and tasks"
 msgstr "Kliknutím si pozriete svoje schôdzky a úlohy"
 
-#: modules/external/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:242
 msgid "Click to hide month calendar"
 msgstr "Kliknutím skryjete mesačný kalendár"
 
-#: modules/external/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:245
 msgid "Click to view month calendar"
 msgstr "Kliknutím si pozriete mesačný kalendár"
 
 #. Done!
-#: modules/external/clock/clock-applet.c:847
+#: modules/clock/clock-applet.c:848
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: modules/external/clock/clock-applet.c:980
+#: modules/clock/clock-applet.c:981
 msgid "Failed to open the time settings"
 msgstr "Zlyhalo otvorenie nastavení času"
 
-#: modules/external/clock/clock-applet.c:1554
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Voľba miesta"
 
-#: modules/external/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Úprava miesta"
 
-#: modules/external/clock/clock-applet.c:1669
-#: modules/external/clock/clock-applet.c:1677
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Predvolená"
 
-#: modules/external/clock/clock-applet.c:1670
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/external/clock/clock-applet.c:1671
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Stupeň Celzia"
 
-#: modules/external/clock/clock-applet.c:1672
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/external/clock/clock-applet.c:1678
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Meter za sekundu (m/s)"
 
-#: modules/external/clock/clock-applet.c:1679
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer za hodinu (kph)"
 
-#: modules/external/clock/clock-applet.c:1680
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Míľa za hodinu (mph)"
 
-#: modules/external/clock/clock-applet.c:1681
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Uzol"
 
-#: modules/external/clock/clock-applet.c:1682
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "Beaufortova stupnica"
 
-#: modules/external/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Názov mesta"
 
-#: modules/external/clock/clock-applet.c:1739
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Časové pásmo mesta"
 
-#: modules/external/clock/clock-location-tile.c:174
+#: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
 msgstr "Nastavenie časového pásma zlyhalo"
 
-#: modules/external/clock/clock-location-tile.c:222
+#: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
 msgstr "<small>Nastaviť...</small>"
 
-#: modules/external/clock/clock-location-tile.c:223
+#: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
 msgstr "<small>Nastaviť</small>"
 
-#: modules/external/clock/clock-location-tile.c:298
+#: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
 msgstr ""
 "Nastaviť miesto ako predvolené a použiť jeho časové pásmo pre tento počítač"
@@ -1932,7 +1577,7 @@ msgstr ""
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:430
+#: modules/clock/clock-location-tile.c:438
 msgid "%l:%M <small>%p (%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1941,7 +1586,7 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * (eg, like in France: 20:10), when the local
 #. * weekday differs from the weekday at the location
 #. * (the %A expands to the weekday).
-#: modules/external/clock/clock-location-tile.c:438
+#: modules/clock/clock-location-tile.c:446
 msgid "%H:%M <small>(%A)</small>"
 msgstr "%H:%M <small>(%A)</small>"
 
@@ -1949,182 +1594,180 @@ msgstr "%H:%M <small>(%A)</small>"
 #. * It is used to display the time in 12-hours format
 #. * (eg, like in the US: 8:10 am). The %p expands to
 #. * am/pm.
-#: modules/external/clock/clock-location-tile.c:447
+#: modules/clock/clock-location-tile.c:455
 msgid "%l:%M <small>%p</small>"
 msgstr "%H:%M"
 
-#: modules/external/clock/clock-location-tile.c:597
+#: modules/clock/clock-location-tile.c:607
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/external/clock/clock-location-tile.c:610
+#: modules/clock/clock-location-tile.c:620
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, na pocit %s"
 
-#: modules/external/clock/clock-location-tile.c:631
+#: modules/clock/clock-location-tile.c:641
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Vychádza: %s / Zapadá: %s"
 
-#: modules/external/clock/clock-module.c:47
-msgid "Get the current time and date"
-msgstr "Zistiť aktuálny dátum a čas"
-
-#: modules/external/clock/clock-module.c:48
+#: modules/clock/clock-module.c:33
 msgid "Clock"
 msgstr "Hodiny"
 
-#: modules/external/clock/clock-menu.ui:5
+#: modules/clock/clock-module.c:34
+msgid "Get the current time and date"
+msgstr "Zistiť aktuálny dátum a čas"
+
+#: modules/clock/clock-menu.ui:5
 msgid "Copy Date and _Time"
 msgstr "Kopírovať dátum a ča_s"
 
-#: modules/external/clock/clock-menu.ui:11
+#: modules/clock/clock-menu.ui:11
 msgid "Ad_just Date & Time"
 msgstr "_Upraviť dátum a čas"
 
-#: modules/external/clock/clock-menu.ui:15
-#: modules/external/wncklet/window-list-menu.ui:5
-#: modules/external/wncklet/workspace-switcher-menu.ui:5
+#: modules/clock/clock-menu.ui:15 modules/wncklet/window-list-menu.ui:5
+#: modules/wncklet/workspace-switcher-menu.ui:5
 msgid "_Preferences"
 msgstr "Nas_tavenia"
 
-#: modules/external/clock/clock.ui:30
+#: modules/clock/clock.ui:30
 msgid "East"
 msgstr "Východne"
 
-#: modules/external/clock/clock.ui:33
+#: modules/clock/clock.ui:33
 msgid "West"
 msgstr "Západne"
 
-#: modules/external/clock/clock.ui:44
+#: modules/clock/clock.ui:44
 msgid "North"
 msgstr "Severne"
 
-#: modules/external/clock/clock.ui:47
+#: modules/clock/clock.ui:47
 msgid "South"
 msgstr "Južne"
 
-#: modules/external/clock/clock.ui:206 modules/external/clock/clock.ui:221
+#: modules/clock/clock.ui:206 modules/clock/clock.ui:221
 msgid "(optional)"
 msgstr "(voliteľné)"
 
-#: modules/external/clock/clock.ui:265
+#: modules/clock/clock.ui:265
 msgid "_Location Name:"
 msgstr "Názov _miesta:"
 
-#: modules/external/clock/clock.ui:278
+#: modules/clock/clock.ui:278
 msgid "L_atitude:"
 msgstr "Zemepisná ší_rka:"
 
-#: modules/external/clock/clock.ui:292
+#: modules/clock/clock.ui:292
 msgid "L_ongitude:"
 msgstr "Zemepisná _dĺžka:"
 
 #. Languages that have a single word that translates as either 'state' or 'province' should use that instead of 'region'.
-#: modules/external/clock/clock.ui:308
+#: modules/clock/clock.ui:308
 msgid ""
 "Type a city, region, or country name and then select a match from the pop-up."
 msgstr ""
 "Napíšte názov mesta, kraja alebo štátu a potom zvoľte vhodnú položku zo "
 "zoznamu."
 
-#: modules/external/clock/clock.ui:325
+#: modules/clock/clock.ui:325
 msgid "_Timezone:"
 msgstr "Časové _pásmo:"
 
-#: modules/external/clock/clock.ui:360
+#: modules/clock/clock.ui:360
 msgid "Clock Preferences"
 msgstr "Nastavenie hodín"
 
-#: modules/external/clock/clock.ui:376 modules/external/fish/fish.ui:36
+#: modules/clock/clock.ui:376 modules/fish/fish.ui:36
 msgid "_Help"
 msgstr "_Pomocník"
 
-#: modules/external/clock/clock.ui:391
+#: modules/clock/clock.ui:391
 msgid "Time _Settings"
 msgstr "Na_stavenie času"
 
-#: modules/external/clock/clock.ui:451
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "Zav_rieť"
+
+#: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Formát hodín"
 
-#: modules/external/clock/clock.ui:470
+#: modules/clock/clock.ui:470
 msgid "_12 hour format"
 msgstr "_12-hodinový formát"
 
-#: modules/external/clock/clock.ui:487
+#: modules/clock/clock.ui:487
 msgid "_24 hour format"
 msgstr "_24-hodinový formát"
 
 # * https://bugzilla.gnome.org/show_bug.cgi?id=613527
-#: modules/external/clock/clock.ui:527
+#: modules/clock/clock.ui:527
 msgid "Panel Display"
 msgstr "Zobraziť v paneli"
 
-#: modules/external/clock/clock.ui:547
+#: modules/clock/clock.ui:547
 msgid "Show the _date"
 msgstr "Zobraziť _dátum"
 
-#: modules/external/clock/clock.ui:563
+#: modules/clock/clock.ui:563
 msgid "Show seco_nds"
 msgstr "Zobraziť _sekundy"
 
-#: modules/external/clock/clock.ui:579
+#: modules/clock/clock.ui:579
 msgid "Show _weather"
 msgstr "Zobraziť počasi_e"
 
-#: modules/external/clock/clock.ui:595
+#: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "Zobraziť _teplotu"
 
-#: modules/external/clock/clock.ui:697
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Pridať"
+
+#: modules/clock/clock.ui:697
 msgid "_Edit"
 msgstr "_Upraviť"
 
-#: modules/external/clock/clock.ui:712
+#: modules/clock/clock.ui:712
 msgid "_Remove"
 msgstr "O_dstrániť"
 
 # * https://bugzilla.gnome.org/show_bug.cgi?id=613527
-#: modules/external/clock/clock.ui:773
+#: modules/clock/clock.ui:773
 msgid "Display"
 msgstr "Zobraziť"
 
-#: modules/external/clock/clock.ui:805
+#: modules/clock/clock.ui:805
 msgid "_Visibility unit:"
 msgstr "Jednotka vi_diteľnosti:"
 
-#: modules/external/clock/clock.ui:828
+#: modules/clock/clock.ui:828
 msgid "_Pressure unit:"
 msgstr "Jednotka _tlaku:"
 
-#: modules/external/clock/clock.ui:864
+#: modules/clock/clock.ui:864
 msgid "_Temperature unit:"
 msgstr "Jednotka t_eploty:"
 
-#: modules/external/clock/clock.ui:878
+#: modules/clock/clock.ui:878
 msgid "_Wind speed unit:"
 msgstr "Jednotka _rýchlosti vetra:"
 
-#: modules/external/clock/clock.ui:910
+#: modules/clock/clock.ui:910
 msgid "Weather"
 msgstr "Počasie"
 
-#: modules/external/clock/clock-utils.c:91
-#: modules/external/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Nepodarilo sa zobraziť dokument pomocníka '%s'"
-
-#: modules/external/clock/clock-utils.c:120
-#: modules/external/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Nepodarilo sa zobraziť dokument pomocníka"
-
-#: modules/external/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, fuzzy, c-format
 #| msgid ""
 #| "Warning:  The command appears to be something actually useful.\n"
@@ -2142,27 +1785,26 @@ msgstr ""
 "Výrazne odporúčame nepoužívať aplet %s na niečo,\n"
 "čo by ho urobilo \"praktickým\" alebo použiteľným."
 
-#: modules/external/fish/fish-applet.c:365
-#: modules/external/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Ryba %s"
 
-#: modules/external/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Ryba menom %s, moderné orákulum"
 
-#: modules/external/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Nepodarilo sa nájsť príkaz pre spustenie"
 
-#: modules/external/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Ryba %s hovorí:"
 
-#: modules/external/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2173,16 +1815,16 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/external/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "Povedz ešte _niečo"
 
-#: modules/external/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Nastavený príkaz nepracuje a bol nahradený týmto: %s"
 
-#: modules/external/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2193,7 +1835,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/external/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2204,101 +1846,505 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: modules/external/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "Voda potrebuje vymeniť"
 
-#: modules/external/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Pozrite na dnešný dátum!"
 
-#: modules/external/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Ryba %s, rozprávač citátov"
 
-#: modules/external/fish/fish-module.c:47
-msgid "Display a swimming fish or another animated creature"
-msgstr "Zobrazuje plávajúcu rybu alebo inú animovanú potvorku"
-
-#: modules/external/fish/fish-module.c:48
+#: modules/fish/fish-module.c:33
 msgid "Fish"
 msgstr "Ryba"
 
-#: modules/external/fish/fish-menu.ui:5
+#: modules/fish/fish-module.c:34
+msgid "Display a swimming fish or another animated creature"
+msgstr "Zobrazuje plávajúcu rybu alebo inú animovanú potvorku"
+
+#: modules/fish/fish-menu.ui:5
 msgid "Preferences"
 msgstr "Nastavenia"
 
-#: modules/external/fish/fish.ui:22
+#: modules/fish/fish.ui:22
 msgid "Fish Preferences"
 msgstr "Nastavenie ryby"
 
-#: modules/external/fish/fish.ui:134
+#: modules/fish/fish.ui:134
 msgid "_Name of fish:"
 msgstr "_Meno ryby:"
 
-#: modules/external/fish/fish.ui:174
+#: modules/fish/fish.ui:174
 msgid "Co_mmand to run when clicked:"
 msgstr "_Príkaz vykonaný pri kliknutí:"
 
-#: modules/external/fish/fish.ui:240
+#: modules/fish/fish.ui:240
 msgid "Animation:"
 msgstr "Animácia:"
 
-#: modules/external/fish/fish.ui:277
+#: modules/fish/fish.ui:277
 msgid "    "
 msgstr "    "
 
-#: modules/external/fish/fish.ui:301
+#: modules/fish/fish.ui:301
 msgid "_Pause per frame:"
 msgstr "_Prestávka medzi snímkami:"
 
-#: modules/external/fish/fish.ui:332
+#: modules/fish/fish.ui:332
 msgid "seconds"
 msgstr "sekúnd"
 
-#: modules/external/fish/fish.ui:349
+#: modules/fish/fish.ui:349
 msgid "_Rotate on vertical panels"
 msgstr "_Otočiť na zvislých paneloch"
 
-#: modules/external/notification-area/na-applet.c:155
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Spustiť"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Aplikácia"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Aplikácia v termináli"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Adresár"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Súbor"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+msgid "Choose Icon File"
+msgstr "Zvoliť súbor ikony"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "_Otvoriť"
+
+#: modules/launcher/gp-editor.c:347
+msgid "Choose Icon Name"
+msgstr "Zvoliť názov ikony"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Zvoliť aplikáciu..."
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+msgid "Choose a directory..."
+msgstr "Voľba adresára..."
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Zvoliť súbor..."
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "Prík_az:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Umiestnenie:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Typ:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Názov:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Prehliadať..."
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "P_oznámka:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+msgid "All"
+msgstr "Všetky"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Voľba názvu ikony"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Vybrať"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Súvislosti:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+msgid "Icon Names:"
+msgstr "Názvy ikon:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Zobraziť len štandardné ikony"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(prázdne)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr "Nedá sa spustiť príkaz „%s“ v príkazovom riadku."
+
+#: modules/launcher/gp-launcher-applet.c:885
+msgid "Could not open location"
+msgstr "Nepodarilo sa otvoriť umiestnenie"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+msgid "Failed to load key file “%s”: %s"
+msgstr "Zlyhalo načítanie súboru kľúča „%s“: %s"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Custom Application Launcher"
+msgstr "Vlastný spúšťač aplikácie"
+
+#: modules/launcher/gp-launcher-module.c:59
+msgid "Create a new launcher"
+msgstr "Vytvoriť nový spúšťač"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Application Launcher..."
+msgstr "Spúšťač aplikácie..."
+
+#: modules/launcher/gp-launcher-module.c:69
+msgid "Copy a launcher from the applications menu"
+msgstr "Kopírovať spúšťač z ponuky aplikácií"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Nepodarilo sa uložiť spúšťač"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "Vrá_tiť"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Vlastnosti spúšťača"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr ""
+
+#: modules/launcher/gp-launcher-utils.c:156
+msgid "The icon of the launcher is not set."
+msgstr "Ikona spúšťača nie je nastavená."
+
+#: modules/launcher/gp-launcher-utils.c:164
+msgid "The type of the launcher is not set."
+msgstr "Typ spúšťača nie je nastavený."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Spúšťač musí byť typu „%s“ alebo „%s“."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Názov spúšťača nie je nastavený."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Príkaz spúšťača nie je nastavený."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Umiestnenie spúšťača nie je nastavené."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Umiestnenie spúšťača"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+msgid "The location of the .desktop file describing the launcher."
+msgstr "Umiestnenie súboru .desktop popisujúceho spúšťač."
+
+#: modules/menu/gp-lock-logout.c:972
+msgid "Switch User"
+msgstr "Prepnúť používateľa"
+
+#: modules/menu/gp-lock-logout.c:1055
+msgid "Hibernate"
+msgstr "Hibernovať"
+
+#: modules/menu/gp-lock-logout.c:1071
+msgid "Suspend"
+msgstr "Uspať"
+
+#: modules/menu/gp-lock-logout.c:1087
+msgid "Hybrid Sleep"
+msgstr "Hybridný spánok"
+
+#: modules/menu/gp-lock-logout.c:1105
+msgid "Restart"
+msgstr "Reštartovať"
+
+#: modules/menu/gp-lock-logout.c:1106
+msgid "Restart the computer"
+msgstr "Reštartuje počítač"
+
+#: modules/menu/gp-menu-bar-applet.c:145
+msgid "Applications"
+msgstr "Aplikácie"
+
+#: modules/menu/gp-menu-bar-applet.c:150
+msgid "Browse and run installed applications"
+msgstr "Prehliadanie a spúšťanie nainštalovaných aplikácií"
+
+#: modules/menu/gp-menu-bar-applet.c:185
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
+msgid "Places"
+msgstr "Miesta"
+
+#: modules/menu/gp-menu-bar-applet.c:189
+msgid "Access documents, folders and network places"
+msgstr "Môžete pristupovať k dokumentom, priečinkom a miestam v sieti"
+
+#: modules/menu/gp-menu-bar-applet.c:225
+msgid "System"
+msgstr "Systém"
+
+# tooltip
+#: modules/menu/gp-menu-bar-applet.c:229
+msgid "Change system appearance and behavior, or get help"
+msgstr "Zmení vzhľad systému a správanie, alebo získa pomoc"
+
+#: modules/menu/gp-menu-bar-applet.c:279
+#: modules/menu/gp-menu-button-applet.c:486
+#, c-format
+msgid "Please install the '%s' application."
+msgstr "Prosím, nainštalujte aplikáciu „%s“."
+
+#: modules/menu/gp-menu-module.c:375
+msgid "Main Menu"
+msgstr "Hlavná ponuka"
+
+#: modules/menu/gp-menu-module.c:376
+msgid "The main GNOME menu"
+msgstr "Hlavná ponuka GNOME"
+
+#: modules/menu/gp-menu-module.c:382
+msgid "Menu Button"
+msgstr "Tlačidlo ponuky"
+
+#: modules/menu/gp-menu-module.c:383
+msgid "A custom menu button"
+msgstr "Vlastné tlačidlo ponuky"
+
+#: modules/menu/gp-menu-module.c:391
+msgid "Menu Bar"
+msgstr "Panel ponuky"
+
+#: modules/menu/gp-menu-module.c:392
+msgid "A custom menu bar"
+msgstr "Vlastný panel ponuky"
+
+#: modules/menu/gp-menu-module.c:398
+msgid "User menu"
+msgstr "Ponuka používateľa"
+
+#: modules/menu/gp-menu-module.c:399
+msgid "Menu to change your settings and log out"
+msgstr "Ponuka na zmenu vašich nastavení a odhlásenia"
+
+#: modules/menu/gp-menu-utils.c:353
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "Nepodarilo sa spustiť '%s'"
+
+#: modules/menu/gp-places-menu.c:94
+#, c-format
+msgid "Unable to scan %s for media changes"
+msgstr "Nepodarilo sa prezrieť %s na zmeny média"
+
+#: modules/menu/gp-places-menu.c:144
+#, c-format
+msgid "Unable to mount %s"
+msgstr "Nepodarilo sa pripojiť %s"
+
+#: modules/menu/gp-places-menu.c:292
+#, c-format
+msgid "Rescan %s"
+msgstr "Znovunačítať %s"
+
+#: modules/menu/gp-places-menu.c:333
+#, c-format
+msgid "Mount %s"
+msgstr "Pripojiť %s"
+
+#. Translators: Desktop is used here as in "Desktop Folder"
+#. * (this is not the Desktop environment).
+#.
+#: modules/menu/gp-places-menu.c:446
+msgctxt "Desktop Folder"
+msgid "Desktop"
+msgstr "Plocha"
+
+#: modules/menu/gp-places-menu.c:447
+msgid "Open the contents of your desktop in a folder"
+msgstr "Otvoriť pracovnú plochu ako priečinok"
+
+#: modules/menu/gp-places-menu.c:467
+msgid "Bookmarks"
+msgstr "Záložky"
+
+#: modules/menu/gp-places-menu.c:525
+msgid "Removable Media"
+msgstr "Vymeniteľné médiá"
+
+#: modules/menu/gp-places-menu.c:579
+msgid "Network Places"
+msgstr "Sieťové miesta"
+
+#: modules/menu/gp-places-menu.c:604
+msgid "Recent Documents"
+msgstr "Nedávne dokumenty"
+
+#: modules/menu/gp-recent-menu.c:193
+msgid "Clear the Recent Documents list?"
+msgstr "Vymazať zoznam Nedávnych dokumentov?"
+
+#: modules/menu/gp-recent-menu.c:198
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"• All items from the Places → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"Ak vymažete zoznam Nedávnych dokumentov, vymažete nasledujúce:\n"
+"• Všetky položky z položky ponuky Miesta → Nedávne dokumenty.\n"
+"• Všetky položky zo zoznamu nedávnych dokumentov všetkých aplikácií."
+
+#: modules/menu/gp-recent-menu.c:206
+msgid "C_lear"
+msgstr "Vy_mazať"
+
+#: modules/menu/gp-recent-menu.c:236
+msgid "Clear Recent Documents..."
+msgstr "Vymazať Nedávne dokumenty..."
+
+#: modules/menu/gp-recent-menu.c:241
+msgid "Clear all items from the recent documents list"
+msgstr "Vymazať všetky položky zo zoznamu nedávnych dokumentov"
+
+#: modules/menu/main-menu-menu.ui:5 modules/menu/menu-bar-menu.ui:5
+msgid "_Edit Menus"
+msgstr "_Upraviť ponuky"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:5
+msgid "Icon used for button"
+msgstr "Ikona použitá pre tlačidlo"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:6
+#, fuzzy
+msgid ""
+"The location of the image file used as the icon for the object's button. If "
+"empty, the default icon for the menu will be used."
+msgstr ""
+"Umiestnenie súboru obrázku pre ikonu tlačidla objektu. Tento kľúč má zmysel "
+"iba ak má kľúč object_type hodnotu \"drawer-object\" alebo \"menu-object\" a "
+"kľúč use_custom_icon má hodnotu true."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:11
+msgid "Menu content path"
+msgstr "Cesta k obsahu ponuky"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
+#, fuzzy
+msgid ""
+"The path from which the menu contents is constructed. If empty, the menu "
+"will be the default applications menu."
+msgstr ""
+"Cesta, z ktorej sa má vytvoriť obsah ponuky. Tento kľúč má zmysel iba ak má "
+"kľúč use_menu_path hodnotu true a kľúč object_type má hodnotu \"menu-object"
+"\"."
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
+msgid "Show arrow on menu icon"
+msgstr "Zobraziť šípku v ikone ponuky"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
+msgid "Tooltip displayed for menu"
+msgstr "Bublinový popis pre ponuku"
+
+#: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:23
+msgid "The text to display in a tooltip for this menu."
+msgstr "Text, ktorý sa zobrazí v bublinovom popise tejto ponuky."
+
+#: modules/notification-area/na-applet.c:155
 msgid "Panel Notification Area"
 msgstr "Oblasť upozornení panelu"
 
-#: modules/external/notification-area/na-module.c:46
+#: modules/notification-area/na-module.c:33
 msgid "Notification Area"
 msgstr "Oblasť upozornení"
 
-#: modules/external/notification-area/na-module.c:47
+#: modules/notification-area/na-module.c:34
 msgid "Area where notification icons appear"
 msgstr "Oblasť, kde sa objavujú ikony upozornení"
 
-#: modules/external/status-notifier/sn-module.c:47
-msgid "Display all Status Notifier Items"
-msgstr ""
+#: modules/separator/separator-module.c:33
+msgid "Separator"
+msgstr "Oddeľovač"
 
-#: modules/external/status-notifier/sn-module.c:48
+#: modules/separator/separator-module.c:34
+msgid "A separator to organize the panel items"
+msgstr "Oddeľovač na lepšie usporiadanie položiek na paneli"
+
+#: modules/status-notifier/sn-module.c:33
 msgid "Status Notifier Host"
 msgstr ""
 
-#: modules/external/wncklet/showdesktop.c:100
+#: modules/status-notifier/sn-module.c:34
+msgid "Display all Status Notifier Items"
+msgstr ""
+
+#: modules/wncklet/showdesktop.c:100
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nepodarilo sa načítať %s: %s\n"
 
-#: modules/external/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:101
 msgid "Icon not found"
 msgstr "Ikona nebola nájdená"
 
-#: modules/external/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:181
 msgid "Click here to restore hidden windows."
 msgstr "Kliknutím sem obnovíte skryté okná."
 
-#: modules/external/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:183
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím sem skryjete všetky okná a zobrazíte plochu."
 
-#: modules/external/wncklet/showdesktop.c:210
+#: modules/wncklet/showdesktop.c:214
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2306,138 +2352,244 @@ msgstr ""
 "Váš správca okien nepodporuje tlačidlo na zobrazenie plochy, alebo žiadneho "
 "správcu okien nepoužívate."
 
-#: modules/external/wncklet/showdesktop.c:407
+#: modules/wncklet/showdesktop.c:411
 msgid "Show Desktop Button"
 msgstr "Tlačidlo na zobrazenie plochy"
 
-#: modules/external/wncklet/window-list.ui:8
+#: modules/wncklet/window-list.ui:8
 msgid "Window List Preferences"
 msgstr "Nastavenie zoznamu okien"
 
-#: modules/external/wncklet/window-list.ui:35
+#: modules/wncklet/window-list.ui:35
 msgid "Window List Content"
 msgstr "Obsah zoznamu okien"
 
-#: modules/external/wncklet/window-list.ui:55
+#: modules/wncklet/window-list.ui:55
 msgid "Sh_ow windows from current workspace"
 msgstr "Zobraziť okná z _aktuálnej plochy"
 
-#: modules/external/wncklet/window-list.ui:72
+#: modules/wncklet/window-list.ui:72
 msgid "Show windows from a_ll workspaces"
 msgstr "Zobraziť okná zo všet_kých plôch"
 
-#: modules/external/wncklet/window-list.ui:112
+#: modules/wncklet/window-list.ui:112
 msgid "Window Grouping"
 msgstr "Zoskupovanie okien"
 
-#: modules/external/wncklet/window-list.ui:132
+#: modules/wncklet/window-list.ui:132
 msgid "_Never group windows"
 msgstr "_Nikdy nezoskupovať okná"
 
-#: modules/external/wncklet/window-list.ui:149
+#: modules/wncklet/window-list.ui:149
 msgid "Group windows when _space is limited"
 msgstr "Zoskupiť okná pri nedostatku _miesta"
 
-#: modules/external/wncklet/window-list.ui:166
+#: modules/wncklet/window-list.ui:166
 msgid "_Always group windows"
 msgstr "Vždy _zoskupovať okná"
 
-#: modules/external/wncklet/window-list.ui:206
+#: modules/wncklet/window-list.ui:206
 msgid "Restoring Minimized Windows"
 msgstr "Obnova minimalizovaných okien"
 
-#: modules/external/wncklet/window-list.ui:226
+#: modules/wncklet/window-list.ui:226
 msgid "Restore to current _workspace"
 msgstr "_Obnoviť na aktuálnu plochu"
 
-#: modules/external/wncklet/window-list.ui:243
+#: modules/wncklet/window-list.ui:243
 msgid "Restore to na_tive workspace"
 msgstr "Obnoviť na pôvo_dnú plochu"
 
-#: modules/external/wncklet/window-menu.c:170
-#: modules/external/wncklet/wncklet-module.c:72
+#: modules/wncklet/window-menu.c:170 modules/wncklet/wncklet-module.c:55
 msgid "Window Selector"
 msgstr "Výber okna"
 
-#: modules/external/wncklet/wncklet-module.c:60
+#: modules/wncklet/wncklet-module.c:41
 msgid "Show Desktop"
 msgstr "Zobraziť plochu"
 
-#: modules/external/wncklet/wncklet-module.c:61
+#: modules/wncklet/wncklet-module.c:42
 msgid "Hide application windows and show the desktop"
 msgstr "Tlačidlo na skrytie okien aplikácií a zobrazenie plochy"
 
-#: modules/external/wncklet/wncklet-module.c:66
+#: modules/wncklet/wncklet-module.c:48
 msgid "Window List"
 msgstr "Zoznam okien"
 
-#: modules/external/wncklet/wncklet-module.c:67
+#: modules/wncklet/wncklet-module.c:49
 msgid "Switch between open windows using buttons"
 msgstr "Prepínať medzi otvorenými oknami pomocou tlačidiel"
 
-#: modules/external/wncklet/wncklet-module.c:73
+#: modules/wncklet/wncklet-module.c:56
 msgid "Switch between open windows using a menu"
 msgstr "Prepínať medzi otvorenými oknami pomocou ponuky"
 
-#: modules/external/wncklet/wncklet-module.c:78
+#: modules/wncklet/wncklet-module.c:62
 msgid "Workspace Switcher"
 msgstr "Prepínanie plôch"
 
-#: modules/external/wncklet/wncklet-module.c:79
+#: modules/wncklet/wncklet-module.c:63
 msgid "Switch between workspaces"
 msgstr "Prepínať medzi pracovnými plochami"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
-#: modules/external/wncklet/workspace-switcher.ui:145
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.ui:145
 msgid "rows"
 msgstr "riadky"
 
-#: modules/external/wncklet/workspace-switcher.c:578
-#: modules/external/wncklet/workspace-switcher.c:754
+#: modules/wncklet/workspace-switcher.c:578
+#: modules/wncklet/workspace-switcher.c:754
 msgid "columns"
 msgstr "stĺpce"
 
-#: modules/external/wncklet/workspace-switcher.ui:22
+#: modules/wncklet/workspace-switcher.ui:22
 msgid "Workspace Switcher Preferences"
 msgstr "Nastavenie prepínania plôch"
 
-#: modules/external/wncklet/workspace-switcher.ui:82
+#: modules/wncklet/workspace-switcher.ui:82
 msgid "Show _only the current workspace"
 msgstr "Zobraziť iba _aktuálnu plochu"
 
-#: modules/external/wncklet/workspace-switcher.ui:104
+#: modules/wncklet/workspace-switcher.ui:104
 msgid "Show _all workspaces in:"
 msgstr "_Zobraziť všetky pracovné plochy:"
 
-#: modules/external/wncklet/workspace-switcher.ui:128
-#: modules/external/wncklet/workspace-switcher.ui:228
+#: modules/wncklet/workspace-switcher.ui:128
+#: modules/wncklet/workspace-switcher.ui:228
 msgid "1"
 msgstr "1"
 
-#: modules/external/wncklet/workspace-switcher.ui:176
+#: modules/wncklet/workspace-switcher.ui:176
 msgid "Switcher"
 msgstr "Prepínač"
 
-#: modules/external/wncklet/workspace-switcher.ui:213
+#: modules/wncklet/workspace-switcher.ui:213
 msgid "Number of _workspaces:"
 msgstr "_Počet pracovných plôch:"
 
-#: modules/external/wncklet/workspace-switcher.ui:252
+#: modules/wncklet/workspace-switcher.ui:252
 msgid "Workspace na_mes:"
 msgstr "_Názvy pracovných plôch:"
 
-#: modules/external/wncklet/workspace-switcher.ui:272
+#: modules/wncklet/workspace-switcher.ui:272
 msgid "Workspace Names"
 msgstr "Názvy pracovných plôch"
 
-#: modules/external/wncklet/workspace-switcher.ui:288
+#: modules/wncklet/workspace-switcher.ui:288
 msgid "Show workspace _names in switcher"
 msgstr "Z_obraziť názvy plôch"
 
-#: modules/external/wncklet/workspace-switcher.ui:309
+#: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Pracovné plochy"
+
+#~ msgid "Icon size for only Applications item in the Menu Bar applet"
+#~ msgstr "Veľkosť ikony iba pre položku aplikácií v aplete panelu ponuky"
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Create new file in the given directory"
+#~ msgstr "Vytvoriť nový súbor v danom priečinku"
+
+#~ msgid "[FILE...]"
+#~ msgstr "[SÚBOR...]"
+
+#~ msgid "- Edit .desktop files"
+#~ msgstr "- Upraviť súbory .desktop"
+
+#~ msgid "Create Launcher"
+#~ msgstr "Vytvoriť spúšťač"
+
+#~ msgid "gnome-panel"
+#~ msgstr "gnome-panel"
+
+#~ msgid "Could not show this URL"
+#~ msgstr "Nepodarilo sa zobraziť toto URL"
+
+#~ msgid "No URL was specified."
+#~ msgstr "Nebolo zadané URL."
+
+#~ msgid "Could not use dropped item"
+#~ msgstr "Nepodarilo sa použiť pustenú položku"
+
+#~ msgid "No URI provided for panel launcher desktop file\n"
+#~ msgstr "Pre spúšťač panelu nie je v desktop súbore uvedené URI\n"
+
+#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+#~ msgstr "Nepodarilo sa otvoriť súbor desktop %s pre spúšťač %s%s\n"
+
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr "Umiestnenie spúšťača nie je nastavené. Nedá sa načítať spúšťač.\n"
+
+#~ msgid "No application to handle search folders is installed."
+#~ msgstr ""
+#~ "Nie je inštalovaná žiadna aplikácia na prezeranie výsledkov vyhľadávania"
+
+#~ msgid "Connect to server"
+#~ msgstr "Pripojiť k serveru"
+
+#~ msgid "Could not connect to server"
+#~ msgstr "Nepodarilo sa pripojiť k serveru"
+
+#~ msgid "Search for Files..."
+#~ msgstr "Hľadať súbory..."
+
+#~ msgid "Locate documents and folders on this computer by name or content"
+#~ msgstr ""
+#~ "Vyhľadať dokumenty a priečinky na tomto počítači podľa názvu a obsahu"
+
+#~ msgid "Connect to Server..."
+#~ msgstr "Pripojiť k serveru..."
+
+#~ msgid "Connect to a remote computer or shared disk"
+#~ msgstr "Pripojiť k vzdialenému serveru alebo zdieľanému disku"
+
+#~ msgid "Find an _item to add to the panel:"
+#~ msgstr "_Zvoľte položku, ktorú pridať do panelu:"
+
+#~ msgid "_Forward"
+#~ msgstr "_Dopredu"
+
+#~ msgid "_Back"
+#~ msgstr "_Späť"
+
+#~ msgid "Location"
+#~ msgstr "Umiestnenie"
+
+#~ msgid "Could not save directory properties"
+#~ msgstr "Nepodarilo sa uložiť vlastnosti priečinka"
+
+#~ msgid "The name of the directory is not set."
+#~ msgstr "Názov priečinka nie je nastavený."
+
+#~ msgid "Image widget"
+#~ msgstr "Prvok obrázku"
+
+#~ msgid "Always show image"
+#~ msgstr "Vždy zobraziť obrázok"
+
+#~ msgid "Whether the image will always be shown"
+#~ msgstr "Určuje, či má byť vždy zobrazený obrázok"
+
+#~ msgid "Could not open recently used document \"%s\""
+#~ msgstr "Nepodarilo sa nedávno použitý dokument \"%s\""
+
+#~ msgid "An unknown error occurred while trying to open \"%s\"."
+#~ msgstr "Počas pokusu o otvorenie \"%s\" nastala neznáma chyba."
+
+#~ msgid "Clear Recent Documents"
+#~ msgstr "Vymazať Nedávne dokumenty"
+
+#~ msgid "Icon '%s' not found"
+#~ msgstr "Ikona '%s' sa nenašla"
+
+#~ msgid "Home Folder"
+#~ msgstr "Domovský priečinok"
+
+#~ msgid "Search"
+#~ msgstr "Hľadať"
 
 #~ msgid "Clock Applet Factory"
 #~ msgstr "Vytváracie rozhranie pre aplet Hodiny"
@@ -2687,9 +2839,6 @@ msgstr "Pracovné plochy"
 #~ msgid "Copy _Date"
 #~ msgstr "Kopírovať _dátum"
 
-#~ msgid "_About"
-#~ msgstr "_O programe"
-
 #, fuzzy
 #~ msgid "%l:%M:%S %p"
 #~ msgstr "%I:%M:%S %p"
@@ -2895,12 +3044,6 @@ msgstr "Pracovné plochy"
 
 #~ msgid "(with minor help from George)"
 #~ msgstr "(s malou pomocou od Georgea)"
-
-#~ msgid "Select an animation"
-#~ msgstr "Zvoliť animáciu"
-
-#~ msgid "_File:"
-#~ msgstr "_Súbor:"
 
 #~ msgid "_Total frames in animation:"
 #~ msgstr "_Celkom snímok v animácii:"
@@ -3134,14 +3277,6 @@ msgstr "Pracovné plochy"
 #~ "Tento kľúč je zavrhnutý, pretože nemôže byť použitý na správne "
 #~ "uzamknutie. Namiesto neho by mal byť použitý kľúč /desktop/gnome/lockdown/"
 #~ "disable_lock_screen."
-
-#~ msgid "Change desktop appearance and behavior, get help, or log out"
-#~ msgstr ""
-#~ "Môžete meniť vzhľad a správanie prostredia, získať pomoc, alebo sa "
-#~ "odhlásiť"
-
-#~ msgid "System"
-#~ msgstr "Systém"
 
 #~ msgid "Log Out %s..."
 #~ msgstr "Odhlásiť používateľa %s..."
