@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
 "POT-Creation-Date: 2020-05-30 16:24+0000\n"
-"PO-Revision-Date: 2021-01-26 14:29+0100\n"
+"PO-Revision-Date: 2021-01-26 17:19+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: FRIULIAN <massimo.furlani@libero.it>\n"
 "Language: fur\n"
@@ -46,7 +46,7 @@ msgstr "Se true (vêr), mostre la temperadure dongje de icone dal meteo."
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:20
 msgid "Show week numbers in calendar"
-msgstr "Mostre i numars di setemane tal calendari"
+msgstr "Mostre i numars des setemanis tal calendari"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:21
 msgid "If true, show week numbers in the calendar."
@@ -396,10 +396,10 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Se metude a true (vêr), tal barcon di dialic \"Eseguìs aplicazion\" e je "
-"disponibile la liste \"Aplicazions cognossudis\". Cu la clâf "
-"show_program_list key tu controlis se la liste e je pandude o mancul cuant "
-"che al ven mostrât il dialic."
+"Se true (vêr), tal barcon di dialic \"Eseguìs aplicazion\" e je disponibile "
+"la liste \"Aplicazions cognossudis\". Cu la clâf show_program_list key tu "
+"controlis se la liste e je pandude o mancul cuant che al ven mostrât il "
+"dialic."
 
 #: data/org.gnome.gnome-panel.gschema.xml:111
 msgid "Expand program list in \"Run Application\" dialog"
@@ -889,7 +889,7 @@ msgstr "Stirâ"
 
 #: gnome-panel/gp-properties-dialog.ui:487
 msgid "Fit"
-msgstr "Juste"
+msgstr "Adate"
 
 #: gnome-panel/gp-properties-dialog.ui:509
 msgid "Rotate image on vertical panel"
@@ -941,7 +941,7 @@ msgstr "Desideristu eliminâ la applet de tô configurazion?"
 
 #: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
-msgstr "Non stâ _scancelâ"
+msgstr "N_o stâ eliminâ"
 
 #: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
@@ -1011,7 +1011,7 @@ msgstr "_Anule"
 
 #: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
-msgstr "Impussibil scancelâ chest panel"
+msgstr "Impussibil eliminâ chest panel"
 
 #: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
@@ -1266,7 +1266,7 @@ msgstr "Sfuarçe la jessude di une aplicazion che no rispuint plui"
 #: modules/action-button/gp-action-button-module.c:53
 #: modules/menu/gp-lock-logout.c:1009
 msgid "Lock Screen"
-msgstr "_Bloche schermo"
+msgstr "Bloche schermi"
 
 #: modules/action-button/gp-action-button-module.c:54
 #: modules/action-button/gp-lock-screen-applet.c:320
@@ -1325,7 +1325,7 @@ msgstr ""
 
 #: modules/action-button/gp-lock-screen-menu.ui:5
 msgid "_Lock Screen"
-msgstr "_Bloche schermo"
+msgstr "_Bloche schermi"
 
 #: modules/action-button/gp-lock-screen-menu.ui:9
 msgid "_Activate Screensaver"
@@ -1349,8 +1349,8 @@ msgstr ""
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
-"Fâs clic su di un barcon par sfuarçâ la jessude de aplicazion. Par anulâ "
-"fracâ <ESC>."
+"Fâs clic suntun barcon par sfuarçâ la jessude de aplicazion. Par anulâ "
+"frache <ESC>."
 
 #: modules/action-button/panel-force-quit.c:206
 msgid "Force this application to exit?"
@@ -1366,7 +1366,7 @@ msgstr ""
 
 #: modules/action-button/panel-force-quit.c:216
 msgid "_Force quit"
-msgstr "_Sfuarçe a lâ fûr"
+msgstr "_Sfuarce jessude"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1403,11 +1403,11 @@ msgstr "%H:%M"
 #.
 #: modules/clock/calendar-window.c:282
 msgid "%b %d"
-msgstr "%b %d"
+msgstr "%d di %b"
 
 #: modules/clock/calendar-window.c:787
 msgid "Tasks"
-msgstr "Funzions"
+msgstr "Compits"
 
 #: modules/clock/calendar-window.c:787 modules/clock/calendar-window.c:970
 #: modules/clock/calendar-window.c:1568
@@ -1432,7 +1432,7 @@ msgstr "Informazions meteo"
 
 #: modules/clock/calendar-window.c:1568 modules/clock/clock.ui:748
 msgid "Locations"
-msgstr "Localitât"
+msgstr "Localitâts"
 
 #: modules/clock/calendar-window.c:1827
 msgid "Calendar"
@@ -1443,7 +1443,7 @@ msgstr "Calendari"
 #.
 #: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
-msgstr "%A, %d %B (%Z)"
+msgstr "%A, %d di %B (%Z)"
 
 #: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
@@ -1520,19 +1520,19 @@ msgstr "Non de citât"
 
 #: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
-msgstr "Fuso orari da citât"
+msgstr "Fûs orari de citât"
 
 #: modules/clock/clock-location-tile.c:177
 msgid "Failed to set the system timezone"
-msgstr "Impostazion dal fuso orari falide"
+msgstr "Impostazion dal fûs orari falide"
 
 #: modules/clock/clock-location-tile.c:225
 msgid "<small>Set...</small>"
-msgstr "<small>Imposte...</small>"
+msgstr "<small>Stabilìs...</small>"
 
 #: modules/clock/clock-location-tile.c:226
 msgid "<small>Set</small>"
-msgstr "<small>Imposte</small>"
+msgstr "<small>Stabilìs</small>"
 
 #: modules/clock/clock-location-tile.c:302
 msgid "Set location as current location and use its timezone for this computer"
@@ -1589,7 +1589,7 @@ msgstr "Orloi"
 
 #: modules/clock/clock-module.c:34
 msgid "Get the current time and date"
-msgstr "Al lei la date e la ore curint"
+msgstr "Oten la date e la ore curint"
 
 #: modules/clock/clock-menu.ui:5
 msgid "Copy Date and _Time"
@@ -1685,11 +1685,11 @@ msgstr "<b>Visibil sul panel</b>"
 
 #: modules/clock/clock.ui:547
 msgid "Show the _date"
-msgstr "Mostre la _data"
+msgstr "Mostre la _date"
 
 #: modules/clock/clock.ui:563
 msgid "Show seco_nds"
-msgstr "Mostre i _seconds"
+msgstr "Mostre i _seconts"
 
 #: modules/clock/clock.ui:579
 msgid "Show _weather"
@@ -1861,7 +1861,7 @@ msgstr "_Durade fotogram:"
 
 #: modules/fish/fish.ui:332
 msgid "seconds"
-msgstr "seconds"
+msgstr "seconts"
 
 #: modules/fish/fish.ui:349
 msgid "_Rotate on vertical panels"
@@ -1924,7 +1924,7 @@ msgstr "_Posizion:"
 #. Type
 #: modules/launcher/gp-editor.c:815
 msgid "_Type:"
-msgstr "_Tipo:"
+msgstr "_Gjenar:"
 
 #. Name
 #: modules/launcher/gp-editor.c:824
@@ -1933,7 +1933,7 @@ msgstr "_Non:"
 
 #: modules/launcher/gp-editor.c:848
 msgid "_Browse..."
-msgstr "_Sgarfe..."
+msgstr "_Esplore..."
 
 #. Comment
 #: modules/launcher/gp-editor.c:862
@@ -2069,7 +2069,6 @@ msgstr "Sospint"
 
 #: modules/menu/gp-lock-logout.c:1087
 #, fuzzy
-#| msgid "Hybrid sleep"
 msgid "Hybrid Sleep"
 msgstr "Polse ibride"
 
@@ -2245,14 +2244,12 @@ msgid "Menu content path"
 msgstr "Percors dal contignût dal menù"
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:12
-#, fuzzy
 msgid ""
 "The path from which the menu contents is constructed. If empty, the menu "
 "will be the default applications menu."
 msgstr ""
-"Il percors par costruî il contignût dal menu. Cheste clâf à sens dome se la "
-"variabil use_menu_path a je impostade a TRUE e la variabil object_type a je "
-"\"menu-object\"."
+"Il percors par costruî il contignût dal menù. Se vueit, il menù al sarà chel "
+"predefinît des aplicazions."
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
 msgid "Show arrow on menu icon"
