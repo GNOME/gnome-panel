@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
 "POT-Creation-Date: 2020-05-30 16:24+0000\n"
-"PO-Revision-Date: 2021-01-27 14:25+0100\n"
+"PO-Revision-Date: 2021-01-27 16:46+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: FRIULIAN <massimo.furlani@libero.it>\n"
 "Language: fur\n"
@@ -321,16 +321,15 @@ msgid "Panel object ID list"
 msgstr "Liste ID ogjiets dal panel"
 
 #: data/org.gnome.gnome-panel.gschema.xml:76
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. an applet, launcher, action button or menu button/bar). The settings for "
 "each of these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
-"Une liste di ID di ogjets dal panel. Ognidun ID al identifiche un singul "
-"ogjet dal panel (par esempli un inviadôr, un boton di azion opûr un boton/"
-"bare di menu). Lis impostazions par ognidun di chescj ogjets a son "
-"memorizadis in /apps/panel/objects/$(id)."
+"Une liste di ID di ogjets dal panel. Ogni ID al identifiche un singul ogjet "
+"dal panel (p.e. une applet, inviadôr, un boton di azion opûr un boton/sbare "
+"di menù). Lis impostazions par ognun di chescj ogjets a vegnin memorizadis "
+"in /apps/panel/objects/$(id)."
 
 #: data/org.gnome.gnome-panel.gschema.xml:83
 msgid "Complete panel lockdown"
@@ -594,6 +593,12 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
+"La posizion dal panel dilunc l'as x, tacant de bande diestre dal schermi. Se "
+"metût a -1, il valôr al ven ignorât e al ven doprât il valôr de clâf x. Se "
+"il valôr al è plui grant di 0, alore il valôr de clâf x al ven ignorât. "
+"Cheste clâf e je rilevante dome in modalitât no-slargjade. In modalitât "
+"slargjade cheste clâf e ven ignorade e il panel al ven plaçât tal ôr dal "
+"schermi specificât de clâf di orientament."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Y co-ordinate of panel, starting from the bottom of the screen"
@@ -608,6 +613,12 @@ msgid ""
 "this key is ignored and the panel is placed at the screen edge specified by "
 "the orientation key."
 msgstr ""
+"La posizion dal panel dilunc l'as y, tacant dal bas dal schermi. Se metût a "
+"-1, il valôr al ven ignorât e al ven doprât il valôr de clâf y. Se il valôr "
+"al è plui grant di 0, alore il valôr de clâf y al ven ignorât. Cheste clâf e "
+"je rilevante dome in modalitât no-slargjade. In modalitât slargjade cheste "
+"clâf e ven ignorade e il panel al ven plaçât tal ôr dal schermi specificât "
+"de clâf di orientament."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
 msgid "Center panel on x-axis"
@@ -620,13 +631,17 @@ msgid ""
 "at that position - i.e. the panel will grow on both sides. If false, the x "
 "and x_right keys specify the location of the panel."
 msgstr ""
+"Se true (vêr), lis clâfs x e x_right a vegnin ignoradis e il panel al ven "
+"plaçât tal mieç dal as X dal schermi. Se il panel al ven ridimensionât al "
+"restarà in chê posizion - vâl a dî che il panel al cressarà di dutis dôs lis "
+"bandis. Se false (fals), lis clâfs x e x_right a specifichis la posizion dal "
+"panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
 msgid "Center panel on y-axis"
 msgstr "Centre il panel su Y"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
-#, fuzzy
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
@@ -634,7 +649,9 @@ msgid ""
 "and y_bottom keys specify the location of the panel."
 msgstr ""
 "Se true (vêr), lis clâfs y e y_bottom a vegnin ignoradis e il panel al ven "
-"plaçât al centri dal as Y dal schermi. Se il panel al ven ridimensionât "
+"plaçât tal centri dal as Y dal schermi. Se il panel al ven ridimensionât al "
+"restarà in chê posizion - vâl a dî che il panel al cressarà di dutis dôs lis "
+"bandis. Se fals, lis clâfs y e y_bottom a specifichin la posizion dal panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
@@ -1738,9 +1755,8 @@ msgid "_24 hour format"
 msgstr "Formât _24 oris"
 
 #: modules/clock/clock.ui:527
-#, fuzzy
 msgid "Panel Display"
-msgstr "<b>Visibil sul panel</b>"
+msgstr "Visualizazion dal panel"
 
 #: modules/clock/clock.ui:547
 msgid "Show the _date"
@@ -2000,10 +2016,8 @@ msgid "Co_mment:"
 msgstr "Co_ment:"
 
 #: modules/launcher/gp-icon-name-chooser.c:482
-#, fuzzy
-#| msgid "All Day"
 msgid "All"
-msgstr "Zornade interie"
+msgstr "Ducj"
 
 #: modules/launcher/gp-icon-name-chooser.ui:27
 msgid "Select Icon Name"
@@ -2074,7 +2088,7 @@ msgstr "Proprietâts dal inviadôr"
 #: modules/launcher/gp-launcher-utils.c:56
 #, c-format
 msgid "Launcher does not start with required “%s” group."
-msgstr ""
+msgstr "L'inviadôr nol partìs cul grup domandât “%s”."
 
 #: modules/launcher/gp-launcher-utils.c:74
 #, c-format
@@ -2127,9 +2141,8 @@ msgid "Suspend"
 msgstr "Sospint"
 
 #: modules/menu/gp-lock-logout.c:1087
-#, fuzzy
 msgid "Hybrid Sleep"
-msgstr "Polse ibride"
+msgstr "Sospension ibride"
 
 #: modules/menu/gp-lock-logout.c:1105
 msgid "Restart"
