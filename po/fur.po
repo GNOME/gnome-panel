@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
 "POT-Creation-Date: 2020-05-30 16:24+0000\n"
-"PO-Revision-Date: 2021-01-27 12:57+0100\n"
+"PO-Revision-Date: 2021-01-27 14:25+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: FRIULIAN <massimo.furlani@libero.it>\n"
 "Language: fur\n"
@@ -626,12 +626,15 @@ msgid "Center panel on y-axis"
 msgstr "Centre il panel su Y"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
+#, fuzzy
 msgid ""
 "If true, the y and y_bottom keys are ignored and the panel is placed at the "
 "center of the y-axis of the screen. If the panel is resized it will remain "
 "at that position - i.e. the panel will grow on both sides. If false, the y "
 "and y_bottom keys specify the location of the panel."
 msgstr ""
+"Se true (vêr), lis clâfs y e y_bottom a vegnin ignoradis e il panel al ven "
+"plaçât al centri dal as Y dal schermi. Se il panel al ven ridimensionât "
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
@@ -643,6 +646,9 @@ msgid ""
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
 msgstr ""
+"Se true (vêr), il panel al ven platât in automatic intun cjanton dal schermi "
+"cuant che il pontadôr al lasse la aree dal panel. Tornant a spostâ il "
+"pontadôr in chel cjanton il panel al tornarà fûr."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
 msgid "Enable hide buttons"
@@ -653,6 +659,8 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Se true (vêr), i botons a vignaran metûts su ogni bande dal panel che si "
+"pues doprâ par spostâlu tai ôrs dal schermi, lassant dome un boton visibil."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
 msgid "Enable arrows on hide buttons"
@@ -663,6 +671,8 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
+"Se true (vêr), lis frecis a vignaran metudis sui botons par platâ. Cheste "
+"clâf e je rilevante dome se la clâf enable_buttons e je true (vêr)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
 msgid "Panel autohide delay"
@@ -694,13 +704,16 @@ msgstr ""
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Visible pixels when hidden"
-msgstr ""
+msgstr "Pixels visibii cuant che al è platât"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
+"Al specifiche il numar di pixels visibii cuant che il panel al ven platât in "
+"automatic suntun cjanton. Cheste clâf e je rilevante dome se la clâf "
+"auto_hide e je true (vêr)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Animation speed"
@@ -712,22 +725,25 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
+"La velocitât che si àn di sucedi lis animazions tal panel. I valôrs pussibii "
+"a son \"slow\", \"medium\" and \"fast\". Cheste clâf e je rilevante se la "
+"clâf enable_animations e je true (vêr)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
 msgid "Use custom background color"
-msgstr "Dopre colôr di fondâl personalizât"
+msgstr "Dopre colôr di fonts personalizât"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
 msgid "Background Color"
-msgstr "Colôr dal fondâl"
+msgstr "Colôr di fonts"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
 msgid "Use custom background image"
-msgstr "Doprâ imagjin di fondâl personalizade"
+msgstr "Doprâ imagjin di fonts personalizade"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
 msgid "Background image"
-msgstr "Piture di fondâl"
+msgstr "Imagjin di fonts"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
 msgid ""
@@ -735,6 +751,9 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
+"Al specifiche il file di doprâ pe imagjin di fonts. Se la imagjin e conten "
+"un canâl alpha e vignarà componude adun cu la imagjin dal fondâl dal "
+"scritori."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
 msgid "Image options"
@@ -748,16 +767,23 @@ msgid ""
 "maintained. With \"fit\", the image will be scaled (retaining the aspect "
 "ratio of the image) to the panel height (if horizontal)."
 msgstr ""
+"Al determine ce mût che a ven dissegnade la imagjin configurade dal image-"
+"uri. I valôrs pussibii a son \"none\", \"stretch\", \"fit\". Cun \"stretch"
+"\", la imagjin e vignarà scjalade aes dimensions dal panel e no vignaran "
+"mantignudis lis proporzions de imagjin. Cun \"fit\", la imagjin e vignarà "
+"scjalade (mantignint lis proporzions de imagjin) su la altece (se orizontâl)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
 msgid "Rotate image on vertical panels"
-msgstr ""
+msgstr "Volte imagjin su panei verticâi"
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
+"Se true (vêr), la imagjin di fonts e vignarà voltade cuant che il panel al "
+"ven orientât in verticâl."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
 msgid "Use custom text color"
@@ -801,6 +827,8 @@ msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
+"Disabilitât parcè che cheste applet e je listade inte impostazion “disabled-"
+"applets” tal scheme GSettings “org.gnome.gnome-panel.lockdown”."
 
 #: gnome-panel/gp-applet-row.c:110
 msgid "Help"
@@ -820,7 +848,7 @@ msgstr "Plate il panel"
 
 #: gnome-panel/gp-main.c:50
 msgid "Replace a currently running panel"
-msgstr ""
+msgstr "Sostituìs un panel che al è in esecuzion"
 
 #: gnome-panel/gp-main.c:56
 msgid "Print version"
@@ -894,11 +922,11 @@ msgstr "Gjenerâl"
 
 #: gnome-panel/gp-properties-dialog.ui:355
 msgid "Background color:"
-msgstr "Colôr dal fondâl:"
+msgstr "Colôr di fonts:"
 
 #: gnome-panel/gp-properties-dialog.ui:418
 msgid "Background image:"
-msgstr "Imagjin dal fondâl:"
+msgstr "Imagjin di fonts:"
 
 #: gnome-panel/gp-properties-dialog.ui:457
 msgid "Tile"
@@ -998,6 +1026,8 @@ msgstr "Computer"
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
+"Esplore ducj i discs locâi o lontans e lis cartelis acessibilis di chest "
+"computer"
 
 #. is_exec?
 #. exec
@@ -1008,7 +1038,7 @@ msgstr "Rêt"
 #. name
 #: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
-msgstr ""
+msgstr "Esplore lis posizions metudis tal segnelibri e te rêt locâl"
 
 #: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
@@ -1156,67 +1186,67 @@ msgstr ""
 #. * popup when you pass the focus to a panel
 #: gnome-panel/panel-toplevel.c:1560
 msgid "Top Expanded Edge Panel"
-msgstr ""
+msgstr "Panel ôr slargjât superiôr"
 
 #: gnome-panel/panel-toplevel.c:1561
 msgid "Top Centered Panel"
-msgstr ""
+msgstr "Panel centrât superiôr"
 
 #: gnome-panel/panel-toplevel.c:1562
 msgid "Top Floating Panel"
-msgstr ""
+msgstr "Panel flotant superiôr"
 
 #: gnome-panel/panel-toplevel.c:1563
 msgid "Top Edge Panel"
-msgstr ""
+msgstr "Panel ôr superiôr"
 
 #: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Expanded Edge Panel"
-msgstr ""
+msgstr "Panel ôr slargjât inferiôr"
 
 #: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Centered Panel"
-msgstr ""
+msgstr "Panel centrât inferiôr"
 
 #: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Floating Panel"
-msgstr ""
+msgstr "Panel flotant inferiôr"
 
 #: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Edge Panel"
-msgstr ""
+msgstr "Panel ôr inferiôr"
 
 #: gnome-panel/panel-toplevel.c:1574
 msgid "Left Expanded Edge Panel"
-msgstr ""
+msgstr "Panel ôr slargjât di çampe"
 
 #: gnome-panel/panel-toplevel.c:1575
 msgid "Left Centered Panel"
-msgstr ""
+msgstr "Panel centrât di çampe"
 
 #: gnome-panel/panel-toplevel.c:1576
 msgid "Left Floating Panel"
-msgstr ""
+msgstr "Panel flotant di çampe"
 
 #: gnome-panel/panel-toplevel.c:1577
 msgid "Left Edge Panel"
-msgstr ""
+msgstr "Panel ôr di çampe"
 
 #: gnome-panel/panel-toplevel.c:1581
 msgid "Right Expanded Edge Panel"
-msgstr ""
+msgstr "Panel ôr slargjât di diestre"
 
 #: gnome-panel/panel-toplevel.c:1582
 msgid "Right Centered Panel"
-msgstr ""
+msgstr "Panel centrât di diestre"
 
 #: gnome-panel/panel-toplevel.c:1583
 msgid "Right Floating Panel"
-msgstr ""
+msgstr "Panel flotant di diestre"
 
 #: gnome-panel/panel-toplevel.c:1584
 msgid "Right Edge Panel"
-msgstr ""
+msgstr "Panel ôr di diestre"
 
 #: gnome-panel/panel-util.c:358
 msgid "file"
@@ -1331,6 +1361,8 @@ msgid ""
 "Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
 "lockdown” GSettings schema is set to true."
 msgstr ""
+"Disabilitât parcè che la impostazion “disable-force-quit” intal scheme "
+"GSettings “org.gnome.gnome-panel.lockdown” e je metude a true (vêr)."
 
 #: modules/action-button/gp-lock-screen-applet.c:280
 #: modules/launcher/gp-launcher-applet.c:850
@@ -1343,6 +1375,8 @@ msgid ""
 "Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
+"Disabilitât parcè che la impostazion “disable-lock-screen” intal scheme "
+"GSettings “org.gnome.desktop.lockdown” e je metude a true (vêr)."
 
 #: modules/action-button/gp-lock-screen-menu.ui:5
 msgid "_Lock Screen"
@@ -1358,6 +1392,8 @@ msgid ""
 "Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
 "GSettings schema is set to true."
 msgstr ""
+"Disabilitât parcè che la impostazion “disable-log-out” intal scheme "
+"GSettings “org.gnome.desktop.lockdown” e je metude a true (vêr)."
 
 #: modules/action-button/gp-run-applet.c:136
 #: modules/launcher/gp-launcher-module.c:34
@@ -1365,6 +1401,8 @@ msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
+"Disabilitât parcè che la impostazion “disable-command-line” intal scheme "
+"GSettings “org.gnome.desktop.lockdown” e je metude a true (vêr)."
 
 #: modules/action-button/panel-force-quit.c:71
 msgid ""
@@ -1994,7 +2032,7 @@ msgstr "(vueit)"
 #: modules/launcher/gp-launcher-applet.c:862
 #, c-format
 msgid "Can not execute “%s” command line."
-msgstr ""
+msgstr "Impussibil eseguî la rie di comant “%s”."
 
 #: modules/launcher/gp-launcher-applet.c:885
 msgid "Could not open location"
@@ -2041,7 +2079,7 @@ msgstr ""
 #: modules/launcher/gp-launcher-utils.c:74
 #, c-format
 msgid "Launcher has invalid Type key value “%s”."
-msgstr ""
+msgstr "L'inviadôr al à un valôr de clâf Gjenar “%s” no valit."
 
 #: modules/launcher/gp-launcher-utils.c:156
 msgid "The icon of the launcher is not set."
@@ -2274,7 +2312,7 @@ msgstr ""
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:17
 msgid "Show arrow on menu icon"
-msgstr ""
+msgstr "Mostre frece su la icone menù"
 
 #: modules/menu/org.gnome.gnome-panel.applet.menu-button.gschema.xml:22
 msgid "Tooltip displayed for menu"
@@ -2306,11 +2344,11 @@ msgstr "Un separadôr par organizâ i elements dal panel"
 
 #: modules/status-notifier/sn-module.c:33
 msgid "Status Notifier Host"
-msgstr ""
+msgstr "Host notificadôr di stât"
 
 #: modules/status-notifier/sn-module.c:34
 msgid "Display all Status Notifier Items"
-msgstr ""
+msgstr "Visualize ducj i elements dal notificadôr di stât"
 
 #: modules/wncklet/showdesktop.c:100
 #, c-format
