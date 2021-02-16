@@ -1,6 +1,7 @@
 # German gnome-panel translation.
 # Copyright (C) 1998-2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
+#
 # Carsten Schaar <nhadcasc@fs-maphy.uni-hannover.de>, 1998.
 # Matthias Warkus <mawa@iname.com>, 1999-2001.
 # Karl Eichwalder <ke@suse.de>, 2000, 2001.
@@ -13,24 +14,25 @@
 # Philipp Kerling <k.philipp@gmail.com>, 2008.
 # Andre Klapper <ak-47@gmx.net>, 2009.
 # Moritz Baumann <flamingmo@online.de>, 2009.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2009-2012, 2016, 2018.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2009-2012, 2016, 2018, 2021.
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2009-2011.
 # Wolfgang Stöggl <c72578@yahoo.de>, 2016.
+# Tim Sabsch <tim@sabsch.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2020-05-30 16:25+0000\n"
-"PO-Revision-Date: 2020-09-15 09:22+0200\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
-"Language-Team: Deutsch <gnome-de@gnome.org>\n"
+"POT-Creation-Date: 2021-01-27 15:47+0000\n"
+"PO-Revision-Date: 2021-02-14 14:00+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -459,19 +461,6 @@ msgstr ""
 "Falls dieser Schlüssel WAHR ist, wird die automatische Vervollständigung im "
 "Dialog »Anwendung ausführen« aktiviert."
 
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Speicherort des Starters"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Der Speicherort der .desktop-Datei, die den Starter beschreibt. Dieser "
-"Schlüssel kommt ausschließlich zum Tragen, falls der Objekttypschlüssel "
-"»object_type« »launcher-object« ist."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "Objekt-IID"
@@ -873,22 +862,6 @@ msgstr "Benutzerdefinierte Textfarbe verwenden"
 msgid "Text Color"
 msgstr "Textfarbe"
 
-#: gnome-panel/applet.c:324
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:462
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "_Verschieben"
-
-#: gnome-panel/applet.c:469
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "Aus dem Panel _entfernen"
-
 #: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Panel"
@@ -901,25 +874,42 @@ msgstr ""
 "Startet andere Anwendungen und liefert verschiedene Werkzeuge zum Verwalten "
 "von Fenstern, dem Anzeigen der Zeit usw."
 
-#: gnome-panel/gp-add-applet-window.c:137
-msgid "Help"
-msgstr "Hilfe"
-
-#: gnome-panel/gp-add-applet-window.c:148
-msgid "About"
-msgstr "Info"
-
-#: gnome-panel/gp-add-applet-window.c:193
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Zum Panel hinzufügen"
 
-#: gnome-panel/gp-add-applet-window.c:560
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Keine Applets gefunden"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, c-format
+msgid "Find an item to add to “%s”"
+msgstr "Wählen Sie ein Objekt, das zu »%s« hinzugefügt werden soll"
+
+#: gnome-panel/gp-add-applet-window.c:558
+msgid "Find an item to add to the panel"
+msgstr "Wählen Sie ein Objekt, das zum Panel hinzugefügt werden soll"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+"Ist deaktiviert, weil dieses Applet unter »disabled-applets« im GSettings-"
+"Schema »org.gnome.gnome-panel.lockdown« aufgelistet ist."
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Hilfe"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Info"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Hinzufügen"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
@@ -1031,262 +1021,57 @@ msgstr "Textfarbe:"
 msgid "Theme"
 msgstr "Thema"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Diese Adresse konnte nicht angezeigt werden"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Es wurde keine Adresse festgelegt."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Anwendung konnte nicht gestartet werden"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Übergebenes Objekt konnte nicht verarbeitet werden"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Keine Adresse für Panel-Starter-Arbeitsflächen-Datei angegeben\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
-"Arbeitsflächen-Datei %s konnte nicht für Panel-Starter %s geöffnet werden%s\n"
-
-#: gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Starter-Eigenschaften"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "_Starten"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:147
-msgid "_Properties"
-msgstr "Ei_genschaften"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr ""
-"Ort des Starters ist nicht festgelegt; Starter kann nicht geladen werden\n"
-
-#: gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Einen Starter anlegen"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1344 gnome-panel/panel-ditem-editor.c:1375
-msgid "Could not save launcher"
-msgstr "Starter konnte nicht gespeichert werden"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:808
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Fehler"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
-msgid "Choose an icon"
-msgstr "Wählen Sie ein Symbol"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:656 gnome-panel/panel-ditem-editor.c:991
-#: gnome-panel/panel-force-quit.c:217 gnome-panel/panel-run-dialog.c:1301
-#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
-#: modules/menu/gp-recent-menu.c:205
-msgid "_Cancel"
-msgstr "Abbre_chen"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:993
-msgid "_Open"
-msgstr "Ö_ffnen"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "»%s« konnte nicht gestartet werden"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:373
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Speicherort »%s« konnte nicht angezeigt werden"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "_Lock Screen"
-msgstr "Bildschirm _sperren"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "_Verschieben"
 
-#: gnome-panel/panel-action-button.c:162
-msgid "_Activate Screensaver"
-msgstr "Bildschirmschoner _aktivieren"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "Aus dem Panel _entfernen"
 
-#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
-msgid "Lock Screen"
-msgstr "Bildschirm sperren"
-
-#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
-msgid "Protect your computer from unauthorized use"
-msgstr "Den Rechner vor unbefugtem Zugriff schützen"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-msgid "Log Out"
-msgstr "Abmelden"
-
-#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
-msgid "Log out of this session to log in as a different user"
-msgstr ""
-"Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden"
-
-#: gnome-panel/panel-action-button.c:377
-msgid "Run Application..."
-msgstr "Anwendung ausführen …"
-
-#: gnome-panel/panel-action-button.c:378
-msgid "Run an application by typing a command or choosing from a list"
-msgstr ""
-"Eine Anwendung durch Eingabe eines Befehls oder Auswahl aus einer Liste "
-"ausführen"
-
-#: gnome-panel/panel-action-button.c:386
-msgid "Search for Files..."
-msgstr "Nach Dateien suchen …"
-
-#: gnome-panel/panel-action-button.c:387
-msgid "Locate documents and folders on this computer by name or content"
-msgstr ""
-"Auf diesem Rechner nach Namen und Inhalten von Dokumenten und Ordnern suchen"
-
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:226
-msgid "Force Quit"
-msgstr "Beenden erzwingen"
-
-# CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
-# 	  ("schlecht benehmen")
-#: gnome-panel/panel-action-button.c:395
-msgid "Force a misbehaving application to quit"
-msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
-
-#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
-msgid "Hibernate"
-msgstr "Ruhezustand"
-
-#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
-msgid "Suspend"
-msgstr "Bereitschaft"
-
-#: gnome-panel/panel-action-button.c:421
-msgid "Hybrid sleep"
-msgstr "Hybrid-Ruhezustand"
-
-#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
-msgid "Restart"
-msgstr "Neu starten"
-
-#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-msgid "Restart the computer"
-msgstr "Den Rechner neustarten"
-
-#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
-msgid "Power Off"
-msgstr "Ausschalten"
-
-#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-msgid "Power off the computer"
-msgstr "Den Rechner ausschalten"
-
-#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
-msgid "(empty)"
-msgstr "(leer)"
-
-#: gnome-panel/panel-addto-dialog.c:368
-msgid "Custom Application Launcher"
-msgstr "Benutzerdefinierter Anwendungsstarter"
-
-#: gnome-panel/panel-addto-dialog.c:369
-msgid "Create a new launcher"
-msgstr "Einen neuen Starter anlegen"
-
-#: gnome-panel/panel-addto-dialog.c:378
-msgid "Application Launcher..."
-msgstr "Anwendungsstarter …"
-
-#: gnome-panel/panel-addto-dialog.c:379
-msgid "Copy a launcher from the applications menu"
-msgstr "Einen Anwendungsstarter aus dem Anwendungsmenü kopieren"
-
-#: gnome-panel/panel-addto-dialog.c:920
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "Wählen Sie ein _Objekt, das zu »%s« hinzugefügt werden soll:"
-
-#: gnome-panel/panel-addto-dialog.c:924
-msgid "Find an _item to add to the panel:"
-msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
-
-#: gnome-panel/panel-addto-dialog.c:1046
-msgid "_Forward"
-msgstr "_Weiter"
-
-#: gnome-panel/panel-addto-dialog.c:1049 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "_Hinzufügen"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "Wählen Sie ein Objekt, das zum Panel hinzugefügt werden soll:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "_Zurück"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:653
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "S_chließen"
-
-#: gnome-panel/panel-applet-frame.c:771
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Das Panel ist beim Laden von »%s« auf ein Problem gestoßen."
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:787
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Wollen Sie das Applet aus Ihrer Konfiguration löschen?"
 
-#: gnome-panel/panel-applet-frame.c:790
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "_Nicht löschen"
 
-#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "Lö_schen"
 
-#: gnome-panel/panel.c:414
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "Adresse öffnen: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1295,18 +1080,18 @@ msgstr "»%s« öffnen"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Den persönlichen Ordner öffnen"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Rechner"
 
 #. name
-#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1315,20 +1100,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Netzwerk"
 
 #. name
-#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Lokale und als Lesezeichen gespeicherte Orte durchsuchen"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Dieses Panel löschen?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1336,129 +1121,42 @@ msgstr ""
 "Beim Löschen eines Panels gehen seine\n"
 "gesamten Einstellungen verloren."
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "Abbre_chen"
+
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Dieses Panel konnte nicht gelöscht werden"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "Es muss immer mindestens ein Panel vorhanden sein."
 
-#: gnome-panel/panel-context-menu.c:138
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "Zum Panel _hinzufügen …"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "Ei_genschaften"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "Dieses Panel _löschen"
 
-#: gnome-panel/panel-context-menu.c:166
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "Panel a_nlegen"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Anwendung"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Anwendung im Terminal"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Ort"
-
-# CHECK
-#. Type
-#: gnome-panel/panel-ditem-editor.c:608
-msgid "_Type:"
-msgstr "_Typ:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:615
-msgid "_Name:"
-msgstr "_Name:"
-
-#: gnome-panel/panel-ditem-editor.c:633
-msgid "_Browse..."
-msgstr "_Durchsuchen …"
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:640
-msgid "Co_mment:"
-msgstr "Ko_mmentar:"
-
-#: gnome-panel/panel-ditem-editor.c:647
-msgid "_Revert"
-msgstr "Zu_rücksetzen"
-
-#: gnome-panel/panel-ditem-editor.c:659 gnome-panel/panel-run-dialog.c:1302
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_OK"
-
-#: gnome-panel/panel-ditem-editor.c:958
-msgid "Choose an application..."
-msgstr "Anwendung auswählen …"
-
-#: gnome-panel/panel-ditem-editor.c:962
-msgid "Choose a file..."
-msgstr "Datei auswählen …"
-
-#: gnome-panel/panel-ditem-editor.c:1127 gnome-panel/panel-ditem-editor.c:1136
-msgid "Comm_and:"
-msgstr "_Befehl:"
-
-#: gnome-panel/panel-ditem-editor.c:1145
-msgid "_Location:"
-msgstr "_Ort:"
-
-#: gnome-panel/panel-ditem-editor.c:1309
-msgid "The name of the launcher is not set."
-msgstr "Der Name des Starters ist nicht gesetzt."
-
-#: gnome-panel/panel-ditem-editor.c:1313
-msgid "Could not save directory properties"
-msgstr "Ordner-Eigenschaften konnten nicht gespeichert werden"
-
-#: gnome-panel/panel-ditem-editor.c:1314
-msgid "The name of the directory is not set."
-msgstr "Der Name des Ordners ist nicht gesetzt."
-
-#: gnome-panel/panel-ditem-editor.c:1330
-msgid "The command of the launcher is not set."
-msgstr "Der Befehl des Startes ist nicht gesetzt."
-
-#: gnome-panel/panel-ditem-editor.c:1333
-msgid "The location of the launcher is not set."
-msgstr "Der Ort des Starters ist nicht gesetzt."
-
-#: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Klicken Sie auf ein Fenster, um das Beenden dieser Anwendung zu erzwingen. "
-"Drücken Sie die Escape-Taste, um abzubrechen."
-
-# CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
-# 	  ("schlecht benehmen")
-#: gnome-panel/panel-force-quit.c:209
-msgid "Force this application to exit?"
-msgstr "Das Beenden dieser Anwendung erzwingen?"
-
-#: gnome-panel/panel-force-quit.c:212
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Wenn Sie das Beenden einer Anwendung erzwingen, gehen die Änderungen in "
-"allen geöffneten Dokumenten verloren."
-
-#: gnome-panel/panel-force-quit.c:219
-msgid "_Force quit"
-msgstr "Beenden _erzwingen"
-
-#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "Initiale Panel-Anordnung konnte nicht erstellt werden.\n"
 
@@ -1481,6 +1179,10 @@ msgstr "»%s« konnte nicht aus UTF-8 konvertiert werden"
 #: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Wählen Sie eine an den Befehl anzuhängende Datei …"
+
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_OK"
 
 #: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
@@ -1619,23 +1321,18 @@ msgstr "Rechtes Panel, freischwebend"
 msgid "Right Edge Panel"
 msgstr "Rechtes Kanten-Panel"
 
-#: gnome-panel/panel-util.c:264
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "Symbol »%s« konnte nicht gefunden werden"
-
-#: gnome-panel/panel-util.c:507
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "Datei"
 
-#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Persönlicher Ordner"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Dateisystem"
 
@@ -1648,22 +1345,167 @@ msgstr "Dateisystem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:128
+#: libgnome-panel/gp-initial-setup-dialog.c:167
 msgid "Initial Setup"
 msgstr "Ersteinrichtung"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:132
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:136
+#: libgnome-panel/gp-initial-setup-dialog.c:175
 msgid "Done"
 msgstr "Fertig"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "Das Hilfedokument »%s« konnte nicht dargestellt werden"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Fehler beim Darstellen des Hilfedokuments"
+
+#: libgnome-panel/gp-module.c:697
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr "Das Backend »%s« wird nicht unterstützt."
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Beenden erzwingen"
+
+# CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
+# 	  ("schlecht benehmen")
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1003
+msgid "Lock Screen"
+msgstr "Bildschirm sperren"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1004
+msgid "Protect your computer from unauthorized use"
+msgstr "Den Rechner vor unbefugtem Zugriff schützen"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:982
+msgid "Log Out"
+msgstr "Abmelden"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:983
+msgid "Log out of this session to log in as a different user"
+msgstr ""
+"Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Anwendung ausführen …"
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr ""
+"Eine Anwendung durch Eingabe eines Befehls oder Auswahl aus einer Liste "
+"ausführen"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1115
+msgid "Power Off"
+msgstr "Ausschalten"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1116
+msgid "Power off the computer"
+msgstr "Den Rechner ausschalten"
+
+#: modules/action-button/gp-force-quit-applet.c:134
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Ist deaktiviert, weil die Einstellung »disable-force-quit« im GSettings-"
+"Schema »org.gnome.gnome-panel.lockdown« auf wahr gesetzt ist."
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Anwendung konnte nicht gestartet werden"
+
+#: modules/action-button/gp-lock-screen-applet.c:434
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Ist deaktiviert, weil die Einstellung »disable-lock-screen« im GSettings-"
+"Schema »org.gnome.desktop.lockdown« auf wahr gesetzt ist."
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "Bildschirm _sperren"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "Bildschirmschoner _aktivieren"
+
+#: modules/action-button/gp-logout-applet.c:222
+#: modules/action-button/gp-shutdown-applet.c:266
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+"Ist deaktiviert, weil die Einstellung »disable-log-out« im GSettings-Schema "
+"»org.gnome.desktop.lockdown« auf wahr gesetzt ist."
+
+#: modules/action-button/gp-run-applet.c:135
+#: modules/launcher/gp-launcher-module.c:33
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Ist deaktiviert, weil die Einstellung »disable-command-line« im GSettings-"
+"Schema »org.gnome.desktop.lockdown« auf wahr gesetzt ist."
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Klicken Sie auf ein Fenster, um das Beenden dieser Anwendung zu erzwingen. "
+"Drücken Sie die Escape-Taste, um abzubrechen."
+
+# CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
+# 	  ("schlecht benehmen")
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Das Beenden dieser Anwendung erzwingen?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Wenn Sie das Beenden einer Anwendung erzwingen, gehen die Änderungen in "
+"allen geöffneten Dokumenten verloren."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "Beenden _erzwingen"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1767,64 +1609,55 @@ msgstr "Rechner-Uhr"
 msgid "Failed to open the time settings"
 msgstr "Zeiteinstellungen konnten nicht geöffnet werden"
 
-#: modules/clock/clock-applet.c:1555 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "Das Hilfedokument »%s« konnte nicht dargestellt werden"
-
-#: modules/clock/clock-applet.c:1584 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Fehler beim Darstellen des Hilfedokuments"
-
-#: modules/clock/clock-applet.c:1633
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Ort wählen"
 
-#: modules/clock/clock-applet.c:1712
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Ort bearbeiten"
 
-#: modules/clock/clock-applet.c:1748 modules/clock/clock-applet.c:1756
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Vorgabe"
 
-#: modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1750
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1757
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Meter pro Sekunde (m/s)"
 
-#: modules/clock/clock-applet.c:1758
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer pro Stunde (km/h)"
 
-#: modules/clock/clock-applet.c:1759
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Meilen pro Stunde (mph)"
 
-#: modules/clock/clock-applet.c:1760
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Knoten"
 
-#: modules/clock/clock-applet.c:1761
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "Beaufort-Skala"
 
-#: modules/clock/clock-applet.c:1814
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Stadtname"
 
-#: modules/clock/clock-applet.c:1818
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Stadt-Zeitzone"
 
@@ -1966,6 +1799,12 @@ msgstr "_Hilfe"
 msgid "Time _Settings"
 msgstr "Zeit_einstellungen"
 
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "S_chließen"
+
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Uhr-Format"
@@ -1997,6 +1836,10 @@ msgstr "_Wetter anzeigen"
 #: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "_Temperatur anzeigen"
+
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Hinzufügen"
 
 #: modules/clock/clock.ui:697
 msgid "_Edit"
@@ -2030,7 +1873,7 @@ msgstr "_Windgeschwindigkeitseinheit:"
 msgid "Weather"
 msgstr "Wetter"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -2045,26 +1888,26 @@ msgstr ""
 "Wir bitten Sie nachdrücklich, %s nicht für etwas zu verwenden,\n"
 "das dieses Applet irgendwie »praktisch« oder »nützlich« machen könnte."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s, der Fisch"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s, der Fisch - ein zeitgenössisches Orakel"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "Der auszuführende Befehl konnte nicht gefunden werden"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s, der Fisch, sagt:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2075,17 +1918,17 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "Erneut _sprechen"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr ""
 "Der Konfigurationsbefehl funktioniert nicht mehr und wurde ersetzt durch: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2096,7 +1939,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2107,15 +1950,15 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: modules/fish/fish-applet.c:1121
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "Das Wasser muss gewechselt werden"
 
-#: modules/fish/fish-applet.c:1123
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Man beachte das heutige Datum!"
 
-#: modules/fish/fish-applet.c:1217
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s, der wahrsagende Fisch"
@@ -2164,13 +2007,215 @@ msgstr "Sekunden"
 msgid "_Rotate on vertical panels"
 msgstr "Auf vertikalen Panels _drehen"
 
-#: modules/menu/gp-lock-logout.c:967
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "_Starten"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Anwendung"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Anwendung im Terminal"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Ordner"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Datei"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+msgid "Choose Icon File"
+msgstr "Symboldatei auswählen"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "Ö_ffnen"
+
+#: modules/launcher/gp-editor.c:347
+msgid "Choose Icon Name"
+msgstr "Symbolname auswählen"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Anwendung auswählen …"
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+msgid "Choose a directory..."
+msgstr "Ordner auswählen …"
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Datei auswählen …"
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "_Befehl:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "_Ort:"
+
+# CHECK
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Typ:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Name:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Durchsuchen …"
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "Ko_mmentar:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+msgid "All"
+msgstr "Alle"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Symbolname auswählen"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Auswählen"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Kontext:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+msgid "Icon Names:"
+msgstr "Symbolnamen:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Nur Standardsymbole anzeigen"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(leer)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr "Die Befehlszeile »%s« kann nicht ausgeführt werden."
+
+#: modules/launcher/gp-launcher-applet.c:885
+msgid "Could not open location"
+msgstr "Der Ort kann nicht geöffnet werden"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+msgid "Failed to load key file “%s”: %s"
+msgstr "Die Schlüsseldatei »%s« konnte nicht geladen werden: %s"
+
+#: modules/launcher/gp-launcher-module.c:57
+msgid "Custom Application Launcher"
+msgstr "Benutzerdefinierter Anwendungsstarter"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Create a new launcher"
+msgstr "Einen neuen Starter anlegen"
+
+#: modules/launcher/gp-launcher-module.c:67
+msgid "Application Launcher..."
+msgstr "Anwendungsstarter …"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Copy a launcher from the applications menu"
+msgstr "Einen Anwendungsstarter aus dem Anwendungsmenü kopieren"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "Starter konnte nicht gespeichert werden"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "Zu_rücksetzen"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Starter-Eigenschaften"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr "Der Starter startet mit der angeforderten Gruppe »%s« nicht."
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr "Der Starter hat den unzulässigen Wert »%s« für den Type-Schlüssel."
+
+#: modules/launcher/gp-launcher-utils.c:156
+msgid "The icon of the launcher is not set."
+msgstr "Für den Starter ist kein Symbol gesetzt."
+
+#: modules/launcher/gp-launcher-utils.c:164
+msgid "The type of the launcher is not set."
+msgstr "Der Typ des Starters ist nicht gesetzt."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "Der Typ des Starters muss »%s« oder »%s« sein."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "Der Name des Starters ist nicht gesetzt."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "Der Befehl des Startes ist nicht gesetzt."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "Der Ort des Starters ist nicht gesetzt."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Speicherort des Starters"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+msgid "The location of the .desktop file describing the launcher."
+msgstr "Der Speicherort der .desktop-Datei, die den Starter beschreibt."
+
+#: modules/menu/gp-lock-logout.c:966
 msgid "Switch User"
 msgstr "Benutzer wechseln"
 
-#: modules/menu/gp-lock-logout.c:1077
+#: modules/menu/gp-lock-logout.c:1049
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+#: modules/menu/gp-lock-logout.c:1065
+msgid "Suspend"
+msgstr "Bereitschaft"
+
+#: modules/menu/gp-lock-logout.c:1081
 msgid "Hybrid Sleep"
 msgstr "Hybrid-Ruhezustand"
+
+#: modules/menu/gp-lock-logout.c:1099
+msgid "Restart"
+msgstr "Neu starten"
+
+#: modules/menu/gp-lock-logout.c:1100
+msgid "Restart the computer"
+msgstr "Den Rechner neustarten"
 
 #: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
@@ -2181,7 +2226,7 @@ msgid "Browse and run installed applications"
 msgstr "Installierte Anwendungen durchsuchen und starten"
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Orte"
 
@@ -2203,37 +2248,42 @@ msgstr "Erscheinungsbild und Verhalten des System anpassen oder Hilfe erhalten"
 msgid "Please install the '%s' application."
 msgstr "Bitte installieren Sie die Anwendung »%s«."
 
-#: modules/menu/gp-menu-module.c:381
+#: modules/menu/gp-menu-module.c:375
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:376
 msgid "The main GNOME menu"
 msgstr "Das GNOME-Hauptmenü"
 
-#: modules/menu/gp-menu-module.c:388
+#: modules/menu/gp-menu-module.c:382
 msgid "Menu Button"
 msgstr "Menüknopf"
 
-#: modules/menu/gp-menu-module.c:389
+#: modules/menu/gp-menu-module.c:383
 msgid "A custom menu button"
 msgstr "Ein benutzerdefinierter Menüknopf"
 
-#: modules/menu/gp-menu-module.c:397
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Menüleiste"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Eine benutzerdefinierte Menüleiste"
 
-#: modules/menu/gp-menu-module.c:404
+#: modules/menu/gp-menu-module.c:398
 msgid "User menu"
 msgstr "Benutzermenü"
 
-#: modules/menu/gp-menu-module.c:405
+#: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
 msgstr "Menü zum Ändern Ihrer Einstellungen und zum Abmelden"
+
+#: modules/menu/gp-menu-utils.c:436
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "»%s« konnte nicht gestartet werden"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
@@ -2538,6 +2588,65 @@ msgstr "_Namen der Arbeitsflächen im Umschalter anzeigen"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Arbeitsflächen"
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "Could not show this URL"
+#~ msgstr "Diese Adresse konnte nicht angezeigt werden"
+
+#~ msgid "No URL was specified."
+#~ msgstr "Es wurde keine Adresse festgelegt."
+
+#~ msgid "Could not use dropped item"
+#~ msgstr "Übergebenes Objekt konnte nicht verarbeitet werden"
+
+#~ msgid "No URI provided for panel launcher desktop file\n"
+#~ msgstr "Keine Adresse für Panel-Starter-Arbeitsflächen-Datei angegeben\n"
+
+#~ msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+#~ msgstr ""
+#~ "Arbeitsflächen-Datei %s konnte nicht für Panel-Starter %s geöffnet werden"
+#~ "%s\n"
+
+#~ msgid "Launcher location is not set, cannot load launcher\n"
+#~ msgstr ""
+#~ "Ort des Starters ist nicht festgelegt; Starter kann nicht geladen werden\n"
+
+#~ msgid "Create Launcher"
+#~ msgstr "Einen Starter anlegen"
+
+#~ msgid "Search for Files..."
+#~ msgstr "Nach Dateien suchen …"
+
+#~ msgid "Locate documents and folders on this computer by name or content"
+#~ msgstr ""
+#~ "Auf diesem Rechner nach Namen und Inhalten von Dokumenten und Ordnern "
+#~ "suchen"
+
+#~ msgid "Hybrid sleep"
+#~ msgstr "Hybrid-Ruhezustand"
+
+#~ msgid "Find an _item to add to the panel:"
+#~ msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
+
+#~ msgid "_Forward"
+#~ msgstr "_Weiter"
+
+#~ msgid "_Back"
+#~ msgstr "_Zurück"
+
+#~ msgid "Location"
+#~ msgstr "Ort"
+
+#~ msgid "Could not save directory properties"
+#~ msgstr "Ordner-Eigenschaften konnten nicht gespeichert werden"
+
+#~ msgid "The name of the directory is not set."
+#~ msgstr "Der Name des Ordners ist nicht gesetzt."
+
+#~ msgid "Icon '%s' not found"
+#~ msgstr "Symbol »%s« konnte nicht gefunden werden"
 
 #~ msgid "Icon size in the menus"
 #~ msgstr "Symbolgröße in den Menüs"
