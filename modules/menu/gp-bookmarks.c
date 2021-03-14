@@ -58,7 +58,7 @@ gp_bookmark_free (gpointer data)
   g_clear_pointer (&bookmark->label, g_free);
   g_clear_pointer (&bookmark->tooltip, g_free);
 
-  g_slice_free (GpBookmark, bookmark);
+  g_free (bookmark);
 }
 
 static GpBookmark *
@@ -91,7 +91,7 @@ gp_bookmark_new (const gchar *uri,
       return NULL;
     }
 
-  bookmark = g_slice_new0 (GpBookmark);
+  bookmark = g_new0 (GpBookmark, 1);
 
   bookmark->file = file;
   bookmark->icon = gp_menu_utils_get_icon_for_file (file);
