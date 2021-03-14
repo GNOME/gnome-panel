@@ -505,7 +505,14 @@ convert_time_to_str (time_t now, GDesktopClockFormat clock_format, const char *t
 		format = _("%H:%M");
 	}
 
-	tz = g_time_zone_new (timezone);
+	tz = g_time_zone_new_identifier (timezone);
+
+	if (tz == NULL) {
+		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
+		           timezone);
+
+		tz = g_time_zone_new_utc ();
+	}
 
 	utc = g_date_time_new_from_unix_utc (now);
 	local = g_date_time_to_timezone (utc, tz);

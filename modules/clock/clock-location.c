@@ -265,15 +265,25 @@ GDateTime *
 clock_location_localtime (ClockLocation *loc)
 {
 	GWeatherTimezone *wtz;
+	const char *tzid;
 	GTimeZone *tz;
 	GDateTime *dt;
 
 	wtz = clock_location_get_gweather_timezone (loc);
+	tzid = gweather_timezone_get_tzid (wtz);
 
-	tz = g_time_zone_new (gweather_timezone_get_tzid (wtz));
+	tz = g_time_zone_new_identifier (tzid);
+
+	if (tz == NULL) {
+		g_warning ("Invalid timezone identifier - %s, falling back to UTC!",
+		           tzid);
+
+		tz = g_time_zone_new_utc ();
+	}
+
 	dt = g_date_time_new_now (tz);
-
 	g_time_zone_unref (tz);
+
 	return dt;
 }
 
