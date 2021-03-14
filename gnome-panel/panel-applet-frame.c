@@ -819,7 +819,7 @@ panel_applet_frame_activating_free (PanelAppletFrameActivating *frame_act)
 {
 	g_object_unref (frame_act->settings);
 	g_free (frame_act->id);
-	g_slice_free (PanelAppletFrameActivating, frame_act);
+	g_free (frame_act);
 }
 
 PanelOrientation
@@ -971,7 +971,7 @@ panel_applet_frame_load_helper (const gchar *iid,
 		return;
 	}
 
-	frame_act = g_slice_new0 (PanelAppletFrameActivating);
+	frame_act = g_new0 (PanelAppletFrameActivating, 1);
 	frame_act->panel    = panel;
 	frame_act->id       = g_strdup (id);
 	frame_act->settings = g_object_ref (settings);
