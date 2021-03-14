@@ -390,7 +390,7 @@ _panel_lockdown_notify_data_destroy (gpointer data)
         g_signal_handler_disconnect (notify_data->lockdown,
                                      notify_data->handler_id);
 
-        g_slice_free (PanelLockdownNotifyData, notify_data);
+        g_free (notify_data);
 }
 
 static void
@@ -424,7 +424,7 @@ panel_lockdown_on_notify (PanelLockdown       *lockdown,
         g_return_if_fail (G_IS_OBJECT (object_while_alive));
         g_return_if_fail (callback != NULL);
 
-        notify_data = g_slice_new0 (PanelLockdownNotifyData);
+        notify_data = g_new0 (PanelLockdownNotifyData, 1);
 
         notify_data->lockdown      = lockdown;
         notify_data->callback      = callback;
