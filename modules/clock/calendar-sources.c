@@ -100,7 +100,7 @@ client_data_free (ClientData *data)
 {
   g_signal_handler_disconnect (data->client, data->backend_died_id);
   g_object_unref (data->client);
-  g_slice_free (ClientData, data);
+  g_free (data);
 }
 
 G_DEFINE_TYPE_WITH_PRIVATE (CalendarSources, calendar_sources, G_TYPE_OBJECT)
@@ -268,7 +268,7 @@ create_client_for_source (ESource              *source,
       return;
     }
 
-  data = g_slice_new0 (ClientData);
+  data = g_new0 (ClientData, 1);
   data->client = E_CAL_CLIENT (client); /* takes ownership */
   data->backend_died_id = g_signal_connect (client,
                                             "backend-died",
