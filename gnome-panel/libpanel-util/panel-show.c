@@ -90,7 +90,7 @@ _panel_show_mount_async_callback (GObject      *source_object,
 	if (handle->mount_op)
 		g_object_unref (handle->mount_op);
 
-	g_slice_free (PanelShowMountOperationHandle, handle);
+	g_free (handle);
 }
 
 static gboolean
@@ -113,7 +113,7 @@ _panel_show_handle_error (const gchar  *uri,
 		GFile *file;
 		PanelShowMountOperationHandle *handle;
 
-		handle = g_slice_new (PanelShowMountOperationHandle);
+		handle = g_new0 (PanelShowMountOperationHandle, 1);
 		file = g_file_new_for_uri (uri);
 
 		/* If it's not mounted, try to mount it ourselves */

@@ -45,7 +45,7 @@ panel_cleanup_do (void)
 
 		clean = l->data;
 		clean->func (clean->data);
-		g_slice_free (PanelClean, clean);
+		g_free (clean);
 	}
 
 	g_slist_free (cleaner);
@@ -60,7 +60,7 @@ panel_cleanup_register (PanelCleanFunc func,
 
 	g_return_if_fail (func != NULL);
 
-	clean = g_slice_new (PanelClean);
+	clean = g_new0 (PanelClean, 1);
 	clean->func = func;
 	clean->data = data;
 
