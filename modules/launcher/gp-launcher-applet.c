@@ -617,7 +617,7 @@ zoom_timeout_cb (gpointer user_data)
       gtk_widget_destroy (zoom->win);
       g_object_unref (zoom->icon);
 
-      g_slice_free (ZoomData, zoom);
+      g_free (zoom);
 
       return G_SOURCE_REMOVE;
     }
@@ -648,7 +648,7 @@ draw_zoom_animation (GpLauncherApplet *self,
   width += 2;
   height += 2;
 
-  zoom = g_slice_new (ZoomData);
+  zoom = g_new0 (ZoomData, 1);
 
   zoom->size = MIN (width, height);
   zoom->size_start = zoom->size;
