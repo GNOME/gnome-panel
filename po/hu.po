@@ -1,5 +1,5 @@
 # Hungarian translation for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 #
 # Szabolcs Ban <shooby at gnome dot hu>, 1998, 1999, 2000, 2001.
@@ -11,20 +11,20 @@
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2018.
 # Mate ORY <orymate at gmail d0t com>, 2006.
 # Nyitrai István <sianis at gmail dot com>, 2008.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2016, 2017, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2019-12-23 12:46+0000\n"
-"PO-Revision-Date: 2020-02-17 23:21+0100\n"
+"POT-Creation-Date: 2021-03-14 14:52+0000\n"
+"PO-Revision-Date: 2021-03-17 12:14+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 19.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -426,18 +426,6 @@ msgstr ""
 "Ha ez be van állítva, az automatikus kiegészítés elérhető lesz az "
 "„Alkalmazás futtatása” párbeszédablakban."
 
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:5
-msgid "Launcher location"
-msgstr "Parancsikon helye"
-
-#: data/org.gnome.gnome-panel.launcher.gschema.xml:6
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
-msgstr ""
-"Az ezen parancsikont leíró .desktop fájl helye. Ez a kulcs csak akkor "
-"lényeges, ha az object_type kulcs értéke „launcher-object”."
-
 #: data/org.gnome.gnome-panel.object.gschema.xml:5
 msgid "Object IID"
 msgstr "Objektum IID-je"
@@ -822,23 +810,7 @@ msgstr "Egyéni szövegszín használata"
 msgid "Text Color"
 msgstr "Szövegszín"
 
-#: gnome-panel/applet.c:324
-msgid "???"
-msgstr "???"
-
-#: gnome-panel/applet.c:462
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:199
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Move"
-msgstr "Át_helyezés"
-
-#: gnome-panel/applet.c:469
-#: gnome-panel/libpanel-applet-private/gp-applet-frame.c:206
-#: libpanel-applet/panel-applet.c:1200
-msgid "_Remove From Panel"
-msgstr "_Eltávolítás a panelról"
-
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/main.c:175
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
 msgid "Panel"
 msgstr "Panel"
 
@@ -850,29 +822,57 @@ msgstr ""
 "Más alkalmazások indítása és különböző segédprogramok biztosítása ablakok "
 "kezeléséhez, az idő megjelenítéséhez, stb."
 
-#: gnome-panel/gp-add-applet-window.c:137
-msgid "Help"
-msgstr "Súgó"
-
-#: gnome-panel/gp-add-applet-window.c:148
-msgid "About"
-msgstr "Névjegy"
-
-#: gnome-panel/gp-add-applet-window.c:193
-msgid "Add"
-msgstr "Hozzáadás"
-
-#: gnome-panel/gp-add-applet-window.c:387 gnome-panel/panel-addto-dialog.ui:16
+#: gnome-panel/gp-add-applet-window.c:368
 msgid "Add to Panel"
 msgstr "Hozzáadás a panelhez"
 
-#: gnome-panel/gp-add-applet-window.c:560
+#: gnome-panel/gp-add-applet-window.c:541
 msgid "No applets found"
 msgstr "Nem találhatók kisalkalmazások"
+
+#: gnome-panel/gp-add-applet-window.c:556
+#, c-format
+#| msgid "Find an _item to add to \"%s\":"
+msgid "Find an item to add to “%s”"
+msgstr "A következőhöz adandó elem keresése: „%s”"
+
+#: gnome-panel/gp-add-applet-window.c:558
+#| msgid "Find an item to add to the panel:"
+msgid "Find an item to add to the panel"
+msgstr "A panelhez adandó elem keresése"
+
+#: gnome-panel/gp-applet-manager.c:426
+msgid ""
+"Disabled because this applet is listed in “disabled-applets” setting in “org."
+"gnome.gnome-panel.lockdown” GSettings schema."
+msgstr ""
+"Letiltva, mert ez a kisalkalmazás fel van sorolva az"
+" „org.gnome.gnome-panel.lockdown” GSettings sémában lévő „disabled-applets”"
+" beállításban."
+
+#: gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Súgó"
+
+#: gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Névjegy"
+
+#: gnome-panel/gp-applet-row.c:270
+msgid "Add"
+msgstr "Hozzáadás"
 
 #: gnome-panel/gp-arrow-button.c:120
 msgid "Hide Panel"
 msgstr "Panel elrejtése"
+
+#: gnome-panel/gp-main.c:50
+msgid "Replace a currently running panel"
+msgstr "Jelenleg futó panel cseréje"
+
+#: gnome-panel/gp-main.c:56
+msgid "Print version"
+msgstr "Verzió kiírása"
 
 #: gnome-panel/gp-properties-dialog.c:213
 msgctxt "Orientation"
@@ -972,263 +972,57 @@ msgstr "Szövegszín:"
 msgid "Theme"
 msgstr "Téma"
 
-#: gnome-panel/launcher.c:339
-msgid "Could not show this URL"
-msgstr "Ez az URL nem jeleníthető meg"
-
-#: gnome-panel/launcher.c:340
-msgid "No URL was specified."
-msgstr "Nem adott meg URL-címet."
-
-#: gnome-panel/launcher.c:378 gnome-panel/libpanel-util/panel-launch.c:50
-msgid "Could not launch application"
-msgstr "Az alkalmazás elindítása sikertelen"
-
-#: gnome-panel/launcher.c:422
-msgid "Could not use dropped item"
-msgstr "Nem használható az ejtett elem"
-
-#: gnome-panel/launcher.c:620
-msgid "No URI provided for panel launcher desktop file\n"
-msgstr "Nincs URI a panelparancsikon .desktop fájljához\n"
-
-#: gnome-panel/launcher.c:665
-#, c-format
-msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "%s desktop fájl megnyitása (%s%s panelikonhoz) sikertelen\n"
-
-#: gnome-panel/launcher.c:935
-msgid "Launcher Properties"
-msgstr "Parancsikon tulajdonságai"
-
-#: gnome-panel/launcher.c:1000
-msgid "_Launch"
-msgstr "I_ndítás"
-
-#: gnome-panel/launcher.c:1005 gnome-panel/panel-action-button.c:167
-#: gnome-panel/panel-context-menu.c:147
-msgid "_Properties"
-msgstr "T_ulajdonságok"
-
-#: gnome-panel/launcher.c:1036
-msgid "Launcher location is not set, cannot load launcher\n"
-msgstr "A parancsikon helye nincs beállítva, a parancsikon nem tölthető be\n"
-
-#: gnome-panel/launcher.c:1095
-msgid "Create Launcher"
-msgstr "Parancsikon létrehozása"
-
-#: gnome-panel/launcher.c:1166 gnome-panel/panel-ditem-editor.c:1308
-#: gnome-panel/panel-ditem-editor.c:1342 gnome-panel/panel-ditem-editor.c:1373
-msgid "Could not save launcher"
-msgstr "A parancsikon nem menthető"
-
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
 #. * the following bug gets fixed:
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:808
+#: gnome-panel/panel-applet-frame.c:941
 msgid "Error"
 msgstr "Hiba"
 
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:376
-msgid "Choose an icon"
-msgstr "Válasszon ikont"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:379 gnome-panel/panel.c:1261
-#: gnome-panel/panel-ditem-editor.c:650 gnome-panel/panel-ditem-editor.c:992
-#: gnome-panel/panel-force-quit.c:231 gnome-panel/panel-run-dialog.c:1291
-#: gnome-panel/panel-run-dialog.ui:236 modules/clock/clock.ui:67
-#: modules/menu/gp-recent-menu.c:205
-msgid "_Cancel"
-msgstr "_Mégse"
-
-#: gnome-panel/libpanel-util/panel-icon-chooser.c:381
-#: gnome-panel/panel-ditem-editor.c:994
-msgid "_Open"
-msgstr "_Megnyitás"
-
-#: gnome-panel/libpanel-util/panel-launch.c:47 modules/menu/gp-menu-utils.c:353
-#, c-format
-msgid "Could not launch '%s'"
-msgstr "A(z) „%s” parancs nem futtatható"
-
-#: gnome-panel/libpanel-util/panel-show.c:46 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:373
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "A(z) „%s” hely nem nyitható meg"
 
-#: gnome-panel/main.c:37
-msgid "Replace a currently running panel"
-msgstr "Jelenleg futó panel cseréje"
+#: gnome-panel/panel-applet-frame.c:396
+msgid "_Move"
+msgstr "Át_helyezés"
 
-#: gnome-panel/main.c:38
-msgid "Print version"
-msgstr "Verzió kiírása"
+#: gnome-panel/panel-applet-frame.c:403
+msgid "_Remove From Panel"
+msgstr "_Eltávolítás a panelról"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "_Lock Screen"
-msgstr "_Képernyő zárolása"
-
-#: gnome-panel/panel-action-button.c:162
-msgid "_Activate Screensaver"
-msgstr "Képernyővédő _bekapcsolása"
-
-#: gnome-panel/panel-action-button.c:354 modules/menu/gp-lock-logout.c:1001
-msgid "Lock Screen"
-msgstr "Képernyő zárolása"
-
-#: gnome-panel/panel-action-button.c:355 modules/menu/gp-lock-logout.c:1002
-msgid "Protect your computer from unauthorized use"
-msgstr "A számítógép megvédése a jogosulatlan használattól"
-
-#. when changing one of those two strings, don't forget to
-#. * update the ones in panel-menu-items.c (look for
-#. * "1" (msgctxt: "panel:showusername"))
-#: gnome-panel/panel-action-button.c:368 modules/menu/gp-lock-logout.c:984
-msgid "Log Out"
-msgstr "Kijelentkezés"
-
-#: gnome-panel/panel-action-button.c:369 modules/menu/gp-lock-logout.c:985
-msgid "Log out of this session to log in as a different user"
-msgstr "Kijelentkezés a munkamenetből, más felhasználóként való belépéshez"
-
-#: gnome-panel/panel-action-button.c:377
-msgid "Run Application..."
-msgstr "Alkalmazás futtatása…"
-
-#: gnome-panel/panel-action-button.c:378
-msgid "Run an application by typing a command or choosing from a list"
-msgstr "Alkalmazás futtatása parancs beírásával vagy listából kiválasztva"
-
-#: gnome-panel/panel-action-button.c:386
-msgid "Search for Files..."
-msgstr "Fájlok keresése…"
-
-#: gnome-panel/panel-action-button.c:387
-msgid "Locate documents and folders on this computer by name or content"
-msgstr ""
-"Dokumentumok és mappák keresése a számítógépen név vagy tartalom szerint"
-
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-force-quit.c:240
-msgid "Force Quit"
-msgstr "Erőltetett kilépés"
-
-#: gnome-panel/panel-action-button.c:395
-msgid "Force a misbehaving application to quit"
-msgstr "Hibásan működő alkalmazás kilépésre kényszerítése"
-
-#: gnome-panel/panel-action-button.c:403 modules/menu/gp-lock-logout.c:1043
-msgid "Hibernate"
-msgstr "Hibernálás"
-
-#: gnome-panel/panel-action-button.c:412 modules/menu/gp-lock-logout.c:1060
-msgid "Suspend"
-msgstr "Felfüggesztés"
-
-#: gnome-panel/panel-action-button.c:421
-msgid "Hybrid sleep"
-msgstr "Hibrid alvás"
-
-#: gnome-panel/panel-action-button.c:430 modules/menu/gp-lock-logout.c:1096
-msgid "Restart"
-msgstr "Újraindítás"
-
-#: gnome-panel/panel-action-button.c:431 modules/menu/gp-lock-logout.c:1097
-msgid "Restart the computer"
-msgstr "A számítógép újraindítása"
-
-#: gnome-panel/panel-action-button.c:439 modules/menu/gp-lock-logout.c:1113
-msgid "Power Off"
-msgstr "Kikapcsolás"
-
-#: gnome-panel/panel-action-button.c:440 modules/menu/gp-lock-logout.c:1114
-msgid "Power off the computer"
-msgstr "A számítógép kikapcsolása"
-
-#: gnome-panel/panel-addto-dialog.c:162 modules/menu/gp-menu-module.c:56
-msgid "(empty)"
-msgstr "(üres)"
-
-#: gnome-panel/panel-addto-dialog.c:361
-msgid "Custom Application Launcher"
-msgstr "Egyedi parancsikon"
-
-#: gnome-panel/panel-addto-dialog.c:362
-msgid "Create a new launcher"
-msgstr "Új parancsikon létrehozása"
-
-#: gnome-panel/panel-addto-dialog.c:371
-msgid "Application Launcher..."
-msgstr "Parancsikon…"
-
-#: gnome-panel/panel-addto-dialog.c:372
-msgid "Copy a launcher from the applications menu"
-msgstr "Parancsikon másolása az Alkalmazások menüből"
-
-#: gnome-panel/panel-addto-dialog.c:913
-#, c-format
-msgid "Find an _item to add to \"%s\":"
-msgstr "A következőhöz adandó _elem keresése: „%s”:"
-
-#: gnome-panel/panel-addto-dialog.c:917
-msgid "Find an _item to add to the panel:"
-msgstr "A panelhez adandó _elem keresése:"
-
-#: gnome-panel/panel-addto-dialog.c:1039
-msgid "_Forward"
-msgstr "_Tovább"
-
-#: gnome-panel/panel-addto-dialog.c:1042 gnome-panel/panel-addto-dialog.ui:158
-#: modules/clock/clock.ui:682
-msgid "_Add"
-msgstr "_Hozzáadás"
-
-#: gnome-panel/panel-addto-dialog.ui:38
-msgid "Find an item to add to the panel:"
-msgstr "A panelhez adandó elem keresése:"
-
-#: gnome-panel/panel-addto-dialog.ui:142
-msgid "_Back"
-msgstr "_Vissza"
-
-#: gnome-panel/panel-addto-dialog.ui:173 gnome-panel/panel-ditem-editor.c:647
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:622
-#: modules/fish/fish.ui:51 modules/wncklet/window-list.ui:285
-#: modules/wncklet/workspace-switcher.ui:37
-msgid "_Close"
-msgstr "_Bezárás"
-
-#: gnome-panel/panel-applet-frame.c:771
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "A(z) „%s” betöltése közben a panel hibát érzékelt."
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:916
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:787
+#: gnome-panel/panel-applet-frame.c:920
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Törli ezt a kisalkalmazást a beállításaiból?"
 
-#: gnome-panel/panel-applet-frame.c:790
+#: gnome-panel/panel-applet-frame.c:923
 msgid "D_on't Delete"
 msgstr "Ne _törölje"
 
-#: gnome-panel/panel-applet-frame.c:791 gnome-panel/panel.c:1262
+#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
 msgid "_Delete"
 msgstr "_Törlés"
 
-#: gnome-panel/panel.c:414
+#: gnome-panel/panel.c:604
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:465 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -1237,18 +1031,18 @@ msgstr "„%s” megnyitása"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:513 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "A személyes mappájának megnyitása"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:522 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Számítógép"
 
 #. name
-#: gnome-panel/panel.c:523 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -1256,149 +1050,65 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:530 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Hálózat"
 
 #. name
-#: gnome-panel/panel.c:531 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Könyvjelzőzött és helyi hálózati helyek tallózása"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1267
 msgid "Delete this panel?"
 msgstr "Törli ezt a panelt?"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1271
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr "A panel törlésekor a panel és annak beállításai elvesznek."
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel-run-dialog.ui:236
+#: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
+#: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
+#: modules/menu/gp-recent-menu.c:205
+msgid "_Cancel"
+msgstr "_Mégse"
+
+#: gnome-panel/panel-context-menu.c:60
 msgid "Cannot delete this panel"
 msgstr "Ez a panel nem törölhető"
 
-#: gnome-panel/panel-context-menu.c:60
+#: gnome-panel/panel-context-menu.c:61
 msgid "You must always have at least one panel."
 msgstr "Mindig rendelkeznie kell legalább egy panellel."
 
-#: gnome-panel/panel-context-menu.c:138
+#: gnome-panel/panel-context-menu.c:177
 msgid "_Add to Panel..."
 msgstr "Hozzá_adás a panelhez…"
 
-#: gnome-panel/panel-context-menu.c:154
+#: gnome-panel/panel-context-menu.c:188
+#: modules/action-button/gp-lock-screen-menu.ui:13
+#: modules/launcher/custom-launcher-menu.ui:9
+#: modules/launcher/launcher-menu.ui:9
+msgid "_Properties"
+msgstr "T_ulajdonságok"
+
+#: gnome-panel/panel-context-menu.c:195
 msgid "_Delete This Panel"
 msgstr "Panel _törlése"
 
-#: gnome-panel/panel-context-menu.c:166
+#: gnome-panel/panel-context-menu.c:207
 msgid "_New Panel"
 msgstr "Új _panel"
 
-#: gnome-panel/panel-ditem-editor.c:110
-msgid "Application"
-msgstr "Alkalmazás"
-
-#: gnome-panel/panel-ditem-editor.c:112
-msgid "Application in Terminal"
-msgstr "Alkalmazás terminálban"
-
-#: gnome-panel/panel-ditem-editor.c:114
-msgid "Location"
-msgstr "Hely"
-
-#. Type
-#: gnome-panel/panel-ditem-editor.c:595
-msgid "_Type:"
-msgstr "_Típus:"
-
-#. Name
-#: gnome-panel/panel-ditem-editor.c:602
-msgid "_Name:"
-msgstr "_Név:"
-
-#: gnome-panel/panel-ditem-editor.c:627
-msgid "_Browse..."
-msgstr "_Tallózás…"
-
-#. Comment
-#: gnome-panel/panel-ditem-editor.c:634
-msgid "Co_mment:"
-msgstr "_Megjegyzés:"
-
-#: gnome-panel/panel-ditem-editor.c:641
-msgid "_Revert"
-msgstr "_Visszaállítás"
-
-#: gnome-panel/panel-ditem-editor.c:653 gnome-panel/panel-run-dialog.c:1292
-#: modules/clock/clock.ui:82
-msgid "_OK"
-msgstr "_OK"
-
-#: gnome-panel/panel-ditem-editor.c:961
-msgid "Choose an application..."
-msgstr "Válasszon alkalmazást…"
-
-#: gnome-panel/panel-ditem-editor.c:965
-msgid "Choose a file..."
-msgstr "Válasszon fájlt…"
-
-#: gnome-panel/panel-ditem-editor.c:1128 gnome-panel/panel-ditem-editor.c:1137
-msgid "Comm_and:"
-msgstr "_Parancs:"
-
-#: gnome-panel/panel-ditem-editor.c:1146
-msgid "_Location:"
-msgstr "He_ly:"
-
-#: gnome-panel/panel-ditem-editor.c:1309
-msgid "The name of the launcher is not set."
-msgstr "A parancsikon neve nincs beállítva."
-
-#: gnome-panel/panel-ditem-editor.c:1313
-msgid "Could not save directory properties"
-msgstr "A könyvtár tulajdonságai nem menthetők"
-
-#: gnome-panel/panel-ditem-editor.c:1314
-msgid "The name of the directory is not set."
-msgstr "A könyvtár neve nincs beállítva."
-
-#: gnome-panel/panel-ditem-editor.c:1330
-msgid "The command of the launcher is not set."
-msgstr "A parancsikon parancsa nincs beállítva."
-
-#: gnome-panel/panel-ditem-editor.c:1333
-msgid "The location of the launcher is not set."
-msgstr "A parancsikon helye nincs beállítva."
-
-#: gnome-panel/panel-force-quit.c:75
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Kattintson az ablakra, hogy az alkalmazás bezáródjon. A művelet az <ESC> "
-"billentyűvel szakítható meg."
-
-#: gnome-panel/panel-force-quit.c:223
-msgid "Force this application to exit?"
-msgstr "Kilépésre kényszeríti ezt az alkalmazást?"
-
-#: gnome-panel/panel-force-quit.c:226
-msgid ""
-"If you choose to force an application to exit, unsaved changes in any open "
-"documents in it might get lost."
-msgstr ""
-"Ha az alkalmazást kilépésre kényszeríti, akkor a benne megnyitott "
-"dokumentumok mentetlen változtatásai elveszhetnek."
-
-#: gnome-panel/panel-force-quit.c:233
-msgid "_Force quit"
-msgstr "_Erőltetett kilépés"
-
-#: gnome-panel/panel-layout.c:1133 gnome-panel/panel-layout.c:1148
+#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
 msgid "Cannot create initial panel layout.\n"
 msgstr "A kiinduló panelelrendezés nem hozható létre.\n"
 
-#: gnome-panel/panel-run-dialog.c:424
+#: gnome-panel/panel-run-dialog.c:430
 msgid "Cannot find a terminal, using xterm, even if it may not work"
 msgstr ""
 "Nem található terminál, az xterm lesz használva, még ha az esetleg nem is "
@@ -1409,25 +1119,29 @@ msgstr ""
 msgid "Could not run command '%s'"
 msgstr "A(z) „%s” parancs nem futtatható"
 
-#: gnome-panel/panel-run-dialog.c:529
+#: gnome-panel/panel-run-dialog.c:528
 #, c-format
 msgid "Could not convert '%s' from UTF-8"
 msgstr "Nem alakítható át UTF-8-ból a következő: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1288
+#: gnome-panel/panel-run-dialog.c:1298
 msgid "Choose a file to append to the command..."
 msgstr "Válassza ki a parancshoz hozzáfűzendő fájlt…"
 
-#: gnome-panel/panel-run-dialog.c:1671 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1302 modules/clock/clock.ui:82
+msgid "_OK"
+msgstr "_OK"
+
+#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Válasszon ki egy alkalmazást a leírásának megtekintéséhez."
 
-#: gnome-panel/panel-run-dialog.c:1709
+#: gnome-panel/panel-run-dialog.c:1727
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: „%s”"
 
-#: gnome-panel/panel-run-dialog.c:1742
+#: gnome-panel/panel-run-dialog.c:1760
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1487,87 +1201,82 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1563
+#: gnome-panel/panel-toplevel.c:1560
 msgid "Top Expanded Edge Panel"
 msgstr "Fenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1564
+#: gnome-panel/panel-toplevel.c:1561
 msgid "Top Centered Panel"
 msgstr "Fenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1565
+#: gnome-panel/panel-toplevel.c:1562
 msgid "Top Floating Panel"
 msgstr "Fenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1566
+#: gnome-panel/panel-toplevel.c:1563
 msgid "Top Edge Panel"
 msgstr "Fenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1570
+#: gnome-panel/panel-toplevel.c:1567
 msgid "Bottom Expanded Edge Panel"
 msgstr "Lenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1571
+#: gnome-panel/panel-toplevel.c:1568
 msgid "Bottom Centered Panel"
 msgstr "Lenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1572
+#: gnome-panel/panel-toplevel.c:1569
 msgid "Bottom Floating Panel"
 msgstr "Lenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1573
+#: gnome-panel/panel-toplevel.c:1570
 msgid "Bottom Edge Panel"
 msgstr "Lenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1577
+#: gnome-panel/panel-toplevel.c:1574
 msgid "Left Expanded Edge Panel"
 msgstr "Bal oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1578
+#: gnome-panel/panel-toplevel.c:1575
 msgid "Left Centered Panel"
 msgstr "Bal oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1579
+#: gnome-panel/panel-toplevel.c:1576
 msgid "Left Floating Panel"
 msgstr "Bal oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1580
+#: gnome-panel/panel-toplevel.c:1577
 msgid "Left Edge Panel"
 msgstr "Bal oldali élpanel"
 
-#: gnome-panel/panel-toplevel.c:1584
+#: gnome-panel/panel-toplevel.c:1581
 msgid "Right Expanded Edge Panel"
 msgstr "Jobb oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1585
+#: gnome-panel/panel-toplevel.c:1582
 msgid "Right Centered Panel"
 msgstr "Jobb oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1586
+#: gnome-panel/panel-toplevel.c:1583
 msgid "Right Floating Panel"
 msgstr "Jobb oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1587
+#: gnome-panel/panel-toplevel.c:1584
 msgid "Right Edge Panel"
 msgstr "Jobb oldali élpanel"
 
-#: gnome-panel/panel-util.c:264
-#, c-format
-msgid "Icon '%s' not found"
-msgstr "A(z) „%s” ikon nem található"
-
-#: gnome-panel/panel-util.c:507
+#: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "fájl"
 
-#: gnome-panel/panel-util.c:619 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
 msgid "Home"
 msgstr "Saját mappa"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:628 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
 msgid "File System"
 msgstr "Fájlrendszer"
 
@@ -1580,22 +1289,160 @@ msgstr "Fájlrendszer"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:842 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s, %2$s"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:128
+#: libgnome-panel/gp-initial-setup-dialog.c:167
 msgid "Initial Setup"
 msgstr "Kezdeti beállítások"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:132
+#: libgnome-panel/gp-initial-setup-dialog.c:171
+#: modules/launcher/gp-icon-name-chooser.ui:30
 msgid "Cancel"
 msgstr "Mégse"
 
-#: libgnome-panel/gp-initial-setup-dialog.c:136
+#: libgnome-panel/gp-initial-setup-dialog.c:175
 msgid "Done"
 msgstr "Kész"
+
+#: libgnome-panel/gp-module.c:640
+#, c-format
+msgid "Could not display help document '%s'"
+msgstr "A súgódokumentum nem jeleníthető meg: „%s”"
+
+#: libgnome-panel/gp-module.c:657
+msgid "Error displaying help document"
+msgstr "Hiba a súgódokumentum megjelenítésekor"
+
+#: libgnome-panel/gp-module.c:697
+#, c-format
+msgid "Backend “%s” is not supported."
+msgstr "A(z) „%s” háttérprogram nem támogatott."
+
+#: modules/action-button/gp-action-button-module.c:44
+#: modules/action-button/panel-force-quit.c:223
+msgid "Force Quit"
+msgstr "Erőltetett kilépés"
+
+#: modules/action-button/gp-action-button-module.c:45
+#: modules/action-button/gp-force-quit-applet.c:66
+msgid "Force a misbehaving application to quit"
+msgstr "Hibásan működő alkalmazás kilépésre kényszerítése"
+
+#: modules/action-button/gp-action-button-module.c:53
+#: modules/menu/gp-lock-logout.c:1003
+msgid "Lock Screen"
+msgstr "Képernyő zárolása"
+
+#: modules/action-button/gp-action-button-module.c:54
+#: modules/action-button/gp-lock-screen-applet.c:320
+#: modules/menu/gp-lock-logout.c:1004
+msgid "Protect your computer from unauthorized use"
+msgstr "A számítógép megvédése a jogosulatlan használattól"
+
+#: modules/action-button/gp-action-button-module.c:62
+#: modules/menu/gp-lock-logout.c:982
+msgid "Log Out"
+msgstr "Kijelentkezés"
+
+#: modules/action-button/gp-action-button-module.c:63
+#: modules/action-button/gp-logout-applet.c:68
+#: modules/menu/gp-lock-logout.c:983
+msgid "Log out of this session to log in as a different user"
+msgstr "Kijelentkezés a munkamenetből, más felhasználóként való belépéshez"
+
+#: modules/action-button/gp-action-button-module.c:71
+msgid "Run Application..."
+msgstr "Alkalmazás futtatása…"
+
+#: modules/action-button/gp-action-button-module.c:72
+#: modules/action-button/gp-run-applet.c:64
+msgid "Run an application by typing a command or choosing from a list"
+msgstr "Alkalmazás futtatása parancs beírásával vagy listából kiválasztva"
+
+#: modules/action-button/gp-action-button-module.c:80
+#: modules/menu/gp-lock-logout.c:1115
+msgid "Power Off"
+msgstr "Kikapcsolás"
+
+#: modules/action-button/gp-action-button-module.c:81
+#: modules/action-button/gp-shutdown-applet.c:71
+#: modules/menu/gp-lock-logout.c:1116
+msgid "Power off the computer"
+msgstr "A számítógép kikapcsolása"
+
+#: modules/action-button/gp-force-quit-applet.c:134
+msgid ""
+"Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Letiltva, mert az „org.gnome.gnome-panel.lockdown” GSettings sémában lévő"
+" „disable-force-quit” beállítás igazra van állítva."
+
+#: modules/action-button/gp-lock-screen-applet.c:280
+#: modules/launcher/gp-launcher-applet.c:850
+#: modules/launcher/gp-launcher-applet.c:866
+msgid "Could not launch application"
+msgstr "Az alkalmazás elindítása sikertelen"
+
+#: modules/action-button/gp-lock-screen-applet.c:434
+msgid ""
+"Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
+" „disable-lock-screen” beállítás igazra van állítva."
+
+#: modules/action-button/gp-lock-screen-menu.ui:5
+msgid "_Lock Screen"
+msgstr "_Képernyő zárolása"
+
+#: modules/action-button/gp-lock-screen-menu.ui:9
+msgid "_Activate Screensaver"
+msgstr "Képernyővédő _bekapcsolása"
+
+#: modules/action-button/gp-logout-applet.c:222
+#: modules/action-button/gp-shutdown-applet.c:266
+msgid ""
+"Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
+"GSettings schema is set to true."
+msgstr ""
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
+" „disable-log-out” beállítás igazra van állítva."
+
+#: modules/action-button/gp-run-applet.c:135
+#: modules/launcher/gp-launcher-module.c:33
+msgid ""
+"Disabled because “disable-command-line” setting in “org.gnome.desktop."
+"lockdown” GSettings schema is set to true."
+msgstr ""
+"Letiltva, mert az „org.gnome.desktop.lockdown” GSettings sémában lévő"
+" „disable-command-line” beállítás igazra van állítva."
+
+#: modules/action-button/panel-force-quit.c:71
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kattintson az ablakra, hogy az alkalmazás bezáródjon. A művelet az <ESC> "
+"billentyűvel szakítható meg."
+
+#: modules/action-button/panel-force-quit.c:206
+msgid "Force this application to exit?"
+msgstr "Kilépésre kényszeríti ezt az alkalmazást?"
+
+#: modules/action-button/panel-force-quit.c:209
+msgid ""
+"If you choose to force an application to exit, unsaved changes in any open "
+"documents in it might get lost."
+msgstr ""
+"Ha az alkalmazást kilépésre kényszeríti, akkor a benne megnyitott "
+"dokumentumok mentetlen változtatásai elveszhetnek."
+
+#: modules/action-button/panel-force-quit.c:216
+msgid "_Force quit"
+msgstr "_Erőltetett kilépés"
 
 #. Translators: This is a strftime format string.
 #. * It is used to display the time in 12-hours format
@@ -1670,93 +1517,84 @@ msgstr "Naptár"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:227
+#: modules/clock/clock-applet.c:226
 msgid "%A %B %d (%Z)"
 msgstr "%B %e., %A (%Z)"
 
-#: modules/clock/clock-applet.c:236
+#: modules/clock/clock-applet.c:235
 msgid "Click to hide your appointments and tasks"
 msgstr "Kattintson a találkozói és feladatai elrejtéséhez"
 
-#: modules/clock/clock-applet.c:239
+#: modules/clock/clock-applet.c:238
 msgid "Click to view your appointments and tasks"
 msgstr "Kattintson a találkozói és feladatai megjelenítéséhez"
 
-#: modules/clock/clock-applet.c:243
+#: modules/clock/clock-applet.c:242
 msgid "Click to hide month calendar"
 msgstr "Kattintson a havi naptár elrejtéséhez"
 
-#: modules/clock/clock-applet.c:246
+#: modules/clock/clock-applet.c:245
 msgid "Click to view month calendar"
 msgstr "Kattintson a havi naptár megjelenítéséhez"
 
 #. Done!
-#: modules/clock/clock-applet.c:850
+#: modules/clock/clock-applet.c:848
 msgid "Computer Clock"
 msgstr "Számítógép óra"
 
-#: modules/clock/clock-applet.c:983
+#: modules/clock/clock-applet.c:981
 msgid "Failed to open the time settings"
 msgstr "Az időbeállítások megnyitása meghiúsult"
 
-#: modules/clock/clock-applet.c:1548 modules/fish/fish-applet.c:148
-#, c-format
-msgid "Could not display help document '%s'"
-msgstr "A súgódokumentum nem jeleníthető meg: „%s”"
-
-#: modules/clock/clock-applet.c:1577 modules/fish/fish-applet.c:174
-msgid "Error displaying help document"
-msgstr "Hiba a súgódokumentum megjelenítésekor"
-
-#: modules/clock/clock-applet.c:1626
+#: modules/clock/clock-applet.c:1570
 msgid "Choose Location"
 msgstr "Válasszon helyet"
 
-#: modules/clock/clock-applet.c:1705
+#: modules/clock/clock-applet.c:1649
 msgid "Edit Location"
 msgstr "Hely szerkesztése"
 
-#: modules/clock/clock-applet.c:1741 modules/clock/clock-applet.c:1749
+#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: modules/clock/clock-applet.c:1742
+#: modules/clock/clock-applet.c:1686
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1743
+#: modules/clock/clock-applet.c:1687
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1744
+#: modules/clock/clock-applet.c:1688
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1750
+#: modules/clock/clock-applet.c:1694
 msgid "Meters per second (m/s)"
 msgstr "Méter per másodperc (m/s)"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1695
 msgid "Kilometers per hour (kph)"
 msgstr "Kilométer per óra (kph)"
 
-#: modules/clock/clock-applet.c:1752
+#: modules/clock/clock-applet.c:1696
 msgid "Miles per hour (mph)"
 msgstr "Mérföld per óra (mph)"
 
-#: modules/clock/clock-applet.c:1753
+#: modules/clock/clock-applet.c:1697
 msgid "Knots"
 msgstr "Csomó"
 
-#: modules/clock/clock-applet.c:1754
+#: modules/clock/clock-applet.c:1698
 msgid "Beaufort scale"
 msgstr "Beaufort skála"
 
-#: modules/clock/clock-applet.c:1807
+#: modules/clock/clock-applet.c:1751
 msgid "City Name"
 msgstr "Város neve"
 
-#: modules/clock/clock-applet.c:1811
+#: modules/clock/clock-applet.c:1755
 msgid "City Time Zone"
 msgstr "Város időzónája"
 
@@ -1898,6 +1736,12 @@ msgstr "_Súgó"
 msgid "Time _Settings"
 msgstr "I_dő beállításai"
 
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
+#: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
+msgid "_Close"
+msgstr "_Bezárás"
+
 #: modules/clock/clock.ui:451
 msgid "Clock Format"
 msgstr "Óraformátum"
@@ -1929,6 +1773,10 @@ msgstr "_Időjárás megjelenítése"
 #: modules/clock/clock.ui:595
 msgid "Show _temperature"
 msgstr "_Hőmérséklet megjelenítése"
+
+#: modules/clock/clock.ui:682
+msgid "_Add"
+msgstr "_Hozzáadás"
 
 #: modules/clock/clock.ui:697
 msgid "_Edit"
@@ -1962,7 +1810,7 @@ msgstr "S_zélsebesség egysége:"
 msgid "Weather"
 msgstr "Időjárás"
 
-#: modules/fish/fish-applet.c:203
+#: modules/fish/fish-applet.c:146
 #, c-format
 msgid ""
 "Warning: The command appears to be something actually useful.\n"
@@ -1976,26 +1824,26 @@ msgstr ""
 "Azt tanácsoljuk, hogy ne használja a(z) %s kisalkalmazást semmire, amit\n"
 "hasznosnak vagy értelmesnek gondol."
 
-#: modules/fish/fish-applet.c:365 modules/fish/fish-applet.c:471
+#: modules/fish/fish-applet.c:308 modules/fish/fish-applet.c:414
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s a hal"
 
-#: modules/fish/fish-applet.c:369
+#: modules/fish/fish-applet.c:312
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s a hal, korunk jövendőmondója"
 
-#: modules/fish/fish-applet.c:427
+#: modules/fish/fish-applet.c:370
 msgid "Unable to locate the command to execute"
 msgstr "A végrehajtandó parancs nem található"
 
-#: modules/fish/fish-applet.c:476
+#: modules/fish/fish-applet.c:419
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s a hal ezt mondja:"
 
-#: modules/fish/fish-applet.c:545
+#: modules/fish/fish-applet.c:488
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -2006,16 +1854,16 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: modules/fish/fish-applet.c:621
+#: modules/fish/fish-applet.c:564
 msgid "_Speak again"
 msgstr "Be_szélj újra"
 
-#: modules/fish/fish-applet.c:693
+#: modules/fish/fish-applet.c:636
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "A beállított parancs nem működik és le lett cserélve erre: %s"
 
-#: modules/fish/fish-applet.c:722
+#: modules/fish/fish-applet.c:665
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -2026,7 +1874,7 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: modules/fish/fish-applet.c:738
+#: modules/fish/fish-applet.c:681
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -2037,15 +1885,15 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: modules/fish/fish-applet.c:1120
+#: modules/fish/fish-applet.c:1064
 msgid "The water needs changing"
 msgstr "A vizet cserélni kellene"
 
-#: modules/fish/fish-applet.c:1122
+#: modules/fish/fish-applet.c:1066
 msgid "Look at today's date!"
 msgstr "Nézze meg a mai dátumot!"
 
-#: modules/fish/fish-applet.c:1216
+#: modules/fish/fish-applet.c:1160
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s a hal, a jövendőmondó"
@@ -2094,13 +1942,227 @@ msgstr "másodpercenként"
 msgid "_Rotate on vertical panels"
 msgstr "Függőleges panelen _forgatás"
 
-#: modules/menu/gp-lock-logout.c:967
+#: modules/launcher/custom-launcher-menu.ui:5
+#: modules/launcher/launcher-menu.ui:5
+msgid "_Launch"
+msgstr "I_ndítás"
+
+#: modules/launcher/gp-editor.c:41
+msgid "Application"
+msgstr "Alkalmazás"
+
+#: modules/launcher/gp-editor.c:42
+msgid "Application in Terminal"
+msgstr "Alkalmazás terminálban"
+
+#: modules/launcher/gp-editor.c:43
+msgid "Directory"
+msgstr "Könyvtár"
+
+#: modules/launcher/gp-editor.c:44
+msgid "File"
+msgstr "Fájl"
+
+#: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
+#| msgid "Choose a file..."
+msgid "Choose Icon File"
+msgstr "Válasszon ikonfájlt"
+
+#: modules/launcher/gp-editor.c:293 modules/launcher/gp-editor.c:468
+msgid "_Open"
+msgstr "_Megnyitás"
+
+#: modules/launcher/gp-editor.c:347
+#| msgid "Choose an icon"
+msgid "Choose Icon Name"
+msgstr "Válasszon ikonnevet"
+
+#: modules/launcher/gp-editor.c:446 modules/launcher/gp-editor.c:550
+msgid "Choose an application..."
+msgstr "Válasszon alkalmazást…"
+
+#: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
+#| msgid "Choose a file..."
+msgid "Choose a directory..."
+msgstr "Válasszon könyvtárat…"
+
+#: modules/launcher/gp-editor.c:456 modules/launcher/gp-editor.c:562
+msgid "Choose a file..."
+msgstr "Válasszon fájlt…"
+
+#: modules/launcher/gp-editor.c:549 modules/launcher/gp-editor.c:842
+msgid "Comm_and:"
+msgstr "_Parancs:"
+
+#: modules/launcher/gp-editor.c:555 modules/launcher/gp-editor.c:561
+msgid "_Location:"
+msgstr "He_ly:"
+
+#. Type
+#: modules/launcher/gp-editor.c:815
+msgid "_Type:"
+msgstr "_Típus:"
+
+#. Name
+#: modules/launcher/gp-editor.c:824
+msgid "_Name:"
+msgstr "_Név:"
+
+#: modules/launcher/gp-editor.c:848
+msgid "_Browse..."
+msgstr "_Tallózás…"
+
+#. Comment
+#: modules/launcher/gp-editor.c:862
+msgid "Co_mment:"
+msgstr "_Megjegyzés:"
+
+#: modules/launcher/gp-icon-name-chooser.c:482
+#| msgid "All Day"
+msgid "All"
+msgstr "Összes"
+
+#: modules/launcher/gp-icon-name-chooser.ui:27
+msgid "Select Icon Name"
+msgstr "Ikonnév kiválasztása"
+
+#: modules/launcher/gp-icon-name-chooser.ui:39
+msgid "Select"
+msgstr "Kiválasztás"
+
+#: modules/launcher/gp-icon-name-chooser.ui:126
+msgid "Contexts:"
+msgstr "Környezetek:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:195
+#| msgid "_Location Name:"
+msgid "Icon Names:"
+msgstr "Ikonnevek:"
+
+#: modules/launcher/gp-icon-name-chooser.ui:271
+msgid "Show standard icons only"
+msgstr "Csak szabványos ikonok megjelenítése"
+
+#: modules/launcher/gp-launcher-applet.c:132 modules/menu/gp-menu-module.c:56
+msgid "(empty)"
+msgstr "(üres)"
+
+#: modules/launcher/gp-launcher-applet.c:862
+#, c-format
+msgid "Can not execute “%s” command line."
+msgstr "A(z) „%s” nem futtatható a parancssorban."
+
+#: modules/launcher/gp-launcher-applet.c:885
+#| msgid "Could not open location '%s'"
+msgid "Could not open location"
+msgstr "Nem sikerült megnyitni a helyet"
+
+#: modules/launcher/gp-launcher-applet.c:1010
+#, c-format
+#| msgid "Failed to load %s: %s\n"
+msgid "Failed to load key file “%s”: %s"
+msgstr "A(z) „%s” kulcsfájl betöltése sikertelen: %s"
+
+#: modules/launcher/gp-launcher-module.c:57
+msgid "Custom Application Launcher"
+msgstr "Egyedi parancsikon"
+
+#: modules/launcher/gp-launcher-module.c:58
+msgid "Create a new launcher"
+msgstr "Új parancsikon létrehozása"
+
+#: modules/launcher/gp-launcher-module.c:67
+msgid "Application Launcher..."
+msgstr "Parancsikon…"
+
+#: modules/launcher/gp-launcher-module.c:68
+msgid "Copy a launcher from the applications menu"
+msgstr "Parancsikon másolása az Alkalmazások menüből"
+
+#: modules/launcher/gp-launcher-properties.c:71
+msgid "Could not save launcher"
+msgstr "A parancsikon nem menthető"
+
+#: modules/launcher/gp-launcher-properties.c:672
+msgid "_Revert"
+msgstr "_Visszaállítás"
+
+#: modules/launcher/gp-launcher-properties.c:692
+msgid "Launcher Properties"
+msgstr "Parancsikon tulajdonságai"
+
+#: modules/launcher/gp-launcher-utils.c:56
+#, c-format
+msgid "Launcher does not start with required “%s” group."
+msgstr "A parancsikon nem a megkövetelt „%s” csoporttal indít."
+
+#: modules/launcher/gp-launcher-utils.c:74
+#, c-format
+msgid "Launcher has invalid Type key value “%s”."
+msgstr "A parancsikon érvénytelen „%s” típus kulcsértékkel rendelkezik."
+
+#: modules/launcher/gp-launcher-utils.c:156
+#| msgid "The command of the launcher is not set."
+msgid "The icon of the launcher is not set."
+msgstr "A parancsikon ikonja nincs beállítva."
+
+#: modules/launcher/gp-launcher-utils.c:164
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher is not set."
+msgstr "A parancsikon típusa nincs beállítva."
+
+#: modules/launcher/gp-launcher-utils.c:173
+#, c-format
+#| msgid "The name of the launcher is not set."
+msgid "The type of the launcher must be “%s” or “%s”."
+msgstr "A parancsikon típusa csak „%s” vagy „%s” lehet."
+
+#: modules/launcher/gp-launcher-utils.c:183
+msgid "The name of the launcher is not set."
+msgstr "A parancsikon neve nincs beállítva."
+
+#: modules/launcher/gp-launcher-utils.c:193
+msgid "The command of the launcher is not set."
+msgstr "A parancsikon parancsa nincs beállítva."
+
+#: modules/launcher/gp-launcher-utils.c:198
+msgid "The location of the launcher is not set."
+msgstr "A parancsikon helye nincs beállítva."
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:5
+msgid "Launcher location"
+msgstr "Parancsikon helye"
+
+#: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
+#| msgid ""
+#| "The location of the .desktop file describing the launcher. This key is "
+#| "only relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher."
+msgstr "A parancsikont leíró .desktop fájl helye."
+
+#: modules/menu/gp-lock-logout.c:966
 msgid "Switch User"
 msgstr "Felhasználóváltás"
 
-#: modules/menu/gp-lock-logout.c:1077
+#: modules/menu/gp-lock-logout.c:1049
+msgid "Hibernate"
+msgstr "Hibernálás"
+
+#: modules/menu/gp-lock-logout.c:1065
+msgid "Suspend"
+msgstr "Felfüggesztés"
+
+#: modules/menu/gp-lock-logout.c:1081
 msgid "Hybrid Sleep"
 msgstr "Hibrid alvás"
+
+#: modules/menu/gp-lock-logout.c:1099
+msgid "Restart"
+msgstr "Újraindítás"
+
+#: modules/menu/gp-lock-logout.c:1100
+msgid "Restart the computer"
+msgstr "A számítógép újraindítása"
 
 #: modules/menu/gp-menu-bar-applet.c:145
 msgid "Applications"
@@ -2111,7 +2173,7 @@ msgid "Browse and run installed applications"
 msgstr "Telepített alkalmazások böngészése és futtatása"
 
 #: modules/menu/gp-menu-bar-applet.c:185
-#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:468
+#: modules/menu/gp-menu-button-applet.c:199 modules/menu/gp-menu-module.c:462
 msgid "Places"
 msgstr "Helyek"
 
@@ -2134,37 +2196,42 @@ msgstr ""
 msgid "Please install the '%s' application."
 msgstr "Telepítse a(z) „%s” alkalmazást."
 
-#: modules/menu/gp-menu-module.c:381
+#: modules/menu/gp-menu-module.c:375
 msgid "Main Menu"
 msgstr "Főmenü"
 
-#: modules/menu/gp-menu-module.c:382
+#: modules/menu/gp-menu-module.c:376
 msgid "The main GNOME menu"
 msgstr "A GNOME főmenüje"
 
-#: modules/menu/gp-menu-module.c:388
+#: modules/menu/gp-menu-module.c:382
 msgid "Menu Button"
 msgstr "Menügomb"
 
-#: modules/menu/gp-menu-module.c:389
+#: modules/menu/gp-menu-module.c:383
 msgid "A custom menu button"
 msgstr "Egy egyéni menügomb"
 
-#: modules/menu/gp-menu-module.c:397
+#: modules/menu/gp-menu-module.c:391
 msgid "Menu Bar"
 msgstr "Menü"
 
-#: modules/menu/gp-menu-module.c:398
+#: modules/menu/gp-menu-module.c:392
 msgid "A custom menu bar"
 msgstr "Egy egyéni menüsor"
 
-#: modules/menu/gp-menu-module.c:404
+#: modules/menu/gp-menu-module.c:398
 msgid "User menu"
 msgstr "Felhasználómenü"
 
-#: modules/menu/gp-menu-module.c:405
+#: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
 msgstr "Egy menü a beállításai módosításához és a kijelentkezéshez"
+
+#: modules/menu/gp-menu-utils.c:436
+#, c-format
+msgid "Could not launch '%s'"
+msgstr "A(z) „%s” parancs nem futtatható"
 
 #: modules/menu/gp-places-menu.c:94
 #, c-format
