@@ -119,6 +119,8 @@ read_bookmarks (GpBookmarks *bookmarks,
       bookmarks->bookmarks = NULL;
     }
 
+  contents = NULL;
+
   if (!g_file_load_contents (file, NULL, &contents, NULL, NULL, NULL))
     return;
 
