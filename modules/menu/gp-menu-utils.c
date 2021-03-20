@@ -78,15 +78,20 @@ static GFile *
 get_file_root (GFile *file)
 {
   GFile *parent;
+  GFile *root;
 
-  g_object_ref (file);
-  while ((parent = g_file_get_parent (file)) != NULL)
+  parent = g_file_get_parent (file);
+  if (parent == NULL)
+    return g_object_ref (file);
+
+  root = parent;
+  while ((parent = g_file_get_parent (root)) != NULL)
     {
-      g_object_unref (file);
-      file = parent;
+      g_object_unref (root);
+      root = parent;
     }
 
-  return file;
+  return root;
 }
 
 static gchar *
