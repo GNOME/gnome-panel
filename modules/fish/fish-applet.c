@@ -352,6 +352,7 @@ locate_fortune_command (FishApplet   *fish,
 		}
 
 		g_strfreev (*argvp);
+		*argvp = NULL;
 	}
 
 	prog = g_find_program_in_path ("fortune");
@@ -367,7 +368,7 @@ locate_fortune_command (FishApplet   *fish,
 
 	something_fishy_going_on (fish,
 				  _("Unable to locate the command to execute"));
-	*argvp = NULL;
+
 	return FALSE;
 }
 
@@ -548,8 +549,10 @@ display_fortune_dialog (FishApplet *fish)
 	fish->source_id = 0;
 	fish_close_channel (fish);
 
+	argv = NULL;
 	user_command = locate_fortune_command (fish, &argv);
-	if (!argv)
+
+	if (argv == NULL)
 		return;
 
 	if (!fish->fortune_dialog) {
