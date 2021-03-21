@@ -514,7 +514,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	command = g_strdup (panel_run_dialog_get_combo_text (dialog));
 	command = g_strchug (command);
 
-	if (!command || !command [0]) {
+	if (command[0] == '\0') {
 		g_free (command);
 		return;
 	}
@@ -1680,7 +1680,7 @@ combobox_changed (GtkComboBox    *combobox,
 	}
 
 	/* desensitize run button if no text entered */
-	if (!start || !start [0]) {
+	if (start[0] == '\0') {
 		g_free (text);
 
 		gtk_widget_set_sensitive (dialog->run_button, FALSE);
@@ -1852,8 +1852,8 @@ panel_run_dialog_create_desktop_file (PanelRunDialog *dialog)
 	char     *save_uri;
 
         text = g_strdup (panel_run_dialog_get_combo_text (dialog));
-	
-	if (!text || !text [0]) {
+
+	if (text[0] == '\0') {
 		g_free (text);
 		return NULL;
 	}
