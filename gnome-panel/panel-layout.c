@@ -596,8 +596,7 @@ out:
         if (groups)
                 g_strfreev (groups);
 
-        if (keyfile)
-                g_key_file_free (keyfile);
+        g_key_file_free (keyfile);
 }
 
 
