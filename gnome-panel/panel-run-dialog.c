@@ -1593,8 +1593,10 @@ entry_event (GtkEditable    *entry,
 		while (*nospace_prefix != '\0' &&
 		       g_ascii_isspace (*nospace_prefix))
 			nospace_prefix++;
-		if (*nospace_prefix == '\0')
+		if (*nospace_prefix == '\0') {
+			g_free (prefix);
 			return FALSE;
+		}
 
 		panel_run_dialog_update_completion (dialog, nospace_prefix);
 		
