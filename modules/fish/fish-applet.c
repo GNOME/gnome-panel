@@ -339,13 +339,12 @@ something_fishy_going_on (FishApplet *fish,
 
 static gboolean
 locate_fortune_command (FishApplet   *fish,
-			int          *argcp,
-			char       ***argvp)
+                        char       ***argvp)
 {
 	char *prog = NULL;
 
 	if (fish->command
-	    && g_shell_parse_argv (fish->command, argcp, argvp, NULL)) {
+	    && g_shell_parse_argv (fish->command, NULL, argvp, NULL)) {
 		prog = g_find_program_in_path ((*argvp)[0]);
 		if (prog) {
 			g_free (prog);
@@ -358,12 +357,12 @@ locate_fortune_command (FishApplet   *fish,
 	prog = g_find_program_in_path ("fortune");
 	if (prog) {
 		g_free (prog);
-		if (g_shell_parse_argv ("fortune", argcp, argvp, NULL))
+		if (g_shell_parse_argv ("fortune", NULL, argvp, NULL))
 			return FALSE;
 	}
 
 	if (g_file_test ("/usr/games/fortune", G_FILE_TEST_IS_EXECUTABLE)
-	    && g_shell_parse_argv ("/usr/games/fortune", argcp, argvp, NULL))
+	    && g_shell_parse_argv ("/usr/games/fortune", NULL, argvp, NULL))
 		return FALSE;
 
 	something_fishy_going_on (fish,
@@ -541,7 +540,6 @@ display_fortune_dialog (FishApplet *fish)
 	gboolean     user_command;
 	int          output;
 	const char  *charset;
-	int          argc;
 	char       **argv;
 
 	/* if there is still a pipe, close it */
@@ -550,7 +548,7 @@ display_fortune_dialog (FishApplet *fish)
 	fish->source_id = 0;
 	fish_close_channel (fish);
 
-	user_command = locate_fortune_command (fish, &argc, &argv);
+	user_command = locate_fortune_command (fish, &argv);
 	if (!argv)
 		return;
 
