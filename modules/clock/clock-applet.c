@@ -1275,6 +1275,38 @@ edit_hide (GtkWidget   *unused,
         edit_clear (applet);
 }
 
+static GWeatherLocation *
+get_weather_station_location (GWeatherLocation *location)
+{
+        GWeatherLocation *station_loc;
+
+        /* According to the documentation, the parent of a detached location
+         * is the nearest weather station.
+         */
+        if (gweather_location_get_level (location) == GWEATHER_LOCATION_DETACHED) {
+                station_loc = gweather_location_get_parent (location);
+                g_assert (station_loc != NULL);
+
+                station_loc = gweather_location_ref (station_loc);
+        } else {
+                station_loc = gweather_location_ref (location);
+        }
+
+        while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
+                GWeatherLocation *tmp;
+
+                tmp = station_loc;
+
+                station_loc = gweather_location_get_children (station_loc)[0];
+                g_assert (station_loc != NULL);
+
+                station_loc = gweather_location_ref (station_loc);
+                gweather_location_unref (tmp);
+        }
+
+        return station_loc;
+}
+
 static void
 run_prefs_edit_save (GtkButton   *button,
                      ClockApplet *cd)
@@ -1316,18 +1348,12 @@ run_prefs_edit_save (GtkButton   *button,
                 return;
         }
 
-        station_loc = gloc;
-        if (gweather_location_get_level (station_loc) == GWEATHER_LOCATION_DETACHED) {
-                /* According to the documentation, the parent of a detached location is
-                 * the nearest weather station. */
-                station_loc = gweather_location_get_parent (station_loc);
-        }
-        while (gweather_location_get_level (station_loc) < GWEATHER_LOCATION_WEATHER_STATION) {
-                station_loc = gweather_location_get_children (station_loc)[0];
-                g_assert (station_loc != NULL);
-        }
+        station_loc = get_weather_station_location (gloc);
+        gweather_location_unref (gloc);
 
         weather_code = gweather_location_get_code (station_loc);
+        gweather_location_unref (station_loc);
+
         if (gweather_location_entry_has_custom_text (cd->location_entry)) {
                 name = gtk_editable_get_chars (GTK_EDITABLE (cd->location_entry), 0, -1);
         }
