@@ -998,14 +998,12 @@ update_launcher (GpLauncherApplet *self)
   priv = gp_launcher_applet_get_instance_private (self);
 
   error = NULL;
-  g_key_file_load_from_file (priv->key_file,
-                             priv->location,
-                             G_KEY_FILE_NONE,
-                             &error);
-
   error_message = NULL;
 
-  if (error != NULL)
+  if (!g_key_file_load_from_file (priv->key_file,
+                                  priv->location,
+                                  G_KEY_FILE_NONE,
+                                  &error))
     {
       error_message = g_strdup_printf (_("Failed to load key file “%s”: %s"),
                                        priv->location,
@@ -1415,10 +1413,7 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
       filename = gp_launcher_get_unique_filename ();
 
       error = NULL;
-      g_key_file_save_to_file (file, filename, &error);
-      g_key_file_unref (file);
-
-      if (error != NULL)
+      if (!g_key_file_save_to_file (file, filename, &error))
         {
           g_warning ("%s", error->message);
           g_error_free (error);
@@ -1432,6 +1427,7 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
           g_free (basename);
         }
 
+      g_key_file_unref (file);
       g_free (filename);
     }
 
