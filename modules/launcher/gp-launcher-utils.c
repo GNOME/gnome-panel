@@ -254,7 +254,8 @@ gp_launcher_get_launchers_dir (void)
                           "launchers",
                           NULL);
 
-  g_mkdir_with_parents (dir, 0700);
+  if (g_mkdir_with_parents (dir, 0700) == -1)
+    g_warning ("Failed to create %s: %s", dir, g_strerror (errno));
 
   return dir;
 }
