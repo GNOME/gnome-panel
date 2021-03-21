@@ -1284,10 +1284,15 @@ get_weather_station_location (GWeatherLocation *location)
          * is the nearest weather station.
          */
         if (gweather_location_get_level (location) == GWEATHER_LOCATION_DETACHED) {
+#ifdef HAVE_GWEATHER_40
+                station_loc = gweather_location_get_parent (location);
+                g_assert (station_loc != NULL);
+#else
                 station_loc = gweather_location_get_parent (location);
                 g_assert (station_loc != NULL);
 
                 station_loc = gweather_location_ref (station_loc);
+#endif
         } else {
                 station_loc = gweather_location_ref (location);
         }
@@ -1297,10 +1302,16 @@ get_weather_station_location (GWeatherLocation *location)
 
                 tmp = station_loc;
 
+#ifdef HAVE_GWEATHER_40
+                station_loc = gweather_location_next_child (station_loc, NULL);
+                g_assert (station_loc != NULL);
+#else
                 station_loc = gweather_location_get_children (station_loc)[0];
                 g_assert (station_loc != NULL);
 
                 station_loc = gweather_location_ref (station_loc);
+#endif
+
                 gweather_location_unref (tmp);
         }
 
@@ -1982,6 +1993,10 @@ clock_applet_dispose (GObject *object)
         g_clear_pointer (&applet->calendar_popup, gtk_widget_destroy);
 
         g_clear_object (&applet->datetime_appinfo);
+
+#ifdef HAVE_GWEATHER_40
+        g_clear_pointer (&applet->world, gweather_location_unref);
+#endif
 
         free_locations (applet);
 

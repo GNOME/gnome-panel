@@ -222,6 +222,10 @@ PKG_CHECK_MODULES([CLOCK], [
   polkit-gobject-1
 ])
 
+PKG_CHECK_EXISTS([gweather-3.0 >= 40.beta],
+                 AC_DEFINE([HAVE_GWEATHER_40], [1],
+                           [Define if gweather is 40 or newer]))
+
 # Check whether to enable e-d-s support for clock applet
 AC_MSG_CHECKING([whether to enable evolution-data-server support])
 AC_ARG_ENABLE([eds],

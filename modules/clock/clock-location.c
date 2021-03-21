@@ -212,23 +212,42 @@ clock_location_get_gweather_timezone (ClockLocation *loc)
 	GWeatherTimezone *tz;
 	GWeatherLocation *gloc;
 
-	gloc = loc->priv->loc;
+	gloc = gweather_location_ref (loc->priv->loc);
 	tz = gweather_location_get_timezone (gloc);
 
 	if (tz == NULL) {
+		GWeatherLocation *tmp;
+
 		/* Some weather stations do not have timezone information.
 		 * In this case, we need to find the nearest city. */
-		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY)
+		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY) {
+			tmp = gloc;
+
+#ifdef HAVE_GWEATHER_40
 			gloc = gweather_location_get_parent (gloc);
+#else
+			gloc = gweather_location_get_parent (gloc);
+			gloc = gweather_location_ref (gloc);
+#endif
+
+			gweather_location_unref (tmp);
+		}
+
+		tmp = gloc;
 		gloc = gweather_location_find_nearest_city (gloc,
 		                                            loc->priv->latitude,
 		                                            loc->priv->longitude);
+		gweather_location_unref (tmp);
+
 		if (gloc == NULL) {
 			g_warning ("Could not find the nearest city for location \"%s\"",
 			           gweather_location_get_name (loc->priv->loc));
 			return gweather_timezone_get_utc ();
 		}
 		tz = gweather_location_get_timezone (gloc);
+		gweather_location_unref (gloc);
+	} else {
+		gweather_location_unref (gloc);
 	}
 
 	return tz;
@@ -491,6 +510,10 @@ static void
 setup_weather_updates (ClockLocation *loc)
 {
 	ClockLocationPrivate *priv;
+#ifdef HAVE_GWEATHER_40
+	const char *contact_info;
+	GWeatherProvider providers;
+#endif
 
 	priv = loc->priv;
 
@@ -503,8 +526,22 @@ setup_weather_updates (ClockLocation *loc)
 
 	priv->weather_info = gweather_info_new (priv->loc);
 
+#ifdef HAVE_GWEATHER_40
+	gweather_info_set_application_id (priv->weather_info, "org.gnome.gnome-panel");
+
+	contact_info = "https://gitlab.gnome.org/GNOME/gnome-panel/-/raw/master/gnome-panel.doap";
+	gweather_info_set_contact_info (priv->weather_info, contact_info);
+
+	providers = GWEATHER_PROVIDER_METAR | GWEATHER_PROVIDER_IWIN;
+	gweather_info_set_enabled_providers (priv->weather_info, providers);
+#endif
+
 	g_signal_connect (priv->weather_info, "updated",
 			  G_CALLBACK (weather_info_updated), loc);
 
 	set_weather_update_timeout (loc);
+
+#ifdef HAVE_GWEATHER_40
+	gweather_info_update (priv->weather_info);
+#endif
 }
