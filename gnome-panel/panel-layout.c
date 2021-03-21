@@ -432,6 +432,9 @@ panel_layout_append_group_helper (GKeyFile                  *keyfile,
                                      "Unknown key '%s' for %s",
                                      keyfile_keys[i],
                                      type_for_error_message);
+                        g_strfreev (keyfile_keys);
+                        g_object_unref (settings);
+                        g_free (unique_id);
                         return FALSE;
                 }
 
