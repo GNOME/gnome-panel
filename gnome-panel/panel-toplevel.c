@@ -176,12 +176,6 @@ struct _PanelToplevelPrivate {
 	/* This is a keyboard initiated grab operation */
 	guint                   grab_is_keyboard : 1;
 
-	/* The x-y co-ordinates temporarily specify the panel center.
-	 * This is used when the panel is rotating, because the width/height
-	 * of the toplevel might change, so we need to compute new values for
-	 * those. */
-	guint                   position_centered : 1;
-
 	/* More saved grab op state */
 	guint                   orig_x_centered : 1;
 	guint                   orig_y_centered : 1;
@@ -1951,48 +1945,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	if (toplevel->priv->animating) {
 		panel_toplevel_update_animating_position (toplevel);
 		return;
-	}
-
-	if (toplevel->priv->position_centered) {
-		toplevel->priv->position_centered = FALSE;
-
-		g_object_freeze_notify (G_OBJECT (toplevel));
-
-		if (!toplevel->priv->x_centered) {
-			int x_right;
-
-			toplevel->priv->x -= toplevel->priv->geometry.width  / 2;
-			g_object_notify (G_OBJECT (toplevel), "x");
-
-			if ((toplevel->priv->x + toplevel->priv->geometry.width / 2) > monitor_width / 2)
-				x_right = monitor_width - (toplevel->priv->x + toplevel->priv->geometry.width);
-			else
-				x_right = -1;
-			if (toplevel->priv->x_right != x_right) {
-				toplevel->priv->x_right = x_right;
-				g_object_notify (G_OBJECT (toplevel),
-						 "x-right");
-			}
-		}
-
-		if (!toplevel->priv->y_centered) {
-			int y_bottom;
-
-			toplevel->priv->y -= toplevel->priv->geometry.height / 2;
-			g_object_notify (G_OBJECT (toplevel), "y");
-
-			if ((toplevel->priv->y + toplevel->priv->geometry.height / 2) > monitor_height / 2)
-				y_bottom = monitor_height - (toplevel->priv->y + toplevel->priv->geometry.height);
-			else
-				y_bottom = -1;
-			if (toplevel->priv->y_bottom != y_bottom) {
-				toplevel->priv->y_bottom = y_bottom;
-				g_object_notify (G_OBJECT (toplevel),
-						 "y-bottom");
-			}
-		}
-
-		g_object_thaw_notify (G_OBJECT (toplevel));
 	}
 
 	panel_toplevel_update_expanded_position (toplevel);
@@ -4032,7 +3984,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->y_centered        = FALSE;
 	toplevel->priv->animating         = FALSE;
 	toplevel->priv->grab_is_keyboard  = FALSE;
-	toplevel->priv->position_centered = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
 	toplevel->priv->initial_animation_done   = FALSE;
 
@@ -4444,24 +4395,30 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 		 (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK))
 		rotate = TRUE;
 
-	/* rotate around the center */
-	if (rotate && !toplevel->priv->position_centered && !toplevel->priv->expand &&
+	if (rotate &&
+	    !toplevel->priv->expand &&
 	    toplevel->priv->updated_geometry_initial) {
-		toplevel->priv->position_centered = TRUE;
-
-		/* x, y temporary refer to the panel center, so we don't care
-		 * about x_right, y_bottom. Those will get updated in
-		 * panel_toplevel_update_position() accordingly. */
-		if (!toplevel->priv->x_centered) {
-			toplevel->priv->x += toplevel->priv->geometry.width  / 2;
-			g_object_notify (G_OBJECT (toplevel), "x");
+		switch (orientation) {
+		case PANEL_ORIENTATION_TOP:
+			panel_toplevel_set_x (toplevel, 0, -1, TRUE);
+			panel_toplevel_set_y (toplevel, 0, -1, FALSE);
+			break;
+		case PANEL_ORIENTATION_BOTTOM:
+			panel_toplevel_set_x (toplevel, 0, 0, TRUE);
+			panel_toplevel_set_y (toplevel, 0, 0, FALSE);
+			break;
+		case PANEL_ORIENTATION_LEFT:
+			panel_toplevel_set_x (toplevel, 0, -1, FALSE);
+			panel_toplevel_set_y (toplevel, 0, -1, TRUE);
+			break;
+		case PANEL_ORIENTATION_RIGHT:
+			panel_toplevel_set_x (toplevel, 0, 0, FALSE);
+			panel_toplevel_set_y (toplevel, 0, 0, TRUE);
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
 		}
-
-		if (!toplevel->priv->y_centered) {
-			toplevel->priv->y += toplevel->priv->geometry.height / 2;
-			g_object_notify (G_OBJECT (toplevel), "y");
-		}
-
 	}
 
 	toplevel->priv->orientation = orientation;
