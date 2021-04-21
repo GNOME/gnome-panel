@@ -38,6 +38,7 @@
 #define PANEL_TOPLEVEL_MONITOR_KEY          "monitor"
 #define PANEL_TOPLEVEL_EXPAND_KEY           "expand"
 #define PANEL_TOPLEVEL_ORIENTATION_KEY      "orientation"
+#define PANEL_TOPLEVEL_ALIGNMENT_KEY        "alignment"
 #define PANEL_TOPLEVEL_SIZE_KEY             "size"
 #define PANEL_TOPLEVEL_X_KEY                "x"
 #define PANEL_TOPLEVEL_Y_KEY                "y"

@@ -90,6 +90,7 @@ static PanelLayoutKeyDefinition panel_layout_toplevel_keys[] = {
         { PANEL_TOPLEVEL_MONITOR_KEY,         G_TYPE_INT      },
         { PANEL_TOPLEVEL_EXPAND_KEY,          G_TYPE_BOOLEAN  },
         { PANEL_TOPLEVEL_ORIENTATION_KEY,     G_TYPE_STRING   },
+        { PANEL_TOPLEVEL_ALIGNMENT_KEY,       G_TYPE_INT      },
         { PANEL_TOPLEVEL_SIZE_KEY,            G_TYPE_INT      },
         { PANEL_TOPLEVEL_X_KEY,               G_TYPE_INT      },
         { PANEL_TOPLEVEL_Y_KEY,               G_TYPE_INT      },

@@ -89,6 +89,7 @@ struct _PanelToplevelPrivate {
 
 	gboolean                expand;
 	PanelOrientation        orientation;
+	PanelAlignment          alignment;
 	int                     size;
 
 	/* relative to the monitor origin */
@@ -141,6 +142,7 @@ struct _PanelToplevelPrivate {
 	int                     orig_y_bottom;
 	int                     orig_size;
 	int                     orig_orientation;
+	PanelAlignment          orig_alignment;
 
 	/* relative to the monitor origin */
 	int                     animation_end_x;
@@ -204,6 +206,7 @@ enum {
 	PROP_NAME,
 	PROP_EXPAND,
 	PROP_ORIENTATION,
+	PROP_ALIGNMENT,
 	PROP_SIZE,
 	PROP_X,
 	PROP_X_RIGHT,
@@ -242,6 +245,8 @@ static void panel_toplevel_update_monitor       (PanelToplevel *toplevel);
 static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 						 int            monitor,
 						 gboolean       force_resize);
+
+static void panel_toplevel_apply_delayed_settings_queue (PanelToplevel *toplevel);
 
 static void
 update_style_classes (PanelToplevel *toplevel)
@@ -575,6 +580,7 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	toplevel->priv->orig_y_centered  = toplevel->priv->y_centered;
 	toplevel->priv->orig_size        = toplevel->priv->size;
 	toplevel->priv->orig_orientation = toplevel->priv->orientation;
+	toplevel->priv->orig_alignment   = toplevel->priv->alignment;
 
 	gtk_grab_add (widget);
 
@@ -624,10 +630,32 @@ panel_toplevel_end_grab_op (PanelToplevel *toplevel,
 }
 
 static void
+panel_toplevel_set_alignment (PanelToplevel  *toplevel,
+                              PanelAlignment  alignment)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	if (toplevel->priv->alignment == alignment)
+		return;
+
+	g_object_freeze_notify (G_OBJECT (toplevel));
+
+	toplevel->priv->alignment = alignment;
+
+	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+
+	panel_toplevel_apply_delayed_settings_queue (toplevel);
+	g_object_notify (G_OBJECT (toplevel), "alignment");
+
+	g_object_thaw_notify (G_OBJECT (toplevel));
+}
+
+static void
 panel_toplevel_cancel_grab_op (PanelToplevel *toplevel,
 			       guint32        time_)
 {
 	panel_toplevel_set_orientation (toplevel, toplevel->priv->orig_orientation);
+	panel_toplevel_set_alignment (toplevel, toplevel->priv->orig_alignment);
 	panel_toplevel_set_monitor (toplevel, toplevel->priv->orig_monitor);
 	panel_toplevel_set_size (toplevel, toplevel->priv->orig_size);
 	panel_toplevel_set_x (toplevel,
@@ -3238,6 +3266,9 @@ panel_toplevel_set_property (GObject      *object,
 	case PROP_ORIENTATION:
 		panel_toplevel_set_orientation (toplevel, g_value_get_enum (value));
 		break;
+	case PROP_ALIGNMENT:
+		panel_toplevel_set_alignment (toplevel, g_value_get_enum (value));
+		break;
 	case PROP_SIZE:
 		panel_toplevel_set_size (toplevel, g_value_get_int (value));
 		break;
@@ -3334,6 +3365,9 @@ panel_toplevel_get_property (GObject    *object,
 		break;
 	case PROP_ORIENTATION:
 		g_value_set_enum (value, toplevel->priv->orientation);
+		break;
+	case PROP_ALIGNMENT:
+		g_value_set_enum (value, toplevel->priv->alignment);
 		break;
 	case PROP_SIZE:
 		g_value_set_int (value, toplevel->priv->size);
@@ -3527,6 +3561,17 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"The orientation of the panel",
 			PANEL_TYPE_ORIENTATION,
 			PANEL_ORIENTATION_TOP,
+			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+	g_object_class_install_property (
+		gobject_class,
+		PROP_ALIGNMENT,
+		g_param_spec_enum (
+			"alignment",
+			"Alignment",
+			"The alignment of the panel",
+			PANEL_TYPE_ALIGNMENT,
+			PANEL_ALIGNMENT_CENTER,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
 	g_object_class_install_property (
@@ -3861,6 +3906,7 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
+	toplevel->priv->alignment       = PANEL_ALIGNMENT_CENTER;
 	toplevel->priv->size            = DEFAULT_SIZE;
 	toplevel->priv->x               = 0;
 	toplevel->priv->y               = 0;
@@ -4026,6 +4072,12 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 			 PANEL_TOPLEVEL_ORIENTATION_KEY,
 			 toplevel,
 			 "orientation",
+			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
+
+	g_settings_bind (toplevel->priv->delayed_settings,
+			 PANEL_TOPLEVEL_ALIGNMENT_KEY,
+			 toplevel,
+			 "alignment",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->delayed_settings,

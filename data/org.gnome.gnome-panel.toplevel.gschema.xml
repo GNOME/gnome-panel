@@ -20,6 +20,11 @@
       <summary>Panel orientation</summary>
       <description>The orientation of the panel. Possible values are "top", "bottom", "left", "right". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between "top" and "bottom" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a "top" panel a menu button will pop up its menu below the panel, whereas on a "bottom" panel the menu will be popped up above the panel.</description>
     </key>
+    <key name="alignment" enum="org.gnome.gnome-panel.PanelAlignment">
+      <default>'center'</default>
+      <summary>Panel alignment</summary>
+      <description>The alignment of the panel. Possible values are "start", "center", "end".</description>
+    </key>
     <key name="size" type="i">
       <default>24</default>
       <summary>Panel size</summary>
