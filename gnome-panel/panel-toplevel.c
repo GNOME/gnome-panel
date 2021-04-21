@@ -931,39 +931,6 @@ panel_toplevel_move_to_pointer (PanelToplevel *toplevel,
 	panel_toplevel_move_to (toplevel, new_x, new_y);
 }
 
-static void
-panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
-				  int            pointer_x,
-				  int            pointer_y)
-{
-	int        x_diff, y_diff;
-	int        x, y;
-	int        snap_tolerance;
-
-	x = toplevel->priv->geometry.x;
-	y = toplevel->priv->geometry.y;
-	snap_tolerance = toplevel->priv->snap_tolerance;
-
-	x_diff = pointer_x - (x + toplevel->priv->geometry.width / 2);
-	y_diff = pointer_y - (y + toplevel->priv->geometry.height / 2);
-
-	if (((-y_diff > x_diff + snap_tolerance) && x_diff > 0 && y_diff < 0) ||
-	    (( y_diff < x_diff + snap_tolerance) && x_diff < 0 && y_diff < 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_RIGHT);
-
-	else if (((-x_diff < y_diff - snap_tolerance) && x_diff > 0 && y_diff < 0) ||
-	         (( x_diff > y_diff - snap_tolerance) && x_diff > 0 && y_diff > 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_BOTTOM);
-
-	else if ((( y_diff > x_diff + snap_tolerance) && x_diff > 0 && y_diff > 0) ||
-	         ((-y_diff < x_diff + snap_tolerance) && x_diff < 0 && y_diff > 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_LEFT);
-
-	else if (((-x_diff > y_diff - snap_tolerance) && x_diff < 0 && y_diff > 0) ||
-	         (( x_diff < y_diff - snap_tolerance) && x_diff < 0 && y_diff < 0))
-		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
-}
-
 static gboolean
 panel_toplevel_warp_pointer_increment (PanelToplevel *toplevel,
 				       int            keyval,
@@ -1172,11 +1139,6 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 		if (toplevel->priv->expand)
 			panel_toplevel_calc_new_orientation (
 					toplevel, event->x_root, event->y_root);
-
-		else if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
-			panel_toplevel_rotate_to_pointer (
-					toplevel, event->x_root, event->y_root);
-
 		else
 			panel_toplevel_move_to_pointer (
 					toplevel, event->x_root, event->y_root);
