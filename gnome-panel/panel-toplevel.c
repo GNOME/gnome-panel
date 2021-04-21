@@ -826,85 +826,107 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 	GdkScreen        *screen;
 	PanelOrientation  new_orientation;
 	gboolean          x_centered, y_centered;
-	int               screen_width, screen_height;
+	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 	int               width, height;
 	int               new_monitor;
 	int               x, y, x_right, y_bottom;
 	int               snap_tolerance;
 
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	new_monitor = panel_multiscreen_get_monitor_at_point (new_x, new_y);
+
+	monitor_x = panel_multiscreen_x (screen, new_monitor);
+	monitor_y = panel_multiscreen_y (screen, new_monitor);
+	monitor_width = panel_multiscreen_width (screen, new_monitor);
+	monitor_height = panel_multiscreen_height (screen, new_monitor);
 
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 
 	snap_tolerance = toplevel->priv->snap_tolerance;
 
-	new_x = CLAMP (new_x, 0, screen_width  - width);
-	new_y = CLAMP (new_y, 0, screen_height - height);
+	new_x = CLAMP (new_x, 0, monitor_x + monitor_width - width);
+	new_y = CLAMP (new_y, 0, monitor_y + monitor_height - height);
+
+	x = new_x - monitor_x;
+	y = new_y - monitor_y;
 
 	new_orientation = toplevel->priv->orientation;
 
-	if (new_x <= snap_tolerance &&
-	    toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-		new_orientation = PANEL_ORIENTATION_LEFT;
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		if (x <= snap_tolerance &&
+		    y > snap_tolerance &&
+		    y < monitor_height - snap_tolerance) {
+			new_orientation = PANEL_ORIENTATION_LEFT;
+		} else if (x + width >= monitor_width - snap_tolerance &&
+		           y > snap_tolerance &&
+		           y < monitor_height - snap_tolerance) {
+			new_orientation = PANEL_ORIENTATION_RIGHT;
+		} else if (y <= monitor_height / 2) {
+			new_orientation = PANEL_ORIENTATION_TOP;
+		} else {
+			new_orientation = PANEL_ORIENTATION_BOTTOM;
+		}
+	} else {
+		if (y <= snap_tolerance &&
+		    x > snap_tolerance &&
+		    x < monitor_width - snap_tolerance) {
+			new_orientation = PANEL_ORIENTATION_TOP;
+		} else if (y + height >= monitor_height - snap_tolerance &&
+		           x > snap_tolerance &&
+		           x < monitor_width - snap_tolerance) {
+			new_orientation = PANEL_ORIENTATION_BOTTOM;
+		} else if (x <= monitor_width / 2) {
+			new_orientation = PANEL_ORIENTATION_LEFT;
+		} else {
+			new_orientation = PANEL_ORIENTATION_RIGHT;
+		}
+	}
 
-	else if ((new_x + width) >= (screen_width - snap_tolerance) &&
-		 toplevel->priv->orientation & PANEL_VERTICAL_MASK)
-		new_orientation = PANEL_ORIENTATION_RIGHT;
-
-	if (new_y <= snap_tolerance &&
-	    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		new_orientation = PANEL_ORIENTATION_TOP;
-
-	else if ((new_y + height) >= (screen_height - snap_tolerance) &&
-		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		new_orientation = PANEL_ORIENTATION_BOTTOM;
-
-	new_monitor = panel_multiscreen_get_monitor_at_point (new_x, new_y);
-
-	panel_toplevel_get_monitor_geometry (
-			toplevel, NULL, NULL, &monitor_width, &monitor_height);
+	x_right = toplevel->priv->x_right;
+	y_bottom = toplevel->priv->y_bottom;
 
 	x_centered = toplevel->priv->x_centered;
 	y_centered = toplevel->priv->y_centered;
 
-	x = new_x - panel_multiscreen_x (screen, new_monitor);
-	y = new_y - panel_multiscreen_y (screen, new_monitor);
-
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+	if (new_orientation & PANEL_HORIZONTAL_MASK) {
+		x_centered = abs (x - ((monitor_width - width) / 2)) <= snap_tolerance;
 		y_centered = FALSE;
-		if (new_y <= snap_tolerance ||
-		    new_y + height >= screen_height - snap_tolerance)
-			x_centered = abs (x - ((monitor_width - width) / 2))
-								<= snap_tolerance;
-		else
-			x_centered = FALSE;
+
+		if (x_centered) {
+			x = (monitor_width - width) / 2;
+		} else if ((x + width / 2) > monitor_width / 2) {
+			x_right = monitor_width - (x + width);
+		} else {
+			x_right = -1;
+		}
+
+		if ((y + height / 2) > monitor_height / 2) {
+			y_bottom = 0;
+		} else {
+			y_bottom = -1;
+			y = 0;
+		}
 	} else {
 		x_centered = FALSE;
-		if (new_x <= snap_tolerance ||
-		    new_x + width >= screen_width - snap_tolerance)
-			y_centered = abs (y - ((monitor_height - height) / 2))
-								<= snap_tolerance;
-		else
-			y_centered = FALSE;
+		y_centered = abs (y - ((monitor_height - height) / 2)) <= snap_tolerance;
+
+		if ((x + width / 2) > monitor_width / 2) {
+			x_right = 0;
+		} else {
+			x_right = -1;
+			x = 0;
+		}
+
+		if (y_centered) {
+			y = (monitor_height - height) / 2;
+		} else if ((y + height / 2) > monitor_height / 2) {
+			y_bottom = monitor_height - (y + height);
+		} else {
+			y_bottom = -1;
+		}
 	}
-
-	if (x_centered)
-		x = (monitor_width  - width) / 2;
-	if (y_centered)
-		y = (monitor_height - height) / 2;
-
-	if (!x_centered && (x + width / 2) > monitor_width / 2)
-		x_right = monitor_width - (x + width);
-	else
-		x_right = -1;
-
-	if (!y_centered && (y + height / 2) > monitor_height / 2)
-		y_bottom = monitor_height - (y + height);
-	else
-		y_bottom = -1;
 
 	panel_toplevel_set_monitor (toplevel, new_monitor);
 	panel_toplevel_set_orientation (toplevel, new_orientation);
