@@ -167,9 +167,6 @@ struct _PanelToplevelPrivate {
 	guint                   x_centered : 1;
 	guint                   y_centered : 1;
 
-	/* The panel is not lined up with th screen edge */
-	guint                   floating : 1;
-
 	/* We are currently animating a hide/show */
 	guint                   animating : 1;
 
@@ -385,26 +382,6 @@ panel_toplevel_find_empty_spot (GdkScreen        *screen,
 	g_free (filled_spots);
 
 	return found_a_spot;
-}
-
-static GdkScreen *
-panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,
-				    int           *width,
-				    int           *height)
-{
-	GdkScreen *screen;
-	Screen *xscreen;
-
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
-	g_return_val_if_fail (width != NULL && height != NULL, NULL);
-
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
-	xscreen = gdk_x11_screen_get_xscreen (screen);
-
-	*width = WidthOfScreen (xscreen);
-	*height = HeightOfScreen (xscreen);
-
-	return screen;
 }
 
 static GdkScreen *
@@ -1174,46 +1151,6 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 	return FALSE;
 }
 
-static void
-panel_toplevel_calc_floating (PanelToplevel *toplevel)
-{
-	int        screen_width, screen_height;
-	int        monitor_x, monitor_y;
-	int        monitor_width, monitor_height;
-	int        x, y;
-	int        snap_tolerance;
-
-	if (toplevel->priv->expand) {
-		toplevel->priv->floating = FALSE;
-		return;
-	}
-
-	panel_toplevel_get_screen_geometry (toplevel,
-					    &screen_width, &screen_height);
-	panel_toplevel_get_monitor_geometry (toplevel, &monitor_x, &monitor_y,
-					     &monitor_width, &monitor_height);
-
-	if (toplevel->priv->x_right == -1)
-		x = monitor_x + toplevel->priv->x;
-	else
-		x = monitor_x + (monitor_width - (toplevel->priv->x_right + toplevel->priv->geometry.width));
-	if (toplevel->priv->y_bottom == -1)
-		y = monitor_y + toplevel->priv->y;
-	else
-		y = monitor_y + (monitor_height - (toplevel->priv->y_bottom + toplevel->priv->geometry.height));
-
-	snap_tolerance = toplevel->priv->snap_tolerance;
-
-	//FIXME? everywhere else, snap_tolerance is relative to the monitor,
-	//not the screen
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
-		toplevel->priv->floating =
-			(y > snap_tolerance) && (y < (screen_height - toplevel->priv->geometry.height - snap_tolerance));
-	else
-		toplevel->priv->floating =
-			(x > snap_tolerance) && (x < (screen_width - toplevel->priv->geometry.width - snap_tolerance));
-}
-
 void 
 panel_toplevel_push_autohide_disabler (PanelToplevel *toplevel)
 {
@@ -1531,34 +1468,30 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 {
 	int orientation, type;
 
-	static const char *description[4][4] = {
+	static const char *description[4][3] = {
 		{
 	/* translators: these string will be shown in MetaCity's switch window
 	 * popup when you pass the focus to a panel */
 			N_("Top Expanded Edge Panel"),
 			N_("Top Centered Panel"),
-	     		N_("Top Floating Panel"),
 	     		N_("Top Edge Panel"),
 		},
 		
 		{
 			N_("Bottom Expanded Edge Panel"),
 	     		N_("Bottom Centered Panel"),
-	     		N_("Bottom Floating Panel"),
 	     		N_("Bottom Edge Panel"),
 		},
 
 		{
 			N_("Left Expanded Edge Panel"),
 			N_("Left Centered Panel"),
-			N_("Left Floating Panel"),
 			N_("Left Edge Panel"),
 		},
 
 		{
 			N_("Right Expanded Edge Panel"),
 			N_("Right Centered Panel"),
-			N_("Right Floating Panel"),
 			N_("Right Edge Panel"),
 		},
 	};
@@ -1587,10 +1520,8 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 	else if (toplevel->priv->x_centered ||
 		 toplevel->priv->y_centered)
 		type = 1;
-	else if (toplevel->priv->floating)
-		type = 2;
 	else
-		type = 3;
+		type = 2;
 	
 	return description[orientation][type];
 }
@@ -1673,11 +1604,6 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	int snap_tolerance;
 
 	g_assert (x != NULL && y != NULL);
-
-	if (toplevel->priv->floating) {
-		panel_toplevel_update_normal_position (toplevel, x, y);
-		return;
-	}
 
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
@@ -1970,7 +1896,6 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	}
 
 	panel_toplevel_update_expanded_position (toplevel);
-	panel_toplevel_calc_floating (toplevel); //FIXME should probably be done after panel_toplevel_update_normal_position() too
 
 	if (toplevel->priv->x_right == -1)
 		x = toplevel->priv->x;
