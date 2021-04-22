@@ -20,7 +20,6 @@
 #include <glib-unix.h>
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkx.h>
 #include <stdlib.h>
 
 #include "gp-application.h"
@@ -169,7 +168,6 @@ end_session_cb (GpSession  *session,
 int
 main (int argc, char *argv[])
 {
-  GdkDisplay *display;
   const char *autostart_id;
   GpMainData main_data;
   GpSession *session;
@@ -181,10 +179,6 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   gtk_init (&argc, &argv);
-
-  /* FIXME: High dpi scaling does not work... */
-  display = gdk_display_get_default ();
-  gdk_x11_display_set_window_scale (display, 1);
 
   if (!parse_arguments (&argc, &argv))
     return EXIT_FAILURE;
