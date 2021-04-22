@@ -31,6 +31,7 @@
 #include <gdk/gdkx.h>
 
 #include "panel-multiscreen.h"
+#include "panel-util.h"
 
 #include <string.h>
 
@@ -100,6 +101,7 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
   GArray *geometries;
   int i;
   gboolean driver_is_pre_randr_1_2;
+  int window_scale;
 
   if (!have_randr)
     return FALSE;
@@ -162,6 +164,7 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
                                   resources->noutput);
 
   driver_is_pre_randr_1_2 = FALSE;
+  window_scale = panel_util_get_window_scaling_factor ();
 
   for (i = 0; i < resources->noutput; i++)
     {
@@ -184,10 +187,10 @@ panel_multiscreen_get_randr_monitors_for_screen (int           *monitors_ret,
           crtc = XRRGetCrtcInfo (xdisplay, resources,
                                  output->crtc);
 
-          rect.x = crtc->x;
-          rect.y = crtc->y;
-          rect.width = crtc->width;
-          rect.height = crtc->height;
+          rect.x = crtc->x / window_scale;
+          rect.y = crtc->y / window_scale;
+          rect.width = crtc->width / window_scale;
+          rect.height = crtc->height / window_scale;
 
           XRRFreeCrtcInfo (crtc);
 
