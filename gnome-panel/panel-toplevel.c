@@ -82,8 +82,6 @@ struct _PanelToplevelPrivate {
 
 	char                   *settings_path;
 	GSettings              *settings;
-	GSettings              *delayed_settings;
-	guint                   apply_delayed_id;
 
 	GpTheme                *theme;
 
@@ -224,8 +222,6 @@ static void panel_toplevel_update_monitor       (PanelToplevel *toplevel);
 static void panel_toplevel_set_monitor_internal (PanelToplevel *toplevel,
 						 int            monitor,
 						 gboolean       force_resize);
-
-static void panel_toplevel_apply_delayed_settings_queue (PanelToplevel *toplevel);
 
 static void
 update_style_classes (PanelToplevel *toplevel)
@@ -729,7 +725,6 @@ panel_toplevel_set_alignment (PanelToplevel  *toplevel,
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
-	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "alignment");
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
@@ -3242,16 +3237,6 @@ panel_toplevel_finalize (GObject *object)
 		g_free (toplevel->priv->name);
 	toplevel->priv->name = NULL;
 
-	if (toplevel->priv->apply_delayed_id)
-		g_source_remove (toplevel->priv->apply_delayed_id);
-	toplevel->priv->apply_delayed_id = 0;
-
-	if (toplevel->priv->delayed_settings) {
-		g_settings_apply (toplevel->priv->delayed_settings);
-		g_object_unref (toplevel->priv->delayed_settings);
-	}
-	toplevel->priv->delayed_settings= NULL;
-
 	if (toplevel->priv->settings)
 		g_object_unref (toplevel->priv->settings);
 	toplevel->priv->settings= NULL;
@@ -3634,8 +3619,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	toplevel->priv->settings_path    = NULL;
 	toplevel->priv->settings         = NULL;
-	toplevel->priv->delayed_settings = NULL;
-	toplevel->priv->apply_delayed_id = 0;
 
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
@@ -3749,57 +3732,32 @@ panel_toplevel_position_is_writable (PanelToplevel *toplevel)
 	                               PANEL_TOPLEVEL_ALIGNMENT_KEY);
 }
 
-static gboolean
-panel_toplevel_apply_delayed_settings (PanelToplevel *toplevel)
-{
-	g_settings_apply (toplevel->priv->delayed_settings);
-
-	toplevel->priv->apply_delayed_id = 0;
-
-	return FALSE;
-}
-
-static void
-panel_toplevel_apply_delayed_settings_queue (PanelToplevel *toplevel)
-{
-	if (toplevel->priv->apply_delayed_id != 0)
-		return;
-
-	toplevel->priv->apply_delayed_id = g_timeout_add (500,
-							  (GSourceFunc) panel_toplevel_apply_delayed_settings,
-							  toplevel);
-}
-
 static void
 panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 {
-	/* Delayed settings: the ones related to the position */
-
-	g_settings_bind (toplevel->priv->delayed_settings,
+	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_MONITOR_KEY,
 			 toplevel,
 			 "monitor",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
-	g_settings_bind (toplevel->priv->delayed_settings,
+	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_SIZE_KEY,
 			 toplevel,
 			 "size",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
-	g_settings_bind (toplevel->priv->delayed_settings,
+	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_ORIENTATION_KEY,
 			 toplevel,
 			 "orientation",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
-	g_settings_bind (toplevel->priv->delayed_settings,
+	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_ALIGNMENT_KEY,
 			 toplevel,
 			 "alignment",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
-
-	/* Normal settings */
 
 	g_settings_bind (toplevel->priv->settings,
 			 PANEL_TOPLEVEL_NAME_KEY,
@@ -3896,14 +3854,10 @@ panel_toplevel_set_settings_path (PanelToplevel *toplevel,
 {
 	g_assert (toplevel->priv->settings_path == NULL);
 	g_assert (toplevel->priv->settings == NULL);
-	g_assert (toplevel->priv->delayed_settings == NULL);
 
 	toplevel->priv->settings_path = g_strdup (settings_path);
 	toplevel->priv->settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
 							     settings_path);
-	toplevel->priv->delayed_settings = g_settings_new_with_path (PANEL_TOPLEVEL_SCHEMA,
-								     settings_path);
-	g_settings_delay (toplevel->priv->delayed_settings);
 }
 
 static void
@@ -4045,7 +3999,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
-	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "orientation");
 
 	g_object_thaw_notify (G_OBJECT (toplevel));
@@ -4075,7 +4028,6 @@ panel_toplevel_set_size (PanelToplevel *toplevel,
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
-	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "size");
 }
 
@@ -4196,7 +4148,6 @@ panel_toplevel_set_monitor (PanelToplevel *toplevel,
 	if (monitor < gdk_display_get_n_monitors (display))
 		panel_toplevel_set_monitor_internal (toplevel, monitor, TRUE);
 
-	panel_toplevel_apply_delayed_settings_queue (toplevel);
 	g_object_notify (G_OBJECT (toplevel), "monitor");
 }
 
