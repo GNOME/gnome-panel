@@ -719,15 +719,11 @@ panel_toplevel_set_alignment (PanelToplevel  *toplevel,
 	if (toplevel->priv->alignment == alignment)
 		return;
 
-	g_object_freeze_notify (G_OBJECT (toplevel));
-
 	toplevel->priv->alignment = alignment;
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_notify (G_OBJECT (toplevel), "alignment");
-
-	g_object_thaw_notify (G_OBJECT (toplevel));
 }
 
 static void
@@ -3959,8 +3955,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	if (toplevel->priv->orientation == orientation)
 		return;
 
-	g_object_freeze_notify (G_OBJECT (toplevel));
-
 	toplevel->priv->orientation = orientation;
 	update_style_classes (toplevel);
 
@@ -4000,8 +3994,6 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_notify (G_OBJECT (toplevel), "orientation");
-
-	g_object_thaw_notify (G_OBJECT (toplevel));
 }
 
 PanelOrientation
