@@ -35,6 +35,8 @@ void panel_util_key_event_is_popup_panel (GdkEventKey *event,
 					  gboolean    *is_popup,
 					  gboolean    *is_popup_modifier);
 
+int panel_util_get_window_scaling_factor (void);
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */
