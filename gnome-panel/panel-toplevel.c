@@ -151,10 +151,6 @@ struct _PanelToplevelPrivate {
 	guint                   animate : 1;
 	guint                   buttons_enabled : 1;
 
-	/* The co-ordinates are relative to center screen */
-	guint                   x_centered : 1;
-	guint                   y_centered : 1;
-
 	/* We are currently animating a hide/show */
 	guint                   animating : 1;
 
@@ -3621,8 +3617,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	toplevel->priv->auto_hide         = FALSE;
 	toplevel->priv->buttons_enabled   = TRUE;
-	toplevel->priv->x_centered        = FALSE;
-	toplevel->priv->y_centered        = FALSE;
 	toplevel->priv->animating         = FALSE;
 	toplevel->priv->grab_is_keyboard  = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;
