@@ -28,6 +28,9 @@ G_DECLARE_FINAL_TYPE (GpArrowButton, gp_arrow_button,
 
 GtkWidget    *gp_arrow_button_new            (GtkArrowType   arrow_type);
 
+void          gp_arrow_button_set_arrow_type (GpArrowButton *self,
+                                              GtkArrowType   arrow_type);
+
 GtkArrowType  gp_arrow_button_get_arrow_type (GpArrowButton *button);
 
 G_END_DECLS

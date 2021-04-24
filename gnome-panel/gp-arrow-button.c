@@ -218,6 +218,13 @@ gp_arrow_button_new (GtkArrowType arrow_type)
                        NULL);
 }
 
+void
+gp_arrow_button_set_arrow_type (GpArrowButton *self,
+                                GtkArrowType   arrow_type)
+{
+  set_arrow_type (self, arrow_type);
+}
+
 GtkArrowType
 gp_arrow_button_get_arrow_type (GpArrowButton *button)
 {
