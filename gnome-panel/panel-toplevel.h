@@ -64,10 +64,6 @@ struct _PanelToplevelClass {
 	gboolean  (*toggle_hidden)    (PanelToplevel *toplevel);
 	gboolean  (*begin_move)       (PanelToplevel *toplevel);
 	gboolean  (*begin_resize)     (PanelToplevel *toplevel);
-
-	/* signals */
-	void      (*hiding)           (PanelToplevel *toplevel);
-	void      (*unhiding)         (PanelToplevel *toplevel);
 };
 
 GType                panel_toplevel_get_type               (void) G_GNUC_CONST;

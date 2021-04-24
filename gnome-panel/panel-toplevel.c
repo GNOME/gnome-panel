@@ -170,8 +170,6 @@ struct _PanelToplevelPrivate {
 };
 
 enum {
-	HIDE_SIGNAL,
-	UNHIDE_SIGNAL,
 	POPUP_PANEL_MENU_SIGNAL,
 	TOGGLE_EXPAND_SIGNAL,
 	EXPAND_SIGNAL,
@@ -1782,9 +1780,6 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 		toplevel->priv->initial_animation_done = TRUE;
 
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-
-		if (toplevel->priv->state == PANEL_STATE_NORMAL)
-			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
 	}
 }
 
@@ -2663,8 +2658,6 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 	if (toplevel->priv->state != PANEL_STATE_NORMAL)
 		return;
 
-	g_signal_emit (toplevel, toplevel_signals [HIDE_SIGNAL], 0);
-
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 	else {
@@ -2747,9 +2740,6 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 		panel_toplevel_start_animation (toplevel);
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
-
-	if (!toplevel->priv->animate)
-		g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
 }
 
 static gboolean
@@ -3285,8 +3275,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
 	container_class->check_resize = panel_toplevel_check_resize;
 
-	klass->hiding           = NULL;
-	klass->unhiding         = NULL;
 	klass->popup_panel_menu = panel_toplevel_popup_panel_menu;
 	klass->toggle_expand    = panel_toplevel_toggle_expand;
 	klass->expand           = panel_toplevel_expand;
@@ -3457,28 +3445,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			"Enable hide/show buttons",
 			TRUE,
 			G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
-
-	toplevel_signals [HIDE_SIGNAL] =
-		g_signal_new ("hiding",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, hiding),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_NONE,
-			      0);
-
-	toplevel_signals [UNHIDE_SIGNAL] =
-		g_signal_new ("unhiding",
-			      G_TYPE_FROM_CLASS (gobject_class),
-			      G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
-			      G_STRUCT_OFFSET (PanelToplevelClass, unhiding),
-			      NULL,
-			      NULL,
-			      NULL,
-			      G_TYPE_NONE,
-			      0);
 
 	toplevel_signals [POPUP_PANEL_MENU_SIGNAL] =
 		g_signal_new ("popup-panel-menu",
