@@ -150,7 +150,6 @@ struct _PanelToplevelPrivate {
 	guint                   auto_hide : 1;
 	guint                   animate : 1;
 	guint                   buttons_enabled : 1;
-	guint                   arrows_enabled : 1;
 
 	/* The co-ordinates are relative to center screen */
 	guint                   x_centered : 1;
@@ -1327,18 +1326,6 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 			G_OBJECT (toplevel->priv->hide_button_right),
 			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_LEFT,
 			NULL);
-	}
-
-	if (toplevel->priv->arrows_enabled) {
-		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
-		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
-		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
-		gtk_widget_show (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
-	} else {
-		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_top)));
-		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_bottom)));
-		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_left)));
-		gtk_widget_hide (gtk_bin_get_child (GTK_BIN (toplevel->priv->hide_button_right)));
 	}
 }
 
@@ -3634,7 +3621,6 @@ panel_toplevel_init (PanelToplevel *toplevel)
 
 	toplevel->priv->auto_hide         = FALSE;
 	toplevel->priv->buttons_enabled   = TRUE;
-	toplevel->priv->arrows_enabled    = TRUE;
 	toplevel->priv->x_centered        = FALSE;
 	toplevel->priv->y_centered        = FALSE;
 	toplevel->priv->animating         = FALSE;
