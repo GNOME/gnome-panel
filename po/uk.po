@@ -4,22 +4,21 @@
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2002-2008.
 # wanderlust <wanderlust@ukr.net>, 2009.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2020-05-30 16:24+0000\n"
-"PO-Revision-Date: 2020-05-30 19:33+0300\n"
+"POT-Creation-Date: 2021-04-22 18:19+0000\n"
+"PO-Revision-Date: 2021-04-24 09:28+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.07.70\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 20.12.0\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -514,10 +513,22 @@ msgstr ""
 "кнопки буде зорієнтовано вниз, а із \"bottom\" — вгору."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
+#| msgid "Panel ID list"
+msgid "Panel alignment"
+msgstr "Вирівнювання панелі"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+msgid ""
+"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
+"\"."
+msgstr ""
+"Вирівнювання панелі. Можливі значення: \"start\" (початок), \"center\" (центр), \"end\" (кінець)."
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
 msgstr "Розмір панелі"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -529,111 +540,11 @@ msgstr ""
 "Максимальний розмір обмежено чвертю висоти екрана (чи ширини, для "
 "вертикальних панелей)."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
-msgid "X co-ordinate of panel"
-msgstr "Горизонтальна координата панелі"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Горизонтальне положення панелі. Це значення має сенс лише не у розширеному "
-"режимі. В розширеному режимі це значення ігнорується, і панель розміщується "
-"на межі екрана відповідно до орієнтації."
-
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:35
-msgid "Y co-ordinate of panel"
-msgstr "Вертикальна координата панелі"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Вертикальне положення панелі. Це значення має зміст лише не у розширеному "
-"режимі. В розширеному це значення ігнорується, і панель розміщується на межі "
-"екрана відповідно до орієнтації."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "Координата X панелі, починаючи з правої межі екрана"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Горизонтальне положення панелі, починаючи з правої межі екрана. Якщо "
-"встановлено -1, значення ігнорується та використовується значення ключа x."
-"Якщо значення більше за 0, тоді значення ключа x ігнорується. Це значення "
-"має сенс лише не у розширеному режимі. В розширеному режимі це значення "
-"ігнорується, і панель розміщується на межі екрану у відповідності з "
-"орієнтацією."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Координата Y панелі, починаючи з низу екрана"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Вертикальне положення панелі. починаючи з низу екрана. Якщо встановлено -1, "
-"значення ігнорується та використовується значення ключа y. Якщо значення "
-"більше за 0, тоді значення ключа y ігнорується. Це значення має зміст лише "
-"не у розширеному режимі. В розширеному це значення ігнорується, і панель "
-"розміщується на межі екрана відповідно до орієнтації."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
-msgid "Center panel on x-axis"
-msgstr "Центрувати панель горизонтально"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Якщо встановлено, ключі x та x_right ігноруються і панель розміщується у "
-"центрі екрана на осі X. Якщо панель змінює розмір, вона, попри все лишається "
-"на тому ж місці, тобто розширюється у обидві сторони. Якщо ж параметр не "
-"встановлено, то значення x та x_right визначають положення панелі."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
-msgid "Center panel on y-axis"
-msgstr "Центрувати панель вертикально"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Якщо встановлено, ключі y та y_bottom ігноруються і панель розміщується у "
-"центрі екрана на осі Y. Якщо панель змінює розмір, вона, попри все, "
-"лишається на тому ж місці, тобто розширюється у обидві сторони.  Якщо ж "
-"параметр не встановлено, то значення y та y_bottom визначають положення "
-"панелі."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
 msgstr "Автоматично ховати панель у куток"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:61
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -643,11 +554,11 @@ msgstr ""
 "автоматично ховається за межі екрана. Переміщення вказівника миші до цієї "
 "межі викличе показ схованої панелі."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "Enable hide buttons"
 msgstr "Увімкнути кнопки згортання"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:66
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -657,11 +568,11 @@ msgstr ""
 "таким чином, що залишається лише кнопка, яка дозволяє знову розгорнути "
 "панель."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Enable arrows on hide buttons"
 msgstr "Увімкнути стрілки на кнопках згортання"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:71
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -670,11 +581,11 @@ msgstr ""
 "панелі. Цей параметр має сенс лише тоді, коли встановлено параметр "
 "enable_buttons."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
 msgid "Panel autohide delay"
 msgstr "Затримка автоматичного згортання панелі"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:77
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:52
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -684,11 +595,11 @@ msgstr ""
 "миші залишить панель та автоматичним приховуванням цієї панелі. Має сенс "
 "лише тоді, коли встановлено параметр auto_hide."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:82
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:57
 msgid "Panel autounhide delay"
 msgstr "Затримка автоматичного згортання панелі"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:58
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -698,11 +609,11 @@ msgstr ""
 "миші з'явиться в зоні панелі і автоматичним показуванням цієї панелі. Має "
 "сенс лише тоді, коли встановлено параметр auto_hide."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:63
 msgid "Visible pixels when hidden"
 msgstr "Кількість видимих точок у схованої панелі"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:64
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -711,11 +622,11 @@ msgstr ""
 "екрана. Цей параметр має зміст лише тоді, коли встановлено параметр "
 "auto_hide."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:68
 msgid "Animation speed"
 msgstr "Швидкість анімації"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -725,23 +636,23 @@ msgstr ""
 "\" (повільно), \"medium\" (помірно), і \"fast\" (швидко). Цей параметр має "
 "зміст лише тоді, коли встановлено параметр enable_animations."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
 msgstr "Нетиповий колір тла"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
 msgid "Background Color"
 msgstr "Колір тла"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Use custom background image"
 msgstr "Використовувати нетипове зображення тла"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Background image"
 msgstr "Зображення на тлі"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -751,11 +662,11 @@ msgstr ""
 "містить альфа, то його буде суміщено на прозорих ділянках із зображенням на "
 "тлі стільниці."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:99
 msgid "Image options"
 msgstr "Параметри зображення"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:125
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:100
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -769,11 +680,11 @@ msgstr ""
 "підтримуватись. Через «fit» зображення буде масштабовано (зі збереженням "
 "пропорцій зображення) відносно до висоти панелі (якщо горизонтально)."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:105
 msgid "Rotate image on vertical panels"
 msgstr "Повернути зображення на вертикальних панелях"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:106
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -781,11 +692,11 @@ msgstr ""
 "Якщо встановлено, то зображення тла буде повернуте, якщо панель зорієнтовано "
 "вертикально."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:111
 msgid "Use custom text color"
 msgstr "Використати нетиповий колір тексту"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:141
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:116
 msgid "Text Color"
 msgstr "Колір тексту"
 
@@ -811,12 +722,10 @@ msgstr "Аплетів не знайдено"
 
 #: gnome-panel/gp-add-applet-window.c:556
 #, c-format
-#| msgid "Find an _item to add to \"%s\":"
 msgid "Find an item to add to “%s”"
 msgstr "Знайти запис для додавання до «%s»"
 
 #: gnome-panel/gp-add-applet-window.c:558
-#| msgid "Find an item to add to the panel:"
 msgid "Find an item to add to the panel"
 msgstr "Знати об'єкт для додавання до панелі"
 
@@ -825,8 +734,8 @@ msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
-"Вимкнено, оскільки цей аплет є у списку параметра «disabled-applets» у схемі"
-" «org.gnome.gnome-panel.lockdown» GSettings."
+"Вимкнено, оскільки цей аплет є у списку параметра «disabled-applets» у схемі "
+"«org.gnome.gnome-panel.lockdown» GSettings."
 
 #: gnome-panel/gp-applet-row.c:110
 msgid "Help"
@@ -960,7 +869,7 @@ msgstr "Тема"
 msgid "Error"
 msgstr "Помилка"
 
-#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Не вдалось відкрити адресу «%s»"
@@ -1084,7 +993,7 @@ msgstr "В_илучити цю панель"
 msgid "_New Panel"
 msgstr "_Створити панель"
 
-#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
+#: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
 msgid "Cannot create initial panel layout.\n"
 msgstr "Неможливо створити початкове компонування панелі.\n"
 
@@ -1112,16 +1021,16 @@ msgstr "Вибрати файл, щоб додати його до команд�
 msgid "_OK"
 msgstr "_Гаразд"
 
-#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Вибрати програму перегляду опису."
 
-#: gnome-panel/panel-run-dialog.c:1727
+#: gnome-panel/panel-run-dialog.c:1729
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Буде запущено: «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1760
+#: gnome-panel/panel-run-dialog.c:1762
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1182,82 +1091,90 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1560
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Top Expanded Edge Panel"
 msgstr "Верхня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1561
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Top Centered Panel"
 msgstr "Верхня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1562
-msgid "Top Floating Panel"
-msgstr "Верхня відірвана панель"
+#: gnome-panel/panel-toplevel.c:1512
+#| msgid "Top Centered Panel"
+msgid "Top Start Panel"
+msgstr "Верхня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1563
-msgid "Top Edge Panel"
-msgstr "Верхня бічна панель"
+#: gnome-panel/panel-toplevel.c:1513
+#| msgid "Top Edge Panel"
+msgid "Top End Panel"
+msgstr "Верхня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Bottom Expanded Edge Panel"
 msgstr "Нижня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Bottom Centered Panel"
 msgstr "Нижня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1569
-msgid "Bottom Floating Panel"
-msgstr "Нижня відірвана панель"
+#: gnome-panel/panel-toplevel.c:1519
+#| msgid "Bottom Centered Panel"
+msgid "Bottom Start Panel"
+msgstr "Нижня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1570
-msgid "Bottom Edge Panel"
-msgstr "Нижня бічна панель"
+#: gnome-panel/panel-toplevel.c:1520
+#| msgid "Bottom Edge Panel"
+msgid "Bottom End Panel"
+msgstr "Нижня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1524
 msgid "Left Expanded Edge Panel"
 msgstr "Ліва розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1525
 msgid "Left Centered Panel"
 msgstr "Ліва центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1576
-msgid "Left Floating Panel"
-msgstr "Ліва відірвана панель"
+#: gnome-panel/panel-toplevel.c:1526
+#| msgid "Left Centered Panel"
+msgid "Left Start Panel"
+msgstr "Ліва панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1577
-msgid "Left Edge Panel"
-msgstr "Ліва бічна панель"
+#: gnome-panel/panel-toplevel.c:1527
+#| msgid "Left Edge Panel"
+msgid "Left End Panel"
+msgstr "Ліва панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1531
 msgid "Right Expanded Edge Panel"
 msgstr "Права розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1532
 msgid "Right Centered Panel"
 msgstr "Права центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1583
-msgid "Right Floating Panel"
-msgstr "Права відірвана панель"
+#: gnome-panel/panel-toplevel.c:1533
+#| msgid "Right Centered Panel"
+msgid "Right Start Panel"
+msgstr "Права панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1584
-msgid "Right Edge Panel"
-msgstr "Права бічна панель"
+#: gnome-panel/panel-toplevel.c:1534
+#| msgid "Right Edge Panel"
+msgid "Right End Panel"
+msgstr "Права панель у кінці"
 
 #: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "файл"
 
-#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:212
 msgid "Home"
 msgstr "Домівка"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:229
 msgid "File System"
 msgstr "Файлова система"
 
@@ -1270,7 +1187,7 @@ msgstr "Файлова система"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:127
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1297,7 +1214,7 @@ msgstr "Не вдалось показати документ довідки «%
 msgid "Error displaying help document"
 msgstr "При вивести довідки виникла помилка"
 
-#: libgnome-panel/gp-module.c:695
+#: libgnome-panel/gp-module.c:697
 #, c-format
 msgid "Backend “%s” is not supported."
 msgstr "Підтримки модуля «%s» не передбачено."
@@ -1313,24 +1230,24 @@ msgid "Force a misbehaving application to quit"
 msgstr "Примусово завершити програму, яка поводиться неправильно"
 
 #: modules/action-button/gp-action-button-module.c:53
-#: modules/menu/gp-lock-logout.c:1009
+#: modules/menu/gp-lock-logout.c:1003
 msgid "Lock Screen"
 msgstr "Заблокувати екран"
 
 #: modules/action-button/gp-action-button-module.c:54
 #: modules/action-button/gp-lock-screen-applet.c:320
-#: modules/menu/gp-lock-logout.c:1010
+#: modules/menu/gp-lock-logout.c:1004
 msgid "Protect your computer from unauthorized use"
 msgstr "Захистити ваш комп'ютер від несанкційованого використання"
 
 #: modules/action-button/gp-action-button-module.c:62
-#: modules/menu/gp-lock-logout.c:988
+#: modules/menu/gp-lock-logout.c:982
 msgid "Log Out"
 msgstr "Вийти"
 
 #: modules/action-button/gp-action-button-module.c:63
 #: modules/action-button/gp-logout-applet.c:68
-#: modules/menu/gp-lock-logout.c:989
+#: modules/menu/gp-lock-logout.c:983
 msgid "Log out of this session to log in as a different user"
 msgstr "Вийти з сеансу та зайти під іншим користувачем"
 
@@ -1344,23 +1261,23 @@ msgid "Run an application by typing a command or choosing from a list"
 msgstr "Запуск програми шляхом вводу команди або вибору команду зі списку"
 
 #: modules/action-button/gp-action-button-module.c:80
-#: modules/menu/gp-lock-logout.c:1121
+#: modules/menu/gp-lock-logout.c:1115
 msgid "Power Off"
 msgstr "Вимкнути"
 
 #: modules/action-button/gp-action-button-module.c:81
 #: modules/action-button/gp-shutdown-applet.c:71
-#: modules/menu/gp-lock-logout.c:1122
+#: modules/menu/gp-lock-logout.c:1116
 msgid "Power off the computer"
 msgstr "Вимкнути комп'ютер"
 
-#: modules/action-button/gp-force-quit-applet.c:135
+#: modules/action-button/gp-force-quit-applet.c:134
 msgid ""
 "Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Вимкнено, оскільки для параметра «disable-force-quit» у схемі"
-" «org.gnome.gnome-panel.lockdown» GSettings встановлено значення true."
+"Вимкнено, оскільки для параметра «disable-force-quit» у схемі «org.gnome."
+"gnome-panel.lockdown» GSettings встановлено значення true."
 
 #: modules/action-button/gp-lock-screen-applet.c:280
 #: modules/launcher/gp-launcher-applet.c:850
@@ -1368,13 +1285,13 @@ msgstr ""
 msgid "Could not launch application"
 msgstr "Не вдалось запустити програму"
 
-#: modules/action-button/gp-lock-screen-applet.c:435
+#: modules/action-button/gp-lock-screen-applet.c:434
 msgid ""
 "Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Вимкнено, оскільки для параметра «disable-lock-screen» у схемі"
-" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+"Вимкнено, оскільки для параметра «disable-lock-screen» у схемі «org.gnome."
+"desktop.lockdown» GSettings встановлено значення true."
 
 #: modules/action-button/gp-lock-screen-menu.ui:5
 msgid "_Lock Screen"
@@ -1384,23 +1301,23 @@ msgstr "_Замкнути екран"
 msgid "_Activate Screensaver"
 msgstr "_Активувати зберігач екрану"
 
-#: modules/action-button/gp-logout-applet.c:223
-#: modules/action-button/gp-shutdown-applet.c:267
+#: modules/action-button/gp-logout-applet.c:222
+#: modules/action-button/gp-shutdown-applet.c:266
 msgid ""
 "Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
 "GSettings schema is set to true."
 msgstr ""
-"Вимкнено, оскільки для параметра «disable-log-out» у схемі"
-" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+"Вимкнено, оскільки для параметра «disable-log-out» у схемі «org.gnome."
+"desktop.lockdown» GSettings встановлено значення true."
 
-#: modules/action-button/gp-run-applet.c:136
-#: modules/launcher/gp-launcher-module.c:34
+#: modules/action-button/gp-run-applet.c:135
+#: modules/launcher/gp-launcher-module.c:33
 msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
 msgstr ""
-"Вимкнено, оскільки для параметра «disable-command-line» у схемі"
-" «org.gnome.desktop.lockdown» GSettings встановлено значення true."
+"Вимкнено, оскільки для параметра «disable-command-line» у схемі «org.gnome."
+"desktop.lockdown» GSettings встановлено значення true."
 
 #: modules/action-button/panel-force-quit.c:71
 msgid ""
@@ -1527,55 +1444,55 @@ msgstr "Комп'ютерний годинник"
 msgid "Failed to open the time settings"
 msgstr "Не вдалось відкрити параметри часу"
 
-#: modules/clock/clock-applet.c:1570
+#: modules/clock/clock-applet.c:1607
 msgid "Choose Location"
 msgstr "Виберіть місцевість"
 
-#: modules/clock/clock-applet.c:1649
+#: modules/clock/clock-applet.c:1686
 msgid "Edit Location"
 msgstr "Зміна місцевості"
 
-#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
+#: modules/clock/clock-applet.c:1722 modules/clock/clock-applet.c:1730
 msgid "Default"
 msgstr "Типово"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1723
 msgid "Kelvin"
 msgstr "Градуси Кельвіна"
 
-#: modules/clock/clock-applet.c:1687
+#: modules/clock/clock-applet.c:1724
 msgid "Celsius"
 msgstr "Градуси Цельсія"
 
-#: modules/clock/clock-applet.c:1688
+#: modules/clock/clock-applet.c:1725
 msgid "Fahrenheit"
 msgstr "Градуси Фаренгейта"
 
-#: modules/clock/clock-applet.c:1694
+#: modules/clock/clock-applet.c:1731
 msgid "Meters per second (m/s)"
 msgstr "Метри на секунду (м/с)"
 
-#: modules/clock/clock-applet.c:1695
+#: modules/clock/clock-applet.c:1732
 msgid "Kilometers per hour (kph)"
 msgstr "Кілометри на годину (км/год)"
 
-#: modules/clock/clock-applet.c:1696
+#: modules/clock/clock-applet.c:1733
 msgid "Miles per hour (mph)"
 msgstr "Милі на годину (миль/год)"
 
-#: modules/clock/clock-applet.c:1697
+#: modules/clock/clock-applet.c:1734
 msgid "Knots"
 msgstr "Вузли"
 
-#: modules/clock/clock-applet.c:1698
+#: modules/clock/clock-applet.c:1735
 msgid "Beaufort scale"
 msgstr "За шкалою Бофорта"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1788
 msgid "City Name"
 msgstr "Назва міста"
 
-#: modules/clock/clock-applet.c:1755
+#: modules/clock/clock-applet.c:1792
 msgid "City Time Zone"
 msgstr "Часовий пояс міста"
 
@@ -1624,18 +1541,18 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:607
+#: modules/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:620
+#: modules/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, самопочуття %s"
 
-#: modules/clock/clock-location-tile.c:641
+#: modules/clock/clock-location-tile.c:648
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Схід сонця: %s / Захід сонця: %s"
@@ -1717,7 +1634,7 @@ msgstr "_Довідка"
 msgid "Time _Settings"
 msgstr "_Параметри часу"
 
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
 #: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
 #: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
@@ -1834,16 +1751,16 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:564
+#: modules/fish/fish-applet.c:565
 msgid "_Speak again"
 msgstr "_Вимовити слова"
 
-#: modules/fish/fish-applet.c:636
+#: modules/fish/fish-applet.c:637
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Налаштована команда не працює, була замінена на: %s"
 
-#: modules/fish/fish-applet.c:665
+#: modules/fish/fish-applet.c:666
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1854,7 +1771,7 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:681
+#: modules/fish/fish-applet.c:682
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1865,15 +1782,15 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: modules/fish/fish-applet.c:1064
+#: modules/fish/fish-applet.c:1065
 msgid "The water needs changing"
 msgstr "Потрібно змінити воду!"
 
-#: modules/fish/fish-applet.c:1066
+#: modules/fish/fish-applet.c:1067
 msgid "Look at today's date!"
 msgstr "Подивіться на сьогоднішню дату"
 
-#: modules/fish/fish-applet.c:1160
+#: modules/fish/fish-applet.c:1161
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Рибка %s для середовища GNOME"
@@ -1944,7 +1861,6 @@ msgid "File"
 msgstr "Файл"
 
 #: modules/launcher/gp-editor.c:288 modules/launcher/gp-editor.c:356
-#| msgid "Choose a file..."
 msgid "Choose Icon File"
 msgstr "Виберіть файл піктограми"
 
@@ -1953,7 +1869,6 @@ msgid "_Open"
 msgstr "Від_крити"
 
 #: modules/launcher/gp-editor.c:347
-#| msgid "Choose an icon"
 msgid "Choose Icon Name"
 msgstr "Виберіть назву піктограми"
 
@@ -1962,7 +1877,6 @@ msgid "Choose an application..."
 msgstr "Виберіть програму…"
 
 #: modules/launcher/gp-editor.c:451 modules/launcher/gp-editor.c:556
-#| msgid "Choose a file..."
 msgid "Choose a directory..."
 msgstr "Виберіть каталог…"
 
@@ -1998,7 +1912,6 @@ msgid "Co_mment:"
 msgstr "Ко_ментар:"
 
 #: modules/launcher/gp-icon-name-chooser.c:482
-#| msgid "All Day"
 msgid "All"
 msgstr "Усі"
 
@@ -2015,7 +1928,6 @@ msgid "Contexts:"
 msgstr "Контексти:"
 
 #: modules/launcher/gp-icon-name-chooser.ui:195
-#| msgid "_Location Name:"
 msgid "Icon Names:"
 msgstr "Назви піктограм:"
 
@@ -2033,29 +1945,27 @@ msgid "Can not execute “%s” command line."
 msgstr "Не вдалося виконати командний рядок «%s»."
 
 #: modules/launcher/gp-launcher-applet.c:885
-#| msgid "Could not open location '%s'"
 msgid "Could not open location"
 msgstr "Не вдалось відкрити адресу"
 
-#: modules/launcher/gp-launcher-applet.c:1010
+#: modules/launcher/gp-launcher-applet.c:1008
 #, c-format
-#| msgid "Failed to load %s: %s\n"
 msgid "Failed to load key file “%s”: %s"
 msgstr "Не вдалося завантажити файл ключа «%s»: %s"
 
-#: modules/launcher/gp-launcher-module.c:58
+#: modules/launcher/gp-launcher-module.c:57
 msgid "Custom Application Launcher"
 msgstr "Власна кнопка запуску"
 
-#: modules/launcher/gp-launcher-module.c:59
+#: modules/launcher/gp-launcher-module.c:58
 msgid "Create a new launcher"
 msgstr "Створити кнопку запуску"
 
-#: modules/launcher/gp-launcher-module.c:68
+#: modules/launcher/gp-launcher-module.c:67
 msgid "Application Launcher..."
 msgstr "Запуск програм…"
 
-#: modules/launcher/gp-launcher-module.c:69
+#: modules/launcher/gp-launcher-module.c:68
 msgid "Copy a launcher from the applications menu"
 msgstr "Скопіювати кнопку запуску з меню програм"
 
@@ -2082,18 +1992,15 @@ msgid "Launcher has invalid Type key value “%s”."
 msgstr "Засіб запуску містить некоректне значення ключа Type «%s»."
 
 #: modules/launcher/gp-launcher-utils.c:156
-#| msgid "The command of the launcher is not set."
 msgid "The icon of the launcher is not set."
 msgstr "Піктограму засобу запуску не встановлено."
 
 #: modules/launcher/gp-launcher-utils.c:164
-#| msgid "The name of the launcher is not set."
 msgid "The type of the launcher is not set."
 msgstr "Тип засобу запуску не встановлено."
 
 #: modules/launcher/gp-launcher-utils.c:173
 #, c-format
-#| msgid "The name of the launcher is not set."
 msgid "The type of the launcher must be “%s” or “%s”."
 msgstr "Типом засобу запуску має бути «%s» або «%s»."
 
@@ -2114,33 +2021,30 @@ msgid "Launcher location"
 msgstr "Положення кнопки запуску"
 
 #: modules/launcher/org.gnome.gnome-panel.applet.launcher.gschema.xml:6
-#| msgid ""
-#| "The location of the .desktop file describing the launcher. This key is "
-#| "only relevant if the object_type key is \"launcher-object\"."
 msgid "The location of the .desktop file describing the launcher."
 msgstr "Розташування файла .desktop, що описує кнопку запуску."
 
-#: modules/menu/gp-lock-logout.c:972
+#: modules/menu/gp-lock-logout.c:966
 msgid "Switch User"
 msgstr "Змінити користувача"
 
-#: modules/menu/gp-lock-logout.c:1055
+#: modules/menu/gp-lock-logout.c:1049
 msgid "Hibernate"
 msgstr "Приспати"
 
-#: modules/menu/gp-lock-logout.c:1071
+#: modules/menu/gp-lock-logout.c:1065
 msgid "Suspend"
 msgstr "Призупинити"
 
-#: modules/menu/gp-lock-logout.c:1087
+#: modules/menu/gp-lock-logout.c:1081
 msgid "Hybrid Sleep"
 msgstr "Гібридне присипляння"
 
-#: modules/menu/gp-lock-logout.c:1105
+#: modules/menu/gp-lock-logout.c:1099
 msgid "Restart"
 msgstr "Перезапустити"
 
-#: modules/menu/gp-lock-logout.c:1106
+#: modules/menu/gp-lock-logout.c:1100
 msgid "Restart the computer"
 msgstr "Перезапустити комп'ютер"
 
@@ -2207,7 +2111,7 @@ msgstr "Меню користувача"
 msgid "Menu to change your settings and log out"
 msgstr "Меню для зміни налаштувань і виходу"
 
-#: modules/menu/gp-menu-utils.c:353
+#: modules/menu/gp-menu-utils.c:441
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Не вдалось запустити «%s»"
@@ -2510,3 +2414,105 @@ msgstr "Показувати назви _робочих просторів в п
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Робочі простори"
+
+#~ msgid "X co-ordinate of panel"
+#~ msgstr "Горизонтальна координата панелі"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Горизонтальне положення панелі. Це значення має сенс лише не у "
+#~ "розширеному режимі. В розширеному режимі це значення ігнорується, і "
+#~ "панель розміщується на межі екрана відповідно до орієнтації."
+
+#~ msgid "Y co-ordinate of panel"
+#~ msgstr "Вертикальна координата панелі"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Вертикальне положення панелі. Це значення має зміст лише не у розширеному "
+#~ "режимі. В розширеному це значення ігнорується, і панель розміщується на "
+#~ "межі екрана відповідно до орієнтації."
+
+#~ msgid "X co-ordinate of panel, starting from the right of the screen"
+#~ msgstr "Координата X панелі, починаючи з правої межі екрана"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis, starting from the right of "
+#~ "the screen. If set to -1, the value is ignored and the value of the x key "
+#~ "is used. If the value is greater than 0, then the value of the x key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Горизонтальне положення панелі, починаючи з правої межі екрана. Якщо "
+#~ "встановлено -1, значення ігнорується та використовується значення ключа x."
+#~ "Якщо значення більше за 0, тоді значення ключа x ігнорується. Це значення "
+#~ "має сенс лише не у розширеному режимі. В розширеному режимі це значення "
+#~ "ігнорується, і панель розміщується на межі екрану у відповідності з "
+#~ "орієнтацією."
+
+#~ msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+#~ msgstr "Координата Y панелі, починаючи з низу екрана"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis, starting from the bottom of "
+#~ "the screen. If set to -1, the value is ignored and the value of the y key "
+#~ "is used. If the value is greater than 0, then the value of the y key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Вертикальне положення панелі. починаючи з низу екрана. Якщо встановлено "
+#~ "-1, значення ігнорується та використовується значення ключа y. Якщо "
+#~ "значення більше за 0, тоді значення ключа y ігнорується. Це значення має "
+#~ "зміст лише не у розширеному режимі. В розширеному це значення "
+#~ "ігнорується, і панель розміщується на межі екрана відповідно до "
+#~ "орієнтації."
+
+#~ msgid "Center panel on x-axis"
+#~ msgstr "Центрувати панель горизонтально"
+
+#~ msgid ""
+#~ "If true, the x and x_right keys are ignored and the panel is placed at "
+#~ "the center of the x-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the x and x_right keys specify the location of the panel."
+#~ msgstr ""
+#~ "Якщо встановлено, ключі x та x_right ігноруються і панель розміщується у "
+#~ "центрі екрана на осі X. Якщо панель змінює розмір, вона, попри все "
+#~ "лишається на тому ж місці, тобто розширюється у обидві сторони. Якщо ж "
+#~ "параметр не встановлено, то значення x та x_right визначають положення "
+#~ "панелі."
+
+#~ msgid "Center panel on y-axis"
+#~ msgstr "Центрувати панель вертикально"
+
+#~ msgid ""
+#~ "If true, the y and y_bottom keys are ignored and the panel is placed at "
+#~ "the center of the y-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the y and y_bottom keys specify the location of the panel."
+#~ msgstr ""
+#~ "Якщо встановлено, ключі y та y_bottom ігноруються і панель розміщується у "
+#~ "центрі екрана на осі Y. Якщо панель змінює розмір, вона, попри все, "
+#~ "лишається на тому ж місці, тобто розширюється у обидві сторони.  Якщо ж "
+#~ "параметр не встановлено, то значення y та y_bottom визначають положення "
+#~ "панелі."
+
+#~ msgid "Top Floating Panel"
+#~ msgstr "Верхня відірвана панель"
+
+#~ msgid "Bottom Floating Panel"
+#~ msgstr "Нижня відірвана панель"
+
+#~ msgid "Left Floating Panel"
+#~ msgstr "Ліва відірвана панель"
+
+#~ msgid "Right Floating Panel"
+#~ msgstr "Права відірвана панель"
