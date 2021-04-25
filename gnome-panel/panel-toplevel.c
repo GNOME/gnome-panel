@@ -2219,88 +2219,47 @@ panel_toplevel_dispose (GObject *widget)
 static void
 panel_toplevel_check_resize (GtkContainer *container)
 {
-	GtkAllocation   allocation;
-	GtkRequisition  requisition;
-	GtkWidget      *widget;
+	PanelToplevel *self;
+	GtkWidget *widget;
+	GdkRectangle old_geometry;
+	GtkRequisition requisition;
+	gboolean position_changed;
+	gboolean size_changed;
+	GtkAllocation allocation;
 
-	widget = GTK_WIDGET (container);
+	self = PANEL_TOPLEVEL (container);
+	widget = GTK_WIDGET (self);
 
 	if (!gtk_widget_get_visible (widget))
 		return;
 
-	gtk_widget_get_preferred_size (widget, &requisition, NULL);
-	gtk_widget_get_allocation (widget, &allocation);
-
-	allocation.width = requisition.width;
-	allocation.height = requisition.height;
-
-	gtk_widget_size_allocate (widget, &allocation);
-}
-
-static void
-panel_toplevel_size_request (GtkWidget      *widget,
-			     GtkRequisition *requisition)
-{
-	PanelToplevel *toplevel;
-	GtkBin        *bin;
-	GtkWidget     *child;
-	GdkRectangle   old_geometry;
-	int            position_changed = FALSE;
-	int            size_changed = FALSE;
-	int            dummy; /* to pass a valid pointer */
-
-	toplevel = PANEL_TOPLEVEL (widget);
-	bin = GTK_BIN (widget);
-
 	/* we get a size request when there are new monitors, so first try to
 	 * see if we need to move to a new monitor */
-	panel_toplevel_update_monitor (toplevel);
+	panel_toplevel_update_monitor (self);
 
-	child = gtk_bin_get_child (bin);
-	if (child && gtk_widget_get_visible (child)) {
-		gtk_widget_get_preferred_width (child, &dummy, &requisition->width);
-		gtk_widget_get_preferred_height (child, &dummy, &requisition->height);
-	}
+	old_geometry = self->priv->geometry;
 
-	old_geometry = toplevel->priv->geometry;
+	gtk_widget_get_preferred_size (widget, &requisition, NULL);
+	panel_toplevel_update_geometry (self, &requisition);
 
-	panel_toplevel_update_geometry (toplevel, requisition);
-
-	requisition->width  = toplevel->priv->geometry.width;
-	requisition->height = toplevel->priv->geometry.height;
-
-	if (!gtk_widget_get_realized (widget))
-		return;
-
-	if (old_geometry.width  != toplevel->priv->geometry.width ||
-	    old_geometry.height != toplevel->priv->geometry.height)
-		size_changed = TRUE;
-
-	if (old_geometry.x != toplevel->priv->geometry.x ||
-	    old_geometry.y != toplevel->priv->geometry.y)
+	position_changed = FALSE;
+	if (old_geometry.x != self->priv->geometry.x ||
+	    old_geometry.y != self->priv->geometry.y)
 		position_changed = TRUE;
 
-	panel_toplevel_move_resize_window (toplevel, position_changed, size_changed);
-}
+	size_changed = FALSE;
+	if (old_geometry.width != self->priv->geometry.width ||
+	    old_geometry.height != self->priv->geometry.height)
+		size_changed = TRUE;
 
-static void
-panel_toplevel_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
-{
-	GtkRequisition requisition;
+	panel_toplevel_move_resize_window (self, position_changed, size_changed);
 
-	panel_toplevel_size_request (widget, &requisition);
+	allocation.x = 0;
+	allocation.y = 0;
+	allocation.width = self->priv->geometry.width;
+	allocation.height = self->priv->geometry.height;
 
-	*minimal_width = *natural_width = requisition.width;
-}
-
-static void
-panel_toplevel_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
-{
-	GtkRequisition requisition;
-
-	panel_toplevel_size_request (widget, &requisition);
-
-	*minimal_height = *natural_height = requisition.height;
+	gtk_widget_size_allocate (widget, &allocation);
 }
 
 static gboolean
@@ -3122,8 +3081,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 
 	widget_class->realize              = panel_toplevel_realize;
 	widget_class->unrealize            = panel_toplevel_unrealize;
-	widget_class->get_preferred_width  = panel_toplevel_get_preferred_width;
-	widget_class->get_preferred_height = panel_toplevel_get_preferred_height;
 	widget_class->button_press_event   = panel_toplevel_button_press_event;
 	widget_class->button_release_event = panel_toplevel_button_release_event;
 	widget_class->key_press_event      = panel_toplevel_key_press_event;
