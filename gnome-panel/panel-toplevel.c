@@ -1945,7 +1945,6 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 {
 	int monitor_width, monitor_height;
 	int width, height;
-	int size;
 	int minimum_height;
 
 	if (toplevel->priv->animating)
@@ -1975,7 +1974,6 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 							monitor_width);
 
 		width  = MAX (MINIMUM_WIDTH, width);
-		size = height;
 	} else {
 		width = MAX (MIN (MAX (width, toplevel->priv->size),
 				  panel_toplevel_get_maximum_size (toplevel)),
@@ -1990,16 +1988,12 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 							monitor_height);
 
 		height = MAX (MINIMUM_WIDTH, height);
-		size = width;
 	}
 
 	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_width);
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
 	toplevel->priv->original_width  = toplevel->priv->geometry.width;
 	toplevel->priv->original_height = toplevel->priv->geometry.height;
-
-	if (toplevel->priv->size < size)
-		panel_widget_set_size (toplevel->priv->panel_widget, size);
 }
 
 static void
