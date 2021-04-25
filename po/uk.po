@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-04-22 18:19+0000\n"
-"PO-Revision-Date: 2021-04-24 09:28+0300\n"
+"POT-Creation-Date: 2021-04-24 15:51+0000\n"
+"PO-Revision-Date: 2021-04-25 10:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -513,7 +513,6 @@ msgstr ""
 "кнопки буде зорієнтовано вниз, а із \"bottom\" — вгору."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
-#| msgid "Panel ID list"
 msgid "Panel alignment"
 msgstr "Вирівнювання панелі"
 
@@ -522,7 +521,8 @@ msgid ""
 "The alignment of the panel. Possible values are \"start\", \"center\", \"end"
 "\"."
 msgstr ""
-"Вирівнювання панелі. Можливі значення: \"start\" (початок), \"center\" (центр), \"end\" (кінець)."
+"Вирівнювання панелі. Можливі значення: \"start\" (початок), \"center"
+"\" (центр), \"end\" (кінець)."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
@@ -700,7 +700,7 @@ msgstr "Використати нетиповий колір тексту"
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:140
 msgid "Panel"
 msgstr "Панель"
 
@@ -753,40 +753,58 @@ msgstr "Додати"
 msgid "Hide Panel"
 msgstr "Сховати панель"
 
-#: gnome-panel/gp-main.c:50
+#: gnome-panel/gp-main.c:49
 msgid "Replace a currently running panel"
 msgstr "Замінити поточну панель"
 
-#: gnome-panel/gp-main.c:56
+#: gnome-panel/gp-main.c:55
 msgid "Print version"
 msgstr "Показати версію"
 
-#: gnome-panel/gp-properties-dialog.c:213
+#: gnome-panel/gp-properties-dialog.c:214
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Згори"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:215
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Знизу"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:216
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Ліворуч"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:217
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Праворуч"
+
+#: gnome-panel/gp-properties-dialog.c:221
+#| msgid "Restart"
+msgctxt "Alignment"
+msgid "Start"
+msgstr "Початок"
+
+#: gnome-panel/gp-properties-dialog.c:222
+msgctxt "Alignment"
+msgid "Center"
+msgstr ""
+"Центр"
+
+#: gnome-panel/gp-properties-dialog.c:223
+#| msgid "E_xpand"
+msgctxt "Alignment"
+msgid "End"
+msgstr "Кінець"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
 msgstr "Властивості панелі"
 
 #: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:323
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "Деякі з цих властивостей недоступні"
 
@@ -795,67 +813,72 @@ msgid "_Orientation:"
 msgstr "_Орієнтація:"
 
 #: gnome-panel/gp-properties-dialog.ui:122
+#| msgid "Panel alignment"
+msgid "_Alignment:"
+msgstr "_Вирівнювання:"
+
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_Розмір:"
 
-#: gnome-panel/gp-properties-dialog.ui:158
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "точок"
 
-#: gnome-panel/gp-properties-dialog.ui:191
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "Інше:"
 
-#: gnome-panel/gp-properties-dialog.ui:210
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "Роз_ширювати"
 
-#: gnome-panel/gp-properties-dialog.ui:225
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "_Автоматичне приховування"
 
-#: gnome-panel/gp-properties-dialog.ui:240
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "Показувати _кнопки приховування"
 
-#: gnome-panel/gp-properties-dialog.ui:255
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "_Стрілки на кнопках приховування"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Загальне"
 
-#: gnome-panel/gp-properties-dialog.ui:355
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "Колір тла:"
 
-#: gnome-panel/gp-properties-dialog.ui:418
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "Зображення тла:"
 
-#: gnome-panel/gp-properties-dialog.ui:457
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "Плитка"
 
-#: gnome-panel/gp-properties-dialog.ui:472
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "Розтягувати"
 
-#: gnome-panel/gp-properties-dialog.ui:487
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "Вмістити"
 
-#: gnome-panel/gp-properties-dialog.ui:509
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "Повернути зображення на вертикальній панелі"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "Колір тексту:"
 
-#: gnome-panel/gp-properties-dialog.ui:607
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "Тема"
 
@@ -1091,75 +1114,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1510
+#: gnome-panel/panel-toplevel.c:1499
 msgid "Top Expanded Edge Panel"
 msgstr "Верхня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1511
+#: gnome-panel/panel-toplevel.c:1500
 msgid "Top Centered Panel"
 msgstr "Верхня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1512
-#| msgid "Top Centered Panel"
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Top Start Panel"
 msgstr "Верхня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1513
-#| msgid "Top Edge Panel"
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Top End Panel"
 msgstr "Верхня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1517
+#: gnome-panel/panel-toplevel.c:1506
 msgid "Bottom Expanded Edge Panel"
 msgstr "Нижня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1518
+#: gnome-panel/panel-toplevel.c:1507
 msgid "Bottom Centered Panel"
 msgstr "Нижня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1519
-#| msgid "Bottom Centered Panel"
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Bottom Start Panel"
 msgstr "Нижня панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1520
-#| msgid "Bottom Edge Panel"
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Bottom End Panel"
 msgstr "Нижня панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1524
+#: gnome-panel/panel-toplevel.c:1513
 msgid "Left Expanded Edge Panel"
 msgstr "Ліва розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1525
+#: gnome-panel/panel-toplevel.c:1514
 msgid "Left Centered Panel"
 msgstr "Ліва центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1526
-#| msgid "Left Centered Panel"
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Left Start Panel"
 msgstr "Ліва панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1527
-#| msgid "Left Edge Panel"
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Left End Panel"
 msgstr "Ліва панель у кінці"
 
-#: gnome-panel/panel-toplevel.c:1531
+#: gnome-panel/panel-toplevel.c:1520
 msgid "Right Expanded Edge Panel"
 msgstr "Права розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1532
+#: gnome-panel/panel-toplevel.c:1521
 msgid "Right Centered Panel"
 msgstr "Права центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1533
-#| msgid "Right Centered Panel"
+#: gnome-panel/panel-toplevel.c:1522
 msgid "Right Start Panel"
 msgstr "Права панель на початку"
 
-#: gnome-panel/panel-toplevel.c:1534
-#| msgid "Right Edge Panel"
+#: gnome-panel/panel-toplevel.c:1523
 msgid "Right End Panel"
 msgstr "Права панель у кінці"
 
