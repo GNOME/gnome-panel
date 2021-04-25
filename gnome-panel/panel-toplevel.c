@@ -2754,19 +2754,6 @@ panel_toplevel_focus_out_event (GtkWidget     *widget,
 }
 
 static void
-panel_toplevel_style_updated (GtkWidget *widget)
-{
-	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
-
-	panel_toplevel_update_hide_buttons (toplevel);
-
-	if (GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated)
-		GTK_WIDGET_CLASS (panel_toplevel_parent_class)->style_updated (widget);
-
-	panel_widget_set_size (toplevel->priv->panel_widget, toplevel->priv->size);
-}
-
-static void
 panel_toplevel_composited_changed (GtkWidget *widget)
 {
 	PanelToplevel *toplevel;
@@ -3090,7 +3077,6 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
 	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
 	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
-	widget_class->style_updated        = panel_toplevel_style_updated;
 	widget_class->composited_changed   = panel_toplevel_composited_changed;
 
 	container_class->check_resize = panel_toplevel_check_resize;
