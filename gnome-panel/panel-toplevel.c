@@ -139,11 +139,9 @@ struct _PanelToplevelPrivate {
 	guint                   animation_timeout;
 
 	PanelWidget            *panel_widget;
-	GtkWidget              *grid;
-	GtkWidget              *hide_button_top;
-	GtkWidget              *hide_button_bottom;
-	GtkWidget              *hide_button_left;
-	GtkWidget              *hide_button_right;
+	GtkWidget              *box;
+	GtkWidget              *hide_button_start;
+	GtkWidget              *hide_button_end;
 
 	gint			n_autohide_disablers;
 
@@ -1263,10 +1261,8 @@ panel_toplevel_hide_button_clicked (PanelToplevel *toplevel,
 }
 
 static GtkWidget *
-panel_toplevel_add_hide_button (PanelToplevel *toplevel,
-				GtkArrowType   arrow_type,
-				int            left,
-				int            top)
+add_hide_button (PanelToplevel *toplevel,
+                 GtkArrowType   arrow_type)
 {
 	GtkWidget *button;
 
@@ -1279,49 +1275,33 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 	g_signal_connect_swapped (button, "button_release_event",
 				  G_CALLBACK (panel_toplevel_hide_button_event), toplevel);
 
-	gtk_grid_attach (GTK_GRID (toplevel->priv->grid), button, left, top, 1, 1);
-
 	return button;
-}
-
-static void
-panel_toplevel_update_buttons_showing (PanelToplevel *toplevel)
-{
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		gtk_widget_hide (toplevel->priv->hide_button_top);
-		gtk_widget_hide (toplevel->priv->hide_button_bottom);
-		gtk_widget_show (toplevel->priv->hide_button_left);
-		gtk_widget_show (toplevel->priv->hide_button_right);
-	} else {
-		gtk_widget_show (toplevel->priv->hide_button_top);
-		gtk_widget_show (toplevel->priv->hide_button_bottom);
-		gtk_widget_hide (toplevel->priv->hide_button_left);
-		gtk_widget_hide (toplevel->priv->hide_button_right);
-	}
 }
 
 static void
 panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 {
-	if (toplevel->priv->buttons_enabled)
-		panel_toplevel_update_buttons_showing (toplevel);
-	else {
-		g_object_set (
-			G_OBJECT (toplevel->priv->hide_button_top),
-			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_DOWN,
-			NULL);
-		g_object_set (
-			G_OBJECT (toplevel->priv->hide_button_bottom),
-			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_UP,
-			NULL);
-		g_object_set (
-			G_OBJECT (toplevel->priv->hide_button_left),
-			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_RIGHT,
-			NULL);
-		g_object_set (
-			G_OBJECT (toplevel->priv->hide_button_right),
-			"visible", toplevel->priv->state == PANEL_STATE_HIDDEN_LEFT,
-			NULL);
+	gboolean horizontal;
+
+	horizontal = toplevel->priv->orientation & PANEL_HORIZONTAL_MASK;
+
+	gp_arrow_button_set_arrow_type (GP_ARROW_BUTTON (toplevel->priv->hide_button_start),
+		                        horizontal ? GTK_ARROW_LEFT : GTK_ARROW_UP);
+
+	gp_arrow_button_set_arrow_type (GP_ARROW_BUTTON (toplevel->priv->hide_button_end),
+		                        horizontal ? GTK_ARROW_RIGHT : GTK_ARROW_DOWN);
+
+	if (toplevel->priv->buttons_enabled) {
+		gtk_widget_show (toplevel->priv->hide_button_start);
+		gtk_widget_show (toplevel->priv->hide_button_end);
+	} else {
+		gtk_widget_set_visible (toplevel->priv->hide_button_start,
+		                        toplevel->priv->state == PANEL_STATE_HIDDEN_DOWN ||
+		                        toplevel->priv->state == PANEL_STATE_HIDDEN_RIGHT);
+
+		gtk_widget_set_visible (toplevel->priv->hide_button_end,
+		                        toplevel->priv->state == PANEL_STATE_HIDDEN_UP ||
+		                        toplevel->priv->state == PANEL_STATE_HIDDEN_LEFT);
 	}
 }
 
@@ -1669,22 +1649,22 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 
 	switch (toplevel->priv->state) {
 	case PANEL_STATE_HIDDEN_UP:
-		gtk_widget_get_allocation (toplevel->priv->hide_button_bottom,
+		gtk_widget_get_allocation (toplevel->priv->hide_button_end,
 					   &hide_allocation);
 		*y = - (height - MAX (hide_allocation.height, min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_DOWN:
-		gtk_widget_get_allocation (toplevel->priv->hide_button_top,
+		gtk_widget_get_allocation (toplevel->priv->hide_button_start,
 					   &hide_allocation);
 		*y = monitor_y + monitor_height - MAX (hide_allocation.height, min_hide_size);
 		break;
 	case PANEL_STATE_HIDDEN_LEFT:
-		gtk_widget_get_allocation (toplevel->priv->hide_button_right,
+		gtk_widget_get_allocation (toplevel->priv->hide_button_end,
 					   &hide_allocation);
 		*x = - (width - MAX (hide_allocation.width, min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_RIGHT:
-		gtk_widget_get_allocation (toplevel->priv->hide_button_left,
+		gtk_widget_get_allocation (toplevel->priv->hide_button_start,
 					   &hide_allocation);
 		*x = monitor_x + monitor_width - MAX (hide_allocation.width, min_hide_size);
 		break;
@@ -3517,40 +3497,53 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 static void
 panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 {
+	GtkOrientation orientation;
+	GtkArrowType arrow;
 	GtkWidget *container;
 
-	toplevel->priv->grid = gtk_grid_new ();
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		orientation = GTK_ORIENTATION_HORIZONTAL;
+	else
+		orientation = GTK_ORIENTATION_VERTICAL;
 
-	toplevel->priv->hide_button_top    = panel_toplevel_add_hide_button (toplevel, GTK_ARROW_UP,    1, 0);
-	toplevel->priv->hide_button_bottom = panel_toplevel_add_hide_button (toplevel, GTK_ARROW_DOWN,  1, 2);
-	toplevel->priv->hide_button_left   = panel_toplevel_add_hide_button (toplevel, GTK_ARROW_LEFT,  0, 1);
-	toplevel->priv->hide_button_right  = panel_toplevel_add_hide_button (toplevel, GTK_ARROW_RIGHT, 2, 1);
+	toplevel->priv->box = gtk_box_new (orientation, 0);
+	gtk_container_add (GTK_CONTAINER (toplevel), toplevel->priv->box);
+	gtk_widget_show (toplevel->priv->box);
 
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		gtk_widget_show (toplevel->priv->hide_button_left);
-		gtk_widget_show (toplevel->priv->hide_button_right);
-	} else {
-		gtk_widget_show (toplevel->priv->hide_button_top);
-		gtk_widget_show (toplevel->priv->hide_button_bottom);
-	}
+	arrow = orientation == GTK_ORIENTATION_HORIZONTAL ? GTK_ARROW_LEFT : GTK_ARROW_UP;
+	toplevel->priv->hide_button_start = add_hide_button (toplevel, arrow);
+
+	arrow = orientation == GTK_ORIENTATION_HORIZONTAL ? GTK_ARROW_RIGHT : GTK_ARROW_DOWN;
+	toplevel->priv->hide_button_end = add_hide_button (toplevel, arrow);
 
 	container = panel_widget_new (toplevel,
 				      !toplevel->priv->expand,
-				      toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
-						GTK_ORIENTATION_HORIZONTAL :
-						GTK_ORIENTATION_VERTICAL,	
+				      orientation,
 				      toplevel->priv->size);
+
+	gtk_box_pack_start (GTK_BOX (toplevel->priv->box),
+	                    toplevel->priv->hide_button_start,
+	                    FALSE,
+	                    FALSE,
+	                    0);
+
+	gtk_box_pack_start (GTK_BOX (toplevel->priv->box),
+	                    container,
+	                    TRUE,
+	                    TRUE,
+	                    0);
+
+	gtk_box_pack_start (GTK_BOX (toplevel->priv->box),
+	                    toplevel->priv->hide_button_end,
+	                    FALSE,
+	                    FALSE,
+	                    0);
 
 	toplevel->priv->panel_widget = PANEL_WIDGET (container);
 
 	gtk_widget_set_hexpand (container, TRUE);
 	gtk_widget_set_vexpand (container, TRUE);
-
-	gtk_grid_attach (GTK_GRID (toplevel->priv->grid), container, 1, 1, 1, 1);
 	gtk_widget_show (container);
-
-	gtk_container_add (GTK_CONTAINER (toplevel), toplevel->priv->grid);
-	gtk_widget_show (toplevel->priv->grid);
 }
 
 static void
@@ -3607,11 +3600,9 @@ panel_toplevel_init (PanelToplevel *toplevel)
 	toplevel->priv->animation_timeout = 0;
 
 	toplevel->priv->panel_widget       = NULL;
-	toplevel->priv->grid               = NULL;
-	toplevel->priv->hide_button_top    = NULL;
-	toplevel->priv->hide_button_bottom = NULL;
-	toplevel->priv->hide_button_left   = NULL;
-	toplevel->priv->hide_button_right  = NULL;
+	toplevel->priv->box                = NULL;
+	toplevel->priv->hide_button_start  = NULL;
+	toplevel->priv->hide_button_end    = NULL;
 
 	toplevel->priv->n_autohide_disablers = 0;
 
@@ -3749,26 +3740,16 @@ panel_toplevel_bind_gsettings (PanelToplevel *toplevel)
 			 "buttons-enabled",
 			 G_SETTINGS_BIND_DEFAULT|G_SETTINGS_BIND_NO_SENSITIVITY);
 
-	/* FIXME: should be in panel_toplevel_add_hide_button */
+	/* FIXME: should be in add_hide_button */
 
 	g_settings_bind (toplevel->priv->settings,
 	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
-	                 toplevel->priv->hide_button_top, "arrow-visible",
+	                 toplevel->priv->hide_button_start, "arrow-visible",
 	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
 
 	g_settings_bind (toplevel->priv->settings,
 	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
-	                 toplevel->priv->hide_button_bottom, "arrow-visible",
-	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
-
-	g_settings_bind (toplevel->priv->settings,
-	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
-	                 toplevel->priv->hide_button_left, "arrow-visible",
-	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
-
-	g_settings_bind (toplevel->priv->settings,
-	                 PANEL_TOPLEVEL_ENABLE_ARROWS_KEY,
-	                 toplevel->priv->hide_button_right, "arrow-visible",
+	                 toplevel->priv->hide_button_end, "arrow-visible",
 	                 G_SETTINGS_BIND_GET | G_SETTINGS_BIND_NO_SENSITIVITY);
 }
 
@@ -3905,6 +3886,13 @@ panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 	update_style_classes (toplevel);
 
 	gtk_widget_reset_style (GTK_WIDGET (toplevel));
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
+		gtk_orientable_set_orientation (GTK_ORIENTABLE (toplevel->priv->box),
+		                                GTK_ORIENTATION_HORIZONTAL);
+	else
+		gtk_orientable_set_orientation (GTK_ORIENTABLE (toplevel->priv->box),
+		                                GTK_ORIENTATION_VERTICAL);
 
 	panel_toplevel_update_hide_buttons (toplevel);
 
