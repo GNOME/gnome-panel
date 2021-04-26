@@ -21,8 +21,6 @@
 #include "panel-enums-gsettings.h"
 #include "panel-typebuiltins.h"
 
-#define HANDLE_SIZE 10
-
 struct _GpHandle
 {
   GtkWidget        parent;
@@ -93,15 +91,43 @@ gp_handle_draw (GtkWidget *widget,
                 cairo_t   *cr)
 {
   GtkStyleContext *context;
+  GtkStateFlags flags;
+  int width;
+  int height;
+  GtkBorder margin;
+  GtkBorder border;
+  GtkBorder padding;
+  int handle_width;
+  int handle_height;
 
-  context = gtk_widget_get_style_context (gtk_widget_get_toplevel (widget));
+  context = gtk_widget_get_style_context (widget);
+  flags = gtk_style_context_get_state (context);
 
-  gtk_render_handle (context,
-                     cr,
-                     0,
-                     0,
-                     gtk_widget_get_allocated_width (widget),
-                     gtk_widget_get_allocated_height (widget));
+  width = gtk_widget_get_allocated_width (widget);
+  height = gtk_widget_get_allocated_height (widget);
+
+  gtk_render_background (context, cr, 0, 0, width, height);
+  gtk_render_frame (context, cr, 0, 0, width, height);
+
+  gtk_style_context_get_margin (context, flags, &margin);
+  gtk_style_context_get_border (context, flags, &border);
+  gtk_style_context_get_padding (context, flags, &padding);
+
+  gtk_style_context_get (context,
+                         flags,
+                         "min-height", &handle_height,
+                         "min-width", &handle_width,
+                         NULL);
+
+  width -= margin.left + border.left + padding.left + padding.right + border.right + margin.right;
+  height -= margin.top + border.top + padding.top + padding.bottom + border.bottom + margin.bottom;
+
+  gtk_render_check (context,
+                    cr,
+                    margin.left + border.left + padding.left + (width - handle_width) / 2,
+                    margin.top + border.top + padding.top + (height - handle_height) / 2,
+                    handle_width,
+                    handle_height);
 
   return FALSE;
 }
@@ -111,14 +137,27 @@ gp_handle_get_preferred_height (GtkWidget *widget,
                                 gint      *minimum_height,
                                 gint      *natural_height)
 {
-  GpHandle *self;
+  GtkStyleContext *context;
+  GtkStateFlags flags;
+  GtkBorder margin;
+  GtkBorder border;
+  GtkBorder padding;
+  int handle_height;
+  int height;
 
-  self = GP_HANDLE (widget);
+  context = gtk_widget_get_style_context (widget);
+  flags = gtk_style_context_get_state (context);
 
-  if (self->orientation & PANEL_VERTICAL_MASK)
-    *minimum_height = *natural_height = HANDLE_SIZE;
-  else
-    *minimum_height = *natural_height = 0;
+  gtk_style_context_get_margin (context, flags, &margin);
+  gtk_style_context_get_border (context, flags, &border);
+  gtk_style_context_get_padding (context, flags, &padding);
+  gtk_style_context_get (context, flags, "min-height", &handle_height, NULL);
+
+  height = margin.top + border.top + padding.top;
+  height += handle_height;
+  height += padding.bottom + border.bottom + margin.bottom;
+
+  *minimum_height = *natural_height = height;
 }
 
 static void
@@ -126,14 +165,27 @@ gp_handle_get_preferred_width (GtkWidget *widget,
                                gint      *minimum_width,
                                gint      *natural_width)
 {
-  GpHandle *self;
+  GtkStyleContext *context;
+  GtkStateFlags flags;
+  GtkBorder margin;
+  GtkBorder border;
+  GtkBorder padding;
+  int handle_width;
+  int width;
 
-  self = GP_HANDLE (widget);
+  context = gtk_widget_get_style_context (widget);
+  flags = gtk_style_context_get_state (context);
 
-  if (self->orientation & PANEL_HORIZONTAL_MASK)
-    *minimum_width = *natural_width = HANDLE_SIZE;
-  else
-    *minimum_width = *natural_width = 0;
+  gtk_style_context_get_margin (context, flags, &margin);
+  gtk_style_context_get_border (context, flags, &border);
+  gtk_style_context_get_padding (context, flags, &padding);
+  gtk_style_context_get (context, flags, "min-width", &handle_width, NULL);
+
+  width = margin.left + border.left + padding.left;
+  width += handle_width;
+  width += padding.right + border.right + margin.right;
+
+  *minimum_width = *natural_width = width;
 }
 
 static void
@@ -171,12 +223,22 @@ gp_handle_class_init (GpHandleClass *self_class)
   widget_class->get_preferred_width = gp_handle_get_preferred_width;
 
   install_properties (object_class);
+
+  gtk_widget_class_set_css_name (widget_class, "gp-handle");
 }
 
 static void
 gp_handle_init (GpHandle *self)
 {
-  gtk_widget_set_has_window (GTK_WIDGET (self), FALSE);
+  GtkWidget *widget;
+  GtkStyleContext *context;
+
+  widget = GTK_WIDGET (self);
+
+  gtk_widget_set_has_window (widget, FALSE);
+
+  context = gtk_widget_get_style_context (widget);
+  gtk_style_context_add_class (context, "gp-text-color");
 }
 
 GtkWidget *

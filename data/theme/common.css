@@ -93,6 +93,21 @@ gp-arrow-button {
   min-height: 20px;
 }
 
+gp-handle {
+  -gtk-icon-source: -gtk-recolor(url("/org/gnome/gnome-panel/theme/gp-handle-symbolic.svg"));
+  min-width: 16px;
+  min-height: 16px;
+}
+
+.horizontal gp-handle {
+  margin: 0 -3px;
+}
+
+.vertical gp-handle {
+  -gtk-icon-transform: rotate(90deg);
+  margin: -3px 0;
+}
+
 .context-row {
   padding: 4px 10px;
 }
