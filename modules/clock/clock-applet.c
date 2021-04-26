@@ -388,7 +388,7 @@ position_calendar_popup (ClockApplet *cd)
 	 * I expected.
 	 */
 	switch (gp_applet_get_position (GP_APPLET (cd))) {
-	case GTK_POS_RIGHT:
+	case GTK_POS_LEFT:
 		x += button_w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
@@ -399,7 +399,7 @@ position_calendar_popup (ClockApplet *cd)
 			gravity = GDK_GRAVITY_NORTH_WEST;
 
 		break;
-	case GTK_POS_LEFT:
+	case GTK_POS_RIGHT:
 		x -= w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
