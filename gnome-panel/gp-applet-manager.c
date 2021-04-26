@@ -199,7 +199,6 @@ gp_applet_manager_load_applet (GpAppletManager            *self,
   GError *error;
   GpApplet *applet;
   PanelAppletFrame *frame;
-  GtkWidget *widget;
 
   g_return_val_if_fail (iid != NULL, FALSE);
   g_return_val_if_fail (frame_act != NULL, FALSE);
@@ -268,11 +267,6 @@ gp_applet_manager_load_applet (GpAppletManager            *self,
 
   _panel_applet_frame_set_applet (frame, applet);
   _panel_applet_frame_set_iid (frame, iid);
-
-  widget = GTK_WIDGET (applet);
-
-  gtk_container_add (GTK_CONTAINER (frame), widget);
-  gtk_widget_show (widget);
 
   _panel_applet_frame_activated (frame, frame_act, NULL);
 
