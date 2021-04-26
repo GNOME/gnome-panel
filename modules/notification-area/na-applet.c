@@ -36,6 +36,24 @@ struct _NaApplet
 G_DEFINE_TYPE (NaApplet, na_applet, GP_TYPE_APPLET)
 
 static void
+update_icon_size (NaApplet *self)
+{
+  guint icon_size;
+
+  icon_size = gp_applet_get_panel_icon_size (GP_APPLET (self));
+
+  na_tray_set_icon_size (self->tray, icon_size);
+}
+
+static void
+panel_icon_size_cb (GpApplet   *applet,
+                    GParamSpec *pspec,
+                    NaApplet   *self)
+{
+  update_icon_size (self);
+}
+
+static void
 update_style (GtkWidget *widget)
 {
   NaApplet *na;
@@ -45,7 +63,6 @@ update_style (GtkWidget *widget)
   GdkRGBA warning;
   GdkRGBA success;
   gint padding;
-  gint icon_size;
 
   na = NA_APPLET (widget);
 
@@ -69,9 +86,6 @@ update_style (GtkWidget *widget)
 
   gtk_widget_style_get (widget, "icon-padding", &padding, NULL);
   na_tray_set_padding (na->tray, padding);
-
-  gtk_widget_style_get (widget, "icon-size", &icon_size, NULL);
-  na_tray_set_icon_size (na->tray, icon_size);
 }
 
 static void
@@ -84,8 +98,19 @@ na_applet_style_updated (GtkWidget *widget)
 static void
 na_applet_constructed (GObject *object)
 {
+  NaApplet *self;
+
+  self = NA_APPLET (object);
+
   G_OBJECT_CLASS (na_applet_parent_class)->constructed (object);
-  gtk_widget_show (GTK_WIDGET (object));
+
+  g_signal_connect_object (self,
+                           "notify::panel-icon-size",
+                           G_CALLBACK (panel_icon_size_cb),
+                           self,
+                           0);
+
+  update_icon_size (self);
 }
 
 static void
@@ -108,13 +133,6 @@ install_style_properties (GtkWidgetClass *widget_class)
   spec = g_param_spec_int ("icon-padding",
                            "Padding around icons",
                            "Padding that should be put around icons, in pixels",
-                           0, G_MAXINT, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-
-  gtk_widget_class_install_style_property (widget_class, spec);
-
-  spec = g_param_spec_int ("icon-size",
-                           "Icon size",
-                           "If non-zero, hardcodes the size of the icons in pixels",
                            0, G_MAXINT, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
   gtk_widget_class_install_style_property (widget_class, spec);
