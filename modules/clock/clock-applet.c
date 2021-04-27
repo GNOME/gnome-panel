@@ -82,7 +82,6 @@ struct _ClockApplet
         GtkWidget *panel_weather_icon;
         GtkWidget *panel_temperature_label;
 
-	GtkWidget *props;
 	GtkWidget *calendar_popup;
 
         GtkWidget *clock_vbox;
@@ -119,18 +118,8 @@ struct _ClockApplet
         GList *location_tiles;
 
 	/* runtime data */
-        time_t             current_time;
         GnomeWallClock    *wall_clock;
 	GtkAllocation      old_allocation;
-
-        GtkWidget *showseconds_check;
-        GtkWidget *showdate_check;
-        GtkWidget *custom_hbox;
-        GtkWidget *custom_label;
-        GtkWidget *custom_entry;
-        gboolean   custom_format_shown;
-
-	gboolean   can_handle_format_12;
 };
 
 G_DEFINE_TYPE (ClockApplet, clock_applet, GP_TYPE_APPLET)
@@ -849,8 +838,6 @@ create_clock_widget (ClockApplet *cd)
 
 	gtk_container_add (GTK_CONTAINER (cd), cd->panel_button);
 	gtk_container_set_border_width (GTK_CONTAINER (cd), 0);
-
-	cd->props = NULL;
 
 	update_panel_weather (cd);
 
@@ -1989,7 +1976,6 @@ clock_applet_dispose (GObject *object)
 
         g_clear_object (&applet->wall_clock);
 
-        g_clear_pointer (&applet->props, gtk_widget_destroy);
         g_clear_pointer (&applet->calendar_popup, gtk_widget_destroy);
 
         g_clear_object (&applet->datetime_appinfo);
