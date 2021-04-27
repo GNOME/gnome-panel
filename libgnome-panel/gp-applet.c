@@ -612,7 +612,7 @@ gp_applet_get_request_mode (GtkWidget *widget)
   applet = GP_APPLET (widget);
   priv = gp_applet_get_instance_private (applet);
 
-  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
+  if (priv->orientation == GTK_ORIENTATION_VERTICAL)
     return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
 
   return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
