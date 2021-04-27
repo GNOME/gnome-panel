@@ -1773,8 +1773,6 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 		 * as soon as possible (hence, here) since we don't want to
 		 * have a wrong value in a size request event */
 		toplevel->priv->initial_animation_done = TRUE;
-
-		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 	}
 }
 
