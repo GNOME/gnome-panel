@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2001 Sun Microsystems, Inc.
  * Copyright (c) 2010 Carlos Garcia Campos
- * Copyright (C) 2016-2020 Alberts Muktupāvels
+ * Copyright (C) 2016-2021 Alberts Muktupāvels
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -159,13 +159,7 @@ update_prefer_symbolic_icons (GpApplet *applet)
   prefer_symbolic_icons = g_settings_get_boolean (priv->general_settings,
                                                   "prefer-symbolic-icons");
 
-  if (priv->prefer_symbolic_icons == prefer_symbolic_icons)
-    return;
-
-  priv->prefer_symbolic_icons = prefer_symbolic_icons;
-
-  g_object_notify_by_pspec (G_OBJECT (applet),
-                            properties[PROP_PREFER_SYMBOLIC_ICONS]);
+  gp_applet_set_prefer_symbolic_icons (applet, prefer_symbolic_icons);
 }
 
 static void
@@ -1415,6 +1409,23 @@ gp_applet_get_prefer_symbolic_icons (GpApplet *applet)
   priv = gp_applet_get_instance_private (applet);
 
   return priv->prefer_symbolic_icons;
+}
+
+void
+gp_applet_set_prefer_symbolic_icons (GpApplet *self,
+                                     gboolean  prefer_symbolic_icons)
+{
+  GpAppletPrivate *priv;
+
+  priv = gp_applet_get_instance_private (self);
+
+  if (priv->prefer_symbolic_icons == prefer_symbolic_icons)
+    return;
+
+  priv->prefer_symbolic_icons = prefer_symbolic_icons;
+
+  g_object_notify_by_pspec (G_OBJECT (self),
+                            properties[PROP_PREFER_SYMBOLIC_ICONS]);
 }
 
 /**
