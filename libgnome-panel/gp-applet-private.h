@@ -54,6 +54,9 @@ void           gp_applet_set_prefer_symbolic_icons (GpApplet        *self,
 void           gp_applet_set_panel_icon_size       (GpApplet        *self,
                                                     guint            panel_icon_size);
 
+void           gp_applet_set_menu_icon_size        (GpApplet        *self,
+                                                    guint            menu_icon_size);
+
 G_END_DECLS
 
 #endif

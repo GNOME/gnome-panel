@@ -172,13 +172,7 @@ update_menu_icon_size (GpApplet *applet)
   menu_icon_size = g_settings_get_enum (priv->general_settings,
                                         "menu-icon-size");
 
-  if (priv->menu_icon_size == menu_icon_size)
-    return;
-
-  priv->menu_icon_size = menu_icon_size;
-
-  g_object_notify_by_pspec (G_OBJECT (applet),
-                            properties[PROP_MENU_ICON_SIZE]);
+  gp_applet_set_menu_icon_size (applet, menu_icon_size);
 }
 
 static void
@@ -1475,6 +1469,23 @@ gp_applet_get_menu_icon_size (GpApplet *applet)
   priv = gp_applet_get_instance_private (applet);
 
   return priv->menu_icon_size;
+}
+
+void
+gp_applet_set_menu_icon_size (GpApplet *self,
+                              guint     menu_icon_size)
+{
+  GpAppletPrivate *priv;
+
+  priv = gp_applet_get_instance_private (self);
+
+  if (priv->menu_icon_size == menu_icon_size)
+    return;
+
+  priv->menu_icon_size = menu_icon_size;
+
+  g_object_notify_by_pspec (G_OBJECT (self),
+                            properties[PROP_MENU_ICON_SIZE]);
 }
 
 /**
