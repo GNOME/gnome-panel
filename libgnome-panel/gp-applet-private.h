@@ -57,6 +57,9 @@ void           gp_applet_set_panel_icon_size       (GpApplet        *self,
 void           gp_applet_set_menu_icon_size        (GpApplet        *self,
                                                     guint            menu_icon_size);
 
+void           gp_applet_set_enable_tooltips       (GpApplet        *self,
+                                                    gboolean         enable_tooltips);
+
 G_END_DECLS
 
 #endif

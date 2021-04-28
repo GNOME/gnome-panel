@@ -140,13 +140,7 @@ update_enable_tooltips (GpApplet *applet)
   enable_tooltips = g_settings_get_boolean (priv->general_settings,
                                             "enable-tooltips");
 
-  if (priv->enable_tooltips == enable_tooltips)
-    return;
-
-  priv->enable_tooltips = enable_tooltips;
-
-  g_object_notify_by_pspec (G_OBJECT (applet),
-                            properties[PROP_ENABLE_TOOLTIPS]);
+  gp_applet_set_enable_tooltips (applet, enable_tooltips);
 }
 
 static void
@@ -1593,4 +1587,21 @@ gp_applet_popup_menu_at_widget (GpApplet  *applet,
   gtk_menu_popup_at_widget (menu, GTK_WIDGET (widget),
                             widget_anchor, menu_anchor,
                             event);
+}
+
+void
+gp_applet_set_enable_tooltips (GpApplet *self,
+                               gboolean  enable_tooltips)
+{
+  GpAppletPrivate *priv;
+
+  priv = gp_applet_get_instance_private (self);
+
+  if (priv->enable_tooltips == enable_tooltips)
+    return;
+
+  priv->enable_tooltips = enable_tooltips;
+
+  g_object_notify_by_pspec (G_OBJECT (self),
+                            properties[PROP_ENABLE_TOOLTIPS]);
 }
