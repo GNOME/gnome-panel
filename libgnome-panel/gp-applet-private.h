@@ -51,6 +51,9 @@ void           gp_applet_remove_from_panel         (GpApplet        *self);
 void           gp_applet_set_prefer_symbolic_icons (GpApplet        *self,
                                                     gboolean         prefer_symbolic_icons);
 
+void           gp_applet_set_panel_icon_size       (GpApplet        *self,
+                                                    guint            panel_icon_size);
+
 G_END_DECLS
 
 #endif

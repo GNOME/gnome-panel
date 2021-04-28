@@ -226,13 +226,7 @@ update_panel_icon_size (GpApplet *applet)
       panel_icon_size = panel_max_icon_size;
     }
 
-  if (priv->panel_icon_size == panel_icon_size)
-    return;
-
-  priv->panel_icon_size = panel_icon_size;
-
-  g_object_notify_by_pspec (G_OBJECT (applet),
-                            properties[PROP_PANEL_ICON_SIZE]);
+  gp_applet_set_panel_icon_size (applet, panel_icon_size);
 }
 
 static void
@@ -1445,6 +1439,23 @@ gp_applet_get_panel_icon_size (GpApplet *applet)
   priv = gp_applet_get_instance_private (applet);
 
   return priv->panel_icon_size;
+}
+
+void
+gp_applet_set_panel_icon_size (GpApplet *self,
+                               guint     panel_icon_size)
+{
+  GpAppletPrivate *priv;
+
+  priv = gp_applet_get_instance_private (self);
+
+  if (priv->panel_icon_size == panel_icon_size)
+    return;
+
+  priv->panel_icon_size = panel_icon_size;
+
+  g_object_notify_by_pspec (G_OBJECT (self),
+                            properties[PROP_PANEL_ICON_SIZE]);
 }
 
 /**
