@@ -41,7 +41,6 @@ typedef struct _PanelData PanelData;
 struct _PanelData {
 	GtkWidget *panel;
 	GtkWidget *menu;
-	guint deactivate_idle;
 };
 
 enum {
@@ -97,22 +96,10 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	orientation_change(info,PANEL_WIDGET(widget));
 }
 
-static gboolean
-deactivate_idle (gpointer data)
-{
-	PanelData *pd = data;
-	pd->deactivate_idle = 0;
-
-	return FALSE;
-}
-
 static void
 context_menu_deactivate (GtkWidget *w,
 			 PanelData *pd)
 {
-	if (pd->deactivate_idle == 0)
-		pd->deactivate_idle = g_idle_add (deactivate_idle, pd);
-
 	panel_toplevel_pop_autohide_disabler (PANEL_TOPLEVEL (pd->panel));
 }
 
@@ -136,10 +123,6 @@ panel_destroy (PanelToplevel *toplevel,
 	pd->menu = NULL;
 
 	pd->panel = NULL;
-
-	if (pd->deactivate_idle != 0)
-		g_source_remove (pd->deactivate_idle);
-	pd->deactivate_idle = 0;
 
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", NULL);
 	g_free (pd);
@@ -1188,7 +1171,6 @@ panel_setup (PanelToplevel *toplevel)
 	pd = g_new0 (PanelData,1);
 	pd->menu = NULL;
 	pd->panel = GTK_WIDGET (toplevel);
-	pd->deactivate_idle = 0;
 
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
 
