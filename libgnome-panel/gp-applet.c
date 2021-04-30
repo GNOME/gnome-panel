@@ -86,6 +86,8 @@ typedef struct
   guint               panel_icon_size;
   guint               menu_icon_size;
 
+  guint               icon_resize_id;
+
   GtkWidget          *about_dialog;
 } GpAppletPrivate;
 
@@ -236,6 +238,21 @@ general_settings_changed_cb (GSettings   *settings,
 }
 
 static gboolean
+icon_resize_cb (gpointer user_data)
+{
+  GpApplet *self;
+  GpAppletPrivate *priv;
+
+  self = GP_APPLET (user_data);
+  priv = gp_applet_get_instance_private (self);
+
+  update_panel_icon_size (self);
+  priv->icon_resize_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
 emit_size_hints_changed_cb (gpointer user_data)
 {
   GpApplet *applet;
@@ -349,6 +366,12 @@ gp_applet_dispose (GObject *object)
     {
       g_source_remove (priv->size_hints_idle);
       priv->size_hints_idle = 0;
+    }
+
+  if (priv->icon_resize_id != 0)
+    {
+      g_source_remove (priv->icon_resize_id);
+      priv->icon_resize_id = 0;
     }
 
   g_clear_pointer (&priv->initial_settings, g_variant_unref);
@@ -598,13 +621,29 @@ static void
 gp_applet_size_allocate (GtkWidget     *widget,
                          GtkAllocation *allocation)
 {
-  GpApplet *applet;
+  GpApplet *self;
+  GpAppletPrivate *priv;
+  GtkAllocation old_allocation;
 
-  applet = GP_APPLET (widget);
+  self = GP_APPLET (widget);
+  priv = gp_applet_get_instance_private (self);
+
+  gtk_widget_get_allocation (widget, &old_allocation);
 
   GTK_WIDGET_CLASS (gp_applet_parent_class)->size_allocate (widget, allocation);
 
-  update_panel_icon_size (applet);
+  if ((priv->orientation == GTK_ORIENTATION_HORIZONTAL &&
+       old_allocation.height != allocation->height) ||
+      (priv->orientation == GTK_ORIENTATION_VERTICAL &&
+       old_allocation.width != allocation->width))
+    {
+      if (priv->icon_resize_id == 0)
+        {
+          priv->icon_resize_id = g_idle_add (icon_resize_cb, self);
+          g_source_set_name_by_id (priv->icon_resize_id,
+                                   "[libgnome-panel] icon_resize_cb");
+        }
+    }
 }
 
 static void
