@@ -53,43 +53,14 @@ G_DEFINE_TYPE (ShowDesktopApplet, show_desktop_applet, GP_TYPE_APPLET)
 static void
 update_icon (ShowDesktopApplet *sdd)
 {
-        int width, height;
         GdkPixbuf *icon;
-        GdkPixbuf *scaled;
         int        icon_size;
 	GError    *error;
-	int	   thickness = 0;
-	GtkStyleContext *context;
-	GtkStateFlags    state;
-	GtkBorder        padding;
 
 	if (!sdd->icon_theme)
 		return;
 
-	state = gtk_widget_get_state_flags (sdd->button);
-	context = gtk_widget_get_style_context (sdd->button);
-	gtk_style_context_get_padding (context, state, &padding);
-
-	switch (sdd->orient) {
-	case GTK_ORIENTATION_HORIZONTAL:
-		thickness = padding.top + padding.bottom;
-		break;
-	case GTK_ORIENTATION_VERTICAL:
-		thickness = padding.left + padding.right;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	icon_size = sdd->size - thickness;
-
-	if (icon_size < 22)
-		icon_size = 16;
-	else if (icon_size < 32)
-		icon_size = 22;
-	else if (icon_size < 48)
-		icon_size = 32;
+	icon_size = gp_applet_get_panel_icon_size (GP_APPLET (sdd));
 
 	error = NULL;
 	icon = gtk_icon_theme_load_icon (sdd->icon_theme,
@@ -108,65 +79,16 @@ update_icon (ShowDesktopApplet *sdd)
 		return;
 	}
 
-        width = gdk_pixbuf_get_width (icon);
-        height = gdk_pixbuf_get_height (icon);
-
-        scaled = NULL;
-
-        /* Make it fit on the given panel */
-        switch (sdd->orient) {
-        case GTK_ORIENTATION_HORIZONTAL:
-                width = (icon_size * width) / height;
-                height = icon_size;
-                break;
-        case GTK_ORIENTATION_VERTICAL:
-                height = (icon_size * height) / width;
-                width = icon_size;
-                break;
-        default:
-                g_assert_not_reached ();
-                break;
-        }
-
-        scaled = gdk_pixbuf_scale_simple (icon,
-                                          width, height,
-                                          GDK_INTERP_BILINEAR);
-
-        if (scaled != NULL) {
-		gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image),
-					   scaled);
-		g_object_unref (scaled);
-	} else
-		gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image),
-					   icon);
-
+        gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image), icon);
         g_object_unref (icon);
 }
 
 static void
-button_size_allocated (GtkWidget         *button,
-                       GtkAllocation     *allocation,
-                       ShowDesktopApplet *sdd)
+panel_icon_size_cb (GpApplet          *applet,
+                    GParamSpec        *pspec,
+                    ShowDesktopApplet *sdd)
 {
-	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
-		&& (sdd->size == allocation->height))
-	    || ((sdd->orient == GTK_ORIENTATION_VERTICAL)
-		&& (sdd->size == allocation->width)))
-	     return;
-
-	switch (sdd->orient) {
-	case GTK_ORIENTATION_HORIZONTAL:
-		sdd->size = allocation->height;
-		break;
-	case GTK_ORIENTATION_VERTICAL:
-		sdd->size = allocation->width;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-        update_icon (sdd);
+  update_icon (sdd);
 }
 
 /* This updates things that should be consistent with the button's appearance,
@@ -419,9 +341,9 @@ show_desktop_applet_fill (GpApplet *applet)
         gtk_container_add (GTK_CONTAINER (sdd->button), sdd->image);
         gtk_container_add (GTK_CONTAINER (sdd), sdd->button);
 
-        g_signal_connect (G_OBJECT (sdd->button),
-                          "size_allocate",
-                          G_CALLBACK (button_size_allocated),
+        g_signal_connect (applet,
+                          "notify::panel-icon-size",
+                          G_CALLBACK (panel_icon_size_cb),
                           sdd);
 
         g_signal_connect (sdd, "destroy",
