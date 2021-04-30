@@ -294,7 +294,7 @@ set_background_image_from_uri (PanelToplevel *toplevel,
 		return FALSE;
 	}
 
-	g_settings_set_enum (settings, "custom-bg-image", TRUE);
+	g_settings_set_boolean (settings, "custom-bg-image", TRUE);
 	g_settings_set_string (settings, "bg-image", uri);
 
 	g_object_unref (settings);
