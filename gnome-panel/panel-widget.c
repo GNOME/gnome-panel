@@ -1489,6 +1489,45 @@ queue_resize_on_all_applets(PanelWidget *panel)
 }
 
 static void
+get_preferred_size (PanelWidget    *self,
+                    AppletData     *ad,
+                    GtkRequisition *minimum_size)
+{
+  if (self->orient == GTK_ORIENTATION_HORIZONTAL)
+    {
+      if (ad->expand_minor)
+        minimum_size->height = self->sz;
+      else
+        gtk_widget_get_preferred_height (ad->applet,
+                                         &minimum_size->height,
+                                         NULL);
+
+      gtk_widget_get_preferred_width_for_height (ad->applet,
+                                                 minimum_size->height,
+                                                 &minimum_size->width,
+                                                 NULL);
+    }
+  else if (self->orient == GTK_ORIENTATION_VERTICAL)
+    {
+      if (ad->expand_minor)
+        minimum_size->width = self->sz;
+      else
+        gtk_widget_get_preferred_width (ad->applet,
+                                        &minimum_size->width,
+                                        NULL);
+
+      gtk_widget_get_preferred_height_for_width (ad->applet,
+                                                 minimum_size->width,
+                                                 &minimum_size->height,
+                                                 NULL);
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+}
+
+static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	PanelWidget *panel;
@@ -1532,16 +1571,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			ad = list->data;
 
-			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
+			get_preferred_size (panel, ad, &chreq);
 
 			ad->constrained = i;
 			
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-				if (ad->expand_minor)
-					challoc.height = allocation->height;
-
 				if (ad->expand_major && ad->size_hints) {
 					int width = panel->applets_using_hint[applet_using_hint_index].size;
 					applet_using_hint_index++;
@@ -1552,9 +1588,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
-				if (ad->expand_minor)
-					challoc.width = allocation->width;
-
 				if (ad->expand_major && ad->size_hints) {
 					int height = panel->applets_using_hint[applet_using_hint_index].size;
 					applet_using_hint_index++;
@@ -1588,7 +1621,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			ad = list->data;
 
-			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
+			get_preferred_size (panel, ad, &chreq);
 
 			if (!ad->expand_major || !ad->size_hints) {
 				if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -1614,21 +1647,16 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			ad = list->data;
 
-			gtk_widget_get_preferred_size (ad->applet, &chreq, NULL);
+			get_preferred_size (panel, ad, &chreq);
+
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 				challoc.width = ad->cells;
-				if (ad->expand_minor) {
-					challoc.height = allocation->height;
-				}
 				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				challoc.height = ad->cells;
-				if (ad->expand_minor) {
-					challoc.width = allocation->width;
-				}
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
