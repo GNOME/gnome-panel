@@ -51,12 +51,6 @@ static GSList *panels = NULL;
 static gboolean panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
 
-static void panel_widget_get_preferred_width  (GtkWidget        *widget,
-					       gint             *minimal_width,
-					       gint             *natural_width);
-static void panel_widget_get_preferred_height (GtkWidget        *widget,
-					       gint             *minimal_height,
-					       gint             *natural_height);
 static void panel_widget_size_allocate        (GtkWidget        *widget,
 					       GtkAllocation    *allocation);
 static void panel_widget_cadd                 (GtkContainer     *container,
@@ -258,6 +252,227 @@ remove_all_move_bindings (PanelWidget *panel)
 	gtk_binding_entry_remove (binding_set, GDK_KEY_space, 0);
 }
 
+static GtkSizeRequestMode
+panel_widget_get_request_mode (GtkWidget *widget)
+{
+  PanelWidget *self;
+
+  self = PANEL_WIDGET (widget);
+
+  if (self->orient == GTK_ORIENTATION_VERTICAL)
+    return GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH;
+
+  return GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT;
+}
+
+static void
+panel_widget_get_preferred_height (GtkWidget *widget,
+                                   gint      *minimum_height,
+                                   gint      *natural_height)
+{
+  PanelWidget *self;
+  int height;
+
+  self = PANEL_WIDGET (widget);
+
+  height = 0;
+
+  if (self->orient == GTK_ORIENTATION_HORIZONTAL)
+    {
+      height = self->sz;
+
+      if (height < 12)
+        height = 12;
+    }
+  else if (self->orient == GTK_ORIENTATION_VERTICAL)
+    {
+      GList *l;
+      gboolean dont_fill;
+
+      for (l = self->applet_list; l != NULL; l = g_list_next (l))
+        {
+          AppletData *ad;
+          int child_height;
+
+          ad = l->data;
+
+          gtk_widget_get_preferred_height (ad->applet, &child_height, NULL);
+
+          if (self->packed && !(ad->expand_major && ad->size_hints))
+            height += child_height;
+        }
+
+      dont_fill = self->packed && self->nb_applets_size_hints != 0;
+
+      if (height < 12 && !dont_fill)
+        height = 12;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  *minimum_height = *natural_height = height;
+}
+
+static void
+panel_widget_get_preferred_width_for_height (GtkWidget *widget,
+                                             gint       height,
+                                             gint      *minimum_width,
+                                             gint      *natural_width)
+{
+  PanelWidget *self;
+  int width;
+
+  self = PANEL_WIDGET (widget);
+
+  width = 0;
+
+  if (self->orient == GTK_ORIENTATION_VERTICAL)
+    {
+      width = self->sz;
+
+      if (width < 12)
+        width = 12;
+    }
+  else if (self->orient == GTK_ORIENTATION_HORIZONTAL)
+    {
+      GList *l;
+      gboolean dont_fill;
+
+      for (l = self->applet_list; l != NULL; l = g_list_next (l))
+        {
+          AppletData *ad;
+          int child_width;
+
+          ad = l->data;
+
+          gtk_widget_get_preferred_width_for_height (ad->applet,
+                                                     height,
+                                                     &child_width,
+                                                     NULL);
+
+          if (self->packed && !(ad->expand_major && ad->size_hints))
+            width += child_width;
+        }
+
+      dont_fill = self->packed && self->nb_applets_size_hints != 0;
+
+      if (width < 12 && !dont_fill)
+        width = 12;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  *minimum_width = *natural_width = width;
+}
+
+static void
+panel_widget_get_preferred_width (GtkWidget *widget,
+                                  gint      *minimum_width,
+                                  gint      *natural_width)
+{
+  PanelWidget *self;
+  int width;
+
+  self = PANEL_WIDGET (widget);
+
+  width = 0;
+
+  if (self->orient == GTK_ORIENTATION_VERTICAL)
+    {
+      width = self->sz;
+
+      if (width < 12)
+        width = 12;
+    }
+  else if (self->orient == GTK_ORIENTATION_HORIZONTAL)
+    {
+      GList *l;
+      gboolean dont_fill;
+
+      for (l = self->applet_list; l != NULL; l = g_list_next (l))
+        {
+          AppletData *ad;
+          int child_width;
+
+          ad = l->data;
+
+          gtk_widget_get_preferred_width (ad->applet, &child_width, NULL);
+
+          if (self->packed && !(ad->expand_major && ad->size_hints))
+            width += child_width;
+        }
+
+      dont_fill = self->packed && self->nb_applets_size_hints != 0;
+
+      if (width < 12 && !dont_fill)
+        width = 12;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  *minimum_width = *natural_width = width;
+}
+
+static void
+panel_widget_get_preferred_height_for_width (GtkWidget *widget,
+                                             gint       width,
+                                             gint      *minimum_height,
+                                             gint      *natural_height)
+{
+  PanelWidget *self;
+  int height;
+
+  self = PANEL_WIDGET (widget);
+
+  height = 0;
+
+  if (self->orient == GTK_ORIENTATION_HORIZONTAL)
+    {
+      height = self->sz;
+
+      if (height < 12)
+        height = 12;
+    }
+  else if (self->orient == GTK_ORIENTATION_VERTICAL)
+    {
+      GList *l;
+      gboolean dont_fill;
+
+      for (l = self->applet_list; l != NULL; l = g_list_next (l))
+        {
+          AppletData *ad;
+          int child_height;
+
+          ad = l->data;
+
+          gtk_widget_get_preferred_height_for_width (ad->applet,
+                                                     width,
+                                                     &child_height,
+                                                     NULL);
+
+          if (self->packed && !(ad->expand_major && ad->size_hints))
+            height += child_height;
+        }
+
+      dont_fill = self->packed && self->nb_applets_size_hints != 0;
+
+      if (height < 12 && !dont_fill)
+        height = 12;
+    }
+  else
+    {
+      g_assert_not_reached ();
+    }
+
+  *minimum_height = *natural_height = height;
+}
+
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
@@ -358,9 +573,12 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	object_class->dispose = panel_widget_dispose;
 	object_class->finalize = panel_widget_finalize;
-	
-	widget_class->get_preferred_width = panel_widget_get_preferred_width;
+
+	widget_class->get_request_mode = panel_widget_get_request_mode;
 	widget_class->get_preferred_height = panel_widget_get_preferred_height;
+	widget_class->get_preferred_width_for_height = panel_widget_get_preferred_width_for_height;
+	widget_class->get_preferred_width = panel_widget_get_preferred_width;
+	widget_class->get_preferred_height_for_width = panel_widget_get_preferred_height_for_width;
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->focus = panel_widget_real_focus;
 
@@ -1257,78 +1475,6 @@ panel_widget_push_move (PanelWidget *panel,
 				break;
 		}
 	}
-}
-
-static void
-panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
-{
-	PanelWidget *panel;
-	GList *list;
-	gboolean dont_fill;
-
-	g_return_if_fail(PANEL_IS_WIDGET(widget));
-	g_return_if_fail(requisition!=NULL);
-
-	panel = PANEL_WIDGET(widget);
-
-	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-		requisition->width = 0;
-		requisition->height = panel->sz;
-	} else {
-		requisition->height = 0;
-		requisition->width = panel->sz;
-	}
-
-	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
-		AppletData *ad = list->data;
-                GtkRequisition child_req;
-
-                gtk_widget_get_preferred_size (ad->applet, &child_req, NULL);
-
-		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if (panel->packed &&
-			    !(ad->expand_major && ad->size_hints))
-				requisition->width += child_req.width;
-		} else {
-			if (panel->packed &&
-			    !(ad->expand_major && ad->size_hints))
-				requisition->height += child_req.height;
-		}
-	}
-
-	dont_fill = panel->packed && panel->nb_applets_size_hints != 0;
-
-	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-		if (requisition->width < 12 && !dont_fill)
-			requisition->width = 12;
-		if (requisition->height < 12)
-			requisition->height = 12;
-	} else {
-		if (requisition->width < 12)
-			requisition->width = 12;
-		if (requisition->height < 12 && !dont_fill)
-			requisition->height = 12;
-	}
-}
-
-static void
-panel_widget_get_preferred_width(GtkWidget *widget, gint *minimal_width, gint *natural_width)
-{
-	GtkRequisition requisition;
-
-        panel_widget_size_request (widget, &requisition);
-
-	*minimal_width = *natural_width = requisition.width;
-}
-
-static void
-panel_widget_get_preferred_height(GtkWidget *widget, gint *minimal_height, gint *natural_height)
-{
-	GtkRequisition requisition;
-
-        panel_widget_size_request (widget, &requisition);
-
-	*minimal_height = *natural_height = requisition.height;
 }
 
 static void
