@@ -290,7 +290,6 @@ clock_button_init (ClockButton *self)
                       0);
 
   set_text_gravity_to_auto (self->clock_label);
-  set_text_gravity_to_auto (self->temperature_label);
 
   gp_add_text_color_class (self->clock_label);
   gp_add_text_color_class (self->weather_image);
