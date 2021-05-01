@@ -1198,15 +1198,6 @@ panel_setup (PanelToplevel *toplevel)
 	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
 }
 
-GdkScreen *
-panel_screen_from_panel_widget (PanelWidget *panel)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), NULL);
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (panel->toplevel), NULL);
-
-	return gtk_window_get_screen (GTK_WINDOW (panel->toplevel));
-}
-
 static void
 panel_delete_without_query (PanelToplevel *toplevel)
 {

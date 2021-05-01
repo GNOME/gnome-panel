@@ -2059,9 +2059,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 				PANEL_WIDGET(list->data);
 
 			if (panel != new_panel &&
-			    panel_widget_is_cursor (new_panel,10) &&
-			    panel_screen_from_panel_widget (panel) ==
-			    panel_screen_from_panel_widget (new_panel)) {
+			    panel_widget_is_cursor (new_panel,10)) {
 				PanelObjectPackType pack_type = PANEL_OBJECT_PACK_START;
 				int                 pack_index = 0;
 

@@ -12,8 +12,6 @@ void orientation_change(AppletInfo *info, PanelWidget *panel);
 
 void panel_setup (PanelToplevel *toplevel);
 
-GdkScreen *panel_screen_from_panel_widget  (PanelWidget *panel);
-
 void panel_delete (PanelToplevel *toplevel);
 
 GtkWidget  *panel_deletion_dialog  (PanelToplevel *toplevel);
