@@ -48,11 +48,10 @@
 #include <gdk/gdkx.h>
 
 #include <libgnome-desktop/gnome-wall-clock.h>
-
-#include <libgnome-panel/gp-utils.h>
 #include <libgweather/gweather.h>
 
 #include "clock-applet.h"
+#include "clock-button.h"
 
 #include "calendar-window.h"
 #include "clock-location.h"
@@ -73,14 +72,6 @@ struct _ClockApplet
 
 	/* widgets */
         GtkWidget *panel_button;	/* main toggle button for the whole clock */
-
-	GtkWidget *main_obox;		/* orientable box inside panel_button */
-        GtkWidget *weather_obox;        /* orientable box for the weather widgets */
-
-	GtkWidget *clockw;		/* main label for the date/time display */
-
-        GtkWidget *panel_weather_icon;
-        GtkWidget *panel_temperature_label;
 
 	GtkWidget *calendar_popup;
 
@@ -119,7 +110,6 @@ struct _ClockApplet
 
 	/* runtime data */
         GnomeWallClock    *wall_clock;
-	GtkAllocation      old_allocation;
 };
 
 G_DEFINE_TYPE (ClockApplet, clock_applet, GP_TYPE_APPLET)
@@ -127,42 +117,11 @@ G_DEFINE_TYPE (ClockApplet, clock_applet, GP_TYPE_APPLET)
 static void display_properties_dialog (ClockApplet       *applet,
                                        gboolean           start_in_locations_page);
 
-static void update_orient             (ClockApplet       *applet);
-
 static inline GtkWidget *
 _clock_get_widget (ClockApplet *cd,
                    const gchar *name)
 {
 	return GTK_WIDGET (gtk_builder_get_object (cd->builder, name));
-}
-
-static int
-calculate_minimum_width (GtkWidget   *widget,
-			 const gchar *text)
-{
-	PangoContext *pango_context;
-	PangoLayout  *layout;
-	int	      width, height;
-	GtkStyleContext *style_context;
-	GtkStateFlags    state;
-	GtkBorder        padding;
-
-	pango_context = gtk_widget_get_pango_context (widget);
-
-	layout = pango_layout_new (pango_context);
-	pango_layout_set_alignment (layout, PANGO_ALIGN_LEFT);
-	pango_layout_set_text (layout, text, -1);
-	pango_layout_get_pixel_size (layout, &width, &height);
-	g_object_unref (G_OBJECT (layout));
-	layout = NULL;
-
-	state = gtk_widget_get_state_flags (widget);
-	style_context = gtk_widget_get_style_context (widget);
-	gtk_style_context_get_padding (style_context, state, &padding);
-
-	width += padding.left + padding.right;
-
-	return width;
 }
 
 /* sets accessible name and description for the widget */
@@ -242,10 +201,7 @@ update_clock (GnomeWallClock *wall_clock, GParamSpec *pspec, ClockApplet *cd)
         const char *clock;
 
         clock = gnome_wall_clock_get_clock (cd->wall_clock);
-        gtk_label_set_text (GTK_LABEL (cd->clockw), clock);
-
-        update_orient (cd);
-        gtk_widget_queue_resize (cd->panel_button);
+        clock_button_set_clock (CLOCK_BUTTON (cd->panel_button), clock);
 
         update_tooltip (cd);
         update_location_tiles (cd);
@@ -687,57 +643,6 @@ toggle_calendar (GtkWidget *button,
 }
 
 static gboolean
-do_not_eat_button_press (GtkWidget      *widget,
-                         GdkEventButton *event)
-{
-	if (event->button != 1)
-		g_signal_stop_emission_by_name (widget, "button_press_event");
-
-	return FALSE;
-}
-
-static void
-clock_update_text_gravity (GtkWidget *label)
-{
-	PangoLayout  *layout;
-	PangoContext *context;
-
-	layout = gtk_label_get_layout (GTK_LABEL (label));
-	context = pango_layout_get_context (layout);
-	pango_context_set_base_gravity (context, PANGO_GRAVITY_AUTO);
-}
-
-static GtkWidget *
-create_main_clock_button (void)
-{
-        GtkWidget *button;
-
-        button = gtk_toggle_button_new ();
-	gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-
-        gtk_widget_set_name (button, "clock-applet-button");
-
-        return button;
-}
-
-static GtkWidget *
-create_main_clock_label (ClockApplet *cd)
-{
-        GtkWidget *label;
-
-        label = gtk_label_new (NULL);
-	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
-	clock_update_text_gravity (label);
-	g_signal_connect (label, "screen-changed",
-			  G_CALLBACK (clock_update_text_gravity),
-			  NULL);
-
-        gp_add_text_color_class (label);
-
-        return label;
-}
-
-static gboolean
 weather_tooltip (GtkWidget   *widget,
                  gint         x,
                  gint         y,
@@ -768,69 +673,52 @@ weather_tooltip (GtkWidget   *widget,
 }
 
 static void
-update_panel_weather (ClockApplet *cd)
+panel_icon_size_cb (GpApplet    *applet,
+                    GParamSpec  *pspec,
+                    ClockApplet *self)
 {
-        gboolean show_weather, show_temperature;
-
-        show_weather = g_settings_get_boolean (cd->applet_settings, "show-weather");
-        show_temperature = g_settings_get_boolean (cd->applet_settings, "show-temperature");
-
-        if ((show_weather || show_temperature) &&
-            g_list_length (cd->locations) > 0)
-                gtk_widget_show (cd->weather_obox);
-        else
-                gtk_widget_hide (cd->weather_obox);
-
-        gtk_widget_queue_resize (GTK_WIDGET (cd));
+        clock_button_set_icon_size (CLOCK_BUTTON (self->panel_button),
+                                    gp_applet_get_panel_icon_size (applet));
 }
 
 static void
 create_clock_widget (ClockApplet *cd)
 {
-        GtkOrientation orientation;
-
-        orientation = gp_applet_get_orientation (GP_APPLET (cd));
+        GtkWidget *weather_box;
 
         g_signal_connect (cd->wall_clock, "notify::clock",
                           G_CALLBACK (update_clock), cd);
 
         /* Main toggle button */
-        cd->panel_button = create_main_clock_button ();
-	g_signal_connect (cd->panel_button, "button_press_event",
-			  G_CALLBACK (do_not_eat_button_press), NULL);
-	g_signal_connect (cd->panel_button, "toggled",
-			  G_CALLBACK (toggle_calendar), cd);
-        gtk_widget_show (cd->panel_button);
+        cd->panel_button = clock_button_new ();
 
-        /* Main orientable box */
-        cd->main_obox = gtk_box_new (orientation, 12);
-        gtk_container_add (GTK_CONTAINER (cd->panel_button), cd->main_obox);
-        gtk_widget_show (cd->main_obox);
+        clock_button_set_orientation (CLOCK_BUTTON (cd->panel_button),
+                                      gp_applet_get_orientation (GP_APPLET (cd)));
+
+        clock_button_set_position (CLOCK_BUTTON (cd->panel_button),
+                                   gp_applet_get_position (GP_APPLET (cd)));
+
+        clock_button_set_icon_size (CLOCK_BUTTON (cd->panel_button),
+                                    gp_applet_get_panel_icon_size (GP_APPLET (cd)));
+
+        g_signal_connect (GP_APPLET (cd),
+                          "notify::panel-icon-size",
+                          G_CALLBACK (panel_icon_size_cb),
+                          cd);
+
+        g_signal_connect (cd->panel_button,
+                          "toggled",
+                          G_CALLBACK (toggle_calendar),
+                          cd);
 
         /* Weather orientable box */
-        cd->weather_obox = gtk_box_new (orientation, 2);
-        gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->weather_obox, FALSE, FALSE, 0);
-        gtk_widget_set_has_tooltip (cd->weather_obox, TRUE);
-        g_signal_connect (cd->weather_obox, "query-tooltip",
-                          G_CALLBACK (weather_tooltip), cd);
+        weather_box = clock_button_get_weather_box (CLOCK_BUTTON (cd->panel_button));
+        gtk_widget_set_has_tooltip (weather_box, TRUE);
 
-        /* Weather widgets */
-        cd->panel_weather_icon = gtk_image_new ();
-        gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_weather_icon, FALSE, FALSE, 0);
-        g_settings_bind (cd->applet_settings, "show-weather", cd->panel_weather_icon, "visible",
-                         G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-
-        cd->panel_temperature_label = gtk_label_new (NULL);
-        gtk_box_pack_start (GTK_BOX (cd->weather_obox), cd->panel_temperature_label, FALSE, FALSE, 0);
-        g_settings_bind (cd->applet_settings, "show-temperature", cd->panel_temperature_label, "visible",
-                         G_SETTINGS_BIND_DEFAULT | G_SETTINGS_BIND_NO_SENSITIVITY);
-
-        gp_add_text_color_class (cd->panel_temperature_label);
-
-        /* Main label for time display */
-	cd->clockw = create_main_clock_label (cd);
-        gtk_box_pack_start (GTK_BOX (cd->main_obox), cd->clockw, FALSE, FALSE, 0);
-	gtk_widget_show (cd->clockw);
+        g_signal_connect (weather_box,
+                          "query-tooltip",
+                          G_CALLBACK (weather_tooltip),
+                          cd);
 
         /* Done! */
 
@@ -838,55 +726,10 @@ create_clock_widget (ClockApplet *cd)
 
 	gtk_container_add (GTK_CONTAINER (cd), cd->panel_button);
 	gtk_container_set_border_width (GTK_CONTAINER (cd), 0);
-
-	update_panel_weather (cd);
+	gtk_widget_show (cd->panel_button);
 
 	/* Refresh the clock so that it paints its first state */
         update_clock (NULL, NULL, cd);
-}
-
-static void
-update_orient (ClockApplet *cd)
-{
-	const gchar   *text;
-	int            min_width;
-	GtkAllocation  allocation;
-	gdouble        new_angle;
-	gdouble        angle;
-
-	text = gtk_label_get_text (GTK_LABEL (cd->clockw));
-	min_width = calculate_minimum_width (cd->panel_button, text);
-	gtk_widget_get_allocation (cd->panel_button, &allocation);
-
-	if (gp_applet_get_position (GP_APPLET (cd)) == GTK_POS_RIGHT &&
-	    min_width > allocation.width)
-		new_angle = 270;
-	else if (gp_applet_get_position (GP_APPLET (cd)) == GTK_POS_LEFT &&
-		 min_width > allocation.width)
-		new_angle = 90;
-	else
-		new_angle = 0;
-
-	angle = gtk_label_get_angle (GTK_LABEL (cd->clockw));
-	if (angle != new_angle) {
-		gtk_label_set_angle (GTK_LABEL (cd->clockw), new_angle);
-                gtk_label_set_angle (GTK_LABEL (cd->panel_temperature_label), new_angle);
-	}
-}
-
-/* this is when the panel size changes */
-static void
-panel_button_change_pixel_size (GtkWidget     *widget,
-                                GtkAllocation *allocation,
-                                ClockApplet   *cd)
-{
-	if (cd->old_allocation.width  == allocation->width &&
-	    cd->old_allocation.height == allocation->height)
-		return;
-
-	cd->old_allocation = *allocation;
-
-	update_clock (NULL, NULL, cd);
 }
 
 static void
@@ -1012,8 +855,6 @@ location_weather_updated_cb (ClockLocation  *location,
 	ClockApplet *cd = data;
 	const gchar *icon_name;
 	const gchar *temp;
-	GtkIconTheme *theme;
-	GdkPixbuf *pixbuf;
 
 	if (!info || !gweather_info_is_valid (info))
 		return;
@@ -1021,16 +862,22 @@ location_weather_updated_cb (ClockLocation  *location,
 	if (!clock_location_is_current (location))
 		return;
 
-	icon_name = gweather_info_get_icon_name (info);
-	/* FIXME: mmh, screen please? Also, don't hardcode to 16 */
-	theme = gtk_icon_theme_get_default ();
-	pixbuf = gtk_icon_theme_load_icon (theme, icon_name, 16,
-					   GTK_ICON_LOOKUP_GENERIC_FALLBACK, NULL);
+	icon_name = NULL;
+	if (g_settings_get_boolean (cd->applet_settings, "show-weather")) {
+		if (gp_applet_get_prefer_symbolic_icons (GP_APPLET (cd)))
+			icon_name = gweather_info_get_symbolic_icon_name (info);
+		else
+			icon_name = gweather_info_get_icon_name (info);
+	}
 
-	temp = gweather_info_get_temp_summary (info);
+	temp = NULL;
+	if (g_settings_get_boolean (cd->applet_settings, "show-temperature")) {
+		temp = gweather_info_get_temp_summary (info);
+	}
 
-	gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon), pixbuf);
-	gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label), temp);
+	clock_button_set_weather (CLOCK_BUTTON (cd->panel_button),
+	                          icon_name,
+	                          temp);
 }
 
 static void
@@ -1058,17 +905,11 @@ locations_changed (GSettings   *settings,
 	glong id;
 
 	if (!cd->locations) {
-		if (cd->weather_obox)
-			gtk_widget_hide (cd->weather_obox);
-		if (cd->panel_weather_icon)
-			gtk_image_set_from_pixbuf (GTK_IMAGE (cd->panel_weather_icon),
-						   NULL);
-		if (cd->panel_temperature_label)
-			gtk_label_set_text (GTK_LABEL (cd->panel_temperature_label),
-					    "");
-	} else {
-		if (cd->weather_obox)
-			gtk_widget_show (cd->weather_obox);
+		if (cd->panel_button) {
+			clock_button_set_weather (CLOCK_BUTTON (cd->panel_button),
+			                          NULL,
+			                          NULL);
+		}
 	}
 
 	for (l = cd->locations; l; l = l->next) {
@@ -1159,11 +1000,6 @@ fill_clock_applet (ClockApplet *cd)
 	gtk_builder_add_from_resource (cd->builder, CLOCK_RESOURCE_PATH "clock.ui", NULL);
 
 	create_clock_widget (cd);
-
-	g_signal_connect (G_OBJECT (cd->panel_button),
-			  "size_allocate",
-			  G_CALLBACK (panel_button_change_pixel_size),
-			  cd);
 
 	gp_applet_setup_menu_from_resource (applet,
 	                                    CLOCK_RESOURCE_PATH "clock-menu.ui",
@@ -2002,18 +1838,14 @@ clock_applet_placement_changed (GpApplet        *applet,
                                 GtkOrientation   orientation,
                                 GtkPositionType  position)
 {
-        ClockApplet *cd;
+        ClockApplet *self;
 
-        cd = CLOCK_APPLET (applet);
+        self = CLOCK_APPLET (applet);
 
-        if (cd->main_obox == NULL)
-                return;
+        clock_button_set_orientation (CLOCK_BUTTON (self->panel_button), orientation);
+        clock_button_set_position (CLOCK_BUTTON (self->panel_button), position);
 
-        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->main_obox), orientation);
-        gtk_orientable_set_orientation (GTK_ORIENTABLE (cd->weather_obox), orientation);
-
-        update_clock (NULL, NULL, cd);
-        update_calendar_popup (cd);
+        update_calendar_popup (self);
 }
 
 static void

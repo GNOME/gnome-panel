@@ -20,6 +20,8 @@ org_gnome_gnome_panel_clock_la_SOURCES = \
 	calendar-window.h \
 	clock-applet.c \
 	clock-applet.h \
+	clock-button.c \
+	clock-button.h \
 	clock-face.c \
 	clock-face.h \
 	clock-location.c \
