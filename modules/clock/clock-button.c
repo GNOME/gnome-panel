@@ -119,7 +119,7 @@ get_clock_width (ClockButton *self)
   gtk_widget_get_preferred_width (label, &width, NULL);
 
   g_object_ref_sink (label);
-  gtk_widget_destroy (label);
+  g_object_unref (label);
 
   return width;
 }
