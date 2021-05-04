@@ -271,18 +271,18 @@ panel_widget_get_preferred_height (GtkWidget *widget,
                                    gint      *natural_height)
 {
   PanelWidget *self;
-  int height;
+  int min_height;
+  int nat_height;
 
   self = PANEL_WIDGET (widget);
 
-  height = 0;
+  min_height = 0;
+  nat_height = 0;
 
   if (self->orient == GTK_ORIENTATION_HORIZONTAL)
     {
-      height = self->sz;
-
-      if (height < 12)
-        height = 12;
+      min_height = MAX (self->sz, 12);
+      nat_height = MAX (self->sz, 12);
     }
   else if (self->orient == GTK_ORIENTATION_VERTICAL)
     {
@@ -292,27 +292,33 @@ panel_widget_get_preferred_height (GtkWidget *widget,
       for (l = self->applet_list; l != NULL; l = g_list_next (l))
         {
           AppletData *ad;
-          int child_height;
+          int child_min_height;
+          int child_nat_height;
 
           ad = l->data;
 
-          gtk_widget_get_preferred_height (ad->applet, &child_height, NULL);
+          gtk_widget_get_preferred_height (ad->applet,
+                                           &child_min_height,
+                                           &child_nat_height);
 
           if (self->packed && !(ad->expand_major && ad->size_hints))
-            height += child_height;
+            min_height += child_min_height;
+
+          nat_height += ad->expand_major ? child_nat_height : child_min_height;
         }
 
       dont_fill = self->packed && self->nb_applets_size_hints != 0;
 
-      if (height < 12 && !dont_fill)
-        height = 12;
+      if (min_height < 12 && !dont_fill)
+        min_height = 12;
     }
   else
     {
       g_assert_not_reached ();
     }
 
-  *minimum_height = *natural_height = height;
+  *minimum_height = min_height;
+  *natural_height = nat_height;
 }
 
 static void
@@ -322,18 +328,18 @@ panel_widget_get_preferred_width_for_height (GtkWidget *widget,
                                              gint      *natural_width)
 {
   PanelWidget *self;
-  int width;
+  int min_width;
+  int nat_width;
 
   self = PANEL_WIDGET (widget);
 
-  width = 0;
+  min_width = 0;
+  nat_width = 0;
 
   if (self->orient == GTK_ORIENTATION_VERTICAL)
     {
-      width = self->sz;
-
-      if (width < 12)
-        width = 12;
+      min_width = MAX (self->sz, 12);
+      nat_width = MAX (self->sz, 12);
     }
   else if (self->orient == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -343,30 +349,34 @@ panel_widget_get_preferred_width_for_height (GtkWidget *widget,
       for (l = self->applet_list; l != NULL; l = g_list_next (l))
         {
           AppletData *ad;
-          int child_width;
+          int child_min_width;
+          int child_nat_width;
 
           ad = l->data;
 
           gtk_widget_get_preferred_width_for_height (ad->applet,
                                                      height,
-                                                     &child_width,
-                                                     NULL);
+                                                     &child_min_width,
+                                                     &child_nat_width);
 
           if (self->packed && !(ad->expand_major && ad->size_hints))
-            width += child_width;
+            min_width += child_min_width;
+
+          nat_width += ad->expand_major ? child_nat_width : child_min_width;
         }
 
       dont_fill = self->packed && self->nb_applets_size_hints != 0;
 
-      if (width < 12 && !dont_fill)
-        width = 12;
+      if (min_width < 12 && !dont_fill)
+        min_width = 12;
     }
   else
     {
       g_assert_not_reached ();
     }
 
-  *minimum_width = *natural_width = width;
+  *minimum_width = min_width;
+  *natural_width = nat_width;
 }
 
 static void
@@ -375,18 +385,18 @@ panel_widget_get_preferred_width (GtkWidget *widget,
                                   gint      *natural_width)
 {
   PanelWidget *self;
-  int width;
+  int min_width;
+  int nat_width;
 
   self = PANEL_WIDGET (widget);
 
-  width = 0;
+  min_width = 0;
+  nat_width = 0;
 
   if (self->orient == GTK_ORIENTATION_VERTICAL)
     {
-      width = self->sz;
-
-      if (width < 12)
-        width = 12;
+      min_width = MAX (self->sz, 12);
+      nat_width = MAX (self->sz, 12);
     }
   else if (self->orient == GTK_ORIENTATION_HORIZONTAL)
     {
@@ -396,27 +406,33 @@ panel_widget_get_preferred_width (GtkWidget *widget,
       for (l = self->applet_list; l != NULL; l = g_list_next (l))
         {
           AppletData *ad;
-          int child_width;
+          int child_min_width;
+          int child_nat_width;
 
           ad = l->data;
 
-          gtk_widget_get_preferred_width (ad->applet, &child_width, NULL);
+          gtk_widget_get_preferred_width (ad->applet,
+                                          &child_min_width,
+                                          &child_nat_width);
 
           if (self->packed && !(ad->expand_major && ad->size_hints))
-            width += child_width;
+            min_width += child_min_width;
+
+          nat_width += ad->expand_major ? child_nat_width : child_min_width;
         }
 
       dont_fill = self->packed && self->nb_applets_size_hints != 0;
 
-      if (width < 12 && !dont_fill)
-        width = 12;
+      if (min_width < 12 && !dont_fill)
+        min_width = 12;
     }
   else
     {
       g_assert_not_reached ();
     }
 
-  *minimum_width = *natural_width = width;
+  *minimum_width = min_width;
+  *natural_width = nat_width;
 }
 
 static void
@@ -426,18 +442,18 @@ panel_widget_get_preferred_height_for_width (GtkWidget *widget,
                                              gint      *natural_height)
 {
   PanelWidget *self;
-  int height;
+  int min_height;
+  int nat_height;
 
   self = PANEL_WIDGET (widget);
 
-  height = 0;
+  min_height = 0;
+  nat_height = 0;
 
   if (self->orient == GTK_ORIENTATION_HORIZONTAL)
     {
-      height = self->sz;
-
-      if (height < 12)
-        height = 12;
+      min_height = MAX (self->sz, 12);
+      nat_height = MAX (self->sz, 12);
     }
   else if (self->orient == GTK_ORIENTATION_VERTICAL)
     {
@@ -447,30 +463,34 @@ panel_widget_get_preferred_height_for_width (GtkWidget *widget,
       for (l = self->applet_list; l != NULL; l = g_list_next (l))
         {
           AppletData *ad;
-          int child_height;
+          int child_min_height;
+          int child_nat_height;
 
           ad = l->data;
 
           gtk_widget_get_preferred_height_for_width (ad->applet,
                                                      width,
-                                                     &child_height,
-                                                     NULL);
+                                                     &child_min_height,
+                                                     &child_nat_height);
 
           if (self->packed && !(ad->expand_major && ad->size_hints))
-            height += child_height;
+            min_height += child_min_height;
+
+          nat_height += ad->expand_major ? child_nat_height : child_min_height;
         }
 
       dont_fill = self->packed && self->nb_applets_size_hints != 0;
 
-      if (height < 12 && !dont_fill)
-        height = 12;
+      if (min_height < 12 && !dont_fill)
+        min_height = 12;
     }
   else
     {
       g_assert_not_reached ();
     }
 
-  *minimum_height = *natural_height = height;
+  *minimum_height = min_height;
+  *natural_height = nat_height;
 }
 
 static void
