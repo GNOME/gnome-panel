@@ -54,8 +54,8 @@ struct _AppletData
 	int		    pack_index;
 
 	int             position;
-	int		cells;
-	int             min_cells;
+	int             size;
+	int             min_size;
 
 	/* Valid size ranges for expanded applets */
 	int *           size_hints; 

@@ -732,24 +732,25 @@ get_applet_list_pack (PanelWidget         *panel,
 }
 
 static int
-get_size_from_hints (AppletData *ad, int cells)
+get_size_from_hints (AppletData *ad,
+                     int         size)
 {
 	int i;
-	
+
 	for (i = 0; i < ad->size_hints_len; i += 2) {
-		if (cells > ad->size_hints[i]) {
+		if (size > ad->size_hints[i]) {
 			/* Clip to top */
-			cells = ad->size_hints[i];
+			size = ad->size_hints[i];
 			break;
 		}
-		if (cells <= ad->size_hints[i] &&
-		    cells >= ad->size_hints[i+1]) {
-			/* Keep cell size */
+		if (size <= ad->size_hints[i] &&
+		    size >= ad->size_hints[i+1]) {
+			/* Keep size */
 			break;
 		}
 	}
-	
-	return MAX (cells, ad->min_cells);
+
+	return MAX (size, ad->min_size);
 }
 
 static void
@@ -857,7 +858,7 @@ panel_widget_update_positions_packed_start (PanelWidget *panel)
 	/* get size used by the objects */
 	for (l = list; l; l = l->next) {
 		ad = l->data;
-		size_all += ad->cells;
+		size_all += ad->size;
 	}
 
 	/* update absolute position of all applets based on this information,
@@ -868,7 +869,7 @@ panel_widget_update_positions_packed_start (PanelWidget *panel)
 	while (l) {
 		ad = l->data;
 		ad->position = pos_next;
-		pos_next += ad->cells;
+		pos_next += ad->size;
 		l = l->next;
 	}
 
@@ -877,8 +878,8 @@ panel_widget_update_positions_packed_start (PanelWidget *panel)
 
 /* Note: only use this function when you can; see comment above
  * panel_widget_update_positions_packed_start()
- * For center specifically, we require ad->cells to be set. Note that we don't
- * care much about min_cells: if we need it, this means objects will have to be
+ * For center specifically, we require ad->size to be set. Note that we don't
+ * care much about min_size: if we need it, this means objects will have to be
  * pushed to accomodate other objects, which will kill centering anyway.
  * (FIXME: hrm, not that sure about it ;-)) */
 static void
@@ -897,7 +898,7 @@ panel_widget_update_positions_packed_center (PanelWidget *panel)
 	/* get size used by the objects */
 	for (l = list; l; l = l->next) {
 		ad = l->data;
-		size_all += ad->cells;
+		size_all += ad->size;
 	}
 
 	/* update absolute position of all applets based on this information,
@@ -908,7 +909,7 @@ panel_widget_update_positions_packed_center (PanelWidget *panel)
 	while (l) {
 		ad = l->data;
 		ad->position = pos_next;
-		pos_next += ad->cells;
+		pos_next += ad->size;
 		l = l->next;
 	}
 
@@ -933,7 +934,7 @@ panel_widget_update_positions_packed_end (PanelWidget *panel)
 	/* get size used by the objects */
 	for (l = list; l; l = l->next) {
 		ad = l->data;
-		size_all += ad->cells;
+		size_all += ad->size;
 	}
 
 	/* update absolute position of all applets based on this information,
@@ -944,7 +945,7 @@ panel_widget_update_positions_packed_end (PanelWidget *panel)
 	while (l) {
 		ad = l->data;
 		ad->position = pos_next;
-		pos_next += ad->cells;
+		pos_next += ad->size;
 		l = l->next;
 	}
 
@@ -972,7 +973,7 @@ panel_widget_update_positions (PanelWidget *panel)
 		     list = g_list_next (list)) {
 			ad = list->data;
 			ad->position = i;
-			i += ad->cells;
+			i += ad->size;
 		}
 	} else {
 		/* Re-compute the ideal position of objects, based on their size */
@@ -989,7 +990,7 @@ panel_widget_update_positions (PanelWidget *panel)
 			if (ad->position < i)
 				ad->position = i;
 
-			i = ad->position + ad->cells;
+			i = ad->position + ad->size;
 		}
 
 		/* Third pass: now expand from the end, and start using size
@@ -998,22 +999,22 @@ panel_widget_update_positions (PanelWidget *panel)
 		for(list = g_list_last(panel->applet_list);
 		    list!=NULL;
 		    list = g_list_previous(list)) {
-			int cells;
+			int size;
 
 			ad = list->data;
 
-			if (ad->position + ad->min_cells > i)
-				ad->position = MAX (i - ad->min_cells, 0);
+			if (ad->position + ad->min_size > i)
+				ad->position = MAX (i - ad->min_size, 0);
 
 			if (ad->expand_major) {
-				cells = (i - ad->position) - 1;
+				size = (i - ad->position) - 1;
 
 				if (ad->size_hints)
-					cells = get_size_from_hints (ad, cells);
-				cells = MAX (cells, ad->min_cells);
-				cells = MIN (cells, panel->size);
+					size = get_size_from_hints (ad, size);
+				size = MAX (size, ad->min_size);
+				size = MIN (size, panel->size);
 
-				ad->cells = cells;
+				ad->size = size;
 			}
 
 			i = ad->position;
@@ -1032,7 +1033,7 @@ panel_widget_update_positions (PanelWidget *panel)
 				if (ad->position < i)
 					ad->position = i;
 
-				i = ad->position + ad->cells;
+				i = ad->position + ad->size;
 			}
 		}
 	}
@@ -1043,7 +1044,7 @@ panel_widget_get_moveby (PanelWidget *panel,
 			 AppletData  *ad)
 {
 	/* move relative to the center of the object */
-	return panel_widget_get_cursorloc (panel) - ad->position - ad->cells / 2;
+	return panel_widget_get_cursorloc (panel) - ad->position - ad->size / 2;
 }
 
 static int
@@ -1087,7 +1088,7 @@ panel_widget_move_get_pos_prev_pack (PanelWidget *panel,
 	if (!pad || pad->pack_type < ad->pack_type - 1)
 		return panel_widget_move_get_pos_pack (panel, ad->pack_type - 1);
 
-	return pad->position + pad->cells;
+	return pad->position + pad->size;
 }
 
 static void
@@ -1168,14 +1169,14 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 		return FALSE;
 
 	/* count moveby from end of object => remove distance to go there */
-	moveby -= ad->cells / 2;
+	moveby -= ad->size / 2;
 
 	nad = list->next ? list->next->data : NULL;
 
 	/* Move inside same pack */
 	if (nad && nad->pack_type == ad->pack_type) {
 		if (force_switch ||
-		    (moveby >= nad->cells / 2)) {
+		    (moveby >= nad->size / 2)) {
 			swap_index = ad->pack_index;
 			ad->pack_index = nad->pack_index;
 			nad->pack_index = swap_index;
@@ -1196,7 +1197,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 	/* Move to next pack */
 	next_pos = panel_widget_move_get_pos_next_pack (panel, ad, nad);
 	if (force_switch ||
-	    (moveby >= (next_pos - (ad->position + ad->cells)) / 2)) {
+	    (moveby >= (next_pos - (ad->position + ad->size)) / 2)) {
 		if (ad->pack_type + 1 == PANEL_OBJECT_PACK_END)
 			panel_widget_move_to_pack (panel, ad, ad->pack_type + 1, -1);
 		else
@@ -1263,14 +1264,14 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 		return FALSE;
 
 	/* count moveby from start of object => add distance to go there */
-	moveby += ad->cells / 2;
+	moveby += ad->size / 2;
 
 	pad = list->prev ? list->prev->data : NULL;
 
 	/* Move inside same pack */
 	if (pad && pad->pack_type == ad->pack_type) {
 		if (force_switch ||
-		    (moveby <= - pad->cells / 2)) {
+		    (moveby <= - pad->size / 2)) {
 			swap_index = ad->pack_index;
 			ad->pack_index = pad->pack_index;
 			pad->pack_index = swap_index;
@@ -1320,16 +1321,16 @@ panel_widget_switch_move (PanelWidget *panel,
 
 	moveby = panel_widget_get_moveby (panel, ad);
 
-	if (moveby > ad->cells / 2) {
+	if (moveby > ad->size / 2) {
 		moved = TRUE;
-		while (moved && moveby > ad->cells / 2) {
+		while (moved && moveby > ad->size / 2) {
 			moved = panel_widget_switch_applet_right (panel, list,
 								  moveby, FALSE);
 			moveby = panel_widget_get_moveby (panel, ad);
 		}
 	} else {
 		moved = TRUE;
-		while (moved && moveby < - ad->cells / 2) {
+		while (moved && moveby < - ad->size / 2) {
 			moved = panel_widget_switch_applet_left (panel, list,
 								 moveby, FALSE);
 			moveby = panel_widget_get_moveby (panel, ad);
@@ -1356,7 +1357,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 		return FALSE;
 
 	/* count moveby from end of object => remove distance to go there */
-	moveby -= ad->cells / 2;
+	moveby -= ad->size / 2;
 
 	new_pack_type = ad->pack_type + 1;
 
@@ -1372,7 +1373,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	next_pos = panel_widget_move_get_pos_next_pack (panel, ad, nad);
 
 	if (!force_switch &&
-	    (moveby < (next_pos - (ad->position + ad->cells)) / 2))
+	    (moveby < (next_pos - (ad->position + ad->size)) / 2))
 		return FALSE;
 
 	for (l = last_in_pack; l; l = l->prev) {
@@ -1414,7 +1415,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 		return FALSE;
 
 	/* count moveby from start of object => add distance to go there */
-	moveby += ad->cells / 2;
+	moveby += ad->size / 2;
 
 	new_pack_type = ad->pack_type - 1;
 
@@ -1468,10 +1469,10 @@ panel_widget_push_move (PanelWidget *panel,
 
 	moveby = panel_widget_get_moveby (panel, ad);
 
-	if (direction > 0 || moveby > ad->cells / 2) {
+	if (direction > 0 || moveby > ad->size / 2) {
 		moved = TRUE;
 		while (direction > 0 ||
-		       (moved && moveby > ad->cells / 2)) {
+		       (moved && moveby > ad->size / 2)) {
 			moved = panel_widget_push_applet_right (panel, list,
 								moveby,
 								direction != 0);
@@ -1484,7 +1485,7 @@ panel_widget_push_move (PanelWidget *panel,
 	} else {
 		moved = TRUE;
 		while (direction < 0 ||
-		       (moved && moveby < ad->cells / 2)) {
+		       (moved && moveby < ad->size / 2)) {
 			moved = panel_widget_push_applet_left (panel, list,
 							       moveby,
 							       direction != 0);
@@ -1604,7 +1605,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.width = MIN (width, allocation->width - i);
 				}
 
-				ad->cells = challoc.width;
+				ad->size = challoc.width;
 				challoc.x = ltr ? ad->position : panel->size - ad->position - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
@@ -1614,17 +1615,17 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					challoc.height = MIN (height, allocation->height - i);
 				}
 
-				ad->cells = challoc.height;
+				ad->size = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->position;
 			}
-			ad->min_cells  = ad->cells;
+			ad->min_size = ad->size;
 
 			challoc.width = MAX (challoc.width, 0);
 			challoc.height = MAX (challoc.height, 0);
 
 			gtk_widget_size_allocate(ad->applet,&challoc);
-			i += ad->cells;
+			i += ad->size;
 		}
 
 		/* EEEEK, there might be not enough room and we don't handle
@@ -1632,7 +1633,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	} else { /*not packed*/
 
-		/* First pass: set ad->cells so that we can know the absolute
+		/* First pass: set ad->size so that we can know the absolute
 		 * position of objects. */
 		for (list = panel->applet_list;
 		     list != NULL;
@@ -1645,14 +1646,14 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			if (!ad->expand_major || !ad->size_hints) {
 				if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
-					ad->cells = chreq.width;
+					ad->size = chreq.width;
 				else
-					ad->cells = chreq.height;
+					ad->size = chreq.height;
 
-				ad->min_cells = ad->cells;
+				ad->min_size = ad->size;
 			} else {
-				ad->cells = ad->size_hints [0];
-				ad->min_cells = ad->size_hints [ad->size_hints_len - 1];
+				ad->size = ad->size_hints [0];
+				ad->min_size = ad->size_hints [ad->size_hints_len - 1];
 			}
 		}
 
@@ -1672,11 +1673,11 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-				challoc.width = ad->cells;
+				challoc.width = ad->size;
 				challoc.x = ltr ? ad->position : panel->size - ad->position - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
-				challoc.height = ad->cells;
+				challoc.height = ad->size;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->position;
 			}
@@ -2013,7 +2014,7 @@ panel_widget_get_insert_at_cursor (PanelWidget         *widget,
 		ad = l->data;
 
 		if (ad->position <= pos) {
-			if (ad->position + ad->cells > pos) {
+			if (ad->position + ad->size > pos) {
 				*pack_type = ad->pack_type;
 				*pack_index = ad->pack_index;
 			}
@@ -2495,8 +2496,8 @@ panel_widget_add (PanelWidget         *panel,
 	if (ad == NULL) {
 		ad = g_new (AppletData, 1);
 		ad->applet = applet;
-		ad->cells = 1;
-		ad->min_cells = 1;
+		ad->size = 1;
+		ad->min_size = 1;
 		ad->pack_type = pack_type;
 		ad->pack_index = pack_index;
 		ad->position = 0;
