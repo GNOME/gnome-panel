@@ -839,7 +839,7 @@ panel_widget_update_size_hints_for_toplevel (PanelWidget *panel)
 }
 
 /* Note: this can only be called at the beginning of size_allocate, which means
- * that ad->constrained doesn't matter yet (it will be set to the correct
+ * that ad->position doesn't matter yet (it will be set to the correct
  * value in size_allocate). */
 static void
 panel_widget_update_positions_packed_start (PanelWidget *panel)
@@ -867,7 +867,7 @@ panel_widget_update_positions_packed_start (PanelWidget *panel)
 
 	while (l) {
 		ad = l->data;
-		ad->constrained = pos_next;
+		ad->position = pos_next;
 		pos_next += ad->cells;
 		l = l->next;
 	}
@@ -907,7 +907,7 @@ panel_widget_update_positions_packed_center (PanelWidget *panel)
 
 	while (l) {
 		ad = l->data;
-		ad->constrained = pos_next;
+		ad->position = pos_next;
 		pos_next += ad->cells;
 		l = l->next;
 	}
@@ -943,7 +943,7 @@ panel_widget_update_positions_packed_end (PanelWidget *panel)
 
 	while (l) {
 		ad = l->data;
-		ad->constrained = pos_next;
+		ad->position = pos_next;
 		pos_next += ad->cells;
 		l = l->next;
 	}
@@ -971,7 +971,7 @@ panel_widget_update_positions (PanelWidget *panel)
 		     list != NULL;
 		     list = g_list_next (list)) {
 			ad = list->data;
-			ad->constrained = i;
+			ad->position = i;
 			i += ad->cells;
 		}
 	} else {
@@ -986,10 +986,10 @@ panel_widget_update_positions (PanelWidget *panel)
 		     list != NULL;
 		     list = g_list_next (list)) {
 			ad = list->data;
-			if (ad->constrained < i)
-				ad->constrained = i;
+			if (ad->position < i)
+				ad->position = i;
 
-			i = ad->constrained + ad->cells;
+			i = ad->position + ad->cells;
 		}
 
 		/* Third pass: now expand from the end, and start using size
@@ -1002,11 +1002,11 @@ panel_widget_update_positions (PanelWidget *panel)
 
 			ad = list->data;
 
-			if (ad->constrained + ad->min_cells > i)
-				ad->constrained = MAX (i - ad->min_cells, 0);
+			if (ad->position + ad->min_cells > i)
+				ad->position = MAX (i - ad->min_cells, 0);
 
 			if (ad->expand_major) {
-				cells = (i - ad->constrained) - 1;
+				cells = (i - ad->position) - 1;
 
 				if (ad->size_hints)
 					cells = get_size_from_hints (ad, cells);
@@ -1016,7 +1016,7 @@ panel_widget_update_positions (PanelWidget *panel)
 				ad->cells = cells;
 			}
 
-			i = ad->constrained;
+			i = ad->position;
 		}
 
 		/* EEEEK, there's not enough room, so shift applets even
@@ -1029,10 +1029,10 @@ panel_widget_update_positions (PanelWidget *panel)
 			    list = g_list_next(list)) {
 				ad = list->data;
 
-				if (ad->constrained < i)
-					ad->constrained = i;
+				if (ad->position < i)
+					ad->position = i;
 
-				i = ad->constrained + ad->cells;
+				i = ad->position + ad->cells;
 			}
 		}
 	}
@@ -1043,7 +1043,7 @@ panel_widget_get_moveby (PanelWidget *panel,
 			 AppletData  *ad)
 {
 	/* move relative to the center of the object */
-	return panel_widget_get_cursorloc (panel) - ad->constrained - ad->cells / 2;
+	return panel_widget_get_cursorloc (panel) - ad->position - ad->cells / 2;
 }
 
 static int
@@ -1076,7 +1076,7 @@ panel_widget_move_get_pos_next_pack (PanelWidget *panel,
 	if (!nad || nad->pack_type > ad->pack_type + 1)
 		return panel_widget_move_get_pos_pack (panel, ad->pack_type + 1);
 
-	return nad->constrained;
+	return nad->position;
 }
 
 static int
@@ -1087,7 +1087,7 @@ panel_widget_move_get_pos_prev_pack (PanelWidget *panel,
 	if (!pad || pad->pack_type < ad->pack_type - 1)
 		return panel_widget_move_get_pos_pack (panel, ad->pack_type - 1);
 
-	return pad->constrained + pad->cells;
+	return pad->position + pad->cells;
 }
 
 static void
@@ -1196,7 +1196,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 	/* Move to next pack */
 	next_pos = panel_widget_move_get_pos_next_pack (panel, ad, nad);
 	if (force_switch ||
-	    (moveby >= (next_pos - (ad->constrained + ad->cells)) / 2)) {
+	    (moveby >= (next_pos - (ad->position + ad->cells)) / 2)) {
 		if (ad->pack_type + 1 == PANEL_OBJECT_PACK_END)
 			panel_widget_move_to_pack (panel, ad, ad->pack_type + 1, -1);
 		else
@@ -1291,7 +1291,7 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 	/* Move to prev pack */
 	prev_pos = panel_widget_move_get_pos_prev_pack (panel, ad, pad);
 	if (force_switch ||
-	    (moveby <=  - ((ad->constrained - prev_pos) / 2))) {
+	    (moveby <= - ((ad->position - prev_pos) / 2))) {
 		panel_widget_move_to_pack (panel, ad, ad->pack_type - 1, -1);
 		emit_applet_moved (panel, ad);
 
@@ -1372,7 +1372,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 	next_pos = panel_widget_move_get_pos_next_pack (panel, ad, nad);
 
 	if (!force_switch &&
-	    (moveby < (next_pos - (ad->constrained + ad->cells)) / 2))
+	    (moveby < (next_pos - (ad->position + ad->cells)) / 2))
 		return FALSE;
 
 	for (l = last_in_pack; l; l = l->prev) {
@@ -1430,7 +1430,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 	prev_pos = panel_widget_move_get_pos_prev_pack (panel, ad, pad);
 
 	if (!force_switch &&
-	    (moveby >  - ((ad->constrained - prev_pos) / 2)))
+	    (moveby > - ((ad->position - prev_pos) / 2)))
 		return FALSE;
 
 	for (l = first_in_pack; l; l = l->next) {
@@ -1593,7 +1593,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 			get_preferred_size (panel, ad, &chreq);
 
-			ad->constrained = i;
+			ad->position = i;
 			
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
@@ -1605,7 +1605,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				}
 
 				ad->cells = challoc.width;
-				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
+				challoc.x = ltr ? ad->position : panel->size - ad->position - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				if (ad->expand_major && ad->size_hints) {
@@ -1616,7 +1616,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 				ad->cells = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
-				challoc.y = ad->constrained;
+				challoc.y = ad->position;
 			}
 			ad->min_cells  = ad->cells;
 
@@ -1673,12 +1673,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			challoc.height = chreq.height;
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 				challoc.width = ad->cells;
-				challoc.x = ltr ? ad->constrained : panel->size - ad->constrained - challoc.width;
+				challoc.x = ltr ? ad->position : panel->size - ad->position - challoc.width;
 				challoc.y = allocation->height / 2 - challoc.height / 2;
 			} else {
 				challoc.height = ad->cells;
 				challoc.x = allocation->width / 2 - challoc.width / 2;
-				challoc.y = ad->constrained;
+				challoc.y = ad->position;
 			}
 
 			challoc.width = MAX (challoc.width, 0);
@@ -2012,8 +2012,8 @@ panel_widget_get_insert_at_cursor (PanelWidget         *widget,
 	for (l = widget->applet_list; l; l = l->next) {
 		ad = l->data;
 
-		if (ad->constrained <= pos) {
-			if (ad->constrained + ad->cells > pos) {
+		if (ad->position <= pos) {
+			if (ad->position + ad->cells > pos) {
 				*pack_type = ad->pack_type;
 				*pack_index = ad->pack_index;
 			}
@@ -2499,7 +2499,7 @@ panel_widget_add (PanelWidget         *panel,
 		ad->min_cells = 1;
 		ad->pack_type = pack_type;
 		ad->pack_index = pack_index;
-		ad->constrained = 0;
+		ad->position = 0;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
 		ad->size_hints = NULL;

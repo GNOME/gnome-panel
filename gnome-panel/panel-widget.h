@@ -53,9 +53,7 @@ struct _AppletData
 	PanelObjectPackType pack_type;
 	int		    pack_index;
 
-	/* constrained position from the left, after taking other objects into
-	 * account */
-	int             constrained;
+	int             position;
 	int		cells;
 	int             min_cells;
 
