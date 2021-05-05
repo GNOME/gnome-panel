@@ -1838,105 +1838,6 @@ calculate_minimum_height (GtkWidget        *widget,
 	return PANGO_PIXELS (ascent + descent) + thickness;
 }
 
-static int
-panel_toplevel_update_size_from_hints (PanelToplevel  *toplevel,
-				       int             requisition_size,
-				       int             monitor_size)
-{
-	int                   nb_size_hints;
-	AppletSizeHints      *applets_hints;
-	AppletSizeHintsAlloc *using_hint;
-
-	int i;
-	int total_size;
-	int full_hints;
-
-	total_size = requisition_size;
-
-	nb_size_hints = toplevel->priv->panel_widget->nb_applets_size_hints;
-	if (nb_size_hints <= 0)
-		return total_size;
-
-	applets_hints = toplevel->priv->panel_widget->applets_hints;
-	using_hint = toplevel->priv->panel_widget->applets_using_hint;
-
-	for (i = 0; i < nb_size_hints; i++) {
-		using_hint[i].index = applets_hints[i].len - 2;
-		using_hint[i].size = applets_hints[i].hints[applets_hints[i].len - 1];
-		total_size += using_hint[i].size;
-	}
-
-	if (total_size > monitor_size)
-		return monitor_size;
-
-	full_hints = 0;
-	while (full_hints != nb_size_hints && total_size < monitor_size) {
-		int bonus;
-		int extra_bonus;
-
-		bonus = (monitor_size - total_size)
-			/ (nb_size_hints - full_hints);
-		extra_bonus = (monitor_size - total_size)
-			      % (nb_size_hints - full_hints);
-		full_hints = 0;
-
-		for (i = 0; i < nb_size_hints; i++) {
-			int new_size;
-			int current_bonus;
-
-			current_bonus = bonus;
-
-			/* first find the (max, min) range in hints that we
-			 * will use; since we try to allocate as much size as
-			 * possible, this means we want the (max, min) range
-			 * where min is the highest possible (ie, the range
-			 * with the smaller index possible), while still
-			 * keeping min smaller than the potential new size */
-			while (using_hint[i].index > 0 &&
-			       applets_hints[i].hints[using_hint[i].index - 1] < using_hint[i].size + current_bonus) {
-				new_size = applets_hints[i].hints[using_hint[i].index - 1];
-				current_bonus = using_hint[i].size
-						+ current_bonus - new_size;
-				total_size = total_size - using_hint[i].size
-					     + new_size;
-
-				using_hint[i].index -= 2;
-				using_hint[i].size = new_size;
-			}
-
-			/* now, give the bonus, while still keeping a size that
-			 * is lower than max from the (max, min) range we've
-			 * settled for */
-			new_size = MIN (applets_hints[i].hints[using_hint[i].index],
-					using_hint[i].size + current_bonus);
-			if (new_size > using_hint[i].size) {
-				total_size += (new_size - using_hint[i].size);
-				using_hint[i].size = new_size;
-			}
-
-
-			/* if there's some extra bonus to take, try to allocate
-			 * it too */
-			if (extra_bonus > 0) {
-				new_size = MIN (applets_hints[i].hints[using_hint[i].index],
-						using_hint[i].size + extra_bonus);
-				if (new_size > using_hint[i].size) {
-					total_size += (new_size
-						       - using_hint[i].size);
-					extra_bonus -= (new_size
-							- using_hint[i].size);
-					using_hint[i].size = new_size;
-				}
-			}
-
-			if (using_hint[i].size == applets_hints[i].hints[using_hint[i].index])
-				full_hints++;
-		}
-	}
-
-	return total_size;
-}
-
 static void
 panel_toplevel_update_size (PanelToplevel  *toplevel,
 			    GtkRequisition *requisition)
@@ -1964,14 +1865,11 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 			      minimum_height);
 
 		if (toplevel->priv->expand)
-			width  = monitor_width;
+			width = monitor_width;
 		else
-			width = panel_toplevel_update_size_from_hints (
-							toplevel,
-							requisition->width,
-							monitor_width);
+			width = MIN (requisition->width, monitor_width);
 
-		width  = MAX (MINIMUM_WIDTH, width);
+		width = MAX (MINIMUM_WIDTH, width);
 	} else {
 		width = MAX (MIN (MAX (width, toplevel->priv->size),
 				  panel_toplevel_get_maximum_size (toplevel)),
@@ -1980,10 +1878,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 		if (toplevel->priv->expand)
 			height = monitor_height;
 		else
-			height = panel_toplevel_update_size_from_hints (
-							toplevel,
-							requisition->height,
-							monitor_height);
+			height = MIN (requisition->height, monitor_height);
 
 		height = MAX (MINIMUM_WIDTH, height);
 	}
@@ -2231,7 +2126,7 @@ panel_toplevel_check_resize (GtkContainer *container)
 
 	old_geometry = self->priv->geometry;
 
-	gtk_widget_get_preferred_size (widget, &requisition, NULL);
+	gtk_widget_get_preferred_size (widget, NULL, &requisition);
 	panel_toplevel_update_geometry (self, &requisition);
 
 	position_changed = FALSE;
