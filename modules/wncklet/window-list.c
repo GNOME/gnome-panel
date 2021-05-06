@@ -41,7 +41,6 @@ struct _WindowListApplet
 	gboolean move_unminimized_windows;
 
 	GtkOrientation orientation;
-	int size;
 
 	GtkIconTheme *icon_theme;
 
@@ -64,14 +63,6 @@ G_DEFINE_TYPE (WindowListApplet, window_list_applet, GP_TYPE_APPLET)
 static void
 tasklist_update (WindowListApplet *tasklist)
 {
-	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_widget_set_size_request (GTK_WIDGET (tasklist->tasklist),
-					     -1, tasklist->size);
-	} else {
-		gtk_widget_set_size_request (GTK_WIDGET (tasklist->tasklist),
-					     tasklist->size, -1);
-	}
-
 	wnck_tasklist_set_grouping (WNCK_TASKLIST (tasklist->tasklist),
 				    tasklist->grouping);
 	wnck_tasklist_set_include_all_workspaces (WNCK_TASKLIST (tasklist->tasklist),
@@ -223,34 +214,6 @@ setup_gsettings (WindowListApplet *tasklist)
 
         g_signal_connect (tasklist->settings, "changed::move-unminimized-windows",
                           G_CALLBACK (move_unminimized_windows_changed), tasklist);
-}
-
-static void
-applet_size_allocate (GtkWidget        *widget,
-                      GtkAllocation    *allocation,
-                      WindowListApplet *tasklist)
-{
-	gint len, size;
-	const int *size_hints;
-	GtkOrientation orient = gp_applet_get_orientation (GP_APPLET (tasklist));
-
-	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist), &len);
-	g_assert (len % 2 == 0);
-
-	gp_applet_set_size_hints (GP_APPLET (tasklist), size_hints, len, 0);
-
-	if (orient == GTK_ORIENTATION_HORIZONTAL) {
-		size = allocation->height;
-	} else {
-		size = allocation->width;
-	}
-
-	if (tasklist->size == size)
-		return;
-
-	tasklist->size = size;
-
-	tasklist_update (tasklist);
 }
 
 static GdkPixbuf*
@@ -494,9 +457,6 @@ window_list_applet_fill (GpApplet *applet)
 
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
-			  tasklist);
-	g_signal_connect (G_OBJECT (tasklist), "size-allocate",
-			  G_CALLBACK (applet_size_allocate),
 			  tasklist);
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);
