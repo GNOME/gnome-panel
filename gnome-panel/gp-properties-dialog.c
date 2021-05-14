@@ -483,7 +483,7 @@ setup_applet_box_add_applets (GpPropertiesDialog *dialog,
   GpModuleManager *manager;
   GpModule *module;
 
-  manager = panel_applets_maanger_get_module_manager();
+  manager = panel_applets_manager_get_module_manager();
 
   for (iter = applets; iter; iter = iter->next)
     {
