@@ -11,14 +11,14 @@ dnl **************************************************************************
 dnl Define bugzilla address
 dnl **************************************************************************
 
-m4_define([gp_bugzilla_url],
-          [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-panel])
+m4_define([gp_issue_url],
+          [https://gitlab.gnome.org/GNOME/gnome-panel/-/issues/new])
 
 dnl **************************************************************************
 dnl Initialize autoconf
 dnl **************************************************************************
 
-AC_INIT([gnome-panel], gp_version, [gp_bugzilla_url])
+AC_INIT([gnome-panel], gp_version, [gp_issue_url])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
