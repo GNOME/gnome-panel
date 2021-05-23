@@ -1,5 +1,5 @@
 # Swedish messages for gnome-panel.
-# Copyright © 1998-2020 Free Software Foundation, Inc.
+# Copyright © 1998-2021 Free Software Foundation, Inc.
 # Martin Wahlen <mva@sbbs.se>, 1998.
 # Anders Carlsson <anders.carlsson@tordata.se>, 1999.
 # Andreas Hyden  <a.hyden@cyberpoint.se>, 2000.
@@ -7,15 +7,15 @@
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004, 2005.
 # Johan Dahlin <jdahlin@telia.com>, 2002.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021.
 # Josef Andersson <josef.andersson@fripost.org>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2020-05-30 16:24+0000\n"
-"PO-Revision-Date: 2020-07-30 17:58+0200\n"
+"POT-Creation-Date: 2021-04-24 15:51+0000\n"
+"PO-Revision-Date: 2021-05-23 02:02+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
 msgid "Show date in tooltip"
@@ -526,10 +526,20 @@ msgstr ""
 "en nederkantspanel kommer att visas ovanför panelen."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
+msgid "Panel alignment"
+msgstr "Paneljustering"
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+msgid ""
+"The alignment of the panel. Possible values are \"start\", \"center\", \"end"
+"\"."
+msgstr "Panelens justering. Möjliga värden är \"start\", \"center\", \"end\"."
+
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
 msgid "Panel size"
 msgstr "Panelstorlek"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:26
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -541,113 +551,11 @@ msgstr ""
 "indikatorer. Den maximala storleken är låst till en fjärdedel av skärmhöjden "
 "(eller skärmbredden)."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:30
-msgid "X co-ordinate of panel"
-msgstr "X-koordinaten för panelen"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:31
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Platsen för panelen längs x-axeln. Nyckeln är endast relevant i oexpanderat "
-"läge. I expanderat läge ignoreras nyckeln och panelen placeras på den "
-"skärmkant som anges av nyckeln orientering."
-
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:35
-msgid "Y co-ordinate of panel"
-msgstr "Y-koordinaten för panelen"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
-msgstr ""
-"Platsen för panelen längs y-axeln. Nyckeln är endast relevant i oexpanderat "
-"läge. I expanderat läge ignoreras nyckeln och panelen placeras på den "
-"skärmkant som anges av nyckeln orientering."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
-msgid "X co-ordinate of panel, starting from the right of the screen"
-msgstr "X-koordinat för panelen, med början från skärmens högra sida"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
-msgid ""
-"The location of the panel along the x-axis, starting from the right of the "
-"screen. If set to -1, the value is ignored and the value of the x key is "
-"used. If the value is greater than 0, then the value of the x key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Platsen för panelen längs x-axeln med början från skärmens högra sida. Om "
-"inställd till -1 kommer värdet att ignoreras och värdet för x-nyckeln att "
-"användas. Om värdet är större än 0 kommer värdet för x-nyckeln att "
-"ignoreras. Nyckeln är endast relevant i oexpanderat läge. I expanderat läge "
-"ignoreras nyckeln och panelen placeras på den skärmkant som anges av nyckeln "
-"orientation."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
-msgid "Y co-ordinate of panel, starting from the bottom of the screen"
-msgstr "Y-koordinat för panelen, med början från skärmens nederkant"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
-msgid ""
-"The location of the panel along the y-axis, starting from the bottom of the "
-"screen. If set to -1, the value is ignored and the value of the y key is "
-"used. If the value is greater than 0, then the value of the y key is "
-"ignored. This key is only relevant in un-expanded mode. In expanded mode "
-"this key is ignored and the panel is placed at the screen edge specified by "
-"the orientation key."
-msgstr ""
-"Platsen för panelen längs y-axeln med början från skärmens nederkant. Om "
-"inställd till -1 kommer värdet att ignoreras och värdet för y-nyckeln att "
-"användas. Om värdet är större än 0 kommer värdet för y-nyckeln att "
-"ignoreras. Nyckeln är endast relevant i oexpanderat läge. I expanderat läge "
-"ignoreras nyckeln och panelen placeras på den skärmkant som anges av nyckeln "
-"orientation."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:50
-msgid "Center panel on x-axis"
-msgstr "Centrera panelen på x-axeln"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
-msgid ""
-"If true, the x and x_right keys are ignored and the panel is placed at the "
-"center of the x-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the x "
-"and x_right keys specify the location of the panel."
-msgstr ""
-"Om true kommer nycklarna x och x_right att ignoreras och panelen att "
-"placeras i mitten på skärmens x-axel. Om panelens storlek ändras kommer den "
-"att finnas kvar på den positionen, det vill säga att panelen kommer att växa "
-"på båda sidor. Om false kommer nycklarna x och x_right ange platsen för "
-"panelen."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:55
-msgid "Center panel on y-axis"
-msgstr "Centrera panelen på y-axeln"
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:56
-msgid ""
-"If true, the y and y_bottom keys are ignored and the panel is placed at the "
-"center of the y-axis of the screen. If the panel is resized it will remain "
-"at that position - i.e. the panel will grow on both sides. If false, the y "
-"and y_bottom keys specify the location of the panel."
-msgstr ""
-"Om true kommer nycklarna y och y_bottom att ignoreras och panelen att "
-"placeras i mitten på skärmens y-axel. Om panelens storlek ändras kommer den "
-"att finnas kvar på den positionen, det vill säga att panelen kommer att växa "
-"på båda sidor. Om false kommer nycklarna y och y_bottom ange platsen för "
-"panelen."
-
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:60
 msgid "Automatically hide panel into corner"
 msgstr "Dölj automatiskt panelen i hörnet"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:61
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:36
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -657,11 +565,11 @@ msgstr ""
 "pekaren lämnar panelytan. Att flytta pekaren till det hörnet kommer att göra "
 "att panelen åter visas."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:65
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:40
 msgid "Enable hide buttons"
 msgstr "Aktivera döljknappar"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:66
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:41
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
@@ -670,11 +578,11 @@ msgstr ""
 "på skärmen, och som endast lämnar en knapp synlig, att placeras på var sida "
 "om panelen."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:70
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:45
 msgid "Enable arrows on hide buttons"
 msgstr "Aktivera pilar på döljknappar"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:71
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:46
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -682,11 +590,11 @@ msgstr ""
 "Om true kommer pilar att placeras på döljknapparna. Denna inställning är "
 "endast meningsfull om nyckeln enable_buttons är sann."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:76
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:51
 msgid "Panel autohide delay"
 msgstr "Fördröjning för automatisk döljning av panel"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:77
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:52
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -696,11 +604,11 @@ msgstr ""
 "lämnat panelytan innan panelen automatiskt döljs. Denna inställning är "
 "endast relevant om nyckeln auto_hide är sann."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:82
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:57
 msgid "Panel autounhide delay"
 msgstr "Fördröjning för automatisk visning av panel"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:58
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -710,11 +618,11 @@ msgstr ""
 "kommit in på panelytan innan panelen automatiskt visas igen. Denna "
 "inställning är endast relevant om nyckeln auto_hide är true."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:63
 msgid "Visible pixels when hidden"
 msgstr "Synliga bildpunkter då panelen är dold"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:89
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:64
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -722,11 +630,11 @@ msgstr ""
 "Anger antalet synliga bildpunkter om panelen automatiskt döljs i ett hörn. "
 "Denna inställning är endast relevant om nyckeln auto_hide är true."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:68
 msgid "Animation speed"
 msgstr "Animeringshastighet"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:69
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -736,23 +644,23 @@ msgstr ""
 "\" (långsam), \"medium\" (mellan) och \"fast\" (snabb). Denna inställning är "
 "endast relevant om nyckeln enable_animations är true."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:103
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:78
 msgid "Use custom background color"
 msgstr "Använd anpassad bakgrundsfärg"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:108
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:83
 msgid "Background Color"
 msgstr "Bakgrundsfärg"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:113
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:88
 msgid "Use custom background image"
 msgstr "Använd anpassad bakgrundsbild"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:118
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:93
 msgid "Background image"
 msgstr "Bakgrundsbild"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:119
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:94
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -761,11 +669,11 @@ msgstr ""
 "Anger filen som ska användas som bakgrundsbild. Om bilden innehåller en "
 "alfakanal kommer den att sättas samman ovanpå skrivbordets bakgrundsbild."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:124
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:99
 msgid "Image options"
 msgstr "Bildflaggor"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:125
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:100
 msgid ""
 "Determines how the image set by image-uri is rendered. Possible values are "
 "\"none\", \"stretch\", \"fit\". With \"stretch\", the image will be scaled "
@@ -779,11 +687,11 @@ msgstr ""
 "upprätthållas. Med \"fit\" kommer bilden att skalas (upprätthåller "
 "bildförhållandet) till panelens höjd (om horisontal)."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:130
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:105
 msgid "Rotate image on vertical panels"
 msgstr "Rotera bild på vertikala paneler"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:131
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:106
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
@@ -791,15 +699,15 @@ msgstr ""
 "Om true kommer bakgrundsbilden att roteras då panelen är vertikalt "
 "orienterad."
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:136
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:111
 msgid "Use custom text color"
 msgstr "Använd anpassad textfärg"
 
-#: data/org.gnome.gnome-panel.toplevel.gschema.xml:141
+#: data/org.gnome.gnome-panel.toplevel.gschema.xml:116
 msgid "Text Color"
 msgstr "Textfärg"
 
-#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:141
+#: gnome-panel/gnome-panel.desktop.in:4 gnome-panel/gp-main.c:140
 msgid "Panel"
 msgstr "Panel"
 
@@ -852,40 +760,55 @@ msgstr "Lägg till"
 msgid "Hide Panel"
 msgstr "Dölj panel"
 
-#: gnome-panel/gp-main.c:50
+#: gnome-panel/gp-main.c:49
 msgid "Replace a currently running panel"
 msgstr "Ersätt en för närvarande körande panel"
 
-#: gnome-panel/gp-main.c:56
+#: gnome-panel/gp-main.c:55
 msgid "Print version"
 msgstr "Skriv ut version"
 
-#: gnome-panel/gp-properties-dialog.c:213
+#: gnome-panel/gp-properties-dialog.c:214
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Överst"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:215
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Nederst"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:216
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Vänster"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:217
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Höger"
+
+#: gnome-panel/gp-properties-dialog.c:221
+msgctxt "Alignment"
+msgid "Start"
+msgstr "Start"
+
+#: gnome-panel/gp-properties-dialog.c:222
+msgctxt "Alignment"
+msgid "Center"
+msgstr "Centrerad"
+
+#: gnome-panel/gp-properties-dialog.c:223
+msgctxt "Alignment"
+msgid "End"
+msgstr "Slut"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
 msgstr "Panelegenskaper"
 
 #: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:323
+#: gnome-panel/gp-properties-dialog.ui:366
 msgid "Some of these properties are locked down"
 msgstr "En del av dessa egenskaper är låsta"
 
@@ -894,67 +817,71 @@ msgid "_Orientation:"
 msgstr "_Orientering:"
 
 #: gnome-panel/gp-properties-dialog.ui:122
+msgid "_Alignment:"
+msgstr "_Justering:"
+
+#: gnome-panel/gp-properties-dialog.ui:165
 msgid "_Size:"
 msgstr "_Storlek:"
 
-#: gnome-panel/gp-properties-dialog.ui:158
+#: gnome-panel/gp-properties-dialog.ui:201
 msgid "pixels"
 msgstr "bildpunkter"
 
-#: gnome-panel/gp-properties-dialog.ui:191
+#: gnome-panel/gp-properties-dialog.ui:234
 msgid "Miscellaneous:"
 msgstr "Övrigt:"
 
-#: gnome-panel/gp-properties-dialog.ui:210
+#: gnome-panel/gp-properties-dialog.ui:253
 msgid "E_xpand"
 msgstr "F_äll ut"
 
-#: gnome-panel/gp-properties-dialog.ui:225
+#: gnome-panel/gp-properties-dialog.ui:268
 msgid "_Autohide"
 msgstr "_Dölj automatiskt"
 
-#: gnome-panel/gp-properties-dialog.ui:240
+#: gnome-panel/gp-properties-dialog.ui:283
 msgid "Show hide _buttons"
 msgstr "Visa dölj_knappar"
 
-#: gnome-panel/gp-properties-dialog.ui:255
+#: gnome-panel/gp-properties-dialog.ui:298
 msgid "Arro_ws on hide buttons"
 msgstr "P_ilar på döljknappar"
 
-#: gnome-panel/gp-properties-dialog.ui:288 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Allmänt"
 
-#: gnome-panel/gp-properties-dialog.ui:355
+#: gnome-panel/gp-properties-dialog.ui:398
 msgid "Background color:"
 msgstr "Bakgrundsfärg:"
 
-#: gnome-panel/gp-properties-dialog.ui:418
+#: gnome-panel/gp-properties-dialog.ui:461
 msgid "Background image:"
 msgstr "Bakgrundsbild:"
 
-#: gnome-panel/gp-properties-dialog.ui:457
+#: gnome-panel/gp-properties-dialog.ui:500
 msgid "Tile"
 msgstr "Upprepa"
 
-#: gnome-panel/gp-properties-dialog.ui:472
+#: gnome-panel/gp-properties-dialog.ui:515
 msgid "Stretch"
 msgstr "Sträck ut"
 
-#: gnome-panel/gp-properties-dialog.ui:487
+#: gnome-panel/gp-properties-dialog.ui:530
 msgid "Fit"
 msgstr "Anpassa"
 
-#: gnome-panel/gp-properties-dialog.ui:509
+#: gnome-panel/gp-properties-dialog.ui:552
 msgid "Rotate image on vertical panel"
 msgstr "Rotera bilden på vertikal panel"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:595
 msgid "Text color:"
 msgstr "Textfärg:"
 
-#: gnome-panel/gp-properties-dialog.ui:607
+#: gnome-panel/gp-properties-dialog.ui:650
 msgid "Theme"
 msgstr "Tema"
 
@@ -968,7 +895,7 @@ msgstr "Tema"
 msgid "Error"
 msgstr "Fel"
 
-#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:387
+#: gnome-panel/libpanel-util/panel-show.c:45 modules/menu/gp-menu-utils.c:378
 #, c-format
 msgid "Could not open location '%s'"
 msgstr "Kunde inte öppna platsen ”%s”"
@@ -1103,7 +1030,7 @@ msgstr "_Ta bort denna panel"
 msgid "_New Panel"
 msgstr "_Ny panel"
 
-#: gnome-panel/panel-layout.c:1100 gnome-panel/panel-layout.c:1115
+#: gnome-panel/panel-layout.c:1097 gnome-panel/panel-layout.c:1112
 msgid "Cannot create initial panel layout.\n"
 msgstr "Kan inte skapa initial panellayout.\n"
 
@@ -1130,16 +1057,16 @@ msgstr "Välj en fil att lägga till efter kommandot…"
 msgid "_OK"
 msgstr "_OK"
 
-#: gnome-panel/panel-run-dialog.c:1689 gnome-panel/panel-run-dialog.ui:194
+#: gnome-panel/panel-run-dialog.c:1691 gnome-panel/panel-run-dialog.ui:194
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
-#: gnome-panel/panel-run-dialog.c:1727
+#: gnome-panel/panel-run-dialog.c:1729
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: ”%s”"
 
-#: gnome-panel/panel-run-dialog.c:1760
+#: gnome-panel/panel-run-dialog.c:1762
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -1200,82 +1127,82 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1560
+#: gnome-panel/panel-toplevel.c:1499
 msgid "Top Expanded Edge Panel"
 msgstr "Utfälld överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1561
+#: gnome-panel/panel-toplevel.c:1500
 msgid "Top Centered Panel"
 msgstr "Centrerad överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1562
-msgid "Top Floating Panel"
-msgstr "Flytande överkantspanel"
+#: gnome-panel/panel-toplevel.c:1501
+msgid "Top Start Panel"
+msgstr "Inledande överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1563
-msgid "Top Edge Panel"
-msgstr "Överkantspanel"
+#: gnome-panel/panel-toplevel.c:1502
+msgid "Top End Panel"
+msgstr "Avslutande överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1567
+#: gnome-panel/panel-toplevel.c:1506
 msgid "Bottom Expanded Edge Panel"
 msgstr "Utfälld nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1568
+#: gnome-panel/panel-toplevel.c:1507
 msgid "Bottom Centered Panel"
 msgstr "Centrerad nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1569
-msgid "Bottom Floating Panel"
-msgstr "Flytande nederkantspanel"
+#: gnome-panel/panel-toplevel.c:1508
+msgid "Bottom Start Panel"
+msgstr "Inledande nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1570
-msgid "Bottom Edge Panel"
-msgstr "Nederkantspanel"
+#: gnome-panel/panel-toplevel.c:1509
+msgid "Bottom End Panel"
+msgstr "Avslutande nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1574
+#: gnome-panel/panel-toplevel.c:1513
 msgid "Left Expanded Edge Panel"
 msgstr "Utfälld vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1575
+#: gnome-panel/panel-toplevel.c:1514
 msgid "Left Centered Panel"
 msgstr "Centrerad vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1576
-msgid "Left Floating Panel"
-msgstr "Flytande vänsterkantspanel"
+#: gnome-panel/panel-toplevel.c:1515
+msgid "Left Start Panel"
+msgstr "Inledande vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1577
-msgid "Left Edge Panel"
-msgstr "Vänsterkantspanel"
+#: gnome-panel/panel-toplevel.c:1516
+msgid "Left End Panel"
+msgstr "Avslutande vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1581
+#: gnome-panel/panel-toplevel.c:1520
 msgid "Right Expanded Edge Panel"
 msgstr "Utfälld högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1582
+#: gnome-panel/panel-toplevel.c:1521
 msgid "Right Centered Panel"
 msgstr "Centrerad högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1583
-msgid "Right Floating Panel"
-msgstr "Flytande högerkantspanel"
+#: gnome-panel/panel-toplevel.c:1522
+msgid "Right Start Panel"
+msgstr "Inledande högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1584
-msgid "Right Edge Panel"
-msgstr "Högerkantspanel"
+#: gnome-panel/panel-toplevel.c:1523
+msgid "Right End Panel"
+msgstr "Avslutande högerkantspanel"
 
 #: gnome-panel/panel-util.c:358
 msgid "file"
 msgstr "fil"
 
-#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:207
+#: gnome-panel/panel-util.c:470 modules/menu/gp-menu-utils.c:212
 msgid "Home"
 msgstr "Hem"
 
 #. Translators: this is the same string as the one found in
 #. * nautilus
 #. Translators: this is the same string as the one found in nautilus
-#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:224
+#: gnome-panel/panel-util.c:479 modules/menu/gp-menu-utils.c:229
 msgid "File System"
 msgstr "Filsystem"
 
@@ -1288,7 +1215,7 @@ msgstr "Filsystem"
 #. * second string is a path. For example, "Trash: some-directory". It
 #. * means that the directory called "some-directory" is in the trash.
 #.
-#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:122
+#: gnome-panel/panel-util.c:693 modules/menu/gp-menu-utils.c:127
 #, c-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
@@ -1315,7 +1242,7 @@ msgstr "Kunde inte visa hjälpdokumentet ”%s”"
 msgid "Error displaying help document"
 msgstr "Fel vid visning av hjälpdokumentet"
 
-#: libgnome-panel/gp-module.c:695
+#: libgnome-panel/gp-module.c:697
 #, c-format
 msgid "Backend “%s” is not supported."
 msgstr "Bakänden ”%s” stöds inte."
@@ -1331,24 +1258,24 @@ msgid "Force a misbehaving application to quit"
 msgstr "Tvinga ett program som beter sig fel att avsluta"
 
 #: modules/action-button/gp-action-button-module.c:53
-#: modules/menu/gp-lock-logout.c:1009
+#: modules/menu/gp-lock-logout.c:1003
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
 #: modules/action-button/gp-action-button-module.c:54
 #: modules/action-button/gp-lock-screen-applet.c:320
-#: modules/menu/gp-lock-logout.c:1010
+#: modules/menu/gp-lock-logout.c:1004
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
 #: modules/action-button/gp-action-button-module.c:62
-#: modules/menu/gp-lock-logout.c:988
+#: modules/menu/gp-lock-logout.c:982
 msgid "Log Out"
 msgstr "Logga ut"
 
 #: modules/action-button/gp-action-button-module.c:63
 #: modules/action-button/gp-logout-applet.c:68
-#: modules/menu/gp-lock-logout.c:989
+#: modules/menu/gp-lock-logout.c:983
 msgid "Log out of this session to log in as a different user"
 msgstr "Logga ut från denna session för att logga in som en annan användare"
 
@@ -1362,17 +1289,17 @@ msgid "Run an application by typing a command or choosing from a list"
 msgstr "Kör ett program genom att ange ett kommando eller välj från en lista"
 
 #: modules/action-button/gp-action-button-module.c:80
-#: modules/menu/gp-lock-logout.c:1121
+#: modules/menu/gp-lock-logout.c:1115
 msgid "Power Off"
 msgstr "Stäng av"
 
 #: modules/action-button/gp-action-button-module.c:81
 #: modules/action-button/gp-shutdown-applet.c:71
-#: modules/menu/gp-lock-logout.c:1122
+#: modules/menu/gp-lock-logout.c:1116
 msgid "Power off the computer"
 msgstr "Stäng av datorn"
 
-#: modules/action-button/gp-force-quit-applet.c:135
+#: modules/action-button/gp-force-quit-applet.c:134
 msgid ""
 "Disabled because “disable-force-quit” setting in “org.gnome.gnome-panel."
 "lockdown” GSettings schema is set to true."
@@ -1386,7 +1313,7 @@ msgstr ""
 msgid "Could not launch application"
 msgstr "Kunde inte starta program"
 
-#: modules/action-button/gp-lock-screen-applet.c:435
+#: modules/action-button/gp-lock-screen-applet.c:434
 msgid ""
 "Disabled because “disable-lock-screen” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
@@ -1402,8 +1329,8 @@ msgstr "_Lås skärmen"
 msgid "_Activate Screensaver"
 msgstr "_Aktivera skärmsläckare"
 
-#: modules/action-button/gp-logout-applet.c:223
-#: modules/action-button/gp-shutdown-applet.c:267
+#: modules/action-button/gp-logout-applet.c:222
+#: modules/action-button/gp-shutdown-applet.c:266
 msgid ""
 "Disabled because “disable-log-out” setting in “org.gnome.desktop.lockdown” "
 "GSettings schema is set to true."
@@ -1411,8 +1338,8 @@ msgstr ""
 "Inaktiverat eftersom inställningen ”disable-log-out” i GSettings-schemat "
 "”org.gnome.desktop.lockdown” är satt till true."
 
-#: modules/action-button/gp-run-applet.c:136
-#: modules/launcher/gp-launcher-module.c:34
+#: modules/action-button/gp-run-applet.c:135
+#: modules/launcher/gp-launcher-module.c:33
 msgid ""
 "Disabled because “disable-command-line” setting in “org.gnome.desktop."
 "lockdown” GSettings schema is set to true."
@@ -1545,55 +1472,55 @@ msgstr "Datorklocka"
 msgid "Failed to open the time settings"
 msgstr "Misslyckades med att öppna tidsinställningarna"
 
-#: modules/clock/clock-applet.c:1570
+#: modules/clock/clock-applet.c:1607
 msgid "Choose Location"
 msgstr "Välj plats"
 
-#: modules/clock/clock-applet.c:1649
+#: modules/clock/clock-applet.c:1686
 msgid "Edit Location"
 msgstr "Redigera plats"
 
-#: modules/clock/clock-applet.c:1685 modules/clock/clock-applet.c:1693
+#: modules/clock/clock-applet.c:1722 modules/clock/clock-applet.c:1730
 msgid "Default"
 msgstr "Standard"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1723
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1687
+#: modules/clock/clock-applet.c:1724
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1688
+#: modules/clock/clock-applet.c:1725
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1694
+#: modules/clock/clock-applet.c:1731
 msgid "Meters per second (m/s)"
 msgstr "Meter per sekund (m/s)"
 
-#: modules/clock/clock-applet.c:1695
+#: modules/clock/clock-applet.c:1732
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per timme (kph)"
 
-#: modules/clock/clock-applet.c:1696
+#: modules/clock/clock-applet.c:1733
 msgid "Miles per hour (mph)"
 msgstr "Engelska mil per timme (mph)"
 
-#: modules/clock/clock-applet.c:1697
+#: modules/clock/clock-applet.c:1734
 msgid "Knots"
 msgstr "Knop"
 
-#: modules/clock/clock-applet.c:1698
+#: modules/clock/clock-applet.c:1735
 msgid "Beaufort scale"
 msgstr "Beauforts skala"
 
-#: modules/clock/clock-applet.c:1751
+#: modules/clock/clock-applet.c:1788
 msgid "City Name"
 msgstr "Stadens namn"
 
-#: modules/clock/clock-applet.c:1755
+#: modules/clock/clock-applet.c:1792
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
@@ -1641,18 +1568,18 @@ msgstr "%H:%M <small>(%A)</small>"
 msgid "%l:%M <small>%p</small>"
 msgstr "%l:%M <small>%p</small>"
 
-#: modules/clock/clock-location-tile.c:607
+#: modules/clock/clock-location-tile.c:614
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Translators: The two strings are temperatures.
-#: modules/clock/clock-location-tile.c:620
+#: modules/clock/clock-location-tile.c:627
 #, c-format
 msgid "%s, feels like %s"
 msgstr "%s, känns som %s"
 
-#: modules/clock/clock-location-tile.c:641
+#: modules/clock/clock-location-tile.c:648
 #, c-format
 msgid "Sunrise: %s / Sunset: %s"
 msgstr "Soluppgång: %s / Solnedgång: %s"
@@ -1734,7 +1661,7 @@ msgstr "_Hjälp"
 msgid "Time _Settings"
 msgstr "Tidsinstä_llningar"
 
-#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:565
+#: modules/clock/clock.ui:406 modules/fish/fish-applet.c:566
 #: modules/fish/fish.ui:51 modules/launcher/gp-launcher-properties.c:680
 #: modules/wncklet/window-list.ui:285 modules/wncklet/workspace-switcher.ui:37
 msgid "_Close"
@@ -1852,16 +1779,16 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/fish/fish-applet.c:564
+#: modules/fish/fish-applet.c:565
 msgid "_Speak again"
 msgstr "_Tala igen"
 
-#: modules/fish/fish-applet.c:636
+#: modules/fish/fish-applet.c:637
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "Det konfigurerade kommandot fungerar inte och har ersatts av: %s"
 
-#: modules/fish/fish-applet.c:665
+#: modules/fish/fish-applet.c:666
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -1872,7 +1799,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/fish/fish-applet.c:681
+#: modules/fish/fish-applet.c:682
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -1883,15 +1810,15 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: modules/fish/fish-applet.c:1064
+#: modules/fish/fish-applet.c:1065
 msgid "The water needs changing"
 msgstr "Vattnet behöver bytas"
 
-#: modules/fish/fish-applet.c:1066
+#: modules/fish/fish-applet.c:1067
 msgid "Look at today's date!"
 msgstr "Titta på dagens datum!"
 
-#: modules/fish/fish-applet.c:1160
+#: modules/fish/fish-applet.c:1161
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, siaren"
@@ -2049,24 +1976,24 @@ msgstr "Kan inte köra kommandoraden ”%s”."
 msgid "Could not open location"
 msgstr "Kunde inte öppna platsen"
 
-#: modules/launcher/gp-launcher-applet.c:1010
+#: modules/launcher/gp-launcher-applet.c:1008
 #, c-format
 msgid "Failed to load key file “%s”: %s"
 msgstr "Misslyckades med att läsa in nyckelfilen ”%s”: %s"
 
-#: modules/launcher/gp-launcher-module.c:58
+#: modules/launcher/gp-launcher-module.c:57
 msgid "Custom Application Launcher"
 msgstr "Anpassad programstartare"
 
-#: modules/launcher/gp-launcher-module.c:59
+#: modules/launcher/gp-launcher-module.c:58
 msgid "Create a new launcher"
 msgstr "Skapa en ny programstartare"
 
-#: modules/launcher/gp-launcher-module.c:68
+#: modules/launcher/gp-launcher-module.c:67
 msgid "Application Launcher..."
 msgstr "Programstartare…"
 
-#: modules/launcher/gp-launcher-module.c:69
+#: modules/launcher/gp-launcher-module.c:68
 msgid "Copy a launcher from the applications menu"
 msgstr "Kopiera en programstartare från programmenyn"
 
@@ -2125,27 +2052,27 @@ msgstr "Plats för programstartare"
 msgid "The location of the .desktop file describing the launcher."
 msgstr "Platsen för den .desktop-fil som beskriver programstartaren."
 
-#: modules/menu/gp-lock-logout.c:972
+#: modules/menu/gp-lock-logout.c:966
 msgid "Switch User"
 msgstr "Växla användare"
 
-#: modules/menu/gp-lock-logout.c:1055
+#: modules/menu/gp-lock-logout.c:1049
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: modules/menu/gp-lock-logout.c:1071
+#: modules/menu/gp-lock-logout.c:1065
 msgid "Suspend"
 msgstr "Vänteläge"
 
-#: modules/menu/gp-lock-logout.c:1087
+#: modules/menu/gp-lock-logout.c:1081
 msgid "Hybrid Sleep"
 msgstr "Hybridvila"
 
-#: modules/menu/gp-lock-logout.c:1105
+#: modules/menu/gp-lock-logout.c:1099
 msgid "Restart"
 msgstr "Starta om"
 
-#: modules/menu/gp-lock-logout.c:1106
+#: modules/menu/gp-lock-logout.c:1100
 msgid "Restart the computer"
 msgstr "Starta om datorn"
 
@@ -2212,7 +2139,7 @@ msgstr "Användarmeny"
 msgid "Menu to change your settings and log out"
 msgstr "Meny för att ändra dina inställningar och logga ut."
 
-#: modules/menu/gp-menu-utils.c:353
+#: modules/menu/gp-menu-utils.c:441
 #, c-format
 msgid "Could not launch '%s'"
 msgstr "Kunde inte starta ”%s”"
@@ -2515,6 +2442,108 @@ msgstr "Visa _namn på arbetsytor i växlaren"
 #: modules/wncklet/workspace-switcher.ui:309
 msgid "Workspaces"
 msgstr "Arbetsytor"
+
+#~ msgid "X co-ordinate of panel"
+#~ msgstr "X-koordinaten för panelen"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Platsen för panelen längs x-axeln. Nyckeln är endast relevant i "
+#~ "oexpanderat läge. I expanderat läge ignoreras nyckeln och panelen "
+#~ "placeras på den skärmkant som anges av nyckeln orientering."
+
+#~ msgid "Y co-ordinate of panel"
+#~ msgstr "Y-koordinaten för panelen"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis. This key is only relevant in "
+#~ "un-expanded mode. In expanded mode this key is ignored and the panel is "
+#~ "placed at the screen edge specified by the orientation key."
+#~ msgstr ""
+#~ "Platsen för panelen längs y-axeln. Nyckeln är endast relevant i "
+#~ "oexpanderat läge. I expanderat läge ignoreras nyckeln och panelen "
+#~ "placeras på den skärmkant som anges av nyckeln orientering."
+
+#~ msgid "X co-ordinate of panel, starting from the right of the screen"
+#~ msgstr "X-koordinat för panelen, med början från skärmens högra sida"
+
+#~ msgid ""
+#~ "The location of the panel along the x-axis, starting from the right of "
+#~ "the screen. If set to -1, the value is ignored and the value of the x key "
+#~ "is used. If the value is greater than 0, then the value of the x key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Platsen för panelen längs x-axeln med början från skärmens högra sida. Om "
+#~ "inställd till -1 kommer värdet att ignoreras och värdet för x-nyckeln att "
+#~ "användas. Om värdet är större än 0 kommer värdet för x-nyckeln att "
+#~ "ignoreras. Nyckeln är endast relevant i oexpanderat läge. I expanderat "
+#~ "läge ignoreras nyckeln och panelen placeras på den skärmkant som anges av "
+#~ "nyckeln orientation."
+
+#~ msgid "Y co-ordinate of panel, starting from the bottom of the screen"
+#~ msgstr "Y-koordinat för panelen, med början från skärmens nederkant"
+
+#~ msgid ""
+#~ "The location of the panel along the y-axis, starting from the bottom of "
+#~ "the screen. If set to -1, the value is ignored and the value of the y key "
+#~ "is used. If the value is greater than 0, then the value of the y key is "
+#~ "ignored. This key is only relevant in un-expanded mode. In expanded mode "
+#~ "this key is ignored and the panel is placed at the screen edge specified "
+#~ "by the orientation key."
+#~ msgstr ""
+#~ "Platsen för panelen längs y-axeln med början från skärmens nederkant. Om "
+#~ "inställd till -1 kommer värdet att ignoreras och värdet för y-nyckeln att "
+#~ "användas. Om värdet är större än 0 kommer värdet för y-nyckeln att "
+#~ "ignoreras. Nyckeln är endast relevant i oexpanderat läge. I expanderat "
+#~ "läge ignoreras nyckeln och panelen placeras på den skärmkant som anges av "
+#~ "nyckeln orientation."
+
+#~ msgid "Center panel on x-axis"
+#~ msgstr "Centrera panelen på x-axeln"
+
+#~ msgid ""
+#~ "If true, the x and x_right keys are ignored and the panel is placed at "
+#~ "the center of the x-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the x and x_right keys specify the location of the panel."
+#~ msgstr ""
+#~ "Om true kommer nycklarna x och x_right att ignoreras och panelen att "
+#~ "placeras i mitten på skärmens x-axel. Om panelens storlek ändras kommer "
+#~ "den att finnas kvar på den positionen, det vill säga att panelen kommer "
+#~ "att växa på båda sidor. Om false kommer nycklarna x och x_right ange "
+#~ "platsen för panelen."
+
+#~ msgid "Center panel on y-axis"
+#~ msgstr "Centrera panelen på y-axeln"
+
+#~ msgid ""
+#~ "If true, the y and y_bottom keys are ignored and the panel is placed at "
+#~ "the center of the y-axis of the screen. If the panel is resized it will "
+#~ "remain at that position - i.e. the panel will grow on both sides. If "
+#~ "false, the y and y_bottom keys specify the location of the panel."
+#~ msgstr ""
+#~ "Om true kommer nycklarna y och y_bottom att ignoreras och panelen att "
+#~ "placeras i mitten på skärmens y-axel. Om panelens storlek ändras kommer "
+#~ "den att finnas kvar på den positionen, det vill säga att panelen kommer "
+#~ "att växa på båda sidor. Om false kommer nycklarna y och y_bottom ange "
+#~ "platsen för panelen."
+
+#~ msgid "Top Floating Panel"
+#~ msgstr "Flytande överkantspanel"
+
+#~ msgid "Bottom Floating Panel"
+#~ msgstr "Flytande nederkantspanel"
+
+#~ msgid "Left Floating Panel"
+#~ msgstr "Flytande vänsterkantspanel"
+
+#~ msgid "Right Floating Panel"
+#~ msgstr "Flytande högerkantspanel"
 
 #~ msgid "???"
 #~ msgstr "???"
