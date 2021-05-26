@@ -51,12 +51,6 @@
 #include "gp-module-private.h"
 
 typedef struct
- {
-  gint  *size_hints;
-  guint  n_elements;
-} GpSizeHints;
-
-typedef struct
 {
   GtkBuilder         *builder;
   GSimpleActionGroup *action_group;
@@ -73,9 +67,6 @@ typedef struct
   GtkPositionType     position;
 
   GpAppletFlags       flags;
-  GpSizeHints        *size_hints;
-
-  guint               size_hints_idle;
 
   GSettings          *general_settings;
 
@@ -123,7 +114,6 @@ enum
   PLACEMENT_CHANGED,
 
   FLAGS_CHANGED,
-  SIZE_HINTS_CHANGED,
 
   LAST_SIGNAL
 };
@@ -252,74 +242,6 @@ icon_resize_cb (gpointer user_data)
   return G_SOURCE_REMOVE;
 }
 
-static gboolean
-emit_size_hints_changed_cb (gpointer user_data)
-{
-  GpApplet *applet;
-  GpAppletPrivate *priv;
-
-  applet = GP_APPLET (user_data);
-  priv = gp_applet_get_instance_private (applet);
-
-  priv->size_hints_idle = 0;
-  g_signal_emit (applet, signals[SIZE_HINTS_CHANGED], 0);
-
-  return G_SOURCE_REMOVE;
-}
-
-static void
-emit_size_hints_changed (GpApplet *applet)
-{
-  GpAppletPrivate *priv;
-  const gchar *name;
-
-  priv = gp_applet_get_instance_private (applet);
-  if (priv->size_hints_idle != 0)
-    return;
-
-  priv->size_hints_idle = g_idle_add (emit_size_hints_changed_cb, applet);
-
-  name = "[libgnome-panel] emit_size_hints_changed_cb";
-  g_source_set_name_by_id (priv->size_hints_idle, name);
-}
-
-static void
-gp_size_hints_free (gpointer data)
-{
-  GpSizeHints *size_hints;
-
-  size_hints = (GpSizeHints *) data;
-
-  g_free (size_hints->size_hints);
-  g_free (size_hints);
-}
-
-static gboolean
-size_hints_changed (GpAppletPrivate *priv,
-                    const gint      *size_hints,
-                    guint            n_elements,
-                    gint             base_size)
-{
-  guint i;
-
-  if (priv->size_hints == NULL && size_hints == NULL)
-    return FALSE;
-
-  if (priv->size_hints == NULL || size_hints == NULL)
-    return TRUE;
-
-  if (priv->size_hints->n_elements != n_elements)
-    return TRUE;
-
-  for (i = 0; i < n_elements; i++)
-    {
-      if (priv->size_hints->size_hints[i] != size_hints[i] + base_size)
-        return TRUE;
-    }
-
-  return FALSE;
-}
-
 static void
 gp_applet_constructed (GObject *object)
 {
@@ -362,12 +284,6 @@ gp_applet_dispose (GObject *object)
 
   g_clear_object (&priv->module);
 
-  if (priv->size_hints_idle != 0)
-    {
-      g_source_remove (priv->size_hints_idle);
-      priv->size_hints_idle = 0;
-    }
-
   if (priv->icon_resize_id != 0)
     {
       g_source_remove (priv->icon_resize_id);
@@ -394,7 +310,6 @@ gp_applet_finalize (GObject *object)
   g_clear_pointer (&priv->id, g_free);
   g_clear_pointer (&priv->settings_path, g_free);
   g_clear_pointer (&priv->gettext_domain, g_free);
-  g_clear_pointer (&priv->size_hints, gp_size_hints_free);
 
   G_OBJECT_CLASS (gp_applet_parent_class)->finalize (object);
 }
@@ -834,16 +749,6 @@ install_signals (void)
   signals[FLAGS_CHANGED] =
     g_signal_new ("flags-changed", GP_TYPE_APPLET, G_SIGNAL_RUN_LAST,
                   0, NULL, NULL, NULL, G_TYPE_NONE, 0);
-
-  /**
-   * GpApplet::size-hints-changed:
-   * @applet: the object on which the signal is emitted
-   *
-   * Signal is emitted when size hints has changed.
-   */
-  signals[SIZE_HINTS_CHANGED] =
-    g_signal_new ("size-hints-changed", GP_TYPE_APPLET, G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL, NULL, G_TYPE_NONE, 0);
 }
 
 static void
@@ -1078,112 +983,6 @@ gp_applet_set_flags (GpApplet      *applet,
   priv->flags = flags;
 
   g_signal_emit (applet, signals[FLAGS_CHANGED], 0);
-}
-
-/**
- * gp_applet_get_size_hints:
- * @applet: a #GpApplet
- * @n_elements: (out): return location for the length of the returned array
- *
- * Returns array with size hints.
- *
- * Returns: (transfer full) (array length=n_elements): a newly allocated
- *     array, or %NULL.
- */
-gint *
-gp_applet_get_size_hints (GpApplet *applet,
-                          guint    *n_elements)
-{
-  GpAppletPrivate *priv;
-  gint *size_hints;
-  guint i;
-
-  g_return_val_if_fail (GP_IS_APPLET (applet), NULL);
-  g_return_val_if_fail (n_elements != NULL, NULL);
-
-  priv = gp_applet_get_instance_private (applet);
-
-  if (!priv->size_hints || priv->size_hints->n_elements == 0)
-    {
-      *n_elements = 0;
-      return NULL;
-    }
-
-  *n_elements = priv->size_hints->n_elements;
-  size_hints = g_new0 (gint, priv->size_hints->n_elements);
-
-  for (i = 0; i < priv->size_hints->n_elements; i++)
-    size_hints[i] = priv->size_hints->size_hints[i];
-
-  return size_hints;
-}
-
-/**
- * gp_applet_set_size_hints:
- * @applet: a #GpApplet
- * @size_hints: (allow-none): array of sizes or %NULL
- * @n_elements: length of @size_hints
- * @base_size: base size of the applet
- *
- * Give hints to the panel about sizes @applet is comfortable with. This
- * is generally useful for applets that can take a lot of space, in case
- * the panel gets full and needs to restrict the size of some applets.
- *
- * @size_hints should have an even number of sizes. It is an array of
- * (max, min) pairs where min(i) > max(i + 1).
- *
- * @base_size will be added to all sizes in @size_hints, and is therefore
- * a way to guarantee a minimum size to @applet.
- *
- * The panel will try to allocate a size that is acceptable to @applet,
- * i.e. in one of the (@base_size + max, @base_size + min) ranges.
- *
- * %GP_APPLET_FLAGS_EXPAND_MAJOR must be set for @applet to use size hints.
- */
-void
-gp_applet_set_size_hints (GpApplet   *applet,
-                          const gint *size_hints,
-                          guint       n_elements,
-                          gint        base_size)
-{
-  GpAppletPrivate *priv;
-  guint i;
-
-  g_return_if_fail (GP_IS_APPLET (applet));
-  priv = gp_applet_get_instance_private (applet);
-
-  if (!size_hints_changed (priv, size_hints, n_elements, base_size))
-    return;
-
-  if (!size_hints || n_elements == 0)
-    {
-      g_clear_pointer (&priv->size_hints, gp_size_hints_free);
-      emit_size_hints_changed (applet);
-
-      return;
-    }
-
-  if (!priv->size_hints)
-    {
-      priv->size_hints = g_new0 (GpSizeHints, 1);
-      priv->size_hints->size_hints = g_new0 (gint, n_elements);
-      priv->size_hints->n_elements = n_elements;
-    }
-  else
-    {
-      if (priv->size_hints->n_elements < n_elements)
-        {
-          g_free (priv->size_hints->size_hints);
-          priv->size_hints->size_hints = g_new0 (gint, n_elements);
-        }
-
-      priv->size_hints->n_elements = n_elements;
-    }
-
-  for (i = 0; i < n_elements; i++)
-    priv->size_hints->size_hints[i] = size_hints[i] + base_size;
-
-  emit_size_hints_changed (applet);
 }
 
 /**
