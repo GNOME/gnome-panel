@@ -1315,14 +1315,19 @@ gp_launcher_applet_finalize (GObject *object)
   G_OBJECT_CLASS (gp_launcher_applet_parent_class)->finalize (object);
 }
 
-static void
-gp_launcher_applet_initial_setup (GpApplet *applet,
-                                  GVariant *initial_settings)
+static gboolean
+gp_launcher_applet_initial_setup (GpApplet  *applet,
+                                  GVariant  *initial_settings,
+                                  GError   **error)
 {
   GSettings *settings;
+  gboolean ret;
   const char *location;
 
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
   settings = gp_applet_settings_new (applet, LAUNCHER_SCHEMA);
+  ret = TRUE;
 
   location = NULL;
   if (g_variant_lookup (initial_settings, "location", "&s", &location))
@@ -1338,7 +1343,6 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
       const char *comment;
       GKeyFile *file;
       char *filename;
-      GError *error;
 
       type = NULL;
       icon = NULL;
@@ -1412,11 +1416,9 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
 
       filename = gp_launcher_get_unique_filename ();
 
-      error = NULL;
-      if (!g_key_file_save_to_file (file, filename, &error))
+      if (!g_key_file_save_to_file (file, filename, error))
         {
-          g_warning ("%s", error->message);
-          g_error_free (error);
+          ret = FALSE;
         }
       else
         {
@@ -1432,6 +1434,8 @@ gp_launcher_applet_initial_setup (GpApplet *applet,
     }
 
   g_object_unref (settings);
+
+  return ret;
 }
 
 static void
