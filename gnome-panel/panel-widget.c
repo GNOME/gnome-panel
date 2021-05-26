@@ -251,28 +251,6 @@ remove_all_move_bindings (PanelWidget *panel)
 	gtk_binding_entry_remove (binding_set, GDK_KEY_space, 0);
 }
 
-static void
-get_preferred_size_from_hints (AppletData *ad,
-                               int        *minimum_size,
-                               int        *natural_size)
-{
-  int max_size;
-  int min_size;
-  int i;
-
-  max_size = 0;
-  min_size = INT_MAX;
-
-  for (i = 0; i < ad->size_hints_len; i += 2)
-    {
-      max_size = MAX (max_size, ad->size_hints[i]);
-      min_size = MIN (min_size, ad->size_hints[i + 1]);
-    }
-
-  *minimum_size = min_size;
-  *natural_size = max_size;
-}
-
 static GtkSizeRequestMode
 panel_widget_get_request_mode (GtkWidget *widget)
 {
@@ -323,13 +301,6 @@ panel_widget_get_preferred_height (GtkWidget *widget,
 
           if (ad->expand_major)
             {
-              if (ad->size_hints != NULL)
-                {
-                  get_preferred_size_from_hints (ad,
-                                                 &child_min_height,
-                                                 &child_nat_height);
-                }
-
               min_height += child_min_height;
               nat_height += child_nat_height;
             }
@@ -388,13 +359,6 @@ panel_widget_get_preferred_width_for_height (GtkWidget *widget,
 
           if (ad->expand_major)
             {
-              if (ad->size_hints != NULL)
-                {
-                  get_preferred_size_from_hints (ad,
-                                                 &child_min_width,
-                                                 &child_nat_width);
-                }
-
               min_width += child_min_width;
               nat_width += child_nat_width;
             }
@@ -451,13 +415,6 @@ panel_widget_get_preferred_width (GtkWidget *widget,
 
           if (ad->expand_major)
             {
-              if (ad->size_hints != NULL)
-                {
-                  get_preferred_size_from_hints (ad,
-                                                 &child_min_width,
-                                                 &child_nat_width);
-                }
-
               min_width += child_min_width;
               nat_width += child_nat_width;
             }
@@ -516,13 +473,6 @@ panel_widget_get_preferred_height_for_width (GtkWidget *widget,
 
           if (ad->expand_major)
             {
-              if (ad->size_hints != NULL)
-                {
-                  get_preferred_size_from_hints (ad,
-                                                 &child_min_height,
-                                                 &child_nat_height);
-                }
-
               min_height += child_min_height;
               nat_height += child_nat_height;
             }
@@ -1460,19 +1410,8 @@ get_preferred_size (PanelWidget    *self,
                                                  &minimum_size->width,
                                                  &natural_size->width);
 
-      if (ad->expand_major)
-        {
-          if (ad->size_hints != NULL)
-            {
-              get_preferred_size_from_hints (ad,
-                                             &minimum_size->width,
-                                             &natural_size->width);
-            }
-        }
-      else
-        {
-          natural_size->width = minimum_size->width;
-        }
+      if (!ad->expand_major)
+        natural_size->width = minimum_size->width;
     }
   else if (self->orient == GTK_ORIENTATION_VERTICAL)
     {
@@ -1493,19 +1432,8 @@ get_preferred_size (PanelWidget    *self,
                                                  &minimum_size->height,
                                                  &natural_size->height);
 
-      if (ad->expand_major)
-        {
-          if (ad->size_hints != NULL)
-            {
-              get_preferred_size_from_hints (ad,
-                                             &minimum_size->height,
-                                             &natural_size->height);
-            }
-        }
-      else
-        {
-          natural_size->height = minimum_size->height;
-        }
+      if (!ad->expand_major)
+        natural_size->height = minimum_size->height;
     }
   else
     {
@@ -2284,8 +2212,6 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 		panel->applet_list = g_list_remove (panel->applet_list,ad);
 	}
 
-	g_free (ad->size_hints);
-
 	g_free (ad);
 }
 
@@ -2414,7 +2340,7 @@ panel_widget_add (PanelWidget         *panel,
 		ad->position = 0;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
-		ad->size_hints = NULL;
+
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_DATA, ad);
 		
@@ -2706,31 +2632,6 @@ panel_widget_set_applet_expandable (PanelWidget *panel,
 
 	ad->expand_major = major;
 	ad->expand_minor = minor;
-
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
-}
-
-void
-panel_widget_set_applet_size_hints (PanelWidget *panel,
-				    GtkWidget   *applet,
-				    int         *size_hints,
-				    int          size_hints_len)
-{
-	AppletData *ad;
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	if (!ad)
-		return;
-
-	g_free (ad->size_hints);
-
-	if (size_hints_len > 0 && (size_hints_len % 2 == 0)) {
-		ad->size_hints     = size_hints;
-		ad->size_hints_len = size_hints_len;
-	} else {
-		g_free (size_hints);
-		ad->size_hints = NULL;
-	}
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }

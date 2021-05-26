@@ -43,10 +43,6 @@ struct _AppletData
 	int             position;
 	int             size;
 
-	/* Valid size ranges for expanded applets */
-	int *           size_hints; 
-	int             size_hints_len;
-
 	guint           expand_major : 1;
 	guint           expand_minor : 1;
 };
@@ -152,10 +148,6 @@ void     panel_widget_set_applet_expandable       (PanelWidget *panel,
 						   GtkWidget   *applet,
 						   gboolean     major,
 						   gboolean     minor);
-void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
-						   GtkWidget   *applet,
-						   int         *size_hints,
-						   int          size_hints_len);
 
 void     panel_widget_register_open_dialog        (PanelWidget *panel,
 						   GtkWidget   *dialog);  

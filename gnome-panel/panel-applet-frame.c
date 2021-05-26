@@ -656,42 +656,9 @@ update_flags (PanelAppletFrame *self)
 }
 
 static void
-update_size_hints (PanelAppletFrame *self)
-{
-  guint n_elements;
-  gint *size_hints;
-
-  size_hints = gp_applet_get_size_hints (self->priv->applet, &n_elements);
-
-  if (self->priv->handle != NULL)
-    {
-      GtkAllocation allocation;
-      gint extra_size;
-      guint i;
-
-      gtk_widget_get_allocation (self->priv->handle, &allocation);
-
-      if (self->priv->orientation & PANEL_HORIZONTAL_MASK)
-        extra_size = allocation.width + 1;
-      else
-        extra_size = allocation.height + 1;
-
-      for (i = 0; i < n_elements; i++)
-        size_hints[i] += extra_size;
-    }
-
-  /* It takes the ownership of size-hints array */
-  panel_widget_set_applet_size_hints (self->priv->panel,
-                                      GTK_WIDGET (self),
-                                      size_hints,
-                                      n_elements);
-}
-
-static void
 panel_applet_frame_init_properties (PanelAppletFrame *self)
 {
   update_flags (self);
-  update_size_hints (self);
 }
 
 static void
@@ -772,13 +739,6 @@ flags_changed_cb (GpApplet         *applet,
   update_flags (self);
 }
 
-static void
-size_hints_changed_cb (GpApplet         *applet,
-                       PanelAppletFrame *self)
-{
-  update_size_hints (self);
-}
-
 void
 _panel_applet_frame_set_applet (PanelAppletFrame *self,
                                 GpApplet         *applet)
@@ -788,11 +748,6 @@ _panel_applet_frame_set_applet (PanelAppletFrame *self,
   g_signal_connect (applet,
                     "flags-changed",
                     G_CALLBACK (flags_changed_cb),
-                    self);
-
-  g_signal_connect (applet,
-                    "size-hints-changed",
-                    G_CALLBACK (size_hints_changed_cb),
                     self);
 
   gtk_container_add (GTK_CONTAINER (self), GTK_WIDGET (applet));
