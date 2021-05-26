@@ -187,7 +187,7 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
 
   data = (InitialSetupData *) user_data;
 
-  initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+  initial_settings = gp_initial_setup_dialog_get_settings (dialog);
 
   panel_applet_frame_create (data->toplevel,
                              data->pack_type,

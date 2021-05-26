@@ -85,7 +85,7 @@ check_required_info (LauncherData *data)
                                gp_editor_get_comment (data->editor),
                                NULL);
 
-  gp_initital_setup_dialog_set_done (data->dialog, done);
+  gp_initial_setup_dialog_set_done (data->dialog, done);
 }
 
 static void
@@ -97,7 +97,7 @@ icon_changed_cb (GpEditor     *editor,
 
   icon = gp_editor_get_icon (editor);
   variant = icon != NULL ? g_variant_new_string (icon) : NULL;
-  gp_initital_setup_dialog_set_setting (data->dialog, "icon", variant);
+  gp_initial_setup_dialog_set_setting (data->dialog, "icon", variant);
 
   check_required_info (data);
 }
@@ -125,16 +125,16 @@ type_changed_cb (GpEditor     *editor,
     }
 
   variant = type_string != NULL ? g_variant_new_string (type_string) : NULL;
-  gp_initital_setup_dialog_set_setting (data->dialog, "type", variant);
+  gp_initial_setup_dialog_set_setting (data->dialog, "type", variant);
 
   if (type == GP_EDITOR_TYPE_TERMINAL_APPLICATION)
     {
       variant = g_variant_new_boolean (TRUE);
-      gp_initital_setup_dialog_set_setting (data->dialog, "terminal", variant);
+      gp_initial_setup_dialog_set_setting (data->dialog, "terminal", variant);
     }
   else
     {
-      gp_initital_setup_dialog_set_setting (data->dialog, "terminal", NULL);
+      gp_initial_setup_dialog_set_setting (data->dialog, "terminal", NULL);
     }
 
   check_required_info (data);
@@ -149,7 +149,7 @@ name_changed_cb (GpEditor     *editor,
 
   name = gp_editor_get_name (editor);
   variant = name != NULL ? g_variant_new_string (name) : NULL;
-  gp_initital_setup_dialog_set_setting (data->dialog, "name", variant);
+  gp_initial_setup_dialog_set_setting (data->dialog, "name", variant);
 
   check_required_info (data);
 }
@@ -163,7 +163,7 @@ command_changed_cb (GpEditor     *editor,
 
   command = gp_editor_get_command (editor);
   variant = command != NULL ? g_variant_new_string (command) : NULL;
-  gp_initital_setup_dialog_set_setting (data->dialog, "command", variant);
+  gp_initial_setup_dialog_set_setting (data->dialog, "command", variant);
 
   check_required_info (data);
 }
@@ -177,7 +177,7 @@ comment_changed_cb (GpEditor     *editor,
 
   comment = gp_editor_get_comment (editor);
   variant = comment != NULL ? g_variant_new_string (comment) : NULL;
-  gp_initital_setup_dialog_set_setting (data->dialog, "comment", variant);
+  gp_initial_setup_dialog_set_setting (data->dialog, "comment", variant);
 
   check_required_info (data);
 }
@@ -221,7 +221,7 @@ gp_custom_launcher_applet_initial_setup_dialog (GpInitialSetupDialog *dialog)
   g_signal_connect (editor, "command-changed", G_CALLBACK (command_changed_cb), data);
   g_signal_connect (editor, "comment-changed", G_CALLBACK (comment_changed_cb), data);
 
-  variant = gp_initital_setup_dialog_get_setting (dialog, "command");
+  variant = gp_initial_setup_dialog_get_setting (dialog, "command");
   if (variant != NULL)
     {
       gp_editor_set_command (GP_EDITOR (editor),
@@ -231,6 +231,8 @@ gp_custom_launcher_applet_initial_setup_dialog (GpInitialSetupDialog *dialog)
   icon_changed_cb (data->editor, data);
   type_changed_cb (data->editor, data);
 
-  gp_initital_setup_dialog_add_content_widget (dialog, editor, data,
-                                               launcher_data_free);
+  gp_initial_setup_dialog_add_content_widget (dialog,
+                                              editor,
+                                              data,
+                                              launcher_data_free);
 }

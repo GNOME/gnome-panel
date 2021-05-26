@@ -405,7 +405,7 @@ initial_setup_dialog_cb (GpInitialSetupDialog *dialog,
   if (canceled)
     return;
 
-  initial_settings = gp_initital_setup_dialog_get_settings (dialog);
+  initial_settings = gp_initial_setup_dialog_get_settings (dialog);
 
   panel_applet_frame_create (data->panel->toplevel,
                              data->pack_type,
