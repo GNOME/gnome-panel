@@ -289,12 +289,12 @@ selection_changed_cb (GtkTreeSelection *selection,
           variant = g_variant_new_string (menu_path);
           g_free (menu_path);
 
-          gp_initital_setup_dialog_set_setting (data->dialog, "menu-path", variant);
+          gp_initial_setup_dialog_set_setting (data->dialog, "menu-path", variant);
           done = TRUE;
         }
     }
 
-  gp_initital_setup_dialog_set_done (data->dialog, done);
+  gp_initial_setup_dialog_set_done (data->dialog, done);
 }
 
 static void
@@ -353,8 +353,10 @@ menu_button_initial_setup_dialog (GpInitialSetupDialog *dialog)
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view),
                            GTK_TREE_MODEL (data->store));
 
-  gp_initital_setup_dialog_add_content_widget (dialog, scrolled, data,
-                                               menu_button_data_free);
+  gp_initial_setup_dialog_add_content_widget (dialog,
+                                              scrolled,
+                                              data,
+                                              menu_button_data_free);
 }
 
 static GpAppletInfo *

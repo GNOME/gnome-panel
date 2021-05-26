@@ -338,10 +338,10 @@ gp_applet_manager_open_initial_setup_dialog (GpAppletManager        *self,
   if (!info || !info->initial_setup_dialog_func)
     return FALSE;
 
-  dialog = gp_initital_setup_dialog_new ();
+  dialog = gp_initial_setup_dialog_new ();
 
-  gp_initital_setup_dialog_add_callback (dialog, callback, user_data, free_func);
-  gp_initital_setup_dialog_set_settings (dialog, settings);
+  gp_initial_setup_dialog_add_callback (dialog, callback, user_data, free_func);
+  gp_initial_setup_dialog_set_settings (dialog, settings);
 
   info->initial_setup_dialog_func (dialog);
 

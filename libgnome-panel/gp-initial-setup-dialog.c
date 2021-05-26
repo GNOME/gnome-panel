@@ -46,7 +46,7 @@ enum
 
 static guint dialog_signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (GpInitialSetupDialog, gp_initital_setup_dialog, GTK_TYPE_WINDOW)
+G_DEFINE_TYPE (GpInitialSetupDialog, gp_initial_setup_dialog, GTK_TYPE_WINDOW)
 
 static void
 cancel_clicked_cb (GtkButton            *button,
@@ -76,7 +76,7 @@ close_cb (GpInitialSetupDialog *self,
 }
 
 static void
-gp_initital_setup_dialog_finalize (GObject *object)
+gp_initial_setup_dialog_finalize (GObject *object)
 {
   GpInitialSetupDialog *dialog;
 
@@ -100,12 +100,12 @@ gp_initital_setup_dialog_finalize (GObject *object)
 
   g_clear_pointer (&dialog->settings, g_hash_table_destroy);
 
-  G_OBJECT_CLASS (gp_initital_setup_dialog_parent_class)->finalize (object);
+  G_OBJECT_CLASS (gp_initial_setup_dialog_parent_class)->finalize (object);
 }
 
 static gboolean
-gp_initital_setup_dialog_delete_event (GtkWidget   *widget,
-                                       GdkEventAny *event)
+gp_initial_setup_dialog_delete_event (GtkWidget   *widget,
+                                      GdkEventAny *event)
 {
   GpInitialSetupDialog *dialog;
 
@@ -133,7 +133,7 @@ install_signals (void)
 }
 
 static void
-gp_initital_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
+gp_initial_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
 {
   GObjectClass *object_class;
   GtkWidgetClass *widget_class;
@@ -142,9 +142,9 @@ gp_initital_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
   object_class = G_OBJECT_CLASS (dialog_class);
   widget_class = GTK_WIDGET_CLASS (dialog_class);
 
-  object_class->finalize = gp_initital_setup_dialog_finalize;
+  object_class->finalize = gp_initial_setup_dialog_finalize;
 
-  widget_class->delete_event = gp_initital_setup_dialog_delete_event;
+  widget_class->delete_event = gp_initial_setup_dialog_delete_event;
 
   install_signals ();
 
@@ -153,7 +153,7 @@ gp_initital_setup_dialog_class_init (GpInitialSetupDialogClass *dialog_class)
 }
 
 static void
-gp_initital_setup_dialog_init (GpInitialSetupDialog *dialog)
+gp_initial_setup_dialog_init (GpInitialSetupDialog *dialog)
 {
   GtkWidget *header_bar;
   GtkWidget *cancel;
@@ -187,16 +187,16 @@ gp_initital_setup_dialog_init (GpInitialSetupDialog *dialog)
 }
 
 GpInitialSetupDialog *
-gp_initital_setup_dialog_new (void)
+gp_initial_setup_dialog_new (void)
 {
   return g_object_new (GP_TYPE_INITIAL_SETUP_DIALOG, NULL);
 }
 
 void
-gp_initital_setup_dialog_add_callback (GpInitialSetupDialog   *dialog,
-                                       GpInitialSetupCallback  callback,
-                                       gpointer                user_data,
-                                       GDestroyNotify          free_func)
+gp_initial_setup_dialog_add_callback (GpInitialSetupDialog   *dialog,
+                                      GpInitialSetupCallback  callback,
+                                      gpointer                user_data,
+                                      GDestroyNotify          free_func)
 {
   dialog->setup_callback = callback;
   dialog->setup_user_data = user_data;
@@ -204,10 +204,10 @@ gp_initital_setup_dialog_add_callback (GpInitialSetupDialog   *dialog,
 }
 
 void
-gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
-                                             GtkWidget            *content,
-                                             gpointer              user_data,
-                                             GDestroyNotify        free_func)
+gp_initial_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
+                                            GtkWidget            *content,
+                                            gpointer              user_data,
+                                            GDestroyNotify        free_func)
 {
   dialog->content_user_data = user_data;
   dialog->content_user_data_free_func = free_func;
@@ -218,7 +218,7 @@ gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
 }
 
 /**
- * gp_initital_setup_dialog_get_setting:
+ * gp_initial_setup_dialog_get_setting:
  * @dialog: a #GpInitialSetupDialog
  * @key: the setting key
  *
@@ -227,14 +227,14 @@ gp_initital_setup_dialog_add_content_widget (GpInitialSetupDialog *dialog,
  * Returns: (transfer none): a #GVariant, or %NULL.
  */
 GVariant *
-gp_initital_setup_dialog_get_setting (GpInitialSetupDialog *dialog,
-                                      const char           *key)
+gp_initial_setup_dialog_get_setting (GpInitialSetupDialog *dialog,
+                                     const char           *key)
 {
   return g_hash_table_lookup (dialog->settings, key);
 }
 
 /**
- * gp_initital_setup_dialog_set_setting:
+ * gp_initial_setup_dialog_set_setting:
  * @dialog: a #GpInitialSetupDialog
  * @key: the setting key
  * @value: (allow-none): the setting value, or %NULL to unset the setting
@@ -245,9 +245,9 @@ gp_initital_setup_dialog_get_setting (GpInitialSetupDialog *dialog,
  * If @value is floating, it is consumed.
  */
 void
-gp_initital_setup_dialog_set_setting (GpInitialSetupDialog *dialog,
-                                      const gchar          *key,
-                                      GVariant             *value)
+gp_initial_setup_dialog_set_setting (GpInitialSetupDialog *dialog,
+                                     const char           *key,
+                                     GVariant             *value)
 {
   if (value != NULL)
     {
@@ -261,7 +261,7 @@ gp_initital_setup_dialog_set_setting (GpInitialSetupDialog *dialog,
 }
 
 GVariant *
-gp_initital_setup_dialog_get_settings (GpInitialSetupDialog *dialog)
+gp_initial_setup_dialog_get_settings (GpInitialSetupDialog *dialog)
 {
   GVariantBuilder builder;
   GHashTableIter iter;
@@ -281,8 +281,8 @@ gp_initital_setup_dialog_get_settings (GpInitialSetupDialog *dialog)
 }
 
 void
-gp_initital_setup_dialog_set_settings (GpInitialSetupDialog *dialog,
-                                       GVariant             *settings)
+gp_initial_setup_dialog_set_settings (GpInitialSetupDialog *dialog,
+                                      GVariant             *settings)
 {
   GVariantIter iter;
   char *key;
@@ -294,7 +294,7 @@ gp_initital_setup_dialog_set_settings (GpInitialSetupDialog *dialog,
   g_variant_iter_init (&iter, settings);
   while (g_variant_iter_next (&iter, "{sv}", &key, &value))
     {
-      gp_initital_setup_dialog_set_setting (dialog, key, value);
+      gp_initial_setup_dialog_set_setting (dialog, key, value);
 
       g_free (key);
       g_variant_unref (value);
@@ -302,8 +302,8 @@ gp_initital_setup_dialog_set_settings (GpInitialSetupDialog *dialog,
 }
 
 void
-gp_initital_setup_dialog_set_done (GpInitialSetupDialog *dialog,
-                                   gboolean              done)
+gp_initial_setup_dialog_set_done (GpInitialSetupDialog *dialog,
+                                  gboolean              done)
 {
   gtk_widget_set_sensitive (dialog->done, done);
 }
