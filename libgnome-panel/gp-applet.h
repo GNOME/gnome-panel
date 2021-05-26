@@ -96,11 +96,6 @@ GtkPositionType  gp_applet_get_position              (GpApplet           *applet
 void             gp_applet_set_flags                 (GpApplet           *applet,
                                                       GpAppletFlags       flags);
 
-void             gp_applet_set_size_hints            (GpApplet           *applet,
-                                                      const gint         *size_hints,
-                                                      guint               n_elements,
-                                                      gint                base_size);
-
 GSettings       *gp_applet_settings_new              (GpApplet           *applet,
                                                       const gchar        *schema);
 
