@@ -258,7 +258,7 @@ gp_applet_constructed (GObject *object)
   priv = gp_applet_get_instance_private (applet);
 
   if (applet_class->initial_setup != NULL && priv->initial_settings != NULL)
-    applet_class->initial_setup (applet, priv->initial_settings);
+    applet_class->initial_setup (applet, priv->initial_settings, NULL);
   g_clear_pointer (&priv->initial_settings, g_variant_unref);
 
   gtk_builder_set_translation_domain (priv->builder, priv->gettext_domain);

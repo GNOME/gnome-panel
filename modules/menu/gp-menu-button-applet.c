@@ -657,12 +657,15 @@ gp_menu_button_applet_dispose (GObject *object)
   G_OBJECT_CLASS (gp_menu_button_applet_parent_class)->dispose (object);
 }
 
-static void
-gp_menu_button_applet_initial_setup (GpApplet *applet,
-                                     GVariant *initial_settings)
+static gboolean
+gp_menu_button_applet_initial_setup (GpApplet  *applet,
+                                     GVariant  *initial_settings,
+                                     GError   **error)
 {
   GSettings *settings;
   const gchar *menu_path;
+
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   settings = gp_applet_settings_new (applet, MENU_BUTTON_SCHEMA);
 
@@ -671,6 +674,8 @@ gp_menu_button_applet_initial_setup (GpApplet *applet,
     g_settings_set_string (settings, "menu-path", menu_path);
 
   g_object_unref (settings);
+
+  return TRUE;
 }
 
 static void

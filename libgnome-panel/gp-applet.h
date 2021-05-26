@@ -72,14 +72,15 @@ struct _GpAppletClass
 {
   GtkEventBoxClass parent_class;
 
-  void (* initial_setup)       (GpApplet        *applet,
-                                GVariant        *initial_settings);
+  gboolean (* initial_setup)     (GpApplet         *self,
+                                  GVariant         *initial_settings,
+                                  GError          **error);
 
-  void (* placement_changed)   (GpApplet        *applet,
-                                GtkOrientation   orientation,
-                                GtkPositionType  position);
+  void     (* placement_changed) (GpApplet         *self,
+                                  GtkOrientation    orientation,
+                                  GtkPositionType   position);
 
-  void (* remove_from_panel)   (GpApplet        *self);
+  void     (* remove_from_panel) (GpApplet         *self);
 
   /*< private >*/
   gpointer padding[9];
