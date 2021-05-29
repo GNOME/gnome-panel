@@ -55,6 +55,56 @@ static void clock_location_finalize (GObject *);
 static gboolean update_weather_info (gpointer user_data);
 static void setup_weather_updates (ClockLocation *loc);
 
+static GWeatherTimezone *
+get_gweather_timezone (ClockLocation *loc)
+{
+	GWeatherTimezone *tz;
+	GWeatherLocation *gloc;
+
+	gloc = gweather_location_ref (loc->priv->loc);
+	tz = gweather_location_get_timezone (gloc);
+
+	if (tz == NULL) {
+		GWeatherLocation *tmp;
+
+		/* Some weather stations do not have timezone information.
+		 * In this case, we need to find the nearest city. */
+		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY) {
+			tmp = gloc;
+
+#ifdef HAVE_GWEATHER_40
+			gloc = gweather_location_get_parent (gloc);
+#else
+			gloc = gweather_location_get_parent (gloc);
+			gloc = gweather_location_ref (gloc);
+#endif
+
+			gweather_location_unref (tmp);
+		}
+
+		tmp = gloc;
+		gloc = gweather_location_find_nearest_city (gloc,
+		                                            loc->priv->latitude,
+		                                            loc->priv->longitude);
+		gweather_location_unref (tmp);
+
+		if (gloc == NULL) {
+			g_warning ("Could not find the nearest city for location \"%s\"",
+			           gweather_location_get_name (loc->priv->loc));
+			return gweather_timezone_get_utc ();
+		}
+
+		tz = gweather_location_get_timezone (gloc);
+		tz = gweather_timezone_ref (tz);
+		gweather_location_unref (gloc);
+	} else {
+		tz = gweather_timezone_ref (tz);
+		gweather_location_unref (gloc);
+	}
+
+	return tz;
+}
+
 ClockLocation *
 clock_location_new (GnomeWallClock   *wall_clock,
                     GWeatherLocation *world,
@@ -88,7 +138,7 @@ clock_location_new (GnomeWallClock   *wall_clock,
 		gweather_location_get_coords (priv->loc, &priv->latitude, &priv->longitude);
 	}
 
-	priv->wtz = clock_location_get_gweather_timezone (this);
+	priv->wtz = get_gweather_timezone (this);
 
         setup_weather_updates (this);
 
@@ -210,56 +260,6 @@ gchar *
 clock_location_get_city (ClockLocation *loc)
 {
         return gweather_location_get_city_name (loc->priv->loc);
-}
-
-GWeatherTimezone *
-clock_location_get_gweather_timezone (ClockLocation *loc)
-{
-	GWeatherTimezone *tz;
-	GWeatherLocation *gloc;
-
-	gloc = gweather_location_ref (loc->priv->loc);
-	tz = gweather_location_get_timezone (gloc);
-
-	if (tz == NULL) {
-		GWeatherLocation *tmp;
-
-		/* Some weather stations do not have timezone information.
-		 * In this case, we need to find the nearest city. */
-		while (gweather_location_get_level (gloc) >= GWEATHER_LOCATION_CITY) {
-			tmp = gloc;
-
-#ifdef HAVE_GWEATHER_40
-			gloc = gweather_location_get_parent (gloc);
-#else
-			gloc = gweather_location_get_parent (gloc);
-			gloc = gweather_location_ref (gloc);
-#endif
-
-			gweather_location_unref (tmp);
-		}
-
-		tmp = gloc;
-		gloc = gweather_location_find_nearest_city (gloc,
-		                                            loc->priv->latitude,
-		                                            loc->priv->longitude);
-		gweather_location_unref (tmp);
-
-		if (gloc == NULL) {
-			g_warning ("Could not find the nearest city for location \"%s\"",
-			           gweather_location_get_name (loc->priv->loc));
-			return gweather_timezone_get_utc ();
-		}
-
-		tz = gweather_location_get_timezone (gloc);
-		tz = gweather_timezone_ref (tz);
-		gweather_location_unref (gloc);
-	} else {
-		tz = gweather_timezone_ref (tz);
-		gweather_location_unref (gloc);
-	}
-
-	return tz;
 }
 
 const gchar *

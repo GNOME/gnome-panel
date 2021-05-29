@@ -50,7 +50,6 @@ const char *clock_location_get_name (ClockLocation *loc);
 void clock_location_set_name (ClockLocation *loc, const gchar *name);
 
 gchar *clock_location_get_city (ClockLocation *loc);
-GWeatherTimezone *clock_location_get_gweather_timezone (ClockLocation *loc);
 const gchar *clock_location_get_timezone (ClockLocation *loc);
 void clock_location_get_coords (ClockLocation *loc, gdouble *latitude, gdouble *longitude);
 
