@@ -27,6 +27,8 @@ struct _ClockLocationPrivate {
 	GWeatherLocation *world;
 	GWeatherLocation *loc;
 
+	GWeatherTimezone *wtz;
+
         gdouble latitude;
         gdouble longitude;
 
@@ -85,6 +87,8 @@ clock_location_new (GnomeWallClock   *wall_clock,
 	} else {
 		gweather_location_get_coords (priv->loc, &priv->latitude, &priv->longitude);
 	}
+
+	priv->wtz = clock_location_get_gweather_timezone (this);
 
         setup_weather_updates (this);
 
@@ -168,6 +172,8 @@ clock_location_finalize (GObject *g_obj)
 	gweather_location_unref (priv->world);
 	gweather_location_unref (priv->loc);
 
+	gweather_timezone_unref (priv->wtz);
+
 	if (priv->weather_timeout)
 		g_source_remove (priv->weather_timeout);
 
@@ -244,9 +250,12 @@ clock_location_get_gweather_timezone (ClockLocation *loc)
 			           gweather_location_get_name (loc->priv->loc));
 			return gweather_timezone_get_utc ();
 		}
+
 		tz = gweather_location_get_timezone (gloc);
+		tz = gweather_timezone_ref (tz);
 		gweather_location_unref (gloc);
 	} else {
+		tz = gweather_timezone_ref (tz);
 		gweather_location_unref (gloc);
 	}
 
@@ -256,19 +265,13 @@ clock_location_get_gweather_timezone (ClockLocation *loc)
 const gchar *
 clock_location_get_timezone (ClockLocation *loc)
 {
-	GWeatherTimezone *tz;
-
-	tz = clock_location_get_gweather_timezone (loc);
-        return gweather_timezone_get_name (tz);
+	return gweather_timezone_get_name (loc->priv->wtz);
 }
 
 const gchar *
 clock_location_get_tzname (ClockLocation *loc)
 {
-	GWeatherTimezone *tz;
-
-	tz = clock_location_get_gweather_timezone (loc);
-        return gweather_timezone_get_tzid (tz);
+	return gweather_timezone_get_tzid (loc->priv->wtz);
 }
 
 void
@@ -283,14 +286,11 @@ clock_location_get_coords (ClockLocation *loc,
 GDateTime *
 clock_location_localtime (ClockLocation *loc)
 {
-	GWeatherTimezone *wtz;
 	const char *tzid;
 	GTimeZone *tz;
 	GDateTime *dt;
 
-	wtz = clock_location_get_gweather_timezone (loc);
-	tzid = gweather_timezone_get_tzid (wtz);
-
+	tzid = gweather_timezone_get_tzid (loc->priv->wtz);
 	tz = g_time_zone_new_identifier (tzid);
 
 	if (tz == NULL) {
@@ -309,17 +309,14 @@ clock_location_localtime (ClockLocation *loc)
 gboolean
 clock_location_is_current_timezone (ClockLocation *loc)
 {
-	GWeatherTimezone *wtz;
 	GTimeZone *timezone;
 	const char *zone;
-
-	wtz = clock_location_get_gweather_timezone (loc);
 
 	timezone = gnome_wall_clock_get_timezone (loc->priv->wall_clock);
 	zone = g_time_zone_get_identifier (timezone);
 
 	if (zone)
-		return strcmp (zone, gweather_timezone_get_tzid (wtz)) == 0;
+		return strcmp (zone, gweather_timezone_get_tzid (loc->priv->wtz)) == 0;
 	else
 		return clock_location_get_offset (loc) == 0;
 }
@@ -348,14 +345,10 @@ clock_location_is_current (ClockLocation *loc)
 	return FALSE;
 }
 
-
 glong
 clock_location_get_offset (ClockLocation *loc)
 {
-	GWeatherTimezone *wtz;
-
-	wtz = clock_location_get_gweather_timezone (loc);
-	return gweather_timezone_get_offset (wtz);
+	return gweather_timezone_get_offset (loc->priv->wtz);
 }
 
 typedef struct {
@@ -405,7 +398,6 @@ clock_location_make_current (ClockLocation *loc,
                              GDestroyNotify destroy)
 {
 	MakeCurrentData *mcdata;
-	GWeatherTimezone *wtz;
 
         if (loc == current_location) {
                 if (destroy)
@@ -436,10 +428,9 @@ clock_location_make_current (ClockLocation *loc,
 	mcdata->data = data;
 	mcdata->destroy = destroy;
 
-	wtz = clock_location_get_gweather_timezone (loc);
-        set_system_timezone_async (gweather_timezone_get_tzid (wtz),
-                                   make_current_cb,
-                                   mcdata);
+	set_system_timezone_async (gweather_timezone_get_tzid (loc->priv->wtz),
+	                           make_current_cb,
+	                           mcdata);
 }
 
 const gchar *
