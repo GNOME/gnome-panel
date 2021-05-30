@@ -54,6 +54,10 @@ enum
 
 static GParamSpec *row_properties[LAST_PROP] = { NULL };
 
+static GtkTargetEntry entries[] = {
+    { (gchar *)"GTK_LIST_BOX_ROW", GTK_TARGET_SAME_APP, 0 }
+};
+
 G_DEFINE_TYPE (GpAppletListRow, gp_applet_list_row, GTK_TYPE_LIST_BOX_ROW)
 
 static void
@@ -132,6 +136,103 @@ setup_view_more_button (GpAppletListRow *self,
 }
 
 static void
+drag_data_get_cb (GtkWidget        *widget,
+                  GdkDragContext   *context,
+                  GtkSelectionData *data,
+                  guint             info,
+                  guint             time,
+                  GpAppletListRow  *self)
+{
+  gtk_selection_data_set (data,
+                          gdk_atom_intern_static_string ("GTK_LIST_BOX_ROW"),
+                          8,
+                          (const guchar *)&widget,
+                          sizeof (gpointer));
+}
+
+static void
+drag_data_received_cb (GtkWidget        *target,
+                       GdkDragContext   *context,
+                       gint              x,
+                       gint              y,
+                       GtkSelectionData *selection_data,
+                       guint             info,
+                       guint             time,
+                       gpointer          user_data)
+{
+  gpointer handle;
+  GtkWidget *source;
+  GtkWidget *source_list;
+  GtkWidget *target_list;
+  int position;
+
+  handle = *(gpointer*) gtk_selection_data_get_data (selection_data);
+  source = gtk_widget_get_ancestor (handle, GTK_TYPE_LIST_BOX_ROW);
+
+  if (source == target)
+    return;
+
+  source_list = gtk_widget_get_parent (source);
+  target_list = gtk_widget_get_parent (target);
+  position = gtk_list_box_row_get_index (GTK_LIST_BOX_ROW (target));
+
+  g_object_ref (source);
+
+  gtk_container_remove (GTK_CONTAINER (source_list), source);
+  gtk_list_box_insert (GTK_LIST_BOX (target_list), source, position);
+  g_object_unref (source);
+}
+
+static void
+drag_begin (GtkWidget      *widget,
+            GdkDragContext *context,
+            gpointer        user_data)
+{
+  GtkWidget *row;
+  GtkAllocation alloc;
+  cairo_surface_t *surface;
+  cairo_t *cr;
+  GtkStyleContext *style_context;
+
+  row = gtk_widget_get_ancestor (widget, GTK_TYPE_LIST_BOX_ROW);
+  gtk_widget_get_allocation (row, &alloc);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                        alloc.width, alloc.height);
+
+  cr = cairo_create (surface);
+
+  style_context = gtk_widget_get_style_context (row);
+  gtk_style_context_add_class (style_context, "applet-list-row-drag-icon");
+  gtk_widget_draw (row, cr);
+  gtk_style_context_remove_class (style_context, "applet-list-row-drag-icon");
+
+  gtk_drag_set_icon_surface (context, surface);
+
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
+}
+
+static void
+setup_drag_source (GpAppletListRow *self)
+{
+  gtk_drag_source_set (self->event_box, GDK_BUTTON1_MASK, entries, 1, GDK_ACTION_MOVE);
+  gtk_drag_dest_set (GTK_WIDGET (self), GTK_DEST_DEFAULT_ALL, entries, 1, GDK_ACTION_MOVE);
+
+  g_signal_connect (self->event_box,
+                    "drag-data-get",
+                    G_CALLBACK (drag_data_get_cb),
+                    self);
+
+  g_signal_connect (self,
+                    "drag-data-received",
+                    G_CALLBACK (drag_data_received_cb),
+                    NULL);
+
+  g_signal_connect_after (self->event_box, "drag-begin",
+                          G_CALLBACK (drag_begin), NULL);
+}
+
+static void
 lockdown_changed_cb (PanelLockdown *lockdown,
                      gpointer       user_data)
 {
@@ -144,10 +245,12 @@ lockdown_changed_cb (PanelLockdown *lockdown,
       panel_applets_manager_is_applet_disabled (self->iid, NULL))
     {
       gtk_widget_set_sensitive (GTK_WIDGET (self), FALSE);
+      gtk_drag_source_unset (self->event_box);
       return;
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (self), TRUE);
+  setup_drag_source (self);
 }
 
 static void
