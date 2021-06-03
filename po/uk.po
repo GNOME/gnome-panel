@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-05-31 08:36+0000\n"
-"PO-Revision-Date: 2021-05-31 20:20+0300\n"
+"POT-Creation-Date: 2021-06-03 09:51+0000\n"
+"PO-Revision-Date: 2021-06-03 19:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -729,6 +729,19 @@ msgstr "Знайти запис для додавання до «%s»"
 msgid "Find an item to add to the panel"
 msgstr "Знати об'єкт для додавання до панелі"
 
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Довідка"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Відомості"
+
+#: gnome-panel/gp-applet-list-row.c:207
+#| msgid "_Remove"
+msgid "Remove"
+msgstr "Вилучити"
+
 #: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
@@ -736,14 +749,6 @@ msgid ""
 msgstr ""
 "Вимкнено, оскільки цей аплет є у списку параметра «disabled-applets» у схемі "
 "«org.gnome.gnome-panel.lockdown» GSettings."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Довідка"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Відомості"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -879,25 +884,18 @@ msgid "Theme"
 msgstr "Тема"
 
 #: gnome-panel/gp-properties-dialog.ui:669
-#| msgctxt "Orientation"
-#| msgid "Left"
 msgid "Left"
 msgstr "Ліворуч"
 
 #: gnome-panel/gp-properties-dialog.ui:692
-#| msgctxt "Alignment"
-#| msgid "Center"
 msgid "Center"
 msgstr "Центр"
 
 #: gnome-panel/gp-properties-dialog.ui:715
-#| msgctxt "Orientation"
-#| msgid "Right"
 msgid "Right"
 msgstr "Праворуч"
 
 #: gnome-panel/gp-properties-dialog.ui:743
-#| msgid "Applications"
 msgid "Applets"
 msgstr "Аплети"
 
@@ -907,7 +905,7 @@ msgstr "Аплети"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:989
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Помилка"
 
@@ -924,24 +922,24 @@ msgstr "Пере_містити"
 msgid "_Remove From Panel"
 msgstr "В_илучити з панелі"
 
-#: gnome-panel/panel-applet-frame.c:952
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Виявлено проблему при завантаженні \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:964
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "Гаразд"
 
-#: gnome-panel/panel-applet-frame.c:968
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Вилучити аплет з поточними налаштуваннями?"
 
-#: gnome-panel/panel-applet-frame.c:971
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "_Не вилучати"
 
-#: gnome-panel/panel-applet-frame.c:972 gnome-panel/panel.c:1249
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "В_илучити"
 
