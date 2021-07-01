@@ -9,13 +9,14 @@
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2010, 2011.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2021.
 # Josef Andersson <josef.andersson@fripost.org>, 2016.
+# Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-04-24 15:51+0000\n"
-"PO-Revision-Date: 2021-05-23 02:02+0200\n"
+"POT-Creation-Date: 2021-06-03 09:51+0000\n"
+"PO-Revision-Date: 2021-07-01 15:07+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -736,21 +737,25 @@ msgstr "Sök ett objekt att lägga till i ”%s”"
 msgid "Find an item to add to the panel"
 msgstr "Sök ett objekt att lägga till i panelen"
 
-#: gnome-panel/gp-applet-manager.c:426
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Hjälp"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Om"
+
+#: gnome-panel/gp-applet-list-row.c:207
+msgid "Remove"
+msgstr "Ta bort"
+
+#: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
 "Inaktiverat eftersom detta miniprogram är listat i inställningen ”disabled-"
 "applets” i GSettings-schemat ”org.gnome.gnome-panel.lockdown”."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Hjälp"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Om"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -768,37 +773,37 @@ msgstr "Ersätt en för närvarande körande panel"
 msgid "Print version"
 msgstr "Skriv ut version"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:224
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Överst"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:225
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Nederst"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Vänster"
 
-#: gnome-panel/gp-properties-dialog.c:217
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Right"
 msgstr "Höger"
 
-#: gnome-panel/gp-properties-dialog.c:221
+#: gnome-panel/gp-properties-dialog.c:231
 msgctxt "Alignment"
 msgid "Start"
 msgstr "Start"
 
-#: gnome-panel/gp-properties-dialog.c:222
+#: gnome-panel/gp-properties-dialog.c:232
 msgctxt "Alignment"
 msgid "Center"
 msgstr "Centrerad"
 
-#: gnome-panel/gp-properties-dialog.c:223
+#: gnome-panel/gp-properties-dialog.c:233
 msgctxt "Alignment"
 msgid "End"
 msgstr "Slut"
@@ -807,83 +812,101 @@ msgstr "Slut"
 msgid "Panel Properties"
 msgstr "Panelegenskaper"
 
-#: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:366
+#: gnome-panel/gp-properties-dialog.ui:56
+#: gnome-panel/gp-properties-dialog.ui:369
 msgid "Some of these properties are locked down"
 msgstr "En del av dessa egenskaper är låsta"
 
-#: gnome-panel/gp-properties-dialog.ui:79
+#: gnome-panel/gp-properties-dialog.ui:82
 msgid "_Orientation:"
 msgstr "_Orientering:"
 
-#: gnome-panel/gp-properties-dialog.ui:122
+#: gnome-panel/gp-properties-dialog.ui:125
 msgid "_Alignment:"
 msgstr "_Justering:"
 
-#: gnome-panel/gp-properties-dialog.ui:165
+#: gnome-panel/gp-properties-dialog.ui:168
 msgid "_Size:"
 msgstr "_Storlek:"
 
-#: gnome-panel/gp-properties-dialog.ui:201
+#: gnome-panel/gp-properties-dialog.ui:204
 msgid "pixels"
 msgstr "bildpunkter"
 
-#: gnome-panel/gp-properties-dialog.ui:234
+#: gnome-panel/gp-properties-dialog.ui:237
 msgid "Miscellaneous:"
 msgstr "Övrigt:"
 
-#: gnome-panel/gp-properties-dialog.ui:253
+#: gnome-panel/gp-properties-dialog.ui:256
 msgid "E_xpand"
 msgstr "F_äll ut"
 
-#: gnome-panel/gp-properties-dialog.ui:268
+#: gnome-panel/gp-properties-dialog.ui:271
 msgid "_Autohide"
 msgstr "_Dölj automatiskt"
 
-#: gnome-panel/gp-properties-dialog.ui:283
+#: gnome-panel/gp-properties-dialog.ui:286
 msgid "Show hide _buttons"
 msgstr "Visa dölj_knappar"
 
-#: gnome-panel/gp-properties-dialog.ui:298
+#: gnome-panel/gp-properties-dialog.ui:301
 msgid "Arro_ws on hide buttons"
 msgstr "P_ilar på döljknappar"
 
-#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:334 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "Allmänt"
 
-#: gnome-panel/gp-properties-dialog.ui:398
+#: gnome-panel/gp-properties-dialog.ui:401
 msgid "Background color:"
 msgstr "Bakgrundsfärg:"
 
-#: gnome-panel/gp-properties-dialog.ui:461
+#: gnome-panel/gp-properties-dialog.ui:464
 msgid "Background image:"
 msgstr "Bakgrundsbild:"
 
-#: gnome-panel/gp-properties-dialog.ui:500
+#: gnome-panel/gp-properties-dialog.ui:503
 msgid "Tile"
 msgstr "Upprepa"
 
-#: gnome-panel/gp-properties-dialog.ui:515
+#: gnome-panel/gp-properties-dialog.ui:518
 msgid "Stretch"
 msgstr "Sträck ut"
 
-#: gnome-panel/gp-properties-dialog.ui:530
+#: gnome-panel/gp-properties-dialog.ui:533
 msgid "Fit"
 msgstr "Anpassa"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:555
 msgid "Rotate image on vertical panel"
 msgstr "Rotera bilden på vertikal panel"
 
-#: gnome-panel/gp-properties-dialog.ui:595
+#: gnome-panel/gp-properties-dialog.ui:598
 msgid "Text color:"
 msgstr "Textfärg:"
 
-#: gnome-panel/gp-properties-dialog.ui:650
+#: gnome-panel/gp-properties-dialog.ui:653
 msgid "Theme"
 msgstr "Tema"
+
+#: gnome-panel/gp-properties-dialog.ui:669
+msgid "Left"
+msgstr "Vänster"
+
+# The list of applets is grouped into the three
+# locations on the panel (left, right, center)
+#: gnome-panel/gp-properties-dialog.ui:692
+msgid "Center"
+msgstr "Mitten"
+
+#: gnome-panel/gp-properties-dialog.ui:715
+msgid "Right"
+msgstr "Höger"
+
+#: gnome-panel/gp-properties-dialog.ui:743
+msgid "Applets"
+msgstr "Miniprogram"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -891,7 +914,7 @@ msgstr "Tema"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:941
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Fel"
 
@@ -900,42 +923,42 @@ msgstr "Fel"
 msgid "Could not open location '%s'"
 msgstr "Kunde inte öppna platsen ”%s”"
 
-#: gnome-panel/panel-applet-frame.c:396
+#: gnome-panel/panel-applet-frame.c:395
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/panel-applet-frame.c:403
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det uppstod ett problem i panelen vid inläsning av ”%s”."
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "OK"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Vill du ta bort miniprogrammet från din konfiguration?"
 
-#: gnome-panel/panel-applet-frame.c:923
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "Ta i_nte bort"
 
-#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: gnome-panel/panel.c:604
+#: gnome-panel/panel.c:587
 #, c-format
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -944,18 +967,18 @@ msgstr "Öppna ”%s”"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Öppna din personliga mapp"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Dator"
 
 #. name
-#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -964,12 +987,12 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Nätverk"
 
 #. name
-#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 
@@ -978,11 +1001,11 @@ msgstr "Bläddra bland bokmärkta och lokala nätverksplatser"
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
 msgstr "Ta bort denna panel?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -990,7 +1013,7 @@ msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
 "inställningar."
 
-#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236
 #: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1127,67 +1150,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1499
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Top Expanded Edge Panel"
 msgstr "Utfälld överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Top Centered Panel"
 msgstr "Centrerad överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1501
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Top Start Panel"
 msgstr "Inledande överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1502
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Top End Panel"
 msgstr "Avslutande överkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1506
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Bottom Expanded Edge Panel"
 msgstr "Utfälld nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1507
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Centered Panel"
 msgstr "Centrerad nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1508
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Bottom Start Panel"
 msgstr "Inledande nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1509
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Bottom End Panel"
 msgstr "Avslutande nederkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1513
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Left Expanded Edge Panel"
 msgstr "Utfälld vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1514
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Left Centered Panel"
 msgstr "Centrerad vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1515
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Left Start Panel"
 msgstr "Inledande vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1516
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Left End Panel"
 msgstr "Avslutande vänsterkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Right Expanded Edge Panel"
 msgstr "Utfälld högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Right Centered Panel"
 msgstr "Centrerad högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1522
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Right Start Panel"
 msgstr "Inledande högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1523
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Right End Panel"
 msgstr "Avslutande högerkantspanel"
 
@@ -1443,84 +1466,84 @@ msgstr "Kalender"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:174
 msgid "%A %B %d (%Z)"
 msgstr "%A %d %B (%Z)"
 
-#: modules/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:183
 msgid "Click to hide your appointments and tasks"
 msgstr "Klicka för att dölja dina möten och uppgifter"
 
-#: modules/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:186
 msgid "Click to view your appointments and tasks"
 msgstr "Klicka för att visa dina möten och uppgifter"
 
-#: modules/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:190
 msgid "Click to hide month calendar"
 msgstr "Klicka för att dölja månadskalendern"
 
-#: modules/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:193
 msgid "Click to view month calendar"
 msgstr "Klicka för att visa månadskalendern"
 
 #. Done!
-#: modules/clock/clock-applet.c:848
+#: modules/clock/clock-applet.c:725
 msgid "Computer Clock"
 msgstr "Datorklocka"
 
-#: modules/clock/clock-applet.c:981
+#: modules/clock/clock-applet.c:811
 msgid "Failed to open the time settings"
 msgstr "Misslyckades med att öppna tidsinställningarna"
 
-#: modules/clock/clock-applet.c:1607
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Välj plats"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Redigera plats"
 
-#: modules/clock/clock-applet.c:1722 modules/clock/clock-applet.c:1730
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Standard"
 
-#: modules/clock/clock-applet.c:1723
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1724
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Celsius"
 
-#: modules/clock/clock-applet.c:1725
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1731
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Meter per sekund (m/s)"
 
-#: modules/clock/clock-applet.c:1732
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometer per timme (kph)"
 
-#: modules/clock/clock-applet.c:1733
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Engelska mil per timme (mph)"
 
-#: modules/clock/clock-applet.c:1734
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Knop"
 
-#: modules/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Beauforts skala"
 
-#: modules/clock/clock-applet.c:1788
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Stadens namn"
 
-#: modules/clock/clock-applet.c:1792
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Stadens tidszon"
 
@@ -2137,7 +2160,7 @@ msgstr "Användarmeny"
 
 #: modules/menu/gp-menu-module.c:399
 msgid "Menu to change your settings and log out"
-msgstr "Meny för att ändra dina inställningar och logga ut."
+msgstr "Meny för att ändra dina inställningar och logga ut"
 
 #: modules/menu/gp-menu-utils.c:441
 #, c-format
@@ -2258,7 +2281,7 @@ msgstr "Inforuta som visas för meny"
 msgid "The text to display in a tooltip for this menu."
 msgstr "Texten att visa i en inforuta för denna meny."
 
-#: modules/notification-area/na-applet.c:155
+#: modules/notification-area/na-applet.c:173
 msgid "Panel Notification Area"
 msgstr "Panelaviseringsyta"
 
@@ -2286,24 +2309,24 @@ msgstr "Värd för statusaviserare"
 msgid "Display all Status Notifier Items"
 msgstr "Visa alla statusaviserarobjekt"
 
-#: modules/wncklet/showdesktop.c:100
+#: modules/wncklet/showdesktop.c:71
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Misslyckades med att läsa in %s: %s\n"
 
-#: modules/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:72
 msgid "Icon not found"
 msgstr "Ikonen hittades inte"
 
-#: modules/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:103
 msgid "Click here to restore hidden windows."
 msgstr "Klicka här för att återställa dolda fönster."
 
-#: modules/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klicka här för att dölja alla fönster och visa skrivbordet."
 
-#: modules/wncklet/showdesktop.c:214
+#: modules/wncklet/showdesktop.c:136
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2311,7 +2334,7 @@ msgstr ""
 "Din fönsterhanterare stöder inte knappen för att visa skrivbordet, eller så "
 "kör du ingen fönsterhanterare."
 
-#: modules/wncklet/showdesktop.c:411
+#: modules/wncklet/showdesktop.c:333
 msgid "Show Desktop Button"
 msgstr "Visa skrivbordsknapp"
 
@@ -2776,9 +2799,6 @@ msgstr "Arbetsytor"
 
 #~ msgid "Close"
 #~ msgstr "Stäng"
-
-#~ msgid "_Applet:"
-#~ msgstr "_Miniprogram:"
 
 #~ msgid "Test DBus Applet Factory"
 #~ msgstr "Fabrik för DBus-testminiprogram"
