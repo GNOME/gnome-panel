@@ -39,7 +39,7 @@
 #define MEAN_OBLIQUITY 23.440592  /* degrees */ /* mean obliquity of earth's axis at epoch 1990.0 */
 
 #define NORMALIZE(x) \
-  while (x>360) x-=360; while (x<0) x+= 360;
+  while (x>360) { x-=360; } while (x<0) { x+= 360; }
 
 #define DEG_TO_RADS(x) \
   (x * G_PI/180.0)
