@@ -21,15 +21,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-panel/issues\n"
-"POT-Creation-Date: 2021-04-24 15:51+0000\n"
-"PO-Revision-Date: 2021-05-05 11:01+0200\n"
+"POT-Creation-Date: 2021-08-13 17:51+0000\n"
+"PO-Revision-Date: 2021-08-29 15:46+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 40.0\n"
+"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/org.gnome.gnome-panel.applet.clock.gschema.xml:5
@@ -305,7 +305,7 @@ msgstr "Tamaño de los iconos en los menús"
 
 #: data/org.gnome.gnome-panel.gschema.xml:52
 msgid "The size of icons in menus."
-msgstr "El tamaño de los iconos en los menús"
+msgstr "El tamaño de los iconos en los menús."
 
 #: data/org.gnome.gnome-panel.gschema.xml:57
 msgid "Maximum icon size in panels"
@@ -553,7 +553,6 @@ msgstr ""
 "«bottom» (inferior) el menú se mostrará por encima del panel."
 
 #: data/org.gnome.gnome-panel.toplevel.gschema.xml:25
-#| msgid "Panel ID list"
 msgid "Panel alignment"
 msgstr "Alineación del panel"
 
@@ -769,21 +768,25 @@ msgstr "Buscar un _elemento para añadirlo a «%s»"
 msgid "Find an item to add to the panel"
 msgstr "Buscar un elemento para añadirlo al panel"
 
-#: gnome-panel/gp-applet-manager.c:426
+#: gnome-panel/gp-applet-list-row.c:114 gnome-panel/gp-applet-row.c:110
+msgid "Help"
+msgstr "Ayuda"
+
+#: gnome-panel/gp-applet-list-row.c:124 gnome-panel/gp-applet-row.c:120
+msgid "About"
+msgstr "Acerca de"
+
+#: gnome-panel/gp-applet-list-row.c:207
+msgid "Remove"
+msgstr "Eliminar"
+
+#: gnome-panel/gp-applet-manager.c:420
 msgid ""
 "Disabled because this applet is listed in “disabled-applets” setting in “org."
 "gnome.gnome-panel.lockdown” GSettings schema."
 msgstr ""
 "Desactivada porque esta miniaplicación aparece en “disabled-applets” del "
 "esquema“org.gnome.gnome-panel.lockdown” de GSettings."
-
-#: gnome-panel/gp-applet-row.c:110
-msgid "Help"
-msgstr "Ayuda"
-
-#: gnome-panel/gp-applet-row.c:120
-msgid "About"
-msgstr "Acerca de"
 
 #: gnome-panel/gp-applet-row.c:270
 msgid "Add"
@@ -801,125 +804,138 @@ msgstr "Reemplazar un panel actualmente en ejecución"
 msgid "Print version"
 msgstr "Mostrar versión"
 
-#: gnome-panel/gp-properties-dialog.c:214
+#: gnome-panel/gp-properties-dialog.c:224
 msgctxt "Orientation"
 msgid "Top"
 msgstr "Superior"
 
-#: gnome-panel/gp-properties-dialog.c:215
+#: gnome-panel/gp-properties-dialog.c:225
 msgctxt "Orientation"
 msgid "Bottom"
 msgstr "Inferior"
 
-#: gnome-panel/gp-properties-dialog.c:216
+#: gnome-panel/gp-properties-dialog.c:226
 msgctxt "Orientation"
 msgid "Left"
 msgstr "Izquierda"
 
-#: gnome-panel/gp-properties-dialog.c:217
+#: gnome-panel/gp-properties-dialog.c:227
 msgctxt "Orientation"
 msgid "Right"
-msgstr "Derecho"
+msgstr "Derecha"
 
-#: gnome-panel/gp-properties-dialog.c:221
-#| msgid "Restart"
+#: gnome-panel/gp-properties-dialog.c:231
 msgctxt "Alignment"
 msgid "Start"
 msgstr "Inicio"
 
-#: gnome-panel/gp-properties-dialog.c:222
+#: gnome-panel/gp-properties-dialog.c:232
 msgctxt "Alignment"
 msgid "Center"
 msgstr "Centrado"
 
-#: gnome-panel/gp-properties-dialog.c:223
-#| msgid "E_xpand"
+#: gnome-panel/gp-properties-dialog.c:233
 msgctxt "Alignment"
 msgid "End"
-msgstr "Fin"
+msgstr "Final"
 
 #: gnome-panel/gp-properties-dialog.ui:15
 msgid "Panel Properties"
 msgstr "Propiedades del panel"
 
-#: gnome-panel/gp-properties-dialog.ui:53
-#: gnome-panel/gp-properties-dialog.ui:366
+#: gnome-panel/gp-properties-dialog.ui:56
+#: gnome-panel/gp-properties-dialog.ui:369
 msgid "Some of these properties are locked down"
 msgstr "Algunas de estas propiedades están bloqueadas"
 
-#: gnome-panel/gp-properties-dialog.ui:79
+#: gnome-panel/gp-properties-dialog.ui:82
 msgid "_Orientation:"
 msgstr "_Orientación:"
 
-#: gnome-panel/gp-properties-dialog.ui:122
-#| msgid "Appointments"
+#: gnome-panel/gp-properties-dialog.ui:125
 msgid "_Alignment:"
 msgstr "_Alineación:"
 
-#: gnome-panel/gp-properties-dialog.ui:165
+#: gnome-panel/gp-properties-dialog.ui:168
 msgid "_Size:"
 msgstr "_Tamaño:"
 
-#: gnome-panel/gp-properties-dialog.ui:201
+#: gnome-panel/gp-properties-dialog.ui:204
 msgid "pixels"
 msgstr "píxeles"
 
-#: gnome-panel/gp-properties-dialog.ui:234
+#: gnome-panel/gp-properties-dialog.ui:237
 msgid "Miscellaneous:"
 msgstr "Varios:"
 
-#: gnome-panel/gp-properties-dialog.ui:253
+#: gnome-panel/gp-properties-dialog.ui:256
 msgid "E_xpand"
 msgstr "_Expandir"
 
-#: gnome-panel/gp-properties-dialog.ui:268
+#: gnome-panel/gp-properties-dialog.ui:271
 msgid "_Autohide"
 msgstr "Ocultar _automáticamente"
 
-#: gnome-panel/gp-properties-dialog.ui:283
+#: gnome-panel/gp-properties-dialog.ui:286
 msgid "Show hide _buttons"
 msgstr "_Mostrar botones de ocultación"
 
-#: gnome-panel/gp-properties-dialog.ui:298
+#: gnome-panel/gp-properties-dialog.ui:301
 msgid "Arro_ws on hide buttons"
 msgstr "_Flechas en los botones de ocultación"
 
-#: gnome-panel/gp-properties-dialog.ui:331 modules/clock/clock.ui:629
+#: gnome-panel/gp-properties-dialog.ui:334 modules/clock/clock.ui:629
 #: modules/fish/fish.ui:91
 msgid "General"
 msgstr "General"
 
-#: gnome-panel/gp-properties-dialog.ui:398
+#: gnome-panel/gp-properties-dialog.ui:401
 msgid "Background color:"
 msgstr "Color de fondo:"
 
-#: gnome-panel/gp-properties-dialog.ui:461
+#: gnome-panel/gp-properties-dialog.ui:464
 msgid "Background image:"
 msgstr "Imagen de fondo:"
 
-#: gnome-panel/gp-properties-dialog.ui:500
+#: gnome-panel/gp-properties-dialog.ui:503
 msgid "Tile"
 msgstr "Mosaico"
 
-#: gnome-panel/gp-properties-dialog.ui:515
+#: gnome-panel/gp-properties-dialog.ui:518
 msgid "Stretch"
 msgstr "Estirar"
 
-#: gnome-panel/gp-properties-dialog.ui:530
+#: gnome-panel/gp-properties-dialog.ui:533
 msgid "Fit"
 msgstr "Ajustar"
 
-#: gnome-panel/gp-properties-dialog.ui:552
+#: gnome-panel/gp-properties-dialog.ui:555
 msgid "Rotate image on vertical panel"
 msgstr "Rotar la imagen en el panel vertical"
 
-#: gnome-panel/gp-properties-dialog.ui:595
+#: gnome-panel/gp-properties-dialog.ui:598
 msgid "Text color:"
 msgstr "Color de texto:"
 
-#: gnome-panel/gp-properties-dialog.ui:650
+#: gnome-panel/gp-properties-dialog.ui:653
 msgid "Theme"
 msgstr "Tema"
+
+#: gnome-panel/gp-properties-dialog.ui:669
+msgid "Left"
+msgstr "Izquierda"
+
+#: gnome-panel/gp-properties-dialog.ui:692
+msgid "Center"
+msgstr "Centrado"
+
+#: gnome-panel/gp-properties-dialog.ui:715
+msgid "Right"
+msgstr "Derecha"
+
+#: gnome-panel/gp-properties-dialog.ui:743
+msgid "Applets"
+msgstr "Miniaplicaciones"
 
 #. FIXME: We need a title in this case, but we don't know what
 #. * the format should be. Let's put something simple until
@@ -927,7 +943,7 @@ msgstr "Tema"
 #. * http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #. FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=165132
 #: gnome-panel/libpanel-util/panel-error.c:78
-#: gnome-panel/panel-applet-frame.c:941
+#: gnome-panel/panel-applet-frame.c:944
 msgid "Error"
 msgstr "Error"
 
@@ -936,42 +952,42 @@ msgstr "Error"
 msgid "Could not open location '%s'"
 msgstr "No se puede abrir el lugar «%s»"
 
-#: gnome-panel/panel-applet-frame.c:396
+#: gnome-panel/panel-applet-frame.c:395
 msgid "_Move"
 msgstr "_Mover"
 
-#: gnome-panel/panel-applet-frame.c:403
+#: gnome-panel/panel-applet-frame.c:402
 msgid "_Remove From Panel"
 msgstr "_Quitar del panel"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:919
 msgid "OK"
 msgstr "Aceptar"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:923
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "¿Quiere eliminar la miniaplicación de su configuración?"
 
-#: gnome-panel/panel-applet-frame.c:923
+#: gnome-panel/panel-applet-frame.c:926
 msgid "D_on't Delete"
 msgstr "_No eliminar"
 
-#: gnome-panel/panel-applet-frame.c:924 gnome-panel/panel.c:1276
+#: gnome-panel/panel-applet-frame.c:927 gnome-panel/panel.c:1249
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: gnome-panel/panel.c:604
+#: gnome-panel/panel.c:587
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel.c:659 modules/menu/gp-bookmarks.c:101
+#: gnome-panel/panel.c:642 modules/menu/gp-bookmarks.c:101
 #: modules/menu/gp-recent-menu.c:134
 #, c-format
 msgid "Open '%s'"
@@ -980,18 +996,18 @@ msgstr "Abrir «%s»"
 #. is_exec?
 #. exec
 #. name
-#: gnome-panel/panel.c:714 modules/menu/gp-places-menu.c:423
+#: gnome-panel/panel.c:697 modules/menu/gp-places-menu.c:423
 msgid "Open your personal folder"
 msgstr "Abrir su carpeta personal"
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:724 modules/menu/gp-places-menu.c:504
+#: gnome-panel/panel.c:707 modules/menu/gp-places-menu.c:504
 msgid "Computer"
 msgstr "Equipo"
 
 #. name
-#: gnome-panel/panel.c:725 modules/menu/gp-places-menu.c:505
+#: gnome-panel/panel.c:708 modules/menu/gp-places-menu.c:505
 msgid ""
 "Browse all local and remote disks and folders accessible from this computer"
 msgstr ""
@@ -999,20 +1015,20 @@ msgstr ""
 
 #. is_exec?
 #. exec
-#: gnome-panel/panel.c:733 modules/menu/gp-places-menu.c:558
+#: gnome-panel/panel.c:716 modules/menu/gp-places-menu.c:558
 msgid "Network"
 msgstr "Red"
 
 #. name
-#: gnome-panel/panel.c:734 modules/menu/gp-places-menu.c:559
+#: gnome-panel/panel.c:717 modules/menu/gp-places-menu.c:559
 msgid "Browse bookmarked and local network locations"
 msgstr "Examinar los lugares locales y remotos marcados"
 
-#: gnome-panel/panel.c:1267
+#: gnome-panel/panel.c:1240
 msgid "Delete this panel?"
 msgstr "¿Quiere este panel?"
 
-#: gnome-panel/panel.c:1271
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -1020,7 +1036,7 @@ msgstr ""
 "Cuando se elimina un panel, el panel y los valores de sus\n"
 "preferencias se pierden."
 
-#: gnome-panel/panel.c:1275 gnome-panel/panel-run-dialog.c:1301
+#: gnome-panel/panel.c:1248 gnome-panel/panel-run-dialog.c:1301
 #: gnome-panel/panel-run-dialog.ui:236
 #: modules/action-button/panel-force-quit.c:214 modules/clock/clock.ui:67
 #: modules/launcher/gp-editor.c:291 modules/launcher/gp-editor.c:466
@@ -1154,75 +1170,67 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1499
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Top Expanded Edge Panel"
 msgstr "Panel expandido lateral superior"
 
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Top Centered Panel"
 msgstr "Panel centrado superior"
 
-#: gnome-panel/panel-toplevel.c:1501
-#| msgid "Top Centered Panel"
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Top Start Panel"
 msgstr "Panel inicial superior"
 
-#: gnome-panel/panel-toplevel.c:1502
-#| msgid "Top Edge Panel"
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Top End Panel"
 msgstr "Panel final superior"
 
-#: gnome-panel/panel-toplevel.c:1506
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panel expandido lateral inferior"
 
-#: gnome-panel/panel-toplevel.c:1507
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Bottom Centered Panel"
 msgstr "Panel centrado inferior"
 
-#: gnome-panel/panel-toplevel.c:1508
-#| msgid "Bottom Centered Panel"
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Bottom Start Panel"
 msgstr "Panel inicial inferior"
 
-#: gnome-panel/panel-toplevel.c:1509
-#| msgid "Bottom Edge Panel"
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Bottom End Panel"
 msgstr "Panel final inferior"
 
-#: gnome-panel/panel-toplevel.c:1513
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Left Expanded Edge Panel"
 msgstr "Panel expandido lateral izquierdo"
 
-#: gnome-panel/panel-toplevel.c:1514
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Left Centered Panel"
 msgstr "Panel centrado izquierdo"
 
-#: gnome-panel/panel-toplevel.c:1515
-#| msgid "Left Centered Panel"
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Left Start Panel"
 msgstr "Panel inicial izquierdo"
 
-#: gnome-panel/panel-toplevel.c:1516
-#| msgid "Left Edge Panel"
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Left End Panel"
 msgstr "Panel final izquierdo"
 
-#: gnome-panel/panel-toplevel.c:1520
+#: gnome-panel/panel-toplevel.c:1515
 msgid "Right Expanded Edge Panel"
 msgstr "Panel lateral expandido derecho"
 
-#: gnome-panel/panel-toplevel.c:1521
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Right Centered Panel"
 msgstr "Panel centrado derecho"
 
-#: gnome-panel/panel-toplevel.c:1522
-#| msgid "Right Centered Panel"
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Right Start Panel"
 msgstr "Panel inicial derecho"
 
-#: gnome-panel/panel-toplevel.c:1523
-#| msgid "Right Edge Panel"
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Right End Panel"
 msgstr "Panel final derecho"
 
@@ -1480,85 +1488,85 @@ msgstr "Calendario"
 #. Translators: This is a strftime format string.
 #. * It is used to display a date.
 #.
-#: modules/clock/clock-applet.c:226
+#: modules/clock/clock-applet.c:174
 msgid "%A %B %d (%Z)"
 msgstr "%A %B %d (%Z)"
 
-#: modules/clock/clock-applet.c:235
+#: modules/clock/clock-applet.c:183
 msgid "Click to hide your appointments and tasks"
 msgstr "Pulse para ocultar sus citas y tareas"
 
-#: modules/clock/clock-applet.c:238
+#: modules/clock/clock-applet.c:186
 msgid "Click to view your appointments and tasks"
 msgstr "Pulse para ver sus citas y tareas"
 
-#: modules/clock/clock-applet.c:242
+#: modules/clock/clock-applet.c:190
 msgid "Click to hide month calendar"
 msgstr "Pulse para ocultar el calendario del mes"
 
-#: modules/clock/clock-applet.c:245
+#: modules/clock/clock-applet.c:193
 msgid "Click to view month calendar"
 msgstr "Pulse para ver el calendario del mes"
 
 #. Done!
-#: modules/clock/clock-applet.c:848
+#: modules/clock/clock-applet.c:725
 msgid "Computer Clock"
 msgstr "Reloj del equipo"
 
-#: modules/clock/clock-applet.c:981
+#: modules/clock/clock-applet.c:811
 msgid "Failed to open the time settings"
 msgstr "Falló al abrir la configuración de la hora"
 
-#: modules/clock/clock-applet.c:1607
+#: modules/clock/clock-applet.c:1430
 msgid "Choose Location"
 msgstr "Elegir ubicación"
 
-#: modules/clock/clock-applet.c:1686
+#: modules/clock/clock-applet.c:1509
 msgid "Edit Location"
 msgstr "Editar ubicación"
 
-#: modules/clock/clock-applet.c:1722 modules/clock/clock-applet.c:1730
+#: modules/clock/clock-applet.c:1545 modules/clock/clock-applet.c:1553
 msgid "Default"
 msgstr "Predeterminado"
 
-#: modules/clock/clock-applet.c:1723
+#: modules/clock/clock-applet.c:1546
 msgid "Kelvin"
 msgstr "Kelvin"
 
-#: modules/clock/clock-applet.c:1724
+#: modules/clock/clock-applet.c:1547
 msgid "Celsius"
 msgstr "Centígrados"
 
-#: modules/clock/clock-applet.c:1725
+#: modules/clock/clock-applet.c:1548
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: modules/clock/clock-applet.c:1731
+#: modules/clock/clock-applet.c:1554
 msgid "Meters per second (m/s)"
 msgstr "Metros por segundo (m/s)"
 
-#: modules/clock/clock-applet.c:1732
+#: modules/clock/clock-applet.c:1555
 msgid "Kilometers per hour (kph)"
 msgstr "Kilómetros por hora (km/h)"
 
-#: modules/clock/clock-applet.c:1733
+#: modules/clock/clock-applet.c:1556
 msgid "Miles per hour (mph)"
 msgstr "Millas por hora (mph)"
 
-#: modules/clock/clock-applet.c:1734
+#: modules/clock/clock-applet.c:1557
 msgid "Knots"
 msgstr "Nudos"
 
-#: modules/clock/clock-applet.c:1735
+#: modules/clock/clock-applet.c:1558
 msgid "Beaufort scale"
 msgstr "Escala Beaufort"
 
 # Esta cadena aparece en la ayuda
-#: modules/clock/clock-applet.c:1788
+#: modules/clock/clock-applet.c:1611
 msgid "City Name"
 msgstr "Nombre de la ciudad"
 
-#: modules/clock/clock-applet.c:1792
+#: modules/clock/clock-applet.c:1615
 msgid "City Time Zone"
 msgstr "Zona horaria de la ciudad"
 
@@ -1893,7 +1901,7 @@ msgstr "Animación:"
 
 #: modules/fish/fish.ui:277
 msgid "    "
-msgstr "  "
+msgstr "    "
 
 # Esta cadena aparece en la ayuda
 #: modules/fish/fish.ui:301
@@ -2303,7 +2311,7 @@ msgstr "Sugerencia mostrada para el menú"
 msgid "The text to display in a tooltip for this menu."
 msgstr "El texto para mostrar en un sugerencia para este menú."
 
-#: modules/notification-area/na-applet.c:155
+#: modules/notification-area/na-applet.c:173
 msgid "Panel Notification Area"
 msgstr "Área del panel de notificación"
 
@@ -2331,24 +2339,24 @@ msgstr "Equipo notificador de estado"
 msgid "Display all Status Notifier Items"
 msgstr "Mostrar todos los elementos del notificador de estado"
 
-#: modules/wncklet/showdesktop.c:100
+#: modules/wncklet/showdesktop.c:71
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Se produjo un fallo al cargar %s: %s\n"
 
-#: modules/wncklet/showdesktop.c:101
+#: modules/wncklet/showdesktop.c:72
 msgid "Icon not found"
 msgstr "Icono no encontrado"
 
-#: modules/wncklet/showdesktop.c:181
+#: modules/wncklet/showdesktop.c:103
 msgid "Click here to restore hidden windows."
 msgstr "Pulse aquí para restaurar las ventanas ocultas."
 
-#: modules/wncklet/showdesktop.c:183
+#: modules/wncklet/showdesktop.c:105
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Pulse aquí para ocultar todas las ventanas y mostrar el escritorio."
 
-#: modules/wncklet/showdesktop.c:214
+#: modules/wncklet/showdesktop.c:136
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -2356,7 +2364,7 @@ msgstr ""
 "Su gestor de ventanas no soporta el botón para mostrar el escritorio, o no "
 "está ejecutando un gestor de ventanas."
 
-#: modules/wncklet/showdesktop.c:411
+#: modules/wncklet/showdesktop.c:333
 msgid "Show Desktop Button"
 msgstr "Botón para mostrar el escritorio"
 
@@ -2836,9 +2844,6 @@ msgstr "Áreas de trabajo"
 
 #~ msgid "Close"
 #~ msgstr "Cerrar"
-
-#~ msgid "_Applet:"
-#~ msgstr "_Miniaplicación:"
 
 #~ msgid "Test DBus Applet Factory"
 #~ msgstr "Fábrica de miniaplicaciones de prueba de DBus"
